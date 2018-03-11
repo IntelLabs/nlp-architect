@@ -1,3 +1,5 @@
+dynet
+spacy
 configargparse==0.10.0
 numpy==1.13.1
 pyyaml==3.12

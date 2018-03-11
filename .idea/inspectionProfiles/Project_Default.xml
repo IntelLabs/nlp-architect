@@ -1,0 +1,43 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyCompatibilityInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ourVersions">
+        <value>
+          <list size="2">
+            <item index="0" class="java.lang.String" itemvalue="2.7" />
+            <item index="1" class="java.lang.String" itemvalue="3.6" />
+          </list>
+        </value>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredPackages">
+        <value>
+          <list size="20">
+            <item index="0" class="java.lang.String" itemvalue="pytest" />
+            <item index="1" class="java.lang.String" itemvalue="h5py" />
+            <item index="2" class="java.lang.String" itemvalue="cffi" />
+            <item index="3" class="java.lang.String" itemvalue="pep8" />
+            <item index="4" class="java.lang.String" itemvalue="py-cpuinfo" />
+            <item index="5" class="java.lang.String" itemvalue="numpy" />
+            <item index="6" class="java.lang.String" itemvalue="flake8" />
+            <item index="7" class="java.lang.String" itemvalue="sphinx" />
+            <item index="8" class="java.lang.String" itemvalue="tqdm" />
+            <item index="9" class="java.lang.String" itemvalue="pandoc" />
+            <item index="10" class="java.lang.String" itemvalue="appdirs" />
+            <item index="11" class="java.lang.String" itemvalue="posix_ipc" />
+            <item index="12" class="java.lang.String" itemvalue="filelock" />
+            <item index="13" class="java.lang.String" itemvalue="pytest-cov" />
+            <item index="14" class="java.lang.String" itemvalue="pytest-mock" />
+            <item index="15" class="java.lang.String" itemvalue="pylint" />
+            <item index="16" class="java.lang.String" itemvalue="future" />
+            <item index="17" class="java.lang.String" itemvalue="pillow" />
+            <item index="18" class="java.lang.String" itemvalue="pypandoc" />
+            <item index="19" class="java.lang.String" itemvalue="configargparse" />
+          </list>
+        </value>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>
