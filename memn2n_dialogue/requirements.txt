@@ -1,0 +1,6 @@
+ConfigArgParse==0.11.0
+-e git+https://github.com/NervanaSystems/ngraph-python.git@a349109f849afbf69b2b544ea4c36b0e7dda3a29#egg=ngraph
+numpy==1.13.1
+pytest==3.4.2
+scipy==0.18.1
+tqdm==4.11.2
