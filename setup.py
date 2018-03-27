@@ -35,7 +35,7 @@ except Exception:
 
 try:
     import pypandoc
-    readme_file = pypandoc.convert('README.md', 'rst') 
+    readme_file = pypandoc.convert('README.md', 'rst')
 except:
     readme_file = open('README.md').read()
 
@@ -71,39 +71,18 @@ if write_version:
         a.close()
 
 requirements = [
-    "configargparse",
-    "numpy",
-    "pyyaml",
-    "pep8",
-    "flake8",
-    "pytest",
-    "pytest-cov",
-    "pytest-mock",
-    "posix_ipc",
-    "pillow",
-    "pylint",
-    "sphinx",
-    "h5py",
-    "appdirs",
-    "future",
-    "tqdm",
-    "cffi",
-    "filelock",
-    "py-cpuinfo",
-    "pypandoc",
-    "pandoc"
+    
 ]
 
 
-setup(name='nervananeon',
+setup(name='ai_lab_nlp',
       version=VERSION,
-      description="Intel's deep learning framework",
+      description="Intel AI Lab NLP deep learning framework",
       long_description=readme_file,
-      author='Intel Deep Learning System',
+      author='Intel AI Lab NLP',
       author_email='intelnervana@intel.com',
       url='http://www.intelnervana.com',
       license='License :: OSI Approved :: Apache Software License',
-      scripts=['bin/neon', 'bin/nvis'],
       packages=find_packages(),
       install_requires=requirements,
       package_data={'neon': ['backends/kernels/sass/*.sass',

@@ -1,6 +1,5 @@
-
 .. ---------------------------------------------------------------------------
-.. Copyright 2016-2018 Intel Corporation
+.. Copyright 2017-2018 Intel Corporation
 ..
 .. Licensed under the Apache License, Version 2.0 (the "License");
 .. you may not use this file except in compliance with the License.
@@ -15,44 +14,6 @@
 .. limitations under the License.
 .. ---------------------------------------------------------------------------
 
-Developer Guide
+
+Developer guide
 ===============
-
-.. include:: ../../CONTRIBUTING.rst
-
-Coding Conventions
-------------------
-
-To ensure consistency across developers, we enforce the following conventions
-on all of the code in neon (which is primarily python plus some
-reStructuredText for documentation).
-
-* By and large we conform to PEP8_ with the following exceptions:
-
-  * Maximum line length is 99 characters
-
-* All public class and function names must have docstrings, and these
-  docstrings must conform to `Google Style Docstrings`_ as our API
-  documentation is auto-generated from these.  To do this we utilize
-  the Napoleon_ Sphinx extensions.
-
-.. _PEP8: https://www.python.org/dev/peps/pep-0008/
-.. _Google Style Docstrings: http://google-styleguide.googlecode.com/svn/trunk/pyguide.html#Comments
-.. _Napoleon: http://sphinxcontrib-napoleon.readthedocs.org/en/latest/index.html
-
-Documentation Conventions
--------------------------
-
-* Documents are created using `reStructuredText`_.
-
-* Limit your docs to 2-3 levels of headings. 
-
-* New .rst files will show up in the sidebar, and any first and second level headings will also show up in the menu. Keep the sidebar short and only add essentials items there. Otherwise, add your documentation to the pre-existing files. You can add to the toctree manually, but please don't add or create pages unless absolutely necessary!
-
-* If you created a new class, add it to the API by creating a new section in api.rst and create an autosummary_. Anytime you add an autosummary, please remember to add :nosignatures: to keep things consistent with the rest of our docs. 
-
-* Every time you make a significant contribution, add a short description of it in the relevant document. 
-
-.. _reStructuredText: http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html
-.. _autosummary: http://sphinx-doc.org/latest/ext/autosummary.html
-
