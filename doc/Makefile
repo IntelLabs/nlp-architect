@@ -72,7 +72,7 @@ convert:
 	@echo $(TOP)
 	jupyter nbconvert --to rst $(wildcard $(WALKTHROUGH_DIR)/*.ipynb) --stdout > source/walk_throughs.rst
 
-html: 
+html:
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
