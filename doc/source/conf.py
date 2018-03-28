@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # ******************************************************************************
 # Copyright 2017-2018 Intel Corporation
 #
@@ -13,9 +14,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
-
-# -*- coding: utf-8 -*-
-
 import os
 import sys
 
@@ -79,10 +77,10 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Intel® AI Lab NLP'
-copyright = u'Intel Nervana and neon are trademarks of Intel Corporation or \
-    its subsidiaries in the U.S. and/or other countries. * Other names and \
-    brands may be claimed as the property of others.'
+project = u'Intel® AI NLP Architect'
+copyright = u'Intel Nervana and neon are trademarks of Intel Corporation or its subsidiaries \
+            in the U.S. and/or other countries. * Other names and brands may be claimed as \
+            the property of others.'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
