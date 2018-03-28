@@ -20,13 +20,14 @@ The BIST parser is described in [this](../bist/README.md) README file.
 ## Usage
 The module can be imported and used in python. To import, type the following:
 ```python
-from libs.spacy_bist.parser import SpacyBISTParser
+from ai_lab_nlp.pipelines.spacy_bist.parser import SpacyBISTParser
 ```
 Note: For usage in import, the root directory `/ai-lab-models` must be added to `PYTHONPATH` environment variable.
 
 ## Training
-By default, the parser uses a pre-trained BIST model (located in `pretrained/bist.model`) and Spacy's English model (`spacy en`).
-To use other models, supply the path or link to each model at initialization (see example below).
+By default, the parser uses a pre-trained BIST model and Spacy's English model (`spacy en`).
+The pre-trained BIST model is automatically downloaded (on-demand) to `spacy_bist/pretrained/` and then loaded from that directory. 
+To use other models, supply a path or link to each model at initialization (see example below).
 
 For instructions on how to train these models, see:
 - BIST: [README file](../bist/README.md)
@@ -38,8 +39,8 @@ parser = SpacyBISTParser(spacy_model='/path/or/link/to/spacy/model', bist_model=
 ```
 
 ## Inference
-Inference accepts document(s) either as a string of raw text or a directory of raw text files. Text must be encoded in UTF-8 format.
-The parser outputs a [ParsedDocument](../utils/parsed_document.py) object for each processed document.
+Inference accepts document(s) either as a raw text string or as a directory of raw text files. Text must be encoded in UTF-8 format.
+The parser outputs a [ParsedDocument](../utils/parsed_document.py) object for each processed document (example output below).
 
 #### Example - Parse Files
 ```python

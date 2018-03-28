@@ -1,5 +1,5 @@
 # ******************************************************************************
-# Copyright 2014-2018 Intel Corporation
+# Copyright 2017-2018 Intel Corporation
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,20 +16,19 @@
 from __future__ import unicode_literals, print_function, division, \
     absolute_import
 
-import os
+import io
 import pathlib
 import pickle
-import io
+from os import path, walk
 
 from spacy import load as spacy_load
 
-from ai_lab_nlp.models.bist.bmstparser import mstlstm
-from ai_lab_nlp.models.bist.bmstparser.parser_utils import ConllEntry
+from models.bist.bmstparser import mstlstm
+from models.bist.bmstparser.parser_utils import ConllEntry
+from ai_lab_nlp.pipelines.spacy_bist.utils import download_file, unzip_file
 from ai_lab_nlp.utils.parsed_document import ParsedDocument
 
 loaded_models = {}
-PRE_TRAINED_MODEL = \
-    os.path.join(os.path.dirname(os.path.realpath(__file__)), 'pretrained/bist.model')
 
 
 class SpacyBISTParser:
@@ -42,10 +41,17 @@ class SpacyBISTParser:
         bist_model (:obj:`str`, optional): Path to a .model file to load.
             Defaults to 'spacy_bist/pretrained/bist.model'.
     """
+    dir = path.dirname(path.realpath(__file__))
+    pretrained = path.join(dir, 'bist-pretrained', 'bist.model')
 
-    def __init__(self, verbose=False, spacy_model='en', bist_model=PRE_TRAINED_MODEL):
+    def __init__(self, verbose=False, spacy_model='en', bist_model=None):
+        if not bist_model:
+            print("Using pre-trained BIST model.")
+            download_pretrained_model()
+
         self.verbose = verbose
-        self.bist_parser = load_bist_model(bist_model)
+        self.bist_parser = \
+            load_bist_model(bist_model if bist_model else SpacyBISTParser.pretrained)
         print('Loading Spacy annotator...')
         self.spacy_annotator = spacy_load(spacy_model)
 
@@ -206,13 +212,24 @@ def load_bist_model(model_path):
     if model_path not in loaded_models:
         print('Loading BIST Parser...')
         params_path = \
-            os.path.join(str(pathlib.Path(os.path.abspath(model_path)).parent), 'params.pickle')
+            path.join(str(pathlib.Path(path.abspath(model_path)).parent), 'params.pickle')
         with io.open(params_path, 'rb') as file:
             params = pickle.load(file)
         bist_parser = mstlstm.MSTParserLSTM(*params)
         bist_parser.load(model_path)
         loaded_models[model_path] = bist_parser
     return loaded_models[model_path]
+
+
+def download_pretrained_model():
+    """Downloads the pre-trained BIST model if non-existent."""
+    if not path.exists(path.join(SpacyBISTParser.dir, 'bist-pretrained', 'bist.model')):
+        print('Downloading pre-trained BIST model...')
+        download_file('https://s3-us-west-1.amazonaws.com/nervana-modelzoo/parse/',
+                      'bist-pretrained.zip', path.join(SpacyBISTParser.dir, 'bist-pretrained.zip'))
+        print('Unzipping...')
+        unzip_file(path.join(SpacyBISTParser.dir, 'bist-pretrained.zip'))
+        print('Done.')
 
 
 def normalize_pos(pos, text):
@@ -235,10 +252,10 @@ def normalize_pos(pos, text):
 
 def walk_directory(directory):
     """Iterates a directory's text files and their contents."""
-    for dir_path, _, filenames in os.walk(directory):
+    for dir_path, _, filenames in walk(directory):
         for filename in filenames:
-            file_path = os.path.join(dir_path, filename)
-            if os.path.isfile(file_path) and not filename.startswith('.'):
+            file_path = path.join(dir_path, filename)
+            if path.isfile(file_path) and not filename.startswith('.'):
                 with io.open(file_path, 'r', encoding='utf-8') as file:
                     print('Reading ' + filename)
                     doc_text = file.read()

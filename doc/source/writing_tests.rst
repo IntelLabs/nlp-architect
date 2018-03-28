@@ -14,6 +14,26 @@
 .. limitations under the License.
 .. ---------------------------------------------------------------------------
 
+Test Conventions
+=================
 
-Tests
-=====
+To ensure code stability, developers are required to write tests for contributed modules,
+according to these guidelines:
+
+* Tests are written using `pytest`_
+
+* All test functions must have docstrings
+
+* Tests modules should be placed in the ./tests directory
+
+.. _pytest: https://docs.pytest.org/en/latest/
+
+
+Test Types
+----------
+
+* **Regression tests** – check that claimed model/pipeline end-to-end functionality is preserved after changes. Test sub-components where appropriate.
+
+* **Util tests** – test functionality of utility modules.
+
+* **Framework tests** – test http service input/output
