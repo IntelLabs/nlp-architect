@@ -14,7 +14,25 @@
 .. limitations under the License.
 .. ---------------------------------------------------------------------------
 
-.. include:: overview.rst
+Intel AI NLP Architect
+=======================
+
+:Release:   |version|
+:Date:      |today|
+
+The Intel AI NLP Architect is a repository for models exploring the state of the art deep learning techniques for natural language processing. It is intended to be a space to promote research and collaboration.
+
+The library consists of 3 type of NLP/NLU components:
+
+- Basic components
+- High level models and end-to-end models
+- Solutions (*TBD*)
+
+Who is the end user of our library?
+
+- Data Scientists - as a toolkit for examinings models and data to derive insights
+- Artificial Intelligence software developers - developers who want to integrate Machine Learning and Deep Learning models models as a part of a solution
+- Researchers
 
 .. toctree::
    :hidden:

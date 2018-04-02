@@ -17,13 +17,6 @@
 Overview
 ========
 
-:Release: |version|
-:Date: |today|
-
-The Intel® AI NLP Architect is a repository for models exploring the state of the
-art deep learning techniques for natural language processing. It is intended
-to be a space to promote research and collaboration.
-
 Because of its exploratory nature, several open source deep learning frameworks are used in this repository including:
 
 - `Intel® Nervana™ graph`_

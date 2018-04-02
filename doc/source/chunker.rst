@@ -15,7 +15,7 @@
 .. ---------------------------------------------------------------------------
 
 Chunker
-############
+#######
 
 Overview
 ========
@@ -23,7 +23,7 @@ Overview
 Phrase chunking is a basic NLP task that consists of tagging parts of a sentence (1 or more tokens)
 syntactically.
 
-.. code:: python
+.. code:: bash
 
 	The quick brown fox jumped over the fence
 	|                   |      |    |
@@ -54,7 +54,7 @@ CoNLL 2000 dataset uses IOB tagging format. Tags begin with a ``B-`` tag and con
 A new ``B-`` tag marks end of last tag and start of a new tag.
 Example (from above):
 
-.. code:: python
+.. code:: bash
 
 	The  quick brown fox  jumped over the  fence
 	|    |     |     |    |      |    |    |
@@ -66,7 +66,7 @@ Model
 The Chunker model example comes with several options for creating the NN topology depending on what
 input is given (tokens/POS/embeddings/char features).
 
-.. image: ../../chunker/model_diag.png
+.. image:: ../../chunker/model_diag.png
 
 The model above depicts the main topology.
 Given sentence ``S`` of length ``n``, and sentence tokens ``S = (s1, s2, .. , sn)`` we can input
@@ -78,7 +78,7 @@ of the following values:
 * part-of-speech embedding (trained by model)
 * character features vector (trained by char-rnn)
 
-.. image: ../../char_diag.png
+.. image:: ../../chunker/char_diag.png
 
 The Char-RNN feature extractor model uses 2 layers of LSTM such that each RNN layer outputs the
 last hidden state. The final feature vector for a token is a concatenation of final hidden state of
@@ -105,6 +105,7 @@ Dependencies
 spaCy (for POS tags annotation)
 
 *  Install: ``pip install spacy``
+
 *  Download English model: ``python -m spacy download en``
 
 
@@ -123,11 +124,9 @@ Train a model with default parameters (only tokens, default network settings):
 
 Custom training parameters
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-All customizable parameters can be obtained by running:
+All customizable parameters can be obtained by running: ``python train.py -h``
 
-.. code:: python
-
-	python train.py -h
+.. code:: bash
 
 	  --use_w2v             Use pre-trained word embedding from given w2v model
                         path (default: False)
@@ -165,11 +164,9 @@ Inference
 -----------
 To run inference on a trained model one has to have a pre-trained chunker.prm and chunker_settings.dat model files.
 If the model was trained using pre-trained word embedding the same exact word embedding model should be used.
-Running ``inference.py`` is described below:
+Run ``python inference.py -h`` for a full list of options:
 
-.. code:: python
-
-	python inference.py -h
+.. code:: bash
 
 	  --model MODEL         Path to model file (default: None)
 	  --settings SETTINGS   Path to model settings file (default: None)
@@ -188,10 +185,10 @@ Quick example:
 	python inference.py --model chunker.prm --parameters chunker_settings.dat --input inference_samples.txt
 
 .. note::
-	currently char-RNN features are not supported in inference models (will be added soon).
+	currently char-RNN feature (character embedding) is not supported in inference mode (will be added in the future).
 
-Results
-=======
+Evaluation
+==========
 The reported performance below is on Noun Phrase (NP) detection (using B-NP and consecutive I-NP labels).
 
 .. csv-table::
@@ -199,26 +196,8 @@ The reported performance below is on Noun Phrase (NP) detection (using B-NP and 
     :widths: 40, 20, 20, 20
     :escape: ~
 
-		CRF, 0.964, 0.964, 0.964 |
-		Tokens+BSZ=32+Depth=2+E=5, 0.985, 0.959, 0.971
-		Tokens+W2V+BSZ=32+Depth=2+E=10, 0.987, 0.949, 0.968
-		FB W2V+BSZ=32+Depth=2+E=5, 0.977, 0.952, 0.965
+		CRF, 0.964, 0.964, 0.964
+		Our model, 0.985, 0.959, 0.971
 
-.. csv-table::
-    :header: "Model", "Batch Size", "fprop runtime", "Total runtime (sec.)"
-    :widths: 40, 20, 20, 20
-    :escape: ~
-
-		CRF ,  ~ , ~ , 0.768
-		BiLSTM Depth=1, 1 , 0.096, 192.864
-		              , 16 , 0.177 , 22.125
-		              , 32 , 0.204 , 12.648
-		              , 64 , 0.365 , 11.315
-		              , 128, 0.603 , 9.045
-		BiLSTM Depth=3, 1  , 0.333 , 668.997
-		              , 16 , 0.511 , 63.875
-		              , 32 , 0.567 , 35.154
-		              , 64 , 0.886 , 27.466
-		              , 128 , 1.582 , 23.73
 
 .. _here: https://www.clips.uantwerpen.be/conll2000/chunking/
