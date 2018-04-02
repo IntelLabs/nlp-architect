@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 .. ---------------------------------------------------------------------------
 .. Copyright 2016-2018 Intel Corporation
 ..
@@ -15,8 +14,6 @@
 .. limitations under the License.
 .. ---------------------------------------------------------------------------
 
-=======
->>>>>>> master
 Noun Phrase to vec
 ###################
 
@@ -40,7 +37,12 @@ For example, if the marking character is "\_", the NP "Natural Language Processi
 Dependencies
 ==============
 Dependencies required for the project are mentioned in requirements.txt.
-Use ``pip install -r requirements.txt``
+Use 
+
+.. code:: python
+
+  pip install -r requirements.txt
+
 
 Files
 ======
