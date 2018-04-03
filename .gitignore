@@ -19,7 +19,6 @@ generated
 *.hdf5
 *.h5
 *.html
-*.txt
 *.log
 .idea/
 dist

@@ -22,8 +22,8 @@ import pickle
 import sys
 import time
 import io
-from models.bist.bmstparser import parser_utils
-from models.bist.bmstparser.mstlstm import MSTParserLSTM
+from bmstparser import parser_utils
+from bmstparser.mstlstm import MSTParserLSTM
 
 
 class BISTInference:

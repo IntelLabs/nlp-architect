@@ -18,7 +18,7 @@ from __future__ import unicode_literals, print_function, division, \
 
 import pytest
 
-from tests.conftest import Fixtures
+from ai_lab_nlp.pipelines.spacy_bist.parser import SpacyBISTParser
 
 
 class TestData:
@@ -29,13 +29,27 @@ class TestData:
                         "This is a document... This is the second sentence"]
 
     sentence_breaking = [("This is a single-sentence document", 1),
-                                   ("This is a document... This is the second sentence", 2)]
+                         ("This is a document... This is the second sentence", 2)]
 
     dependencies = \
         [("i don't have other assistance",
           [[('nsubj', 3), ('aux', 3), ('neg', 3), ('root', -1), ('amod', 5), ('dobj', 3)]])]
 
     pos_tags = ["He's the best player in NBA history"]
+
+
+class Fixtures:
+    default_parser = SpacyBISTParser()
+
+    ptb_pos_tags = {'CC', 'CD', 'DT', 'EX', 'FW', 'IN', 'JJ', 'JJR', 'JJS', 'LS', 'MD',
+                    'NN', 'NNS', 'NNP', 'NNPS', 'PDT', 'POS', 'PRP', 'PRP$', 'RB', 'RBR',
+                    'RBS', 'RP', 'SYM', 'TO', 'UH', 'VB', 'VBD', 'VBG', 'VBN', 'VBP',
+                    'VBZ', 'WDT', 'WP', 'WP$', 'WRB'}
+
+    token_label_types = {'start': int, 'len': int, 'pos': str, 'ner': str, 'lemma': str,
+                         'gov': int, 'rel': str}
+
+    parse_str_methods = ['inference', 'parse']
 
 
 @pytest.mark.parametrize('show_tok', [True, False])
@@ -112,3 +126,23 @@ def test_pos_tag(parser, text, method_name, ptb_pos_tags):
     parse_method = getattr(parser, method_name)
     parsed_doc = parse_method(doc_text=text)
     assert all([token['pos'] in ptb_pos_tags for sent in parsed_doc for token in sent])
+
+
+@pytest.fixture
+def parser():
+    return Fixtures.default_parser
+
+
+@pytest.fixture
+def ptb_pos_tags():
+    return Fixtures.ptb_pos_tags
+
+
+@pytest.fixture
+def token_label_types():
+    return Fixtures.token_label_types
+
+
+@pytest.fixture
+def parse_str_methods():
+    return Fixtures.parse_str_methods
