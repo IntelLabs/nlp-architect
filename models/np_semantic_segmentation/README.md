@@ -1,0 +1,115 @@
+# Noun Phrase (NP) Semantic Segmentation
+
+Noun-Phrase (NP) is a phrase which has a noun (or pronoun) as its head and zero of more dependent modifiers.
+Noun-Phrase is the most frequently occurring phrase type and its inner segmentation is critical for understanding the 
+semantics of the Noun-Phrase.
+The most basic division of the semantic segmentation is to two classes:
+1. Descriptive Structure - a structure where all dependent modifiers are not changing the semantic meaning of the Head.
+2. Collocation Structure - a sequence of words or term that co-occur and change the semantic meaning of the Head.
+
+For example:
+- `fresh hot dog` - hot dog is a collocation, and changes the head (`dog`) semantic meaning.
+- `fresh hot pizza` - fresh and hot are descriptions for the pizza.
+
+This model is the first step in the Semantic Segmentation algorithm - the MLP classifier.
+The Semantic Segmentation algorithm takes the dependency relations between the Noun-Phrase words, and the MLP classifier inference as the 
+input - and build a semantic hierarchy that represents the semantic meaning.
+The Semantic Segmentation algorithm eventually create a tree where each tier represent a semantic meaning -> if a sequence of words is a 
+collocation then a collocation tier is created, else the elements are broken down and each one is mapped 
+to different tier in the tree.
+
+This model trains MLP classifier and inference from such classifier in order to conclude the correct segmentation 
+for the given NP.
+
+for the examples above the classifier will output 1 (==Collocation) for `hot dog` and output 0 (== not collocation) 
+for `hot pizza`.
+
+
+## Requirements:
+- **nltk** (for data.py - used for Wordnet, SnowballStemmer) 
+- **palmettopy** (for data.py - used for Palmetto PMI scores)
+- **requests** (for data.py - used for Wikidata)
+- **gensim** (for data.py - used for Word2Vec utilities)
+- **tqdm** (for data.py)
+- **numpy**
+
+## Files
+- *data.py*: Prepare string data for both `train.py` and `inference.py` using pre-trained word embedding, PMI score, Wordnet and wikidata.
+- *feature_extraction.py*: contains the feature extraction services
+- *train.py*: train the MLP classifier.
+- *model.py*: contains the MLP classifier model.
+- *inference.py*: load the trained model and inference the input data by the model.
+
+## Dataset
+The expected dataset is a CSV file with 2 columns. the first column contains the Noun-Phrase string (a Noun-Phrase containing 2 words), and the second column contains the correct label (if the 2 word Noun-Phrase is a collocation - the label is 1, else 0)
+
+Attached to this project are examples:
+- `raw_data.csv` - the dataset before prepare_data.py
+- `prepared_data.csv` - the output of prepare_data.py
+
+both of these files are accessible in the following link:
+https://s3-us-west-1.amazonaws.com/nervana-modelzoo/np_semantic_segmentation/data.zip
+
+
+### Pre-processing the data:
+A feature vector is extracted from each Noun-Phrase string:
+* Word2Vec word embedding (300 size vector for each word in the Noun-Phrase) .
+    * Pre-trained Google News Word2vec model can download at https://drive.google.com/file/d/0B7XkCwpI5KDYNlNUTTlSS21pQmM/edit?usp=sharing
+* Cosine distance between 2 words in the Noun-Phrase.
+* PMI score (NPMI and UCI scores).
+* A binary features whether the Noun-Phrase has existing entity in Wikidata.
+* A binary features whether the Noun-Phrase has existing entity in WordNet.
+
+#### pre-processing the dataset:
+Parameters can be obtained by running:
+
+    python data.py -h
+        --data DATA         path the CSV file where the raw dataset is saved
+                            (default: datasets/raw_data.csv)
+        --output OUTPUT     path the CSV file where the prepared dataset will be
+                            saved (default: datasets/prepared_data.csv)
+        --w2v_path W2V_PATH
+                            path to the word embedding's model (default: None)
+        --http_proxy HTTP_PROXY
+                            system's http proxy (default: None)
+        --https_proxy HTTPS_PROXY
+                            system's https proxy (default: None)
+          
+Quick example:
+
+    python data.py --data datasets/raw_data.csv --output datasets/prepared_data.csv --w2v_path <path_to_w2v>/GoogleNews-vectors-negative300.bin.gz
+    
+## Training:
+Train the MLP classifier and evaluate it.
+Parameters can be obtained by running:
+
+    python train.py -h
+      --data DATA               Path the CSV file where the prepared dataset is saved (default: datasets/prepared_data.csv)
+      --model_path MODEL_PATH   Path the save the model (default: datasets/np_semantic_segmentation)
+
+After training is done, the model is saved automatically:
+
+`<model_name>.prm` - the trained model
+
+Quick example:
+
+    python train.py --data datasets/prepared_data.csv --model datasets/np_semantic_segmentation
+
+## Inference:
+In order to run inference you need to have pre-trained `<model_name>.prm` file and data CSV file 
+that was generated by `prepare_data.py`.
+The result of `inference.py` is a CSV file, each row contains the model's inference in respect to the input data.
+
+    python inference.py -h
+      --data DATA           prepared data CSV file path (default:
+                            datasets/prepared_data.csv)
+      --model MODEL         path to the trained model file
+      --print_stats PRINT_STATS
+                            print evaluation stats for the model predictions -
+                            if your data has tagging (default: False)
+      --output OUTPUT       path to location for inference output file (default:
+                            datasets/inference_data.csv)
+Quick example:
+
+    python inference.py --model datasets/np_semantic_segmentation.prm --data datasets/prepared_data.csv --output datasets/inference_data.csv --print_stats True  
+    

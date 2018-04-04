@@ -28,7 +28,8 @@ The most basic division of the semantic segmentation is to two classes:
 2. Collocation Structure - a sequence of words or term that co-occur and change the semantic meaning of the Head.
 
 For example:
-- `fresh hot dog`` - hot dog is a collocation, and changes the head (``dog``) semantic meaning.
+
+- ``fresh hot dog`` - hot dog is a collocation, and changes the head (``dog``) semantic meaning.
 - ``fresh hot pizza`` - fresh and hot are descriptions for the pizza.
 
 This model is the first step in the Semantic Segmentation algorithm - the MLP classifier.
@@ -69,10 +70,12 @@ The first column contains the Noun-Phrase string (a Noun-Phrase containing 2 wor
 and the second column contains the correct label (if the 2 word Noun-Phrase is a collocation - the label is 1, else 0)
 
 Attached to this project are examples:
+
 - ``raw_data.csv`` - the dataset before prepare_data.py
 - ``prepared_data.csv`` - the output of prepare_data.py
 
 Both of these files are accessible in the following link:
+
 https://s3-us-west-1.amazonaws.com/nervana-modelzoo/np_semantic_segmentation/data.zip
 
 
