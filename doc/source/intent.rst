@@ -14,8 +14,8 @@
 .. limitations under the License.
 .. ---------------------------------------------------------------------------
 
-Intent
-######
+Intent Extraction
+#################
 
 Overview
 ========

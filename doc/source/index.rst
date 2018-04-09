@@ -15,29 +15,36 @@
 .. ---------------------------------------------------------------------------
 
 Intel AI NLP Architect
-=======================
+######################
 
-:Release:   |version|
-:Date:      |today|
+| **Release:**  |version|
+| **Date:**     |today|
 
-The Intel AI NLP Architect is a repository for models exploring the state of the art deep learning techniques for natural language processing. It is intended to be a space to promote research and collaboration.
+"""""""""""""""""""""""
 
-The library consists of 3 type of NLP/NLU components:
+The Intel AI NLP Architect is a repository for models exploring the state of the
+art deep learning techniques for natural language processing and natural
+language understanding. It is intended to be a space to promote research and
+collaboration.
 
-- Basic components
-- High level models and end-to-end models
-- Solutions (*TBD*)
+The library includes our past and ongoing NLP research efforts as part of Intel AI Lab.
 
-Who is the end user of our library?
+NLP Architect Library
+---------------------
+- Brief library :doc:`overview <overview>`
+- :doc:`Installation <installation>` instructions
 
-- Data Scientists - as a toolkit for examinings models and data to derive insights
-- Artificial Intelligence software developers - developers who want to integrate Machine Learning and Deep Learning models models as a part of a solution
-- Researchers
+Models
+------
+
+
+For Developers
+--------------
 
 .. toctree::
    :hidden:
    :maxdepth: 1
-   :caption: Introduction
+   :caption: NLP Architect
 
    overview.rst
    installation.rst
@@ -45,32 +52,17 @@ Who is the end user of our library?
 .. toctree::
    :hidden:
    :maxdepth: 1
-   :caption: Core Modules
+   :caption: Modules
 
-   core_overview.rst
    np2vec.rst
    chunker.rst
    intent.rst
    np_segmentation.rst
-   ne_expansion.rst
-   word_sense.rst
-
-.. toctree::
-   :hidden:
-   :maxdepth: 1
-   :caption: Solutions
-
-   sentiment.rst
-
-.. toctree::
-   :hidden:
-   :maxdepth: 1
-   :caption: Models
-
+   bist_parser.rst
    reading_comprehension.rst
    memn2n.rst
    kvmemn2n.rst
-
+   word_sense.rst
 
 .. toctree::
   :hidden:
