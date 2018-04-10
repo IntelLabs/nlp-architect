@@ -71,3 +71,10 @@ For Developers
 
   developer_guide.rst
   writing_tests.rst
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+   :caption: Full API
+
+   api.rst

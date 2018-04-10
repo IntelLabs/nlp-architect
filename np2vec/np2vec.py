@@ -27,7 +27,9 @@ logger = logging.getLogger(__name__)
 
 
 class NP2vec:
-
+    """
+    Initialize the np2vec model and train it.
+    """
     def is_marked(self, s):
         return len(s) > 0 and s[-1] == self.mark_char
 
@@ -52,9 +54,7 @@ class NP2vec:
             min_n=3,
             max_n=6,
             word_ngrams=1):
-        """
-        Initialize the np2vec model and train it.
-        """
+
         self.mark_char = mark_char
         self.word_embedding_type = word_embedding_type
         self.word_ngrams = word_ngrams

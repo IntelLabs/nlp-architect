@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
- 
+
 from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
@@ -65,6 +65,9 @@ class IntentExtractionModel(object):
 
 
 class JointSequentialLSTM(IntentExtractionModel):
+    """
+    Joint Intent classification and Slot tagging Model
+    """
     def __init__(self):
         super(JointSequentialLSTM, self).__init__()
 
@@ -103,6 +106,9 @@ class JointSequentialLSTM(IntentExtractionModel):
 
 
 class EncDecTaggerModel(IntentExtractionModel):
+    """
+    Encoder Decoder Deep LSTM Tagger Model
+    """
     def __init__(self):
         super(EncDecTaggerModel, self).__init__()
 

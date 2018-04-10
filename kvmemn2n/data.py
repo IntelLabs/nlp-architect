@@ -106,16 +106,17 @@ def ex_entity_names(line, dictionary_lookup, regex_list, return_key=False):
 
 
 class WIKIMOVIES(object):
+    """
+    Load WikiMovies dataset and extract text and read the stories
+    For a particular task, the class will read both train and test files
+    and combine the vocabulary.
+
+    Arguments:
+        path (str): Directory to store the dataset
+    """
     def __init__(self, path='.', subset='wiki-entities', reparse=False,
                  mem_source='kb'):
-        """
-        Load WikiMovies dataset and extract text and read the stories
-        For a particular task, the class will read both train and test files
-        and combine the vocabulary.
 
-        Arguments:
-            path (str): Directory to store the dataset
-        """
         self.url = 'http://www.thespermwhale.com/jaseweston/babi'
         self.size = 11745123
         self.filename = 'movieqa.tar.gz'

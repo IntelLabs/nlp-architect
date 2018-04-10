@@ -122,7 +122,9 @@ class ModifiedLookupTable(Layer):
 
 
 class MemN2N_Dialog(Layer):
-
+    """
+    End-to-End Memory Networks for Goal Oriented Dialogue
+    """
     def __init__(
         self,
         cands,
