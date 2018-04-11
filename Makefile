@@ -15,7 +15,7 @@
 # ******************************************************************************
 
 STYLE_CHECK_OPTS :=
-STYLE_CHECK_DIRS := 
+STYLE_CHECK_DIRS :=
 DOC_DIR := doc
 DOC_PUB_RELEASE_PATH := $(DOC_PUB_PATH)/$(RELEASE)
 test_prepare:
@@ -37,10 +37,64 @@ doc_prepare:
 doc: doc_prepare
 	$(MAKE) -C $(DOC_DIR) clean
 	$(MAKE) -C $(DOC_DIR) html
-	echo "Documentation built in $(DOC_DIR)/build/html"
+	@echo "Documentation built in $(DOC_DIR)/build/html"
 	@echo "To view documents open your browser to: http://localhost:8000"
 	@cd $(DOC_DIR)/build/html; python -m http.server
 	@echo
 
 html:
 	$(MAKE) -C $(DOC_DIR) html
+
+LIBRARY_NAME := nlp_architect
+VIRTUALENV_DIR := .nlp_architect_env
+ACTIVATE := $(VIRTUALENV_DIR)/bin/activate
+MODELS_DIR := $(LIBRARY_NAME)/models
+
+$(ACTIVATE):
+	pip3 install --upgrade pip setuptools virtualenv
+	virtualenv -p python3 $(VIRTUALENV_DIR)
+	@. $(ACTIVATE); pip install -U pip
+	# @. $(basic); pip install -r requirements.txt
+
+intent: $(ACTIVATE)
+	@echo "installing intent extractor model"
+	# @. $(ACTIVATE); pip install -r $(MODELS_DIR)/intent_extraction/requirements.txt
+	# @$(MAKE) finally
+
+chunker: $(ACTIVATE)
+	@echo "installing chunker model"
+	# @. $(ACTIVATE); pip install -r $(MODELS_DIR)/chunker/requirements.txt
+	@$(MAKE) finally
+
+bist: $(ACTIVATE)
+	@echo "installing BIST parser"
+	# @. $(ACTIVATE); pip install -r $(MODELS_DIR)/bist/requirements.txt
+	@$(MAKE) finally
+
+kbmemn2n: $(ACTIVATE)
+	@echo "installing key-value memory network model"
+	# @. $(ACTIVATE); pip install -r $(MODELS_DIR)/kvmemn2n/requirements.txt
+	@$(MAKE) finally
+
+mem2n_dialog: $(ACTIVATE)
+	@echo "installing memory network for dialog model"
+	# @. $(ACTIVATE); pip install -r $(MODELS_DIR)/memn2n_dialogue/requirements.txt
+	@$(MAKE) finally
+
+np_seg: $(ACTIVATE)
+	@echo "installing NP semantic segmentation model"
+	# @. $(ACTIVATE); pip install -r $(MODELS_DIR)/np_semantic_segmentation/requirements.txt
+	@$(MAKE) finally
+
+np2vec: $(ACTIVATE)
+	@echo "installing NP2vec model"
+	# @. $(ACTIVATE); pip install -r $(MODELS_DIR)/np2vec/requirements.txt
+	@$(MAKE) finally
+
+finally: $(ACTIVATE)
+	@. $(ACTIVATE); pip install -e .
+	@echo "\n\n****************************************"
+	@echo "Setup complete."
+	@echo "Type:"
+	@echo "    . '$(ACTIVATE)'"
+	@echo "to work interactively $(VIRTUALENV_DIR) virtual env"
