@@ -19,6 +19,7 @@ from __future__ import print_function
 from __future__ import unicode_literals
 from __future__ import absolute_import
 import pickle
+import os
 
 import numpy as np
 
@@ -47,16 +48,22 @@ if __name__ == '__main__':
     be = gen_backend(**extract_valid_args(args, gen_backend))
 
     model_file = args.model
-    with open(args.settings, 'rb') as fp:
-        mp = pickle.load(fp)
+    if not os.path.exists(args.settings):
+        raise Exception('Not valid model settings file')
+    else:
+        with open(args.settings, 'rb') as fp:
+            mp = pickle.load(fp)
 
     if mp['char_rnn'] is not False:
         raise NotImplementedError
 
     sentence_len = mp['sentence_len']
 
-    with open(args.input) as fp:
-        input_texts = [t.strip() for t in fp.readlines()]
+    if not os.path.exists(args.input):
+        raise Exception('Not valid input file')
+    else:
+        with open(args.input) as fp:
+            input_texts = [t.strip() for t in fp.readlines()]
 
     be.bsz = len(input_texts)
     input_features = []
@@ -74,7 +81,7 @@ if __name__ == '__main__':
         token_features = np.asarray(text_tokens)
         del emb_model
     else:
-        x_vocab = mp['vocabs']['token']
+        x_vocab = mp.get('vocabs').get('token')
         for t in input_texts:
             tokens = [x_vocab[t] if t in x_vocab else len(
                 x_vocab) + 1 for t in t.lower().split()]
