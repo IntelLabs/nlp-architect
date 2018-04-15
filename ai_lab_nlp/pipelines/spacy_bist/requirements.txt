@@ -1,3 +1,4 @@
 dynet
 spacy
 tqdm
+requests
