@@ -16,31 +16,35 @@
 
 from __future__ import unicode_literals, print_function, division, \
     absolute_import
+
 import csv
-import os
 import io
+import os
+
 from neon.backends import gen_backend
 from neon.util.argparser import NeonArgparser
+
+from models.np_semantic_segmentation.data import NpSemanticSegData, extract_y_labels
 from models.np_semantic_segmentation.model import NpSemanticSegClassifier
-from models.np_semantic_segmentation.data import NpSemanticSegData
-import models.np_semantic_segmentation.data
 
 
-def classify_collocation(dataset):
+def classify_collocation(dataset, model_file_path, num_epochs, callback_args):
     """
     Classify the dataset by the given trained model
     Args:
+        model_file_path (str): model path
+        num_epochs (int): number of epochs
+        callback_args (dict): callback_arg
         dataset: NpSemanticSegData object containing the dataset
     Returns:
         the output of the final layer for the entire Dataset
     """
     # load existing model
-    model_path = args.model
-    if not os.path.isabs(model_path):
+    if not os.path.isabs(model_file_path):
         # handle case using default value\relative paths
-        model_path = os.path.join(os.path.dirname(__file__), model_path)
-    loaded_model = NpSemanticSegClassifier()
-    loaded_model.load(model_path)
+        model_file_path = os.path.join(os.path.dirname(__file__), model_file_path)
+    loaded_model = NpSemanticSegClassifier(num_epochs, callback_args)
+    loaded_model.load(model_file_path)
     print("Model loaded")
     # arrange the data
     return loaded_model.get_outputs(dataset.train_set)
@@ -74,20 +78,21 @@ def print_evaluation(y_test, predictions):
           "\nrecall: {2:.2f}\n".format(acc, prec, rec))
 
 
-def write_results(predictions):
+def write_results(predictions, output_path):
     """
     Write csv file of predication results to specified --output
     Args:
+        output_path (str): output file path
         predictions:
             the model's predictions
     """
     results_list = predictions.tolist()
-    out_file = io.open(args.output, 'w', encoding='utf-8')
+    out_file = io.open(output_path, 'w', encoding='utf-8')
     writer = csv.writer(out_file, delimiter=',', quotechar='"')
     for result in results_list:
         writer.writerow([result])
     out_file.close()
-    print("Results of inference saved in {0}".format(args.output))
+    print("Results of inference saved in {0}".format(output_path))
 
 
 if __name__ == "__main__":
@@ -102,12 +107,17 @@ if __name__ == "__main__":
     parser.add_argument('--output', default="datasets/inference_data.csv",
                         help='path to location for inference output file')
     args = parser.parse_args()
+    data_path = args.data
+    if not os.path.exists(data_path):
+        raise Exception('Not valid model settings file')
+    model_path = args.model
+    if not os.path.exists(data_path):
+        raise Exception('Not valid model settings file')
     # generate backend
     be = gen_backend(batch_size=10)
-    data_set = NpSemanticSegData(args.data, train_to_test_ratio=1)
-
-    results = classify_collocation(data_set)
+    data_set = NpSemanticSegData(data_path, train_to_test_ratio=1)
+    results = classify_collocation(data_set, model_path, args.num_epochs, **args.callback_args)
     if args.print_stats and (data_set.is_y_labels is not None):
-        y_labels = data.extract_y_labels(args.data)
+        y_labels = extract_y_labels(data_path)
         print_evaluation(y_labels, results.argmax(1))
-    write_results(results.argmax(1))
+    write_results(results.argmax(1), args.output)
