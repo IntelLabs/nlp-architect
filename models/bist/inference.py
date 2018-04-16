@@ -19,11 +19,12 @@ from __future__ import unicode_literals, print_function, division, \
 import os
 import pathlib
 import pickle
-import sys
 import time
 import io
+import subprocess
 from bmstparser import parser_utils
 from bmstparser.mstlstm import MSTParserLSTM
+from utils.evaluation_script.conll17_ud_eval import run_conllu_eval
 
 
 class BISTInference:
@@ -38,7 +39,6 @@ class BISTInference:
 
         Attributes:
             options (Values): Parameters for model.
-            root_dir (str): Path to execution root directory
             write_path (str): Path to write predictions output file to
             parser_model (MSTParserLSTM): The BIST LSTM model to use for inference
     """
@@ -48,7 +48,7 @@ class BISTInference:
             kwargs = {}
 
         print('\nInitializing BISTInference...')
-        self.options, self.root_dir, self.write_path = self.get_input_params(kwargs)
+        self.options, self.write_path = self.get_input_params(kwargs)
         self.parser_model = self.load_model(self.options.model)
 
     def run(self):
@@ -72,14 +72,15 @@ class BISTInference:
     def run_eval(self):
         """Evaluates the result using the appropriate script."""
         if self.write_path.endswith('.conllu'):
-            os.system('python %s/utils/evaluation_script/conll17_ud_eval.py'
-                      ' -v -w %s/utils/evaluation_script/weights.clas '
-                      % (self.root_dir, self.root_dir) + self.options.conll_input +
-                      ' ' + self.write_path + ' > ' + self.write_path + '.txt')
+            run_conllu_eval(gold_file=self.options.conll_input, test_file=self.write_path,
+                            verbose=True)
         else:
-            os.system('perl %s/utils/eval.pl -g ' % self.root_dir +
-                      self.options.conll_input + ' -s ' + self.write_path + ' > ' +
-                      self.write_path + '.txt')
+            eval_script_path = \
+                os.path.join(os.path.dirname(os.path.realpath(__file__)), 'utils', 'eval.pl')
+
+            with open(self.write_path + '.txt', 'w') as out_file:
+                subprocess.run(['perl', str(eval_script_path), '-g', self.options.conll_input,
+                                '-s', self.write_path], stdout=out_file)
 
     @staticmethod
     def get_input_params(kwargs):
@@ -103,11 +104,11 @@ class BISTInference:
         opt_parser.add_option("--eval", action="store_true", dest="evalFlag",
                               default=kwargs.get('eval', False))
         options = opt_parser.parse_args()[0]
+
         is_conllu = os.path.splitext(options.conll_input.lower())[1] == '.conllu'
         write_path = os.path.join(
             options.output, 'inference_res.conll' if not is_conllu else 'inference_res.conllu')
-        root_dir = os.path.dirname(os.path.abspath(sys.argv[0]))
-        return options, root_dir, write_path
+        return options, write_path
 
     @staticmethod
     def load_model(path):
