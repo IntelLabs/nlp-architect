@@ -15,7 +15,7 @@ In addition to NGraph, the following libraries are used and can be installed wit
 train_kvmemn2n.py: The primary class which processes the request to train or run inference on the key-value memory network model. It in turn will call the data processing algorithm when necessary.
 data.py: Will download and process the data necessary to train the key-value memory network model.
 wikiwindows.py: A key data preprocessing stage necessary when using the raw Wikipedia text knowledge base. It is called by data.py, or can be run independently.
-kvmemn2n.py: Defines the key-value memory network model.
+model.py: Defines the key-value memory network model.
 interactive_util.py: Called by train_kvmemn2n.py to facilitate the interactive mode.
 
 

@@ -91,7 +91,7 @@ parser.add_argument('data_dir', type=str, help='name of root directory for files
 # parser.add_argument('input_file', type=str, nargs='+',
 #     help='name of a input file in memnns format')
 parser.add_argument('-o', '--output_file', type=str,
-                    help='name of a input file in memnns format')
+                    help='name of a output file, otherwise data_dir will be used')
 parser.add_argument('-n', type=int, help='Max number of examples to process.')
 parser.add_argument('-e', '--entities', type=str,
                     help='entities file (each line specifies ngrams to always chunk together)')
@@ -123,7 +123,10 @@ args = vars(parser.parse_args())
 beg = time.time()
 
 if args['output_file']:
-    out = open(args['output_file'], 'w')
+    if not os.path.exists('/'.join(args['output_file'].split('/')[:-1])):
+        raise Exception('Not a valid output file path')
+    else:
+        out = open(args['output_file'], 'w')
 elif args['data_dir']:
     args['output_file'] = os.path.expanduser(args['data_dir'] +
                                              '/movieqa/lower_wiki-w=0-d=3-m-4.txt')
@@ -154,24 +157,27 @@ ent_rev = {}
 if 'entities' in args:
     if args['output_file']:
         print('Processing entity file...')
-    with open(args['entities']) as read:
-        for l in read:
-            l = l.strip().lower()
-            if len(l) > 0:
-                ent_list.append(l)
-    ent_list.sort(key=lambda x: -len(x))
-    for i in range(len(ent_list)):
-        k = ent_list[i]
-        if k not in ['$\n', 's\n']:
-            v = 'ENTITY_{}'.format(i)
-            entities[k] = v
-            ent_rev[v] = k
-    re_list = [
-        (
-            re.compile('\\b{}\\b'.format(re.escape(e))),
-            '{}'.format(entities[e])
-        ) for e in ent_list
-    ]
+    if not os.path.exists(args['entities']):
+        raise Exception('Not a valid entities file path')
+    else:
+        with open(args['entities']) as read:
+            for l in read:
+                l = l.strip().lower()
+                if len(l) > 0:
+                    ent_list.append(l)
+        ent_list.sort(key=lambda x: -len(x))
+        for i in range(len(ent_list)):
+            k = ent_list[i]
+            if k not in ['$\n', 's\n']:
+                v = 'ENTITY_{}'.format(i)
+                entities[k] = v
+                ent_rev[v] = k
+        re_list = [
+            (
+                re.compile('\\b{}\\b'.format(re.escape(e))),
+                '{}'.format(entities[e])
+            ) for e in ent_list
+        ]
 else:
     args['all_windows'] = True
 
@@ -340,30 +346,33 @@ for f in args['input_file']:
     if args['output_file']:
         # output is free to print debug info
         print('Processing file {}...'.format(f))
-    with open(f) as read:
-        first = True
-        cnt_exs = 0
-        full_ex = ''
+    if not os.path.exists(f):
+        raise Exception('Not a valid file {}...'.format(f))
+    else:
+        with open(f) as read:
+            first = True
+            cnt_exs = 0
+            full_ex = ''
 
-        for line in read:
-            line = line.strip().lower()
-            if line == '':
-                continue
-            idx = int(line[:line.find(' ')])
-            line = line[line.find(' ') + 1:]
-            if idx != 1 or full_ex == '':
-                full_ex = full_ex + line + '\n'
-                continue  # next line
-            else:
-                cnt_exs += 1
+            for line in read:
+                line = line.strip().lower()
+                if line == '':
+                    continue
+                idx = int(line[:line.find(' ')])
+                line = line[line.find(' ') + 1:]
+                if idx != 1 or full_ex == '':
+                    full_ex = full_ex + line + '\n'
+                    continue  # next line
+                else:
+                    cnt_exs += 1
+                    load(full_ex.strip())
+                    if args['n'] is not None and cnt_exs >= args['n']:
+                        full_ex = ''
+                        break
+                    full_ex = line + '\n'
+            # process last full_ex if out of new lines
+            if full_ex != '':
                 load(full_ex.strip())
-                if args['n'] is not None and cnt_exs >= args['n']:
-                    full_ex = ''
-                    break
-                full_ex = line + '\n'
-        # process last full_ex if out of new lines
-        if full_ex != '':
-            load(full_ex.strip())
 
 while queued_exs.value - proced_exs.value > 0:
     with finished:

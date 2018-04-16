@@ -112,6 +112,10 @@ class ModifiedLookupTable(Layer):
 
 
 class KVMemN2N(Layer):
+
+    """
+    Key Value Memory Network model
+    """
     def __init__(self, num_iterations, batch_size, emb_size, nhops,
                  story_length, memory_size, vocab_size, vocab_axis, use_v_luts):
 

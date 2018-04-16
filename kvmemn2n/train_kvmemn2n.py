@@ -25,7 +25,7 @@ from ngraph.frontends.neon import ArrayIterator
 from ngraph.frontends.neon import Saver
 import ngraph.transformers as ngt
 
-from kvmemn2n import KVMemN2N
+from model import KVMemN2N
 from data import WIKIMOVIES
 from interactive_util import interactive_loop
 

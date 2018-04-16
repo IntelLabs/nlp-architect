@@ -152,7 +152,7 @@ class WIKIMOVIES(object):
                 self.full_entity_dict, self.full_rev_entity_dict, self.re_list = \
                     self.create_entity_dict()
                 print('Creating knowledge base information')
-                if mem_source == ' text':
+                if mem_source == 'text':
                     print('Creating knowledge base information from text')
                     self.knowledge_dict = self.parse_text_window()
                 else:
