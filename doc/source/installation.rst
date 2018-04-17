@@ -36,16 +36,18 @@ before installing, ensure your system has recent updates of the following packag
    pkg-config, pkg-config, Retrieves information about installed libraries
 
 .. note::
-  The default installations of models use the default CPU backend installations. In order to use GPU/MKL backends the user must install it himself.
+  The default installations of models use the default CPU backend deep learning framework installations.
 
 Instructions
 ============
 
 We recommend installing NLP Architect within a virtual environment to ensure a self-contained environment. To install NLP Architect models within an already existing virtual environment, see below installation receipes for custom model installation. The default installation will create a new local virtual environment for development purposes.
 
-To get started using our library, run the following commands:
+To get started using our library, clone our repository:
 
 .. code:: python
 
   git clone https://github.com/NervanaSystems/ai-lab-nlp.git
-  cd ai-lab-nlp; make setup_env
+  cd ai-lab-nlp
+
+Models and NLP/NLU components are installed individualy (preferred way) or all at once (installed all deep learning frameworks and dependencies).

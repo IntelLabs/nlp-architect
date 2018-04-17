@@ -29,6 +29,21 @@ API for specific function definitions.
 ..    :py:mod:`nlp_architect.data` | Data loading and handling | :doc:`Data loading<loading_data>`, :doc:`Datasets<datasets>`
 ..    :py:mod:`nlp_architect.models` | Model architecture | :doc:`Models<models>`
 
+``nlp_architect.nlp``
+---------------
+.. py:module:: nlp_architect.nlp
+
+NLP classes stores a list of layers describing the NLP/NLU models. Methods are provided to train the model weights, perform inference, and save/load the model.
+
+.. autosummary::
+   :toctree: generated/
+   :nosignatures:
+
+   nlp_architect.nlp.chunker.ChunkerModel
+   nlp_architect.nlp.intent_extraction.JointSequentialLSTM
+   nlp_architect.nlp.intent_extraction.EncDecTaggerModel
+
+
 ``nlp_architect.models``
 ---------------
 .. py:module:: nlp_architect.models
@@ -41,9 +56,6 @@ to train the model weights, perform inference, and save/load the model.
    :nosignatures:
 
    np2vec.np2vec.NP2vec
-   chunker.model.ChunkerModel
-   intent_extraction.model.JointSequentialLSTM
-   intent_extraction.model.EncDecTaggerModel
    models.np_semantic_segmentation.model.NpSemanticSegClassifier
    models.bist.bmstparser.mstlstm.MSTParserLSTM
    memn2n_dialogue.model.MemN2N_Dialog

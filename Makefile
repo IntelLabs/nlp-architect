@@ -49,6 +49,7 @@ LIBRARY_NAME := nlp_architect
 VIRTUALENV_DIR := .nlp_architect_env
 ACTIVATE := $(VIRTUALENV_DIR)/bin/activate
 MODELS_DIR := $(LIBRARY_NAME)/models
+NLP_DIR := $(LIBRARY_NAME)/nlp
 
 $(ACTIVATE):
 	pip3 install --upgrade pip setuptools virtualenv
@@ -58,37 +59,47 @@ $(ACTIVATE):
 
 intent: $(ACTIVATE)
 	@echo "installing intent extractor model"
-	# @. $(ACTIVATE); pip install -r $(MODELS_DIR)/intent_extraction/requirements.txt
-	# @$(MAKE) finally
+	@. $(ACTIVATE); pip install -r $(NLP_DIR)/intent_extraction/requirements.txt
+	@$(MAKE) finally
 
 chunker: $(ACTIVATE)
 	@echo "installing chunker model"
-	# @. $(ACTIVATE); pip install -r $(MODELS_DIR)/chunker/requirements.txt
+	@. $(ACTIVATE); pip install -r $(NLP_DIR)/chunker/requirements.txt
 	@$(MAKE) finally
 
 bist: $(ACTIVATE)
 	@echo "installing BIST parser"
-	# @. $(ACTIVATE); pip install -r $(MODELS_DIR)/bist/requirements.txt
-	@$(MAKE) finally
-
-kbmemn2n: $(ACTIVATE)
-	@echo "installing key-value memory network model"
-	# @. $(ACTIVATE); pip install -r $(MODELS_DIR)/kvmemn2n/requirements.txt
-	@$(MAKE) finally
-
-mem2n_dialog: $(ACTIVATE)
-	@echo "installing memory network for dialog model"
-	# @. $(ACTIVATE); pip install -r $(MODELS_DIR)/memn2n_dialogue/requirements.txt
+	@. $(ACTIVATE); pip install -r $(NLP_DIR)/bist/requirements.txt
 	@$(MAKE) finally
 
 np_seg: $(ACTIVATE)
 	@echo "installing NP semantic segmentation model"
-	# @. $(ACTIVATE); pip install -r $(MODELS_DIR)/np_semantic_segmentation/requirements.txt
+	@. $(ACTIVATE); pip install -r $(NLP_DIR)/np_semantic_segmentation/requirements.txt
 	@$(MAKE) finally
 
 np2vec: $(ACTIVATE)
 	@echo "installing NP2vec model"
-	# @. $(ACTIVATE); pip install -r $(MODELS_DIR)/np2vec/requirements.txt
+	@. $(ACTIVATE); pip install -r $(NLP_DIR)/np2vec/requirements.txt
+	@$(MAKE) finally
+
+mcws: $(ACTIVATE)
+	@echo "installing most common word sense model"
+	@. $(ACTIVATE); pip install -r $(NLP_DIR)/most_common_word_sense/requirements.txt
+	@$(MAKE) finally
+
+reading_comprehension: $(ACTIVATE)
+	@echo "installing reading comprehension model"
+	@. $(ACTIVATE); pip install -r $(MODELS_DIR)/reading_comprehension/requirements.txt
+	@$(MAKE) finally
+
+kbmemn2n: $(ACTIVATE)
+	@echo "installing key-value memory network model"
+	@. $(ACTIVATE); pip install -r $(MODELS_DIR)/kvmemn2n/requirements.txt
+	@$(MAKE) finally
+
+mem2n_dialog: $(ACTIVATE)
+	@echo "installing memory network for dialog model"
+	@. $(ACTIVATE); pip install -r $(MODELS_DIR)/memn2n_dialogue/requirements.txt
 	@$(MAKE) finally
 
 finally: $(ACTIVATE)
