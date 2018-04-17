@@ -1,2 +1,2 @@
-dynet
-numpy
+dynet==2.0.2
+numpy==1.14.0

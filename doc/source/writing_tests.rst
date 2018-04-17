@@ -37,3 +37,14 @@ Test Types
 * **Util tests** – test functionality of utility modules.
 
 * **Framework tests** – test http service input/output
+
+
+Running Tests
+-------------
+
+Before creating a pull request, ensure that your test pass.
+To a test module, issue the following command:
+
+.. code:: bash
+
+    py.test tests/test_module.py
