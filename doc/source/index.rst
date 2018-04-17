@@ -52,13 +52,19 @@ For Developers
 .. toctree::
    :hidden:
    :maxdepth: 1
-   :caption: Modules
+   :caption: NLP/NLU Components
 
    np2vec.rst
    chunker.rst
    intent.rst
    np_segmentation.rst
    bist_parser.rst
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+   :caption: Models
+
    reading_comprehension.rst
    memn2n.rst
    kvmemn2n.rst
