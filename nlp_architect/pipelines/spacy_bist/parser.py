@@ -23,10 +23,10 @@ from os import path, walk
 
 from spacy import load as spacy_load
 
-from models.bist.bmstparser import mstlstm
-from models.bist.bmstparser.parser_utils import ConllEntry
-from ai_lab_nlp.pipelines.spacy_bist.utils import download_file, unzip_file
-from ai_lab_nlp.utils.parsed_document import ParsedDocument
+from nlp_architect.bist.bmstparser import mstlstm
+from nlp_architect.bist.bmstparser.parser_utils import ConllEntry
+from nlp_architect.pipelines.spacy_bist.utils import download_file, unzip_file
+from nlp_architect.utils.parsed_document import ParsedDocument
 
 loaded_models = {}
 

@@ -29,17 +29,9 @@ collaboration.
 
 The library includes our past and ongoing NLP research efforts as part of Intel AI Lab.
 
-NLP Architect Library
----------------------
 - Brief library :doc:`overview <overview>`
 - :doc:`Installation <installation>` instructions
 
-Models
-------
-
-
-For Developers
---------------
 
 .. toctree::
    :hidden:

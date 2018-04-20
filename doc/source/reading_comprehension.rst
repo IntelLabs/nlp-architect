@@ -26,7 +26,7 @@ input to the pointer network which identifies the start and end indices of the a
 
 **Model Architecture**
 
-.. image: ../../ReadingComprehension/ngraph_implementation/MatchLSTM_Model.png
+.. image: ../../models/ReadingComprehension/ngraph_implementation/MatchLSTM_Model.png
 
 
 Dependencies

@@ -15,7 +15,7 @@
 .. ---------------------------------------------------------------------------
 
 Word Chunker
-#######
+#############
 
 Overview
 ========
@@ -66,7 +66,7 @@ Model
 The Chunker model example comes with several options for creating the NN topology depending on what
 input is given (tokens/POS/embeddings/char features).
 
-.. image:: ../../chunker/model_diag.png
+.. image:: ../../nlp_architect/chunker/model_diag.png
 
 The model above depicts the main topology.
 Given sentence ``S`` of length ``n``, and sentence tokens ``S = (s1, s2, .. , sn)`` we can input
@@ -78,7 +78,7 @@ of the following values:
 * part-of-speech embedding (trained by model)
 * character features vector (trained by char-rnn)
 
-.. image:: ../../chunker/char_diag.png
+.. image:: ../../nlp_architect/chunker/char_diag.png
 
 The Char-RNN feature extractor model uses 2 layers of LSTM such that each RNN layer outputs the
 last hidden state. The final feature vector for a token is a concatenation of final hidden state of

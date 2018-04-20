@@ -15,26 +15,26 @@
 .. ---------------------------------------------------------------------------
 
 BIST Dependency Parser
-======================
+#######################
 
 Graph-based dependency parser using BiLSTM feature extractors
--------------------------------------------------------------
+==============================================================
 
 The techniques behind the parser are described in the paper `Simple and
 Accurate Dependency Parsing Using Bidirectional LSTM Feature
 Representations <https://www.transacl.org/ojs/index.php/tacl/article/viewFile/885/198>`__.
-Futher materials could be found
+Further materials could be found
 `here <http://elki.cc/#/article/Simple%20and%20Accurate%20Dependency%20Parsing%20Using%20Bidirectional%20LSTM%20Feature%20Representations>`__.
 
 Installation
-------------
+=============
 
 .. code:: bash
 
     pip install -r requirements.txt
 
-Dependencies:
--------------
+Dependencies
+============
 
 -  **Python** 3.5+
 -  **dynet** 2.0.2
@@ -42,7 +42,7 @@ Dependencies:
 -  **cython** 0.27.3
 
 Usage
------
+=====
 
 The module can be imported and used in python or invoked from the
 command line. To import in python type the following:
@@ -52,7 +52,7 @@ command line. To import in python type the following:
     from libs.bist.model import BISTParser
 
 Training
---------
+========
 
 The software requires having a ``train.conll`` and ``dev.conll`` files
 formatted according to the `CoNLL data

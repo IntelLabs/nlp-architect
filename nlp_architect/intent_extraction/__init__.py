@@ -1,0 +1,1 @@
+from nlp_architect.intent_extraction.model import JointSequentialLSTM, EncDecTaggerModel

@@ -22,31 +22,17 @@ corresponding user guide section that introduces the main concepts. See this
 API for specific function definitions.
 
 .. .. csv-table::
-..    :header: "Module API", "Description", "User Guide"
-..    :widths: 20, 40, 30
+..    :header: "Module API", "Description"
+..    :widths: 20, 40
 ..    :delim: |
 ..
-..    :py:mod:`nlp_architect.data` | Data loading and handling | :doc:`Data loading<loading_data>`, :doc:`Datasets<datasets>`
-..    :py:mod:`nlp_architect.models` | Model architecture | :doc:`Models<models>`
-
-``nlp_architect.nlp``
----------------
-.. py:module:: nlp_architect.nlp
-
-NLP classes stores a list of layers describing the NLP/NLU models. Methods are provided to train the model weights, perform inference, and save/load the model.
-
-.. autosummary::
-   :toctree: generated/
-   :nosignatures:
-
-   nlp_architect.nlp.chunker.ChunkerModel
-   nlp_architect.nlp.intent_extraction.JointSequentialLSTM
-   nlp_architect.nlp.intent_extraction.EncDecTaggerModel
-
+..    :py:mod:`nlp_architect.models` | Model architecture
+..    :py:mod:`nlp_architect.layers` | Model layers
+..    :py:mod:`nlp_architect.data` | Data loading and handling
 
 ``nlp_architect.models``
 ---------------
-.. py:module:: nlp_architect.models
+.. py:module:: models
 
 Model classes stores a list of layers describing the model. Methods are provided
 to train the model weights, perform inference, and save/load the model.
@@ -55,11 +41,14 @@ to train the model weights, perform inference, and save/load the model.
    :toctree: generated/
    :nosignatures:
 
-   np2vec.np2vec.NP2vec
-   models.np_semantic_segmentation.model.NpSemanticSegClassifier
-   models.bist.bmstparser.mstlstm.MSTParserLSTM
-   memn2n_dialogue.model.MemN2N_Dialog
-   kvmemn2n.model.KVMemN2N
+   nlp_architect.chunker.ChunkerModel
+   nlp_architect.intent_extraction.JointSequentialLSTM
+   nlp_architect.intent_extraction.EncDecTaggerModel
+   nlp_architect.np2vec.np2vec.NP2vec
+   nlp_architect.np_semantic_segmentation.model.NpSemanticSegClassifier
+   nlp_architect.bist.bmstparser.mstlstm.MSTParserLSTM
+   models.memn2n_dialogue.model.MemN2N_Dialog
+   models.kvmemn2n.model.KVMemN2N
 
 
 ``nlp_architect.layers``
@@ -73,14 +62,14 @@ These are currently stored in the various models
    :toctree: generated/
    :nosignatures:
 
-   chunker.model.TimeDistributedRecurrentOutput
-   chunker.model.TimeDistributedRecurrentLast
-   chunker.model.TimeDistBiLSTM
-   reading_comprehension.ngraph_implementation.layers.MatchLSTMCell_withAttention
-   reading_comprehension.ngraph_implementation.layers.AnswerPointer_withAttention
-   reading_comprehension.ngraph_implementation.layers.Dropout_Modified
-   reading_comprehension.ngraph_implementation.layers.LookupTable
-   memn2n_dialogue.model.ModifiedLookupTable
+   nlp_architect.chunker.model.TimeDistributedRecurrentOutput
+   nlp_architect.chunker.model.TimeDistributedRecurrentLast
+   nlp_architect.chunker.model.TimeDistBiLSTM
+   models.reading_comprehension.ngraph_implementation.layers.MatchLSTMCell_withAttention
+   models.reading_comprehension.ngraph_implementation.layers.AnswerPointer_withAttention
+   models.reading_comprehension.ngraph_implementation.layers.Dropout_Modified
+   models.reading_comprehension.ngraph_implementation.layers.LookupTable
+   models.memn2n_dialogue.model.ModifiedLookupTable
 
 
 
@@ -95,13 +84,13 @@ these will be placed into a central repository.
     :toctree: generated/
     :nosignatures:
 
-    chunker.data.TaggedTextSequence
-    chunker.data.MultiSequenceDataIterator
-    chunker.data.CONLL2000
-    chunker.model.DataInput
-    intent_extraction.data.IntentDataset
-    intent_extraction.data.ATIS
-    intent_extraction.data.SNIPS
-    models.np_semantic_segmentation.data.NpSemanticSegData
-    memn2n_dialogue.data.BABI_Dialog
-    kvmemn2n.data.WIKIMOVIES
+    nlp_architect.chunker.data.TaggedTextSequence
+    nlp_architect.chunker.data.MultiSequenceDataIterator
+    nlp_architect.chunker.data.CONLL2000
+    nlp_architect.chunker.model.DataInput
+    nlp_architect.intent_extraction.data.IntentDataset
+    nlp_architect.intent_extraction.data.ATIS
+    nlp_architect.intent_extraction.data.SNIPS
+    nlp_architect.np_semantic_segmentation.data.NpSemanticSegData
+    models.memn2n_dialogue.data.BABI_Dialog
+    models.kvmemn2n.data.WIKIMOVIES
