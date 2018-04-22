@@ -44,7 +44,6 @@ if __name__ == "__main__":
         'fasttext models.')
 
     args = arg_parser.parse_args()
-    logger.info(args)
 
     np2vec_model = NP2vec.load(
         args.np2vec_model_file,
