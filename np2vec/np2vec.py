@@ -157,11 +157,11 @@ class NP2vec:
                 if self.is_marked(word):
                     total_vec += 1
             logger.info(
-                "storing %sx%s projection weights into %s" %
+                "storing %sx%s projection weights for NP's into %s" %
                 (total_vec, vector_size, np2vec_model_file))
             with utils.smart_open(np2vec_model_file, 'wb') as fout:
                 fout.write(utils.to_utf8("%s %s\n" % (total_vec, vector_size)))
-                # store in sorted order: most frequent words at the top
+                # store NP vectors in sorted order: most frequent NP's at the top
                 for word, vocab in sorted(
                     iteritems(
                         self.model.wv.vocab), key=lambda item: -item[1].count):
