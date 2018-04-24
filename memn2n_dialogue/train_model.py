@@ -110,7 +110,7 @@ parser.add_argument(
 parser.add_argument(
     '--log_file',
     type=str,
-    default='dialogue_results/memn2n_dialgoue_results.txt',
+    default='memn2n_dialgoue_results.txt',
     help='File to write evaluation set results to.')
 parser.add_argument(
     '--weights_save_path',
@@ -140,6 +140,13 @@ parser.add_argument(
 
 parser.set_defaults(batch_size=32, epochs=200)
 args = parser.parse_args()
+
+# Sanitize inputs
+log_file = args.log_file.replace('..','').replace('/', '')
+weights_save_path = args.weights_save_path.replace('..','').replace('/', '')
+assert weights_save_path.endswith('.npz')
+assert log_file.endswith('.txt')
+
 gradient_clip_norm = args.grad_clip_norm
 
 babi = BABI_Dialog(
@@ -218,15 +225,15 @@ with closing(ngt.make_transformer()) as transformer:
 
     weight_saver.setup_save(transformer=transformer, computation=train_outputs)
 
-    if args.restore and os.path.exists(args.weights_save_path):
-        print("Loading weights from {}".format(args.weights_save_path))
+    if args.restore and os.path.exists(weights_save_path):
+        print("Loading weights from {}".format(weights_save_path))
         weight_saver.setup_restore(
             transformer=transformer,
             computation=train_outputs,
-            filename=args.weights_save_path)
+            filename=weights_save_path)
         weight_saver.restore()
-    elif args.restore and os.path.exists(args.weights_save_path) is False:
-        print("Could not find weights at {}. ".format(args.weights_save_path)
+    elif args.restore and os.path.exists(weights_save_path) is False:
+        print("Could not find weights at {}. ".format(weights_save_path)
               + "Running with random initialization.")
 
     for e in range(args.epochs):
@@ -245,12 +252,12 @@ with closing(ngt.make_transformer()) as transformer:
             e, np.mean(train_cost), np.mean(train_error))
         print(train_cost_str)
         if args.save_log:
-            with open(args.log_file, 'a') as f:
+            with open(log_file, 'a') as f:
                 f.write(train_cost_str + '\n')
 
         if e % args.save_epochs == 0:
-            print("Saving model to {}".format(args.weights_save_path))
-            weight_saver.save(filename=args.weights_save_path)
+            print("Saving model to {}".format(weights_save_path))
+            weight_saver.save(filename=weights_save_path)
             print("Saving complete")
 
         # Eval after each epoch
@@ -267,7 +274,7 @@ with closing(ngt.make_transformer()) as transformer:
             e, np.mean(test_loss), np.mean(test_error))
         print(val_cost_str)
         if args.save_log:
-            with open(args.log_file, 'a') as f:
+            with open(log_file, 'a') as f:
                 f.write(val_cost_str + '\n')
 
         # Shuffle training set and reset the others
@@ -298,5 +305,5 @@ with closing(ngt.make_transformer()) as transformer:
              np.mean(test_loss), np.mean(test_error))
         print(test_cost_str)
         if args.save_log:
-            with open(args.log_file, 'a') as f:
+            with open(log_file, 'a') as f:
                 f.write(test_cost_str + '\n')
