@@ -1,3 +1,4 @@
-dynet
-spacy
-tqdm
+dynet==2.0.2
+spacy==2.0.5
+tqdm==4.19.5
+requests==2.18.4

@@ -70,6 +70,8 @@ Who is the end user of our library?
    reading_comprehension.rst
    memn2n.rst
    kvmemn2n.rst
+   bist.rst
+   spacy_bist.rst
 
 
 .. toctree::
