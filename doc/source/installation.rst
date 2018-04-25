@@ -20,8 +20,9 @@ Installation
 Requirements
 ============
 
-The Intel® Nervana™ NLP AI-Lab requires **Python 3.5+** running on a
-Linux* or UNIX-based OS. Each model contains its own installation requirements, but in general,
+The Intel® NLP Architect requires **Python 3.5+** running on a
+Linux* or UNIX-based OS.
+Each model contains its own installation requirements, but in general,
 before installing, ensure your system has recent updates of the following packages:
 
 .. csv-table::
@@ -32,5 +33,21 @@ before installing, ensure your system has recent updates of the following packag
    python-pip, pip, Tool to install Python dependencies
    python-virtualenv (*), virtualenv (*), Allows creation of isolated environments ((*): This is required only for Python 2.7 installs. With Python3: test for presence of ``venv`` with ``python3 -m venv -h``)
    libhdf5-dev, h5py, Enables loading of hdf5 formats
-   libyaml-dev, pyaml, Parses YAML format inputs
    pkg-config, pkg-config, Retrieves information about installed libraries
+
+.. note::
+  The default installations of models use the default CPU backend deep learning framework installations.
+
+Instructions
+============
+
+We recommend installing NLP Architect within a virtual environment to ensure a self-contained environment. To install NLP Architect models within an already existing virtual environment, see below installation receipes for custom model installation. The default installation will create a new local virtual environment for development purposes.
+
+To get started using our library, clone our repository:
+
+.. code:: python
+
+  git clone https://github.com/NervanaSystems/ai-lab-nlp.git
+  cd ai-lab-nlp
+
+Models and NLP/NLU components are installed individualy (preferred way) or all at once (installed all deep learning frameworks and dependencies).

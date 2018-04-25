@@ -18,7 +18,7 @@ from __future__ import unicode_literals, print_function, division, \
 
 import pytest
 
-from ai_lab_nlp.pipelines.spacy_bist.parser import SpacyBISTParser
+from nlp_architect.pipelines.spacy_bist.parser import SpacyBISTParser
 
 
 class TestData:

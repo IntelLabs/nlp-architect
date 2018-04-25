@@ -14,7 +14,7 @@
 .. limitations under the License.
 .. ---------------------------------------------------------------------------
 
-End to End Memory Networks for Goal Oriented Dialogue
+End-to-End Memory Networks for Goal Oriented Dialogue
 #######################################################
 
 Overview

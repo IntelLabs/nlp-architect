@@ -14,7 +14,7 @@
 .. limitations under the License.
 .. ---------------------------------------------------------------------------
 
-Noun Phrase to vec
+Noun Phrase to Vec
 ###################
 
 Overview
@@ -37,7 +37,7 @@ For example, if the marking character is "\_", the NP "Natural Language Processi
 Dependencies
 ==============
 Dependencies required for the project are mentioned in requirements.txt.
-Use 
+Use
 
 .. code:: python
 

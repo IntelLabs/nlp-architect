@@ -15,7 +15,7 @@
 .. ---------------------------------------------------------------------------
 
 Contribution Process
---------------------
+====================
 
 1. File an issue (to track your contribution):
 
@@ -54,7 +54,7 @@ Contribution Process
     make lint   # (optional).  We still have a fair bit to clean up currently!
 
 5. If necessary you may want to update and/or rebuild the documentation.
-   This all exists under doc/source and is in 
+   This all exists under doc/source and is in
    `Sphinx reStructuredText format <http://sphinx-doc.org/rest.html>`_:
 
 .. code-block:: bash

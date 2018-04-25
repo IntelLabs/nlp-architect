@@ -14,8 +14,8 @@
 .. limitations under the License.
 .. ---------------------------------------------------------------------------
 
-Intent
-######
+Intent Extraction
+#################
 
 Overview
 ========
@@ -45,7 +45,7 @@ and fed into another bi-directional LSTM layer for predicting the slot tags.
 The slot classification is done using the softmax output in each time stamp.
 This model is a derivative of the models presented in [1].
 
-.. image :: ../../intent_extraction/joint_model.png
+.. image :: ../../nlp_architect/intent_extraction/joint_model.png
 
 Encoder-Decoder topology for Slot Tagging
 ===========================================
@@ -54,7 +54,7 @@ The Encoder-Decoder LSTM topology is a well known model for sequence-to-sequence
 The model we implemented is similar to the *Encoder-Labeler Deep LSTM(W)* model shown in [2].
 Our model support arbitrary depths of LSTM layers in both encoder and decoder.
 
-.. image :: ../../intent_extraction/enc-dec_model.png
+.. image :: ../../nlp_architect/intent_extraction/enc-dec_model.png
 
 
 Dependencies
@@ -64,7 +64,7 @@ Dependencies
 - Please configure_ Keras to use Tensorflow as backend.
 - Download English model for spacy: ``python -m spacy download en``
 - Downloaded pre-trained word vector embedding models:
-    - GloVe: https://nlp.stanford.edu/projects/glove/)
+    - GloVe: https://nlp.stanford.edu/projects/glove/
     - Fasttext: https://fasttext.cc/docs/en/english-vectors.html
 
 Files

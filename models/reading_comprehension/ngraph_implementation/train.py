@@ -20,7 +20,7 @@ import ngraph as ng
 from ngraph.frontends.neon import (Layer, Tanh,
                                    LSTM, Logistic)
 
-from layers import (
+from models.reading_comprehension.ngraph_implementation.layers import (
     MatchLSTMCell_withAttention,
     unroll_with_attention,
     AnswerPointer_withAttention,

@@ -14,87 +14,25 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
-import os
 from setuptools import setup, find_packages
-import subprocess
 
 # Define version information
-VERSION = '2.6.0'
+VERSION = '0.1'
 FULLVERSION = VERSION
-write_version = True
-
-try:
-    pipe = subprocess.Popen(["git", "rev-parse", "--short", "HEAD"],
-                            stdout=subprocess.PIPE)
-    (so, serr) = pipe.communicate()
-    if pipe.returncode == 0:
-        FULLVERSION += "+%s" % so.strip().decode("utf-8")
-except Exception:
-    pass
-
-
-try:
-    import pypandoc
-    readme_file = pypandoc.convert('README.md', 'rst')
-except:
-    readme_file = open('README.md').read()
-
-
-if write_version:
-    txt = "# " + ("-" * 77) + "\n"
-    txt += "# Copyright 2017-2018 Intel Corporation\n"
-    txt += "#\n"
-    txt += "# Licensed under the Apache License, Version 2.0 "
-    txt += "(the \"License\");\n"
-    txt += "# you may not use this file except in compliance with the "
-    txt += "License.\n"
-    txt += "# You may obtain a copy of the License at\n"
-    txt += "#\n"
-    txt += "#      http://www.apache.org/licenses/LICENSE-2.0\n"
-    txt += "#\n"
-    txt += "# Unless required by applicable law or agreed to in writing, "
-    txt += "software\n"
-    txt += "# distributed under the License is distributed on an \"AS IS\" "
-    txt += "BASIS,\n"
-    txt += "# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or "
-    txt += "implied.\n"
-    txt += "# See the License for the specific language governing permissions "
-    txt += "and\n"
-    txt += "# limitations under the License.\n"
-    txt += "# " + ("-" * 77) + "\n"
-    txt += "\"\"\"\n%s\n\"\"\"\nVERSION = '%s'\nSHORT_VERSION = '%s'\n"
-    fname = os.path.join(os.path.dirname(__file__), 'neon', 'version.py')
-    a = open(fname, 'w')
-    try:
-        a.write(txt % ("Project version information.", FULLVERSION, VERSION))
-    finally:
-        a.close()
 
 requirements = [
-    
 ]
 
-
-setup(name='ai_lab_nlp',
+setup(name='nlp_architect',
       version=VERSION,
       description="Intel AI Lab NLP deep learning framework",
-      long_description=readme_file,
       author='Intel AI Lab NLP',
       author_email='intelnervana@intel.com',
-      url='http://www.intelnervana.com',
+      url='http://ai.intel.com',
       license='License :: OSI Approved :: Apache Software License',
       packages=find_packages(),
       install_requires=requirements,
-      package_data={'neon': ['backends/kernels/sass/*.sass',
-                             'backends/kernels/cubin/*.cubin',
-                             'backends/kernels/maxas/*.pl',
-                             'backends/kernels/maxas/MaxAs/*.pm',
-                             'backends/mklEngine/*.so',
-                             'backends/mklEngine/*.dll',
-                             'backends/mklEngine/*.dylib',
-                             'backends/mklEngine/src/*.header',
-                             '../mklml_*/lib/*.so',
-                             '../loader/bin/*.so']},
+      package_data={},
       classifiers=['Development Status :: 3 - Alpha',
                    'Environment :: Console',
                    'Environment :: Console :: Curses',

@@ -26,9 +26,17 @@ note that most of the words in the language have many senses. The sense of a wor
 definition of the word and the inherited hypernyms of the word.
 
 For example: the most common sense of the target_word **burger** is:
-``definition: "a sandwich consisting of a fried cake of minced beef served on a bun, often with other ingredients"
-inherited hypernyms: ['sandwich', 'snack_food']`` whereas the least common sense is:
-``definition: "United States jurist appointed chief justice of the United States Supreme Court by Richard Nixon (1907-1995)"``
+
+.. code::
+
+  definition: "a sandwich consisting of a fried cake of minced beef served on a bun, often with other ingredients"
+  inherited hypernyms: ['sandwich', 'snack_food']
+
+whereas the least common sense is:
+
+.. code::
+
+  definition: "United States jurist appointed chief justice of the United States Supreme Court by Richard Nixon (1907-1995)"
 
 Our approach:
 

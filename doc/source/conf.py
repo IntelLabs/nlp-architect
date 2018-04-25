@@ -89,7 +89,7 @@ copyright = u'Intel NLP Architect is a trademarks of Intel Corporation or its su
 # The short X.Y.Z version.
 version = '0.1'
 # The ful
-# 
+#
 # l version, including git-hash and alpha/beta/rc tags.
 release = version
 
@@ -262,7 +262,7 @@ latex_documents = [('index', 'ngraph.tex', u'Nervana Graph Documentation',
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'ngraph', u'Nervana Graph Documentation',
+    ('index', 'ngraph', u'Intel AI NLP Architect Documentation',
      [u'Nervana Systems Inc'], 1)
 ]
 
@@ -275,7 +275,7 @@ man_pages = [
 # Grouping the document tree into Texinfo files. List of tuples
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
-texinfo_documents = [('index', 'ngraph', u'Intel Nervana Graph Documentation',
+texinfo_documents = [('index', 'ngraph', u'Intel AI NLP Architect Documentation',
                       u'Intel Corporation', 'cloud',
                       'One line description of project.', 'Miscellaneous'), ]
 

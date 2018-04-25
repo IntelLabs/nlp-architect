@@ -15,12 +15,12 @@
 .. ---------------------------------------------------------------------------
 
 Developer Guide
-===============
+###############
 
 .. include:: ../../CONTRIBUTING.rst
 
 Coding Conventions
-------------------
+==================
 
 To ensure consistency across developers, we enforce the following conventions
 on all of the code in neon (which is primarily python plus some
@@ -40,7 +40,7 @@ reStructuredText for documentation).
 .. _Napoleon: http://sphinxcontrib-napoleon.readthedocs.org/en/latest/index.html
 
 Documentation Conventions
--------------------------
+=========================
 
 * Documents are created using `reStructuredText`_.
 

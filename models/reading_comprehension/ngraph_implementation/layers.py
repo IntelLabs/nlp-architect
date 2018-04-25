@@ -32,6 +32,7 @@ import numpy as np
 class MatchLSTMCell_withAttention(BaseRNNCell):
     """
     MatchLSTM cell fused with attention.
+
     Arguments:
     ----------
     params_dict : Dictionary containing information and hyperparameters
@@ -285,6 +286,7 @@ class MatchLSTMCell_withAttention(BaseRNNCell):
 class AnswerPointer_withAttention(BaseRNNCell):
     """
     Answer pointer cell.
+
     Arguments:
     ----------
     params_dict : Dictionary containing information and hyperparameters
@@ -538,7 +540,8 @@ class AnswerPointer_withAttention(BaseRNNCell):
 
 class Dropout_Modified(Layer):
     """
-    Layer for stochastically dropping activations to prevent overfitting
+    Layer for stochastically dropping activations to prevent overfitting.
+
     Args:
         keep (float):  Number between 0 and 1 that indicates probability of any particular
                        activation being dropped.  Default 0.5.
@@ -566,7 +569,8 @@ class Dropout_Modified(Layer):
 
 class LookupTable(Layer):
     """
-    Lookup table layer that often is used as word embedding layer
+    Lookup table layer that often is used as word embedding layerself.
+
     Args:
         vocab_size (int): the vocabulary size
         embed_dim (int): the size of embedding vector
