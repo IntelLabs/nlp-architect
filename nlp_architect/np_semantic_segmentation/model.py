@@ -16,13 +16,14 @@
 
 from __future__ import unicode_literals, print_function, division, \
     absolute_import
+
+from neon.callbacks.callbacks import Callbacks
 from neon.initializers import Gaussian
 from neon.layers import GeneralizedCost, Affine
 from neon.models import Model
 from neon.optimizers import GradientDescentMomentum
 from neon.transforms import Rectlin, Logistic, CrossEntropyBinary, \
     Misclassification, Accuracy, PrecisionRecall
-from neon.callbacks.callbacks import Callbacks
 
 
 class NpSemanticSegClassifier:
@@ -31,10 +32,13 @@ class NpSemanticSegClassifier:
     The model is initialized with a pre-defined cost function (CrossEntropyBinary()) and with
     a pre-defined optimizer (GradientDescentMomentum())
     """
-    def __init__(self):
+
+    def __init__(self, num_epochs, callback_args):
         self.model = None
         self.cost = GeneralizedCost(costfunc=CrossEntropyBinary())
         self.optimizer = GradientDescentMomentum(0.07, momentum_coef=0.9)
+        self.epochs = num_epochs
+        self.callback_args = callback_args
 
     def build(self):
         """
@@ -56,7 +60,7 @@ class NpSemanticSegClassifier:
         # initialize model object
         self.model = Model(layers=layers)
 
-    def fit(self, test_set, train_set, args):
+    def fit(self, test_set, train_set):
         """
         Train and fit the model on the datasets
         Args:
@@ -65,8 +69,8 @@ class NpSemanticSegClassifier:
             args: callback_args and epochs from ArgParser input
         """
         # configure callbacks
-        callbacks = Callbacks(self.model, eval_set=test_set, **args.callback_args)
-        self.model.fit(train_set, optimizer=self.optimizer, num_epochs=args.epochs, cost=self.cost,
+        callbacks = Callbacks(self.model, eval_set=test_set, **self.callback_args)
+        self.model.fit(train_set, optimizer=self.optimizer, num_epochs=self.epochs, cost=self.cost,
                        callbacks=callbacks)
 
     def save(self, model_path):

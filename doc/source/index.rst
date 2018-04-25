@@ -51,6 +51,8 @@ The library includes our past and ongoing NLP research efforts as part of Intel 
    intent.rst
    np_segmentation.rst
    bist_parser.rst
+   spacy_bist.rst
+   word_sense.rst
 
 .. toctree::
    :hidden:
@@ -60,7 +62,7 @@ The library includes our past and ongoing NLP research efforts as part of Intel 
    reading_comprehension.rst
    memn2n.rst
    kvmemn2n.rst
-   word_sense.rst
+
 
 .. toctree::
   :hidden:

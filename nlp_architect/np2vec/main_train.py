@@ -176,8 +176,6 @@ if __name__ == "__main__":
 
     args = arg_parser.parse_args()
 
-    logger.info(args)
-
     np2vec = NP2vec(
         args.corpus,
         args.corpus_format,

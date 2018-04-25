@@ -16,17 +16,19 @@
 
 from __future__ import unicode_literals, print_function, division, \
     absolute_import
+
 import argparse
-from multiprocessing import Pool
-import io
-import os
-import math
 import csv
-from tqdm import tqdm
+import io
+import math
+import os
+from multiprocessing import Pool
+
 import numpy
 from neon.data import ArrayIterator
-import nlp_architect.np_semantic_segmentation.feature_extraction as fe
+from tqdm import tqdm
 
+import models.np_semantic_segmentation.feature_extraction as fe
 
 wordnet = None
 wikidata = None
@@ -116,11 +118,26 @@ def get_pmi_score(np):
 
 
 def get_all_case_combinations(np):
+    """
+    Returns all case combinations for the noun-phrase (regular, upper, lower, title)
+    Args:
+        np (str): a noun-phrase
+    Returns List<str>:
+        List of all case combinations
+    """
     candidates = [np, np.upper(), np.lower(), np.title()]
     return candidates
 
 
 def write_to_csv(output, np_feature_vectors, np_dic, np_list):
+    """
+    Write data to csv file
+    Args:
+        output (str): output file path
+        np_feature_vectors: numpy vectors
+        np_dic: dict, keys: the noun phrase, value: the features
+        np_list: features list
+    """
     out_file = io.open(output, 'w', encoding='utf-8')
     writer = csv.writer(out_file, delimiter=',', quotechar='"')
     for i, _ in enumerate(np_feature_vectors):
@@ -203,6 +220,7 @@ class NpSemanticSegData:
             train_to_test_ratio (float): the train-to-test ration of the dataset
             feature_vec_dim (int): the size of the feature vector for each noun-phrase
     """
+
     def __init__(self, file_path, train_to_test_ratio=0.8, feature_vec_dim=605):
         self.file_path = file_path
         self.feature_vec_dim = feature_vec_dim

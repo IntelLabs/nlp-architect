@@ -532,19 +532,20 @@ def load_deprel_weights(weights_file):
         return None
 
     deprel_weights = {}
-    for line in weights_file:
-        # Ignore comments and empty lines
-        if line.startswith("#") or not line.strip():
-            continue
+    with open(weights_file) as f:
+        for line in f:
+            # Ignore comments and empty lines
+            if line.startswith("#") or not line.strip():
+                continue
 
-        columns = line.rstrip("\r\n").split()
-        if len(columns) != 2:
-            raise ValueError(
-                "Expected two columns in the UD Relations weights file on line"
-                " '{}'".format(
-                    line))
+            columns = line.rstrip("\r\n").split()
+            if len(columns) != 2:
+                raise ValueError(
+                    "Expected two columns in the UD Relations weights file on line"
+                    " '{}'".format(
+                        line))
 
-        deprel_weights[columns[0]] = float(columns[1])
+            deprel_weights[columns[0]] = float(columns[1])
 
     return deprel_weights
 
@@ -555,65 +556,47 @@ def load_conllu_file(path):
     return load_conllu(_file)
 
 
-def evaluate_wrapper(args):
+def evaluate_wrapper(gold_file: str, system_file: str, weights_file: str):
     # Load CoNLL-U files
-    gold_ud = load_conllu_file(args.gold_file)
-    system_ud = load_conllu_file(args.system_file)
+    gold_ud = load_conllu_file(gold_file)
+    system_ud = load_conllu_file(system_file)
 
     # Load weights if requested
-    deprel_weights = load_deprel_weights(args.weights)
+    deprel_weights = load_deprel_weights(weights_file)
 
     return evaluate(gold_ud, system_ud, deprel_weights)
 
 
-def main():
-    # Parse arguments
-    parser = argparse.ArgumentParser()
-    parser.add_argument("gold_file", type=str,
-                        help="Name of the CoNLL-U file with the gold data.")
-    parser.add_argument("system_file", type=str,
-                        help="Name of the CoNLL-U file with the predicted "
-                             "data.")
-    parser.add_argument("--weights", "-w", type=argparse.FileType("r"),
-                        default=None,
-                        metavar="deprel_weights_file",
-                        help="Compute WeightedLAS using given weights for "
-                             "Universal Dependency Relations.")
-    parser.add_argument("--verbose", "-v", default=0, action="count",
-                        help="Print all metrics.")
-    args = parser.parse_args()
-
+def run_conllu_eval(gold_file: str, test_file: str,  weights_file: str= 'weights.clas',
+                    verbose: bool=False):
     # Use verbose if weights are supplied
-    if args.weights is not None and not args.verbose:
-        args.verbose = 1
+    if weights_file is not None and not verbose:
+        verbose = True
 
     # Evaluate
-    evaluation = evaluate_wrapper(args)
+    evaluation = evaluate_wrapper(gold_file, test_file, weights_file)
 
-    # Print the evaluation
-    if not args.verbose:
-        print("LAS F1 Score: {:.2f}".format(100 * evaluation["LAS"].f1))
-    else:
-        metrics = ["Tokens", "Sentences", "Words", "UPOS", "XPOS", "Feats",
-                   "AllTags", "Lemmas", "UAS", "LAS"]
-        if args.weights is not None:
-            metrics.append("WeightedLAS")
+    # Write the evaluation to file
+    with open(test_file + 'txt', 'w') as out_file:
+        if not verbose:
+            out_file.write("LAS F1 Score: {:.2f}".format(100 * evaluation["LAS"].f1) + '\n')
+        else:
+            metrics = ["Tokens", "Sentences", "Words", "UPOS", "XPOS", "Feats",
+                       "AllTags", "Lemmas", "UAS", "LAS"]
+            if weights_file is not None:
+                metrics.append("WeightedLAS")
 
-        print("Metrics    | Precision |    Recall |  F1 Score | AligndAcc")
-        print("-----------+-----------+-----------+-----------+-----------")
-        for metric in metrics:
-            print("{:11}|{:10.2f} |{:10.2f} |{:10.2f} |{}".format(
-                metric,
-                100 * evaluation[metric].precision,
-                100 * evaluation[metric].recall,
-                100 * evaluation[metric].f1,
-                "{:10.2f}".format(100 * evaluation[metric].aligned_accuracy)
-                if evaluation[metric].aligned_accuracy is not None else ""
-            ))
-
-
-if __name__ == "__main__":
-    main()
+            out_file.write("Metrics    | Precision |    Recall |  F1 Score | AligndAcc" + '\n')
+            out_file.write("-----------+-----------+-----------+-----------+-----------" + '\n')
+            for metric in metrics:
+                out_file.write("{:11}|{:10.2f} |{:10.2f} |{:10.2f} |{}".format(
+                    metric,
+                    100 * evaluation[metric].precision,
+                    100 * evaluation[metric].recall,
+                    100 * evaluation[metric].f1,
+                    "{:10.2f}".format(100 * evaluation[metric].aligned_accuracy)
+                    if evaluation[metric].aligned_accuracy is not None else ""
+                ) + '\n')
 
 
 # Tests, which can be executed with `python -m unittest conll17_ud_eval`.

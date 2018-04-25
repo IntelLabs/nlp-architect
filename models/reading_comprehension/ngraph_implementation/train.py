@@ -54,7 +54,6 @@ parser = NgraphArgparser(__doc__)
 
 parser.add_argument(
     '--data_path',
-    default='/nfs/site/home/snitturs/squad/code/data/',
     help='enter path for training data')
 
 parser.add_argument('--gpu_id', default="0",
@@ -93,16 +92,24 @@ params_dict['init'] = init
 
 
 path_gen = args.data_path
-train_para_file = os.path.join(path_gen + 'squad/train.context')
-train_para_ids = os.path.join(path_gen + 'squad/train.ids.context')
-train_ques_file = os.path.join(path_gen + 'squad/train.question')
-train_ques_ids = os.path.join(path_gen + 'squad/train.ids.question')
-answer_file = os.path.join(path_gen + 'squad/train.span')
-vocab_file = os.path.join(path_gen + 'squad/vocab.dat')
-val_paras_ids = os.path.join(path_gen + 'squad/dev.ids.context')
-val_ques_ids = os.path.join(path_gen + 'squad/dev.ids.question')
-val_ans_file = os.path.join(path_gen + 'squad/dev.span')
-vocab_file = os.path.join(path_gen + 'squad/vocab.dat')
+
+file_name_dict={}
+file_name_dict['train_para_ids']='squad/train.ids.context'
+file_name_dict['train_ques_ids']='squad/train.ids.question'
+file_name_dict['train_answer']='squad/train.span'
+file_name_dict['val_para_ids']='squad/dev.ids.context'
+file_name_dict['val_ques_ids']='squad/dev.ids.question'
+file_name_dict['val_ans']='squad/dev.span'
+file_name_dict['vocab_file']='squad/vocab.dat'
+
+
+train_para_ids = os.path.join(path_gen + file_name_dict['train_para_ids'])
+train_ques_ids = os.path.join(path_gen + file_name_dict['train_ques_ids'])
+answer_file = os.path.join(path_gen + file_name_dict['train_answer'])
+val_paras_ids = os.path.join(path_gen + file_name_dict['val_para_ids'])
+val_ques_ids = os.path.join(path_gen + file_name_dict['val_ques_ids'])
+val_ans_file = os.path.join(path_gen + file_name_dict['val_ans'])
+vocab_file = os.path.join(path_gen + file_name_dict['vocab_file'])
 
 
 data_train, vocab_list = create_squad_training(train_para_ids, train_ques_ids,

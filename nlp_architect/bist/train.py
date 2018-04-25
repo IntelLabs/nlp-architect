@@ -18,10 +18,11 @@ from __future__ import unicode_literals, print_function, division, \
 
 import os
 import pickle
-import sys
 import io
-from nlp_architect.bist.bmstparser import parser_utils
-from nlp_architect.bist.bmstparser.mstlstm import MSTParserLSTM
+import subprocess
+from models.bist.bmstparser import parser_utils
+from models.bist.bmstparser.mstlstm import MSTParserLSTM
+from utils.evaluation_script.conll17_ud_eval import run_conllu_eval
 
 
 class BISTTrain:
@@ -37,7 +38,6 @@ class BISTTrain:
 
         Attributes:
             options (Values): Model parameters.
-            root_dir (str): Path to execution root directory.
             write_path (str): Path to write predictions output file to.
             parser_model (MSTParserLSTM): The BIST LSTM model to use for inference.
     """
@@ -47,7 +47,7 @@ class BISTTrain:
             kwargs = {}
 
         print('\nInitializing BISTTrain...\n')
-        self.options, self.root_dir = self.get_input_params(kwargs)
+        self.options = self.get_input_params(kwargs)
         self.is_conllu = os.path.splitext(self.options.conll_dev.lower())[1] == '.conllu'
         self.parser_model = self.init_model()
 
@@ -105,15 +105,18 @@ class BISTTrain:
         opt_parser.add_option("--dev", dest="conll_dev", help="Annotated CONLL dev file",
                               metavar="FILE", default=kwargs.get('dev'))
         options = opt_parser.parse_args()[0]
-        root_dir = os.path.dirname(os.path.abspath(sys.argv[0]))
-        return options, root_dir
+
+        return options
 
     def run_eval(self, dev_path):
         """Evaluates the result using the appropriate script."""
         if self.is_conllu:
-            os.system('python %s/utils/evaluation_script/conll17_ud_eval.py -v -w '
-                      '%s/utils/evaluation_script/weights.clas ' % (self.root_dir, self.root_dir) +
-                      self.options.conll_dev + ' ' + dev_path + ' > ' + dev_path + '.txt')
+            run_conllu_eval(gold_file=self.options.conll_dev, test_file=dev_path,
+                            verbose=True)
         else:
-            os.system('perl %s/utils/eval.pl -g ' % self.root_dir + self.options.conll_dev +
-                      ' -s ' + dev_path + ' > ' + dev_path + '.txt')
+            eval_script_path = \
+                os.path.join(os.path.dirname(os.path.realpath(__file__)), 'utils', 'eval.pl')
+
+            with open(dev_path + '.txt', 'w') as out_file:
+                subprocess.run(['perl', eval_script_path, '-g', self.options.conll_dev, '-s',
+                                dev_path], stdout=out_file)
