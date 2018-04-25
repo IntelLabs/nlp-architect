@@ -16,28 +16,35 @@
 
 from __future__ import unicode_literals, print_function, division, \
     absolute_import
+
+import os
+
 from neon import logger as neon_logger
 from neon.backends import gen_backend
 from neon.util.argparser import NeonArgparser
+
 from models.np_semantic_segmentation.data import NpSemanticSegData
 from models.np_semantic_segmentation.model import NpSemanticSegClassifier
 
 
-def train_mlp_classifier(dataset):
+def train_mlp_classifier(dataset, model_file_path, num_epochs, callback_args):
     """
 
     Args:
+        model_file_path (str): model path
+        num_epochs (int): number of epochs
+        callback_args (dict): callback_arg
         dataset: NpSemanticSegData object containing the dataset
     Returns:
         print error_rate, test_accuracy_rate and precision_recall_rate evaluation from the model
 
     """
-    model = NpSemanticSegClassifier()
+    model = NpSemanticSegClassifier(num_epochs, callback_args)
     model.build()
     # run fit
-    model.fit(dataset.test_set, dataset.train_set, args)
+    model.fit(dataset.test_set, dataset.train_set)
     # save model params
-    model.save(args.model_path)
+    model.save(model_file_path)
     # set evaluation error rates
     error_rate, test_accuracy_rate, precision_recall_rate = model.eval(dataset.test_set)
     neon_logger.display('Misclassification error = %.1f%%' %
@@ -60,9 +67,15 @@ if __name__ == "__main__":
     parser.add_argument('--model_path', default='datasets/np_semantic_segmentation', type=str,
                         help='Path the save the model')
     args = parser.parse_args()
+    data_path = args.data
+    if not os.path.exists(data_path):
+        raise Exception('Not valid model settings file')
+    model_path = args.model_path
+    if not os.path.exists(data_path):
+        raise Exception('Not valid model settings file')
     # generate backend
     be = gen_backend(batch_size=64)
     # load data sets from file
-    data_set = NpSemanticSegData(args.data, train_to_test_ratio=0.8)
+    data_set = NpSemanticSegData(data_path, train_to_test_ratio=0.8)
     # train the mlp classifier
-    train_mlp_classifier(data_set)
+    train_mlp_classifier(data_set, model_path, args.num_epochs, **args.callback_args)

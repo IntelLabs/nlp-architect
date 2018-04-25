@@ -14,14 +14,14 @@
 # limitations under the License.
 # ******************************************************************************
 
-from palmettopy.palmetto import Palmetto
-from palmettopy.exceptions import CoherenceTypeNotAvailable, EndpointDown
-import requests
-import numpy as np
-from gensim.models.keyedvectors import KeyedVectors
 import nltk
+import numpy as np
+import requests
+from gensim.models.keyedvectors import KeyedVectors
 from nltk.corpus import wordnet as wn
 from nltk.stem.snowball import SnowballStemmer
+from palmettopy.exceptions import CoherenceTypeNotAvailable, EndpointDown
+from palmettopy.palmetto import Palmetto
 
 stemmer = SnowballStemmer("english")
 headers = {"Accept": "application/json"}
@@ -31,6 +31,7 @@ class PalmettoClass:
     """
     Palmetto service
     """
+
     def __init__(self):
         self.palmetto = Palmetto()
 
@@ -78,6 +79,7 @@ class Wikidata:
         http_proxy(str) : http proxy
         https_proxy(str) : https proxy
     """
+
     def __init__(self, http_proxy, https_proxy):
         self.headers = headers
         proxies = {}
@@ -131,6 +133,7 @@ class Word2Vec:
         Args:
             word2vec_model_path (str): the local path to the Word2Vec pre-trained model
     """
+
     def __init__(self, word2vec_model_path):
         self.word2vec_model_path = word2vec_model_path
         self.model = self.load_word2vec_model_from_path()
@@ -189,6 +192,7 @@ class Wordnet:
     """
     WordNet service
     """
+
     def __init__(self):
         nltk.download('wordnet')
         self.wordnet = wn
