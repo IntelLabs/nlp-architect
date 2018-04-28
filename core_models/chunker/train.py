@@ -28,9 +28,9 @@ from neon.optimizers.optimizer import RMSProp
 from neon.transforms.cost import CrossEntropyMulti
 from neon.util.argparser import NeonArgparser, extract_valid_args
 
-from nlp_architect.chunker.data import CONLL2000
-from nlp_architect.chunker.model import ChunkerModel
-from nlp_architect.chunker.utils import label_precision_recall_f1
+from nlp_architect.data.conll2000 import CONLL2000
+from nlp_architect.model.chunker_model import ChunkerModel
+from nlp_architect.utils.chunker_utils import label_precision_recall_f1
 
 if __name__ == '__main__':
 

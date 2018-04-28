@@ -25,9 +25,9 @@ from ngraph.frontends.neon import ArrayIterator
 from ngraph.frontends.neon import Saver
 import ngraph.transformers as ngt
 
-from models.kvmemn2n.model import KVMemN2N
-from models.kvmemn2n.data import WIKIMOVIES
-from models.kvmemn2n.interactive_util import interactive_loop
+from nlp_architect.models.kvmemn2n import KVMemN2N
+from nlp_architect.data.wikimovies import WIKIMOVIES
+from interactive_util import interactive_loop
 
 from tqdm import tqdm
 import numpy as np

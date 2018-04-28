@@ -18,7 +18,7 @@ import logging
 import sys
 from configargparse import ArgumentParser
 
-from nlp_architect.np2vec import NP2vec
+from nlp_architect.models.np2vec import NP2vec
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 logger = logging.getLogger(__name__)

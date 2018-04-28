@@ -39,7 +39,7 @@ from __future__ import unicode_literals
 from __future__ import absolute_import
 from contextlib import closing
 import ngraph as ng
-from data import BABI_Dialog
+from nlp_architect.data.babi_dialog import BABI_Dialog
 from ngraph.frontends.neon import Layer
 from ngraph.frontends.neon import GaussianInit, Adam
 from ngraph.frontends.neon import make_bound_computation
@@ -47,7 +47,7 @@ from ngraph.frontends.neon import NgraphArgparser
 from ngraph.frontends.neon import ArrayIterator
 from ngraph.frontends.neon import Saver
 import ngraph.transformers as ngt
-from models.memn2n_dialogue.model import MemN2N_Dialog
+from nlp_architect.models.memn2n_dialogue import MemN2N_Dialog
 import numpy as np
 import os
 from tqdm import tqdm

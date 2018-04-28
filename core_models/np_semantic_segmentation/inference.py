@@ -24,8 +24,8 @@ import os
 from neon.backends import gen_backend
 from neon.util.argparser import NeonArgparser
 
-from models.np_semantic_segmentation.data import NpSemanticSegData, extract_y_labels
-from models.np_semantic_segmentation.model import NpSemanticSegClassifier
+from nlp_architect.data.semantic_seg_data import NpSemanticSegData, extract_y_labels
+from nlp_architect.models.semantic_segmentation import NpSemanticSegClassifier
 
 
 def classify_collocation(dataset, model_file_path, num_epochs, callback_args):

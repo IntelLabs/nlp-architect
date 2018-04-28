@@ -48,9 +48,9 @@ from ngraph.frontends.neon import NgraphArgparser
 from ngraph.frontends.neon import ArrayIterator
 from ngraph.frontends.neon import Saver
 import ngraph.transformers as ngt
-from models.memn2n_dialogue.data import BABI_Dialog
-from models.memn2n_dialogue.model import MemN2N_Dialog
-from models.memn2n_dialogue.utils import interactive_loop
+from nlp_architect.data.babi_dialog import BABI_Dialog
+from nlp_architect.models.memn2n_dialogue import MemN2N_Dialog
+from memn2n_dialogue.utils import interactive_loop
 
 # parse the command line arguments
 parser = NgraphArgparser(__doc__)
