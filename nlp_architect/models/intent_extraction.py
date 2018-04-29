@@ -26,32 +26,68 @@ from keras.models import load_model
 
 
 class IntentExtractionModel(object):
+    """
+    Intent Extraction model base class
+    """
     def __init__(self):
         self.model = None
 
     def fit(self, x, y, epochs=1, batch_size=1, callbacks=None, validation=None):
+        """
+        Train a model given input samples and target labels.
+
+        Args:
+            x (numpy.ndarray): input samples
+            y (numpy.ndarray): input sample labels
+            epochs (:obj:`int`, optional): number of epochs to train
+            batch_size (:obj:`int`, optional): batch size
+            callbacks(:obj:`Callback`, optional): Keras compatible callbacks
+            validation(:obj:`list` of :obj:`numpy.ndarray`, optional): optional validation data
+                to be evaluated when training
+        """
         assert self.model, 'Model was not initialized'
         self.model.fit(x, y, epochs=epochs, batch_size=batch_size, shuffle=True,
                        validation_data=validation,
                        callbacks=callbacks)
 
     def predict(self, x, batch_size=1):
+        """
+        Get the prediction of the model on given input
+        Args:
+            x (numpy.ndarray):
+            batch_size (:obj:`int`, optional): batch size:
+
+        Returns:
+            numpy.ndarray: predicted values by the model
+        """
         assert self.model, 'Model was not initialized'
         return self.model.predict(x, batch_size=batch_size)
 
     def save(self, path):
+        """
+        Save model to path
+        Args:
+            path (str): path to save model
+        """
         assert self.model, 'Model was not initialized'
         self.model.save(path)
 
     def load(self, path):
+        """
+        Load a trained model
+
+        Args:
+            path (str): path to model file
+        """
         self.model = load_model(path)
 
     @property
     def input_shape(self):
+        """:obj:`tuple`:Get input shape"""
         return self.model.layers[0].input_shape
 
     @staticmethod
-    def create_input_embed(sentence_len, is_extern_emb, token_emb_size, vocab_size):
+    def _create_input_embed(sentence_len, is_extern_emb, token_emb_size, vocab_size):
         if is_extern_emb:
             in_layer = e_layer = Input(shape=(sentence_len, token_emb_size,),
                                        dtype='float32', name='tokens_input')
@@ -81,10 +117,24 @@ class JointSequentialLSTM(IntentExtractionModel):
               tagger_dropout=0.5,
               intent_classifier_hidden=100,
               emb_model_path=None):
-        tokens_input, token_emb = self.create_input_embed(sentence_length,
-                                                          emb_model_path is not None,
-                                                          token_emb_size,
-                                                          vocab_size)
+        """
+        Build the model
+
+        Args:
+            sentence_length (int): max length of a sentence
+            vocab_size (int): vocabulary size
+            tag_labels (int): number of tag labels
+            intent_labels (int): number of intent labels
+            token_emb_size (int): token embedding vectors size
+            tagger_hidden (int): label tagger LSTM hidden size
+            tagger_dropout (float): label tagger dropout rate
+            intent_classifier_hidden (int): intent LSTM hidden size
+            emb_model_path (str): external embedding model path
+        """
+        tokens_input, token_emb = self._create_input_embed(sentence_length,
+                                                           emb_model_path is not None,
+                                                           token_emb_size,
+                                                           vocab_size)
         intent_enc = Bidirectional(LSTM(intent_classifier_hidden))(token_emb)
         intent_out = Dense(intent_labels, activation='softmax',
                            name='intent_classifier')(intent_enc)
@@ -123,10 +173,25 @@ class EncDecTaggerModel(IntentExtractionModel):
               encoder_dropout=0.5,
               decoder_dropout=0.5,
               emb_model_path=None):
-        tokens_input, token_emb = self.create_input_embed(sentence_length,
-                                                          emb_model_path is not None,
-                                                          token_emb_size,
-                                                          vocab_size)
+        """
+        Build the model
+
+        Args:
+            sentence_length (int): max sentence length
+            vocab_size (int): vocabulary size
+            tag_labels (int): number of tag labels
+            token_emb_size (int, optional): token embedding vector size
+            encoder_depth (int, optional): number of encoder LSTM layers
+            decoder_depth (int, optional): number of decoder LSTM layers
+            lstm_hidden_size (int, optional): LSTM layers hidden size
+            encoder_dropout (float, optional): encoder dropout
+            decoder_dropout (float, optional): decoder dropout
+            emb_model_path (str, optional): external embedding model path
+        """
+        tokens_input, token_emb = self._create_input_embed(sentence_length,
+                                                           emb_model_path is not None,
+                                                           token_emb_size,
+                                                           vocab_size)
         benc_in = token_emb
         assert encoder_depth > 0, 'Encoder depth must be > 0'
         for i in range(encoder_depth):

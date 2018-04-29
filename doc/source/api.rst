@@ -42,8 +42,8 @@ to train the model weights, perform inference, and save/load the model.
    :nosignatures:
 
    nlp_architect.chunker.ChunkerModel
-   nlp_architect.intent_extraction.JointSequentialLSTM
-   nlp_architect.intent_extraction.EncDecTaggerModel
+   nlp_architect.models.intent_extraction.JointSequentialLSTM
+   nlp_architect.models.intent_extraction.EncDecTaggerModel
    nlp_architect.np2vec.np2vec.NP2vec
    nlp_architect.np_semantic_segmentation.model.NpSemanticSegClassifier
    nlp_architect.bist.bmstparser.mstlstm.MSTParserLSTM
@@ -89,8 +89,8 @@ these will be placed into a central repository.
     nlp_architect.chunker.data.CONLL2000
     nlp_architect.chunker.model.DataInput
     nlp_architect.intent_extraction.data.IntentDataset
-    nlp_architect.intent_extraction.data.ATIS
-    nlp_architect.intent_extraction.data.SNIPS
+    nlp_architect.data.intent_datasets.ATIS
+    nlp_architect.data.intent_datasets.SNIPS
     nlp_architect.np_semantic_segmentation.data.NpSemanticSegData
     models.memn2n_dialogue.data.BABI_Dialog
     models.kvmemn2n.data.WIKIMOVIES

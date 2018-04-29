@@ -23,10 +23,10 @@ import os
 
 from keras.callbacks import ModelCheckpoint
 
-from nlp_architect.intent_extraction.data import ATIS, SNIPS
-from nlp_architect.intent_extraction.model import EncDecTaggerModel
-from nlp_architect.intent_extraction.utils import ConllCallback, get_conll_scores
-
+from nlp_architect.data.intent_datasets import ATIS, SNIPS
+from nlp_architect.models.intent_extraction import JointSequentialLSTM
+from nlp_architect.topology.callbacks import ConllCallback
+from nlp_architect.utils.metrics import get_conll_scores
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-b', type=int, default=10,
@@ -40,16 +40,12 @@ parser.add_argument('--sentence_length', type=int, default=30,
                     help='Max sentence length')
 parser.add_argument('--token_emb_size', type=int, default=100,
                     help='Token features embedding vector size')
+parser.add_argument('--intent_hidden_size', type=int, default=100,
+                    help='Intent detection LSTM hidden size (joint model only)')
 parser.add_argument('--lstm_hidden_size', type=int, default=150,
-                    help='Encoder LSTM hidden size (enc-dec model only)')
-parser.add_argument('--encoder_depth', type=int, default=1,
-                    help='Encoder LSTM depth (enc-dec model only)')
-parser.add_argument('--decoder_depth', type=int, default=1,
-                    help='Decoder LSTM depth (enc-dec model only)')
-parser.add_argument('--encoder_dropout', type=float, default=0.5,
-                    help='Encoder dropout value (enc-dec model only)')
-parser.add_argument('--decoder_dropout', type=float, default=0.5,
-                    help='Decoder dropout value (enc-dec model only)')
+                    help='Slot tags LSTM hidden size (joint model only)')
+parser.add_argument('--tagger_dropout', type=float, default=0.5,
+                    help='Slot tags dropout value (joint model only)')
 parser.add_argument('--embedding_path', type=str,
                     help='Path to word embedding model file')
 parser.add_argument('--full_eval', action='store_true', default=False,
@@ -73,11 +69,10 @@ if args.dataset == 'snips':
                     embedding_model=args.embedding_path,
                     embedding_size=args.token_emb_size)
 
-train_x, _, train_y = dataset.train_set
-test_x, _, test_y = dataset.test_set
+train_x, train_i, train_y = dataset.train_set
+test_x, test_i, test_y = dataset.test_set
 
-
-model = EncDecTaggerModel()
+model = JointSequentialLSTM()
 
 if args.restore and os.path.exists(args.model_path):
     print('Loading model weights and continuing with training ..')
@@ -86,29 +81,28 @@ else:
     print('Creating new model, starting to train from scratch')
     model.build(args.sentence_length,
                 dataset.vocab_size,
-                dataset.slot_vocab_size,
+                dataset.label_vocab_size,
+                dataset.intent_size,
                 args.token_emb_size,
-                args.encoder_depth,
-                args.decoder_depth,
                 args.lstm_hidden_size,
-                args.encoder_dropout,
-                args.decoder_depth,
+                args.tagger_dropout,
+                args.intent_hidden_size,
                 args.embedding_path)
 
-conll_cb = ConllCallback(test_x, test_y, dataset.slots_vocab, batch_size=args.b)
+conll_cb = ConllCallback(test_x, test_y, dataset.labels_vocab, batch_size=args.b)
 cp_cb = ModelCheckpoint(args.model_path, verbose=1, period=args.save_epochs)
 
 # train model
-model.fit(x=train_x, y=train_y,
+model.fit(x=train_x, y=[train_i, train_y],
           batch_size=args.b, epochs=args.e,
-          validation=(test_x, test_y),
+          validation=(test_x, [test_i, test_y]),
           callbacks=[conll_cb, cp_cb])
 print('Training done.')
 
 # test performance
 predictions = model.predict(test_x, batch_size=args.b)
 eval = get_conll_scores(predictions, test_y, {
-                        v: k for k, v in dataset.slots_vocab.items()})
+                        v: k for k, v in dataset.labels_vocab.items()})
 if args.full_eval is True:
     print(eval)
 else:
