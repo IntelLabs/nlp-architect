@@ -1,0 +1,1 @@
+from nlp_architect.data.intent_datasets import ATIS, SNIPS

@@ -13,8 +13,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
-from __future__ import unicode_literals, print_function, division, \
-    absolute_import
+
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
+from __future__ import absolute_import
 
 import json
 
@@ -59,4 +62,3 @@ class ParsedDocument:
                 tok_count += 1
         doc['text'] = doc['text'][1:]
         return doc
-

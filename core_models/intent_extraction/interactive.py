@@ -25,9 +25,9 @@ import argparse
 import numpy as np
 import spacy
 
-from nlp_architect.intent_extraction.data import ATIS, SNIPS
-from nlp_architect.intent_extraction.model import IntentExtractionModel
-from nlp_architect.intent_extraction.utils import load_word_embeddings
+from nlp_architect.data.intent_datasets import ATIS, SNIPS
+from nlp_architect.models.intent_extraction import IntentExtractionModel
+from nlp_architect.utils.embedding import load_word_embeddings
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--model_path', type=str, required=True,
@@ -83,7 +83,7 @@ def display_results(tokens, predictions):
         print('Intent type: {}'.format(iv.get(intent)))
     else:
         tags = predictions[0].argmax(1)
-    sv = {v: k for k, v in ds.slots_vocab.items()}
+    sv = {v: k for k, v in ds.labels_vocab.items()}
     print_helper = []
     for t, p in zip(tokens, tags[-len(tokens):]):
         tag = sv.get(p, 'OOV')
