@@ -32,7 +32,7 @@ from ngraph.frontends.neon.axis import shadow_axes_map
 from ngraph.frontends.neon import Layer
 from ngraph.frontends.neon import GaussianInit
 from ngraph.frontends.neon.graph import SubGraph
-from nlp_architect.layers.modified_lookup_table import ModifiedLookupTable
+from nlp_architect.contrib.ngraph.modified_lookup_table import ModifiedLookupTable
 
 
 class MemN2N_Dialog(Layer):

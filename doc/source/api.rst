@@ -65,11 +65,11 @@ These are currently stored in the various models
    nlp_architect.models.chunker_model.TimeDistributedRecurrentOutput
    nlp_architect.models.chunker_model.TimeDistributedRecurrentLast
    nlp_architect.models.chunker_model.TimeDistBiLSTM
-   nlp_architect.layers.match_lstm.MatchLSTMCell_withAttention
-   nlp_architect.layers.match_lstm.AnswerPointer_withAttention
-   nlp_architect.layers.match_lstm.Dropout_Modified
-   nlp_architect.layers.match_lstm.LookupTable
-   nlp_architect.layers.modified_lookup_table.ModifiedLookupTable
+   nlp_architect.contrib.ngraph.match_lstm.MatchLSTMCell_withAttention
+   nlp_architect.contrib.ngraph.match_lstm.AnswerPointer_withAttention
+   nlp_architect.contrib.ngraph.match_lstm.Dropout_Modified
+   nlp_architect.contrib.ngraph.match_lstm.LookupTable
+   nlp_architect.contrib.ngraph.modified_lookup_table.ModifiedLookupTable
 
 
 

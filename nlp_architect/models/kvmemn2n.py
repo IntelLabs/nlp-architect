@@ -22,7 +22,7 @@ from ngraph.frontends.neon import Layer
 from ngraph.frontends.neon import GaussianInit
 from ngraph.frontends.neon.graph import SubGraph
 from nlp_architect.utils.encodings import position_encoding
-from nlp_architect.layers.modified_lookup_table import ModifiedLookupTable
+from nlp_architect.contrib.ngraph.modified_lookup_table import ModifiedLookupTable
 
 
 class KVMemN2N(Layer):
