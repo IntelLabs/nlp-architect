@@ -28,8 +28,8 @@ from neon.backends import gen_backend
 from neon.models import Model
 from neon.util.argparser import NeonArgparser, extract_valid_args
 
-from nlp_architect.chunker.data import TaggedTextSequence, MultiSequenceDataIterator
-from nlp_architect.chunker.utils import extract_nps, get_word_embeddings, get_paddedXY_sequence
+from nlp_architect.data.conll2000 import TaggedTextSequence, MultiSequenceDataIterator
+from nlp_architect.utils.chunker_utils import extract_nps, get_word_embeddings, get_paddedXY_sequence
 
 if __name__ == '__main__':
 

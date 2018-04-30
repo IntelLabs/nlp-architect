@@ -26,7 +26,7 @@ import gensim
 import math
 from neon.util.argparser import NeonArgparser
 from sklearn.model_selection import train_test_split
-from models.most_common_word_sense.feature_extraction import extract_features_envelope
+from feature_extraction import extract_features_envelope
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)

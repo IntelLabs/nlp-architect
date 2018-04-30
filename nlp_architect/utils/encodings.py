@@ -19,7 +19,7 @@ import ngraph as ng
 
 def position_encoding(sentence_axis, embedding_axis):
     """
-    Position Encoding described in section 4.1 [1]
+    Position Encoding used by the end to end memory network algorithms
     """
     sentence_size = sentence_axis.length
     embedding_size = embedding_axis.length

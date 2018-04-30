@@ -28,7 +28,7 @@ import numpy
 from neon.data import ArrayIterator
 from tqdm import tqdm
 
-import models.np_semantic_segmentation.feature_extraction as fe
+import nlp_architect.data.feature_extraction as fe
 
 wordnet = None
 wikidata = None

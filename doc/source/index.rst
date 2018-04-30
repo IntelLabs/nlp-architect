@@ -57,7 +57,7 @@ The library includes our past and ongoing NLP research efforts as part of Intel 
 .. toctree::
    :hidden:
    :maxdepth: 1
-   :caption: Models
+   :caption: End to End Models
 
    reading_comprehension.rst
    memn2n.rst

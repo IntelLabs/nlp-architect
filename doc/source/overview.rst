@@ -62,7 +62,7 @@ The library contains state-of-art and novel Natural Language Processing (NLP) an
 - Intent type detection and Slot tagging model for Intent based applications
 - Memory Networks for goal-oriented dialog
 - Noun phrase embedding vectors model
-- Noun phrase semantic segmenatation
+- Noun phrase semantic segmentation
 - Text chunking
 - Reading comprehension
 

@@ -23,8 +23,8 @@ from neon import logger as neon_logger
 from neon.backends import gen_backend
 from neon.util.argparser import NeonArgparser
 
-from models.np_semantic_segmentation.data import NpSemanticSegData
-from models.np_semantic_segmentation.model import NpSemanticSegClassifier
+from nlp_architect.data.semantic_seg_data import NpSemanticSegData
+from nlp_architect.models.semantic_segmentation import NpSemanticSegClassifier
 
 
 def train_mlp_classifier(dataset, model_file_path, num_epochs, callback_args):

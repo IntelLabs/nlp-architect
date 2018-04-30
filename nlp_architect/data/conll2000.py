@@ -25,7 +25,7 @@ import numpy as np
 
 from neon.data import Dataset, NervanaDataIterator
 from neon.data.text_preprocessing import pad_sentences
-from nlp_architect.chunker.utils import get_paddedXY_sequence, get_word_embeddings, sentences_to_ints
+from nlp_architect.utils.chunker_utils import get_paddedXY_sequence, get_word_embeddings, sentences_to_ints
 
 
 class TaggedTextSequence(NervanaDataIterator):

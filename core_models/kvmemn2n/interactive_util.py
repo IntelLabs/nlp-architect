@@ -18,7 +18,7 @@ from __future__ import print_function
 from builtins import input
 import numpy as np
 
-from models.kvmemn2n.data import ex_entity_names, pad_stories, pad_values, pad_sentences
+from nlp_architect.data.wikimovies import ex_entity_names, pad_stories, pad_values, pad_sentences
 
 
 def interactive_loop(interactive_computation, wikimovies, batch_size):

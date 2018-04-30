@@ -20,7 +20,7 @@ import ngraph as ng
 from ngraph.frontends.neon import (Layer, Tanh,
                                    LSTM, Logistic)
 
-from models.reading_comprehension.ngraph_implementation.layers import (
+from nlp_architect.contrib.ngraph.match_lstm import (
     MatchLSTMCell_withAttention,
     unroll_with_attention,
     AnswerPointer_withAttention,
@@ -42,7 +42,7 @@ from utils import (
     get_data_array_squad_ngraph,
     cal_f1_score)
 import math
-from weight_initilizers import (make_placeholder, make_weights)
+from nlp_architect.utils.weight_initilizers import (make_placeholder, make_weights)
 
 
 """
