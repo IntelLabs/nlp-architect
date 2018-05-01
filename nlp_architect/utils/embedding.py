@@ -20,7 +20,7 @@ from __future__ import absolute_import
 import numpy as np
 
 
-def load_word_embeddings(file_path, emb_size):
+def load_word_embeddings(file_path):
     """
     Loads a word embedding model text file into a word(str) to numpy vector dictionary
 
@@ -30,20 +30,23 @@ def load_word_embeddings(file_path, emb_size):
 
     Returns:
         list: a dictionary of numpy.ndarray vectors
+        int: detected word embedding vector size
     """
     with open(file_path) as fp:
         word_vectors = {}
+        size = None
         for line in fp:
             line_fields = line.split()
-            if len(line_fields) == emb_size:
-                # probably space vec embedding, skip
+            if len(line_fields) < 5:
                 continue
-            if len(line_fields) > 2:
-                assert len(line_fields[1:]) == emb_size, \
-                    'Word embedding size (%d) not equal to given size (%d)' % (
-                        len(line_fields[1:]), emb_size)
-                word_vectors[line_fields[0]] = np.asarray(line_fields[1:], dtype='float32')
-    return word_vectors
+            else:
+                if line[0] == ' ':
+                    word_vectors[' '] = np.asarray(line_fields, dtype='float32')
+                else:
+                    word_vectors[line_fields[0]] = np.asarray(line_fields[1:], dtype='float32')
+                    if size is None:
+                        size = len(line_fields[1:])
+    return word_vectors, size
 
 
 def fill_embedding_mat(src_mat, src_lex, emb_lex, emb_size):

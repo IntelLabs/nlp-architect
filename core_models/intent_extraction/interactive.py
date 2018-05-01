@@ -96,8 +96,7 @@ def display_results(tokens, predictions):
 emb_vectors = None
 if args.embedding_model is not None and args.embedding_size is not None:
     print('Loading external word embedding model of size {}'.format(args.embedding_size))
-    emb_vectors = load_word_embeddings(
-        args.embedding_model, args.embedding_size)
+    emb_vectors, _ = load_word_embeddings(args.embedding_model)
 
 while True:
     text = input('>> ')

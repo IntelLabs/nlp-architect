@@ -28,17 +28,19 @@ from neon.backends import gen_backend
 from neon.models import Model
 from neon.util.argparser import NeonArgparser, extract_valid_args
 
-from nlp_architect.data.conll2000 import TaggedTextSequence, MultiSequenceDataIterator
-from nlp_architect.utils.chunker_utils import extract_nps, get_word_embeddings, get_paddedXY_sequence
+from nlp_architect.contrib.neon.text_iterators import TaggedTextSequence, MultiSequenceDataIterator
+from nlp_architect.utils.generic import get_paddedXY_sequence
+from nlp_architect.utils.embedding import load_word_embeddings
+from utils import extract_nps
 
 if __name__ == '__main__':
 
     parser = NeonArgparser()
-    parser.add_argument('--model', type=str,
+    parser.add_argument('--model', type=str, required=True,
                         help='Path to model file')
-    parser.add_argument('--settings', type=str,
+    parser.add_argument('--settings', type=str, required=True,
                         help='Path to model settings file')
-    parser.add_argument('--input', type=str,
+    parser.add_argument('--input', type=str, required=True,
                         help='Input texts file path (samples to pass for inference)')
     parser.add_argument('--emb_model', type=str,
                         help='Pre-trained word embedding model file path')
@@ -69,7 +71,7 @@ if __name__ == '__main__':
     input_features = []
     text_tokens = []
     if mp['use_embeddings'] is True:
-        emb_model, emb_size = get_word_embeddings(args.emb_model)
+        emb_model, emb_size = load_word_embeddings(args.emb_model)
         pad_vector = np.zeros(emb_size)
         for t in input_texts:
             vector = [

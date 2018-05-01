@@ -25,7 +25,7 @@ from keras.callbacks import ModelCheckpoint
 
 from nlp_architect.data.intent_datasets import ATIS, SNIPS
 from nlp_architect.models.intent_extraction import JointSequentialLSTM
-from nlp_architect.topology.callbacks import ConllCallback
+from nlp_architect.contrib.keras.callbacks import ConllCallback
 from nlp_architect.utils.metrics import get_conll_scores
 
 parser = argparse.ArgumentParser()

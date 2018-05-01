@@ -18,168 +18,22 @@ from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
 from __future__ import absolute_import
+
 import gzip
 import os
 
 import numpy as np
-
-from neon.data import Dataset, NervanaDataIterator
+from neon.data import Dataset
 from neon.data.text_preprocessing import pad_sentences
-from nlp_architect.utils.chunker_utils import get_paddedXY_sequence, get_word_embeddings, sentences_to_ints
 
-
-class TaggedTextSequence(NervanaDataIterator):
-    """
-    This class defines methods for loading and iterating over text datasets
-    for tagging tasks (POS, NER, Chunking, ...).
-    """
-
-    def __init__(self, steps, x, y=None, num_classes=None, vec_input=False):
-        """
-        Construct a text tagging dataset object.
-
-        Arguments:
-            steps (int) : Length of a sequence (sentence).
-            x (numpy.ndarray, shape: [# examples, steps]): Input sentences of dataset
-                encoded in ints or as flat vectors (if vec_input=True).
-            y (numpy.ndarray, shape: [# examples, steps]): Output sentence tags.
-            num_classes (int, optional): Number of features in y (# of possible tags of y).
-            vec_input (bool, optional): Toggle vectorized input instead of scalars
-                for input steps.
-        """
-        super(TaggedTextSequence, self).__init__(name=None)
-        self.batch_index = 0
-        self.X_features = self.nclass = x.shape[1]
-        self.vec_input = vec_input
-        self.nsamples = x.shape[0]
-        if self.vec_input:
-            self.shape = (x.shape[2], steps)
-            self.x_dev = self.be.iobuf((x.shape[2], steps))
-        else:
-            self.shape = (steps, 1)
-            self.x_dev = self.be.iobuf(steps)
-
-        extra_examples = self.nsamples % self.be.bsz
-
-        if y is not None:
-            if num_classes is not None:
-                self.y_nfeatures = num_classes
-            else:
-                self.y_nfeatures = y.max() + 1
-
-            self.y_dev = self.be.iobuf((self.y_nfeatures, steps))
-            self.y_labels = self.be.iobuf(steps, dtype=np.int32)
-            self.dev_lblflat = self.y_labels.reshape((1, -1))
-
-        if extra_examples:
-            x = x[:-extra_examples]
-            if y is not None:
-                y = y[:-extra_examples]
-
-        self.nsamples -= extra_examples
-        self.nbatches = self.nsamples // self.be.bsz
-        self.ndata = self.nbatches * self.be.bsz * steps
-
-        self.y = None
-        if y is not None:
-            self.y_series = y
-            self.y = y.reshape(self.be.bsz, self.nbatches, steps)
-
-        if self.vec_input:
-            self.X = x.reshape(self.be.bsz, self.nbatches, steps, x.shape[2])
-        else:
-            self.X = x.reshape(self.be.bsz, self.nbatches, steps)
-
-    def reset(self):
-        """
-        For resetting the starting index of this dataset back to zero.
-        """
-        self.batch_index = 0
-
-    def __iter__(self):
-        """
-        Generator that can be used to iterate over this dataset.
-
-        Yields:
-            tuple : the next minibatch of x data and y is preset.
-        """
-        self.batch_index = 0
-        while self.batch_index < self.nbatches:
-            x_batch = self.X[:, self.batch_index].T.astype(
-                np.float32, order='C')
-            if self.vec_input:
-                x_batch = x_batch.reshape(self.X.shape[-1], -1)
-            self.x_dev.set(x_batch)
-
-            if self.y is not None:
-                y_batch = self.y[:, self.batch_index].T.astype(
-                    np.float32, order='C')
-                self.y_labels.set(y_batch)
-                self.y_dev[:] = self.be.onehot(self.dev_lblflat, axis=0)
-
-            self.batch_index += 1
-            if self.y is not None:
-                yield self.x_dev, self.y_dev
-            else:
-                yield self.x_dev, None
-
-
-class MultiSequenceDataIterator(NervanaDataIterator):
-    """
-    Multiple source data iterator
-
-    this iterator combines several data iterators with given y
-    and iterates concurrently on each iterator. If y is not given
-    it is taken from the first iterator.
-    output shape: tuple of elements from each iterator, y element.
-    """
-
-    def __init__(self, data_iterators, y=None, ignore_y=False):
-        super(MultiSequenceDataIterator, self).__init__()
-        assert len(data_iterators) > 1, "data input is not of size > 1"
-        self.input_sources = data_iterators
-        nbs = {d.nbatches for d in data_iterators}
-        assert len(nbs) == 1, "num of batches in data iterators not equal"
-        self.nbatches = nbs.pop()
-        if y:
-            self.y = y
-        elif hasattr(data_iterators[0], 'y') and data_iterators[0].y is not None:
-            self.y = data_iterators[0].y
-        else:
-            self.y = None
-        self.ignore_y = ignore_y
-        self.ndata = data_iterators[0].ndata
-        self.shape = [(i.shape[0], i.shape[1] if len(i.shape) > 1 else 1)
-                      for i in data_iterators]
-        self.iterators = None
-        self.y_iter = None
-
-    def reset(self):
-        """
-        For resetting the starting index of this dataset back to zero.
-        """
-        for i in self.input_sources:
-            i.reset()
-        self.iterators = [i.__iter__() for i in self.input_sources]
-        if self.y is not None and hasattr(self.y, 'reset') and not self.ignore_y:
-            self.y.reset()
-            self.y_iter = self.y.__iter__()
-
-    def __iter__(self):
-        self.reset()
-        for _ in range(self.nbatches):
-            x_iters = [next(i) for i in self.iterators]
-            if hasattr(self.y, 'y_iter'):
-                yield ([x[0] for x in x_iters]), (next(self.y_iter))
-            elif self.y is not None:
-                yield ([x[0] for x in x_iters]), (x_iters[0][1])
-            elif self.ignore_y:
-                yield ([x[0] for x in x_iters]), ()
+from nlp_architect.utils.generic import get_paddedXY_sequence
+from nlp_architect.contrib.neon.text_iterators import TaggedTextSequence, MultiSequenceDataIterator
+from nlp_architect.utils.embedding import load_word_embeddings
 
 
 class CONLL2000(Dataset):
     """
-    CONLL 2000 chunking task data set
+    CONLL 2000 chunking task data set (Neon)
 
     Arguments:
         sentence_length (int): number of time steps to embed the data.
@@ -295,11 +149,11 @@ class CONLL2000(Dataset):
         num_train_samples = len(train_set)
 
         sents = list(zip(*train_set))[0] + list(zip(*test_set))[0]
-        X, X_vocab = sentences_to_ints(sents, lowercase=False)
+        X, X_vocab = self._sentences_to_ints(sents, lowercase=False)
         self.vocabs.update({'token': X_vocab})
 
         y = list(zip(*train_set))[2] + list(zip(*test_set))[2]
-        y, y_vocab = sentences_to_ints(y, lowercase=False)
+        y, y_vocab = self._sentences_to_ints(y, lowercase=False)
         self.y_vocab = y_vocab
         X, y = get_paddedXY_sequence(
             X, y, sentence_length=self.sentence_length, shuffle=False)
@@ -310,7 +164,7 @@ class CONLL2000(Dataset):
         test_iters = []
 
         if self.use_w2v:
-            w2v_dict, emb_size = get_word_embeddings(self.w2v_path)
+            w2v_dict, emb_size = load_word_embeddings(self.w2v_path)
             self.emb_size = emb_size
             x_vocab_is = {i: s for s, i in X_vocab.items()}
             X_w2v = []
@@ -350,7 +204,7 @@ class CONLL2000(Dataset):
 
         if self.use_pos:
             pos_sents = list(zip(*train_set))[1] + list(zip(*test_set))[1]
-            X_pos, X_pos_vocab = sentences_to_ints(pos_sents)
+            X_pos, X_pos_vocab = self._sentences_to_ints(pos_sents)
             self.vocabs.update({'pos': X_pos_vocab})
             X_pos, _ = get_paddedXY_sequence(X_pos, y, sentence_length=self.sentence_length,
                                              shuffle=False)
@@ -378,3 +232,22 @@ class CONLL2000(Dataset):
             self._data_dict['train'] = train_iters[0]
             self._data_dict['test'] = test_iters[0]
         return self._data_dict
+
+    @staticmethod
+    def _sentences_to_ints(texts, lowercase=True):
+        """
+        convert text sentences into int id sequences. Word ids are sorted
+        by frequency of appearance.
+        return int sequences and vocabulary.
+        """
+        w_dict = {}
+        for sen in texts:
+            for w in sen:
+                if lowercase:
+                    w = w.lower()
+                w_dict.update({w: w_dict.get(w, 0) + 1})
+        int_to_word = [(i, word[0]) for i, word in
+                       enumerate(sorted(w_dict.items(), key=lambda x: x[1], reverse=True))]
+        vocab = {w: i for i, w in int_to_word}
+        return [[vocab[w.lower()] if lowercase else vocab[w]
+                 for w in sen] for sen in texts], vocab

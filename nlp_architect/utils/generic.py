@@ -18,6 +18,7 @@ from __future__ import print_function
 from __future__ import unicode_literals
 from __future__ import absolute_import
 import numpy as np
+from neon.data.text_preprocessing import pad_sentences
 
 
 def one_hot(mat, num_classes):
@@ -71,3 +72,33 @@ def add_offset(mat, offset=1):
         offset_arr.fill(offset)
         mat[i] = vec + offset_arr
     return mat
+
+
+def get_paddedXY_sequence(X, y, vocab_size=20000, sentence_length=100, oov=2,
+                          start=1, index_from=3, seed=113, shuffle=True):
+    if shuffle:
+        np.random.seed(seed)
+        np.random.shuffle(X)
+        np.random.seed(seed)
+        np.random.shuffle(y)
+
+    if start is not None:
+        X = [[start] + [w + index_from for w in x] for x in X]
+    else:
+        X = [[w + index_from for w in x] for x in X]
+
+    if not vocab_size:
+        vocab_size = max([max(x) for x in X])
+
+    # word ids - pad (0), start (1), oov (2)
+    if oov is not None:
+        X = [[oov if w >= vocab_size else w for w in x] for x in X]
+    else:
+        X = [[w for w in x if w < vocab_size] for x in X]
+
+    X = pad_sentences(X, sentence_length=sentence_length)
+
+    y = [[w + 1.0 for w in i] for i in y]
+    y = pad_sentences(y, sentence_length=sentence_length)
+
+    return X, y

@@ -63,7 +63,7 @@ class IntentDataset(object):
 
     def _load_embedding(self, files):
         print('Loading external word embedding model ..')
-        emb_vecs = load_word_embeddings(self.embedding_model, self.embedding_size)
+        emb_vecs, _ = load_word_embeddings(self.embedding_model)
         for f in files:
             self.vecs[f][0] = fill_embedding_mat(self.vecs[f][0],
                                                  self._tokens_vocab.reverse_vocab(),

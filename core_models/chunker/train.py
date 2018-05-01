@@ -29,8 +29,8 @@ from neon.transforms.cost import CrossEntropyMulti
 from neon.util.argparser import NeonArgparser, extract_valid_args
 
 from nlp_architect.data.conll2000 import CONLL2000
-from nlp_architect.model.chunker_model import ChunkerModel
-from nlp_architect.utils.chunker_utils import label_precision_recall_f1
+from nlp_architect.models.chunker import SequenceChunker
+from utils import label_precision_recall_f1
 
 if __name__ == '__main__':
 
@@ -87,18 +87,18 @@ if __name__ == '__main__':
     train_set = dataset.train_iter
     test_set = dataset.test_iter
 
-    model = ChunkerModel(sentence_length=args.sentence_len,
-                         token_vocab_size=args.vocab_size,
-                         pos_vocab_size=pos_vocab_size,
-                         char_vocab_size=char_vocab_size,
-                         max_char_word_length=args.max_char_word_length,
-                         token_embedding_size=args.token_embedding_size,
-                         pos_embedding_size=args.pos_embedding_size,
-                         char_embedding_size=args.char_hidden_size,
-                         num_labels=dataset.y_size,
-                         lstm_hidden_size=args.lstm_hidden_size,
-                         num_lstm_layers=args.lstm_depth,
-                         embedding_model=args.embedding_model)
+    model = SequenceChunker(sentence_length=args.sentence_len,
+                            token_vocab_size=args.vocab_size,
+                            pos_vocab_size=pos_vocab_size,
+                            char_vocab_size=char_vocab_size,
+                            max_char_word_length=args.max_char_word_length,
+                            token_embedding_size=args.token_embedding_size,
+                            pos_embedding_size=args.pos_embedding_size,
+                            char_embedding_size=args.char_hidden_size,
+                            num_labels=dataset.y_size,
+                            lstm_hidden_size=args.lstm_hidden_size,
+                            num_lstm_layers=args.lstm_depth,
+                            embedding_model=args.embedding_model)
 
     cost = GeneralizedCost(costfunc=CrossEntropyMulti(usebits=True))
     optimizer = RMSProp(stochastic_round=args.rounding)
