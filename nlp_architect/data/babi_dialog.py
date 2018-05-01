@@ -116,10 +116,11 @@ class BABI_Dialog(object):
         ]
 
         print('Preparing bAbI-dialog dataset or extracting from %s' % path)
-        print('Task is %s' % (self.tasks[self.task]))
 
         assert task in range(
             1, 7), "given task is not in the bAbI-dialog dataset"
+
+        print('Task is %s' % (self.tasks[self.task]))
 
         (self.train_file, self.dev_file, self.test_file, self.cand_file,
             self.kb_file, self.vocab_file, self.vectorized_file) = self.load_data()
