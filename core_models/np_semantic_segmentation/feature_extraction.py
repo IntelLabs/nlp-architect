@@ -14,10 +14,10 @@
 # limitations under the License.
 # ******************************************************************************
 
-import nltk
 import numpy as np
 import requests
 from gensim.models.keyedvectors import KeyedVectors
+import nltk
 from nltk.corpus import wordnet as wn
 from nltk.stem.snowball import SnowballStemmer
 from palmettopy.exceptions import CoherenceTypeNotAvailable, EndpointDown
@@ -38,10 +38,12 @@ class PalmettoClass:
     def get_pmi_score(self, phrase):
         """
         Extract NPMI & UCI scores
+
         Args:
             phrase (str): a noun-phrase
-        Returns(list<float>):
-            NPMI & UCI scores
+
+        Returns:
+            list(float): NPMI & UCI scores
         """
         candidates = phrase.split(" ")
         if len(candidates) < 2:
@@ -64,10 +66,12 @@ class PalmettoClass:
 def stem(w):
     """
     Stem input
+
     Args:
         w (str): word to extract stem
-    Returns (str):
-        stem of w
+
+    Returns:
+        str: stem of w
     """
     return stemmer.stem(w)
 
@@ -75,12 +79,13 @@ def stem(w):
 class Wikidata:
     """
     Wikidata service
+
     Args:
         http_proxy(str) : http proxy
         https_proxy(str) : https proxy
     """
 
-    def __init__(self, http_proxy, https_proxy):
+    def __init__(self, http_proxy=None, https_proxy=None):
         self.headers = headers
         proxies = {}
         if http_proxy:
@@ -92,10 +97,12 @@ class Wikidata:
     def find_wikidata_existence(self, candidates):
         """
         extract Wikidata indicator-feature (1 if exist in Wikidata, else 0)
+
         Args:
             candidates(list<str>): a list of all possible candidates to have Wikidata entry
-        Returns(int) :
-            1 if exist in Wikidata for any candidate in candidates, else 0
+
+        Returns :
+            int: 1 if exist in Wikidata for any candidate in candidates, else 0
         """
         for candidate in set(candidates):
             if self.has_item(candidate):
@@ -105,10 +112,12 @@ class Wikidata:
     def has_item(self, phrase):
         """
         Send a SPARQL query to wikidata, and return response
+
         Args:
             phrase (str):  a noun-phrase
-        Returns (bool):
-            True if exist in Wikidata for phrase, else False
+
+        Returns:
+            bool: True if exist in Wikidata for phrase, else False
         """
         chr_url = """https://query.wikidata.org/sparql?query=
                         SELECT ?item ?lable
@@ -130,6 +139,7 @@ class Wikidata:
 class Word2Vec:
     """
     Word2Vec service
+
         Args:
             word2vec_model_path (str): the local path to the Word2Vec pre-trained model
     """
@@ -141,6 +151,7 @@ class Word2Vec:
     def load_word2vec_model_from_path(self):
         """
         Load Word2Vec model
+
         Returns:
             the Word2Vec model
         """
@@ -153,10 +164,12 @@ class Word2Vec:
     def get_word_embedding(self, word):
         """
         Get the pre-trained word embeddings
+
         Args:
             word (str): the word to extract from the models embedding
-        Returns (numpy array):
-            the word embeddings
+
+        Returns:
+            :obj:`np.ndarray`: the word embeddings
         """
         if not self.model:
             return np.full((300,), -1)
@@ -169,11 +182,12 @@ class Word2Vec:
     def get_similarity_score(self, noun_phrase):
         """
             Get the cosign similarity distance between the np words (only if 2)
+
         Args:
             noun_phrase (str): the noun-phrase
 
-        Returns (float):
-            cosign similarity distance between the np words (only if 2)
+        Returns:
+            float: cosign similarity distance between the np words (only if 2)
         """
         candidates = noun_phrase.split(" ")
         if len(candidates) < 2:
@@ -200,10 +214,11 @@ class Wordnet:
     def find_wordnet_existence(self, candidates):
         """
         extract WordNet indicator-feature (1 if exist in WordNet, else 0)
+
         Args:
-            candidates(list<str>): a list of all possible candidates to have WordNet entry
-        Returns (int):
-            1 if exist in WordNet for any candidate in candidates, else 0
+            candidates (list(str)): a list of all possible candidates to have WordNet entry
+        Returns:
+            int: 1 if exist in WordNet for any candidate in candidates, else 0
         """
         for candidate in candidates:
             candidate = candidate.replace(" ", "_")

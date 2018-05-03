@@ -28,15 +28,30 @@ from neon.transforms import Rectlin, Logistic, CrossEntropyBinary, \
 
 class NpSemanticSegClassifier:
     """
-    NP Semantic Segmentation classifier model.
-    The model is initialized with a pre-defined cost function (CrossEntropyBinary()) and with
-    a pre-defined optimizer (GradientDescentMomentum())
+    NP Semantic Segmentation classifier model (based on Neon framework).
+
+    Args:
+        num_epochs(int): number of epochs to train the model
+        **callback_args (dict): callback args keyword arguments to init a Callback for the model
+        cost: the model's cost function. Default is 'neon.transforms.CrossEntropyBinary' cost
+        optimizer (:obj:`neon.optimizers`): the model's optimizer. Default is
+        'neon.optimizers.GradientDescentMomentum(0.07, momentum_coef=0.9)'
     """
 
-    def __init__(self, num_epochs, callback_args):
+    def __init__(self, num_epochs, callback_args,
+                 optimizer=GradientDescentMomentum(0.07, momentum_coef=0.9)):
+        """
+
+        Args:
+            num_epochs(int): number of epochs to train the model
+            **callback_args (dict): callback args keyword arguments to init Callback for the model
+            cost: the model's cost function. Default is 'neon.transforms.CrossEntropyBinary' cost
+            optimizer (:obj:`neon.optimizers`): the model's optimizer. Default is
+            `neon.optimizers.GradientDescentMomentum(0.07, momentum_coef=0.9)`
+        """
         self.model = None
         self.cost = GeneralizedCost(costfunc=CrossEntropyBinary())
-        self.optimizer = GradientDescentMomentum(0.07, momentum_coef=0.9)
+        self.optimizer = optimizer
         self.epochs = num_epochs
         self.callback_args = callback_args
 
@@ -63,9 +78,10 @@ class NpSemanticSegClassifier:
     def fit(self, test_set, train_set):
         """
         Train and fit the model on the datasets
+
         Args:
-            test_set (ArrayIterator): The test set
-            train_set (ArrayIterator): The train set
+            test_set (:obj:`neon.data.ArrayIterators`): The test set
+            train_set (:obj:`neon.data.ArrayIterators`): The train set
             args: callback_args and epochs from ArgParser input
         """
         # configure callbacks
@@ -76,14 +92,16 @@ class NpSemanticSegClassifier:
     def save(self, model_path):
         """
         Save the model's prm file in model_path location
+
         Args:
             model_path(str): local path for saving the model
         """
-        self.model.save_params(model_path + '.prm')
+        self.model.save_params(model_path)
 
     def load(self, model_path):
         """
         Load pre-trained model's .prm file to NpSemanticSegClassifier object
+
         Args:
             model_path(str): local path for loading the model
         """
@@ -92,10 +110,12 @@ class NpSemanticSegClassifier:
     def eval(self, test_set):
         """
         Evaluate the model's test_set on error_rate, test_accuracy_rate and precision_recall_rate
+
         Args:
             test_set (ArrayIterator): The test set
+
         Returns:
-            error_rate, test_accuracy_rate and precision_recall_rate
+            tuple(int): error_rate, test_accuracy_rate and precision_recall_rate
         """
         error_rate = self.model.eval(test_set, metric=Misclassification())
         test_accuracy_rate = self.model.eval(test_set, metric=Accuracy())
@@ -105,9 +125,11 @@ class NpSemanticSegClassifier:
     def get_outputs(self, test_set):
         """
         Classify the dataset on the model
+
         Args:
-            test_set (ArrayIterator): The test set
+            test_set (:obj:`neon.data.ArrayIterators`): The test set
+
         Returns:
-            model's predictions
+            list(float): model's predictions
         """
         return self.model.get_outputs(test_set)

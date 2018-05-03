@@ -22,19 +22,19 @@ import os
 from neon import logger as neon_logger
 from neon.backends import gen_backend
 from neon.util.argparser import NeonArgparser
-
-from nlp_architect.data.semantic_seg_data import NpSemanticSegData
-from nlp_architect.models.semantic_segmentation import NpSemanticSegClassifier
+from data import NpSemanticSegData, absolute_path
+from nlp_architect.models.np_semantic_segmentation import NpSemanticSegClassifier
 
 
 def train_mlp_classifier(dataset, model_file_path, num_epochs, callback_args):
     """
-
+    Train the np_semantic_segmentation mlp classifier
     Args:
         model_file_path (str): model path
         num_epochs (int): number of epochs
         callback_args (dict): callback_arg
         dataset: NpSemanticSegData object containing the dataset
+
     Returns:
         print error_rate, test_accuracy_rate and precision_recall_rate evaluation from the model
 
@@ -61,21 +61,20 @@ if __name__ == "__main__":
     # parse the command line arguments
     parser = NeonArgparser()
     parser.set_defaults(epochs=200)
-    parser.add_argument('--data', default='datasets/prepared_data.csv', type=str,
-                        help='Path the CSV file where the '
-                             'prepared dataset is saved')
-    parser.add_argument('--model_path', default='datasets/np_semantic_segmentation', type=str,
-                        help='Path the save the model')
+    parser.add_argument('--data', type=str,
+                        help='Path to the CSV file where the prepared dataset is saved')
+    parser.add_argument('--model_path', type=str,
+                        help='Path to save the model')
     args = parser.parse_args()
-    data_path = args.data
-    if not os.path.exists(data_path):
-        raise Exception('Not valid model settings file')
-    model_path = args.model_path
-    if not os.path.exists(data_path):
+    data_path = absolute_path(args.data)
+    if not isinstance(data_path, str) or not os.path.exists(data_path):
+        raise Exception('Not valid input file')
+    model_path = absolute_path(args.model_path)
+    if not isinstance(model_path, str) or not os.path.exists(data_path):
         raise Exception('Not valid model settings file')
     # generate backend
     be = gen_backend(batch_size=64)
     # load data sets from file
     data_set = NpSemanticSegData(data_path, train_to_test_ratio=0.8)
     # train the mlp classifier
-    train_mlp_classifier(data_set, model_path, args.num_epochs, **args.callback_args)
+    train_mlp_classifier(data_set, model_path, args.epochs, args.callback_args)

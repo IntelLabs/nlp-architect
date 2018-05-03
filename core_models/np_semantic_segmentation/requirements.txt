@@ -5,4 +5,4 @@ palmettopy==3.1
 numpy==1.13.3
 gensim==3.0.1
 asposebarcode==1.0.0
-neon==0.1.2
+nervananeon==2.6.0
