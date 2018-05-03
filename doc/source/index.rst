@@ -40,6 +40,7 @@ The library includes our past and ongoing NLP research efforts as part of Intel 
 
    overview.rst
    installation.rst
+   service.rst
 
 .. toctree::
    :hidden:
