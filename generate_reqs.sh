@@ -18,8 +18,8 @@
 # optimized pacakge links
 tf_ver='1.6.0'
 tf_to_install='tensorflow=='${tf_ver}
-tf35='-U https://anaconda.org/intel/tensorflow/1.6.0/download/tensorflow-1.6.0-cp35-cp35m-linux_x86_64.whl'
-tf36='-U https://anaconda.org/intel/tensorflow/1.6.0/download/tensorflow-1.6.0-cp36-cp36m-linux_x86_64.whl'
+tf35='https://anaconda.org/intel/tensorflow/1.6.0/download/tensorflow-1.6.0-cp35-cp35m-linux_x86_64.whl'
+tf36='https://anaconda.org/intel/tensorflow/1.6.0/download/tensorflow-1.6.0-cp36-cp36m-linux_x86_64.whl'
 
 
 # detect python version and OS
@@ -38,7 +38,7 @@ ask_which_tf() {
     n|N ) retval=0;;
     "" ) retval=0;;
   esac
-  if [ retval == 1 ];
+  if [ ${retval} == 1 ];
   then
     if [ ${pyver} == 3.5 ];
     then
@@ -52,9 +52,12 @@ ask_which_tf() {
   fi
 }
 
-if [ ${platform} == 'linux' ] ;
+if [ ${pyver} == 3.5 ] || [ ${pyver} == 3.6 ] ;
 then
-  ask_which_tf
+  if [ ${platform} == 'linux' ] ;
+  then
+    ask_which_tf
+  fi
 fi
 
 # read file

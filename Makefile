@@ -72,7 +72,7 @@ $(ACTIVATE):
 
 pre_install: $(ACTIVATE)
 	@echo "Generating package list to install"
-	@. $(ACTIVATE); sh generate_reqs.sh
+	@. $(ACTIVATE); bash generate_reqs.sh
 	@echo "Installing packages ..."
 	@. $(ACTIVATE); pip install -r _generated_reqs.txt
 
@@ -81,10 +81,6 @@ install: pre_install
 	$(MAKE) print_finish
 
 install_dev: pre_install
-	@echo "Generating package list to install"
-	@. $(ACTIVATE); sh generate_reqs.sh
-	@echo "Installing packages ..."
-	@. $(ACTIVATE); pip install -r _generated_reqs.txt
 	@. $(ACTIVATE); pip install -e .
 	$(MAKE) print_finish
 
