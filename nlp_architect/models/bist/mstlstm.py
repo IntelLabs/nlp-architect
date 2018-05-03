@@ -13,27 +13,31 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
+# pylint: disable=no-name-in-module
+
 from __future__ import unicode_literals, print_function, division, \
     absolute_import
 
 import random
 import time
+from collections import namedtuple
 from operator import itemgetter
 
-# pylint: disable=no-name-in-module
 from dynet import ParameterCollection, AdamTrainer, LSTMBuilder, tanh, \
     logistic, rectify, cmult, SimpleRNNBuilder, concatenate, np, renew_cg, \
     esum
+from nlp_architect.models.bist.utils import read_conll
 
-from nlp_architect.bist.bmstparser import decoder
-from nlp_architect.bist.bmstparser.parser_utils import ConllEntry, read_conll
+from nlp_architect.data.conll import ConllEntry
+from nlp_architect.models.bist import decoder
 
 
 class MSTParserLSTM:
-    """
-    A bidirectional LSTM model
-    """
+    """Underlying LSTM model for MSTParser used by BIST parser."""
     def __init__(self, vocab, w2i, pos, rels, options):
+        if isinstance(options, dict):
+            options = dict_to_obj(options, 'Values')
+
         self.model = ParameterCollection()
         random.seed(1)
         self.trainer = AdamTrainer(self.model)
@@ -380,3 +384,7 @@ class MSTParserLSTM:
 
         self.trainer.update()
         print("Loss: ", mloss / i_sentence)
+
+
+def dict_to_obj(dic: dict, name='Object'):
+    return namedtuple(name, dic.keys())(*dic.values())

@@ -16,7 +16,6 @@
 from __future__ import unicode_literals, print_function, division, \
     absolute_import
 
-import argparse
 import io
 import sys
 import unittest
@@ -568,7 +567,7 @@ def evaluate_wrapper(gold_file: str, system_file: str, weights_file: str):
 
 
 def run_conllu_eval(gold_file: str, test_file: str,  weights_file: str= 'weights.clas',
-                    verbose: bool=False):
+                    verbose: bool=True):
     # Use verbose if weights are supplied
     if weights_file is not None and not verbose:
         verbose = True

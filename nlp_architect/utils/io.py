@@ -18,8 +18,11 @@ from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
 from __future__ import absolute_import
+
+import io
 import posixpath
 import zipfile
+from os import walk, path
 
 import requests
 from tqdm import tqdm
@@ -66,3 +69,15 @@ def unzip_file(filepath):
     z = zipfile.ZipFile(filepath, 'r')
     z.extractall('.')
     z.close()
+
+
+def walk_directory(directory):
+    """Iterates a directory's text files and their contents."""
+    for dir_path, _, filenames in walk(directory):
+        for filename in filenames:
+            file_path = path.join(dir_path, filename)
+            if path.isfile(file_path) and not filename.startswith('.'):
+                with io.open(file_path, 'r', encoding='utf-8') as file:
+                    print('Reading ' + filename)
+                    doc_text = file.read()
+                    yield filename, doc_text
