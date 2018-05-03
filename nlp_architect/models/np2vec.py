@@ -28,9 +28,16 @@ logger = logging.getLogger(__name__)
 
 class NP2vec:
     """
-    Initialize the np2vec model and train it.
+    Initialize the np2vec model, train it, save it and load it.
     """
+
     def is_marked(self, s):
+        """
+        Check if a string is marked.
+
+        Args:
+            s (str): string to check
+        """
         return len(s) > 0 and s[-1] == self.mark_char
 
     def __init__(
@@ -54,10 +61,56 @@ class NP2vec:
             min_n=3,
             max_n=6,
             word_ngrams=1):
+        """
+        Initialize np2vec model and train it.
+
+        Args:
+          corpus (str): path the file with the input marked corpus
+          corpus_format (str {json,txt}): format of the input marked corpus; txt and json
+          formats are supported. For json format, the file should contain an iterable of
+          sentences. Each sentence is a list of terms (unicode strings) that will be used for
+          training.
+          mark_char (char): special character that marks NP's suffix.
+          word_embedding_type (str {word2vec,fasttext}): word embedding model type; word2vec and
+          fasttext are supported.
+          np2vec_model_file (str): path to the file where the trained np2vec model has to be
+          stored.
+          binary (bool): boolean indicating whether the model is stored in binary format; if
+          word_embedding_type is fasttext and word_ngrams is 1, binary should be set to True.
+          sg (int {0,1}): model training hyperparameter, skip-gram. Defines the training
+          algorithm. If 1, CBOW is used,otherwise, skip-gram is employed.
+          size (int): model training hyperparameter, size of the feature vectors.
+          window (int): model training hyperparameter, maximum distance between the current and
+          predicted word within a sentence.
+          alpha (float): model training hyperparameter. The initial learning rate.
+          min_alpha (float): model training hyperparameter. Learning rate will linearly drop to
+          `min_alpha` as training progresses.
+          min_count (int): model training hyperparameter, ignore all words with total frequency
+          lower than this.
+          sample (float): model training hyperparameter, threshold for configuring which
+          higher-frequency words are randomly downsampled, useful range is (0, 1e-5)
+          workers (int): model training hyperparameter, number of worker threads.
+          hs (int {0,1}): model training hyperparameter, hierarchical softmax. If set to 1,
+          hierarchical softmax will be used for model training. If set to 0, and `negative` is non-
+                        zero, negative sampling will be used.
+          negative (int): model training hyperparameter, negative sampling. If > 0, negative
+          sampling will be used, the int for negative specifies how many "noise words" should be
+          drawn (usually between 5-20). If set to 0, no negative sampling is used.
+          cbow_mean (int {0,1}): model training hyperparameter. If 0, use the sum of the context
+          word vectors. If 1, use the mean, only applies when cbow is used.
+          iter (int): model training hyperparameter, number of iterations.
+          min_n (int): fasttext training hyperparameter. Min length of char ngrams to be used
+          for training word representations.
+          max_n (int): fasttext training hyperparameter. Max length of char ngrams to be used for
+          training word representations. Set `max_n` to be lesser than `min_n` to avoid char
+          ngrams being used.
+          word_ngrams (int {0,1}): fasttext training hyperparameter. If 1, uses enrich word
+          vectors with subword (ngrams) information. If 0, this is equivalent to word2vec training.
+
+        """
 
         self.mark_char = mark_char
         self.word_embedding_type = word_embedding_type
-        self.word_ngrams = word_ngrams
         self.sg = sg
         self.size = size
         self.window = window
@@ -84,7 +137,7 @@ class NP2vec:
             sys.exit(0)
 
         if word_embedding_type == 'fasttext' and word_ngrams == 1:
-            # remove the '_' at the end for subword fasttext model training
+            # remove the marking character at the end for subword fasttext model training
             for i, sentence in enumerate(self._sentences):
                 self._sentences[i] = [
                     w[:-1] if self.is_marked(w) else w for w in sentence]
@@ -139,6 +192,10 @@ class NP2vec:
     def save(self, np2vec_model_file='np2vec.model', binary=False):
         """
         Save the np2vec model.
+
+        Args:
+            np2vec_model_file (str): the file containing the np2vec model to load
+            binary (bool): boolean indicating whether the np2vec model to load is in binary format
         """
         if self.word_embedding_type == 'fasttext' and self.word_ngrams == 1:
             if not binary:
@@ -163,8 +220,8 @@ class NP2vec:
                 fout.write(utils.to_utf8("%s %s\n" % (total_vec, vector_size)))
                 # store NP vectors in sorted order: most frequent NP's at the top
                 for word, vocab in sorted(
-                    iteritems(
-                        self.model.wv.vocab), key=lambda item: -item[1].count):
+                        iteritems(
+                            self.model.wv.vocab), key=lambda item: -item[1].count):
                     if self.is_marked(word):
                         row = self.model.wv.syn0[vocab.index]
                         if binary:
@@ -181,7 +238,16 @@ class NP2vec:
     @classmethod
     def load(cls, np2vec_model_file, binary=False, word_ngrams=0):
         """
-        Load the np2vec model
+        Load the np2vec model.
+
+        Args:
+            np2vec_model_file (str): the file containing the np2vec model to load
+            binary (bool): boolean indicating whether the np2vec model to load is in binary format
+            word_ngrams (int {1,0}): If 1, np2vec model to load uses word vectors with subword (
+            ngrams) information.
+
+        Returns:
+            np2vec model to load
         """
         if word_ngrams == 0:
             return KeyedVectors.load_word2vec_format(
