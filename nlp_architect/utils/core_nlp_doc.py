@@ -50,6 +50,7 @@ def fix_gov_indexes(merged_punct_sentence, sentence):
 def merge_punctuation(sentence):
     merged_punct_sentence = []
     tmp_punct_text = None
+    punct_text = None
     last_merged_punct_index = -1
     for tok_index, token in enumerate(sentence):
         if token['rel'] == 'punct':

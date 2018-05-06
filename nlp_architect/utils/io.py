@@ -59,25 +59,15 @@ def download_file(url, sourcefile, destfile, totalsz=None):
     print("Download Complete")
 
 
-def unzip_file(filepath):
+def unzip_file(filepath, outpath='.'):
     """
     Unzip a file to the same location of filepath
 
     Args:
         filepath (str): path to file
+        outpath (str): path to extract to
+
     """
     z = zipfile.ZipFile(filepath, 'r')
-    z.extractall('.')
+    z.extractall(outpath)
     z.close()
-
-
-def walk_directory(directory):
-    """Iterates a directory's text files and their contents."""
-    for dir_path, _, filenames in walk(directory):
-        for filename in filenames:
-            file_path = path.join(dir_path, filename)
-            if path.isfile(file_path) and not filename.startswith('.'):
-                with io.open(file_path, 'r', encoding='utf-8') as file:
-                    print('Reading ' + filename)
-                    doc_text = file.read()
-                    yield filename, doc_text

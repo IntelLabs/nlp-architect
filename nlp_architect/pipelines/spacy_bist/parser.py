@@ -144,7 +144,8 @@ def download_pretrained_model():
         download_file('https://s3-us-west-1.amazonaws.com/nervana-modelzoo/parse/',
                       'bist-pretrained.zip', path.join(SpacyBISTParser.dir, 'bist-pretrained.zip'))
         print('Unzipping...')
-        unzip_file(path.join(SpacyBISTParser.dir, 'bist-pretrained.zip'))
+        unzip_file(path.join(SpacyBISTParser.dir, 'bist-pretrained.zip'),
+                   outpath=SpacyBISTParser.dir)
         print('Done.')
 
 
