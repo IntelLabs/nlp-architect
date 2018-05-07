@@ -1,5 +1,5 @@
 .. ---------------------------------------------------------------------------
-.. Copyright 2016-2018 Intel Corporation
+.. Copyright 2017-2018 Intel Corporation
 ..
 .. Licensed under the Apache License, Version 2.0 (the "License");
 .. you may not use this file except in compliance with the License.
@@ -26,12 +26,6 @@ Representations <https://www.transacl.org/ojs/index.php/tacl/article/viewFile/88
 Further materials could be found
 `here <http://elki.cc/#/article/Simple%20and%20Accurate%20Dependency%20Parsing%20Using%20Bidirectional%20LSTM%20Feature%20Representations>`__.
 
-Installation
-=============
-
-.. code:: bash
-
-    pip install -r requirements.txt
 
 Dependencies
 ============
@@ -39,164 +33,132 @@ Dependencies
 -  **Python** 3.5+
 -  **dynet** 2.0.2
 -  **numpy** 1.14.0
--  **cython** 0.27.3
 
 Usage
 =====
 
-The module can be imported and used in python or invoked from the
-command line. To import in python type the following:
+To use the module, import it like so:
 
 .. code:: python
 
-    from libs.bist.model import BISTParser
+    from nlp_architect.bist import BISTModel
 
 Training
 ========
 
-The software requires having a ``train.conll`` and ``dev.conll`` files
-formatted according to the `CoNLL data
-format <http://universaldependencies.org/format.html>`__. The benchmark
-was performed on a Mac book pro with i7 processor. The parser achieves
-an accuracy of 93.8 UAS on the standard Penn Treebank dataset (Standford
-Dependencies). The trained models include improvements beyond those
-described in the paper, to be published soon.
+Training the parser requires having a ``train.conll``
+formatted according to the `CoNLL data format <http://universaldependencies.org/format.html>`__,
+annotated with part-of-speech tags and dependencies.
+The benchmark was performed on a Mac book pro with i7 processor. The parser achieves
+an accuracy of 93.8 UAS on the standard Penn Treebank dataset (Standford Dependencies).
 
-To train a parsing model type the following:
 
-**Python**
+Basic Example
+-------------
 
-.. code:: python
-
-    parser = BISTParser()
-    model = parser.train(outdir='output/dir', train='train.conll', dev='dev.conll', epochs=30, lstmdims=125, lstmlayers=2, pembedding=25, activation=tanh)
-
-**Command line**
-
-.. code:: bash
-
-    python train.py --outdir [output/dir] --train train.conll --dev dev.conll [--epochs 30] [--lstmdims 125] [--lstmlayers 2] [--pembedding 25] [--activation tanh]
-
-**The training process produces the following files in the output
-directory:**
-
-- *params.pickle* - parameters file required for loading the model afterwards (should be in the same directory as the .model file)
-- for each completed epoch, denoted by **n**:
-
-  - *dev\_epoch\_n.conll* - prediction results on dev file after **n** iterations
-  - *dev\_epoch\_n.conll.txt* - accuracy results on dev file after **n** iterations
-  - *bist\_epoch\_n.model* - the generated model after **n** iterations
-
-.. note::
-  The arguments in brackets are optional (see example 1 below);
-  their default values appear above. These are the values used for
-  training the pre-trained model.
-
-.. note::
-  You can train without pos embeddings by specifying (--pembedding 0).
-
-.. note::
-  The reported test result is the one matching the highest development score.
-
-.. note::
-  The parser calculates the accuracies excluding punctuation symbols by running the ``eval.pl`` script from the CoNLL-X Shared Task
-
-Example 1
-~~~~~~~~~
-
-**Python**
+To train a parsing model with default parameters, type the following:
 
 .. code:: python
 
-    parser = BISTParser()
-    model = parser.train(outdir='out', train='train.conll', dev='dev.conll')
+    parser = BISTModel()
+    parser.fit('path/to/train.conll')
 
-**Command line**
 
-.. code:: bash
+Exhaustive Example
+------------------
 
-      python train.py --outdir out --train train.conll --dev dev.conll
-
-Example 2
-~~~~~~~~~
-
-**Python**
+Optionally, the following model/trainng parameters can be supplied (overriding their default
+values listed below):
 
 .. code:: python
 
-    parser = BISTParser()
-    model = parser.train(outdir='out', train='train.conll', dev='dev.conll', activation='relu', epochs=20)
+    parser = BISTModel(activation='tanh', lstm_layers=2, lstm_dims=125, pos_dims=25)
+    parser.fit('path/to/train.conll', epochs=10)
 
-**Command line**
 
-.. code:: bash
+Conducting Intermediate Evaluations
+-----------------------------------
 
-    python train.py --outdir out --train train.conll --dev dev.conll --activation relu --epochs 20
+If a path to a development dataset file (annotated with POS tags and dependencies) is supplied,
+intermediate model evaluations are conducted:
+
+.. code:: python
+
+    parser = BISTModel()
+    parser.fit('path/to/train.conll', dev='path/to/dev.conll')
+
+  For each completed epoch, denoted by **n**, the following files will be created in the dataset's
+  directory:
+  - *dev_epoch_n_pred.conll* - prediction results on dev file after **n** iterations.
+  - *dev_epoch_n_pred_eval.txt* - accuracy results of the above predictions.
 
 Inference
----------
+=========
 
-The input file for inference must be annotated with part-of-speech tags,
-in the `CoNLL data
-format <http://universaldependencies.org/format.html>`__.
+Once you have a trained ``BISTModel``, there are two acceptable input modes for running inference
+with it. For both modes, the input must be annotated with part-of-speech tags.
 
-To run inference on an input file with a previously trained model type
-the following:
+File Input Mode
+---------------
 
-**Python**
-
-.. code:: python
-
-    parser = BISTParser()
-    results = parser.inference(outdir='output/dir', input='input.conll', model='.model/file', eval=True)
-
-**Command line**
-
-.. code:: bash
-
-    python inference.py --outdir [output/dir] --input input.conll --model [.model/file] [--eval]
-
-**The inference process produces the following files in the output directory:**
-
-- *inference\_res.conll* - prediction results on the input file
-- *inference\_res.conll.txt* - accuracy results on achieved on input file (see Note 3 below)
-
-.. note::
-  The arguments in brackets are optional; their default values appear above.
-
-.. note::
-  The model file has to be in the same directory as the params.pickle file generated during its training.
-
-.. note::
-  Accuracy results are generated only if the ``eval`` flag was specified and the input file is annotated with dependencies. This evaluation is produced by the ``eval.pl`` script.
-
-Example 1
-~~~~~~~~~
-
-**Python**
+Supply a path to a dataset file in the
+`CoNLL data format <http://universaldependencies.org/format.html>`__.
 
 .. code:: python
 
-    parser = BISTParser()
-    trained_model = parser.train(outdir='out', train='train.conll', dev='dev.conll')
-    results = parser.inference(model=trained_model, outdir='out', input='input.conll')
+    predictions = parser.predict(dataset='path/to/test.conll')
 
-Example 2
-~~~~~~~~~
+After running the above example, ``predictions`` will hold the input sentences with annotated
+dependencies, as a collection of ``ConllEntry`` objects, where each ``ConllEntry`` represents an
+annotated token.
 
-**Python**
+ConllEntry Input Mode
+---------------------
+
+Supply a list of sentences, where each sentence is a list of annotated tokens, represented by
+``ConllEntry`` instances.
 
 .. code:: python
 
-    parser = BISTParser()
-    results = parser.inference(model='bist_epoch_1.model', outdir='out', input='input.conll')
+    predictions = parser.predict(conll='path/to/test.conll')
 
-**Command line**
+Evaluating Predictions
+----------------------
 
-.. code:: bash
+Running an evaluation requires the following:
+- Inference must be run in file input mode
+- The input file must be annotated with dependencies as well
 
-    python inference.py --outdir out --input input.conll --model bist_epoch_1.model --eval
+To evaluate predictions immediately after they're generated, type the following:
+
+.. code:: python
+
+    predictions = parser.predict(dataset='path/to/test.conll', evaluate=True)
+
+This will produce 2 files in your input dataset's directory:
+- *test_pred.conll* - predictions file in CoNLL format
+- *test_pred_eval.txt* - evaluation report text file
+
+Saving and Loading a Model
+==========================
+
+To save a ``BISTModel`` to some path, type:
+
+.. code:: python
+
+    parser.save('path/to/bist.model')
+
+This operation will also produce a model parameters file named *params.json*, in the same directory.
+This file is required for loading the model afterwards.
+
+To load a ``BISTModel`` from some path, type:
+
+.. code:: python
+
+    parser.load('path/to/bist.model')
+
+Note that this operation will also look for the *params.json* in the same directory.
 
 Citations
----------
+=========
 * Kiperwasser, E., & Goldberg, Y. (2016). Simple and Accurate Dependency Parsing Using Bidirectional LSTM Feature Representations. Transactions Of The Association For Computational Linguistics, 4, 313-327. https://transacl.org/ojs/index.php/tacl/article/view/885/198

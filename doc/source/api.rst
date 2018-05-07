@@ -1,5 +1,5 @@
 .. ---------------------------------------------------------------------------
-.. Copyright 2016-2018 Intel Corporation
+.. Copyright 2017-2018 Intel Corporation
 ..
 .. Licensed under the Apache License, Version 2.0 (the "License");
 .. you may not use this file except in compliance with the License.
@@ -41,14 +41,14 @@ to train the model weights, perform inference, and save/load the model.
    :toctree: generated/
    :nosignatures:
 
-   nlp_architect.chunker.ChunkerModel
-   nlp_architect.intent_extraction.JointSequentialLSTM
-   nlp_architect.intent_extraction.EncDecTaggerModel
-   nlp_architect.np2vec.np2vec.NP2vec
-   nlp_architect.np_semantic_segmentation.model.NpSemanticSegClassifier
+   nlp_architect.models.chunker_model.ChunkerModel
+   nlp_architect.models.intent_extraction.JointSequentialLSTM
+   nlp_architect.models.intent_extraction.EncDecTaggerModel
+   nlp_architect.models.np2vec.NP2vec
+   nlp_architect.models.semantic_segmentation.NpSemanticSegClassifier
    nlp_architect.bist.bmstparser.mstlstm.MSTParserLSTM
-   models.memn2n_dialogue.model.MemN2N_Dialog
-   models.kvmemn2n.model.KVMemN2N
+   nlp_architect.models.memn2n_dialogue.MemN2N_Dialog
+   nlp_architect.models.kvmemn2n.KVMemN2N
 
 
 ``nlp_architect.layers``
@@ -62,14 +62,14 @@ These are currently stored in the various models
    :toctree: generated/
    :nosignatures:
 
-   nlp_architect.chunker.model.TimeDistributedRecurrentOutput
-   nlp_architect.chunker.model.TimeDistributedRecurrentLast
-   nlp_architect.chunker.model.TimeDistBiLSTM
-   models.reading_comprehension.ngraph_implementation.layers.MatchLSTMCell_withAttention
-   models.reading_comprehension.ngraph_implementation.layers.AnswerPointer_withAttention
-   models.reading_comprehension.ngraph_implementation.layers.Dropout_Modified
-   models.reading_comprehension.ngraph_implementation.layers.LookupTable
-   models.memn2n_dialogue.model.ModifiedLookupTable
+   nlp_architect.models.chunker_model.TimeDistributedRecurrentOutput
+   nlp_architect.models.chunker_model.TimeDistributedRecurrentLast
+   nlp_architect.models.chunker_model.TimeDistBiLSTM
+   nlp_architect.contrib.ngraph.match_lstm.MatchLSTMCell_withAttention
+   nlp_architect.contrib.ngraph.match_lstm.AnswerPointer_withAttention
+   nlp_architect.contrib.ngraph.match_lstm.Dropout_Modified
+   nlp_architect.contrib.ngraph.match_lstm.LookupTable
+   nlp_architect.contrib.ngraph.modified_lookup_table.ModifiedLookupTable
 
 
 
@@ -84,13 +84,13 @@ these will be placed into a central repository.
     :toctree: generated/
     :nosignatures:
 
-    nlp_architect.chunker.data.TaggedTextSequence
-    nlp_architect.chunker.data.MultiSequenceDataIterator
-    nlp_architect.chunker.data.CONLL2000
-    nlp_architect.chunker.model.DataInput
-    nlp_architect.intent_extraction.data.IntentDataset
-    nlp_architect.intent_extraction.data.ATIS
-    nlp_architect.intent_extraction.data.SNIPS
-    nlp_architect.np_semantic_segmentation.data.NpSemanticSegData
-    models.memn2n_dialogue.data.BABI_Dialog
-    models.kvmemn2n.data.WIKIMOVIES
+    nlp_architect.data.conll2000.TaggedTextSequence
+    nlp_architect.data.conll2000.MultiSequenceDataIterator
+    nlp_architect.data.conll2000.CONLL2000
+    nlp_architect.data.conll2000.DataInput
+    nlp_architect.data.intent_extraction.IntentDataset
+    nlp_architect.data.intent_extraction.ATIS
+    nlp_architect.data.intent_extraction.data.SNIPS
+    nlp_architect.data.semantic_seg_data.NpSemanticSegData
+    nlp_architect.data.babi_dialog.BABI_Dialog
+    nlp_architect.data.wikimovies.WIKIMOVIES

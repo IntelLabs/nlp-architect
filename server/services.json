@@ -1,0 +1,5 @@
+{
+  "api_folders_path" : "nlp_architect.api.",
+  "bist" : {"file_name": "bist_parser_api.py", "type": "core"},
+  "spacy_ner" : {"file_name": "spacy_ner_api.py", "type": "high_level"}
+}

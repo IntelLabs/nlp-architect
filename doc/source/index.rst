@@ -1,5 +1,5 @@
 .. ---------------------------------------------------------------------------
-.. Copyright 2016-2018 Intel Corporation
+.. Copyright 2017-2018 Intel Corporation
 ..
 .. Licensed under the Apache License, Version 2.0 (the "License");
 .. you may not use this file except in compliance with the License.
@@ -40,6 +40,7 @@ The library includes our past and ongoing NLP research efforts as part of Intel 
 
    overview.rst
    installation.rst
+   service.rst
 
 .. toctree::
    :hidden:
@@ -57,7 +58,7 @@ The library includes our past and ongoing NLP research efforts as part of Intel 
 .. toctree::
    :hidden:
    :maxdepth: 1
-   :caption: Models
+   :caption: End to End Models
 
    reading_comprehension.rst
    memn2n.rst

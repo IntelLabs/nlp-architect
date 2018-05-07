@@ -1,5 +1,5 @@
 .. ---------------------------------------------------------------------------
-.. Copyright 2016-2018 Intel Corporation
+.. Copyright 2017-2018 Intel Corporation
 ..
 .. Licensed under the Apache License, Version 2.0 (the "License");
 .. you may not use this file except in compliance with the License.
@@ -62,7 +62,7 @@ The library contains state-of-art and novel Natural Language Processing (NLP) an
 - Intent type detection and Slot tagging model for Intent based applications
 - Memory Networks for goal-oriented dialog
 - Noun phrase embedding vectors model
-- Noun phrase semantic segmenatation
+- Noun phrase semantic segmentation
 - Text chunking
 - Reading comprehension
 

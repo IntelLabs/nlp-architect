@@ -27,9 +27,9 @@ from neon.util.argparser import NeonArgparser
 import logging
 import numpy as np
 from nltk.corpus import wordnet as wn
-from models.most_common_word_sense.feature_extraction import extract_features_envelope
-from models.most_common_word_sense.feature_extraction import extract_synset_data
-from models.most_common_word_sense.data import read_inference_input_examples_file
+from feature_extraction import extract_features_envelope
+from feature_extraction import extract_synset_data
+from nlp_architect.word_sense_data import read_inference_input_examples_file
 from termcolor import colored
 
 logger = logging.getLogger(__name__)

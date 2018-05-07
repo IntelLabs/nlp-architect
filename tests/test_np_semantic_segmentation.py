@@ -1,9 +1,8 @@
-import pytest
 import os
 from neon.backends import gen_backend
-from models.np_semantic_segmentation.data import NpSemanticSegData, read_csv_file_data
-from models.np_semantic_segmentation.train import train_mlp_classifier
-from models.np_semantic_segmentation.inference import classify_collocation, extract_y_labels, \
+from core_models.np_semantic_segmentation.data import NpSemanticSegData, read_csv_file_data
+from core_models.np_semantic_segmentation.train import train_mlp_classifier
+from core_models.np_semantic_segmentation.inference import classify_collocation, extract_y_labels,\
     print_evaluation, write_results
 
 

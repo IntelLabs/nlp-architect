@@ -1,8 +1,0 @@
-nltk==3.2.5
-tqdm==4.19.5
-requests==2.18.4
-palmettopy==3.1
-numpy==1.13.3
-gensim==3.0.1
-asposebarcode==1.0.0
-neon==0.1.2

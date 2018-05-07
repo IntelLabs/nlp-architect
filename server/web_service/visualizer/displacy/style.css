@@ -1,0 +1,68 @@
+/* Format all words in 12px Helvetica and grey */
+
+.displacy-word {
+    font: 20px Helvetica, Arial, sans-serif;
+    color: black;
+}
+
+
+
+/* Make all pos (tags that start with "regular") green */
+
+.displacy-tag {
+    color: #00e039;;
+}
+
+/* Make all noun phrases (tags that start with "NN") orange */
+
+.displacy-tag[data-tag^="NN"] {
+    color: #ff6800;
+}
+
+/* Make all noun phrases (tags that start with "V") pink */
+
+.displacy-tag[data-tag^="V"] {
+    color: #f750cd;
+}
+
+/* Make all noun phrases (tags that start with "J") purple  */
+
+.displacy-tag[data-tag^="J"] {
+    color: #18eafd;
+}
+
+
+
+/* Make all right arrows red and hide their labels */
+
+.displacy-arc,
+.displacy-arrowhead{
+    color: #bfbfbf;
+}
+
+
+.entities {
+    line-height: 2;
+}
+
+[data-entity] {
+    padding: 0.25em 0.35em;
+     margin: 0px 0.25em;
+     line-height: 1;
+     display: inline-block;
+     border-radius: 0.25em;
+     border: 1px solid;
+}
+
+[data-entity]::after {
+    box-sizing: border-box;
+    content: attr(data-entity);
+    font-size: 0.6em;
+    line-height: 1;
+    padding: 0.35em;
+    border-radius: 0.35em;
+    text-transform: uppercase;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0px 0px 0.1rem 0.5rem;
+}
