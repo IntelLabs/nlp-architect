@@ -15,20 +15,17 @@ Use ```pip install -r requirements.txt```
 <b>Goal Oriented Dialog </b>
 ![Goal oriented dialog picture](https://i.imgur.com/5pQJqjM.png)
 
-# Datasets 
-The dataset used for training and evaluation is under the umbrella of the Facebook bAbI dialog tasks (https://research.fb.com/downloads/babi/). There are six separate tasks, tasks 1 through 5 are from simulated conversations between a customer and a restaurant booking bot (created by Facebook), and task 6 is more realistic natural language restaurant booking conversations as part of the dialog state tracking challenge (https://www.microsoft.com/en-us/research/event/dialog-state-tracking-challenge/).
-
 ## Files
 
 - <b>train_model.py</b>: Training script to load dataset and train memory network.
-- <b>model.py</b>: Implementation of MemN2N_Dialog class for dialogue tasks. 
 - <b>interactive.py</b>: Inference script to run interactive session with a trained goal oriented dialog agent.
 - <b>utils.py</b>: Utilities to support interactive mode and simulate backend database.
-- <b>data.py</b>: Data loader class to download data if not present and perform preprocessing.
 - <b>tests.py</b>: Unit tests for custom lookuptable layer.
+- <b>ai-lab-nlp/nlp_architect/models/memn2n_dialogue.py</b>: Implementation of MemN2N_Dialog class for dialogue tasks. 
+- <b>ai-lab-nlp/nlp_architect/data/babi_dialog.py</b>: Data loader class to download data if not present and perform preprocessing.
 
 ## Datasets 
-The dataset used for training and evaluation is under the umbrella of the Facebook bAbI dialog tasks (https://research.fb.com/downloads/babi/). The dataset is automatically downloaded if not found, and the preprocessing all happens at the beginning of training.
+The dataset used for training and evaluation is under the umbrella of the Facebook bAbI dialog tasks (https://research.fb.com/downloads/babi/). The dataset can be downloaded from the command line if not found, and the preprocessing all happens at the beginning of training.
 
 There are six separate tasks, tasks 1 through 5 are from simulated conversations between a customer and a restaurant booking bot (created by Facebook), and task 6 is more realistic natural language restaurant booking conversations as part of the dialog state tracking challenge (https://www.microsoft.com/en-us/research/event/dialog-state-tracking-challenge/).
 
