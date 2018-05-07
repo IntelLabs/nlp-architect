@@ -15,8 +15,9 @@ falcon
 falcon_multipart
 pillow
 Ptable
-spacy
-keras
+spacy>=2.0
+keras==2.1.5
+keras-contrib==2.0.8
 nervananeon==2.6.0
 dynet==2.0.2
 -e git+https://github.com/NervanaSystems/ngraph-python.git#egg=ngraph
