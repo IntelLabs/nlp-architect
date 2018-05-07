@@ -148,10 +148,10 @@ def get_data_array_squad(params_dict, data_train, set_val='train'):
 
             if set_val == 'train':
                 count += 1
-                if count >=params_dict['train_set_size']:
+                if count >= params_dict['train_set_size']:
                     break
 
-    print (len(train_set))
+    print(len(train_set))
     return train_set
 
 
@@ -243,3 +243,9 @@ def obtain_indices(preds_start, preds_end):
         ans_end.append(en_idx)
 
     return (np.array(ans_start), np.array(ans_end))
+
+
+def sanitize_path(path):
+    s_path = os.path.abspath(path)
+    assert len(s_path) < 255
+    return s_path

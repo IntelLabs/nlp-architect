@@ -35,42 +35,44 @@ parser = argparse.ArgumentParser()
 
 parser.add_argument(
     '--data_path',
-    default='/nfs/site/home/snitturs/squad/code/data/',
+    default='',
     help='enter path for training data')
 
 parser.add_argument('--gpu_id', default="2",
                     help='enter gpu id')
 
-parser.add_argument('--max_para_req', default=300,type=int,
+parser.add_argument('--max_para_req', default=300, type=int,
                     help='enter the max length of paragraph')
 
-parser.add_argument('--epochs', default=30,type=int,
+parser.add_argument('--epochs', default=30, type=int,
                     help='enter the number of epochs')
 
 parser.add_argument('--select_device', default='GPU',
                     help='enter the device to execute on')
 
 
-parser.add_argument('--train_set_size',default=None, type=int,
+parser.add_argument('--train_set_size', default=None, type=int,
                     help='enter the length of training set size')
 
 
-parser.add_argument('--hidden_size',default=150, type=int,
+parser.add_argument('--hidden_size', default=150, type=int,
                     help='enter the number of hidden units')
 
-parser.add_argument('--embed_size',default=300, type=int,
+parser.add_argument('--embed_size', default=300, type=int,
                     help='enter the size of embeddings')
 
-parser.add_argument('--model_dir',default='trained_model', type=str,
+parser.add_argument('--model_dir', default='trained_model', type=str,
                     help='enter path to model(save or restore)')
 
-parser.add_argument('--restore_training',default=False, type=bool,
-                    help='Choose whether to restore training from a previously saved model')
+parser.add_argument(
+    '--restore_training',
+    default=False,
+    type=bool,
+    help='Choose whether to restore training from a previously saved model')
 
 
-
-parser.add_argument('--batch_size',default=64,type=int,
-                     help='enter the batch size')
+parser.add_argument('--batch_size', default=64, type=int,
+                    help='enter the batch size')
 
 parser.set_defaults()
 
@@ -80,7 +82,7 @@ os.environ["CUDA_VISIBLE_DEVICES"] = args.gpu_id
 hidden_size = args.hidden_size
 gradient_clip_value = 15
 embed_size = args.embed_size
-#create a dictionary of all parameters
+# create a dictionary of all parameters
 params_dict = {}
 params_dict['batch_size'] = args.batch_size
 params_dict['embed_size'] = args.embed_size
@@ -89,52 +91,64 @@ params_dict['hidden_size'] = hidden_size
 params_dict['glove_dim'] = 300
 params_dict['iter_interval'] = 8000
 params_dict['num_iterations'] = 500000
-params_dict['max_para']=args.max_para_req
-params_dict['epoch_no']=args.epochs
+params_dict['max_para'] = args.max_para_req
+params_dict['epoch_no'] = args.epochs
 # Set Configs
 config = tf.ConfigProto()
 config.gpu_options.allow_growth = True
 
-#paths for data files
-path_gen = args.data_path
-train_para_file = os.path.join(path_gen + 'squad/train.context')
-train_para_ids = os.path.join(path_gen + 'squad/train.ids.context')
-train_ques_file = os.path.join(path_gen + 'squad/train.question')
-train_ques_ids = os.path.join(path_gen + 'squad/train.ids.question')
-answer_file = os.path.join(path_gen + 'squad/train.span')
-vocab_file = os.path.join(path_gen + 'squad/vocab.dat')
-val_paras_ids = os.path.join(path_gen + 'squad/dev.ids.context')
-val_ques_ids = os.path.join(path_gen + 'squad/dev.ids.question')
-val_ans_file = os.path.join(path_gen + 'squad/dev.span')
-vocab_file = os.path.join(path_gen + 'squad/vocab.dat')
+# paths for data files
+try:
+    assert os.path.exists(args.data_path)
+except:
+    print("Please enter a valid data path")
+    exit()
 
-#Create lists for train and validation sets
+data_path = sanitize_path(args.data_path)
+
+path_gen = data_path
+train_para_file = os.path.join(path_gen + '/squad/train.context')
+train_para_ids = os.path.join(path_gen + '/squad/train.ids.context')
+train_ques_file = os.path.join(path_gen + '/squad/train.question')
+train_ques_ids = os.path.join(path_gen + '/squad/train.ids.question')
+answer_file = os.path.join(path_gen + '/squad/train.span')
+vocab_file = os.path.join(path_gen + '/squad/vocab.dat')
+val_paras_ids = os.path.join(path_gen + '/squad/dev.ids.context')
+val_ques_ids = os.path.join(path_gen + '/squad/dev.ids.question')
+val_ans_file = os.path.join(path_gen + '/squad/dev.span')
+vocab_file = os.path.join(path_gen + '/squad/vocab.dat')
+
+# Create lists for train and validation sets
 data_train = create_squad_training(train_para_ids, train_ques_ids, answer_file)
 data_dev = create_squad_training(val_paras_ids, val_ques_ids, val_ans_file)
 
-if args.train_set_size == None:
-    params_dict['train_set_size']=len(data_train)
+if not os.path.exists(args.model_dir):
+    os.makedirs(args.model_dir)
+    model = args.model_dir
+
+if args.train_set_size is None:
+    params_dict['train_set_size'] = len(data_train)
 
 # Combine train and dev data
 data_total = data_train + data_dev
 
-#obtain maximum length of question
+# obtain maximum length of question
 _, max_question = max_values_squad(data_total)
 params_dict['max_question'] = max_question
 
 # Load embeddings for vocab
-print ('Loading Embeddings')
+print('Loading Embeddings')
 embeddingz = np.load(
     os.path.join(
         path_gen +
-        "squad/glove.trimmed_zeroinit.300.npz"))
+        "/squad/glove.trimmed_zeroinit.300.npz"))
 embeddings = embeddingz['glove']
 print("creating training Set ")
-train = get_data_array_squad(params_dict, data_train,set_val='train')
-dev = get_data_array_squad(params_dict,data_dev,set_val='val')
+train = get_data_array_squad(params_dict, data_train, set_val='train')
+dev = get_data_array_squad(params_dict, data_dev, set_val='val')
 
-#Define Model Graph
-with tf.device('/device:'+args.select_device+':0'):
+# Define Model Graph
+with tf.device('/device:' + args.select_device + ':0'):
     model = Match_LSTM_AnswerPointer(params_dict, embeddings)
 
 
@@ -142,31 +156,28 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
     init = tf.global_variables_initializer()
     model_saver = tf.train.Saver()
 
-    if not os.path.exists('trained_model'):
-        os.makedirs('trained_model')
-
     train_dir = os.path.join(model_dir)
     ckpt = tf.train.get_checkpoint_state(train_dir)
     v2_path = ckpt.model_checkpoint_path + ".index" if ckpt else ""
-    if ckpt and args.restore_training and (tf.gfile.Exists(ckpt.model_checkpoint_path)
-                 or tf.gfile.Exists(v2_path)):
+    if ckpt and args.restore_training and (tf.gfile.Exists(
+            ckpt.model_checkpoint_path) or tf.gfile.Exists(v2_path)):
         model_saver.restore(sess, ckpt.model_checkpoint_path)
-        print ("Loading from previously stored session")
+        print("Loading from previously stored session")
     else:
         sess.run(init)
 
     dev_dict = create_data_dict(dev)
 
-    print ("Begin Training")
+    print("Begin Training")
 
     for epoch in range(params_dict['epoch_no']):
-        print ("Epoch Number is ", epoch)
-        #Shuffle Datset
+        print("Epoch Number is ", epoch)
+        # Shuffle Datset
         shuffle(train)
         train_dict = create_data_dict(train)
         model.run_loop(sess, train_dict, mode='train', dropout=0.6)
 
-        print ("Saving Weights")
+        print("Saving Weights")
         model_saver.save(sess, "%s/best_model.chk" % train_dir)
-        print ("\nRunning Validation Test")
+        print("\nRunning Validation Test")
         model.run_loop(sess, dev_dict, mode='val', dropout=1)
