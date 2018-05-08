@@ -20,6 +20,7 @@ from __future__ import unicode_literals
 from __future__ import absolute_import
 
 import io
+import os
 import posixpath
 import zipfile
 from os import walk, path
@@ -95,3 +96,9 @@ def validate(*args):
             num = len(arg[0]) if hasattr(arg[0], '__len__') else arg[0]
             if arg[2] and num < arg[2] or arg[3] and num > arg[3]:
                 raise ValueError
+
+
+def sanitize_path(path):
+    s_path = os.path.normpath('/' + path).lstrip('/')
+    assert len(s_path) < 255
+    return s_path

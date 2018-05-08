@@ -14,16 +14,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
+from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
-from __future__ import absolute_import
+
+import itertools
 from builtins import input
-import numpy as np
 from copy import copy
 from functools import reduce
-import itertools
-import os
+
+import numpy as np
 
 
 def interactive_loop(interactive_computation, babi):
@@ -220,9 +221,3 @@ def issue_api_call(api_call, db, names_to_idxs, kb_text, babi):
     # Return actual text kb entries
     kb_results = list(kb_text[returned_kb_idxs])
     return kb_results
-
-
-def sanitize_path(path):
-    s_path = os.path.normpath('/' + path).lstrip('/')
-    assert len(s_path) < 255
-    return s_path
