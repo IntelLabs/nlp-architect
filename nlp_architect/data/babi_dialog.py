@@ -26,6 +26,7 @@ import pickle
 import itertools
 import tarfile
 import os
+import sys
 
 
 def pad_sentences(sentences, sentence_length=None, dtype=np.int32, pad_val=0.):
@@ -63,10 +64,6 @@ def pad_stories(
     for i, story in enumerate(stories):
         X[i, :len(story)] = story
 
-        # Already adding time words in loader, so ignore for now.
-        # if use_time:
-        #     for j in range(len(story)):
-        #         X[i, j, -1] = vocab_size - max_story_length + len(story) - j
     return X
 
 
@@ -116,10 +113,11 @@ class BABI_Dialog(object):
         ]
 
         print('Preparing bAbI-dialog dataset or extracting from %s' % path)
-        print('Task is %s' % (self.tasks[self.task]))
 
         assert task in range(
             1, 7), "given task is not in the bAbI-dialog dataset"
+
+        print('Task is %s' % (self.tasks[self.task]))
 
         (self.train_file, self.dev_file, self.test_file, self.cand_file,
             self.kb_file, self.vocab_file, self.vectorized_file) = self.load_data()
@@ -229,7 +227,17 @@ class BABI_Dialog(object):
         self.workdir, filepath = valid_path_append(
             self.path, '', self.filename)
         if not os.path.exists(filepath):
-            fetch_file(self.url, self.filename, filepath, self.size)
+            print("bAbI-dialog dataset not found at: {}".format(filepath))
+            response = input("To download the dataset from {}, "
+                             "please type YES: ".format(self.url))
+
+            if response.lower().strip() == 'yes':
+                fetch_file(self.url, self.filename, filepath, self.size)
+            else:
+                print("Download declined. Response recieved: {} != YES. "
+                      "Please download the dataset manually and provide the "
+                      "path as the command line argument --data_dir".format(response))
+                sys.exit(0)
 
         self.babi_dir_name = self.filename.split('.')[0]
 
