@@ -20,7 +20,9 @@ from __future__ import unicode_literals
 from __future__ import absolute_import
 
 import argparse
+import os
 import pickle
+import sys
 
 import spacy
 from keras.preprocessing.sequence import pad_sequences
@@ -37,7 +39,14 @@ def read_input_args():
                         help='Path of model weights')
     parser.add_argument('--model_info_path', type=str, required=True,
                         help='Path of model topology')
-    return parser.parse_args()
+    input_args = parser.parse_args()
+    if not os.path.exists(input_args.model_path):
+        print('model_path file does not exist')
+        sys.exit(0)
+    if not os.path.exists(input_args.model_info_path):
+        print('model_info_path file does not exist')
+        sys.exit(0)
+    return input_args
 
 
 args = read_input_args()

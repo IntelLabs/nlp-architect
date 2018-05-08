@@ -20,8 +20,10 @@ from __future__ import unicode_literals
 from __future__ import absolute_import
 
 import argparse
+import os
 import pickle
 import pprint
+import sys
 
 from keras.utils import to_categorical
 
@@ -63,7 +65,17 @@ def read_input_args():
                         help='Path for saving model weights')
     parser.add_argument('--model_info_path', type=str, default='model_info.dat',
                         help='Path for saving model topology')
-    return parser.parse_args()
+    input_args = parser.parse_args()
+    if not os.path.exists(input_args.train_file):
+        print('train file does not exist')
+        sys.exit(0)
+    if not os.path.exists(input_args.test_file):
+        print('test file does not exist')
+        sys.exit(0)
+    if not os.path.exists(input_args.embedding_model):
+        print('word embedding model file does not exist')
+        sys.exit(0)
+    return input_args
 
 
 # parse the input
