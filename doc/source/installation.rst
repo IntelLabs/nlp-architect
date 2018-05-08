@@ -30,25 +30,56 @@ Before installing the library make sure you has the most recent packages listed 
    :widths: 20, 20, 42
    :escape: ~
 
-   python 3.6, python 3.6, Python 3.6 (preferred)
    python-pip, pip, Tool to install Python dependencies
    python-virtualenv (*), virtualenv (*), Allows creation of isolated environments ((*): This is required only for Python 2.7 installs. With Python3: test for presence of ``venv`` with ``python3 -m venv -h``)
    libhdf5-dev, h5py, Enables loading of hdf5 formats
    pkg-config, pkg-config, Retrieves information about installed libraries
 
 .. note::
-  The default installations of models use the default CPU backend deep learning framework installations.
+  The default installations of NLP Architect uses the default CPU backend of all deep learning framework installations. When installing on Ubuntu systems optional Intel optimized frameworks can be approved to be installed.
 
 Instructions
 ============
 
-We recommend installing NLP Architect within a virtual environment to ensure a self-contained environment. To install NLP Architect models within an already existing virtual environment, see below installation receipes for custom model installation. The default installation will create a new local virtual environment for development purposes.
+We recommend installing NLP Architect within a virtual environment to ensure a self-contained environment.
+To install NLP Architect models within an already existing virtual environment, see below installation receipes for custom model installation.
+The default installation will create a new local virtual environment for development purposes.
 
 To get started using our library, clone our repository:
 
 .. code:: python
 
-  git clone https://github.com/NervanaSystems/ai-lab-nlp.git
-  cd ai-lab-nlp
+  git clone https://github.com/NervanaSystems/nlp-architect.git
+  cd nlp-architect
 
-Models and NLP/NLU components are installed individualy (preferred way) or all at once (installed all deep learning frameworks and dependencies).
+Installing within a virtual environment
+---------------------------------------
+
+*  Install in development mode (default):
+
+.. code:: python
+
+  make
+
+*  Complete install:
+
+.. code:: python
+
+  make install
+
+*  Activate the newly created virtual environment:
+
+.. code:: python
+
+  . .nlp_architect_env/bin/activate
+
+* Fire up your favorite IDE/text editor/terminal and start running models
+
+Installing to current working python (or system wide install)
+-------------------------------------------------------------
+
+*  Install without creating a new virtual environment:
+
+.. code:: python
+
+  make install_no_virt_env

@@ -6,7 +6,7 @@ requests
 gensim
 six
 future
-python-requests
+requests
 nltk
 sklearn
 termcolor
@@ -17,6 +17,7 @@ pillow
 Ptable
 spacy>=2.0
 keras==2.1.5
+git+https://www.github.com/keras-team/keras-contrib.git
 keras-contrib==2.0.8
 nervananeon==2.6.0
 dynet==2.0.2

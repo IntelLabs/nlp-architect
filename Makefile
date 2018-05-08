@@ -20,7 +20,7 @@ DOC_DIR := doc
 DOC_PUB_RELEASE_PATH := $(DOC_PUB_PATH)/$(RELEASE)
 
 .PHONY: test_prepare style fixstyle autopep8 doc_prepare doc html clean \
-	install install_dev $(ACTIVATE)
+	install install_dev install_no_virt_env $(ACTIVATE)
 
 default: install_dev
 
@@ -71,6 +71,7 @@ $(ACTIVATE):
 	@. $(ACTIVATE); pip install -U pip
 
 pre_install: $(ACTIVATE)
+	@echo "\n\n****************************************"
 	@echo "Generating package list to install"
 	@. $(ACTIVATE); bash generate_reqs.sh
 	@echo "Installing packages ..."
@@ -83,6 +84,14 @@ install: pre_install
 install_dev: pre_install
 	@. $(ACTIVATE); pip install -e .
 	$(MAKE) print_finish
+
+install_no_virt_env:
+	@echo "\n\n****************************************"
+	@echo "Installing NLP Architect in current python env"
+	@echo "Generating package list to install"
+	bash generate_reqs.sh
+	pip install -r _generated_reqs.txt
+	@echo "Installation done"
 
 print_finish:
 	@echo "\n\n****************************************"
