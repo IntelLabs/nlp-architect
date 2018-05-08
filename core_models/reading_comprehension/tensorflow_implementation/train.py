@@ -22,7 +22,7 @@ from random import shuffle
 import os
 import numpy as np
 from utils import *
-from layers import Match_LSTM_AnswerPointer
+from layers import MatchLSTMAnswerPointer
 
 import math
 import argparse
@@ -64,11 +64,8 @@ parser.add_argument('--embed_size', default=300, type=int,
 parser.add_argument('--model_dir', default='trained_model', type=str,
                     help='enter path to model(save or restore)')
 
-parser.add_argument(
-    '--restore_training',
-    default=False,
-    type=bool,
-    help='Choose whether to restore training from a previously saved model')
+parser.add_argument('--restore_training',default=False,type=bool,
+        help='Choose whether to restore training from a previously saved model')
 
 
 parser.add_argument('--batch_size', default=64, type=int,
@@ -138,21 +135,20 @@ params_dict['max_question'] = max_question
 
 # Load embeddings for vocab
 print('Loading Embeddings')
-embeddingz = np.load(
-    os.path.join(
-        path_gen +
-        "/squad/glove.trimmed_zeroinit.300.npz"))
+embeddingz = np.load(os.path.join(path_gen +"/squad/glove.trimmed_zeroinit.300.npz"))
 embeddings = embeddingz['glove']
+
 print("creating training Set ")
 train = get_data_array_squad(params_dict, data_train, set_val='train')
 dev = get_data_array_squad(params_dict, data_dev, set_val='val')
 
 # Define Model Graph
 with tf.device('/device:' + args.select_device + ':0'):
-    model = Match_LSTM_AnswerPointer(params_dict, embeddings)
+    model = MatchLSTMAnswerPointer(params_dict, embeddings)
 
+run_config=tf.ConfigProto(allow_soft_placement=True, log_device_placement=False)
 
-with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_placement=False)) as sess:
+with tf.Session(config=run_config) as sess:
     init = tf.global_variables_initializer()
     model_saver = tf.train.Saver()
 

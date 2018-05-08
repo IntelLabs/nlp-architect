@@ -35,29 +35,6 @@ def max_values_squad(data_train):
     return max_premise, max_hypothesis
 
 
-def build_vocab_snli(data_train):
-    vocab = {}
-    idx = 1
-    for ele in data_train:
-        for word in ele[0]:
-            if word not in vocab:
-                vocab[word] = idx
-                idx += 1
-        for word in ele[1]:
-            if word not in vocab:
-                vocab[word] = idx
-                idx += 1
-    return vocab
-
-
-def get_embeddding_array(embedding_size):
-
-    embed_path = "data/squad/glove.trimmed.{}.npz".format(embedding_size)
-    embeddingz = np.load(embed_path)
-    embeddings = embeddingz['glove']
-    max_vocab = embeddings.shape[0]
-    return max_vocab, embeddings
-
 
 def get_qids(args, q_id_path, data_dev):
     q_ids = open(q_id_path)
@@ -75,11 +52,8 @@ def get_qids(args, q_id_path, data_dev):
     return final_qidlist
 
 
-def create_squad_training(
-        paras_file,
-        ques_file,
-        answer_file,
-        data_train_len=None):
+def create_squad_training(paras_file,ques_file,answer_file,data_train_len=None):
+
     f_para = open(paras_file)
     f_ques = open(ques_file)
     f_ans = open(answer_file)
@@ -137,14 +111,8 @@ def get_data_array_squad(params_dict, data_train, set_val='train'):
                 ques_mask[0, 0:question_len] = 1
                 ques_mask = ques_mask.tolist()[0]
 
-            train_set.append(
-                (para_idx,
-                 question_idx,
-                 para_len,
-                 question_len,
-                 ele[2],
-                    para_mask,
-                    ques_mask))
+            train_set.append((para_idx,question_idx,para_len,question_len,
+                            ele[2],para_mask,ques_mask))
 
             if set_val == 'train':
                 count += 1
