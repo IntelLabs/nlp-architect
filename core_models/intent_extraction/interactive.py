@@ -18,6 +18,8 @@ from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
 from __future__ import absolute_import
+
+import os
 from builtins import input
 
 import argparse
@@ -40,6 +42,10 @@ parser.add_argument('--embedding_model', type=str,
 parser.add_argument('--embedding_size', type=int,
                     help='Word embedding model vector size')
 args = parser.parse_args()
+
+if not os.path.exists(args.embedding_model):
+    print('word embedding model file was not found')
+    exit()
 
 model = IntentExtractionModel()
 model.load(args.model_path)

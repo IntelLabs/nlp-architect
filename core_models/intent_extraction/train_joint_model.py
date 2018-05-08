@@ -41,11 +41,11 @@ parser.add_argument('--sentence_length', type=int, default=30,
 parser.add_argument('--token_emb_size', type=int, default=100,
                     help='Token features embedding vector size')
 parser.add_argument('--intent_hidden_size', type=int, default=100,
-                    help='Intent detection LSTM hidden size (joint model only)')
+                    help='Intent detection LSTM hidden size')
 parser.add_argument('--lstm_hidden_size', type=int, default=150,
-                    help='Slot tags LSTM hidden size (joint model only)')
+                    help='Slot tags LSTM hidden size')
 parser.add_argument('--tagger_dropout', type=float, default=0.5,
-                    help='Slot tags dropout value (joint model only)')
+                    help='Slot tags dropout value')
 parser.add_argument('--embedding_path', type=str,
                     help='Path to word embedding model file')
 parser.add_argument('--full_eval', action='store_true', default=False,
@@ -58,6 +58,12 @@ parser.add_argument('--save_epochs', type=int, default=1,
                     help='Number of epochs to run between model saves')
 args = parser.parse_args()
 
+if not os.path.exists(args.embedding_path):
+    print('word embedding model file was not found')
+    exit()
+if args.restore is not None and not os.path.exists(args.restore):
+    print('restore model file was not found')
+    exit()
 
 # load dataset
 if args.dataset == 'atis':
