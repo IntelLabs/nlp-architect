@@ -39,10 +39,12 @@ def run_conlleval(filename):
         (int, int, int), tuple: Overall precision/recall/f1 and per
         label P/R/F1 in tuple (dictionary format)
     """
-    if not os.path.exists('conlleval.pl'):
+    script_path = os.path.expanduser('~') + '/nlp_architect/utils/conlleval.pl'
+    if not os.path.exists(script_path):
+        os.makedirs(os.path.dirname(script_path))
         download_file('https://www.clips.uantwerpen.be/conll2000/chunking/',
-                      'conlleval.txt', 'conlleval.pl')
-    proc = subprocess.Popen(['perl', 'conlleval.pl'],
+                      'conlleval.txt', script_path)
+    proc = subprocess.Popen(['perl', script_path],
                             stdin=subprocess.PIPE, stdout=subprocess.PIPE)
     stdout, _ = proc.communicate(open(filename, 'rb').read())
     lines = stdout.decode('utf-8').split('\n')[:-1]

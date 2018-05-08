@@ -23,12 +23,15 @@ from keras import Input, Model
 from keras.layers import (LSTM, Bidirectional, Dense, Dropout, Embedding,
                           RepeatVector, TimeDistributed, concatenate)
 from keras.models import load_model
+from keras_contrib.layers import CRF
+from keras_contrib.utils import save_load_utils
 
 
 class IntentExtractionModel(object):
     """
     Intent Extraction model base class
     """
+
     def __init__(self):
         self.model = None
 
@@ -37,8 +40,8 @@ class IntentExtractionModel(object):
         Train a model given input samples and target labels.
 
         Args:
-            x (numpy.ndarray): input samples
-            y (numpy.ndarray): input sample labels
+            x: input samples
+            y: input sample labels
             epochs (:obj:`int`, optional): number of epochs to train
             batch_size (:obj:`int`, optional): batch size
             callbacks(:obj:`Callback`, optional): Keras compatible callbacks
@@ -54,7 +57,7 @@ class IntentExtractionModel(object):
         """
         Get the prediction of the model on given input
         Args:
-            x (numpy.ndarray):
+            x: samples to run through the model
             batch_size (:obj:`int`, optional): batch size:
 
         Returns:
@@ -100,12 +103,127 @@ class IntentExtractionModel(object):
         return in_layer, e_layer
 
 
-class JointSequentialLSTM(IntentExtractionModel):
+class MultiTaskIntentModel(IntentExtractionModel):
+    """
+    Multi-Task Intent and Slot tagging model (with character embedding)
+    """
+
+    def __init__(self):
+        super(MultiTaskIntentModel, self).__init__()
+
+    def save(self, path):
+        save_load_utils.save_all_weights(self.model, path)
+
+    def load(self, path):
+        save_load_utils.load_all_weights(self.model, path, include_optimizer=False)
+
+    def build(self,
+              sentence_length,
+              word_length,
+              num_labels,
+              num_intent_labels,
+              word_vocab_size,
+              char_vocab_size,
+              word_emb_dims=100,
+              char_emb_dims=25,
+              char_lstm_dims=25,
+              tagger_lstm_dims=100,
+              dropout=0.2,
+              embedding_matrix=None):
+        """
+        Build a model
+
+        Args:
+            sentence_length (int): max sentence length
+            word_length (int): max word length (in characters)
+            num_labels (int): number of slot labels
+            num_intent_labels (int): number of intent classes
+            word_vocab_size (int): word vocabulary size
+            char_vocab_size (int): character vocabulary size
+            word_emb_dims (int, optional): word embedding dimensions
+            char_emb_dims (int, optional): character embedding dimensions
+            char_lstm_dims (int, optional): character feature LSTM hidden size
+            tagger_lstm_dims (int, optional): tagger LSTM hidden size
+            dropout (float, optional): dropout rate
+            embedding_matrix (dict, optional): external word embedding dictionary
+        """
+        if embedding_matrix is not None:
+            # load pre-trained word embeddings into an Embedding layer
+            # note that we set trainable = False so as to keep the embeddings fixed
+            embedding_layer = Embedding(word_vocab_size,
+                                        word_emb_dims,
+                                        weights=[embedding_matrix],
+                                        input_length=sentence_length,
+                                        trainable=True,
+                                        name='word_embedding_layer')
+        else:
+            # learn embeddings ourselves
+            embedding_layer = Embedding(word_vocab_size, word_emb_dims,
+                                        input_length=sentence_length,
+                                        name='word_embedding_layer')
+
+        # create word embedding input and embedding layer
+        words_input = Input(shape=(sentence_length,), name='words_input')
+        word_embeddings = embedding_layer(words_input)
+        word_embeddings = Dropout(dropout)(word_embeddings)
+
+        # create word character input and embeddings layer
+        word_chars_input = Input(shape=(sentence_length, word_length), name='word_chars_input')
+        char_embedding_layer = Embedding(char_vocab_size, char_emb_dims,
+                                         input_length=word_length, name='char_embedding_layer')
+        # apply embedding to each word
+        char_embeddings = TimeDistributed(char_embedding_layer)(word_chars_input)
+        # feed dense char vectors into BiLSTM
+        char_embeddings = TimeDistributed(Bidirectional(LSTM(char_lstm_dims)))(char_embeddings)
+        char_embeddings = Dropout(dropout)(char_embeddings)
+
+        # first BiLSTM layer (used for intent classification)
+        first_bilstm_layer = Bidirectional(
+            LSTM(tagger_lstm_dims, return_sequences=True, return_state=True))
+        first_lstm_out = first_bilstm_layer(word_embeddings)
+
+        lstm_y_sequence = first_lstm_out[:1][0]  # save y states of the LSTM layer
+        states = first_lstm_out[1:]
+        hf, cf, hb, cb = states  # extract last hidden states
+        h_state = concatenate([hf, hb], axis=-1)
+        intent_out = Dense(num_intent_labels, activation='softmax',
+                           name='intent_classifier_output')(h_state)
+
+        # create the 2nd feature vectors
+        combined_features = concatenate([lstm_y_sequence, char_embeddings], axis=-1)
+
+        # 2nd BiLSTM layer for label classification
+        second_bilstm_layer = Bidirectional(
+                LSTM(tagger_lstm_dims, return_sequences=True))(combined_features)
+        second_bilstm_layer = Dropout(dropout)(second_bilstm_layer)
+
+        # feed BiLSTM vectors into CRF
+        crf = CRF(num_labels, sparse_target=False)
+        labels_out = crf(second_bilstm_layer)
+
+        # compile the model
+        model = Model(inputs=[words_input, word_chars_input],
+                      outputs=[intent_out, labels_out])
+
+        # define losses and metrics
+        loss_f = {'intent_classifier_output': 'categorical_crossentropy',
+                  'crf_1': crf.loss_function}
+        metrics = {'intent_classifier_output': 'categorical_accuracy',
+                   'crf_1': crf.accuracy}
+
+        model.compile(loss=loss_f,
+                      optimizer='adam',
+                      metrics=metrics)
+        self.model = model
+
+
+class JointSequentialIntentModel(IntentExtractionModel):
     """
     Joint Intent classification and Slot tagging Model
     """
+
     def __init__(self):
-        super(JointSequentialLSTM, self).__init__()
+        super(JointSequentialIntentModel, self).__init__()
 
     def build(self,
               sentence_length,
@@ -143,11 +261,11 @@ class JointSequentialLSTM(IntentExtractionModel):
         slot_emb = Bidirectional(LSTM(tagger_hidden, return_sequences=True))(token_emb)
         tagger_features = concatenate([slot_emb, intent_vec_rep], axis=-1)
         tagger = Bidirectional(
-            LSTM(tagger_hidden, return_sequences=True))(tagger_features)
+                LSTM(tagger_hidden, return_sequences=True))(tagger_features)
         tagger = Dropout(tagger_dropout)(tagger)
         tagger_out = TimeDistributed(
-            Dense(tag_labels, activation='softmax'),
-            name='slot_tag_classifier')(tagger)
+                Dense(tag_labels, activation='softmax'),
+                name='slot_tag_classifier')(tagger)
 
         self.model = Model(inputs=tokens_input, outputs=[
             intent_out, tagger_out])
@@ -155,12 +273,13 @@ class JointSequentialLSTM(IntentExtractionModel):
                            loss_weights=[1., 1.], metrics=['categorical_accuracy'])
 
 
-class EncDecTaggerModel(IntentExtractionModel):
+class EncDecIntentModel(IntentExtractionModel):
     """
     Encoder Decoder Deep LSTM Tagger Model
     """
+
     def __init__(self):
-        super(EncDecTaggerModel, self).__init__()
+        super(EncDecIntentModel, self).__init__()
 
     def build(self,
               sentence_length,
@@ -212,8 +331,8 @@ class EncDecTaggerModel(IntentExtractionModel):
             decoder_inputs = decoder
         decoder_outputs = Dropout(decoder_dropout)(decoder)
         decoder_predictions = TimeDistributed(
-            Dense(tag_labels, activation='softmax'),
-            name='decoder_classifier')(decoder_outputs)
+                Dense(tag_labels, activation='softmax'),
+                name='decoder_classifier')(decoder_outputs)
 
         self.model = Model(tokens_input, decoder_predictions)
         self.model.compile(optimizer='rmsprop', loss='categorical_crossentropy',
