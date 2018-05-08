@@ -38,6 +38,35 @@ from nlp_architect.contrib.ngraph.modified_lookup_table import ModifiedLookupTab
 class MemN2N_Dialog(Layer):
     """
     End-to-End Memory Networks for Goal Oriented Dialogue
+
+    After the model is initialized, it accepts a BABI_Dialog class formatted dataset 
+    as input and returns a probability distribution over candidate answers. 
+
+    Args:
+        cands (np.array): Vectorized array of potential candidate answers, encoded
+            as integers, as returned by BABI_Dialog class. Shape = [num_cands, max_cand_length]
+        num_cands (int): Number of potential candidate answers. 
+        max_cand_len (int): Maximum length of a candidate answer sentence in number of words. 
+        memory_size (int): Maximum number of sentences to keep in memory at any given time.
+        max_utt_len (int): Maximum length of any given sentence / user utterance 
+        vocab_size (int): Number of unique words in the vocabulary + 2 (0 is reserved for 
+            a padding symbol, and 1 is reserved for OOV)
+        emb_size (int): Dimensionality of word embeddings to use 
+        batch_size (int): Number of training examples per batch 
+        use_match_type (bool, optional): Flag to use match-type features
+        kb_ents_to_type (dict, optional): For use with match-type features, dictionary of 
+            entities found in the dataset mapping to their associated match-type
+        kb_ents_to_cand_idxs (dict, optional): For use with match-type features, dictionary
+            mapping from each entity in the  knowledge base to the set of indicies in the
+            candidate_answers array that contain that entity.
+        match_type_idxs (dict, optional): For use with match-type features, dictionary 
+            mapping from match-type to the associated fixed index of the candidate vector
+            which indicated this match type.
+        nhop (int, optional): Number of memory-hops to perform during fprop 
+        eps (float, optional): Small epsilon used for numerical stability in 
+            softmax renormalization
+        init (Initalizer, optional): Initalizer object used to initialize lookup table
+            and projection layer.
     """
     def __init__(
         self,

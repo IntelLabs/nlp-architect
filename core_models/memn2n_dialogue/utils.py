@@ -27,6 +27,9 @@ import os
 
 
 def interactive_loop(interactive_computation, babi):
+    """
+    Loop used to interact with trained conversational agent with access to knowledge base API
+    """
     context = []
     response = None
     time_feat = 1
