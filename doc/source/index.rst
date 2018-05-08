@@ -49,6 +49,7 @@ The library includes our past and ongoing NLP research efforts as part of Intel 
 
    np2vec.rst
    chunker.rst
+   ner_crf.rst
    intent.rst
    np_segmentation.rst
    bist_parser.rst
