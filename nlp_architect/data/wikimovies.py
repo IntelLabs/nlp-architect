@@ -23,6 +23,7 @@ import re
 import pickle
 import subprocess
 from collections import defaultdict
+import sys
 
 from ngraph.util.persist import valid_path_append, fetch_file, ensure_dirs_exist
 
@@ -263,9 +264,17 @@ class WIKIMOVIES(object):
         self.vocab = None
         workdir, filepath = valid_path_append(path, '', self.filename)
         if not os.path.exists(filepath):
-            fetch_file(self.url, self.filename, filepath, self.size)
-            with tarfile.open(filepath, 'r:gz') as f:
-                f.extractall(workdir)
+            print("WikiMovies dataset not found at: {}".format(filepath))
+            response = input("To download the dataset from {}, "
+                             "please type YES: ".format(self.url))
+
+            if response.lower.strip() == "yes":
+                fetch_file(self.url, self.filename, filepath, self.size)
+            else:
+                print("Download declined. Response recieved {} != YES. ".format(response))
+                print("Please download the dataset manually and provide the path "
+                      "as the command line argmuent --data_dir")
+                sys.exit(0)
 
         if subset == 'wiki-entities':
             subset_folder = 'wiki_entities'
