@@ -112,7 +112,7 @@ class BABI_Dialog(object):
             'dialog-babi-task6-dstc2-'
         ]
 
-        print('Preparing bAbI-dialog dataset or extracting from %s' % path)
+        print('Preparing bAbI-dialog dataset. Looking in ./%s' % path)
 
         assert task in range(
             1, 7), "given task is not in the bAbI-dialog dataset"
@@ -227,7 +227,13 @@ class BABI_Dialog(object):
         self.workdir, filepath = valid_path_append(
             self.path, '', self.filename)
         if not os.path.exists(filepath):
-            print("bAbI-dialog dataset not found at: {}".format(filepath))
+            print("The bAbI-dialog dataset is not found at: {}".format(filepath))
+            print("This dataset is released under Creative Commons Attribution 3.0 "
+                  "Unported license. A copy of this license can be found at "
+                  "https://github.com/vyraun/chatbot-MemN2N-tensorflow/blob/"
+                  "master/data/dialog-bAbI-tasks/LICENSE.txt.")
+            print("The terms and conditions of the data set license apply. Intel "
+                  "does not grant any rights to the data files or database.")
             response = input("To download the dataset from {}, "
                              "please type YES: ".format(self.url))
 
