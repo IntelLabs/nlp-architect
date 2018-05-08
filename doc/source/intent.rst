@@ -45,7 +45,7 @@ and fed into another bi-directional LSTM layer for predicting the slot tags.
 The slot classification is done using the softmax output in each time stamp.
 This model is a derivative of the models presented in [1].
 
-.. image :: ../../nlp_architect/intent_extraction/joint_model.png
+.. image :: assets/joint_model.png
 
 Encoder-Decoder topology for Slot Tagging
 ===========================================
@@ -54,15 +54,24 @@ The Encoder-Decoder LSTM topology is a well known model for sequence-to-sequence
 The model we implemented is similar to the *Encoder-Labeler Deep LSTM(W)* model shown in [2].
 Our model support arbitrary depths of LSTM layers in both encoder and decoder.
 
-.. image :: ../../nlp_architect/intent_extraction/enc-dec_model.png
+.. image :: assets/enc-dec_model.png
+
+Multi-task Intent and slot tagging model
+========================================
+
+The Multi-task model is similar to the joint intent/slot tagging model. The model has 2 sources of input: 1 - words, 2 - characters of words. The model has 3 main features when compared to the other models, character information embedding acting as a feature extractor of the words, a CRF classifier for slot labels, and a cascasing structure of the intent and tag classificaion.
+The intent classification is done by encoding the context of the sentences (words ``x_1, .., x_n``), using word embeddings (denoted as ``W``), by a bi-directional LSTM layer, and training a classifier on the last hidden state of the LSTM layer (using ``softmax``).
+Word-character embeddings (denoted as ``C``) are created using a bi-directional LSTM encoder which concatenates the last hidden states of the layers.
+The encoding of the word-context, in each time step (word location in the sentence) is concatenated with the word-charcter embeddings and pushed in another bi-directional LSTM which provides the final context encoding that a CRF layer uses for slot tag classification.
+
+.. image :: assets/mtl_model.png
 
 
 Dependencies
 ==============
 
-- Dependencies required for the project are mentioned in requirements.txt, Use ``pip install -r requirements.txt`` to install.
+- ``nlp_architect``
 - Please configure_ Keras to use Tensorflow as backend.
-- Download English model for spacy: ``python -m spacy download en``
 - Downloaded pre-trained word vector embedding models:
     - GloVe: https://nlp.stanford.edu/projects/glove/
     - Fasttext: https://fasttext.cc/docs/en/english-vectors.html
@@ -70,33 +79,27 @@ Dependencies
 Files
 ======
 
-- **data.py**: Implements dataloader for The Airline Travel Information System (ATIS) and SNIPS datasets.
-- **model.py**: Implementation of Encoder-Decoder slot classifer and Joint Intent detection/slot classifier model.
 - **train_enc-dec_model.py**: training script to train a joint intent/slot tag model.
 - **train_joint_model.py**: training script to train an encoder-decoder slot tag model.
 - **interactive.py**: Inference script to run an input sentence using a trained model.
-- **utils.py**: Utilities to support data loading, Conll benchmark and various data manipulation.
 
 Datasets
 ========
-
-The dataset are downloaded automatically and consist on a train/test files. Each file is contains
-a token which is a part of a sentence, the token's slot tag and the sentence intent type.
-
-ATIS
-----
-
-The Airline Travel Information System (ATIS) consists of spoken queries on flight related information,
-such as flight schedule, meal information, available public transportation, etc.
-The dataset was split to train/test sets made of 4978/893 sentences, vocabulary size of 943, 26
-type of intents and 129 slot tags (including the null tag 'O') which were encoded in IOB format.
-
 SNIPS NLU benchmark
 -------------------
 
 A NLU benchmark containing ~16K sentences with 7 intent types. Each intent has about 2000 sentences
-for training the model and 100 sentences for validation. The included data files were encoded using
-IOB format for slot tags. More details on the dataset can be found in the following github repo_ and this_ blog post.
+for training the model and 100 sentences for validation. ``nlp_architect.data.intent_datasets.SNIPS`` is a class that loads the dataset from the repository and encodes the data into BIO format. The words are encoded with sparse int representation and word characters are extracted for character embeddings.
+More details on the dataset can be found in the following github repo_ and this_ blog post.
+
+TabularIntentDataset
+--------------------
+We provide an additional dataset loader, ``nlp_architect.data.intent_datasets.TabularIntentDataset``, which can parse tabular data in the format of:
+
+-  each word encoded in a separate line: ``<token> <label_tag> <intent>``
+-  sentences are separated with an empty line
+
+The dataset loader extracts word and character sparse encoding and label/intent tags per sentence. This dataloader is useful for many intent extraction datasets that can be found on the web and used in academic literature (such as ATIS, CoNLL, etc.).
 
 Running Modalities
 ==================
@@ -104,18 +107,18 @@ Running Modalities
 Training
 --------
 
-Training the joint task model (predicts slot tags and intent type) using ATIS and saving the model weights to `my_model.h5`:
+An example for training the joint task model (predicts slot tags and intent type) using SNIPS dataset and saving the model weights to `my_model.h5`:
 
 .. code:: python
 
-  python train_joint_model.py --dataset atis --model_path my_model.h5
+  python train_joint_model.py --model_path my_model.h5
 
 
-Training an Encoder-Decoder model (predicts slot tags) using SNIPS, GloVe word embedding model of size 100 and saving the model weights to `my_model.h5`:
+An example for training an Encoder-Decoder model (predicts slot tags) using SNIPS, GloVe word embedding model of size 100 and saving the model weights to `my_model.h5`:
 
 .. code:: python
 
-  python train_enc-dec_model.py --dataset atis --embedding_path <path_to_glove_100_file> --token_emb_size 100 --model_path my_model.h5
+  python train_enc-dec_model.py --embedding_path <path_to_glove_100_file> --token_emb_size 100 --model_path my_model.h5
 
 
 To list all possible parameters: ``python train_joint_model.py/train_enc-dec_model.py -h``
@@ -124,12 +127,12 @@ Interactive mode
 ----------------
 
 Interactive mode allows to run sentences on a trained model (either of two) and get the results of the models displayed interactively.
-An interactive session requires the dataset the model that was used when training the mode and the path/size of the embedding model (if used).
+The interactive session requires the dataset that the model was trained with for parsing new sentences.
 Example:
 
 .. code:: python
 
-  python interactive.py --model_path my_model.h5 --dataset atis
+  python interactive.py --model_path my_model.h5
 
 Results
 ========
@@ -138,7 +141,7 @@ Results for both dataset published below. The reference results were taken from 
 Minor differences might occur in final results. Each model was trained for 100 epochs with default parameters.
 
 
-**ATIS**
+**TabularIntentDataset**
 
 .. csv-table::
   :header: " ", "Joint task", "Encoder-Decoder", "[1]", "[2]"
@@ -165,11 +168,11 @@ Citations
 
 [2] Gakuto Kurata, Bing Xiang, Bowen Zhou, Mo Yu. [Leveraging Sentence-level Information with Encoder LSTM for Semantic Slot Filling](https://arxiv.org/abs/1601.01530).
 
-[3] C. Hemphill, J. Godfrey, and G. Doddington, The ATIS spoken
+[3] C. Hemphill, J. Godfrey, and G. Doddington, The TabularIntentDataset spoken
 language systems pilot corpus, in Proc. of the DARPA speech and
 natural language workshop, 1990.
 
-[4] P. Price, Evaluation of spoken language systems: The ATIS domain,
+[4] P. Price, Evaluation of spoken language systems: The TabularIntentDataset domain,
 in Proc. of the Third DARPA Speech and Natural Language
 Workshop. Morgan Kaufmann, 1990.
 
