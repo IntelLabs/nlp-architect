@@ -19,6 +19,7 @@ from __future__ import print_function
 from __future__ import unicode_literals
 from __future__ import absolute_import
 import pickle
+import os
 
 from neon import logger as neon_logger
 from neon.backends import gen_backend
@@ -67,6 +68,11 @@ if __name__ == '__main__':
                         help='Print Noun Phrase (NP) tags accuracy')
 
     args = parser.parse_args(gen_be=False)
+
+    if args.embedding_model is not None and not os.path.exists(args.embedding_model):
+        print('word embedding model file was not found')
+        exit()
+
     if args.use_pos:
         pos_vocab_size = 50
     else:
@@ -88,6 +94,7 @@ if __name__ == '__main__':
     test_set = dataset.test_iter
 
     model = SequenceChunker(sentence_length=args.sentence_len,
+                            num_labels=dataset.y_size,
                             token_vocab_size=args.vocab_size,
                             pos_vocab_size=pos_vocab_size,
                             char_vocab_size=char_vocab_size,
@@ -95,7 +102,6 @@ if __name__ == '__main__':
                             token_embedding_size=args.token_embedding_size,
                             pos_embedding_size=args.pos_embedding_size,
                             char_embedding_size=args.char_hidden_size,
-                            num_labels=dataset.y_size,
                             lstm_hidden_size=args.lstm_hidden_size,
                             num_lstm_layers=args.lstm_depth,
                             embedding_model=args.embedding_model)

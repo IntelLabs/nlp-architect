@@ -41,15 +41,15 @@ parser.add_argument('--sentence_length', type=int, default=30,
 parser.add_argument('--token_emb_size', type=int, default=100,
                     help='Token features embedding vector size')
 parser.add_argument('--lstm_hidden_size', type=int, default=150,
-                    help='Encoder LSTM hidden size (enc-dec model only)')
+                    help='Encoder LSTM hidden size')
 parser.add_argument('--encoder_depth', type=int, default=1,
-                    help='Encoder LSTM depth (enc-dec model only)')
+                    help='Encoder LSTM depth')
 parser.add_argument('--decoder_depth', type=int, default=1,
-                    help='Decoder LSTM depth (enc-dec model only)')
+                    help='Decoder LSTM depth')
 parser.add_argument('--encoder_dropout', type=float, default=0.5,
-                    help='Encoder dropout value (enc-dec model only)')
+                    help='Encoder dropout value')
 parser.add_argument('--decoder_dropout', type=float, default=0.5,
-                    help='Decoder dropout value (enc-dec model only)')
+                    help='Decoder dropout value')
 parser.add_argument('--embedding_path', type=str,
                     help='Path to word embedding model file')
 parser.add_argument('--full_eval', action='store_true', default=False,
@@ -62,6 +62,13 @@ parser.add_argument('--save_epochs', type=int, default=1,
                     help='Number of epochs to run between model saves')
 args = parser.parse_args()
 
+
+if not os.path.exists(args.embedding_path):
+    print('word embedding model file was not found')
+    exit()
+if args.restore is not None and not os.path.exists(args.restore):
+    print('restore model file was not found')
+    exit()
 
 # load dataset
 if args.dataset == 'atis':

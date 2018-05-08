@@ -49,12 +49,21 @@ if __name__ == '__main__':
     args = parser.parse_args()
     be = gen_backend(**extract_valid_args(args, gen_backend))
 
-    model_file = args.model
+    if not os.path.exists(args.model):
+        print('model file was not found')
+        exit()
+    else:
+        model_file = args.model
     if not os.path.exists(args.settings):
-        raise Exception('Not valid model settings file')
+        print('model settings files was not found')
+        exit()
     else:
         with open(args.settings, 'rb') as fp:
             mp = pickle.load(fp)
+
+    if args.emb_model is not None and not os.path.exists(args.emb_model):
+        print('word embedding model file was not found')
+        exit()
 
     if mp['char_rnn'] is not False:
         raise NotImplementedError
@@ -62,7 +71,8 @@ if __name__ == '__main__':
     sentence_len = mp['sentence_len']
 
     if not os.path.exists(args.input):
-        raise Exception('Not valid input file')
+        print('input file was not found')
+        exit()
     else:
         with open(args.input) as fp:
             input_texts = [t.strip() for t in fp.readlines()]
