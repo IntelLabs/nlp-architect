@@ -14,18 +14,16 @@
 # limitations under the License.
 # ******************************************************************************
 
-from __future__ import division
-from __future__ import print_function
-from __future__ import unicode_literals
-from __future__ import absolute_import
+from __future__ import division, print_function, unicode_literals, absolute_import
+
 import argparse
 import os
+import sys
 
 from keras.callbacks import ModelCheckpoint
-
-from nlp_architect.data.intent_datasets import ATIS, SNIPS
-from nlp_architect.models.intent_extraction import EncDecTaggerModel
 from nlp_architect.contrib.keras.callbacks import ConllCallback
+from nlp_architect.data.intent_datasets import SNIPS
+from nlp_architect.models.intent_extraction import EncDecIntentModel
 from nlp_architect.utils.metrics import get_conll_scores
 
 parser = argparse.ArgumentParser()
@@ -33,23 +31,20 @@ parser.add_argument('-b', type=int, default=10,
                     help='Batch size')
 parser.add_argument('-e', type=int, default=10,
                     help='Number of epochs')
-parser.add_argument('--dataset', type=str, required=True,
-                    choices=['atis', 'snips'],
-                    help='Dataset for training the model')
 parser.add_argument('--sentence_length', type=int, default=30,
                     help='Max sentence length')
 parser.add_argument('--token_emb_size', type=int, default=100,
                     help='Token features embedding vector size')
 parser.add_argument('--lstm_hidden_size', type=int, default=150,
-                    help='Encoder LSTM hidden size (enc-dec model only)')
+                    help='Encoder LSTM hidden size')
 parser.add_argument('--encoder_depth', type=int, default=1,
-                    help='Encoder LSTM depth (enc-dec model only)')
+                    help='Encoder LSTM depth')
 parser.add_argument('--decoder_depth', type=int, default=1,
-                    help='Decoder LSTM depth (enc-dec model only)')
+                    help='Decoder LSTM depth')
 parser.add_argument('--encoder_dropout', type=float, default=0.5,
-                    help='Encoder dropout value (enc-dec model only)')
+                    help='Encoder dropout value')
 parser.add_argument('--decoder_dropout', type=float, default=0.5,
-                    help='Decoder dropout value (enc-dec model only)')
+                    help='Decoder dropout value')
 parser.add_argument('--embedding_path', type=str,
                     help='Path to word embedding model file')
 parser.add_argument('--full_eval', action='store_true', default=False,
@@ -62,22 +57,20 @@ parser.add_argument('--save_epochs', type=int, default=1,
                     help='Number of epochs to run between model saves')
 args = parser.parse_args()
 
+if args.embedding_path is not None and not os.path.exists(args.embedding_path):
+    print('word embedding model file was not found')
+    sys.exit(0)
+if args.restore is not None and not os.path.exists(args.restore):
+    print('restore model file was not found')
+    sys.exit(0)
+dataset = SNIPS(sentence_length=args.sentence_length,
+                embedding_model=args.embedding_path,
+                embedding_size=args.token_emb_size)
 
-# load dataset
-if args.dataset == 'atis':
-    dataset = ATIS(sentence_length=args.sentence_length,
-                   embedding_model=args.embedding_path,
-                   embedding_size=args.token_emb_size)
-if args.dataset == 'snips':
-    dataset = SNIPS(sentence_length=args.sentence_length,
-                    embedding_model=args.embedding_path,
-                    embedding_size=args.token_emb_size)
+train_x, _, train_i, train_y = dataset.train_set
+test_x, _, test_i, test_y = dataset.test_set
 
-train_x, _, train_y = dataset.train_set
-test_x, _, test_y = dataset.test_set
-
-
-model = EncDecTaggerModel()
+model = EncDecIntentModel()
 
 if args.restore and os.path.exists(args.model_path):
     print('Loading model weights and continuing with training ..')

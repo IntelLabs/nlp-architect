@@ -18,45 +18,46 @@ from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
 from __future__ import absolute_import
-from builtins import input
+
+import os
 
 import argparse
+import sys
+from builtins import input
 
 import numpy as np
-import spacy
-
-from nlp_architect.data.intent_datasets import ATIS, SNIPS
+from nlp_architect.data.intent_datasets import SNIPS
 from nlp_architect.models.intent_extraction import IntentExtractionModel
 from nlp_architect.utils.embedding import load_word_embeddings
+from nlp_architect.utils.text import SpacyTokenizer
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--model_path', type=str, required=True,
                     help='Model file path')
-parser.add_argument('--dataset', type=str, required=True,
-                    choices=['atis', 'snips'],
-                    help='Dataset used for training the model')
 parser.add_argument('--embedding_model', type=str,
                     help='Path to word embedding model')
 parser.add_argument('--embedding_size', type=int,
                     help='Word embedding model vector size')
 args = parser.parse_args()
 
+if not os.path.exists(args.model_path):
+    print('model_path does not exist')
+    sys.exit(0)
+if args.embedding_model is not None and not os.path.exists(args.embedding_model):
+    print('word embedding model file was not found')
+    sys.exit(0)
+
 model = IntentExtractionModel()
 model.load(args.model_path)
 
-if args.dataset == 'atis':
-    ds = ATIS()
-if args.dataset == 'snips':
-    ds = SNIPS()
-
-nlp = spacy.load('en')
+ds = SNIPS()
+nlp = SpacyTokenizer()
 
 
 def process_text(text):
     max_sen_size = model.input_shape[1]
-    doc = nlp(u'{}'.format(text))
-    tokens = [t.text for t in doc[:max_sen_size] if len(t.text.strip()) > 0]
-    return tokens
+    tokens = nlp.tokenize(u'{}'.format(text))
+    return [t for t in tokens[:max_sen_size] if len(t.strip()) > 0]
 
 
 def encode_sentence(tokens, emb_vectors=None):

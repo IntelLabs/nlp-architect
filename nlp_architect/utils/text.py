@@ -19,15 +19,21 @@ from __future__ import print_function
 from __future__ import unicode_literals
 from __future__ import absolute_import
 
+import sys
+
+import spacy
+from spacy.cli.download import download as spacy_download
+
 
 class Vocabulary:
     """
     A vocabulary that maps words to ints (storing a vocabulary)
     """
-    def __init__(self):
+    def __init__(self, start=0):
+
         self._vocab = {}
         self._rev_vocab = {}
-        self.next = 0
+        self.next = start
 
     def add(self, word):
         """
@@ -48,6 +54,7 @@ class Vocabulary:
     def word_id(self, word):
         """
         Get the word_id of given word
+
         Args:
             word (str): word from vocabulary
 
@@ -58,6 +65,18 @@ class Vocabulary:
 
     def __len__(self):
         return len(self._vocab)
+
+    def id_to_word(self, wid):
+        """
+        Word-id to word (string)
+
+        Args:
+            wid (int): word id
+
+        Returns:
+            str: string of given word id
+        """
+        return self._rev_vocab.get(wid)
 
     @property
     def vocab(self):
@@ -88,3 +107,44 @@ class Vocabulary:
             dict: reversed vocabulary object
         """
         return self._rev_vocab
+
+
+class SpacyTokenizer:
+    """
+    Spacy based tokenizer
+
+    Args:
+        model (str, optional): spacy model name (default: english small model)
+    """
+
+    def __init__(self, model='en_core_web_sm'):
+        pipeline_opts = ['tagger', 'ner', 'parser', 'vectors', 'textcat']
+        try:
+            self.parser = spacy.load(model, disable=pipeline_opts)
+        except OSError:
+            print('Spacy English model not found')
+            url = 'https://spacy.io/models/en#en_core_web_sm'
+            print('License: CC3-BY-SA https://creativecommons.org/licenses/by-sa/3.0/')
+            response = input('To download the model from {}, '
+                             + 'please type YES: '.format(url))
+            if response.lower().strip() == "yes":
+                print('The terms and conditions of the data set license apply. Intel does not '
+                      'grant any rights to the data files or database')
+                print('Downloading Spacy model...')
+                spacy_download(model)
+                self.parser = spacy.load(model, disable=pipeline_opts)
+            else:
+                print('Download declined. Response received {} != YES. '.format(response))
+                print('Please download the model manually')
+                sys.exit(0)
+
+    def tokenize(self, text):
+        """
+        Tokenize a sentence into tokens
+        Args:
+            text (str): text to tokenize
+
+        Returns:
+            list: a list of str tokens of input
+        """
+        return [t.text for t in self.parser(text)]
