@@ -17,11 +17,11 @@ from __future__ import unicode_literals, print_function, division, \
     absolute_import
 
 import io
+import os
 import sys
 import unittest
 
 # !/usr/bin/env python
-
 # CoNLL 2017 UD Parsing evaluation script.
 #
 # Compatible with Python 2.7 and 3.2+, can be used either as a module
@@ -39,7 +39,6 @@ import unittest
 #                              Compare forms in LCS case insensitively
 #                              Detect cycles and multiple root nodes
 #                              Compute AlignedAccuracy
-
 # Command line usage
 # ------------------
 # conll17_ud_eval.py [-v] [-w weights_file] gold_conllu_file system_conllu_file
@@ -63,7 +62,6 @@ import unittest
 #   one more metric is shown:
 #   - WeightedLAS: as LAS, but each deprel (ignoring subtypes) has different
 #     weight
-
 # API usage
 # ---------
 # - load_conllu(file)
@@ -77,7 +75,6 @@ import unittest
 #     match
 #   - returns a dictionary with the metrics described above, each metrics
 #     having three fields: precision, recall and f1
-
 # Description of token matching
 # -----------------------------
 # In order to match tokens of gold file and system file, we consider the text
@@ -87,7 +84,6 @@ import unittest
 #
 # If the texts do match, every token is represented as a range in this original
 # text, and tokens are equal only if their range is the same.
-
 # Description of word matching
 # ----------------------------
 # When matching words of gold file and system file, we first match the tokens.
@@ -104,11 +100,12 @@ import unittest
 # For every multi-word span, we align the gold and system words completely
 # inside this span using LCS on their FORMs. The words not intersecting
 # (even partially) any multi-word span are then aligned as tokens.
-
 # pylint: disable=invalid-name
 
 # CoNLL-U column names
 ID, FORM, LEMMA, UPOS, XPOS, FEATS, HEAD, DEPREL, DEPS, MISC = list(range(10))
+
+WEIGHTS = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'weights.clas')
 
 
 # UD Error is used when raising exceptions in this module
@@ -566,8 +563,7 @@ def evaluate_wrapper(gold_file: str, system_file: str, weights_file: str):
     return evaluate(gold_ud, system_ud, deprel_weights)
 
 
-def run_conllu_eval(gold_file: str, test_file: str,  weights_file: str= 'weights.clas',
-                    verbose: bool=True):
+def run_conllu_eval(gold_file, test_file, weights_file=WEIGHTS, verbose=True):
     # Use verbose if weights are supplied
     if weights_file is not None and not verbose:
         verbose = True
@@ -576,7 +572,7 @@ def run_conllu_eval(gold_file: str, test_file: str,  weights_file: str= 'weights
     evaluation = evaluate_wrapper(gold_file, test_file, weights_file)
 
     # Write the evaluation to file
-    with open(test_file + 'txt', 'w') as out_file:
+    with open(test_file[:test_file.rindex('.')] + '_eval.txt', 'w') as out_file:
         if not verbose:
             out_file.write("LAS F1 Score: {:.2f}".format(100 * evaluation["LAS"].f1) + '\n')
         else:

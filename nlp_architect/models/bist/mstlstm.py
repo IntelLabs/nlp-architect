@@ -34,6 +34,7 @@ from nlp_architect.models.bist import decoder
 
 class MSTParserLSTM:
     """Underlying LSTM model for MSTParser used by BIST parser."""
+
     def __init__(self, vocab, w2i, pos, rels, options):
         if isinstance(options, dict):
             options = dict_to_obj(options, 'Values')

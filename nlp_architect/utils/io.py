@@ -36,7 +36,7 @@ def download_file(url, sourcefile, destfile, totalsz=None):
         url (str): url to download from
         sourcefile (str): file to download from url
         destfile (str): save path
-        totalsz (:obj:`int`, optional): total size of file
+        totalsz (`int`, optional): total size of file
     """
     req = requests.get(posixpath.join(url, sourcefile),
                        stream=True)
@@ -71,3 +71,27 @@ def unzip_file(filepath, outpath='.'):
     z = zipfile.ZipFile(filepath, 'r')
     z.extractall(outpath)
     z.close()
+
+
+def validate(*args):
+    """
+    Validate all arguments are of correct type and in correct range.
+
+    Args:
+        *args (tuple of tuples): Each tuple represents an argument validation like so:
+        Option 1 - With range check:
+            (arg, class, min_val, max_val)
+        Option 2 - Without range check:
+            (arg, class)
+        If class is a tuple of type objects check if arg is an instance of any of the types.
+        To allow a None valued argument, include type(None) in class.
+        To disable lower or upper bound check, set min_val or max_val to None, respectively.
+        If arg has the len attribute (such as string), range checks are performed on its length.
+    """
+    for arg in args:
+        if not isinstance(arg[0], arg[1]):
+            raise TypeError
+        if arg[0] and len(arg) == 4:
+            num = len(arg[0]) if hasattr(arg[0], '__len__') else arg[0]
+            if arg[2] and num < arg[2] or arg[3] and num > arg[3]:
+                raise ValueError
