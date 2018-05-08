@@ -141,7 +141,7 @@ import sphinx_rtd_theme
 html_theme = 'sphinx_rtd_theme'
 html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 html_theme_options = {
-    'canonical_url': '',
+    # 'canonical_url': '',
     # 'analytics_id': '',
     'logo_only': True,
     'display_version': False,
