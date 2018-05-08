@@ -1,2 +1,4 @@
 sphinx
 sphinx_rtd_theme
+jupyter
+nbformat
