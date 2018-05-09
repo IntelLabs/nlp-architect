@@ -30,6 +30,9 @@ import sys
 
 
 def pad_sentences(sentences, sentence_length=None, dtype=np.int32, pad_val=0.):
+    """
+    Pad all sentences to have the same length (number of words)
+    """
     lengths = [len(sent) for sent in sentences]
 
     nsamples = len(sentences)
@@ -51,6 +54,9 @@ def pad_stories(
         dtype=np.int32,
         pad_val=0.,
         use_time=True):
+    """
+    Pad all stories to have the same number of sentences (max_story_length).
+    """
     nsamples = len(stories)
 
     X = (
@@ -72,28 +78,48 @@ class BABI_Dialog(object):
     This class loads in the Facebook bAbI goal oriented dialog dataset and
     vectorizes them into user utterances, bot utterances, and answers.
 
-    as described in: "Learning End-to-End Goal Oriented Dialog".
+    As described in: "Learning End-to-End Goal Oriented Dialog".
     https://arxiv.org/abs/1605.07683.
-    """
+    
+    For a particular task, the class will read both train and test files
+    and combine the vocabulary.
 
+    Args:
+        path (str): Directory to store the dataset
+        task (str): a particular task to solve (all bAbI tasks are train
+            and tested separately)
+        oov (bool, optional): Load test set with out of vocabulary entity words
+        use_match_type (bool, optional): Flag to use match-type features
+        use_time (bool, optional): Add time words to each memory, encoding when the
+            memory was formed
+        use_speaker_tag (bool, optional): Add speaker words to each memory
+            (<BOT> or <USER>) indicating who spoke each memory.
+        cache_match_type (bool, optional): Flag to save match-type features after processing
+        cache_vectorized (bool, optional): Flag to save all vectorized data after processing
+
+    Attributes:
+        data_dict (dict): Dictionary containing final vectorized train, val, and test datasets
+        cands (np.array): Vectorized array of potential candidate answers, encoded
+        as integers, as returned by BABI_Dialog class. Shape = [num_cands, max_cand_length]
+        num_cands (int): Number of potential candidate answers. 
+        max_cand_len (int): Maximum length of a candidate answer sentence in number of words. 
+        memory_size (int): Maximum number of sentences to keep in memory at any given time.
+        max_utt_len (int): Maximum length of any given sentence / user utterance 
+        vocab_size (int): Number of unique words in the vocabulary + 2 (0 is reserved for 
+            a padding symbol, and 1 is reserved for OOV)
+        use_match_type (bool, optional): Flag to use match-type features
+        kb_ents_to_type (dict, optional): For use with match-type features, dictionary of 
+            entities found in the dataset mapping to their associated match-type
+        kb_ents_to_cand_idxs (dict, optional): For use with match-type features, dictionary
+            mapping from each entity in the  knowledge base to the set of indicies in the
+            candidate_answers array that contain that entity.
+        match_type_idxs (dict, optional): For use with match-type features, dictionary 
+            mapping from match-type to the associated fixed index of the candidate vector
+            which indicated this match type.
+    """
     def __init__(self, path='.', task=1, oov=False, use_match_type=False,
                  use_time=True, use_speaker_tag=True, cache_match_type=False,
                  cache_vectorized=False):
-        """
-        Load bAbI dataset and extract text and read the stories
-        For a particular task, the class will read both train and test files
-        and combine the vocabulary.
-
-        Arguments:
-            path (str): Directory to store the dataset
-            task (str): a particular task to solve (all bAbI tasks are train
-                        and tested separately)
-            oov (bool, optional): Load test set with out of vocabulary entity words
-            use_time (bool, optional): Add time words to each memory, encoding when the
-                                       memory was formed
-            use_speaker_tag (bool, optional): Add speaker words to each memory
-                                             (<BOT> or <USER>) indicating who spoke each memory.
-        """
         self.url = 'http://www.thespermwhale.com/jaseweston/babi'
         self.size = 3032766
         self.filename = 'dialog-bAbI-tasks.tgz'
@@ -112,7 +138,7 @@ class BABI_Dialog(object):
             'dialog-babi-task6-dstc2-'
         ]
 
-        print('Preparing bAbI-dialog dataset or extracting from %s' % path)
+        print('Preparing bAbI-dialog dataset. Looking in ./%s' % path)
 
         assert task in range(
             1, 7), "given task is not in the bAbI-dialog dataset"
@@ -227,7 +253,13 @@ class BABI_Dialog(object):
         self.workdir, filepath = valid_path_append(
             self.path, '', self.filename)
         if not os.path.exists(filepath):
-            print("bAbI-dialog dataset not found at: {}".format(filepath))
+            print("The bAbI-dialog dataset is not found at: {}".format(filepath))
+            print("This dataset is released under Creative Commons Attribution 3.0 "
+                  "Unported license. A copy of this license can be found at "
+                  "https://github.com/vyraun/chatbot-MemN2N-tensorflow/blob/"
+                  "master/data/dialog-bAbI-tasks/LICENSE.txt.")
+            print("The terms and conditions of the data set license apply. Intel "
+                  "does not grant any rights to the data files or database.")
             response = input("To download the dataset from {}, "
                              "please type YES: ".format(self.url))
 
@@ -274,6 +306,15 @@ class BABI_Dialog(object):
 
     @staticmethod
     def parse_dialog(fn, use_time=True, use_speaker_tag=True):
+        """
+        Given a dialog file, parse into user and bot utterances, adding time and speaker tags.
+
+        Args:
+            fn (str): Filename to parse
+            use_time (bool, optional): Flag to append 'time-words' to the end of each utterance
+            use_speaker_tag (bool, optional): Flag to append tags specifiying the speaker to
+                each utterance.
+        """
         with open(fn, 'r') as f:
             text = f.readlines()
 
@@ -326,7 +367,7 @@ class BABI_Dialog(object):
         """
         Convert a list of words into vector form.
 
-        Arguments:
+        Args:
             words (list) : List of words.
 
         Returns:
@@ -339,7 +380,7 @@ class BABI_Dialog(object):
         """
         Create one-hot representation of an answer.
 
-        Arguments:
+        Args:
             answer (string) : The word answer.
 
         Returns:
@@ -356,7 +397,7 @@ class BABI_Dialog(object):
         If sentence length < max_utt_len it is padded with 0's
         If memory length < memory size, it is padded with empty memorys (max_utt_len 0's)
 
-        Arguments:
+        Args:
             data (tuple) : Tuple of memories, user_utt, answer word data.
 
         Returns:
@@ -388,7 +429,7 @@ class BABI_Dialog(object):
 
         If sentence length < max_cand_len it is padded with 0's
 
-        Arguments:
+        Args:
             data (list of lists) : list of candidate answers split into words
 
         Returns:
@@ -402,6 +443,9 @@ class BABI_Dialog(object):
         return c
 
     def get_vocab(self, dialog):
+        """
+        Compute vocabulary from the set of dialogs.
+        """
         # Extract only the memory words and user utterance words (these will
         # contain all vocab in the end)
         dialog_words = [x[0] + [x[1]] for x in dialog]
