@@ -3,20 +3,6 @@
 
 This directory contains an implementation of the boundary model(b in the Figure) Match LSTM and Answer Pointer network for Machine Reading Comprehension in Intel-Ngraph. The idea behind this method is to build a question aware representation of the passage and use this representation as an input to the pointer network which identifies the start and end indices of the answer.
 
-<b>Model Architecture</b>
-![Model architecture](https://github.com/NervanaSystems/ai-lab-models/blob/sharath/SQUAD_ngraph/ReadingComprehension/ngraph_implementation/MatchLSTM_Model.png)
-
-# Dependencies:
-The primary dependency of this model is `ngraph-python`. Download and installation instructions can be found at https://github.com/NervanaSystems/ngraph-python/blob/master/legacy_README.md. In addition to this, other required libraries are
-- `numpy`
-- `python3`
-
-# Files:
-- `train.py` -Implements the end to end model along with the training commands
-- `utils.py`- Implements different utility functions to set up the data loader and to do the evaluation.
-- `layers.py` -Contains different layers in ngraph required for the model
-- `weight_initializers.py` - Containsm functions to initialize the LSTM Cell in ngraph
-
 ## Dataset
 1. Download the training and  from here
 https://rajpurkar.github.io/SQuAD-explorer/
@@ -26,13 +12,8 @@ https://rajpurkar.github.io/SQuAD-explorer/
 Train the model using the following command
  `python train.py -bgpu --gpu_id 0`
 
-The command line options available are:
-- `--gpu_id` select the gpu id train the model. Default is 0.
-- `--max_para_req` enter the max length of the para to truncate the dataset.Default is 100. Currently the code has been tested for a maximum length of paragraph length of 100.
-- `--batch_size_squad` enter the batch size (please note that 30 is the max batch size that will fit on the gpu with 12 gb memory). Default is 16.
-
 ## Results
-After training starts, you will see outputs like this:
+After training starts, you will see outputs as shown below:
 ```
 Loading Embeddings
 creating training Set
