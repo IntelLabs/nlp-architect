@@ -13,11 +13,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
-
+from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
-from __future__ import absolute_import
 
 import sys
 
@@ -29,6 +28,7 @@ class Vocabulary:
     """
     A vocabulary that maps words to ints (storing a vocabulary)
     """
+
     def __init__(self, start=0):
 
         self._vocab = {}
@@ -109,31 +109,34 @@ class Vocabulary:
         return self._rev_vocab
 
 
-class SpacyTokenizer:
+class SpacyPipeline:
     """
-    Spacy based tokenizer
+    Spacy pipeline wrapper which prompts user for model download authorization.
 
     Args:
         model (str, optional): spacy model name (default: english small model)
+        disable (list of string, optional): pipeline annotators to disable
+            (default: ['tagger', 'ner', 'parser', 'vectors', 'textcat'])
     """
 
-    def __init__(self, model='en'):
-        pipeline_opts = ['tagger', 'ner', 'parser', 'vectors', 'textcat']
+    def __init__(self, model='en', **kwargs):
+        if 'disable' not in kwargs:
+            kwargs['disable'] = ['tagger', 'ner', 'parser', 'vectors', 'textcat']
+
         try:
-            self.parser = spacy.load(model, disable=pipeline_opts)
+            self.parser = spacy.load(model, **kwargs)
         except OSError:
-            print('Spacy English model was not found')
-            url = 'https://spacy.io/models/en#en_core_web_sm'
+            print('Spacy model ' + str(model) + ' was not found')
+            url = 'https://spacy.io/models'
             print('License: Creative Commons v3-BY-SA '
                   'https://creativecommons.org/licenses/by-sa/3.0/')
-            response = input('To download the model from {}, '
-                             + 'please type YES: '.format(url))
+            response = input('To download the model from {}, please type YES: '.format(url))
             if response.lower().strip() == "yes":
                 print('The terms and conditions of the data set license apply. Intel does not '
                       'grant any rights to the data files or database')
                 print('Downloading Spacy model...')
-                spacy_download(model)
-                self.parser = spacy.load(model, disable=pipeline_opts)
+                spacy_download(None, model)
+                self.parser = spacy.load(model, **kwargs)
             else:
                 print('Download declined. Response received {} != YES. '.format(response))
                 print('Please download the model manually')

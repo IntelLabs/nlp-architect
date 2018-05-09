@@ -22,6 +22,7 @@ from __future__ import absolute_import
 import io
 import posixpath
 import zipfile
+import os
 from os import walk, path
 
 import requests
@@ -171,3 +172,9 @@ def absolute_path(input_path):
             # handle case using default value\relative paths
             input_path = path.join(path.dirname(__file__), input_path)
     return input_path
+
+
+def sanitize_path(path):
+    s_path = os.path.normpath('/' + path).lstrip('/')
+    assert len(s_path) < 255
+    return s_path

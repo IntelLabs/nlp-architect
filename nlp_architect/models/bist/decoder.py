@@ -13,20 +13,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
-from __future__ import unicode_literals, print_function, division, \
-    absolute_import
-
+# pylint: disable=invalid-name
 import numpy as np
 
+'''
+Things that were changed from the original:
+1) Reformatted code and variable names to conform with PEP8
+2) Added legal header
+'''
 
 # This file contains routines from Lisbon Machine Learning summer school.
-# The code is freely distributed under a MIT license.
-# https://github.com/LxMLS/lxmls-toolkit/
-# pylint: disable=invalid-name
+# The code is freely distributed under a MIT license. https://github.com/LxMLS/lxmls-toolkit/
+
 
 def parse_proj(scores, gold=None):
     # pylint: disable=too-many-locals
-
     """
     Parse using Eisner's algorithm.
     """
@@ -39,10 +40,8 @@ def parse_proj(scores, gold=None):
     # Initialize CKY table.
     complete = np.zeros([N + 1, N + 1, 2])  # s, t, direction (right=1).
     incomplete = np.zeros([N + 1, N + 1, 2])  # s, t, direction (right=1).
-    complete_backtrack = -np.ones([N + 1, N + 1, 2],
-                                  dtype=int)  # s, t, direction (right=1).
-    incomplete_backtrack = -np.ones([N + 1, N + 1, 2],
-                                    dtype=int)  # s, t, direction (right=1).
+    complete_backtrack = -np.ones([N + 1, N + 1, 2], dtype=int)  # s, t, direction (right=1).
+    incomplete_backtrack = -np.ones([N + 1, N + 1, 2], dtype=int)  # s, t, direction (right=1).
 
     incomplete[0, :, 0] -= np.inf
 
@@ -53,18 +52,13 @@ def parse_proj(scores, gold=None):
 
             # First, create incomplete items.
             # left tree
-            incomplete_vals0 = \
-                complete[s, s:t, 1] + complete[(s + 1):(t + 1), t, 0] +\
-                scores[t, s] +\
-                (0.0 if gold is not None and gold[s] == t else 1.0)
+            incomplete_vals0 = complete[s, s:t, 1] + complete[(s + 1):(t + 1), t, 0] + \
+                scores[t, s] +  (0.0 if gold is not None and gold[s] == t else 1.0)
             incomplete[s, t, 0] = np.max(incomplete_vals0)
             incomplete_backtrack[s, t, 0] = s + np.argmax(incomplete_vals0)
             # right tree
-            incomplete_vals1 = \
-                complete[s, s:t, 1] +\
-                complete[(s + 1):(t + 1), t, 0] +\
-                scores[s, t] +\
-                (0.0 if gold is not None and gold[t] == s else 1.0)
+            incomplete_vals1 = complete[s, s:t, 1] +  complete[(s + 1):(t + 1), t, 0] + \
+                scores[s, t] + (0.0 if gold is not None and gold[t] == s else 1.0)
             incomplete[s, t, 1] = np.max(incomplete_vals1)
             incomplete_backtrack[s, t, 1] = s + np.argmax(incomplete_vals1)
 
@@ -74,16 +68,13 @@ def parse_proj(scores, gold=None):
             complete[s, t, 0] = np.max(complete_vals0)
             complete_backtrack[s, t, 0] = s + np.argmax(complete_vals0)
             # right tree
-            complete_vals1 = \
-                incomplete[s, (s + 1):(t + 1), 1] +\
-                complete[(s + 1):(t + 1), t, 1]
+            complete_vals1 = incomplete[s, (s + 1):(t + 1), 1] + complete[(s + 1):(t + 1), t, 1]
             complete[s, t, 1] = np.max(complete_vals1)
             complete_backtrack[s, t, 1] = s + 1 + np.argmax(complete_vals1)
 
     # value = complete[0][N][1]
     heads = [-1 for _ in range(N + 1)]  # -np.ones(N+1, dtype=int)
-    backtrack_eisner(incomplete_backtrack, complete_backtrack, 0, N, 1, 1,
-                     heads)
+    backtrack_eisner(incomplete_backtrack, complete_backtrack, 0, N, 1, 1, heads)
     value_proj = 0.0
     for m in range(1, N + 1):
         h = heads[m]
@@ -92,8 +83,7 @@ def parse_proj(scores, gold=None):
 
 
 # pylint: disable=too-many-arguments
-def backtrack_eisner(incomplete_backtrack, complete_backtrack, s, t, direction,
-                     complete, heads):
+def backtrack_eisner(incomplete_backtrack, complete_backtrack, s, t, direction, complete, heads):
     """
     Backtracking step in Eisner's algorithm.
     - incomplete_backtrack is a (NW+1)-by-(NW+1) numpy array indexed by a start
@@ -116,27 +106,20 @@ def backtrack_eisner(incomplete_backtrack, complete_backtrack, s, t, direction,
     if complete:
         r = complete_backtrack[s][t][direction]
         if direction == 0:
-            backtrack_eisner(incomplete_backtrack, complete_backtrack, s, r, 0,
-                             1, heads)
-            backtrack_eisner(incomplete_backtrack, complete_backtrack, r, t, 0,
-                             0, heads)
+            backtrack_eisner(incomplete_backtrack, complete_backtrack, s, r, 0, 1, heads)
+            backtrack_eisner(incomplete_backtrack, complete_backtrack, r, t, 0, 0, heads)
             return
-        backtrack_eisner(incomplete_backtrack, complete_backtrack, s, r, 1,
-                         0, heads)
-        backtrack_eisner(incomplete_backtrack, complete_backtrack, r, t, 1,
-                         1, heads)
+        backtrack_eisner(incomplete_backtrack, complete_backtrack, s, r, 1, 0, heads)
+        backtrack_eisner(incomplete_backtrack, complete_backtrack, r, t, 1, 1, heads)
         return
+
     r = incomplete_backtrack[s][t][direction]
     if direction == 0:
         heads[s] = t
-        backtrack_eisner(incomplete_backtrack, complete_backtrack, s, r, 1,
-                         1, heads)
-        backtrack_eisner(incomplete_backtrack, complete_backtrack, r + 1,
-                         t, 0, 1, heads)
+        backtrack_eisner(incomplete_backtrack, complete_backtrack, s, r, 1, 1, heads)
+        backtrack_eisner(incomplete_backtrack, complete_backtrack, r + 1, t, 0, 1, heads)
         return
     heads[t] = s
-    backtrack_eisner(incomplete_backtrack, complete_backtrack, s, r, 1,
-                     1, heads)
-    backtrack_eisner(incomplete_backtrack, complete_backtrack, r + 1,
-                     t, 0, 1, heads)
+    backtrack_eisner(incomplete_backtrack, complete_backtrack, s, r, 1, 1, heads)
+    backtrack_eisner(incomplete_backtrack, complete_backtrack, r + 1, t, 0, 1, heads)
     return
