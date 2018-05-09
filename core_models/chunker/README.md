@@ -1,5 +1,18 @@
 # BiLSTM Phrase Chunker
-This directory contains an implementation of a BiLSTM Pharse Chunker which tags parts of sentence syntactically of a given input.
+
+Phrase chunking is a basic NLP task that consists of tagging parts of a sentence (1 or more tokens) syntactically.  
+
+### Example
+
+  The quick brown fox jumped over the fence
+  |                   |      |    |
+  Noun                Verb   Prep Noun
+
+In this example the sentence can be divided into 4 phrases, `The quick brown fox` and `the fence` are noun phrases, `jumped` is a verb phrase and `over` is a prepositional phrase.
+
+## Dataset
+
+We used the CoNLL2000 dataset in our example for training a phrase chunker. More info about this dataset can be found [here](https://www.clips.uantwerpen.be/conll2000/chunking/).
 
 ## Usage
 ### Training

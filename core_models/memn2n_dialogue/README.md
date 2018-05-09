@@ -1,6 +1,10 @@
 # End-to-End Memory Network for Goal Oriented Dialogue
 This directory contains an implementation of an End-to-End Memory Network for goal oriented dialogue in ngraph. 
 
+Goal oriented dialogue is a subset of open-domain dialogue where an automated agent has a specific goal for the outcome of the interaction. At a high level, the system needs to understand a user request and complete a related task with a clear goal within a limited number of dialog turns. This task could be making a restaurant reservation, placing an order, setting a timer, or many of the digital personal assistant tasks.
+
+End-to-End Memory Networks are generic semi-recurrent neural networks which allow for a bank of external memories to be read from and used during execution. They can be used in place of traditional slot-filling algorithms to accomplish goal oriented dialogue tasks without the need for expensive hand-labeled dialogue data. End-to-End Memory Netowrks have also been shown to be useful for Question-Answering and information retrieval tasks. 
+
 ## Datasets 
 The dataset used for training and evaluation is under the umbrella of the Facebook bAbI dialog tasks (https://research.fb.com/downloads/babi/). The dataset can be downloaded from the command line if not found, and the preprocessing all happens at the beginning of training.
 

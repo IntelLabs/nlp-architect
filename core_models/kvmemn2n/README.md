@@ -8,7 +8,7 @@ Please download the tar file from http://www.thespermwhale.com/jaseweston/babi/m
 # Training
 The base command to train is `python train_kvmemn2n.py`.
 To get all the options run `python train_kvmemn2n.py -h`
-The run commands for the results below were:
+The following are example commands to run training using knowledge base and raw text respectively
 ```
 python train_kvmemn2n.py --epochs 2000 --batch_size 32 --emb_size 100 --use_v_luts --model_file path_to_model_dir/kb_model
 ```
