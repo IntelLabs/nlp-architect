@@ -22,6 +22,5 @@ generated
 *.log
 .idea/
 dist
-.nlp_architect_env
-
+.nlp_architect_env/
 _generated_reqs.txt
