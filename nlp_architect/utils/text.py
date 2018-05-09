@@ -126,17 +126,16 @@ class SpacyPipeline:
         try:
             self.parser = spacy.load(model, **kwargs)
         except OSError:
-            print('Spacy English model was not found')
-            url = 'https://spacy.io/models/en#en_core_web_sm'
+            print('Spacy model ' + str(model) + ' was not found')
+            url = 'https://spacy.io/models'
             print('License: Creative Commons v3-BY-SA '
                   'https://creativecommons.org/licenses/by-sa/3.0/')
-            response = input('To download the model from {}, '
-                             + 'please type YES: '.format(url))
+            response = input('To download the model from {}, please type YES: '.format(url))
             if response.lower().strip() == "yes":
                 print('The terms and conditions of the data set license apply. Intel does not '
                       'grant any rights to the data files or database')
                 print('Downloading Spacy model...')
-                spacy_download(model)
+                spacy_download(None, model)
                 self.parser = spacy.load(model, **kwargs)
             else:
                 print('Download declined. Response received {} != YES. '.format(response))
