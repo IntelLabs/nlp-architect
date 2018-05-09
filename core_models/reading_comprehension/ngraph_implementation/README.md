@@ -12,11 +12,6 @@ https://rajpurkar.github.io/SQuAD-explorer/
 Train the model using the following command
  `python train.py -bgpu --gpu_id 0`
 
-The command line options available are:
-- `--gpu_id` select the gpu id train the model. Default is 0.
-- `--max_para_req` enter the max length of the para to truncate the dataset.Default is 100. Currently the code has been tested for a maximum length of paragraph length of 100.
-- `--batch_size_squad` enter the batch size (please note that 30 is the max batch size that will fit on the gpu with 12 gb memory). Default is 16.
-
 ## Results
 After training starts, you will see outputs as shown below:
 ```
