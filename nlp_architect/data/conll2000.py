@@ -16,6 +16,8 @@
 
 from __future__ import division, print_function, unicode_literals, absolute_import
 
+import sys
+
 import nltk
 import numpy as np
 from neon.data.text_preprocessing import pad_sentences
@@ -56,8 +58,13 @@ class CONLL2000(object):
 
     @staticmethod
     def load_data():
-        train_set = conll2000.chunked_sents('train.txt')
-        test_set = conll2000.chunked_sents('test.txt')
+        try:
+            train_set = conll2000.chunked_sents('train.txt')
+            test_set = conll2000.chunked_sents('test.txt')
+        except Exception:
+            print('dataset is missing from NLTK, please refer to the documentation for '
+                  'instructions for obtaining the dataset')
+            sys.exit(0)
         train_data = [list(zip(*nltk.chunk.tree2conlltags(sent))) for sent in train_set]
         test_data = [list(zip(*nltk.chunk.tree2conlltags(sent))) for sent in test_set]
         return train_data, test_data

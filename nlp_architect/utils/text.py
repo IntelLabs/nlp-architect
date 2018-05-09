@@ -117,26 +117,20 @@ class SpacyTokenizer:
         model (str, optional): spacy model name (default: english small model)
     """
 
-    def __init__(self, model='en_core_web_sm'):
+    def __init__(self, model='en'):
         pipeline_opts = ['tagger', 'ner', 'parser', 'vectors', 'textcat']
         try:
             self.parser = spacy.load(model, disable=pipeline_opts)
         except OSError:
-            print('Spacy English model not found')
-            url = 'https://spacy.io/models/en#en_core_web_sm'
-            print('License: CC3-BY-SA https://creativecommons.org/licenses/by-sa/3.0/')
-            response = input('To download the model from {}, '
-                             + 'please type YES: '.format(url))
-            if response.lower().strip() == "yes":
-                print('The terms and conditions of the data set license apply. Intel does not '
-                      'grant any rights to the data files or database')
-                print('Downloading Spacy model...')
-                spacy_download(model)
-                self.parser = spacy.load(model, disable=pipeline_opts)
-            else:
-                print('Download declined. Response received {} != YES. '.format(response))
-                print('Please download the model manually')
-                sys.exit(0)
+            print('Spacy English model not found'.format(model))
+            print('to download an English model using Spacy, please run:')
+            print('    python -m spacy download en_core_web_sm')
+            print('')
+            print('Spacy license:  MIT')
+            print('Link to license: https://github.com/explosion/spaCy/blob/master/LICENSE')
+            print('The terms and conditions of the data set license apply. Intel does not '
+                  'grant any rights to the data files or database')
+            sys.exit(0)
 
     def tokenize(self, text):
         """
