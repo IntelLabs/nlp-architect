@@ -21,7 +21,6 @@ from __future__ import absolute_import
 import pickle
 import os
 
-from neon import logger as neon_logger
 from neon.backends import gen_backend
 from neon.callbacks.callbacks import Callbacks
 from neon.layers import GeneralizedCost
@@ -31,7 +30,7 @@ from neon.util.argparser import NeonArgparser, extract_valid_args
 
 from nlp_architect.data.conll2000 import CONLL2000
 from nlp_architect.models.chunker import SequenceChunker
-from utils import label_precision_recall_f1
+from nlp_architect.utils.metrics import get_conll_scores
 
 if __name__ == '__main__':
 
@@ -64,7 +63,7 @@ if __name__ == '__main__':
                         help='Model file name')
     parser.add_argument('--settings', default='chunker_settings', type=str,
                         help='Model settings file name')
-    parser.add_argument('--print_np_perf', default=True, action='store_true',
+    parser.add_argument('--print_np_perf', default=False, action='store_true',
                         help='Print Noun Phrase (NP) tags accuracy')
 
     args = parser.parse_args(gen_be=False)
@@ -129,19 +128,16 @@ if __name__ == '__main__':
 
     with open(args.settings + '.dat', 'wb') as fp:
         pickle.dump(model_settings, fp)
-    model.save('{}.prm'.format(args.model_name))
+    model.save(args.model_name)
 
     # tagging accuracy
     y_preds = model.predict(test_set)
-    shape = (test_set.nbatches, args.batch_size, args.sentence_len)
-    prediction = y_preds.argmax(2).reshape(shape).transpose(1, 0, 2)
-    fraction_correct = (prediction == test_set.y).mean()
-    neon_logger.display('Misclassification error = %.1f%%' % ((1 - fraction_correct) * 100))
+    predictions = y_preds.argmax(2)
+    truth_labels = test_set.y.reshape(-1, args.sentence_len)
 
-    # check NP label accuracy
+    eval = get_conll_scores(predictions, truth_labels, {
+        v+1: k for k, v in dataset.y_vocab.items()})
     if args.print_np_perf is True:
-        np_labels = [dataset.y_vocab['B-NP'] + 1, dataset.y_vocab['I-NP'] + 1]
-        p, r, f1 = label_precision_recall_f1(test_set.y.reshape(-1, args.sentence_len),
-                                             prediction.reshape(-1, args.sentence_len),
-                                             np_labels)
-        print(p, r, f1)
+        print('NP performance: {}'.format(eval[1]['NP']))
+    else:
+        print('Global performance: {}'.format(eval[0]))

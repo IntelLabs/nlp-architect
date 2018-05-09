@@ -40,8 +40,12 @@ def run_conlleval(data):
 def get_conll_scores(predictions, y, y_lex):
     if type(predictions) == list:
         predictions = predictions[-1]
-    test_p = predictions.argmax(2)
-    test_y = y.argmax(2)
+    test_p = predictions
+    if len(test_p.shape) > 2:
+        test_p = test_p.argmax(2)
+    test_y = y
+    if len(test_y.shape) > 2:
+        test_y = test_y.argmax(2)
 
     prediction_data = []
     for n in range(test_y.shape[0]):
