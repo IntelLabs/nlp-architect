@@ -18,7 +18,20 @@ STYLE_CHECK_OPTS :=
 STYLE_CHECK_DIRS :=
 DOC_DIR := doc
 DOC_PUB_RELEASE_PATH := $(DOC_PUB_PATH)/$(RELEASE)
-test_prepare:
+
+LIBRARY_NAME := nlp_architect
+VIRTUALENV_DIR := .nlp_architect_env
+GEN_REQ_FILE := _generated_reqs.txt
+ACTIVATE := $(VIRTUALENV_DIR)/bin/activate
+MODELS_DIR := $(LIBRARY_NAME)/models
+NLP_DIR := $(LIBRARY_NAME)/nlp
+
+.PHONY: test_prepare style fixstyle autopep8 doc_prepare doc html clean \
+	install install_dev install_no_virt_env $(ACTIVATE)
+
+default: install_dev
+
+test_prepare: test_requirements.txt
 	pip install -r test_requirements.txt > /dev/null 2>&1
 
 style: test_prepare
@@ -31,7 +44,7 @@ autopep8:
 	autopep8 -a -a --global-config setup.cfg --in-place `find . -name \*.py`
 	echo run "git diff" to see what may need to be checked in and "make style" to see what work remains
 
-doc_prepare:
+doc_prepare: doc_requirements.txt
 	pip install -r doc_requirements.txt > /dev/null 2>&1
 
 doc: doc_prepare
@@ -45,65 +58,42 @@ doc: doc_prepare
 html:
 	$(MAKE) -C $(DOC_DIR) html
 
-LIBRARY_NAME := nlp_architect
-VIRTUALENV_DIR := .nlp_architect_env
-ACTIVATE := $(VIRTUALENV_DIR)/bin/activate
-MODELS_DIR := $(LIBRARY_NAME)/models
-NLP_DIR := $(LIBRARY_NAME)/nlp
+clean:
+	@echo "Cleaning files.."
+	@rm -rf $(VIRTUALENV_DIR)
+	@rm -rf $(GEN_REQ_FILE)
 
 $(ACTIVATE):
-	pip3 install --upgrade pip setuptools virtualenv
+	@echo "NLP Architect installation"
+	@echo "**************************"
+	@echo "creating new environment"
 	virtualenv -p python3 $(VIRTUALENV_DIR)
 	@. $(ACTIVATE); pip install -U pip
-	# @. $(basic); pip install -r requirements.txt
 
-intent: $(ACTIVATE)
-	@echo "installing intent extractor model"
-	@. $(ACTIVATE); pip install -r $(NLP_DIR)/intent_extraction/requirements.txt
-	@$(MAKE) finally
+pre_install: $(ACTIVATE) generate_reqs.sh
+	@echo "\n\n****************************************"
+	@echo "Generating package list to install"
+	@. $(ACTIVATE); bash generate_reqs.sh
+	@echo "Installing packages ..."
+	@. $(ACTIVATE); pip install -r $(GEN_REQ_FILE)
 
-chunker: $(ACTIVATE)
-	@echo "installing chunker model"
-	@. $(ACTIVATE); pip install -r $(NLP_DIR)/chunker/requirements.txt
-	@$(MAKE) finally
+install: pre_install
+	@. $(ACTIVATE); pip install .
+	$(MAKE) print_finish
 
-bist: $(ACTIVATE)
-	@echo "installing BIST parser"
-	@. $(ACTIVATE); pip install -r $(NLP_DIR)/bist/requirements.txt
-	@$(MAKE) finally
-
-np_seg: $(ACTIVATE)
-	@echo "installing NP semantic segmentation model"
-	@. $(ACTIVATE); pip install -r $(NLP_DIR)/np_semantic_segmentation/requirements.txt
-	@$(MAKE) finally
-
-np2vec: $(ACTIVATE)
-	@echo "installing NP2vec model"
-	@. $(ACTIVATE); pip install -r $(NLP_DIR)/np2vec/requirements.txt
-	@$(MAKE) finally
-
-mcws: $(ACTIVATE)
-	@echo "installing most common word sense model"
-	@. $(ACTIVATE); pip install -r $(NLP_DIR)/most_common_word_sense/requirements.txt
-	@$(MAKE) finally
-
-reading_comprehension: $(ACTIVATE)
-	@echo "installing reading comprehension model"
-	@. $(ACTIVATE); pip install -r $(MODELS_DIR)/reading_comprehension/requirements.txt
-	@$(MAKE) finally
-
-kbmemn2n: $(ACTIVATE)
-	@echo "installing key-value memory network model"
-	@. $(ACTIVATE); pip install -r $(MODELS_DIR)/kvmemn2n/requirements.txt
-	@$(MAKE) finally
-
-mem2n_dialog: $(ACTIVATE)
-	@echo "installing memory network for dialog model"
-	@. $(ACTIVATE); pip install -r $(MODELS_DIR)/memn2n_dialogue/requirements.txt
-	@$(MAKE) finally
-
-finally: $(ACTIVATE)
+install_dev: pre_install
 	@. $(ACTIVATE); pip install -e .
+	$(MAKE) print_finish
+
+install_no_virt_env:
+	@echo "\n\n****************************************"
+	@echo "Installing NLP Architect in current python env"
+	@echo "Generating package list to install"
+	bash generate_reqs.sh
+	pip install -r $(GEN_REQ_FILE)
+	@echo "Installation done"
+
+print_finish:
 	@echo "\n\n****************************************"
 	@echo "Setup complete."
 	@echo "Type:"

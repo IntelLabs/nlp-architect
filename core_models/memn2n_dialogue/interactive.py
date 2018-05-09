@@ -50,7 +50,7 @@ from ngraph.frontends.neon import Saver
 import ngraph.transformers as ngt
 from nlp_architect.data.babi_dialog import BABI_Dialog
 from nlp_architect.models.memn2n_dialogue import MemN2N_Dialog
-from memn2n_dialogue.utils import interactive_loop
+from memn2n_dialogue.utils import interactive_loop, sanitize_path
 
 # parse the command line arguments
 parser = NgraphArgparser(__doc__)
@@ -102,8 +102,13 @@ parser.add_argument(
 parser.set_defaults(batch_size=32, epochs=200)
 args = parser.parse_args()
 
+# Sanitize inputs
+model_file = sanitize_path(args.model_file)
+assert model_file.endswith('.npz')
+data_dir = sanitize_path(args.data_dir)
+
 babi = BABI_Dialog(
-    path=args.data_dir,
+    path=data_dir,
     task=args.task,
     oov=args.use_oov,
     use_match_type=args.use_match_type,
@@ -170,7 +175,7 @@ with closing(ngt.make_transformer()) as transformer:
     weight_saver.setup_restore(
         transformer=transformer,
         computation=train_outputs,
-        filename=args.model_file)
+        filename=model_file)
     weight_saver.restore()
 
     # Add interactive mode

@@ -25,9 +25,9 @@ requirements = [
 
 setup(name='nlp_architect',
       version=VERSION,
-      description="Intel AI Lab NLP deep learning framework",
+      description="Intel AI Lab NLP Deep Learning framework for Research",
       author='Intel AI Lab NLP',
-      author_email='intelnervana@intel.com',
+      author_email='nlp_architect@intel.com',
       url='http://ai.intel.com',
       license='License :: OSI Approved :: Apache Software License',
       packages=find_packages(),
@@ -35,7 +35,6 @@ setup(name='nlp_architect',
       package_data={},
       classifiers=['Development Status :: 3 - Alpha',
                    'Environment :: Console',
-                   'Environment :: Console :: Curses',
                    'Environment :: Web Environment',
                    'Intended Audience :: End Users/Desktop',
                    'Intended Audience :: Developers',
@@ -43,9 +42,12 @@ setup(name='nlp_architect',
                    'License :: OSI Approved :: Apache Software License',
                    'Operating System :: POSIX',
                    'Operating System :: MacOS :: MacOS X',
-                   'Programming Language :: Python :: 2',
                    'Programming Language :: Python :: 3',
                    'Topic :: Scientific/Engineering :: ' +
                    'Artificial Intelligence',
+                   'Topic :: Scientific/Engineering :: ' +
+                   'Natural Language Processing',
+                   'Topic :: Scientific/Engineering :: ' +
+                   'Natural Language Understanding',
                    'Topic :: Scientific/Engineering :: Information Analysis',
                    'Topic :: System :: Distributed Computing'])

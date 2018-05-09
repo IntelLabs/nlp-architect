@@ -28,12 +28,9 @@ The dataset used for training and evaluation is under the umbrella of the Facebo
 
 You may choose to use the knowledge base `kb` or raw Wikipedia Text `text` using the argument `--mem_mode`.  The data will be preprocessed and stored according to the `--dataset_dir` and type of knowledge base as given by the argument `--mem_mode`. If you are using `--mem_mode text` the python function `wikiwindows.py` will run which can take a number of hours.  
 
-The code will automatically download and preprocess the data, placing the data and all data artifacts into folders within `~/nervana/data`. This can be changed using the argument `--data_dir`. The data preprocessing will only need to occur once for each type of knowledge base.  However, you can redo the preprocessing with the argument `--reparse`.
+Please download the tar file from http://www.thespermwhale.com/jaseweston/babi/movieqa.tar.gz and expand the folder into your desired data directory or `--data_dir`. If you are not planning to specify a data directory, please use the path `~/nervana/data`. The code `python train_kvmemn2n.py` will then preprocess the dataset, placing necessary data artifacts into folders within the `--data_dir` directory. The data preprocessing will only need to occur once for each type of knowledge base.  However, you can redo the preprocessing with the argument `--reparse`.
 
-The preprocessing algorithm `wikiwindows.py` can also be ran independently with `python wikiwindows.py ~/nervana/data/` though please note this is not necessary as `train_kvmemn2n.py` will run all data preprocessing steps. To run `wikiwindows.py` independently you need to:
-- Download the tar from http://www.thespermwhale.com/jaseweston/babi/movieqa.tar.gz
-- Extract the tar file
-- Run `python wikiwindows.py --data_dir ~/nervana/data`
+The preprocessing algorithm `wikiwindows.py` can also be ran independently with `python wikiwindows.py ~/nervana/data/` though please note this is not necessary as `train_kvmemn2n.py` will run all data preprocessing steps. To run `wikiwindows.py` independently you need to run `python wikiwindows.py --data_dir ~/nervana/data`
 
 
 # Training

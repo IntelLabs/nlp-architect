@@ -23,9 +23,13 @@ import numpy as np
 from copy import copy
 from functools import reduce
 import itertools
+import os
 
 
 def interactive_loop(interactive_computation, babi):
+    """
+    Loop used to interact with trained conversational agent with access to knowledge base API
+    """
     context = []
     response = None
     time_feat = 1
@@ -219,3 +223,9 @@ def issue_api_call(api_call, db, names_to_idxs, kb_text, babi):
     # Return actual text kb entries
     kb_results = list(kb_text[returned_kb_idxs])
     return kb_results
+
+
+def sanitize_path(path):
+    s_path = os.path.normpath('/' + path).lstrip('/')
+    assert len(s_path) < 255
+    return s_path

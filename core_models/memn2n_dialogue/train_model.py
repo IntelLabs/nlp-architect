@@ -51,7 +51,7 @@ from nlp_architect.models.memn2n_dialogue import MemN2N_Dialog
 import numpy as np
 import os
 from tqdm import tqdm
-from utils import interactive_loop
+from utils import interactive_loop, sanitize_path
 
 
 # parse the command line arguments
@@ -142,15 +142,16 @@ parser.set_defaults(batch_size=32, epochs=200)
 args = parser.parse_args()
 
 # Sanitize inputs
-log_file = args.log_file.replace('..','').replace('/', '')
-weights_save_path = args.weights_save_path.replace('..','').replace('/', '')
+log_file = sanitize_path(args.log_file)
+weights_save_path = sanitize_path(args.weights_save_path)
+data_dir = sanitize_path(args.data_dir)
 assert weights_save_path.endswith('.npz')
 assert log_file.endswith('.txt')
 
 gradient_clip_norm = args.grad_clip_norm
 
 babi = BABI_Dialog(
-    path=args.data_dir,
+    path=data_dir,
     task=args.task,
     oov=args.use_oov,
     use_match_type=args.use_match_type,
