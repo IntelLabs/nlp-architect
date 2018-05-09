@@ -265,6 +265,11 @@ class WIKIMOVIES(object):
         workdir, filepath = valid_path_append(path, '', self.filename)
         if not os.path.exists(filepath):
             print("WikiMovies dataset not found at: {}".format(filepath))
+            print("This dataset is released under Creative Commons Attribution 3.0 "
+                  "Unported license. A copy of this license can be found at "
+                  "https://research.fb.com/downloads/babi/"
+            print("The terms and conditions of the data set license apply. Intel "
+                  "does not grant any rights to the data files or database.")
             response = input("To download the dataset from {}, "
                              "please type YES: ".format(self.url))
 
