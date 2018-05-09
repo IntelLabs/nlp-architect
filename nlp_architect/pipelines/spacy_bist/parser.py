@@ -15,13 +15,12 @@
 # ******************************************************************************
 from os import path
 
-from spacy import load as spacy_load
-
 from nlp_architect.data.conll import ConllEntry
 from nlp_architect.models.bist_parser import BISTModel
 from nlp_architect.utils.core_nlp_doc import CoreNLPDoc
 from nlp_architect.utils.io import download_file, unzip_file
 from nlp_architect.utils.io import validate
+from nlp_architect.utils.text import SpacyPipeline
 
 
 class SpacyBISTParser(object):
@@ -47,7 +46,8 @@ class SpacyBISTParser(object):
         self.verbose = verbose
         self.bist_parser = BISTModel()
         self.bist_parser.load(bist_model if bist_model else SpacyBISTParser.pretrained)
-        self.spacy_annotator = spacy_load(spacy_model)
+        self.spacy_parser = SpacyPipeline(spacy_model,
+                                          disable=['ner', 'vectors', 'textcat']).parser
 
     def to_conll(self, doc_text):
         """Converts a document to CoNLL format with spacy POS tags.
@@ -59,7 +59,7 @@ class SpacyBISTParser(object):
             list of ConllEntry: The next sentence in the document in CoNLL format.
         """
         validate((doc_text, str))
-        for sentence in self.spacy_annotator(doc_text).sents:
+        for sentence in self.spacy_parser(doc_text).sents:
             sentence_conll = [ConllEntry(0, '*root*', '*root*', 'ROOT-POS', 'ROOT-CPOS', '_',
                                          -1, 'rroot', '_', '_')]
             i_tok = 0

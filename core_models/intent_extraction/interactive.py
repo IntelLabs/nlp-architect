@@ -29,7 +29,7 @@ import numpy as np
 from nlp_architect.data.intent_datasets import SNIPS
 from nlp_architect.models.intent_extraction import IntentExtractionModel
 from nlp_architect.utils.embedding import load_word_embeddings
-from nlp_architect.utils.text import SpacyTokenizer
+from nlp_architect.utils.text import SpacyPipeline
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--model_path', type=str, required=True,
@@ -56,7 +56,7 @@ model = IntentExtractionModel()
 model.load(args.model_path)
 
 ds = SNIPS(path=args.dataset_path)
-nlp = SpacyTokenizer()
+nlp = SpacyPipeline()
 
 
 def process_text(text):
