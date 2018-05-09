@@ -18,33 +18,46 @@ Most Common Word Sense Inference module.
 """
 
 
-import gensim
-from neon.backends import gen_backend
-from neon.data import ArrayIterator
-from neon.models import Model
-from neon.util.argparser import NeonArgparser
-
 import logging
+
+import gensim
 import numpy as np
-from nltk.corpus import wordnet as wn
 from feature_extraction import extract_features_envelope
 from feature_extraction import extract_synset_data
-from nlp_architect.word_sense_data import read_inference_input_examples_file
+from neon.backends import gen_backend
+from neon.data import ArrayIterator
+from neon.util.argparser import NeonArgparser
+from nltk.corpus import wordnet as wn
+from prepare_data import read_inference_input_examples_file
 from termcolor import colored
+
+from nlp_architect.models.most_common_word_sense import MostCommonWordSense
+from nlp_architect.utils.io import validate_existing_filepath
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
 
 def wsd_classify(x_test, y_test=None):
+    """
+    classifiy target word. output all word senses ranked according to the most probable sense
+
+    Args:
+        x_test(numpy.ndarray): input x data for inference
+        y_test: input y data for inference
+
+    Returns:
+         str: predicted values by the model
+    """
     # test set
     x_test = np.array(x_test)
     if y_test is not None:
         y_test = np.array(y_test)
     test_set = ArrayIterator(X=x_test, y=y_test, make_onehot=False)
 
+    mlp_clf = MostCommonWordSense(args.rounding, args.callback_args, args.epochs)
     # load existing model
-    mlp_clf = Model(args.model_prm)
+    mlp_clf.load(args.model_prm)
 
     results = mlp_clf.get_outputs(test_set)
 
@@ -54,17 +67,20 @@ def wsd_classify(x_test, y_test=None):
 if __name__ == "__main__":
 
     # parse the command line arguments
-    parser = NeonArgparser(__doc__)
+    parser = NeonArgparser()
 
-    parser.add_argument('--max_num_of_senses_to_search', default='3',
+    parser.add_argument('--max_num_of_senses_to_search', default=3, type=int,
                         help='maximum number of senses that are tests')
 
-    parser.add_argument('--input_inference_examples_file', default='data/input_inference_examples.csv',
+    parser.add_argument('--input_inference_examples_file',
+                        type=validate_existing_filepath,
+                        default='data/input_inference_examples.csv',
                         help='input_data_file')
     parser.add_argument('--model_prm', default='data/mcs_model.prm',
+                        type=validate_existing_filepath,
                         help='path to the file where the trained model has been stored')
-
     parser.add_argument('--word_embedding_model_file',
+                        type=validate_existing_filepath,
                         default='pretrained_models/GoogleNews-vectors-negative300.bin',
                         help='path to the word embedding\'s model')
 
@@ -78,7 +94,8 @@ if __name__ == "__main__":
     logger.info("finished reading inference input examples file")
 
     # 2. Load pre-trained word embeddings model.
-    word_embeddings_model = gensim.models.KeyedVectors.load_word2vec_format(args.word_embedding_model_file, binary=True)
+    word_embeddings_model = gensim.models.KeyedVectors.\
+        load_word2vec_format(args.word_embedding_model_file, binary=True)
     logger.info("finished loading word embeddings model")
 
     example_cntr = 0
@@ -100,7 +117,8 @@ if __name__ == "__main__":
             feature_vec = np.concatenate((feature_vec, target_word_emb), 0)
             feature_vec = np.concatenate((feature_vec, definition_sentence_emb_cbow), 0)
             featVecDim = feature_vec.shape[0]
-#           X_featureMatrix dim should be (1,featVecDim) but neon classifier gets a minimum of 10 samples not just 1
+#           X_featureMatrix dim should be (1,featVecDim) but neon classifier gets a minimum of
+            # 10 samples not just 1
             X_featureMatrix = np.zeros((10, featVecDim))
             X_featureMatrix[0, :] = feature_vec
 
@@ -119,7 +137,8 @@ if __name__ == "__main__":
 
 #       find sense with max score
         if len(sense_data_matrix) > 0:
-            max_val = max(sense_data_matrix, key=lambda sense_data_matrix_entry: sense_data_matrix_entry[0])
+            max_val = max(sense_data_matrix,
+                          key=lambda sense_data_matrix_entry: sense_data_matrix_entry[0])
             max_val = max_val[0]
             header_text = 'word: ' + input_word
             print(colored(header_text, 'grey',  attrs=['bold', 'underline']))

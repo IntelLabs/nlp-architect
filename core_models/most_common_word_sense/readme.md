@@ -21,13 +21,13 @@ both in the training and inference a feature vector is constructed as input to t
 
 ## Requirements:
 The training module inputs a gold standard csv file which is list of target_words where each word is associated with a CLASS_LABEL - a correct (true example) or an incorrect (false example) sense. the sense consists of the definition and the inherited hypernyms of the target word in a specific sense.
-the user needs to prepare this gold standard csv file in advance. The file should include the following 4 columns: (see gold standard file example under: data/gold_standard_sample.csv)
-|TARGET_WORD|DEFINITION|SEMANTIC_BRANCH|CLASS_LABEL
+the user needs to prepare this gold standard csv file in advance. The file should include the following 4 columns:
+| TARGET_WORD | DEFINITION | SEMANTIC_BRANCH | CLASS_LABEL
 where:
-1. TARGET_WORD: the word that you want to get the most common sense of.
-2. DEFINITION: the definition of the word (usually a single sentence) extracted from external resource such as wordnet or wikidata
-3. SEMANTIC_BRANCH:  the inherited hypernyms extracted from external resource such as wordnet or wikidata
-4. CLASS_LABEL: a binary [0,1] Y value that represent whether the sense (Definition and semantic branch) is the most common sense  of the target word
+1. TARGET_WORD(string):the word that you want to get the most common sense of. e.g. chair
+2. DEFINITION (string): the definition of the word (usually a single sentence) extracted from external resource such as wordnet or wikidata. e.g. an articat that is design for sitting
+3. SEMANTIC_BRANCH(string):  [comma seoarated] the inherited hypernyms extracted from external resource such as wordnet or wikidata e.g. [funniture, articact]
+4. CLASS_LABEL(string): a binary Y value 0/1 that represent whether the sense (Definition and semantic branch) is the most common sense  of the target word. e.g. 1
 
 Store the file in the data folder of the project.
 ## Dependencies:
@@ -53,12 +53,14 @@ Store the file in the data folder of the project.
 
 ### Example:
 
-1. preparing data for training and validation using pretrained Google News Word2vec model.
-Pretrained Google News Word2vec model can be download at <https://drive.google.com/file/d/0B7XkCwpI5KDYNlNUTTlSS21pQmM/edit?usp=sharing>. Then
+1. preparing data for training and validation using pre-trained Google News Word2vec model.
+The terms and conditions of the data set license apply. Intel does not grant any rights to the data files or database.
+see relevant license agreement http://www.apache.org/licenses/LICENSE-2.0
+Pretrained Google News Word2vec model can be download at <https://drive.google.com/file/d/0B7XkCwpI5KDYNlNUTTlSS21pQmM/edit?usp=sharing>.
 2. Prepare in advance gold standard csv file as described in the requirements section above.
 
 `python prepare_data.py --gold_standard_file data/gold_standard.csv
-       --word_embedding_model_file pretrained_models/GoogleNews-vectors-negative300.bin
+       --word_embedding_model_file pre-trained_models/GoogleNews-vectors-negative300.bin
        --training_to_validation_size_ratio 0.8
        --data_set_file data/data_set.pkl`
 
@@ -85,6 +87,6 @@ Train the MLP classifier and evaluate it.
 
 where:
 max_num_of_senses_to_search is the maximum number of senses that are checked per target word . default =3
-input_inference_examples_file is a csv file containing the input inference data. this file includes a single column wwherein each entry in this column is a different target word (see input_inference_examples.csv under the data folder):
+input_inference_examples_file is a csv file containing the input inference data. this file includes a single column wherein each entry in this column is a different target word (see input_inference_examples.csv under the data folder):
 
 note that the results are printed to the terminal using different colors therefore using a white terminal background is best to view the results

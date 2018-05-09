@@ -34,6 +34,8 @@ from nlp_architect.utils.text import SpacyTokenizer
 parser = argparse.ArgumentParser()
 parser.add_argument('--model_path', type=str, required=True,
                     help='Model file path')
+parser.add_argument('--dataset_path', type=str, required=True,
+                    help='dataset directory')
 parser.add_argument('--embedding_model', type=str,
                     help='Path to word embedding model')
 parser.add_argument('--embedding_size', type=int,
@@ -43,6 +45,9 @@ args = parser.parse_args()
 if not os.path.exists(args.model_path):
     print('model_path does not exist')
     sys.exit(0)
+if not os.path.exists(args.dataset_path):
+    print('dataset_path does not exist')
+    sys.exit(0)
 if args.embedding_model is not None and not os.path.exists(args.embedding_model):
     print('word embedding model file was not found')
     sys.exit(0)
@@ -50,7 +55,7 @@ if args.embedding_model is not None and not os.path.exists(args.embedding_model)
 model = IntentExtractionModel()
 model.load(args.model_path)
 
-ds = SNIPS()
+ds = SNIPS(path=args.dataset_path)
 nlp = SpacyTokenizer()
 
 
