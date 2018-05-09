@@ -26,3 +26,6 @@ An overall installation process will be coming soon.
 
 ## Disclaimer
 The NLP Architect is released as a reference code for research purposes. It is not an official Intel product, and the level of quality and support may not be as expected from an official product. Additional algorithms and environments are planned to be added to the framework. Feedback and contributions from the open source and NLP research communities are more than welcome.
+
+## Contact
+Contacting the NLP Architect development team is possible through this email: nlp_architect@intel.com
