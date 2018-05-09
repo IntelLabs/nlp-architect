@@ -117,14 +117,15 @@ class SpacyTokenizer:
         model (str, optional): spacy model name (default: english small model)
     """
 
-    def __init__(self, model='en_core_web_sm'):
+    def __init__(self, model='en'):
         pipeline_opts = ['tagger', 'ner', 'parser', 'vectors', 'textcat']
         try:
             self.parser = spacy.load(model, disable=pipeline_opts)
         except OSError:
-            print('Spacy English model not found')
+            print('Spacy English model was not found')
             url = 'https://spacy.io/models/en#en_core_web_sm'
-            print('License: CC3-BY-SA https://creativecommons.org/licenses/by-sa/3.0/')
+            print('License: Creative Commons v3-BY-SA '
+                  'https://creativecommons.org/licenses/by-sa/3.0/')
             response = input('To download the model from {}, '
                              + 'please type YES: '.format(url))
             if response.lower().strip() == "yes":
