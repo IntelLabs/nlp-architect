@@ -14,20 +14,21 @@
 # limitations under the License.
 # ******************************************************************************
 # pylint: disable=deprecated-module
-"""
-Utility functions for the BIST parser.
-"""
-
-from __future__ import unicode_literals, print_function, division, \
-    absolute_import
-
-import io
 import os
 import subprocess
 from collections import Counter
 
 from nlp_architect.data.conll import ConllEntry
 from nlp_architect.models.bist.eval.conllu.conll17_ud_eval import run_conllu_eval
+
+'''
+Things that were changed from the original:
+1) Removed ConllEntry class, normalize()
+2) Changed read_conll() and write_conll() input from file to path
+3) Added run_eval(), get_options_dict() and is_conllu()
+4) Reformatted code and variable names to conform with PEP8
+5) Added legal header
+'''
 
 
 def vocab(conll_path):
@@ -47,8 +48,8 @@ def vocab(conll_path):
         pos_count.keys()), list(rel_count.keys())
 
 
-def read_conll(conll_path):
-    with io.open(conll_path, 'r') as conll_fp:
+def read_conll(path):
+    with open(path, 'r') as conll_fp:
         root = ConllEntry(0, '*root*', '*root*', 'ROOT-POS', 'ROOT-CPOS', '_',
                           -1, 'rroot', '_', '_')
         tokens = [root]
@@ -73,8 +74,8 @@ def read_conll(conll_path):
             yield tokens
 
 
-def write_conll(filename, conll_gen):
-    with io.open(filename, 'w') as file:
+def write_conll(path, conll_gen):
+    with open(path, 'w') as file:
         for sentence in conll_gen:
             for entry in sentence[1:]:
                 file.write(str(entry) + '\n')

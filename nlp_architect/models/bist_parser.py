@@ -13,10 +13,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
-"""BIST parser main module."""
-
-from __future__ import unicode_literals, print_function, division, absolute_import
-
 import json
 import os
 

@@ -13,10 +13,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
-"""Spacy-BIST parser main module."""
-from __future__ import unicode_literals, print_function, division, \
-    absolute_import
-
 from os import path
 
 from spacy import load as spacy_load
@@ -177,3 +173,6 @@ def _spacy_pos_to_ptb(pos, text):
     elif pos in ['NFP', 'HYPH', 'XX']:
         ptb_tag = 'SYM'
     return ptb_tag
+
+
+print(SpacyBISTParser().parse("This is a single-sentence document"))
