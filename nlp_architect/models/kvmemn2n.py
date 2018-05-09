@@ -29,6 +29,25 @@ class KVMemN2N(Layer):
 
     """
     Key Value Memory Network model
+
+    This class is an N-Graph implementation of the paper https://arxiv.org/abs/1606.03126
+    "Key-Value Memory Networks for Directly Reading Documents"
+
+    Args:
+        num_iterations (int): number of batches per epoch
+        batch_size (int): number of samples in a batch, used to create axis
+        emb_size (int): embedding size
+        nhops (int): number of internal memory hops
+        story_length (int): maximum number of memories associated with an entity
+        memory_size (int): maximum length of memory statements
+        vocab_size (int): number of objects in dictionary
+        vocab_axis (axis): the vobaulary axis
+        use_v_luts (bool): if true, a separate lookup table will be used for each memory hop
+
+    Returns:
+        a_pred (tensor, vocab x batch): probabilities of each potential response (vocab dictionary)
+        a_logits (tensor, batch): predicted answer for each question in the batch
+
     """
     def __init__(self, num_iterations, batch_size, emb_size, nhops,
                  story_length, memory_size, vocab_size, vocab_axis, use_v_luts):
