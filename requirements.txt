@@ -17,8 +17,7 @@ pillow
 Ptable
 spacy>=2.0
 keras==2.1.5
-git+https://www.github.com/keras-team/keras-contrib.git
-keras-contrib==2.0.8
+git+https://www.github.com/keras-team/keras-contrib.git#egg=keras-contrib
 nervananeon==2.6.0
 dynet==2.0.2
 -e git+https://github.com/NervanaSystems/ngraph-python.git#egg=ngraph

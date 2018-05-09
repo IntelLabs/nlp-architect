@@ -19,12 +19,19 @@ STYLE_CHECK_DIRS :=
 DOC_DIR := doc
 DOC_PUB_RELEASE_PATH := $(DOC_PUB_PATH)/$(RELEASE)
 
+LIBRARY_NAME := nlp_architect
+VIRTUALENV_DIR := .nlp_architect_env
+GEN_REQ_FILE := _generated_reqs.txt
+ACTIVATE := $(VIRTUALENV_DIR)/bin/activate
+MODELS_DIR := $(LIBRARY_NAME)/models
+NLP_DIR := $(LIBRARY_NAME)/nlp
+
 .PHONY: test_prepare style fixstyle autopep8 doc_prepare doc html clean \
 	install install_dev install_no_virt_env $(ACTIVATE)
 
 default: install_dev
 
-test_prepare:
+test_prepare: test_requirements.txt
 	pip install -r test_requirements.txt > /dev/null 2>&1
 
 style: test_prepare
@@ -37,7 +44,7 @@ autopep8:
 	autopep8 -a -a --global-config setup.cfg --in-place `find . -name \*.py`
 	echo run "git diff" to see what may need to be checked in and "make style" to see what work remains
 
-doc_prepare:
+doc_prepare: doc_requirements.txt
 	pip install -r doc_requirements.txt > /dev/null 2>&1
 
 doc: doc_prepare
@@ -53,29 +60,22 @@ html:
 
 clean:
 	@echo "Cleaning files.."
-	@rm -rf .nlp_architect_env
-	@rm -rf _generated_reqs.txt
-
-LIBRARY_NAME := nlp_architect
-VIRTUALENV_DIR := .nlp_architect_env
-ACTIVATE := $(VIRTUALENV_DIR)/bin/activate
-MODELS_DIR := $(LIBRARY_NAME)/models
-NLP_DIR := $(LIBRARY_NAME)/nlp
+	@rm -rf $(VIRTUALENV_DIR)
+	@rm -rf $(GEN_REQ_FILE)
 
 $(ACTIVATE):
 	@echo "NLP Architect installation"
 	@echo "**************************"
-	pip3 install --upgrade pip setuptools virtualenv
 	@echo "creating new environment"
 	virtualenv -p python3 $(VIRTUALENV_DIR)
 	@. $(ACTIVATE); pip install -U pip
 
-pre_install: $(ACTIVATE)
+pre_install: $(ACTIVATE) generate_reqs.sh
 	@echo "\n\n****************************************"
 	@echo "Generating package list to install"
 	@. $(ACTIVATE); bash generate_reqs.sh
 	@echo "Installing packages ..."
-	@. $(ACTIVATE); pip install -r _generated_reqs.txt
+	@. $(ACTIVATE); pip install -r $(GEN_REQ_FILE)
 
 install: pre_install
 	@. $(ACTIVATE); pip install .
@@ -90,7 +90,7 @@ install_no_virt_env:
 	@echo "Installing NLP Architect in current python env"
 	@echo "Generating package list to install"
 	bash generate_reqs.sh
-	pip install -r _generated_reqs.txt
+	pip install -r $(GEN_REQ_FILE)
 	@echo "Installation done"
 
 print_finish:
