@@ -51,7 +51,8 @@ from nlp_architect.models.memn2n_dialogue import MemN2N_Dialog
 import numpy as np
 import os
 from tqdm import tqdm
-from utils import interactive_loop, sanitize_path
+from utils import interactive_loop
+from nlp_architect.utils.io import sanitize_path
 
 
 # parse the command line arguments
