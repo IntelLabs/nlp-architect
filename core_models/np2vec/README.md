@@ -12,16 +12,6 @@ Note that this code can be also used to train a word embedding's model on any ma
 NP's have to be marked in the corpus by a marking character between the words of the NP and as a suffix of the NP.
 For example, if the marking character is '\_', the NP "Natural Language Processing" will be marked as "Natural_Language_Processing_".
 
-## Dependencies:
-Dependencies required for the project are mentioned in requirements.txt.
-Use ```pip install -r requirements.txt```
-
-## Files
-- *np2vec.py*: NP2vec model training, store and load code.
-- *main_train.py*: illustrates how to call NP2vec training and store code.
-- *main_inference.py*: illustrates how to call NP2vec load code.
-
-
 ## Training Usage
 
 ```
@@ -119,5 +109,4 @@ optional arguments:
                         fasttext models.
 ```
                         
-More details about the hyperparameters at <https://radimrehurek.com/gensim/models/word2vec.html#gensim.models.word2vec.Word2Vec> for word2vec and <https://radimrehurek.com/gensim/models/fasttext.html#gensim.models.fasttext.FastText> for fasttext. 
 

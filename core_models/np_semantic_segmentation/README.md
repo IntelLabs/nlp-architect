@@ -3,13 +3,6 @@
 Noun-Phrase (NP) is a phrase which has a noun (or pronoun) as its head and zero of more dependent modifiers.
 Noun-Phrase is the most frequently occurring phrase type and its inner segmentation is critical for understanding the
 semantics of the Noun-Phrase.
-The most basic division of the semantic segmentation is to two classes:
-1. Descriptive Structure - a structure where all dependent modifiers are not changing the semantic meaning of the Head.
-2. Collocation Structure - a sequence of words or term that co-occur and change the semantic meaning of the Head.
-
-For example:
-- `fresh hot dog` - hot dog is a collocation, and changes the head (`dog`) semantic meaning.
-- `fresh hot pizza` - fresh and hot are descriptions for the pizza.
 
 This model is the first step in the Semantic Segmentation algorithm - the MLP classifier.
 The Semantic Segmentation algorithm takes the dependency relations between the Noun-Phrase words, and the MLP classifier inference as the
@@ -21,31 +14,8 @@ to different tier in the tree.
 This model trains MLP classifier and inference from such classifier in order to conclude the correct segmentation
 for the given NP.
 
-for the examples above the classifier will output 1 (==Collocation) for `hot dog` and output 0 (== not collocation)
-for `hot pizza`.
-
-
-## Requirements:
-- **neon**
-- **nltk** (for data.py - used for Wordnet, SnowballStemmer)
-- **palmettopy** (for data.py - used for Palmetto PMI scores)
-- **requests** (for data.py - used for Wikidata)
-- **gensim** (for data.py - used for Word2Vec utilities)
-- **tqdm** (for data.py)
-- **numpy**
-
-## Files
-- *preprocess_tratz2011.py*: Constructing labeled dataset from Tratz 2011 dataset.
-- *data.py*: Prepare string data for both `train.py` and `inference.py` using pre-trained word embedding, PMI score, Wordnet and wikidata.
-- *feature_extraction.py*: contains the feature extraction services
-- *train.py*: train the MLP classifier.
-- *model.py*: contains the MLP classifier model.
-- *inference.py*: load the trained model and inference the input data by the model.
-
 ## Dataset
-The expected dataset is a CSV file with 2 columns. the first column contains the Noun-Phrase string (a Noun-Phrase containing 2 words), and the second column contains the correct label (if the 2 word Noun-Phrase is a collocation - the label is 1, else 0)
-
-If you wish to use an existing dataset for training the model, you can download Tratz 2011 et al. dataset [1,2] from the following link:
+You can download Tratz 2011 et al. dataset [1,2] from the following link:
 [Tratz 2011 Dataset](https://vered1986.github.io/papers/Tratz2011_Dataset.tar.gz)
 
 After downloading and unzipping the dataset, run `preprocess_tratz2011.py` in order to construct the labeled data and save it in a CSV file (as expected for the model).
@@ -111,7 +81,3 @@ Quick example:
 
     python inference.py --model np_semantic_segmentation_path.prm --data prepared_data_path.csv --output inference_data.csv --print_stats True
 
-
-## Citations:
-[1] Tratz, Stephen, and Eduard Hovy. ["A taxonomy, dataset, and classifier for automatic noun compound interpretation."] (http://www.aclweb.org/anthology/P10-1070) Proceedings of the 48th Annual Meeting of the Association for Computational Linguistics. Association for Computational Linguistics, 2010.
-[2] Shwartz, Vered, and Chris Waterson. ["Olive Oil is Made of Olives, Baby Oil is Made for Babies: Interpreting Noun Compounds using Paraphrases in a Neural Model."] (https://arxiv.org/pdf/1803.08073.pdf) arXiv preprint arXiv:1803.08073 (2018).
