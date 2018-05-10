@@ -4,9 +4,9 @@ Phrase chunking is a basic NLP task that consists of tagging parts of a sentence
 
 ### Example
 
-  The quick brown fox jumped over the fence
-  |                   |      |    |
-  Noun                Verb   Prep Noun
+	The quick brown fox jumped over the fence
+	|                   |      |    |
+	Noun                Verb   Prep Noun
 
 In this example the sentence can be divided into 4 phrases, `The quick brown fox` and `the fence` are noun phrases, `jumped` is a verb phrase and `over` is a prepositional phrase.
 
