@@ -40,14 +40,14 @@ Training
 ========
 
 By default, the parser uses a pre-trained BIST model and Spacy's English
-model (``spacy en``). The pre-trained BIST model is automatically
+model (``en``). A pre-trained BIST model is automatically
 downloaded (on-demand) to ``spacy_bist/bist-pretrained/`` and then loaded
 from that directory. To use other models, supply a path or link to each
 model at initialization (see example below).
 
-For instructions on how to train these models, see:
-- BIST: `BIST documentation <bist.rst>`__
-- Spacy: `training instructions <https://spacy.io/usage/training>`__
+For instructions on how to train a BIST model, see: `BIST documentation <bist.rst>`__
+
+For instructions on how to get spaCy models_ or how to train a model see `spaCy training instructions <https://spacy.io/usage/training>`__
 
 Example
 -------
@@ -142,3 +142,5 @@ Citations
 =========
 
 * Kiperwasser, E., & Goldberg, Y. (2016). Simple and Accurate Dependency Parsing Using Bidirectional LSTM Feature Representations. Transactions Of The Association For Computational Linguistics, 4, 313-327. https://transacl.org/ojs/index.php/tacl/article/view/885/198
+
+.. _models: https://spacy.io/usage/models

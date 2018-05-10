@@ -28,8 +28,10 @@ fasttext training with word_ngrams=1; in this case, we store all the word embedd
 including non-NP's in order to be able to estimate word embeddings of out-of-vocabulary NP's
 (NP's that don't appear in the training corpora).
 
-Note that this code can be also used to train a word embedding's model on any marked corpus.
-For example, if you mark verbs in your corpus, you can train a verb2vec model.
+.. note::
+
+  This code can be also used to train a word embedding's model on any marked corpus.
+  For example, if you mark verbs in your corpus, you can train a verb2vec model.
 
 NP's have to be marked in the corpus by a marking character between the words of the NP and as a suffix of the NP.
 For example, if the marking character is "\_", the NP "Natural Language Processing" will be marked as "Natural_Language_Processing".

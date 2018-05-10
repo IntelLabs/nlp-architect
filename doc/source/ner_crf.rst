@@ -89,7 +89,6 @@ The main tagger model consists of a bidirectional LSTM layers. The input of the 
 
 Finally, the output of the LSTM layers are merged into a fully-connected layer (for each token) and fed into a `Conditional Random Field classifier`_. CRF prediction layers have been empirically proved to provide more accuract models when compared to single token prediction (when using a `softmax` layer).
 
-
 Running Modalities
 ==================
 
@@ -110,31 +109,31 @@ All customizable parameters can be obtained by running: ``python train.py -h``
 .. code:: bash
 
 		--train_file TRAIN_FILE
-												Train file (sequential tagging dataset format)
+								Train file (sequential tagging dataset format)
 		--test_file TEST_FILE
-												Test file (sequential tagging dataset format)
+								Test file (sequential tagging dataset format)
 		--tag_num TAG_NUM
-												Entity labels tab number in train/test files
+								Entity labels tab number in train/test files
 		--sentence_length SENTENCE_LENGTH
-												Max sentence length
+								Max sentence length
 		--word_length WORD_LENGTH
-												Max word length in characters
+								Max word length in characters
 		--word_embedding_dims WORD_EMBEDDING_DIMS
-												Word features embedding dimension size
+								Word features embedding dimension size
 		--character_embedding_dims CHARACTER_EMBEDDING_DIMS
-												Character features embedding dimension size
+								Character features embedding dimension size
 		--char_features_lstm_dims CHAR_FEATURES_LSTM_DIMS
-												Character feature extractor LSTM dimension size
+								Character feature extractor LSTM dimension size
 		--entity_tagger_lstm_dims ENTITY_TAGGER_LSTM_DIMS
-												Entity tagger LSTM dimension size
+								Entity tagger LSTM dimension size
 		--dropout DROPOUT
-												Dropout rate
+								Dropout rate
 		--embedding_model EMBEDDING_MODEL
-												Path to external word embedding model file
+								Path to external word embedding model file
 		--model_path MODEL_PATH
-												Path for saving model weights
+								Path for saving model weights
 		--model_info_path MODEL_INFO_PATH
-												Path for saving model topology
+								Path for saving model topology
 
 The model will automatically save the model weights and topology information after training is complete (user can provide file names):
 
@@ -145,14 +144,15 @@ Interactive mode
 ----------------
 
 The provided ``interactive.py`` file enables using a pre-trained model in interactive mode, providing input directly from stdin.
+
 Run ``python interactive.py -h`` for a full list of options:
 
 .. code:: bash
 
 		--model_path MODEL_PATH
-												Path of model weights
+								Path of model weights
 		--model_info_path MODEL_INFO_PATH
-												Path of model topology
+								Path of model topology
 
 Quick example:
 

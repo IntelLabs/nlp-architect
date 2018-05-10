@@ -87,7 +87,7 @@ TabularIntentDataset
 --------------------
 We provide an additional dataset loader, ``nlp_architect.data.intent_datasets.TabularIntentDataset``, which can parse tabular data in the format of:
 
--  each word encoded in a separate line: ``<token> <label_tag> <intent>``
+-  each word encoded in a separate line: ``<token> <token_tag> <intent_type>``
 -  sentences are separated with an empty line
 
 The dataset loader extracts word and character sparse encoding and label/intent tags per sentence. This dataloader is useful for many intent extraction datasets that can be found on the web and used in academic literature (such as ATIS, CoNLL, etc.).
@@ -128,19 +128,8 @@ Example:
 Results
 ========
 
-Results for both dataset published below. The reference results were taken from the originating paper.
+Results for SNIPS NLU dataset and ATIS are published below. The reference results were taken from the originating paper.
 Minor differences might occur in final results. Each model was trained for 100 epochs with default parameters.
-
-
-**TabularIntentDataset**
-
-.. csv-table::
-  :header: " ", "Joint task", "Encoder-Decoder", "[1]", "[2]"
-  :widths: 20, 40, 40, 20, 20
-  :escape: ~
-
-  Slots,95.52,93.74,95.48,95.47
-  Intent,96.08, , ,
 
 **SNIPS**
 
@@ -151,6 +140,16 @@ Minor differences might occur in final results. Each model was trained for 100 e
 
   Slots,93.68,85.96
   Intent,99.14, " "
+
+**ATIS**
+
+.. csv-table::
+  :header: " ", "Joint task", "Encoder-Decoder", "[1]", "[2]"
+  :widths: 20, 40, 40, 20, 20
+  :escape: ~
+
+  Slots,95.52,93.74,95.48,95.47
+  Intent,96.08, , ,
 
 Citations
 ----------------
