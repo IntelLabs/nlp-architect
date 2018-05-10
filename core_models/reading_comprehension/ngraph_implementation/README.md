@@ -4,13 +4,15 @@
 This directory contains an implementation of the boundary model(b in the Figure) Match LSTM and Answer Pointer network for Machine Reading Comprehension in Intel-Ngraph. The idea behind this method is to build a question aware representation of the passage and use this representation as an input to the pointer network which identifies the start and end indices of the answer.
 
 ## Dataset
-1. Download the training and  from here
+1. mkdir data
+2. Download the training and dev datasets  from here
 https://rajpurkar.github.io/SQuAD-explorer/
-2. Preprocess the data set using this command- `python squad_preprocess.py`
+3. Download the glove pretrained embeddings from  http://nlp.stanford.edu/data/glove.6B.zip and copy "glove.6B.300d.txt" file into the  `data` directory
+4. Preprocess the data set using this command- `python prepare_data.py --data_path data/`
 
 ## Training
 Train the model using the following command
- `python train.py -bgpu --gpu_id 0`
+ `python train.py --data_path data/ -bgpu --gpu_id 0`
 
 ## Results
 After training starts, you will see outputs as shown below:

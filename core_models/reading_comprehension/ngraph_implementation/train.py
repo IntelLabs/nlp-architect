@@ -43,6 +43,7 @@ from utils import (
     cal_f1_score)
 import math
 from nlp_architect.utils.weight_initilizers import (make_placeholder, make_weights)
+from nlp_architect.utils.io import sanitize_path
 
 
 """
@@ -90,17 +91,22 @@ params_dict['ax'] = ax
 init = GlorotInit()
 params_dict['init'] = init
 
+try:
+    assert os.path.exists(args.data_path)
+except:
+    print("Please enter a valid data path")
+    exit()
 
-path_gen = args.data_path
+path_gen = sanitize_path(args.data_path)
 
 file_name_dict={}
-file_name_dict['train_para_ids']='squad/train.ids.context'
-file_name_dict['train_ques_ids']='squad/train.ids.question'
-file_name_dict['train_answer']='squad/train.span'
-file_name_dict['val_para_ids']='squad/dev.ids.context'
-file_name_dict['val_ques_ids']='squad/dev.ids.question'
-file_name_dict['val_ans']='squad/dev.span'
-file_name_dict['vocab_file']='squad/vocab.dat'
+file_name_dict['train_para_ids']='/train.ids.context'
+file_name_dict['train_ques_ids']='/train.ids.question'
+file_name_dict['train_answer']='/train.span'
+file_name_dict['val_para_ids']='/dev.ids.context'
+file_name_dict['val_ques_ids']='/dev.ids.question'
+file_name_dict['val_ans']='/dev.span'
+file_name_dict['vocab_file']='/vocab.dat'
 
 
 train_para_ids = os.path.join(path_gen + file_name_dict['train_para_ids'])
@@ -126,7 +132,7 @@ print(max_question)
 params_dict['max_question'] = max_question
 params_dict['max_para'] = max_para
 
-# chane this to experiment with smaller dataset sizes(eg 8000)
+# change this to experiment with smaller dataset sizes(eg 8000)
 params_dict['train_set_size'] = len(data_train)
 params_dict['vocab_size'] = len(vocab_list)
 
@@ -134,9 +140,9 @@ print('Loading Embeddings')
 embeddingz = np.load(
     os.path.join(
         path_gen +
-        "squad/glove.trimmed_zeroinit.300.npz"))
+        "/glove.trimmed.300.npz"))
 embeddings = embeddingz['glove']
-vocab_file = os.path.join(path_gen + 'squad/vocab.dat')
+vocab_file = os.path.join(path_gen + '/vocab.dat')
 
 
 print("creating training Set ")
