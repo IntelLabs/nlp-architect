@@ -23,10 +23,10 @@ import os
 from tqdm import *
 from nlp_architect.utils.io import sanitize_path
 
-_PAD = b"<pad>"
-_SOS = b"<sos>"
-_UNK = b"<unk>"
-_START_VOCAB = [_PAD, _SOS, _UNK]
+PAD = "<pad>"
+SOS = "<sos>"
+UNK = "<unk>"
+START_VOCAB = [PAD, SOS, UNK]
 
 def create_vocabulary(data_lists, vocabulary_path=None):
     """
@@ -41,7 +41,7 @@ def create_vocabulary(data_lists, vocabulary_path=None):
                 else:
                     vocab[word] = 1
 
-    vocab_list = _START_VOCAB + sorted(vocab, key=vocab.get, reverse=True)
+    vocab_list = START_VOCAB + sorted(vocab, key=vocab.get, reverse=True)
     vocab_dict = dict((vocab_ele, i) for i, vocab_ele in enumerate(vocab_list))
 
     return vocab_list, vocab_dict
@@ -72,10 +72,10 @@ def get_glove_matrix(vocab_list, download_path):
     """
     Function to obtain preprocessed glove embeddings matrix
     """
-    save_file_name = download_path + "/glove.trimmed.300"
+    save_file_name = download_path + "glove.trimmed.300"
     if not os.path.exists(save_file_name + ".npz"):
         vocab_len = len(vocab_list)
-        glove_path = os.path.join(download_path + "/glove.6B.300d.txt")
+        glove_path = os.path.join(download_path + "glove.6B.300d.txt")
         glove_matrix = np.zeros((vocab_len, 300))
         count = 0
         with open(glove_path) as f:
@@ -168,7 +168,7 @@ def write_to_file(file_dict, path_to_save):
         if file_name=="vocab.dat":
             with open(os.path.join(path_to_save + file_name), 'w') as target_file:
                 for word in file_dict[file_name]:
-                    target_file_file.write(word + b"\n")
+                    target_file.write(str(word) + "\n")
         else:
             with open(os.path.join(path_to_save + file_name), 'w') as target_file:
                 for line in file_dict[file_name]:
@@ -186,7 +186,7 @@ def get_ids_list(data_lists, vocab):
             try:
                 curr_line_idx.append(vocab[word])
             except:
-                curr_line_idx.append(vocab[_UNK])
+                curr_line_idx.append(vocab[UNK])
 
         ids_list.append(curr_line_idx)
     return ids_list
@@ -219,10 +219,10 @@ if __name__ == '__main__':
         exit()
 
     data_path = sanitize_path(args.data_path,prefix='')
-
+    data_path=os.path.join(data_path+"/")
     # Load Train and Dev Data
-    train_filename = os.path.join(data_path + "/train-v1.1.json")
-    dev_filename = os.path.join(data_path + "/dev-v1.1.json")
+    train_filename = os.path.join(data_path + "train-v1.1.json")
+    dev_filename = os.path.join(data_path + "dev-v1.1.json")
     with open(train_filename) as train_file:
         train_data = json.load(train_file)
 
@@ -255,7 +255,9 @@ if __name__ == '__main__':
                        "train.ids.question": train_question_ids,
                        "dev.ids.context": dev_para_ids,
                        "dev.ids.question": dev_question_ids,
-                       "vocab.dat": vocab_list}
+                       "vocab.dat": vocab_list,
+                       "train.span": train_ans,
+                       "dev.span": dev_ans}
 
     print("writing data to files")
     write_to_file(final_data_dict, data_path)
