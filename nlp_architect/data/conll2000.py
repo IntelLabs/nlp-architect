@@ -23,7 +23,7 @@ import numpy as np
 from neon.data.text_preprocessing import pad_sentences
 from nlp_architect.contrib.neon.text_iterators import TaggedTextSequence, MultiSequenceDataIterator
 from nlp_architect.utils.embedding import load_word_embeddings
-from nlp_architect.utils.generic import get_paddedXY_sequence
+from nlp_architect.utils.generic import get_paddedXY_sequence, license_prompt
 from nltk.corpus import conll2000
 
 
@@ -62,9 +62,14 @@ class CONLL2000(object):
             train_set = conll2000.chunked_sents('train.txt')
             test_set = conll2000.chunked_sents('test.txt')
         except Exception:
-            print('dataset is missing from NLTK, please refer to the documentation for '
-                  'instructions for obtaining the dataset')
-            sys.exit(0)
+            if license_prompt('CONLL2000 data set',
+                              'http://www.nltk.org/nltk_data/',
+                              'Apache 2.0',
+                              'https://github.com/nltk/nltk/blob/develop/LICENSE.txt') is False:
+                sys.exit(0)
+            nltk.download('conll2000')
+            train_set = conll2000.chunked_sents('train.txt')
+            test_set = conll2000.chunked_sents('test.txt')
         train_data = [list(zip(*nltk.chunk.tree2conlltags(sent))) for sent in train_set]
         test_data = [list(zip(*nltk.chunk.tree2conlltags(sent))) for sent in test_set]
         return train_data, test_data
