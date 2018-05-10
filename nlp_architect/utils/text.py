@@ -21,6 +21,7 @@ from __future__ import unicode_literals
 import sys
 
 import spacy
+from nlp_architect.utils.generic import license_prompt
 from spacy.cli.download import download as spacy_download
 
 
@@ -116,28 +117,21 @@ class SpacyInstance:
     Args:
         model (str, optional): spacy model name (default: english small model)
         disable (list of string, optional): pipeline annotators to disable
-            (default: none)
+            (default: [])
     """
 
     def __init__(self, model='en', disable=None):
+        if disable is None:
+            disable = []
         try:
             self._parser = spacy.load(model, disable=disable)
         except OSError:
-            print('Spacy model ' + str(model) + ' was not found')
             url = 'https://spacy.io/models'
-            print('License: Creative Commons v3-BY-SA '
-                  'https://creativecommons.org/licenses/by-sa/3.0/')
-            response = input('To download the model from {}, please type YES: '.format(url))
-            if response.lower().strip() == "yes":
-                print('The terms and conditions of the data set license apply. Intel does not '
-                      'grant any rights to the data files or database')
-                print('Downloading Spacy model...')
-                spacy_download(model)
-                self._parser = spacy.load(model, disable=disable)
-            else:
-                print('Download declined. Response received {} != YES. '.format(response))
-                print('Please download the model manually')
+            if license_prompt('Spacy {} model'.format(model), url, 'MIT',
+                              'https://github.com/explosion/spaCy/blob/master/LICENSE') is False:
                 sys.exit(0)
+            spacy_download(model)
+            self._parser = spacy.load(model, disable=disable)
 
     @property
     def parser(self):

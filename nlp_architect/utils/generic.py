@@ -17,6 +17,7 @@ from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
 from __future__ import absolute_import
+
 import numpy as np
 from neon.data.text_preprocessing import pad_sentences
 
@@ -102,3 +103,21 @@ def get_paddedXY_sequence(X, y, vocab_size=20000, sentence_length=100, oov=2,
     y = pad_sentences(y, sentence_length=sentence_length)
 
     return X, y
+
+
+def license_prompt(model_name, model_website, license_name, license_url):
+    print('{} was not found on local installation'.format(model_name))
+    print('{} has the following information'.format(model_name))
+    print('License: {} \nLink to license: {}'.format(license_name, license_url))
+    response = input('\nTo download \'{}\' from {}, please enter YES: '.
+                     format(model_name, model_website))
+    res = response.lower().strip()
+    if res == "yes" or (len(res) == 1 and res == 'y'):
+        print('The terms and conditions of the data set license apply. Intel does not '
+              'grant any rights to the data files or database')
+        print('Downloading {}...'.format(model_name))
+        return True
+    else:
+        print('Download declined. Response received {} != YES|Y. '.format(res))
+        print('Please download the model manually from {}'.format(model_website))
+        return False
