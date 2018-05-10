@@ -26,6 +26,7 @@ from collections import defaultdict
 import sys
 
 from ngraph.util.persist import valid_path_append, fetch_file, ensure_dirs_exist
+from nlp_architect.utils.generic import license_prompt
 
 
 def pad_sentences(sentences, sentence_length=None, dtype=np.int32, pad_val=0.):
@@ -264,22 +265,14 @@ class WIKIMOVIES(object):
         self.vocab = None
         workdir, filepath = valid_path_append(path, '', self.filename)
         if not os.path.exists(filepath):
-            print("WikiMovies dataset not found at: {}".format(filepath))
-            print("This dataset is released under Creative Commons Attribution 3.0 "
-                  "Unported license. A copy of this license can be found at "
-                  "https://research.fb.com/downloads/babi/"
-            print("The terms and conditions of the data set license apply. Intel "
-                  "does not grant any rights to the data files or database.")
-            response = input("To download the dataset from {}, "
-                             "please type YES: ".format(self.url))
-
-            if response.lower.strip() == "yes":
-                fetch_file(self.url, self.filename, filepath, self.size)
-            else:
-                print("Download declined. Response recieved {} != YES. ".format(response))
-                print("Please download the dataset manually and provide the path "
-                      "as the command line argmuent --data_dir")
+            if license_prompt('WikiMovies',
+                              self.url,
+                              'Creative Commons Attribution 3.0',
+                              'https://research.fb.com/downloads/babi/',
+                              self.path) is False:
                 sys.exit(0)
+
+            fetch_file(self.url, self.filename, filepath, self.size)
 
         if subset == 'wiki-entities':
             subset_folder = 'wiki_entities'

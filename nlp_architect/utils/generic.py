@@ -105,8 +105,11 @@ def get_paddedXY_sequence(X, y, vocab_size=20000, sentence_length=100, oov=2,
     return X, y
 
 
-def license_prompt(model_name, model_website, license_name, license_url):
-    print('{} was not found on local installation'.format(model_name))
+def license_prompt(model_name, model_website, license_name, license_url, dataset_dir=None):
+    if dataset_dir:
+        print('{} was not found in the directory: {}'.format(model_name, dataset_dir))
+    else:
+        print('{} was not found on local installation'.format(model_name))
     print('{} has the following information'.format(model_name))
     print('License: {} \nLink to license: {}'.format(license_name, license_url))
     response = input('\nTo download \'{}\' from {}, please enter YES: '.
@@ -119,5 +122,9 @@ def license_prompt(model_name, model_website, license_name, license_url):
         return True
     else:
         print('Download declined. Response received {} != YES|Y. '.format(res))
-        print('Please download the model manually from {}'.format(model_website))
+        if dataset_dir:
+            print('Please download the model manually from {} and place in the directory: {}'
+                  .format(model_website, dataset_dir))
+        else:
+            print('Please download the model manually from {}'.format(model_website))
         return False
