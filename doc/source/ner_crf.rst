@@ -89,17 +89,6 @@ The main tagger model consists of a bidirectional LSTM layers. The input of the 
 
 Finally, the output of the LSTM layers are merged into a fully-connected layer (for each token) and fed into a `Conditional Random Field classifier`_. CRF prediction layers have been empirically proved to provide more accuract models when compared to single token prediction (when using a `softmax` layer).
 
-Dependencies
-=============
-
-spaCy (for tokenization)
-
-*  Install: ``pip install spacy``
-
-*  Download English model: ``python -m spacy download en``
-
-Keras and Tensorflow
-
 
 Running Modalities
 ==================

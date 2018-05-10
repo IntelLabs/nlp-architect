@@ -47,9 +47,6 @@ The inference process is as follows
 1) The system finds the most similar named entities in the vector space model according to the cosine similarity
 2) We enrich the word embedding's with additional features as during training and we classify the named entities returned by cosine similarity.
 
-Dependencies
-============
-- **gensim** (in prepare_data.py, used for basic word embedding's utilities)
 
 Running Modalities
 ==================

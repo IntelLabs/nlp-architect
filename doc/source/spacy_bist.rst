@@ -27,14 +27,6 @@ Dependency relations between tokens are extracted using BIST parser.
 The BIST parser is described :doc:`here <bist>`.
 
 
-Dependencies
-============
-
--  **Python** 3.5+
--  **bist** 0.1
--  **spacy** 2.0.5
--  **spacy en** 2.0.0
-
 Usage
 =====
 

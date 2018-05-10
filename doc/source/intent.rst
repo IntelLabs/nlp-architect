@@ -67,21 +67,12 @@ The encoding of the word-context, in each time step (word location in the senten
 .. image :: assets/mtl_model.png
 
 
-Dependencies
-==============
-
-- ``nlp_architect``
-- Please configure_ Keras to use Tensorflow as backend.
-- Downloaded pre-trained word vector embedding models:
-    - GloVe: https://nlp.stanford.edu/projects/glove/
-    - Fasttext: https://fasttext.cc/docs/en/english-vectors.html
-
 Files
 ======
 
-- **train_enc-dec_model.py**: training script to train a joint intent/slot tag model.
-- **train_joint_model.py**: training script to train an encoder-decoder slot tag model.
-- **interactive.py**: Inference script to run an input sentence using a trained model.
+- **examples/train_enc-dec_model.py**: training script to train a joint intent/slot tag model.
+- **examples/train_joint_model.py**: training script to train an encoder-decoder slot tag model.
+- **examples/interactive.py**: Inference script to run an input sentence using a trained model.
 
 Datasets
 ========

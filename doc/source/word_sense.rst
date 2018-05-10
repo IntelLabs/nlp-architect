@@ -14,7 +14,7 @@
 .. limitations under the License.
 .. ---------------------------------------------------------------------------
 
-Most Probable Word Sense
+Most Common Word Sense
 ########################
 
 Overview
@@ -55,7 +55,7 @@ The feature vector consists of:
 - the word embedding of the target_word
 - the CBOW word embedding of the definition
 
-Dependencies
+Dataset
 ============
 The training module requires a gold standard csv file which is list of target_words where each word
 is associated with a CLASS_LABEL - a correct (true example) or an incorrect (false example) sense.
@@ -73,20 +73,6 @@ where:
 4. CLASS_LABEL: a binary [0,1] Y value that represent whether the sense (Definition and semantic branch) is the most common sense  of the target word
 
 Store the file in the data folder of the project.
-The code dependencies for this project are as follows:
-
-- python version 3.6.3 was used in this project
-- **nervananeon** (version 2.4.0 is used in this project)
-- **aeon** (version 2.0.2 is used in this project)
-- **gensim** (version 3.2.0. in prepare_data.py, used for basic word embedding's utilities)
-- **nltk** (version 3.2.5 in Inference.py, used for extracting all senses of each word)
-- **sklearn** (version 0.19.0. in prepare_data.py, used for splitting train and validation sets)
-- **numpy**
-- **csv** (in prepare_data.py, used for reading gold standard files)
-- **codecs**
-- **math**
-- **pickle** (used for saving and reading data files)
-- **termcolor** (in Inference.py, used for highlighting the detected sense)
 
 
 Running Modalities

@@ -29,20 +29,13 @@ input to the pointer network which identifies the start and end indices of the a
 .. image: ../../models/ReadingComprehension/ngraph_implementation/MatchLSTM_Model.png
 
 
-Dependencies
-============
-The primary dependency of this model is `ngraph-python`. Download and installation instructions can
-be found at https://github.com/NervanaSystems/ngraph-python/blob/master/legacy_README.md.
-In addition to this, other required libraries are
-- `numpy`
-- `python3`
-
 Files
 ======
-- **train.py** -Implements the end to end model along with the training commands
-- **utils.py**- Implements different utility functions to set up the data loader and to do the evaluation.
-- **layers.py** -Contains different layers in ngraph required for the model
-- **weight_initializers.py** - Contains functions to initialize the LSTM Cell in ngraph
+- **nlp_architect/contrib/ngraph/match_lstm.py** -Contains different layers in ngraph required for the model
+- **nlp_architect/utils/weight_initializers.py** - Contains functions to initialize the LSTM Cell in ngraph
+- **examples/train.py** -Implements the end to end model along with the training commands
+- **examples/utils.py**- Implements different utility functions to set up the data loader and to do the evaluation.
+
 
 Datasets
 ========

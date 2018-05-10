@@ -26,14 +26,6 @@ Representations <https://www.transacl.org/ojs/index.php/tacl/article/viewFile/88
 Further materials could be found
 `here <http://elki.cc/#/article/Simple%20and%20Accurate%20Dependency%20Parsing%20Using%20Bidirectional%20LSTM%20Feature%20Representations>`__.
 
-
-Dependencies
-============
-
--  **Python** 3.5+
--  **dynet** 2.0.2
--  **numpy** 1.14.0
-
 Usage
 =====
 

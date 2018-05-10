@@ -26,21 +26,14 @@ The idea behind this method is to be able to answer wide range of questions base
 .. image :: https://github.com/siyuanzhao/key-value-memory-networks/raw/master/key_value_mem.png
     :alt: key_value_mem
 
-Dependencies
-============
-The primary dependency of this model is NGraph. Download and installation instructions are at https://github.com/NervanaSystems/ngraph-python.
-In addition to NGraph, the following libraries are used and can be installed with ``pip install -r requirements.txt``
-
-* **numpy**
-* **tqdm**
-
 Files
 =====
-* **train_kvmemn2n.py**: The primary class which processes the request to train or run inference on the key-value memory network model. It in turn will call the data processing algorithm when necessary.
-* **data.py**: Will download and process the data necessary to train the key-value memory network model.
-* **wikiwindows.py**: A key data preprocessing stage necessary when using the raw Wikipedia text knowledge base. It is called by data.py, or can be run independently.
-* **kvmemn2n.py**: Defines the key-value memory network model.
-* **interactive_util.py**: Called by train_kvmemn2n.py to facilitate the interactive mode.
+- * **nlp_architect/models/kvmemn2n.py**: Defines the key-value memory network model.
+- * **nlp_architect/data/wikimovies.py**: Will download and process the data necessary to train the key-value memory network model.
+- * **examples/train_kvmemn2n.py**: The primary class which processes the request to train or run inference on the key-value memory network model. It in turn will call the data processing algorithm when necessary.
+- * **examples/wikiwindows.py**: A key data preprocessing stage necessary when using the raw Wikipedia text knowledge base. It is called by data.py, or can be run independently.
+- * **examples/interactive_util.py**: Called by train_kvmemn2n.py to facilitate the interactive mode.
+
 
 
 Dataset

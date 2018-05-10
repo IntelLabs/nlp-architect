@@ -66,7 +66,7 @@ Model
 The Chunker model example comes with several options for creating the NN topology depending on what
 input is given (tokens/POS/embeddings/char features).
 
-.. image:: ../../nlp_architect/chunker/model_diag.png
+.. image :: assets/model_diag.png
 
 The model above depicts the main topology.
 Given sentence ``S`` of length ``n``, and sentence tokens ``S = (s1, s2, .. , sn)`` we can input
@@ -78,7 +78,7 @@ of the following values:
 * part-of-speech embedding (trained by model)
 * character features vector (trained by char-rnn)
 
-.. image:: ../../nlp_architect/chunker/char_diag.png
+.. image:: assets/char_diag.png
 
 The Char-RNN feature extractor model uses 2 layers of LSTM such that each RNN layer outputs the
 last hidden state. The final feature vector for a token is a concatenation of final hidden state of
@@ -97,16 +97,6 @@ In addition to the model described above, the model support the use of multiple 
 as recent literature has indicated that several layers of RNN layers might be beneficial int sequential prediction.
 When using multiple BiLSTM layers the hidden state of the forward and backward layers are at step ``i``
 are used as the input to the next layer of BiLSTM at step ``i`` accordingly.
-
-
-Dependencies
-=============
-
-spaCy (for POS tags annotation)
-
-*  Install: ``pip install spacy``
-
-*  Download English model: ``python -m spacy download en``
 
 
 Running Modalities

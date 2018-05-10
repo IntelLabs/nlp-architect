@@ -34,22 +34,12 @@ For example, if you mark verbs in your corpus, you can train a verb2vec model.
 NP's have to be marked in the corpus by a marking character between the words of the NP and as a suffix of the NP.
 For example, if the marking character is "\_", the NP "Natural Language Processing" will be marked as "Natural_Language_Processing".
 
-Dependencies
-==============
-Dependencies required for the project are mentioned in requirements.txt.
-Use
-
-.. code:: python
-
-  pip install -r requirements.txt
-
-
 Files
 ======
 
-- **np2vec.py**: NP2vec model training, store and load code.
-- **main_train.py**: illustrates how to call NP2vec training and store code.
-- **main_inference.py**: illustrates how to call NP2vec load code.
+- **nlp_architect/models/np2vec.py**: NP2vec model training, store and load code.
+- **examples/train.py**: illustrates how to call NP2vec training and store code.
+- **examples/inference.py**: illustrates how to call NP2vec load code.
 
 Running Modalities
 ==================
