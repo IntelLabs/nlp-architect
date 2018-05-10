@@ -17,16 +17,20 @@
 Prepare the datasets for Most Common Word Sense training
 """
 
-import numpy as np
-import pickle
+import codecs
 import csv
 import logging
-import codecs
-import gensim
 import math
+import pickle
+import argparse
+
+import gensim
+import numpy as np
+from feature_extraction import extract_features_envelope
 from neon.util.argparser import NeonArgparser
 from sklearn.model_selection import train_test_split
-from feature_extraction import extract_features_envelope
+
+from nlp_architect.utils.io import validate_existing_directory, validate_existing_filepath
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -34,18 +38,28 @@ logger.setLevel(logging.DEBUG)
 
 # -------------------------------------------------------------------------------------#
 def read_gs_file(gs_file_name):
-    # read gold std file
+    """
+    reads gold standard file
 
+    Args:
+        gs_file_name (str): the file path
+
+    Returns:
+        target_word_vec1 (list(str)): words vector
+        definition_vec1  (list(str)): words definitions vector - definition per target word
+        hypernym_vec1    (list(str)): words hypernyms vector
+        label_vec1       (list(str)): labels of binary class 0/1
+    """
     file = codecs.open(gs_file_name, 'rU', 'utf-8')
     reader = csv.reader((line.replace('\0', '') for line in file))
 
-    cntr = 0
+    cntr1 = 0
     # 1. read csv file
-    target_word_vec = []
-    definition_vec = []
-    hypernym_vec = []
+    target_word_vec1 = []
+    definition_vec1 = []
+    hypernym_vec1 = []
 
-    label_vec = []
+    label_vec1 = []
 
     header_line_flag = True
     for line in reader:
@@ -54,58 +68,67 @@ def read_gs_file(gs_file_name):
                 header_line_flag = False
                 continue
 
-            target_word_vec.insert(cntr, line[0].strip())
-            definition_vec.insert(cntr, line[1])
-            hypernym_vec.insert(cntr, line[2])
-            label_vec.insert(cntr, line[3])
-            cntr = cntr + 1
+            target_word_vec1.insert(cntr1, line[0].strip())
+            definition_vec1.insert(cntr1, line[1])
+            hypernym_vec1.insert(cntr1, line[2])
+            label_vec1.insert(cntr1, line[3])
+            cntr1 = cntr1 + 1
 
     file.close()
 
-    return target_word_vec, definition_vec, hypernym_vec, label_vec
+    return target_word_vec1, definition_vec1, hypernym_vec1, label_vec1
 
 
 # -------------------------------------------------------------------------------------#
 
 
 def read_inference_input_examples_file(input_examples_file):
-    # read gold std file
+    """
+    read inference input examples file
 
+    Args:
+        input_examples_file(str): inference input file containing a vector of target word
+
+    Returns:
+        list(str): target word vector
+
+    """
     file = codecs.open(input_examples_file, 'rU', 'utf-8')
     reader = csv.reader((line.replace('\0', '') for line in file))
 
-    cntr = 0
+    cntr2 = 0
     # 1. read csv file
-    target_word_vec = []
+    target_word_vec1 = []
     header_line_flag = True
     for line in reader:
         if line is not None:
             if header_line_flag:  # skip header line
                 header_line_flag = False
                 continue
-            target_word_vec.insert(cntr, line[0])
+            target_word_vec1.insert(cntr2, line[0])
 
-            cntr = cntr + 1
+            cntr2 = cntr2 + 1
 
     file.close()
 
-    return target_word_vec
+    return target_word_vec1
 
 
 if __name__ == "__main__":
 
-    parser = NeonArgparser(__doc__)
+    parser = argparse.ArgumentParser()
 
-    parser.add_argument('--gold_standard_file',
-                        default='data/goldStd.csv',
+    parser.add_argument('--gold_standard_file', default='data/goldStd.csv',
+                        type=validate_existing_filepath,
                         help='path to gold standard file')
     parser.add_argument('--word_embedding_model_file',
+                        type=validate_existing_filepath,
                         default='pretrained_models/GoogleNews-vectors-negative300.bin',
                         help='path to the word embedding\'s model')
-
-    parser.add_argument('--training_to_validation_size_ratio', default='0.8',
+    parser.add_argument('--training_to_validation_size_ratio', default=0.8, type=float,
                         help='ratio between training and validation size')
     parser.add_argument('--data_set_file', default='data/data_set.pkl',
+                        type=validate_existing_directory,
                         help='path the file where the train, valid and test sets are stored')
 
     args = parser.parse_args()
@@ -119,11 +142,13 @@ if __name__ == "__main__":
     y_valid = []
 
     # 1. read GS file
-    [target_word_vec, definition_vec, hypernym_vec, label_vec] = read_gs_file(args.gold_standard_file)
+    [target_word_vec, definition_vec, hypernym_vec, label_vec] = \
+        read_gs_file(args.gold_standard_file)
     logger.info("finished reading GS file")
 
     # 2. Load pre-trained word embeddings model.
-    word_embeddings_model = gensim.models.KeyedVectors.load_word2vec_format(args.word_embedding_model_file, binary=True)
+    word_embeddings_model = gensim.models.KeyedVectors.\
+        load_word2vec_format(args.word_embedding_model_file, binary=True)
     logger.info("finished loading word embeddings model")
 
     feat_vec_dim = 603
@@ -140,7 +165,8 @@ if __name__ == "__main__":
         hypslist = hypernym_vec[i]
         label = label_vec[i]
 
-        [valid_w2v_flag, definition_sim_cbow, definition_sim, hyps_sim, target_word_emb, definition_sentence_emb_cbow] \
+        [valid_w2v_flag, definition_sim_cbow, definition_sim, hyps_sim, target_word_emb,
+         definition_sentence_emb_cbow] \
             = extract_features_envelope(InputWord, definition, hypslist, word_embeddings_model)
 
         if definition_sim_cbow != 0 and definition_sim != 0 and valid_w2v_flag is True:
@@ -165,7 +191,7 @@ if __name__ == "__main__":
     # split between train and valid sets
     X_train1, X_valid1, y_train1, y_valid1 = train_test_split(
         x_feature_matrix, y_labels_vec, train_size=math.ceil(
-                                                             num_samples*float(args.training_to_validation_size_ratio)))
+            num_samples*float(args.training_to_validation_size_ratio)))
 
     X_train.extend(X_train1)
     X_valid.extend(X_valid1)

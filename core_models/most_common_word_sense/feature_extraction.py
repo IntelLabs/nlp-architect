@@ -13,8 +13,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ****************************************************************************
-import nltk
 import re
+
+import nltk
 import numpy
 from numpy import dot
 from numpy.linalg import norm
@@ -26,6 +27,27 @@ nltk.download('punkt')
 
 
 def extract_features_envelope(target_word, definition, hyps_vec, model_w2v):
+    """
+    extract features
+
+    Args:
+        target_word (list(str)): target word for finding senses
+        definition (list(str)):  definition of target word
+        hyps_vec (list(str)):    hypernym list of of target word
+        model_w2v (list(str)):   word embedding's model
+
+    Returns:
+        valid_w2v_flag(bool):         true if target word has w2v entry, else false
+        definition_sim_cbow(float):   cosine similarity between target word embedding and
+        definition cbow sentence embedding
+        definition_sim(float):        cosine similarity between target word embedding and
+        definition sentence embedding
+        hyps_sim(float):              cosine similarity between target word embedding and
+        hypernyms embeddings
+        target_word_emb(numpy.array): word embedding of target word
+        definition_sentence_emb_cbow(numpy.array): definition sentence cbow embedding
+
+    """
     valid_w2v_flag, target_word_emb = return_w2v(target_word, model_w2v)
 
     # calculate target word to definition similarity and definition similarity CBOW
@@ -44,7 +66,17 @@ def extract_features_envelope(target_word, definition, hyps_vec, model_w2v):
 
 # -------------------------------------------------------------------------------------#
 def extract_meaningful_words_from_sentence(sentence):
-    sentence = re.sub('[-+.^:,\\[|\\]|\\(|\\)]', '', str(sentence))
+    """
+    extract meaningful (nouns and verbs) words from sentence
+
+    Args:
+        sentence(str): input sentence
+
+    Returns:
+        list(str): vector of meaningful words
+
+    """
+    sentence = re.sub(r'[-+.^:,\[\]()]', '', str(sentence))
 
     tokens = nltk.word_tokenize(sentence)
     pos_tags = nltk.pos_tag(tokens)
@@ -61,7 +93,17 @@ def extract_meaningful_words_from_sentence(sentence):
 
 # -------------------------------------------------------------------------------------#
 def convert_string_to_list_of_words(string_list_of_words):
-    string_list_of_words = re.sub('[-+.^:,\\[|\\]|\\(|\\)]', '', str(string_list_of_words))
+    """
+    convert string to list of words
+
+    Args:
+        string_list_of_words(str): input sentence
+
+    Returns:
+        list(str): vector of words
+
+    """
+    string_list_of_words = re.sub('[-+.^:,\[\]()]', '', str(string_list_of_words))
     tokens = nltk.word_tokenize(string_list_of_words)
 
     words_vec = []
@@ -75,10 +117,23 @@ def convert_string_to_list_of_words(string_list_of_words):
 
 # -------------------------------------------------------------------------------------#
 def calc_word_to_sentence_dist_cbow(target_word, sentence, model):
+    """
+    calculate cosine similaity between word emb. and sentence cbow emb.
+
+    Args:
+        target_word(str): input word
+        sentence(list(str)): input sentence
+        model(gensim.models.Word2Vec): w2v model
+
+    Returns:
+        numpy.array: cbow_sentence_emb, sentence cbow embedding
+        float: cosine_sim, cosine similarity between target word embedding and cbow sentence
+         embedding
+
+    """
     cbow_sentence_emb = calc_cbow_sentence(sentence, model)
 
     try:
-        wv_target_word = numpy.array
         wv_target_word = model[target_word]
         cosine_sim = cosine_similarity(wv_target_word, cbow_sentence_emb)
     # if target word is not in embedding dictionary
@@ -91,6 +146,18 @@ def calc_word_to_sentence_dist_cbow(target_word, sentence, model):
 # -------------------------------------------------------------------------------------#
 
 def cosine_similarity(vec1, vec2):
+    """
+    calculate cosine similarity between 2 vecs
+
+    Args:
+        vec1(numpy.array): input vec 1
+        vec2(numpy.array): input vec 2
+
+    Returns:
+        float: cosine_sim, cosine similarity between 2 vecs
+
+
+    """
 
     cosine_sim = 0
     try:
@@ -103,20 +170,29 @@ def cosine_similarity(vec1, vec2):
         cosine_sim = 0
 
     return cosine_sim
-# -------------------------------------------------------------------------------------#
 
 
 # -------------------------------------------------------------------------------------#
 def calc_cbow_sentence(sentence, model):
+    """
+    calc cbow embedding of an input sentence
+
+    Args:
+        sentence(bytearray): vector of words
+        model(gensim.models.Word2Vec): w2v model
+
+    Returns:
+        numpy.array: cbow_sentence, cbow embedding of the input sentence
+
+    """
     cbow_sentence = numpy.zeros(300)
     i = 0
     for word in sentence:
         try:
-            wv = numpy.array
             wv = model[word]
             cbow_sentence = cbow_sentence + wv
             i += 1
-        except Exception:   # if word is not in embedding dictionary
+        except Exception:  # if word is not in embedding dictionary
             pass  # no-operation
 
     if i > 0:
@@ -127,6 +203,19 @@ def calc_cbow_sentence(sentence, model):
 
 # -------------------------------------------------------------------------------------#
 def calc_word_to_sentence_sim_w2v(target_word, string_vec, model, max_items_to_test):
+    """
+
+    Args:
+        target_word(str): input target word
+        string_vec(list(str)): sentence
+        model(gensim.models.Word2Vec): w2v model
+        max_items_to_test(int): max number of words
+
+    Returns:
+        float: top_av, average embedding similarity betewwen target word and words in string vec
+        (sentence)
+
+    """
     sim_score_vec = []
     i = 0
     for word in string_vec:
@@ -146,6 +235,19 @@ def calc_word_to_sentence_sim_w2v(target_word, string_vec, model, max_items_to_t
 
 # -------------------------------------------------------------------------------------#
 def w2v_similarity_envelope(word_a, phrase_b, model):
+    """
+    calculate cosine similarity between 2 words
+
+    Args:
+        word_a(str):   input word a
+        phrase_b(str): input word b
+        model(gensim.models.Word2Vec): w2v model
+
+    Returns:
+        float: similarity, mean cosine similarity between 2 words
+
+
+    """
     try:
         similarity = -1
         sim_scores_vec = []
@@ -169,6 +271,17 @@ def w2v_similarity_envelope(word_a, phrase_b, model):
 # -------------------------------------------------------------------------------------#
 
 def w2v_similarity(word_a, word_b, model):
+    """
+
+    Args:
+        word_a(str):   input word a
+        word_b(str):   input word b (can be phrase)
+        model(gensim.models.Word2Vec): w2v model
+
+    Returns:
+        float: similarity, cosine similarity between 2 words
+
+    """
     try:
         similarity = model.similarity(word_a, word_b)
         return similarity
@@ -179,6 +292,18 @@ def w2v_similarity(word_a, word_b, model):
 # -------------------------------------------------------------------------------------#
 
 def return_w2v(word_a, model):
+    """
+    extract embedding vector of word_a
+
+    Args:
+         word_a(str):   input word
+        model(gensim.models.Word2Vec): w2v model
+
+    Returns:
+        numpy.array: w2v, embedding vector of word_a
+
+    """
+    w2v = None
     try:
         w2v = numpy.array
         w2v = model[word_a]
@@ -189,6 +314,16 @@ def return_w2v(word_a, model):
 
 # -------------------------------------------------------------------------------------#
 def calc_top_av(sim_score_vec):
+    """
+    calc top average of scores vector
+
+    Args:
+        sim_score_vec(list(float)): vector of similarity scores
+
+    Returns:
+        float: av_score, average of top similarity scores in sim_score_vec
+
+    """
     av_number_th = 3
     sim_score_vec_sorted = sorted(sim_score_vec, reverse=True)
     cntr = 0
@@ -211,18 +346,37 @@ def calc_top_av(sim_score_vec):
 # -------------------------------------------------------------------------------------#
 
 def get_inherited_hypernyms_list(synset, hyps_list):
+    """
+    get inherited hypernyms list of synset
+    Args:
+        synset(synset): synset
+        hyps_list: hypernym list
+
+    Returns:
+        list(str): hyps_list, hypernym list
+
+    """
 
     for hypernym in synset.hypernyms():
         hyp_string = hypernym.name()
         hyp_string = hyp_string.split(".")[0]
         hyps_list.append(hyp_string)
+        set(get_inherited_hypernyms_list(hypernym, hyps_list))
 
-        hypernym = set(get_inherited_hypernyms_list(hypernym, hyps_list))
     return hyps_list
 
 
 # -------------------------------------------------------------------------------------#
 def get_synonyms(synset):
+    """
+    get synonyms list of synset
+    Args:
+        synset(synset): synset
+
+    Returns:
+        list(str): synonym_list, synonyms list
+
+    """
     synonym_list = []
     i = 0
     for synonym in synset.lemma_names():
@@ -234,6 +388,17 @@ def get_synonyms(synset):
 
 # -------------------------------------------------------------------------------------#
 def extract_synset_data(synset):
+    """
+
+    Args:
+        synset(synset): synset
+
+    Returns:
+        definition(str): definition of synset
+        list(str): synonym_list, synonyms list
+        list(str): hyps_list, hypernym list
+
+    """
     # a. get definition
     definition = synset.definition()
     # b. get inherited hypernyms
@@ -244,3 +409,4 @@ def extract_synset_data(synset):
     synonym_list = get_synonyms(synset)
 
     return definition, hyps_list, synonym_list
+

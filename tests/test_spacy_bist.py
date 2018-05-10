@@ -13,9 +13,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
-from __future__ import unicode_literals, print_function, division, \
-    absolute_import
-
 import pytest
 
 from nlp_architect.pipelines.spacy_bist.parser import SpacyBISTParser
@@ -49,12 +46,10 @@ class Fixtures:
     token_label_types = {'start': int, 'len': int, 'pos': str, 'ner': str, 'lemma': str,
                          'gov': int, 'rel': str}
 
-    parse_str_methods = ['inference', 'parse']
-
 
 @pytest.mark.parametrize('show_tok', [True, False])
 @pytest.mark.parametrize('show_doc', [True, False])
-@pytest.mark.parametrize('method_name', Fixtures.parse_str_methods)
+@pytest.mark.parametrize('method_name', ['parse'])
 @pytest.mark.parametrize('text', TestData.output_structure)
 def test_output_structure(parser, text, method_name, show_tok, show_doc, token_label_types):
     """Test that the output object structure hasn't changed.
@@ -78,7 +73,7 @@ def test_output_structure(parser, text, method_name, show_tok, show_doc, token_l
                 assert isinstance(token.get(label), label_type)
 
 
-@pytest.mark.parametrize('method_name', Fixtures.parse_str_methods)
+@pytest.mark.parametrize('method_name', ['parse'])
 @pytest.mark.parametrize('text, sent_count', TestData.sentence_breaking)
 def test_sentence_breaking(parser, text, sent_count, method_name):
     """Test that documents are broken into the expected number of sentences.
@@ -94,7 +89,7 @@ def test_sentence_breaking(parser, text, sent_count, method_name):
     assert len(parsed_doc.sentences) == sent_count
 
 
-@pytest.mark.parametrize('method_name', Fixtures.parse_str_methods)
+@pytest.mark.parametrize('method_name', ['parse'])
 @pytest.mark.parametrize('text, deps', TestData.dependencies)
 def test_dependencies(parser, text, deps, method_name):
     """Test that dependencies are predicted correctly.
@@ -112,7 +107,7 @@ def test_dependencies(parser, text, deps, method_name):
             assert (token['rel'], token['gov']) == deps[i_sentence][i_token]
 
 
-@pytest.mark.parametrize('method_name', Fixtures.parse_str_methods)
+@pytest.mark.parametrize('method_name', ['parse'])
 @pytest.mark.parametrize('text', TestData.pos_tags)
 def test_pos_tag(parser, text, method_name, ptb_pos_tags):
     """Tests that produced POS tags are valid PTB POS tags.
@@ -141,8 +136,3 @@ def ptb_pos_tags():
 @pytest.fixture
 def token_label_types():
     return Fixtures.token_label_types
-
-
-@pytest.fixture
-def parse_str_methods():
-    return Fixtures.parse_str_methods

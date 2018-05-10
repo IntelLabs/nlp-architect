@@ -31,6 +31,8 @@ parser.add_argument('-b', type=int, default=10,
                     help='Batch size')
 parser.add_argument('-e', type=int, default=10,
                     help='Number of epochs')
+parser.add_argument('--dataset_path', type=str, required=True,
+                    help='dataset directory')
 parser.add_argument('--sentence_length', type=int, default=30,
                     help='Max sentence length')
 parser.add_argument('--token_emb_size', type=int, default=100,
@@ -60,10 +62,14 @@ args = parser.parse_args()
 if args.embedding_path is not None and not os.path.exists(args.embedding_path):
     print('word embedding model file was not found')
     sys.exit(0)
+if not os.path.exists(args.dataset_path):
+    print('dataset_path does not exist')
+    sys.exit(0)
 if args.restore is not None and not os.path.exists(args.restore):
     print('restore model file was not found')
     sys.exit(0)
-dataset = SNIPS(sentence_length=args.sentence_length,
+dataset = SNIPS(path=args.dataset_path,
+                sentence_length=args.sentence_length,
                 embedding_model=args.embedding_path,
                 embedding_size=args.token_emb_size)
 

@@ -31,7 +31,7 @@ API for specific function definitions.
 ..    :py:mod:`nlp_architect.data` | Data loading and handling
 
 ``nlp_architect.models``
----------------
+------------------------
 .. py:module:: models
 
 Model classes stores a list of layers describing the model. Methods are provided
@@ -41,7 +41,7 @@ to train the model weights, perform inference, and save/load the model.
    :toctree: generated/
    :nosignatures:
 
-   nlp_architect.models.chunker_model.ChunkerModel
+   nlp_architect.models.chunker.SequenceChunker
    nlp_architect.models.intent_extraction.JointSequentialIntentModel
    nlp_architect.models.intent_extraction.EncDecIntentModel
    nlp_architect.models.np2vec.NP2vec
@@ -52,7 +52,7 @@ to train the model weights, perform inference, and save/load the model.
 
 
 ``nlp_architect.layers``
----------------------------
+------------------------
 .. py:module:: nlp_architect.layers
 
 In addition to imported layers, the Intel AI Architect contains its own set of layers.
@@ -74,7 +74,7 @@ These are currently stored in the various models
 
 
 ``nlp_architect.data``
----------------------------
+----------------------
 .. py:module:: nlp_architect.data
 
 Currently datasets are distributed among the various models. In future versions of the code

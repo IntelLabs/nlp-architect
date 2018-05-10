@@ -13,15 +13,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
-from __future__ import unicode_literals, print_function, division, \
-    absolute_import
-
-import io
+import os
 import sys
-import unittest
+
+'''
+Things that were changed from the original:
+1) Added legal header
+2) Reformatted code and variable names to conform with PEP8
+3) Added pointer to 'weights.clas' file
+4) Added run_conllu_eval()
+5) Removed tests and command-line usage option
+6) Removed unnecessary imports
+7) Add pylint check disable flags
+'''
 
 # !/usr/bin/env python
-
 # CoNLL 2017 UD Parsing evaluation script.
 #
 # Compatible with Python 2.7 and 3.2+, can be used either as a module
@@ -39,31 +45,6 @@ import unittest
 #                              Compare forms in LCS case insensitively
 #                              Detect cycles and multiple root nodes
 #                              Compute AlignedAccuracy
-
-# Command line usage
-# ------------------
-# conll17_ud_eval.py [-v] [-w weights_file] gold_conllu_file system_conllu_file
-#
-# - if no -v is given, only the CoNLL17 UD Shared Task evaluation LAS metrics
-#   is printed
-# - if -v is given, several metrics are printed (as precision, recall, and in
-#   case the metric is computed on aligned words also accuracy on these):
-#   - Tokens: how well do the gold tokens match system tokens
-#   - Sentences: how well do the gold sentences match system sentences
-#   - Words: how well can the gold words be aligned to system words
-#   - UPOS: using aligned words, how well does UPOS match
-#   - XPOS: using aligned words, how well does XPOS match
-#   - Feats: using aligned words, how well does FEATS match
-#   - AllTags: using aligned words, how well does UPOS+XPOS+FEATS match
-#   - Lemmas: using aligned words, how well does LEMMA match
-#   - UAS: using aligned words, how well does HEAD match
-#   - LAS: using aligned words, how well does HEAD+DEPREL(ignoring subtypes)
-#     match
-# - if weights_file is given (with lines containing deprel-weight pairs),
-#   one more metric is shown:
-#   - WeightedLAS: as LAS, but each deprel (ignoring subtypes) has different
-#     weight
-
 # API usage
 # ---------
 # - load_conllu(file)
@@ -77,7 +58,7 @@ import unittest
 #     match
 #   - returns a dictionary with the metrics described above, each metrics
 #     having three fields: precision, recall and f1
-
+#
 # Description of token matching
 # -----------------------------
 # In order to match tokens of gold file and system file, we consider the text
@@ -87,7 +68,7 @@ import unittest
 #
 # If the texts do match, every token is represented as a range in this original
 # text, and tokens are equal only if their range is the same.
-
+#
 # Description of word matching
 # ----------------------------
 # When matching words of gold file and system file, we first match the tokens.
@@ -104,11 +85,12 @@ import unittest
 # For every multi-word span, we align the gold and system words completely
 # inside this span using LCS on their FORMs. The words not intersecting
 # (even partially) any multi-word span are then aligned as tokens.
-
 # pylint: disable=invalid-name
 
 # CoNLL-U column names
 ID, FORM, LEMMA, UPOS, XPOS, FEATS, HEAD, DEPREL, DEPS, MISC = list(range(10))
+
+WEIGHTS = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'weights.clas')
 
 
 # UD Error is used when raising exceptions in this module
@@ -387,14 +369,13 @@ def evaluate(gold_ud, system_ud, deprel_weights=None):
         # Initialize multiword_span_end characters index.
         if gold_words[gi].is_multiword:
             multiword_span_end = gold_words[gi].span.end
-            if not system_words[si].is_multiword and \
-                            system_words[si].span.start < gold_words[gi].span.start:
+            if not system_words[si].is_multiword and system_words[si].span.start < \
+                    gold_words[gi].span.start:
                 si += 1
         else:  # if system_words[si].is_multiword
             multiword_span_end = system_words[si].span.end
-            if not gold_words[gi].is_multiword and \
-                            gold_words[gi].span.start < \
-                            system_words[si].span.start:
+            if not gold_words[gi].is_multiword and gold_words[gi].span.start < \
+                    system_words[si].span.start:
                 gi += 1
         gs, ss = gi, si
 
@@ -417,7 +398,7 @@ def evaluate(gold_ud, system_ud, deprel_weights=None):
 
     def compute_lcs(gold_words, system_words, gi, si, gs, ss):
         # pylint: disable=too-many-arguments
-        lcs = [[0] * (si - ss) for i in range(gi - gs)]
+        lcs = [[0] * (si - ss) for _ in range(gi - gs)]
         for g in reversed(list(range(gi - gs))):
             for s in reversed(list(range(si - ss))):
                 if lower(gold_words[gs + g].columns[FORM]) == lower(
@@ -566,8 +547,7 @@ def evaluate_wrapper(gold_file: str, system_file: str, weights_file: str):
     return evaluate(gold_ud, system_ud, deprel_weights)
 
 
-def run_conllu_eval(gold_file: str, test_file: str,  weights_file: str= 'weights.clas',
-                    verbose: bool=True):
+def run_conllu_eval(gold_file, test_file, weights_file=WEIGHTS, verbose=True):
     # Use verbose if weights are supplied
     if weights_file is not None and not verbose:
         verbose = True
@@ -576,7 +556,7 @@ def run_conllu_eval(gold_file: str, test_file: str,  weights_file: str= 'weights
     evaluation = evaluate_wrapper(gold_file, test_file, weights_file)
 
     # Write the evaluation to file
-    with open(test_file + 'txt', 'w') as out_file:
+    with open(test_file[:test_file.rindex('.')] + '_eval.txt', 'w') as out_file:
         if not verbose:
             out_file.write("LAS F1 Score: {:.2f}".format(100 * evaluation["LAS"].f1) + '\n')
         else:
@@ -596,69 +576,3 @@ def run_conllu_eval(gold_file: str, test_file: str,  weights_file: str= 'weights
                     "{:10.2f}".format(100 * evaluation[metric].aligned_accuracy)
                     if evaluation[metric].aligned_accuracy is not None else ""
                 ) + '\n')
-
-
-# Tests, which can be executed with `python -m unittest conll17_ud_eval`.
-class TestAlignment(unittest.TestCase):
-    @staticmethod
-    def _load_words(words):
-        """Prepare fake CoNLL-U files with fake HEAD to prevent multiple roots
-         errors."""
-        lines, num_words = [], 0
-        for w in words:
-            parts = w.split(" ")
-            if len(parts) == 1:
-                num_words += 1
-                lines.append(
-                    "{}\t{}\t_\t_\t_\t_\t{}\t_\t_\t_".format(
-                        num_words, parts[0], int(num_words > 1)))
-            else:
-                lines.append(
-                    "{}-{}\t{}\t_\t_\t_\t_\t_\t_\t_\t_".format(
-                        num_words + 1, num_words + len(parts) - 1, parts[0]))
-
-                for part in parts[1:]:
-                    num_words += 1
-                    lines.append(
-                        "{}\t{}\t_\t_\t_\t_\t{}\t_\t_\t_".format(
-                            num_words, part, int(num_words > 1)))
-        return load_conllu(
-            (io.StringIO if sys.version_info >= (3, 0) else io.BytesIO)(
-                "\n".join(lines + ["\n"])))
-
-    def _test_exception(self, gold, system):
-        self.assertRaises(UDError, evaluate, self._load_words(gold),
-                          self._load_words(system))
-
-    def _test_ok(self, gold, system, correct):
-        metrics = evaluate(self._load_words(gold), self._load_words(system))
-        gold_words = sum((max(1, len(word.split(" ")) - 1) for word in gold))
-        system_words = sum(
-            (max(1, len(word.split(" ")) - 1) for word in system))
-        self.assertEqual((metrics["Words"].precision, metrics["Words"].recall,
-                          metrics["Words"].f1),
-                         (correct / system_words, correct / gold_words,
-                          2 * correct / (gold_words + system_words)))
-
-    def test_exception(self):
-        self._test_exception(["a"], ["b"])
-
-    def test_equal(self):
-        self._test_ok(["a"], ["a"], 1)
-        self._test_ok(["a", "b", "c"], ["a", "b", "c"], 3)
-
-    def test_equal_with_multiword(self):
-        self._test_ok(["abc a b c"], ["a", "b", "c"], 3)
-        self._test_ok(["a", "bc b c", "d"], ["a", "b", "c", "d"], 4)
-        self._test_ok(["abcd a b c d"], ["ab a b", "cd c d"], 4)
-        self._test_ok(["abc a b c", "de d e"], ["a", "bcd b c d", "e"], 5)
-
-    def test_alignment(self):
-        self._test_ok(["abcd"], ["a", "b", "c", "d"], 0)
-        self._test_ok(["abc", "d"], ["a", "b", "c", "d"], 1)
-        self._test_ok(["a", "bc", "d"], ["a", "b", "c", "d"], 2)
-        self._test_ok(["a", "bc b c", "d"], ["a", "b", "cd"], 2)
-        self._test_ok(["abc a BX c", "def d EX f"],
-                      ["ab a b", "cd c d", "ef e f"], 4)
-        self._test_ok(["ab a b", "cd bc d"], ["a", "bc", "d"], 2)
-        self._test_ok(["a", "bc b c", "d"], ["ab AX BX", "cd CX a"], 1)

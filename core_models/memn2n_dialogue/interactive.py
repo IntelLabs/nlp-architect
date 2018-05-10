@@ -50,7 +50,8 @@ from ngraph.frontends.neon import Saver
 import ngraph.transformers as ngt
 from nlp_architect.data.babi_dialog import BABI_Dialog
 from nlp_architect.models.memn2n_dialogue import MemN2N_Dialog
-from memn2n_dialogue.utils import interactive_loop, sanitize_path
+from memn2n_dialogue.utils import interactive_loop
+from nlp_architect.utils.io import sanitize_path
 
 # parse the command line arguments
 parser = NgraphArgparser(__doc__)

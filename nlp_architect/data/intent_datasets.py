@@ -26,7 +26,7 @@ from keras.preprocessing.sequence import pad_sequences
 from nlp_architect.utils.embedding import load_word_embeddings, fill_embedding_mat
 from nlp_architect.utils.generic import one_hot_sentence, one_hot
 from nlp_architect.utils.io import download_file
-from nlp_architect.utils.text import Vocabulary, SpacyTokenizer
+from nlp_architect.utils.text import Vocabulary, SpacyPipeline
 
 
 class IntentDataset(object):
@@ -233,14 +233,12 @@ class SNIPS(IntentDataset):
     SNIPS dataset class
 
     Args:
+            path (str): dataset path
             sentence_length (int, optional): max sentence length
             word_length (int, optional): max word length
-            path (str, optional): path where to save dataset files
             embedding_model (str, optional): external word embedding model path
             embedding_size (int, optional): external word embedding vector size
     """
-    url = 'https://raw.githubusercontent.com/snipsco/nlu-benchmark/master/2017-06' \
-          '-custom-intent-engines/'
     train_files = [
         'AddToPlaylist/train_AddToPlaylist_full.json',
         'BookRestaurant/train_BookRestaurant_full.json',
@@ -261,11 +259,12 @@ class SNIPS(IntentDataset):
     ]
     files = ['train', 'test']
 
-    def __init__(self, sentence_length=30, word_length=12, path=None, embedding_model=None,
+    def __init__(self, path, sentence_length=30, embedding_model=None, word_length=12,
                  embedding_size=None):
-        if path is None:
-            self.dataset_root = os.path.expanduser('~') + '/nlp_architect/data/snips/'
-        self._download_dataset()
+        if path is None or not os.path.isdir(path):
+            print('invalid path for SNIPS dataset loader')
+            sys.exit(0)
+        self.dataset_root = path
         train_set_raw, test_set_raw = self._load_dataset()
         super(SNIPS, self).__init__(sentence_length=sentence_length,
                                     word_length=word_length,
@@ -274,17 +273,6 @@ class SNIPS(IntentDataset):
         self._load_data(train_set_raw, test_set_raw)
         if self.embedding_model is not None:
             self._load_embedding(self.files)
-
-    def _download_dataset(self):
-        if not os.path.exists(self.dataset_root):
-            self._ask_if_download()
-            os.makedirs(self.dataset_root)
-        for f in self.train_files + self.test_files:
-            fp = self.dataset_root + f
-            if not os.path.exists(os.path.dirname(fp)):
-                os.makedirs(os.path.dirname(fp))
-            if not os.path.exists(fp):
-                download_file(self.url, f, fp)
 
     def _load_dataset(self):
         """returns a tuple of train/test with 3-tuple of tokens, tags, intent_type"""
@@ -305,7 +293,7 @@ class SNIPS(IntentDataset):
         return data
 
     def _parse_json(self, data):
-        tok = SpacyTokenizer()
+        tok = SpacyPipeline()
         sentences = []
         for s in data:
             tokens = []
@@ -328,20 +316,3 @@ class SNIPS(IntentDataset):
             for _ in range(length - 1):
                 labels.append('I-' + tag)
         return labels
-
-    @staticmethod
-    def _ask_if_download():
-        url = 'https://github.com/snipsco/nlu-benchmark'
-        print('SNIPS NLU benchmark dataset was not found')
-        print('License: CC0-1.0 https://github.com/snipsco/nlu-benchmark/blob/master/LICENSE')
-        response = input('To download the dataset from {}, please type YES: '.format(url))
-        if response.lower().strip() == "yes":
-            print('The terms and conditions of the data set license apply. Intel does not '
-                  + 'grant any rights to the data files or database')
-            print('Proceeding to download the dataset')
-            return
-        else:
-            print('Download declined. Response received {} != YES.'.format(response))
-            print('Download data files manually and provide path in \'path\' keyword of '
-                  'this class')
-            sys.exit(0)
