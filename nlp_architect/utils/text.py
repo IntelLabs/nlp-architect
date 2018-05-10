@@ -109,22 +109,19 @@ class Vocabulary:
         return self._rev_vocab
 
 
-class SpacyPipeline:
+class SpacyInstance:
     """
     Spacy pipeline wrapper which prompts user for model download authorization.
 
     Args:
         model (str, optional): spacy model name (default: english small model)
         disable (list of string, optional): pipeline annotators to disable
-            (default: ['tagger', 'ner', 'parser', 'vectors', 'textcat'])
+            (default: none)
     """
 
-    def __init__(self, model='en', **kwargs):
-        if 'disable' not in kwargs:
-            kwargs['disable'] = ['tagger', 'ner', 'parser', 'vectors', 'textcat']
-
+    def __init__(self, model='en', disable=None):
         try:
-            self.parser = spacy.load(model, **kwargs)
+            self._parser = spacy.load(model, disable=disable)
         except OSError:
             print('Spacy model ' + str(model) + ' was not found')
             url = 'https://spacy.io/models'
@@ -136,11 +133,16 @@ class SpacyPipeline:
                       'grant any rights to the data files or database')
                 print('Downloading Spacy model...')
                 spacy_download(model)
-                self.parser = spacy.load(model, **kwargs)
+                self._parser = spacy.load(model, disable=disable)
             else:
                 print('Download declined. Response received {} != YES. '.format(response))
                 print('Please download the model manually')
                 sys.exit(0)
+
+    @property
+    def parser(self):
+        """return Spacy's instance parser"""
+        return self._parser
 
     def tokenize(self, text):
         """

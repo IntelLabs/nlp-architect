@@ -26,7 +26,7 @@ from keras.preprocessing.sequence import pad_sequences
 from nlp_architect.utils.embedding import load_word_embeddings, fill_embedding_mat
 from nlp_architect.utils.generic import one_hot_sentence, one_hot
 from nlp_architect.utils.io import download_file
-from nlp_architect.utils.text import Vocabulary, SpacyPipeline
+from nlp_architect.utils.text import Vocabulary, SpacyInstance
 
 
 class IntentDataset(object):
@@ -293,7 +293,7 @@ class SNIPS(IntentDataset):
         return data
 
     def _parse_json(self, data):
-        tok = SpacyPipeline()
+        tok = SpacyInstance(disable=['tagger', 'ner', 'parser', 'vectors', 'textcat'])
         sentences = []
         for s in data:
             tokens = []

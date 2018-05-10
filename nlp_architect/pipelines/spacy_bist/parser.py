@@ -20,7 +20,7 @@ from nlp_architect.models.bist_parser import BISTModel
 from nlp_architect.utils.core_nlp_doc import CoreNLPDoc
 from nlp_architect.utils.io import download_file, unzip_file
 from nlp_architect.utils.io import validate
-from nlp_architect.utils.text import SpacyPipeline
+from nlp_architect.utils.text import SpacyInstance
 
 
 class SpacyBISTParser(object):
@@ -46,7 +46,7 @@ class SpacyBISTParser(object):
         self.verbose = verbose
         self.bist_parser = BISTModel()
         self.bist_parser.load(bist_model if bist_model else SpacyBISTParser.pretrained)
-        self.spacy_parser = SpacyPipeline(spacy_model,
+        self.spacy_parser = SpacyInstance(spacy_model,
                                           disable=['ner', 'vectors', 'textcat']).parser
 
     def to_conll(self, doc_text):

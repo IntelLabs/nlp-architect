@@ -16,7 +16,7 @@
 
 from nlp_architect.api.abstract_api import AbstractApi
 from nlp_architect.utils.high_level_doc import HighLevelDoc
-from nlp_architect.utils.text import SpacyPipeline
+from nlp_architect.utils.text import SpacyInstance
 
 
 class SpacyNerApi(AbstractApi):
@@ -30,7 +30,7 @@ class SpacyNerApi(AbstractApi):
         """
         Load spacy english model
         """
-        self.model = SpacyPipeline(disable=['parser', 'vectors', 'textcat']).parser
+        self.model = SpacyInstance(disable=['parser', 'vectors', 'textcat']).parser
 
     def inference(self, doc):
         """
