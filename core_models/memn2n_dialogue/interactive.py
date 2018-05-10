@@ -104,9 +104,9 @@ parser.set_defaults(batch_size=32, epochs=200)
 args = parser.parse_args()
 
 # Sanitize inputs
-model_file = sanitize_path(args.model_file)
+model_file = sanitize_path(args.model_file,prefix='')
 assert model_file.endswith('.npz')
-data_dir = sanitize_path(args.data_dir)
+data_dir = sanitize_path(args.data_dir,prefix='')
 
 babi = BABI_Dialog(
     path=data_dir,

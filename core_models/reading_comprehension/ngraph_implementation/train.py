@@ -97,7 +97,7 @@ except:
     print("Please enter a valid data path")
     exit()
 
-path_gen = sanitize_path(args.data_path)
+path_gen = sanitize_path(args.data_path,prefix='')
 
 file_name_dict={}
 file_name_dict['train_para_ids']='/train.ids.context'
