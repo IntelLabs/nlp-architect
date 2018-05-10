@@ -4,9 +4,9 @@ Phrase chunking is a basic NLP task that consists of tagging parts of a sentence
 
 ### Example
 
-  The quick brown fox jumped over the fence
-  |                   |      |    |
-  Noun                Verb   Prep Noun
+	The quick brown fox jumped over the fence
+	|                   |      |    |
+	Noun                Verb   Prep Noun
 
 In this example the sentence can be divided into 4 phrases, `The quick brown fox` and `the fence` are noun phrases, `jumped` is a verb phrase and `over` is a prepositional phrase.
 
@@ -19,11 +19,11 @@ Train a model with default parameters (only tokens, default network settings):
 	`python train.py`
 Saving the model after training is done automatically:
 
-* `<chunker>.prm` - Neon NN model file
+* `<chunker>` - Neon NN model file
 * `<chunker>_settings.dat` - Model topology and input settings
 
 ### Inference
-To run inference on a trained model one has to have a pre-trained chunker.prm and chunker_settings.dat model files.
+Running inference on a trained model `chunker` and `chunker_settings.dat` on input samples from `inference_sentences.txt`
 
 Quick example:
 ```

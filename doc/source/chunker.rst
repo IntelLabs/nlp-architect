@@ -32,36 +32,22 @@ syntactically.
 In this example the sentence can be divided into 4 phrases, ``The quick brown fox`` and ``the fence``
 are noun phrases, ``jumped`` is a verb phrase and ``over`` is a prepositional phrase.
 
-Datasets
-========
+Dataset
+=======
 
-We used the CoNLL2000 dataset in our example for training a phrase chunker. More info about this
-dataset can be found here_.
+We used the CONLL2000_ shared task dataset in our example for training a phrase chunker.
 
-The dataset is divided into ``train`` and ``test`` sets consisting of 8926 and 2009 sentences fully annotated.
-The dataset is implemented in Neon and can be used by creating a ``CONLL2000`` object from ``neon.data.text`` module.
-``CONLL2000`` supports the following as features for training a model:
+The dataset has a ``train`` and ``test`` sets consisting of 8926 and 2009 sentences annotated with Part-of-speech and chuking information.
+We implemented a dataset loader, ``nlp_architect.data.conll2000.CONLL2000``, for loading and parsing CONLL2000 data into iterators ready to be used by the chunker model.
+``CONLL2000`` supports the following feature generation when loading the dataset:
 
-1. sentence tokens directly
-2. use pre-train word embedding vector (instead of tokens)
-3. part-of-speech tags of tokens
-4. character level RNN feature vectors (last vector of BiRNN on each token)
-
-Tag format
------------
-
-CoNLL 2000 dataset uses IOB tagging format. Tags begin with a ``B-`` tag and continue with ``I-``.
-A new ``B-`` tag marks end of last tag and start of a new tag.
-Example (from above):
-
-.. code:: bash
-
-	The  quick brown fox  jumped over the  fence
-	|    |     |     |    |      |    |    |
-	B-NP I-NP  I-NP  I-NP B-VP   B-PP B-NP I-NP
+1. Sentence words as sparse int representation
+2. Pre-train word embeddings
+3. Part-of-speech tags of words
+4. Word character sparse representation (for extracting character features)
 
 Model
-========
+=====
 
 The Chunker model example comes with several options for creating the NN topology depending on what
 input is given (tokens/POS/embeddings/char features).
@@ -90,8 +76,8 @@ LSTM layer's hidden state is concatenated with the backward LSTM hidden state, a
 that predicts the token's tag at position ``i`` using a softmax activation layer. Eventually, the
 model output are the tokens tags ``(tag_1, tag_2, .., tagn)`` as predicted in each step.
 
-Deep BiLSTM
-------------
+Deep Bi-directional LSTM
+------------------------
 
 In addition to the model described above, the model support the use of multiple stacked LSTM layers
 as recent literature has indicated that several layers of RNN layers might be beneficial int sequential prediction.
@@ -99,14 +85,14 @@ When using multiple BiLSTM layers the hidden state of the forward and backward l
 are used as the input to the next layer of BiLSTM at step ``i`` accordingly.
 
 
-Running Modalities
-==================
+Running Models
+==============
 
 Training
 --------
 Quick train
-^^^^^^^^^^^^^^^^
-Train a model with default parameters (only tokens, default network settings):
+^^^^^^^^^^^
+Train a model with default parameters (use sentence words and default network settings):
 
 .. code:: python
 
@@ -147,13 +133,20 @@ All customizable parameters can be obtained by running: ``python train.py -h``
 
 The model will automatically save after training is complete:
 
-* ``<chunker>.prm`` - Neon NN model file
+* ``<chunker>`` - Neon NN model file
 * ``<chunker>_settings.dat`` - Model topology and input settings
 
 Inference
------------
-To run inference on a trained model one has to have a pre-trained chunker.prm and chunker_settings.dat model files.
-If the model was trained using pre-trained word embedding the same exact word embedding model should be used.
+---------
+Quick inference
+^^^^^^^^^^^^^^^
+
+Running inference on a trained model ``chunker`` and ``chunker_settings.dat`` on input samples from ``inference_sentences.txt``
+
+.. code:: python
+
+	python inference.py --model chunker --parameters chunker_settings.dat --input inference_sentences.txt
+
 Run ``python inference.py -h`` for a full list of options:
 
 .. code:: bash
@@ -166,13 +159,6 @@ Run ``python inference.py -h`` for a full list of options:
 	                        Pre-trained word embedding model file path (default:
 	                        None)
 	  --print_only_nps      Print inferred Noun Phrases (default: False)
-
-
-Quick example:
-
-.. code:: python
-
-	python inference.py --model chunker.prm --parameters chunker_settings.dat --input inference_samples.txt
 
 .. note::
 	currently char-RNN feature (character embedding) is not supported in inference mode (will be added in the future).
@@ -190,4 +176,4 @@ The reported performance below is on Noun Phrase (NP) detection (using B-NP and 
 		Our model, 0.985, 0.959, 0.971
 
 
-.. _here: https://www.clips.uantwerpen.be/conll2000/chunking/
+.. _CONLL2000: https://www.clips.uantwerpen.be/conll2000/chunking/

@@ -79,10 +79,11 @@ intermediate model evaluations are conducted:
     parser = BISTModel()
     parser.fit('path/to/train.conll', dev='path/to/dev.conll')
 
-  For each completed epoch, denoted by **n**, the following files will be created in the dataset's
-  directory:
-  - *dev_epoch_n_pred.conll* - prediction results on dev file after **n** iterations.
-  - *dev_epoch_n_pred_eval.txt* - accuracy results of the above predictions.
+For each completed epoch, denoted by **n**, the following files will be created in the dataset's
+directory:
+
+- *dev_epoch_n_pred.conll* - prediction results on dev file after **n** iterations.
+- *dev_epoch_n_pred_eval.txt* - accuracy results of the above predictions.
 
 Inference
 =========
@@ -128,6 +129,7 @@ To evaluate predictions immediately after they're generated, type the following:
     predictions = parser.predict(dataset='path/to/test.conll', evaluate=True)
 
 This will produce 2 files in your input dataset's directory:
+
 - *test_pred.conll* - predictions file in CoNLL format
 - *test_pred_eval.txt* - evaluation report text file
 
