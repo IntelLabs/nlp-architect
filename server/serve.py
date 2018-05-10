@@ -56,7 +56,8 @@ def format_response(resp_format, parsed_doc):
         formatted response
     """
     logger.info('preparing response JSON')
-    if resp_format == "json" or 'json' in resp_format:
+    if (resp_format == "json") or ('json' in resp_format) or (not resp_format):
+        # if not specified resp_format then default is json
         return json.dumps(parsed_doc)
     # if resp_format == "pickle":
     #     return pickle.dumps(parsed_doc)
@@ -74,7 +75,7 @@ def parse_headers(req_headers):
     Returns:
         dict: dictionary hosting the request headers
     """
-    headers_lst = ["CONTENT-TYPE", "CONTENT-ENCODING", "FORMAT",
+    headers_lst = ["CONTENT-TYPE", "CONTENT-ENCODING", "RESPONSE-FORMAT",
                    "CLEAN", "DISPLAY-POST-PREPROCCES",
                    "DISPLAY-TOKENS", "DISPLAY-TOKEN-TEXT", "IS-HTML"]
     headers = {}
@@ -117,7 +118,7 @@ def set_headers(res):
                    "Access-Control-Allow-Headers, Access-Control-Allow-Origin,"
                    " Origin,Accept, X-Requested-With, Content-Type, "
                    "Access-Control-Request-Method, "
-                   "Access-Control-Request-Headers, format, clean, "
+                   "Access-Control-Request-Headers, Response-Format, clean, "
                    "display-post-preprocces, display-tokens, "
                    "display-token-text")
 
@@ -178,7 +179,7 @@ class Service(object):
         headers = parse_headers(req.headers)
         req_content_type = headers["CONTENT-TYPE"]
         # req_content_encoding = headers["CONTENT-ENCODING"]
-        req_format = headers["FORMAT"]
+        resp_format = headers["RESPONSE-FORMAT"]
         if req_content_type == "application/json" or "application/json" in req_content_type:
             logger.info('Json request')
             try:
@@ -201,7 +202,7 @@ class Service(object):
             raise falcon.HTTPBadRequest('Bad request', msg)
         parsed_doc = self.get_service_inference(input_docs, headers)
         logger.info('parsed document processing done')
-        resp.body = format_response(req_format, parsed_doc)
+        resp.body = format_response(resp_format, parsed_doc)
 
     def get_service_inference(self, docs, headers):
         """
@@ -239,14 +240,16 @@ class Service(object):
         properties = json.load(open(os.path.join(package_home(globals()), "services.json")))
         folder_path = properties["api_folders_path"]
         model_relative_path = None
+        service_name_error = "'{0}' is not an existing service - " \
+                             "please try using another service.".format(name)
         if name in properties:
             model_relative_path = properties[name]["file_name"]
         else:
-            logger.error(
-                "{0} is not an existing service - please try using another service.".format(name))
+            logger.error(service_name_error)
+            raise Exception(service_name_error)
         if not model_relative_path:
-            logger.error(
-                "{0} is not an existing service - please try using another service.".format(name))
+            logger.error(service_name_error)
+            raise Exception(service_name_error)
         module_path = ".".join(model_relative_path.split(".")[:-1])
         module_name = extract_module_name(model_relative_path)
         module = import_module(folder_path + module_path)

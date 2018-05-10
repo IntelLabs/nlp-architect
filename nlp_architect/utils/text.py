@@ -135,7 +135,7 @@ class SpacyPipeline:
                 print('The terms and conditions of the data set license apply. Intel does not '
                       'grant any rights to the data files or database')
                 print('Downloading Spacy model...')
-                spacy_download(None, model)
+                spacy_download(model)
                 self.parser = spacy.load(model, **kwargs)
             else:
                 print('Download declined. Response received {} != YES. '.format(response))

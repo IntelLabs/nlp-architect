@@ -1,19 +1,3 @@
-# ******************************************************************************
-# Copyright 2017-2018 Intel Corporation
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-# ******************************************************************************
-
 from __future__ import unicode_literals, print_function, division, \
     absolute_import
 
@@ -21,16 +5,15 @@ import gzip
 import io
 import json
 import os
-from os.path import dirname
-from io import open
 import sys
+from io import open
 
 import falcon
 import pytest
 from falcon import testing
-
 # from nlp_architect_server.serve import app
 from falcon_multipart.middleware import MultipartMiddleware
+from os.path import dirname
 
 import server.serve
 
@@ -44,14 +27,13 @@ server_data_rel_path = 'fixtures/data/server_data/'
 def load_test_data(service_name):
     """
     load test data (input and expected response) for given service from 'tests_data.json'
-
     Args:
         service_name (str):  the service name
-
     Returns:
         str: the test data of the service
     """
-    f = open(os.path.join(os.path.dirname(__file__),server_data_rel_path + 'tests_data.json'), 'r')
+    f = open(os.path.join(os.path.dirname(__file__), server_data_rel_path + 'tests_data.json'),
+             'r')
     service_test_data = json.loads(f.read())[service_name]
     return service_test_data
 
@@ -77,7 +59,7 @@ def test_request(service_name):
     expected_result = json.dumps(test_data["response"])
     headers["Content-Type"] = "application/json"
     headers["format"] = "json"
-    response = client.simulate_post('/'+ service_name, body=doc, headers=headers)
+    response = client.simulate_post('/' + service_name, body=doc, headers=headers)
     result_doc = json.loads(response.content, encoding='utf-8')
     assert result_doc == json.loads(expected_result)
     assert response.status == falcon.HTTP_OK
@@ -86,14 +68,15 @@ def test_request(service_name):
 @pytest.mark.parametrize('service_name', ['bist', 'spacy_ner'])
 def test_gzip_file_request(service_name):
     client = init_client(service_name)
-    file_path = os.path.join(os.path.dirname(__file__), server_data_rel_path+ service_name + "_sentences_examples.json.gz")
+    file_path = os.path.join(os.path.dirname(__file__), server_data_rel_path + service_name +
+                             "_sentences_examples.json.gz")
     file_data = open(file_path, 'rb').read()
     doc = file_data
     expected_result = json.dumps(load_test_data(service_name)["response"])
     headers["Content-Type"] = "application/gzip"
     headers["Content-Encoding"] = "gzip"
     headers["format"] = "gzip"
-    response = client.simulate_post('/'+ service_name, body=doc, headers=headers)
+    response = client.simulate_post('/' + service_name, body=doc, headers=headers)
     result_doc = get_decompressed_gzip(response.content)
     assert result_doc == json.loads(expected_result)
     assert response.status == falcon.HTTP_OK
@@ -102,12 +85,13 @@ def test_gzip_file_request(service_name):
 @pytest.mark.parametrize('service_name', ['bist', 'spacy_ner'])
 def test_json_file_request(service_name):
     client = init_client(service_name)
-    file_path = os.path.join(os.path.dirname(__file__), server_data_rel_path + service_name + "_sentences_examples.json")
+    file_path = os.path.join(os.path.dirname(__file__), server_data_rel_path + service_name +
+                             "_sentences_examples.json")
     doc = open(file_path, 'rb').read()
     expected_result = json.dumps(load_test_data(service_name)["response"])
     headers["Content-Type"] = "application/json"
     headers["format"] = "json"
-    response = client.simulate_post('/'+ service_name, body=doc, headers=headers)
+    response = client.simulate_post('/' + service_name, body=doc, headers=headers)
     result_doc = json.loads(response.content, encoding='utf-8')
     assert result_doc == json.loads(expected_result)
     assert response.status == falcon.HTTP_OK
