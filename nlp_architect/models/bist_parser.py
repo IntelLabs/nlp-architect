@@ -19,7 +19,7 @@ import os
 from nlp_architect.models.bist import utils
 from nlp_architect.models.bist.mstlstm import MSTParserLSTM
 from nlp_architect.models.bist.utils import get_options_dict
-from nlp_architect.utils.io import validate
+from nlp_architect.utils.io import validate, sanitize_path
 
 
 class BISTModel(object):
@@ -41,10 +41,7 @@ class BISTModel(object):
         options (dict): User model options.
     """
 
-    def __init__(self, activation='tanh',
-                 lstm_layers=2,
-                 lstm_dims=125,
-                 pos_dims=25):
+    def __init__(self, activation='tanh', lstm_layers=2, lstm_dims=125, pos_dims=25):
         validate((activation, str), (lstm_layers, int, 0, None), (lstm_dims, int, 0, 1000),
                  (pos_dims, int, 0, 1000))
         self.options = get_options_dict(activation, lstm_dims, lstm_layers, pos_dims)
@@ -59,8 +56,11 @@ class BISTModel(object):
             epochs (int, optional): Number of learning iterations.
             dev (str, optional): Path to development dataset for conducting evaluations.
         """
-        validate((dataset, str, 0, 1000), (epochs, int, 0, None),
-                 (dev, (type(None), str), 0, 1000))
+        if dev:
+            dev = sanitize_path(dev)
+        dataset = sanitize_path(dataset)
+        validate((dataset, str, 0, 1000), (epochs, int, 0, None), (dev, (type(None), str)))
+
         print('\nRunning fit on ' + dataset + '...\n')
         words, w2i, pos, rels = utils.vocab(dataset)
         self.params = words, w2i, pos, rels, self.options
@@ -85,7 +85,9 @@ class BISTModel(object):
             res (list of list of ConllEntry): The list of input sentences with predicted
             dependencies attached.
         """
-        validate((dataset, str, 0, 1000), (evaluate, bool))
+        dataset = sanitize_path(dataset)
+        validate((evaluate, bool))
+
         print('\nRunning predict on ' + dataset + '...\n')
         res = list(self.model.predict(conll_path=dataset))
         if evaluate:
@@ -108,21 +110,17 @@ class BISTModel(object):
             return list(self.model.predict(conll=dataset))
 
     def load(self, path):
-        """
-        Loads and initializes a BIST model from file.
-        """
-        validate((path, str))
+        """Loads and initializes a BIST model from file."""
+        path = sanitize_path(path)
         with open(os.path.join(os.path.dirname(path), 'params.json'), 'r') as file:
             self.params = json.load(file)
         self.model = MSTParserLSTM(*self.params)
-        self.model.load(path)
+        self.model.model.populate(path)
 
     def save(self, path):
-        """
-        Saves the BIST model to file.
-        """
-        validate((path, str))
+        """Saves the BIST model to file."""
+        path = sanitize_path(path)
         print("Saving")
         with open(os.path.join(os.path.dirname(path), 'params.json'), 'w') as file:
             json.dump(self.params, file)
-        self.model.save(path)
+        self.model.model.save(path)

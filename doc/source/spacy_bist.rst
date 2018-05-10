@@ -42,7 +42,7 @@ To use the module, import it like so:
 
 .. code:: python
 
-    from nlp_architect.pipelines.spacy_bist.parser import SpacyBISTParser
+    from nlp_architect.pipelines.spacy_bist import SpacyBISTParser
 
 Training
 ========

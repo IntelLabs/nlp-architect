@@ -13,19 +13,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
+# pylint: disable=missing-docstring
+
 import os
 import sys
 
-'''
-Things that were changed from the original:
-1) Added legal header
-2) Reformatted code and variable names to conform with PEP8
-3) Added pointer to 'weights.clas' file
-4) Added run_conllu_eval()
-5) Removed tests and command-line usage option
-6) Removed unnecessary imports
-7) Add pylint check disable flags
-'''
+# Things that were changed from the original:
+# - Added legal header
+# - Reformatted code and variable names to conform with PEP8
+# - Added pointer to 'weights.clas' file
+# - Added run_conllu_eval()
+# - Removed tests and command-line usage option
+# - Removed unnecessary imports
+# - Add pylint check disable flags
 
 # !/usr/bin/env python
 # CoNLL 2017 UD Parsing evaluation script.
@@ -384,15 +384,13 @@ def evaluate(gold_ud, system_ud, deprel_weights=None):
         # span end).
         while not beyond_end(gold_words, gi, multiword_span_end) or \
                 not beyond_end(system_words, si, multiword_span_end):
-            if gi < len(gold_words) and \
-                    (si >= len(system_words) or gold_words[gi].span.start <=
-                        system_words[si].span.start):
-                multiword_span_end = extend_end(gold_words[gi],
-                                                multiword_span_end)
+            gold_start = gold_words[gi].span.start
+            sys_start = system_words[si].span.start
+            if gi < len(gold_words) and (si >= len(system_words) or gold_start <= sys_start):
+                multiword_span_end = extend_end(gold_words[gi], multiword_span_end)
                 gi += 1
             else:
-                multiword_span_end = extend_end(system_words[si],
-                                                multiword_span_end)
+                multiword_span_end = extend_end(system_words[si], multiword_span_end)
                 si += 1
         return gs, ss, gi, si
 

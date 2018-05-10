@@ -14,6 +14,12 @@
 # limitations under the License.
 # ******************************************************************************
 # pylint: disable=no-name-in-module
+# pylint: disable=too-many-instance-attributes
+# pylint: disable=too-many-arguments
+# pylint: disable=too-many-statements
+# pylint: disable=too-many-locals
+# pylint: disable=too-many-branches
+
 import random
 import time
 from collections import namedtuple
@@ -26,16 +32,16 @@ from nlp_architect.data.conll import ConllEntry
 from nlp_architect.models.bist import decoder
 from nlp_architect.models.bist.utils import read_conll
 
-'''
-Things that were changed from the original:
-1) Added input validation
-2) Updated function and object names to dyNet 2.0.2 and Python 3
-3) Removed external embeddings option
-4) Reformatted code and variable names to conform with PEP8
-5) Added dict_to_obj()
-6) Added option for train() to get ConllEntry input
-7) Added legal header
-'''
+# Things that were changed from the original:
+# - Added input validation
+# - Updated function and object names to dyNet 2.0.2 and Python 3
+# - Removed external embeddings option
+# - Reformatted code and variable names to conform with PEP8
+# - Added dict_to_obj()
+# - Added option for train() to get ConllEntry input
+# - Added legal header
+# - Removed save() and load()
+# - Disabled some style checks
 
 
 class MSTParserLSTM(object):
@@ -43,7 +49,7 @@ class MSTParserLSTM(object):
 
     def __init__(self, vocab, w2i, pos, rels, options):
         if isinstance(options, dict):
-            options = dict_to_obj(options, 'Values')
+            options = _dict_to_obj(options, 'Values')
 
         self.model = ParameterCollection()
         random.seed(1)
@@ -116,7 +122,8 @@ class MSTParserLSTM(object):
                  self.hidden2_units if self.hidden2_units > 0 else self.hidden_units))
             self.rout_bias = self.model.add_parameters((len(self.irels)))
 
-    def __get_expr(self, sentence, i, j):
+    def _get_expr(self, sentence, i, j):
+        # pylint: disable=missing-docstring
         if sentence[i].headfov is None:
             sentence[i].headfov = self.hid_layer_foh.expr() * concatenate(
                 [sentence[i].lstms[0], sentence[i].lstms[1]])
@@ -125,23 +132,25 @@ class MSTParserLSTM(object):
                 [sentence[j].lstms[0], sentence[j].lstms[1]])
 
         if self.hidden2_units > 0:
-            output = self.out_layer.expr()\
-                     * self.activation(self.hid2_bias.expr() + self.hid2_layer.expr()
-                                       * self.activation(sentence[i].headfov + sentence[j].modfov
-                                                         + self.hid_bias.expr()))  # + self.outBias
+            output = \
+                self.out_layer.expr() * self.activation(
+                    self.hid2_bias.expr() + self.hid2_layer.expr() * self.activation(
+                        sentence[i].headfov + sentence[j].modfov
+                        + self.hid_bias.expr()))  # + self.outBias
         else:
-            output = self.out_layer.expr()\
-                     * self.activation(sentence[i].headfov + sentence[j].modfov
-                                       + self.hid_bias.expr())  # + self.outBias
+            output = self.out_layer.expr() * self.activation(
+                sentence[i].headfov + sentence[j].modfov + self.hid_bias.expr())  # + self.outBias
         return output
 
-    def __evaluate(self, sentence):
-        exprs = [[self.__get_expr(sentence, i, j) for j in range(len(sentence))]
+    def _evaluate(self, sentence):
+        # pylint: disable=missing-docstring
+        exprs = [[self._get_expr(sentence, i, j) for j in range(len(sentence))]
                  for i in range(len(sentence))]
         scores = np.array([[output.scalar_value() for output in exprsRow] for exprsRow in exprs])
         return scores, exprs
 
-    def __evaluate_label(self, sentence, i, j):
+    def _evaluate_label(self, sentence, i, j):
+        # pylint: disable=missing-docstring
         if sentence[i].rheadfov is None:
             sentence[i].rheadfov = self.rhid_layer_foh.expr() * concatenate(
                 [sentence[i].lstms[0], sentence[i].lstms[1]])
@@ -155,18 +164,13 @@ class MSTParserLSTM(object):
                 self.activation(sentence[i].rheadfov + sentence[j].rmodfov
                                 + self.rhid_bias.expr())) + self.rout_bias.expr()
         else:
-            output = self.rout_layer.expr()\
-                     * self.activation(sentence[i].rheadfov + sentence[j].rmodfov
-                                       + self.rhid_bias.expr()) + self.rout_bias.expr()
+            output = self.rout_layer.expr() * self.activation(
+                sentence[i].rheadfov + sentence[j].rmodfov
+                + self.rhid_bias.expr()) + self.rout_bias.expr()
         return output.value(), output
 
-    def save(self, filename):
-        self.model.save(filename)
-
-    def load(self, filename):
-        self.model.populate(filename)
-
     def predict(self, conll_path=None, conll=None):
+        # pylint: disable=missing-docstring
         if conll is None:
             conll = read_conll(conll_path)
 
@@ -214,7 +218,7 @@ class MSTParserLSTM(object):
                         entry.lstms[1] = blstm_forward.output()
                         rentry.lstms[0] = blstm_backward.output()
 
-            scores, _ = self.__evaluate(conll_sentence)
+            scores, _ = self._evaluate(conll_sentence)
             heads = decoder.parse_proj(scores)
 
             for entry, head in zip(conll_sentence, heads):
@@ -225,15 +229,17 @@ class MSTParserLSTM(object):
 
             if self.labels_flag:
                 for modifier, head in enumerate(heads[1:]):
-                    scores, _ = self.__evaluate_label(conll_sentence, head, modifier + 1)
+                    scores, _ = self._evaluate_label(conll_sentence, head, modifier + 1)
                     conll_sentence[modifier + 1].pred_relation = \
-                        self.irels[ max(enumerate(scores), key=itemgetter(1))[0]]
+                        self.irels[max(enumerate(scores), key=itemgetter(1))[0]]
 
             renew_cg()
             if not dump:
                 yield sentence
 
     def train(self, conll_path):
+        # pylint: disable=invalid-name
+        # pylint: disable=missing-docstring
         eloss = 0.0
         mloss = 0.0
         eerrors = 0
@@ -261,7 +267,7 @@ class MSTParserLSTM(object):
             for entry in conll_sentence:
                 c = float(self.words_count.get(entry.norm, 0))
                 drop_flag = (random.random() < (c / (0.25 + c)))
-                wordvec = self.wlookup[int(self.vocab.get(entry.norm, 0)) if drop_flag else 0]\
+                wordvec = self.wlookup[int(self.vocab.get(entry.norm, 0)) if drop_flag else 0] \
                     if self.wdims > 0 else None
                 posvec = self.plookup[int(self.pos[entry.pos])] if self.pdims > 0 else None
 
@@ -299,13 +305,13 @@ class MSTParserLSTM(object):
                         entry.lstms[1] = blstm_forward.output()
                         rentry.lstms[0] = blstm_backward.output()
 
-            scores, exprs = self.__evaluate(conll_sentence)
+            scores, exprs = self._evaluate(conll_sentence)
             gold = [entry.parent_id for entry in conll_sentence]
             heads = decoder.parse_proj(scores, gold if self.costaug_flag else None)
 
             if self.labels_flag:
                 for modifier, head in enumerate(gold[1:]):
-                    rscores, rexprs = self.__evaluate_label(conll_sentence, head, modifier + 1)
+                    rscores, rexprs = self._evaluate_label(conll_sentence, head, modifier + 1)
                     gold_label_ind = self.rels[conll_sentence[modifier + 1].relation]
                     wrong_label_ind = max(((label, scr) for label, scr in enumerate(rscores)
                                            if label != gold_label_ind), key=itemgetter(1))[0]
@@ -348,5 +354,6 @@ class MSTParserLSTM(object):
         print("Loss: ", mloss / i_sentence)
 
 
-def dict_to_obj(dic: dict, name='Object'):
+def _dict_to_obj(dic, name='Object'):
+    """Return an object form of a dictionary."""
     return namedtuple(name, dic.keys())(*dic.values())

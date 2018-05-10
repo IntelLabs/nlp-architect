@@ -15,7 +15,7 @@
 # ******************************************************************************
 
 from nlp_architect.api.abstract_api import AbstractApi
-from nlp_architect.pipelines.spacy_bist.parser import SpacyBISTParser
+from nlp_architect.pipelines.spacy_bist import SpacyBISTParser
 
 
 class BistParserApi(AbstractApi):
@@ -39,7 +39,6 @@ class BistParserApi(AbstractApi):
             doc (str): the doc str
 
         Returns:
-            :obj:`nlp_architect.utils.core_nlp_doc.CoreNLPDoc`: the parser's response hosted in
-                CoreNLPDoc object
+            CoreNLPDoc: the parser's response hosted in CoreNLPDoc object
         """
         return self.model.parse(doc)

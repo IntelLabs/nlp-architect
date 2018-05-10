@@ -13,7 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
-from os import path
+from os import path, remove
+from pathlib import Path
 
 from nlp_architect.data.conll import ConllEntry
 from nlp_architect.models.bist_parser import BISTModel
@@ -33,14 +34,14 @@ class SpacyBISTParser(object):
         bist_model (str, optional): Path to a .model file to load. Defaults pre-trained model'.
     """
     dir = path.dirname(path.realpath(__file__))
-    pretrained = path.join(dir, 'bist-pretrained', 'bist.model')
+    pretrained = path.relpath(path.join(dir, 'bist-pretrained', 'bist.model'), str(Path.home()))
 
     def __init__(self, verbose=False, spacy_model='en', bist_model=None):
         validate((verbose, bool), (spacy_model, str, 0, 1000),
                  (bist_model, (type(None), str), 0, 1000))
         if not bist_model:
             print("Using pre-trained BIST model.")
-            download_pretrained_model()
+            _download_pretrained_model()
             bist_model = SpacyBISTParser.pretrained
 
         self.verbose = verbose
@@ -135,15 +136,16 @@ class SpacyBISTParser(object):
         return parsed_doc
 
 
-def download_pretrained_model():
+def _download_pretrained_model():
     """Downloads the pre-trained BIST model if non-existent."""
     if not path.isfile(path.join(SpacyBISTParser.dir, 'bist-pretrained', 'bist.model')):
         print('Downloading pre-trained BIST model...')
         download_file('https://s3-us-west-1.amazonaws.com/nervana-modelzoo/parse/',
                       'bist-pretrained.zip', path.join(SpacyBISTParser.dir, 'bist-pretrained.zip'))
         print('Unzipping...')
-        unzip_file(path.join(SpacyBISTParser.dir, 'bist-pretrained.zip'),
-                   outpath=SpacyBISTParser.dir)
+        zip_file = path.join(SpacyBISTParser.dir, 'bist-pretrained.zip')
+        unzip_file(zip_file, outpath=SpacyBISTParser.dir)
+        remove(zip_file)
         print('Done.')
 
 
@@ -173,6 +175,3 @@ def _spacy_pos_to_ptb(pos, text):
     elif pos in ['NFP', 'HYPH', 'XX']:
         ptb_tag = 'SYM'
     return ptb_tag
-
-
-print(SpacyBISTParser().parse("This is a single-sentence document"))

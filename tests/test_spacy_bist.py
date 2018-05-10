@@ -15,7 +15,7 @@
 # ******************************************************************************
 import pytest
 
-from nlp_architect.pipelines.spacy_bist.parser import SpacyBISTParser
+from nlp_architect.pipelines.spacy_bist import SpacyBISTParser
 
 
 class TestData:

@@ -14,16 +14,12 @@
 # limitations under the License.
 # ******************************************************************************
 
-from __future__ import division
-from __future__ import print_function
-from __future__ import unicode_literals
-from __future__ import absolute_import
-
 import io
+import os
 import posixpath
 import zipfile
-import os
 from os import walk, path
+from pathlib import Path
 
 import requests
 from tqdm import tqdm
@@ -174,7 +170,7 @@ def absolute_path(input_path):
     return input_path
 
 
-def sanitize_path(path):
-    s_path = os.path.normpath('/' + path).lstrip('/')
-    assert len(s_path) < 255
-    return s_path
+def sanitize_path(path, prefix=str(Path.home())):
+    if not isinstance(path, str) or len(path) >= 255:
+        raise TypeError
+    return os.path.join(prefix, os.path.normpath('/' + path).lstrip('/'))

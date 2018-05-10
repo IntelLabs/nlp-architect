@@ -14,8 +14,8 @@
 # limitations under the License.
 # ******************************************************************************
 
-STYLE_CHECK_OPTS :=
-STYLE_CHECK_DIRS :=
+FLAKE8_CHECK_DIRS :=
+PYLINT_CHECK_DIRS := *
 DOC_DIR := doc
 DOC_PUB_RELEASE_PATH := $(DOC_PUB_PATH)/$(RELEASE)
 
@@ -35,8 +35,8 @@ test_prepare: test_requirements.txt
 	pip install -r test_requirements.txt > /dev/null 2>&1
 
 style: test_prepare
-	flake8 --output-file style.txt --tee $(STYLE_CHECK_OPTS) $(STYLE_CHECK_DIRS)
-	pylint --reports=n --output-format=colorized --py3k $(PYLINT3K_ARGS) --ignore=.venv *
+	flake8 --exit-zero --output-file flake.txt --tee $(FLAKE8_CHECK_DIRS)
+	pylint --reports=n --output-format=colorized --ignore=.venv $(PYLINT_CHECK_DIRS) || true
 
 fixstyle: autopep8
 
