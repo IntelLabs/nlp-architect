@@ -98,15 +98,16 @@ except:
     exit()
 
 path_gen = sanitize_path(args.data_path,prefix='')
+path_gen=os.path.join(path_gen+"/")
 
 file_name_dict={}
-file_name_dict['train_para_ids']='/train.ids.context'
-file_name_dict['train_ques_ids']='/train.ids.question'
-file_name_dict['train_answer']='/train.span'
-file_name_dict['val_para_ids']='/dev.ids.context'
-file_name_dict['val_ques_ids']='/dev.ids.question'
-file_name_dict['val_ans']='/dev.span'
-file_name_dict['vocab_file']='/vocab.dat'
+file_name_dict['train_para_ids']='train.ids.context'
+file_name_dict['train_ques_ids']='train.ids.question'
+file_name_dict['train_answer']='train.span'
+file_name_dict['val_para_ids']='dev.ids.context'
+file_name_dict['val_ques_ids']='dev.ids.question'
+file_name_dict['val_ans']='dev.span'
+file_name_dict['vocab_file']='vocab.dat'
 
 
 train_para_ids = os.path.join(path_gen + file_name_dict['train_para_ids'])
@@ -140,9 +141,9 @@ print('Loading Embeddings')
 embeddingz = np.load(
     os.path.join(
         path_gen +
-        "/glove.trimmed.300.npz"))
+        "glove.trimmed.300.npz"))
 embeddings = embeddingz['glove']
-vocab_file = os.path.join(path_gen + '/vocab.dat')
+vocab_file = os.path.join(path_gen + 'vocab.dat')
 
 
 print("creating training Set ")
