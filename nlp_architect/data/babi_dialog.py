@@ -27,6 +27,7 @@ import itertools
 import tarfile
 import os
 import sys
+from nlp_architect.utils.generic import license_prompt
 
 
 def pad_sentences(sentences, sentence_length=None, dtype=np.int32, pad_val=0.):
@@ -80,7 +81,7 @@ class BABI_Dialog(object):
 
     As described in: "Learning End-to-End Goal Oriented Dialog".
     https://arxiv.org/abs/1605.07683.
-    
+
     For a particular task, the class will read both train and test files
     and combine the vocabulary.
 
@@ -101,19 +102,19 @@ class BABI_Dialog(object):
         data_dict (dict): Dictionary containing final vectorized train, val, and test datasets
         cands (np.array): Vectorized array of potential candidate answers, encoded
         as integers, as returned by BABI_Dialog class. Shape = [num_cands, max_cand_length]
-        num_cands (int): Number of potential candidate answers. 
-        max_cand_len (int): Maximum length of a candidate answer sentence in number of words. 
+        num_cands (int): Number of potential candidate answers.
+        max_cand_len (int): Maximum length of a candidate answer sentence in number of words.
         memory_size (int): Maximum number of sentences to keep in memory at any given time.
-        max_utt_len (int): Maximum length of any given sentence / user utterance 
-        vocab_size (int): Number of unique words in the vocabulary + 2 (0 is reserved for 
+        max_utt_len (int): Maximum length of any given sentence / user utterance
+        vocab_size (int): Number of unique words in the vocabulary + 2 (0 is reserved for
             a padding symbol, and 1 is reserved for OOV)
         use_match_type (bool, optional): Flag to use match-type features
-        kb_ents_to_type (dict, optional): For use with match-type features, dictionary of 
+        kb_ents_to_type (dict, optional): For use with match-type features, dictionary of
             entities found in the dataset mapping to their associated match-type
         kb_ents_to_cand_idxs (dict, optional): For use with match-type features, dictionary
             mapping from each entity in the  knowledge base to the set of indicies in the
             candidate_answers array that contain that entity.
-        match_type_idxs (dict, optional): For use with match-type features, dictionary 
+        match_type_idxs (dict, optional): For use with match-type features, dictionary
             mapping from match-type to the associated fixed index of the candidate vector
             which indicated this match type.
     """
@@ -253,23 +254,16 @@ class BABI_Dialog(object):
         self.workdir, filepath = valid_path_append(
             self.path, '', self.filename)
         if not os.path.exists(filepath):
-            print("The bAbI-dialog dataset is not found at: {}".format(filepath))
-            print("This dataset is released under Creative Commons Attribution 3.0 "
-                  "Unported license. A copy of this license can be found at "
-                  "https://github.com/vyraun/chatbot-MemN2N-tensorflow/blob/"
-                  "master/data/dialog-bAbI-tasks/LICENSE.txt.")
-            print("The terms and conditions of the data set license apply. Intel "
-                  "does not grant any rights to the data files or database.")
-            response = input("To download the dataset from {}, "
-                             "please type YES: ".format(self.url))
-
-            if response.lower().strip() == 'yes':
-                fetch_file(self.url, self.filename, filepath, self.size)
-            else:
-                print("Download declined. Response recieved: {} != YES. "
-                      "Please download the dataset manually and provide the "
-                      "path as the command line argument --data_dir".format(response))
+            license_link = """https://github.com/vyraun/chatbot-MemN2N-tensorflow/blob/
+                            master/data/dialog-bAbI-tasks/LICENSE.txt"""
+            if license_prompt('bAbI-dialog',
+                              self.url,
+                              'Creative Commons Attribution 3.0',
+                              license_link,
+                              self.path) is False:
                 sys.exit(0)
+
+            fetch_file(self.url, self.filename, filepath, self.size)
 
         self.babi_dir_name = self.filename.split('.')[0]
 
