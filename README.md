@@ -5,8 +5,8 @@ to be a space to promote research and collaboration.
 
 Because of its exploratory nature, several open source deep learning frameworks are used in this repository including:
 
-* [Intel® Nervana™ graph](https://github.com/nervanasystems/neon)
-* [Intel® neon](https://github.com/NervanaSystems/ngraph-python)
+* [Intel® neon](https://github.com/NervanaSystems/neon)
+* [Intel® Nervana™ graph](https://github.com/nervanasystems/ngraph-python)
 * [Tensorflow](https://www.tensorflow.org/)
 * [Keras](https://keras.io/)
 * [Dynet](https://dynet.readthedocs.io/en/latest/)
