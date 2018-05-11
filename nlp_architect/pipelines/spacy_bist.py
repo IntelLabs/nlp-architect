@@ -34,7 +34,7 @@ class SpacyBISTParser(object):
         bist_model (str, optional): Path to a .model file to load. Defaults pre-trained model'.
     """
     dir = path.dirname(path.realpath(__file__))
-    pretrained = path.relpath(path.join(dir, 'bist-pretrained', 'bist.model'), str(Path.home()))
+    pretrained = path.relpath(path.join(dir, 'bist-pretrained', 'bist.model'), '')
 
     def __init__(self, verbose=False, spacy_model='en', bist_model=None):
         validate((verbose, bool), (spacy_model, str, 0, 1000),
