@@ -22,7 +22,7 @@ import os
 from neon import logger as neon_logger
 from neon.backends import gen_backend
 from neon.util.argparser import NeonArgparser
-from data import NpSemanticSegData, absolute_path
+from core_models.np_semantic_segmentation.data import NpSemanticSegData, absolute_path
 from nlp_architect.models.np_semantic_segmentation import NpSemanticSegClassifier
 
 

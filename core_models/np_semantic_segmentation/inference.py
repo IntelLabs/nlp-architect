@@ -24,7 +24,7 @@ import os
 from neon.backends import gen_backend
 from neon.util.argparser import NeonArgparser
 
-from data import NpSemanticSegData, extract_y_labels, absolute_path
+from core_models.np_semantic_segmentation.data import NpSemanticSegData, extract_y_labels, absolute_path
 from nlp_architect.models.np_semantic_segmentation import NpSemanticSegClassifier
 
 
@@ -75,8 +75,10 @@ def print_evaluation(y_test, predictions):
             tn = tn + 1
         else:
             fn = fn + 1
-    # if tp + fn == 0:
-    #     fn = 1
+    if tp + fn == 0:
+        fn = 1
+    if tp == 0:
+        tp = 1
     acc = 100 * ((tp + tn) / len(predictions))
     prec = 100 * (tp / (tp + fp))
     rec = 100 * (tp / (tp + fn))
