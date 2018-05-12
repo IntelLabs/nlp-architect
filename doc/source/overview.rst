@@ -18,7 +18,7 @@
 Overview
 ########
 
-The Intel AI NLP Architect is a repository for models exploring the state of the
+NLP Architect is a repository for models exploring the state of the
 art deep learning techniques for natural language processing and natural
 language understanding. It is intended to be a space to promote research and
 collaboration.
@@ -29,14 +29,14 @@ The library includes our past and ongoing NLP research efforts as part of Intel 
 To who is this library intended to?
 ===================================
 
-- Data Scientists - as a toolkit for examining models and data to derive insights.
-- Artificial Intelligence software developers - developers who want to integrate Machine Learning and Deep Learning models models as a part of a solution.
-- NLP Researchers.
+- Data Scientists - as a toolkit for exploring models and data to derive insights
+- NLP Researchers - as a set of NLP models and algorithms to use, experiment and optimize
+- Machine Learning Engineers - to integrate Machine Learning and Deep Learning models models as a part of a solution
 
 
 How would you use this library?
 ===============================
-- Train models using provided dataset and configuration.
+- Train models using provided algorithms, reference datasets and configurations.
 - Train models using their own data.
 - Create new/extend models based on existing models or topologies.
 
@@ -44,9 +44,23 @@ How would you use this library?
 Library Overview
 ================
 
+Research driven NLP/NLU models
+``````````````````````````
+The library contains state-of-art and novel NLP and NLU models in a varity of topics:
+
+- Dependency parsing
+- Intent detection and Slot tagging model for Intent based applications
+- Memory Networks for goal-oriented dialog
+- Key-value Network for question&answer system
+- Noun phrase embedding vectors model
+- Noun phrase semantic segmentation
+- NER and NE expansion
+- Text chunking
+- Reading comprehension
+
 Deep Learning frameworks
 ````````````````````````
-Because of its exploratory nature, several open source deep learning frameworks are used in this repository including:
+Because of the current research nature of the library, several open source deep learning frameworks are used in this repository including:
 
 - `Intel® Nervana™ graph`_
 - Intel® neon_
@@ -54,24 +68,13 @@ Because of its exploratory nature, several open source deep learning frameworks 
 - Dynet_
 - Keras_
 
-Research driven NLP models
-``````````````````````````
-The library contains state-of-art and novel Natural Language Processing (NLP) and Natural Language Understanding (NLU) models in a wide varity of topics:
+Overtime the list of models included in this space will change, though all generally run with Python 3.5+
 
-- Dependency parsing
-- Intent type detection and Slot tagging model for Intent based applications
-- Memory Networks for goal-oriented dialog
-- Noun phrase embedding vectors model
-- Noun phrase semantic segmentation
-- Text chunking
-- Reading comprehension
 
 Using the Models
 ````````````````
-Each of the models includes algorithm descriptions, installation
-requirements, dataset descriptions and loader, and evaluation results. Overtime the list of models included in this space
-will grow.
-The library is compatible with Python 3.5+.
+Each of the models includes a comprehensive description on algorithms, network topologies, reference dataset descriptions and loader, and evaluation results. Overtime the list of models included in this space will grow.
+
 
 Contributing to the library
 ```````````````````````````

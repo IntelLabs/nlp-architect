@@ -17,7 +17,7 @@
 API
 ###
 
-This API documentation covers each model within the Intel AI NLP Architect. Most modules have a
+This API documentation covers each model within NLP Architect. Most modules have a
 corresponding user guide section that introduces the main concepts. See this
 API for specific function definitions.
 
@@ -45,8 +45,8 @@ to train the model weights, perform inference, and save/load the model.
    nlp_architect.models.intent_extraction.JointSequentialIntentModel
    nlp_architect.models.intent_extraction.EncDecIntentModel
    nlp_architect.models.np2vec.NP2vec
-   nlp_architect.models.semantic_segmentation.NpSemanticSegClassifier
-   nlp_architect.bist.bmstparser.mstlstm.MSTParserLSTM
+   nlp_architect.models.np_semantic_segmentation.NpSemanticSegClassifier
+   nlp_architect.models.bist_parser.BISTModel
    nlp_architect.models.memn2n_dialogue.MemN2N_Dialog
    nlp_architect.models.kvmemn2n.KVMemN2N
 
@@ -55,21 +55,23 @@ to train the model weights, perform inference, and save/load the model.
 ------------------------
 .. py:module:: nlp_architect.layers
 
-In addition to imported layers, the Intel AI Architect contains its own set of layers.
-These are currently stored in the various models
+In addition to imported layers, the library also contains its own set of layers.
+These are currently stored in the various models or related to which DL frameworks it was based on.
 
 .. autosummary::
    :toctree: generated/
    :nosignatures:
 
-   nlp_architect.models.chunker_model.TimeDistributedRecurrentOutput
-   nlp_architect.models.chunker_model.TimeDistributedRecurrentLast
-   nlp_architect.models.chunker_model.TimeDistBiLSTM
    nlp_architect.contrib.ngraph.match_lstm.MatchLSTMCell_withAttention
    nlp_architect.contrib.ngraph.match_lstm.AnswerPointer_withAttention
    nlp_architect.contrib.ngraph.match_lstm.Dropout_Modified
    nlp_architect.contrib.ngraph.match_lstm.LookupTable
    nlp_architect.contrib.ngraph.modified_lookup_table.ModifiedLookupTable
+   nlp_architect.contrib.neon.layers.DataInput
+   nlp_architect.contrib.neon.layers.TimeDistributedRecurrentOutput
+   nlp_architect.contrib.neon.layers.TimeDistributedRecurrentLast
+   nlp_architect.contrib.neon.layers.TimeDistBiLSTM
+   nlp_architect.contrib.keras.callbacks.ConllCallback
 
 
 
@@ -87,10 +89,9 @@ these will be placed into a central repository.
     nlp_architect.data.conll2000.TaggedTextSequence
     nlp_architect.data.conll2000.MultiSequenceDataIterator
     nlp_architect.data.conll2000.CONLL2000
-    nlp_architect.data.conll2000.DataInput
-    nlp_architect.data.intent_extraction.IntentDataset
-    nlp_architect.data.intent_extraction.TabularIntentDataset
-    nlp_architect.data.intent_extraction.data.SNIPS
-    nlp_architect.data.semantic_seg_data.NpSemanticSegData
+    nlp_architect.data.intent_datasets.IntentDataset
+    nlp_architect.data.intent_datasets.TabularIntentDataset
+    nlp_architect.data.intent_datasets.SNIPS
+    nlp_architect.data.sequential_tagging.NamedEntityDataset
     nlp_architect.data.babi_dialog.BABI_Dialog
     nlp_architect.data.wikimovies.WIKIMOVIES

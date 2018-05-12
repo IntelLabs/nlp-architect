@@ -20,7 +20,7 @@ Reading Comprehension
 Overview
 ========
 This directory contains an implementation of the boundary model(b in the Figure) Match LSTM and
-Answer Pointer network for Machine Reading Comprehension in Intel-Ngraph. The idea behind this
+Answer Pointer network for Machine Reading Comprehension. The idea behind this
 method is to build a question aware representation of the passage and use this representation as an
 input to the pointer network which identifies the start and end indices of the answer.
 

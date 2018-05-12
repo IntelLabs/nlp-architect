@@ -1,4 +1,4 @@
-# BiLSTM Phrase Chunker
+# BiLSTM Sequence Chunker
 
 Phrase chunking is a basic NLP task that consists of tagging parts of a sentence (1 or more tokens) syntactically.  
 

@@ -20,13 +20,13 @@ Using as a REST service
 
 Overview
 ========
-NLP-Architect server is a Falcon server for serving predictions to different models in NLP-Architect repository.
+NLP Architect server is a Falcon server for serving predictions to different models in NLP Architect repository.
 The server also includes a very very simple front-end web exposing the model's annotations using displaCy and displaCyENT visualizations.
 The server supports both `json` and `gzip` formats.
 
-Running NLP-Architect server
+Running NLP Architect server
 ============================
-In order to keep NLP-Architect server light and simple as possible, the server uploads only the needed model.
+In order to keep NLP Architect server light and simple as possible, the server uploads only the needed model.
 Hence, in order to run the server you need to know which service you want to upload.
 Currently we provided 2 services:
 
@@ -58,11 +58,11 @@ header (Response-Format=json\gzip). The default response format is Json.
 
 The server supports 2 types of Responses (see `Annotation Structure Types - Server Responses` bellow).
 
-Examples for running NLP-Architect server
+Examples for running NLP Architect server
 =========================================
 We currently support only 2 services:
 
-- BIST parser - Core-NLP models annotation structure
+- BIST parser - Core NLP models annotation structure
 
 .. code:: python
 
@@ -92,18 +92,18 @@ Annotation Structure Types - Server Responses
 =============================================
 The server supports 2 types of annotation structure (responses from the server):
 
--  **Core-NLP models annotation structure**:
+-  **Core NLP models annotation structure**:
 
-A annotation of a Core-NLP model (POS, LEMMA, dependency relations etc.). usually a word-to-label annotation used for the lower level of NLP task.
+A annotation of a Core NLP model (POS, LEMMA, dependency relations etc.). usually a word-to-label annotation used for the lower level of NLP task.
 
 -  **High-level models annotation structure**:
 
 An annotation of a more high-level model (Intent Extraction, NER, Noun-Phrase chunking, etc.). usually a span-to-label annotation used for higher
 level of nlp tasks and applications.
 
-Core-NLP models annotation structure
+Core NLP models annotation structure
 ------------------------------------
-`CoreNLPDoc` class is hosting the Core-NLP models annotation structure.
+`CoreNLPDoc` class is hosting the Core NLP models annotation structure.
 (can be imported using: `from nlp_architect.utils.core_nlp_models_doc import CoreNLPDoc`).
 
 .. code:: json
@@ -140,7 +140,7 @@ High-level models annotation structure
                     "type": <annotation_string> (string)
                  }
 
-NLP-Architect server - developers guide
+NLP Architect server - developers guide
 =======================================
 This section is for developers who wish to add a new service to NLP-Architect server.
 
@@ -150,7 +150,7 @@ All the services are documented in `services.json` file under `nlp_architect_ser
 
 In order to add a new service to the server you need to go over 3 steps:
 
-1. Choose the type of your service: Core-NLP models or High-level models
+1. Choose the type of your service: Core NLP models or High-level models
 
 2. Create API for your service. Create the file under `nlp_architect/api/abstract_api` folder. Make sure your class inherits from `AbstractApi` (`from nlp_architect.api.abstract_api import AbstractApi`) and implements all its methods. Notice that your `inference` class_method must return either "CoreNLPDoc" or "HighLevelDoc".
 

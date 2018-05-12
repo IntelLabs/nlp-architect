@@ -20,7 +20,7 @@ Installation
 Requirements
 ============
 
-The Intel® NLP Architect requires **Python 3.5+** running on a
+The NLP Architect requires **Python 3.5+** running on a
 Linux* or UNIX-based OS (like Mac OS). We recommend using the library with Ubuntu 16.04+.
 
 Before installing the library make sure you has the most recent packages listed below:

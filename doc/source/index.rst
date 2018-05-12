@@ -14,7 +14,7 @@
 .. limitations under the License.
 .. ---------------------------------------------------------------------------
 
-Intel AI NLP Architect
+NLP Architect by Intel® AI Lab
 ######################
 
 | **Release:**  |version|
@@ -22,12 +22,11 @@ Intel AI NLP Architect
 
 """""""""""""""""""""""
 
-The Intel AI NLP Architect is a repository for models exploring the state of the
-art deep learning techniques for natural language processing and natural
+NLP Architect is an open-source Python library for exploring the state-of-the-art deep learning topologies and techniques for natural language processing and natural
 language understanding. It is intended to be a space to promote research and
 collaboration.
 
-The library includes our past and ongoing NLP research efforts as part of Intel AI Lab.
+The library includes our past and ongoing NLP research and development efforts as part of Intel AI Lab.
 
 - Brief library :doc:`overview <overview>`
 - :doc:`Installation <installation>` instructions
@@ -50,6 +49,7 @@ The library includes our past and ongoing NLP research efforts as part of Intel 
    np2vec.rst
    chunker.rst
    ner_crf.rst
+   ne_expansion.rst
    intent.rst
    np_segmentation.rst
    bist_parser.rst

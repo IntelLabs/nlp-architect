@@ -19,7 +19,7 @@ Noun Phrase to Vec
 
 Overview
 ========
-Noun Phrases (NP) play a particular role in NLP algorithms.
+Noun Phrases (NP) play a particular role in NLP applications.
 This code consists in training a word embedding's model for Noun NP's using word2vec_ or fasttext_ algorithm.
 It assumes that the NP's are already extracted and marked in the input corpus.
 All the terms in the corpus are used as context in order to train the word embedding's model; however,

@@ -20,7 +20,7 @@ Core Library Modules
 Overview
 ========
 
-The Intel® NLP AI-lab core consists of a set of NLP libraries that can be used
+NLP Architect core consists of a set of NLP libraries that can be used
 as building blocks for language understanding. These libraries are built with
 modularity in mind, so that they can be utilized much like you would used
 spacy_ or nltk_.

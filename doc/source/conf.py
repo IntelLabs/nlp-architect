@@ -17,8 +17,6 @@
 import os
 import sys
 
-# from ngraph import __version__ as ngraph_version
-
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
@@ -77,8 +75,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Intel® AI NLP Architect'
-copyright = u'Intel NLP Architect is a trademarks of Intel Corporation or its subsidiaries \
+project = u'NLP Architect by Intel® AI Lab'
+copyright = u'NLP Architect by Intel® AI Lab is a trademarks of Intel Corporation or its subsidiaries \
             in the U.S. and/or other countries. * Other names and brands may be claimed as \
             the property of others.'
 
@@ -239,7 +237,7 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
-latex_documents = [('index', 'ngraph.tex', u'Intel AI NLP Architect Documentation',
+latex_documents = [('index', 'ngraph.tex', u'NLP Architect Documentation',
                     u'Intel Corporation', 'manual'), ]
 
 # -- Options for manual page output ---------------------------------------
@@ -247,8 +245,8 @@ latex_documents = [('index', 'ngraph.tex', u'Intel AI NLP Architect Documentatio
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'ngraph', u'Intel AI NLP Architect Documentation',
-     [u'Nervana Systems Inc'], 1)
+    ('index', 'ngraph', u'NLP Architect Documentation',
+     [u'Intel'], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -260,7 +258,7 @@ man_pages = [
 # Grouping the document tree into Texinfo files. List of tuples
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
-texinfo_documents = [('index', 'ngraph', u'Intel AI NLP Architect Documentation',
+texinfo_documents = [('index', 'ngraph', u'NLP Architect Documentation',
                       u'Intel Corporation', 'cloud',
                       'One line description of project.', 'Miscellaneous'), ]
 
@@ -274,6 +272,7 @@ intersphinx_mapping = {
 rst_epilog = """
 .. include :: <isonum.txt>
 .. |ngraph| replace:: ngraph
+.. |NLP-Architect| replace:: NLP Architect
 .. |Geon| replace:: Nervana Graph
 .. |TF| replace:: TensorFlow\ |trade|
 """

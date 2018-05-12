@@ -14,14 +14,14 @@
 .. limitations under the License.
 .. ---------------------------------------------------------------------------
 
-Word Chunker
+Sequence Chunker
 #############
 
 Overview
 ========
 
 Phrase chunking is a basic NLP task that consists of tagging parts of a sentence (1 or more tokens)
-syntactically.
+syntactically, i.e. POS tagging.
 
 .. code:: bash
 

@@ -1,9 +1,13 @@
-# AI NLP Architect
-The Intel® AI NLP Architect is a repository for models exploring the state of the
-art deep learning techniques for natural language processing. It is intended
-to be a space to promote research and collaboration.
+# NLP Architect by Intel® AI LAB
 
-Because of its exploratory nature, several open source deep learning frameworks are used in this repository including:
+NLP Architect is an open-source Python library for exploring the state-of-the-art deep learning topologies and techniques for natural language processing and natural
+language understanding. It is intended to be a space to promote research and
+collaboration.
+
+Each of the models includes algorithm descriptions and results in the [documentation](http://www.nlp_architect.nervanasys.com/). The library consists of core modules (topologies), data pipelines, utilities and end-to-end model examples with training and inference scripts.
+
+
+Because of its current research nature, several open source deep learning frameworks are used in this repository including:
 
 * [Intel® neon](https://github.com/NervanaSystems/neon)
 * [Intel® Nervana™ graph](https://github.com/nervanasystems/ngraph-python)
@@ -11,21 +15,50 @@ Because of its exploratory nature, several open source deep learning frameworks 
 * [Keras](https://keras.io/)
 * [Dynet](https://dynet.readthedocs.io/en/latest/)
 
-Each of the models includes algorithm descriptions, installation
-requirements, and results. Overtime the list of models included in this space will grow.
-The library is separated into core module components, models, and solutions.
-Each of the modules, models, and solution contains its own set of python requirements,
-though all generally run with Python 3.5+.
+Overtime the list of models included in this space will change, though all generally run with Python 3.5+
 
-## Documentation
-Framework documentation, algorithm description and instructions on how to contribute a new agent/environment can be found here.
+## Documentation 
+Framework documentation on NLP model, algorithms, and modules, and instructions on how to contribute can be found [here](http://www.nlp_architect.nervanasys.com/).
 
 ## Installation
-Please see the individual modules, models, and solutions for installation instructions.
-An overall installation process will be coming soon.
+
+We recommend installing NLP Architect within a virtual environment to ensure a self-contained environment.
+To install NLP Architect models within an already existing virtual environment, see below installation receipes for custom model installation.
+The default installation will create a new local virtual environment for development purposes.
+
+To get started using our library, clone our repository:
+```
+  git clone https://github.com/NervanaSystems/nlp-architect.git
+  cd nlp-architect
+```
+### Installing within a virtual environment
+
+#### Install in development mode (default):
+``` 
+make
+```
+
+Complete install:
+```
+make install
+```
+
+Activate the newly created virtual environment:
+
+```
+. .nlp_architect_env/bin/activate
+```
+Fire up your favorite IDE/text editor/terminal and start running models
+
+#### Installing to current working python (or system wide install)
+
+Install without creating a new virtual environment:
+```
+make install_no_virt_env
+```
 
 ## Disclaimer
 The NLP Architect is released as a reference code for research purposes. It is not an official Intel product, and the level of quality and support may not be as expected from an official product. Additional algorithms and environments are planned to be added to the framework. Feedback and contributions from the open source and NLP research communities are more than welcome.
 
 ## Contact
-Contacting the NLP Architect development team is possible through this email: nlp_architect@intel.com
+Contacting the NLP Architect development team through Github issues or email: nlp_architect@intel.com

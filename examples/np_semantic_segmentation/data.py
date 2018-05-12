@@ -28,7 +28,7 @@ from multiprocessing import Pool
 import numpy
 from neon.data import ArrayIterator
 from tqdm import tqdm
-import core_models.np_semantic_segmentation.feature_extraction as fe
+import examples.np_semantic_segmentation.feature_extraction as fe
 
 wordnet = None
 wikidata = None
