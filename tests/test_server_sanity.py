@@ -21,7 +21,7 @@ sys.path.insert(0, (dirname(dirname(os.path.abspath(__file__)))))
 
 headers = {"clean": "True", "display_post_preprocces": "True",
            "display_tokens": "", "display_token_text": "True"}
-server_data_rel_path = 'fixtures/data/server_data/'
+server_data_rel_path = 'fixtures/data/server/'
 
 
 def load_test_data(service_name):
