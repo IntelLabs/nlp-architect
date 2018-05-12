@@ -15,12 +15,12 @@
 .. ---------------------------------------------------------------------------
 
 NLP Architect by Intel® AI Lab
-######################
+###############################
 
 | **Release:**  |version|
 | **Date:**     |today|
 
-"""""""""""""""""""""""
+"""""""""""""""""""""""""""""""
 
 NLP Architect is an open-source Python library for exploring the state-of-the-art deep learning topologies and techniques for natural language processing and natural
 language understanding. It is intended to be a space to promote research and
