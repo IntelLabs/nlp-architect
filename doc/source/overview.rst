@@ -26,26 +26,22 @@ collaboration.
 The library includes our past and ongoing NLP research efforts as part of Intel AI Lab.
 
 
-To who is this library intended to?
-===================================
-
-- Data Scientists - as a toolkit for exploring models and data to derive insights
-- NLP Researchers - as a set of NLP models and algorithms to use, experiment and optimize
-- Machine Learning Engineers - to integrate Machine Learning and Deep Learning models models as a part of a solution
-
-
-How would you use this library?
+How can NLP Architect be used
 ===============================
-- Train models using provided algorithms, reference datasets and configurations.
-- Train models using their own data.
-- Create new/extend models based on existing models or topologies.
+
+- Train models using provided algorithms, reference datasets and configurations
+- Train models using their own data
+- Create new/extend models based on existing models or topologies
+- Explore how deep learning models tackle these NLP tasks
+- Experiment and optimize state-of-the-art deep learning algorithms
+- integrate modules and utilities from the library to a solutions
 
 
 Library Overview
 ================
 
 Research driven NLP/NLU models
-``````````````````````````
+``````````````````````````````
 The library contains state-of-art and novel NLP and NLU models in a varity of topics:
 
 - Dependency parsing

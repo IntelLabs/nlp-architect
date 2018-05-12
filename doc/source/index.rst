@@ -28,8 +28,64 @@ collaboration.
 
 The library includes our past and ongoing NLP research and development efforts as part of Intel AI Lab.
 
-- Brief library :doc:`overview <overview>`
-- :doc:`Installation <installation>` instructions
+How can NLP Architect be used
+===============================
+
+- Train models using provided algorithms, reference datasets and configurations
+- Train models using their own data
+- Create new/extend models based on existing models or topologies
+- Explore how deep learning models tackle these NLP tasks
+- Experiment and optimize state-of-the-art deep learning algorithms
+- integrate modules and utilities from the library to a solutions
+
+
+Library Overview
+================
+
+Research driven NLP/NLU models
+``````````````````````````````
+The library contains state-of-art and novel NLP and NLU models in a varity of topics:
+
+- Dependency parsing
+- Intent detection and Slot tagging model for Intent based applications
+- Memory Networks for goal-oriented dialog
+- Key-value Network for question&answer system
+- Noun phrase embedding vectors model
+- Noun phrase semantic segmentation
+- NER and NE expansion
+- Text chunking
+- Reading comprehension
+
+
+Deep Learning frameworks
+````````````````````````
+Because of the current research nature of the library, several open source deep learning frameworks are used in this repository including:
+
+- `Intel® Nervana™ graph`_
+- Intel® neon_
+- Tensorflow_
+- Dynet_
+- Keras_
+
+Overtime the list of models included in this space will change, though all generally run with Python 3.5+
+
+
+Using the Models
+````````````````
+Each of the models includes a comprehensive description on algorithms, network topologies, reference dataset descriptions and loader, and evaluation results. Overtime the list of models included in this space will grow.
+
+
+Contributing to the library
+````````````````````````````
+We welcome collaboration, suggestions, and critiques. For information on how to become a developer
+on this project, please see the :doc:`developer guide <developer_guide>`.
+
+
+.. _neon: https://github.com/nervanasystems/neon
+.. _Intel® Nervana™ graph: https://github.com/NervanaSystems/ngraph-python
+.. _Tensorflow: https://www.tensorflow.org/
+.. _Keras: https://keras.io/
+.. _Dynet: https://dynet.readthedocs.io/en/latest/
 
 
 .. toctree::
