@@ -1,17 +1,20 @@
 # NLP Architect by Intel® AI LAB
 
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/NervanaSystems/nlp-architect/blob/master/LICENSE)
+[![Docs](https://img.shields.io/readthedocs/pip/stable.svg)](http://nlp_architect.nervanasys.com)
+
+
 NLP Architect is an open-source Python library for exploring the state-of-the-art deep learning topologies and techniques for natural language processing and natural
 language understanding. It is intended to be a space to promote research and
 collaboration.
 
-Each of the models includes algorithm descriptions and results in the [documentation](http://www.nlp_architect.nervanasys.com/). The library consists of core modules (topologies), data pipelines, utilities and end-to-end model examples with training and inference scripts.
-
+The library consists of core modules (topologies), data pipelines, utilities and end-to-end model examples with training and inference scripts. Each of the models includes algorithm descriptions and results in the [documentation](http://www.nlp_architect.nervanasys.com/). 
 
 Because of its current research nature, several open source deep learning frameworks are used in this repository including:
 
 * [Intel® neon](https://github.com/NervanaSystems/neon)
 * [Intel® Nervana™ graph](https://github.com/nervanasystems/ngraph-python)
-* [Tensorflow](https://www.tensorflow.org/)
+* [Tensorflow](https://www.tensorflow.org/) or [Intel-Optimized TensorFlow](https://software.intel.com/en-us/articles/intel-optimized-tensorflow-wheel-now-available)
 * [Keras](https://keras.io/)
 * [Dynet](https://dynet.readthedocs.io/en/latest/)
 

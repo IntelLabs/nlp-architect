@@ -26,7 +26,7 @@ NLP Architect is an open-source Python library for exploring the state-of-the-ar
 language understanding. It is intended to be a space to promote research and
 collaboration.
 
-The library includes our past and ongoing NLP research and development efforts as part of Intel AI Lab.
+The library includes our past and ongoing NLP research and development efforts as part of Intel AI Lab. 
 
 How can NLP Architect be used
 ===============================

@@ -20,15 +20,15 @@ Contribution Process
 1. File an issue (to track your contribution):
 
    * Create an issue on github:
-     https://github.com/NervanaSystems/ai-lab-nlp/issues
+     https://github.com/NervanaSystems/nlp-architect/issues
 
-2. Clone and/or update your checked out copy of neon to ensure you have the
+2. Clone and/or update your checked out copy of nlp-achitect to ensure you have the
    most recent commits from the master branch:
 
 .. code-block:: bash
 
-    git clone https://github.com/NervanaSystems/ai-lab-nlp.git
-    cd ai-lab-nlp
+    git clone https://github.com/NervanaSystems/nlp-architect.git
+    cd nlp-architect
     git fetch origin
     git checkout master
     git pull
@@ -48,7 +48,6 @@ Contribution Process
 
 .. code-block:: bash
 
-    make check   # ensure this is clean or your patch won't be accepted
     make test   # ensure all are OK
     make style  # ensure there are no style related issues
     make lint   # (optional).  We still have a fair bit to clean up currently!
@@ -60,6 +59,8 @@ Contribution Process
 .. code-block:: bash
 
     make html  # builds docs locally, starts a webserver so you can view
+    or
+    make doc   # builds the doc and starts a local server directly
 
 6. Commit your changes and push your feature branch to your github fork.  Be
    sure to add a descriptive message and reference the github issue associated
@@ -68,7 +69,7 @@ Contribution Process
 
 .. code-block:: bash
 
-    git add my_updated_file.txt
+    git add my_updated_files
     git commit -m "Added new awesome functionality.  Closes issue #1"
     git push origin my_new_feature_branch
 
@@ -81,7 +82,7 @@ Contribution Process
 .. code-block:: bash
 
     # (external contribs): make a new pull request:
-    https://github.com/NervanaSystems/ai-lab-nlp/pulls
+    https://github.com/NervanaSystems/nlp-architect/pulls
 
     # merge latest master changes into your feature branch
     git fetch origin
