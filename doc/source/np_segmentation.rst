@@ -1,24 +1,3 @@
-Noun Phrase (NP) Semantic Segmentation
-======================================
-
-Noun-Phrase (NP) is a phrase which has a noun (or pronoun) as its head
-and zero of more dependent modifiers. Noun-Phrase is the most frequently
-occurring phrase type and its inner segmentation is critical for
-understanding the semantics of the Noun-Phrase.
-
-This model is the first step in the Semantic Segmentation algorithm -
-the MLP classifier. The Semantic Segmentation algorithm takes the
-dependency relations between the Noun-Phrase words, and the MLP
-classifier inference as the input - and build a semantic hierarchy that
-represents the semantic meaning. The Semantic Segmentation algorithm
-eventually create a tree where each tier represent a semantic meaning ->
-if a sequence of words is a collocation then a collocation tier is
-created, else the elements are broken down and each one is mapped to
-different tier in the tree.
-
-This model trains MLP classifier and inference from such classifier in
-order to conclude the correct segmentation for the given NP.
-=======
 .. ---------------------------------------------------------------------------
 .. Copyright 2017-2018 Intel Corporation
 ..

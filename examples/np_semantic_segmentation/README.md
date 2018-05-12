@@ -52,7 +52,7 @@ After training is done, the model is saved automatically:
 
 Quick example:
 
-    python train.py --data prepared_data_path.csv --model np_semantic_segmentation_path.prm
+    python train.py --data prepared_data_path.csv --model_path np_semantic_segmentation_path.prm
 
 ## Inference
 In order to run inference you need to have pre-trained `<model_name>.prm` file and data CSV file
@@ -61,4 +61,4 @@ The result of `python inference.py` is a CSV file, each row contains the model's
 
 Quick example:
 
-    python inference.py --model np_semantic_segmentation_path.prm --data prepared_data_path.csv --output inference_data.csv --print_stats True
+    python inference.py --model np_semantic_segmentation_path.prm --data prepared_data_path.csv --output inference_data.csv --print_stats

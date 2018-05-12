@@ -24,7 +24,7 @@ Raw text parser based on Spacy and BIST parsers
 The parser uses Spacy's english model for sentence breaking,
 tokenization and token annotations (part-of-speech, lemma, NER).
 Dependency relations between tokens are extracted using BIST parser.
-The BIST parser is described :doc:`here <bist>`.
+The BIST parser is described :doc:`here <https://aclweb.org/anthology/Q16-1023>`__.
 
 
 Usage

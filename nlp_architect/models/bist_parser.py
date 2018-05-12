@@ -111,7 +111,7 @@ class BISTModel(object):
 
     def load(self, path):
         """Loads and initializes a BIST model from file."""
-        path = sanitize_path(path)
+#        path = sanitize_path(path)
         with open(os.path.join(os.path.dirname(path), 'params.json'), 'r') as file:
             self.params = json.load(file)
         self.model = MSTParserLSTM(*self.params)

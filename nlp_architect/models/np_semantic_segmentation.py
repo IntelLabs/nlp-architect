@@ -117,9 +117,9 @@ class NpSemanticSegClassifier:
         Returns:
             tuple(int): error_rate, test_accuracy_rate and precision_recall_rate
         """
-        error_rate = self.model.eval(test_set, eval_metric=Misclassification())
-        test_accuracy_rate = self.model.eval(test_set, eval_metric=Accuracy())
-        precision_recall_rate = self.model.eval(test_set, eval_metric=PrecisionRecall(2))
+        error_rate = self.model.eval(test_set, metric=Misclassification())
+        test_accuracy_rate = self.model.eval(test_set, metric=Accuracy())
+        precision_recall_rate = self.model.eval(test_set, metric=PrecisionRecall(2))
         return error_rate, test_accuracy_rate, precision_recall_rate
 
     def get_outputs(self, test_set):

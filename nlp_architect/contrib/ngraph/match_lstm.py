@@ -285,24 +285,24 @@ class MatchLSTMCell_withAttention(BaseRNNCell):
 
 class AnswerPointer_withAttention(BaseRNNCell):
     """
-    Answer pointer cell.
+    Answer pointer cell
 
     Arguments:
     ----------
-    params_dict : Dictionary containing information and hyperparameters
-                  having the following fields:
-                  (initialzer function,max length of para and max length of question)
-    nout (int): Number of hidden/output units
-    init (Initializer): Function to initialize the input-to-hidden weights.
+    params_dict: Dictionary containing information and hyperparameters
+        having the following fields:
+        (initialzer function, max length of para and max length of question)
+    nout(int): Number of hidden/output units
+    init(Initializer): Function to initialize the input-to-hidden weights.
         By default, this initializer will also be used to initialize recurrent
         weights unless init_inner is also specified. Biases are always
         initialized to zero.
-    init_h2h (Initializer, optional): Function to initialize recurrent weights.
+    init_h2h(Initializer, optional): Function to initialize recurrent weights.
         If absent, will default to using the initializer passed as the init
         argument.
-    activation (Transform): Activation function used to produce outputs.
-    gate_activation (Transform): Activation function for gate inputs.
-    batch_norm (bool, optional): Defaults to False. If True, batch normalization
+    activation(Transform): Activation function used to produce outputs.
+    gate_activation(Transform): Activation function for gate inputs.
+    batch_norm(bool, optional): Defaults to False. If True, batch normalization
         is applied to the weighted inputs.
     reset_cells: Reset cells if assigned to True
 
