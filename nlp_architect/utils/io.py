@@ -105,7 +105,7 @@ def validate(*args):
 
 
 def validate_existing_filepath(arg):
-    """Validates an input argument is a path string to an existing file, and returns it."""
+    """Validates an input argument is a path string to an existing file."""
     validate((arg, str, 0, 255))
     if not os.path.isfile(arg):
         raise ValueError("{0} is not a path to existing file.".format(arg))
@@ -113,11 +113,16 @@ def validate_existing_filepath(arg):
 
 
 def validate_existing_directory(arg):
-    """Validates an input argument is a path string to an existing directory, and returns it."""
+    """Validates an input argument is a path string to an existing directory."""
     validate((arg, str, 0, 255))
     if not os.path.isdir(arg):
         raise ValueError("{0} is not a path to existing directory".format(arg))
     return arg
+
+
+def validate_parent_exists(arg):
+    """Validates an input argument is a path string, and its parent directory exists."""
+    return validate_existing_directory(os.path.dirname(arg))
 
 
 def sanitize_path(path):
