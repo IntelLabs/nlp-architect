@@ -14,9 +14,8 @@
 # limitations under the License.
 # ******************************************************************************
 import ngraph as ng
-from ngraph.frontends.neon.axis import shadow_axes_map
 from ngraph.frontends.neon import Layer
-from ngraph.frontends.neon import GaussianInit
+from ngraph.frontends.neon.axis import shadow_axes_map
 from ngraph.frontends.neon.graph import SubGraph
 
 LABELS = {"weight": "weight",

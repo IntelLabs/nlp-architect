@@ -19,7 +19,29 @@ from __future__ import unicode_literals
 from __future__ import absolute_import
 
 import numpy as np
-from neon.data.text_preprocessing import pad_sentences
+
+
+def pad_sentences(sequences, max_length=None, padding_value=0.):
+    """
+    Pad input sequences up to max_length
+    padding is aligned to the right
+
+    Args:
+        sequences (iter): a 2D matrix (np.array) to pad
+        max_length (int, optional): max length of resulting sequences
+        padding_value (int, optional): padding value
+
+    Returns:
+        input sequences padded to size 'max_length'
+    """
+    if max_length is None:
+        max_length = np.max([len(s) for s in sequences])
+
+    padded_sequences = (np.ones((len(sequences), max_length)) * padding_value)
+    for i, sent in enumerate(sequences):
+        trunc = sent[-max_length:]
+        padded_sequences[i, -len(trunc):] = trunc
+    return padded_sequences.astype(dtype=np.int32)
 
 
 def one_hot(mat, num_classes):
@@ -97,10 +119,10 @@ def get_paddedXY_sequence(X, y, vocab_size=20000, sentence_length=100, oov=2,
     else:
         X = [[w for w in x if w < vocab_size] for x in X]
 
-    X = pad_sentences(X, sentence_length=sentence_length)
+    X = pad_sentences(X, max_length=sentence_length)
 
     y = [[w + 1.0 for w in i] for i in y]
-    y = pad_sentences(y, sentence_length=sentence_length)
+    y = pad_sentences(y, max_length=sentence_length)
 
     return X, y
 

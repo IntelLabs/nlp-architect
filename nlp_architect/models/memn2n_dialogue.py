@@ -23,15 +23,10 @@ Reference:
     "Learning End-to-End Goal Oriented Dialog"
     https://arxiv.org/abs/1605.07683.
 """
-from __future__ import division
-from __future__ import print_function
-from __future__ import unicode_literals
-from __future__ import absolute_import
+from __future__ import division, print_function, unicode_literals, absolute_import
+
 import ngraph as ng
-from ngraph.frontends.neon.axis import shadow_axes_map
-from ngraph.frontends.neon import Layer
-from ngraph.frontends.neon import GaussianInit
-from ngraph.frontends.neon.graph import SubGraph
+from ngraph.frontends.neon import Layer, GaussianInit
 from nlp_architect.contrib.ngraph.modified_lookup_table import ModifiedLookupTable
 
 

@@ -24,7 +24,8 @@ import os
 from neon.backends import gen_backend
 from neon.util.argparser import NeonArgparser
 
-from examples.np_semantic_segmentation.data import NpSemanticSegData, extract_y_labels, absolute_path
+from examples.np_semantic_segmentation.data import NpSemanticSegData, extract_y_labels, \
+    absolute_path
 from nlp_architect.models.np_semantic_segmentation import NpSemanticSegClassifier
 
 

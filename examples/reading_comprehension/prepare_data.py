@@ -28,6 +28,7 @@ SOS = "<sos>"
 UNK = "<unk>"
 START_VOCAB = [PAD, SOS, UNK]
 
+
 def create_vocabulary(data_lists, vocabulary_path=None):
     """
     Function to generate vocabulary for both training and development datasets
@@ -47,7 +48,6 @@ def create_vocabulary(data_lists, vocabulary_path=None):
     return vocab_list, vocab_dict
 
 
-
 def create_token_map(para, para_tokens):
     """
     Function to generate mapping between tokens and indices
@@ -60,12 +60,11 @@ def create_token_map(para, para_tokens):
             current_para_token = (para_tokens[para_token_idx])
             char_append += char
             if char_append == current_para_token:
-                token_map[char_idx -len(char_append) +1] = [char_append,para_token_idx]
+                token_map[char_idx - len(char_append) + 1] = [char_append, para_token_idx]
                 para_token_idx += 1
                 char_append = ''
 
     return token_map
-
 
 
 def get_glove_matrix(vocab_list, download_path):
@@ -98,18 +97,16 @@ def get_glove_matrix(vocab_list, download_path):
                     glove_matrix[word_index, :] = word_vec
                     count += 1
 
-
         print("Saving the embeddings .npz file")
         np.savez_compressed(save_file_name, glove=glove_matrix)
-        print("Percentage of words in vocab found in glove embeddings %f" % (count/vocab_len))
-
+        print("Percentage of words in vocab found in glove embeddings %f" % (count / vocab_len))
 
 
 def tokenize_sentence(line):
     """
     Function to tokenize  sentence
     """
-    tokenized_words = [word.replace("``",'"').replace("''",'"')
+    tokenized_words = [word.replace("``", '"').replace("''", '"')
                        for word in nltk.word_tokenize(line)]
     return list(map(lambda x: str(x), tokenized_words))
 
@@ -165,7 +162,7 @@ def write_to_file(file_dict, path_to_save):
     """
 
     for file_name in file_dict:
-        if file_name=="vocab.dat":
+        if file_name == "vocab.dat":
             with open(os.path.join(path_to_save + file_name), 'w') as target_file:
                 for word in file_dict[file_name]:
                     target_file.write(str(word) + "\n")
@@ -191,21 +188,22 @@ def get_ids_list(data_lists, vocab):
         ids_list.append(curr_line_idx)
     return ids_list
 
+
 if __name__ == '__main__':
 
     # parse the command line arguments
     parser = argparse.ArgumentParser()
 
     parser.add_argument(
-        '--data_path',
-        default='',
-        help='enter path where training data and the glove embeddings were downloaded')
+            '--data_path',
+            default='',
+            help='enter path where training data and the glove embeddings were downloaded')
 
     parser.add_argument(
-        '--preprocess_glove',
-        type=int,
-        default=1,
-        help='Chose whether or not to preprocess glove embeddings')
+            '--preprocess_glove',
+            type=int,
+            default=1,
+            help='Chose whether or not to preprocess glove embeddings')
 
     parser.set_defaults()
 
@@ -219,7 +217,7 @@ if __name__ == '__main__':
         exit()
 
     data_path = sanitize_path(args.data_path)
-    data_path=os.path.join(data_path+"/")
+    data_path = os.path.join(data_path + "/")
     # Load Train and Dev Data
     train_filename = os.path.join(data_path + "train-v1.1.json")
     dev_filename = os.path.join(data_path + "dev-v1.1.json")
@@ -229,7 +227,7 @@ if __name__ == '__main__':
     with open(dev_filename) as dev_file:
         dev_data = json.load(dev_file)
 
-    print ('Extracting data from json files')
+    print('Extracting data from json files')
     # Extract training data from raw files
     train_para, train_question, train_ans = extract_data_from_files(train_data)
     # Extract dev data from raw dataset
