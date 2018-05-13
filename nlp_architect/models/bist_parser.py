@@ -19,7 +19,7 @@ import os
 from nlp_architect.models.bist import utils
 from nlp_architect.models.bist.mstlstm import MSTParserLSTM
 from nlp_architect.models.bist.utils import get_options_dict
-from nlp_architect.utils.io import validate, sanitize_path
+from nlp_architect.utils.io import validate, validate_existing_filepath
 
 
 class BISTModel(object):
@@ -57,9 +57,9 @@ class BISTModel(object):
             dev (str, optional): Path to development dataset for conducting evaluations.
         """
         if dev:
-            dev = sanitize_path(dev)
-        dataset = sanitize_path(dataset)
-        validate((dataset, str, 0, 1000), (epochs, int, 0, None), (dev, (type(None), str)))
+            dev = validate_existing_filepath(dev)
+        dataset = validate_existing_filepath(dataset)
+        validate((epochs, int, 0, None))
 
         print('\nRunning fit on ' + dataset + '...\n')
         words, w2i, pos, rels = utils.vocab(dataset)
@@ -85,7 +85,7 @@ class BISTModel(object):
             res (list of list of ConllEntry): The list of input sentences with predicted
             dependencies attached.
         """
-        dataset = sanitize_path(dataset)
+        dataset = validate_existing_filepath(dataset)
         validate((evaluate, bool))
 
         print('\nRunning predict on ' + dataset + '...\n')
@@ -111,7 +111,6 @@ class BISTModel(object):
 
     def load(self, path):
         """Loads and initializes a BIST model from file."""
-#        path = sanitize_path(path)
         with open(os.path.join(os.path.dirname(path), 'params.json'), 'r') as file:
             self.params = json.load(file)
         self.model = MSTParserLSTM(*self.params)
@@ -119,7 +118,6 @@ class BISTModel(object):
 
     def save(self, path):
         """Saves the BIST model to file."""
-        path = sanitize_path(path)
         print("Saving")
         with open(os.path.join(os.path.dirname(path), 'params.json'), 'w') as file:
             json.dump(self.params, file)

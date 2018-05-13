@@ -218,7 +218,7 @@ if __name__ == '__main__':
         print("Please enter a valid data path")
         exit()
 
-    data_path = sanitize_path(args.data_path,prefix='')
+    data_path = sanitize_path(args.data_path)
     data_path=os.path.join(data_path+"/")
     # Load Train and Dev Data
     train_filename = os.path.join(data_path + "train-v1.1.json")
