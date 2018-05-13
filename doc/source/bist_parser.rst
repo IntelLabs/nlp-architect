@@ -33,16 +33,16 @@ To use the module, import it like so:
 
 .. code:: python
 
-    from nlp_architect.bist import BISTModel
+    from nlp_architect.models.bist_parser import BISTModel
 
 Training
 ========
 
-Training the parser requires having a ``train.conll``
+Training the parser requires having a ``train.conll`` file
 formatted according to the `CoNLL data format <http://universaldependencies.org/format.html>`__,
 annotated with part-of-speech tags and dependencies.
 The benchmark was performed on a Mac book pro with i7 processor. The parser achieves
-an accuracy of 93.8 UAS on the standard Penn Treebank dataset (Standford Dependencies).
+an accuracy of 93.8 UAS on the standard Penn Treebank dataset (Universal Dependencies).
 
 
 Basic Example
@@ -53,7 +53,7 @@ To train a parsing model with default parameters, type the following:
 .. code:: python
 
     parser = BISTModel()
-    parser.fit('path/to/train.conll')
+    parser.fit('/path/to/train.conll')
 
 
 Exhaustive Example
@@ -65,7 +65,7 @@ values listed below):
 .. code:: python
 
     parser = BISTModel(activation='tanh', lstm_layers=2, lstm_dims=125, pos_dims=25)
-    parser.fit('path/to/train.conll', epochs=10)
+    parser.fit('/path/to/train.conll', epochs=10)
 
 
 Conducting Intermediate Evaluations
@@ -77,7 +77,7 @@ intermediate model evaluations are conducted:
 .. code:: python
 
     parser = BISTModel()
-    parser.fit('path/to/train.conll', dev='path/to/dev.conll')
+    parser.fit('/path/to/train.conll', dev='/path/to/dev.conll')
 
 For each completed epoch, denoted by **n**, the following files will be created in the dataset's
 directory:
@@ -99,7 +99,7 @@ Supply a path to a dataset file in the
 
 .. code:: python
 
-    predictions = parser.predict(dataset='path/to/test.conll')
+    predictions = parser.predict(dataset='/path/to/test.conll')
 
 After running the above example, ``predictions`` will hold the input sentences with annotated
 dependencies, as a collection of ``ConllEntry`` objects, where each ``ConllEntry`` represents an
@@ -113,7 +113,7 @@ Supply a list of sentences, where each sentence is a list of annotated tokens, r
 
 .. code:: python
 
-    predictions = parser.predict(conll='path/to/test.conll')
+    predictions = parser.predict(conll='/path/to/test.conll')
 
 Evaluating Predictions
 ----------------------
@@ -126,7 +126,7 @@ To evaluate predictions immediately after they're generated, type the following:
 
 .. code:: python
 
-    predictions = parser.predict(dataset='path/to/test.conll', evaluate=True)
+    predictions = parser.predict(dataset='/path/to/test.conll', evaluate=True)
 
 This will produce 2 files in your input dataset's directory:
 
@@ -140,7 +140,7 @@ To save a ``BISTModel`` to some path, type:
 
 .. code:: python
 
-    parser.save('path/to/bist.model')
+    parser.save('/path/to/bist.model')
 
 This operation will also produce a model parameters file named *params.json*, in the same directory.
 This file is required for loading the model afterwards.
@@ -149,7 +149,7 @@ To load a ``BISTModel`` from some path, type:
 
 .. code:: python
 
-    parser.load('path/to/bist.model')
+    parser.load('/path/to/bist.model')
 
 Note that this operation will also look for the *params.json* in the same directory.
 

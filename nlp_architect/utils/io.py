@@ -63,7 +63,6 @@ def unzip_file(filepath, outpath='.'):
     Args:
         filepath (str): path to file
         outpath (str): path to extract to
-
     """
     z = zipfile.ZipFile(filepath, 'r')
     z.extractall(outpath)
@@ -105,72 +104,23 @@ def validate(*args):
                 raise ValueError
 
 
-def validate_filepath(str_arg):
-    """
-    validate an input string argument
-
-    Args:
-        str_arg (str): string file path argument
-
-    Returns:
-        str: the string file path
-    """
-    path_str = str_arg
-    if (not path.isdir(path.dirname(path_str))) and (not path.dirname(path_str) is ""):
-        raise ValueError("{0} is an invalid file path".format(path_str))
-    return path_str
+def validate_existing_filepath(arg):
+    """Validates an input argument is a path string to an existing file, and returns it."""
+    validate((arg, str, 0, 255))
+    if not os.path.isfile(arg):
+        raise ValueError("{0} is not a path to existing file.".format(arg))
+    return arg
 
 
-def validate_existing_filepath(str_arg):
-    """
-    validate an input string argument is an existing file
-
-    Args:
-        str_arg (str): string file path argument
-
-    Returns:
-        str: the string file path
-    """
-    file_path = validate_filepath(str_arg)
-    if not path.exists(file_path):
-        raise ValueError("{0} is an not an existing file".format(file_path))
-    return file_path
+def validate_existing_directory(arg):
+    """Validates an input argument is a path string to an existing directory, and returns it."""
+    validate((arg, str, 0, 255))
+    if not os.path.isdir(arg):
+        raise ValueError("{0} is not a path to existing directory".format(arg))
+    return arg
 
 
-def validate_existing_directory(str_arg):
-    """
-    validate an input string argument is a valid directory
-
-    Args:
-        str_arg (str): string file path argument
-
-    Returns:
-        str: the string file path
-    """
-    file_path = validate_filepath(str_arg)
-    if not path.isdir(path.dirname(file_path)):
-        raise ValueError("{0} is an not an valid path of file".format(file_path))
-    return file_path
-
-
-def absolute_path(input_path):
-    """
-    Return input_path's absolute path
-
-    Args:
-        input_path(str): input_path
-
-    Returns:
-        str: absolute path
-    """
-    if isinstance(input_path, str):
-        if not path.isabs(input_path):
-            # handle case using default value\relative paths
-            input_path = path.join(path.dirname(__file__), input_path)
-    return input_path
-
-
-def sanitize_path(path, prefix=str(Path.home())):
-    if not isinstance(path, str) or len(path) >= 255:
-        raise TypeError
-    return os.path.join(prefix, os.path.normpath('/' + path).lstrip('/'))
+def sanitize_path(path):
+    s_path = os.path.normpath('/' + path).lstrip('/')
+    assert len(s_path) < 255
+    return s_path

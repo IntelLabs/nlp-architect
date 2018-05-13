@@ -97,7 +97,7 @@ except:
     print("Please enter a valid data path")
     exit()
 
-path_gen = sanitize_path(args.data_path,prefix='')
+path_gen = sanitize_path(args.data_path)
 path_gen=os.path.join(path_gen+"/")
 
 file_name_dict={}

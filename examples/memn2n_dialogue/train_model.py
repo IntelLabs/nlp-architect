@@ -143,9 +143,9 @@ parser.set_defaults(batch_size=32, epochs=200)
 args = parser.parse_args()
 
 # Sanitize inputs
-log_file = sanitize_path(args.log_file,prefix='')
-weights_save_path = sanitize_path(args.weights_save_path,prefix='')
-data_dir = sanitize_path(args.data_dir,prefix='')
+log_file = sanitize_path(args.log_file)
+weights_save_path = sanitize_path(args.weights_save_path)
+data_dir = sanitize_path(args.data_dir)
 assert weights_save_path.endswith('.npz')
 assert log_file.endswith('.txt')
 
