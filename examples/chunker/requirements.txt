@@ -1,3 +1,0 @@
-numpy
-nervananeon>=2.6.0
-spacy

@@ -22,10 +22,8 @@ import sys
 
 import numpy as np
 from keras.preprocessing.sequence import pad_sequences
-
 from nlp_architect.utils.embedding import load_word_embeddings, fill_embedding_mat
 from nlp_architect.utils.generic import one_hot_sentence, one_hot
-from nlp_architect.utils.io import download_file
 from nlp_architect.utils.text import Vocabulary, SpacyInstance
 
 

@@ -81,7 +81,10 @@ SNIPS NLU benchmark
 
 A NLU benchmark containing ~16K sentences with 7 intent types. Each intent has about 2000 sentences
 for training the model and 100 sentences for validation. ``nlp_architect.data.intent_datasets.SNIPS`` is a class that loads the dataset from the repository and encodes the data into BIO format. The words are encoded with sparse int representation and word characters are extracted for character embeddings.
-More details on the dataset can be found in the following github repo_ and this_ blog post.
+
+The dataset can be downloaded from https://github.com/snipsco/nlu-benchmark, and more info on the benchmark can be found here_. SNIPS has CC0 1.0 license (https://github.com/snipsco/nlu-benchmark/blob/master/LICENSE). The terms and conditions of the data set license apply. Intel does not grant any rights to the data files.
+
+Once the dataset is downloaded, point ``<SNIPS folder>/2017-06-custom-intent-engines`` as the dataset path to ``nlp_architect.data.intent_datasets.SNIPS``.
 
 TabularIntentDataset
 --------------------
@@ -102,14 +105,14 @@ An example for training the joint task model (predicts slot tags and intent type
 
 .. code:: python
 
-  python train_joint_model.py --model_path my_model.h5
+  python train_joint_model.py --model_path my_model.h5 --dataset_path <path_to_data>
 
 
 An example for training an Encoder-Decoder model (predicts slot tags) using SNIPS, GloVe word embedding model of size 100 and saving the model weights to `my_model.h5`:
 
 .. code:: python
 
-  python train_enc-dec_model.py --embedding_path <path_to_glove_100_file> --token_emb_size 100 --model_path my_model.h5
+  python train_enc-dec_model.py --embedding_model <path_to_glove_100_file> --token_emb_size 100 --dataset_path <path_to_data> --model_path my_model.h5
 
 
 To list all possible parameters: ``python train_joint_model.py/train_enc-dec_model.py -h``
@@ -123,7 +126,7 @@ Example:
 
 .. code:: python
 
-  python interactive.py --model_path my_model.h5
+  python interactive.py --model_path my_model.h5 --dataset_path <path_to_data>
 
 Results
 ========
@@ -151,6 +154,10 @@ Minor differences might occur in final results. Each model was trained for 100 e
   Slots,95.52,93.74,95.48,95.47
   Intent,96.08, , ,
 
+.. note::
+
+  We used ATIS dataset from: https://github.com/Microsoft/CNTK/tree/master/Examples/LanguageUnderstanding/ATIS/Data, License: https://github.com/Microsoft/CNTK/blob/master/LICENSE.md.  The terms and conditions of the data set license apply. Intel does not grant any rights to the data files.
+
 Citations
 ----------------
 
@@ -166,6 +173,9 @@ natural language workshop, 1990.
 in Proc. of the Third DARPA Speech and Natural Language
 Workshop. Morgan Kaufmann, 1990.
 
-.. _repo: https://github.com/snipsco/nlu-benchmark
-.. _this: https://medium.com/snips-ai/benchmarking-natural-language-understanding-systems-google-facebook-microsoft-and-snips-2b8ddcf9fb19
+.. _https://github.com/snipsco/nlu-benchmark: https://github.com/snipsco/nlu-benchmark
+.. _here: https://medium.com/snips-ai/benchmarking-natural-language-understanding-systems-google-facebook-microsoft-and-snips-2b8ddcf9fb19
 .. _configure: https://keras.io/backend/
+.. _https://github.com/snipsco/nlu-benchmark/blob/master/LICENSE: https://github.com/snipsco/nlu-benchmark/blob/master/LICENSE
+.. _https://github.com/Microsoft/CNTK/tree/master/Examples/LanguageUnderstanding/ATIS/Data: https://github.com/Microsoft/CNTK/tree/master/Examples/LanguageUnderstanding/ATIS/Data
+.. _https://github.com/Microsoft/CNTK/blob/master/LICENSE.md: https://github.com/Microsoft/CNTK/blob/master/LICENSE.md

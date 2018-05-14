@@ -35,7 +35,12 @@ are noun phrases, ``jumped`` is a verb phrase and ``over`` is a prepositional ph
 Dataset
 =======
 
-We used the CONLL2000_ shared task dataset in our example for training a phrase chunker.
+We used the CONLL2000_ shared task dataset in our example for training a phrase chunker. More info about the CONLL2000_ shared task can be found here: https://www.clips.uantwerpen.be/conll2000/chunking/.
+
+If CONLL2000 is not found in NLTK, ``nlp_architect.data.conll2000.CONLL2000`` will attempt to download the dataset if the user agrees by using  ``nltk.download('conll2000')``.
+
+Legal notice:
+NLTK is open source software: https://www.nltk.org/data.html. The source code is distributed under the terms of the Apache License Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0). The documentation is distributed under the terms of the Creative Commons Attribution-Noncommercial-No Derivative Works 3.0 United States license. The corpora are distributed under various licenses, as documented in their respective README files. The terms and conditions of the data set license apply. Intel does not grant any rights to the data files.
 
 The dataset has a ``train`` and ``test`` sets consisting of 8926 and 2009 sentences annotated with Part-of-speech and chuking information.
 We implemented a dataset loader, ``nlp_architect.data.conll2000.CONLL2000``, for loading and parsing CONLL2000 data into iterators ready to be used by the chunker model.
@@ -104,31 +109,32 @@ All customizable parameters can be obtained by running: ``python train.py -h``
 
 .. code:: bash
 
-	  --use_w2v             Use pre-trained word embedding from given w2v model
-                        path (default: False)
-	  --w2v_path W2V_PATH   w2v embedding model path (only GloVe and Fasttext are
-	                        supported (default: None)
-	  --use_pos             Use part-of-speech tags of tokens (default: False)
-	  --use_char_rnn        Use char-RNN features of tokens (default: False)
-	  --sentence_len SENTENCE_LEN
-	                        Sentence token length (default: 100)
-	  --lstm_depth LSTM_DEPTH
-	                        Deep BiLSTM depth (default: 1)
-	  --lstm_hidden_size LSTM_HIDDEN_SIZE
-	                        LSTM cell hidden vector size (default: 128)
-	  --token_embedding_size TOKEN_EMBEDDING_SIZE
-	                        Token embedding vector size (default: 50)
-	  --pos_embedding_size POS_EMBEDDING_SIZE
-	                        Part-of-speech embedding vector size (default: 25)
-	  --vocab_size VOCAB_SIZE
-	                        Vocabulary size to use (only if pre-trained embedding
-	                        is not used) (default: 25000)
-	  --char_hidden_size CHAR_HIDDEN_SIZE
-	                        Char-RNN cell hidden vector size (default: 25)
-	  --model_name MODEL_NAME
-	                        Model file name (default: chunker)
-	  --settings SETTINGS   Model settings file name (default: chunker_settings)
-	  --print_np_perf       Print Noun Phrase (NP) tags accuracy (default: True)
+  --embedding_model EMBEDDING_MODEL
+                        word embedding model path (only GloVe and Fasttext are
+                        supported (default: None)
+  --use_pos             Use part-of-speech tags of tokens (default: False)
+  --use_char_rnn        Use char-RNN features of tokens (default: False)
+  --sentence_len SENTENCE_LEN
+                        Sentence token length (default: 100)
+  --lstm_depth LSTM_DEPTH
+                        Deep BiLSTM depth (default: 1)
+  --lstm_hidden_size LSTM_HIDDEN_SIZE
+                        LSTM cell hidden vector size (default: 100)
+  --token_embedding_size TOKEN_EMBEDDING_SIZE
+                        Token embedding vector size (default: 50)
+  --pos_embedding_size POS_EMBEDDING_SIZE
+                        Part-of-speech embedding vector size (default: 25)
+  --vocab_size VOCAB_SIZE
+                        Vocabulary size to use (only if pre-trained embedding
+                        is not used) (default: 25000)
+  --char_hidden_size CHAR_HIDDEN_SIZE
+                        Char-RNN cell hidden vector size (default: 25)
+  --max_char_word_length MAX_CHAR_WORD_LENGTH
+                        max characters per one word (default: 20)
+  --model_name MODEL_NAME
+                        Model file name (default: chunker)
+  --settings SETTINGS   Model settings file name (default: chunker_settings)
+  --print_np_perf       Print Noun Phrase (NP) tags accuracy (default: False)
 
 
 The model will automatically save after training is complete:
@@ -145,20 +151,20 @@ Running inference on a trained model ``chunker`` and ``chunker_settings.dat`` on
 
 .. code:: python
 
-	python inference.py --model chunker --parameters chunker_settings.dat --input inference_sentences.txt
+	python inference.py --model chunker --settings chunker_settings.dat --input inference_sentences.txt
 
 Run ``python inference.py -h`` for a full list of options:
 
 .. code:: bash
 
-	  --model MODEL         Path to model file (default: None)
-	  --settings SETTINGS   Path to model settings file (default: None)
-	  --input INPUT         Input texts file path (samples to pass for inference)
-	                        (default: None)
-	  --emb_model EMB_MODEL
-	                        Pre-trained word embedding model file path (default:
-	                        None)
-	  --print_only_nps      Print inferred Noun Phrases (default: False)
+  --model MODEL         Path to model file (default: None)
+  --settings SETTINGS   Path to model settings file (default: None)
+  --input INPUT         Input texts file path (samples to pass for inference)
+                        (default: None)
+  --embedding_model EMBEDDING_MODEL
+                        Pre-trained word embedding model file path (default:
+                        None)
+  --print_only_nps      Print inferred Noun Phrases (default: True)
 
 .. note::
 	currently char-RNN feature (character embedding) is not supported in inference mode (will be added in the future).
@@ -177,3 +183,6 @@ The reported performance below is on Noun Phrase (NP) detection (using B-NP and 
 
 
 .. _CONLL2000: https://www.clips.uantwerpen.be/conll2000/chunking/
+.. _"https://www.clips.uantwerpen.be/conll2000/chunking/": https://www.clips.uantwerpen.be/conll2000/chunking/
+.. _"https://www.nltk.org/data.html": https://www.nltk.org/data.html
+.. _"http://www.apache.org/licenses/LICENSE-2.0": http://www.apache.org/licenses/LICENSE-2.0

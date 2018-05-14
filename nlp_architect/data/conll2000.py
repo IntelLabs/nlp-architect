@@ -14,8 +14,10 @@
 # limitations under the License.
 # ******************************************************************************
 
-from __future__ import division, print_function, unicode_literals, absolute_import
-
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
+from __future__ import absolute_import
 import sys
 
 import nltk
@@ -36,28 +38,26 @@ class CONLL2000(object):
         vocab_size (int): max size of vocabulary.
         use_pos (boolean, optional): Yield POS tag features.
         use_chars (boolean, optional): Yield Char RNN features.
-        use_w2v (boolean, optional): Use W2V as input features.
-        w2v_path (str, optional): W2V model path
+        chars_len (int, optional): max word length in characters.
+        embedding_model_path (str, optional): W2V model path
     """
 
     def __init__(self, sentence_length=50, vocab_size=20000,
                  use_pos=False,
                  use_chars=False,
                  chars_len=20,
-                 use_w2v=False,
-                 w2v_path=None):
+                 embedding_model_path=None):
         self.sentence_length = sentence_length
         self.vocab_size = vocab_size
         self.use_pos = use_pos
         self.use_chars = use_chars
         self.chars_len = chars_len
-        self.use_w2v = use_w2v
-        self.w2v_path = w2v_path
+        self.embedding_model_path = embedding_model_path
         self.vocabs = {}
         self._data_dict = {}
 
     @staticmethod
-    def load_data():
+    def _load_data():
         try:
             train_set = conll2000.chunked_sents('train.txt')
             test_set = conll2000.chunked_sents('test.txt')
@@ -74,7 +74,7 @@ class CONLL2000(object):
         test_data = [list(zip(*nltk.chunk.tree2conlltags(sent))) for sent in test_set]
         return train_data, test_data
 
-    def create_char_features(self, sentences, sentence_length, word_length):
+    def _create_char_features(self, sentences, sentence_length, word_length):
         char_dict = {}
         char_id = 3
         new_sentences = []
@@ -105,18 +105,20 @@ class CONLL2000(object):
 
     @property
     def train_iter(self):
+        """train set iterator"""
         if self._data_dict.get('train', None) is None:
-            self.gen_iterators()
+            self._gen_iterators()
         return self._data_dict.get('train')
 
     @property
     def test_iter(self):
+        """test set iterator"""
         if self._data_dict.get('test', None) is None:
-            self.gen_iterators()
+            self._gen_iterators()
         return self._data_dict.get('test')
 
-    def gen_iterators(self):
-        train_set, test_set = self.load_data()
+    def _gen_iterators(self):
+        train_set, test_set = self._load_data()
         num_train_samples = len(train_set)
 
         sents = list(zip(*train_set))[0] + list(zip(*test_set))[0]
@@ -134,8 +136,8 @@ class CONLL2000(object):
         train_iters = []
         test_iters = []
 
-        if self.use_w2v:
-            w2v_dict, emb_size = load_word_embeddings(self.w2v_path)
+        if self.embedding_model_path is not None:
+            w2v_dict, emb_size = load_word_embeddings(self.embedding_model_path)
             self.emb_size = emb_size
             x_vocab_is = {i: s for s, i in X_vocab.items()}
             X_w2v = []
@@ -185,7 +187,7 @@ class CONLL2000(object):
                                                  x=X_pos[num_train_samples:]))
 
         if self.use_chars:
-            char_sentences = self.create_char_features(
+            char_sentences = self._create_char_features(
                 sents, self.sentence_length, self.chars_len)
             char_sentences = char_sentences.reshape(
                 -1, self.sentence_length * self.chars_len)

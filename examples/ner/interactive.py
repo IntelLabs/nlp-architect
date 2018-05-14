@@ -14,46 +14,28 @@
 # limitations under the License.
 # ******************************************************************************
 
-from __future__ import division
-from __future__ import print_function
-from __future__ import unicode_literals
-from __future__ import absolute_import
+from __future__ import division, print_function, unicode_literals, absolute_import
 
 import argparse
-import os
 import pickle
-import sys
 
-import spacy
-from keras.preprocessing.sequence import pad_sequences
 import numpy as np
-
+from keras.preprocessing.sequence import pad_sequences
 from nlp_architect.models.ner_crf import NERCRF
+from nlp_architect.utils.io import validate_existing_filepath
+from nlp_architect.utils.text import SpacyInstance
 
-nlp = spacy.load('en')
+nlp = SpacyInstance(disable=['tagger', 'ner', 'parser', 'vectors', 'textcat'])
 
 
 def read_input_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--model_path', type=str, required=True,
+    parser.add_argument('--model_path', type=validate_existing_filepath, required=True,
                         help='Path of model weights')
-    parser.add_argument('--model_info_path', type=str, required=True,
+    parser.add_argument('--model_info_path', type=validate_existing_filepath, required=True,
                         help='Path of model topology')
     input_args = parser.parse_args()
-    if not os.path.exists(input_args.model_path):
-        print('model_path file does not exist')
-        sys.exit(0)
-    if not os.path.exists(input_args.model_info_path):
-        print('model_info_path file does not exist')
-        sys.exit(0)
     return input_args
-
-
-args = read_input_args()
-with open(args.model_info_path, 'rb') as fp:
-    model_info = pickle.load(fp)
-
-assert model_info is not None, 'No model topology information loaded'
 
 
 def load_saved_model():
@@ -76,8 +58,7 @@ def load_saved_model():
 
 def process_text(text):
     input_text = ' '.join(text.strip().split())
-    doc = nlp(input_text)
-    return [t.text for t in doc]
+    return nlp.tokenize(input_text)
 
 
 def encode_word(word):
@@ -124,4 +105,8 @@ def run_interactive():
 
 
 if __name__ == '__main__':
+    args = read_input_args()
+    with open(args.model_info_path, 'rb') as fp:
+        model_info = pickle.load(fp)
+    assert model_info is not None, 'No model topology information loaded'
     run_interactive()
