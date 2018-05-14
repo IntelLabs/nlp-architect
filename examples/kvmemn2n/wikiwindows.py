@@ -54,6 +54,9 @@ import time
 from multiprocessing import Process, Queue, Condition, Value
 import os
 
+from nlp_architect.utils.io import validate, validate_existing_directory, \
+    validate_existing_filepath, validate_parent_exists, check_size
+
 '''
 Things that were changed from the original:
 1) Entities are replaced by their keys both in the key and the value (center word)
@@ -120,14 +123,18 @@ parser = argparse.ArgumentParser(
     description='Generates windowed examples for wikipedia files. By default,' +
     ' creates pairs of window<TAB>entity when used with entities.'
 )
-parser.add_argument('data_dir', type=str, help='name of root directory for files')
+parser.add_argument('data_dir', type=str, help='name of root directory for files',
+                    action=validate_existing_directory)
 # parser.add_argument('input_file', type=str, nargs='+',
 #     help='name of a input file in memnns format')
 parser.add_argument('-o', '--output_file', type=str,
-                    help='name of a output file, otherwise data_dir will be used')
-parser.add_argument('-n', type=int, help='Max number of examples to process.')
+                    help='name of a output file, otherwise data_dir will be used',
+                    action=validate_parent_exists)
+parser.add_argument('-n', type=int, help='Max number of examples to process.',
+                    action=check_size(1, 100000000))
 parser.add_argument('-e', '--entities', type=str,
-                    help='entities file (each line specifies ngrams to always chunk together)')
+                    help='entities file (each line specifies ngrams to always chunk together)',
+                    action=validate_existing_filepath)
 parser.add_argument('-a', '--all_windows', action='store_true',
                     help='if set, keeps all windows (not just ones entities). defaults to ' +
                     ' True if entities file not present, False if it is present.')
@@ -150,7 +157,8 @@ parser.add_argument('-d', '--double_dict', type=str, default='3',
                     'sentence "hello world how are things" creates a window of "2:hello ' +
                     '1:world <NULL> 1:are 2:things"')
 parser.add_argument('-t', '--num_threads', type=int, default=4,
-                    help='number of threads to use')
+                    help='number of threads to use',
+                    action=check_size(1,20))
 args = vars(parser.parse_args())
 
 beg = time.time()

@@ -52,6 +52,8 @@ from nlp_architect.data.babi_dialog import BABI_Dialog
 from nlp_architect.models.memn2n_dialogue import MemN2N_Dialog
 from memn2n_dialogue.utils import interactive_loop
 from nlp_architect.utils.io import sanitize_path
+from nlp_architect.utils.io import validate, validate_existing_directory, \
+    validate_existing_filepath, validate_parent_exists, check_size
 
 # parse the command line arguments
 parser = NgraphArgparser(__doc__)
@@ -67,9 +69,11 @@ parser.add_argument(
     '--emb_size',
     type=int,
     default='32',
-    help='Size of the word-embedding used in the model. (default 128)')
+    help='Size of the word-embedding used in the model. (default 128)',
+    action=check_size(1, 2000))
 parser.add_argument('--nhops', type=int, default='3',
-                    help='Number of memory hops in the network')
+                    help='Number of memory hops in the network',
+                    action=check_size(1, 20))
 parser.add_argument(
     '--use_match_type',
     default=False,
@@ -94,11 +98,13 @@ parser.add_argument(
     '--eps',
     type=float,
     default=1e-8,
-    help='epsilon used to avoid divide by zero in softmax renormalization.')
+    help='epsilon used to avoid divide by zero in softmax renormalization.',
+    action=check_size(1e-100,1e-2))
 parser.add_argument(
     '--model_file',
     default='memn2n_weights.npz',
-    help='File to load model weights from.')
+    help='File to load model weights from.',
+    action=validate_existing_filepath)
 
 parser.set_defaults(batch_size=32, epochs=200)
 args = parser.parse_args()

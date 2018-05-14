@@ -53,7 +53,8 @@ import os
 from tqdm import tqdm
 from utils import interactive_loop
 from nlp_architect.utils.io import sanitize_path
-
+from nlp_architect.utils.io import validate, validate_existing_directory, \
+    validate_existing_filepath, validate_parent_exists, check_size
 
 # parse the command line arguments
 parser = NgraphArgparser(__doc__)
@@ -69,9 +70,11 @@ parser.add_argument(
     '--emb_size',
     type=int,
     default='32',
-    help='Size of the word-embedding used in the model. (default 128)')
+    help='Size of the word-embedding used in the model. (default 32)',
+    action=check_size(1, 2000))
 parser.add_argument('--nhops', type=int, default='3',
-                    help='Number of memory hops in the network')
+                    help='Number of memory hops in the network',
+                    action=check_size(1, 20))
 parser.add_argument(
     '--use_match_type',
     default=False,
@@ -97,12 +100,14 @@ parser.add_argument(
     '--grad_clip_norm',
     type=float,
     default=40.0,
-    help='Clip gradients such that norm is below this value.')
+    help='Clip gradients such that norm is below this value.',
+    action=check_size(0,100))
 parser.add_argument(
     '--eps',
     type=float,
     default=1e-8,
-    help='epsilon used to avoid divide by zero in softmax renormalization.')
+    help='epsilon used to avoid divide by zero in softmax renormalization.',
+    action=check_size(1e-100,1e-2))
 parser.add_argument(
     '--save_log',
     action='store_true',
@@ -112,17 +117,20 @@ parser.add_argument(
     '--log_file',
     type=str,
     default='memn2n_dialgoue_results.txt',
-    help='File to write evaluation set results to.')
+    help='File to write evaluation set results to.',
+    action=validate_parent_exists)
 parser.add_argument(
     '--weights_save_path',
     type=str,
     default='memn2n_weights.npz',
-    help='File to save model weights to.')
+    help='File to save model weights to.',
+    action=validate_parent_exists)
 parser.add_argument(
     '--save_epochs',
     type=int,
     default=1,
-    help='Number of epochs between saving model weights.')
+    help='Number of epochs between saving model weights.',
+    action=check_size(1,1000))
 parser.add_argument(
     '--restore',
     default=False,

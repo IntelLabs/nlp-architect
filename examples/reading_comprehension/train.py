@@ -42,9 +42,10 @@ from utils import (
     get_data_array_squad_ngraph,
     cal_f1_score)
 import math
-from nlp_architect.utils.weight_initilizers import (make_placeholder, make_weights)
+from nlp_architect.contrib.ngraph.weight_initilizers import (make_placeholder, make_weights)
 from nlp_architect.utils.io import sanitize_path
-
+from nlp_architect.utils.io import validate, validate_existing_directory, \
+    validate_existing_filepath, validate_parent_exists, check_size
 
 """
 Model converges on gpu backened.
@@ -55,18 +56,22 @@ parser = NgraphArgparser(__doc__)
 
 parser.add_argument(
     '--data_path',
-    help='enter path for training data')
+    help='enter path for training data',
+    action=validate_existing_directory)
 
 parser.add_argument('--gpu_id', default="0",
-                    help='enter gpu id')
+                    help='enter gpu id',
+                    action=check_size(0,10))
 
 parser.add_argument('--max_para_req', default=100,
-                    help='enter the max length of paragraph')
+                    help='enter the max length of paragraph',
+                    action=check_size(0,10000))
 
 parser.add_argument(
     '--batch_size_squad',
     default=16,
-    help='enter the batch size')  # 16 is the max batch size o be fit on gpu
+    help='enter the batch size',
+    action=check_size(1,10000))  # 16 is the max batch size o be fit on gpu
 
 parser.set_defaults()
 

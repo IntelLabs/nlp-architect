@@ -21,7 +21,7 @@ from ngraph.frontends.neon.axis import shadow_axes_map
 from ngraph.frontends.neon import Layer
 from ngraph.frontends.neon import GaussianInit
 from ngraph.frontends.neon.graph import SubGraph
-from nlp_architect.utils.encodings import position_encoding
+from nlp_architect.contrib.ngraph.encodings import position_encoding
 from nlp_architect.contrib.ngraph.modified_lookup_table import ModifiedLookupTable
 
 
