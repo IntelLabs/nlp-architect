@@ -13,6 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
+import sys
 
 import numpy as np
 import requests
@@ -20,30 +21,54 @@ from gensim.models.keyedvectors import KeyedVectors
 import nltk
 from nltk.corpus import wordnet as wn
 from nltk.stem.snowball import SnowballStemmer
-from palmettopy.exceptions import CoherenceTypeNotAvailable, EndpointDown
-from palmettopy.palmetto import Palmetto
+import nltk.collocations
+import nltk.corpus
+import collections
+from nlp_architect.utils.generic import license_prompt
 
 stemmer = SnowballStemmer("english")
 headers = {"Accept": "application/json"}
 
 
-class PalmettoClass:
+class NLTKCollocations:
     """
-    Palmetto service
+    NLTKCollocations score using NLTK framework on Brown dataset
     """
-
     def __init__(self):
-        self.palmetto = Palmetto()
+        nltk.download('brown')
+        self.bigram_finder = nltk.collocations.BigramCollocationFinder.from_words(
+            nltk.corpus.brown.words())
+        self.bigram_messure = nltk.collocations.BigramAssocMeasures()
+        self.likelihood_ration_dict = self.build_bigram_score_dict(
+            self.bigram_messure.likelihood_ratio)
+        self.chi_sq_dict = self.build_bigram_score_dict(self.bigram_messure.chi_sq)
+        self.pmi_dict = self.build_bigram_score_dict(self.bigram_messure.pmi)
+
+    def build_bigram_score_dict(self, score):
+        """
+        build a Dictionary containing the bigrams according to a BigramAssocMeasures score
+
+        Args:
+            score (:obj:`BigramAssocMeasures.*`) : a score function of BigramAssocMeasures
+
+        Returns:
+            dict: dictionary with tuple(w1,w2) as key, and the score as value
+        """
+        bigram_dict = collections.defaultdict(list)
+        scored_bigrams = self.bigram_finder.score_ngrams(score)
+        for key, scores in scored_bigrams:
+            bigram_dict[key[0], key[1]].append(scores)
+        return bigram_dict
 
     def get_pmi_score(self, phrase):
         """
-        Extract NPMI & UCI scores
+        extract phrase PMI and Chi-square scores
 
         Args:
             phrase (str): a noun-phrase
 
         Returns:
-            list(float): NPMI & UCI scores
+            list(float): list containing PMI and Chi-square scores
         """
         candidates = phrase.split(" ")
         if len(candidates) < 2:
@@ -52,13 +77,17 @@ class PalmettoClass:
             candidates.extend(candidates[0])
         response_list = []
         try:
-            response_list.append(
-                self.palmetto.get_coherence(candidates, coherence_type="npmi"))
-            response_list.append(
-                self.palmetto.get_coherence(candidates, coherence_type="uci"))
-        except CoherenceTypeNotAvailable:
-            response_list.extend([0, 0])
-        except EndpointDown:
+            pmi_score = self.pmi_dict[tuple(candidates)]
+            if pmi_score:
+                response_list.append(pmi_score[0])
+            else:
+                response_list.append(0)
+            chi_sq_score = self.chi_sq_dict[tuple(candidates)]
+            if chi_sq_score:
+                response_list.append(chi_sq_score[0])
+            else:
+                response_list.append(0)
+        except KeyError:
             response_list.extend([0, 0])
         return response_list
 
@@ -99,7 +128,7 @@ class Wikidata:
         extract Wikidata indicator-feature (1 if exist in Wikidata, else 0)
 
         Args:
-            candidates(list<str>): a list of all possible candidates to have Wikidata entry
+            candidates(list(str)): a list of all possible candidates to have Wikidata entry
 
         Returns :
             int: 1 if exist in Wikidata for any candidate in candidates, else 0
@@ -217,6 +246,7 @@ class Wordnet:
 
         Args:
             candidates (list(str)): a list of all possible candidates to have WordNet entry
+
         Returns:
             int: 1 if exist in WordNet for any candidate in candidates, else 0
         """

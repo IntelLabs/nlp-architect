@@ -38,7 +38,7 @@ A feature vector is extracted from each Noun-Phrase string using the command `py
     * Pre-trained Google News Word2vec model can download [here](https://drive.google.com/file/d/0B7XkCwpI5KDYNlNUTTlSS21pQmM/edit?usp=sharing)
     * The terms and conditions of the data set license apply. Intel does not grant any rights to the data files or database. see relevant [license agreement](http://www.apache.org/licenses/LICENSE-2.0)
 * Cosine distance between 2 words in the Noun-Phrase.
-* PMI score (NPMI and UCI scores).
+* NLTKCollocations score (NPMI and UCI scores).
 * A binary features whether the Noun-Phrase has existing entity in Wikidata.
 * A binary features whether the Noun-Phrase has existing entity in WordNet.
 
