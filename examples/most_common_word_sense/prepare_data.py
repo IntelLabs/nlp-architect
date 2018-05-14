@@ -17,20 +17,19 @@
 Prepare the datasets for Most Common Word Sense training
 """
 
-import codecs
+import argparse
 import csv
 import logging
 import math
 import pickle
-import argparse
 
 import gensim
 import numpy as np
 from feature_extraction import extract_features_envelope
-from neon.util.argparser import NeonArgparser
 from sklearn.model_selection import train_test_split
 
-from nlp_architect.utils.io import validate_existing_directory, validate_existing_filepath
+from nlp_architect.utils.io import validate_existing_filepath, \
+    validate_parent_exists, validate, check_size
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -50,31 +49,29 @@ def read_gs_file(gs_file_name):
         hypernym_vec1    (list(str)): words hypernyms vector
         label_vec1       (list(str)): labels of binary class 0/1
     """
-    file = codecs.open(gs_file_name, 'rU', 'utf-8')
-    reader = csv.reader((line.replace('\0', '') for line in file))
+    with open(gs_file_name, 'rU', encoding='utf-8') as file:
+        reader = csv.reader((line.replace('\0', '') for line in file))
 
-    cntr1 = 0
-    # 1. read csv file
-    target_word_vec1 = []
-    definition_vec1 = []
-    hypernym_vec1 = []
+        cntr1 = 0
+        # 1. read csv file
+        target_word_vec1 = []
+        definition_vec1 = []
+        hypernym_vec1 = []
 
-    label_vec1 = []
+        label_vec1 = []
 
-    header_line_flag = True
-    for line in reader:
-        if line is not None:
-            if header_line_flag:  # skip header line
-                header_line_flag = False
-                continue
+        header_line_flag = True
+        for line in reader:
+            if line is not None:
+                if header_line_flag:  # skip header line
+                    header_line_flag = False
+                    continue
 
-            target_word_vec1.insert(cntr1, line[0].strip())
-            definition_vec1.insert(cntr1, line[1])
-            hypernym_vec1.insert(cntr1, line[2])
-            label_vec1.insert(cntr1, line[3])
-            cntr1 = cntr1 + 1
-
-    file.close()
+                target_word_vec1.insert(cntr1, line[0].strip())
+                definition_vec1.insert(cntr1, line[1])
+                hypernym_vec1.insert(cntr1, line[2])
+                label_vec1.insert(cntr1, line[3])
+                cntr1 = cntr1 + 1
 
     return target_word_vec1, definition_vec1, hypernym_vec1, label_vec1
 
@@ -93,23 +90,20 @@ def read_inference_input_examples_file(input_examples_file):
         list(str): target word vector
 
     """
-    file = codecs.open(input_examples_file, 'rU', 'utf-8')
-    reader = csv.reader((line.replace('\0', '') for line in file))
+    with open(input_examples_file, 'rU', encoding='utf-8') as file:
+        reader = csv.reader((line.replace('\0', '') for line in file))
+        cntr2 = 0
+        # 1. read csv file
+        target_word_vec1 = []
+        header_line_flag = True
+        for line in reader:
+            if line is not None:
+                if header_line_flag:  # skip header line
+                    header_line_flag = False
+                    continue
+                target_word_vec1.insert(cntr2, line[0])
 
-    cntr2 = 0
-    # 1. read csv file
-    target_word_vec1 = []
-    header_line_flag = True
-    for line in reader:
-        if line is not None:
-            if header_line_flag:  # skip header line
-                header_line_flag = False
-                continue
-            target_word_vec1.insert(cntr2, line[0])
-
-            cntr2 = cntr2 + 1
-
-    file.close()
+                cntr2 = cntr2 + 1
 
     return target_word_vec1
 
@@ -126,13 +120,12 @@ if __name__ == "__main__":
                         default='pretrained_models/GoogleNews-vectors-negative300.bin',
                         help='path to the word embedding\'s model')
     parser.add_argument('--training_to_validation_size_ratio', default=0.8, type=float,
-                        help='ratio between training and validation size')
+                        action=check_size(0, 1), help='ratio between training and validation size')
     parser.add_argument('--data_set_file', default='data/data_set.pkl',
-                        type=validate_existing_directory,
-                        help='path the file where the train, valid and test sets are stored')
+                        type=validate_parent_exists,
+                        help='path the file where the train, valid and test sets will be stored')
 
     args = parser.parse_args()
-
     # training set
     X_train = []
     y_train = []

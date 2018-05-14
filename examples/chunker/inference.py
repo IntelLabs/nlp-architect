@@ -20,6 +20,7 @@ from __future__ import unicode_literals
 from __future__ import absolute_import
 import pickle
 import os
+import sys
 
 import numpy as np
 
@@ -31,57 +32,44 @@ from neon.util.argparser import NeonArgparser, extract_valid_args
 from nlp_architect.contrib.neon.text_iterators import TaggedTextSequence, MultiSequenceDataIterator
 from nlp_architect.utils.generic import get_paddedXY_sequence
 from nlp_architect.utils.embedding import load_word_embeddings
+from nlp_architect.utils.io import validate_existing_filepath
 from utils import extract_nps
 
 if __name__ == '__main__':
 
     parser = NeonArgparser()
-    parser.add_argument('--model', type=str, required=True,
+    parser.add_argument('--model', type=validate_existing_filepath, required=True,
                         help='Path to model file')
-    parser.add_argument('--settings', type=str, required=True,
+    parser.add_argument('--settings', type=validate_existing_filepath, required=True,
                         help='Path to model settings file')
-    parser.add_argument('--input', type=str, required=True,
+    parser.add_argument('--input', type=validate_existing_filepath, required=True,
                         help='Input texts file path (samples to pass for inference)')
-    parser.add_argument('--emb_model', type=str,
+    parser.add_argument('--embedding_model', type=validate_existing_filepath,
                         help='Pre-trained word embedding model file path')
-    parser.add_argument('--print_only_nps', default=False, action='store_true',
+    parser.add_argument('--print_only_nps', default=True, action='store_true',
                         help='Print inferred Noun Phrases')
     args = parser.parse_args()
     be = gen_backend(**extract_valid_args(args, gen_backend))
 
-    if not os.path.exists(args.model):
-        print('model file was not found')
-        exit()
-    else:
-        model_file = args.model
-    if not os.path.exists(args.settings):
-        print('model settings files was not found')
-        exit()
-    else:
-        with open(args.settings, 'rb') as fp:
-            mp = pickle.load(fp)
-
-    if args.emb_model is not None and not os.path.exists(args.emb_model):
-        print('word embedding model file was not found')
-        exit()
+    with open(args.settings, 'rb') as fp:
+        mp = pickle.load(fp)
 
     if mp['char_rnn'] is not False:
         raise NotImplementedError
 
     sentence_len = mp['sentence_len']
 
-    if not os.path.exists(args.input):
-        print('input file was not found')
-        exit()
-    else:
-        with open(args.input) as fp:
-            input_texts = [t.strip() for t in fp.readlines()]
+    with open(args.input) as fp:
+        input_texts = [t.strip() for t in fp.readlines()]
 
     be.bsz = len(input_texts)
     input_features = []
     text_tokens = []
     if mp['use_embeddings'] is True:
-        emb_model, emb_size = load_word_embeddings(args.emb_model)
+        if args.embedding_model is None:
+            print('word embedding model was not supplied')
+            sys.exit(0)
+        emb_model, emb_size = load_word_embeddings(args.embedding_model)
         pad_vector = np.zeros(emb_size)
         for t in input_texts:
             vector = [
@@ -121,7 +109,7 @@ if __name__ == '__main__':
     else:
         x = input_features[0]
 
-    model = Model(model_file)
+    model = Model(args.model)
     model.initialize(dataset=x)
     preds = model.get_outputs(x).argmax(2)
 

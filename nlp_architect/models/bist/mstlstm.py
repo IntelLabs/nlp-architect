@@ -32,6 +32,7 @@ from nlp_architect.data.conll import ConllEntry
 from nlp_architect.models.bist import decoder
 from nlp_architect.models.bist.utils import read_conll
 
+
 # Things that were changed from the original:
 # - Added input validation
 # - Updated function and object names to dyNet 2.0.2 and Python 3

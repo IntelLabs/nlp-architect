@@ -14,49 +14,18 @@
 # limitations under the License.
 # ******************************************************************************
 
-from __future__ import division
-from __future__ import print_function
-from __future__ import unicode_literals
-from __future__ import absolute_import
-
-import os
+from __future__ import division, print_function, unicode_literals, absolute_import
 
 import argparse
-import sys
 from builtins import input
 
 import numpy as np
 from nlp_architect.data.intent_datasets import SNIPS
 from nlp_architect.models.intent_extraction import IntentExtractionModel
 from nlp_architect.utils.embedding import load_word_embeddings
+from nlp_architect.utils.io import validate_existing_filepath, validate, \
+    validate_existing_directory
 from nlp_architect.utils.text import SpacyInstance
-
-parser = argparse.ArgumentParser()
-parser.add_argument('--model_path', type=str, required=True,
-                    help='Model file path')
-parser.add_argument('--dataset_path', type=str, required=True,
-                    help='dataset directory')
-parser.add_argument('--embedding_model', type=str,
-                    help='Path to word embedding model')
-parser.add_argument('--embedding_size', type=int,
-                    help='Word embedding model vector size')
-args = parser.parse_args()
-
-if not os.path.exists(args.model_path):
-    print('model_path does not exist')
-    sys.exit(0)
-if not os.path.exists(args.dataset_path):
-    print('dataset_path does not exist')
-    sys.exit(0)
-if args.embedding_model is not None and not os.path.exists(args.embedding_model):
-    print('word embedding model file was not found')
-    sys.exit(0)
-
-model = IntentExtractionModel()
-model.load(args.model_path)
-
-ds = SNIPS(path=args.dataset_path)
-nlp = SpacyInstance()
 
 
 def process_text(text):
@@ -68,8 +37,8 @@ def process_text(text):
 def encode_sentence(tokens, emb_vectors=None):
     max_sen_size = model.input_shape[1]
     if emb_vectors is not None:
-        input_vec = np.zeros((max_sen_size, args.embedding_size))
-        zeros = np.zeros(args.embedding_size)
+        input_vec = np.zeros((max_sen_size, emb_size))
+        zeros = np.zeros(emb_size)
         tvecs = [emb_vectors.get(t.lower(), zeros) for t in tokens]
         input_vec[-len(tvecs):] = tvecs
         input_vec = input_vec.reshape((1, max_sen_size, -1))
@@ -99,14 +68,34 @@ def display_results(tokens, predictions):
     print(' '.join(['%-{}s'.format(x[2]) % x[1] for x in print_helper]))
 
 
-emb_vectors = None
-if args.embedding_model is not None and args.embedding_size is not None:
-    print('Loading external word embedding model of size {}'.format(args.embedding_size))
-    emb_vectors, _ = load_word_embeddings(args.embedding_model)
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--model_path', type=validate_existing_filepath, required=True,
+                        help='Model file path')
+    parser.add_argument('--dataset_path', type=validate_existing_directory, required=True,
+                        help='dataset directory')
+    parser.add_argument('--embedding_model', type=validate_existing_filepath,
+                        help='Path to word embedding model')
+    parser.add_argument('--embedding_size', type=int,
+                        help='Word embedding model vector size')
+    args = parser.parse_args()
+    if args.embedding_size is not None:
+        validate((args.embedding_size, int, 1, 10000))
 
-while True:
-    text = input('>> ')
-    tokens = process_text(text)
-    enc_sent = encode_sentence(tokens, emb_vectors)
-    predictions = model.predict(enc_sent)
-    display_results(tokens, predictions)
+    model = IntentExtractionModel()
+    model.load(args.model_path)
+
+    ds = SNIPS(path=args.dataset_path)
+    nlp = SpacyInstance(disable=['tagger', 'ner', 'parser', 'vectors', 'textcat'])
+
+    emb_vectors = None
+    if args.embedding_model is not None:
+        print('Loading external word embedding model')
+        emb_vectors, emb_size = load_word_embeddings(args.embedding_model)
+
+    while True:
+        text = input('>> ')
+        tokens = process_text(text)
+        enc_sent = encode_sentence(tokens, emb_vectors)
+        predictions = model.predict(enc_sent)
+        display_results(tokens, predictions)

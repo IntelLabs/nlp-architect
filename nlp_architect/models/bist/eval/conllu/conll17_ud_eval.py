@@ -529,9 +529,9 @@ def load_deprel_weights(weights_file):
 
 
 def load_conllu_file(path):
-    _file = open(path, mode="r", **(
-        {"encoding": "utf-8"} if sys.version_info >= (3, 0) else {}))
-    return load_conllu(_file)
+    with open(path, mode="r", **({"encoding": "utf-8"} if sys.version_info >= (3, 0) else {})) \
+            as _file:
+        return load_conllu(_file)
 
 
 def evaluate_wrapper(gold_file: str, system_file: str, weights_file: str):

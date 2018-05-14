@@ -21,6 +21,7 @@ from collections import Counter
 from nlp_architect.data.conll import ConllEntry
 from nlp_architect.models.bist.eval.conllu.conll17_ud_eval import run_conllu_eval
 
+
 # Things that were changed from the original:
 # - Removed ConllEntry class, normalize()
 # - Changed read_conll() and write_conll() input from file to path
