@@ -14,9 +14,6 @@
 # limitations under the License.
 # ******************************************************************************
 
-from __future__ import unicode_literals, print_function, division, \
-    absolute_import
-
 from neon import logger as neon_logger
 from neon.backends import gen_backend
 from neon.util.argparser import NeonArgparser

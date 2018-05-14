@@ -14,9 +14,6 @@
 # limitations under the License.
 # ******************************************************************************
 
-from __future__ import unicode_literals, print_function, division, \
-    absolute_import
-
 from neon.callbacks.callbacks import Callbacks
 from neon.initializers import Gaussian
 from neon.layers import GeneralizedCost, Affine

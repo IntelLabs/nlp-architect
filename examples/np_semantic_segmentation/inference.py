@@ -14,9 +14,6 @@
 # limitations under the License.
 # ******************************************************************************
 
-from __future__ import unicode_literals, print_function, division, \
-    absolute_import
-
 import csv
 import io
 import os
