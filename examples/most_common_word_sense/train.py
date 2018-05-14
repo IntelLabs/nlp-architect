@@ -26,7 +26,8 @@ from neon.data import ArrayIterator
 from neon.util.argparser import NeonArgparser
 
 from nlp_architect.models.most_common_word_sense import MostCommonWordSense
-from nlp_architect.utils.io import validate_existing_directory, validate_existing_filepath
+from nlp_architect.utils.io import validate_existing_filepath, \
+    validate_parent_exists
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -83,8 +84,8 @@ if __name__ == "__main__":
                         type=validate_existing_filepath,
                         help='train and validation sets path')
     parser.add_argument('--model_prm', default='data/mcs_model.prm',
-                        type=validate_existing_directory,
-                        help=' trained model full path')
+                        type=validate_parent_exists,
+                        help='trained model full path')
 
     args = parser.parse_args()
 
