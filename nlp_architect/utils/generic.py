@@ -112,12 +112,12 @@ def license_prompt(model_name, model_website, license_name, license_url, dataset
         print('{} was not found on local installation'.format(model_name))
     print('{} has the following information'.format(model_name))
     print('License: {} \nLink to license: {}'.format(license_name, license_url))
+    print('\nThe terms and conditions of the data set license apply. Intel does not '
+          'grant any rights to the data files or database\n')
     response = input('\nTo download \'{}\' from {}, please enter YES: '.
                      format(model_name, model_website))
     res = response.lower().strip()
     if res == "yes" or (len(res) == 1 and res == 'y'):
-        print('The terms and conditions of the data set license apply. Intel does not '
-              'grant any rights to the data files or database')
         print('Downloading {}...'.format(model_name))
         return True
     else:

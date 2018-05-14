@@ -14,12 +14,10 @@
 # limitations under the License.
 # ******************************************************************************
 
-from __future__ import division
-from __future__ import print_function
-from __future__ import unicode_literals
-from __future__ import absolute_import
+from __future__ import division, print_function, unicode_literals, absolute_import
+
 import pickle
-import os
+from os import path
 
 from neon.backends import gen_backend
 from neon.callbacks.callbacks import Callbacks
@@ -27,18 +25,32 @@ from neon.layers import GeneralizedCost
 from neon.optimizers.optimizer import RMSProp
 from neon.transforms.cost import CrossEntropyMulti
 from neon.util.argparser import NeonArgparser, extract_valid_args
-
 from nlp_architect.data.conll2000 import CONLL2000
 from nlp_architect.models.chunker import SequenceChunker
+from nlp_architect.utils.io import validate_existing_filepath, validate_parent_exists, validate
 from nlp_architect.utils.metrics import get_conll_scores
 
-if __name__ == '__main__':
 
+def validate_input_args():
+    global model_path, settings_path
+    validate((args.sentence_len, int, 1, 1000))
+    validate((args.lstm_depth, int, 1, 10))
+    validate((args.lstm_hidden_size, int, 1, 10000))
+    validate((args.token_embedding_size, int, 1, 10000))
+    validate((args.pos_embedding_size, int, 1, 1000))
+    validate((args.vocab_size, int, 1, 100000000))
+    validate((args.char_hidden_size, int, 1, 1000))
+    validate((args.max_char_word_length, int, 1, 100))
+    model_path = path.join(path.dirname(path.realpath(__file__)), str(args.model_name))
+    settings_path = path.join(path.dirname(path.realpath(__file__)), str(args.settings))
+    validate_parent_exists(model_path)
+    validate_parent_exists(settings_path)
+
+
+if __name__ == '__main__':
     parser = NeonArgparser()
-    parser.add_argument('--use_w2v', default=False, action='store_true',
-                        help='Use pre-trained word embedding from given w2v model path')
-    parser.add_argument('--embedding_model', type=str,
-                        help='w2v embedding model path (only GloVe and Fasttext are supported')
+    parser.add_argument('--embedding_model', type=validate_existing_filepath,
+                        help='word embedding model path (only GloVe and Fasttext are supported')
     parser.add_argument('--use_pos', default=False, action='store_true',
                         help='Use part-of-speech tags of tokens')
     parser.add_argument('--use_char_rnn', default=False, action='store_true',
@@ -67,10 +79,7 @@ if __name__ == '__main__':
                         help='Print Noun Phrase (NP) tags accuracy')
 
     args = parser.parse_args(gen_be=False)
-
-    if args.embedding_model is not None and not os.path.exists(args.embedding_model):
-        print('word embedding model file was not found')
-        exit()
+    validate_input_args()
 
     if args.use_pos:
         pos_vocab_size = 50
@@ -87,8 +96,7 @@ if __name__ == '__main__':
                         use_pos=args.use_pos,
                         use_chars=args.use_char_rnn,
                         chars_len=args.max_char_word_length,
-                        use_w2v=args.use_w2v,
-                        w2v_path=args.embedding_model)
+                        embedding_model_path=args.embedding_model)
     train_set = dataset.train_iter
     test_set = dataset.test_iter
 
@@ -103,7 +111,7 @@ if __name__ == '__main__':
                             char_embedding_size=args.char_hidden_size,
                             lstm_hidden_size=args.lstm_hidden_size,
                             num_lstm_layers=args.lstm_depth,
-                            embedding_model=args.embedding_model)
+                            use_external_embedding=args.embedding_model)
 
     cost = GeneralizedCost(costfunc=CrossEntropyMulti(usebits=True))
     optimizer = RMSProp(stochastic_round=args.rounding)
@@ -116,19 +124,16 @@ if __name__ == '__main__':
 
     # save model
     model_settings = {'sentence_len': args.sentence_len,
-                      'use_embeddings': args.use_w2v,
+                      'use_embeddings': args.embedding_model is not None,
                       'pos': args.use_pos,
                       'char_rnn': args.use_char_rnn,
-                      'y_vocab': dataset.y_vocab
+                      'y_vocab': dataset.y_vocab,
+                      'vocabs': dataset.vocabs,
                       }
 
-    model_settings.update({'vocabs': dataset.vocabs})
-    if args.use_w2v is True:
-        model_settings.update({'embedding_size': dataset.emb_size})
-
-    with open(args.settings + '.dat', 'wb') as fp:
+    with open(settings_path + '.dat', 'wb') as fp:
         pickle.dump(model_settings, fp)
-    model.save(args.model_name)
+    model.save(model_path)
 
     # tagging accuracy
     y_preds = model.predict(test_set)

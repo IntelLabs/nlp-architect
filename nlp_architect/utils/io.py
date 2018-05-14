@@ -13,13 +13,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
-
+import argparse
 import io
 import os
 import posixpath
 import zipfile
 from os import walk, path
-from pathlib import Path
 
 import requests
 from tqdm import tqdm
@@ -96,19 +95,33 @@ def validate(*args):
         If arg has the len attribute (such as string), range checks are performed on its length.
     """
     for arg in args:
-        if not isinstance(arg[0], arg[1]):
-            raise TypeError
-        if arg[0] and len(arg) == 4:
-            num = len(arg[0]) if hasattr(arg[0], '__len__') else arg[0]
-            if arg[2] and num < arg[2] or arg[3] and num > arg[3]:
-                raise ValueError
+        arg_val = arg[0]
+        arg_type = (arg[1],) if isinstance(arg[1], type) else arg[1]
+        if not isinstance(arg_val, arg_type):
+            raise TypeError('Expected type {}'.format(' or '.join([t.__name__ for t in arg_type])))
+        if arg_val is not None and len(arg) >= 4:
+            name = 'of ' + arg[4] if len(arg) == 5 else ''
+            arg_min = arg[2]
+            arg_max = arg[3]
+            if hasattr(arg_val, '__len__'):
+
+                val = 'Length'
+                num = len(arg_val)
+            else:
+
+                val = 'Value'
+                num = arg_val
+            if arg_min is not None and num < arg_min:
+                raise ValueError('{} {} must be greater or equal to {}'.format(val, name, arg_min))
+            if arg_max is not None and num >= arg_max:
+                raise ValueError('{} {} must be less than {}'.format(val, name, arg_max))
 
 
 def validate_existing_filepath(arg):
     """Validates an input argument is a path string to an existing file."""
     validate((arg, str, 0, 255))
     if not os.path.isfile(arg):
-        raise ValueError("{0} is not a path to existing file.".format(arg))
+        raise ValueError("{0} does not exist.".format(arg))
     return arg
 
 
@@ -116,7 +129,7 @@ def validate_existing_directory(arg):
     """Validates an input argument is a path string to an existing directory."""
     validate((arg, str, 0, 255))
     if not os.path.isdir(arg):
-        raise ValueError("{0} is not a path to existing directory".format(arg))
+        raise ValueError("{0} does not exist".format(arg))
     return arg
 
 
@@ -129,3 +142,21 @@ def sanitize_path(path):
     s_path = os.path.normpath('/' + path).lstrip('/')
     assert len(s_path) < 255
     return s_path
+
+
+def check(validator):
+    class CustomAction(argparse.Action):
+        def __call__(self, parser, namespace, values, option_string=None):
+            validator(values)
+            setattr(namespace, self.dest, values)
+
+    return CustomAction
+
+
+def check_size(min=None, max=None):
+    class CustomAction(argparse.Action):
+        def __call__(self, parser, namespace, values, option_string=None):
+            validate((values, self.type, min, max, self.dest))
+            setattr(namespace, self.dest, values)
+
+    return CustomAction

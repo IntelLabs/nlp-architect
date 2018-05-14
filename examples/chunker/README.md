@@ -10,13 +10,25 @@ Phrase chunking is a basic NLP task that consists of tagging parts of a sentence
 
 In this example the sentence can be divided into 4 phrases, `The quick brown fox` and `the fence` are noun phrases, `jumped` is a verb phrase and `over` is a prepositional phrase.
 
+## Documentation
+
+Full documentation of this example and the neural network model can be found here: [http://nlp_architect.nervanasys.com/chunker.html](http://localhost:8000/chunker.html)
+
 ## Dataset
 
-We used the CoNLL2000 dataset in our example for training a phrase chunker. More info about this dataset can be found [here](https://www.clips.uantwerpen.be/conll2000/chunking/).
+We used the CONLL2000 dataset in our example for training a phrase chunker. More info about the CONLL2000 shared task can be found [here](https://www.clips.uantwerpen.be/conll2000/chunking/).
+
+If CONLL2000 is not found in NLTK, `nlp_architect.data.conll2000.CONLL2000` will attempt to download it by `nltk.download('conll2000')` after user consent.
+
+Legal notice: NLTK is an open source software: [https://www.nltk.org/data.html](https://www.nltk.org/data.html). The source code is distributed under the terms of the Apache License Version 2.0 ([http://www.apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0)). The documentation is distributed under the terms of the Creative Commons Attribution-Noncommercial-No Derivative Works 3.0 United States license. The corpora are distributed under various licenses, as documented in their respective README files. The terms and conditions of the data set license apply. Intel does not grant any rights to the data files.
 
 ### Training
 Train a model with default parameters (only tokens, default network settings):  
-	`python train.py`
+
+```
+python train.py
+```
+
 Saving the model after training is done automatically:
 
 * `<chunker>` - Neon NN model file
@@ -27,7 +39,7 @@ Running inference on a trained model `chunker` and `chunker_settings.dat` on inp
 
 Quick example:
 ```
-python inference.py --model chunker.prm --parameters chunker_settings.dat --input inference_samples.txt
+python inference.py --model chunker.prm --settings chunker_settings.dat --input inference_samples.txt
 ```  
 
 **Note:** currently char-RNN features are not supported in inference models (will be added soon).
