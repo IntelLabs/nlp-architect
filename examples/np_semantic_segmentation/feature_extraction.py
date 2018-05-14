@@ -13,18 +13,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
-import sys
 
+import collections
+import nltk
+import nltk.collocations
+import nltk.corpus
 import numpy as np
 import requests
 from gensim.models.keyedvectors import KeyedVectors
-import nltk
 from nltk.corpus import wordnet as wn
 from nltk.stem.snowball import SnowballStemmer
-import nltk.collocations
-import nltk.corpus
-import collections
-from nlp_architect.utils.generic import license_prompt
 
 stemmer = SnowballStemmer("english")
 headers = {"Accept": "application/json"}

@@ -77,7 +77,7 @@ After downloading and unzipping the dataset, run
 save it in a CSV file (as expected for the model). the scripts read 2
 .tsv files ('tratz2011\_coarse\_grained\_random/train.tsv' and
 'tratz2011\_coarse\_grained\_random/val.tsv') and outputs 2 .csv files
-accordingly.
+accordingly to the same location.
 
 Quick example:
 

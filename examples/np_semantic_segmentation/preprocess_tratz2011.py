@@ -21,7 +21,10 @@ import argparse
 import csv
 import io
 import os
+
 from data import absolute_path
+
+from nlp_architect.utils.io import validate_existing_directory
 
 tratz2011_train_labeled_dict = {
     False: [55, 64, 67, 68, 100, 104, 121, 150, 444, 492, 782, 798, 878, 942, 952, 967, 990, 1012,
@@ -136,10 +139,8 @@ def preprocess_tratz_2011(folder_path):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Pre-process Tratz 2011 data from tsv to csv')
-    parser.add_argument('--data',
+    parser.add_argument('--data', type=validate_existing_directory,
                         help='path the Tratz_2011_dataset folder local path')
     args = parser.parse_args()
     data_path = absolute_path(args.data)
-    if not os.path.exists(data_path):
-        raise Exception('Not valid data file')
     preprocess_tratz_2011(data_path)

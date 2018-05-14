@@ -17,13 +17,13 @@
 from __future__ import unicode_literals, print_function, division, \
     absolute_import
 
-import os
-
 from neon import logger as neon_logger
 from neon.backends import gen_backend
 from neon.util.argparser import NeonArgparser
+
 from examples.np_semantic_segmentation.data import NpSemanticSegData, absolute_path
 from nlp_architect.models.np_semantic_segmentation import NpSemanticSegClassifier
+from nlp_architect.utils.io import validate_existing_filepath, validate_parent_exists
 
 
 def train_mlp_classifier(dataset, model_file_path, num_epochs, callback_args):
@@ -61,17 +61,13 @@ if __name__ == "__main__":
     # parse the command line arguments
     parser = NeonArgparser()
     parser.set_defaults(epochs=200)
-    parser.add_argument('--data', type=str,
+    parser.add_argument('--data', type=validate_existing_filepath,
                         help='Path to the CSV file where the prepared dataset is saved')
-    parser.add_argument('--model_path', type=str,
+    parser.add_argument('--model_path', type=validate_parent_exists,
                         help='Path to save the model')
     args = parser.parse_args()
     data_path = absolute_path(args.data)
-    if not isinstance(data_path, str) or not os.path.exists(data_path):
-        raise Exception('Not valid input file')
     model_path = absolute_path(args.model_path)
-    if not isinstance(model_path, str) or not os.path.exists(data_path):
-        raise Exception('Not valid model settings file')
     # generate backend
     be = gen_backend(batch_size=64)
     # load data sets from file
