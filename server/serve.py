@@ -30,7 +30,7 @@ import falcon
 import os.path
 from falcon_multipart.middleware import MultipartMiddleware
 from os.path import dirname
-from nlp_architect.utils.io import validate
+from nlp_architect.utils.io import validate, check_size
 
 sys.path.insert(0, dirname(dirname(dirname(os.path.abspath(__file__)))))
 logger = logging.getLogger(__name__)
@@ -295,9 +295,8 @@ def set_server_properties(api, service_name):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--name', help="the name of the service you want to upload", type=str,
-                        required=True)
+                        required=True, action=check_size(1, 30))
     args = parser.parse_args()
-    validate((args.name, str, 1, 30))
     app = application = falcon.API(middleware=[MultipartMiddleware()])
     if not is_valid_input(args.name):
         logger.error('ERROR: Invalid argument input for the server.')
