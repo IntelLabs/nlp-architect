@@ -32,7 +32,7 @@ from prepare_data import read_inference_input_examples_file
 from termcolor import colored
 
 from nlp_architect.models.most_common_word_sense import MostCommonWordSense
-from nlp_architect.utils.io import validate_existing_filepath
+from nlp_architect.utils.io import validate_existing_filepath, validate_parent_exists
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -69,9 +69,8 @@ if __name__ == "__main__":
     # parse the command line arguments
     parser = NeonArgparser()
 
-    parser.add_argument('--max_num_of_senses_to_search', default=3, type=int,
+    parser.add_argument('--max_num_of_senses_to_search', default=3, type=int, choices=[0, 100],
                         help='maximum number of senses that are tests')
-
     parser.add_argument('--input_inference_examples_file',
                         type=validate_existing_filepath,
                         default='data/input_inference_examples.csv',

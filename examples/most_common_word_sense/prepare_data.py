@@ -17,20 +17,20 @@
 Prepare the datasets for Most Common Word Sense training
 """
 
+import argparse
 import codecs
 import csv
 import logging
 import math
 import pickle
-import argparse
 
 import gensim
 import numpy as np
 from feature_extraction import extract_features_envelope
-from neon.util.argparser import NeonArgparser
 from sklearn.model_selection import train_test_split
 
-from nlp_architect.utils.io import validate_existing_directory, validate_existing_filepath
+from nlp_architect.utils.io import validate_existing_filepath, \
+    validate_parent_exists, validate
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -128,11 +128,11 @@ if __name__ == "__main__":
     parser.add_argument('--training_to_validation_size_ratio', default=0.8, type=float,
                         help='ratio between training and validation size')
     parser.add_argument('--data_set_file', default='data/data_set.pkl',
-                        type=validate_existing_directory,
-                        help='path the file where the train, valid and test sets are stored')
+                        type=validate_parent_exists,
+                        help='path the file where the train, valid and test sets will be stored')
 
     args = parser.parse_args()
-
+    validate((args.training_to_validation_size_ratio, float, 0, 1))
     # training set
     X_train = []
     y_train = []
