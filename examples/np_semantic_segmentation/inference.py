@@ -15,7 +15,6 @@
 # ******************************************************************************
 
 import csv
-import io
 import os
 
 from neon.backends import gen_backend
@@ -95,11 +94,10 @@ def write_results(predictions, output):
             the model's predictions
     """
     results_list = predictions.tolist()
-    out_file = io.open(output, 'w', encoding='utf-8')
-    writer = csv.writer(out_file, delimiter=',', quotechar='"')
-    for result in results_list:
-        writer.writerow([result])
-    out_file.close()
+    with open(output, 'w', encoding='utf-8') as out_file:
+        writer = csv.writer(out_file, delimiter=',', quotechar='"')
+        for result in results_list:
+            writer.writerow([result])
     print("Results of inference saved in {0}".format(output))
 
 

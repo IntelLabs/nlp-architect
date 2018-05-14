@@ -16,7 +16,6 @@
 
 import argparse
 import csv
-import io
 import math
 import os
 from multiprocessing import Pool
@@ -148,14 +147,13 @@ def write_to_csv(output, np_feature_vectors, np_dic, np_list):
         np_dic (dict): dict, keys: the noun phrase, value: the features
         np_list (list): features list
     """
-    out_file = io.open(output, 'w', encoding='utf-8')
-    writer = csv.writer(out_file, delimiter=',', quotechar='"')
-    print("prepared data CSV file is saved in {0}".format(output))
-    for i, _ in enumerate(np_feature_vectors):
-        np_vector = np_feature_vectors[i]
-        np_vector = numpy.append(np_vector, np_dic[np_list[i]])
-        writer.writerow(np_vector)
-    out_file.close()
+    with open(output, 'w', encoding='utf-8') as out_file:
+        writer = csv.writer(out_file, delimiter=',', quotechar='"')
+        print("prepared data CSV file is saved in {0}".format(output))
+        for i, _ in enumerate(np_feature_vectors):
+            np_vector = np_feature_vectors[i]
+            np_vector = numpy.append(np_vector, np_dic[np_list[i]])
+            writer.writerow(np_vector)
 
 
 def prepare_data(data_file, output_file, word2vec_file, http_prox=None, https_prox=None):
@@ -205,10 +203,9 @@ def read_csv_file_data(input_path):
     if not os.path.isabs(input_path):
         # handle case using default value\relative paths
         input_path = os.path.join(os.path.dirname(__file__), input_path)
-    input_file = io.open(input_path, 'r', encoding='utf-8-sig')
-    reader = csv.reader((line.replace('\0', '') for line in input_file))
-    reader_list = list(reader)
-    input_file.close()
+    with open(input_path, 'r', encoding='utf-8-sig') as input_file:
+        reader = csv.reader((line.replace('\0', '') for line in input_file))
+        reader_list = list(reader)
     return reader_list
 
 

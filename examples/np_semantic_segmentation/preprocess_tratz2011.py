@@ -19,7 +19,6 @@ from __future__ import unicode_literals, print_function, division, \
 
 import argparse
 import csv
-import io
 import os
 
 from data import absolute_path
@@ -86,17 +85,17 @@ def read_from_tratz_2011(file_full_path, labeled_dict):
         labeled_dict (dict): dictionary with prepered labels
     """
     # 1. read the data
-    input_file = io.open(file_full_path, 'r', encoding='utf-8-sig')
-    reader = csv.reader((line.replace('\0', '') for line in input_file))
-    reader_list = list(reader)
-    csv_data = []
-    for index, row in enumerate(reader_list):
-        if index in labeled_dict[False]:
-            csv_data.append(rebuild_row(row, False))
-        if index in labeled_dict[True]:
-            csv_data.append(rebuild_row(row, True))
-    # 2. write to csv file
-    write_csv(csv_data, file_full_path)
+    with open(file_full_path, 'r', encoding='utf-8-sig') as input_file:
+        reader = csv.reader((line.replace('\0', '') for line in input_file))
+        reader_list = list(reader)
+        csv_data = []
+        for index, row in enumerate(reader_list):
+            if index in labeled_dict[False]:
+                csv_data.append(rebuild_row(row, False))
+            if index in labeled_dict[True]:
+                csv_data.append(rebuild_row(row, True))
+        # 2. write to csv file
+        write_csv(csv_data, file_full_path)
 
 
 def write_csv(data, output):
@@ -109,12 +108,11 @@ def write_csv(data, output):
             the csv formated data
     """
     output_path = output[:-3] + 'csv'
-    out_file = io.open(output_path, 'w', encoding='utf-8')
-    writer = csv.writer(out_file, delimiter=',', quotechar='"')
-    print("CSV file is saved in {0}".format(output_path))
-    for result_row in data:
-        writer.writerow(result_row)
-    out_file.close()
+    with open(output_path, 'w', encoding='utf-8') as out_file:
+        writer = csv.writer(out_file, delimiter=',', quotechar='"')
+        print("CSV file is saved in {0}".format(output_path))
+        for result_row in data:
+            writer.writerow(result_row)
 
 
 def preprocess_tratz_2011(folder_path):
