@@ -10,11 +10,9 @@ requests
 nltk
 sklearn
 termcolor
-palmettopy
 falcon
 falcon_multipart
 pillow
-Ptable
 spacy>=2.0
 keras==2.1.5
 git+https://www.github.com/keras-team/keras-contrib.git#egg=keras-contrib
