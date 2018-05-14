@@ -105,11 +105,9 @@ def validate(*args):
             arg_min = arg[2]
             arg_max = arg[3]
             if hasattr(arg_val, '__len__'):
-
                 val = 'Length'
                 num = len(arg_val)
             else:
-
                 val = 'Value'
                 num = arg_val
             if arg_min is not None and num < arg_min:
@@ -128,6 +126,7 @@ def validate_existing_filepath(arg):
 
 def validate_existing_directory(arg):
     """Validates an input argument is a path string to an existing directory."""
+    arg = path.abspath(arg)
     validate((arg, str, 0, 255))
     if not os.path.isdir(arg):
         raise ValueError("{0} does not exist".format(arg))
