@@ -20,11 +20,9 @@ BIST Dependency Parser
 Graph-based dependency parser using BiLSTM feature extractors
 ==============================================================
 
-The techniques behind the parser are described in the paper `Simple and
+The techniques behind the parser are described in the `Simple and
 Accurate Dependency Parsing Using Bidirectional LSTM Feature
 Representations <https://www.transacl.org/ojs/index.php/tacl/article/viewFile/885/198>`__.
-Further materials could be found
-`here <http://elki.cc/#/article/Simple%20and%20Accurate%20Dependency%20Parsing%20Using%20Bidirectional%20LSTM%20Feature%20Representations>`__.
 
 Usage
 =====
@@ -59,7 +57,7 @@ To train a parsing model with default parameters, type the following:
 Exhaustive Example
 ------------------
 
-Optionally, the following model/trainng parameters can be supplied (overriding their default
+Optionally, the following model/training parameters can be supplied (overriding their default
 values listed below):
 
 .. code:: python

@@ -25,10 +25,10 @@ from nlp_architect.utils.io import validate, validate_existing_filepath
 class BISTModel(object):
     """
     BIST parser model class.
+    This class handles training, prediction, loading and saving of a BIST parser model.
     After the model is initialized, it accepts a CoNLL formatted dataset as input, and learns to
     output dependencies for new input.
 
-    This class handles training, prediction, loading and saving of a BIST parser model.
     Args:
         activation (str, optional): Activation function to use.
         lstm_layers (int, optional): Number of LSTM layers to use.
@@ -51,6 +51,7 @@ class BISTModel(object):
     def fit(self, dataset, epochs=10, dev=None):
         """
         Trains a BIST model on an annotated dataset in CoNLL file format.
+
         Args:
             dataset (str): Path to input dataset for training, formatted in CoNLL/U format.
             epochs (int, optional): Number of learning iterations.
@@ -78,6 +79,7 @@ class BISTModel(object):
     def predict(self, dataset, evaluate=False):
         """
         Runs inference with the BIST model on a dataset in CoNLL file format.
+
         Args:
             dataset (str): Path to input CoNLL file.
             evaluate (bool, optional): Write prediction and evaluation files to dataset's folder.
@@ -100,6 +102,7 @@ class BISTModel(object):
     def predict_conll(self, dataset):
         """
         Runs inference with the BIST model on a dataset in CoNLL object format.
+
         Args:
             dataset (list of list of ConllEntry): Input in the form of ConllEntry objects.
         Returns:
