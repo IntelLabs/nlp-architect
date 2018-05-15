@@ -51,9 +51,7 @@ import ngraph.transformers as ngt
 from nlp_architect.data.babi_dialog import BABI_Dialog
 from nlp_architect.models.memn2n_dialogue import MemN2N_Dialog
 from utils import interactive_loop
-from nlp_architect.utils.io import sanitize_path
-from nlp_architect.utils.io import validate, validate_existing_directory, \
-    validate_existing_filepath, validate_parent_exists, check_size
+from nlp_architect.utils.io import validate_existing_filepath, validate_parent_exists, validate
 
 # parse the command line arguments
 parser = NgraphArgparser(__doc__)
@@ -61,19 +59,19 @@ parser.add_argument(
     '--task',
     type=int,
     default='1',
-    choices=range(
-        1,
-        7),
+    choices=range(1, 7),
     help='the task ID to train/test on from bAbI-dialog dataset (1-6)')
 parser.add_argument(
     '--emb_size',
     type=int,
     default='32',
-    help='Size of the word-embedding used in the model. (default 128)',
-    action=check_size(1, 2000))
-parser.add_argument('--nhops', type=int, default='3',
-                    help='Number of memory hops in the network',
-                    action=check_size(1, 20))
+    help='Size of the word-embedding used in the model. (default 128)')
+parser.add_argument(
+    '--nhops',
+    type=int,
+    default='3',
+    help='Number of memory hops in the network',
+    choices=range(1,10))
 parser.add_argument(
     '--use_match_type',
     default=False,
@@ -103,15 +101,21 @@ parser.add_argument(
 parser.add_argument(
     '--model_file',
     default='memn2n_weights.npz',
-    help='File to load model weights from.')
+    help='File to load model weights from.',
+    type=str)
 
 parser.set_defaults(batch_size=32, epochs=200)
 args = parser.parse_args()
 
+validate((args.emb_size, int, 1, 10000),
+         (args.eps, float, 1e-15, 1e-2))
+
 # Sanitize inputs
-model_file = sanitize_path(args.model_file)
+validate_existing_filepath(args.model_file)
+model_file = args.model_file
 assert model_file.endswith('.npz')
-data_dir = sanitize_path(args.data_dir)
+validate_parent_exists(args.data_dir)
+data_dir = args.data_dir
 
 babi = BABI_Dialog(
     path=data_dir,
