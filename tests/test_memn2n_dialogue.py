@@ -55,8 +55,6 @@ def lut_update_ref(error, lut, idx, pad_idx):
             dw_ref[wrd_id, :] = np.sum(error.take(group[0], axis=0), axis=0)
     return dw_ref
 
-@pytest.mark.parametrize('show_tok', [True, False])
-@pytest.mark.parametrize('show_doc', [True, False])
 @pytest.mark.parametrize('lut_args', [lut_args])
 def test_lut(lut_args):
     """
