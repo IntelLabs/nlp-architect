@@ -124,10 +124,6 @@ parser = argparse.ArgumentParser(
     ' creates pairs of window<TAB>entity when used with entities.'
 )
 parser.add_argument('data_dir', type=str, help='name of root directory for files')
-# parser.add_argument('input_file', type=str, nargs='+',
-#     help='name of a input file in memnns format')
-parser.add_argument('-o', '--output_file', type=str,
-                    help='name of a output file, otherwise data_dir will be used')
 parser.add_argument('-n', type=int, help='Max number of examples to process.',
                     action=check_size(1, 100000000))
 parser.add_argument('-e', '--entities', type=str,
@@ -159,277 +155,263 @@ parser.add_argument('-t', '--num_threads', type=int, default=4,
 args = vars(parser.parse_args())
 
 validate_parent_exists(args['data_dir'])
-if args['output_file']:
-    validate_parent_exists(args['output_file'])
 if args['entities']:
     validate_parent_exists(args['entities'])
 validate((args['window_size'], str, 1, 100), (args['double_dict'], str, 1, 100))
 
 beg = time.time()
 
-if args['output_file']:
-    if not os.path.exists('/'.join(args['output_file'].split('/')[:-1])):
-        raise Exception('Not a valid output file path')
-    else:
-        out = open(args['output_file'], 'w')
-elif args['data_dir']:
-    args['output_file'] = os.path.expanduser(args['data_dir'] +
-                                             '/movieqa/lower_wiki-w=0-d=3-m-4.txt')
-    out = open(args['output_file'], 'w')
+if args['data_dir']:
     # also set the entities and input file here
     args['entities'] = os.path.expanduser(args['data_dir'] +
                                           '/movieqa/knowledge_source/entities.txt')
     args['input_file'] = [os.path.expanduser(args['data_dir'] +
                                              '/movieqa/knowledge_source/wiki.txt')]
 else:
-    out = sys.stdout
+    ValueError("No data_dir given.")
 
-try:
-    WS = [int(int(w)) for w in args['window_size'].split(',')]
-    DW = None
-    if args['double_dict']:
-        DW = [int(int(w)) for w in args['double_dict'].split(',')]
-        if len(WS) < len(DW):
-            raise RuntimeError('must have at least as many window sizes as ' +
-                               'double-dict extended window sizes.')
-except ValueError:
-    raise ValueError('Incorrect format for window size, should be CSV integers')
+with open(os.path.expanduser(args['data_dir'] +
+                                     '/movieqa/lower_wiki-w=0-d=3-m-4.txt'), 'w') as out:
+    try:
+        WS = [int(int(w)) for w in args['window_size'].split(',')]
+        DW = None
+        if args['double_dict']:
+            DW = [int(int(w)) for w in args['double_dict'].split(',')]
+            if len(WS) < len(DW):
+                raise RuntimeError('must have at least as many window sizes as ' +
+                                   'double-dict extended window sizes.')
+    except ValueError:
+        raise ValueError('Incorrect format for window size, should be CSV integers')
 
-ent_list = []
-re_list = []
-entities = {}
-ent_rev = {}
-if 'entities' in args:
-    if args['output_file']:
-        print('Processing entity file...')
-    if not os.path.exists(args['entities']):
-        raise Exception('Not a valid entities file path')
-    else:
-        with open(args['entities']) as read:
-            for l in read:
-                l = l.strip().lower()
-                if len(l) > 0:
-                    ent_list.append(l)
-        ent_list.sort(key=lambda x: -len(x))
-        for i in range(len(ent_list)):
-            k = ent_list[i]
-            if k not in ['$\n', 's\n']:
-                v = 'ENTITY_{}'.format(i)
-                entities[k] = v
-                ent_rev[v] = k
-        re_list = [
-            (
-                re.compile('\\b{}\\b'.format(re.escape(e))),
-                '{}'.format(entities[e])
-            ) for e in ent_list
-        ]
-else:
-    args['all_windows'] = True
-
-splitter = re.compile('\\b.*?\S.*?(?:\\b|$)')
-q_out = Queue()
-
-
-def process_example(ex):
-    windows = []
+    ent_list = []
+    re_list = []
+    entities = {}
+    ent_rev = {}
     if 'entities' in args:
-        # replace entities with single tokens
-        for r, v in re_list:
-            ex = r.sub(v, ex)
-    if args['dontmerge']:
-        chunks = ex.split('\n')
+        print('Processing entity file...')
+        if not os.path.exists(args['entities']):
+            raise Exception('Not a valid entities file path')
+        else:
+            with open(args['entities']) as read:
+                for l in read:
+                    l = l.strip().lower()
+                    if len(l) > 0:
+                        ent_list.append(l)
+            ent_list.sort(key=lambda x: -len(x))
+            for i in range(len(ent_list)):
+                k = ent_list[i]
+                if k not in ['$\n', 's\n']:
+                    v = 'ENTITY_{}'.format(i)
+                    entities[k] = v
+                    ent_rev[v] = k
+            re_list = [
+                (
+                    re.compile('\\b{}\\b'.format(re.escape(e))),
+                    '{}'.format(entities[e])
+                ) for e in ent_list
+            ]
     else:
-        ex = ex.replace('\n', ' ')
-        chunks = [ex]
+        args['all_windows'] = True
 
-    split = [t.strip() for t in splitter.findall(chunks[0])]
-    movie = split.pop(0)
-    # if 'entities' in args:
-    #     # revert movie token
-    #     for k, v in ent_rev.items():
-    #         if k in movie:
-    #             movie = movie.replace(k, v)
-    #             break
-    for i in range(len(chunks)):
-        chunk = chunks[i]
-        if i > 0:
-            split = [t.strip() for t in splitter.findall(chunk)]
-        sz = len(split)
-        for i in range(sz):
-            if args['all_windows'] or split[i] in ent_rev:
-                # loop over window sizes
-                for j in range(len(WS)):
-                    ws = WS[j]  # current window size
-                    win = []
-                    # create window
-                    for w in range(max(i - ws, 0), min(i + ws + 1, sz)):
-                        if w == i and args['replace_centroids']:
-                            win.append('<NULL>')
-                        else:
-                            win.append(split[w])
+    splitter = re.compile('\\b.*?\S.*?(?:\\b|$)')
+    q_out = Queue()
 
-                    # now check for second-dict window
-                    # (need an non-nil d value higher than w)
-                    use_second_dict = (
-                        DW is not None and
-                        j < len(DW) and
-                        DW[j] > ws
-                    )
-                    if use_second_dict:
-                        dw = DW[j]
-                        b1 = max(i - dw, 0)
-                        b2 = max(i - ws, 0)
-                        b3 = min(i + ws + 1, sz)
-                        b4 = min(i + dw + 1, sz)
-                        pre = (
-                            ['{}'.format(e) for e in split[b1:b2]]
-                            if b1 < b2 else []
-                        )
-                        post = (
-                            ['{}'.format(e) for e in split[b3:b4]]
-                            if b4 > b3 else []
-                        )
-                        win = pre + win + post
 
-                    join = ' '.join(win)
-                    if 'entities' in args:
-                        # put entities back in
-                        skip_idx = 0
-                        while True:
-                            fst_idx = join.find('__', skip_idx)
-                            if fst_idx > 0:
-                                snd_idx = join.find('__', fst_idx + 2)
-                                k = join[fst_idx:snd_idx + 2]
-                                if k in ent_rev and False:
-                                    join = join.replace(k, ent_rev[k])
-                                else:
-                                    skip_idx = snd_idx + 2
+    def process_example(ex):
+        windows = []
+        if 'entities' in args:
+            # replace entities with single tokens
+            for r, v in re_list:
+                ex = r.sub(v, ex)
+        if args['dontmerge']:
+            chunks = ex.split('\n')
+        else:
+            ex = ex.replace('\n', ' ')
+            chunks = [ex]
+
+        split = [t.strip() for t in splitter.findall(chunks[0])]
+        movie = split.pop(0)
+        # if 'entities' in args:
+        #     # revert movie token
+        #     for k, v in ent_rev.items():
+        #         if k in movie:
+        #             movie = movie.replace(k, v)
+        #             break
+        for i in range(len(chunks)):
+            chunk = chunks[i]
+            if i > 0:
+                split = [t.strip() for t in splitter.findall(chunk)]
+            sz = len(split)
+            for i in range(sz):
+                if args['all_windows'] or split[i] in ent_rev:
+                    # loop over window sizes
+                    for j in range(len(WS)):
+                        ws = WS[j]  # current window size
+                        win = []
+                        # create window
+                        for w in range(max(i - ws, 0), min(i + ws + 1, sz)):
+                            if w == i and args['replace_centroids']:
+                                win.append('<NULL>')
                             else:
-                                break
-                    sentence = join
-                    if args['movie_in_all']:
-                        # if use_second_dict:
-                        #     sentence = '1:' + movie + ' ' + sentence
-                        # else:
-                        sentence = movie + ' ' + sentence
-                    if args['inverse']:
-                        sentence = '__WINDOW_CENTER__ ' + sentence
-                    # center = (
-                    #     ent_rev[split[i]] if split[i] in ent_rev else split[i]
-                    # )
-                    center = (
-                        split[i]
-                    )
-                    if not (args['inverse'] and center == movie):
-                        windows.append((
-                            sentence,
-                            center
-                        ))
-                    if args['inverse']:
-                        i_join = join
-                        if args['replace_centroids']:
-                            i_join = i_join.replace('<NULL>', center)
-                        windows.append((
-                            '__MOVIE__ ' + i_join,
-                            movie
-                        ))
-    q_out.put(
-        '\n'.join(
-            '{} {}'.format(
-                i + 1, '\t'.join(windows[i])
-            )
-            for i in range(len(windows))
-        ) + '\n\n'
-    )
+                                win.append(split[w])
+
+                        # now check for second-dict window
+                        # (need an non-nil d value higher than w)
+                        use_second_dict = (
+                            DW is not None and
+                            j < len(DW) and
+                            DW[j] > ws
+                        )
+                        if use_second_dict:
+                            dw = DW[j]
+                            b1 = max(i - dw, 0)
+                            b2 = max(i - ws, 0)
+                            b3 = min(i + ws + 1, sz)
+                            b4 = min(i + dw + 1, sz)
+                            pre = (
+                                ['{}'.format(e) for e in split[b1:b2]]
+                                if b1 < b2 else []
+                            )
+                            post = (
+                                ['{}'.format(e) for e in split[b3:b4]]
+                                if b4 > b3 else []
+                            )
+                            win = pre + win + post
+
+                        join = ' '.join(win)
+                        if 'entities' in args:
+                            # put entities back in
+                            skip_idx = 0
+                            while True:
+                                fst_idx = join.find('__', skip_idx)
+                                if fst_idx > 0:
+                                    snd_idx = join.find('__', fst_idx + 2)
+                                    k = join[fst_idx:snd_idx + 2]
+                                    if k in ent_rev and False:
+                                        join = join.replace(k, ent_rev[k])
+                                    else:
+                                        skip_idx = snd_idx + 2
+                                else:
+                                    break
+                        sentence = join
+                        if args['movie_in_all']:
+                            # if use_second_dict:
+                            #     sentence = '1:' + movie + ' ' + sentence
+                            # else:
+                            sentence = movie + ' ' + sentence
+                        if args['inverse']:
+                            sentence = '__WINDOW_CENTER__ ' + sentence
+                        # center = (
+                        #     ent_rev[split[i]] if split[i] in ent_rev else split[i]
+                        # )
+                        center = (
+                            split[i]
+                        )
+                        if not (args['inverse'] and center == movie):
+                            windows.append((
+                                sentence,
+                                center
+                            ))
+                        if args['inverse']:
+                            i_join = join
+                            if args['replace_centroids']:
+                                i_join = i_join.replace('<NULL>', center)
+                            windows.append((
+                                '__MOVIE__ ' + i_join,
+                                movie
+                            ))
+        q_out.put(
+            '\n'.join(
+                '{} {}'.format(
+                    i + 1, '\t'.join(windows[i])
+                )
+                for i in range(len(windows))
+            ) + '\n\n'
+        )
 
 
-# multithreading code
-finished = Condition()
-queued_exs = Value('i', 0)
-proced_exs = Value('i', 0)
-# keep at most 100 examples ready per thread queued (to save memory)
-q = Queue(args['num_threads'] * 100)
+    # multithreading code
+    finished = Condition()
+    queued_exs = Value('i', 0)
+    proced_exs = Value('i', 0)
+    # keep at most 100 examples ready per thread queued (to save memory)
+    q = Queue(args['num_threads'] * 100)
 
 
-def load(ex):
-    global queued_exs
-    queued_exs.value += 1
-    q.put(ex)
+    def load(ex):
+        global queued_exs
+        queued_exs.value += 1
+        q.put(ex)
 
 
-def run():
-    while True:
-        ex = q.get()
-        process_example(ex)
+    def run():
+        while True:
+            ex = q.get()
+            process_example(ex)
 
 
-def write():
-    global proced_exs
-    while True:
-        output = q_out.get()
-        out.write(output)
-        with proced_exs.get_lock():
-            proced_exs.value += 1
-        if q_out.empty() and queued_exs.value - proced_exs.value == 0:
-            out.flush()
-            with finished:
-                finished.notify_all()
+    def write():
+        global proced_exs
+        while True:
+            output = q_out.get()
+            out.write(output)
+            with proced_exs.get_lock():
+                proced_exs.value += 1
+            if q_out.empty() and queued_exs.value - proced_exs.value == 0:
+                out.flush()
+                with finished:
+                    finished.notify_all()
 
 
-threads = []
-threads.append(Process(target=write))
-for i in range(args['num_threads']):
-    threads.append(Process(target=run))
-for t in threads:
-    t.start()
-if args['output_file']:
+    threads = []
+    threads.append(Process(target=write))
+    for i in range(args['num_threads']):
+        threads.append(Process(target=run))
+    for t in threads:
+        t.start()
     print('Executing with {} threads.'.format(args['num_threads']))
 
-mid = time.time()
-# import ipdb; ipdb.set_trace()
-for f in args['input_file']:
-    if args['output_file']:
-        # output is free to print debug info
+    mid = time.time()
+    # import ipdb; ipdb.set_trace()
+    for f in args['input_file']:
         print('Processing file {}...'.format(f))
-    if not os.path.exists(f):
-        raise Exception('Not a valid file {}...'.format(f))
-    else:
-        with open(f) as read:
-            first = True
-            cnt_exs = 0
-            full_ex = ''
+        if not os.path.exists(f):
+            raise Exception('Not a valid file {}...'.format(f))
+        else:
+            with open(f) as read:
+                first = True
+                cnt_exs = 0
+                full_ex = ''
 
-            for line in read:
-                line = line.strip().lower()
-                if line == '':
-                    continue
-                idx = int(line[:line.find(' ')])
-                line = line[line.find(' ') + 1:]
-                if idx != 1 or full_ex == '':
-                    full_ex = full_ex + line + '\n'
-                    continue  # next line
-                else:
-                    cnt_exs += 1
+                for line in read:
+                    line = line.strip().lower()
+                    if line == '':
+                        continue
+                    idx = int(line[:line.find(' ')])
+                    line = line[line.find(' ') + 1:]
+                    if idx != 1 or full_ex == '':
+                        full_ex = full_ex + line + '\n'
+                        continue  # next line
+                    else:
+                        cnt_exs += 1
+                        load(full_ex.strip())
+                        if args['n'] is not None and cnt_exs >= args['n']:
+                            full_ex = ''
+                            break
+                        full_ex = line + '\n'
+                # process last full_ex if out of new lines
+                if full_ex != '':
                     load(full_ex.strip())
-                    if args['n'] is not None and cnt_exs >= args['n']:
-                        full_ex = ''
-                        break
-                    full_ex = line + '\n'
-            # process last full_ex if out of new lines
-            if full_ex != '':
-                load(full_ex.strip())
 
-while queued_exs.value - proced_exs.value > 0:
-    with finished:
-        finished.wait()
-
-out.close()
+    while queued_exs.value - proced_exs.value > 0:
+        with finished:
+            finished.wait()
 
 for t in threads:
     t.terminate()
 
 fin = time.time()
-if args['output_file']:
-    print('Time processing entities: {} s'.format(round(mid - beg)))
-    print('Time processing examples: {} s'.format(round(fin - mid)))
-    print('Total time: {} s'.format(round(fin - beg)))
+
+print('Time processing entities: {} s'.format(round(mid - beg)))
+print('Time processing examples: {} s'.format(round(fin - mid)))
+print('Total time: {} s'.format(round(fin - beg)))

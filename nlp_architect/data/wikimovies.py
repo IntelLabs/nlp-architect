@@ -263,26 +263,29 @@ class WIKIMOVIES(object):
         self.data_dict = {}
         self.vocab = None
         workdir, filepath = valid_path_append(path, '', self.filename)
-        if not os.path.exists(filepath):
-            if license_prompt('WikiMovies',
-                              'https://research.fb.com/downloads/babi/',
-                              self.path) is False:
-                sys.exit(0)
-
-            fetch_file(self.url, self.filename, filepath, self.size)
+        babi_dir_name = self.filename.split('.')[0]
 
         if subset == 'wiki-entities':
             subset_folder = 'wiki_entities'
         else:
             subset_folder = subset
 
-        babi_dir_name = self.filename.split('.')[0]
         file_base = babi_dir_name + '/questions/' + subset_folder + '/' + subset + '_qa_{}.txt'
         train_file = os.path.join(workdir, file_base.format('train'))
         test_file = os.path.join(workdir, file_base.format('test'))
 
         entity_file_path = babi_dir_name + '/knowledge_source/entities.txt'
         entity_file = os.path.join(workdir, entity_file_path)
+
+        # Check for the existence of the entity file
+        # If it isn't there then we know we need to fetch everything
+        if not os.path.exists(entity_file):
+            if license_prompt('WikiMovies',
+                              'https://research.fb.com/downloads/babi/',
+                              self.path) is False:
+                sys.exit(0)
+
+            fetch_file(self.url, self.filename, filepath, self.size)
 
         knowledge_file_path = babi_dir_name + '/knowledge_source/' + subset_folder + '/' \
             + subset_folder + '_kb.txt'
