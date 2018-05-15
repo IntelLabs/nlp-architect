@@ -199,7 +199,7 @@ if __name__ == '__main__':
 
     parser.add_argument('--data_path',help='enter path where training data and the \
                         glove embeddings were downloaded',
-                        type=str,action=check_size(1,1000))
+                        type=str)
 
     parser.add_argument('--no_preprocess_glove',action="store_true",
         help='Chose whether or not to preprocess glove embeddings')

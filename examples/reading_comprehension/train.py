@@ -56,7 +56,7 @@ Training script for reading comprehension model
 parser = NgraphArgparser(__doc__)
 
 parser.add_argument('--data_path', help='enter path for training data',
-                    type=str,action=check_size(1,1000))
+                    type=str)
 
 parser.add_argument('--gpu_id', default="0", help='enter gpu id',
                     type=str,action=check_size(0,10))
