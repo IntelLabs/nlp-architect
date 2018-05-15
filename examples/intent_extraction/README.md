@@ -19,7 +19,7 @@ applies to (to whom?) and the object of the action (what?). In this case, *Siri*
 ## SNIPS NLU benchmark
 A NLU benchmark containing ~16K sentences with 7 intent types. Each intent has about 2000 sentences
 
-The dataset can be downloaded from [https://github.com/snipsco/nlu-benchmark](https://github.com/snipsco/nlu-benchmark). SNIPS has CC0 1.0 license [https://github.com/snipsco/nlu-benchmark/blob/master/LICENSE](https://github.com/snipsco/nlu-benchmark/blob/master/LICENSE). The terms and conditions of the data set license apply. Intel does not grant any rights to the data files.
+The dataset can be downloaded from [https://github.com/snipsco/nlu-benchmark](https://github.com/snipsco/nlu-benchmark). The terms and conditions of the data set license apply. Intel does not grant any rights to the data files.
 
 Once the dataset is downloaded, point `<SNIPS folder/2017-06-custom-intent-engines` as the dataset path to `nlp_architect.data.intent_datasets.SNIPS`.
 

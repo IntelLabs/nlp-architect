@@ -82,7 +82,7 @@ SNIPS NLU benchmark
 A NLU benchmark containing ~16K sentences with 7 intent types. Each intent has about 2000 sentences
 for training the model and 100 sentences for validation. ``nlp_architect.data.intent_datasets.SNIPS`` is a class that loads the dataset from the repository and encodes the data into BIO format. The words are encoded with sparse int representation and word characters are extracted for character embeddings.
 
-The dataset can be downloaded from https://github.com/snipsco/nlu-benchmark, and more info on the benchmark can be found here_. SNIPS has CC0 1.0 license (https://github.com/snipsco/nlu-benchmark/blob/master/LICENSE). The terms and conditions of the data set license apply. Intel does not grant any rights to the data files.
+The dataset can be downloaded from https://github.com/snipsco/nlu-benchmark, and more info on the benchmark can be found here_. The terms and conditions of the data set license apply. Intel does not grant any rights to the data files.
 
 Once the dataset is downloaded, point ``<SNIPS folder>/2017-06-custom-intent-engines`` as the dataset path to ``nlp_architect.data.intent_datasets.SNIPS``.
 
@@ -156,7 +156,7 @@ Minor differences might occur in final results. Each model was trained for 100 e
 
 .. note::
 
-  We used ATIS dataset from: https://github.com/Microsoft/CNTK/tree/master/Examples/LanguageUnderstanding/ATIS/Data, License: https://github.com/Microsoft/CNTK/blob/master/LICENSE.md.  The terms and conditions of the data set license apply. Intel does not grant any rights to the data files.
+  We used ATIS dataset from: https://github.com/Microsoft/CNTK/tree/master/Examples/LanguageUnderstanding/ATIS/Data. Intel does not grant any rights to the data files.
 
 Citations
 ----------------
