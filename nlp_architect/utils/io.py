@@ -17,6 +17,7 @@ import argparse
 import io
 import os
 import posixpath
+import re
 import zipfile
 from os import walk, path
 
@@ -104,11 +105,9 @@ def validate(*args):
             arg_min = arg[2]
             arg_max = arg[3]
             if hasattr(arg_val, '__len__'):
-
                 val = 'Length'
                 num = len(arg_val)
             else:
-
                 val = 'Value'
                 num = arg_val
             if arg_min is not None and num < arg_min:
@@ -127,6 +126,7 @@ def validate_existing_filepath(arg):
 
 def validate_existing_directory(arg):
     """Validates an input argument is a path string to an existing directory."""
+    arg = path.abspath(arg)
     validate((arg, str, 0, 255))
     if not os.path.isdir(arg):
         raise ValueError("{0} does not exist".format(arg))
@@ -160,3 +160,17 @@ def check_size(min=None, max=None):
             setattr(namespace, self.dest, values)
 
     return CustomAction
+
+
+def validate_proxy_path(arg):
+    """Validates an input argument is a valid proxy path or None"""
+    proxy_validation_regex = re.compile(
+        r'^(?:http|ftp)s?://'  # http:// or https://
+        r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|'
+        r'localhost|'  # localhost...
+        r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})'  # ...or ip
+        r'(?::\d+)?'  # optional port
+        r'(?:/?|[/?]\S+)$', re.IGNORECASE)
+    if arg is not None and re.match(proxy_validation_regex, arg) is None:
+        raise ValueError("{0} is not a valid proxy path".format(arg))
+    return arg

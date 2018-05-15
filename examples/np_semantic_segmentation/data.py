@@ -14,34 +14,24 @@
 # limitations under the License.
 # ******************************************************************************
 
-from __future__ import unicode_literals, print_function, division, \
-    absolute_import
-
 import argparse
 import csv
-import io
 import math
 import os
-import re
 from multiprocessing import Pool
 
 import numpy
 from neon.data import ArrayIterator
 from tqdm import tqdm
+
 import examples.np_semantic_segmentation.feature_extraction as fe
+from nlp_architect.utils.io import validate_existing_filepath, validate_parent_exists, \
+    validate_proxy_path
 
 wordnet = None
 wikidata = None
-palmetto = None
+nltk_collocations = None
 word2vec = None
-
-proxy_validation_regex = regex = re.compile(
-        r'^(?:http|ftp)s?://'  # http:// or https://
-        r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|'
-        r'localhost|'  # localhost...
-        r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})'  # ...or ip
-        r'(?::\d+)?'  # optional port
-        r'(?:/?|[/?]\S+)$', re.IGNORECASE)
 
 
 def build_feature_vector(np):
@@ -124,15 +114,15 @@ def expand_np_candidates(np, stemming):
 
 def get_pmi_score(np):
     """
-    Extract "npmi" score & "uci" score from Palmetto service
+    Extract NLTKCollocations score & Chi-square score from NLTK bigram service, on brown dataset
 
     Args:
         np (str): a noun-phrase
 
     Returns:
-        list(float): a list with "NPMI" score & "UCI" score
+        list(float): a list with NLTKCollocations score & "Chi-square" score
     """
-    return palmetto.get_pmi_score(np)
+    return nltk_collocations.get_pmi_score(np)
 
 
 def get_all_case_combinations(np):
@@ -157,14 +147,13 @@ def write_to_csv(output, np_feature_vectors, np_dic, np_list):
         np_dic (dict): dict, keys: the noun phrase, value: the features
         np_list (list): features list
     """
-    out_file = io.open(output, 'w', encoding='utf-8')
-    writer = csv.writer(out_file, delimiter=',', quotechar='"')
-    print("prepared data CSV file is saved in {0}".format(output))
-    for i, _ in enumerate(np_feature_vectors):
-        np_vector = np_feature_vectors[i]
-        np_vector = numpy.append(np_vector, np_dic[np_list[i]])
-        writer.writerow(np_vector)
-    out_file.close()
+    with open(output, 'w', encoding='utf-8') as out_file:
+        writer = csv.writer(out_file, delimiter=',', quotechar='"')
+        print("prepared data CSV file is saved in {0}".format(output))
+        for i, _ in enumerate(np_feature_vectors):
+            np_vector = np_feature_vectors[i]
+            np_vector = numpy.append(np_vector, np_dic[np_list[i]])
+            writer.writerow(np_vector)
 
 
 def prepare_data(data_file, output_file, word2vec_file, http_prox=None, https_prox=None):
@@ -180,10 +169,11 @@ def prepare_data(data_file, output_file, word2vec_file, http_prox=None, https_pr
         https_prox(str): https_proxy
     """
     # init_resources:
-    global wordnet, wikidata, palmetto, word2vec
+    global wordnet, wikidata, nltk_collocations, word2vec
     wordnet = fe.Wordnet()
     wikidata = fe.Wikidata(http_prox, https_prox)
-    palmetto = fe.PalmettoClass()
+    print("Start loading NLTK Collocation scoring (this might take a while...)")
+    nltk_collocations = fe.NLTKCollocations()
     print("Start loading Word2Vec model (this might take a while...)")
     word2vec = fe.Word2Vec(word2vec_file)
     print("Finish loading feature extraction services")
@@ -213,10 +203,9 @@ def read_csv_file_data(input_path):
     if not os.path.isabs(input_path):
         # handle case using default value\relative paths
         input_path = os.path.join(os.path.dirname(__file__), input_path)
-    input_file = io.open(input_path, 'r', encoding='utf-8-sig')
-    reader = csv.reader((line.replace('\0', '') for line in input_file))
-    reader_list = list(reader)
-    input_file.close()
+    with open(input_path, 'r', encoding='utf-8-sig') as input_file:
+        reader = csv.reader((line.replace('\0', '') for line in input_file))
+        reader_list = list(reader)
     return reader_list
 
 
@@ -339,29 +328,20 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description='Prepare data')
 
-    parser.add_argument('--data',
+    parser.add_argument('--data', type=validate_existing_filepath,
                         help='path the CSV file where the raw dataset is saved')
-    parser.add_argument('--output',
+    parser.add_argument('--output', type=validate_parent_exists,
                         help='path the CSV file where the prepared dataset will be saved')
-    parser.add_argument('--w2v_path',
+    parser.add_argument('--w2v_path', type=validate_existing_filepath,
                         help='path to the word embedding\'s model')
     parser.add_argument('--http_proxy', help='system\'s http proxy',
-                        default=None)
+                        type=validate_proxy_path, default=None)
     parser.add_argument('--https_proxy', help='system\'s https proxy',
-                        default=None)
+                        type=validate_proxy_path, default=None)
     args = parser.parse_args()
     data_path = absolute_path(args.data)
-    if not os.path.exists(data_path):
-        raise Exception('Not valid data file')
     word2vec_path = args.w2v_path
-    if not os.path.exists(word2vec_path):
-        raise Exception('Not valid word2vec model file')
     output_path = absolute_path(args.output)
-    if not isinstance(output_path, str) or not os.path.isdir(os.path.dirname(output_path)):
-        raise Exception('Not valid output file path')
     http_proxy = args.http_proxy
     https_proxy = args.https_proxy
-    if (http_proxy is not None and re.match(regex, http_proxy) is None) or \
-            (https_proxy is not None and re.match(regex, https_proxy) is None):
-        raise Exception('Not valid http_proxy or https_proxy')
     prepare_data(data_path, output_path, word2vec_path, http_proxy, https_proxy)

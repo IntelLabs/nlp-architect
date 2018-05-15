@@ -1,3 +1,0 @@
-pytest==3.5.0
-falcon==1.4.1
-falcon_multipart==0.2.0

@@ -16,11 +16,8 @@
 from __future__ import division
 from __future__ import print_function
 import ngraph as ng
-from ngraph.frontends.neon import Layer, LookupTable
-from ngraph.frontends.neon.axis import shadow_axes_map
 from ngraph.frontends.neon import Layer
 from ngraph.frontends.neon import GaussianInit
-from ngraph.frontends.neon.graph import SubGraph
 from nlp_architect.contrib.ngraph.encodings import position_encoding
 from nlp_architect.contrib.ngraph.modified_lookup_table import ModifiedLookupTable
 

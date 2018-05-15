@@ -49,7 +49,7 @@ for ``hot pizza``.
 Files
 =========
 - **nlp_architect/models/np_semantic_segmentation.py**: contains the MLP classifier model.
-- **examples/data.py**: Prepare string data for both ``train.py`` and ``inference.py`` using pre-trained word embedding, PMI score, Wordnet and wikidata.
+- **examples/data.py**: Prepare string data for both ``train.py`` and ``inference.py`` using pre-trained word embedding, NLTKCollocations score, Wordnet and wikidata.
 - **examples/feature_extraction.py**: contains the feature extraction services
 - **examples/train.py**: train the MLP classifier.
 - **examples/inference.py**: load the trained model and inference the input data by the model.
@@ -77,14 +77,13 @@ After downloading and unzipping the dataset, run
 save it in a CSV file (as expected for the model). the scripts read 2
 .tsv files ('tratz2011\_coarse\_grained\_random/train.tsv' and
 'tratz2011\_coarse\_grained\_random/val.tsv') and outputs 2 .csv files
-accordingly.
+accordingly to the same location.
 
-Parameters can be obtained by running:
+Quick example:
 
 ::
 
-    python preprocess_tratz2011.py -h
-        --data path_to_Tratz_2011_dataset_folder
+    python preprocess_tratz2011.py --data path_to_Tratz_2011_dataset_folder
 
 Pre-processing the data:
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -102,7 +101,7 @@ command ``python data.py``
       `license agreement <http://www.apache.org/licenses/LICENSE-2.0>`__
 
 -  Cosine distance between 2 words in the Noun-Phrase.
--  PMI score (NPMI and UCI scores).
+-  NLTKCollocations score (PMI score (from Manning and Schutze 5.4) and Chi-square score (Manning and Schutze 5.3.3)).
 -  A binary features whether the Noun-Phrase has existing entity in
    Wikidata.
 -  A binary features whether the Noun-Phrase has existing entity in
@@ -124,7 +123,7 @@ Quick example:
 
 ::
 
-    python train.py --data prepared_data_path.csv --model np_semantic_segmentation_path.prm
+    python train.py --data prepared_data_path.csv --model_path np_semantic_segmentation_path.prm
 
 Inference
 ---------
@@ -139,4 +138,4 @@ Quick example:
 
 ::
 
-    python inference.py --model np_semantic_segmentation_path.prm --data prepared_data_path.csv --output inference_data.csv --print_stats True
+    python inference.py --model np_semantic_segmentation_path.prm --data prepared_data_path.csv --output inference_data.csv --print_stats

@@ -30,6 +30,7 @@ import falcon
 import os.path
 from falcon_multipart.middleware import MultipartMiddleware
 from os.path import dirname
+from nlp_architect.utils.io import validate, check_size
 
 sys.path.insert(0, dirname(dirname(dirname(os.path.abspath(__file__)))))
 logger = logging.getLogger(__name__)
@@ -59,8 +60,6 @@ def format_response(resp_format, parsed_doc):
     if (resp_format == "json") or ('json' in resp_format) or (not resp_format):
         # if not specified resp_format then default is json
         return json.dumps(parsed_doc)
-    # if resp_format == "pickle":
-    #     return pickle.dumps(parsed_doc)
     if resp_format == "gzip" or 'gzip' in resp_format:
         return gzip_str(parsed_doc)
 
@@ -198,7 +197,7 @@ class Service(object):
                 raise falcon.HTTPError(falcon.HTTP_400, 'Error', ex)
         else:
             logger.info('Bad Request Type')
-            msg = 'Doc type not allowed. Must be Gzip, Json, or Pickle'
+            msg = 'Doc type not allowed. Must be Gzip or Json'
             raise falcon.HTTPBadRequest('Bad request', msg)
         parsed_doc = self.get_service_inference(input_docs, headers)
         logger.info('parsed document processing done')
@@ -237,7 +236,8 @@ class Service(object):
         Returns:
             The loaded service
         """
-        properties = json.load(open(os.path.join(package_home(globals()), "services.json")))
+        with open(os.path.join(package_home(globals()), "services.json")) as prop_file:
+            properties = json.load(prop_file)
         folder_path = properties["api_folders_path"]
         model_relative_path = None
         service_name_error = "'{0}' is not an existing service - " \
@@ -295,7 +295,7 @@ def set_server_properties(api, service_name):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--name', help="the name of the service you want to upload", type=str,
-                        required=True)
+                        required=True, action=check_size(1, 30))
     args = parser.parse_args()
     app = application = falcon.API(middleware=[MultipartMiddleware()])
     if not is_valid_input(args.name):

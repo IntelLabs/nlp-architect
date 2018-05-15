@@ -14,17 +14,16 @@
 # limitations under the License.
 # ******************************************************************************
 from __future__ import print_function
+
+import os
+import pickle
+import re
+import subprocess
+import sys
+from collections import defaultdict
 from functools import reduce
 
 import numpy as np
-import tarfile
-import os
-import re
-import pickle
-import subprocess
-from collections import defaultdict
-import sys
-
 from ngraph.util.persist import valid_path_append, fetch_file, ensure_dirs_exist
 from nlp_architect.utils.generic import license_prompt
 

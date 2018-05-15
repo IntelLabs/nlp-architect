@@ -72,7 +72,7 @@ Once the server is up and running you can go to `http://localhost:8080/bist/demo
 and check out a few test sentences, or you can send a POST request (as described above)
 to `http://localhost:8080/bist`, and receive `CoreNLPDoc` annotation structure response.
 
-.. image :: ../../server/bist_service.png
+.. image :: assets/bist_service.png
 
 - Spacy NER - High-level models annotation structure
 
@@ -84,7 +84,7 @@ Once the server is up and running you can go to `http://localhost:8080/spacy_ner
 and check out a few test sentences, or you can send a Post request (as described above)
 to `http://localhost:8080/spacy_ner`, and receive `HighLevelDoc` annotation structure response.
 
-.. image :: ../../server/spacy_ner_service.png
+.. image :: assets/spacy_ner_service.png
 
 You can also take a look at the tests (tests/nlp_architect_server) to see more examples.
 

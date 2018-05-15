@@ -17,7 +17,7 @@ from os import path, remove
 
 from nlp_architect.data.conll import ConllEntry
 from nlp_architect.models.bist_parser import BISTModel
-from nlp_architect.utils.core_nlp_doc import CoreNLPDoc
+from nlp_architect.common.core_nlp_doc import CoreNLPDoc
 from nlp_architect.utils.io import download_file, unzip_file
 from nlp_architect.utils.io import validate
 from nlp_architect.utils.text import SpacyInstance

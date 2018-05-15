@@ -14,18 +14,16 @@
 # limitations under the License.
 # ******************************************************************************
 
-from __future__ import unicode_literals, print_function, division, \
-    absolute_import
-
 import csv
-import io
 import os
 
 from neon.backends import gen_backend
 from neon.util.argparser import NeonArgparser
 
-from examples.np_semantic_segmentation.data import NpSemanticSegData, extract_y_labels, absolute_path
+from examples.np_semantic_segmentation.data import NpSemanticSegData, extract_y_labels, \
+    absolute_path
 from nlp_architect.models.np_semantic_segmentation import NpSemanticSegClassifier
+from nlp_architect.utils.io import validate_existing_filepath, validate_parent_exists
 
 
 def classify_collocation(dataset, model_file_path, num_epochs, callback_args):
@@ -96,11 +94,10 @@ def write_results(predictions, output):
             the model's predictions
     """
     results_list = predictions.tolist()
-    out_file = io.open(output, 'w', encoding='utf-8')
-    writer = csv.writer(out_file, delimiter=',', quotechar='"')
-    for result in results_list:
-        writer.writerow([result])
-    out_file.close()
+    with open(output, 'w', encoding='utf-8') as out_file:
+        writer = csv.writer(out_file, delimiter=',', quotechar='"')
+        for result in results_list:
+            writer.writerow([result])
     print("Results of inference saved in {0}".format(output))
 
 
@@ -108,25 +105,20 @@ if __name__ == "__main__":
     # parse the command line arguments
     parser = NeonArgparser()
     parser.set_defaults(epochs=200)
-    parser.add_argument('--data', help='prepared data CSV file path')
-    parser.add_argument('--model', help='path to the trained model file')
+    parser.add_argument('--data', help='prepared data CSV file path',
+                        type=validate_existing_filepath)
+    parser.add_argument('--model', help='path to the trained model file',
+                        type=validate_existing_filepath)
     parser.add_argument('--print_stats', action='store_true', default=False,
                         help='print evaluation stats for the model predictions - if '
-                                        'your data has tagging')
-    parser.add_argument('--output', help='path to location for inference output file')
+                        'your data has tagging')
+    parser.add_argument('--output', help='path to location for inference output file',
+                        type=validate_parent_exists)
     args = parser.parse_args()
     data_path = absolute_path(args.data)
-    if not isinstance(data_path, str) or not os.path.exists(data_path):
-        raise Exception('Not valid input file')
     model_path = absolute_path(args.model)
-    if not isinstance(model_path, str) or not os.path.exists(model_path):
-        raise Exception('Not valid model settings file')
     print_stats = args.print_stats
-    if not isinstance(print_stats, bool):
-        raise Exception('print_stats should be True\False')
     output_path = absolute_path(args.output)
-    if not isinstance(output_path, str) or not os.path.isdir(os.path.dirname(output_path)):
-        raise Exception('Not valid output file path')
     # generate backend
     be = gen_backend(batch_size=10)
     data_set = NpSemanticSegData(data_path, train_to_test_ratio=1)

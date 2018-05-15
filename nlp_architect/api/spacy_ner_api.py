@@ -15,7 +15,7 @@
 # ******************************************************************************
 
 from nlp_architect.api.abstract_api import AbstractApi
-from nlp_architect.utils.high_level_doc import HighLevelDoc
+from nlp_architect.common.high_level_doc import HighLevelDoc
 from nlp_architect.utils.text import SpacyInstance
 
 
