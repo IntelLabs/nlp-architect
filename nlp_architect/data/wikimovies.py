@@ -264,11 +264,7 @@ class WIKIMOVIES(object):
         self.vocab = None
         workdir, filepath = valid_path_append(path, '', self.filename)
         if not os.path.exists(filepath):
-            if license_prompt('WikiMovies',
-                              self.url,
-                              'Creative Commons Attribution 3.0',
-                              'https://research.fb.com/downloads/babi/',
-                              self.path) is False:
+            if license_prompt('WikiMovies', self.url, self.path) is False:
                 sys.exit(0)
 
             fetch_file(self.url, self.filename, filepath, self.size)
