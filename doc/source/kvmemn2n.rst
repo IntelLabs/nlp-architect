@@ -48,7 +48,7 @@ The dataset is comprised of questions and answers centered around movies. The fi
 - IE performed from the Wikipedia text to build a synthetic KB.
 
 You may choose to use the knowledge base ``kb`` or raw Wikipedia Text ``text`` using the argument
-``--mem_mode``.  The data will be preprocessed and stored according to the ``--dataset_dir`` and
+``--mem_mode``.  The data will be preprocessed and stored according to the ``--data_dir`` and
 type of knowledge base as given by the argument ``--mem_mode``. If you are using ``--mem_mode text``
 the python function ``wikiwindows.py`` will run which can take a number of hours.
 
@@ -61,11 +61,6 @@ However, you can redo the preprocessing with the argument ``--reparse``.
 The preprocessing algorithm ``wikiwindows.py`` can also be ran independently with
 ``python wikiwindows.py ~/nervana/data/`` though please note this is not necessary as
 ``train_kvmemn2n.py`` will run all data preprocessing steps.
-To run ``wikiwindows.py`` independently you need to:
-
-- Download the tar from http://www.thespermwhale.com/jaseweston/babi/movieqa.tar.gz
-- Extract the tar file
-- Run ``python wikiwindows.py --data_dir ~/nervana/data``
 
 
 Running Modalities
