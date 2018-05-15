@@ -25,6 +25,7 @@ from nlp_architect.utils.io import sanitize_path
 from nlp_architect.utils.io import validate, validate_existing_directory, \
     validate_existing_filepath, validate_parent_exists, check_size
 
+
 PAD = "<pad>"
 SOS = "<sos>"
 UNK = "<unk>"
@@ -196,10 +197,9 @@ if __name__ == '__main__':
     # parse the command line arguments
     parser = argparse.ArgumentParser()
 
-    parser.add_argument(
-            '--data_path',
-            default='',
-            help='enter path where training data and the glove embeddings were downloaded')
+    parser.add_argument('--data_path', default='', action=validate_existing_directory,
+                        help='enter path where training data and the \
+                        glove embeddings were downloaded')
 
     parser.add_argument(
         '--no_preprocess_glove',

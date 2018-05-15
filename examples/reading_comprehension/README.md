@@ -5,10 +5,13 @@ This directory contains an implementation of the boundary model(b in the Figure)
 
 ## Dataset
 1. mkdir data
+
 2. Download the training and dev datasets  from here
-https://rajpurkar.github.io/SQuAD-explorer/
-and place the extracted json files in the `data` directory
-3. Download the glove pretrained embeddings from  http://nlp.stanford.edu/data/glove.6B.zip and copy "glove.6B.300d.txt" file into the  `data` directory
+https://rajpurkar.github.io/SQuAD-explorer/ and place the extracted json files in the `data` directory.The terms and conditions of the data set license apply. Intel does not grant any rights to the data files.
+
+3. Download the GloVe pretrained embeddings from  http://nlp.stanford.edu/data/glove.6B.zip and copy "glove.6B.300d.txt" file into the  `data` directory.
+For more information about GloVe please visit https://nlp.stanford.edu/projects/glove/. The terms and conditions of the data set license apply. Intel does not grant any rights to the data files.
+
 4. Preprocess the data set using this command- `python prepare_data.py --data_path data/`
 
 ## Training
