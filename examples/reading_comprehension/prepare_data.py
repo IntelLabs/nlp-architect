@@ -201,20 +201,17 @@ if __name__ == '__main__':
     parser.add_argument(
         '--data_path',
         default='',
-        help='enter path where training data and the glove embeddings were downloaded',
-        action=validate_existing_directory)
+        help='enter path where training data and the glove embeddings were downloaded')
 
     parser.add_argument(
-        '--preprocess_glove',
-        type=int,
-        default=1,
-        help='Chose whether or not to preprocess glove embeddings',
-        action=check_size(0,1))
+        '--no_preprocess_glove',
+        action="store_true",
+        help='Chose whether or not to preprocess glove embeddings')
 
     parser.set_defaults()
 
     args = parser.parse_args()
-    glove_flag = args.preprocess_glove
+    glove_flag = not args.no_preprocess_glove
 
     try:
         assert os.path.exists(args.data_path)

@@ -50,7 +50,7 @@ from ngraph.frontends.neon import Saver
 import ngraph.transformers as ngt
 from nlp_architect.data.babi_dialog import BABI_Dialog
 from nlp_architect.models.memn2n_dialogue import MemN2N_Dialog
-from memn2n_dialogue.utils import interactive_loop
+from utils import interactive_loop
 from nlp_architect.utils.io import sanitize_path
 from nlp_architect.utils.io import validate, validate_existing_directory, \
     validate_existing_filepath, validate_parent_exists, check_size
@@ -103,8 +103,7 @@ parser.add_argument(
 parser.add_argument(
     '--model_file',
     default='memn2n_weights.npz',
-    help='File to load model weights from.',
-    action=validate_existing_filepath)
+    help='File to load model weights from.')
 
 parser.set_defaults(batch_size=32, epochs=200)
 args = parser.parse_args()

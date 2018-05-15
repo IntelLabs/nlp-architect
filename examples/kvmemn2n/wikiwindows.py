@@ -123,18 +123,15 @@ parser = argparse.ArgumentParser(
     description='Generates windowed examples for wikipedia files. By default,' +
     ' creates pairs of window<TAB>entity when used with entities.'
 )
-parser.add_argument('data_dir', type=str, help='name of root directory for files',
-                    action=validate_existing_directory)
+parser.add_argument('data_dir', type=str, help='name of root directory for files')
 # parser.add_argument('input_file', type=str, nargs='+',
 #     help='name of a input file in memnns format')
 parser.add_argument('-o', '--output_file', type=str,
-                    help='name of a output file, otherwise data_dir will be used',
-                    action=validate_parent_exists)
+                    help='name of a output file, otherwise data_dir will be used')
 parser.add_argument('-n', type=int, help='Max number of examples to process.',
                     action=check_size(1, 100000000))
 parser.add_argument('-e', '--entities', type=str,
-                    help='entities file (each line specifies ngrams to always chunk together)',
-                    action=validate_existing_filepath)
+                    help='entities file (each line specifies ngrams to always chunk together)')
 parser.add_argument('-a', '--all_windows', action='store_true',
                     help='if set, keeps all windows (not just ones entities). defaults to ' +
                     ' True if entities file not present, False if it is present.')
@@ -158,7 +155,7 @@ parser.add_argument('-d', '--double_dict', type=str, default='3',
                     '1:world <NULL> 1:are 2:things"')
 parser.add_argument('-t', '--num_threads', type=int, default=4,
                     help='number of threads to use',
-                    action=check_size(1,20))
+                    action=check_size(1,10))
 args = vars(parser.parse_args())
 
 beg = time.time()

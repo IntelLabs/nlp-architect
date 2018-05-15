@@ -117,14 +117,12 @@ parser.add_argument(
     '--log_file',
     type=str,
     default='memn2n_dialgoue_results.txt',
-    help='File to write evaluation set results to.',
-    action=validate_parent_exists)
+    help='File to write evaluation set results to.')
 parser.add_argument(
     '--weights_save_path',
     type=str,
     default='memn2n_weights.npz',
-    help='File to save model weights to.',
-    action=validate_parent_exists)
+    help='File to save model weights to.')
 parser.add_argument(
     '--save_epochs',
     type=int,

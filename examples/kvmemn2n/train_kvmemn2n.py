@@ -56,8 +56,7 @@ parser.add_argument('--mem_mode', type=str, default='kb', choices=['kb', 'text']
 parser.add_argument('--use_v_luts', action="store_true",
                     help="Run the model using separate value lookup tables for each hop")
 parser.add_argument('--model_file', type=str, default=None,
-                    help="File to save or load weights from",
-                    action=validate_parent_exists)
+                    help="File to save or load weights from")
 parser.add_argument('--inference', action="store_true", help="Run Inference with loaded weight")
 parser.add_argument('--restore', action="store_true",
                     help="Run the model restoring weights from model_file")
