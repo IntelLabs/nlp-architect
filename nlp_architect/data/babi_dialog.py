@@ -254,7 +254,9 @@ class BABI_Dialog(object):
         self.workdir, filepath = valid_path_append(
             self.path, '', self.filename)
         if not os.path.exists(filepath):
-            if license_prompt('bAbI-dialog', self.url, self.path) is False:
+            if license_prompt('bAbI-dialog',
+                              'https://research.fb.com/downloads/babi/',
+                              self.path) is False:
                 sys.exit(0)
 
             fetch_file(self.url, self.filename, filepath, self.size)
