@@ -210,6 +210,7 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
     glove_flag = not args.no_preprocess_glove
+    validate_existing_directory(args.data_path)
 
     try:
         assert os.path.exists(args.data_path)

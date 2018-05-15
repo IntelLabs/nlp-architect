@@ -68,6 +68,9 @@ parser.add_argument('--interactive', action="store_true",
 parser.set_defaults()
 args = parser.parse_args()
 
+if args.model_file:
+    validate_parent_exists(args.model_file)
+
 if (args.inference is True) and (args.model_file is None):
     print("Need to set --model_file for Inference problem")
     quit()

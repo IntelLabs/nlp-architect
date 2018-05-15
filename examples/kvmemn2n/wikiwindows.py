@@ -158,6 +158,13 @@ parser.add_argument('-t', '--num_threads', type=int, default=4,
                     action=check_size(1,10))
 args = vars(parser.parse_args())
 
+validate_parent_exists(args['data_dir'])
+if args['output_file']:
+    validate_parent_exists(args['output_file'])
+if args['entities']:
+    validate_parent_exists(args['entities'])
+validate((args['window_size'], str, 1, 100), (args['double_dict'], str, 1, 100))
+
 beg = time.time()
 
 if args['output_file']:
