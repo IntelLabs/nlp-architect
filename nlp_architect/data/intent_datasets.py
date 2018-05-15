@@ -189,7 +189,7 @@ class TabularIntentDataset(IntentDataset):
         return train, test
 
     def _read_file(self, path):
-        with open(path, errors='ignore') as fp:
+        with open(path, encoding='utf-8', errors='ignore') as fp:
             data = fp.readlines()
         return self._split_into_sentences(data)
 

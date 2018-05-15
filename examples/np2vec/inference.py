@@ -19,6 +19,7 @@ import sys
 from configargparse import ArgumentParser
 
 from nlp_architect.models.np2vec import NP2vec
+from nlp_architect.utils.io import validate_existing_filepath, check_size
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -27,8 +28,9 @@ if __name__ == "__main__":
     arg_parser = ArgumentParser(__doc__)
     arg_parser.add_argument(
         '--np2vec_model_file',
-        default='sample_np2vec.model',
-        help='path to the file with the np2vec model to load.')
+        default='conll2000.train.model',
+        help='path to the file with the np2vec model to load.',
+        type=validate_existing_filepath)
     arg_parser.add_argument(
         '--binary',
         help='boolean indicating whether the model to load has been stored in binary '
@@ -42,6 +44,18 @@ if __name__ == "__main__":
         help='If 0, the model to load stores word information. If 1, the model to load stores '
         'subword (ngrams) information; note that subword information is relevant only to '
         'fasttext models.')
+    arg_parser.add_argument(
+        '--mark_char',
+        default='_',
+        type=str,
+        action=check_size(1, 2),
+        help='special character that marks word separator and NP suffix.')
+    arg_parser.add_argument(
+        '--np',
+        default='Intel Corp.',
+        type=str,
+        action=check_size(min=1),
+        help='NP to print its word vector.')
 
     args = arg_parser.parse_args()
 
@@ -50,7 +64,5 @@ if __name__ == "__main__":
         binary=args.binary,
         word_ngrams=args.word_ngrams)
 
-    print("word vector for the NP \'Intel\':", np2vec_model['Intel_'])
-    if args.word_ngrams == 1:
-        print("word vector for the NP \'Intel_Organization\':",
-              np2vec_model['Intel_Organization_'])
+    print("word vector for the NP \'" + args.np + "\':", np2vec_model[args.mark_char.join(
+        args.np.split()) + args.mark_char])

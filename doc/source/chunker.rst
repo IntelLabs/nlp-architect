@@ -39,8 +39,7 @@ We used the CONLL2000_ shared task dataset in our example for training a phrase 
 
 If CONLL2000 is not found in NLTK, ``nlp_architect.data.conll2000.CONLL2000`` will attempt to download the dataset if the user agrees by using  ``nltk.download('conll2000')``.
 
-Legal notice:
-NLTK is open source software: https://www.nltk.org/data.html. The source code is distributed under the terms of the Apache License Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0). The documentation is distributed under the terms of the Creative Commons Attribution-Noncommercial-No Derivative Works 3.0 United States license. The corpora are distributed under various licenses, as documented in their respective README files. The terms and conditions of the data set license apply. Intel does not grant any rights to the data files.
+The dataset can be downloaded from here: https://www.nltk.org/data.html The terms and conditions of the data set license apply. Intel does not grant any rights to the data files.
 
 The dataset has a ``train`` and ``test`` sets consisting of 8926 and 2009 sentences annotated with Part-of-speech and chuking information.
 We implemented a dataset loader, ``nlp_architect.data.conll2000.CONLL2000``, for loading and parsing CONLL2000 data into iterators ready to be used by the chunker model.

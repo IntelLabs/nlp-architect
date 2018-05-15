@@ -254,12 +254,8 @@ class BABI_Dialog(object):
         self.workdir, filepath = valid_path_append(
             self.path, '', self.filename)
         if not os.path.exists(filepath):
-            license_link = """https://github.com/vyraun/chatbot-MemN2N-tensorflow/blob/
-                            master/data/dialog-bAbI-tasks/LICENSE.txt"""
             if license_prompt('bAbI-dialog',
                               'https://research.fb.com/downloads/babi/',
-                              'Creative Commons Attribution 3.0',
-                              license_link,
                               self.path) is False:
                 sys.exit(0)
 

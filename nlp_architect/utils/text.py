@@ -110,6 +110,14 @@ class Vocabulary:
         return self._rev_vocab
 
 
+def is_spacy_model_installed(model_name):
+    try:
+        spacy.load(model_name)
+        return True
+    except OSError:
+        return False
+
+
 class SpacyInstance:
     """
     Spacy pipeline wrapper which prompts user for model download authorization.
@@ -127,8 +135,7 @@ class SpacyInstance:
             self._parser = spacy.load(model, disable=disable)
         except OSError:
             url = 'https://spacy.io/models'
-            if license_prompt('Spacy {} model'.format(model), url, 'MIT',
-                              'https://github.com/explosion/spaCy/blob/master/LICENSE') is False:
+            if license_prompt('Spacy {} model'.format(model), url) is False:
                 sys.exit(0)
             spacy_download(model)
             self._parser = spacy.load(model, disable=disable)

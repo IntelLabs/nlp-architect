@@ -14,7 +14,7 @@
 # limitations under the License.
 # ******************************************************************************
 
-FLAKE8_CHECK_DIRS :=
+FLAKE8_CHECK_DIRS := examples nlp_architect/* server tests
 PYLINT_CHECK_DIRS := *
 DOC_DIR := doc
 DOC_PUB_RELEASE_PATH := $(DOC_PUB_PATH)/$(RELEASE)
@@ -91,6 +91,7 @@ install_no_virt_env:
 	@echo "Generating package list to install"
 	bash generate_reqs.sh
 	pip install -r $(GEN_REQ_FILE)
+	pip install -e .
 	@echo "Installation done"
 
 print_finish:
