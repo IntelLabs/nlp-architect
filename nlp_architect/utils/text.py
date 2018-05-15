@@ -110,6 +110,14 @@ class Vocabulary:
         return self._rev_vocab
 
 
+def is_spacy_model_installed(model_name):
+    try:
+        spacy.load(model_name)
+        return True
+    except OSError:
+        return False
+
+
 class SpacyInstance:
     """
     Spacy pipeline wrapper which prompts user for model download authorization.

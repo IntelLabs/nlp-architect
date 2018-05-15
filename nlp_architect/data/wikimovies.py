@@ -356,7 +356,9 @@ class WIKIMOVIES(object):
                         'in_language', 'has_tags', 'has_plot', 'has_imdb_votes', 'has_imdb_rating']
         rev_actions_pre = 'REV_'
 
-        babi_data = open(self.kb_file).read()
+        with open(self.kb_file) as file:
+            babi_data = file.read()
+
         lines = self.data_to_list(babi_data)
 
         knowledge_dict = defaultdict(list)
@@ -419,7 +421,9 @@ class WIKIMOVIES(object):
         Returns:
             list of tuples : List of (story, query, answer) words.
         """
-        babi_data = open(wikimovies_file).read()
+        with open(wikimovies_file) as file:
+            babi_data = file.read()
+
         lines = WIKIMOVIES.data_to_list(babi_data)
 
         data = []

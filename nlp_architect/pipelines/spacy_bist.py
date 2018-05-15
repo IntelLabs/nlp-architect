@@ -18,7 +18,7 @@ from os import path, remove
 from nlp_architect.data.conll import ConllEntry
 from nlp_architect.models.bist_parser import BISTModel
 from nlp_architect.common.core_nlp_doc import CoreNLPDoc
-from nlp_architect.utils.io import download_file, unzip_file
+from nlp_architect.utils.io import download_unlicensed_file, unzip_file
 from nlp_architect.utils.io import validate
 from nlp_architect.utils.text import SpacyInstance
 
@@ -139,7 +139,7 @@ def _download_pretrained_model():
     """Downloads the pre-trained BIST model if non-existent."""
     if not path.isfile(path.join(SpacyBISTParser.dir, 'bist-pretrained', 'bist.model')):
         print('Downloading pre-trained BIST model...')
-        download_file('https://s3-us-west-1.amazonaws.com/nervana-modelzoo/parse/',
+        download_unlicensed_file('https://s3-us-west-1.amazonaws.com/nervana-modelzoo/parse/',
                       'bist-pretrained.zip', path.join(SpacyBISTParser.dir, 'bist-pretrained.zip'))
         print('Unzipping...')
         zip_file = path.join(SpacyBISTParser.dir, 'bist-pretrained.zip')

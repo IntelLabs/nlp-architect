@@ -89,24 +89,26 @@ def create_squad_training(
     list for vocab
 
     """
-    f_para = open(paras_file)
-    f_ques = open(ques_file)
-    f_ans = open(answer_file)
-    f_vocab = open(vocab_file)
     para_list = []
     ques_list = []
     ans_list = []
     vocab_list = []
-    for ele in f_para:
-        para_list.append(list(map(int, ele.strip().split())))
-    for ele in f_ques:
-        ques_list.append(list(map(int, ele.strip().split())))
 
-    for ele in f_ans:
-        ans_list.append(list(map(int, ele.strip().split())))
+    with open(paras_file) as f_para:
+        for ele in f_para:
+            para_list.append(list(map(int, ele.strip().split())))
 
-    for ele in f_vocab:
-        vocab_list.append(ele.strip().split())
+    with open(ques_file) as f_ques:
+        for ele in f_ques:
+            ques_list.append(list(map(int, ele.strip().split())))
+
+    with open(answer_file) as f_ans:
+        for ele in f_ans:
+            ans_list.append(list(map(int, ele.strip().split())))
+
+    with open(vocab_file) as f_vocab:
+        for ele in f_vocab:
+            vocab_list.append(ele.strip().split())
 
     data_train = []
     if data_train_len is None:

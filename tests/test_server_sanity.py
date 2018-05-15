@@ -32,9 +32,9 @@ def load_test_data(service_name):
     Returns:
         str: the test data of the service
     """
-    f = open(os.path.join(os.path.dirname(__file__), server_data_rel_path + 'tests_data.json'),
-             'r')
-    service_test_data = json.loads(f.read())[service_name]
+    with open(os.path.join(os.path.dirname(__file__), server_data_rel_path + 'tests_data.json'),
+              'r') as f:
+        service_test_data = json.loads(f.read())[service_name]
     return service_test_data
 
 
@@ -70,8 +70,8 @@ def test_gzip_file_request(service_name):
     client = init_client(service_name)
     file_path = os.path.join(os.path.dirname(__file__), server_data_rel_path + service_name +
                              "_sentences_examples.json.gz")
-    file_data = open(file_path, 'rb').read()
-    doc = file_data
+    with open(file_path, 'rb') as file_data:
+        doc = file_data.read()
     expected_result = json.dumps(load_test_data(service_name)["response"])
     headers["Content-Type"] = "application/gzip"
     headers["Content-Encoding"] = "gzip"
@@ -87,7 +87,8 @@ def test_json_file_request(service_name):
     client = init_client(service_name)
     file_path = os.path.join(os.path.dirname(__file__), server_data_rel_path + service_name +
                              "_sentences_examples.json")
-    doc = open(file_path, 'rb').read()
+    with open(file_path, 'rb') as file:
+        doc = file.read()
     expected_result = json.dumps(load_test_data(service_name)["response"])
     headers["Content-Type"] = "application/json"
     headers["format"] = "json"
