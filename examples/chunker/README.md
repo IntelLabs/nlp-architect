@@ -20,7 +20,7 @@ We used the CONLL2000 dataset in our example for training a phrase chunker. More
 
 If CONLL2000 is not found in NLTK, `nlp_architect.data.conll2000.CONLL2000` will attempt to download it by `nltk.download('conll2000')` after user consent.
 
-LThe dataset can be downloaded from here: [https://www.nltk.org/data.html](https://www.nltk.org/data.html) The terms and conditions of the data set license apply. Intel does not grant any rights to the data files.
+The dataset can be downloaded from here: [https://www.nltk.org/data.html](https://www.nltk.org/data.html) The terms and conditions of the data set license apply. Intel does not grant any rights to the data files.
 
 ### Training
 Train a model with default parameters (only tokens, default network settings):  
