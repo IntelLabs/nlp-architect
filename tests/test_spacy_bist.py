@@ -16,12 +16,15 @@
 import pytest
 
 from nlp_architect.pipelines.spacy_bist import SpacyBISTParser
+from nlp_architect.utils.text import is_spacy_model_installed
+
+pytestmark = pytest.mark.skipif(
+    not is_spacy_model_installed('en'),
+    reason="'spacy en' model not installed. Please install it to run this test.")
 
 
 class TestData:
-    """
-    Test cases for the test functions below.
-    """
+    """Test cases for the test functions below."""
     output_structure = ["This is a single-sentence document",
                         "This is a document... This is the second sentence"]
 

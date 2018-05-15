@@ -25,7 +25,7 @@ import requests
 from tqdm import tqdm
 
 
-def download_file(url, sourcefile, destfile, totalsz=None):
+def download_unlicensed_file(url, sourcefile, destfile, totalsz=None):
     """
     Download the file specified by the given URL.
 

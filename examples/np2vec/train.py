@@ -19,46 +19,51 @@ import sys
 from configargparse import ArgumentParser
 
 from nlp_architect.models.np2vec import NP2vec
+from nlp_architect.utils.io import check_size, validate_existing_filepath
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-def check_positive(value):
-    ivalue = int(value)
-    if ivalue < 0:
-        raise arg_parser.ArgumentTypeError(
-            "%s is an invalid positive int value" % value)
-    return ivalue
-
-
 if __name__ == "__main__":
     arg_parser = ArgumentParser(__doc__)
-    arg_parser.add_argument('--corpus', default='sample_corpus.json',
-                            help='path the file with the input marked corpus')
+    arg_parser.add_argument(
+        '--corpus',
+        default='train.txt',
+        type=str,
+        action=check_size(min=1),
+        help='path to the corpus. By default, '
+                                 'it is the training set of CONLL2000 shared task dataset.')
     arg_parser.add_argument(
         '--corpus_format',
-        default='json',
+        default='conll2000',
+        type=str,
         choices=[
             'json',
-            'txt'],
-        help='format of the input marked corpus; txt and json formats are supported. '
+            'txt',
+            'conll2000'],
+        help='format of the input marked corpus; txt, conll2000 and json formats are supported. '
         'For json format, the file should contain an iterable of sentences. '
         'Each sentence is a list of terms (unicode strings) that will be used for training.')
     arg_parser.add_argument(
         '--mark_char',
         default='_',
-        help='special character that marks NP\'s suffix.')
+        type=str,
+        action=check_size(1, 2),
+        help='special character that marks word separator and NP suffix.')
     arg_parser.add_argument(
         '--word_embedding_type',
         default='word2vec',
+        type=str,
         choices=[
             'word2vec',
             'fasttext'],
         help='word embedding model type; word2vec and fasttext are supported.')
     arg_parser.add_argument(
         '--np2vec_model_file',
-        default='sample_np2vec.model',
+        default='conll2000.train.model',
+        type=str,
+        action=check_size(min=1),
         help='path to the file where the trained np2vec model has to be stored.')
     arg_parser.add_argument(
         '--binary',
@@ -81,11 +86,13 @@ if __name__ == "__main__":
         '--size',
         default=100,
         type=int,
+        action=check_size(min=1),
         help='model training hyperparameter, size of the feature vectors.')
     arg_parser.add_argument(
         '--window',
         default=10,
         type=int,
+        action=check_size(min=1),
         help='model training hyperparameter, maximum distance '
         'between the current and predicted word within a '
         'sentence.')
@@ -93,23 +100,27 @@ if __name__ == "__main__":
         '--alpha',
         default=0.025,
         type=float,
+        action=check_size(min=0),
         help='model training hyperparameter. The initial learning rate.')
     arg_parser.add_argument(
         '--min_alpha',
         default=0.0001,
         type=float,
+        action=check_size(min=0),
         help='model training hyperparameter. Learning rate will linearly drop to `min_alpha` as '
         'training progresses.')
     arg_parser.add_argument(
         '--min_count',
         default=5,
         type=int,
+        action=check_size(min=0),
         help='model training hyperparameter, ignore all words '
         'with total frequency lower than this.')
     arg_parser.add_argument(
         '--sample',
         default=1e-5,
         type=float,
+        action=check_size(min=0),
         help='model training hyperparameter, threshold for '
         'configuring which higher-frequency words are '
         'randomly downsampled, useful range is (0, 1e-5)')
@@ -117,6 +128,7 @@ if __name__ == "__main__":
         '--workers',
         default=20,
         type=int,
+        action=check_size(min=1),
         help='model training hyperparameter, number of worker threads.')
     arg_parser.add_argument(
         '--hs',
@@ -131,7 +143,8 @@ if __name__ == "__main__":
     arg_parser.add_argument(
         '--negative',
         default=25,
-        type=check_positive,
+        type=int,
+        action=check_size(min=0),
         help='model training hyperparameter, negative sampling. If > 0, negative sampling will be '
         'used, the int for negative specifies how many \"noise words\" should be drawn ('
         'usually between 5-20). If set to 0, no negative sampling is used.')
@@ -148,6 +161,7 @@ if __name__ == "__main__":
         '--iter',
         default=15,
         type=int,
+        action=check_size(min=1),
         help='model training hyperparameter, number of iterations.')
 
     # fasttext hyperparameters
@@ -155,12 +169,14 @@ if __name__ == "__main__":
         '--min_n',
         default=3,
         type=int,
+        action=check_size(min=1),
         help='fasttext training hyperparameter. Min length of char ngrams to be used for training '
         'word representations.')
     arg_parser.add_argument(
         '--max_n',
         default=6,
         type=int,
+        action=check_size(min=0),
         help='fasttext training hyperparameter. Max length of char ngrams to be used for training '
         'word representations. '
         'Set `max_n` to be lesser than `min_n` to avoid char ngrams being used.')
@@ -175,6 +191,9 @@ if __name__ == "__main__":
         'ngrams) information. If 0, this is equivalent to word2vec training.')
 
     args = arg_parser.parse_args()
+
+    if args.corpus_format is not 'conll2000':
+        validate_existing_filepath(args.corpus)
 
     np2vec = NP2vec(
         args.corpus,
@@ -196,10 +215,5 @@ if __name__ == "__main__":
         args.min_n,
         args.max_n,
         args.word_ngrams)
-
-    print("word vector for the NP \'Intel\':", np2vec.model['Intel_'])
-    if args.word_embedding_type == 'fasttext' and args.word_ngrams == 1:
-        print("word vector for the NP \'Intel_Organization\':",
-              np2vec.model['Intel_Organization_'])
 
     np2vec.save(args.np2vec_model_file, args.binary)

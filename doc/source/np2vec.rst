@@ -36,6 +36,12 @@ including non-NP's in order to be able to estimate word embeddings of out-of-voc
 NP's have to be marked in the corpus by a marking character between the words of the NP and as a suffix of the NP.
 For example, if the marking character is "\_", the NP "Natural Language Processing" will be marked as "Natural_Language_Processing".
 
+We use the CONLL2000_ shared task dataset in the default parameters of our example for training
+np2vec model. You can download the dataset
+from NLTK_ using the following command ``nltk.download('conll2000')``. The terms and
+conditions of the data set license apply. Intel does
+not grant any rights to the data files.
+
 Files
 ======
 
@@ -68,3 +74,5 @@ for word2vec and https://radimrehurek.com/gensim/models/fasttext.html#gensim.mod
 
 .. _word2vec: https://code.google.com/archive/p/word2vec/
 .. _fasttext: https://github.com/facebookresearch/fastText
+.. _CONLL2000: https://www.clips.uantwerpen.be/conll2000/chunking/
+.. _NLTK: https://www.nltk.org/data.html

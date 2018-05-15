@@ -62,10 +62,7 @@ class CONLL2000(object):
             train_set = conll2000.chunked_sents('train.txt')
             test_set = conll2000.chunked_sents('test.txt')
         except Exception:
-            if license_prompt('CONLL2000 data set',
-                              'http://www.nltk.org/nltk_data/',
-                              'Apache 2.0',
-                              'https://github.com/nltk/nltk/blob/develop/LICENSE.txt') is False:
+            if license_prompt('CONLL2000 data set', 'http://www.nltk.org/nltk_data/') is False:
                 sys.exit(0)
             nltk.download('conll2000')
             train_set = conll2000.chunked_sents('train.txt')

@@ -18,9 +18,11 @@ import json
 import logging
 import sys
 
+import nltk
 from gensim.models import FastText, Word2Vec, KeyedVectors
 from gensim.models.word2vec import LineSentence
 from gensim import utils
+from nltk.corpus import conll2000
 from six import iteritems
 
 logger = logging.getLogger(__name__)
@@ -65,8 +67,8 @@ class NP2vec:
         Initialize np2vec model and train it.
 
         Args:
-          corpus (str): path the file with the input marked corpus
-          corpus_format (str {json,txt}): format of the input marked corpus; txt and json
+          corpus (str): path to the corpus.
+          corpus_format (str {json,txt,conll2000}): format of the input marked corpus; txt and json
           formats are supported. For json format, the file should contain an iterable of
           sentences. Each sentence is a list of terms (unicode strings) that will be used for
           training.
@@ -132,6 +134,27 @@ class NP2vec:
         elif corpus_format == 'json':
             with open(corpus) as json_data:
                 self._sentences = json.load(json_data)
+        elif corpus_format == 'conll2000':
+            try:
+                self._sentences = list()
+                for chunked_sent in conll2000.chunked_sents(corpus):
+                    tokens = list()
+                    for chunk in chunked_sent:
+                        if hasattr(chunk, '_label') and chunk._label == 'NP':
+                            s = ''
+                            for w in chunk:
+                                s += w[0] + self.mark_char
+                            tokens.append(s)
+                        else:
+                            if isinstance(chunk, nltk.Tree):
+                                for w in chunk:
+                                    tokens.append(w[0])
+                            else:
+                                tokens.append(chunk[0])
+                        self._sentences.append(tokens)
+            except Exception:
+                print('Conll2000 dataset is missing from NLTK. See downloading details in the '
+                      'README file')
         else:
             logger.error('invalid corpus format: ' + corpus_format)
             sys.exit(0)
@@ -223,17 +246,17 @@ class NP2vec:
                         iteritems(
                             self.model.wv.vocab), key=lambda item: -item[1].count):
                     if self.is_marked(word):
-                        row = self.model.wv.syn0[vocab.index]
+                        embedding_vec = self.model.wv.syn0[vocab.index]
                         if binary:
                             fout.write(
-                                utils.to_utf8(word) + b" " + row.tostring())
+                                utils.to_utf8(word) + b" " + embedding_vec.tostring())
                         else:
                             fout.write(
                                 utils.to_utf8(
                                     "%s %s\n" %
                                     (word, ' '.join(
                                         "%f" %
-                                        val for val in row))))
+                                        val for val in embedding_vec))))
 
     @classmethod
     def load(cls, np2vec_model_file, binary=False, word_ngrams=0):
