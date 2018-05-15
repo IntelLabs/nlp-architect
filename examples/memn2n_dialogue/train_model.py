@@ -103,12 +103,14 @@ parser.add_argument(
     '--grad_clip_norm',
     type=float,
     default=40.0,
-    help='Clip gradients such that norm is below this value.')
+    help='Clip gradients such that norm is below this value.',
+    action=check_size(0,100))
 parser.add_argument(
     '--eps',
     type=float,
     default=1e-8,
-    help='epsilon used to avoid divide by zero in softmax renormalization.')
+    help='epsilon used to avoid divide by zero in softmax renormalization.',
+    action=check_size(1e-100,1e-2))
 parser.add_argument(
     '--save_log',
     action='store_true',

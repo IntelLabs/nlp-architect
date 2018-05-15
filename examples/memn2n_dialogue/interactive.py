@@ -96,7 +96,8 @@ parser.add_argument(
     '--eps',
     type=float,
     default=1e-8,
-    help='epsilon used to avoid divide by zero in softmax renormalization.')
+    help='epsilon used to avoid divide by zero in softmax renormalization.',
+    action=check_size(1e-100,1e-2))
 parser.add_argument(
     '--model_file',
     default='memn2n_weights.npz',
