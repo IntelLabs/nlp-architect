@@ -56,7 +56,7 @@ Training script for reading comprehension model
 parser = NgraphArgparser(__doc__)
 
 parser.add_argument('--data_path', help='enter path for training data',
-                    action=validate_existing_directory)
+                    type=str)
 
 parser.add_argument('--gpu_id', default="0", help='enter gpu id',
                     type=str,action=check_size(0,10))
@@ -90,12 +90,7 @@ params_dict['ax'] = ax
 init = GlorotInit()
 params_dict['init'] = init
 
-try:
-    assert os.path.exists(args.data_path)
-except:
-    print("Please enter a valid data path")
-    exit()
-
+validate_existing_directory(args.data_path)
 path_gen = sanitize_path(args.data_path)
 path_gen=os.path.join(path_gen+"/")
 
