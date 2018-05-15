@@ -26,7 +26,7 @@ input to the pointer network which identifies the start and end indices of the a
 
 **Model Architecture**
 
-.. image: ../../models/ReadingComprehension/ngraph_implementation/MatchLSTM_Model.png
+.. image: ../../examples/reading_comprehension/MatchLSTM_Model.png
 
 
 Files
@@ -43,6 +43,7 @@ Datasets
 This repository uses the SQuAD dataset. The preprossessing steps required prior to training are listed below:
 
 1. mkdir data
+
 2. Download the training and dev datasets  from here
 https://rajpurkar.github.io/SQuAD-explorer/ and place the extracted json files in the `data` directory.
 The terms and conditions of the data set license apply. Intel does not grant any rights to the data files.
@@ -50,7 +51,8 @@ The terms and conditions of the data set license apply. Intel does not grant any
 3. Download the GloVe pretrained embeddings from  http://nlp.stanford.edu/data/glove.6B.zip and copy "glove.6B.300d.txt" into the  `data` directory.
 For more information about GloVe please visit https://nlp.stanford.edu/projects/glove/. The terms and conditions of the data set license apply. Intel does not grant any rights to the data files.
 
-4. Preprocess the data set using this command-
+4. Preprocess the data set using this command
+
 .. code:: python
 python prepare_data.py --data_path data/
 
