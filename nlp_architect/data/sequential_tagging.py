@@ -96,7 +96,7 @@ class NamedEntityDataset(object):
         return self.data['test']
 
     def read_file(self, path):
-        with open(path) as fp:
+        with open(path, encoding='utf-8') as fp:
             data = fp.readlines()
             data = [d.strip() for d in data]
             data = [d for d in data if 'DOCSTART' not in d]

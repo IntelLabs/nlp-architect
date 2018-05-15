@@ -32,7 +32,7 @@ def load_word_embeddings(file_path):
         list: a dictionary of numpy.ndarray vectors
         int: detected word embedding vector size
     """
-    with open(file_path) as fp:
+    with open(file_path, encoding='utf-8') as fp:
         word_vectors = {}
         size = None
         for line in fp:
