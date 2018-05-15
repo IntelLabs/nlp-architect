@@ -274,7 +274,7 @@ def get_output_dict(train,max_question):
     train['answer']['axes'] = ('batch', 'span')
     train['question_mask']['axes'] = ('batch', 'dummy_axis', 'REC2')
     train['para_mask']['axes'] = ('batch', 'dummy_axis', 'REC')
-    train['dropout_val']['axes'] = ('batch'))
+    train['dropout_val']['axes'] = ('batch')
 
     return train
 

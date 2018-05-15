@@ -58,7 +58,7 @@ parser.add_argument('--data_path', help='enter path for training data',
                     type=validate_existing_directory)
 
 parser.add_argument('--gpu_id', default="0", help='enter gpu id',
-                    type=int, action=check_size(0,9))
+                    type=str)
 
 parser.add_argument('--max_para_req', default=100, help='enter the max length of paragraph',
                     type=int, action=check_size(30,300))
@@ -94,7 +94,7 @@ try:
 except:
     print("Please enter a valid data path")
     exit()
-
+import ipdb;ipdb.set_trace()
 path_gen = sanitize_path(args.data_path)
 path_gen=os.path.join(path_gen+"/")
 
