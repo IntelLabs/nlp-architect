@@ -197,9 +197,10 @@ if __name__ == '__main__':
     # parse the command line arguments
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--data_path', default='', action=validate_existing_directory,
+    parser.add_argument('--data_path', default='',
                         help='enter path where training data and the \
-                        glove embeddings were downloaded')
+                        glove embeddings were downloaded',
+                        type=str,action=check_size(1,1000))
 
     parser.add_argument(
         '--no_preprocess_glove',
@@ -207,17 +208,10 @@ if __name__ == '__main__':
         help='Chose whether or not to preprocess glove embeddings')
 
     parser.set_defaults()
-
     args = parser.parse_args()
     glove_flag = not args.no_preprocess_glove
+
     validate_existing_directory(args.data_path)
-
-    try:
-        assert os.path.exists(args.data_path)
-    except:
-        print("Please enter a valid data path")
-        exit()
-
     data_path = sanitize_path(args.data_path)
     data_path = os.path.join(data_path + "/")
     # Load Train and Dev Data
