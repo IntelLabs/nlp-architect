@@ -51,7 +51,7 @@ import ngraph.transformers as ngt
 from nlp_architect.data.babi_dialog import BABI_Dialog
 from nlp_architect.models.memn2n_dialogue import MemN2N_Dialog
 from utils import interactive_loop
-from nlp_architect.utils.io import validate_existing_filepath, validate_parent_exists
+from nlp_architect.utils.io import validate_existing_filepath, validate_parent_exists, validate
 
 # parse the command line arguments
 parser = NgraphArgparser(__doc__)
@@ -105,6 +105,9 @@ parser.add_argument(
 
 parser.set_defaults(batch_size=32, epochs=200)
 args = parser.parse_args()
+
+validate((args.emb_size, int, 1, 10000),
+         (args.eps, float, 1e-15, 1e-2))
 
 # Sanitize inputs
 validate_existing_filepath(args.model_file)

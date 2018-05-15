@@ -52,7 +52,7 @@ import numpy as np
 import os
 from tqdm import tqdm
 from utils import interactive_loop
-from nlp_architect.utils.io import validate_parent_exists, check_size
+from nlp_architect.utils.io import validate_parent_exists, check_size, validate
 
 
 # parse the command line arguments
@@ -148,6 +148,11 @@ parser.add_argument(
 
 parser.set_defaults(batch_size=32, epochs=200)
 args = parser.parse_args()
+
+validate((args.emb_size, int, 1, 10000),
+         (args.eps, float, 1e-15, 1e-2),
+         (args.lr, float, 1e-8, 10),
+         (args.grad_clip_norm, float, 1e-3, 1e5))
 
 # Validate inputs
 validate_parent_exists(args.log_file)
