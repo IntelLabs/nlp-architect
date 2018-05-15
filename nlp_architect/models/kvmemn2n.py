@@ -18,7 +18,7 @@ from __future__ import print_function
 import ngraph as ng
 from ngraph.frontends.neon import Layer
 from ngraph.frontends.neon import GaussianInit
-from nlp_architect.utils.encodings import position_encoding
+from nlp_architect.contrib.ngraph.encodings import position_encoding
 from nlp_architect.contrib.ngraph.modified_lookup_table import ModifiedLookupTable
 
 

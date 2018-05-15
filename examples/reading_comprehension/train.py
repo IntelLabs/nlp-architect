@@ -42,9 +42,11 @@ from utils import (
     get_data_array_squad_ngraph,
     cal_f1_score)
 import math
-from nlp_architect.utils.weight_initilizers import (make_placeholder, make_weights)
+from nlp_architect.contrib.ngraph.weight_initilizers import (make_placeholder, make_weights)
 from nlp_architect.utils.io import sanitize_path
-from nlp_architect.utils.io import validate, validate_existing_directory,check_size
+from nlp_architect.utils.io import validate, validate_existing_directory, \
+    validate_existing_filepath, validate_parent_exists, check_size
+
 
 """
 Training script for reading comprehension model
@@ -53,12 +55,11 @@ Training script for reading comprehension model
 # parse the command line arguments
 parser = NgraphArgparser(__doc__)
 
-
 parser.add_argument('--data_path', help='enter path for training data',
-                    type=validate_existing_directory)
+                    action=validate_existing_directory)
 
 parser.add_argument('--gpu_id', default="0", help='enter gpu id',
-                    type=str)
+                    type=str,action=check_size(0,10))
 
 parser.add_argument('--max_para_req', default=100, help='enter the max length of paragraph',
                     type=int, action=check_size(30,300))
@@ -94,7 +95,7 @@ try:
 except:
     print("Please enter a valid data path")
     exit()
-import ipdb;ipdb.set_trace()
+
 path_gen = sanitize_path(args.data_path)
 path_gen=os.path.join(path_gen+"/")
 

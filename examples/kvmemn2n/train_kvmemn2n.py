@@ -27,6 +27,8 @@ import ngraph.transformers as ngt
 
 from nlp_architect.models.kvmemn2n import KVMemN2N
 from nlp_architect.data.wikimovies import WIKIMOVIES
+from nlp_architect.utils.io import validate, validate_existing_directory, \
+    validate_existing_filepath, validate_parent_exists, check_size
 from interactive_util import interactive_loop
 
 from tqdm import tqdm
@@ -37,10 +39,13 @@ import os
 # parse the command line arguments
 parser = NgraphArgparser(__doc__)
 parser.add_argument('--emb_size', type=int, default='50',
-                    help='Size of the word-embedding used in the model. (default 50)')
+                    help='Size of the word-embedding used in the model. (default 50)',
+                    action=check_size(1, 20000))
 parser.add_argument('--nhops', type=int, default='3',
-                    help='Number of memory hops in the network')
-parser.add_argument('--lr', type=float, default=0.01, help='learning rate')
+                    help='Number of memory hops in the network',
+                    action=check_size(1, 20))
+parser.add_argument('--lr', type=float, default=0.01, help='learning rate',
+                    action=check_size(0, 5))
 parser.add_argument('--subset', type=str, default='wiki-entities',
                     choices=['full', 'wiki-entities'],
                     help='wikiMovies dataset to use for training examples.')
@@ -62,6 +67,9 @@ parser.add_argument('--interactive', action="store_true",
 
 parser.set_defaults()
 args = parser.parse_args()
+
+if args.model_file:
+    validate_parent_exists(args.model_file)
 
 if (args.inference is True) and (args.model_file is None):
     print("Need to set --model_file for Inference problem")

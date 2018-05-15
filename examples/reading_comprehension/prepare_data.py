@@ -22,7 +22,8 @@ import json
 import os
 from tqdm import *
 from nlp_architect.utils.io import sanitize_path
-from nlp_architect.utils.io import validate, validate_existing_directory,check_size
+from nlp_architect.utils.io import validate, validate_existing_directory, \
+    validate_existing_filepath, validate_parent_exists, check_size
 
 
 PAD = "<pad>"
@@ -196,18 +197,20 @@ if __name__ == '__main__':
     # parse the command line arguments
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--data_path', default='', type=validate_existing_directory,
+    parser.add_argument('--data_path', default='', action=validate_existing_directory,
                         help='enter path where training data and the \
                         glove embeddings were downloaded')
 
-    parser.add_argument('--preprocess_glove',default=1,type=int,
-                        help='Chose whether or not to preprocess glove embeddings',
-                        action=check_size(0,1))
+    parser.add_argument(
+        '--no_preprocess_glove',
+        action="store_true",
+        help='Chose whether or not to preprocess glove embeddings')
 
     parser.set_defaults()
 
     args = parser.parse_args()
-    glove_flag = args.preprocess_glove
+    glove_flag = not args.no_preprocess_glove
+    validate_existing_directory(args.data_path)
 
     try:
         assert os.path.exists(args.data_path)

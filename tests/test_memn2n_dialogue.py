@@ -27,29 +27,13 @@ from ngraph.testing import RandomTensorGenerator, ExecutorFactory
 from ngraph.frontends.neon import ax
 import pytest
 
-pytestmark = pytest.mark.transformer_dependent
-
-
 rng = RandomTensorGenerator(0, np.float32)
 
 delta = 1e-8
 rtol = atol = 1e-2
 
-
-def pytest_generate_tests(metafunc):
-    bsz_rng = [1]
-
-    if 'lut_args' in metafunc.fixturenames:
-        fargs = []
-        vocab_rng = [10, 50, 100]
-        embed_rng = [20, 18, 31]
-        # Add third axis (memory size) to test multiaxis LUT
-        mem_rng = [1, 5, 19]
-        bsz_rng = [4, 32]
-        seq_rng = [3, 5]
-        fargs = itt.product(vocab_rng, embed_rng, bsz_rng, seq_rng, mem_rng)
-        metafunc.parametrize('lut_args', fargs)
-
+(V, F, N, T, M) = (3, 6, 4, 5, 7)
+lut_args = (V, F, N, T, M)
 
 def lut_fprop_ref(lut, idx):
     """
@@ -71,7 +55,7 @@ def lut_update_ref(error, lut, idx, pad_idx):
             dw_ref[wrd_id, :] = np.sum(error.take(group[0], axis=0), axis=0)
     return dw_ref
 
-
+@pytest.mark.parametrize('lut_args', [lut_args])
 def test_lut(lut_args):
     """
     test lut fprop and bprop
@@ -127,11 +111,3 @@ def test_lut(lut_args):
             pad_idx=pad_idx)
         ng.testing.assert_allclose(
             update_lut, update_ref, rtol=0.0, atol=1.0e-5)
-
-
-if __name__ == '__main__':
-    factory = ngt.make_transformer_factory('cpu')
-    ngt.set_transformer_factory(factory)
-    (V, F, N, T, M) = (3, 6, 4, 5, 7)
-    lut_args = (V, F, N, T, M)
-    test_lut(lut_args)

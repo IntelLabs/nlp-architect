@@ -3,7 +3,7 @@ This directory contains an implementation of an end-to-end key-value memory netw
 The idea behind this method is to be able to answer wide range of questions based on a large set of textual information, as opposed to a restricted or sparse knowledge base.
 
 # Dataset
-Please download the tar file from http://www.thespermwhale.com/jaseweston/babi/movieqa.tar.gz and expand the folder into your desired data directory or `--data_dir`. The dataset can be downloaded from the command line if not found, and the preprocessing all happens at the beginning of training.
+Please download the tar file from http://www.thespermwhale.com/jaseweston/babi/movieqa.tar.gz and expand the folder into your desired data directory or `--data_dir`. The terms and conditions of the data set license apply. Intel does not grant any rights to the data files. The dataset can be downloaded from the command line if not found, and the preprocessing all happens at the beginning of training.
 
 # Training
 The base command to train is `python train_kvmemn2n.py`.

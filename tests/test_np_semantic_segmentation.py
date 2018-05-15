@@ -11,7 +11,7 @@ def test_model_training():
     Test model end2end training
     """
     data_path = os.path.abspath('fixtures/data/np_semantic_segmentation_prepared_data.csv')
-    model_path = os.path.abspath('fixtures/data/np_semantic_segmentation')
+    model_path = os.path.abspath('fixtures/data/np_semantic_segmentation.prm')
     num_epochs = 200
     be = gen_backend(batch_size=64)
     # load data sets from file
@@ -45,4 +45,3 @@ def test_model_inference():
     assert len(output_reader_list) == len(input_reader_list) - 1
     os.remove(model_path)
     os.remove(output_path)
-
