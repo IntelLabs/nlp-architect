@@ -197,14 +197,11 @@ if __name__ == '__main__':
     # parse the command line arguments
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--data_path', default='',
-                        help='enter path where training data and the \
+    parser.add_argument('--data_path',help='enter path where training data and the \
                         glove embeddings were downloaded',
                         type=str,action=check_size(1,1000))
 
-    parser.add_argument(
-        '--no_preprocess_glove',
-        action="store_true",
+    parser.add_argument('--no_preprocess_glove',action="store_true",
         help='Chose whether or not to preprocess glove embeddings')
 
     parser.set_defaults()
