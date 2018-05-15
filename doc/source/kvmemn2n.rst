@@ -38,7 +38,10 @@ Files
 
 Dataset
 =======
-The dataset used for training and evaluation is under the umbrella of the Facebook WikiMovies Dataset tasks (https://research.fb.com/downloads/babi/). The dataset is comprised of questions and answers centered around movies. The files also contain a list of all entities in the dataset such as movie names, people's names, as well as other words which were tagged as entities. The last component of the dataset is a series of knowledge base items as follows:
+The dataset used for training and evaluation is under the umbrella of the Facebook WikiMovies Dataset tasks (https://research.fb.com/downloads/babi/). Please download the dataset from that location.
+The terms and conditions of the data set license apply. Intel does not grant any rights to the data files.
+
+The dataset is comprised of questions and answers centered around movies. The files also contain a list of all entities in the dataset such as movie names, people's names, as well as other words which were tagged as entities. The last component of the dataset is a series of knowledge base items as follows:
 
 - Knowledge base. This comes from the Open Movie Database and MovieLens. The questions and answers are based on the KB.
 - Raw Wikipedia text on the movies. This text is limited to only the article summary (i.e., its introduction)

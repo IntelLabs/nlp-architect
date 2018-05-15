@@ -265,7 +265,7 @@ class WIKIMOVIES(object):
         workdir, filepath = valid_path_append(path, '', self.filename)
         if not os.path.exists(filepath):
             if license_prompt('WikiMovies',
-                              self.url,
+                              'https://research.fb.com/downloads/babi/',
                               'Creative Commons Attribution 3.0',
                               'https://research.fb.com/downloads/babi/',
                               self.path) is False:
