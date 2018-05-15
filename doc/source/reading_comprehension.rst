@@ -35,28 +35,38 @@ Files
 - **nlp_architect/utils/weight_initializers.py** - Contains functions to initialize the LSTM Cell in ngraph
 - **examples/train.py** -Implements the end to end model along with the training commands
 - **examples/utils.py**- Implements different utility functions to set up the data loader and to do the evaluation.
+- **examples/prepare_data.py**- Implements the pipeline to preprocess the dataset
 
 
 Datasets
 ========
-This repository uses the SQuAD dataset. Two preprossessing steps are required prior to training:
+This repository uses the SQuAD dataset. The preprossessing steps required prior to training are listed below:
 
-1. Download the training and test data from https://rajpurkar.github.io/SQuAD-explorer/
-2. Preprocess the data set using this command- `python squad_preprocess.py`
+1. mkdir data
+2. Download the training and dev datasets  from here
+https://rajpurkar.github.io/SQuAD-explorer/ and place the extracted json files in the `data` directory.
+The terms and conditions of the data set license apply. Intel does not grant any rights to the data files.
+
+3. Download the GloVe pretrained embeddings from  http://nlp.stanford.edu/data/glove.6B.zip and copy "glove.6B.300d.txt" into the  `data` directory.
+For more information about GloVe please visit https://nlp.stanford.edu/projects/glove/. The terms and conditions of the data set license apply. Intel does not grant any rights to the data files.
+
+4. Preprocess the data set using this command-
+.. code:: python
+python prepare_data.py --data_path data/
 
 Training
 ========
 Train the model using the following command
 
 .. code:: python
-
-  python train.py -bgpu --gpu_id 0
+python train.py --data_path data/ -bgpu --gpu_id 0
 
 The command line options available are:
 
 * ``--gpu_id`` select the gpu id train the model. Default is 0.
 * ``--max_para_req`` enter the max length of the para to truncate the dataset.Default is 100. Currently the code has been tested for a maximum length of paragraph length of 100.
 * ``--batch_size_squad`` enter the batch size (please note that 30 is the max batch size that will fit on a gpu with 12 gb memory). Default is 16.
+* ``--data_path`` enter the path to the preprocessed dataset
 
 Results
 ========

@@ -44,29 +44,27 @@ from utils import (
 import math
 from nlp_architect.utils.weight_initilizers import (make_placeholder, make_weights)
 from nlp_architect.utils.io import sanitize_path
-
+from nlp_architect.utils.io import validate, validate_existing_directory,check_size
 
 """
-Model converges on gpu backened.
+Training script for reading comprehension model
+
 """
 # parse the command line arguments
 parser = NgraphArgparser(__doc__)
 
 
-parser.add_argument(
-    '--data_path',
-    help='enter path for training data')
+parser.add_argument('--data_path', help='enter path for training data',
+                    type=validate_existing_directory)
 
-parser.add_argument('--gpu_id', default="0",
-                    help='enter gpu id')
+parser.add_argument('--gpu_id', default="0", help='enter gpu id',
+                    type=int, action=check_size(0,9))
 
-parser.add_argument('--max_para_req', default=100,
-                    help='enter the max length of paragraph')
+parser.add_argument('--max_para_req', default=100, help='enter the max length of paragraph',
+                    type=int, action=check_size(30,300))
 
-parser.add_argument(
-    '--batch_size_squad',
-    default=16,
-    help='enter the batch size')  # 16 is the max batch size o be fit on gpu
+parser.add_argument('--batch_size_squad',default=16, help='enter the batch size',
+                    type=int, action=check_size(1,256))
 
 parser.set_defaults()
 
@@ -391,8 +389,12 @@ valid_computation = make_bound_computation(transformer, eval_outputs, inputs)
 TODO: Include feature to Save and load weights
 '''
 
+#Ensure batch size is greater than 0
+assert(params_dict['batch_size'] > 0)
+
 # Start Itearting through
 epoch_no = 0
+
 for idx, data in enumerate(train_set):
     train_output = train_computation(data)
     predictions = train_output['logits']
@@ -429,6 +431,8 @@ for idx, data in enumerate(train_set):
 
             if (idx_val + 1) % divide_val == 0:
                 break
+
+        assert(divide_val > 0)
 
         f1_val = f1_score_req / divide_val
         em_val = em_score_req / divide_val

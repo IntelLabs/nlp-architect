@@ -127,7 +127,7 @@ def get_data_array_squad_ngraph(
         vocab_train=None):
     """
     Function to return a dictionary for train/dev datasets in the format required
-    by ArrayIterator object ion ngraph
+    by ArrayIterator object in ngraph
     Arguments:
     ---------
     params_dict: dictionary containing all input parameters
@@ -139,43 +139,11 @@ def get_data_array_squad_ngraph(
     Returns a dictionary in the format required by ArrayIterator object
 
     """
-
+    train=create_train_dict()
     max_para = params_dict['max_para']
     max_question = params_dict['max_question']
     question_mask = np.zeros([1, max_question])
     para_mask = np.zeros([1, max_para])
-
-    train = {}
-    train['para'] = {}
-    train['answer'] = {}
-    train['question'] = {}
-    train['question_len'] = {}
-    train['para_len'] = {}
-    train['question_mask'] = {}
-    train['para_mask'] = {}
-    train['dropout_val'] = {}
-
-    train['para']['data'] = []
-    train['para']['axes'] = ()
-    train['question']['data'] = []
-    train['question']['axes'] = ()
-
-    train['question_len']['data'] = []
-    train['question_len']['axes'] = ()
-    train['para_len']['data'] = []
-    train['para_len']['axes'] = ()
-
-    train['question_mask']['data'] = []
-    train['question_mask']['axes'] = ()
-    train['para_mask']['data'] = []
-    train['para_mask']['axes'] = ()
-
-    train['answer']['data'] = []
-
-    train['answer']['axes'] = ()
-
-    train['dropout_val']['data'] = []
-    train['dropout_val']['axes'] = ()
 
     count = 0
     for ele in data_train:
@@ -213,7 +181,7 @@ def get_data_array_squad_ngraph(
             train['question_mask']['data'].append(question_mask)
 
             if set_val == 'train':
-                train['dropout_val']['data'].append(0.6)  # change back to 0.6
+                train['dropout_val']['data'].append(0.6)
 
             else:
                 train['dropout_val']['data'].append(1.0)
@@ -227,6 +195,55 @@ def get_data_array_squad_ngraph(
                 if count >= 2000:
                     break
                 count += 1
+
+    train_out=get_output_dict(train,max_question)
+
+    return train_out
+
+
+def create_train_dict():
+    """
+    Function to define the data dictionary with format as required by
+    ArrayIterator object
+
+    """
+    data = {}
+    data['para'] = {}
+    data['answer'] = {}
+    data['question'] = {}
+    data['question_len'] = {}
+    data['para_len'] = {}
+    data['question_mask'] = {}
+    data['para_mask'] = {}
+    data['dropout_val'] = {}
+
+    data['para']['data'] = []
+    data['para']['axes'] = ()
+    data['question']['data'] = []
+    data['question']['axes'] = ()
+
+    data['question_len']['data'] = []
+    data['question_len']['axes'] = ()
+    data['para_len']['data'] = []
+    data['para_len']['axes'] = ()
+
+    data['question_mask']['data'] = []
+    data['question_mask']['axes'] = ()
+    data['para_mask']['data'] = []
+    data['para_mask']['axes'] = ()
+
+    data['answer']['data'] = []
+    data['answer']['axes'] = ()
+    data['dropout_val']['data'] = []
+    data['dropout_val']['axes'] = ()
+
+    return data
+
+def get_output_dict(train,max_question):
+    """
+    Function to populate data dictionary with data and defined axes as
+    required by ArrayIterator object in ngraph
+    """
 
     train['para']['data'] = np.array(
         [xi for xi in train['para']['data'][:-1]], dtype=np.int32)
@@ -257,9 +274,9 @@ def get_data_array_squad_ngraph(
     train['answer']['axes'] = ('batch', 'span')
     train['question_mask']['axes'] = ('batch', 'dummy_axis', 'REC2')
     train['para_mask']['axes'] = ('batch', 'dummy_axis', 'REC')
-    train['dropout_val']['axes'] = ('batch')
-    return train
+    train['dropout_val']['axes'] = ('batch'))
 
+    return train
 
 def cal_f1_score(params_dict, ground_truths, predictions):
     """
@@ -286,6 +303,8 @@ def cal_f1_score(params_dict, ground_truths, predictions):
         if num_same == 0:
             f1 += 0
         else:
+            assert(len(preds)>0 and len(gts)>0)
+
             precision = 1.0 * num_same / len(preds)
             recall = 1.0 * num_same / len(gts)
             f1 += (2 * precision * recall) / (precision + recall)
