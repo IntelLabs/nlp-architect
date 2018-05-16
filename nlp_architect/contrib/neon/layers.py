@@ -234,6 +234,9 @@ class TimeDistributedRecurrentLast(TimeDistributedRecurrentOutput):
 
 
 class TimeDistBiLSTM(BiLSTM):
+    """
+    A Bi-directional LSTM layer that supports time step output of the LSTM layer.
+    """
     def __init__(self, output_size, init, init_inner=None, activation=None,
                  gate_activation=None, reset_cells=False, reset_freq=0,
                  split_inputs=False, name=None):

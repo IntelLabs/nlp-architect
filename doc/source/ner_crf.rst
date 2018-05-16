@@ -49,7 +49,7 @@ In the above format each sentence is separated by an empty line. Each line consi
 Data loader
 -----------
 
-Loading data into the model can be done using the ``NamedEntityDataset`` data loader from ``nlp_architect.data.sequential_tagging`` package, which can be used with the preprared train and test data sets described above.
+Loading data into the model can be done using the ``SequentialTaggingDataset`` data loader from ``nlp_architect.data.sequential_tagging`` package, which can be used with the preprared train and test data sets described above.
 
 The data loader returns 2 numpy matrices:
 1. sparse word representation of the sentence words

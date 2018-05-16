@@ -92,6 +92,6 @@ these will be placed into a central repository.
     nlp_architect.data.intent_datasets.IntentDataset
     nlp_architect.data.intent_datasets.TabularIntentDataset
     nlp_architect.data.intent_datasets.SNIPS
-    nlp_architect.data.sequential_tagging.NamedEntityDataset
+    nlp_architect.data.sequential_tagging.SequentialTaggingDataset
     nlp_architect.data.babi_dialog.BABI_Dialog
     nlp_architect.data.wikimovies.WIKIMOVIES

@@ -23,7 +23,7 @@ from os import path
 
 from keras.utils import to_categorical
 from nlp_architect.contrib.keras.callbacks import ConllCallback
-from nlp_architect.data.sequential_tagging import NamedEntityDataset
+from nlp_architect.data.sequential_tagging import SequentialTaggingDataset
 from nlp_architect.models.ner_crf import NERCRF
 from nlp_architect.utils.io import validate_existing_filepath, validate_parent_exists, validate
 from nlp_architect.utils.metrics import get_conll_scores
@@ -88,10 +88,10 @@ if __name__ == '__main__':
     args = read_input_args()
 
     # load dataset and parameters
-    dataset = NamedEntityDataset(args.train_file, args.test_file,
-                                 max_sentence_length=args.sentence_length,
-                                 max_word_length=args.word_length,
-                                 tag_field_no=args.tag_num)
+    dataset = SequentialTaggingDataset(args.train_file, args.test_file,
+                                       max_sentence_length=args.sentence_length,
+                                       max_word_length=args.word_length,
+                                       tag_field_no=args.tag_num)
 
     # get the train and test data sets
     x_train, x_char_train, y_train = dataset.train
