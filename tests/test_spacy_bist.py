@@ -15,12 +15,16 @@
 # ******************************************************************************
 import pytest
 
-from nlp_architect.pipelines.spacy_bist import SpacyBISTParser
 from nlp_architect.utils.text import is_spacy_model_installed
 
-pytestmark = pytest.mark.skipif(
-    not is_spacy_model_installed('en'),
-    reason="'spacy en' model not installed. Please install it to run this test.")
+if not is_spacy_model_installed('en'):
+    print("\n\nSkipping test_spacy_bist_.py. Reason: 'spacy en' model not installed. "
+          "Please see https://spacy.io/models/ for installation instructions.\n"
+          "The terms and conditions of the data set and/or model license apply.\n"
+          "Intel does not grant any rights to the data and/or model files.\n")
+    pytest.skip(allow_module_level=True)
+
+from nlp_architect.pipelines.spacy_bist import SpacyBISTParser
 
 
 class TestData:
