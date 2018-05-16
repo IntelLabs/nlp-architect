@@ -21,78 +21,81 @@ DOC_PUB_RELEASE_PATH := $(DOC_PUB_PATH)/$(RELEASE)
 
 LIBRARY_NAME := nlp_architect
 VIRTUALENV_DIR := .nlp_architect_env
-GEN_REQ_FILE := _generated_reqs.txt
+REQ_FILE := requirements.txt
 ACTIVATE := $(VIRTUALENV_DIR)/bin/activate
 MODELS_DIR := $(LIBRARY_NAME)/models
 NLP_DIR := $(LIBRARY_NAME)/nlp
 
-.PHONY: test_prepare style fixstyle autopep8 doc_prepare doc html clean \
-	install install_dev install_no_virt_env $(ACTIVATE)
+.PHONY: test_prepare test style doc_prepare doc html clean pre_install install dev install_no_virt_env sysinstall finish_install
 
-default: install_dev
+default: dev
 
-test_prepare: test_requirements.txt
-	pip install -r test_requirements.txt > /dev/null 2>&1
+test_prepare: test_requirements.txt $(ACTIVATE)
+	@. $(ACTIVATE); pip install -r test_requirements.txt > /dev/null 2>&1
+
+test: test_prepare $(ACTIVATE) dev
+	@. $(ACTIVATE); py.test -rs tests
 
 style: test_prepare
-	flake8 --exit-zero --output-file flake.txt --tee $(FLAKE8_CHECK_DIRS)
-	pylint --reports=n --output-format=colorized --ignore=.venv $(PYLINT_CHECK_DIRS) || true
+	@. $(ACTIVATE); flake8 --exit-zero --output-file flake.txt --tee $(FLAKE8_CHECK_DIRS)
+	@. $(ACTIVATE); pylint --reports=n --output-format=colorized --ignore=.venv $(PYLINT_CHECK_DIRS) || true
 
-fixstyle: autopep8
-
-autopep8:
-	autopep8 -a -a --global-config setup.cfg --in-place `find . -name \*.py`
-	echo run "git diff" to see what may need to be checked in and "make style" to see what work remains
-
-doc_prepare: doc_requirements.txt
-	pip install -r doc_requirements.txt > /dev/null 2>&1
+doc_prepare: doc_requirements.txt $(ACTIVATE)
+	@. $(ACTIVATE); pip install -r doc_requirements.txt > /dev/null 2>&1
 
 doc: doc_prepare
-	$(MAKE) -C $(DOC_DIR) clean
-	$(MAKE) -C $(DOC_DIR) html
+	@. $(ACTIVATE); $(MAKE) -C $(DOC_DIR) clean
+	@. $(ACTIVATE); $(MAKE) -C $(DOC_DIR) html
 	@echo "Documentation built in $(DOC_DIR)/build/html"
 	@echo "To view documents open your browser to: http://localhost:8000"
-	@cd $(DOC_DIR)/build/html; python -m http.server
+	@. $(ACTIVATE); cd $(DOC_DIR)/build/html; python -m http.server
 	@echo
 
-html:
-	$(MAKE) -C $(DOC_DIR) html
+html: doc_prepare $(ACTIVATE)
+	@. $(ACTIVATE); $(MAKE) -C $(DOC_DIR) html
 
 clean:
 	@echo "Cleaning files.."
 	@rm -rf $(VIRTUALENV_DIR)
-	@rm -rf $(GEN_REQ_FILE)
+
+ENV_EXIST := $(shell test -d $(VIRTUALENV_DIR) && echo -n yes)
 
 $(ACTIVATE):
+ifneq ($(ENV_EXIST), yes)
 	@echo "NLP Architect installation"
 	@echo "**************************"
-	@echo "creating new environment"
+	@echo "Creating new environment"
+	@echo
 	virtualenv -p python3 $(VIRTUALENV_DIR)
 	@. $(ACTIVATE); pip install -U pip
+endif
 
-pre_install: $(ACTIVATE) generate_reqs.sh
+pre_install: $(ACTIVATE)
 	@echo "\n\n****************************************"
-	@echo "Generating package list to install"
-	@. $(ACTIVATE); bash generate_reqs.sh
 	@echo "Installing packages ..."
-	@. $(ACTIVATE); pip install -r $(GEN_REQ_FILE)
+	@. $(ACTIVATE); pip install -r $(REQ_FILE)
 
 install: pre_install
 	@. $(ACTIVATE); pip install .
 	$(MAKE) print_finish
 
-install_dev: pre_install
+dev: pre_install
 	@. $(ACTIVATE); pip install -e .
 	$(MAKE) print_finish
 
 install_no_virt_env:
 	@echo "\n\n****************************************"
 	@echo "Installing NLP Architect in current python env"
-	@echo "Generating package list to install"
-	bash generate_reqs.sh
-	pip install -r $(GEN_REQ_FILE)
+	pip install -r $(REQ_FILE)
 	pip install -e .
-	@echo "Installation done"
+	@echo "NLP Architect setup complete."
+
+sysinstall:
+	@echo "\n\n****************************************"
+	@echo "Installing NLP Architect in current python env (system install)"
+	pip install -r $(REQ_FILE)
+	pip install .
+	@echo "NLP Architect setup complete."
 
 print_finish:
 	@echo "\n\n****************************************"

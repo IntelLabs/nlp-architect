@@ -36,7 +36,7 @@ Before installing the library make sure you has the most recent packages listed 
    pkg-config, pkg-config, Retrieves information about installed libraries
 
 .. note::
-  The default installations of NLP Architect uses the default CPU backend of all deep learning framework installations. When installing on Ubuntu systems optional Intel optimized frameworks can be approved to be installed.
+  The default installations of NLP Architect uses the default CPU backend of all deep learning framework installations. When installing on Ubuntu systems optional Intel optimized frameworks can be installed.
 
 Instructions
 ============
@@ -83,3 +83,10 @@ Installing to current working python (or system wide install)
 .. code:: python
 
   make install_no_virt_env
+
+
+*  System-wide install (might require `sudo` permissions):
+
+.. code:: python
+
+  make sysinstall

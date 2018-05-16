@@ -283,7 +283,7 @@ class SNIPS(IntentDataset):
     def _load_intents(self, files):
         data = {}
         for f in files:
-            fname = self.dataset_root + f
+            fname = os.path.join(self.dataset_root, f)
             intent = f.split(os.sep)[0]
             fdata = json.load(open(fname, encoding='utf-8', errors='ignore'))
             entries = self._parse_json([d['data'] for d in fdata[intent]])

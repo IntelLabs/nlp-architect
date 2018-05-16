@@ -8,7 +8,7 @@ NLP Architect is an open-source Python library for exploring the state-of-the-ar
 language understanding. It is intended to be a space to promote research and
 collaboration.
 
-The library consists of core modules (topologies), data pipelines, utilities and end-to-end model examples with training and inference scripts. Each of the models includes algorithm descriptions and results in the [documentation](http://www.nlp_architect.nervanasys.com/). 
+The library consists of core modules (topologies), data pipelines, utilities and end-to-end model examples with training and inference scripts. Each of the models includes algorithm descriptions and results in the [documentation](http://www.nlp_architect.nervanasys.com/).
 
 Because of its current research nature, several open source deep learning frameworks are used in this repository including:
 
@@ -20,14 +20,14 @@ Because of its current research nature, several open source deep learning framew
 
 Overtime the list of models included in this space will change, though all generally run with Python 3.5+
 
-## Documentation 
+## Documentation
 Framework documentation on NLP model, algorithms, and modules, and instructions on how to contribute can be found [here](http://www.nlp_architect.nervanasys.com/).
 
 ## Installation
 
 We recommend installing NLP Architect within a virtual environment to ensure a self-contained environment.
-To install NLP Architect models within an already existing virtual environment, see below installation receipes for custom model installation.
-The default installation will create a new local virtual environment for development purposes.
+To install NLP Architect within an already existing virtual environment, see below installation recipe for custom installation.
+The default installation will create a new local virtual environment and install the library in development mode.
 
 To get started using our library, clone our repository:
 ```
@@ -36,8 +36,8 @@ To get started using our library, clone our repository:
 ```
 ### Installing within a virtual environment
 
-#### Install in development mode (default):
-``` 
+Install in development mode (default):
+```
 make
 ```
 
@@ -47,17 +47,21 @@ make install
 ```
 
 Activate the newly created virtual environment:
-
 ```
 . .nlp_architect_env/bin/activate
 ```
-Fire up your favorite IDE/text editor/terminal and start running models
+Fire up your favorite IDE/text editor/terminal and start running models.
 
-#### Installing to current working python (or system wide install)
+### Installing to current working python (or system wide install)
 
-Install without creating a new virtual environment:
+Install in development mode:
 ```
 make install_no_virt_env
+```
+
+System-wide install (might require `sudo` permissions):
+```
+make sysinstall
 ```
 
 ## Disclaimer
