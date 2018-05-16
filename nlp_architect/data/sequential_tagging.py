@@ -25,7 +25,18 @@ from keras.preprocessing.sequence import pad_sequences
 from nlp_architect.utils.text import Vocabulary
 
 
-class NamedEntityDataset(object):
+class SequentialTaggingDataset(object):
+    """
+    Sequential tagging dataset loader.
+    Loads train/test files with tabular separation.
+
+    Args:
+        train_file (str): path to train file
+        test_file (str): path to test file
+        max_sentence_length (int, optional): max sentence length
+        max_word_length (int, optional): max word length
+        tag_field_no (int, optional): index of column to use a y-samples
+    """
     def __init__(self,
                  train_file,
                  test_file,
@@ -39,12 +50,12 @@ class NamedEntityDataset(object):
         self.tf = tag_field_no
 
         self.vocabs = {'token': Vocabulary(2),  # 0=pad, 1=unk
-                       'char': Vocabulary(2),  # 0=pad, 1=unk
-                       'tag': Vocabulary(1)}  # 0=pad
+                       'char': Vocabulary(2),   # 0=pad, 1=unk
+                       'tag': Vocabulary(1)}    # 0=pad
 
         self.data = {}
         for f in self.files:
-            raw_sentences = self.read_file(self.files[f])
+            raw_sentences = self._read_file(self.files[f])
             word_vecs = []
             char_vecs = []
             tag_vecs = []
@@ -69,42 +80,49 @@ class NamedEntityDataset(object):
 
     @property
     def y_labels(self):
+        """return y labels"""
         return self.vocabs['tag'].vocab
 
     @property
     def word_vocab(self):
+        """words vocabulary"""
         return self.vocabs['token'].vocab
 
     @property
     def char_vocab(self):
+        """characters vocabulary"""
         return self.vocabs['char'].vocab
 
     @property
     def word_vocab_size(self):
+        """word vocabulary size"""
         return len(self.vocabs['token']) + 2
 
     @property
     def char_vocab_size(self):
+        """character vocabulary size"""
         return len(self.vocabs['char']) + 2
 
     @property
     def train(self):
+        """Get the train set"""
         return self.data['train']
 
     @property
     def test(self):
+        """Get the test set"""
         return self.data['test']
 
-    def read_file(self, path):
+    def _read_file(self, path):
         with open(path, encoding='utf-8') as fp:
             data = fp.readlines()
             data = [d.strip() for d in data]
             data = [d for d in data if 'DOCSTART' not in d]
-            sentences = self.split_into_sentences(data)
-            parsed_sentences = [self.parse_sentence(s) for s in sentences if len(s) > 0]
+            sentences = self._split_into_sentences(data)
+            parsed_sentences = [self._parse_sentence(s) for s in sentences if len(s) > 0]
         return parsed_sentences
 
-    def parse_sentence(self, sentence):
+    def _parse_sentence(self, sentence):
         tokens = []
         tags = []
         for line in sentence:
@@ -118,7 +136,7 @@ class NamedEntityDataset(object):
         return tokens, tags
 
     @staticmethod
-    def split_into_sentences(file_lines):
+    def _split_into_sentences(file_lines):
         sents = []
         s = []
         for line in file_lines:
