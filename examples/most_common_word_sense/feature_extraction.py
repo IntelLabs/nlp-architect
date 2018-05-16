@@ -20,8 +20,23 @@ import numpy
 from numpy import dot
 from numpy.linalg import norm
 
-nltk.download('averaged_perceptron_tagger')
-nltk.download('punkt')
+from nlp_architect.utils.generic import license_prompt
+
+try:
+    nltk.data.find('taggers/averaged_perceptron_tagger')
+except LookupError:
+    if license_prompt('Averaged Perceptron Tagger', 'http://www.nltk.org/nltk_data/') is False:
+        raise Exception("can't continue data prepare process "
+                        "without downloading averaged_perceptron_tagger")
+    nltk.download('averaged_perceptron_tagger')
+
+try:
+    nltk.data.find('tokenizers/punkt')
+except LookupError:
+    if license_prompt('Punkt model', 'http://www.nltk.org/nltk_data/') is False:
+        raise Exception("can't continue data prepare process "
+                        "without downloading punkt")
+    nltk.download('punkt')
 
 # -------------------------------------------------------------------------------------#
 

@@ -18,7 +18,6 @@ Prepare the datasets for Most Common Word Sense training
 """
 
 import argparse
-import codecs
 import csv
 import logging
 import math
@@ -27,8 +26,10 @@ import pickle
 import gensim
 import numpy as np
 from feature_extraction import extract_features_envelope
-from nlp_architect.utils.io import validate_existing_directory, validate_existing_filepath
 from sklearn.model_selection import train_test_split
+
+from nlp_architect.utils.io import validate_existing_filepath, \
+    check_size, validate_parent_exists
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)

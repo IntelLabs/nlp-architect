@@ -24,6 +24,8 @@ from gensim.models.keyedvectors import KeyedVectors
 from nltk.corpus import wordnet as wn
 from nltk.stem.snowball import SnowballStemmer
 
+from nlp_architect.utils.generic import license_prompt
+
 stemmer = SnowballStemmer("english")
 headers = {"Accept": "application/json"}
 
@@ -33,7 +35,13 @@ class NLTKCollocations:
     NLTKCollocations score using NLTK framework on Brown dataset
     """
     def __init__(self):
-        nltk.download('brown')
+        try:
+            nltk.data.find('corpora/brown')
+        except LookupError:
+            if license_prompt('brown data set', 'http://www.nltk.org/nltk_data/') is False:
+                raise Exception("can't continue data prepare process "
+                                "without downloading brown dataset")
+            nltk.download('brown')
         self.bigram_finder = nltk.collocations.BigramCollocationFinder.from_words(
             nltk.corpus.brown.words())
         self.bigram_messure = nltk.collocations.BigramAssocMeasures()
@@ -235,7 +243,13 @@ class Wordnet:
     """
 
     def __init__(self):
-        nltk.download('wordnet')
+        try:
+            nltk.data.find('corpora/wordnet')
+        except LookupError:
+            if license_prompt('WordNet data set', 'http://www.nltk.org/nltk_data/') is False:
+                raise Exception("can't continue data prepare process "
+                                "without downloading WordNet dataset")
+            nltk.download('wordnet')
         self.wordnet = wn
 
     def find_wordnet_existence(self, candidates):

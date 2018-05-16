@@ -19,7 +19,7 @@ The expected dataset is a CSV file with 2 columns. the first column contains the
 
 If you wish to use an existing dataset for training the model, you can download Tratz 2011 et al. dataset [1,2] from the following link:
 [Tratz 2011 Dataset](https://vered1986.github.io/papers/Tratz2011_Dataset.tar.gz). Is also available in [here](https://www.isi.edu/publications/licensed-sw/fanseparser/index.html).
-(The terms and conditions of the data set license apply. Intel does not grant any rights to the data files or database. see relevant [license agreement](http://www.apache.org/licenses/LICENSE-2.0))
+(The terms and conditions of the data set license apply. Intel does not grant any rights to the data files or database.
 
 
 After downloading and unzipping the dataset, run `preprocess_tratz2011.py` in order to construct the labeled data and save it in a CSV file (as expected for the model).
@@ -27,8 +27,7 @@ the scripts read 2 .tsv files ('tratz2011_coarse_grained_random/train.tsv' and '
 
 Parameters can be obtained by running:
 
-    python preprocess_tratz2011.py -h
-        --data path_to_Tratz_2011_dataset_folder
+    python preprocess_tratz2011.py --data path_to_Tratz_2011_dataset_folder
 
 
 ### Pre-processing the data:
@@ -36,7 +35,7 @@ A feature vector is extracted from each Noun-Phrase string using the command `py
 
 * Word2Vec word embedding (300 size vector for each word in the Noun-Phrase) .
     * Pre-trained Google News Word2vec model can download [here](https://drive.google.com/file/d/0B7XkCwpI5KDYNlNUTTlSS21pQmM/edit?usp=sharing)
-    * The terms and conditions of the data set license apply. Intel does not grant any rights to the data files or database. see relevant [license agreement](http://www.apache.org/licenses/LICENSE-2.0)
+    * The terms and conditions of the data set license apply. Intel does not grant any rights to the data files or database.
 * Cosine distance between 2 words in the Noun-Phrase.
 * NLTKCollocations score (NPMI and UCI scores).
 * A binary features whether the Noun-Phrase has existing entity in Wikidata.

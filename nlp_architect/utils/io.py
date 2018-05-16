@@ -135,7 +135,10 @@ def validate_existing_directory(arg):
 
 def validate_parent_exists(arg):
     """Validates an input argument is a path string, and its parent directory exists."""
-    return validate_existing_directory(os.path.dirname(arg))
+    arg = path.abspath(arg)
+    dir_arg = os.path.dirname(os.path.abspath(arg))
+    if not validate_existing_directory(dir_arg) is None:
+        return arg
 
 
 def sanitize_path(path):

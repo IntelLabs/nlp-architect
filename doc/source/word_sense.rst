@@ -83,6 +83,7 @@ Dataset Preparation
 
 The script prepare_data.py uses the gold standard csv file as described in the requirements section above
 using pretrained Google News Word2vec model. Pretrained Google News Word2vec model can be download here_.
+The terms and conditions of the data set license apply. Intel does not grant any rights to the data files.
 
 .. code:: python
 

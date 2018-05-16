@@ -58,7 +58,7 @@ def test_request(service_name):
     doc = json.dumps(test_data["input"])
     expected_result = json.dumps(test_data["response"])
     headers["Content-Type"] = "application/json"
-    headers["format"] = "json"
+    headers["Response-Format"] = "json"
     response = client.simulate_post('/' + service_name, body=doc, headers=headers)
     result_doc = json.loads(response.content, encoding='utf-8')
     assert result_doc == json.loads(expected_result)
@@ -75,7 +75,7 @@ def test_gzip_file_request(service_name):
     expected_result = json.dumps(load_test_data(service_name)["response"])
     headers["Content-Type"] = "application/gzip"
     headers["Content-Encoding"] = "gzip"
-    headers["format"] = "gzip"
+    headers["Response-Format"] = "gzip"
     response = client.simulate_post('/' + service_name, body=doc, headers=headers)
     result_doc = get_decompressed_gzip(response.content)
     assert result_doc == json.loads(expected_result)
@@ -91,7 +91,7 @@ def test_json_file_request(service_name):
         doc = file.read()
     expected_result = json.dumps(load_test_data(service_name)["response"])
     headers["Content-Type"] = "application/json"
-    headers["format"] = "json"
+    headers["Response-Format"] = "json"
     response = client.simulate_post('/' + service_name, body=doc, headers=headers)
     result_doc = json.loads(response.content, encoding='utf-8')
     assert result_doc == json.loads(expected_result)

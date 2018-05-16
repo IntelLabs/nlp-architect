@@ -69,8 +69,7 @@ Dataset <https://vered1986.github.io/papers/Tratz2011_Dataset.tar.gz>`__.
 Is also available in
 `here <https://www.isi.edu/publications/licensed-sw/fanseparser/index.html>`__.
 (The terms and conditions of the data set license apply. Intel does not
-grant any rights to the data files or database. see relevant `license
-agreement <http://www.apache.org/licenses/LICENSE-2.0>`__)
+grant any rights to the data files or database.
 
 After downloading and unzipping the dataset, run
 ``preprocess_tratz2011.py`` in order to construct the labeled data and
@@ -97,8 +96,7 @@ command ``python data.py``
    -  Pre-trained Google News Word2vec model can download
       `here <https://drive.google.com/file/d/0B7XkCwpI5KDYNlNUTTlSS21pQmM/edit?usp=sharing>`__
    -  The terms and conditions of the data set license apply. Intel does
-      not grant any rights to the data files or database. see relevant
-      `license agreement <http://www.apache.org/licenses/LICENSE-2.0>`__
+      not grant any rights to the data files or database.
 
 -  Cosine distance between 2 words in the Noun-Phrase.
 -  NLTKCollocations score (PMI score (from Manning and Schutze 5.4) and Chi-square score (Manning and Schutze 5.3.3)).
