@@ -163,7 +163,7 @@ High-level models annotation structure
 
 NLP Architect server - developers guide
 =======================================
-This section is for developers who wish to add a new service to NLP-Architect server.
+This section is for developers who wish to add a new service to NLP Architect server.
 
 Adding a new service to the server
 ----------------------------------

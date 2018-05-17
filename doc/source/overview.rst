@@ -20,7 +20,7 @@ Overview
 
 NLP Architect is a repository for models exploring the state of the
 art deep learning techniques for natural language processing and natural
-language understanding. It is intended to be a space to promote research and
+language understanding. It is intended to be a platform for future research and
 collaboration.
 
 The library includes our past and ongoing NLP research efforts as part of Intel AI Lab.
@@ -30,11 +30,11 @@ How can NLP Architect be used
 ===============================
 
 - Train models using provided algorithms, reference datasets and configurations
-- Train models using their own data
+- Train models using your own data
 - Create new/extend models based on existing models or topologies
-- Explore how deep learning models tackle these NLP tasks
+- Explore how deep learning models tackle various NLP tasks
 - Experiment and optimize state-of-the-art deep learning algorithms
-- integrate modules and utilities from the library to a solutions
+- integrate modules and utilities from the library to solutions
 
 
 Library Overview
@@ -59,8 +59,8 @@ Deep Learning frameworks
 Because of the current research nature of the library, several open source deep learning frameworks are used in this repository including:
 
 - `Intel® Nervana™ graph`_
-- Intel® neon_
-- Tensorflow_
+- `Intel® neon`_
+- Tensorflow_ or `Intel-Optimized TensorFlow`_
 - Dynet_
 - Keras_
 
@@ -78,8 +78,9 @@ We welcome collaboration, suggestions, and critiques. For information on how to 
 on this project, please see the :doc:`developer guide <developer_guide>`.
 
 
-.. _neon: https://github.com/nervanasystems/neon
+.. _Intel® neon: https://github.com/nervanasystems/neon
 .. _Intel® Nervana™ graph: https://github.com/NervanaSystems/ngraph-python
 .. _Tensorflow: https://www.tensorflow.org/
+.. _Intel-Optimized TensorFlow: https://software.intel.com/en-us/articles/intel-optimized-tensorflow-wheel-now-available
 .. _Keras: https://keras.io/
 .. _Dynet: https://dynet.readthedocs.io/en/latest/

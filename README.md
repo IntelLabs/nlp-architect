@@ -5,7 +5,7 @@
 
 
 NLP Architect is an open-source Python library for exploring the state-of-the-art deep learning topologies and techniques for natural language processing and natural
-language understanding. It is intended to be a space to promote research and
+language understanding. It is intended to be a platform for future research and
 collaboration.
 
 The library consists of core modules (topologies), data pipelines, utilities and end-to-end model examples with training and inference scripts. Each of the models includes algorithm descriptions and results in the [documentation](http://www.nlp_architect.nervanasys.com/).
