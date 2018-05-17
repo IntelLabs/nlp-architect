@@ -20,20 +20,20 @@ Using as a REST service
 
 Overview
 ========
-NLP Architect server is a Falcon server for serving predictions to different models in NLP Architect repository.
-The server also includes a very very simple front-end web exposing the model's annotations using displaCy and displaCyENT visualizations.
+NLP Architect server is a Falcon server for serving predictions to different models in NLP Architect.
+The server also includes a web front-end exposing the model's annotations using displaCy and displaCyENT visualizations.
 The server supports both `json` and `gzip` formats.
 
 Running NLP Architect server
 ============================
-In order to keep NLP Architect server light and simple as possible, the server uploads only the needed model.
-Hence, in order to run the server you need to know which service you want to upload.
-Currently we provided 2 services:
+Some of the components, which we provide pre-trained models, are exposed through this server. In order to run the server, a user needs to specify which service, so NLP Archtiect serer will only upload the needed model.
+
+Currently we provide 2 services:
 
  1. `bist` service which provides BIST Dependency parsing
  2. `spacy_ner` service which provides Spacy NER annotations.
 
-In order to run the server, simply run `serve.py` with the Parameter `--name` as the name of the service you wish to serve.
+To run the server, simply run `serve.py` with the Parameter `--name` as the name of the service you wish to serve.
 Once the model is loaded, the server will run on `http://localhost:8080/{service_name}`.
 
 If you wish to use the server's visualization - enter `http://localhost:8080/{service_name}/demo.html`
