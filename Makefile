@@ -21,7 +21,7 @@ DOC_PUB_RELEASE_PATH := $(DOC_PUB_PATH)/$(RELEASE)
 
 LIBRARY_NAME := nlp_architect
 VIRTUALENV_DIR := .nlp_architect_env
-REQ_FILE := requirements.txt
+REQ_FILE := _generated_reqs.txt
 ACTIVATE := $(VIRTUALENV_DIR)/bin/activate
 MODELS_DIR := $(LIBRARY_NAME)/models
 NLP_DIR := $(LIBRARY_NAME)/nlp
@@ -57,10 +57,18 @@ html: doc_prepare $(ACTIVATE)
 clean:
 	@echo "Cleaning files.."
 	@rm -rf $(VIRTUALENV_DIR)
+	@rm -rf $(REQ_FILE)
 
 ENV_EXIST := $(shell test -d $(VIRTUALENV_DIR) && echo -n yes)
+REQ_EXIST := $(shell test -f $(REQ_FILE) && echo -n yes)
 
-$(ACTIVATE):
+$(REQ_FILE):
+ifneq ($(REQ_EXIST), yes)
+	@echo "Generating pip requirements file"
+	@bash generate_reqs.sh
+endif
+
+$(ACTIVATE): $(REQ_FILE)
 ifneq ($(ENV_EXIST), yes)
 	@echo "NLP Architect installation"
 	@echo "**************************"
@@ -83,14 +91,14 @@ dev: pre_install
 	@. $(ACTIVATE); pip install -e .
 	$(MAKE) print_finish
 
-install_no_virt_env:
+install_no_virt_env: $(REQ_FILE)
 	@echo "\n\n****************************************"
 	@echo "Installing NLP Architect in current python env"
 	pip install -r $(REQ_FILE)
 	pip install -e .
 	@echo "NLP Architect setup complete."
 
-sysinstall:
+sysinstall: $(REQ_FILE)
 	@echo "\n\n****************************************"
 	@echo "Installing NLP Architect in current python env (system install)"
 	pip install -r $(REQ_FILE)
