@@ -1,5 +1,5 @@
 # ******************************************************************************
-# this file is taken from https://github.com/spyysalo/conlleval.py
+# modified from original code at https://github.com/spyysalo/conlleval.py
 # ------------------------------------------------------------------------------
 # The MIT License (MIT)
 #
@@ -58,22 +58,6 @@ class EvalCounts(object):
         self.t_correct_chunk = defaultdict(int)
         self.t_found_correct = defaultdict(int)
         self.t_found_guessed = defaultdict(int)
-
-def parse_args(argv):
-    import argparse
-    parser = argparse.ArgumentParser(
-        description='evaluate tagging results using CoNLL criteria',
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter
-    )
-    arg = parser.add_argument
-    arg('-b', '--boundary', metavar='STR', default='-X-',
-        help='sentence boundary')
-    arg('-d', '--delimiter', metavar='CHAR', default=ANY_SPACE,
-        help='character delimiting items in input')
-    arg('-o', '--otag', metavar='CHAR', default='O',
-        help='alternative outside tag')
-    arg('file', nargs='?', default=None)
-    return parser.parse_args(argv)
 
 def parse_tag(t):
     m = re.match(r'^([^-]*)-(.*)$', t)
@@ -255,16 +239,3 @@ def start_of_chunk(prev_tag, tag, prev_type, type_):
     if tag == ']': chunk_start = True
 
     return chunk_start
-
-def main(argv):
-    args = parse_args(argv[1:])
-
-    if args.file is None:
-        counts = evaluate(sys.stdin, args)
-    else:
-        with open(args.file) as f:
-            counts = evaluate(f, args)
-    report(counts)
-
-if __name__ == '__main__':
-    sys.exit(main(sys.argv))
