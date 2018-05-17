@@ -53,8 +53,12 @@ Otherwise the expected Request for the server is the following:
        ]
      }
 
-If you wish the response format will be Json / Gzip format, please specify it under "Response-Format"
-header (Response-Format=json\gzip). The default response format is Json.
+Request Headers
+---------------
+
+- Content-Type: "application/json" or "application/gzip"
+
+- Response-Format: The response format, "json" or "gzip". The default response format is json.
 
 The server supports 2 types of Responses (see `Annotation Structure Types - Server Responses` bellow).
 
@@ -87,6 +91,23 @@ to `http://localhost:8080/spacy_ner`, and receive `HighLevelDoc` annotation stru
 .. image :: assets/spacy_ner_service.png
 
 You can also take a look at the tests (tests/nlp_architect_server) to see more examples.
+
+Example CURL request
+--------------------
+
+Running `spacy_ner` model
+
+.. code:: json
+
+    curl -i -H "Response-Format:json" -H "Content-Type:application/json" -d '{"docs": [{"id": 1,"doc": "Intel Corporation is an American multinational corporation and technology company headquartered in Santa Clara, California, in the Silicon Valley."}]}' http://{localhost_ip}:8080/spacy_ner
+
+
+Running `bist` model
+
+.. code:: json
+
+    curl -i -H "Response-Format:json" -H "Content-Type:application/json" -d '{"docs":[{"id": 1,"doc": "Time flies like an arrow. fruit flies like a banana."},{"id": 2,"doc": "the horse passed the barn fell"},{"id": 3,"doc": "the old man the boat"}]}' http://10.13.133.120:8080/bist
+
 
 Annotation Structure Types - Server Responses
 =============================================
