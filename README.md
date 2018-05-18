@@ -18,7 +18,7 @@ The current version of NLP Architect includes these features that we found inter
 
 <center> <img src="doc/source/assets/nlp_archtiect_v0.1.png"></center>
 
-The library consists of core modules (topologies), data pipelines, utilities and end-to-end model examples with training and inference scripts. We look at these as a set of building blocks that were needed for implementing NLP use cases based on our pragmatic research experience. Each of the models includes algorithm descriptions and results in the [documentation](http://www.nlp_architect.nervanasys.com/).
+The library consists of core modules (topologies), data pipelines, utilities and end-to-end model examples with training and inference scripts. We look at these as a set of building blocks that were needed for implementing NLP use cases based on our pragmatic research experience. Each of the models includes algorithm descriptions and results in the [documentation](http://nlp_architect.nervanasys.com).
 
 Some of the components, with provided pre-trained models, are exposed as REST service APIs through NLP Architect server. NLP Architect server is designed to provide predictions across different models in NLP Architect. It also includes a web front-end exposing the model annotations for visualizations. Currently, we provide 2 services, BIST dependency parsing and NER annotations. We also provide a template for developers to add a new service.
 
@@ -36,7 +36,7 @@ Because of its current research nature, several open source deep learning framew
 Overtime the list of models included in this space will change, though all generally run with Python 3.5+
 
 ## Documentation
-Framework documentation on NLP model, algorithms, and modules, and instructions on how to contribute can be found [here](http://www.nlp_architect.nervanasys.com/).
+Framework documentation on NLP model, algorithms, and modules, and instructions on how to contribute can be found [here](http://nlp_architect.nervanasys.com).
 
 ## Installation
 
