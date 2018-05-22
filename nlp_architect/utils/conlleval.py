@@ -59,6 +59,22 @@ class EvalCounts(object):
         self.t_found_correct = defaultdict(int)
         self.t_found_guessed = defaultdict(int)
 
+def parse_args(argv):
+    import argparse
+    parser = argparse.ArgumentParser(
+        description='evaluate tagging results using CoNLL criteria',
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter
+    )
+    arg = parser.add_argument
+    arg('-b', '--boundary', metavar='STR', default='-X-',
+        help='sentence boundary')
+    arg('-d', '--delimiter', metavar='CHAR', default=ANY_SPACE,
+        help='character delimiting items in input')
+    arg('-o', '--otag', metavar='CHAR', default='O',
+        help='alternative outside tag')
+    arg('file', nargs='?', default=None)
+    return parser.parse_args(argv)
+
 def parse_tag(t):
     m = re.match(r'^([^-]*)-(.*)$', t)
     return m.groups() if m else (t, '')
