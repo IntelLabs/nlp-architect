@@ -14,7 +14,7 @@ class SetExpand():
         return id.replace(self.mark_char, ' ')[:-1]
 
     def get_vocab(self):
-        return set(self.np2vec_model.vocab)
+        return [self.id2np(id) for id in self.np2vec_model.vocab]
 
     def expand(self, seed, topn=500):
         seed_ids = list()
@@ -32,7 +32,7 @@ class SetExpand():
             return None
 
 if __name__ == "__main__":
-    se = SetExpand('/Users/jmamou/WorkGoogleDrive/set_expansion_research/experiments/w2v_model/np2vec_concatenate')
+    se = SetExpand('/Users/jmamou/work/set_expansion_research/experiments/w2v_model/np2vec_concatenate')
     # get vocabulary
     print(se.get_vocab())
     #exp = se.expand(['France','USA','Israel'])
