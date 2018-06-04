@@ -1,0 +1,6 @@
+bokeh
+gensim
+ftfy
+textacy
+nltk
+pandas

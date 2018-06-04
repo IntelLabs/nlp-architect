@@ -1,0 +1,16 @@
+
+.clear_button button.bk-bs-btn.bk-bs-btn-success {
+	background-color: #d2d4d8;
+	border-color: #d2d4d8;
+	color: white;
+}
+
+.export_button button.bk-bs-btn.bk-bs-btn-success {
+	background-color: #d2d4d8;
+	border-color: #d2d4d8;
+	color: white;
+}
+
+.content {
+    font-size: 200px;
+}

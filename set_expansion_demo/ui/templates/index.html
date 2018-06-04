@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    {{ bokeh_css }}
+    {{ bokeh_js }}
+    <link rel="stylesheet" href="ui/static/css/styles.css"/>
+  </head>
+  <body>
+    <!--<H1 style="text-align:center;font-family:Helvetica"> Set Expansion Demo</H1>-->
+    <div class="content">
+        {{ plot_div|indent(8) }}
+        {{ plot_script|indent(8) }}
+    </div>
+  </body>
+</html>

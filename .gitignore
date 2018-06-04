@@ -20,6 +20,7 @@ generated
 *.h5
 *.html
 !server/web_service/visualizer/displacy/*.html
+!set_expansion_demo/ui/templates/*.html
 !tests/fixtures/data/server/*.gz
 *.log
 .idea/
