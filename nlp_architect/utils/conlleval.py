@@ -23,6 +23,8 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 # ------------------------------------------------------------------------------
+# pylint: skip-file
+# flake8: noqa
 #!/usr/bin/env python
 
 # Python version of the evaluation script from CoNLL'00-

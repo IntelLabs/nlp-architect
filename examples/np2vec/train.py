@@ -31,9 +31,9 @@ if __name__ == "__main__":
         '--corpus',
         default='train.txt',
         type=str,
-        action=check_size(min=1),
+        action=check_size(min_size=1),
         help='path to the corpus. By default, '
-                                 'it is the training set of CONLL2000 shared task dataset.')
+             'it is the training set of CONLL2000 shared task dataset.')
     arg_parser.add_argument(
         '--corpus_format',
         default='conll2000',
@@ -63,7 +63,7 @@ if __name__ == "__main__":
         '--np2vec_model_file',
         default='conll2000.train.model',
         type=str,
-        action=check_size(min=1),
+        action=check_size(min_size=1),
         help='path to the file where the trained np2vec model has to be stored.')
     arg_parser.add_argument(
         '--binary',
@@ -86,13 +86,13 @@ if __name__ == "__main__":
         '--size',
         default=100,
         type=int,
-        action=check_size(min=1),
+        action=check_size(min_size=1),
         help='model training hyperparameter, size of the feature vectors.')
     arg_parser.add_argument(
         '--window',
         default=10,
         type=int,
-        action=check_size(min=1),
+        action=check_size(min_size=1),
         help='model training hyperparameter, maximum distance '
         'between the current and predicted word within a '
         'sentence.')
@@ -100,27 +100,27 @@ if __name__ == "__main__":
         '--alpha',
         default=0.025,
         type=float,
-        action=check_size(min=0),
+        action=check_size(min_size=0),
         help='model training hyperparameter. The initial learning rate.')
     arg_parser.add_argument(
         '--min_alpha',
         default=0.0001,
         type=float,
-        action=check_size(min=0),
+        action=check_size(min_size=0),
         help='model training hyperparameter. Learning rate will linearly drop to `min_alpha` as '
         'training progresses.')
     arg_parser.add_argument(
         '--min_count',
         default=5,
         type=int,
-        action=check_size(min=0),
+        action=check_size(min_size=0),
         help='model training hyperparameter, ignore all words '
         'with total frequency lower than this.')
     arg_parser.add_argument(
         '--sample',
         default=1e-5,
         type=float,
-        action=check_size(min=0),
+        action=check_size(min_size=0),
         help='model training hyperparameter, threshold for '
         'configuring which higher-frequency words are '
         'randomly downsampled, useful range is (0, 1e-5)')
@@ -128,7 +128,7 @@ if __name__ == "__main__":
         '--workers',
         default=20,
         type=int,
-        action=check_size(min=1),
+        action=check_size(min_size=1),
         help='model training hyperparameter, number of worker threads.')
     arg_parser.add_argument(
         '--hs',
@@ -144,7 +144,7 @@ if __name__ == "__main__":
         '--negative',
         default=25,
         type=int,
-        action=check_size(min=0),
+        action=check_size(min_size=0),
         help='model training hyperparameter, negative sampling. If > 0, negative sampling will be '
         'used, the int for negative specifies how many \"noise words\" should be drawn ('
         'usually between 5-20). If set to 0, no negative sampling is used.')
@@ -156,12 +156,12 @@ if __name__ == "__main__":
             0,
             1],
         help='model training hyperparameter.  If 0, use the sum of the context word vectors. '
-        'If 1, use the mean, only applies when cbow is used.')
+             'If 1, use the mean, only applies when cbow is used.')
     arg_parser.add_argument(
         '--iter',
         default=15,
         type=int,
-        action=check_size(min=1),
+        action=check_size(min_size=1),
         help='model training hyperparameter, number of iterations.')
 
     # fasttext hyperparameters
@@ -169,14 +169,14 @@ if __name__ == "__main__":
         '--min_n',
         default=3,
         type=int,
-        action=check_size(min=1),
+        action=check_size(min_size=1),
         help='fasttext training hyperparameter. Min length of char ngrams to be used for training '
         'word representations.')
     arg_parser.add_argument(
         '--max_n',
         default=6,
         type=int,
-        action=check_size(min=0),
+        action=check_size(min_size=0),
         help='fasttext training hyperparameter. Max length of char ngrams to be used for training '
         'word representations. '
         'Set `max_n` to be lesser than `min_n` to avoid char ngrams being used.')
@@ -192,7 +192,7 @@ if __name__ == "__main__":
 
     args = arg_parser.parse_args()
 
-    if args.corpus_format is not 'conll2000':
+    if args.corpus_format != 'conll2000':
         validate_existing_filepath(args.corpus)
 
     np2vec = NP2vec(

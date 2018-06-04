@@ -13,6 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
+# pylint: disable=all
 
 from __future__ import division
 from __future__ import print_function
@@ -21,14 +22,12 @@ import numpy as np
 from ngraph.testing.random import RandomTensorGenerator
 
 
-'''
-Contains functions to initialze LSTM cells
-'''
+# Contains functions to initialze LSTM cells
 
 
 def weight_initializer(request):
     if request.param == "random":
-        return lambda w_axes: rng.normal(0, 1, w_axes)
+        return lambda w_axes: rng.normal(0, 1, w_axes)  # noqa: F821
     elif request.param == "ones":
         return lambda w_axes: np.zeros(w_axes.lengths)
 
@@ -58,7 +57,7 @@ def make_weights(
         ax_s = ng.make_axes([hidden_axis, batch_axis])
         init_state = {name: ng.placeholder(ax_s) for name in ['h', 'c']}
         init_state_value = {
-            name: rng.uniform(-1, 1, ax_s) for name in ['h', 'c']}
+            name: rng.uniform(-1, 1, ax_s) for name in ['h', 'c']}  # noqa: F821
     else:
         init_state = None
         init_state_value = None

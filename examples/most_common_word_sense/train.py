@@ -68,7 +68,7 @@ def most_common_word_train(x_train, y_train, x_valid, y_valid):
 
     # evaluation
     error_rate = mlp_model.eval(valid_set)
-    logger.info('Mis-classification error on validation set= %.1f%%' % (error_rate * 100))
+    logger.info('Mis-classification error on validation set= %0.1f', error_rate * 100)
 
     reslts = mlp_model.get_outputs(valid_set)
 
@@ -101,8 +101,8 @@ if __name__ == "__main__":
     Y_train = data_in['y_train']
     Y_valid = data_in['y_valid']
 
-    logger.info('training set size: ' + repr(len(Y_train)))
-    logger.info('validation set size: ' + repr(len(Y_valid)))
+    logger.info('training set size: %s', str(len(Y_train)))
+    logger.info('validation set size: %s', str(len(Y_valid)))
 
     results = most_common_word_train(x_train=X_train, y_train=Y_train, x_valid=X_valid,
                                      y_valid=Y_valid)

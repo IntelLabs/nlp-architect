@@ -62,8 +62,7 @@ class SequenceChunker(object):
                  lstm_hidden_size=100,
                  num_lstm_layers=1,
                  use_external_embedding=None,
-                 dropout=0.5
-                 ):
+                 dropout=0.5):
 
         init = GlorotUniform()
         tokens = []

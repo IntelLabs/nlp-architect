@@ -21,6 +21,7 @@ from __future__ import absolute_import
 import numpy as np
 
 
+# pylint: disable=invalid-unary-operand-type
 def pad_sentences(sequences, max_length=None, padding_value=0.):
     """
     Pad input sequences up to max_length
@@ -36,6 +37,8 @@ def pad_sentences(sequences, max_length=None, padding_value=0.):
     """
     if max_length is None:
         max_length = np.max([len(s) for s in sequences])
+    elif max_length < 1:
+        raise ValueError('max sequence length must be > 0')
 
     padded_sequences = (np.ones((len(sequences), max_length)) * padding_value)
     for i, sent in enumerate(sequences):
@@ -97,6 +100,7 @@ def add_offset(mat, offset=1):
     return mat
 
 
+# pylint: disable=no-member
 def get_paddedXY_sequence(X, y, vocab_size=20000, sentence_length=100, oov=2,
                           start=1, index_from=3, seed=113, shuffle=True):
     if shuffle:

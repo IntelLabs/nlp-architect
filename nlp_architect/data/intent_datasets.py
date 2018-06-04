@@ -67,11 +67,8 @@ class IntentDataset(object):
         self._tokens_vocab.add_vocab_offset(2)
         self._chars_vocab.add_vocab_offset(2)
         self._tags_vocab.add_vocab_offset(1)
-        vec_data = {}
-        for f in datasets.keys():
-            vec_data[f] = self._prepare_vectors(datasets[f])
-        for f in datasets.keys():
-            tokens, words, intents, tags = vec_data[f]
+        for f, v in datasets.items():
+            tokens, words, intents, tags = self._prepare_vectors(v)
             x = pad_sequences(tokens, maxlen=self.sentence_len)
             _w = []
             for s in words:
@@ -199,12 +196,12 @@ class TabularIntentDataset(IntentDataset):
         s = []
         for line in file_lines:
             line = line.strip()
-            if len(line) == 0:
+            if not line:
                 sents.append(s)
                 s = []
                 continue
             s.append(line)
-        else:
+        if s:
             sents.append(s)
         return sents
 

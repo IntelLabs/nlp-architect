@@ -13,10 +13,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
-
+# pylint: disable=no-self-use
 from __future__ import absolute_import
 
 import argparse
+import ast
 import gzip
 import io
 import json
@@ -26,11 +27,11 @@ import sys
 from importlib import import_module
 from wsgiref.simple_server import make_server
 
-import falcon
 import os.path
-from falcon_multipart.middleware import MultipartMiddleware
 from os.path import dirname
-from nlp_architect.utils.io import validate, check_size
+import falcon
+from falcon_multipart.middleware import MultipartMiddleware
+from nlp_architect.utils.io import check_size
 
 sys.path.insert(0, dirname(dirname(dirname(os.path.abspath(__file__)))))
 logger = logging.getLogger(__name__)
@@ -62,6 +63,7 @@ def format_response(resp_format, parsed_doc):
         return json.dumps(parsed_doc)
     if resp_format == "gzip" or 'gzip' in resp_format:
         return gzip_str(parsed_doc)
+    return None
 
 
 def parse_headers(req_headers):
@@ -141,23 +143,21 @@ class Service(object):
         self.service_type = None
         self.service = self.load_service(service_name)
 
-    def on_options(self, req, res):
+    def on_options(self, _, res):
         """
         Handles OPTION requests
 
         Args:
-            req (:obj:`falcon.Request`): the client’s HTTP OPTION request
             res (:obj:`falcon.Response`): the server's HTTP response
         """
         res.status = falcon.HTTP_200
         set_headers(res)
 
-    def on_get(self, req, resp):
+    def on_get(self, _, resp):
         """
         Handles GET requests
 
         Args:
-            req (:obj:`falcon.Request`): the client’s HTTP GET request
             resp (:obj:`falcon.Response`): the server's HTTP response
         """
         logger.info('handle GET request')
@@ -219,7 +219,7 @@ class Service(object):
         for doc in docs:
             parsed_doc = self.service.inference(doc["doc"]).displacy_doc()
             doc_dic = {"id": doc["id"], "doc": parsed_doc}
-            if headers['IS-HTML'] is not None and eval(headers['IS-HTML']):
+            if headers['IS-HTML'] is not None and ast.literal_eval(headers['IS-HTML']):
                 # this is a visualizer request - add type of service (core/annotate) to response
                 doc_dic["type"] = self.service_type
             response_data.append(doc_dic)

@@ -28,7 +28,7 @@ def extract_nps(text, annotation):
     np_indexes = []
     for s in np_starts:
         i = 1
-        while s+i < len(annotation) and annotation[s + i] == 'I-NP':
+        while s + i < len(annotation) and annotation[s + i] == 'I-NP':
             i += 1
         np_indexes.append((s, s + i))
     return [' '.join(text[s:e]) for s, e in np_indexes]

@@ -25,8 +25,8 @@ import pickle
 
 import gensim
 import numpy as np
-from feature_extraction import extract_features_envelope
 from sklearn.model_selection import train_test_split
+from examples.most_common_word_sense.feature_extraction import extract_features_envelope
 
 from nlp_architect.utils.io import validate_existing_filepath, \
     check_size, validate_parent_exists
@@ -184,15 +184,15 @@ if __name__ == "__main__":
     # split between train and valid sets
     X_train1, X_valid1, y_train1, y_valid1 = train_test_split(
         x_feature_matrix, y_labels_vec, train_size=math.ceil(
-            num_samples*float(args.training_to_validation_size_ratio)))
+            num_samples * float(args.training_to_validation_size_ratio)))
 
     X_train.extend(X_train1)
     X_valid.extend(X_valid1)
     y_train.extend(y_train1)
     y_valid.extend(y_valid1)
 
-    logger.info('training set size: ' + repr(len(y_train)))
-    logger.info('validation set size: ' + repr(len(y_valid)))
+    logger.info('training set size: %s', str(len(y_train)))
+    logger.info('validation set size: %s', str(len(y_valid)))
 
     # store data on file
     data_out = dict()

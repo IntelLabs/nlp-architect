@@ -46,16 +46,15 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 # ------------------------------------------------------------------------------
+# pylint: disable=all
 
 import argparse
 import re
-import sys
 import time
 from multiprocessing import Process, Queue, Condition, Value
 import os
 
-from nlp_architect.utils.io import validate, validate_existing_directory, \
-    validate_existing_filepath, validate_parent_exists, check_size
+from nlp_architect.utils.io import validate, validate_parent_exists, check_size
 
 '''
 Things that were changed from the original:
@@ -151,7 +150,7 @@ parser.add_argument('-d', '--double_dict', type=str, default='3',
                     '1:world <NULL> 1:are 2:things"')
 parser.add_argument('-t', '--num_threads', type=int, default=4,
                     help='number of threads to use',
-                    action=check_size(1,10))
+                    action=check_size(1, 10))
 args = vars(parser.parse_args())
 
 validate_parent_exists(args['data_dir'])
@@ -171,7 +170,7 @@ else:
     ValueError("No data_dir given.")
 
 with open(os.path.expanduser(args['data_dir'] +
-                                     '/movieqa/lower_wiki-w=0-d=3-m-4.txt'), 'w') as out:
+                             '/movieqa/lower_wiki-w=0-d=3-m-4.txt'), 'w') as out:
     try:
         WS = [int(int(w)) for w in args['window_size'].split(',')]
         DW = None
@@ -193,15 +192,15 @@ with open(os.path.expanduser(args['data_dir'] +
             raise Exception('Not a valid entities file path')
         else:
             with open(args['entities']) as read:
-                for l in read:
-                    l = l.strip().lower()
-                    if len(l) > 0:
-                        ent_list.append(l)
+                for read_entity in read:
+                    read_entity = read_entity.strip().lower()
+                    if read_entity:
+                        ent_list.append(read_entity)
             ent_list.sort(key=lambda x: -len(x))
-            for i in range(len(ent_list)):
-                k = ent_list[i]
+            for i_ent in range(len(ent_list)):
+                k = ent_list[i_ent]
                 if k not in ['$\n', 's\n']:
-                    v = 'ENTITY_{}'.format(i)
+                    v = 'ENTITY_{}'.format(i_ent)
                     entities[k] = v
                     ent_rev[v] = k
             re_list = [
@@ -216,13 +215,12 @@ with open(os.path.expanduser(args['data_dir'] +
     splitter = re.compile('\\b.*?\S.*?(?:\\b|$)')
     q_out = Queue()
 
-
     def process_example(ex):
         windows = []
         if 'entities' in args:
             # replace entities with single tokens
-            for r, v in re_list:
-                ex = r.sub(v, ex)
+            for r_l, v_l in re_list:
+                ex = r_l.sub(v_l, ex)
         if args['dontmerge']:
             chunks = ex.split('\n')
         else:
@@ -231,16 +229,9 @@ with open(os.path.expanduser(args['data_dir'] +
 
         split = [t.strip() for t in splitter.findall(chunks[0])]
         movie = split.pop(0)
-        # if 'entities' in args:
-        #     # revert movie token
-        #     for k, v in ent_rev.items():
-        #         if k in movie:
-        #             movie = movie.replace(k, v)
-        #             break
-        for i in range(len(chunks)):
-            chunk = chunks[i]
-            if i > 0:
-                split = [t.strip() for t in splitter.findall(chunk)]
+
+        for chunk in chunks[1:]:
+            split = [t.strip() for t in splitter.findall(chunk)]
             sz = len(split)
             for i in range(sz):
                 if args['all_windows'] or split[i] in ent_rev:
@@ -286,9 +277,9 @@ with open(os.path.expanduser(args['data_dir'] +
                                 fst_idx = join.find('__', skip_idx)
                                 if fst_idx > 0:
                                     snd_idx = join.find('__', fst_idx + 2)
-                                    k = join[fst_idx:snd_idx + 2]
-                                    if k in ent_rev and False:
-                                        join = join.replace(k, ent_rev[k])
+                                    k_fst = join[fst_idx:snd_idx + 2]
+                                    if k_fst in ent_rev and False:
+                                        join = join.replace(k_fst, ent_rev[k])
                                     else:
                                         skip_idx = snd_idx + 2
                                 else:
@@ -323,12 +314,11 @@ with open(os.path.expanduser(args['data_dir'] +
         q_out.put(
             '\n'.join(
                 '{} {}'.format(
-                    i + 1, '\t'.join(windows[i])
+                    i_window + 1, '\t'.join(windows[i_window])
                 )
-                for i in range(len(windows))
+                for i_window in range(len(windows))
             ) + '\n\n'
         )
-
 
     # multithreading code
     finished = Condition()
@@ -337,18 +327,15 @@ with open(os.path.expanduser(args['data_dir'] +
     # keep at most 100 examples ready per thread queued (to save memory)
     q = Queue(args['num_threads'] * 100)
 
-
     def load(ex):
         global queued_exs
         queued_exs.value += 1
         q.put(ex)
 
-
     def run():
         while True:
             ex = q.get()
             process_example(ex)
-
 
     def write():
         global proced_exs
@@ -362,10 +349,9 @@ with open(os.path.expanduser(args['data_dir'] +
                 with finished:
                     finished.notify_all()
 
-
     threads = []
     threads.append(Process(target=write))
-    for i in range(args['num_threads']):
+    for i_t in range(args['num_threads']):
         threads.append(Process(target=run))
     for t in threads:
         t.start()

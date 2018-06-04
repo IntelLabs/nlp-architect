@@ -13,11 +13,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
-from os import path, remove
+from os import path, remove, makedirs
 
+from nlp_architect.common.core_nlp_doc import CoreNLPDoc
 from nlp_architect.data.conll import ConllEntry
 from nlp_architect.models.bist_parser import BISTModel
-from nlp_architect.common.core_nlp_doc import CoreNLPDoc
 from nlp_architect.utils.io import download_unlicensed_file, unzip_file
 from nlp_architect.utils.io import validate
 from nlp_architect.utils.text import SpacyInstance
@@ -137,14 +137,17 @@ class SpacyBISTParser(object):
 
 def _download_pretrained_model():
     """Downloads the pre-trained BIST model if non-existent."""
-    if not path.isfile(path.join(SpacyBISTParser.dir, 'bist-pretrained', 'bist.model')):
+    dir_path = path.join(SpacyBISTParser.dir, 'bist-pretrained')
+    if not path.isfile(path.join(dir_path, 'bist.model')):
         print('Downloading pre-trained BIST model...')
+        zip_path = path.join(SpacyBISTParser.dir, 'bist-pretrained.zip')
         download_unlicensed_file('https://s3-us-west-1.amazonaws.com/nervana-modelzoo/parse/',
-                      'bist-pretrained.zip', path.join(SpacyBISTParser.dir, 'bist-pretrained.zip'))
+                                 'bist-pretrained.zip', zip_path)
+
+        makedirs(dir_path, exist_ok=True)
         print('Unzipping...')
-        zip_file = path.join(SpacyBISTParser.dir, 'bist-pretrained.zip')
-        unzip_file(zip_file, outpath=SpacyBISTParser.dir)
-        remove(zip_file)
+        unzip_file(zip_path, outpath=dir_path)
+        remove(zip_path)
         print('Done.')
 
 
@@ -159,7 +162,7 @@ def _spacy_pos_to_ptb(pos, text):
     Returns:
         ptb_tag (str): Standard PTB POS tag.
     """
-    validate((pos, str, 0, 30), (text, str, 0, 100))
+    validate((pos, str, 0, 30), (text, str, 0, 1000))
     ptb_tag = pos
     if text == '...':
         ptb_tag = ':'

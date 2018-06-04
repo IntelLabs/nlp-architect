@@ -32,7 +32,6 @@ from nlp_architect.utils.metrics import get_conll_scores
 
 
 def validate_input_args():
-    global model_path, settings_path
     validate((args.sentence_len, int, 1, 1000))
     validate((args.lstm_depth, int, 1, 10))
     validate((args.lstm_hidden_size, int, 1, 10000))
@@ -41,10 +40,11 @@ def validate_input_args():
     validate((args.vocab_size, int, 1, 100000000))
     validate((args.char_hidden_size, int, 1, 1000))
     validate((args.max_char_word_length, int, 1, 100))
-    model_path = path.join(path.dirname(path.realpath(__file__)), str(args.model_name))
-    settings_path = path.join(path.dirname(path.realpath(__file__)), str(args.settings))
-    validate_parent_exists(model_path)
-    validate_parent_exists(settings_path)
+    m_path = path.join(path.dirname(path.realpath(__file__)), str(args.model_name))
+    s_path = path.join(path.dirname(path.realpath(__file__)), str(args.settings))
+    validate_parent_exists(m_path)
+    validate_parent_exists(s_path)
+    return m_path, s_path
 
 
 if __name__ == '__main__':
@@ -79,7 +79,7 @@ if __name__ == '__main__':
                         help='Print Noun Phrase (NP) tags accuracy')
 
     args = parser.parse_args(gen_be=False)
-    validate_input_args()
+    model_path, settings_path = validate_input_args()
 
     if args.use_pos:
         pos_vocab_size = 50
@@ -128,8 +128,7 @@ if __name__ == '__main__':
                       'pos': args.use_pos,
                       'char_rnn': args.use_char_rnn,
                       'y_vocab': dataset.y_vocab,
-                      'vocabs': dataset.vocabs,
-                      }
+                      'vocabs': dataset.vocabs}
 
     with open(settings_path + '.dat', 'wb') as fp:
         pickle.dump(model_settings, fp)
@@ -137,12 +136,16 @@ if __name__ == '__main__':
 
     # tagging accuracy
     y_preds = model.predict(test_set)
-    predictions = y_preds.argmax(2)
+    shape = (test_set.nbatches, args.batch_size, args.sentence_len)
+    predictions = y_preds.argmax(2) \
+        .reshape(shape) \
+        .transpose(1, 0, 2) \
+        .reshape(-1, args.sentence_len)
     truth_labels = test_set.y.reshape(-1, args.sentence_len)
 
-    eval = get_conll_scores(predictions, truth_labels, {
-        v+1: k for k, v in dataset.y_vocab.items()})
+    eval_report = get_conll_scores(predictions, truth_labels, {
+        v + 1: k for k, v in dataset.y_vocab.items()})
     if args.print_np_perf is True:
-        print('NP performance: {}'.format(eval[1]['NP']))
+        print('NP performance: {}'.format(eval_report[1]['NP']))
     else:
-        print('Global performance: {}'.format(eval[0]))
+        print('Global performance: {}'.format(eval_report[0]))
