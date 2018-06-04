@@ -6,7 +6,7 @@ from bokeh.models.widgets.tables import BooleanFormatter, CheckboxEditor
 from bokeh.core.enums import Enumeration, enumeration
 from bokeh.core.properties import Enum
 from bokeh.io import curdoc
-from nlp_architect.utils.text_preprocess import simple_normalizer
+# from nlp_architect.utils.text_preprocess import simple_normalizer
 import numpy as np
 import pandas
 import socket
@@ -17,7 +17,6 @@ import os
 import time
 
 
-phrases_path = "/Users/sguskin/ai-lab-models/set_expansion_demo/data/ArXiv_2016.csv"
 out_path = "export.csv"
 hash2group = {}
 all_phrases = []
@@ -26,30 +25,28 @@ seed_after_search = ''
 working_text = 'working...'
 
 
-def read_phrases(data, top_n=100000):
-    if not os.path.exists(phrases_path):
-        all_phrases.append('no data')
-        print("phrases path doesn't exist")
-    else:
-        ctr = 0
-        try:
-            with open(data, encoding='utf-8', errors='ignore') as csv_file:
-                topics = csv.reader(csv_file, delimiter=',')
-                for group, imp in topics:
-                    if ctr == top_n:
-                        break
-                    try:
-                        rep_phrase = clean_group(group).strip()
-                        # imp = float(imp) * 100.0
-                        hash_id = simple_normalizer(rep_phrase)
-                        all_phrases.append(rep_phrase)
-                        hash2group[hash_id] = rep_phrase
-                        ctr += 1
-                    except Exception as e:
-                        print('bad line: ' + str(ctr) + '. Error: ' + str(e))
-        except Exception as e:
-            print('Error: ' + str(e) + ". Is " + data + ' a valid csv file?')
-            sys.exit()
+def get_phrases(top_n=100000):
+    global all_phrases
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    try:
+        # Connect to server and send data
+        sock.connect(("localhost", 1111))
+        print('sending a get_vocab request')
+        sock.sendall(bytes('get_vocab' + "\n", "utf-8"))
+        # Receive data from the server and shut down
+        data = b""
+        while True:
+            packet = sock.recv(4096)
+            if not packet:
+                break
+            data += packet
+        received = pickle.loads(data)
+        all_phrases.extend(received)
+        print('vocab len = ' + str(len(all_phrases)))
+        # print("Received: {}".format(received))
+
+    finally:
+        sock.close()
 
 
 def clean_group(phrase_group):
@@ -58,7 +55,7 @@ def clean_group(phrase_group):
 
 
 # initialize
-read_phrases(phrases_path)
+get_phrases()
 expand_columns = [
     TableColumn(field="res", title="Results"),
     TableColumn(field="score", title="Score")

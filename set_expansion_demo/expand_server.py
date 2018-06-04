@@ -8,14 +8,21 @@ from set_expansion_demo import set_expand
 class MyTCPHandler(socketserver.BaseRequestHandler):
     def handle(self):
         print("handling expand request")
+        res = ''
         self.data = str(self.request.recv(10240).strip(), 'utf-8')
         logger.debug('request data: ' + self.data)
-        data = [x.strip() for x in self.data.split(',')]
-        seeds = data
-        res = se.expand(seeds)
+        if self.data == 'get_vocab':
+            print('got vocab request')
+            res = se.get_vocab()
+        else:
+            data = [x.strip() for x in self.data.split(',')]
+            seeds = data
+            res = se.expand(seeds)
         packet = pickle.dumps(res)
+        print('response length= ' + str(len(packet)))
         # length = struct.pack('!I', len(packet))
         # packet = length + packet
+        print('sending response)')
         self.request.sendall(packet)
 
 
