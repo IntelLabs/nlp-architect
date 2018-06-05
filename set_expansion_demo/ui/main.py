@@ -1,6 +1,6 @@
 from bokeh.layouts import column, widgetbox, gridplot, layout, Spacer
 from bokeh.models import ColumnDataSource, Div, Row
-from bokeh.models.widgets import Button, DataTable, TableColumn, RadioGroup, CheckboxGroup, MultiSelect
+from bokeh.models.widgets import Button, DataTable, TableColumn, RadioGroup, CheckboxGroup, MultiSelect, Toggle
 from bokeh.models.widgets.inputs import TextInput
 from bokeh.models.widgets.tables import BooleanFormatter, CheckboxEditor
 from bokeh.core.enums import Enumeration, enumeration
@@ -23,6 +23,7 @@ hash2group = {}
 all_phrases = []
 max_visible_phrases = 5000
 working_text = 'working...'
+seed_check_text = ''
 all_selected_phrases = []
 search_flag = False
 
@@ -64,7 +65,7 @@ expand_columns = [
 
 # create ui components
 seed_input_title = 'Please enter a comma separated seed list of terms:'
-seed_input_box = TextInput(title=seed_input_title, value="USA, Israel, France", width=450)
+seed_input_box = TextInput(title=seed_input_title, value="USA, Israel, France", width=450, css_classes=["seed-input"])
 search_input_box = TextInput(title="Search:", value="", width=300)
 expand_button = Button(label="Expand", button_type="success", width=150)
 clear_seed_button = Button(label="Clear", button_type="success", css_classes=['clear_button'], width=50)
@@ -77,12 +78,14 @@ search_box_area = column(children=[Div(width=480)])
 phrases_area = column(children=[Div(width=300)])
 seed_layout = Row(seed_input_box,column(Div(height=0, width=0),clear_seed_button))
 working_label = Div(text="", style={'color':'red'})
+seed_check_label = Div(text='',style={'font-size':'15px'}, height=20, width=500)
 table_layout = Row(expand_table,Div(width=25), column(Div(height=350),export_button,working_label))
+table_area = column(children=(seed_check_label,table_layout))
 grid = layout([
                 [Div(width=500),Div(text="<H1>Set Expansion Demo</H1>")],
                 [checkbox_group,seed_layout],
-                [search_box_area,Div(width=100),expand_button],
-                [phrases_area,Div(width=100),table_layout]
+                [search_box_area,Div(width=100),expand_button ],
+                [phrases_area,Div(width=100),table_area]
             ])
 
 
@@ -164,32 +167,47 @@ def show_phrases_callback(checked_value):
 
 
 def get_expand_results_callback():
+    global seed_check_text, table_area
+
+    seed_check_label.text = ''
+    table_area.children = [table_layout]
+
     seed = seed_input_box.value
+
     # print('seed= ' + user_input)
     if seed == '':
         expand_table_source.data = {
             'res': [''],
             'score': ['']
         }
-    else:
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        try:
-            # Connect to server and send data
-            sock.connect(("localhost", 1111))
-            sock.sendall(bytes(seed + "\n", "utf-8"))
-            # Receive data from the server and shut down
-            # length = sock.recv()
-            received = pickle.loads(sock.recv(2000000))
-            print("Sent:     {}".format(seed))
-            # print("Received: {}".format(received))
-            res = [x[0] for x in received]
-            scores = [y[1] for y in received]
-            expand_table_source.data = {
-                'res': res,
-                'score': scores
-            }
-        finally:
-            sock.close()
+        return
+    seed_words = [x.strip() for x in seed.split(',')]
+    bad_words = ''
+    for w in seed_words:
+        if w not in all_phrases:
+            bad_words += ("'"+ w + "',")
+    if bad_words != '':
+        seed_check_label.text = 'the words: <span class="bad-word">' + bad_words[:-1] + '</span> are not in the vocabulary. '
+        print('setting table area')
+        table_area.children = [seed_check_label,table_layout]
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    try:
+        # Connect to server and send data
+        sock.connect(("localhost", 1111))
+        sock.sendall(bytes(seed + "\n", "utf-8"))
+        # Receive data from the server and shut down
+        # length = sock.recv()
+        received = pickle.loads(sock.recv(2000000))
+        print("Sent:     {}".format(seed))
+        # print("Received: {}".format(received))
+        res = [x[0] for x in received]
+        scores = [y[1] for y in received]
+        expand_table_source.data = {
+            'res': res,
+            'score': scores
+        }
+    finally:
+        sock.close()
 
 
 def search_callback(value, old, new):
@@ -209,12 +227,6 @@ def vocab_phrase_selected_callback(attr, old_selected, new_selected):
     global all_selected_phrases, search_flag
     if(search_flag):
         return
-    # values = ''
-    # for x in selected_phrases:
-    #     values += x + ', '
-    # values = values[:-2]
-
-
     print('selected_vocab was updated: old=' + str(old_selected) + ' ,new=' + str(new_selected))
     # sync expand table:
 
@@ -240,11 +252,13 @@ def vocab_phrase_selected_callback(attr, old_selected, new_selected):
 
 def clear_seed_callback():
     print('clear')
-    global all_selected_phrases
+    global all_selected_phrases, table_area
     expand_table_source.selected.indices=[]
     phrases_list.value = []
     all_selected_phrases = []
     seed_input_box.value = ''
+    seed_check_label.text = ''
+    table_area.children = [table_layout]
 
 
 def export_data_callback():

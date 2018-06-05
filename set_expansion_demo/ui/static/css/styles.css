@@ -14,3 +14,11 @@
 .content {
     font-size: 200px;
 }
+
+.seed-input {
+    color: black;
+}
+
+.bad-word {
+    color: #ed380b;
+}
