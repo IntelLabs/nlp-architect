@@ -22,3 +22,11 @@
 .bad-word {
     color: #ed380b;
 }
+
+.checkbox_group {
+    padding-bottom: 0px;
+}
+
+.phrases_list {
+    padding-top: 0px;
+}

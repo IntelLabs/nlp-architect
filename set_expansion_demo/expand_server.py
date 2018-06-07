@@ -12,18 +12,20 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
         self.data = str(self.request.recv(10240).strip(), 'utf-8')
         logger.debug('request data: ' + self.data)
         if self.data == 'get_vocab':
-            print('got vocab request')
+            print('getting vocabulary')
             res = se.get_vocab()
         else:
             data = [x.strip() for x in self.data.split(',')]
-            seeds = data
-            res = se.expand(seeds)
+            print('expanding)')
+            res = se.expand(data)
+        print('compressing response')
         packet = pickle.dumps(res)
         print('response length= ' + str(len(packet)))
         # length = struct.pack('!I', len(packet))
         # packet = length + packet
-        print('sending response)')
+        print('sending response')
         self.request.sendall(packet)
+        print('done')
 
 
 if __name__ == "__main__":
