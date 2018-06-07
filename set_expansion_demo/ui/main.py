@@ -31,12 +31,13 @@ working_text = 'please wait...'
 seed_check_text = ''
 all_selected_phrases = []
 search_flag = False
-max_phrase_length = 100
+max_phrase_length = 40
 clear_flag = False
 expand_columns = [
     TableColumn(field="res", title="Results"),
     TableColumn(field="score", title="Score")
 ]
+empty_table = {'res': 14*[''], 'score':14*['']}
 
 # create ui components
 seed_input_title = 'Please enter a comma separated seed list of terms:'
@@ -45,7 +46,7 @@ search_input_box = TextInput(title="Search:", value="", width=300)
 expand_button = Button(label="Expand", button_type="success", width=150)
 clear_seed_button = Button(label="Clear", button_type="success", css_classes=['clear_button'], width=50)
 export_button = Button(label="Export", button_type="success", css_classes=['export_button'], width=100)
-expand_table_source = ColumnDataSource(data={'res':[],'score':[]})
+expand_table_source = ColumnDataSource(data=empty_table)
 expand_table = DataTable(source=expand_table_source, columns=expand_columns, width=500, css_classes=['expand_table'])
 phrases_list = MultiSelect(title="", value=[],options=[], width=300, size=27, css_classes=['phrases_list'])
 checkbox_group = CheckboxGroup(labels=["Show extracted phrases"], active=[], width=400, css_classes=['checkbox_group'])
@@ -127,52 +128,43 @@ def conv(val):
 
 def row_selected_callback(attr, old, new):
     global clear_flag
-    if not clear_flag:
+    if not clear_flag and expand_table_source.data != empty_table:
         print('row selected callback')
         print('old indices=' + str(old.indices))
         print('new indices=' + str(new.indices))
         global all_selected_phrases
-        # selected_rows = new.indices
-        # values = ''
-        # for x in selected_rows:
-        #     values += (expand_table_source.data['res'][x] + ', ')
-        # values = values[:-2]
-
-
-    #sync phrases lists:
-
-    old_phrases = [expand_table_source.data['res'][p] for p in old.indices]
-    new_phrases = [expand_table_source.data['res'][p] for p in new.indices]
-    print('selected_expand was updated: old=' + str(
-        old_phrases) + ' ,new=' + str(new_phrases))
-    #phrase was de-selected from expand list:
-    for o in old_phrases:
-        if o not in new_phrases and all_phrases_dict[o] in phrases_list.value:
-            print('removing ' + o + 'from vocab selected')
-            phrases_list.value.remove(all_phrases_dict[o])
-            break
-    #new phrase was selected from expand list:
-    for n in new_phrases:
-        if n not in old_phrases and all_phrases_dict[n] in phrases_list.options and all_phrases_dict[n] not in phrases_list.value:
-            phrases_list.value.append(all_phrases_dict[n])
-            break
-
-    update_all_selected_phrases()
-    seed_input_box.value = get_selected_phrases_for_seed()
+        #sync phrases lists:
+        old_phrases = [expand_table_source.data['res'][p] for p in old.indices]
+        new_phrases = [expand_table_source.data['res'][p] for p in new.indices]
+        print('selected_expand was updated: old=' + str(
+            old_phrases) + ' ,new=' + str(new_phrases))
+        #phrase was de-selected from expand list:
+        for o in old_phrases:
+            if o not in new_phrases and (all_phrases is not None and all_phrases_dict[o] in phrases_list.value):
+                print('removing ' + o + 'from vocab selected')
+                phrases_list.value.remove(all_phrases_dict[o])
+                break
+        #new phrase was selected from expand list:
+        for n in new_phrases:
+            if n not in old_phrases and (all_phrases is not None and all_phrases_dict[n] in phrases_list.options and all_phrases_dict[n] not in phrases_list.value):
+                phrases_list.value.append(all_phrases_dict[n])
+                break
+        update_all_selected_phrases()
+        seed_input_box.value = get_selected_phrases_for_seed()
 
 
 def update_all_selected_phrases():
     print('update selected phrases')
     global all_selected_phrases
     updated_selected_phrases = all_selected_phrases[:]
-    selected_expand = [expand_table_source.data['res'][p] for p in expand_table_source.selected.indices]
+    selected_expand = [expand_table_source.data['res'][i] for i in expand_table_source.selected.indices if expand_table_source.data['res'][i] != '']
     selected_vocab = phrases_list.value
     print('selected expand=' + str(selected_expand))
     print('selected vocab=' + str(selected_vocab))
     print('current all_selected_phrases=' + str(all_selected_phrases))
     for x in all_selected_phrases:
         print('x=' + x)
-        if (x in expand_table_source.data['res'] and x not in selected_expand) or (all_phrases_dict[x] in phrases_list.options and all_phrases_dict[x] not in selected_vocab):
+        if (x in expand_table_source.data['res'] and x not in selected_expand) or (all_phrases is not None and all_phrases_dict[x] in phrases_list.options and all_phrases_dict[x] not in selected_vocab):
             print('removing ' + x)
             updated_selected_phrases.remove(x)
     for e in selected_expand:
@@ -212,7 +204,7 @@ def get_expand_results_callback():
         seed = seed_input_box.value
         # print('seed= ' + user_input)
         if seed == '':
-            expand_table_source.data={'res':[],'score':[]}
+            expand_table_source.data=empty_table
             return
         if all_phrases is not None:
             seed_words = [x.strip() for x in seed.split(',')]
@@ -237,7 +229,6 @@ def get_expand_results_callback():
         print(str(e))
     finally:
         expand_working_label.text = ''
-
 
 
 def search_callback(value, old, new):
@@ -327,9 +318,16 @@ def get_selected_phrases_for_seed():
     return phrases
 
 
+def expand_data_changed_callback(attr, old, new):
+    if old == empty_table:
+        expand_table_source.selected.indices = []
+
+
+
 # set callbacks
 expand_button.on_click(get_expand_results_callback)
 expand_table_source.on_change('selected', row_selected_callback)
+expand_table_source.on_change('data', expand_data_changed_callback)
 checkbox_group.on_click(show_phrases_callback)
 search_input_box.on_change('value',search_callback)
 phrases_list.on_change('value', vocab_phrase_selected_callback)
