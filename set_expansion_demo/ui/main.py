@@ -28,6 +28,7 @@ all_phrases_dict = {}
 all_cut_phrases_dict = {}
 max_visible_phrases = 5000
 working_text = 'please wait...'
+fetching_text = 'fetching vocabulary from server. please wait...'
 seed_check_text = ''
 all_selected_phrases = []
 search_flag = False
@@ -37,7 +38,7 @@ expand_columns = [
     TableColumn(field="res", title="Results"),
     TableColumn(field="score", title="Score")
 ]
-empty_table = {'res': 14*[''], 'score':14*['']}
+empty_table = {'res': 15*[''], 'score':15*['']}
 
 # create ui components
 seed_input_title = 'Please enter a comma separated seed list of terms:'
@@ -82,8 +83,8 @@ def get_phrases(top_n=100000):
             all_phrases_dict[p] = p
             all_cut_phrases_dict[p] = p
         else:
-            all_phrases_dict[p] = p[:max_phrase_length] + '...'
-            all_cut_phrases_dict[p[:max_phrase_length] + '...'] = p
+            all_phrases_dict[p] = p[:max_phrase_length-1] + '...'
+            all_cut_phrases_dict[p[:max_phrase_length-1] + '...'] = p
     print('done. vocab count = ' + str(len(all_phrases)))
     # pp = pprint.PrettyPrinter()
     # pp.pprint(all_phrases_dict)
@@ -184,9 +185,10 @@ def show_phrases_callback(checked_value):
     global search_box_area, phrases_area
     if len(checked_value) == 1:
         if all_phrases is None:
-            getvocab_working_label.text = working_text
+            getvocab_working_label.text = fetching_text
             get_phrases()
             phrases_list.options = list(all_cut_phrases_dict.keys())[0:max_visible_phrases] #show the cut representation
+            phrases_list.options.sort()
             getvocab_working_label.text = ''
         search_box_area.children=[search_input_box]
         phrases_area.children=[search_working_label, phrases_list]
@@ -213,7 +215,7 @@ def get_expand_results_callback():
                 if w not in all_phrases:
                     bad_words += ("'"+ w + "',")
             if bad_words != '':
-                seed_check_label.text = 'the words: <span class="bad-word">' + bad_words[:-1] + '</span> are not in the vocabulary. '
+                seed_check_label.text = 'the words: <span class="bad-word">' + bad_words[:-1] + '</span> are not in the vocabulary and will be ignored'
                 print('setting table area')
                 table_area.children = [seed_check_label,table_layout]
         print('sending expand request to server')
@@ -240,8 +242,11 @@ def search_callback(value, old, new):
         new_phrases = list(all_cut_phrases_dict.keys())
     else:
         # new_phrases = [x for x in all_phrases if x.startswith(new)]
-        new_phrases = [all_phrases_dict[x] for x in all_phrases if (new.lower() in x.lower() or x.lower()==new.lower())]
+        new_phrases = [all_phrases_dict[x] for x in all_phrases if
+                       x.lower().startswith(new.lower())]
+        # new_phrases = [all_phrases_dict[x] for x in all_phrases if (new.lower() in x.lower() or x.lower()==new.lower())]
     phrases_list.options=new_phrases[0:max_visible_phrases]
+    phrases_list.options.sort()
     phrases_list.value = [all_phrases_dict[x] for x in all_selected_phrases if all_phrases_dict[x] in phrases_list.options]
     print('selected vocab after search=' + str(phrases_list.value))
     search_working_label.text = ''
@@ -283,13 +288,13 @@ def clear_seed_callback():
     print('clear')
     clear_working_label.text = working_text
     global all_selected_phrases, table_area, clear_flag
+    # table_area.children = []  # needed for refreshing the selections
     clear_flag = True
     seed_input_box.value = ''
     seed_check_label.text = ''
     expand_table_source.selected.indices=[]
     phrases_list.value = []
     all_selected_phrases = []
-    # table_area.children = []
     table_area.children = [table_layout]
     clear_flag = False
     clear_working_label.text = ''
@@ -323,7 +328,6 @@ def expand_data_changed_callback(attr, old, new):
         expand_table_source.selected.indices = []
 
 
-
 # set callbacks
 expand_button.on_click(get_expand_results_callback)
 expand_table_source.on_change('selected', row_selected_callback)
@@ -333,6 +337,7 @@ search_input_box.on_change('value',search_callback)
 phrases_list.on_change('value', vocab_phrase_selected_callback)
 clear_seed_button.on_click(clear_seed_callback)
 export_button.on_click(export_data_callback)
+# table_area.on_change('children', table_area_change_callback)
 
 
 # arrange components in page
