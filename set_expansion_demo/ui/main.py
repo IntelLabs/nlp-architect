@@ -19,7 +19,7 @@ import os
 import time
 import pprint
 
-expand_host = 'localhost'
+expand_host = '143.185.131.68'
 port = 1111
 out_path = "export.csv"
 hash2group = {}
@@ -188,7 +188,7 @@ def show_phrases_callback(checked_value):
             getvocab_working_label.text = fetching_text
             get_phrases()
             phrases_list.options = list(all_cut_phrases_dict.keys())[0:max_visible_phrases] #show the cut representation
-            phrases_list.options.sort()
+            # phrases_list.options.sort()
             getvocab_working_label.text = ''
         search_box_area.children=[search_input_box]
         phrases_area.children=[search_working_label, phrases_list]
@@ -246,7 +246,8 @@ def search_callback(value, old, new):
                        x.lower().startswith(new.lower())]
         # new_phrases = [all_phrases_dict[x] for x in all_phrases if (new.lower() in x.lower() or x.lower()==new.lower())]
     phrases_list.options=new_phrases[0:max_visible_phrases]
-    phrases_list.options.sort()
+    if new != '':
+        phrases_list.options.sort()
     phrases_list.value = [all_phrases_dict[x] for x in all_selected_phrases if all_phrases_dict[x] in phrases_list.options]
     print('selected vocab after search=' + str(phrases_list.value))
     search_working_label.text = ''
