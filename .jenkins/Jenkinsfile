@@ -1,0 +1,96 @@
+/*
+* NervanaSystems/private-nlp-architect Jenkinsfile
+*/
+
+// Constant Variables for Build
+static final String nodeLabel       = 'swarm'
+static final String customWorkspace = '/state/ws'
+static final Map slackColorMap      = [
+    'FAILURE': 'danger',
+    'UNSTABLE': 'warning',
+    'SUCCESS': 'good'
+]
+
+// Common Closures for Build
+def slackStartMessage = {
+    try {
+        slackSend message: "Build ${env.JOB_NAME} started (<${env.BUILD_URL}|LINK>)"
+    } catch (err) {
+        echo "BUILD WARNING - Failed to send Slack Message: ${err}"
+    }
+}
+def slackEndMessage = {
+    try {
+        slackSend color: slackColorMap[currentBuild.currentResult], message: "Build ${env.JOB_NAME} finished with result: ${currentBuild.currentResult} (<${env.BUILD_URL}|LINK>)"
+    } catch (err) {
+        echo "BUILD WARNING - Failed to send Slack Message: ${err}"
+    }
+}
+
+// Wrap entire build with timestamps to improve Jenkins console log readability
+timestamps {
+    node(nodeLabel) {
+        // Request a custom workspace
+        //      Due to path length restrictions in virtualenv, we must request a custom
+        //      workspace here instead of using the one assigned to us with the call to
+        //      node(). When in a multibranch style job, Jenkins allocates a workspace
+        //      with a large path length (including info like SHA, branch, time). As such
+        //      virtualenv commands will fail, as virtualenv is unable to handle the long
+        //      paths. See the Jenkins Docs for guarantees provided by ws():
+        //      https://jenkins.io/doc/pipeline/steps/workflow-durable-task-step/#ws-allocate-workspace
+        ws(customWorkspace) {
+            // Send Slack start message
+            slackStartMessage()
+
+            // Clear previous workspace
+            deleteDir()
+
+            stage('Checkout') {
+                // Clone repo at triggered commit
+                checkout scm
+            }
+
+            stage('Build') {
+                // Build using Makefile
+                sh 'make'
+            }
+
+            // Wrap this stage in a try/catch to prevent Jenkins from fast failing
+            //      By default, if any command fails (i.e.: if an sh call returns a non-zero exit code)
+            //      however with this call wrapped in the below, we ignore the exception but we flag
+            //      the build as a failure.
+            try {
+                stage('Test') {
+                    // Run tests using Makefile
+                    // TODO: Leverage Jenkins J/XUnit plugins to scan test results
+                    //      by exporting test results as a known J/XUnit style artifact
+                    sh 'make test'
+                }
+            } catch (err) {
+                echo "BUILD FAILURE - Caught Exception: ${err}"
+                // Inform Jenkins this run is now in a FAILURE state
+                currentBuild.result = 'FAILURE'
+            }
+
+            // Wrap this stage in a try/catch to prevent Jenkins from fast failing
+            //      By default, if any command fails (i.e.: if an sh call returns a non-zero exit code)
+            //      however with this call wrapped in the below, we ignore the exception but we flag
+            //      the build as a failure.
+            try {
+                stage('Style') {
+                    // Run style checks using Makefile
+                    // TODO: Leverage Jenkins Warnings plugins to scan for style errors
+                    //      by exporting style check results as a known artifact
+                    sh 'make style'
+                }
+            } catch (err) {
+                echo "BUILD FAILURE - Caught Exception: ${err}"
+                // Inform Jenkins this run is now in a FAILURE state
+                currentBuild.result = 'FAILURE'
+            }
+
+            // Send Slack end message
+            slackEndMessage()
+        }
+    }
+}
