@@ -15,7 +15,7 @@
 # ******************************************************************************
 
 FLAKE8_CHECK_DIRS := examples nlp_architect/* server tests
-PYLINT_CHECK_DIRS := *
+PYLINT_CHECK_DIRS := examples nlp_architect server tests setup
 DOC_DIR := doc
 DOC_PUB_RELEASE_PATH := $(DOC_PUB_PATH)/$(RELEASE)
 
@@ -31,24 +31,30 @@ NLP_DIR := $(LIBRARY_NAME)/nlp
 default: dev
 
 test_prepare: test_requirements.txt $(ACTIVATE)
-	@. $(ACTIVATE); pip install -r test_requirements.txt > /dev/null 2>&1
+	@. $(ACTIVATE); pip3 install -r test_requirements.txt > /dev/null 2>&1
 
 test: test_prepare $(ACTIVATE) dev
-	@. $(ACTIVATE); py.test -rs tests
+	@. $(ACTIVATE); spacy download en
+	@. $(ACTIVATE); py.test -rs -vv tests
 
-style: test_prepare
-	@. $(ACTIVATE); flake8 --exit-zero --output-file flake.txt --tee $(FLAKE8_CHECK_DIRS)
-	@. $(ACTIVATE); pylint --reports=n --output-format=colorized --ignore=.venv $(PYLINT_CHECK_DIRS) || true
+flake: test_prepare
+	@echo "Running flake8..."
+	@. $(ACTIVATE); flake8 $(FLAKE8_CHECK_DIRS)  --output-file flake8.txt --tee
+
+pylint: test_prepare
+	@echo "Running pylint..."
+	@. $(ACTIVATE); pylint $(PYLINT_CHECK_DIRS) | tee pylint.txt
+	@. $(ACTIVATE); python3 tests/utils/ansi2html.py pylint.txt > pylint.html
 
 doc_prepare: doc_requirements.txt $(ACTIVATE)
-	@. $(ACTIVATE); pip install -r doc_requirements.txt > /dev/null 2>&1
+	@. $(ACTIVATE); pip3 install -r doc_requirements.txt > /dev/null 2>&1
 
 doc: doc_prepare
 	@. $(ACTIVATE); $(MAKE) -C $(DOC_DIR) clean
 	@. $(ACTIVATE); $(MAKE) -C $(DOC_DIR) html
 	@echo "Documentation built in $(DOC_DIR)/build/html"
 	@echo "To view documents open your browser to: http://localhost:8000"
-	@. $(ACTIVATE); cd $(DOC_DIR)/build/html; python -m http.server
+	@. $(ACTIVATE); cd $(DOC_DIR)/build/html; python3 -m http.server
 	@echo
 
 html: doc_prepare $(ACTIVATE)
@@ -75,34 +81,34 @@ ifneq ($(ENV_EXIST), yes)
 	@echo "Creating new environment"
 	@echo
 	virtualenv -p python3 $(VIRTUALENV_DIR)
-	@. $(ACTIVATE); pip install -U pip
+	@. $(ACTIVATE); pip3 install -U pip
 endif
 
 pre_install: $(ACTIVATE)
 	@echo "\n\n****************************************"
 	@echo "Installing packages ..."
-	@. $(ACTIVATE); pip install -r $(REQ_FILE)
+	@. $(ACTIVATE); pip3 install -r $(REQ_FILE)
 
 install: pre_install
-	@. $(ACTIVATE); pip install .
+	@. $(ACTIVATE); pip3 install .
 	$(MAKE) print_finish
 
 dev: pre_install
-	@. $(ACTIVATE); pip install -e .
+	@. $(ACTIVATE); pip3 install -e .
 	$(MAKE) print_finish
 
 install_no_virt_env: $(REQ_FILE)
 	@echo "\n\n****************************************"
 	@echo "Installing NLP Architect in current python env"
-	pip install -r $(REQ_FILE)
-	pip install -e .
+	pip3 install -r $(REQ_FILE)
+	pip3 install -e .
 	@echo "NLP Architect setup complete."
 
 sysinstall: $(REQ_FILE)
 	@echo "\n\n****************************************"
 	@echo "Installing NLP Architect in current python env (system install)"
-	pip install -r $(REQ_FILE)
-	pip install .
+	pip3 install -r $(REQ_FILE)
+	pip3 install .
 	@echo "NLP Architect setup complete."
 
 print_finish:

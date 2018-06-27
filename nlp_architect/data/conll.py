@@ -15,21 +15,18 @@
 # ******************************************************************************
 import re
 
-'''
-This file contains adapted open sourced code, publicly available at:
-https://github.com/elikip/bist-parser/blob/master/bmstparser/src/utils.py
-'''
 
-'''
-Things that were changed from the original:
-1) Added input validation
-2) Updated function and object names to dyNet 2.0.2 and Python 3
-3) Removed external embeddings option
-4) Reformatted code and variable names to conform with PEP8
-5) Added dict_to_obj()
-6) Added option for train() to get ConllEntry input
-7) Added legal header
-'''
+# This file contains adapted open sourced code, publicly available at:
+# https://github.com/elikip/bist-parser/blob/master/bmstparser/src/utils.py
+
+# Things that were changed from the original:
+# 1) Added input validation
+# 2) Updated function and object names to dyNet 2.0.2 and Python 3
+# 3) Removed external embeddings option
+# 4) Reformatted code and variable names to conform with PEP8
+# 5) Added dict_to_obj()
+# 6) Added option for train() to get ConllEntry input
+# 7) Added legal header
 
 NUMBER_REGEX = re.compile("[0-9]+|[0-9]+\\.[0-9]+|[0-9]+[0-9,]+")
 
@@ -65,5 +62,3 @@ class ConllEntry:
 
 def normalize(word):
     return 'NUM' if NUMBER_REGEX.match(word) else word.lower()
-
-

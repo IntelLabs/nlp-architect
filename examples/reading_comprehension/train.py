@@ -44,8 +44,7 @@ from utils import (
 import math
 from nlp_architect.contrib.ngraph.weight_initilizers import (make_placeholder, make_weights)
 from nlp_architect.utils.io import sanitize_path
-from nlp_architect.utils.io import validate, validate_existing_directory, \
-    validate_existing_filepath, validate_parent_exists, check_size
+from nlp_architect.utils.io import validate_existing_directory, check_size
 
 
 """
@@ -59,13 +58,13 @@ parser.add_argument('--data_path', help='enter path for training data',
                     type=str)
 
 parser.add_argument('--gpu_id', default="0", help='enter gpu id',
-                    type=str,action=check_size(0,10))
+                    type=str, action=check_size(0, 10))
 
 parser.add_argument('--max_para_req', default=100, help='enter the max length of paragraph',
-                    type=int, action=check_size(30,300))
+                    type=int, action=check_size(30, 300))
 
-parser.add_argument('--batch_size_squad',default=16, help='enter the batch size',
-                    type=int, action=check_size(1,256))
+parser.add_argument('--batch_size_squad', default=16, help='enter the batch size',
+                    type=int, action=check_size(1, 256))
 
 parser.set_defaults()
 
@@ -92,16 +91,16 @@ params_dict['init'] = init
 
 validate_existing_directory(args.data_path)
 path_gen = sanitize_path(args.data_path)
-path_gen=os.path.join(path_gen+"/")
+path_gen = os.path.join(path_gen + "/")
 
-file_name_dict={}
-file_name_dict['train_para_ids']='train.ids.context'
-file_name_dict['train_ques_ids']='train.ids.question'
-file_name_dict['train_answer']='train.span'
-file_name_dict['val_para_ids']='dev.ids.context'
-file_name_dict['val_ques_ids']='dev.ids.question'
-file_name_dict['val_ans']='dev.span'
-file_name_dict['vocab_file']='vocab.dat'
+file_name_dict = {}
+file_name_dict['train_para_ids'] = 'train.ids.context'
+file_name_dict['train_ques_ids'] = 'train.ids.question'
+file_name_dict['train_answer'] = 'train.span'
+file_name_dict['val_para_ids'] = 'dev.ids.context'
+file_name_dict['val_ques_ids'] = 'dev.ids.question'
+file_name_dict['val_ans'] = 'dev.span'
+file_name_dict['vocab_file'] = 'vocab.dat'
 
 
 train_para_ids = os.path.join(path_gen + file_name_dict['train_para_ids'])
@@ -259,7 +258,7 @@ mask_question_embed = ng.dot(
         reorder_ques_mask, [
             dummy_axis, REC, N]))
 
-# Pass question and para through embedding layer and dropout layers
+#  Pass question and para through embedding layer and dropout layers
 embed_output_para_1 = embed_layer(inputs['para'])
 embed_output_para = dropout_1(embed_output_para_1, keep=dropout_val)
 question_inps = ng.cast_axes(inputs['question'], [N, REC])
@@ -385,7 +384,7 @@ valid_computation = make_bound_computation(transformer, eval_outputs, inputs)
 TODO: Include feature to Save and load weights
 '''
 
-#Ensure batch size is greater than 0
+# Ensure batch size is greater than 0
 assert(params_dict['batch_size'] > 0)
 
 # Start Itearting through

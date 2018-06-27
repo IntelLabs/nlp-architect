@@ -18,16 +18,17 @@ import json
 import logging
 import sys
 
-import nltk
 from gensim.models import FastText, Word2Vec, KeyedVectors
 from gensim.models.word2vec import LineSentence
 from gensim import utils
+import nltk
 from nltk.corpus import conll2000
 from six import iteritems
 
 logger = logging.getLogger(__name__)
 
 
+# pylint: disable-msg=too-many-instance-attributes
 class NP2vec:
     """
     Initialize the np2vec model, train it, save it and load it.
@@ -42,7 +43,10 @@ class NP2vec:
         """
         return len(s) > 0 and s[-1] == self.mark_char
 
-    def __init__(
+    # pylint: disable-msg=too-many-arguments
+    # pylint: disable-msg=too-many-locals
+    # pylint: disable-msg=too-many-branches
+    def __init__(  # noqa: C901
             self,
             corpus,
             corpus_format='txt',
@@ -59,7 +63,7 @@ class NP2vec:
             hs=0,
             negative=25,
             cbow_mean=1,
-            iter=15,
+            iterations=15,
             min_n=3,
             max_n=6,
             word_ngrams=1):
@@ -100,7 +104,7 @@ class NP2vec:
           drawn (usually between 5-20). If set to 0, no negative sampling is used.
           cbow_mean (int {0,1}): model training hyperparameter. If 0, use the sum of the context
           word vectors. If 1, use the mean, only applies when cbow is used.
-          iter (int): model training hyperparameter, number of iterations.
+          iterations (int): model training hyperparameter, number of iterations.
           min_n (int): fasttext training hyperparameter. Min length of char ngrams to be used
           for training word representations.
           max_n (int): fasttext training hyperparameter. Max length of char ngrams to be used for
@@ -124,7 +128,7 @@ class NP2vec:
         self.hs = hs
         self.negative = negative
         self.cbow_mean = cbow_mean
-        self.iter = iter
+        self.iter = iterations
         self.min_n = min_n
         self.max_n = max_n
         self.word_ngrams = word_ngrams
@@ -134,12 +138,14 @@ class NP2vec:
         elif corpus_format == 'json':
             with open(corpus) as json_data:
                 self._sentences = json.load(json_data)
+        # pylint: disable-msg=too-many-nested-blocks
         elif corpus_format == 'conll2000':
             try:
                 self._sentences = list()
                 for chunked_sent in conll2000.chunked_sents(corpus):
                     tokens = list()
                     for chunk in chunked_sent:
+                        # pylint: disable-msg=protected-access
                         if hasattr(chunk, '_label') and chunk._label == 'NP':
                             s = ''
                             for w in chunk:
@@ -152,11 +158,12 @@ class NP2vec:
                             else:
                                 tokens.append(chunk[0])
                         self._sentences.append(tokens)
+            # pylint: disable-msg=broad-except
             except Exception:
                 print('Conll2000 dataset is missing from NLTK. See downloading details in the '
                       'README file')
         else:
-            logger.error('invalid corpus format: ' + corpus_format)
+            logger.error('invalid corpus format: %s', corpus_format)
             sys.exit(0)
 
         if word_embedding_type == 'fasttext' and word_ngrams == 1:
@@ -207,9 +214,7 @@ class NP2vec:
                 max_n=self.max_n,
                 word_ngrams=self.word_ngrams)
         else:
-            logger.error(
-                'invalid word embedding type: ' +
-                self.word_embedding_type)
+            logger.error('invalid word embedding type: %s', self.word_embedding_type)
             sys.exit(0)
 
     def save(self, np2vec_model_file='np2vec.model', binary=False):
@@ -237,8 +242,8 @@ class NP2vec:
                 if self.is_marked(word):
                     total_vec += 1
             logger.info(
-                "storing %sx%s projection weights for NP's into %s" %
-                (total_vec, vector_size, np2vec_model_file))
+                "storing %sx%s projection weights for NP's into %s",
+                total_vec, vector_size, np2vec_model_file)
             with utils.smart_open(np2vec_model_file, 'wb') as fout:
                 fout.write(utils.to_utf8("%s %s\n" % (total_vec, vector_size)))
                 # store NP vectors in sorted order: most frequent NP's at the top
@@ -279,3 +284,4 @@ class NP2vec:
             return FastText.load(np2vec_model_file)
         else:
             logger.error('invalid value for \'word_ngrams\'')
+        return None

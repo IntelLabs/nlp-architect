@@ -13,32 +13,26 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
+# pylint: disable=redefined-outer-name
+import gzip
+import json
+import sys
+import io
+from io import open
+import os
+from os.path import dirname
+import falcon
+from falcon import testing
+from falcon_multipart.middleware import MultipartMiddleware
 import pytest
-
 from nlp_architect.utils.text import is_spacy_model_installed
-
+import server.serve
 if not is_spacy_model_installed('en'):
-    pytest.skip("\n\nSkipping test_spacy_bist_.py. Reason: 'spacy en' model not installed. "
+    pytest.skip("\n\nSkipping test_server_sanity.py. Reason: 'spacy en' model not installed. "
                 "Please see https://spacy.io/models/ for installation instructions.\n"
                 "The terms and conditions of the data set and/or model license apply.\n"
                 "Intel does not grant any rights to the data and/or model files.\n",
                 allow_module_level=True)
-
-import gzip
-import io
-import json
-import os
-import sys
-from io import open
-
-import falcon
-import pytest
-from falcon import testing
-# from nlp_architect_server.serve import app
-from falcon_multipart.middleware import MultipartMiddleware
-from os.path import dirname
-
-import server.serve
 
 sys.path.insert(0, (dirname(dirname(os.path.abspath(__file__)))))
 
@@ -65,13 +59,77 @@ def init_client(service_name):
     """
     init dummy client for testing.
     Args:
-        service_name(str):  the service name
+        service_name(str):  the service name)
+        result_spans = result_dict['spans'][0]
+        expected_result_spans = expected_result_dict['spans'][0]
+        assert isinstance(result_spans, dict)
+        for key in expected_result_spans.keys():
+            assert key in result_spans
+    # 6. check displacy html rendering input
+    elif 'arcs' in expected_result_dict.keys():
+        assert isinstance(result_dict['arcs'], list)
+        assert isinstance(result_dict['words'], list)
+        result_arcs
     Returns:
         client for testing
     """
     app = falcon.API(middleware=[MultipartMiddleware()])
     server.serve.set_server_properties(app, service_name)
     return testing.TestClient(app)
+
+
+def assert_response_srtuct(result_doc, expected_result):
+    # 1. assert docs list
+    assert isinstance(result_doc, list)
+    assert len(result_doc) == len(expected_result)
+    # 2. assert the structure of doc item
+    result_item = result_doc[0]
+    expected_result_item = expected_result[0]
+    assert isinstance(result_item, dict)
+    for key in expected_result_item.keys():
+        assert key in result_item
+    # 3. assert the structure of doc item dict
+    result_dict = result_item['doc']
+    expected_result_dict = expected_result_item['doc']
+    if isinstance(result_dict, list):
+        result_dict = result_dict[0]
+        expected_result_dict = expected_result_dict[0]
+    assert isinstance(result_dict, dict)
+    for key in expected_result_dict.keys():
+        assert key in result_dict
+    # 4. check CoreNLPDoc
+    if 'sentences' in expected_result_dict.keys():
+        assert isinstance(result_dict['sentences'], list)
+        # assert sentence:
+        assert isinstance(result_dict['sentences'][0], list)
+        # assert word-token
+        result_word_dict = result_dict['sentences'][0][0]
+        expected_result_word_dict = expected_result_item['sentences'][0][0]
+        for key in expected_result_word_dict.keys():
+            assert key in result_word_dict
+    # 5. check HighLevelDoc
+    elif 'annotation_set' in expected_result_dict.keys():
+        assert isinstance(result_dict['annotation_set'], list)
+        assert isinstance(result_dict['spans'], list)
+        result_spans = result_dict['spans'][0]
+        expected_result_spans = expected_result_dict['spans'][0]
+        assert isinstance(result_spans, dict)
+        for key in expected_result_spans.keys():
+            assert key in result_spans
+    # 6. check displacy html rendering input
+    elif 'arcs' in expected_result_dict.keys():
+        assert isinstance(result_dict['arcs'], list)
+        assert isinstance(result_dict['words'], list)
+        result_arcs = result_dict['arcs'][0]
+        expected_result_arcs = expected_result_dict['arcs'][0]
+        assert isinstance(result_arcs, dict)
+        for key in expected_result_arcs.keys():
+            assert key in result_arcs
+        result_words = result_dict['words'][0]
+        expected_result_words = expected_result_dict['words'][0]
+        assert isinstance(result_words, dict)
+        for key in expected_result_words.keys():
+            assert key in result_words
 
 
 @pytest.mark.parametrize('service_name', ['bist', 'spacy_ner'])
@@ -83,8 +141,8 @@ def test_request(service_name):
     headers["Content-Type"] = "application/json"
     headers["Response-Format"] = "json"
     response = client.simulate_post('/' + service_name, body=doc, headers=headers)
-    result_doc = json.loads(response.content, encoding='utf-8')
-    assert result_doc == json.loads(expected_result)
+    result_doc = json.loads(response.content.decode('utf8'), encoding='utf-8')
+    assert_response_srtuct(result_doc, json.loads(expected_result))
     assert response.status == falcon.HTTP_OK
 
 
@@ -101,7 +159,7 @@ def test_gzip_file_request(service_name):
     headers["Response-Format"] = "gzip"
     response = client.simulate_post('/' + service_name, body=doc, headers=headers)
     result_doc = get_decompressed_gzip(response.content)
-    assert result_doc == json.loads(expected_result)
+    assert_response_srtuct(result_doc, json.loads(expected_result))
     assert response.status == falcon.HTTP_OK
 
 
@@ -116,8 +174,8 @@ def test_json_file_request(service_name):
     headers["Content-Type"] = "application/json"
     headers["Response-Format"] = "json"
     response = client.simulate_post('/' + service_name, body=doc, headers=headers)
-    result_doc = json.loads(response.content, encoding='utf-8')
-    assert result_doc == json.loads(expected_result)
+    result_doc = json.loads(response.content.decode('utf8'), encoding='utf-8')
+    assert_response_srtuct(result_doc, json.loads(expected_result))
     assert response.status == falcon.HTTP_OK
 
 

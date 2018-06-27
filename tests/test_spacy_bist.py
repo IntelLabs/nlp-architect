@@ -13,18 +13,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
+# pylint: disable=redefined-outer-name
 import pytest
 
 from nlp_architect.utils.text import is_spacy_model_installed
+from nlp_architect.pipelines.spacy_bist import SpacyBISTParser
 
 if not is_spacy_model_installed('en'):
-    pytest.skip("\n\nSkipping test_spacy_bist_.py. Reason: 'spacy en' model not installed. "
+    pytest.skip("\n\nSkipping test_spacy_bist.py. Reason: 'spacy en' model not installed. "
                 "Please see https://spacy.io/models/ for installation instructions.\n"
                 "The terms and conditions of the data set and/or model license apply.\n"
                 "Intel does not grant any rights to the data and/or model files.\n",
                 allow_module_level=True)
-
-from nlp_architect.pipelines.spacy_bist import SpacyBISTParser
 
 
 class TestData:
@@ -56,21 +56,18 @@ class Fixtures:
 
 @pytest.mark.parametrize('show_tok', [True, False])
 @pytest.mark.parametrize('show_doc', [True, False])
-@pytest.mark.parametrize('method_name', ['parse'])
 @pytest.mark.parametrize('text', TestData.output_structure)
-def test_output_structure(parser, text, method_name, show_tok, show_doc, token_label_types):
+def test_output_structure(parser, text, show_tok, show_doc, token_label_types):
     """Test that the output object structure hasn't changed.
 
     Args:
         parser (SpacyBistParser)
         text (str): Input test case.
-        method_name (str): Parse method to test.
         show_tok (bool): Specifies whether to include token text in output.
         show_doc (bool): Specifies whether to include document text in output.
         token_label_types (dict): Mapping of label names to their type.
     """
-    parse_method = getattr(parser, method_name)
-    parsed_doc = parse_method(doc_text=text, show_tok=show_tok, show_doc=show_doc)
+    parsed_doc = parser.parse(doc_text=text, show_tok=show_tok, show_doc=show_doc)
     assert isinstance(parsed_doc.sentences, list)
     assert isinstance(parsed_doc.doc_text, str) if show_doc else not parsed_doc.doc_text
     for sentence in parsed_doc:

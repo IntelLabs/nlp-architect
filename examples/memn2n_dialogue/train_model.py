@@ -37,9 +37,11 @@ from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
 from __future__ import absolute_import
+import os
 from contextlib import closing
+import numpy as np
+from tqdm import tqdm
 import ngraph as ng
-from nlp_architect.data.babi_dialog import BABI_Dialog
 from ngraph.frontends.neon import Layer
 from ngraph.frontends.neon import GaussianInit, Adam
 from ngraph.frontends.neon import make_bound_computation
@@ -47,11 +49,9 @@ from ngraph.frontends.neon import NgraphArgparser
 from ngraph.frontends.neon import ArrayIterator
 from ngraph.frontends.neon import Saver
 import ngraph.transformers as ngt
+from interactive_utils import interactive_loop
+from nlp_architect.data.babi_dialog import BABI_Dialog
 from nlp_architect.models.memn2n_dialogue import MemN2N_Dialog
-import numpy as np
-import os
-from tqdm import tqdm
-from utils import interactive_loop
 from nlp_architect.utils.io import validate_parent_exists, check_size, validate
 
 
@@ -61,7 +61,7 @@ parser.add_argument(
     '--task',
     type=int,
     default='1',
-    choices=range(1,7),
+    choices=range(1, 7),
     help='the task ID to train/test on from bAbI-dialog dataset (1-6)')
 parser.add_argument(
     '--emb_size',
@@ -73,7 +73,7 @@ parser.add_argument(
     type=int,
     default='3',
     help='Number of memory hops in the network',
-    choices=range(1,10))
+    choices=range(1, 10))
 parser.add_argument(
     '--use_match_type',
     default=False,
@@ -104,13 +104,13 @@ parser.add_argument(
     type=float,
     default=40.0,
     help='Clip gradients such that norm is below this value.',
-    action=check_size(0,100))
+    action=check_size(0, 100))
 parser.add_argument(
     '--eps',
     type=float,
     default=1e-8,
     help='epsilon used to avoid divide by zero in softmax renormalization.',
-    action=check_size(1e-100,1e-2))
+    action=check_size(1e-100, 1e-2))
 parser.add_argument(
     '--save_log',
     action='store_true',
@@ -259,8 +259,8 @@ with closing(ngt.make_transformer()) as transformer:
         train_error = []
         train_cost = []
         for idx, data in enumerate(
-            tqdm(train_set, total=train_set.nbatches,
-                 unit='minibatches', desc="Epoch {}".format(e))):
+                tqdm(train_set, total=train_set.nbatches,
+                     unit='minibatches', desc="Epoch {}".format(e))):
             train_output = train_computation(data)
             train_cost.append(train_output['batch_cost'])
             preds = np.argmax(train_output['train_preds'], axis=1)
@@ -321,7 +321,7 @@ with closing(ngt.make_transformer()) as transformer:
             test_error.append(error)
 
         test_cost_str = "test_cost {}, test_error {}".format(
-             np.mean(test_loss), np.mean(test_error))
+            np.mean(test_loss), np.mean(test_error))
         print(test_cost_str)
         if args.save_log:
             with open(log_file, 'a') as f:

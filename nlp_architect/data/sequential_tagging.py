@@ -141,7 +141,7 @@ class SequentialTaggingDataset(object):
         s = []
         for line in file_lines:
             line = line.strip()
-            if len(line) == 0:
+            if not line:
                 sents.append(s)
                 s = []
                 continue

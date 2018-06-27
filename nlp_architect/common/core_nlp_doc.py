@@ -13,9 +13,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
-from __future__ import unicode_literals, print_function, division, \
-    absolute_import
-
 import json
 
 
@@ -34,6 +31,7 @@ def find_correct_index(orig_gov, merged_punct_sentence):
         if tok["start"] == orig_gov["start"] and tok["len"] == orig_gov["len"] and tok["pos"] == \
                 orig_gov["pos"] and tok["text"] == orig_gov["text"]:
             return tok_index
+    return None
 
 
 def fix_gov_indexes(merged_punct_sentence, sentence):
@@ -72,7 +70,7 @@ def merge_punctuation(sentence):
 
 class CoreNLPDoc:
     """
-    object for core-components (POS, Dependency Relations, etc)
+    Object for core-components (POS, Dependency Relations, etc).
 
     Args:
         self.doc_text (str): the doc text
@@ -82,7 +80,7 @@ class CoreNLPDoc:
     """
 
     def __init__(self):
-        self.doc_text = None
+        self.doc_text = ""
         self.sentences = []
 
     def __repr__(self):

@@ -19,25 +19,25 @@ from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
 from __future__ import absolute_import
-from ngraph.util.persist import valid_path_append, fetch_file
-from tqdm import tqdm
-import numpy as np
 import pickle
 import itertools
 import tarfile
 import os
 import sys
+import numpy as np
+from tqdm import tqdm
+from ngraph.util.persist import valid_path_append, fetch_file
 from nlp_architect.utils.generic import license_prompt
 
 
-def pad_sentences(sentences, sentence_length=None, dtype=np.int32, pad_val=0.):
+def pad_sentences(sentences, sentence_length=0, pad_val=0.):
     """
     Pad all sentences to have the same length (number of words)
     """
     lengths = [len(sent) for sent in sentences]
 
     nsamples = len(sentences)
-    if sentence_length is None:
+    if sentence_length is 0:
         sentence_length = np.max(lengths)
 
     X = (np.ones((nsamples, sentence_length)) * pad_val).astype(dtype=np.int32)
@@ -47,14 +47,7 @@ def pad_sentences(sentences, sentence_length=None, dtype=np.int32, pad_val=0.):
     return X
 
 
-def pad_stories(
-        stories,
-        sentence_length,
-        max_story_length,
-        vocab_size,
-        dtype=np.int32,
-        pad_val=0.,
-        use_time=True):
+def pad_stories(stories, sentence_length, max_story_length, pad_val=0.):
     """
     Pad all stories to have the same number of sentences (max_story_length).
     """
@@ -129,6 +122,8 @@ class BABI_Dialog(object):
         self.oov = oov
         self.use_match_type = use_match_type
         self.cache_vectorized = cache_vectorized
+        self.match_type_vocab = None
+        self.match_type_idxs = None
 
         self.tasks = [
             'dialog-babi-task1-API-calls-',
@@ -147,7 +142,7 @@ class BABI_Dialog(object):
         print('Task is %s' % (self.tasks[self.task]))
 
         (self.train_file, self.dev_file, self.test_file, self.cand_file,
-            self.kb_file, self.vocab_file, self.vectorized_file) = self.load_data()
+         self.kb_file, self.vocab_file, self.vectorized_file) = self.load_data()
 
         # Parse files into sets of dialogue and user/bot utterance pairs
         self.train_dialog = self.parse_dialog(
@@ -286,8 +281,8 @@ class BABI_Dialog(object):
         vectorized_file = os.path.join(self.workdir, self.vectorized_filename)
 
         if (os.path.exists(train_file) is False
-            or os.path.exists(dev_file) is False
-            or os.path.exists(test_file) is False
+                or os.path.exists(dev_file) is False
+                or os.path.exists(test_file) is False
                 or os.path.exists(cand_file) is False):
             with tarfile.open(filepath, 'r:gz') as f:
                 f.extractall(self.workdir)
@@ -405,7 +400,7 @@ class BABI_Dialog(object):
             a.append(self.one_hot_vector(answer))
 
         m = np.array([pad_sentences(sents, self.max_utt_len) for sents in m])
-        m = pad_stories(m, self.max_utt_len, self.memory_size, self.vocab_size)
+        m = pad_stories(m, self.max_utt_len, self.memory_size)
         m_mask = np.array(m_mask)
 
         u = pad_sentences(u, self.max_utt_len)
@@ -459,9 +454,6 @@ class BABI_Dialog(object):
                 mt: i + self.max_cand_len_pre_match for i,
                 mt in enumerate(
                     self.match_type_vocab)}
-        else:
-            self.match_type_vocab = None
-            self.match_type_idxs = None
 
         vocab = list(set(all_words))
         return vocab
@@ -586,7 +578,7 @@ class BABI_Dialog(object):
         memory_pad = (
             np.zeros(
                 (self.memory_size, self.max_utt_len))).astype(
-            dtype=np.int32)
+                    dtype=np.int32)
         memory_pad[:len(memory)] = memory
 
         # Pad user utt to sentence size
@@ -637,8 +629,7 @@ class BABI_Dialog(object):
                 '\t')[-1]: x.strip().split(' ')[2].split('\t')[-2] + "_MATCH" for x in kb_text}
         else:
             kb_ents_to_type = {
-                x.strip().split(' ')[3]: x.strip().split(' ')[2] +
-                "_MATCH" for x in kb_text}
+                x.strip().split(' ')[3]: x.strip().split(' ')[2] + "_MATCH" for x in kb_text}
 
         return kb_ents_to_type
 
