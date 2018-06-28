@@ -1,0 +1,372 @@
+[WIFIWIN-3282] [Lenovo_ThinkPad][Graf EVO]8265:RS2: No WiFi Network found in Network list and Red X mark (permanent) in WLAN icon in the system tray after resume from sleep
+No WiFi Network found in Network list and Red X mark (permanent) in WLAN icon in the system tray after resume from sleep  with Windows 10 RS2 build 15063in Graf 1.5 machine.         Permanent Red X         1  fail (10:25pm)/ 15 trials (scenario3)        0  fail / 15 trials        0  fail / 15 trials        SN: R90NAW6LWaited for 15minutes still issue not recovered.      Workaround: disable enable in Devmgr      No APs available with Netsh wlan show networks in cmd  when issue replicated.       netsh was not generated  due to correlation failed:error:0x80070002.        IPS#179905:permanent red x mark - 1025pm- graf 1.5- 20170708.zip
+
+Frequency: Very rare (<5%)
+Steps to reproduce: Roaming test
+1. Connect to home AP@11flr (depends in your AP setup@office) with Graf 1.5 or Graf Evo machines.
+2. Put the machine to sleep for 15mins then lid close.
+3. Go to a different room AP@10f.
+Note:make sure that you already have connection to AP@10flr before performing step 2.
+4. Open Lid and Resume the machine.
+permanent issue IPS#179905 "No WiFi Network found in Network list and Red X mark in WLAN icon in the system tray" occurred -> PROBLEM
+
+
+other info:
+SN: R90NAW6L
+Waited for 15minutes still issue not recovered.
+
+Workaround: disable enable in Devmgr
+No APs available with Netsh wlan show networks in cmd  when issue replicated.
+
+netsh was not generated  due to correlation failed:error:0x80070002.
+Hardware: Windstorm Peak (8265);
+Platforms: Kaby Lake;
+Operating System: Windows 10 RS2;
+product_id: 60884
+product_name: Intel® Wireless Technologies
+issue_priority: High
+customer_priority: High
+issue_category: Networking/Connectivity
+issue_subcategory: WiFi Windows
+case_type: Debug Request
+substatus: New
+salesforce_object_id: 5001J00000RMwj1QAD
+salesforce_object_type: sf:Case
+salesforce_link: https://shnintelsf2crm.intel.myshn.net/5001J00000RMwj1QAD
+source_issue_id: 00185420
+intel_support_owner: Yu Liu
+contact_email: kjocson1@lenovo.com
+contact_name: Jocson,Khristina
+account_name: Lenovo (Beijing) Limited
+CIM_Intel_UltimateID: 11330554
+end_customer: Lenovo Japan
+Customer Geo: PRC
+Customer Sub Geo: PRC
+Case Owner: flee5
+Hi Eliran,
+
+Please assign this issue to engineering for further analysis.
+
+[Summary] 
+Permanent Red-x observed after system resumed from sleep.
+When issue happens “There are 0 networks currently visible” is shown when we run “netsh wlan show networks” and network list is empty when we click wifi icon.
+
+According to driver log, it seems that f/w did not start to scan after driver submits the scan request and then 10 seconds after driver asked to abort it.
+
+[Repro steps]
+1.	Connect DUT to an AP
+2.	Put DUT to sleep overnight
+3.	Resume DUT and observe issue the next morning
+*Issue can be replicated in Taipei lab using customer platform. 
+*Failure rate is low
+
+[Initial analysis]
+Log (rlg/ddd, wrt usniffer): \\ger\ec\proj\ha\ICG\symstore\CMAttachments\JIRA\WIFIWIN\WIFIWIN-3282\aug07_localrepro\
+Point of failure:
+
+	Issue was found around 8/7/2017 15:58pm, but it may have happened long before that. Suspect it happened
+         sometime after the previous system resume.
+	Issue is gone after we stop etl collection (miniport reset?) around 16:00pm
+
+
+
+Near the point of failure time, driver log shows that f/w did not start scan upon receiving driver’s scan request and 10 seconds later scan request was asked to be aborted. This behavior is seen many times throughput the logs.
+
+347410 0000347409    15:49:18:776    [CNCT_FLOW    ][00] [S] SCAN_REQUEST - OS - NumOfChannels=38
+347411 0000347410    15:49:18:776    [CNCT_FLOW    ][00] [S] SCAN_REQUEST - 2.4 - NumOfChannels=13, Channels(1,2,3,4,5,6,7,8,9,10,11,12,13,) 
+347412 0000347411    15:49:18:776    [CNCT_FLOW    ][00] [S] SCAN_REQUEST - 5.2 - NumOfChannels=25, Channels(36,40,44,48,52,56,60,64,100,104,108,112,116,120,124,128,132,136,140,144,149,153,157,161,165,) 
+347413 0000347412    15:49:18:776    [CNCT_FLOW    ][00] [S] SCAN_REQUEST - send probe to "<NULL SSID>" 
+347414 0000347413    15:49:18:776    [SCAN         ][00] [S] submitScanRequest: reqID[0x352]   <- scan request sumitted to F/W
+347447 0000347446    15:49:28:783    [SCAN         ][03] [S] abortScanRequest: reqID[0x352]  <- scan request aborted
+347450 0000347449    15:49:28:783    [SCAN         ][00] [S] handleScanCompleteIndication: call[0xFFFFF8058AFDD250] reqID[0x352] at index[0x2]
+347501 0000347500    15:50:18:789    [CNCT_FLOW    ][00] [S] SCAN_REQUEST - OS - NumOfChannels=38
+347502 0000347501    15:50:18:789    [CNCT_FLOW    ][00] [S] SCAN_REQUEST - 2.4 - NumOfChannels=13, Channels(1,2,3,4,5,6,7,8,9,10,11,12,13,) 
+347503 0000347502    15:50:18:789    [CNCT_FLOW    ][00] [S] SCAN_REQUEST - 5.2 - NumOfChannels=25, Channels(36,40,44,48,52,56,60,64,100,104,108,112,116,120,124,128,132,136,140,144,149,153,157,161,165,) 
+347504 0000347503    15:50:18:789    [CNCT_FLOW    ][00] [S] SCAN_REQUEST - send probe to "<NULL SSID>" 
+347505 0000347504    15:50:18:789    [SCAN         ][00] [S] submitScanRequest: reqID[0x353]
+347525 0000347524    15:50:28:796    [SCAN         ][07] [S] abortScanRequest: reqID[0x353]
+347528 0000347527    15:50:28:796    [SCAN         ][00] [S] handleScanCompleteIndication: call[0xFFFFF8058AFDD250] reqID[0x353] at index[0x3]
+347561 0000347560    15:50:28:796    [CNCT_FLOW    ][00] [S] SCAN_REQUEST - OS - NumOfChannels=38
+347562 0000347561    15:50:28:796    [CNCT_FLOW    ][00] [S] SCAN_REQUEST - 2.4 - NumOfChannels=13, Channels(1,2,3,4,5,6,7,8,9,10,11,12,13,) 
+347563 0000347562    15:50:28:796    [CNCT_FLOW    ][00] [S] SCAN_REQUEST - 5.2 - NumOfChannels=25, Channels(36,40,44,48,52,56,60,64,100,104,108,112,116,120,124,128,132,136,140,144,149,153,157,161,165,) 
+347564 0000347563    15:50:28:796    [CNCT_FLOW    ][00] [S] SCAN_REQUEST - send probe to "<NULL SSID>" 
+347565 0000347564    15:50:28:796    [SCAN         ][00] [S] submitScanRequest: reqID[0x354]
+347689 0000347688    15:50:38:808    [SCAN         ][06] [S] abortScanRequest: reqID[0x354]
+347692 0000347691    15:50:38:810    [SCAN         ][00] [S] handleScanCompleteIndication: call[0xFFFFF8058AFDD250] reqID[0x354] at index[0x0]
+
+Thanks,
+Frank
+Hi Alon,
+Please take a look if same missing scan complete notification.
+I assume in this case we can get repro with debug FW.
+Thanks.
+Hi Frank,
+please direct me to the log you took the snippets from.
+both RLG in \\ger\ec\proj\ha\ICG\symstore\CMAttachments\JIRA\WIFIWIN\WIFIWIN-3282\aug07_localrepro don't include the time around 15:50:...
+
+Thanks
+Alon
+Hi Alon,
+
+The snippets were taken from "WiFiLog-09-46-49-84104-08-2017-00001.LOG" in the above folder. 
+The point of failure is near the end of the file. Please go to line# 347410 to locate the beginning of the above snippet.
+
+347410 0000347409 15:49:18:776 [CNCT_FLOW ][00] [S] SCAN_REQUEST - OS - NumOfChannels=38
+
+Thanks,
+Frank
+this issue is different from the scan complete missing notification, driver gets scan complete each time after sending abort with the status 0x2
+
+since there is no prints for  handleScanStartIndication from some point near the issue  seems that scan start indication isn't been uploaded. 
+the DDD provided doesn't fit to the RLG with the issue.
+please repro with DDD so we can see for sure that scan start isn't been sent.
+
+Thanks,
+Alon
+Hi Alon,
+
+The correct DDD binaries which match the RLG are in \\ger\ec\proj\ha\ICG\symstore\CMAttachments\JIRA\WIFIWIN\WIFIWIN-3282\aug07_localrepro\CollectedData\InternalLogs\TABLET-2BUE8FJK-08-07-2017-15-59-35.29-STOP\DDD
+
+Thanks,
+Frank
+Hi Frank, 
+when I parse this DDD I don't see the issue in the output RLG logs. can't find, for example "[SCAN         ][02] [S] submitScanRequest: reqID[0x341]" around this time 15:23:54:272	and I don't see any missing prints that indicate no scan start has arrived in the end of the recording..
+Hi Alon,
+
+Below snippets are copied from the original RLG and my parsed DDD RLG ouput.  It seems that the timestamps are shifted a bit while the line numbers and traces remain the same. I guess this issue maybe related to DDDPlayer, perhaps we can check with DDDPlayer owner to see whether there is a way to fix it.
+
+It seems that scan start for reqID[0x341] are missing in both logs and then 10 seconds later abortScanRequest: reqID[0x341] is triggered.
+
+Original RLG
+343650 0000343649    15:23:54:272    [SCAN         ][01] [S] submitScanRequest: reqID[0x340]
+343663 0000343662    15:23:54:272    [SCAN         ][01] [S] abortScanRequest: reqID[0x340]
+343667 0000343666    15:23:54:272    [SCAN         ][00] [S] handleScanCompleteIndication: call[0xFFFFF8058AFDD250] reqID[0x340] at index[0x0]
+343696 0000343695    15:23:54:272    [CNCT_FLOW    ][02] [S] SCAN_REQUEST - OS - NumOfChannels=38
+343697 0000343696    15:23:54:272    [CNCT_FLOW    ][02] [S] SCAN_REQUEST - 2.4 - NumOfChannels=13, Channels(1,2,3,4,5,6,7,8,9,10,11,12,13,) 
+343698 0000343697    15:23:54:272    [CNCT_FLOW    ][02] [S] SCAN_REQUEST - 5.2 - NumOfChannels=25, Channels(36,40,44,48,52,56,60,64,100,104,108,112,116,120,124,128,132,136,140,144,149,153,157,161,165,) 
+343699 0000343698    15:23:54:272    [CNCT_FLOW    ][02] [S] SCAN_REQUEST - send probe to "<NULL SSID>" 
+343700 0000343699    15:23:54:272    [SCAN         ][02] [S] submitScanRequest: reqID[0x341]
+343716 0000343715    15:24:04:280    [SCAN         ][00] [S] abortScanRequest: reqID[0x341]  <- abort 
+343719 0000343718    15:24:04:280    [SCAN         ][00] [S] handleScanCompleteIndication: call[0xFFFFF8058AFDD250] reqID[0x341] at index[0x1]
+
+RLG from DDD binary
+343650 0000343649    15:23:54:272    [SCAN         ][01] [S] submitScanRequest: reqID[0x340
+343663 0000343662    15:23:54:273    [SCAN         ][01] [S] abortScanRequest: reqID[0x340]
+343667 0000343666    15:23:54:273    [SCAN         ][00] [S] handleScanCompleteIndication: call[0x00007FF78EC617B0] reqID[0x340] at index[0x0]
+343696 0000343695    15:23:54:274    [CNCT_FLOW    ][02] [S] SCAN_REQUEST - OS - NumOfChannels=38
+343697 0000343696    15:23:54:274    [CNCT_FLOW    ][02] [S] SCAN_REQUEST - 2.4 - NumOfChannels=13, Channels(1,2,3,4,5,6,7,8,9,10,11,12,13,) 
+343698 0000343697    15:23:54:274    [CNCT_FLOW    ][02] [S] SCAN_REQUEST - 5.2 - NumOfChannels=25, Channels(36,40,44,48,52,56,60,64,100,104,108,112,116,120,124,128,132,136,140,144,149,153,157,161,165,) 
+343699 0000343698    15:23:54:274    [CNCT_FLOW    ][02] [S] SCAN_REQUEST - send probe to "<NULL SSID>" 
+343700 0000343699    15:23:54:274    [SCAN         ][02] [S] submitScanRequest: reqID[0x341]       
+343716 0000343715    15:24:04:280    [SCAN         ][00] [S] abortScanRequest: reqID[0x341] * <- abort*
+343719 0000343718    15:24:04:281    [SCAN         ][00] [S] handleScanCompleteIndication: call[0x00007FF78EC617B0] reqID[0x341] at index[0x1]
+
+Thanks,
+Frank
+can you share a path to the right RLG from DDD? I'll check the one you parsed..are you using the log lovel FFFF1F to parse?
+
+Alon
+Hi Alon,
+
+Please go to "\\ger\ec\proj\ha\ICG\symstore\CMAttachments\JIRA\WIFIWIN\WIFIWIN-3282\ddd_player_19.71.1.1" for my parsed RLG from DDD. In the folder are the DDDPlayer, DDD binaries and the parsed RLG log file "rlg_output_from_ddd.LOG".
+The log level I used is FFFF07. 
+
+Thanks,
+Frank
+from this DDD I can't see unsolicited notifications. if we assume FW failed to send the scan start notification, we will try to debug this.
+I've triggered a build with some FW prints to help us as well added asserts in case the notification sending somehow fail, and usniffer event to see notification uploading from the FW.
+I will have the build ready by tomorrow and we will like to repro with that build.
+Alon
+Hi Alon,
+Once build ready, we'll share to customer for verification in the meantime.
+Thank you.
+Linda
+Hi please use this build \\infs089\Zip_Listener\TEST\WFWDRV_P4\main\WFDRV35066_V99.0.31.8_DRV572953_FW573934 to repro
+
+in case of asserts 0x123* that's my added asserts and will produce relevant data
+
+Thanks,
+Alon
+repro with debug driver is WIP, will update.
+
+Thanks,
+Frank
+Update Status:
+
+We can not repro this  with engineering build
+(WFDRV35066_V99.0.31.8_DRV572953_FW573934_WinT_t64_dddfree)
+We would keep trying
+
+Lantis
+New finding here...
+We repro this issue but after running the command "NETSH WLAN show drivers"
+it becomes normal w/o Red X and the mobile center button appear.
+
+discussed with Itay, 
+we would try to repro with DDD driver for further investigation. 
+Thanks.
+Frank Yang
+Hi Pukach, Alon
+We got some logs from customer that they claim that the engineering build seems periodically disconnect to AP every 15~30 mins.
+They would like to have more stable version driver to collect log.
+
+i've checked the log, it seems that we would miss beacon for 9 times every around 15 mins and which causes disconnection. and from the log we got lots of asserts while issue happen...
+is it expected or there is something wrong?
+I also put the log in path as below:
+\\ger\ec\proj\ha\ICG\symstore\CMAttachments\JIRA\WIFIWIN\WIFIWIN-3282\0818
+
+Thanks.
+Frank Yang
+hi,
+
+in WiFi DDD EVT- Wifi DC issue - Katoh-san
+seen 2 wakes from us - one due to non wireless and one due to missed beacons, in a range of 10 hours.
+
+in  WiFi DDD EVT WRT - Wifi DC issue - Miyamura-san
+seen 9 wakes - 7 missed beacons and 2 not from us, in a range of 10 hours.
+however in this log seen assert 100232  multiple times due to debug capability I've added in the print that can caused it - this isn't exist in the main or any official builds.
+
+so 7 wakes from missed beacons  in 10 hours does seems normal to me.
+
+back to the original issue of the bug:
+in this nightly build if assert of FW dump - we can see if the missing scan notification issue happened and it won't produce the 100232 assert:
+\\amr.corp.intel.com\ec\proj\DPGEC\iag\mwg\COMP_Builds\WFWDRV_P4\WFDRV35193_V99.0.31.9\Layout
+
+however, the original issue where scan start notification issue didn't seen from a few logs I've looked at
+
+Thanks,
+Alon
+Thanks Alon's sharing...
+will share with customer and wait for their feed back
+Thanks
+Frank Yang
+Hi Alon,
+
+We received new logs from customer based on the latest core30 STHWFW1662_19.80.0.3 release. It seems that issue failure rate has dropped with this release but they can still replicate it 1/40 trials. Here in Taipei lab we can't repro yet with this new release.
+Customer also tried to repro with the debug build that you have provided, and were also able to repro the issue. But for some reason the system hung when they tried to capture usniffer with WRT, therefore unfortunately there was no relevant usniffer dumps generated at the point of failure. 
+
+The new logs (19.80.0.3) are copied to the following locations
+usniffer: \\ger\ec\proj\ha\ICG\symstore\CMAttachments\JIRA\WIFIWIN\WIFIWIN-3282\0828_tina_STHWFW1662_19.80.0.3\wrt logs\TABLET-9O4CDF04-08-26-2017-20-39-04.58-STOP\WPP\
+
+rlg/ddd: \\ger\ec\proj\ha\ICG\symstore\CMAttachments\JIRA\WIFIWIN\WIFIWIN-3282\0828_tina_STHWFW1662_19.80.0.3\wif evt nettrace ddd logs
+
+Customer claims that issue happens around 20:15pm.
+According to driver log, system resumes at 20:15:09:940
+52977 0000052977    20:15:09:940    [CNCT_FLOW    ][02] [S] ************************ RESUME  ************************
+
+Similar to the original observed behavior, after scan request is submitted at 20:15:10:189, it is aborted 10 seconds later at 20:15:20:193. 
+53242 0000053242    20:15:10:189    [CNCT_FLOW    ][02] [S] SCAN_REQUEST - OS - NumOfChannels=33
+53243 0000053243    20:15:10:189    [CNCT_FLOW    ][02] [S] SCAN_REQUEST - 2.4 - NumOfChannels=13, Channels(1,2,3,4,5,6,7,8,9,10,11,12,13,) 
+53244 0000053244    20:15:10:189    [CNCT_FLOW    ][02] [S] SCAN_REQUEST - 5.2 - NumOfChannels=20, Channels(36,40,44,48,52,56,60,64,100,104,108,112,116,120,124,128,132,136,140,144,) 
+53245 0000053245    20:15:10:189    [CNCT_FLOW    ][02] [S] SCAN_REQUEST - send probe to "<NULL SSID>" 
+53246 0000053246    20:15:10:189    [SCAN         ][02] [S] submitScanRequest: reqID[0x321]
+53268 0000053268    20:15:20:193    [SCAN         ][00] [S] abortScanRequest: reqID[0x321]* <- abort scan*
+53271 0000053271    20:15:20:193    [SCAN         ][00] [S] handleScanCompleteIndication: call[0xFFFFF80E19E70120] reqID[0x321] at index[0x1]
+
+Thanks,
+Frank
+Hi Eran,
+Is there any analysis update on this case?
+Thank you.
+Linda
+Hi Daniel, since Alon is away on BT, please take ownership of this bug.
+Review history and analyze latest logs sent on Aug-30.
+Thanks
+In the latest logs I see that FW receives scan command (0xD) and reply with a response but there is no indication for scan start.
+After 10 seconds driver triggers scan abort (0xE) to which FW replies with response and scan complete notification.
+This flow then repeats itself many times without scan start notification ever being received.
+My guess is that something is stuck in UMAC and scan command is never forwarded to LMAC.
+I will require more FW debug data in order to gain any further understanding.
+I have requested driver guys (Roi.F and friends) to provide a driver build that triggers ucode NMI with FW debug dumping once scan start notification is not received within 8 seconds since the scan command is sent.
+Hi,
+
+here is the requested build:
+
+\\infs089\Zip_Listener\TEST\WFWDRV_P4\ramara_core31_donmi_scan_start_ind\WFDRV35738_V99.0.31.12_DRV586698_FW586037\ENG\Engineering_Data\Driver\ddd_free_logs\WINT
+
+please contact me if you need any additional info.
+
+Thanks,
+Reem
+Hi Frank,
+
+Please try to reproduce with the build provided by Reem and retrieve the FW debug data (assuming we get an assert now)
+
+Thanks,
+Daniel.
+Hi Daniel,
+
+The debug driver was shared with Lenovo, will get back to you once logs are available.
+
+Thanks,
+Frank
+Hi,
+Meeting minutes for today.
+
+[09/11]
+Lenovo could produce issue with debug driver but not able to reproduce with 19.80 PV
+AR to Frank: upload log onto JIRA and explain to Lenovo that debug driver purpose
+AR to Linda: have Lenovo to do more runs with 19.80
+Hi Daniel,
+Customer could reproduce issue with debug driver, WFDRV35738_V99.0.31.12_DRV586698_FW586037. Please analyze the log of "20170910permredxafterrebootthenconnecttowifithensystemidle.zip" on JIRA.
+Thank you.
+Linda   
+
+
+Hi,
+Please help to take a look the latest log. Your feedback will be very appropriated.
+
+Thanks,
+Yihua
+Hi, Yaara will analyze the new logs. Thanks.
+what exactly time the problem took place?
+DUT#1
+1 fail / 55 trials
+driver: (WFDRV35738_V99.0.31.12_DRV586698_FW586037_WinT_t64) version: 99.0.31.12
+details: permanent red x mark at 11:44am after reboot then connect to wifi and system idle - re-installed wrt around 12:02pm then wifi icon changed to normal (graf evo-99.0.31.12 ddd)
+
+DUT#2
+1 fail / 55 trials
+driver: (STHWFW1627_19.80.0.3DDD) version: 19.80.0.3
+details: 1:26 pm. Please see the uploaded log of "20170910 - perm red x - graf evo - 1:26pm - 19.80.0.3 ddd.zip"
+I see many "bad karma" in the RLG logs, so it may cause of Red-X. Need to explore in FW why it happens.
+ One example:
+	Line 3272: 0000003272	11:44:13:481	[UTIL         ][01] [E] FATAL_ERROR: HMAC Driver Hang in ctrlRequestMiniportReset, bad karma (0x8000)
+	Line 3568: 0000003568	11:44:23:462	[UTIL         ][01] [E] FATAL_ERROR: MMAC Driver Hang in prvNicIndicateError, bad karma (0x20), writing event 0x8000138D to WEV
+	Line 3618: 0000003618	11:44:23:463	[HMACSYS      ][03] [E] FATAL_ERROR: HMAC bad karma  <0x00008000>
+	Line 3623: 0000003623	11:44:23:463	[HMACSYS      ][04] [E] FATAL_ERROR: HMAC bad karma  <0x00008000>
+	Line 3653: 0000003653	11:44:23:526	[UTIL         ][03] [E] FATAL_ERROR: MMAC Driver Hang in msysHandleEvCheckForHang, bad karma (0x80020), writing event 0x8000138F to WEV
+	Line 3682: 0000003682	11:44:28:455	[MMACSYS      ][04] [E] FATAL_ERROR: MMAC bad karma  <0x00080020>
+	Line 3820: 0000003820	11:44:28:500	[MMACSYS      ][00] [E] FATAL_ERROR: MMAC bad karma  <0x00080020>
+	Line 3826: 0000003826	11:44:28:500	[HMACSYS      ][00] [E] FATAL_ERROR: HMAC bad karma  <0x00008000>
+	Line 3843: 0000003843	11:44:28:542	[MMACSYS      ][00] [E] FATAL_ERROR: MMAC bad karma  <0x00080020> 
+if any new debug driver is needed to capture firmware log, please help share.
+Thank you.
+In RLG there's 0x84 NMI on missing scan start indication.
+We see scan start command from UMAC to LMAC is delayed approx. 10sec
+When this command is eventually received scan is successful.
+Yaara, is looking further into the FW dump to find root cause.
+Hi Frank
+I have umac ucode build for windstorm with scan logs.
+at: \\haswtswrl56\Workarea\Users\yaarar\p4\yaarar_Clone_CoreCycle31_stab_586037\builds\windstorm-a0-noupload\ScanWithLogs
+could you please try to reproduce it with this external image umac?
+
+in parallel I have sent this to full build, so at evening i'll update the full build location (so installation would be easier)
+no need to set special debug level, fw scan logs should come out in RLG as default
+
+regards, yaara
+Hi
+I have build with fw logs, hoping to catch the problematic scenario and understand better the issue
+please try to reproduce with this build - \\amr.corp.intel.com\ec\proj\DPGEC\iag\mwg\COMP_Builds\WFWDRV_P4\PBWFDRV0045_V99.0.31.13\Layout
+it contains the fw logs. no need with special settings.
+i'll appreciate if as in prev repro you could locate the issue in rlg file
+
+regards,
+yaara
+see my comment - please try to reproduce with the build I gave, it contains additional fw logs
+reproing with debug build, will update once repro'd.
+
+Thanks,
+Frank
+under issue reproducing at Lenovo with debug driver V99.0.31.13. not yet reproduced.
+next check point on Sep 19 afternoon Taiwan time.

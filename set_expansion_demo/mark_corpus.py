@@ -3,7 +3,6 @@ import sys
 import spacy
 from configargparse import ArgumentParser
 
-from examples.np2vec import train
 from nlp_architect.utils.io import check_size
 
 

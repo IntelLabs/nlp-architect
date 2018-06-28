@@ -1,1000 +1,372 @@
-Telecommunication_ 
-
-Telecommunication_ is the_transmission_ of signs_ , signals_ , messages_ , words_ , writings_ , images_ and sounds_ or information_ of any_nature_ by wire_ , radio_ , optical or other_electromagnetic_systems_ . Telecommunication_ occurs when the_exchange_ of information_ between communication_participants_ includes the_use_ of technology_ . It_ is transmitted either electrically over physical_media_ , such as cables_ , or via electromagnetic_radiation_ . Such_transmission_paths_ are often divided into communication_channels_ which afford the_advantages_ of multiplexing . Since the_Latin_term_communicatio_ is considered the_social_process_ of information_exchange_ , the_term_ , telecommunications_ , is often used in its_plural_form_ because it_ involves many_different_technologies_ . 
-
-Early_means_ of communicating over a_distance_ included visual_signals_ , such as beacons_ , smoke_signals_ , semaphore_telegraphs_ , signal_flags_ , and optical_heliographs_ . Other_examples_ of pre-modern_long-distance_communication_ included audio_messages_ such as coded_drumbeats_ , lung-blown_horns_ , and loud_whistles_ . 20th_and_21st_century_technologies_ for long-distance_communication_ usually involve electrical_and_electromagnetic_technologies_ , such as telegraph_ , telephone_ , and teleprinter_ , networks_ , radio_ , microwave_transmission_ , fiber_optics_ , and communications_satellites_ . 
-
-A_revolution_ in wireless_communication_ began in the_first_decade_ of the_20th_century_ with the_pioneering_developments_ in radio_communications_ by Guglielmo_Marconi_ , who_ won the_Nobel_Prize_ in Physics_ in 1909 . Other_notable_pioneering_inventors_ and developers_ in the_field_ of electrical_and_electronic_telecommunications_ include Charles_Wheatstone_ and Samuel_Morse_ ( inventors_ of the_telegraph_ ) , Alexander_Graham_Bell_ ( inventor_ of the_telephone_ ) , Edwin_Armstrong_ and Lee_de_Forest_ ( inventors_ of radio_ ) , as well as Vladimir_K._Zworykin_ , John_Logie_Baird_ and Philo_Farnsworth_ ( some of the_inventors_ of television_ ) . 
-
-Etymology . 
-The_word_ " telecommunication_ " is a_compound_ of the_Greek_prefix_"tele_ " (τηλε_ ) , meaning " distant " , " far off " , or " afar " , and the_Latin_"communicare_ " , meaning " to share " . Its_modern_use_ is adapted from the_French_ , because its_written_use_ was recorded in 1904 by the_French_engineer_ and novelist Édouard_Estaunié_ . " Communication_ " was first used as an_English_word_ in the_late_14th_century_ . It_ comes from Old_French_comunicacion_ ( 14c_ . , Modern_French_communication_ ) , from Latin communicationem ( nominative_communicatio_ ) , noun_ of action_ from past_participle_stem_ of communicare_ " to share , divide out ; communicate , impart , inform ; join , unite , participate in , " literally " to make common , " from communis_ " . 
-
-History_ . 
-Beacons_ and pigeons_ . 
-Homing_pigeons_ have occasionally been used throughout history_ by different_cultures_ . Pigeon_post_ had Persian_roots_ , and was later used by the_Romans_ to aid their_military_ . Frontinus_ said that Julius_Caesar_ used pigeons_ as messengers_ in his_conquest_ of Gaul_ . 
-The_Greeks_ also conveyed the_names_ of the_victors_ at the_Olympic_Games_ to various_cities_ using homing pigeons_ . In the_early_19th_century_ , the_Dutch_government_ used the_system_ in Java_ and Sumatra_ . And in 1849 , Paul_Julius_Reuter_ started a_pigeon_service_ to fly stock_prices_ between Aachen_ and Brussels_ , a_service_ that operated for a_year_ until the_gap_ in the_telegraph_link_ was closed . 
-
-In the_Middle_Ages_ , chains_ of beacons_ were commonly used on hilltops_ as a_means_ of relaying a_signal_ . Beacon_chains_ suffered the_drawback_ that they_ could only pass a_single_bit_ of information_ , so the_meaning_ of the_message_ such as " the_enemy_ has been sighted " had to be agreed upon in advance_ . One_notable_instance_ of their_use_ was during the_Spanish_Armada_ , when a_beacon_chain_ relayed a_signal_ from Plymouth_ to London_ . 
-
-In 1792 , Claude_Chappe_ , a_French_engineer_ , built the_first_fixed_visual_telegraphy_system_ ( or semaphore_line_ ) between Lille_ and Paris_ . However semaphore suffered from the_need_ for skilled_operators_ and expensive_towers_ at intervals_ of ten_to_thirty_kilometres_ ( six_to_nineteen_miles_ ) . As a_result_ of competition_ from the_electrical_telegraph_ , the_last_commercial_line_ was abandoned in 1880 . 
-
-Telegraph_ and telephone_ . 
-Sir_Charles_Wheatstone_ and Sir_William_Fothergill_Cooke_ invented the_electric_telegraph_ in 1837 . On July_ 25 , 1837 the_first_commercial_electrical_telegraph_ was demonstrated by William_Fothergill_Cooke_ , an_English_inventor_ , and Charles_Wheastone_ , an_English_scientist_ . Both_inventors_ viewed their_device_ as " an_improvement_ to the_[existing]_electromagnetic_telegraph_ " not as a_new_device_ . 
-
-Samuel_Morse_ independently developed a_version_ of the_electrical_telegraph_ that he_ unsuccessfully demonstrated on 2_September_ 1837 . His_code_ was an_important_advance_ over Wheatstone's_signaling_method_ . The_first_transatlantic_telegraph_cable_ was successfully completed on 27_July_ 1866 , allowing transatlantic_telecommunication_ for the_first_time_ . 
-
-The_conventional_telephone_ was invented independently by Alexander_Bell_ and Elisha_Gray_ in 1876 . Antonio_Meucci_ invented the_first_device_ that allowed the_electrical_transmission_ of voice_ over a_line_ in 1849 . However Meucci's_device_ was of little_practical_value_ because it_ relied upon the_electrophonic_effect_ and thus required users_ to place the_receiver_ in their_mouth_ to " hear " what_ was being said . The_first_commercial_telephone_services_ were set - up in 1878 and 1879 on both_sides_ of the_Atlantic_ in the_cities_ of New_Haven_ and London_ . 
-
-Radio_ and television_ . 
-Starting in 1894 , Italian_inventor_Guglielmo_Marconi_ began developing a_wireless_communication_ using the_then_newly_discovered_phenomenon_ of radio_waves_ , showing by 1901 that they_ could be transmitted across the_Atlantic_Ocean_ . This was the_start_ of wireless_telegraphy_ by radio_ . Voice_ and music_ were demonstrated in 1900 and 1906 , but had little_success_ . World War I_ accelerated the_development_ of radio_ for military_communications_ . After the_war_ , commercial_radio_AM_broadcasting_ began in the_1920s_ and became an_important_mass_medium_ for entertainment_ and news_ . World_War_II_ again accelerated development_ of radio_ for the_wartime_purposes_ of aircraft_and_land_communication_ , radio_navigation_ and radar_ . Development_ of stereo_FM_broadcasting_ of radio_ took place_ from the 1930s on - wards_ in the_United_States_ and displaced_AM_ as the_dominant_commercial_standard_ by the_1960s_ , and by the_1970s_ in the_United_Kingdom_ . 
-
-On 25_March_ 1925 , John_Logie_Baird_ was able to demonstrate the_transmission_ of moving pictures_ at the_London_department_store_Selfridges_ . Baird's_device_ relied upon the_Nipkow_disk_ and thus became known as the_mechanical_television_ . It_ formed the_basis_ of experimental_broadcasts_ done by the_British_Broadcasting_Corporation_ beginning 30 September 1929 . However , for most of the_twentieth_century_televisions_ depended upon the_cathode_ray_tube_ invented by Karl_Braun_ . The_first_version_ of such_a_television_ to show promise_ was produced by Philo_Farnsworth_ and demonstrated to his_family_ on 7_September_ 1927 . After World_War_II_ , the_experiments_ in television_ that had been interrupted were resumed , and it_ also became an_important_home_entertainment_broadcast_medium_ . 
-
-Computers_ and the_Internet_ . 
-On 11_September_ 1940 , George_Stibitz_ transmitted problems_ for his_Complex_Number_Calculator_ in New_York_ using a_teletype_ , and received the_computed_results_ back at Dartmouth_College_ in New_Hampshire_ . This_configuration_ of a_centralized_computer_ ( mainframe_ ) with remote_dumb_terminals_ remained popular well into the_1970s_ . However , already in the_1960s_ , researchers_ started to investigate packet_switching_ , a_technology_ that sends a_message_ in portions_ to its_destination_ asynchronously without passing it_ through a_centralized_mainframe_ . A_four-node_network_ emerged on 5_December_ 1969 , constituting the_beginnings_ of the_ARPANET_ , which by 1981 had grown to 213_nodes_ . ARPANET_ eventually merged with other_networks_ to form the_Internet_ . While Internet_development_ was a_focus_ of the_Internet_Engineering_Task_Force_ ( IETF_ ) who_ published a_series_ of Request_ for Comment_documents_ , other_networking_advancement_ occurred in industrial_laboratories_ , such as the_local_area_network_ (LAN)_developments_ of Ethernet_ ( 1983 ) and the_token_ring_protocol_ ( 1984 ) . 
-
-Key_concepts_ . 
-Modern_telecommunication_ is founded on a_series_ of key_concepts_ that experienced progressive_development_ and refinement_ in a_period_ of well_over_a_century_ . 
-
-Basic_elements_ . 
-Telecommunication_technologies_ may primarily be divided into wired_and_wireless_methods_ . Overall though , a_basic_telecommunication_system_ consists of three_main_parts_ that are always present in some_form_ or another : 
--_A_transmitter_ that takes information_ and converts it_ to a_signal_ . 
-- A_transmission_medium_ , also called the_"physical_channel_ " that carries the_signal_ . An_example_ of this is the_"free_space_channel_ " . 
--_A_receiver_ that takes the_signal_ from the_channel_ and converts it_ back into usable_information_ for the_recipient_ . 
-
-For example_ , in a_radio_broadcasting_station_ the_station's_large_power_amplifier_ is the_transmitter_ ; and the_broadcasting_antenna_ is the_interface_ between the_power_amplifier_ and the_"free_space_channel_ " . The_free_space_channel_ is the_transmission_medium_ ; and the_receiver's_antenna_ is the_interface_ between the_free_space_channel_ and the_receiver_ . Next , the_radio_receiver_ is the_destination_ of the_radio_signal_ , and this is where it_ is converted from electricity_ to sound for people_ to listen to . 
-
-Sometimes , telecommunication_systems_ are " duplex " (two-way_systems_ ) with a_single_box_ of electronics_ working as both_the_transmitter_ and a_receiver_ , or a_"transceiver_ " . For example_ , a_cellular_telephone_ is a_transceiver_ . The_transmission_electronics_ and the_receiver_electronics_ within a_transceiver_ are actually quite independent of each other . This can be readily explained by the_fact_ that radio_ transmitters contain power_amplifiers_ that operate with electrical_powers_ measured in watts_ or kilowatts_ , but radio_receivers_ deal with radio_powers_ that are measured in the_microwatts_ or nanowatts . Hence , transceivers_ have to be carefully designed and built to isolate their_high-power_circuitry_ and their_low-power_circuitry_ from each other , as to not cause interference_ . 
-
-Telecommunication_ over fixed_lines_ is called point - to - point_ communication because it_ is between one_transmitter_ and one_receiver_ . Telecommunication_ through radio_broadcasts_ is called broadcast communication because it_ is between one_powerful_transmitter_ and numerous_low-power_but_sensitive_radio_receivers_ . 
-
-Telecommunications_ in which multiple_transmitters_ and multiple_receivers_ have been designed to cooperate and to share the_same_physical_channel_ are called multiplex systems . The_sharing_ of physical_channels_ using multiplexing often gives very_large_reductions_ in costs_ . Multiplexed_systems_ are laid out in telecommunication_networks_ , and the_multiplexed_signals_ are switched at nodes_ through to the_correct_destination_terminal_receiver_ . 
-
-Analog_ versus digital_communications_ . 
-Communications_signals_ can be sent either by analog_signals_ or digital_signals_ . There are analog_communication_systems_ and digital_communication_systems_ . For an_analog_signal_ , the_signal_ is varied continuously with respect_ to the_information_ . In a_digital_signal_ , the_information_ is encoded as a_set_ of discrete_values_ ( for example_ , a set of ones_ and zeros_ ) . During the_propagation_ and reception_ , the_information_ contained in analog_signals_ will inevitably be degraded by undesirable_physical_noise_ . ( The_output_ of a_transmitter_ is noise - free for all_practical_purposes_ . ) Commonly , the_noise_ in a_communication_system_ can be expressed as adding or subtracting from the_desirable_signal_ in a_completely_random_way_ . This_form_ of noise_ is called additive noise , with the_understanding_ that the_noise_ can be negative or positive at different_instants_ of time_ . Noise_ that is not additive_noise_ is a_much_more_difficult_situation_ to describe or analyze , and these_other_kinds_ of noise_ will be omitted here . 
-
-On the_other_hand_ , unless the_additive_noise_disturbance_ exceeds a_certain_threshold_ , the_information_ contained in digital_signals_ will remain intact . Their_resistance_ to noise_ represents a_key_advantage_ of digital_signals_ over analog_signals_ . 
-
-Telecommunication_networks_ . 
-A_telecommunications_network_ is a_collection_ of transmitters_ , receivers_ , and communications_channels_ that send messages_ to one another . Some_digital_communications_networks_ contain one_or_more_routers_ that work together to transmit information_ to the_correct_user_ . An_analog_communications_network_ consists of one_or_more_switches_ that establish a_connection_ between two_or_more_users_ . For both_types_ of network_ , repeaters_ may be necessary to amplify or recreate the_signal_ when it_ is being transmitted over long_distances_ . This is to combat_attenuation_ that can render the_signal_ indistinguishable from the_noise_ . 
-Another_advantage_ of digital_systems_ over analog_ is that their_output_ is easier to store in memory_ , i.e._two_voltage_states_ ( high and low ) are easier to store than a_continuous_range_ of states_ . 
-
-Communication_channels_ . 
-The_term_"channel_ " has two_different_meanings_ . In one_meaning_ , a_channel_ is the_physical_medium_ that carries a_signal_ between the_transmitter_ and the_receiver_ . Examples_ of this include the_atmosphere_ for sound_communications_ , glass_optical_fibers_ for some_kinds_ of optical_communications_ , coaxial_cables_ for communications_ by way_ of the_voltages_and_electric_currents_ in them_ , and free_space_ for communications_ using visible_light_ , infrared_waves_ , ultraviolet_light_ , and radio_waves_ . Coaxial_cable_types_ are classified by RG_type_ or "radio_guide_ " , terminology derived from World_War_II_ . The_various_RG_designations_ are used to classify the_specific_signal_transmission_applications_ . This_last_channel_ is called the " free space channel " . The_sending_ of radio_waves_ from one_place_ to another has nothing_ to do with the_presence_ or absence_ of an_atmosphere_ between the two . Radio_waves_ travel through a_perfect_vacuum_ just as easily as they_ travel through air_ , fog_ , clouds_ , or any_other_kind_ of gas_ . 
-
-The_other_meaning_ of the_term_"channel_ " in telecommunications_ is seen in the_phrase_communications_channel_ , which is a_subdivision_ of a_transmission_medium_ so that it_ can be used to send multiple_streams_ of information_ simultaneously . For example_ , one_radio_station_ can broadcast radio_waves_ into free_space_ at frequencies_ in the_neighborhood_ of_94.5 MHz_ ( megahertz_ ) while another_radio_station_ can simultaneously broadcast radio_waves_ at frequencies_ in the_neighborhood_ of 96.1 MHz_ . Each_radio_station_ would transmit radio_waves_ over a_frequency_ bandwidth of about 180 kHz_ ( kilohertz_ ) , centered at frequencies_ such as the above , which are called the " carrier frequencies " . Each_station_ in this_example_ is separated from its_adjacent_stations_ by 200 kHz_ , and the_difference_ between 200 kHz and 180 kHz_ ( 20 kHz ) is an_engineering_allowance_ for the_imperfections_ in the_communication_system_ . 
-
-In the_example_ above , the_"free_space_channel_ " has been divided into communications_channels_ according to frequencies_ , and each_channel_ is assigned a_separate_frequency_ bandwidth in which to broadcast radio_waves_ . This_system_ of dividing the_medium_ into channels_ according to frequency_ is called " frequency - division multiplexing " . Another_term_ for the_same_concept_ is " wavelength-division_multiplexing_ " , which is more commonly used in optical_communications_ when multiple_transmitters_ share the_same_physical_medium_ . 
-
-Another_way_ of dividing a_communications_ medium_ into channels_ is to allocate each_sender_ a_recurring_segment_ of time_ ( a_"time_slot_ " , for example_ , 20_milliseconds_ out of each second ) , and to allow each_sender_ to send messages_ only within its_own_time_slot_ . This_method_ of dividing the_medium_ into communication_channels_ is called " time - division multiplexing " (TDM_ ) , and is used in optical_fiber_communication_ . Some_radio_communication_systems_ use TDM_ within an_allocated_FDM_channel_ . Hence , these_systems_ use a_hybrid_ of TDM_ and FDM_ . 
-
-Modulation_ . 
-The_shaping_ of a_signal_ to convey information_ is known as modulation_ . Modulation_ can be used to represent a_digital_message_ as an_analog_waveform_ . This is commonly called " keying " – a_term_ derived from the_older_use_ of Morse_Code_ in telecommunications_ – and several_keying_techniques_ exist ( these include phase-shift_keying_ , frequency-shift_keying_ , and amplitude-shift_keying_ ) . The_"Bluetooth"_system_ , for example_ , uses phase-shift_keying_ to exchange information_ between various_devices_ . In addition_ , there are combinations_ of phase-shift_keying_ and amplitude-shift_ keying_ which is called ( in the_jargon_ of the_field_ ) "quadrature_amplitude_modulation_ " ( QAM_ ) that are used in high-capacity_digital_radio_communication_systems_ . 
-
-Modulation_ can also be used to transmit the_information_ of low-frequency_analog_signals_ at higher_frequencies_ . This is helpful because low-frequency_analog_signals_ can not be effectively transmitted over free_space_ . Hence the_information_ from a_low-frequency_analog_signal_ must be impressed into a_higher-frequency_signal_ ( known as the_"carrier_wave_ " ) before transmission_ . There are several_different_modulation_schemes_ available to achieve this [ two of the_most_basic_being_amplitude_modulation_ (AM_ ) and frequency_modulation_ ( FM_ ) ] . An_example_ of this_process_ is a_disc_jockey's_voice_ being impressed into a_96 MHz_carrier_wave_ using frequency_modulation_ ( the_voice_ would then be received on a_radio_ as the_channel_ "96 FM_ " ) . In addition_ , modulation_ has the_advantage_ that it_ may use frequency_division_multiplexing_ ( FDM_ ) . 
-
-Society_ . 
-Telecommunication_ has a_significant_social,_cultural_and_economic_impact_ on modern_society_ . In 2008 , estimates_ placed the_telecommunication_industry's_revenue_ at $ 4.7 trillion or just_under_3_percent_ of the_gross_world_product_ ( official_exchange_rate_ ) . Several_following_sections_ discuss the_impact_ of telecommunication_ on society_ . 
-
-Economic_impact_ . 
-Microeconomics_ . 
-On the_microeconomic_scale_ , companies_ have used telecommunications_ to help build global_business_empires_ . This is self - evident in the_case_ of online_retailer_ Amazon.com_ but , according to academic_Edward_Lenert_ , even_the_conventional_retailer_Walmart_ has benefited from better_telecommunication_infrastructure_ compared to its_competitors_ . In cities_ throughout the_world_ , home_owners_ use their_telephones_ to order and arrange a_variety_ of home_services_ ranging from pizza_deliveries_ to electricians_ . Even_relatively_poor_communities_ have been noted to use telecommunication_ to their_advantage_ . In Bangladesh's_Narshingdi_district_ , isolated_villagers_ use cellular_phones_ to speak directly to wholesalers_ and arrange a_better_price_ for their_goods_ . In Côte_d'Ivoire_ , coffee_growers_ share mobile_phones_ to follow hourly_variations_ in coffee_prices_ and sell at the_best_price_ . 
-
-Macroeconomics_ . 
-On the_macroeconomic_scale_ , Lars-Hendrik_Röller_ and Leonard_Waverman_ suggested a_causal_link_ between good_telecommunication_infrastructure_ and economic_growth_ . Few dispute the_existence_ of a_correlation_ although some argue it_ is wrong to view the_relationship_ as causal_ . 
-
-Because of the_economic_benefits_ of good_telecommunication_infrastructure_ , there is increasing worry_ about the_inequitable_access_ to telecommunication_services_ amongst various_countries_ of the_world_ — this is known as the_digital_divide_ . A_2003_survey_ by the_International_Telecommunication_Union_ (ITU_ ) revealed that roughly_a_third_ of countries_ have fewer_than_one_mobile_subscription_ for every_20_people_ and one-third_ of countries_ have fewer_than_one_land-line_telephone_subscription_ for every_20_people_ . In terms_ of Internet_access_ , roughly_half_ of all_countries_ have fewer_than_one_out_of_20_people_ with Internet_access_ . From this_information_ , as well as educational_data_ , the_ITU_ was able to compile an_index_ that measures the_overall_ability_ of citizens_ to access and use information_and_communication_technologies_ . Using this_measure_ , Sweden_ , Denmark_ and Iceland_ received the_highest_ranking_ while the_African_countries_ Nigeria_ , Burkina_Faso_ and Mali_ received the lowest . 
-
-Social_impact_ . 
-Telecommunication_ has played a_significant_role_ in social_relationships_ . Nevertheless , devices_ like the_telephone_system_ were originally advertised with an_emphasis_ on the_practical_dimensions_ of the_device_ ( such as the_ability_ to conduct business_ or order_ home_services_ ) as opposed to the_social_dimensions_ . It_ was not until the_late_1920s_ and 1930s_ that the_social_dimensions_ of the_device_ became a_prominent_theme_ in telephone_advertisements_ . New_promotions_ started appealing to consumers'_emotions_ , stressing the_importance_ of social_conversations_ and staying connected to family_ and friends_ . 
-
-Since then the_role_ that telecommunications_ has played in social_relations_ has become increasingly important . In recent_years_ , the_popularity_ of social_networking_sites_ has increased dramatically . These_sites_ allow users_ to communicate with each other as well as post_photographs_ , events_ and profiles_ for others_ to see . The_profiles_ can list a_person's_age_ , interests_ , sexual_preference_ and relationship_status_ . In this_way_ , these_sites_ can play important_role_ in everything_ from organising social_engagements_ to courtship_ . 
-
-Prior to social_networking_sites_ , technologies_ like short_message_service_ ( SMS_ ) and the_telephone_ also had a_significant_impact_ on social_interactions_ . In 2000 , market_research_group_Ipsos_MORI_ reported that 81%_ of 15- to_24-year-old_SMS_users_ in the_United_Kingdom_ had used the_service_ to coordinate social_arrangements_ and 42%_ to flirt_ . 
-
-Other_impacts_ . 
-In cultural_terms_ , telecommunication_ has increased the_public's_ability_ to access music_ and film_ . With television_ , people_ can watch films_ they_ have not seen before in their_own_home_ without having to travel to the_video_store_ or cinema_ . With radio_ and the_Internet_ , people_ can listen to music_ they_ have not heard before without having to travel to the_music_store_ . 
-
-Telecommunication_ has also transformed the_way_ people_ receive their_news_ . A_2006_survey_ ( right_table_ ) of slightly_more_than_3,000_Americans_ by the_non-profit_Pew_Internet_ and American_Life_Project_ in the_United_States_ the_majority_ specified television_ or radio_ over newspapers_ . 
-
-Telecommunication_ has had an_equally_significant_impact_ on advertising_ . TNS_Media_Intelligence_ reported that in 2007 , 58%_ of advertising_expenditure_ in the_United_States_ was spent on media_ that depend upon telecommunication_ . 
-
-Government_ . 
-Many_countries_ have enacted legislation_ which conforms to the_"International_Telecommunication_Regulations_ " established by the_International_Telecommunication_Union_ (ITU_ ) , which is the_"leading_UN_agency_ for information_and_communication_technology_issues_ . " In 1947 , at the_Atlantic_City_Conference_ , the_ITU_ decided to " afford international_protection_ to all_frequencies_ registered in a_new_international_frequency_list_ and used in conformity_ with the_Radio_Regulation_ . " According to the_ITU's_"Radio_Regulations_ " adopted in Atlantic_City_ , all_frequencies_ referenced in the_"International_Frequency_Registration_Board_ " , examined by the_board_ and registered on the_"International_Frequency_List_ " " shall have the_right_ to international_protection_ from harmful_interference_ . " 
-
-From a_global_perspective_ , there have been political_debates_ and legislation_ regarding the_management_ of telecommunication_ and broadcasting_ . The_history_ of broadcasting_ discusses some_debates_ in relation_ to balancing conventional_communication_ such as printing and telecommunication_ such as radio_broadcasting_ . The_onset_ of World_War_II_ brought on the_first_explosion_ of international_broadcasting_propaganda_ . Countries_ , their_governments_ , insurgents_ , terrorists_ , and militiamen_ have all used telecommunication_and_broadcasting_techniques_ to promote propaganda_ . Patriotic_propaganda_ for political_movements_ and colonization_ started the_mid-1930s_ . In 1936 , the_BBC_broadcast_propaganda_ to the_Arab_World_ to partly counter similar_broadcasts_ from Italy_ , which also had colonial_interests_ in North_Africa_ . 
-
-Modern_insurgents_ , such as those in the_latest_Iraq_war_ , often use intimidating telephone_calls_ , SMSs_ and the_distribution_ of sophisticated_videos_ of an_attack_ on coalition_troops_ within hours_ of the_operation_ . " The_Sunni_insurgents_ even have their_own_television_station_ , Al-Zawraa_ , which while banned by the_Iraqi_government_ , still broadcasts from Erbil_ , Iraqi_Kurdistan_ , even as coalition_pressure_ has forced it_ to switch satellite hosts several times . " 
-
-On 10_November_ 2014 , President_Obama_ recommended the_Federal_Communications_Commission_ reclassify broadband_Internet_service_ as a_telecommunications_service_ in order_ to preserve net_neutrality_ . 
-
-Modern_media_ . 
-Worldwide_equipment_sales_ . 
-According to data_ collected by Gartner_and_Ars_Technica_sales_ of main_consumer's_telecommunication_equipment_ worldwide in millions_ of units_ was : 
-Telephone_ . 
-In a_telephone_network_ , the_caller_ is connected to the_person_ they_ want to talk to by switches_ at various_telephone_exchanges_ . The_switches_ form an_electrical_connection_ between the_two_users_ and the_setting_ of these_switches_ is determined electronically when the_caller_ dials the_number_ . Once the_connection_ is made , the_caller's_voice_ is transformed to an_electrical_signal_ using a_small_microphone_ in the_caller's_handset_ . This_electrical_signal_ is then sent through the_network_ to the_user_ at the_other_end_ where it_ is transformed back into sound_ by a_small_speaker_ in that_person's_handset_ . 
-
-The_landline_telephones_ in most_residential_homes_ are analog — that is , the_speaker's_voice_ directly determines the_signal's_voltage_ . Although short-distance_calls_ may be handled from end_ - to - end_ as analog_signals_ , increasingly telephone_service_providers_ are transparently converting the_signals_ to digital_signals_ for transmission_ . The_advantage_ of this is that digitized_voice_data_ can travel side_ - by - side_ with data_ from the_Internet_ and can be perfectly reproduced in long_distance_communication_ ( as opposed to analog signals_ that are inevitably impacted by noise_ ) . 
-
-Mobile_phones_ have had a_significant_impact_ on telephone_networks_ . Mobile_phone_subscriptions_ now outnumber fixed-line_subscriptions_ in many_markets_ . Sales_ of mobile_phones_ in 2005 totalled 816.6 million with that_figure_ being almost equally shared amongst the_markets_ of Asia/Pacific_ ( 204_m_ ) , Western Europe ( 164_m_ ) , CEMEA ( Central_Europe_ , the_Middle_East_ and Africa_ ) ( 153.5_m_ ) , North America ( 148_m_ ) and Latin America ( 102_m_ ) . In terms_ of new_subscriptions_ over the_five_years_ from 1999 , Africa_ has outpaced other_markets_ with 58.2%_growth_ . Increasingly these_phones_ are being serviced by systems_ where the_voice_content_ is transmitted digitally such as GSM_ or W-CDMA_ with many_markets_ choosing to deprecate analog_systems_ such as AMPS_ . 
-
-There have also been dramatic_changes_ in telephone_communication_ behind the_scenes_ . Starting with the_operation_ of TAT-8_ in 1988 , the_1990s_ saw the_widespread_adoption_ of systems_ based on optical_fibers_ . The_benefit_ of communicating with optic_fibers_ is that they_ offer a_drastic_increase_ in data_capacity_ . TAT-8_ itself_ was able to carry 10 times as many telephone calls as the_last_copper_cable_ laid at that_time_ and today's_optic_fibre_cables_ are able to carry 25_times_ as_many_telephone_calls_ as TAT-8_ . This_increase_ in data_capacity_ is due to several_factors_ : First , optic_fibres_ are physically much smaller than competing_technologies_ . Second , they_ do not suffer from crosstalk_ which means several hundred of them_ can be easily bundled together in a_single_cable_ . Lastly , improvements_ in multiplexing have led to an_exponential_growth_ in the_data_capacity_ of a_single_fibre_ . 
-
-Assisting_communication_ across many_modern_optic_fibre_networks_ is a_protocol_ known as Asynchronous_Transfer_Mode_ ( ATM_ ) . The_ATM_protocol_ allows for the side - by - side_ data transmission mentioned in the_second_paragraph_ . It_ is suitable for public_telephone_networks_ because it_ establishes a_pathway_ for data_ through the_network_ and associates a_traffic_contract_ with that_pathway_ . The_traffic_contract_ is essentially an_agreement_ between the_client_ and the_network_ about how the_network_ is to handle the_data_ ; if the_network_ can not meet the_conditions_ of the_traffic_contract_ it_ does not accept the_connection_ . This is important because telephone_calls_ can negotiate a_contract_ so as to guarantee themselves_ a_constant_bit_rate_ , something_ that will ensure a_caller's_voice_ is not delayed in parts_ or cut off completely . There are competitors_ to ATM_ , such as Multiprotocol_Label_Switching_ ( MPLS_ ) , that perform a_similar_task_ and are expected to supplant ATM_ in the_future_ . 
-
-Radio_ and television_ . 
-In a_broadcast_system_ , the_central_high-powered_broadcast_tower_ transmits a_high-frequency_electromagnetic_wave_ to numerous_low-powered_receivers_ . The_high-frequency_wave_ sent by the_tower_ is modulated with a_signal_ containing visual_or_audio_information_ . The_receiver_ is then tuned so as to pick up the_high-frequency_wave_ and a_demodulator_ is used to retrieve the_signal_ containing the_visual_or_audio_information_ . The_broadcast_signal_ can be either_analog_ ( signal_ is varied continuously with respect_ to the_information_ ) or digital ( information_ is encoded as a_set_ of discrete_values_ ) . 
-
-The_broadcast_media_industry_ is at a_critical_turning_point_ in its_development_ , with many_countries_ moving from analog_ to digital_broadcasts_ . This_move_ is made possible by the_production_ of cheaper,_faster_and_more_capable_integrated_circuits_ . The_chief_advantage_ of digital_broadcasts_ is that they_ prevent a_number_ of complaints_ common to traditional_analog_broadcasts_ . For television_ , this includes the_elimination_ of problems_ such as snowy_pictures_ , ghosting and other_distortion_ . These occur because of the_nature_ of analog_transmission_ , which means that perturbations_ due to noise_ will be evident in the_final_output_ . Digital_transmission_ overcomes this_problem_ because digital_signals_ are reduced to discrete_values_ upon reception_ and hence_small_perturbations_ do not affect the_final_output_ . In a_simplified_example_ , if a_binary_message_ 1011 was transmitted with signal_amplitudes_ [ 1.0 0.0 1.0 1.0 ] and received with signal_ amplitudes [ 0.9 0.2 1.1 0.9 ] it_ would still decode to the_binary_message_ 1011 — a_perfect_reproduction_ of what_ was sent . From this_example_ , a_problem_ with digital_transmissions_ can also be seen in that if the_noise_ is great enough it_ can significantly alter the_decoded_message_ . Using forward error_correction_ a_receiver_ can correct a_handful_ of bit_errors_ in the_resulting_message_ but too_much_noise_ will lead to incomprehensible_output_ and hence_a_breakdown_ of the_transmission_ . 
-
-In digital_television_broadcasting_ , there are three_competing_standards_ that are likely to be adopted worldwide . These are the_ATSC_ , DVB_and_ISDB_standards_ ; the_adoption_ of these_standards_ thus far is presented in the_captioned_map_ . All_three_standards_ use MPEG-2_ for video_compression_ . ATSC_ uses Dolby_Digital_ AC-3_ for audio_compression_ , ISDB_ uses Advanced_Audio_Coding_ ( MPEG-2_Part_ 7 ) and DVB_ has no_standard_ for audio_compression_ but typically uses MPEG-1_Part_ 3_Layer_ 2 . The_choice_ of modulation_ also varies between the_schemes_ . In digital_audio_broadcasting_ , standards_ are much more unified with practically_all_countries_ choosing to adopt the_Digital_Audio_Broadcasting_standard_ ( also known as the_Eureka_147_standard_ ) . The_exception_ is the_United_States_ which has chosen to adopt HD_Radio_ . HD_Radio_ , unlike Eureka_ 147 , is based upon a_transmission_method_ known as in - band_ on - channel_ transmission that allows digital_information_ to " piggyback " on normal_AM_or_FM_analog_transmissions_ . 
-
-However , despite the_pending_switch_ to digital , analog_television_ remains being transmitted in most_countries_ . An_exception_ is the_United_States_ that ended analog_television_transmission_ ( by all but the_very_low-power_TV_stations_ ) on 12_June_ 2009 after twice delaying the_switchover_deadline_ , Kenya_ also ended analog_television_transmission_ in December_ 2014 after multiple_delays_ . For analog_television_ , there are three_standards_ in use_ for broadcasting_color_TV_ ( see a_map_ on adoption_ ) . These are known as PAL_ ( German designed ) , NTSC_ ( North_American_ designed ) , and SECAM_(French_ designed ) . ( It_ is important to understand that these are the_ways_ of sending color_TV_ , and they_ do not have anything_ to do with the_standards_ for black_&_white_TV_ , which also vary from country_ to country_ . ) For analog_radio_ , the_switch_ to digital_radio_ is made more difficult by the_fact_ that analog_receivers_ are sold at a_small_fraction_ of the_price_ of digital_receivers_ . The_choice_ of modulation_ for analog_radio_ is typically between amplitude_ (AM_ ) or frequency_modulation_ ( FM_ ) . To achieve stereo_playback_ , an_amplitude_ modulated subcarrier_ is used for stereo_FM_ . 
-
-Internet_ . 
-The_Internet_ is a_worldwide_network_ of computers_ and computer_networks_ that communicate with each other using the_Internet_Protocol_ . Any_computer_ on the_Internet_ has a_unique_IP_address_ that can be used by other_computers_ to route information_ to it_ . Hence , any_computer_ on the_Internet_ can send a_message_ to any_other_computer_ using its_IP_address_ . These_messages_ carry with them_ the_originating_computer's_IP_address_ allowing for two-way_communication_ . The_Internet_ is thus an_exchange_ of messages_ between computers_ . 
-
-It_ is estimated that the_51%_ of the_information_ flowing through two-way_telecommunications_networks_ in the_year_ 2000 were flowing through the_Internet_ ( most of the_rest_ ( 42%_ ) through the_landline_telephone_ ) . By the_year_ 2007 the_Internet_ clearly dominated and captured 97%_ of all_the_information_ in telecommunication_networks_ ( most of the_rest_ ( 2%_ ) through mobile_phones_ ) . , an_estimated_21.9%_ of the_world_population_ has access_ to the_Internet_ with the_highest_access_rates_ ( measured as a_percentage_ of the_population_ ) in North_America_ ( 73.6%_ ) , Oceania /Australia_ ( 59.5%_ ) and Europe ( 48.1%_ ) . In terms_ of broadband_access_ , Iceland_ ( 26.7%_ ) , South_Korea_ ( 25.4%_ ) and the_Netherlands_ ( 25.3%_ ) led the_world_ . 
-
-The_Internet_ works in part_ because of protocols_ that govern how the_computers_ and routers_ communicate with each other . The_nature_ of computer_network_communication_ lends itself_ to a_layered_approach_ where individual_protocols_ in the_protocol_stack_ run more - or - less independently of other_protocols_ . This allows lower-level_protocols_ to be customized for the_network_situation_ while not changing the_way_ higher-level_protocols_ operate . A_practical_example_ of why this is important is because it_ allows an_Internet_browser_ to run the_same_code_ regardless of whether the_computer_ it_ is running on is connected to the_Internet_ through an_Ethernet_or_Wi-Fi_connection_ . Protocols_ are often talked about in terms_ of their_place_ in the_OSI_reference_model_ ( pictured on the_right_ ) , which emerged in 1983 as the_first_step_ in an_unsuccessful_attempt_ to build a_universally_adopted_networking_protocol_suite_ . 
-
-For the_Internet_ , the_physical_medium_and_data_link_protocol_ can vary several times as packets_ traverse the_globe_ . This is because the_Internet_ places no_constraints_ on what_physical_medium_or_data_link_protocol_ is used . This leads to the_adoption_ of media_ and protocols_ that best suit the_local_network_situation_ . In practice_ , most_intercontinental_communication_ will use the Asynchronous Transfer Mode (ATM_ ) protocol ( or a_modern_equivalent_ ) on top_ of optic_fiber_ . This is because for most_intercontinental_communication_ the_Internet_ shares the_same_infrastructure_ as the_public_switched_telephone_network_ . 
-
-At the_network_layer_ , things_ become standardized with the_Internet_Protocol_ (IP_ ) being adopted for logical_addressing_ . For the_World_Wide_Web_ , these_"IP_addresses_ " are derived from the_human_readable_form_ using the_Domain_Name_System_ ( e.g. 72.14.207.99 is derived from www.google.com ) . At the_moment_ , the_most_widely_used_version_ of the_Internet_Protocol_ is version_ four_but_a_move_ to version six is imminent . 
-
-At the_transport_layer_ , most_communication_ adopts either_the_Transmission_Control_Protocol_ (TCP_ ) or the_User_Datagram_Protocol_ (UDP_ ) . TCP_ is used when it_ is essential every_message_ sent is received by the_other_computer_ whereas UDP_ is used when it_ is merely desirable . With TCP_ , packets_ are retransmitted if they_ are lost and placed in order_ before they_ are presented to higher_layers_ . With UDP_ , packets_ are not ordered or retransmitted if lost . Both_TCP_ and UDP_packets_ carry port_numbers_ with them_ to specify what_application_ or process the_packet_ should be handled by . Because certain_application-level_protocols_ use certain_ports_ , network_administrators_ can manipulate traffic_ to suit particular_requirements_ . Examples_ are to restrict Internet_access_ by blocking the_traffic_ destined for a_particular_port_ or to affect the_performance_ of certain_applications_ by assigning priority_ . 
-
-Above the_transport_layer_ , there are certain_protocols_ that are sometimes used and loosely fit in the_session_and_presentation_layers_ , most_notably_the_Secure_Sockets_Layer_ ( SSL_ ) and Transport_Layer_Security_ ( TLS_ ) protocols_ . These_protocols_ ensure that data_ transferred between two_parties_ remains completely confidential . Finally , at the_application_layer_ , are many of the_protocols_ Internet_users_ would be familiar with such as HTTP_ ( web_browsing_ ) , POP3 ( e-mail_ ) , FTP ( file_transfer_ ) , IRC_(Internet_chat_ ) , BitTorrent ( file sharing ) and XMPP ( instant_messaging_ ) . 
-
-Voice_ over Internet_Protocol_ (VoIP_ ) allows data_packets_ to be used for synchronous_voice_communications_ . The_data_packets_ are marked as voice_type_packets_ and can be prioritized by the_network_administrators_ so that the_real-time_ , synchronous_conversation_ is less subject to contention_ with other_types_ of data_traffic_ which can be delayed ( i.e. file transfer or email ) or buffered in advance_ ( i.e._audio_ and video_ ) without detriment_ . That_prioritization_ is fine when the_network_ has sufficient_capacity_ for all the VoIP calls taking place_ at the_same_time_ and the_network_ is enabled for prioritization_ i.e._a_private_corporate_style_network_ , but the_Internet_ is not generally managed in this_way_ and so there can be a_big_difference_ in the_quality_ of VoIP_ calls_ over a_private_network_ and over the_public_Internet_ . 
-
-Local_area_networks_ and wide_area_networks_ . 
-Despite the_growth_ of the_Internet_ , the_characteristics_ of local_area_networks_ ( LANs)--computer_networks_ that do not extend beyond a_few_kilometers_ — remain distinct . This is because networks_ on this_scale_ do not require all_the_features_ associated with larger_networks_ and are often more cost - effective and efficient without them_ . When they_ are not connected with the_Internet_ , they_ also have the_advantages_ of privacy_ and security_ . However , purposefully lacking a_direct_connection_ to the_Internet_ does not provide assured_protection_ from hackers_ , military_forces_ , or economic_powers_ . These_threats_ exist if there are any_methods_ for connecting remotely to the_LAN_ . 
-
-Wide_area_networks_ ( WANs_ ) are private_computer_networks_ that may extend for thousands_ of kilometers_ . Once again , some of their_advantages_ include privacy_ and security_ . Prime_users_ of private_LANs_ and WANs_ include armed_forces_ and intelligence_agencies_ that must keep their_information_ secure and secret . 
-
-In the_mid-1980s_ , several_sets_ of communication_protocols_ emerged to fill the_gaps_ between the_data-link_layer_ and the_application_layer_ of the_OSI_reference_model_ . These included Appletalk_ , IPX_ , and NetBIOS with the_dominant_protocol_ set during the_early_1990s_ being IPX_ due to its_popularity_ with MS-DOS_users_ . TCP/IP_ existed at this_point_ , but it_ was typically only used by large_government_and_research_facilities_ . 
-
-As the_Internet_ grew in popularity_ and its_traffic_ was required to be routed into private_networks_ , the_TCP/IP_protocols_ replaced existing_local_area_network_technologies_ . Additional_technologies_ , such as DHCP_ , allowed TCP/IP-based_computers_ to self-configure_ in the_network_ . Such_functions_ also existed in the_AppleTalk/_IPX/_NetBIOS_protocol_sets_ . 
-
-Whereas Asynchronous_Transfer_Mode_ ( ATM_ ) or Multiprotocol_Label_Switching_ ( MPLS_ ) are typical_data-link_protocols_ for larger_networks_ such as WANs_ ; Ethernet_ and Token_Ring_ are typical_data-link_protocols_ for LANs_ . These_protocols_ differ from the_former_protocols_ in that they_ are simpler , e.g. , they_ omit features_ such as quality_ of service_guarantees_ , and offer collision_prevention_ . Both of these_differences_ allow for more_economical_systems_ . 
-
-Despite the_modest_popularity_ of IBM_Token_Ring_ in the_1980s_ and 1990s_ , virtually_all_LANs_ now use either_wired_or_wireless_Ethernet_facilities_ . At the_physical_layer_ , most_wired_Ethernet_implementations_ use copper_twisted-pair_cables_ ( including the_common_10BASE-T_networks_ ) . However , some_early_implementations_ used heavier_coaxial_cables_ and some_recent_implementations_ ( especially_high-speed_ones_ ) use optical_fibers_ . When optic_fibers_ are used , the_distinction_ must be made between multimode_fibers_ and single-mode_fibers_ . Multimode_fibers_ can be thought of as thicker_optical_fibers_ that are cheaper to manufacture devices_ for , but that suffers from less_usable_bandwidth_ and worse_attenuation_ – implying_poorer_long-distance_performance_ . 
-
-Transmission_capacity_ . 
-The_effective_capacity_ to exchange information_ worldwide through two-way_telecommunication_networks_ grew from 281_petabytes_ of (optimally_compressed)_information_ in 1986 , to 471_petabytes_ in 1993 , to 2.2_(optimally_compressed)_exabytes_ in 2000 , and to_65_(optimally_compressed)_exabytes_ in 2007 . This is the_informational_equivalent_ of two_newspaper_pages_ per person_ per day_ in 1986 , and six_entire_newspapers_ per person_ per day_ by 2007 . Given this_growth_ , telecommunications_ play an_increasingly_important_role_ in the_world_economy_ and the_global_telecommunications_industry_ was about_a_$4.7_trillion_sector_ in 2012 . The_service_revenue_ of the_global_telecommunications_industry_ was estimated to be $ 1.5 trillion in 2010 , corresponding to 2.4%_ of the_world’s_gross_domestic_product_ ( GDP ) . 
-
-Yuka_Saitō_ (voice_actress_ ) 
-
-Filmography_ . 
-Anime_ . 
-- 2009 
--_"Student_Council's_Discretion_ " as Chizuru_Akaba_ 
--_"Umineko_no_Naku_Koro_ni_ " as Lucifer_ 
-
-- 2010 
--_"Shiki_ " as Aoi_Muto_ 
-
-- 2011 
-- " " as Zenet_Surrow_ 
--_"Deadman_Wonderland_ " as En_ 
--_"Shakugan_no_Shana_Final_ " as Hildegard_ 
-
-- 2012 
--_"Campione_ ! " as Ena Seishuin 
--_"High_School_DxD_ " as Mira_ 
--_"Sakura_Trick_ " as Megumi_ , Kaede's_younger_brother_ 
-
-- 2014 
--_"Witch_Craft_Works_ " as Ofuku_ , Evoque 
--_"The_Irregular_ at Magic_High_School_ " as Subaru_Satomi_ 
--_"One_Piece_ " as Cotton_ 
--_"A_Good_Librarian_ Like a_Good_Shepherd_ " as Tamamo_Sakuraba_ 
-
-- 2015 
-- " " as Hitoe_Madoka_ 
-
-- 2016 
--_"Gate_ " as Misery_ 
--_"One_Piece_ " as Milky_ 
-
-- 2017 
--_"The_Silver_Guardian_ " as Riku_Lei_ 
-
-Original_video_animation_ . 
--_"Baby_Princess_ " ( 2011 ) , Mizore_Amatsuka_ 
-
-Video_games_ . 
--_"Ōgon_Musōkyoku_ " ( 2010 ) , Lucifer_ 
--_""_(2010),_Lucifer_ 
--_"Rune_Factory_ 4 " ( 2012 ) , Illuminata_ 
--_""_(2012),_Naotora_Ii_ 
-- " God_ Eater 2 " ( 2013 ) , Fran de_Bourgogne_ 
--_"The_Idolmaster_Million_Live_ ! " mobile ( 2013 ) , Subaru_Nagayoshi_ 
-- " " ( 2013 ) , Yuu 
-- " " ( 2014 ) , Laegrinna 
--_"Samurai_Warriors_ 4 " ( 2014 ) , Naotora_Ii_ 
--_"Dead_or_Alive_5_Last_Round_ " ( 2016 ) , Naotora_Ii_ 
--_"Persona_ 5 " ( 2016 ) , Tae_Takemi_ 
-- " " ( 2016 ) , Naotora_Ii_ , child Yukimura Sanada 
--_"Musou_Stars_ " ( 2017 ) , Naotora_Ii_ and Laegrinna_ 
-
-Dubbing_ . 
-- " 4.3.2.1 . " , Cassandra 
--_"The_Derby_Stallion_ " , Tammy_McCardle_ 
--_"Easy_A_ " , Marianne_Bryant_ 
--_"Freezer_ " , Alisa 
--_"The_Groomsmen_ " , Tina_ 
--_"The_Mentalist_ " , Grace_Van_Pelt_ 
--_"",_Dolores_ 
--_"Robin_Hood_ " , Marian_ 
--_"Swamp_Shark_ " , Krystal_Bouchard_ 
-
-Chos_grub_ 
-
-Chos_grub_ ( 法成 ) was a_Sino-Tibetan_translator_ working in the_area_ of Dunhuang_ in the_9th_century_ . Among other_works_ he_ translated the_Mdzangs_blun_ ( Sutra_ of the_Wise_ and the_Fool_ ) from Chinese_ into Tibetan_ . 
-
-Indian_states_ and territories_ ranking by sex_ratio_ 
-
-Sex_ratio_ is used to describe the_number_ of females_ per 1000 of males_ . In the_Population_Census_ of 2011 it_ was revealed that the_population_ratio_ of India_ 2011 is 943_females_ per 1000 of males_ . The_Sex_Ratio_ 2011 shows an_upward_trend_ from the_census_2001_data_ . Census_ 2001 revealed that there were 933_females_ to that of 1000_males_ . 
-
-The_major_cause_ of the_decrease_ of the_female_birth_ratio_ in India_ is considered to be the_violent_treatments_ meted out to the_girl_child_ at the_time_ of the_birth_ . The_Sex_Ratio_ in India_ was almost normal during the_phase_ of the_years_ of independence_ , but thereafter it_ started showing gradual_signs_ of decrease_ . 
-
-Ranking of States_ and Union_Territories_-_Population_Census_ 2011 - 2001 . 
-This is of the_States_and_Union_territories_ of India_ ranked in order_ of sex_ratio_ for the_years_ 2001 and 2011 . The_following_data_ is based on the_Population_Census_ of 2011 and 2001 . Interactive map visualizing below data_ is available here . 
-
-In India_ , the_Child_Sex_Ratio_ is defined as the_number_ of females_ per thousand_males_ in the_age_group_ 0–6 years in a_human_population_ . 
-
-The_data_ above does not include statistics_ of State_ of Telangana_ which was formed after 2011.Epilobium_parviflorum_ 
-
-Epilobium_parviflorum_ , commonly known as the hoary willowherb or smallflower_hairy_willowherb_ , is a_herbaceous_perennial_plant_ belonging to the_Onagraceae_family_ . 
-
-Etymology . 
-The_genus_name_ derives from the_Greek_words_ " epi " meaning " upon " and "lobos"_meaning_"lobe_ " , with reference_ to position_ of the_petals_ above the_ovary_ . The_specific_Latin_name_ of " parviflorum " means " small_flowers_ " . 
-
-Description_ . 
-The_biological_form_ of "Epilobium_parviflorum_ " is hemicryptophyte_scapose_ , as its_overwintering_buds_ are situated just below the_soil_surface_ and the_floral_axis_ is more or less erect with a_few_leaves_ . 
-
-" Epilobium_parviflorum_ " reaches on average in height_ . The_stem_ is erect and densely covered with hairs_ , especially in the_lower_part_ . The_leaves_ are opposite , unstalked but not amplexicaul , lanceolate and toothed , rounded at the_base_ , long . The_tiny_flowers_ are pale pink or pale purple , in diameter_ , with four_petals_ , eight_stamens_ and a_4-lobed_stigma_ . Flowering_ occurs from June_ to August_ . The_hermaphroditic_flowers_ are either self - fertilized ( autogamy ) or pollinated by insects_ ( entomogamy_ ) . Fruit_ is a_three-to_seven-centimeter_long_capsule_ containing very_small_black_seeds_ ( about_1 mm_ long ) , with white_fibres_ that allow the_dispersal_ by wind_ . This_species_ is quite similar to "Epilobium_hirsutum_ " , but the_flowers_ are much smaller . 
-
-Distribution_ . 
-This_plant_ occurs in most of Europe_ , including Britain_ , from Sweden_ to Northern_Africa_ and Western_Asia_ up to Kashmir_ , in United_States_ and Canada_ . 
-Habitat_ . 
-It_ prefers marshes_ and swamps_ , moist_mountain_meadows_ and slopes_ , at an_average_altitude_ of above_sea_level_ , with a_maximum_ of . 
-
-Medicinal uses . 
-Extracts_ of this_plant_ have been used by traditional_medicine_ in disorders_ of the_prostate_gland_ , bladder_ and kidney_ , having an_antioxidant_and_antiinflammatory_effect_ . " Epilobium_parviflorum"_herb_ has been prescribed internally as tea_ in the_traditional_Austrian_medicine_ for treatment_ of disorders_ of the_prostate_ , kidneys_ , and urinary_tract_ . Extracts_ of Epilobium_ have been shown to inhibit proliferation_ of human_prostate_cells_ in - vitro by affecting progression_ of the_cell_cycle_ . 
-
-Papaipema arctivorens 
-
-Papaipema arctivorens , the_northern_burdock_borer_ , is a_species_ of moth_ of the_Noctuidae_family_ . It_ is found from Quebec_ to northern_Georgia_ , west_ to Missouri_ and north to Minnesota_ and Ontario_ . 
-
-The_wingspan_ is 27–39 mm_ . The_forewings_ are light orange with rusty_red_shading_ and speckling_ . The_hindwings_ are pale brown with a_darker_discal_lunule_and_subterminal_band_ . Adults_ are on wing_ from August_ to October_ in one_generation_ per year_ . 
-
-The_larvae_feed_ on " Arctium_ " , " Cirsium " , " Dipsacus " , and sometimes " Verbena " and " Verbascum " species . They_ bore in the_rhizomes_ of their_host_plant_ . Sutra_ of the_Wise_ and the_Fool_ 
-
-The_Sutra_ of the_Wise_ and the_Fool_ is a_collection_ of tales_ translated from Central_Asian_languages_ into Chinese_ in the_4th_century_ and then translated by Chos - Grub ( 法成 ) into Tibetan_ in the_9th_century_ . The_simple_plot_lines_ of these_tales_ has made them_ popular readings in first_year_Tibetan_courses_ . 
-
-Geoffrey_Somerset_ , 6th_Baron_Raglan_ 
-
-Geoffrey_Somerset_ , 6th_Baron_Raglan_ ( born 29 August 1932 ) is a_British_peer_ , businessman_ , and Conservative_politician_ . 
-
-Early_life_ . 
-Raglan_ is the_younger_son_ of FitzRoy_Richard_Somerset_ , 4th_Baron_Raglan_ , by his_marriage_ to the_Hon_ . Julia_Hamilton_ , daughter_ of the_11th_Lord_Belhaven_ & Stenton_ . He_ was educated at the_Dragon_School_ , Oxford_ , Westminster_School_ , and the_Royal_Agricultural_College_ . 
-
-Field_Marshal_Lord_Raglan_ , the_first_baron_ , was the_eighth_son_ of Henry_Somerset_ , 5th_Duke_ of Beaufort_ , so the_Lords_Raglan_ are distantly in the_line_ of succession_ to the_Dukedom_ of Beaufort_ . 
-
-Life_ . 
-After completing his_National_Service_ as an_officer_ in the_Grenadier_Guards_ , Raglan_ was a_trainee_ with the_Rootes_Group_ from 1954 to 1957 , an Instructor at the_Standard_Motor_Company_ 1957–1960 , then sales and later Marketing Manager , Lambourn Engineering 1960–1971 . From 1971 to 1994 he_ was a_wine_shipper_ and from 1994 to 2013 an_insurance_broker_ . 
-
-He_ served as President_ of the Lambourn St John Ambulance Division 1964–1981 , President_ of the_Lambourn_branch_ of the Royal British Legion 1963–1977 , a_member_ of Berkshire_County_Council_ 1966–1975 (Chairman_Mental_Welfare_Sub-Committee_ , Chairman_Children's_Homes_ & Nurseries_Sub-Committee_ , Chairman_Children's_Homes_ , Chairman of Governors_ of Tesdale_ & Bennet_House_ special schools ) . He_ was a_member_ of Newbury_District_Council_ from 1979 to 1983 and chaired its_Recreation_&_Amenities_Committee_ , Chairman_ of the_Stanford_Conservative_Association_ 1984 to 1988 and again 1997 to 2000 , member_ of the_Oxfordshire_Valuation_Tribunal_ and later_a_Chairman_ of Thames_Valley_Valuation_Tribunals_ between 1987 and 2004 , a_member_ of Oxfordshire_County_Council_ 1988–1993 , Chairman_Vale_ of White_Horse_District_ of the_Campaign_ to Protect_Rural_England_ (CPRE_ ) 2000–2004 ( and a_Committee_Member_ to date_ ) . He_ is also a_Vice-President_ of the_Oxfordshire_Grenadier_Guards_Association_ and a_Liveryman_ of the_Worshipful_Company_ of Skinners_ . 
-
-He_ succeeded to the_title_ of Baron_Raglan_ on 24_January_ 2010 on the_death_ of his_older_brother_ , Fitzroy Somerset , the_5th_Baron_ . 
-
-Family_ . 
-In 1956 , Geoffrey_Somerset_ married Caroline_Rachel_Hill_ (d._ 5 July 2014 ) , a_daughter_ of Colonel_Edward_Roderick_Hill_DSO_ , of St_Arvans_Court_ , Chepstow_ , Monmouthshire_ , by his_marriage_ to Rachel_Hicks_Beach_ . They_ have had three_children_ , two_daughters_ and a_son_ now deceased . 
-1._Hon_ . Belinda_Caroline_Somerset_ , now_Boyd_ ( born 9 February 1958 ) , educated at St_Gabriel's_School_ , Newbury_ , Chatelard_School_ , Bradfield_College_ , Founder_ and Director_ 20-20_Public_Relations_ , married_1989_Nicholas_Gant_Boyd_ , eldest_son_ of Cdr_Christopher_Boyd_DSC_RN_ . 
-2._Hon_ . Arthur_Geoffrey_Somerset_ ( 27_April_ 1960 – 25_July_ 2012 ) , educated at Dragon_School_ , Oxford_ , and Bradfield_College_ , married 2001_Tanya_Arabel_ , only_daughter_ of Roger_Broome_ . He_ was the_founder_ and CEO_ of Mask_Event_Design_ & Production_ ( 1988–2008 ) , President International Special Events Society UK & Europe ( 2002–2004 ) , Regional Vice - President Europe , Middle East and Africa ( 2004–2005 ) , Chairman_Trellech_Conservatives_ from 2011 . Their_children_ are Inigo_Arthur_Fitzroy_Somerset_ ( born 7 July 2004 ) , now heir apparent to the_barony_ ; Ivo_Geoffrey_Arthur_Tarsus_Somerset_ ( born 6 July 2007 ) ; and Oona-Vita_Olwen_Phyllis_Caroline_Somerset_ ( born February 2010 ) . 
-3._Hon_ . Lucy_Ann_Somerset_ ( born 8 February 1963 ) educated St_Gabriel's_School_ , Newbury_ , married 1998_Richard_Scott-Watson_FRCS_ and has_issue_ Rachel_Elise_ ( born 2000 ) , George Anthony ( born 2002 ) , Theo Alan ( born 2004 ) . 
-
-Seats_ . 
-Raglan_ lives at Stanford_ in the Vale , Faringdon , Oxfordshire SN7 8NN . 
-
-The_family_seat_ is Cefntilla_Court_ , Llandenny , in Monmouthshire_ . An_inscription_ over the_porch_ dated 1858 reads : " This_house_ with 238_acres_ of land_ was purchased by 1623 of the_friends_ , admirers_ and comrades_ in arms_ of the_late_Field_Marshal_Lord_Raglan_GCB_ and presented by them_ to his_son_ and his_heirs_ for ever in a_lasting_memorial_ of affectionate_regard_ and respect_ " . The_5th_Baron_Raglan_ willed Cefntilla_ to the_son_ of his_sister_ , and not to the_heirs_ of the_barony_ . The_will_ was disputed by the_Hon_Arthur_Somerset_ , son_ and heir_ of Geoffrey_Somerset_ , but following his_death_ on 25_July_ 2012 the_dispute_ was settled . 
-
-Tender_Loving_Care_ ( album_ ) 
-
-Tender_Loving_Care_ is a_1967_album_ by Nancy_Wilson_ , arranged by Billy_May._ Jason_Ankeny_ of Allmusic_ wrote : " Wilson_ is at her_ best here , taking full_command_ of the_familiar_songs_ and re-animating_them_ with vocals_ that are bold , sophisticated , and daringly adult . " 
-
-Track_ listing . 
-Side_ 1 . 
-1 . " Do n't Go to Strangers_ " ( Arthur Kent , David Mann , Redd Evans ) 
-2 . " Gee_ , Baby_ , Ai n't I_ Good to You_ " (Don_Redman_ , Andy_Razaf_ ) 
-3 . " Your_Name_ Is Love_ " (Gene_de_Paul,_Charles_Rinker_ ) 
-4 . " Too_Late_Now"_(Burton_Lane_ , Alan Jay Lerner ) 
-5 . " Like Someone_ in Love_ " (Jimmy_Van_Heusen_ , Johnny_Burke_ ) 
-6 . " Tender_Loving_Care_ " ( Johnny_Mercer_ , Ronnell_Bright_ ) 
-
-Side_ 2 . 
-1 . " As You_ Desire Me " ( Allie_Wrubel_ ) 
-2 . " I_ Want To Talk About You_ "_(Billy_Eckstine_ ) 
-3 . " Love - Wise " ( Marvin_Fisher_ , Kenward_Elmslie_ ) 
-4 . " Try A_Little_Tenderness_ " ( Harry_M._Woods_ , Jimmy_Campbell_ , Reg_Connelly_ ) 
-5 . " Close Your_Eyes_ "_(Bernice_Petkere_ ) 
-
-Personnel_ . 
-Performance_ . 
--_Nancy_Wilson_–_vocals_ 
--_Ronnell_ Bright_–_pianoRebecca_Brewer_ 
-
-Rebecca_Brewer_ ( born in Wakefield_ , West_Yorkshire_ ) is a_British_actress_ . 
-
-Career_ . 
-After graduating from drama_school_ in 2010 , Rebecca_ got her_first_job_ playing Jenny_ in Trevor_Nunn's_2010_revival_ of Aspects_ of Love_ . She_ has since worked at the_Royal_Shakespeare_Company_ , Royal_Court_ , National_Theatre_ , Almeida_Theatre_ as well as numerous_times_ in the_West_End_ . 
-
-Personal_life_ . 
-Brewer_ was born in Wakefield_ but moved to Derbyshire at the_age_ of 11 . She_ studied GSCEs_ and A_Levels_ at Belper_School_ . She_ also attended Ripley_Academy_ of Dance_ and Drama_ and studied in ballet_ , tap_ and jazz_dance_ . At 18 , she_ got a_full_scholarship_ to study Musical_Theatre_ at Guildford_School_ of Acting_ where she_ trained for 3_years_ . 
-
-Papaipema_birdi_ 
-
-Papaipema_birdi_ , the_umbellifer_borer_ , is a_species_ of moth_ of the_Noctuidae_family_ . It_ is found from Quebec_ to Alberta_ and south in the_east_ to New_Jersey_ . 
-
-The_wingspan_ is about_32 mm_ . The_forewings_ are dull yellowish - brown . The_basal_spots_ are cream - colored and there is a_large_and_elongate_reniform_patch_ . The_hindwings_ are pale yellowish - brown or cream with darker_veins_ and a diffuse indistinct band in the_outer_half_ . Adults_ are on wing_ from August_ to October_ . 
-
-The_larvae_feed_ on " Cicuta_maculata_ " , " Angelica_atropurpurea_ " , and "Sium_suave_ " . They_ bore in the_stems_ of their_host_plant_ . Eddie_Halvey_ 
-
-Eddie_Halvey_ ( born 11 August 1970 in Limerick_ , Ireland_ ) is a_retired_Irish_rugby_union_footballer_ for Munster_ , London_Irish_ and Ireland_ . He_ played as a_Flanker_ . On 12_May_ 2009 he_ received a_7-month_suspended_sentence_ for causing the_death_ of Kevin_Walsh_ , then 16 , in 2006 while driving at over_twice_the_legal_limit_ . 
-
-Munster . 
-Halvey_ made his_debut_ for Munster_ against Swansea_ in November_ 1995 , a game that was also Munster's_first_ever_Heineken_Cup_appearance_ . 
-
-London_Irish_ . 
-He_ joined the_Exiles_ in 2000 , and made his_debut_ against Harlequins_ in August_ of that_year_ . He_ started in the_2002_Powergen_Cup_Final_ at Twickenham_ , as London_Irish_ defeated the_Northampton_Saints_ . 
-
-Return_ to Munster_ . 
-In 2002 Halvey_ rejoined Munster_ , and went on to play a_further_two_season_ with his_home_province_ , making his_final_appearance_ against Cardiff_Blues_ in April_ 2004 . 
-
-Ireland_ . 
-Halvey_ made his_Ireland_debut_ against France_ in March_ 1995 , during the_1995_Five_Nations_Championship_ . He_ earnt three_caps_ at the_1995_Rugby_World_Cup_ in South_Africa_ , against Japan_ , Wales_ and France_ . The first of his_two_international_tries_ came during the_Japan_match_ , and the second came four days later during the_game_ against Wales_ . Halvey_ 's last_appearance_ for Ireland_ came against Canada_ in November_ 1997 . 
-
-Eric_Schneider_ 
-
-Eric_Schneider_ ( born September 15 , 1977 ) is a_Canadian_professional_ice_hockey_player_ . He_ currently plays in the_semi-professional_Chinook_Hockey_League_ with the_Bentley_Generals_ . He_ last played professionally in the_top_German_tier_ with Adler_Mannheim_ of the_Deutsche_Eishockey_Liga_(DEL_ ) . 
-
-During the_2002–03_CHL_season_ , Schneider_ represented the_Laredo_Bucks_ in the_CHL_ All-Star_game_ . 2_time_Carwell_Cup_Winner_ . 
-Stay at home_father_ of 5_kids_ 
-Papaipema_unimoda_ 
-
-The_Meadow_Rue_Borer_ ( "Papaipema_unimoda_ " ) is a_species_ of moth_ of the_Noctuidae_family_ . It_ is found in the_north-eastern_United_States_ and southern_Canada_ east of the_Rocky_Mountains_ . 
-
-The_wingspan_ is 30–40 mm_ . Adults_ are on wing_ from August_ to October_ in one_generation_ per year_ . 
-
-The_larvae_feed_ on " Thalictrum_ " , " Rudbeckia " , " Smilax " , and " Polemonium " species . They_ bore in the_roots_ and stems of their_host_plant_ . Patho_Plains_Important_Bird_Area_ 
-
-The_Patho_Plains_Important_Bird_Area_ comprises a 794 km tract of mainly_pastoral_farmland_ near the_town_ of Gunbower_ in north-central_Victoria_ , south-eastern_Australia_ . It_ contains several_relatively_small_nature_conservation_reserves_ as well as the_38 km_ Terrick_Terrick_National_Park_ . 
-
-Description_ . 
-The_site_ encompasses remnants_ of native_grassland_ inhabited by an_endangered_grassland_bird_ in a_monotypic_family_ – the_plains_ - wanderer_ – with the_intervening_farmland_ . The_area_ has a_Mediterranean_climate_ with cool , damp winters_ and hot_dry_summers_ , supporting native_tussock_grassland_ dominated by "Austrostipa_ " and "Austrodanthonia"_species_ . Other_vegetation_types_ are temperate_grassy_woodlands_ dominated by white_cypress-pine_ , grey_box_ and yellow_box_ . There are also small_areas_ of black_box_riparian_woodland_ and granite_outcrop_shrubland_ . 
-
-Birds_ . 
-The_site_ has been identified by BirdLife_International_ as an_Important_Bird_Area_ ( IBA_ ) because it_ supports most of Victoria’s_population_ of plains-wanderers_ . As well as the land used by the_species_ , the_IBA_ includes extensive_areas_ of unsuitable_farmland_ which has the_potential_ for restoration_ to habitat suitable for plains-wanderers_ . It_ includes an_area_ of woodland_ which supports the_largest_regional_population_ of diamond_firetails_ . Birds_ of prey_ that breed in the_area_ include spotted_harriers_ and black_falcons_ . Bush_stone-curlews_ and painted_honeyeaters_ have been recorded . The_woodland_area_ is important for brown_treecreepers_ , black-chinned_honeyeaters_ ,_grey-crowned_babblers_ and hooded_robins_ . Inland_species_ near the_south-eastern_limit_ of their_range_ include Australian_ringnecks_ , chestnut-crowned_babblers_ and white - winged fairy - wrens . Cubixx_HD_ 
-
-Cubixx_HD_ is a_puzzle_game_ developed by UK-based_studio_Laughing_Jackal_ released on the_PlayStation_Network_ in Europe_ on August_ 17 , 2011 and September_ 20 , 2011 in North_America_ . It_ is the_HD_sequel_ to " Cubixx_ " , a_2009_PlayStation_mini_title_ . 
-
-Gameplay . 
-The_gameplay_ of "Cubixx_HD_ " is based upon the_classic_arcade_game_ Qix_ . The_player_ controls a_robot_ that fires a_laser_ at a_cube_ with the_objective_ of erasing its_sides_ . A_variety_ of enemies_ and power-ups_ become available as the_player_ progresses . 
-
-Reception_ . 
-Reviews_ of "Cubixx_HD_ " have been generally favorable with a_Metacritic_score_ of 77 out of 100 , with Kristian_Reed_ of Eurogamer_ praising the_title_ as the_best_reinvention_ of its_antecedent_Qix_and_Joel_Gregory_ of PlayStation_Official_Magazine_ ( UK_ ) calling it_ " one of the most 
-gloriously_addictive,_knuckle-bitingly_frustrating_strategy_experiences_ you_ can have on PSN."Guillermo_Roldán_ 
-
-Guillermo_'Guille'_Roldán_Méndez_ ( born 23 June 1981 in Córdoba_ , Andalusia_ ) is a_Spanish_footballer_ who_ plays for Gibraltarian_club_Europa_F.C._ as a_winger_ . 
-Wintermind_ 
-
-Wintermind_ is the_second_novel_ of the_"Masters_ of Solitude_ " trilogy_ , written by authors_ Marvin_Kaye_ and Parke_Godwin_ . The_novel_ depicts a_conflict_ between rural_followers_ of a_diseased_mutant_form_ of Christianity_ . Turkic_tribal_confederations_ 
-
-The_Turkic_term_oğuz_ or oğur_ ( in z- and r - Turkic , respectively ) is a_historical_term_ for " military_division_ , clan_ , or tribe_ " among the_Turkic_peoples_ . 
-With the_Mongol_invasions_ of 1206–21 , the_Turkic_khaganates_ were replaced by Mongol_ or hybrid_Turco-Mongol_confederations_ , where the_corresponding_military_division_ came to be known as " orda " . 
-
-The_8th-century_Kül_Tigin_stela_ has the_earliest_attestation_ of the_term_ in Old_Turkic_epigraphy_ , as "Toquz_Oghuz_ " "nine_tribes_ " 
-The_term_ occurs in numerous_proper_names_ of tribes_ or confederations_ of the_time_ of the_Turkic_migration_ during the_early_medieval_period_ , viz . 
--_Onogur_"ten_tribes_ " 
--_Toquz_Oghuz_"nine_tribes_ " 
--_Uyghur_ 
-
-The_Old_Turkic_ stem " uq- , oq- "_"kin_ , tribe_ " is from a_Proto-Turkic_ " * uk " . 
-The_Old_Turkic_word_ is sometimes connected with the_Old_Turkic_word_ "oq"_"arrow_ " ; 
-Pohl_ ( 2002 ) in explanation_ of this connection adduces the_Chinese_T'ang-shu_chronicle_ , which reports that 
-" the_khan_ divided his_realm_ into ten_tribes_ . To the_leader_ of each_tribe_ , he_ sent an_arrow_ . The_name_ [ of these_ten_leaders_ ] was ' the_ten_"she_ " ' , but they_ were also called ' the ten arrows ' . " 
-
-An_"oguz_ " ( " ogur " ) was in origin_ a_military_division_ of a_Nomadic_empire_ , and only secondarily acquired tribal_or_ethnic_connotations_ , by processes_ of ethnogenesis_ . 
-
-Air_KBZ_ 
-
-Air_KBZ_ ( ) is a_privately_owned_domestic_Burmese_airline_ based in Yangon_ . Air_Kanbawza_ , otherwise known as AIR_KBZ_ , was established in June_ 2010.The airline_ is owned by Kanbawza_Bank_ and began operations_ with a_Yangon-Bagan-Nyaung_Oo-Mandalay-Heho-Yangon_flight_ on April_ 2 , 2011 . 
-
-Destinations_ . 
-Air_KBZ_ flies to the_following_destinations_ within Myanmar_ : 
-
--_Bagan_-_Nyaung_U_Airport_ 
--_Banmaw_-_Banmaw_Airport_ 
--_Heho_-_Heho_Airport_ 
--_Kalaymyo_-_Kalaymyo_Airport_ 
--_Kawthaung_-_Kawthaung_Airport_ 
--_Kengtung_-_Kengtung_Airport_ 
--_Lashio_-_Lashio_Airport_ 
--_Mandalay_-_Mandalay_International_Airport_Base_ 
--_Mergui_-_Mergui_Airport_ 
--_Myeik_-_Myeik_Airport_ 
--_Myitkyina_-_Myitkyina_Airport_ 
--_Putao_-_Putao_Airport_ 
--_Sittwe_-_Sittwe_Airport_ 
--_Dawei_-_Dawei_Airport_ 
--_Tachilek_-_Tachilek_Airport_ 
--_Thandwe_-_Thandwe_Airport_ 
--_Yangon_-_Yangon_International_Airport_Main_Base_ 
-
-Fleet_ . 
-Current_Fleet_ . 
-The_Air_KBZ_fleet_ consists of the_following_aircraft_ ( as of August_ 2017 ) : 
-
-Former_Fleet_ . 
--_2_further_ATR_ 72 - 500 
-
-Sponsorships_ . 
-In 2014 , Air_KBZ_ started sponsoring Myanmar's_national_sport_ , Lethwei_ . The_event_ is called the " Air KBZ Aung Lan Golden Belt Championship " being held at Thein_Phyu_Stadium_ in Yangon_ . 
-
-Edwin_Brown_ ( naturalist_ ) 
-
-Edwin_Brown_ ( died 1 September 1876 , Tenby ) was an_English_naturalist_ and entomologist . 
-
-Edwin_Brown_ was manager_ of the_Burton_ , Uttoxeter_ and Ashbourne_Union_Bank_ in Burton_ on Trent_ . He_ had a_private_museum_ of geological,_zoological_and_botanical_specimens_ and a_library_ of taxonomic_works_ . 
-
-Brown_ was a_Member_ of the_Entomological_Society_ of London_ from 1849 . He_ specialised in Carabidae_ and Cicindelidae_ . 
-
-Parts_ of his_collection_ were purchased by Oxford_University_Museum_ of Natural_History_ when it_ was sold at auction_ in March_ 1877 . The_purchase_ included insects_ collected by Alfred_Russel_Wallace_ . 
-
-Edwin_Brown_ was Henry_Walter_Bates's_first_naturalist_friend_ . 
-
-Works_ . 
-Partial_list_ 
--_Contributions_ to Mosley_ , O._"Natural_History_ of Tutbury"(1863_ ) 
-- On the_Australian_species_ of Tetracha_ . " Transactions of The_Royal_Entomological_Society_ of London_ " 17 : 351 - 353 ( 1869)Mercia Accident Rescue Service 
-
-Mercia_Accident_Rescue_Service_ ( or MARS_ ) is a_charity_operation_ based on providing a_fast-response,_highly_experienced_medical_team_ to back up the_emergency_services_ of the_English_counties_ of Herefordshire_ and Worcestershire_ . 
-
-MARS_ is staffed by a_team_ of 14_Doctors_ and two_Advanced_Nurse_Practitioners_ . Corruption_ in Indonesia_ 
-
-While hard_data_ on corruption_ is difficult to collect , corruption_ in Indonesia_ is clearly seen through public_opinion_ , collated through surveys_ as well as observation_ of how each_system_ runs . According to 2016_results_ of Corruption_Perceptions_Index_ of Transparency_International_ , Indonesia_ ranks 90th_place_ out of 176_countries_ . 
-
-There are two_key_areas_ in the_public_sector_ in which corruption_ in Indonesia_ can be found . These are the_justice_ and civil_service_sectors_ . Corruption_ within the_justice_sector_ is seen by its_ineffectiveness_ to enforce laws_ , failure_ to uphold justice_ , hence undermining the_rule_ of law_ . The_areas_ of corruption_ within this_sector_ include the_police_ and the_courts_ . In the_2008_Public_Sector_Integrity_Survey_ , the_Supreme_Court_ ranked the lowest in integrity_ in comparison_ to the_other_public_services_ in Indonesia_ . The_courts_ were viewed to make decisions_ unfairly and have high_unofficial_costs_ . 
-
-Evidence_ of corruption_ within the_civil_service_ comes from surveys_ conducted within the_sector_ . Some_surveys_ found out that almost_half_ were found to have received bribes_ . Civil_servants_ themselves_ admit to corruption_ . 
-
-In January_ 2012 , it_ was reported that Indonesia_ has lost as much as Rp 2.13 trillion ( US$ 238.6 million ) to corruption_ in 2011 . A_study_ conducted by Indonesia_Corruption_Watch_ , a non - profit organization co_ - ordinated by Danang_Widoyoko_ , said that embezzlement_ accounted for most of the_money_ lost and that “government_investment_ was the_sector_ most prone to gratification_ . ” 
-
-Companies_ are concerned about red_tape_ and widespread_extortion_ in the_process_ of obtaining licences_ and permits_ , and they_ often faced demand_ for irregular_fees_ or concessions_ based on personal_relationships_ when obtaining government_contracts_ . Companies_ have also reported regular_demand_ for cash_payments_ and expectations_ for gifts_ and special_treatments_ by Indonesian_officials_ . 
-
-Economic_and_social_costs_ . 
-Corruption_ is an_important_development_challenge_ that poses economic_and_social_costs_ in Indonesia_ . Interference_ in public_laws_ and policies_ for the_sake_ of personal_or_private_gain_ has weakened the_competitiveness_ of Indonesia_ . 
-About one - quarter of ministries_ suffer from budgetary_diversions_ in Indonesia_ . Households_ spent approximately_1%_ while enterprises_ spent at_least_5%_ of monthly_company_revenue_ on unofficial_payments_ . Social_costs_ due to corruption_ in Indonesia_ include the_weakening_ of government_institutions_ and the_rule_ of law_ . Increases_ in crime_ due to smuggling_ and extortion_ involve the_institutions_ that are supposed to be protecting citizens_ . The_people_ who_ suffer most are the poor as they_ are pressured to finance payments_ through their_already_tight_budgets_ and the_effectiveness_ of social_services_ are less accessible indirectly . These_concerns_ were voiced by the_poor_urban_communities_ of Indonesia_ themselves_ in a_joint_World_Bank-Partnership_ for Governance_Reform_research_project_ , entitled “ Corruption and the Poor ” . 
-
-Efforts_ to curb corruption_ . 
-There have been some_efforts_ to battle corruption_ with the_creation_ of the_ombudsman_ and the_Assets_Auditing_Commission_ ( KPKPN_ ) . It_ has been an_important_agenda_ and part_ of Indonesia's_official_reform_program_ since May_ 1998 . However , the_efforts_ made are questionable as there has been limited_success_ to reduce corruption_ . Some_obstacles_ that impeded the_improvement_ of corruption_ included political_and_economic_constraints_ , and the_complex_nature_ of the_corruption_ itself_ . 
-
-Most recently , these_efforts_ have taken the_shape_ of ordering corruption_convicts_ to pay back all_the_money_ they_ have stolen . On 6_March_ 2012 , the_Jakarta_Corruption_Court_ sentenced Ridwan_Sanjaya_ , an_official_ from the_Ministry_ of Energy_ and Mineral_Resources_ , to six_years_ in prison_ for rigging a_tender_bid_ for a_home_solar_energy_system_project_ in 2009 worth IDR526 billion ( US$ 57.86 million ) . This is an_abnormal_number_ in equation_ to other_southeastern-Asian_countries_ . The_government_ is n't doing much for this_case_ and the_Indonesians_ are left to handle this on their own . 
-
-Ridwan_ was found guilty of accepting IDR 14.6 billion in kickbacks_ , resulting in IDR131 billion in state_losses_ . The_Corruption_Eradication_Commission_ ( KPK_ ) stated that it_ will use Ridwan’s_verdict_ as material_ to develop the_investigation_ on the_graft_scandal_ involving the_Solar_Home_System_project_ . Lisa_Franks_ 
-
-Lisa_Franks_ ( born 6 April 1982 in Moose_Jaw_ , Saskatchewan_ ) is a_Canadian_paralympic_athlete_ from competing mainly in category_T52_wheelchair_sprint_events_ . Throughout her_wheelchair_racing_career_ she_ set world_records_ in the_100m_ , 200m_ , 400m_ , 800m_ , 1500m_ , 5000m_ , and marathon_events_ . 
-
-Career_ . 
-Lisa_ has won six_paralympic_gold_medals_ . In the_2000_Summer_Paralympics_ she_ won gold_medals_ in the_200m_ , 400m_ , 800 m and 1500 m and a silver medal in the_100m_ . In 2004 she_ defended her 200m_ and 400m_titles_ . She_ was coached by Clayton_Gerein_ who_ was a_Paralympic_medallist_ in wheelchair_racing_ . The two were introduced by Gerein's_wife_ who_ was Lisa's_physiotherapist_ . 
-
-In readiness_ for the_2008_Summer_Paralympics_Lisa_ had taken up wheelchair_basketball_ and was a_part_ of the_Canadian_team_ that finished fifth . 
-
-Personal_life_ . 
-On April_ 18 , 1996 , just after Frank's_fourteenth_birthday_ , she_ woke up in the_middle_ of the_night_ unable to move her_legs_ . By the_end_ of that_day_ she_ had lost function_ of her_arms_ as well , though had regained use_ of those after rehabilitation_ . Franks_ was diagnosed with arteriovenous_malformation_ , a_condition_ that caused clusters_ of blood_vessels_ to prevent blood_ from properly passing by her_spinal_cord_ . 
-
-She_ graduated from the_University_ of Saskatchewan_ in 2006 with a_Bachelor_ of Engineering_ and a_focus_ in mechanical_engineering_ . 
-
-She_ was awarded an_Honorary_Doctorate_ from the_University_ of Regina_ in 2009 . Watch While I_ Revise the_World_ 
-
-" Watch While I_ Revise the_World_ " is the_160th_episode_ of the_ABC_television_series_ , " Desperate Housewives " . It_ was the_third_episode_ of the_show's_eighth_season_ and was broadcast on October_ 9 , 2011 . 
-
-Plot_ . 
-As Susan_ and Carlos_ bond over their_feelings_ of guilt_ at the_murder_ of Gabrielle's_stepfather_ , Mike_ begins to think that the two are having an_affair_ , and Bree_suspects_ that her_detective_boyfriend_ , Chuck_ , may secretly be investigating her_ . As her_marriage_ continues to crumble , the_tables_ are turned on Lynette_ when her_usually_relationship-challenged_sister_Lydia_ ( guest_star_Sarah_Paulson_ ) comes to town_ and announces she_ 's engaged . Meanwhile , after asking Renee_ to help his_daughter_ , Jenny_ , go shopping for her_first_bra_ , Lee_ fears that the_child_ is starting to bond more with Renee_ and becoming more distant from him_ . 
-
-Reception_ . 
-According to Nielsen_ratings_ , " Watch While I_ Revise the_World_ " was watched by 8.63_million_viewers_ and held 2.8_rating/7_share_ among viewers_ between 18_and_49_years_ of age_ . The_episode_ was outperformed by " Sunday_Night_Football_ " on NBC_ , which averaged 22.05_million_viewers_ and an_8.9_rating/22_share_ , "The_Good_Wife_ " on CBS_ , which was watched by 10.28 million_viewers_ but held a_2.1_rating/5_share_ and "Family_Guy_ " on Fox_ which was watched by 6.99 million_viewers_ and held 3.5_rating_ in the_18-49_demographic_ . This_episode_ was the_least_watched_episode_ in terms_ of total_viewers_ in the_history_ of the_show_ until the_air_date_ of next_episode_ , School_ of Hard_Knocks_ , although the_episode_ was the_most_watched_scripted_program_ of the_night_ in the_18-49_demographic_ . The_episode_ gained an_additional_2.0_million_viewers_ and 0.9_rating_ in the_week_ following the_original_broadcast_ due to DVR_recordings_ . 
-
-Notes_ . 
-- Although credited , Doug_Savant_ ( Tom_Scavo_ ) and Madison_De_La_Garza_ ( Juanita_Solis_ ) do not appear in this_episode_ . 
-- The_title_ is from the_song_ " Beautiful " from " Sunday_ in the_Park_ With George_ " by Stephen_Sondheim_ 
-
-International_titles_ . 
--_Italian:"Segreti_Svelati_ " ( Secrets_ revealed ) 
-- German : " Falsche_Vorstellungen_ " (Wrong_Idea_ ) 
--_Polish_ : " Patrz_jak_rewiduje_świat_ " ( Watch how I_ change the_world)2011–12_ CHA women 's ice hockey season 
-
-The_2011–12_College_Hockey_America_women's_ice_hockey_season_ marked the_continuation_ of the_annual_tradition_ of competitive_ice_hockey_ among College_Hockey_America_members_ . 
-
-Offseason_ . 
-- May 27 : CHA_member_Wayne_State_University_ have announced that sponsorship_ of the_women's_ice_hockey_program_ has been dissolved . The_decision_ was attributed due to continuing_reductions_ in the_state_ of Michigan_appropriations_ for higher_education_ . The_Wayne_State_Warriors_ recorded an_all-time_CHA_mark_ of 48 - 59 - 7 ( .452 ) in nine_seasons_ , tying for the_CHA_regular-season_title_ in 2007 - 08 . 
-- June 13 : Mercyhurst_Lakers_assistant_coach_Paul_Colontino_ has left the_club_ to become head_coach_ of the_Robert_Morris_Colonials_ . He_ is the_third_head_coach_ in Colonials_history_ , after the_resignation_ of Nate_Handrahan_ , who_ left to assume the_head_coaching_position_ at Ohio_State_ . 
-- September 6 : Robert_DeGregorio_ , Commissioner_ for College_Hockey_America_(CHA_ ) , announced that the_Penn_State_Nittany_Lions_ have been accepted into the_CHA_ . The_Nittany_Lions_ will officially join the_conference_ starting with the_2012-13_season_ . 
-
-Exhibition_ . 
-CIS_ . 
-- September 17 , 2011 : Senior_Bailey_Bram_ registered a_hat_trick_ to go with her_three_assists_ , as the_Lakers_ trounced the_Wilfrid_Laurier_Golden_Hawks_women's_ice_hockey_program_ by a_10-2_tally_ . Her_sister_ , Shelby_Bram_ scored one_goal_ while freshman_Kristine_Grenier_ also registered a_hat_trick_ in the_match_ . Kelley_Steadman_ contributed with four_assists_ . 
-
-PWHL_ . 
-- September 24 , 2011 : Sophomore_Christine_Bestland_ notched five_points_ as the_Lakers_ defeated the_Stoney_Creek_Jr._Sabres_ of the_PWHL_ by a_6-0_score_ . The_Lakers_ scored four_goals_ within a_five_and_a_half_minute_time_span_ late in the_second_period_ . 
-- September 25 , 2011 : Freshman_Caroline_Luczak_ notched a_goal_ , while registering three_assists_ as the_Lakers_ defeated the_Toronto_Jr._Aeros_ of the_PWHL_ . 
-
-Regular_season_ . 
-News_ and notes_ . 
-September_ . 
-- September 14 : The_Lindenwood_Lady_Lions_ice_hockey_program_ officially submitted an_application_ to join College_Hockey_America_(CHA_ ) for the_2012–2013_season_ . 
-- In the_Mercyhurst_Lakers_season_opener_ on September_ 30 , 2011 , Bestland_ was named the game 's First Star in a_4-0_shutout_ over the_nationally_ranked_Quinnipiac_Bobcats_ . Bailey_Bram_ scored the_game-winning_goal_ ( it_ was the_61st_goal_ of her_career_ ) . Goaltender_Hillary_Pattenden_ earned her_13th_career_ shutout ( and 81st career win ) while Bailey_Bram_ scored the_game-winning_goal_ . 
-
-October_ . 
--_October_ 1 , 2011 : Bailey_Bram_ played in her_100th_career_game_ for the_Mercyhurst_Lakers_ . Bram_ would be held pointless as the_Lakers_ would lose the_game_ by a_1-0_tally_ to Quinnipiac_ . It_ was Quinnipiac's_first_victory_ over Mercyhurst_ in twelve_regular_season_matches_ . 
--_October_ 7–8 : Robert_Morris_freshman_Katie_Fergus_ accumulated three_points_ in her_NCAA_debut_ with one_goal_ and two_assists_ . Against the_Lindenwood_Lions_ , she_ got her_first-collegiate_point_ fewer_than_nine_minutes_ into the_opening_period_ . Later in the_game_ , she_ scored her_first_goal_ as the_Colonials_ were on the_penalty_kill_ . In the_second_game_ versus Lindenwood_ , she_ earned her_first_multi-goal_game_ . Fergus_ became one of just_two_freshmen_ in Colonials_history_ to register multi-point_performances_ in the_first_two_games_ of a_season_ . Fergus_ finished the_series_ versus Lindenwood_ by scoring three_goals_ and two_assists_ five points . In addition_ , she_ had eight_shots_ to complement a_+5_plus/minus_ . 
--_October_ 8 , 2011 : Brianna_Delaney_ registered the_sixth_three-point_game_ of her_career_ at Robert_Morris_ . With the_achievement_ , she_ tied the_Colonials_ all-time_record_ for career_points_ . The_24th-career_multi-point_game_ of her_career_ increased her point total to 97 . The_total_ now equals the_record_ that Sara_O'Malley_ set during the_2010-11_campaign_ . 
-- October 27–28 : The_series_ versus the_Lindenwood_Lady_Lions_ice_hockey_program_ marked the_first_time_ that Lindenwood_ hosted an_NCAA_Division_ I_ opponent in their_home_arena_ . Mercyhurst_ would win the_October_28_match_ by a_7-0_tally_ , in which Lakers_freshman_Shelby_Bram_ would score her_first_career_NCAA_goal_ . The_October_29_contest_ saw_Mercyhurst_ emerge as the_victor_ in a_14-0_whitewash_ . Kelley_Steadman_ would score four_goals_ and notch an_assist_ , while Jess_Jones_ would earn a_hat_trick_ . The_Bram_sisters_ ( Shelby_ and Bailey_ ) each earned two_goals_ . 
-
-December_ . 
-- December 9 : In a_4-2_loss_ to the_Boston_College_Eagles_ on December_ 9 , 2011 , Kelley_Steadman_ scored her_100th_career_point_ . The_point_ was a_goal_ in the_second_period_ on Boston_College_goalkeeper_Corrine_Boyles_ . 
-- December 10 : In a_3-2_overtime_victory_ versus Boston_College_ , Hillary_Pattenden_ made a_career_ high 48 saves to earn the_91st_victory_ of her_NCAA_career_ , tying former_Wisconsin_goaltender_Jessie_Vetter_ for the_NCAA_Division_ I_ record . Jill_Szandzik_ scored at 3:01 into overtime_ for her_second_goal_ of the_season_ . Bailey_Bram_ had three_assists_ , including one on the_game-winner_ to give her_40_points_ in 16_games_ . Christine_Bestland_ also earned three_points_ . Pattenden_ ’s 48 saves broke her_previous_high_ of 38 ( made earlier in the_2011-12_season_ ) at Minnesota_State-Mankato_ . 
-- December 14 : In a_9-0_defeat_ of the_Lindenwood_Lady_Lions_ , Hillary_Pattenden_ broke Jessie_Vetter's_record_ for career NCAA wins , by notching her_92nd_career_victory_ . Forward_Bailey_Bram_ scored two_goals_ and added four_assists_ while Kelley_Steadman_ scored the_game-winning_goal_ . 
-
-January_ . 
-- On Friday_ , January 20 , 2012 , Brianna_Delaney_ scored in the_third_period_ of a_4-2_loss_ to CHA_rival_Mercyhurst_ . After being hooked , she_ scored on a_wrist_ shot top_shelf_ as she_ was falling to the_ice_ . With the_score_ , Delaney_ reached three_milestones_ . She_ became just_the_second_Robert_Morris_player_ to reach the_50_goal_plateau_ . In addition_ , the_score_ marked her_20th_point_ of the_season_ . It_ made her_ the first player in school_history_ to post four_20_point_seasons_ . Said_goal_ also marked the_113th_point_ of her_career_ , the most by any_Robert_Morris_women's_hockey_player_ in school_history_ . 
-- January 31 : Rebecca_Vint_ logged an_assist_ in the_third_period_ at Princeton_ to tie the_Colonials’_single-season_points_mark_ . 
-
-February_ . 
--_February_3–4_ : In a_sweep_over_CHA_opponent_Syracuse_ , Rebecca_Vint_ led all_Colonials_skaters_ in points_ . In the_first_game_ , she_ scored the_game-winning_goal_ to break the_Colonials’_single-season_record_ for points_ in one_season_ . In the_4-3_win_ versus the_Orange_ , it_ was Vint’s_fourth_game-winning_goal_ of the_season_ ( a_Colonials_record_ ) . The following day , Vint_ tied the_Colonials’_single-sea¬son_mark_ for goals_ in a_5-2_triumph_ . In addition_ , she_ assisted on the_game-winning_goal_ to notch her_10th_multi-point_effort_ of the_season_ . 
-- February 10 : Rebecca_Vint_ notched her_fifth_game-winning_goal_ of the_season_ , a_new_Colonials_record_ . In addition_ , said goal_ also broke the_school_record_ for overall_goals_ in a_season_ . In the_third_period_ , she_ logged another_goal_ to register her_sixth_multi-goal_game_ of the_campaign_ . The_following_day_ , Vint_ assisting on both_RMU_goals_ to break the_single-season_assist_record_ . With the_two_assists_ , she_ also became the_first_Colonial_ to notch 40_points_ in a_season_ . Her_five_game-winning_goals_ leads all_skaters_ in the_CHA_ . 
-- February 18 : In a_contest_ versus the_Robert_Morris_Colonials_ , Hillary_Pattenden_ competed in the_final_regular_season_game_ of her_NCAA_career_ . Heading into the_game_ , she_ had 99_career_regular_season_victories_ , and was aiming to be the_first_NCAA_women's_goaltender_ with 100_career_wins_ . With a 4 - 3 Mercyhurst lead late in the_third_period_ , Colonials_skater_Dayna_Newsom_ recorded a_game-tying_goal_ , as both_teams_ skated to a_4-4_final_score_ . Said Mohamed_Otta_ 
-
-Said_ Mohamed_Otta_(;_ born 3 January 1992 ) is an_Egyptian_footballer_ with Zamalek_ who_ is known with his_dribbling_and_stunning_speed_ .He started his_career_ with Kaskada_ in the_third_division_ of the_Egyptian_league_ . My_Life_ My_Way_ 
-
-My_Life_ My_Way_ is the_tenth_full-length_studio_album_ from New_York_hardcore_band_ , Agnostic_Front_ released on March_ 4 , 2011 . This_album_ was recorded at Mana_Recording_Studio_ in Tampa_ , Florida_ by Erik_Rutan_ and produced by Freddy_Cricien_ of Madball_ , who_ is the_half-brother_ of Agnostic_Front_frontman_Roger_Miret_ . 
-
-Personnel_ . 
--_Agnostic_Front_ 
--_Roger_Miret_-_vocals_ 
--_Vinnie_Stigma_-_guitar_ 
--_Joseph_James_-_guitar_ 
--_Mike_Gallo_-_bass_ 
--_Pokey_Mo_-_drums_ 
--_Production_ 
-- Recorded at Mana_Recording_Studio_ , Tampa_ , Florida_ 
-- Produced by Freddy_Cricien_ 
-- Engineered and mixed by Erik_Rutan_ 
--_Mastering_ by Alan_Douches_ 
-
-Sailing_ at the 1996 Summer Olympics – Europe_ 
-
-The_Women's_Europe_Competition_ was a_sailing_event_ on the_program_ at the_1996_Summer_Olympics_ that was held from July_ 22 to August_ 2 , 1996 in Savannah_ , Georgia_ , United_States_ . Points_ were awarded for placement_ in each_race_ . Eleven_races_ were scheduled and sailed . Each_sailor_ had two_discards_ . 
-Justin_Robinson_ ( basketball_ , born 1987 ) 
-
-Justin_Robinson_ ( born 17 October 1987 ) is a_British_professional_basketball_player_ for the_London_Lions_ of the_British_Basketball_League_ . 
-
-Early_life_ . 
-Robinson_ played for the_Brixton_TopCats_ before moving to the_United_States_ to attend high_school_ at the_Blair_Academy_ . As a_junior_ , he_ would lead Blair_ to a_Mid-Atlantic_Prep_League_title_ and was named to the_All-MAPL_first_team_ . 
-
-College_career_ . 
-Robinson_ played college_basketball_ for the_Rider_Broncs_ . During his_senior_year_ as team_captain_ he_ averaged 15.3_points_ , 3.8_assist_ , 2.8_rebounds_ and 1.0_steal_a_game_ . 
-
-Professional_career_ . 
-In September_ 2011 , Robinson_ began his_professional_career_ with Greek_team_Maroussi_ . The next month he_ left Maroussi_ and moved to Apollon_Limassol_ of the_Cypriot_League_ where he_ spent the_2011–12_season_ . 
-
-On 6_August_ 2012 , he_ signed with BC_Kyiv_ of Ukraine_ . On 26_February_ 2013 , he_ parted ways_ with Kyiv_ . On 3_March_ 2013 , he_ signed with Uppsala_Basket_ of Sweden_ for the_rest_ of the_season_ . 
-
-During the_2013–14_season_ he_ played in Hungary_ with Falco_KC_ Szombathely_and_Atomerőmű_SE_ . 
-
-On 12_November_ 2014 , he_ signed with his_former_team_ Apollon_Limassol_ of Cyprus_ . On 25_February_ 2015 , he_ left Apolon_ and signed with Kolossos_Rodou_ of the_Greek_Basket_League_ . 
-
-On 17_August_ 2016 , Robinson_ signed with Slovenian_club_Union_Olimpija_ . However , only twelve days later , he_ left the_club_ before appearing in a_game_ for them_ . On 20_September_ 2016 , he_ signed with Greek_club_Doxa_Lefkadas_ . He_ left Doxa_ after appearing in 19_games_ . On 16_March_ 2017 , he_ signed with the_French_Pro_B_club_Saint-Quentin_ for the_rest_ of the_season_ . 
-
-On 23_August_ 2017 , Robinson_ signed with the_London_Lions_ of the_British_Basketball_League_ . 
-
-International . 
-Robinson_ plays for the_Great_Britain_national_basketball_team_ , making his_debut_ against Poland_ in 2009 . 
-
-Jessica_Matassa_ 
-
-Jessica_Matassa_ ( born June 6 , 1986 ) is a_paralympic_athlete_ from Canada_ competing mainly in category_T54_sprint_events_ . She_ was born in Windsor_ , Ontario_ . 
-
-Athletics_ . 
-Jessica_ has twice competed in the_200m_ , 400m_ and 800m_ at the_Summer_Paralympics_ , firstly in 2004 where she_ won a_bronze_medal_ in the_T54_800m_ and then again in 2008 . 
-
-Matassa_ underwent numerous_surgeries_ in 2006 that prevented her_ from competing in 2006 . She_ was not expected to compete again . However , after months_ of rehabilitation_ she_ was given the all clear to compete in 2007 and qualified for the_2007_Para_Panamerican_games_ in Rio_de_Janeiro_ , Brazil_ . She_ won gold_ in all three of her_events_ : 200m_ , 400m_ and 800m_ . 
-
-Matassa_ competed as part_ of Team_Canada_ at the_2008_Beijing_Paralympic_Games_ . Placing_5th_ in the_200m_ followed by 7th_ in the_400m_ . 
-
-In 2009 , Matassa_ competed in the_Boston_Marathon_ placing 5th overall . 
-
-Since 2009 , Matassa_ has retired from racing_ . 
-
-Ice_ sledge hockey_ . 
-For the_2015-16_season_ , Matassa_ was named to the_roster_ of the_Canada_women's_national_ice_sledge_hockey_team_ . Of note_ , her_club_team_ is the_Windsor-Essex_Ice_Bullets_ . She_ is one of four_women_ that comprise the_roster_ of both_men_ and women_ . Ashley_Goure_ , Genna_Norton_ , a_former_member_ of the_national_team_ and Heather_Stewart_ consist of the_other_female_players_ that Matassa_ has played with . A._Padmanabhan_ 
-
-A._Padmanabhan_IAS_ is a_member_ of the_Indian_Administrative_Service_ , is a_former_Governor_ of the_state_ of Mizoram_ and a_former_chief_secretary_ of the_government_ of Tamil_Nadu_ . Having had a_career_ in the_governments_ of Tamil_Nadu_ and the_government_ of India_ , he_ now focuses on providing help_ to the needy by partnering with organizations_ like the Foundation For Academic_Excellence_ and Access_ ( FAEA ) where he_ is a_member_ of the_governing_council_ . He_ was born in 1928 and did his_BA_ and MA_ from Pachaiyappa's_College_ in Chennai_ . He_ then was selected to the_IAS_ . He_ served as Sub_Collector_Cheranmahadevi_ and was Collector_ of Salem_ and was instrumental in setting up healthcare_ and industries_ in the_state_ of Tamil_Nadu_ . He_ was chairman_ of TIDCO_ and launched the_partnership_ for SPIC_ . He_ also set up the_industrial_parks_ in hosur_ and also_other_parts_ of Tamil_Nadu_ when he_ was chairman_ of SIPCOT_ . He_ has also written several_books_ . Trolleybuses_ in Esslingen_ am Neckar_ 
-
-The_Esslingen_ am Neckar_trolleybus_system_ serves the_city_ of Esslingen_ am Neckar_ , in the_"Land_ " of Baden-Württemberg_ , Germany_ . 
-
-Opened on 10_July_ 1944 , the_system_ had two_lines_ , and nine_trolleybuses_ , as at 2011.Veenendaal_West_railway_station_ 
-
-Veenendaal_West_ is a_railway_station_ located in Veenendaal_ , The_Netherlands_ . The_station_ was opened in 1981 , and is located on the_Kesteren–Amersfoort_railway_ . The_train_services_ are operated by Nederlandse_Spoorwegen_ . 
-
-Train_services_ . 
-The_following_services_ currently call at Veenendaal_West_ : 
-- 2x per hour_local_service_ ("sprinter_ " ) (Amsterdam_-)_Breukelen_-_Utrecht_ (-_Veenendaal_Centrum_ ) ( peak_hours_ only ) 
-- 2x per hour_local_service_ ("sprinter_ " ) Breukelen_-_Utrecht_-_Rhenen_ 
-
-Brakemine_ 
-
-Brakemine_ was an early surface - to - air_ missile ( SAM)_development_project_ carried out in the_United_Kingdom_ during World_War_II_ . Brakemine_ used a_beam_ riding guidance_system_ developed at A.C._Cossor_ , while REME_ designed the_testbed_airframes_ . Trial_launches_ were carried out between 1944 and 1945 , and the_effort_ wound down as the_war_ ended . Although Brakemine_ would never be used in its_original_form_ , its_use_ of the_"twist-and-steer"_guidance_method_ would later be used on the_much_more_capable_Bristol_Bloodhound_ . A_single_Brakemine_ survives in the_REME_Museum_ . 
-
-History_ . 
-Brakemine_ was the_result_ of two_independently_developed_versions_ of the_beam_ riding guidance_system_concept_ . In 1942 , Captain_Sedgfield_ of the_Royal_Electrical_and_Mechanical_Engineers_ (REME_ ) wrote a_technical_paper_ on the_concept_ . In 1943 , Leslie_H._Bedford_ , director_ of research_ at A.C._Cossor_ , independently developed the_same_idea_ while on a_long_train_ride_ . 
-
-The_filing_ of two_similar_concepts_ led to a_conference_ at the_headquarters_ of Anti-Aircraft_Command_(AA_Command_ ) , attended by Sir_Frederick_Pile_ and Brigadier_J.A.E._Burls_ , Chief_Mechanical_Engineer_ of AA_Command_ ( and inventor_ of the_Pile_Platform_ ) . A_follow-up_meeting_ started planning for a_number_ of committees_ to study development_ of the_concept_ , but worried that this would lead to lengthy_delays_ , Burls_ decided to allow Cossor_ a_free_hand_ to develop the_guidance_system_ while ( now ) Major_Sedgfield_ would handle rocket_development_ at the_AA_Command's_workshops_ at Park_Royal_ . Development_ began in February_ 1944 . 
-
-The_Brakemine_missile_ developed as a_simple_cylindrical_airframe_ with an_ogive_nosecone_ , small_elliptical_wings_ mounted near the_center_ of gravity_ , and four_small_fins_ at the_rear_ . The_missile_ was powered by eight_solid_rockets_ taken from the_existing_Unrotated_Projectile_anti-aircraft_rocket_ ( also used on the RP-3 ) ; later_models_ used six_rockets_ . Its_flight_ was controlled using the_"twist-and-steer"_method_ of the_two_main_wings_ . These were connected to the_missile_fuselage_ with pivots_ , allowing them_ to rotate to different_angles_ of attack_ . To turn the_missile_ , the_wings_ would first rotate in opposite_directions_ to cause the_missile_ to roll . Once the_wings_ were perpendicular to the_required_direction_ , they_ would then be rotated in the_same_direction_ , creating lift_ to change its_course_ . 
-
-A launcher consisting of a_rail_ mounted to an_QF_3.7_inch_AA_gun_traversal_mechanism_ was built at Walton - on - the-Naze_ and test firings started in September_ 1944 . This_pre-dates_the_Fairey_Stooge_ , and is the_first_launch_ of an_anti-aircraft_missile_ of British_design_ . Early_tests_ resulted in numerous_failures_ , but as the_missiles_ fell into the_ocean_ they_ could be retrieved for study_ and the_flaws_ corrected . As the_missile_aerodynamics_ improved and the_failure_rate_ dropped , further_launches_ were fit with the_guidance_system_ , although they_ were not turned on . A_total_ of 20 of these_early_designs_ were built and flown , shots 11 through 20 with the_guidance_system_ installed . 
-
-At this_point_ an_improved_missile_body_ was introduced , and launches_ of the_fully_operational_system_ took place_ . This was guided using the_Radar_ , AA_No_ . 3 Mk_ ._7_"Blue_Cedar_ " , at that_time_ the primary AA radar in the_UK_ . A_proximity_fuse_ was ready for use_ , but a_warhead_ was never tested . When the_war_ in Europe_ ended in the_midst_ of testing_ , the_Army_ lost interest_ in the_project_ . It_ was , at this_time_ , the_best-developed_missile_system_ in Britain_ . 
-
-Further_development_ was taken up by the_Ministry_ of Supply_ ( MoS_ ) , who_ also took over development_ of the_competing_Stooge_ . The_MoS_ moved the_project_ to their_rocket_testing_facilities_ at RAF_Aberporth_ in Wales_ , but no_further_launches_ took place_ . The_dozen_existing_Stooge_test_airframes_ were fired from Aberporth_ before that_program_ also ended . Further_development_ on both_projects_ ended in favour_ of the_much_more_powerful_English_Electric_Thunderbird_ , which had little in common with either_project_ . 
-
-Brakemine_ would have one_lasting_influence_ on British_missile_development_ , however . The_MoS_ was interested in a_much_more_capable_design_ with altitude_performance_ to 40,000 feet_ ( 12,000 m ) and selected Brakemine's_twist-and-steer_manoeuvering_system_ as the_basis_ for this_greatly_improved_LOPGAP_design_ developed , ironically , by Fairey_ . Over time_ these_early_developments_ culminated in the_Bristol_Bloodhound_ , which competed with the_Thunderbird_ . 
-
-Description_ . 
-The_surviving_Brakemine_missile_ at the_REME_Museum_ is about 8 feet long , 2 feet in diameter_ . Two_wide-chord_elliptical_wings_ are mounted on either_side_ just below the_center_ of the_missile_ . Much_smaller_rectangular_fins_ are at the_extreme_rear_ of the_airframe_ . The launcher consisted of a_bridgework_ placed on the_gun_ mounting , with two_rails_ on top_ of the_bridgework_ . The_missile_fuselage_rode_ in the_gap_ between the_rails_ , with the_rockets_ wrapped around the_fuselage_ and falling away after launch_ . 
-
-One_problem_ with the_guidance_system_ that was not solved during Brakemine's_development_ was its_reliance_ on a_known_launch_orientation_ providing an_"up"_direction_ . If the_missile_ rolled during its_initial_flight_ before the_guidance_system_ activated , this_direction_ would not be set correctly and the_automated_system_ that attempted to keep the_missile_ centered in the_radar_beam_ would instead send out corrections_ that would move it_ further away from it_ . 
-
-Survivors_ . 
-A_single_Brakemine_missile_ is preserved in the_REME_Museum_ of Technology_ . Charles_Rinker_ 
-
-Charles_Rinker_ was an_American_lyricist_ who_ worked frequently with Gene_de_Paul_ and Bob_Rothberg_ , among others_ . His_older_brother_ , Al_Rinker_ , formed the_Rhythm_Boys_ with Bing_Crosby_ in 1925 . His_sister_ , Mildred_Bailey_ , was a_popular_and_influential_American_jazz_singer_ during the_1930s_ . 
-
-His_mother_ , Josephine_ , was an_enrolled_member_ of the_Coeur_d'Alene_people_ and a_devout_Roman_Catholic_ . His_father_ , Charles_ , played fiddle_ and called square dances . His_mother_ played piano_ every evening after supper_ . His_brother_ was vocalist and composer Al Rinker . His_sister_ , Mildred_Bailey_ , was a_popular_and_influential_American_jazz_singer_ during the_1930s_ . 
-
-Charles_Rinker_ wrote twenty-seven_songs_ with Gene_de_Paul_ , including " Your_Name_ is Love_ " , which has been recorded by George_Shearing_ , Nancy_Wilson_ , and others_ . August_Strindberg_ paintings 
-
-This is a_gallery_ of August_Strindberg's_paintings_ . 
-See also . 
--_August_Strindberg_bibliography_ 
-Essen_ – Gelsenkirchen_railway_ 
-
-The_Gelsenkirchen_Essen_railway_ is a_double-track_ , electrified main_line_railway_ in the_central_Ruhr_area_ of the_German_state_ of North_Rhine_ - Westphalia_ . It_ runs from Essen_Hauptbahnhof_ via Essen-Kray_Nord_ to Gelsenkirchen_Hauptbahnhof_ . 
-
-History_ . 
-Between 1866 and 1874 the_Rhenish_Railway_Company_ ( , RhE_ ) built its_own_Ruhr_line_ from Osterath_ on the_Lower_Left_Rhine_Railway_ to Dortmund_RhE_station_ , in competition_ with the_Witten/Dortmund–Oberhausen/Duisburg_railway_ built by the_Bergisch-Märkische_Railway_Company_ ( "Bergisch-Märkische_Eisenbahn-Gesellschaft_ " , BME_ ) between 1860 and 1862 and the_Duisburg–Dortmund_railway_ completed by the_Cologne-Minden_Railway_Company_ ( "Cöln-Mindener_Eisenbahn-Gesellschaft_ " , CME_ ) in 1848 and which ran a_little_further_north_ . 
-
-The_line_ was opened to " Wattenscheid_RhE_ " ( later called " Gelsenkirchen - Wattenscheid " ) station in 1868 and completed to "Dortmund_RhE_ " six years later . During construction_ of the_line_ a_branch_ was built in 1870_joint_CME_ and BME_"Duisburg_station_ " ( now_Duisburg_ Hauptbahnhof_ ) in order_ to be competitive . 
-
-Kray–Gelsenkirchen_ . 
-For the_same_reason_ , the_RhE_ built a_branch_ from its_Ruhr_line_ at Kray_station_ ( now_Essen-Kray_Nord_station_ ) to the_north_ , which was opened on 13_February_ 1872 for freight_ and on 1_June_ 1872 for passengers_ . The_line_ ended at "Gelsenkirchen_RhE"_station_ , south of the_CME_Duisburg–Dortmund_line_ , less than half a kilometre from "Gelsenkirchen_CME"_station_ ( now_"Gelsenkirchen_Hauptbahnhof_ " ) . 
-
-In 1876 , a_passenger_station_ was opened midway on the_line_ near Dahlbusch_colliery_ as "Dahlbusch"_station_ ; in 1895 a_freight_yard_ was opened there . The_station_ has been renamed several times , first in 1898 as "Dahlbusch_Rotthausen_ " , in 1907 as "Rotthausen_(Kreis_Essen_ ) " and finally in 1924 as Gelsenkirchen-Rotthausen_station_ . 
-
-After the_nationalisation_ of all of the_(nominally)_private_railway_companies_ in Prussia_ at the_end_ of the_19th_century_ , the_Prussian_state_railways_ began on the_one_hand_ to eliminate or merge unnecessary_or_redundant_rail_facilities_ , and on the other to build new_lines_ connecting the_individual_sections_ of the_former_railway_companies_ . 
-
-For this_reason_ , the_"Rhenish"_station_ in Gelsenkirchen_ was closed in 1904 and all_traffic_ was moved to the_"Cologne-Minden"_station_ , which was then rebuilt on a_large_scale_ and renamed in 1907 as " Gelsenkirchen_Hauptbahnhof_ " . To be able to serve this_station_ without a_level_crossing_ , an_additional_connection_ was built to Rotthausen_ (VzG_line_number_ 2237 ) , which passes under the_Cologne-Minden_trunk_line_ on the_tracks_ of an_old_freight_line_ ( now occupied by the_street_ of Rotthauser_Strasse_ ) . The_entire_line_ was then duplicated to Kray_Nord_ , which was completed in 1908 . 
-
-Rotthausen–Schalke/Gelsenkirchen–Hessler_ . 
-Only half a year after completion_ of the_line_ from Kray_ to Gelsenkirchen_ , on 18_September_ 1872 , the_RhE_ opened a_siding_ to the_Wilhelmine_Victoria_colliery_ in the_district_ of Hessler_ , together with "Schalke_RhE"_station_ . Since this crossed the_important_Cologne-Minden_main_line_ on the_level_west_ of Gelsenkirchen_ , the_station_ and siding_ were closed at the_end_ of the 1880s following the_nationalisation_ of the_railways_ , after less_than_twenty_years_ of operation_ . In 1893 , the_station_ reopened as " Schalke_Süd_ " ( from 1907 it_ was called " Gelsenkirchen - Schalke Süd " ) . 
-
-The_siding_ from Gelsenkirchen_ was upgraded to a_regular_freight_line_ and a_connection_ was opened to Hessler_station_ on the_BME_Emscher_Valley_Railway_ on 1_April_ 1897 . The_track_ was duplicated between Hessler_ and Schalke_Süd_ in 1898 and two_years_later_the_track_ to Gelsenkirchen_ was also duplicated . The_line_ was also used for passenger_transport_ from 1_May_ 1902 . 
-
-On 12_September_ 1903 , freight_traffic_ was resumed on the_original_line_ between Rotthausen_and_Schalke_Süd_stations_ . Freight_traffic_ on the_line_ was abandoned on 28_May_ 1967 and the_section_ was closed completely on 1_June_ 1969 . 
-
-By 1933 , passenger_traffic_ between Gelsenkirchen_Hauptbahnhof_ and Gelsenkirchen-Hessler_station_ had been closed . After the_Second_World_War_ it_ had a_short_revival_ from 4_May_ 1947 to 8 May_ 1948 . In the_1970s_ , the_second_track_ was dismantled and on 30_September_ 1979 the_line_ was designated as a_branch_line_ . 
-
-Kray–Wanne_ . 
-On 25_March_ 1875 , the_RhE_ opened another_branch_line_ from Kray_ , this was a_9 km_long_line_ that ran almost directly to "Wanne_CME"_station_ ( now_Wanne-Eickel_Hauptbahnhof_ ) . This was only ever used for freight_ and was closed on 1_August_ 1890 . Following its_closure_ , the_line_ continued to be used under the_VzG_line_number_ of 2209 as a_colliery_ siding . Part_ of it_ later became part_ of the_Gelsenkirchen–Wanne-Eickel_freight_line_ ( line_number_ 2231 ) . 
-
-Essen_ – Kray_Nord_ . 
-On 1_May_ 1905 , the_Royal_Railway_Division_ of Essen_ ("königliche_Eisenbahndirection_Essen_ " ) opened a_southern_extension_ of the_reconstructed_line_ from Gelsenkirchen_ to connect with the_line_ from Essen_Hauptbahnhof_ to Gelsenkirchen-Bismarck_ ( via Stoppenberg_ and Katernberg-Nord_ ) , an_originally_single-track_line_ , at Frillendorf_junction_ . 
-
-Platforms_ were built on the_new_line_ parallel to Kray_station_ on the_former_RhE_line_ . The_station_ was renamed " Kray Nord " station in 1896 after the_opening_ of the_Kray_Süd_station_ on the_Essen–Wattenscheid–Bochum_line_ . Since 16_July_ 1914 , the_line_ has been fully duplicated from Essen_Hauptbahnhof_ to Kray_Nord_ . 
-
-Development_ . 
-More_than_30_years_ passed between the_construction_ of the_two_sections_ of the_line_ , which were both originally intended only as supplements_ to the_Rhenish_line_ . Nevertheless , they_ became increasingly important , while the_Rhenish_line_ increasingly lost its_importance_ because of its_poor_location_ between the_Cologne-Minden_ and the_Bergisch-Märkische_lines_ . 
-
-The_combination_ of the_two_sections_ made a_main_line_ between two_major_railway_stations_ . After the_Second_World_War_ the_line_ was upgraded and the_whole_line_ was electrified on 27_May_ 1962 . 
-
-Between 1972 and 1974 , the_line_ was realigned from the_eastern_end_ of Essen_Hauptbahnhof_ as part_ of the_redevelopment_ for the_Rhine-Ruhr_S-Bahn_ , its_connection_ to the_line_ via Stoppenberg_ to Gelsenkirchen-Bismarck_ , which had been abandoned in 1970 , was removed and connections_ were built to Essen-Kray_ via a_flying_junction_ to the_two_S-Bahn_tracks_ on the_south_side_ of the_station_ , as well as to the_terminating_tracks_ on the_north_side_ of the_station_ . 
-
-Current_operations_ . 
-The_Rhenish_Ruhr_line_ is now closed along with most of its_branch_lines_ or reduced to stations_ and sidings_ . The_connecting_line_ from Gelsenkirchen_ to Gelsenkirchen-Hessler_ only serves to connect with the_Essen_Katernberg_Nord_ siding of the_former_Bergisch-Märkische_Railway’s_Emscher_Valley_Railway_ , which otherwise would have no_connection_ to the_railway_network_ anymore . 
-
-The_line_ between Essen_ and Gelsenkirchen_ , however , is served by a_variety_ of passenger_services_ , with intermediate_stops_ at Essen-Kray_Nord_ and Gelsenkirchen-Rotthausen_ , which are served only once an hour by S-Bahn_line_S2_ . 
-
-Rail_services_ . 
-In long-distance_rail_passenger_traffic_ , the_line_ is served two_inter-city_routes_ : 
-
-In regional_transport_ , the_line_ is served , on behalf_ of the_Verkehrsverbund_Rhein-Ruhr_ , by the_following_Regional-Express_ , Regionalbahn_ and S-Bahn_ lines_ : 
-Veenendaal_Centrum_railway_station_ 
-
-Veenendaal_Centrum_ is a_railway_station_ located in Veenendaal_ , The_Netherlands_ . The_station_ was opened in 1886 , closed in 1944 and reopened in 1981 . It_ is located on the_Kesteren–Amersfoort_railway_ . The_train_services_ are operated by Nederlandse_Spoorwegen_ . 
-
-Train_services_ . 
-The_following_services_ currently call at Veenendaal_Centrum_ : 
-- 2x per hour_local_service_ ("sprinter_ " ) (Amsterdam_-)_Breukelen_-_Utrecht_ (-_Veenendaal_Centrum_ ) ( peak_hours_ only ) 
-- 2x per hour_local_service_ ("sprinter_ " ) Breukelen_-_Utrecht_-_Rhenen_ 
-
-Umaria_Coalfield_ 
-
-Umaria_Coalfield_ is located in Umaria_district_ in the_Indian_state_ of Madhya_Pradesh_ in the_valley_ of the_Umrer_River_ , a_tributary_ of the_Son_River_ . 
-
-History_ . 
-In 1886 , W.W._Hunter_ wrote , “Extensive_coalfields_ have recently been discovered at Umaria_ , within the_native_state_ of Rewa_ … ” 
-
-Umaria_Coalfield_ , which was owned by Rewa_Coalfields_Limited_ , was nationalized in 1973 . 
-
-The_coalfield_ . 
-Umaria_Coalfield_ is a_part_ of Central_India_Coalfields_ . The latter is spread over the_districts_ of Surguja_ , Koriya_ ( both in Chhattisgarh_ ) , Shahdol_ and Umaria_ ( both in Madhya_Pradesh_ ) . There are fourteen_coalfields_ in this_group_ , namely_Korar_ , Umaria_ , Johilla_ , Sohagpur_ , Sonhat_ , Jhilimili_ , Chirimiri_ , Sendurgarh_ , Koreagarh_ , Damhamunda_ , Panchbahini_ , Hasdeo-Arand_ , Lakhanpur_ and Bishrampur_ . The_group_ covers an_area_ of about with estimated_reserves_ of 15,613.98_million_tonnes_ . The_deposits_ are at a_depth_ of 0-1200_meters_ . Therefore , extraction_ is mainly amenable to underground_mining_ except a_few_blocks_ in eastern_part_ of these_coalfields_ which have opencast_potential_ . 
-
-In Umaria_Coalfield_ , the_Lower_Gondwana_rocks_ are well developed . The_coalfield_ has an_estimated_reserve_ of 181.29_million_tonnes_ , spread across six_coal_seams_ . The_coals_ are relatively high in moisture_ ( 7-10%_ ) and high in ash_ ( 18.6-29.4%_ ) . South_Eastern_Coalfields_Limited_ operates eight_mines_ . 
-
-According to Geological Survey of India_ reserves of non-coking_coal_ up to a_depth_ of 300_m_ in Umaria_Coalfield_ was 181.29_million_tonnes_ . 
-Kanchan_Open_Cast_Mine_ is being expanded from 0.32_million_tonnes_ per annum_ to 0.65_million_tonnes_ per annum_ , with a_peak_capacity_ of 0.75_million_tonnes_ per annum_ . The_entire_overburden_ would be backfilled . There is 4_km_metalled_road_ connecting the_mine_ to Vindhya_Mine_ and onwards to Nowrozabad_Railway_ siding . 
-
-Transport_ . 
-The_Katni_Umaria_Railways_section_ was opened to traffic_ in 1886.The_line_ from Katni_ , from Allahabad_ on the_Jabalpur_line_ , to Umaria_ , then in Rewa_State_ , was accorded priority_ in construction_ , in order_ to connect Umaria_Coalfield_ to the_railway_system_ . 
-The_Bilaspur-Umaria_branch_line_ was opened in 1891 , linking the_entire_area_ to the_GIPR_system_ at Katni_ . Finanztest_ 
-
-Finanztest ( originally " FINANZtest " ) is a_consumer_magazine_ which focuses on providing objective_information_ about financial_services_ . Together with "test_ " it_ is one of the_two_main_publications_ of Stiftung_Warentest_ , the_German_foundation_ and consumer_organisation_ . 
-
-General_background_ . 
-" Finanztest " was first published in 1991 . It_ has appeared monthly since 1997 , and at the_present_time_ has a_circulation_ of 251,000_copies_ per month_ . However , according to a_survey_ by Allensbach_ , a_well-known_institute_ for public_opinion_research_ , each_issue_ is actually read by 1.3_million_readers_ . Approximately_205,000_copies_ are sold to subscribers_ and 46,000 at newsstands_ every month . The_magazine_ is free of adverts_ in order_ to ensure that it_ is totally independent of manufacturer_influence_ . Hermann-Josef_Tenhagen_ has been the_editor_ - in - chief_ since 1999 . 
-
-There are five_main_thematic_sections_ in the_magazine_ : " Legal_ and Everyday_Life_Issues_ " , "Investment_ and Provision_ for Retirement_ " , " Home_ and Living_ " ,_"Tax_ " , " Health_ and Insurance_ " . It_ publishes the_results_ of investigations_ of financial_services_ , for example_insurance_ , investment_products_ and loans_ , as well as advice_ about tax_and_legal_issues_ . Every month there is an_extensive_section_ providing a_comparison_ of interest_rates_ for various_savings_products_ , shares_ and investment_funds_ , as well as loans for buying property_ or a_car_ . 
-
-In addition_ to the_regular_magazine_ , there are several_special_issues_ each year dealing in more_detail_ with topics_ of particular_interest_ . In the_recent_past_ these included financial_advice_ for the self - employed , taking care_ of elderly_parents_ , and maximising tax_refunds_ . The_Finanztest_Yearbook_ with summaries_ of the_year's_investigations_ comes out every December . Details_ of all_the_investigations_ and reports_ can of course_ be downloaded , in part_ as a_paid-for_service_ . There are also product_picker_databases_ for investment_funds_ and statutory_health_insurance_ that are continuously updated . 
-
-Working_procedures_ and effects_ of its_investigations_ . 
-The_published_data_ and reports_ are based on the_investigations_ of the_financial_and_insurance_products_ on the_market_ which are carried out using scientific_methods_ by the_foundation's_own_staff_ . There was a_total_ of 85_investigations_ in 2010 . 
-
-Since more_and_more_companies_ do not wish to be surveyed and refuse to provide the_information_ requested , Stiftung_Warentest_ now also evaluates databases_ and business_reports_ , as well as relying on private_providers_ as sources_ of data_ . In addition_ , specifically_trained_freelancers_ often act as customers_ . Mystery_shoppers_ for example_ played an_important_role_ in testing out the_investment_advice_services_ of banks_ ( issue 08/2010 ) and the_statutory_health_insurance_providers_ ( issue 09/2010 ) . 
-
-" Finanztest"'s_investigations_ very definitely have an_effect_ on both_providers_ and politicians_ . For example_ , as a_result_ of unfavourable_results_ , consumer_unfriendly_financial_services_ , such as some of the_private_health_insurance_tariffs_ , have been taken off the_market_ . Following repeated_criticism_ , more_customer_friendly_terms_ and conditions_ have also been introduced by providers_ offering occupational_disability_insurance_ . As a_consequence_ of several_investigations_ published in Finanztest_ , Ilse_Aigner_ , the_Federal_Minister_ for Consumer_Protection_ announced in December_ 2010 that she_ also intends to make use_ of mystery_shoppers_ to check the_reliability_ of investment_advice_ offered by banks_ . 
-
-Advertising with investigation_results_ . 
-If they_ agree to abide by the_specified_terms_ and conditions_ and pay a_one-off_fee_ , providers_ are allowed to advertise using Stiftung_Warentest's_overall_verdicts_ on quality_ and the_Foundation's_logos_ . 
-
-"Finanztest"'s_official_logos_ as used in advertising_ : 
-
-"Riester"_–_mistakes_ and their_consequence_ . 
-Stiftung_Warentest_ has a_reputation_ for providing accurate_and_reliable_information_ with relevance_ for consumers_ . If mistakes_ are made , the Foundation deals with them_ openly and honestly , as was the_case_ in 2002 , with the_publication_ of the_incorrectly_calculated_results_ for the_"Riester-Rente_ " ( a_state-subsidised_privately_funded_pension_ introduced and named after the_German_politician_ Walter_Riester_ ) . The_complete_issue_ of "Finanztest_ " was withdrawn and a_public_apology_ was made . The_investigation_ was repeated , and the_new_results_ were published . In addition_ , they_ were also made available free of charge_ online . It_ was the_first_and_only_time_ in the_then_almost_40-year_history_ of the_Foundation_ that this happened – interestingly , over_100,000_copies_ of the_magazine_ with the_corrected_information_ were subsequently sold at newsstands_ and it_ was the_most_popular_"Finanztest"_issue_ that year . 
-
-Since 2005 , Finanztest_ has published reports_ every year on its_latest_investigations_ of the_various_Riester_state-subsidised_pension_schemes_ , the_Riester_fund_savings_plans_ and Riester_bank_savings_plans_ . Stiftung_Warentest's_financial_experts_ have regularly carried out investigations_ of Riester_loans_ and also_the_Riester_home_pension_scheme_ since it_ was introduced . Jerry_Benjamin_ 
-
-Jerry_Charles_Benjamin_ (November_ 9 , 1909 – November 23 , 1974 ) was an_American_Negro_league_baseball_center_fielder_ who_ played from 1931 to 1948 . He_ played for the_Knoxville_Giants_ , Memphis_Red_Sox_ , Detroit_Stars_ , Birmingham_Black_Barons_ , Homestead_Grays_ , Newark_Eagles_ , and New_York_Cubans_ . While with the_Grays_ , Benjamin_ won Negro_League_championships_ in 1941 , 1943 , 1944 , and 1948 . A_three_time_ East - West All - Star , he_ had a_.485_batting_average_ in 1943 . 
-
-Benjamin_ was born in Montgomery_ , Alabama_ , and died in Detroit_ , Michigan_ . EUROGEO-European_Association_ of Geographers_ 
-
-EUROGEO_ is a_European_scientific_society_ , which networks geographers_ from all_walks_ of life_ . It_ is an_international_non-governmental_organisation_ with a_wide_membership_ ( http://www.eurogeography.eu/_ ) . Since 1987 EUROGEO_ has been a_participative_member_ of the_Conference_ of International_NGOs_ of the_Council_ of Europe_ . The_association_ has considerable_experience_ in national_and_international_activities_ and projects_ in geography_ including those related to education_ and training_ . It_ is a_not_profit_organisation_ , which aims to develop , support and promote policies_ designed to advance the_status_ of Geography_ ; establish and promote cross-border_cooperation_ ; promote education_ and training_ in Geography_ from a_European_perspective_ and represent nationally and internationally the_views_ of its_members_ . 
-
-EUROGEO_activities_ include organising events_ , producing publications_ , supporting geographers_ in their_jobs_ and careers_ , the teaching of geographical_sciences_ , identifying and promoting good_practise_ , co - operating with the_European_Union_ , Council_ of Europe_ , European_Commission_ and other_relevant_organisations_ ; lobbying at global,_European_and_where_relevant_national_level_ , providing a_forum_ for the_discussion_ of matters_ of common_interest_ to geographers_ , giving advice_ on geography_ and making recommendations_ to policy_makers_ . 
-
-History_ . 
-Origin_ . 
-EUROGEO_ was first established in 1979 under the_name_ of European_Standing_Conference_ of Geography_Teachers_Association_ ( ESCGTA_ ) . In the_beginning_ it_ was an_association_ of associations_ . In 1994 , when other_European_countries_ became members_ , the_association_ took the_name_ of its_bulletin_ , EUROGEO : European Network of Geography_ Teachers ´_Associations_ . The principal aims of that_organisation_ were to advise and promote the_European_dimension_ in geographical_education_ and teaching about the_countries_ of Europe_ as a_contribution_ towards the_development_ of a_European_dimension_ in education_ . Members_ were geography_teacher_associations_ and geographical_associations_ from around Europe_ . Presidents_ of these_associations_ or their_representatives_ attended the_bi-annual_meetings_ that were originally organised and funded by the_European_Commission_ in Brussels_ . 
-
-First_activities_ . 
-EUROGEO_ was led by a_small_committee_ of volunteers_ headed by Henk_Meier_ representing the_Dutch_Geographical_Association_ ( KNAG_ ) . In between each of these_conferences_ a_EUROGEO_bulletin_ was published ( see table_ 1 ) . 
-
-Table_ 1 . Conferences_ and Bulletin_ of EUROGEO_ ( 1980 - 1996 ) 
-
-Twentieth_century_ . 
-In 1987 EUROGEO_ applied for and was accepted as an_international_NGO_ with representation_ at the_Council_ of Europe_ . Since this_time_ representatives_ from the_association_ have participated in NGO_meetings_ in Strasbourg_ , being the_voice_ of geography_ and geographers_ there . In 2003 the_status_ of EUROGEO_ , along with other_NGOs_ , was reviewed and the_association_ became a_fully_participating_NGO_ at the_Council_ of Europe_ (http://www.coe.int/t/ngo/_ ) . 
-
-In 1999 a_successful_application_ was made by EUROGEO_ for a_European_Minerva_Project_(Euro.Geo_ ) to produce materials_ that promote European_citizenship_ through the_use_ of ICT_ in teaching geography_ in school_education_ . The_project_ was coordinated by Karl_Donert_ at Liverpool_Hope_University_ . 
-
-At the_Liverpool_meeting_ of EUROGEO_ in 2001 , members_ of the_association_ decided to apply for a_project_ to share news_ and information_ about the_state_ and status_ of Geography_ in Europe_ . The_project_ produced a_Web_site_ , interactive_maps_ of Europe_ as well as teaching_ and training_ resources_ in different_languages_ . 
-
-Henk_Meijer_ decided to stand down and in 2002 and during the_EUROGEO_Annual_meeting_ held in Madeira_ , Portugal_ at elections_ for new_Presidium_Karl_Donert_ was elected President of the_association_ . 
-
-Twenty-first_century:_Networking_ : the_HERODOT_Network_ for Geography_ in higher_education_ and teacher_training_ . 
-In 2002 , the_proposal_ to establish a_Socrates-Erasmus_Thematic_Network_project_ on university_Geography_ and the_Bologna_Process_ funded by the_European_Commission_ was successful . This was the_HERODOT_Network_ for Geography_ in Higher_Education_ ( http://www.herodot.net_ ) . This_thematic_network_ was coordinated by Liverpool_Hope_University_ and led by Karl_Donert_ . HERODOT_ sought to improve the_quality_ of learning_ and teaching in higher_education_ and teacher_training_ and address_ issues_ raised by the_Bologna_Process_ like quality_assurance_ , the_use_ of new_technologies_ and research_ in geographical_education_ . 
-
-There were two_phases_ of the_project_ that ran from 2002–2005 and 2006 - 2009 . A_large_number_ of publications_ were produced and many_events_ were held around Europe_ dealing with issues_ relating to Geography_ in higher_education_ and teacher_training_ . Members_ of EUROGEO_ participated in the_funded_network_ . Under HERODOT_ , Geography_ became a_subject_ assessed under the_project_ Tuning_Educational_Structures_ in Europe_ ( http://tuningacademy.org/herodot-geography-2003-2010/_ ) . 
-
-By 2009 HERODOT_ had connected more_than_300_organizations_ throughout all_European_countries_ and 60_partners_ from other_countries_ around the_world_ . These_partners_ joined HERODOT_meetings_ and workshops_ to share their_ideas_ , innovations_ and best_practice_ online and face - to - face_ . The_broad_partnership_ of the_network_ included universities_ and research_centres_ , companies_ and NGOs_ as well as teacher_training_ and other_education_bodies_ like Ministries_ of Education_ . Many of those who_ participated in the_work_ of HERODOT_ are still actively collaborating in follow_up_activities_ , project_ and meetings_ . 
-
-The_idea_ to establish a_European_Geography_association_ that supported not_only_teachers_ and educators_ , but also geographers working in other_professions_ came as a_result_ of the_discussions_ that took place_ at several_Herodot_meetings_ . 
-
-At the_annual_meeting_ of EUROGEO_ in Liverpool_ in September_ 2008 , member_associations_ unanimously agreed to change the_legal_status_ and remit of the_association_ . This was presented to HERODOT_partners_ , after which members_ of the_EUROGEO_Presidium_ and the_HERODOT_Core_Group_ held a_joint_meeting_ to form a_working_group_ to restructure the_association_ as a_membership_organisation_ . 
-
-After lengthy_discussions_ both_organisations_ held a_joint_meeting_ in Ayvalik_ , Turkey_ in June_ 2009 , where the_new_EUROGEO_association_ held its_first_elections_ and passed its_revised_statutes_ . Karl_Donert_ was then elected president of EUROGEO_ . This was the_final_meeting_ of the_HERODOT_network_ . The_new,_restructured_organisation_ now deals with educational,_scientific,_research_ and applied_parts_ of Geography_ with a_European_perspective_ . 
-
-EUROGEO_cooperates_ with many_other_international_institutions_ and associations_ including the_AAG_(http://www.aag.org_ ) , SEAGA_ and the_International_Geographical_Union_ (IGU_ ) ( http://igu-online.org ) and is a_stakeholder_organisation_ in the_UNEP_ , EyeonEarth_ and " Geo for All "_(http://www.geoforall.org)_initiatives_ . 
-
-Membership_ . 
-EUROGEO_members_ are geographers_ and related_professionals_ who_ work in the_public,_private,_and_academic_sectors_ . They_ work in a_wide_range_ of careers_ , as teachers_ and trainers_ , state_and_local_government_employees_ , planners_ , cartographers_ , scientists_ ,_non-profit_workers_ , entrepreneurs_ , business_people_ , graduate_students_ , retirees_ , and university_administrators_ . 
-
-There are three_categories_ of membership_ : 
-1 . Individual_members_ 
-2 . Organisational_members_ 
-3 . Young_members_ including EGEA_ ( EGEA_ is the_European_Association_ of Young_Geographers_ , http://www.egea.eu_ ) 
-
-Joining the_association_ is easy , visit http://www.eurogeography.eu/about-2/membership/ 
-
-Publications_ . 
-EUROGEO_ has published a_large_number_ of books_ , articles_ , magazines_ and conference_proceedings_ and the_society_ has developed the_European_Journal_ of Geography_ ( http://www.eurogeographyjournal.eu/ ) . The_European_Journal_ of Geography_ published its_first_issue_ in 2010 and since then has regularly_produced_issues_ and widely_cited_articles_ on geographical_themes_ relevant to the_activities_ of the_association_ . In February_ 2014 the_European_Journal_ of Geography_ was accepted and indexed in Scopus_ . 
-
-EUROGEO_ is associated with the_geography_education_journal_ , the Review of International_Geographical_Education_Online_ ( http://www.rigeo.org/ ) , which developed as an_initiative_ from HERODOT_members_ . 
-
-Recent_projects_ . 
-EUROGEO_ regularly applies for new_projects_ , currently under the_Erasmus_ + ,_Jean_Monnet,_Citizenship_and_Horizon_2020_Programmes_ . They_ are available on : http://www.eurogeography.eu/projects_ ( Table_ 2 ) 
-
-Since 2009 , the_number_ of innovative_geographical_projects_ EUROGEO_ has been involved in has increased . Four_types_ of projects_ have been developed and supported i)_networks_ , ii )_multilateral_projects_ iii ) awareness raising and iv ) support for associations_ . 
-
-EUROGEO_ has been responsible for the_creation_ of networks_ of academics_ and educators_ on specific_priority_themes_ , such as the_digitalearth.eu_ : geomedia_ in schools_network_ ( Lifelong Learning Programme ) http://www.digital-earth.eu , where a_number_ of Digital_Earth_Centres_ of Excellence_ ( http://www.digital-earth-edu.net_ ) were accredited , and since 2013 , the_School_ on the_Cloud_network_ : connecting education_ to the_Cloud_ for digital_citizenship_http://www.schoolonthecloud.eu/._ 
-EUROGEO_ has participated in a_large_number_ of multi-lateral_education_development_projects_ . These have established training_ of teachers_ and educators_ in important_geographical_areas_ , such as GIS_ ( the_iGuess_ and iGuess_ 2_Projects_http://www.iguess.eu_ ) , data_ and statistics_ in schools_ ( the I - Use Project http://www.i-use.eu ) and more_recently_powerful_disciplinary_knowledge_ ( the GeoCapabilities project http://www.geocapabilities.org_ ) . 
-GeoCapabilities_ is a_3-year_project_ with a_key_objective_ to create teacher_training_materials_ to develop teachers_ as curriculum_leaders_ … through a_'capabilities'_approach_Capability_approach_ . The_project_ embraces diversity_ in culture_ and language_ and in how geography_ is understood and expressed in national_school_standards_ . The_project_ believes that a_capabilities_approach_ helps geography_educators_ in all_jurisdictions_ articulate the_relevance_ and power_ of learning how to think geographically . The_key_output_ is " to develop and pilot an_online_professional_development_communications_platform_ for teacher_preparation_ in geography_ . " This includes resources_ ( teaching_materials_and_communications_tools_ ) , international_collaboration_ and online_teacher_exchanges_ . 
-EUROGEO_participates_ in the_SeaChange_Horizon_2020_Project_http://www.seachangeproject.eu_ , raising awareness_ of the_importance_ of Ocean_Literacy_ . The_project_ aims to establish a_fundamental_"Sea_Change_ " in the_way_ European_citizens_ view their_relationship_ with the_sea_ , by empowering them_ , as Ocean Literate citizens , to take direct_and_sustainable_action_ towards a_healthy_ocean_ and seas_ , healthy_communities_ and ultimately_a_healthy_planet_ . 
-EUROGEO_ has been coordinating since 2016 the_YouthMetre_Forward_Looking_Project_ that addresses EU_Youth_Priority_ 7 " Using e-participation_ as an_instrument_ to foster young_people's_empowerment_ and active_participation_ in democratic_life_ " . The_aim_ is to empower young_people_ to become engaged and affect EU_youth_policy_ . An_e-tool_ will be produced to close the_gap_ between youth_ and institutions_ by collecting the_perceived_needs_ of youth_ in key_policy_areas_ and providing guidelines_ to public_institutions_ that help address them_ . Through training YouthMetre_ will provide youngsters_ with necessary_skills_ and knowledge_ to foster effective_implementation_ by policy_makers_ of the_guidelines_ provided by the_"Youthmetre_ " . 
-
-In 2013 EUROGEO_ was awarded a_Jean_Monnet_grant_ for pan-European_associations_ . 
-
-Table_ 2 . Participation_ of EUROGEO_ in EU_projects_ 
-
-Conferences_ . 
-The_Association_ organizes events_ and activities_ for members_ , the most relevant of these is the_annual_conference_ and the_Annual_Meeting_ ( see table_ 3 ) . 
-
-Table_ 3 . Annual_Conferences_ 
-
-Governance_ . 
-EUROGEO_ is managed by its_Presidium_ , which consists of a_President_ , Secretary_General_ , and Treasurer_ and up to five Vice Presidents . The_Presidium_ is responsible for the_finances_ and administration_ of the_association_ and in maintaining the_web_site_ of the_association_ and other_information_sources_ . Co-opted_members_ may be invited to join the_Presidium_ for specific_activities_ . 
-
-Coelostegus_ 
-
-Coelostegus_ is an_extinct_genus_ of Late_Carboniferous_ ( late_Westphalian_stage_ ) basal reptile known from Pilsen_ of Czech_Republic_ . It_ is known from the_holotype_ČGH_ 3027 , a_partial_skeleton_ of an_immature_individual_ . It_ was collected in the_Nýřany_site_ from the_Nýřany_Member_ of the_Kladno_Formation_ . It_ was first named by was first named by Robert_L._Carroll_ and Donald_Baird_ in 1972 and the_type_species_ is "Coelostegus_prothales_ " . The_most_recent_phylogenic_study_ of primitive_reptile_relationships_ found "Coelostegus_ " to be the basalmost known eureptile . Phantom_Breaker_ 
-
-Gameplay . 
-" Phantom_Breaker_ " is a_2D_fighting_game_ that supports two_distinctive_fighting_styles_ , the_player_ is able to choose between Quick_style_ and Hard_style_ . Quick_style_ focuses on quick_hits_ and combos_ while the other is more about defense_ . 
-
-When the_player_ reaches Overdrive_mode_ , their_character_ might get an_extra_increase_ in speed_ or defense_ . Every_attack_ the_player_releases_ can cancel out their_enemy's_attack_ and raise their_tension_gauge_ ; timing it_ right will maximise the_player's_gauge_ to boost their_attack_power_ . 
-
-Plot_ . 
-The_game's_setting_ takes place_ in Japan_ . A_mystery_organization_ led by "Phantom_ " organised a_fighting_tournament_ in Tokyo_ , whose_winner_ will have their_wish_ granted . 
-
-Characters_ . 
-There is a_total_ of 18_playable_characters_ in the_game_ . An_additional_"female_gang_member"_character_ was planned , but never made it_ into the_final_game_ . 
-
--_A_19-year-old_college_violinist_ . Her_weapon_ is a_large,_two-handed_sword_ named Maestro . . 
--_A_14-year-old_idol_ . Her_weapon_ is a_magical_wand_ called Candy . . 
--_A_high_school_girl_ , who_ is also a ninja - in - training_ from the_Bakufu_era_ . Her_weapons_ are Shoukaku and Zuikaku — a_ninja_blade_ and a_kunai_ . . 
--_A_descendent_ of the_miko_ ( a_family_ of exorcists_ that have had some_dealings_ with Phantom_ in the_past_ ) . She_ fights with Kahoutou_ , her_naginata_ , to stop the_duels_ . . 
-- One of the_few_males_ in this_contest_ . He_ is fighting to cure his_little_sister_ of an_incurable_disease_ . He_ fights with a_gauntlet_ named Koutarou . . 
-- She_ has no_memories_ and fights only to satisfy her_lust_ for battles_ . Her_weapon_ of choice_ is a_mace_ made of scrap_materials_ , named Humongous . . 
-- She_ does not know much of the_world_ and have a_gentle_personality_ but a_strong_sense_ of justice_ . She_ beats opponents_ over the_head_ with her_battle_hammer_ , Maggie_ . . 
-- She_ finds out that one of the_other_combatants_ in Phantom_Breaker_ killed her_mother_ , and she_ is on a_quest_ for revenge_ . She_ fights with two_blades_ called Aldina . . 
--_The_other_male_main_character_ in this_game_ . He_ is the_CEO_ of a_pharmaceutical_company_ and he_ is fighting in order_ to resurrect his_parents_ , who_ were assassinated fifteen years ago . He_ uses a_long_sword_ named Setsuna . . 
-- She_ got bored with the_real_world_ and modified her_body_ into an_idealized_version_ , based on a_video_game_ she_ liked . Her_occupation_ is cosplaying . She_ fights with a_giant_claw_ called Kusenia ’s Claw_ . . 
--_A_9-year_old_time-traveler_ from the_future_ who_ is part_ of the_organization_ “Schrodinger_ ” . She_ is accompanied by a_droid_ named Mauchuu . Her_weapons_ are all-purpose_laser_guns_ named JJ Apple . . 
-- He_ is not a_main_character_ but the_bodyguard_ to the_mysterious_Phantom_ . He_ fights using telekinesis_ . . 
-- A_new_character_ added in " Phantom_Breaker_ : Extra_ " . Sofia_ is a_Fu-mantion_Artifact_ made by the_Russian_Science_Academy_ that despises Phantom_ . . 
-- A_new_character_ added in " Phantom_Breaker_ : Extra_ " . A_former_senior_official_ that worked for Phantom_ who_ wants to bring Japan_ back to its_militarism_dogma_ . . 
-- A_new_character_ added in " Phantom_Breaker_ : Extra_ " . Ende_ is from the_Schrödinger_Space-Time_patrol_group_ brings a_giant_robot_ named Nataku into battle_ . . 
-- A_new_character_ added in " Phantom_Breaker_ : Extra_ " . Gaito_ & Rin_ are a_team_ , but Rin_ , a_6-year-old_girl_ , controls Gaito_ , an anti - soul that is brimming with power_ . (Gaito_ ) & Yuka_Ōtsubo_(Rin_ ) . 
--_Guest_character_ from Chaos;Head_ . She_ is an_Esper_ who_ can conjure whatever she_ imagines . She_ does not possess a_known_weapon_ . . 
--_Guest_character_ from "Steins;Gate_ " . She_ is a_genius_ who_ graduated early from an_American_university_ and helps out in a_circle_ that develops strange_inventions_ . She_ uses these_strange_inventions_ in gameplay_ . . 
-
-Release_ . 
-" Phantom_Breaker_ " was initially slate to be launched in April_ 2011 , but was delayed and released in June_ 2011 . The_game_ had been announced for a_first_quarter_ 2012 North_American_release_ by 7Sixty ( a_subsidiary_ of SouthPeak_Games_ ) but the_release_ has since been cancelled for unknown_reasons_ . 
-
-"Phantom_Breaker_ : Another_Code_ " . 
-An_arcade_version_ of the_game_ running on the_RingEdge_2_board_ titled was released on April_ 4 , 2013 . Version_ 1.1 was released on June_ 2013 . This_version_ adds Infinity_ , the_game_ ’s final_boss_ , as a_playable_character_ , rebalanced_gameplay_ , and a_new_opening_movie_ . 
-
-"Phantom_Breaker_ : Extra_ " . 
-In May_ 2013 , 5pb_ . announced a_new_updated_version_ of "Phantom_Breaker_ " titled " Phantom Breaker : Extra_ " which was released for the_PlayStation_ 3 and Xbox_ 360 on September_ 19 , 2013 . It_ features rebalanced_gameplay_ , new_characters_ , new_techniques_ , new_"Extra"_fighting_style_ , new_stages_ , renewed_background_effects_ , and an_online_spectator_mode_ . Unlike the_first_console_release_ , it_ is region - free . Edward_E._Kramer_ 
-
-Edward_E._Kramer_ ( born March 20 , 1961 ) is an_American_editor_ who_ has edited several_science_fiction_ , fantasy_ , and horror_works_ , was co - founder and former part - owner of the_Dragon*Con_media_convention_ and is a_convicted_child_sex_offender_ . He_ lives in Duluth_ , Georgia_ and is former_program_director_ of the_Metropolitan_Atlanta_Council_ on Alcohol_ and Drugs_ . Before pleading guilty to three_counts_ of child_molestation_ , Kramer_ was the_subject_ of a_long-running_legal_battle_ . 
-
-Early_life_ . 
-Kramer_ was born in Brooklyn_ , New_York_ . He_ holds a_Bachelor_ of Science_ in psychology_ from Emory_College_ and a_Master_ of Public_Health_ in health_administration_ and planning from the_Rollins_School_ of Public_Health_ at Emory_University_School_ of Medicine_ . 
-
-Career_ . 
-Editing_ . 
-Kramer_ is the_editor_ of the_anthologies_ "Dark_Love_ " and "Grails_ " ( Roc_Books_ ) ; " The_Sandman_ : Book_ of Dreams_ " by Neil_Gaiman_ ( HarperPrism_ ) ; "The_Crow_ " , by James_O'Barr_ ( Random_House_ ) ; "Free_Space_ " ( Tor_Books_ ) ; " Forbidden_Acts_ " ( Avon_Books_ ) ; " Elric_ : Tales_ of the_White_Wolf_ " and "Pawn_ of Chaos_ : Tales_ of the_Eternal_Champion_ " ( based on the_works_ and characters_ of Michael_Moorcock_ ) ; " Dante's_Disciples_ " , " Tombs_ " , and the_"Dark_Destiny"_trilogy_ ( White_Wolf_ ) ; and "Strange_Attraction_ : Turns of the_Midnight_Carnival_Wheel_ " ( Bereshith_Publishing_ ) . He_ has also worked for over_a_decade_ as a_music_critic_ and photojournalist_ . 
-
-Dragon_Con_ and other_events_ . 
-In 1987 , he_ co - founded Dragon*Con , a_convention_ dedicated to science_fiction_ , fantasy_ , comics_ , gaming_ , and the_popular_arts_ . He_ has not been involved with Dragon_Con_planning_ or activities_ since 2000 ; but still owned 34%_ of the_business_ until Kramer's_relationship_ with the_convention_ was ended in July_ 2013 in a_cash-out_merger_ . 
-He_ has also chaired the_1990_Atlanta_Origins_convention_ , the_1992_Georgia_World_Fantasy_Convention_ , and the_Nebula_Awards_Weekend_ , and both_the_Atlanta_World_Horror_Convention_ , and the_North_American_Science_Fiction_Convention_ ( NASFiC_ ) in 1995 . In 1999 , he_ chaired the_Atlanta_World_Horror_Convention_ . 
-
-Child_sex_offense_arrests_ and convictions_ . 
-Kramer_ was arrested on August_ 25 , 2000 following an_investigation_ spurred by an_anonymous_tip_ , and charged with molesting three_teenage_boys_ . The_investigation_ revealed that Kramer_ had previously been accused of molestation_ in 1997 before the_alleged_victim_ recanted . Before Kramer_ was arrested , he_ had a_reputation_ for inappropriate_relationships_ . According to "Atlanta_Magazine_ " , Kramer_ " was constantly surrounded by young_boys_ . " 
-
-Kramer's_first_attempt_ to serve his_pre-trial_detention_ in house_arrest_ lasted only a week due to a_reported_visit_ by a_teenage_boy_ . After Kramer_ suffered a_spinal_injury_ in jail_ , Judge_Debra_Turner_ allowed him_ to go back to house_arrest_ in January_ 2001 . This lasted until 2008 when his_travel_ban_ was lifted . 
-
-In September_ 2011 , Kramer_ was arrested after Connecticut_police_ found him_ in a_motel_room_ , unsupervised , with a_14-year-old_boy_ despite being banned from contacting anyone_ under 18 . The_felony_"risk_ of injury_ to a_child_ " was added to the_list_ of charges_ for which Kramer_ was to stand trial_ . 
-
-In September_ 2012 , Kramer_ was being held at the_MacDougall-Walker_Correctional_Institution_ , a_maximum_security_facility_ in Suffield_ , Connecticut_ , before his_extradition_ to Georgia_ in January_ 2013 . On April_ 26 , 2013 , he_ was denied the_chance_ to post bail_ , as the_presiding_judge_ concluded based on past_behavior_ that he_ was likely to break the_conditions_ of his_bond_ . 
-
-In 2007 , Congressman_Bob_Barr_ said , " There is an_overwhelming_sense_ of injustice_ that pervades all of what_ has happened to Petitioner_Appellant_Edward_Kramer_ . " Protests_ to "Free_Ed_ " gained the_support_ of science_fiction_writers_Harlan_Ellison_ , Anne_McCaffrey_ , Robert_J_Sawyer_ and J._Neil_Schulman_ . Conversely , Gwinnett_County_District_Attorney_Danny_Porter_ said in September_ 2010 that Kramer_ had " done nothing_ but delay_ and blame everyone_ else but himself_ " , agreeing with an_assessment_ that the_Georgia_Court_ of Appeals_ gave in September_ 2007 : " The_record_ strongly indicates that Kramer_ either sought or knowingly acquiesced in the_great_majority_ of the_delay_ and did not want a_speedy_trial_ . " Kramer_ and his_lawyers_ disputed this , stating that he_ had serious_health_issues_ that prevented him_ from sitting through a_long_trial_ . 
-
-On December_ 2 , 2013_Kramer_ , in a_plea_bargaining_deal_ , pleaded guilty by way_ of an_Alford_plea_ to one_charge_ for each of the_three_victims_ , just before his_trial_ was scheduled to start . 
-In 2014 , Kramer_ sought to reverse the_2013_plea_ , with his_lawyer_ claiming Kramer_ was forced into the_plea_bargain_ through prosecutorial_misconduct_ . The_Georgia_State_Attorney’s_Office_ ordered the_recusal_ of both_the_district_attorney_ and the_Gwinnett_District_Attorney’s_Office_ from the_case_ , since they_ were also witnesses_ in the_action_ . All_Gwinnett_County_Judges_ voluntarily recused themselves_ as well . 
-
-Bibliography_ . 
--_"Tales_ of Riverworld_ " ( 1992 ) 
--_"Grails_ : Quests_ , Visitations_ and Other_Occurrences_ " ( 1992 ) , a_World_Fantasy_Award_nominee_ for Best_Anthology_ 
--_"Quest_ to Riverworld_ " ( 1993 ) 
-- " Confederacy of the_Dead_ " ( 1993 ) 
--_"Phobias_ " ( 1994 ) 
--_"Michael_Moorcock's_Elric_ : Tales_ of the_White_Wolf_ " ( 1994 ) 
--_"Grails_ : Visitations_ of the_Night_ " ( 1994 ) 
-- The_"Dark_Destiny"_trilogy_ is set in White_Wolf_publishing's_"World_ of Darkness_ " : 
-1 . " Dark_Destiny_ " ( 1994 ) 
-2 . " Dark_Destiny_II_ : Proprietors_ of Fate_ " ( 1995 ) 
-3 . " Dark_Destiny_III_ : Children_ of Dracula_ " ( 1996 ) 
--_"Dante's_Disciples_ " ( 1998 ) 
--_"Excalibur_ " ( 1995 ) 
--_"Tombs_ " ( 1995 ) 
--_"More_Phobias_ " ( 1995 ) 
--_"Forbidden_Acts_ " ( 1995 ) 
--_"Dark_Love_ " ( 1996 ) , a_World_Fantasy_Award_ and International_Horror_Guild_Award_nominee_ for Best_Anthology_ 
--_"The_Sandman_ : Book_ of Dreams_ " ( 1996 ) , a_British_Fantasy_Award_nominee_ for Best_Anthology_ 
--_"Michael_Moorcock's_Pawn_ of Chaos_ : Tales_ of the_Eternal_Champion_ " ( 1997 ) 
--_"Free_Space_ " ( 1997 ) , recipient_ of the_first_Prometheus_Special_Award_ 
--_"The_Crow_ : Shattered Lives and Broken_Dreams_ " ( 1998 ) 
--_"Strange_Attraction_ : Turns_ of the_Midnight_Carnival's_Wheel_ " ( 2000 ) 
--_"Grails_ : Quests_ of the_Dawn_ " ( 2004 ) 
-
-Chirimiri_Coalfield_ 
-
-Chirimiri_Coalfield_ is located in Koriya_district_ in the_Indian_state_ of Chhattisgarh_ in the_valley_ of the_Hasdeo_River_ , a tributary of the_Mahanadi_ . 
-
-Other_coalfields_ . 
-There are several_other_coalfields_ in the_region_ . Kotma_sub-basin_ of Sohagpur_Coalfield_ is from Chirimiri_Coalfield_ . Jhilimili_Coalfield_ is north_ of Chirimiri_railway_station_ . Sonhat_Colliery_ lies north - east of Chirimiri_ . 
-
-History_ . 
-Tata_Iron_and_Steel_Company_ initiated prospecting_ of coal_ but no_mining_ was carried out by them_ . The_Chirimiri_colliery_ was opened in 1930 ( production_ started in 1932 ) , New_Chirimiri_colliery_ came up in 1942 , Pure_Chirimiri_colliery_ in 1945 , and North_Chirimiri_ colliery in 1946 . Subsequently , New_Chirimiri_Pondi_Hills_ , West_Chirimiri_ , Duman_Hill_ and Korea_ collieries_ started operating . Coal_production_ rose from 264,000_tonnes_ in 1933 to 3,162,500_tonnes_ in 1980 . 
-
-The_collieries_ in Chirimiri_Coalfield_ were owned by several_companies_ and owners_ such as Chirimiri_Colliery_Company_Pvt._Ltd._ , Dababhoy's_New_Chirimiri_Ponri_Hill_Company_ ( Private)_Limited_ , United_Collieries_Limited_ , K.N._Dhady_ and Indra_Singh_ & Sons_ ( Private ) Limited . These were nationalized in 1973 . 
-
-The_coalfield_ . 
-Chirimiri_Coalfield_ is a_part_ of Central_India_Coalfields_ . The latter is spread over the_districts_ of Surguja_ , Koriya_ ( both in Chhattisgarh_ ) , Shahdol_ and Umaria_ ( both in Madhya_Pradesh_ ) . There are fourteen_coalfields_ in this_group_ , namely_Korar_ , Umaria_ , Johilla_ , Sohagpur_ , Sonhat_ , Jhilimili_ , Chirimiri_ , Sendurgarh_ , Koreagarh_ , Damhamunda_ , Panchbahini_ , Hasdeo-Arand_ , Lakhanpur_ and Bishrampur_ . The_group_ covers an_area_ of about with estimated_reserves_ of 15,613.98_million_tonnes_ . The_deposits_ are at a_depth_ of 0–1200_meters_ . Therefore , extraction_ is mainly amenable to underground_mining_ except a_few_blocks_ in eastern_part_ of these_coalfields_ which have opencast_potential_ . 
-
-Chirimiri coalfield is spread over of hilly_country_ and includes both_the_sections_ – Kurasia_ and Chirimiri_ . Total_reserves_ in Chirimiri_coalfield_ have been estimated to be around 312.11_million_tonnes_ . 
-
-According to Geological Survey of India_ reserves of non-coking_coal_ up to a_depth_ of 300_m_ in Chirimiri_Coalfield_ was 362.16_million_tonnes_ . 
-
-Transport_ . 
-Chirimiri_ was connected to Anuppur_ by the_Annupur-Chirimiri_branch_line_ in 1939.Sally_Reddin_ 
-
-Sally_Reddin_ is a_paralympic_athlete_ from Great_Britain_ competing mainly in category F54_ shot putt events . 
-
-Sally_Reddin_ competed in the_shot_putt_ and javelin_events_ at the_1996_Summer_Paralympics_ . She_ then went on to win the_gold_medal_ four years later in 2000 in the_shot_putt_ but was unable to defend this_title_ finishing fourth in 2008_Summer_Paralympics_ . Barkhad_Awale_Adan_ 
-
-Barkhad_Awale_Adan_ , also spelled Burkhat_ , ( 1950 ? – 24_August_ 2010 ) was a_Somali_journalist_ . He_ was the_Director_ of Radio_Hurma_ , based in Mogadishu_ , Somalia_ . He_ was killed in 2010 by a_stray_bullet_ during intensive_fighting_ between Al-Shabaab_militants_ and AMISOM_soldiers_ in the_Battle_ of Mogadishu_ . 
-
-Life_ and career_ . 
-Adan_ was born in Borama_ in northern_Somalia_ . He_ was married , with three_children_ . 
-
-Adan_ was a_veteran_ who_ had worked for 30_years_ in Mogadishu's_radio_industry_ . He_ had been working at Radio_Hurma_ for 4_years_ . 
-
-Death_ . 
-On 24_August_ 2010 , AMISOM_forces_ were battling Al-Shabaab_rebels_ in Mogadishu_ , after a_suicide_bombing_attack_ earlier in the_day_ on the_Hotel_Muna_ killed at_least_33_people_ . Awale_ was helping a technician repair his_radio_station's_roof_transmitter_ when he_ was struck in the_abdomen_ by a_stray_crossfire_bullet_ . He_ was rushed to the_Madina_hospital_ , where he_ was later pronounced dead . 
-
-Adan_ became the_second_journalist_ in Somalia_ to die in 2010 , a year after the_country_ had experienced its_deadliest_year_ for journalists_ up to that_point_ , according to the_Committee_ to Protect_Journalists_ . 
-
-Reactions_ . 
-Faruk_Osman_ , Secretary_General_ of the_National_Union_ of Somali_Journalists_ , said at the_time_ of Adan's_death_ : " The_violence_ in Mogadishu_ has made it_ extremely dangerous for media_professionals_ to carry out their_work_ without falling_victims_ to the_ever_flying_bullets_ and widespread_criminality_ . We_ have lost , yet again , another_veteran_journalist_ courtesy of the_raging_hostilities_ . " 
-
-Gabriel_Baglo_ , Director_ of International_Federation_ of Journalists'_Africa_Office_ , also stated : " This_killing_ demonstrates again that journalists_ in Somalia_ are being targeted by gangs_ and militias_ in the_country_ . The_authorities_ must take concrete and urgent_measures_ to protect journalists_ doing their_work_ and innocent_civilians_ in general . " 
-
-Additionally , Irina_Bokova_ , Director_General_ of UNESCO_ , said : " The_Somali_press_ is paying an_exorbitant_price_ for the_instability_ prevailing in the_country_ . Combatants_ must respect journalists’_immunity_ . Without it_ , without security_ , no_freedom_ of expression_ worthy of the_name_ can exist , even though it_ is a_fundamental_human_right_ . " Jhilimili_Coalfield_ 
-
-Jhilimili_Coalfield_ is located in Surguja_district_ in the_Indian_state_ of Chhattisgarh_ . 
+[WIFIWIN-3282_ ] [ Lenovo_ThinkPad][Graf_ EVO]8265:RS2 : No_WiFi_Network_ found in Network_list_ and Red_X_mark_ ( permanent ) in WLAN_icon_ in the_system_tray_ after resume_ from sleep_ 
+No_WiFi_Network_ found in Network_list_ and Red_X_mark_ ( permanent ) in WLAN_icon_ in the_system_tray_ after resume_ from sleep_ with Windows_ 10 RS2_ build 15063 in Graf_ 1.5_machine_ . Permanent_Red_X_ 1 fail ( 10:25pm)/_15_trials_ ( scenario3_ ) 0 fail / 15 trials 0 fail_ / 15 trials SN_ : R90NAW6LWaited for 15minutes_ still issue not recovered . Workaround_ : disable_enable_ in Devmgr_ No_APs_ available with Netsh_wlan_show_networks_ in cmd when issue_ replicated . netsh_ was not generated due to correlation_ failed : error:0x80070002 . IPS#179905:permanent_red_x_mark_-_1025pm-_ graf 1.5- 20170708.zip 
+
+Frequency_ : Very rare ( < 5 % ) 
+Steps_ to reproduce : Roaming_test_ 
+1 . Connect_ to home AP@11flr ( depends in your_AP_setup@office_ ) with Graf_ 1.5 or Graf_Evo_machines_ . 
+2 . Put the_machine_ to sleep for 15mins then lid close . 
+3 . Go to a_different_room_ AP@10f_ . 
+Note : make sure that you_ already have connection_ to AP@10flr_ before performing step_ 2 . 
+4 . Open_Lid_ and Resume_ the_machine_ . 
+permanent_issue_ IPS#179905 " No_WiFi_Network_ found in Network_list_ and Red_X_mark_ in WLAN_icon_ in the_system_tray_ " occurred - > PROBLEM 
+
+
+other_info_ : 
+SN_ : R90NAW6L_ 
+Waited for 15minutes_ still issue not recovered . 
+
+Workaround:_disable_enable_ in Devmgr_ 
+No_APs_ available with Netsh_wlan_show_networks_ in cmd when issue_ replicated . 
+
+netsh was not generated due to correlation_ failed : error:0x80070002 . 
+Hardware_ : Windstorm_Peak_ ( 8265 ) ; 
+Platforms_ : Kaby_Lake_ ; 
+Operating_System_ : Windows_ 10_RS2_ ; 
+product_id_ : 60884 
+product_name_ : Intel®_ Wireless_Technologies_ 
+issue_priority_ : High 
+customer_priority_ : High 
+issue_category : Networking/Connectivity_ 
+issue_subcategory_ : WiFi_Windows_ 
+case_type_ : Debug_Request_ 
+substatus_ : New_ 
+salesforce_object_id_ : 5001J00000RMwj1QAD 
+salesforce_object_type_ : sf : Case_ 
+salesforce_link_ : https://shnintelsf2crm.intel.myshn.net/5001J00000RMwj1QAD 
+source_issue_id_ : 00185420 
+intel_support_owner_ : Yu_Liu_ 
+contact_email_ : kjocson1@lenovo.com 
+contact_name_ : Jocson_ , Khristina_ 
+account_name_ : Lenovo_ (Beijing)_Limited_ 
+CIM_Intel_UltimateID_ : 11330554 
+end_customer_ : Lenovo_Japan_ 
+Customer_Geo_ : PRC_ 
+Customer_Sub_Geo_ : PRC_ 
+Case_Owner_ : flee5_ 
+Hi Eliran_ , 
+
+Please assign this_issue_ to engineering_ for further_analysis_ . 
+
+[Summary_ ] 
+Permanent_Red_ - x observed after system_ resumed from sleep_ . 
+When issue_ happens “ There are 0_networks_ currently visible ” is shown when we_ run “ netsh_wlan_ show networks ” and network_list_ is empty when we_ click wifi_icon_ . 
+
+According to driver_log_ , it_ seems that f /w_ did not start to scan after driver_ submits the_scan_request_ and then 10 seconds after driver_ asked to abort it_ . 
+
+[Repro_steps_ ] 
+1 . Connect DUT to an_AP_ 
+2 . Put DUT_ to sleep overnight 
+3.	Resume_DUT_ and observe issue the next morning 
+* Issue_ can be replicated in Taipei_lab_ using customer_platform_ . 
+* Failure_rate_ is low 
+
+[Initial_analysis_ ] 
+Log_ ( rlg/ddd_ , wrt_usniffer_ ) : \\ger\ec\proj\ha\ICG\symstore\CMAttachments\JIRA\WIFIWIN\WIFIWIN-3282\aug07_localrepro\ 
+Point_ of failure_ : 
+
+	Issue_ was found around 8/7/2017_15:58pm_ , but it_ may have happened long before that . Suspect it_ happened 
+sometime after the previous system resume . 
+	Issue_ is gone after we_ stop etl_collection_ ( miniport reset ? ) around 16:00pm_ 
+
+
+
+Near the_point_ of failure_time_ , driver_log_ shows that f/w_ did not start scan upon receiving driver’s_scan_request_ and 10 seconds later scan_request_ was asked to be aborted . This_behavior_ is seen many_times_ throughput the_logs_ . 
+
+347410 0000347409 15:49:18:776 [ CNCT_FLOW ] [ 00 ] [S]_SCAN_REQUEST_-_OS_-_NumOfChannels=38_ 
+347411 0000347410 15:49:18:776 [ CNCT_FLOW ] [ 00 ] [S]_SCAN_REQUEST_ -_2.4_-_NumOfChannels=13_ , Channels(1,2,3,4,5,6,7,8,9,10,11,12,13_ , ) 
+347412 0000347411 15:49:18:776 [ CNCT_FLOW ] [ 00 ] [S]_SCAN_REQUEST_ -_5.2_-_NumOfChannels=25_ , Channels(36,40,44,48,52,56,60,64,100,104,108,112,116,120,124,128,132,136,140,144,149,153,157,161,165 , ) 
+347413 0000347412 15:49:18:776 [ CNCT_FLOW ] [ 00 ] [ S_ ] SCAN_REQUEST_ - send probe_ to "<NULL_SSID_ > " 
+347414 0000347413 15:49:18:776 [SCAN_ ] [ 00 ] [ S ] submitScanRequest : reqID[0x352 ] <-_scan_request_ sumitted to F/W_ 
+347447 0000347446 15:49:28:783 [SCAN_ ] [ 03 ]_[S_ ] abortScanRequest : reqID[0x352 ] <-_scan_request_ aborted 
+347450 0000347449 15:49:28:783 [SCAN_ ] [ 00 ] [S]_handleScanCompleteIndication_ : call[0xFFFFF8058AFDD250_ ] reqID[0x352 ] at index[0x2_ ] 
+347501 0000347500 15:50:18:789 [ CNCT_FLOW ] [ 00 ]_[S]_SCAN_REQUEST_-_OS_-_NumOfChannels=38_ 
+347502 0000347501 15:50:18:789 [ CNCT_FLOW ] [ 00 ]_[S]_SCAN_REQUEST_ -_2.4_-_NumOfChannels=13_ , Channels(1,2,3,4,5,6,7,8,9,10,11,12,13_ , ) 
+347503 0000347502 15:50:18:789 [ CNCT_FLOW ] [ 00 ]_[S]_SCAN_REQUEST_ -_5.2_-_NumOfChannels=25_ , Channels(36,40,44,48,52,56,60,64,100,104,108,112,116,120,124,128,132,136,140,144,149,153,157,161,165 , ) 
+347504 0000347503 15:50:18:789 [ CNCT_FLOW ] [ 00 ] [ S_ ] SCAN_REQUEST_ - send probe_ to "<NULL_SSID_ > " 
+347505 0000347504 15:50:18:789 [SCAN_ ] [ 00 ] [ S ] submitScanRequest : reqID[0x353 ] 
+347525 0000347524 15:50:28:796 [SCAN_ ] [ 07 ] [S_ ] abortScanRequest:_reqID[0x353_ ] 
+347528 0000347527 15:50:28:796 [SCAN_ ] [ 00 ] [S]_handleScanCompleteIndication_ : call[0xFFFFF8058AFDD250_ ] reqID[0x353 ] at index[0x3_ ] 
+347561 0000347560 15:50:28:796 [ CNCT_FLOW ] [ 00 ] [ S ] SCAN_REQUEST -_OS_-_NumOfChannels=38_ 
+347562 0000347561 15:50:28:796 [ CNCT_FLOW ] [ 00 ] [S]_SCAN_REQUEST_ -_2.4_-_NumOfChannels=13_ , Channels(1,2,3,4,5,6,7,8,9,10,11,12,13_ , ) 
+347563 0000347562 15:50:28:796 [ CNCT_FLOW ] [ 00 ] [S]_SCAN_REQUEST_ -_5.2_-_NumOfChannels=25_ , Channels(36,40,44,48,52,56,60,64,100,104,108,112,116,120,124,128,132,136,140,144,149,153,157,161,165 , ) 
+347564 0000347563 15:50:28:796 [ CNCT_FLOW ] [ 00 ] [S_ ] SCAN_REQUEST_ - send probe_ to "<NULL_SSID_ > " 
+347565 0000347564 15:50:28:796 [SCAN_ ] [ 00 ] [ S ] submitScanRequest : reqID[0x354 ] 
+347689 0000347688 15:50:38:808 [SCAN_ ] [ 06 ] [S_ ] abortScanRequest : reqID[0x354 ] 
+347692 0000347691 15:50:38:810 [ SCAN ] [ 00 ] [S]_handleScanCompleteIndication_ : call[0xFFFFF8058AFDD250_ ] reqID[0x354 ] at index[0x0_ ] 
+
+Thanks_ , 
+Frank_ 
+Hi Alon , 
+Please take a_look_ if_same_missing_scan_complete_notification_ . 
+I_ assume in this_case_ we_ can get repro with debug_FW_ . 
+Thanks_ . 
+Hi Frank , 
+please direct me_ to the_log_ you_ took the_snippets_ from . 
+both_RLG_ in \\ger\ec\proj\ha\ICG\symstore\CMAttachments\JIRA\WIFIWIN\WIFIWIN-3282\aug07_localrepro_ do n't include the_time_ around 15:50 : ... 
+
+Thanks_ 
+Alon_ 
+Hi Alon , 
+
+The_snippets_ were taken from " WiFiLog-09_ - 46 - 49 - 84104 - 08 - 2017 - 00001.LOG " in the_above_folder_ . 
+The_point_ of failure_ is near the_end_ of the_file_ . Please go to line # 347410 to locate the_beginning_ of the_above_snippet_ . 
+
+347410 0000347409 15:49:18:776 [CNCT_FLOW_ ] [ 00 ] [S]_SCAN_REQUEST_-_OS_-_NumOfChannels=38_ 
+
+Thanks_ , 
+Frank_ 
+this_issue_ is different from the_scan_complete_missing_notification_ , driver_ gets scan complete each time after sending abort_ with the_status_ 0x2 
+
+since there is no_prints_ for handleScanStartIndication_ from some_point_ near the_issue_ seems that scan_start_indication_ is n't been uploaded . 
+the_DDD_ provided does n't fit to the_RLG_ with the_issue_ . 
+please repro with DDD_ so we_ can see for sure that scan_start_ is n't been sent . 
+
+Thanks_ , 
+Alon_ 
+Hi Alon , 
+
+The_correct_DDD_binaries_ which match the_RLG_ are in \\ger\ec\proj\ha\ICG\symstore\CMAttachments\JIRA\WIFIWIN\WIFIWIN-3282\aug07_localrepro\CollectedData\InternalLogs\TABLET-2BUE8FJK-08 - 07 - 2017 - 15 - 59 - 35.29-STOP\DDD 
+
+Thanks_ , 
+Frank_ 
+Hi Frank , 
+when I_ parse this_DDD_ I_ do n't see the_issue_ in the output RLG logs . ca n't find , for example_ " [ SCAN_ ] [ 02 ] [ S ] submitScanRequest : reqID[0x341_ ] " around this_time_ 15:23:54:272_ and I_ do n't see any_missing_prints_ that indicate no_scan_start_ has arrived in the_end_ of the_recording_ .. 
+Hi Alon , 
+
+Below_snippets_ are copied from the_original_RLG_ and my_parsed_DDD_RLG_ouput_ . It_ seems that the_timestamps_ are shifted a bit while the_line_numbers_ and traces_ remain the same . I_ guess this_issue_ maybe related to DDDPlayer_ , perhaps we_ can check with DDDPlayer_owner_ to see whether there is a_way_ to fix it_ . 
+
+It_ seems that scan start for reqID[0x341_ ] are missing in both_logs_ and then 10 seconds later abortScanRequest : reqID[0x341 ] is triggered . 
+
+Original_RLG_ 
+343650 0000343649 15:23:54:272 [SCAN_ ] [ 01 ] [ S ] submitScanRequest : reqID[0x340 ] 
+343663 0000343662 15:23:54:272 [SCAN_ ] [ 01 ] [S_ ] abortScanRequest : reqID[0x340 ] 
+343667 0000343666 15:23:54:272_ [SCAN_ ] [ 00 ] [S]_handleScanCompleteIndication_ : call[0xFFFFF8058AFDD250_ ] reqID[0x340_ ] at index[0x0_ ] 
+343696 0000343695 15:23:54:272 [ CNCT_FLOW ] [ 02 ] [ S ] SCAN_REQUEST -_OS_-_NumOfChannels=38_ 
+343697 0000343696 15:23:54:272 [ CNCT_FLOW ] [ 02 ] [ S ] SCAN_REQUEST -_2.4_-_NumOfChannels=13_ , Channels(1,2,3,4,5,6,7,8,9,10,11,12,13_ , ) 
+343698 0000343697 15:23:54:272 [ CNCT_FLOW ] [ 02 ] [ S ] SCAN_REQUEST -_5.2_-_NumOfChannels=25_ , Channels(36,40,44,48,52,56,60,64,100,104,108,112,116,120,124,128,132,136,140,144,149,153,157,161,165 , ) 
+343699 0000343698 15:23:54:272 [ CNCT_FLOW ] [ 02 ]_[S]_SCAN_REQUEST_ - send probe_ to "<NULL_SSID_ > " 
+343700 0000343699 15:23:54:272 [SCAN_ ] [02]_[S_ ] submitScanRequest : reqID[0x341 ] 
+343716 0000343715 15:24:04:280 [SCAN_ ] [ 00 ] [S_ ] abortScanRequest : reqID[0x341 ] < - abort 
+343719 0000343718 15:24:04:280 [SCAN_ ] [ 00 ] [S]_handleScanCompleteIndication_ : call[0xFFFFF8058AFDD250_ ] reqID[0x341 ] at index[0x1_ ] 
+
+RLG_ from DDD_binary_ 
+343650 0000343649 15:23:54:272 [SCAN_ ] [ 01 ] [ S ] submitScanRequest : reqID[0x340_ 
+343663 0000343662 15:23:54:273 [SCAN_ ] [ 01 ] [S_ ] abortScanRequest : reqID[0x340 ] 
+343667 0000343666 15:23:54:273 [SCAN_ ] [ 00 ] [S]_handleScanCompleteIndication_ : call[0x00007FF78EC617B0]_reqID[0x340_ ] at index[0x0_ ] 
+343696 0000343695 15:23:54:274 [ CNCT_FLOW ] [ 02 ] [ S ] SCAN_REQUEST -_OS_-_NumOfChannels=38_ 
+343697 0000343696 15:23:54:274 [ CNCT_FLOW ] [ 02 ] [ S ] SCAN_REQUEST -_2.4_-_NumOfChannels=13_ , Channels(1,2,3,4,5,6,7,8,9,10,11,12,13_ , ) 
+343698 0000343697 15:23:54:274 [ CNCT_FLOW ] [ 02 ] [S]_SCAN_REQUEST_-_5.2_-_NumOfChannels=25,_Channels(36,40,44,48,52,56,60,64,100,104,108,112,116,120,124,128,132,136,140,144,149,153,157,161,165_ , ) 
+343699 0000343698 15:23:54:274 [ CNCT_FLOW ] [ 02 ]_[S]_SCAN_REQUEST_ - send probe_ to "<NULL_SSID_ > " 
+343700 0000343699 15:23:54:274 [SCAN_ ] [02]_[S_ ] submitScanRequest : reqID[0x341 ] 
+343716 0000343715 15:24:04:280 [SCAN_ ] [ 00 ] [S_ ] abortScanRequest : reqID[0x341 ] *_<-_abort_ * 
+343719 0000343718 15:24:04:281 [SCAN_ ] [ 00 ] [S]_handleScanCompleteIndication_ : call[0x00007FF78EC617B0]_reqID[0x341_ ] at index[0x1_ ] 
+
+Thanks_ , 
+Frank_ 
+can you_ share a_path_ to the_right_RLG_ from DDD_ ? I_ 'll check the_one_ you_ parsed .. are you_ using the log lovel FFFF1F to parse ? 
+
+Alon_ 
+Hi Alon , 
+
+Please go to " \\ger\ec\proj\ha\ICG\symstore\CMAttachments\JIRA\WIFIWIN\WIFIWIN-3282\ddd_player_19.71.1.1_ " for my_parsed_RLG_ from DDD_ . In the_folder_ are the_DDDPlayer_ , DDD_binaries_ and the_parsed_RLG_log_file_ " rlg_output_from_ddd . LOG_ " . 
+The_log_level_ I_ used is FFFF07 . 
+
+Thanks_ , 
+Frank_ 
+from this_DDD_ I_ ca n't see unsolicited_notifications_ . if we_ assume FW_ failed to send the scan start notification_ , we_ will try to debug this . 
+I_ 've triggered a_build_ with some_FW_prints_ to help us_ as well added asserts in case_ the_notification_ sending somehow fail , and usniffer event_ to see notification_uploading_ from the_FW_ . 
+I_ will have the_build_ ready by tomorrow_ and we_ will like to repro with that_build_ . 
+Alon_ 
+Hi Alon , 
+Once build ready , we_ 'll share to customer_ for verification_ in the_meantime_ . 
+Thank you_ . 
+Linda_ 
+Hi please use this_build_ \\infs089\Zip_Listener\TEST\WFWDRV_P4\main\WFDRV35066_V99.0.31.8_DRV572953_FW573934 to repro 
+
+in case_ of asserts 0x123 * that 's my added asserts and will produce relevant_data_ 
+
+Thanks_ , 
+Alon_ 
+repro with debug_driver_ is WIP_ , will update . 
+
+Thanks_ , 
+Frank_ 
+Update_Status_ : 
+
+We_ can not repro this with engineering_build_ 
+(WFDRV35066_V99.0.31.8_DRV572953_FW573934_WinT_t64_dddfree_ ) 
+We_ would keep trying 
+
+Lantis_ 
+New_finding_ here ... 
+We_ repro this_issue_ but after running the_command_ "NETSH_WLAN_ show drivers_ " 
+it_ becomes normal w/o Red_X_ and the_mobile_center_button_ appear . 
+
+discussed with Itay_ , 
+we_ would try to repro with DDD_driver_ for further_investigation_ . 
+Thanks_ . 
+Frank_Yang_ 
+Hi Pukach , Alon 
+We_ got some_logs_ from customer_ that they_ claim that the_engineering_build_ seems periodically disconnect to AP_ every 15~30 mins . 
+They_ would like to have more_stable_version_driver_ to collect log_ . 
+
+i_ 've checked the_log_ , it_ seems that we_ would miss beacon_ for 9_times_ every around 15 mins and which causes disconnection_ . and from the_log_ we_ got lots_ of asserts_ while issue_ happen ... 
+is it_ expected or there is something_ wrong ? 
+I_ also put the_log_ in path_ as below : 
+\\ger\ec\proj\ha\ICG\symstore\CMAttachments\JIRA\WIFIWIN\WIFIWIN-3282\0818_ 
+
+Thanks_ . 
+Frank_Yang_ 
+hi , 
+
+in WiFi_DDD_ EVT- Wifi DC issue - Katoh - san 
+seen 2_wakes_ from us_ - one due to non_wireless_ and one due to missed_beacons_ , in a_range_ of 10_hours_ . 
+
+in WiFi_ DDD_EVT_ WRT_-_Wifi_DC_issue_ - Miyamura - san 
+seen 9_wakes_ - 7_missed_beacons_ and 2 not from us_ , in a_range_ of 10_hours_ . 
+however in this_log_ seen assert 100232 multiple times due to debug_capability_ I_ 've added in the_print_ that can caused it_ - this is n't exist in the main or any official builds . 
+
+so_7_wakes_ from missed_beacons_ in 10_hours_ does seems normal to me_ . 
+
+back to the_original_issue_ of the_bug_ : 
+in this_nightly_build_ if assert of FW_dump_ - we_ can see if the_missing_scan_notification_issue_ happened and it_ wo n't produce the_100232_assert_ : 
+\\amr.corp.intel.com\ec\proj\DPGEC\iag\mwg\COMP_Builds\WFWDRV_P4\WFDRV35193_V99.0.31.9\Layout 
+
+however , the_original_issue_ where scan start notification_issue_ did n't seen from a_few_logs_ I_ 've looked at 
+
+Thanks_ , 
+Alon_ 
+Thanks_Alon's_sharing_ ... 
+will share with customer_ and wait for their_feed_ back 
+Thanks_ 
+Frank_Yang_ 
+Hi Alon , 
+
+We_ received new_logs_ from customer_ based on the_latest_core30_STHWFW1662_19.80.0.3_release_ . It_ seems that issue_failure_rate_ has dropped with this_release_ but they_ can still replicate it_ 1/40 trials . Here in Taipei_lab_ we_ ca n't repro yet with this_new_release_ . 
+Customer_ also tried to repro with the_debug_build_ that you_ have provided , and were also able to repro the_issue_ . But for some_reason_ the_system_ hung when they_ tried to capture usniffer_ with WRT_ , therefore unfortunately there was no relevant usniffer dumps generated at the_point_ of failure_ . 
+
+The_new_logs_ ( 19.80.0.3 ) are copied to the_following_locations_ 
+usniffer_ : \\ger\ec\proj\ha\ICG\symstore\CMAttachments\JIRA\WIFIWIN\WIFIWIN-3282\0828_tina_STHWFW1662_19.80.0.3\wrt logs\TABLET-9O4CDF04 - 08 - 26 - 2017 - 20 - 39 - 04.58-STOP\WPP\ 
+
+rlg/ddd_ : \\ger\ec\proj\ha\ICG\symstore\CMAttachments\JIRA\WIFIWIN\WIFIWIN-3282\0828_tina_STHWFW1662_19.80.0.3\wif_evt_nettrace_ ddd logs 
+
+Customer_ claims that issue_ happens around 20:15pm_ . 
+According to driver_log_ , system_ resumes at 20:15:09:940_ 
+52977_0000052977____20:15:09:940_ [ CNCT_FLOW ] [02]_[S_ ] * ***********************_RESUME_ * * * * * * * * * * * * * * * * * * * * * * * * 
+
+Similar to the_original_observed_behavior_ , after scan_request_ is submitted at 20:15:10:189 , it_ is aborted 10 seconds later at 20:15:20:193 . 
+53242 0000053242 20:15:10:189 [ CNCT_FLOW ] [ 02 ] [ S ] SCAN_REQUEST_ -_OS_-_NumOfChannels=33_ 
+53243 0000053243 20:15:10:189 [ CNCT_FLOW ] [ 02 ] [ S ] SCAN_REQUEST -_2.4_-_NumOfChannels=13_ , Channels(1,2,3,4,5,6,7,8,9,10,11,12,13_ , ) 
+53244 0000053244 20:15:10:189 [ CNCT_FLOW ] [ 02 ] [ S ] SCAN_REQUEST -_5.2_-_NumOfChannels=20_ , Channels(36,40,44,48,52,56,60,64,100,104,108,112,116,120,124,128,132,136,140,144 , ) 
+53245 0000053245 20:15:10:189 [ CNCT_FLOW ] [ 02 ]_[S]_SCAN_REQUEST_ - send probe_ to "<NULL_SSID_ > " 
+53246 0000053246 20:15:10:189 [SCAN_ ] [02]_[S_ ] submitScanRequest:_reqID[0x321_ ] 
+53268 0000053268 20:15:20:193 [SCAN_ ] [ 00 ] [S_ ] abortScanRequest:_reqID[0x321_ ] * <-_abort_scan_ * 
+53271 0000053271 20:15:20:193 [SCAN_ ] [ 00 ] [S]_handleScanCompleteIndication_ : call[0xFFFFF80E19E70120]_reqID[0x321_ ] at index[0x1_ ] 
+
+Thanks_ , 
+Frank_ 
+Hi_Eran_ , 
+Is there any_analysis_update_ on this_case_ ? 
+Thank you_ . 
+Linda_ 
+Hi Daniel , since Alon_ is away on BT_ , please take ownership_ of this_bug_ . 
+Review_history_ and analyze latest_logs_ sent on Aug-30_ . 
+Thanks_ 
+In the_latest_logs_ I_ see that FW_ receives scan_command_ ( 0xD_ ) and reply with a_response_ but there is no_indication_ for scan_start_ . 
+After 10_seconds_ driver_ triggers scan abort ( 0xE ) to which FW_ replies with response_ and scan_complete_notification_ . 
+This_flow_ then repeats itself_ many times without scan start_ notification_ ever being received . 
+My_guess_ is that something_ is stuck in UMAC_ and scan_command_ is never forwarded to LMAC . 
+I_ will require more_FW_debug_data_ in order_ to gain any_further_understanding_ . 
+I_ have requested driver_guys_ ( Roi_ . F_ and friends_ ) to provide a_driver_build_ that triggers ucode NMI_ with FW_debug_dumping_ once scan_start_notification_ is not received within 8_seconds_ since the_scan_command_ is sent . 
+Hi , 
+
+here is the_requested_build_ : 
+
+\\infs089\Zip_Listener\TEST\WFWDRV_P4\ramara_core31_donmi_scan_start_ind\WFDRV35738_V99.0.31.12_DRV586698_FW586037\ENG\Engineering_Data\Driver\ddd_free_logs\WINT_ 
+
+please contact me_ if you_ need any_additional_info_ . 
+
+Thanks_ , 
+Reem_ 
+Hi Frank , 
+
+Please try to reproduce with the_build_ provided by Reem_ and retrieve the_FW_debug_data_ ( assuming we_ get an_assert_ now ) 
+
+Thanks_ , 
+Daniel_ . 
+Hi Daniel , 
+
+The_debug_driver_ was shared with Lenovo_ , will get back to you_ once logs_ are available . 
+
+Thanks_ , 
+Frank_ 
+Hi , 
+Meeting_ minutes_ for today_ . 
+
+[09/11_ ] 
+Lenovo_ could produce issue_ with debug_driver_ but not able to reproduce with 19.80_PV_ 
+AR_ to Frank_ : upload_log_ onto JIRA_ and explain to Lenovo_ that debug driver_purpose_ 
+AR_ to Linda_ : have Lenovo_ to do more_runs_ with 19.80 
+Hi Daniel , 
+Customer_ could reproduce issue_ with debug_driver_ , WFDRV35738_V99.0.31.12_DRV586698_FW586037 . Please analyze the_log_ of "20170910permredxafterrebootthenconnecttowifithensystemidle.zip_ " on JIRA_ . 
+Thank you_ . 
+Linda_ 
+
+_ 
+Hi , 
+Please help to take a_look_ the_latest_log_ . Your_feedback_ will be very appropriated . 
+
+Thanks_ , 
+Yihua_ 
+Hi , Yaara_ will analyze the_new_logs_ . Thanks_ . 
+what exactly time the_problem_ took place_ ? 
+DUT#1_ 
+1_fail_/_55_trials_ 
+driver_ : (WFDRV35738_V99.0.31.12_DRV586698_FW586037_WinT_t64)_version_ : 99.0.31.12 
+details_ : permanent_red_x_mark_ at 11:44am_ after reboot_ then connect to wifi_and_system_idle_-_re-installed_wrt_ around 12:02pm_ then wifi_icon_ changed to normal ( graf evo-99.0.31.12_ddd_ ) 
+
+DUT#2_ 
+1_fail_/_55_trials_ 
+driver_ : (STHWFW1627_19.80.0.3DDD)_version_ : 19.80.0.3 
+details_ : 1:26_pm_ . Please see the_uploaded_log_ of "20170910_-_perm_red_x_-_graf_evo_-_1:26pm_-_19.80.0.3_ddd.zip_ " 
+I_ see many_"bad_karma_ " in the RLG logs , so it_ may cause of Red-X._Need_ to explore in FW_ why it_ happens . 
+_One_example_ : 
+	Line_ 3272 : 0000003272 11:44:13:481 [UTIL_ ] [ 01 ] [E]_FATAL_ERROR_ : HMAC_Driver_Hang_ in ctrlRequestMiniportReset,_bad_karma_ ( 0x8000 ) 
+	Line_ 3568 : 0000003568 11:44:23:462 [UTIL_ ] [ 01 ] [E]_FATAL_ERROR_ : MMAC_Driver_Hang_ in prvNicIndicateError_ , bad_karma_ (0x20_ ) , writing event_ 0x8000138D to WEV_ 
+	Line_ 3618 : 0000003618 11:44:23:463_ [HMACSYS_ ] [ 03 ] [ E ] FATAL_ERROR : HMAC_bad_karma_ < 0x00008000 > 
+	Line_ 3623 : 0000003623 11:44:23:463_ [HMACSYS_ ] [ 04 ] [E]_FATAL_ERROR_ : HMAC_bad_karma_ < 0x00008000 > 
+	Line_ 3653 : 0000003653 11:44:23:526 [UTIL_ ] [ 03 ]_[E]_FATAL_ERROR:_MMAC_Driver_Hang_ in msysHandleEvCheckForHang_ , bad_karma_ ( 0x80020 ) , writing event_ 0x8000138F_ to WEV_ 
+	Line_ 3682 : 0000003682 11:44:28:455 [MMACSYS______][04]_[E]_FATAL_ERROR_ : MMAC_bad_karma_ < 0x00080020 > 
+Line 3820 : 0000003820 11:44:28:500 [MMACSYS_ ] [ 00 ] [ E ] FATAL_ERROR : MMAC_bad_karma_ < 0x00080020 > 
+Line 3826 : 0000003826 11:44:28:500 [HMACSYS_ ] [ 00 ] [ E ] FATAL_ERROR : HMAC_bad_karma_ < 0x00008000 > 
+	Line_ 3843 : 0000003843 11:44:28:542 [MMACSYS_ ] [ 00 ] [E]_FATAL_ERROR_ : MMAC_bad_karma_ < 0x00080020 > 
+if any_new_debug_driver_ is needed to capture firmware_log_ , please help share . 
+Thank you_ . 
+In RLG_ there 's 0x84_NMI_ on missing scan_start_indication_ . 
+We_ see scan start command_ from UMAC_ to LMAC_ is delayed approx . 10sec_ 
+When this_command_ is eventually received scan is successful . 
+Yaara_ , is looking further into the_FW_dump_ to find root_cause_ . 
+Hi Frank 
+I_ have umac_ucode_ build for windstorm_ with scan_logs_ . 
+at : \\haswtswrl56\Workarea\Users\yaarar\p4\yaarar_Clone_CoreCycle31_stab_586037\builds\windstorm-a0-noupload\ScanWithLogs_ 
+could you_ please try to reproduce it_ with this_external_image_umac_ ? 
+
+in parallel_ I_ have sent this to full_build_ , so at evening_ i_ 'll update the_full_build_location_ ( so installation_ would be easier ) 
+no need to set special_debug_level_ , fw scan_logs_ should come out in RLG_ as default_ 
+
+regards_ , yaara 
+Hi 
+I_ have build with fw logs_ , hoping to catch the_problematic_scenario_ and understand better the_issue_ 
+please try to reproduce with this_build_-_\\amr.corp.intel.com\ec\proj\DPGEC\iag\mwg\COMP_Builds\WFWDRV_P4\PBWFDRV0045_V99.0.31.13\Layout_ 
+it_ contains the_fw_logs_ . no_need_ with special_settings_ . 
+i_ 'll appreciate if as in prev repro you_ could locate the_issue_ in rlg_file_ 
+
+regards_ , 
+yaara_ 
+see my_comment_ - please try to reproduce with the_build_ I_ gave , it_ contains additional_fw_logs_ 
+reproing with debug_build_ , will update once repro'd . 
+
+Thanks_ , 
+Frank_ 
+under issue_ reproducing at Lenovo_ with debug_driver_V99.0.31.13_ . not yet reproduced . 
+next_check_point_ on Sep_ 19 afternoon Taiwan time . 
