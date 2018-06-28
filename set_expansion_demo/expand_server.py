@@ -30,22 +30,24 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(prog='expand_server.py')
-    parser.add_argument('port', metavar='port', type=int,
-                        help='set port for the server')
     parser.add_argument('model_path', metavar='model_path', type=str,
                         help='a path to the w2v model file')
+    parser.add_argument('--host',type=str, default='localhost',
+                        help='set port for the server')
+    parser.add_argument('--port', type=int, default=1234,
+                        help='set port for the server')
+
     args = parser.parse_args()
 
     port = args.port
     model_path = args.model_path
     logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.DEBUG)
     logger = logging.getLogger("set_expantion_demo")
-    # initialize the model:
+    logger.debug("initialize model\n")
     se = set_expand.SetExpand(model_path)
     logger.debug("loading server\n")
-    HOST, PORT = "localhost", port
+    HOST, PORT = args.host, port
     server = socketserver.TCPServer((HOST, PORT), MyTCPHandler)
     logger.debug("server loaded\n")
-    # Activate the server; this will keep running until you
-    # interrupt the program with Ctrl-C
     server.serve_forever()
+

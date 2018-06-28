@@ -1,27 +1,16 @@
-from bokeh.layouts import column, widgetbox, gridplot, layout, Spacer
+from bokeh.layouts import column, layout
 from bokeh.models import ColumnDataSource, Div, Row
-from bokeh.models.widgets import Button, DataTable, TableColumn, RadioGroup, CheckboxGroup, MultiSelect, Toggle,HTMLTemplateFormatter
+from bokeh.models.widgets import Button, DataTable, TableColumn, CheckboxGroup, MultiSelect
 from bokeh.models.widgets.inputs import TextInput
-from bokeh.models.widgets.tables import BooleanFormatter, CheckboxEditor
-from bokeh.core.enums import Enumeration, enumeration
-from bokeh.core.properties import Enum
-from bokeh.events import *
 from bokeh.io import curdoc
-from bokeh.models.selections import Selection
-# from nlp_architect.utils.text_preprocess import simple_normalizer
 import numpy as np
 import pandas
 import socket
 import pickle
-import csv
-import sys
-import os
 import time
-import pprint
+import set_expansion_demo.ui.settings as settings
 
-expand_host = '143.185.131.68'
-port = 1111
-out_path = "export.csv"
+
 hash2group = {}
 all_phrases = None
 all_phrases_dict = {}
@@ -94,7 +83,7 @@ def send_request_to_server(request):
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     try:
         # Connect to server and send data
-        sock.connect((expand_host, port))
+        sock.connect((settings.expand_host, settings.expand_port))
         print('sending request')
         sock.sendall(bytes(request + "\n", "utf-8"))
         # Receive data from the server and shut down
@@ -304,11 +293,12 @@ def clear_seed_callback():
 
 def export_data_callback():
     if export_working_label.text != working_text:
-        print('saving expansion results to: ' + out_path)
+        path = settings.export_path
+        print('saving expansion results to: ' + path)
         export_working_label.style = {'color': 'red'}
         export_working_label.text=working_text
         table_df = pandas.DataFrame(expand_table_source.data)
-        table_df.to_csv(out_path)
+        table_df.to_csv(path)
         export_working_label.style={'color':'green'}
         export_working_label.text = 'Done!'
         time.sleep(1)
