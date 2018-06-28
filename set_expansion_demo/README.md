@@ -6,4 +6,4 @@ python3 examples/np2vec/train.py --workers 30 --size 100 --min_count 10 --window
  
  - data
  - model wikipedia
- - public service 
+ - public service
