@@ -235,12 +235,12 @@ class BABI_Dialog(object):
             self.candidate_answer_filename = 'dialog-babi-candidates.txt'
             self.kb_filename = 'dialog-babi-kb-all.txt'
             self.cands_mat_filename = 'babi-cands-with-matchtype_{}.npy'
-            self.vocab_filename = 'dialog-babi-vocab-task{}.pkl'.format(self.task + 1)
+            self.vocab_filename = 'dialog-babi-vocab-task{}_matchtype{}.pkl'.format(self.task + 1, self.use_match_type)
         else:
             self.candidate_answer_filename = 'dialog-babi-task6-dstc2-candidates.txt'
             self.kb_filename = 'dialog-babi-task6-dstc2-kb.txt'
             self.cands_mat_filename = 'dstc2-cands-with-matchtype_{}.npy'
-            self.vocab_filename = 'dstc2-vocab-task{}.pkl'.format(self.task + 1)
+            self.vocab_filename = 'dstc2-vocab-task{}_matchtype{}.pkl'.format(self.task + 1, self.use_match_type)
 
         self.vectorized_filename = 'vectorized_task{}.pkl'.format(self.task + 1)
 
@@ -447,7 +447,7 @@ class BABI_Dialog(object):
             # Add match-type words
             self.match_type_vocab = list(set(self.kb_ents_to_type.values()))
             all_words += list(self.match_type_vocab) + \
-                self.kb_ents_to_type.keys()
+                list(self.kb_ents_to_type.keys())
             # Also compute indicies into each candidate vector for the
             # different match types (fixed position)
             self.match_type_idxs = {
@@ -609,7 +609,7 @@ class BABI_Dialog(object):
 
                     cands_mat[cand_idxs, match_type_word_idx] = ent_type_word
         else:
-            cands_mat = None
+            cands_mat = np.array(self.cands)
 
         time_feat += 1
 

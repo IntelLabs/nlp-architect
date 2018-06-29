@@ -1,209 +1,225 @@
-#!/usr/bin/env python
-# ******************************************************************************
-# Copyright 2017-2018 Intel Corporation
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-# ******************************************************************************
+"""End-To-End Memory Networks.
+
+The implementation is based on http://arxiv.org/abs/1503.08895 [1]
 """
-Example implementation of End-to-End Memory Network modified slightly from the
-baseic End-to-End Memory network to reproduce results on the Facebook bAbI
-goal-oriented dialog dataset.
+from __future__ import absolute_import
+from __future__ import division
 
-Reference:
-    "Learning End-to-End Goal Oriented Dialog"
-    https://arxiv.org/abs/1605.07683.
-"""
-from __future__ import division, print_function, unicode_literals, absolute_import
-
-import ngraph as ng
-from ngraph.frontends.neon import Layer, GaussianInit
-from nlp_architect.contrib.ngraph.modified_lookup_table import ModifiedLookupTable
+import tensorflow as tf
+import numpy as np
+from six.moves import range
 
 
-class MemN2N_Dialog(Layer):
+def zero_nil_slot(t, name=None):
     """
-    End-to-End Memory Networks for Goal Oriented Dialogue
+    Overwrites the nil_slot (first row) of the input Tensor with zeros.
 
-    After the model is initialized, it accepts a BABI_Dialog class formatted dataset
-    as input and returns a probability distribution over candidate answers.
-
-    Args:
-        cands (np.array): Vectorized array of potential candidate answers, encoded
-            as integers, as returned by BABI_Dialog class. Shape = [num_cands, max_cand_length]
-        num_cands (int): Number of potential candidate answers.
-        max_cand_len (int): Maximum length of a candidate answer sentence in number of words.
-        memory_size (int): Maximum number of sentences to keep in memory at any given time.
-        max_utt_len (int): Maximum length of any given sentence / user utterance
-        vocab_size (int): Number of unique words in the vocabulary + 2 (0 is reserved for
-            a padding symbol, and 1 is reserved for OOV)
-        emb_size (int): Dimensionality of word embeddings to use
-        batch_size (int): Number of training examples per batch
-        use_match_type (bool, optional): Flag to use match-type features
-        kb_ents_to_type (dict, optional): For use with match-type features, dictionary of
-            entities found in the dataset mapping to their associated match-type
-        kb_ents_to_cand_idxs (dict, optional): For use with match-type features, dictionary
-            mapping from each entity in the  knowledge base to the set of indicies in the
-            candidate_answers array that contain that entity.
-        match_type_idxs (dict, optional): For use with match-type features, dictionary
-            mapping from match-type to the associated fixed index of the candidate vector
-            which indicated this match type.
-        nhop (int, optional): Number of memory-hops to perform during fprop
-        eps (float, optional): Small epsilon used for numerical stability in
-            softmax renormalization
-        init (Initalizer, optional): Initalizer object used to initialize lookup table
-            and projection layer.
+    The nil_slot is a dummy slot and should not be trained and influence
+    the training algorithm.
     """
-    def __init__(
-            self,
-            cands,
-            num_cands,
-            max_cand_len,
-            memory_size,
-            max_utt_len,
-            vocab_size,
-            emb_size,
-            batch_size,
-            use_match_type=False,
-            kb_ents_to_type=None,
-            kb_ents_to_cand_idxs=None,
-            match_type_idxs=None,
-            nhops=3,
-            eps=1e-6,
-            init=GaussianInit(
-                mean=0.0,
-                std=0.1)):
-        super(MemN2N_Dialog, self).__init__()
+    with tf.op_scope([t], name, "zero_nil_slot") as name:
+        t = tf.convert_to_tensor(t, name="t")
+        s = tf.shape(t)[1]
+        z = tf.zeros(tf.stack([1, s]))
+        return tf.concat(axis=0, values=[z, tf.slice(t, [1, 0], [-1, -1])], name=name)
 
-        self.cands = cands
-        self.memory_size = memory_size
-        self.max_utt_len = max_utt_len
-        self.vocab_size = vocab_size
-        self.num_cands = num_cands
-        self.max_cand_len = max_cand_len
-        self.batch_size = batch_size
-        self.use_match_type = use_match_type
-        self.kb_ents_to_type = kb_ents_to_type
-        self.kb_ents_to_cand_idxs = kb_ents_to_cand_idxs
-        self.match_type_idxs = match_type_idxs
-        self.nhops = nhops
-        self.eps = eps
-        self.init = init
 
-        # Make axes
-        self.batch_axis = ng.make_axis(length=batch_size, name='N')
-        self.sentence_rec_axis = ng.make_axis(length=max_utt_len, name='REC')
-        self.memory_axis = ng.make_axis(length=memory_size, name='memory_axis')
-        self.embedding_axis = ng.make_axis(length=emb_size, name='F')
-        self.embedding_axis_proj = ng.make_axis(length=emb_size, name='F_proj')
-        self.cand_axis = ng.make_axis(length=num_cands, name='cand_axis')
-        self.cand_rec_axis = ng.make_axis(length=max_cand_len, name='REC')
+class MemN2N_Dialog(object):
+    """End-To-End Memory Network."""
+    def __init__(self,
+        batch_size,
+        vocab_size,
+        sentence_size,
+        memory_size,
+        embedding_size,
+        num_cands,
+        max_cand_len,
+        hops=3,
+        max_grad_norm=40.0,
+        use_match_type=False,
+        kb_ents_to_type=None,
+        kb_ents_to_cand_idxs=None,
+        match_type_idxs=None,
+        nonlin=None,
+        initializer=tf.random_normal_initializer(stddev=0.1),
+        optimizer=tf.train.AdamOptimizer(learning_rate=0.001, epsilon=1e-8),
+        session=tf.Session(),
+        name='MemN2N_Dialog'):
+        """Creates an End-To-End Memory Network for Goal Oriented Dialog
 
-        # Weight sharing of A's accross all hops input and output
-        self.LUT_A = ModifiedLookupTable(
-            vocab_size, emb_size, init, update=True, pad_idx=0)
-        # Use lookuptable W to embed the candidate answers
-        self.LUT_W = ModifiedLookupTable(
-            vocab_size, emb_size, init, update=True, pad_idx=0)
+        Args:
+            cands: Encoded candidate answers
 
-        # Initialize projection matrix between internal model states
-        self.R_proj = ng.variable(
-            axes=[
-                self.embedding_axis,
-                self.embedding_axis_proj],
-            initial_value=init)
+            batch_size: The size of the batch.
 
-        if not self.use_match_type:
-            # Initialize constant matrix of all candidate answers
-            self.cands_mat = ng.constant(
-                self.cands, axes=[
-                    self.cand_axis, self.cand_rec_axis])
+            vocab_size: The size of the vocabulary (should include the nil word). The nil word
+            one-hot encoding should be 0.
 
-    def __call__(self, inputs, **kwargs):
-        query = ng.cast_axes(
-            inputs['user_utt'], [
-                self.batch_axis, self.sentence_rec_axis])
+            sentence_size: The max size of a sentence in the data. All sentences should be padded
+            to this length. If padding is required it should be done with nil one-hot encoding (0).
 
-        # Query embedding [batch, sentence_axis, F]
-        q_emb = self.LUT_A(query)
+            memory_size: The max size of the memory. Since Tensorflow currently does not support jagged arrays
+            all memories must be padded to this length. If padding is required, the extra memories should be
+            empty memories; memories filled with the nil word ([0, 0, 0, ......, 0]).
 
-        # Multiply by position encoding and sum
-        u_0 = ng.sum(q_emb, reduction_axes=[self.sentence_rec_axis])
+            embedding_size: The size of the word embedding.
 
-        # Start a list of the internal states of the model. Will be appended to
-        # after each memory hop
-        u = [u_0]
+            hops: The number of hops. A hop consists of reading and addressing a memory slot.
+            Defaults to `3`.
 
-        for _ in range(self.nhops):
-            story = ng.cast_axes(
-                inputs['memory'], [
-                    self.batch_axis, self.memory_axis, self.sentence_rec_axis])
+            max_grad_norm: Maximum L2 norm clipping value. Defaults to `40.0`.
 
-            # Re-use the query embedding matrix to embed the memory sentences
-            # [batch, memory_axis, sentence_axis, F]
-            m_emb_A = self.LUT_A(story)
-            m_A = ng.sum(
-                m_emb_A, reduction_axes=[
-                    self.sentence_rec_axis])  # [batch, memory_axis, F]
+            nonlin: Non-linearity. Defaults to `None`.
 
-            # Compute scalar similarity between internal state and each memory
-            # Equivalent to dot product between u[-1] and each memory in m_A
-            # [batch, memory_axis]
-            dotted = ng.sum(u[-1] * m_A, reduction_axes=[self.embedding_axis])
+            initializer: Weight initializer. Defaults to `tf.random_normal_initializer(stddev=0.1)`.
 
-            # [batch, memory_axis]
-            probs = ng.softmax(dotted, self.memory_axis)
+            optimizer: Optimizer algorithm used for SGD. Defaults to `tf.train.AdamOptimizer(learning_rate=1e-2)`.
 
-            # Renormalize probabilites according to non-empty memories
-            probs_masked = probs * inputs['memory_mask']
-            renorm_sum = ng.sum(
-                probs_masked, reduction_axes=[
-                    self.memory_axis]) + self.eps
-            probs_renorm = (probs_masked + self.eps) / renorm_sum
+            session: Tensorflow Session the model is run with. Defaults to `tf.Session()`.
 
-            # Compute weighted sum of memory embeddings
-            o_k = ng.sum(
-                probs_renorm * m_A,
-                reduction_axes=[
-                    self.memory_axis])  # [batch, F]
+            name: Name of the End-To-End Memory Network. Defaults to `MemN2N`.
+        """
 
-            # Add the output back into the internal state and project
-            u_k = ng.cast_axes(ng.dot(self.R_proj, o_k), [
-                self.embedding_axis, self.batch_axis]) + u[-1]  # [batch, F_proj]
+        self._batch_size = batch_size
+        self._vocab_size = vocab_size
+        self._sentence_size = sentence_size
+        self._memory_size = memory_size
+        self._embedding_size = embedding_size
+        self._max_cand_len = max_cand_len
+        self._num_cands = num_cands
+        self._hops = hops
+        self._max_grad_norm = max_grad_norm
+        self._nonlin = nonlin
+        self._init = initializer
+        self._name = name
 
-            # Add new internal state
-            u.append(u_k)
+        self._build_inputs()
+        self._build_vars()
 
-        if self.use_match_type:
-            # [batch_axis, cand_axis, cand_rec_axis, F]
-            self.cands_mat = inputs['cands_mat']
+        self._opt = optimizer
 
-        # Embed all candidate responses using LUT_W
-        # [<batch_axis>, cand_axis, cand_rec_axis, F]
-        cand_emb_W = self.LUT_W(self.cands_mat)
-        # No position encoding added yet
-        cands_mat_emb = ng.sum(
-            cand_emb_W, reduction_axes=[
-                self.cand_rec_axis])  # [<batch_axis>, cand_axis, F]
+        # cross entropy
+        logits = self._inference(self._stories, self._queries) # (batch_size, vocab_size)
+        cross_entropy = tf.nn.softmax_cross_entropy_with_logits(logits=logits, 
+                                                                labels=tf.cast(self._answers, tf.float32), 
+                                                                name="cross_entropy")
+        # loss op
+        cross_entropy_sum = tf.reduce_sum(cross_entropy, name="cross_entropy_sum")
 
-        # Compute predicted answer from product of final internal state
-        # and embedded candidate answers
-        # a_logits = ng.dot(cands_mat_emb, u[-1]) # [batch, cand_axis]
-        # [batch, cand_axis]
-        a_logits = ng.sum(u[-1] * cands_mat_emb,
-                          reduction_axes=[self.embedding_axis])
+        # gradient pipeline
+        grads_and_vars = self._opt.compute_gradients(cross_entropy_sum)
+        grads_and_vars = [(tf.clip_by_norm(g, self._max_grad_norm), v) for g,v in grads_and_vars]
+        nil_grads_and_vars = []
+        for g, v in grads_and_vars:
+            if v.name in self._nil_vars:
+                nil_grads_and_vars.append((zero_nil_slot(g), v))
+            else:
+                nil_grads_and_vars.append((g, v))
+        train_op = self._opt.apply_gradients(nil_grads_and_vars, name="train_op")
 
-        # rename V to vocab_axis to match answer
-        a_logits = ng.cast_axes(a_logits, [self.batch_axis, self.cand_axis])
-        a_pred = ng.softmax(a_logits, self.cand_axis)
+        # predict ops
+        predict_op = tf.argmax(logits, 1, name="predict_op")
+        predict_proba_op = tf.nn.softmax(logits, name="predict_proba_op")
+        predict_log_proba_op = tf.log(predict_proba_op, name="predict_log_proba_op")
 
-        return a_pred, probs_renorm
+        # assign ops
+        self.loss_op = cross_entropy_sum
+        self.predict_op = predict_op
+        self.predict_proba_op = predict_proba_op
+        self.predict_log_proba_op = predict_log_proba_op
+        self.train_op = train_op
+
+        init_op = tf.global_variables_initializer()
+        self._sess = session
+        self._sess.run(init_op)
+        self.saver = tf.train.Saver(max_to_keep=1)
+
+    def _build_inputs(self):
+        self._stories = tf.placeholder(tf.int32, [None, None, self._sentence_size], name="stories")
+        self._queries = tf.placeholder(tf.int32, [None, self._sentence_size], name="queries")
+        self._answers = tf.placeholder(tf.int32, [None, self._num_cands], name="answers")
+        self._cands = tf.placeholder(tf.int32, [None, self._num_cands, self._max_cand_len], name="candidate_answers")
+
+    def _build_vars(self):
+        with tf.variable_scope(self._name):
+            nil_word_slot = tf.zeros([1, self._embedding_size])
+            A = tf.concat(axis=0, values=[ nil_word_slot, self._init([self._vocab_size-1, self._embedding_size]) ])
+            W = tf.concat(axis=0, values=[ nil_word_slot, self._init([self._vocab_size-1, self._embedding_size]) ])
+  
+            self.LUT_A = tf.Variable(A, name="LUT_A")
+            self.LUT_W = tf.Variable(W, name="LUT_W")
+
+            # Dont use projection for layerwise weight sharing
+            self.R_proj = tf.Variable(self._init([self._embedding_size, self._embedding_size]), name="R_proj")
+
+        self._nil_vars = set([self.LUT_A.name, self.LUT_W.name])
+
+    def _inference(self, stories, queries):
+        with tf.variable_scope(self._name):
+            q_emb = tf.nn.embedding_lookup(self.LUT_A, queries)
+            u_0 = tf.reduce_sum(q_emb, 1)
+            u = [u_0]
+
+            for hopn in range(self._hops):
+                m_emb_A = tf.nn.embedding_lookup(self.LUT_A, stories)
+                m_A = tf.reduce_sum(m_emb_A, 2)
+
+                # hack to get around no reduce_dot
+                u_temp = tf.transpose(tf.expand_dims(u[-1], -1), [0, 2, 1])
+                dotted = tf.reduce_sum(m_A * u_temp, 2)
+
+                # Calculate probabilities
+                probs = tf.nn.softmax(dotted)
+
+                probs_temp = tf.transpose(tf.expand_dims(probs, -1), [0, 2, 1])
+
+                # Reuse A for the output memory encoding
+                c_temp = tf.transpose(m_A, [0, 2, 1])
+                o_k = tf.reduce_sum(c_temp * probs_temp, 2)
+
+                # Project hidden state, and add update
+                u_k = tf.matmul(u[-1], self.R_proj) + o_k
+
+                # nonlinearity
+                if self._nonlin:
+                    u_k = nonlin(u_k)
+
+                u.append(u_k)
+
+            cands_emb = tf.nn.embedding_lookup(self.LUT_W, self._cands)
+            cands_emb_sum = tf.reduce_sum(cands_emb, 2)
+
+            logits = tf.reshape(tf.matmul(tf.expand_dims(u_k, 1), 
+                                          tf.transpose(cands_emb_sum, [0,2,1])), 
+                                (-1, cands_emb_sum.shape[1]))
+
+            return logits
+
+    def batch_fit(self, stories, queries, answers, cands):
+        """Runs the training algorithm over the passed batch
+
+        Args:
+            stories: Tensor (None, memory_size, sentence_size)
+            queries: Tensor (None, sentence_size)
+            answers: Tensor (None, vocab_size)
+
+        Returns:
+            loss: floating-point number, the loss computed for the batch
+        """
+        feed_dict = {self._stories: stories, self._queries: queries, self._answers: answers, self._cands: cands}
+        loss, _ = self._sess.run([self.loss_op, self.train_op], feed_dict=feed_dict)
+        
+        return loss
+
+    def predict(self, stories, queries, cands):
+        """Predicts answers as one-hot encoding.
+
+        Args:
+            stories: Tensor (None, memory_size, sentence_size)
+            queries: Tensor (None, sentence_size)
+
+        Returns:
+            answers: Tensor (None, vocab_size)
+        """
+        feed_dict = {self._stories: stories, self._queries: queries, self._cands: cands}
+        return self._sess.run(self.predict_op, feed_dict=feed_dict)
