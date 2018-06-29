@@ -41,7 +41,7 @@ class MemN2N_Dialog_TF(object):
         match_type_idxs=None,
         nonlin=None,
         initializer=tf.random_normal_initializer(stddev=0.1),
-        optimizer=tf.train.AdamOptimizer(learning_rate=0.01),
+        optimizer=tf.train.AdamOptimizer(learning_rate=0.001, epsilon=1e-8),
         session=tf.Session(),
         name='MemN2N_Dialog'):
         """Creates an End-To-End Memory Network for Goal Oriented Dialog

@@ -42,7 +42,7 @@ from contextlib import closing
 import numpy as np
 from tqdm import tqdm
 import tensorflow as tf
-from interactive_utils import interactive_loop
+from interactive_utils_tf import interactive_loop
 from nlp_architect.data.babi_dialog import BABI_Dialog
 from nlp_architect.models.memn2n_dialogue_tf import MemN2N_Dialog_TF
 from nlp_architect.utils.io import validate_parent_exists, check_size, validate
@@ -54,7 +54,7 @@ tf.flags.DEFINE_integer(
     'the task ID to train/test on from bAbI-dialog dataset (1-6)')
 tf.flags.DEFINE_integer(
     'emb_size',
-    32,
+    20,
     'Size of the word-embedding used in the model.')
 tf.flags.DEFINE_integer(
     'batch_size',
@@ -110,7 +110,7 @@ tf.flags.DEFINE_string(
     'File to save model weights to.')
 tf.flags.DEFINE_integer(
     'save_epochs',
-    1,
+    10,
     'Number of epochs between saving model weights.')
 tf.flags.DEFINE_integer(
     'epochs',
@@ -173,8 +173,6 @@ test_batches = zip(range(0, n_test - FLAGS.batch_size, FLAGS.batch_size),
                     range(FLAGS.batch_size, n_test, FLAGS.batch_size))
 test_batches = [(start, end) for start, end in test_batches]
 
-best_validation_accuracy = 0
-
 with tf.Session() as sess:
     memn2n = MemN2N_Dialog_TF(
         babi.cands,
@@ -189,6 +187,7 @@ with tf.Session() as sess:
         kb_ents_to_type=babi.kb_ents_to_type,
         kb_ents_to_cand_idxs=babi.kb_ents_to_cand_idxs,
         match_type_idxs=babi.match_type_idxs,
+        optimizer=tf.train.AdamOptimizer(learning_rate=FLAGS.lr, epsilon=FLAGS.eps),
         session=sess)
 
     if FLAGS.restore and os.path.exists(weights_save_path):
@@ -223,45 +222,50 @@ with tf.Session() as sess:
             memn2n.saver.save(sess, weights_save_path)
             print("Saving complete")
 
-        val_error = []
+            val_error = []
+            # Eval after each epoch
+            for start, end in tqdm(val_batches, total=len(val_batches),
+                                   unit='minibatches', desc="Epoch {}".format(e)):
+                s = dev_set['memory']['data'][start:end]
+                q = dev_set['user_utt']['data'][start:end]
+                a = dev_set['answer']['data'][start:end]
+
+                a_pred = memn2n.predict(s, q)
+
+                error = np.mean(a.argmax(axis=1) != a_pred)
+                val_error.append(error)
+
+            val_err_str = "Epoch {}: Validation Error: {}".format(e, np.mean(val_error))
+            print(val_err_str)
+            if FLAGS.save_log:
+                with open(log_file, 'a') as f:
+                    f.write(val_err_str + '\n')
+
+    print('Training Complete.')
+    print("Saving model to {}".format(weights_save_path))
+    memn2n.saver.save(sess, weights_save_path)
+    print("Saving complete")
+
+    if FLAGS.interactive:
+        interactive_loop(memn2n, babi)
+
+    if FLAGS.test:
+        # Final evaluation on test set
+        test_error = []
         # Eval after each epoch
-        for start, end in tqdm(val_batches, total=len(val_batches),
+        for start, end in tqdm(test_batches, total=len(test_batches),
                                unit='minibatches', desc="Epoch {}".format(e)):
-            s = dev_set['memory']['data'][start:end]
-            q = dev_set['user_utt']['data'][start:end]
-            a = dev_set['answer']['data'][start:end]
+            s = test_set['memory']['data'][start:end]
+            q = test_set['user_utt']['data'][start:end]
+            a = test_set['answer']['data'][start:end]
 
             a_pred = memn2n.predict(s, q)
 
             error = np.mean(a.argmax(axis=1) != a_pred)
-            val_error.append(error)
+            test_error.append(error)
 
-        val_err_str = "Epoch {}: Validation Error: {}".format(e, np.mean(val_error))
-        print(val_err_str)
+        test_err_str = "Epoch {}: Validation Error: {}".format(e, np.mean(test_error))
+        print(test_err_str)
         if FLAGS.save_log:
             with open(log_file, 'a') as f:
-                f.write(val_err_str + '\n')
-
-    print('Training Complete.')
-
-    # need to re-write interactive loop to work with tf model
-    # if FLAGS.interactive:
-    #     interactive_loop(interactive_computation, babi)
-
-    # if FLAGS.test:
-    #     # Final evaluation on test set
-    #     test_loss = []
-    #     test_error = []
-    #     for idx, data in enumerate(test_set):
-    #         test_output = loss_computation(data)
-    #         test_loss.append(np.sum(test_output['test_cross_ent_loss']))
-    #         preds = np.argmax(test_output['test_preds'], axis=1)
-    #         error = np.mean(data['answer'].argmax(axis=1) != preds)
-    #         test_error.append(error)
-
-    #     test_cost_str = "test_cost {}, test_error {}".format(
-    #         np.mean(test_loss), np.mean(test_error))
-    #     print(test_cost_str)
-    #     if FLAGS.save_log:
-    #         with open(log_file, 'a') as f:
-    #             f.write(test_cost_str + '\n')
+                f.write(test_err_str + '\n')
