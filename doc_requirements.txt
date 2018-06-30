@@ -1,3 +1,4 @@
-sphinx==1.4.6
-jupyter==1.0.0
-nbformat==4.3.0
+sphinx
+sphinx_rtd_theme
+jupyter
+nbformat

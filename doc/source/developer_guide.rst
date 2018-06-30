@@ -17,7 +17,7 @@
 Developer Guide
 ###############
 
-.. include:: ../../CONTRIBUTING.rst
+.. include:: CONTRIBUTING.rst
 
 Coding Conventions
 ==================

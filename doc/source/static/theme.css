@@ -1,0 +1,26 @@
+.wy-side-nav-search {
+  background-color: #8eb0af;
+}
+
+.wy-nav-content-wrap {
+    background: rgba(0,0,0,0.05);
+}
+
+.wy-nav-content {
+    padding: 1.618em 3.236em;
+    height: 100%;
+    max-width: 1000px !important;
+    margin: 0;
+}
+
+.wy-nav-side {
+    background: #343131;
+}
+
+.rst-content div[class^='highlight'] pre {
+  border: none;
+  background: none;
+  margin: 0;
+  font-family: "Monaco", "Consolas", "Menlo", "Andale Mono WT", "Andale Mono", "Lucida Console", "monospace";
+  font-size: 13px;
+}

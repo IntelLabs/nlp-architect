@@ -101,7 +101,7 @@ function postData(text, url) {
       'Access-Control-Allow-Headers': '*',
       'Access-Control-Allow-Methods': '*',
       'user-agent': 'Mozilla/4.0 MDN Example',
-      'FORMAT': 'json',
+      'Response-Format': 'json',
       'IS-HTML': 'True'
 
     },

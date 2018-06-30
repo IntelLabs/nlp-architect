@@ -18,104 +18,64 @@ from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
 from __future__ import absolute_import
+import sys
 
-import gzip
-import os
-
+import nltk
+from nltk.corpus import conll2000
 import numpy as np
-from neon.data import Dataset
 from neon.data.text_preprocessing import pad_sentences
-
-from nlp_architect.utils.generic import get_paddedXY_sequence
 from nlp_architect.contrib.neon.text_iterators import TaggedTextSequence, MultiSequenceDataIterator
 from nlp_architect.utils.embedding import load_word_embeddings
+from nlp_architect.utils.generic import get_paddedXY_sequence, license_prompt
 
 
-class CONLL2000(Dataset):
+class CONLL2000(object):
     """
     CONLL 2000 chunking task data set (Neon)
 
     Arguments:
         sentence_length (int): number of time steps to embed the data.
         vocab_size (int): max size of vocabulary.
-        path (str, optional): Path to data file.
         use_pos (boolean, optional): Yield POS tag features.
         use_chars (boolean, optional): Yield Char RNN features.
-        use_w2v (boolean, optional): Use W2V as input features.
-        w2v_path (str, optional): W2V model path
+        chars_len (int, optional): max word length in characters.
+        embedding_model_path (str, optional): W2V model path
     """
 
-    def __init__(self, path='.', sentence_length=50, vocab_size=20000,
+    def __init__(self, sentence_length=50, vocab_size=20000,
                  use_pos=False,
                  use_chars=False,
                  chars_len=20,
-                 use_w2v=False,
-                 w2v_path=None):
-        url = 'https://raw.githubusercontent.com/teropa/nlp/master/resources/corpora/conll2000/'
-        self.filemap = {'train': 2842164,
-                        'test': 639396}
-        self.file_names = ['{}.txt'.format(phase) for phase in self.filemap]
-        sizes = [self.filemap[phase] for phase in self.filemap]
-        super(CONLL2000, self).__init__(self.file_names,
-                                        url,
-                                        sizes,
-                                        path=path)
+                 embedding_model_path=None):
         self.sentence_length = sentence_length
         self.vocab_size = vocab_size
         self.use_pos = use_pos
         self.use_chars = use_chars
         self.chars_len = chars_len
-        self.use_w2v = use_w2v
-        self.w2v_path = w2v_path
+        self.embedding_model_path = embedding_model_path
         self.vocabs = {}
+        self._data_dict = {}
+        self.emb_size = None
+        self.y_vocab = None
+        self.y_size = None
 
-    def load_gzip(self, filename, size):
-        """
-        Helper function for downloading test files
-        Will download and un-gzip the file into the directory self.path
-
-        Arguments:
-            filename (str): name of file to download from self.url
-            size (str): size of the file in bytes?
-
-        Returns:
-            str: Path to the downloaded dataset.
-        """
-        _, filepath = self._valid_path_append(self.path, '', filename)
-
-        if not os.path.exists(filepath):
-            self.fetch_dataset(self.url, filename, filepath, size)
-        if '.gz' in filepath:
-            with gzip.open(filepath, 'rb') as fp:
-                file_content = fp.readlines()
-            filepath = filepath.split('.gz')[0]
-            with open(filepath, 'wb') as fp:
-                fp.writelines(file_content)
-        return filepath
-
-    def load_data(self):
-        file_data = {}
-        for phase in self.filemap:
-            size = self.filemap[phase]
-            phase_file = self.load_zip('{}.txt'.format(phase), size)
-            file_data[phase] = self.parse_entries(phase_file)
-        return file_data['train'], file_data['test']
-
+    # pylint: disable=broad-except
     @staticmethod
-    def parse_entries(filepath):
-        texts = []
-        block = []
-        with open(filepath, 'r', encoding='utf-8') as fp:
-            for line in fp:
-                if len(line.strip()) == 0:
-                    if len(block) > 1:
-                        texts.append(list(zip(*block)))
-                    block = []
-                else:
-                    block.append([e.strip() for e in line.strip().split()])
-        return texts
+    def _load_data():
+        try:
+            train_set = conll2000.chunked_sents('train.txt')
+            test_set = conll2000.chunked_sents('test.txt')
+        except Exception:
+            if license_prompt('CONLL2000 data set', 'http://www.nltk.org/nltk_data/') is False:
+                sys.exit(0)
+            nltk.download('conll2000')
+            train_set = conll2000.chunked_sents('train.txt')
+            test_set = conll2000.chunked_sents('test.txt')
+        train_data = [list(zip(*nltk.chunk.tree2conlltags(sent))) for sent in train_set]
+        test_data = [list(zip(*nltk.chunk.tree2conlltags(sent))) for sent in test_set]
+        return train_data, test_data
 
-    def create_char_features(self, sentences, sentence_length, word_length):
+    def _create_char_features(self, sentences, sentence_length, word_length):
         char_dict = {}
         char_id = 3
         new_sentences = []
@@ -144,8 +104,23 @@ class CONLL2000(Dataset):
         self.vocabs.update({'char_rnn': char_dict})
         return char_sentences
 
-    def gen_iterators(self):
-        train_set, test_set = self.load_data()
+    @property
+    def train_iter(self):
+        """train set iterator"""
+        if self._data_dict.get('train', None) is None:
+            self._gen_iterators()
+        return self._data_dict.get('train')
+
+    @property
+    def test_iter(self):
+        """test set iterator"""
+        if self._data_dict.get('test', None) is None:
+            self._gen_iterators()
+        return self._data_dict.get('test')
+
+    # pylint: disable=too-many-statements
+    def _gen_iterators(self):
+        train_set, test_set = self._load_data()
         num_train_samples = len(train_set)
 
         sents = list(zip(*train_set))[0] + list(zip(*test_set))[0]
@@ -163,8 +138,8 @@ class CONLL2000(Dataset):
         train_iters = []
         test_iters = []
 
-        if self.use_w2v:
-            w2v_dict, emb_size = load_word_embeddings(self.w2v_path)
+        if self.embedding_model_path is not None:
+            w2v_dict, emb_size = load_word_embeddings(self.embedding_model_path)
             self.emb_size = emb_size
             x_vocab_is = {i: s for s, i in X_vocab.items()}
             X_w2v = []
@@ -214,7 +189,7 @@ class CONLL2000(Dataset):
                                                  x=X_pos[num_train_samples:]))
 
         if self.use_chars:
-            char_sentences = self.create_char_features(
+            char_sentences = self._create_char_features(
                 sents, self.sentence_length, self.chars_len)
             char_sentences = char_sentences.reshape(
                 -1, self.sentence_length * self.chars_len)

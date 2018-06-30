@@ -14,96 +14,104 @@
 # limitations under the License.
 # ******************************************************************************
 
-STYLE_CHECK_OPTS :=
-STYLE_CHECK_DIRS :=
+FLAKE8_CHECK_DIRS := examples nlp_architect/* server tests
+PYLINT_CHECK_DIRS := examples nlp_architect server tests setup
 DOC_DIR := doc
 DOC_PUB_RELEASE_PATH := $(DOC_PUB_PATH)/$(RELEASE)
-test_prepare:
-	pip install -r test_requirements.txt > /dev/null 2>&1
-
-style: test_prepare
-	flake8 --output-file style.txt --tee $(STYLE_CHECK_OPTS) $(STYLE_CHECK_DIRS)
-	pylint --reports=n --output-format=colorized --py3k $(PYLINT3K_ARGS) --ignore=.venv *
-
-fixstyle: autopep8
-
-autopep8:
-	autopep8 -a -a --global-config setup.cfg --in-place `find . -name \*.py`
-	echo run "git diff" to see what may need to be checked in and "make style" to see what work remains
-
-doc_prepare:
-	pip install -r doc_requirements.txt > /dev/null 2>&1
-
-doc: doc_prepare
-	$(MAKE) -C $(DOC_DIR) clean
-	$(MAKE) -C $(DOC_DIR) html
-	@echo "Documentation built in $(DOC_DIR)/build/html"
-	@echo "To view documents open your browser to: http://localhost:8000"
-	@cd $(DOC_DIR)/build/html; python -m http.server
-	@echo
-
-html:
-	$(MAKE) -C $(DOC_DIR) html
 
 LIBRARY_NAME := nlp_architect
 VIRTUALENV_DIR := .nlp_architect_env
+REQ_FILE := _generated_reqs.txt
 ACTIVATE := $(VIRTUALENV_DIR)/bin/activate
 MODELS_DIR := $(LIBRARY_NAME)/models
 NLP_DIR := $(LIBRARY_NAME)/nlp
 
-$(ACTIVATE):
-	pip3 install --upgrade pip setuptools virtualenv
+.PHONY: test_prepare test style doc_prepare doc html clean pre_install install dev install_no_virt_env sysinstall finish_install
+
+default: dev
+
+test_prepare: test_requirements.txt $(ACTIVATE)
+	@. $(ACTIVATE); pip3 install -r test_requirements.txt > /dev/null 2>&1
+
+test: test_prepare $(ACTIVATE) dev
+	@. $(ACTIVATE); spacy download en
+	@. $(ACTIVATE); py.test -rs -vv tests
+
+flake: test_prepare
+	@echo "Running flake8..."
+	@. $(ACTIVATE); flake8 $(FLAKE8_CHECK_DIRS)  --output-file flake8.txt --tee
+
+pylint: test_prepare
+	@echo "Running pylint..."
+	@. $(ACTIVATE); pylint $(PYLINT_CHECK_DIRS) | tee pylint.txt
+	@. $(ACTIVATE); python3 tests/utils/ansi2html.py pylint.txt > pylint.html
+
+doc_prepare: doc_requirements.txt $(ACTIVATE)
+	@. $(ACTIVATE); pip3 install -r doc_requirements.txt > /dev/null 2>&1
+
+doc: doc_prepare
+	@. $(ACTIVATE); $(MAKE) -C $(DOC_DIR) clean
+	@. $(ACTIVATE); $(MAKE) -C $(DOC_DIR) html
+	@echo "Documentation built in $(DOC_DIR)/build/html"
+	@echo "To view documents open your browser to: http://localhost:8000"
+	@. $(ACTIVATE); cd $(DOC_DIR)/build/html; python3 -m http.server
+	@echo
+
+html: doc_prepare $(ACTIVATE)
+	@. $(ACTIVATE); $(MAKE) -C $(DOC_DIR) html
+
+clean:
+	@echo "Cleaning files.."
+	@rm -rf $(VIRTUALENV_DIR)
+	@rm -rf $(REQ_FILE)
+
+ENV_EXIST := $(shell test -d $(VIRTUALENV_DIR) && echo -n yes)
+REQ_EXIST := $(shell test -f $(REQ_FILE) && echo -n yes)
+
+$(REQ_FILE):
+ifneq ($(REQ_EXIST), yes)
+	@echo "Generating pip requirements file"
+	@bash generate_reqs.sh
+endif
+
+$(ACTIVATE): $(REQ_FILE)
+ifneq ($(ENV_EXIST), yes)
+	@echo "NLP Architect installation"
+	@echo "**************************"
+	@echo "Creating new environment"
+	@echo
 	virtualenv -p python3 $(VIRTUALENV_DIR)
-	@. $(ACTIVATE); pip install -U pip
-	# @. $(basic); pip install -r requirements.txt
+	@. $(ACTIVATE); pip3 install -U pip
+endif
 
-intent: $(ACTIVATE)
-	@echo "installing intent extractor model"
-	@. $(ACTIVATE); pip install -r $(NLP_DIR)/intent_extraction/requirements.txt
-	@$(MAKE) finally
+pre_install: $(ACTIVATE)
+	@echo "\n\n****************************************"
+	@echo "Installing packages ..."
+	@. $(ACTIVATE); pip3 install -r $(REQ_FILE)
 
-chunker: $(ACTIVATE)
-	@echo "installing chunker model"
-	@. $(ACTIVATE); pip install -r $(NLP_DIR)/chunker/requirements.txt
-	@$(MAKE) finally
+install: pre_install
+	@. $(ACTIVATE); pip3 install .
+	$(MAKE) print_finish
 
-bist: $(ACTIVATE)
-	@echo "installing BIST parser"
-	@. $(ACTIVATE); pip install -r $(NLP_DIR)/bist/requirements.txt
-	@$(MAKE) finally
+dev: pre_install
+	@. $(ACTIVATE); pip3 install -e .
+	$(MAKE) print_finish
 
-np_seg: $(ACTIVATE)
-	@echo "installing NP semantic segmentation model"
-	@. $(ACTIVATE); pip install -r $(NLP_DIR)/np_semantic_segmentation/requirements.txt
-	@$(MAKE) finally
+install_no_virt_env: $(REQ_FILE)
+	@echo "\n\n****************************************"
+	@echo "Installing NLP Architect in current python env"
+	pip3 install -r $(REQ_FILE)
+	pip3 install -e .
+	@echo "NLP Architect setup complete."
 
-np2vec: $(ACTIVATE)
-	@echo "installing NP2vec model"
-	@. $(ACTIVATE); pip install -r $(NLP_DIR)/np2vec/requirements.txt
-	@$(MAKE) finally
+sysinstall: $(REQ_FILE)
+	@echo "\n\n****************************************"
+	@echo "Installing NLP Architect in current python env (system install)"
+	pip3 install -r $(REQ_FILE)
+	pip3 install .
+	@echo "NLP Architect setup complete."
 
-mcws: $(ACTIVATE)
-	@echo "installing most common word sense model"
-	@. $(ACTIVATE); pip install -r $(NLP_DIR)/most_common_word_sense/requirements.txt
-	@$(MAKE) finally
-
-reading_comprehension: $(ACTIVATE)
-	@echo "installing reading comprehension model"
-	@. $(ACTIVATE); pip install -r $(MODELS_DIR)/reading_comprehension/requirements.txt
-	@$(MAKE) finally
-
-kbmemn2n: $(ACTIVATE)
-	@echo "installing key-value memory network model"
-	@. $(ACTIVATE); pip install -r $(MODELS_DIR)/kvmemn2n/requirements.txt
-	@$(MAKE) finally
-
-mem2n_dialog: $(ACTIVATE)
-	@echo "installing memory network for dialog model"
-	@. $(ACTIVATE); pip install -r $(MODELS_DIR)/memn2n_dialogue/requirements.txt
-	@$(MAKE) finally
-
-finally: $(ACTIVATE)
-	@. $(ACTIVATE); pip install -e .
+print_finish:
 	@echo "\n\n****************************************"
 	@echo "Setup complete."
 	@echo "Type:"

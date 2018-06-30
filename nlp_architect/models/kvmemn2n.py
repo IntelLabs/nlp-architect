@@ -16,12 +16,9 @@
 from __future__ import division
 from __future__ import print_function
 import ngraph as ng
-from ngraph.frontends.neon import Layer, LookupTable
-from ngraph.frontends.neon.axis import shadow_axes_map
 from ngraph.frontends.neon import Layer
 from ngraph.frontends.neon import GaussianInit
-from ngraph.frontends.neon.graph import SubGraph
-from nlp_architect.utils.encodings import position_encoding
+from nlp_architect.contrib.ngraph.encodings import position_encoding
 from nlp_architect.contrib.ngraph.modified_lookup_table import ModifiedLookupTable
 
 
@@ -29,7 +26,28 @@ class KVMemN2N(Layer):
 
     """
     Key Value Memory Network model
+
+    This class is an N-Graph implementation of the paper https://arxiv.org/abs/1606.03126
+    "Key-Value Memory Networks for Directly Reading Documents"
+
+    Args:
+        num_iterations (int): number of batches per epoch
+        batch_size (int): number of samples in a batch, used to create axis
+        emb_size (int): embedding size
+        nhops (int): number of internal memory hops
+        story_length (int): maximum number of memories associated with an entity
+        memory_size (int): maximum length of memory statements
+        vocab_size (int): number of objects in dictionary
+        vocab_axis (axis): the vobaulary axis
+        use_v_luts (bool): if true, a separate lookup table will be used for each memory hop
+
+    Returns:
+        a_pred (tensor, vocab x batch): probabilities of each potential response (vocab dictionary)
+        a_logits (tensor, batch): predicted answer for each question in the batch
+
     """
+
+    # pylint: disable=super-init-not-called
     def __init__(self, num_iterations, batch_size, emb_size, nhops,
                  story_length, memory_size, vocab_size, vocab_axis, use_v_luts):
 
@@ -65,8 +83,9 @@ class KVMemN2N(Layer):
                                          pad_idx=0, name='LUT_A')
         if use_v_luts:
             self.LUTs_C = [ModifiedLookupTable(self.vocab_size, self.emb_size, self.init,
-                           update=True, pad_idx=0) for n in range(self.nhops)]
+                                               update=True, pad_idx=0) for n in range(self.nhops)]
 
+    # pylint: disable=arguments-differ
     def __call__(self, inputs):
         query = ng.cast_axes(inputs['query'], [self.batch_axis, self.sentence_rec_axis])
 
@@ -82,9 +101,9 @@ class KVMemN2N(Layer):
 
         for hopn in range(self.nhops):
             keys = ng.cast_axes(inputs['keys'], [self.batch_axis, self.memory_axis,
-                                self.sentence_rec_axis])
+                                                 self.sentence_rec_axis])
             value = ng.cast_axes(inputs['values'], [self.batch_axis, self.memory_axis,
-                                 self.val_len_axis])
+                                                    self.val_len_axis])
 
             # Embed keys
             m_emb_A = self.LUT_A(keys)

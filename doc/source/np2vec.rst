@@ -19,7 +19,7 @@ Noun Phrase to Vec
 
 Overview
 ========
-Noun Phrases (NP) play a particular role in NLP algorithms.
+Noun Phrases (NP) play a particular role in NLP applications.
 This code consists in training a word embedding's model for Noun NP's using word2vec_ or fasttext_ algorithm.
 It assumes that the NP's are already extracted and marked in the input corpus.
 All the terms in the corpus are used as context in order to train the word embedding's model; however,
@@ -28,28 +28,26 @@ fasttext training with word_ngrams=1; in this case, we store all the word embedd
 including non-NP's in order to be able to estimate word embeddings of out-of-vocabulary NP's
 (NP's that don't appear in the training corpora).
 
-Note that this code can be also used to train a word embedding's model on any marked corpus.
-For example, if you mark verbs in your corpus, you can train a verb2vec model.
+.. note::
+
+  This code can be also used to train a word embedding's model on any marked corpus.
+  For example, if you mark verbs in your corpus, you can train a verb2vec model.
 
 NP's have to be marked in the corpus by a marking character between the words of the NP and as a suffix of the NP.
 For example, if the marking character is "\_", the NP "Natural Language Processing" will be marked as "Natural_Language_Processing".
 
-Dependencies
-==============
-Dependencies required for the project are mentioned in requirements.txt.
-Use
-
-.. code:: python
-
-  pip install -r requirements.txt
-
+We use the CONLL2000_ shared task dataset in the default parameters of our example for training
+np2vec model. You can download the dataset
+from NLTK_ using the following command ``nltk.download('conll2000')``. The terms and
+conditions of the data set license apply. Intel does
+not grant any rights to the data files.
 
 Files
 ======
 
-- **np2vec.py**: NP2vec model training, store and load code.
-- **main_train.py**: illustrates how to call NP2vec training and store code.
-- **main_inference.py**: illustrates how to call NP2vec load code.
+- **nlp_architect/models/np2vec.py**: NP2vec model training, store and load code.
+- **examples/train.py**: illustrates how to call NP2vec training and store code.
+- **examples/inference.py**: illustrates how to call NP2vec load code.
 
 Running Modalities
 ==================
@@ -76,3 +74,5 @@ for word2vec and https://radimrehurek.com/gensim/models/fasttext.html#gensim.mod
 
 .. _word2vec: https://code.google.com/archive/p/word2vec/
 .. _fasttext: https://github.com/facebookresearch/fastText
+.. _CONLL2000: https://www.clips.uantwerpen.be/conll2000/chunking/
+.. _NLTK: https://www.nltk.org/data.html

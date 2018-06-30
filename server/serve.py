@@ -13,10 +13,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
-
+# pylint: disable=no-self-use
 from __future__ import absolute_import
 
 import argparse
+import ast
 import gzip
 import io
 import json
@@ -26,10 +27,11 @@ import sys
 from importlib import import_module
 from wsgiref.simple_server import make_server
 
-import falcon
 import os.path
-from falcon_multipart.middleware import MultipartMiddleware
 from os.path import dirname
+import falcon
+from falcon_multipart.middleware import MultipartMiddleware
+from nlp_architect.utils.io import check_size
 
 sys.path.insert(0, dirname(dirname(dirname(os.path.abspath(__file__)))))
 logger = logging.getLogger(__name__)
@@ -56,12 +58,12 @@ def format_response(resp_format, parsed_doc):
         formatted response
     """
     logger.info('preparing response JSON')
-    if resp_format == "json" or 'json' in resp_format:
+    if (resp_format == "json") or ('json' in resp_format) or (not resp_format):
+        # if not specified resp_format then default is json
         return json.dumps(parsed_doc)
-    # if resp_format == "pickle":
-    #     return pickle.dumps(parsed_doc)
     if resp_format == "gzip" or 'gzip' in resp_format:
         return gzip_str(parsed_doc)
+    return None
 
 
 def parse_headers(req_headers):
@@ -74,7 +76,7 @@ def parse_headers(req_headers):
     Returns:
         dict: dictionary hosting the request headers
     """
-    headers_lst = ["CONTENT-TYPE", "CONTENT-ENCODING", "FORMAT",
+    headers_lst = ["CONTENT-TYPE", "CONTENT-ENCODING", "RESPONSE-FORMAT",
                    "CLEAN", "DISPLAY-POST-PREPROCCES",
                    "DISPLAY-TOKENS", "DISPLAY-TOKEN-TEXT", "IS-HTML"]
     headers = {}
@@ -117,7 +119,7 @@ def set_headers(res):
                    "Access-Control-Allow-Headers, Access-Control-Allow-Origin,"
                    " Origin,Accept, X-Requested-With, Content-Type, "
                    "Access-Control-Request-Method, "
-                   "Access-Control-Request-Headers, format, clean, "
+                   "Access-Control-Request-Headers, Response-Format, clean, "
                    "display-post-preprocces, display-tokens, "
                    "display-token-text")
 
@@ -141,23 +143,21 @@ class Service(object):
         self.service_type = None
         self.service = self.load_service(service_name)
 
-    def on_options(self, req, res):
+    def on_options(self, _, res):
         """
         Handles OPTION requests
 
         Args:
-            req (:obj:`falcon.Request`): the client’s HTTP OPTION request
             res (:obj:`falcon.Response`): the server's HTTP response
         """
         res.status = falcon.HTTP_200
         set_headers(res)
 
-    def on_get(self, req, resp):
+    def on_get(self, _, resp):
         """
         Handles GET requests
 
         Args:
-            req (:obj:`falcon.Request`): the client’s HTTP GET request
             resp (:obj:`falcon.Response`): the server's HTTP response
         """
         logger.info('handle GET request')
@@ -178,7 +178,7 @@ class Service(object):
         headers = parse_headers(req.headers)
         req_content_type = headers["CONTENT-TYPE"]
         # req_content_encoding = headers["CONTENT-ENCODING"]
-        req_format = headers["FORMAT"]
+        resp_format = headers["RESPONSE-FORMAT"]
         if req_content_type == "application/json" or "application/json" in req_content_type:
             logger.info('Json request')
             try:
@@ -197,11 +197,11 @@ class Service(object):
                 raise falcon.HTTPError(falcon.HTTP_400, 'Error', ex)
         else:
             logger.info('Bad Request Type')
-            msg = 'Doc type not allowed. Must be Gzip, Json, or Pickle'
+            msg = 'Doc type not allowed. Must be Gzip or Json'
             raise falcon.HTTPBadRequest('Bad request', msg)
         parsed_doc = self.get_service_inference(input_docs, headers)
         logger.info('parsed document processing done')
-        resp.body = format_response(req_format, parsed_doc)
+        resp.body = format_response(resp_format, parsed_doc)
 
     def get_service_inference(self, docs, headers):
         """
@@ -219,7 +219,7 @@ class Service(object):
         for doc in docs:
             parsed_doc = self.service.inference(doc["doc"]).displacy_doc()
             doc_dic = {"id": doc["id"], "doc": parsed_doc}
-            if headers['IS-HTML'] is not None and eval(headers['IS-HTML']):
+            if headers['IS-HTML'] is not None and ast.literal_eval(headers['IS-HTML']):
                 # this is a visualizer request - add type of service (core/annotate) to response
                 doc_dic["type"] = self.service_type
             response_data.append(doc_dic)
@@ -236,17 +236,20 @@ class Service(object):
         Returns:
             The loaded service
         """
-        properties = json.load(open(os.path.join(package_home(globals()), "services.json")))
+        with open(os.path.join(package_home(globals()), "services.json")) as prop_file:
+            properties = json.load(prop_file)
         folder_path = properties["api_folders_path"]
         model_relative_path = None
+        service_name_error = "'{0}' is not an existing service - " \
+                             "please try using another service.".format(name)
         if name in properties:
             model_relative_path = properties[name]["file_name"]
         else:
-            logger.error(
-                "{0} is not an existing service - please try using another service.".format(name))
+            logger.error(service_name_error)
+            raise Exception(service_name_error)
         if not model_relative_path:
-            logger.error(
-                "{0} is not an existing service - please try using another service.".format(name))
+            logger.error(service_name_error)
+            raise Exception(service_name_error)
         module_path = ".".join(model_relative_path.split(".")[:-1])
         module_name = extract_module_name(model_relative_path)
         module = import_module(folder_path + module_path)
@@ -292,7 +295,7 @@ def set_server_properties(api, service_name):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--name', help="the name of the service you want to upload", type=str,
-                        required=True)
+                        required=True, action=check_size(1, 30))
     args = parser.parse_args()
     app = application = falcon.API(middleware=[MultipartMiddleware()])
     if not is_valid_input(args.name):

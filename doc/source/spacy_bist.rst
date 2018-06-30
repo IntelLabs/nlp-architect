@@ -24,16 +24,9 @@ Raw text parser based on Spacy and BIST parsers
 The parser uses Spacy's english model for sentence breaking,
 tokenization and token annotations (part-of-speech, lemma, NER).
 Dependency relations between tokens are extracted using BIST parser.
-The BIST parser is described :doc:`here <bist>`.
+The BIST parser is described `here <https://www.transacl.org/ojs/index.php/tacl/article/viewFile/885/198>`__,
+and its code is documented `here <bist_parser.html>`__.
 
-
-Dependencies
-============
-
--  **Python** 3.5+
--  **bist** 0.1
--  **spacy** 2.0.5
--  **spacy en** 2.0.0
 
 Usage
 =====
@@ -42,20 +35,19 @@ To use the module, import it like so:
 
 .. code:: python
 
-    from nlp_architect.pipelines.spacy_bist.parser import SpacyBISTParser
+    from nlp_architect.pipelines.spacy_bist import SpacyBISTParser
 
 Training
 ========
 
 By default, the parser uses a pre-trained BIST model and Spacy's English
-model (``spacy en``). The pre-trained BIST model is automatically
+model (``en``). A pre-trained BIST model is automatically
 downloaded (on-demand) to ``spacy_bist/bist-pretrained/`` and then loaded
 from that directory. To use other models, supply a path or link to each
 model at initialization (see example below).
 
-For instructions on how to train these models, see:
-- BIST: `BIST documentation <bist.rst>`__
-- Spacy: `training instructions <https://spacy.io/usage/training>`__
+For instructions on how to train a BIST model, see `BIST documentation <bist_parser.rst>`__
+For instructions on how to get spaCy models_ or how to train a model see `spaCy training instructions <https://spacy.io/usage/training>`__
 
 Example
 -------
@@ -68,8 +60,7 @@ Parsing
 =========
 
 The parser accepts a document as a raw text string encoded in UTF-8 format and outputs a
-`ParsedDocument <../utils/parsed_document.py>`__ instance which contains the annotations
-(example output below).
+``CoreNLPDoc`` instance which contains the annotations (example output below).
 
 
 Example
@@ -150,3 +141,5 @@ Citations
 =========
 
 * Kiperwasser, E., & Goldberg, Y. (2016). Simple and Accurate Dependency Parsing Using Bidirectional LSTM Feature Representations. Transactions Of The Association For Computational Linguistics, 4, 313-327. https://transacl.org/ojs/index.php/tacl/article/view/885/198
+
+.. _models: https://spacy.io/usage/models

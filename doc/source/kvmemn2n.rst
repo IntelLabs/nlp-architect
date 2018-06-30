@@ -26,33 +26,29 @@ The idea behind this method is to be able to answer wide range of questions base
 .. image :: https://github.com/siyuanzhao/key-value-memory-networks/raw/master/key_value_mem.png
     :alt: key_value_mem
 
-Dependencies
-============
-The primary dependency of this model is NGraph. Download and installation instructions are at https://github.com/NervanaSystems/ngraph-python.
-In addition to NGraph, the following libraries are used and can be installed with ``pip install -r requirements.txt``
-
-* **numpy**
-* **tqdm**
-
 Files
 =====
-* **train_kvmemn2n.py**: The primary class which processes the request to train or run inference on the key-value memory network model. It in turn will call the data processing algorithm when necessary.
-* **data.py**: Will download and process the data necessary to train the key-value memory network model.
-* **wikiwindows.py**: A key data preprocessing stage necessary when using the raw Wikipedia text knowledge base. It is called by data.py, or can be run independently.
-* **kvmemn2n.py**: Defines the key-value memory network model.
-* **interactive_util.py**: Called by train_kvmemn2n.py to facilitate the interactive mode.
+- **nlp_architect/models/kvmemn2n.py**: Defines the key-value memory network model.
+- **nlp_architect/data/wikimovies.py**: Will download and process the data necessary to train the key-value memory network model.
+- **examples/train_kvmemn2n.py**: The primary class which processes the request to train or run inference on the key-value memory network model. It in turn will call the data processing algorithm when necessary.
+- **examples/wikiwindows.py**: A key data preprocessing stage necessary when using the raw Wikipedia text knowledge base. It is called by data.py, or can be run independently.
+- **examples/interactive_util.py**: Called by train_kvmemn2n.py to facilitate the interactive mode.
+
 
 
 Dataset
 =======
-The dataset used for training and evaluation is under the umbrella of the Facebook WikiMovies Dataset tasks (https://research.fb.com/downloads/babi/). The dataset is comprised of questions and answers centered around movies. The files also contain a list of all entities in the dataset such as movie names, people's names, as well as other words which were tagged as entities. The last component of the dataset is a series of knowledge base items as follows:
+The dataset used for training and evaluation is under the umbrella of the Facebook WikiMovies Dataset tasks (https://research.fb.com/downloads/babi/). Please download the dataset from that location.
+The terms and conditions of the data set license apply. Intel does not grant any rights to the data files.
+
+The dataset is comprised of questions and answers centered around movies. The files also contain a list of all entities in the dataset such as movie names, people's names, as well as other words which were tagged as entities. The last component of the dataset is a series of knowledge base items as follows:
 
 - Knowledge base. This comes from the Open Movie Database and MovieLens. The questions and answers are based on the KB.
 - Raw Wikipedia text on the movies. This text is limited to only the article summary (i.e., its introduction)
 - IE performed from the Wikipedia text to build a synthetic KB.
 
 You may choose to use the knowledge base ``kb`` or raw Wikipedia Text ``text`` using the argument
-``--mem_mode``.  The data will be preprocessed and stored according to the ``--dataset_dir`` and
+``--mem_mode``.  The data will be preprocessed and stored according to the ``--data_dir`` and
 type of knowledge base as given by the argument ``--mem_mode``. If you are using ``--mem_mode text``
 the python function ``wikiwindows.py`` will run which can take a number of hours.
 
@@ -65,11 +61,6 @@ However, you can redo the preprocessing with the argument ``--reparse``.
 The preprocessing algorithm ``wikiwindows.py`` can also be ran independently with
 ``python wikiwindows.py ~/nervana/data/`` though please note this is not necessary as
 ``train_kvmemn2n.py`` will run all data preprocessing steps.
-To run ``wikiwindows.py`` independently you need to:
-
-- Download the tar from http://www.thespermwhale.com/jaseweston/babi/movieqa.tar.gz
-- Extract the tar file
-- Run ``python wikiwindows.py --data_dir ~/nervana/data``
 
 
 Running Modalities

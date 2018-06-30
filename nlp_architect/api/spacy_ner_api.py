@@ -15,8 +15,8 @@
 # ******************************************************************************
 
 from nlp_architect.api.abstract_api import AbstractApi
-from nlp_architect.utils.high_level_doc import HighLevelDoc
-import spacy
+from nlp_architect.common.high_level_doc import HighLevelDoc
+from nlp_architect.utils.text import SpacyInstance
 
 
 class SpacyNerApi(AbstractApi):
@@ -30,7 +30,7 @@ class SpacyNerApi(AbstractApi):
         """
         Load spacy english model
         """
-        self.model = spacy.load('en')
+        self.model = SpacyInstance(disable=['parser', 'vectors', 'textcat']).parser
 
     def inference(self, doc):
         """
@@ -51,7 +51,3 @@ class SpacyNerApi(AbstractApi):
         annot_doc.annotation_set = [e.label_ for e in spacy_doc.ents]
         annot_doc.spans = ents
         return annot_doc
-
-
-
-

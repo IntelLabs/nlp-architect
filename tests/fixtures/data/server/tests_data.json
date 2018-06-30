@@ -1,0 +1,335 @@
+{
+  "bist": {
+    "input": {
+      "docs": [
+        {
+          "id": 1,
+          "doc": "Intel is a big organization. The fox jumps quickly"
+        },
+        {
+          "id": 2,
+          "doc": "the horse passed the barn fell"
+        },
+        {
+          "id": 3,
+          "doc": "the old man the boat"
+        }
+      ]
+    },
+    "response": [
+      {
+        "id": 1,
+        "doc": [
+          {
+            "arcs": [
+              {
+                "dir": "left",
+                "label": "nsubj",
+                "start": 0,
+                "end": 4
+              },
+              {
+                "dir": "left",
+                "label": "cop",
+                "start": 1,
+                "end": 4
+              },
+              {
+                "dir": "left",
+                "label": "det",
+                "start": 2,
+                "end": 4
+              },
+              {
+                "dir": "left",
+                "label": "amod",
+                "start": 3,
+                "end": 4
+              }
+            ],
+            "words": [
+              {
+                "text": "Intel",
+                "tag": "NNP"
+              },
+              {
+                "text": "is",
+                "tag": "VBZ"
+              },
+              {
+                "text": "a",
+                "tag": "DT"
+              },
+              {
+                "text": "big",
+                "tag": "JJ"
+              },
+              {
+                "text": "organization.",
+                "tag": "NN"
+              }
+            ]
+          },
+          {
+            "arcs": [
+              {
+                "dir": "left",
+                "label": "det",
+                "start": 0,
+                "end": 1
+              },
+              {
+                "dir": "left",
+                "label": "nsubj",
+                "start": 1,
+                "end": 2
+              },
+              {
+                "dir": "right",
+                "label": "advmod",
+                "start": 2,
+                "end": 3
+              }
+            ],
+            "words": [
+              {
+                "text": "The",
+                "tag": "DT"
+              },
+              {
+                "text": "fox",
+                "tag": "NN"
+              },
+              {
+                "text": "jumps",
+                "tag": "VBZ"
+              },
+              {
+                "text": "quickly",
+                "tag": "RB"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "doc": [
+          {
+            "arcs": [
+              {
+                "dir": "left",
+                "label": "det",
+                "start": 0,
+                "end": 1
+              },
+              {
+                "dir": "left",
+                "label": "nsubj",
+                "start": 1,
+                "end": 2
+              },
+              {
+                "dir": "left",
+                "label": "det",
+                "start": 3,
+                "end": 4
+              },
+              {
+                "dir": "left",
+                "label": "nsubj",
+                "start": 4,
+                "end": 5
+              },
+              {
+                "dir": "right",
+                "label": "ccomp",
+                "start": 2,
+                "end": 5
+              }
+            ],
+            "words": [
+              {
+                "text": "the",
+                "tag": "DT"
+              },
+              {
+                "text": "horse",
+                "tag": "NN"
+              },
+              {
+                "text": "passed",
+                "tag": "VBD"
+              },
+              {
+                "text": "the",
+                "tag": "DT"
+              },
+              {
+                "text": "barn",
+                "tag": "NN"
+              },
+              {
+                "text": "fell",
+                "tag": "VBD"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "doc": [
+          {
+            "arcs": [
+              {
+                "dir": "left",
+                "label": "det",
+                "start": 0,
+                "end": 2
+              },
+              {
+                "dir": "left",
+                "label": "amod",
+                "start": 1,
+                "end": 2
+              },
+              {
+                "dir": "left",
+                "label": "det",
+                "start": 3,
+                "end": 4
+              },
+              {
+                "dir": "right",
+                "label": "dobj",
+                "start": 2,
+                "end": 4
+              }
+            ],
+            "words": [
+              {
+                "text": "the",
+                "tag": "DT"
+              },
+              {
+                "text": "old",
+                "tag": "JJ"
+              },
+              {
+                "text": "man",
+                "tag": "NN"
+              },
+              {
+                "text": "the",
+                "tag": "DT"
+              },
+              {
+                "text": "boat",
+                "tag": "NN"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "spacy_ner": {
+    "input": {
+      "docs": [
+        {
+          "id": 1,
+          "doc": "Apple is looking at buying U.K. startup for $1 billion"
+        },
+        {
+          "id": 2,
+          "doc": "Autonomous cars shift insurance liability toward manufacturers"
+        },
+        {
+          "id": 3,
+          "doc": "San Francisco considers banning sidewalk delivery robots"
+        },
+        {
+          "id": 4,
+          "doc": "London is a big city in the United Kingdom."
+        }
+      ]
+    },
+    "response": [
+      {
+        "id": 1,
+        "doc": {
+          "doc_text": "Apple is looking at buying U.K. startup for $1 billion",
+          "annotation_set": [
+            "org",
+            "gpe",
+            "money"
+          ],
+          "spans": [
+            {
+              "start": 0,
+              "end": 5,
+              "type": "ORG"
+            },
+            {
+              "start": 27,
+              "end": 31,
+              "type": "GPE"
+            },
+            {
+              "start": 44,
+              "end": 54,
+              "type": "MONEY"
+            }
+          ]
+        }
+      },
+      {
+        "id": 2,
+        "doc": {
+          "doc_text": "Autonomous cars shift insurance liability toward manufacturers",
+          "annotation_set": [],
+          "spans": []
+        }
+      },
+      {
+        "id": 3,
+        "doc": {
+          "doc_text": "San Francisco considers banning sidewalk delivery robots",
+          "annotation_set": [
+            "gpe"
+          ],
+          "spans": [
+            {
+              "start": 0,
+              "end": 13,
+              "type": "GPE"
+            }
+          ]
+        }
+      },
+      {
+        "id": 4,
+        "doc": {
+          "doc_text": "London is a big city in the United Kingdom.",
+          "annotation_set": [
+            "gpe",
+            "gpe"
+          ],
+          "spans": [
+            {
+              "start": 0,
+              "end": 6,
+              "type": "GPE"
+            },
+            {
+              "start": 24,
+              "end": 42,
+              "type": "GPE"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -42,29 +42,20 @@ Question-Answering and information retrieval tasks.
 .. image:: https://i.imgur.com/5pQJqjM.png
     :alt: goal_oriented_dialog
 
-Dependencies
-============
-The dependencies required for the project are mentioned in requirements.txt.
-Use
-
-.. code:: python
-
-  pip install -r requirements.txt
-
 
 Files
 =====
-- **train_model.py**: Training script to load dataset and train memory network.
-- **model.py**: Implementation of MemN2N_Dialog class for dialogue tasks.
-- **interactive.py**: Inference script to run interactive session with a trained goal oriented dialog agent.
-- **utils.py**: Utilities to support interactive mode and simulate backend database.
-- **data.py**: Data loader class to download data if not present and perform preprocessing.
-- **tests.py**: Unit tests for custom lookuptable layer.
+- **nlp_architect/data/babi_dialog.py**: Data loader class to download data if not present and perform preprocessing.
+- **nlp_architect/models/memn2n_dialogue.py**: Implementation of MemN2N_Dialog class for dialogue tasks.
+- **examples/train_model.py**: Training script to load dataset and train memory network.
+- **examples/interactive.py**: Inference script to run interactive session with a trained goal oriented dialog agent.
+- **examples/utils.py**: Utilities to support interactive mode and simulate backend database.
+- **examples/tests.py**: Unit tests for custom lookuptable layer.
 
 Datasets
 ========
 The dataset used for training and evaluation is under the umbrella of the Facebook bAbI dialog tasks
-(https://research.fb.com/downloads/babi/). The dataset is automatically downloaded if not found,
+(https://research.fb.com/downloads/babi/). The terms and conditions of the data set license apply. Intel does not grant any rights to the data files. The dataset is automatically downloaded if not found,
 and the preprocessing all happens at the beginning of training.
 
 There are six separate tasks, tasks 1 through 5 are from simulated conversations between a customer

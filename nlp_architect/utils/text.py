@@ -13,21 +13,24 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
+import sys
 
-from __future__ import division
-from __future__ import print_function
-from __future__ import unicode_literals
-from __future__ import absolute_import
+import spacy
+from spacy.cli.download import download as spacy_download
+
+from nlp_architect.utils.generic import license_prompt
 
 
 class Vocabulary:
     """
     A vocabulary that maps words to ints (storing a vocabulary)
     """
-    def __init__(self):
+
+    def __init__(self, start=0):
+
         self._vocab = {}
         self._rev_vocab = {}
-        self.next = 0
+        self.next = start
 
     def add(self, word):
         """
@@ -48,6 +51,7 @@ class Vocabulary:
     def word_id(self, word):
         """
         Get the word_id of given word
+
         Args:
             word (str): word from vocabulary
 
@@ -58,6 +62,18 @@ class Vocabulary:
 
     def __len__(self):
         return len(self._vocab)
+
+    def id_to_word(self, wid):
+        """
+        Word-id to word (string)
+
+        Args:
+            wid (int): word id
+
+        Returns:
+            str: string of given word id
+        """
+        return self._rev_vocab.get(wid)
 
     @property
     def vocab(self):
@@ -88,3 +104,52 @@ class Vocabulary:
             dict: reversed vocabulary object
         """
         return self._rev_vocab
+
+
+def is_spacy_model_installed(model_name):
+    try:
+        spacy.load(model_name)
+        return True
+    except OSError:
+        return False
+
+
+class SpacyInstance:
+    """
+    Spacy pipeline wrapper which prompts user for model download authorization.
+
+    Args:
+        model (str, optional): spacy model name (default: english small model)
+        disable (list of string, optional): pipeline annotators to disable
+            (default: [])
+    """
+
+    def __init__(self, model='en', disable=None):
+        if disable is None:
+            disable = []
+        try:
+            self._parser = spacy.load(model, disable=disable)
+        except OSError:
+            url = 'https://spacy.io/models'
+            if license_prompt('Spacy {} model'.format(model), url) is False:
+                sys.exit(0)
+            spacy_download(model)
+            self._parser = spacy.load(model, disable=disable)
+
+    @property
+    def parser(self):
+        """return Spacy's instance parser"""
+        return self._parser
+
+    def tokenize(self, text):
+        """
+        Tokenize a sentence into tokens
+        Args:
+            text (str): text to tokenize
+
+        Returns:
+            list: a list of str tokens of input
+        """
+        # pylint: disable=not-callable
+
+        return [t.text for t in self.parser(text)]

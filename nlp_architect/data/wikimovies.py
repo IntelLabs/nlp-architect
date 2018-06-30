@@ -14,27 +14,29 @@
 # limitations under the License.
 # ******************************************************************************
 from __future__ import print_function
+
+import os
+import pickle
+import re
+import subprocess
+import sys
+from collections import defaultdict
 from functools import reduce
 
 import numpy as np
-import tarfile
-import os
-import re
-import pickle
-import subprocess
-from collections import defaultdict
-
 from ngraph.util.persist import valid_path_append, fetch_file, ensure_dirs_exist
 
+from nlp_architect.utils.generic import license_prompt
 
-def pad_sentences(sentences, sentence_length=None, dtype=np.int32, pad_val=0.):
+
+def pad_sentences(sentences, sentence_length, dtype_in=np.int32, pad_val=0.):
     lengths = [len(sent) for sent in sentences]
 
     nsamples = len(sentences)
     if sentence_length is None:
         sentence_length = np.max(lengths)
 
-    X = (np.ones((nsamples, sentence_length)) * pad_val).astype(dtype=np.int32)
+    X = (np.ones((nsamples, sentence_length)) * pad_val).astype(dtype=dtype_in)
     for i, sent in enumerate(sentences):
         trunc = sent[-sentence_length:]
 
@@ -42,11 +44,11 @@ def pad_sentences(sentences, sentence_length=None, dtype=np.int32, pad_val=0.):
     return X
 
 
-def pad_stories(stories, sentence_length,  max_story_length, vocab_size, dtype=np.int32,
+def pad_stories(stories, sentence_length, max_story_length, vocab_size, dtype_in=np.int32,
                 pad_val=0., use_time=False):
     nsamples = len(stories)
 
-    X = (np.ones((nsamples, max_story_length, sentence_length)) * pad_val).astype(dtype=np.int32)
+    X = (np.ones((nsamples, max_story_length, sentence_length)) * pad_val).astype(dtype=dtype_in)
 
     for i, story in enumerate(stories):
         trunc = story[-max_story_length:]
@@ -58,21 +60,21 @@ def pad_stories(stories, sentence_length,  max_story_length, vocab_size, dtype=n
     return X
 
 
-def pad_values(values,  max_story_length, dtype=np.int32, pad_val=0.):
+def pad_values(values, max_story_length, dtype_in=np.int32, pad_val=0.):
     # for values we want an array with our same shape (first value is fine)
     # but filled in with trailing zeros
     nsamples = len(values)
     # len_sample = len(values[0][0])
     len_sample = 1  # temp hack as some questions don't have key-vals
 
-    X = (np.ones((nsamples, max_story_length, len_sample)) * pad_val).astype(dtype=np.int32)
+    X = (np.ones((nsamples, max_story_length, len_sample)) * pad_val).astype(dtype=dtype_in)
 
     for i, story in enumerate(values):
         try:
-            if len(story) > 0:
+            if story:
                 trunc = story[-max_story_length:]
                 X[i, :len(trunc)] = trunc
-        except:
+        except Exception:
             pass
     return X
 
@@ -85,24 +87,21 @@ def ex_entity_names(line, dictionary_lookup, regex_list, return_key=False):
         e = dictionary_lookup[line]
         if return_key:
             return e, e
-        else:
-            return e
+        return e
 
     for r, e in regex_list:
         try:
-            if len(r.findall(line)) > 0:
+            if r.findall(line):
                 line = r.sub(e, line)
                 if return_key:
                     return line, e
-                else:
-                    return line
-        except:
+                return line
+        except Exception:
             raise
 
     if return_key:
         return line, None
-    else:
-        return line
+    return line
 
 
 class WIKIMOVIES(object):
@@ -115,6 +114,7 @@ class WIKIMOVIES(object):
     Arguments:
         path (str): Directory to store the dataset
     """
+
     def __init__(self, path='.', subset='wiki-entities', reparse=False,
                  mem_source='kb'):
 
@@ -262,17 +262,13 @@ class WIKIMOVIES(object):
         self.data_dict = {}
         self.vocab = None
         workdir, filepath = valid_path_append(path, '', self.filename)
-        if not os.path.exists(filepath):
-            fetch_file(self.url, self.filename, filepath, self.size)
-            with tarfile.open(filepath, 'r:gz') as f:
-                f.extractall(workdir)
+        babi_dir_name = self.filename.split('.')[0]
 
         if subset == 'wiki-entities':
             subset_folder = 'wiki_entities'
         else:
             subset_folder = subset
 
-        babi_dir_name = self.filename.split('.')[0]
         file_base = babi_dir_name + '/questions/' + subset_folder + '/' + subset + '_qa_{}.txt'
         train_file = os.path.join(workdir, file_base.format('train'))
         test_file = os.path.join(workdir, file_base.format('test'))
@@ -280,23 +276,33 @@ class WIKIMOVIES(object):
         entity_file_path = babi_dir_name + '/knowledge_source/entities.txt'
         entity_file = os.path.join(workdir, entity_file_path)
 
-        knowledge_file_path = babi_dir_name + '/knowledge_source/' + subset_folder + '/' \
-            + subset_folder + '_kb.txt'
+        # Check for the existence of the entity file
+        # If it isn't there then we know we need to fetch everything
+        if not os.path.exists(entity_file):
+            if license_prompt('WikiMovies',
+                              'https://research.fb.com/downloads/babi/',
+                              self.path) is False:
+                sys.exit(0)
+
+            fetch_file(self.url, self.filename, filepath, self.size)
+
+        knowledge_file_path = \
+            babi_dir_name + '/knowledge_source/' + subset_folder + '/' + subset_folder + '_kb.txt'
         kb_file = os.path.join(workdir, knowledge_file_path)
 
         return entity_file, kb_file, train_file, test_file
 
     def create_entity_dict(self):
-        # TODO it would be nice to remove the entities films, movies
+
         # the questions sometimes picks up this entity first
         entity_dict = {}
         reverse_dictionary = {}
         ent_list = []
         with open(self.entity_file) as read:
-            for l in read:
-                l = l.strip().lower()
-                if len(l) > 0:
-                    ent_list.append(l)
+            for read_entity in read:
+                read_entity = read_entity.strip().lower()
+                if read_entity:
+                    ent_list.append(read_entity)
         ent_list.sort(key=lambda x: -len(x))
         for i in range(len(ent_list)):
             k = ent_list[i]
@@ -322,10 +328,10 @@ class WIKIMOVIES(object):
         knowledge_dict = defaultdict(list)
         with open(wiki_window_file) as read:
             movie_ent = None
-            for l in read:
-                l = l.strip()
-                if len(l) > 0:
-                    nid, line = l.split(' ', 1)
+            for read_entity in read:
+                read_entity = read_entity.strip()
+                if read_entity:
+                    nid, line = read_entity.split(' ', 1)
 
                     if nid == '1':
                         movie_ent = line.split(' ')[0]
@@ -350,7 +356,9 @@ class WIKIMOVIES(object):
                         'in_language', 'has_tags', 'has_plot', 'has_imdb_votes', 'has_imdb_rating']
         rev_actions_pre = 'REV_'
 
-        babi_data = open(self.kb_file).read()
+        with open(self.kb_file) as file:
+            babi_data = file.read()
+
         lines = self.data_to_list(babi_data)
 
         knowledge_dict = defaultdict(list)
@@ -380,7 +388,7 @@ class WIKIMOVIES(object):
                             knowledge_dict[fact].append((fact + ' ' + a, subject))
                             # Also add reverse here
                             knowledge_dict[subject].append((subject + ' ' +
-                                                            rev_actions_pre+a, fact))
+                                                            rev_actions_pre + a, fact))
 
         kb_out_path = ensure_dirs_exist(os.path.join(workdir, kb_file_path))
 
@@ -389,17 +397,6 @@ class WIKIMOVIES(object):
             pickle.dump(knowledge_dict, f)
 
         return knowledge_dict
-
-    def reduce_entity_dictionaries(self):
-        self.reduced_entity_dict = dict()
-        self.reduced_reverse_dict = dict()
-        for keeper_key in self.knowledge_dict.keys():
-            try:
-                self.reduced_entity_dict[keeper_key] = self.full_entity_dict[keeper_key]
-                self.reduced_reverse_dict[self.full_entity_dict[keeper_key]] = keeper_key
-            except:
-                continue
-        return self.reduced_entity_dict, self.reduced_reverse_dict
 
     @staticmethod
     def parse_wikimovies(wikimovies_file, reverse_dictionary, knowledge_dict, regex_list):
@@ -413,12 +410,14 @@ class WIKIMOVIES(object):
         Returns:
             list of tuples : List of (story, query, answer) words.
         """
-        babi_data = open(wikimovies_file).read()
+        with open(wikimovies_file) as file:
+            babi_data = file.read()
+
         lines = WIKIMOVIES.data_to_list(babi_data)
 
         data = []
         for line in lines:
-            nid, line = line.lower().split(' ', 1)
+            _, line = line.lower().split(' ', 1)
             try:
                 # Have to actually find the entities before hand as some have question marks...
                 q, a = line.split('\t')
@@ -431,11 +430,13 @@ class WIKIMOVIES(object):
                     related_facts = []
 
                 # transform each answer into the entities creating a list of all answer entities
-                a = WIKIMOVIES.tokenize(' '.join([ex_entity_names(a_0, reverse_dictionary, regex_list)
-                                        for a_0 in a.split(',')]))
+                to_token = ' '.join([ex_entity_names(a_0, reverse_dictionary, regex_list)
+                                     for a_0 in a.split(',')])
+                a = WIKIMOVIES.tokenize(to_token)
+
                 data.append((related_facts, q, a))
 
-            except:
+            except Exception:
                 print(line)
                 raise
 
@@ -451,7 +452,7 @@ class WIKIMOVIES(object):
         all_data = train_data + test_data
 
         all_text = reduce(lambda x, y: x + y, (list(self.flatten_kvs(s)) + q + a
-                          for s, q, a in all_data))
+                                               for s, q, a in all_data))
         vocab = sorted(set(all_text))
         print(len(vocab))
         # vocab = sorted(reduce(lambda x, y: x | y,
@@ -487,7 +488,7 @@ class WIKIMOVIES(object):
         Returns:
             list : Vectorized list of words.
         """
-        if type(words) != str:
+        if not isinstance(words, str):
             index_array = []
             for w in words:
                 if w in self.word_to_index:
@@ -498,8 +499,7 @@ class WIKIMOVIES(object):
         else:
             if words in self.word_to_index:
                 return [self.word_to_index[words]]
-            else:
-                return [0]
+        return [0]
 
     def one_hot_vector(self, answer):
         """
@@ -513,12 +513,12 @@ class WIKIMOVIES(object):
         """
         vector = np.zeros(self.vocab_size)
         try:
-            if type(answer) == list:
+            if isinstance(answer, list):
                 for a in answer:
                     vector[self.word_to_index[a]] = 1
             else:
                 vector[self.word_to_index[answer]] = 1
-        except:
+        except Exception:
             return vector
         return vector
 
@@ -592,10 +592,9 @@ class WIKIMOVIES(object):
         Returns:
             list : A single flattened list of all words.
         """
-        if len(data) > 0:
+        if data:
             return reduce(lambda x, y: x + y, data)
-        else:
-            return data
+        return data
 
     @staticmethod
     def flatten_kvs(data):

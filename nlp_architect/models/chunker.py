@@ -33,6 +33,21 @@ from nlp_architect.contrib.neon.layers import DataInput, TimeDistributedRecurren
 class SequenceChunker(object):
     """
     Sequence chunker model (Neon based)
+
+    Args:
+        sentence_length (str): max sentence length
+        token_vocab_size (int): word vocabulary size
+        pos_vocab_size (int, optional): POS vocabulary size
+        char_vocab_size (int, optional): characters vocabulary size
+        max_char_word_length (int, optional): max word length in characters
+        token_embedding_size (int, optional): word embedding dims
+        pos_embedding_size (int, optional): POS embedding dims
+        char_embedding_size (int, optional): character embedding dims
+        num_labels (int, optional): number of output labels possible per token
+        lstm_hidden_size (int, optional): LSTM hidden size
+        num_lstm_layers (int, optional): number of LSTM layers
+        use_external_embedding (bool, optional): input is provided as external word embedding
+        dropout (float, optional): dropout rate
     """
 
     def __init__(self, sentence_length,
@@ -46,13 +61,12 @@ class SequenceChunker(object):
                  num_labels=None,
                  lstm_hidden_size=100,
                  num_lstm_layers=1,
-                 embedding_model=None,
-                 dropout=0.5
-                 ):
+                 use_external_embedding=None,
+                 dropout=0.5):
 
         init = GlorotUniform()
         tokens = []
-        if embedding_model is None:
+        if use_external_embedding is None:
             tokens.append(LookupTable(vocab_size=token_vocab_size,
                                       embedding_dim=token_embedding_size,
                                       init=init,
@@ -102,6 +116,16 @@ class SequenceChunker(object):
         self._model = Model(layers=layers)
 
     def fit(self, dataset, optimizer, cost, callbacks, epochs=10):
+        """
+        fit a model
+
+        Args:
+            dataset: train/test set of CONLL2000 dataset
+            optimizer: optimizer (Neon based)
+            cost: cost function (Neon based)
+            callbacks: callbacks (Neon based)
+            epochs (int, optional): number of epochs to train
+        """
         self._model.fit(dataset,
                         optimizer=optimizer,
                         num_epochs=epochs,
@@ -109,10 +133,31 @@ class SequenceChunker(object):
                         callbacks=callbacks)
 
     def predict(self, dataset):
+        """
+        predict output of given dataset
+
+        Args:
+            dataset: Neon based iterator
+
+        Returns:
+            prediction on given dataset
+        """
         return self._model.get_outputs(dataset)
 
     def save(self, path):
+        """
+        Save model weights to path
+
+        Args:
+            path (str): path to weights file
+        """
         self._model.save_params(path)
 
     def get_model(self):
+        """
+        Get model
+
+        Returns:
+            Neon model object
+        """
         return self._model

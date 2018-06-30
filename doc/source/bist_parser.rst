@@ -20,19 +20,9 @@ BIST Dependency Parser
 Graph-based dependency parser using BiLSTM feature extractors
 ==============================================================
 
-The techniques behind the parser are described in the paper `Simple and
+The techniques behind the parser are described in the `Simple and
 Accurate Dependency Parsing Using Bidirectional LSTM Feature
 Representations <https://www.transacl.org/ojs/index.php/tacl/article/viewFile/885/198>`__.
-Further materials could be found
-`here <http://elki.cc/#/article/Simple%20and%20Accurate%20Dependency%20Parsing%20Using%20Bidirectional%20LSTM%20Feature%20Representations>`__.
-
-
-Dependencies
-============
-
--  **Python** 3.5+
--  **dynet** 2.0.2
--  **numpy** 1.14.0
 
 Usage
 =====
@@ -41,16 +31,16 @@ To use the module, import it like so:
 
 .. code:: python
 
-    from nlp_architect.bist import BISTModel
+    from nlp_architect.models.bist_parser import BISTModel
 
 Training
 ========
 
-Training the parser requires having a ``train.conll``
-formatted according to the `CoNLL data format <http://universaldependencies.org/format.html>`__,
+Training the parser requires having a ``train.conllu`` file
+formatted according to the CoNLL-U_ data format,
 annotated with part-of-speech tags and dependencies.
 The benchmark was performed on a Mac book pro with i7 processor. The parser achieves
-an accuracy of 93.8 UAS on the standard Penn Treebank dataset (Standford Dependencies).
+an accuracy of 93.8 UAS on the standard Penn Treebank dataset (Universal Dependencies).
 
 
 Basic Example
@@ -61,19 +51,19 @@ To train a parsing model with default parameters, type the following:
 .. code:: python
 
     parser = BISTModel()
-    parser.fit('path/to/train.conll')
+    parser.fit('/path/to/train.conllu')
 
 
 Exhaustive Example
 ------------------
 
-Optionally, the following model/trainng parameters can be supplied (overriding their default
+Optionally, the following model/training parameters can be supplied (overriding their default
 values listed below):
 
 .. code:: python
 
     parser = BISTModel(activation='tanh', lstm_layers=2, lstm_dims=125, pos_dims=25)
-    parser.fit('path/to/train.conll', epochs=10)
+    parser.fit('/path/to/train.conllu', epochs=10)
 
 
 Conducting Intermediate Evaluations
@@ -85,12 +75,13 @@ intermediate model evaluations are conducted:
 .. code:: python
 
     parser = BISTModel()
-    parser.fit('path/to/train.conll', dev='path/to/dev.conll')
+    parser.fit('/path/to/train.conllu', dev='/path/to/dev.conllu')
 
-  For each completed epoch, denoted by **n**, the following files will be created in the dataset's
-  directory:
-  - *dev_epoch_n_pred.conll* - prediction results on dev file after **n** iterations.
-  - *dev_epoch_n_pred_eval.txt* - accuracy results of the above predictions.
+For each completed epoch, denoted by **n**, the following files will be created in the dataset's
+directory:
+
+- *dev_epoch_n_pred.conllu* - prediction results on dev file after **n** iterations.
+- *dev_epoch_n_pred_eval.txt* - accuracy results of the above predictions.
 
 Inference
 =========
@@ -101,12 +92,11 @@ with it. For both modes, the input must be annotated with part-of-speech tags.
 File Input Mode
 ---------------
 
-Supply a path to a dataset file in the
-`CoNLL data format <http://universaldependencies.org/format.html>`__.
+Supply a path to a dataset file in the CoNLL-U_ data format.
 
 .. code:: python
 
-    predictions = parser.predict(dataset='path/to/test.conll')
+    predictions = parser.predict(dataset='/path/to/test.conllu')
 
 After running the above example, ``predictions`` will hold the input sentences with annotated
 dependencies, as a collection of ``ConllEntry`` objects, where each ``ConllEntry`` represents an
@@ -120,7 +110,9 @@ Supply a list of sentences, where each sentence is a list of annotated tokens, r
 
 .. code:: python
 
-    predictions = parser.predict(conll='path/to/test.conll')
+    predictions = parser.predict(conll='/path/to/test.conllu')
+
+The output format is the same as in file input mode.
 
 Evaluating Predictions
 ----------------------
@@ -133,10 +125,11 @@ To evaluate predictions immediately after they're generated, type the following:
 
 .. code:: python
 
-    predictions = parser.predict(dataset='path/to/test.conll', evaluate=True)
+    predictions = parser.predict(dataset='/path/to/test.conllu', evaluate=True)
 
 This will produce 2 files in your input dataset's directory:
-- *test_pred.conll* - predictions file in CoNLL format
+
+- *test_pred.conllu* - predictions file in CoNLL-U format
 - *test_pred_eval.txt* - evaluation report text file
 
 Saving and Loading a Model
@@ -146,7 +139,7 @@ To save a ``BISTModel`` to some path, type:
 
 .. code:: python
 
-    parser.save('path/to/bist.model')
+    parser.save('/path/to/bist.model')
 
 This operation will also produce a model parameters file named *params.json*, in the same directory.
 This file is required for loading the model afterwards.
@@ -155,10 +148,12 @@ To load a ``BISTModel`` from some path, type:
 
 .. code:: python
 
-    parser.load('path/to/bist.model')
+    parser.load('/path/to/bist.model')
 
 Note that this operation will also look for the *params.json* in the same directory.
 
 Citations
 =========
 * Kiperwasser, E., & Goldberg, Y. (2016). Simple and Accurate Dependency Parsing Using Bidirectional LSTM Feature Representations. Transactions Of The Association For Computational Linguistics, 4, 313-327. https://transacl.org/ojs/index.php/tacl/article/view/885/198
+
+.. _CoNLL-U:  http://universaldependencies.org/format.html

@@ -13,18 +13,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
-from __future__ import unicode_literals, print_function, division, \
-    absolute_import
-
+# pylint: disable=redefined-outer-name
 import pytest
 
-from nlp_architect.pipelines.spacy_bist.parser import SpacyBISTParser
+from nlp_architect.utils.text import is_spacy_model_installed
+from nlp_architect.pipelines.spacy_bist import SpacyBISTParser
+
+if not is_spacy_model_installed('en'):
+    pytest.skip("\n\nSkipping test_spacy_bist.py. Reason: 'spacy en' model not installed. "
+                "Please see https://spacy.io/models/ for installation instructions.\n"
+                "The terms and conditions of the data set and/or model license apply.\n"
+                "Intel does not grant any rights to the data and/or model files.\n",
+                allow_module_level=True)
 
 
 class TestData:
-    """
-    Test cases for the test functions below.
-    """
+    """Test cases for the test functions below."""
     output_structure = ["This is a single-sentence document",
                         "This is a document... This is the second sentence"]
 
@@ -49,26 +53,21 @@ class Fixtures:
     token_label_types = {'start': int, 'len': int, 'pos': str, 'ner': str, 'lemma': str,
                          'gov': int, 'rel': str}
 
-    parse_str_methods = ['inference', 'parse']
-
 
 @pytest.mark.parametrize('show_tok', [True, False])
 @pytest.mark.parametrize('show_doc', [True, False])
-@pytest.mark.parametrize('method_name', Fixtures.parse_str_methods)
 @pytest.mark.parametrize('text', TestData.output_structure)
-def test_output_structure(parser, text, method_name, show_tok, show_doc, token_label_types):
+def test_output_structure(parser, text, show_tok, show_doc, token_label_types):
     """Test that the output object structure hasn't changed.
 
     Args:
         parser (SpacyBistParser)
         text (str): Input test case.
-        method_name (str): Parse method to test.
         show_tok (bool): Specifies whether to include token text in output.
         show_doc (bool): Specifies whether to include document text in output.
         token_label_types (dict): Mapping of label names to their type.
     """
-    parse_method = getattr(parser, method_name)
-    parsed_doc = parse_method(doc_text=text, show_tok=show_tok, show_doc=show_doc)
+    parsed_doc = parser.parse(doc_text=text, show_tok=show_tok, show_doc=show_doc)
     assert isinstance(parsed_doc.sentences, list)
     assert isinstance(parsed_doc.doc_text, str) if show_doc else not parsed_doc.doc_text
     for sentence in parsed_doc:
@@ -78,7 +77,7 @@ def test_output_structure(parser, text, method_name, show_tok, show_doc, token_l
                 assert isinstance(token.get(label), label_type)
 
 
-@pytest.mark.parametrize('method_name', Fixtures.parse_str_methods)
+@pytest.mark.parametrize('method_name', ['parse'])
 @pytest.mark.parametrize('text, sent_count', TestData.sentence_breaking)
 def test_sentence_breaking(parser, text, sent_count, method_name):
     """Test that documents are broken into the expected number of sentences.
@@ -94,7 +93,7 @@ def test_sentence_breaking(parser, text, sent_count, method_name):
     assert len(parsed_doc.sentences) == sent_count
 
 
-@pytest.mark.parametrize('method_name', Fixtures.parse_str_methods)
+@pytest.mark.parametrize('method_name', ['parse'])
 @pytest.mark.parametrize('text, deps', TestData.dependencies)
 def test_dependencies(parser, text, deps, method_name):
     """Test that dependencies are predicted correctly.
@@ -112,7 +111,7 @@ def test_dependencies(parser, text, deps, method_name):
             assert (token['rel'], token['gov']) == deps[i_sentence][i_token]
 
 
-@pytest.mark.parametrize('method_name', Fixtures.parse_str_methods)
+@pytest.mark.parametrize('method_name', ['parse'])
 @pytest.mark.parametrize('text', TestData.pos_tags)
 def test_pos_tag(parser, text, method_name, ptb_pos_tags):
     """Tests that produced POS tags are valid PTB POS tags.
@@ -141,8 +140,3 @@ def ptb_pos_tags():
 @pytest.fixture
 def token_label_types():
     return Fixtures.token_label_types
-
-
-@pytest.fixture
-def parse_str_methods():
-    return Fixtures.parse_str_methods

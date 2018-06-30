@@ -17,8 +17,34 @@ from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
 from __future__ import absolute_import
+
 import numpy as np
-from neon.data.text_preprocessing import pad_sentences
+
+
+# pylint: disable=invalid-unary-operand-type
+def pad_sentences(sequences, max_length=None, padding_value=0.):
+    """
+    Pad input sequences up to max_length
+    padding is aligned to the right
+
+    Args:
+        sequences (iter): a 2D matrix (np.array) to pad
+        max_length (int, optional): max length of resulting sequences
+        padding_value (int, optional): padding value
+
+    Returns:
+        input sequences padded to size 'max_length'
+    """
+    if max_length is None:
+        max_length = np.max([len(s) for s in sequences])
+    elif max_length < 1:
+        raise ValueError('max sequence length must be > 0')
+
+    padded_sequences = (np.ones((len(sequences), max_length)) * padding_value)
+    for i, sent in enumerate(sequences):
+        trunc = sent[-max_length:]
+        padded_sequences[i, -len(trunc):] = trunc
+    return padded_sequences.astype(dtype=np.int32)
 
 
 def one_hot(mat, num_classes):
@@ -74,6 +100,7 @@ def add_offset(mat, offset=1):
     return mat
 
 
+# pylint: disable=no-member
 def get_paddedXY_sequence(X, y, vocab_size=20000, sentence_length=100, oov=2,
                           start=1, index_from=3, seed=113, shuffle=True):
     if shuffle:
@@ -96,9 +123,33 @@ def get_paddedXY_sequence(X, y, vocab_size=20000, sentence_length=100, oov=2,
     else:
         X = [[w for w in x if w < vocab_size] for x in X]
 
-    X = pad_sentences(X, sentence_length=sentence_length)
+    X = pad_sentences(X, max_length=sentence_length)
 
     y = [[w + 1.0 for w in i] for i in y]
-    y = pad_sentences(y, sentence_length=sentence_length)
+    y = pad_sentences(y, max_length=sentence_length)
 
     return X, y
+
+
+def license_prompt(model_name, model_website, dataset_dir=None):
+    if dataset_dir:
+        print('{} was not found in the directory: {}'.format(model_name, dataset_dir))
+    else:
+        print('{} was not found on local installation'.format(model_name))
+    print('{} can be downloaded from {}'.format(model_name, model_website))
+    print('\nThe terms and conditions of the data set license apply. Intel does not '
+          'grant any rights to the data files or database\n')
+    response = input('\nTo download \'{}\' from {}, please enter YES: '.
+                     format(model_name, model_website))
+    res = response.lower().strip()
+    if res == "yes" or (len(res) == 1 and res == 'y'):
+        print('Downloading {}...'.format(model_name))
+        return True
+    else:
+        print('Download declined. Response received {} != YES|Y. '.format(res))
+        if dataset_dir:
+            print('Please download the model manually from {} and place in the directory: {}'
+                  .format(model_website, dataset_dir))
+        else:
+            print('Please download the model manually from {}'.format(model_website))
+        return False

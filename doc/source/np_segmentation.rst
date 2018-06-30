@@ -46,75 +46,94 @@ for the examples above the classifier will output 1 (==Collocation) for ``hot do
 for ``hot pizza``.
 
 
-Requirements
-=============
-- **nltk** (for data.py - used for Wordnet, SnowballStemmer)
-- **palmettopy** (for data.py - used for Palmetto PMI scores)
-- **requests** (for data.py - used for Wikidata)
-- **gensim** (for data.py - used for Word2Vec utilities)
-- **tqdm** (for data.py)
-- **numpy**
-
 Files
 =========
-- **data.py**: Prepare string data for both ``train.py`` and ``inference.py`` using pre-trained word embedding, PMI score, Wordnet and wikidata.
-- **feature_extraction.py**: contains the feature extraction services
-- **train.py**: train the MLP classifier.
-- **model.py**: contains the MLP classifier model.
-- **inference.py**: load the trained model and inference the input data by the model.
+- **nlp_architect/models/np_semantic_segmentation.py**: contains the MLP classifier model.
+- **examples/data.py**: Prepare string data for both ``train.py`` and ``inference.py`` using pre-trained word embedding, NLTKCollocations score, Wordnet and wikidata.
+- **examples/feature_extraction.py**: contains the feature extraction services
+- **examples/train.py**: train the MLP classifier.
+- **examples/inference.py**: load the trained model and inference the input data by the model.
 
 Dataset
-=========
-The expected dataset is a CSV file with 2 columns.
-The first column contains the Noun-Phrase string (a Noun-Phrase containing 2 words),
-and the second column contains the correct label (if the 2 word Noun-Phrase is a collocation - the label is 1, else 0)
+-------
 
-Attached to this project are examples:
+The expected dataset is a CSV file with 2 columns. the first column
+contains the Noun-Phrase string (a Noun-Phrase containing 2 words), and
+the second column contains the correct label (if the 2 word Noun-Phrase
+is a collocation - the label is 1, else 0)
 
-- ``raw_data.csv`` - the dataset before prepare_data.py
-- ``prepared_data.csv`` - the output of prepare_data.py
+If you wish to use an existing dataset for training the model, you can
+download Tratz 2011 et al. dataset [1,2] from the following link: `Tratz
+2011
+Dataset <https://vered1986.github.io/papers/Tratz2011_Dataset.tar.gz>`__.
+Is also available in
+`here <https://www.isi.edu/publications/licensed-sw/fanseparser/index.html>`__.
+(The terms and conditions of the data set license apply. Intel does not
+grant any rights to the data files or database.
 
-Both of these files are accessible in the following link:
+After downloading and unzipping the dataset, run
+``preprocess_tratz2011.py`` in order to construct the labeled data and
+save it in a CSV file (as expected for the model). the scripts read 2
+.tsv files ('tratz2011\_coarse\_grained\_random/train.tsv' and
+'tratz2011\_coarse\_grained\_random/val.tsv') and outputs 2 .csv files
+accordingly to the same location.
 
-https://s3-us-west-1.amazonaws.com/nervana-modelzoo/np_semantic_segmentation/data.zip
+Quick example:
 
+::
 
-Running Modalities
-==================
+    python preprocess_tratz2011.py --data path_to_Tratz_2011_dataset_folder
 
-Pre-processing the data
-------------------------
+Pre-processing the data:
+~~~~~~~~~~~~~~~~~~~~~~~~
 
-Within the file ``data.py`` a feature vector is extracted from each Noun-Phrase string:
+A feature vector is extracted from each Noun-Phrase string using the
+command ``python data.py``
 
-* Word2Vec word embedding (300 size vector for each word in the Noun-Phrase) .
-    * Pre-trained Google News Word2vec model can download at https://drive.google.com/file/d/0B7XkCwpI5KDYNlNUTTlSS21pQmM/edit?usp=sharing
-* Cosine distance between 2 words in the Noun-Phrase.
-* PMI score (NPMI and UCI scores).
-* A binary features whether the Noun-Phrase has existing entity in Wikidata.
-* A binary features whether the Noun-Phrase has existing entity in WordNet.
+-  Word2Vec word embedding (300 size vector for each word in the
+   Noun-Phrase) .
 
-.. code:: python
+   -  Pre-trained Google News Word2vec model can download
+      `here <https://drive.google.com/file/d/0B7XkCwpI5KDYNlNUTTlSS21pQmM/edit?usp=sharing>`__
+   -  The terms and conditions of the data set license apply. Intel does
+      not grant any rights to the data files or database.
 
-    python data.py --data datasets/raw_data.csv --output datasets/prepared_data.csv --w2v_path <path_to_w2v>/GoogleNews-vectors-negative300.bin.gz
+-  Cosine distance between 2 words in the Noun-Phrase.
+-  NLTKCollocations score (PMI score (from Manning and Schutze 5.4) and Chi-square score (Manning and Schutze 5.3.3)).
+-  A binary features whether the Noun-Phrase has existing entity in
+   Wikidata.
+-  A binary features whether the Noun-Phrase has existing entity in
+   WordNet.
+
+Quick example:
+
+::
+
+    python data.py --data input_data_path.csv --output output_prepared_path.csv --w2v_path <path_to_w2v>/GoogleNews-vectors-negative300.bin.gz
 
 Training
----------
-The file train.py will train the MLP classifier and evaluate it.
+--------
 
-After training is done, the model is saved automatically as ``<model_name>.prm``
+The command ``python train.py`` will train the MLP classifier and
+evaluate it. After training is done, the model is saved automatically:
 
-.. code:: python
+Quick example:
 
-    python train.py --data datasets/prepared_data.csv --model datasets/np_semantic_segmentation
+::
+
+    python train.py --data prepared_data_path.csv --model_path np_semantic_segmentation_path.prm
 
 Inference
 ---------
-In order to run inference you need to have pre-trained ``<model_name>.prm`` file and data CSV file
-that was generated by ``prepare_data.py``.
-The result of ``inference.py`` is a CSV file, each row contains the model's inference in respect to
-the input data.
 
-.. code:: python
+In order to run inference you need to have pre-trained
+``<model_name>.prm`` file and data CSV file that was generated by
+``prepare_data.py``. The result of ``python inference.py`` is a CSV
+file, each row contains the model's inference in respect to the input
+data.
 
-    python inference.py --model datasets/np_semantic_segmentation.prm --data datasets/prepared_data.csv --output datasets/inference_data.csv --print_stats True
+Quick example:
+
+::
+
+    python inference.py --model np_semantic_segmentation_path.prm --data prepared_data_path.csv --output inference_data.csv --print_stats
