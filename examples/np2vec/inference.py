@@ -54,7 +54,7 @@ if __name__ == "__main__":
         '--np',
         default='Intel Corp.',
         type=str,
-        action=check_size(min=1),
+        action=check_size(min_size=1),
         help='NP to print its word vector.')
 
     args = arg_parser.parse_args()

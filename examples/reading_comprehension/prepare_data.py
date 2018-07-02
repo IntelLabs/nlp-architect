@@ -20,11 +20,9 @@ import nltk
 import argparse
 import json
 import os
-from tqdm import *
+from tqdm import tqdm
 from nlp_architect.utils.io import sanitize_path
-from nlp_architect.utils.io import validate, validate_existing_directory, \
-    validate_existing_filepath, validate_parent_exists, check_size
-
+from nlp_architect.utils.io import validate_existing_directory
 
 PAD = "<pad>"
 SOS = "<sos>"
@@ -153,7 +151,7 @@ def extract_data_from_files(json_data):
                         data_ques.append(question_tokens)
                         data_answer.append((a_start_idx, a_end_idx))
 
-                    except:
+                    except ValueError:
                         line_skipped += 1
 
     return data_para, data_ques, data_answer
@@ -185,7 +183,7 @@ def get_ids_list(data_lists, vocab):
         for word in line:
             try:
                 curr_line_idx.append(vocab[word])
-            except:
+            except ValueError:
                 curr_line_idx.append(vocab[UNK])
 
         ids_list.append(curr_line_idx)
@@ -197,13 +195,12 @@ if __name__ == '__main__':
     # parse the command line arguments
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--data_path',help='enter path where training data and the \
+    parser.add_argument('--data_path', help='enter path where training data and the \
                         glove embeddings were downloaded',
                         type=str)
 
-    parser.add_argument('--no_preprocess_glove',action="store_true",
-        help='Chose whether or not to preprocess glove embeddings')
-
+    parser.add_argument('--no_preprocess_glove', action="store_true",
+                        help='Chose whether or not to preprocess glove embeddings')
     parser.set_defaults()
     args = parser.parse_args()
     glove_flag = not args.no_preprocess_glove

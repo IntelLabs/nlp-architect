@@ -19,20 +19,19 @@ Most Common Word Sense Inference module.
 
 
 import logging
-
 import gensim
 import numpy as np
-from feature_extraction import extract_features_envelope
-from feature_extraction import extract_synset_data
 from neon.backends import gen_backend
 from neon.data import ArrayIterator
 from neon.util.argparser import NeonArgparser
 from nltk.corpus import wordnet as wn
-from prepare_data import read_inference_input_examples_file
 from termcolor import colored
+from examples.most_common_word_sense.prepare_data import read_inference_input_examples_file
+from examples.most_common_word_sense.feature_extraction import extract_features_envelope
+from examples.most_common_word_sense.feature_extraction import extract_synset_data
 
 from nlp_architect.models.most_common_word_sense import MostCommonWordSense
-from nlp_architect.utils.io import validate_existing_filepath, validate_parent_exists, check_size
+from nlp_architect.utils.io import validate_existing_filepath, check_size
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -136,12 +135,12 @@ if __name__ == "__main__":
         example_cntr = example_cntr + 1
 
 #       find sense with max score
-        if len(sense_data_matrix) > 0:
+        if sense_data_matrix:
             max_val = max(sense_data_matrix,
                           key=lambda sense_data_matrix_entry: sense_data_matrix_entry[0])
             max_val = max_val[0]
             header_text = 'word: ' + input_word
-            print(colored(header_text, 'grey',  attrs=['bold', 'underline']))
+            print(colored(header_text, 'grey', attrs=['bold', 'underline']))
 
             for data_sense in sense_data_matrix:
                 if data_sense[0] == max_val:

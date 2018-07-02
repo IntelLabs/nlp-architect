@@ -13,16 +13,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-from __future__ import unicode_literals
-
 import sys
 
 import spacy
-from nlp_architect.utils.generic import license_prompt
 from spacy.cli.download import download as spacy_download
+
+from nlp_architect.utils.generic import license_prompt
 
 
 class Vocabulary:
@@ -154,4 +150,6 @@ class SpacyInstance:
         Returns:
             list: a list of str tokens of input
         """
+        # pylint: disable=not-callable
+
         return [t.text for t in self.parser(text)]

@@ -34,54 +34,54 @@ class MemN2N_Dialog(Layer):
     """
     End-to-End Memory Networks for Goal Oriented Dialogue
 
-    After the model is initialized, it accepts a BABI_Dialog class formatted dataset 
-    as input and returns a probability distribution over candidate answers. 
+    After the model is initialized, it accepts a BABI_Dialog class formatted dataset
+    as input and returns a probability distribution over candidate answers.
 
     Args:
         cands (np.array): Vectorized array of potential candidate answers, encoded
             as integers, as returned by BABI_Dialog class. Shape = [num_cands, max_cand_length]
-        num_cands (int): Number of potential candidate answers. 
-        max_cand_len (int): Maximum length of a candidate answer sentence in number of words. 
+        num_cands (int): Number of potential candidate answers.
+        max_cand_len (int): Maximum length of a candidate answer sentence in number of words.
         memory_size (int): Maximum number of sentences to keep in memory at any given time.
-        max_utt_len (int): Maximum length of any given sentence / user utterance 
-        vocab_size (int): Number of unique words in the vocabulary + 2 (0 is reserved for 
+        max_utt_len (int): Maximum length of any given sentence / user utterance
+        vocab_size (int): Number of unique words in the vocabulary + 2 (0 is reserved for
             a padding symbol, and 1 is reserved for OOV)
-        emb_size (int): Dimensionality of word embeddings to use 
-        batch_size (int): Number of training examples per batch 
+        emb_size (int): Dimensionality of word embeddings to use
+        batch_size (int): Number of training examples per batch
         use_match_type (bool, optional): Flag to use match-type features
-        kb_ents_to_type (dict, optional): For use with match-type features, dictionary of 
+        kb_ents_to_type (dict, optional): For use with match-type features, dictionary of
             entities found in the dataset mapping to their associated match-type
         kb_ents_to_cand_idxs (dict, optional): For use with match-type features, dictionary
             mapping from each entity in the  knowledge base to the set of indicies in the
             candidate_answers array that contain that entity.
-        match_type_idxs (dict, optional): For use with match-type features, dictionary 
+        match_type_idxs (dict, optional): For use with match-type features, dictionary
             mapping from match-type to the associated fixed index of the candidate vector
             which indicated this match type.
-        nhop (int, optional): Number of memory-hops to perform during fprop 
-        eps (float, optional): Small epsilon used for numerical stability in 
+        nhop (int, optional): Number of memory-hops to perform during fprop
+        eps (float, optional): Small epsilon used for numerical stability in
             softmax renormalization
         init (Initalizer, optional): Initalizer object used to initialize lookup table
             and projection layer.
     """
     def __init__(
-        self,
-        cands,
-        num_cands,
-        max_cand_len,
-        memory_size,
-        max_utt_len,
-        vocab_size,
-        emb_size,
-        batch_size,
-        use_match_type=False,
-        kb_ents_to_type=None,
-        kb_ents_to_cand_idxs=None,
-        match_type_idxs=None,
-        nhops=3,
-        eps=1e-6,
-        init=GaussianInit(
-            mean=0.0,
-            std=0.1)):
+            self,
+            cands,
+            num_cands,
+            max_cand_len,
+            memory_size,
+            max_utt_len,
+            vocab_size,
+            emb_size,
+            batch_size,
+            use_match_type=False,
+            kb_ents_to_type=None,
+            kb_ents_to_cand_idxs=None,
+            match_type_idxs=None,
+            nhops=3,
+            eps=1e-6,
+            init=GaussianInit(
+                mean=0.0,
+                std=0.1)):
         super(MemN2N_Dialog, self).__init__()
 
         self.cands = cands
@@ -128,7 +128,7 @@ class MemN2N_Dialog(Layer):
                 self.cands, axes=[
                     self.cand_axis, self.cand_rec_axis])
 
-    def __call__(self, inputs):
+    def __call__(self, inputs, **kwargs):
         query = ng.cast_axes(
             inputs['user_utt'], [
                 self.batch_axis, self.sentence_rec_axis])
@@ -143,7 +143,7 @@ class MemN2N_Dialog(Layer):
         # after each memory hop
         u = [u_0]
 
-        for hopn in range(self.nhops):
+        for _ in range(self.nhops):
             story = ng.cast_axes(
                 inputs['memory'], [
                     self.batch_axis, self.memory_axis, self.sentence_rec_axis])
@@ -178,7 +178,7 @@ class MemN2N_Dialog(Layer):
 
             # Add the output back into the internal state and project
             u_k = ng.cast_axes(ng.dot(self.R_proj, o_k), [
-                               self.embedding_axis, self.batch_axis]) + u[-1]  # [batch, F_proj]
+                self.embedding_axis, self.batch_axis]) + u[-1]  # [batch, F_proj]
 
             # Add new internal state
             u.append(u_k)

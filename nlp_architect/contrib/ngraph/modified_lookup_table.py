@@ -13,6 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
+# pylint: disable=attribute-defined-outside-init
+
 import ngraph as ng
 from ngraph.frontends.neon import Layer
 from ngraph.frontends.neon.axis import shadow_axes_map

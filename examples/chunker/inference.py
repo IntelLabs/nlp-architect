@@ -14,26 +14,22 @@
 # limitations under the License.
 # ******************************************************************************
 
-from __future__ import division
-from __future__ import print_function
-from __future__ import unicode_literals
-from __future__ import absolute_import
+from __future__ import division, print_function, unicode_literals, absolute_import
+
 import pickle
-import os
 import sys
 
 import numpy as np
-
 import spacy
 from neon.backends import gen_backend
 from neon.models import Model
 from neon.util.argparser import NeonArgparser, extract_valid_args
 
 from nlp_architect.contrib.neon.text_iterators import TaggedTextSequence, MultiSequenceDataIterator
-from nlp_architect.utils.generic import get_paddedXY_sequence
 from nlp_architect.utils.embedding import load_word_embeddings
+from nlp_architect.utils.generic import get_paddedXY_sequence
 from nlp_architect.utils.io import validate_existing_filepath
-from utils import extract_nps
+from examples.chunker.utils import extract_nps
 
 if __name__ == '__main__':
 
@@ -46,7 +42,7 @@ if __name__ == '__main__':
                         help='Input texts file path (samples to pass for inference)')
     parser.add_argument('--embedding_model', type=validate_existing_filepath,
                         help='Pre-trained word embedding model file path')
-    parser.add_argument('--print_only_nps', default=True, action='store_true',
+    parser.add_argument('--print_only_nps', default=False, action='store_true',
                         help='Print inferred Noun Phrases')
     args = parser.parse_args()
     be = gen_backend(**extract_valid_args(args, gen_backend))

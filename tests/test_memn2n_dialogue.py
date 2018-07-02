@@ -14,15 +14,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
+# pylint: disable=redefined-outer-name
 from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
 from __future__ import absolute_import
-import itertools as itt
 import numpy as np
 import ngraph as ng
 from ngraph.op_graph.lookuptable import lookuptable_update
-import ngraph.transformers as ngt
 from ngraph.testing import RandomTensorGenerator, ExecutorFactory
 from ngraph.frontends.neon import ax
 import pytest
@@ -34,6 +33,7 @@ rtol = atol = 1e-2
 
 (V, F, N, T, M) = (3, 6, 4, 5, 7)
 lut_args = (V, F, N, T, M)
+
 
 def lut_fprop_ref(lut, idx):
     """
@@ -54,6 +54,7 @@ def lut_update_ref(error, lut, idx, pad_idx):
         if wrd_id != pad_idx:
             dw_ref[wrd_id, :] = np.sum(error.take(group[0], axis=0), axis=0)
     return dw_ref
+
 
 @pytest.mark.parametrize('lut_args', [lut_args])
 def test_lut(lut_args):

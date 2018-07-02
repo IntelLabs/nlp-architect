@@ -20,7 +20,7 @@ from __future__ import print_function
 from __future__ import unicode_literals
 
 import itertools
-from builtins import input
+from builtins import input as text_input
 from copy import copy
 from functools import reduce
 
@@ -43,7 +43,7 @@ def interactive_loop(interactive_computation, babi):
     db, names_to_idxs, kb_text = build_kb_db(babi)
 
     while True:
-        line_in = input('>>> ').strip().lower()
+        line_in = text_input('>>> ').strip().lower()
         if not line_in:
             line_in = "<SILENCE>"
         if line_in == 'exit' or line_in == 'quit':
