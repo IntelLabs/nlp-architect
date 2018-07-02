@@ -2,7 +2,7 @@ import logging
 import socketserver
 import argparse
 import pickle
-from set_expansion_demo import set_expand
+from solutions.set_expansion import set_expand
 
 
 class MyTCPHandler(socketserver.BaseRequestHandler):

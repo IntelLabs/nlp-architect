@@ -8,7 +8,7 @@ import pandas
 import socket
 import pickle
 import time
-import set_expansion_demo.ui.settings as settings
+import solutions.set_expansion.ui.settings as settings
 
 
 hash2group = {}
