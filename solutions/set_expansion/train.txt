@@ -1,0 +1,1000 @@
+Telecommunication
+
+Telecommunication is the transmission of signs, signals, messages, words, writings, images and sounds or information of any nature by wire, radio, optical or other electromagnetic systems. Telecommunication occurs when the exchange of information between communication participants includes the use of technology. It is transmitted either electrically over physical media, such as cables, or via electromagnetic radiation. Such transmission paths are often divided into communication channels which afford the advantages of multiplexing. Since the Latin term communicatio is considered the social process of information exchange, the term, telecommunications, is often used in its plural form because it involves many different technologies.
+
+Early means of communicating over a distance included visual signals, such as beacons, smoke signals, semaphore telegraphs, signal flags, and optical heliographs. Other examples of pre-modern long-distance communication included audio messages such as coded drumbeats, lung-blown horns, and loud whistles. 20th and 21st century technologies for long-distance communication usually involve electrical and electromagnetic technologies, such as telegraph, telephone, and teleprinter, networks, radio, microwave transmission, fiber optics, and communications satellites.
+
+A revolution in wireless communication began in the first decade of the 20th century with the pioneering developments in radio communications by Guglielmo Marconi, who won the Nobel Prize in Physics in 1909. Other notable pioneering inventors and developers in the field of electrical and electronic telecommunications include Charles Wheatstone and Samuel Morse (inventors of the telegraph), Alexander Graham Bell (inventor of the telephone), Edwin Armstrong and Lee de Forest (inventors of radio), as well as Vladimir K. Zworykin, John Logie Baird and Philo Farnsworth (some of the inventors of television).
+
+Etymology.
+The word "telecommunication" is a compound of the Greek prefix "tele" (τηλε), meaning "distant", "far off", or "afar", and the Latin "communicare", meaning "to share". Its modern use is adapted from the French, because its written use was recorded in 1904 by the French engineer and novelist Édouard Estaunié. "Communication" was first used as an English word in the late 14th century. It comes from Old French comunicacion (14c., Modern French communication), from Latin communicationem (nominative communicatio), noun of action from past participle stem of communicare "to share, divide out; communicate, impart, inform; join, unite, participate in," literally "to make common," from communis".
+
+History.
+Beacons and pigeons.
+Homing pigeons have occasionally been used throughout history by different cultures. Pigeon post had Persian roots, and was later used by the Romans to aid their military. Frontinus said that Julius Caesar used pigeons as messengers in his conquest of Gaul.
+The Greeks also conveyed the names of the victors at the Olympic Games to various cities using homing pigeons. In the early 19th century, the Dutch government used the system in Java and Sumatra. And in 1849, Paul Julius Reuter started a pigeon service to fly stock prices between Aachen and Brussels, a service that operated for a year until the gap in the telegraph link was closed.
+
+In the Middle Ages, chains of beacons were commonly used on hilltops as a means of relaying a signal. Beacon chains suffered the drawback that they could only pass a single bit of information, so the meaning of the message such as "the enemy has been sighted" had to be agreed upon in advance. One notable instance of their use was during the Spanish Armada, when a beacon chain relayed a signal from Plymouth to London.
+
+In 1792, Claude Chappe, a French engineer, built the first fixed visual telegraphy system (or semaphore line) between Lille and Paris. However semaphore suffered from the need for skilled operators and expensive towers at intervals of ten to thirty kilometres (six to nineteen miles). As a result of competition from the electrical telegraph, the last commercial line was abandoned in 1880.
+
+Telegraph and telephone.
+Sir Charles Wheatstone and Sir William Fothergill Cooke invented the electric telegraph in 1837. On July 25, 1837 the first commercial electrical telegraph was demonstrated by William Fothergill Cooke, an English inventor, and Charles Wheastone, an English scientist. Both inventors viewed their device as "an improvement to the [existing] electromagnetic telegraph" not as a new device.
+
+Samuel Morse independently developed a version of the electrical telegraph that he unsuccessfully demonstrated on 2 September 1837. His code was an important advance over Wheatstone's signaling method. The first transatlantic telegraph cable was successfully completed on 27 July 1866, allowing transatlantic telecommunication for the first time.
+
+The conventional telephone was invented independently by Alexander Bell and Elisha Gray in 1876. Antonio Meucci invented the first device that allowed the electrical transmission of voice over a line in 1849. However Meucci's device was of little practical value because it relied upon the electrophonic effect and thus required users to place the receiver in their mouth to "hear" what was being said. The first commercial telephone services were set-up in 1878 and 1879 on both sides of the Atlantic in the cities of New Haven and London.
+
+Radio and television.
+Starting in 1894, Italian inventor Guglielmo Marconi began developing a wireless communication using the then newly discovered phenomenon of radio waves, showing by 1901 that they could be transmitted across the Atlantic Ocean. This was the start of wireless telegraphy by radio. Voice and music were demonstrated in 1900 and 1906, but had little success. World War I accelerated the development of radio for military communications. After the war, commercial radio AM broadcasting began in the 1920s and became an important mass medium for entertainment and news. World War II again accelerated development of radio for the wartime purposes of aircraft and land communication, radio navigation and radar. Development of stereo FM broadcasting of radio took place from the 1930s on-wards in the United States and displaced AM as the dominant commercial standard by the 1960s, and by the 1970s in the United Kingdom. 
+
+On 25 March 1925, John Logie Baird was able to demonstrate the transmission of moving pictures at the London department store Selfridges. Baird's device relied upon the Nipkow disk and thus became known as the mechanical television. It formed the basis of experimental broadcasts done by the British Broadcasting Corporation beginning 30 September 1929. However, for most of the twentieth century televisions depended upon the cathode ray tube invented by Karl Braun. The first version of such a television to show promise was produced by Philo Farnsworth and demonstrated to his family on 7 September 1927. After World War II, the experiments in television that had been interrupted were resumed, and it also became an important home entertainment broadcast medium.
+
+Computers and the Internet.
+On 11 September 1940, George Stibitz transmitted problems for his Complex Number Calculator in New York using a teletype, and received the computed results back at Dartmouth College in New Hampshire. This configuration of a centralized computer (mainframe) with remote dumb terminals remained popular well into the 1970s. However, already in the 1960s, researchers started to investigate packet switching, a technology that sends a message in portions to its destination asynchronously without passing it through a centralized mainframe. A four-node network emerged on 5 December 1969, constituting the beginnings of the ARPANET, which by 1981 had grown to 213 nodes. ARPANET eventually merged with other networks to form the Internet. While Internet development was a focus of the Internet Engineering Task Force (IETF) who published a series of Request for Comment documents, other networking advancement occurred in industrial laboratories, such as the local area network (LAN) developments of Ethernet (1983) and the token ring protocol (1984).
+
+Key concepts.
+Modern telecommunication is founded on a series of key concepts that experienced progressive development and refinement in a period of well over a century.
+
+Basic elements.
+Telecommunication technologies may primarily be divided into wired and wireless methods. Overall though, a basic telecommunication system consists of three main parts that are always present in some form or another:
+- A transmitter that takes information and converts it to a signal.
+- A transmission medium, also called the "physical channel" that carries the signal. An example of this is the "free space channel".
+- A receiver that takes the signal from the channel and converts it back into usable information for the recipient.
+
+For example, in a radio broadcasting station the station's large power amplifier is the transmitter; and the broadcasting antenna is the interface between the power amplifier and the "free space channel". The free space channel is the transmission medium; and the receiver's antenna is the interface between the free space channel and the receiver. Next, the radio receiver is the destination of the radio signal, and this is where it is converted from electricity to sound for people to listen to.
+
+Sometimes, telecommunication systems are "duplex" (two-way systems) with a single box of electronics working as both the transmitter and a receiver, or a "transceiver". For example, a cellular telephone is a transceiver. The transmission electronics and the receiver electronics within a transceiver are actually quite independent of each other. This can be readily explained by the fact that radio transmitters contain power amplifiers that operate with electrical powers measured in watts or kilowatts, but radio receivers deal with radio powers that are measured in the microwatts or nanowatts. Hence, transceivers have to be carefully designed and built to isolate their high-power circuitry and their low-power circuitry from each other, as to not cause interference.
+
+Telecommunication over fixed lines is called point-to-point communication because it is between one transmitter and one receiver. Telecommunication through radio broadcasts is called broadcast communication because it is between one powerful transmitter and numerous low-power but sensitive radio receivers.
+
+Telecommunications in which multiple transmitters and multiple receivers have been designed to cooperate and to share the same physical channel are called multiplex systems. The sharing of physical channels using multiplexing often gives very large reductions in costs. Multiplexed systems are laid out in telecommunication networks, and the multiplexed signals are switched at nodes through to the correct destination terminal receiver.
+
+Analog versus digital communications.
+Communications signals can be sent either by analog signals or digital signals. There are analog communication systems and digital communication systems. For an analog signal, the signal is varied continuously with respect to the information. In a digital signal, the information is encoded as a set of discrete values (for example, a set of ones and zeros). During the propagation and reception, the information contained in analog signals will inevitably be degraded by undesirable physical noise. (The output of a transmitter is noise-free for all practical purposes.) Commonly, the noise in a communication system can be expressed as adding or subtracting from the desirable signal in a completely random way. This form of noise is called additive noise, with the understanding that the noise can be negative or positive at different instants of time. Noise that is not additive noise is a much more difficult situation to describe or analyze, and these other kinds of noise will be omitted here.
+
+On the other hand, unless the additive noise disturbance exceeds a certain threshold, the information contained in digital signals will remain intact. Their resistance to noise represents a key advantage of digital signals over analog signals.
+
+Telecommunication networks.
+A telecommunications network is a collection of transmitters, receivers, and communications channels that send messages to one another. Some digital communications networks contain one or more routers that work together to transmit information to the correct user. An analog communications network consists of one or more switches that establish a connection between two or more users. For both types of network, repeaters may be necessary to amplify or recreate the signal when it is being transmitted over long distances. This is to combat attenuation that can render the signal indistinguishable from the noise.
+Another advantage of digital systems over analog is that their output is easier to store in memory, i.e. two voltage states (high and low) are easier to store than a continuous range of states.
+
+Communication channels.
+The term "channel" has two different meanings. In one meaning, a channel is the physical medium that carries a signal between the transmitter and the receiver. Examples of this include the atmosphere for sound communications, glass optical fibers for some kinds of optical communications, coaxial cables for communications by way of the voltages and electric currents in them, and free space for communications using visible light, infrared waves, ultraviolet light, and radio waves. Coaxial cable types are classified by RG type or "radio guide", terminology derived from World War II. The various RG designations are used to classify the specific signal transmission applications. This last channel is called the "free space channel". The sending of radio waves from one place to another has nothing to do with the presence or absence of an atmosphere between the two. Radio waves travel through a perfect vacuum just as easily as they travel through air, fog, clouds, or any other kind of gas.
+
+The other meaning of the term "channel" in telecommunications is seen in the phrase communications channel, which is a subdivision of a transmission medium so that it can be used to send multiple streams of information simultaneously. For example, one radio station can broadcast radio waves into free space at frequencies in the neighborhood of 94.5 MHz (megahertz) while another radio station can simultaneously broadcast radio waves at frequencies in the neighborhood of 96.1 MHz. Each radio station would transmit radio waves over a frequency bandwidth of about 180 kHz (kilohertz), centered at frequencies such as the above, which are called the "carrier frequencies". Each station in this example is separated from its adjacent stations by 200 kHz, and the difference between 200 kHz and 180 kHz (20 kHz) is an engineering allowance for the imperfections in the communication system.
+
+In the example above, the "free space channel" has been divided into communications channels according to frequencies, and each channel is assigned a separate frequency bandwidth in which to broadcast radio waves. This system of dividing the medium into channels according to frequency is called "frequency-division multiplexing". Another term for the same concept is "wavelength-division multiplexing", which is more commonly used in optical communications when multiple transmitters share the same physical medium.
+
+Another way of dividing a communications medium into channels is to allocate each sender a recurring segment of time (a "time slot", for example, 20 milliseconds out of each second), and to allow each sender to send messages only within its own time slot. This method of dividing the medium into communication channels is called "time-division multiplexing" (TDM), and is used in optical fiber communication. Some radio communication systems use TDM within an allocated FDM channel. Hence, these systems use a hybrid of TDM and FDM.
+
+Modulation.
+The shaping of a signal to convey information is known as modulation. Modulation can be used to represent a digital message as an analog waveform. This is commonly called "keying" – a term derived from the older use of Morse Code in telecommunications – and several keying techniques exist (these include phase-shift keying, frequency-shift keying, and amplitude-shift keying). The "Bluetooth" system, for example, uses phase-shift keying to exchange information between various devices. In addition, there are combinations of phase-shift keying and amplitude-shift keying which is called (in the jargon of the field) "quadrature amplitude modulation" (QAM) that are used in high-capacity digital radio communication systems.
+
+Modulation can also be used to transmit the information of low-frequency analog signals at higher frequencies. This is helpful because low-frequency analog signals cannot be effectively transmitted over free space. Hence the information from a low-frequency analog signal must be impressed into a higher-frequency signal (known as the "carrier wave") before transmission. There are several different modulation schemes available to achieve this [two of the most basic being amplitude modulation (AM) and frequency modulation (FM)]. An example of this process is a disc jockey's voice being impressed into a 96 MHz carrier wave using frequency modulation (the voice would then be received on a radio as the channel "96 FM"). In addition, modulation has the advantage that it may use frequency division multiplexing (FDM).
+
+Society.
+Telecommunication has a significant social, cultural and economic impact on modern society. In 2008, estimates placed the telecommunication industry's revenue at $4.7 trillion or just under 3 percent of the gross world product (official exchange rate). Several following sections discuss the impact of telecommunication on society.
+
+Economic impact.
+Microeconomics.
+On the microeconomic scale, companies have used telecommunications to help build global business empires. This is self-evident in the case of online retailer Amazon.com but, according to academic Edward Lenert, even the conventional retailer Walmart has benefited from better telecommunication infrastructure compared to its competitors. In cities throughout the world, home owners use their telephones to order and arrange a variety of home services ranging from pizza deliveries to electricians. Even relatively poor communities have been noted to use telecommunication to their advantage. In Bangladesh's Narshingdi district, isolated villagers use cellular phones to speak directly to wholesalers and arrange a better price for their goods. In Côte d'Ivoire, coffee growers share mobile phones to follow hourly variations in coffee prices and sell at the best price.
+
+Macroeconomics.
+On the macroeconomic scale, Lars-Hendrik Röller and Leonard Waverman suggested a causal link between good telecommunication infrastructure and economic growth. Few dispute the existence of a correlation although some argue it is wrong to view the relationship as causal.
+
+Because of the economic benefits of good telecommunication infrastructure, there is increasing worry about the inequitable access to telecommunication services amongst various countries of the world—this is known as the digital divide. A 2003 survey by the International Telecommunication Union (ITU) revealed that roughly a third of countries have fewer than one mobile subscription for every 20 people and one-third of countries have fewer than one land-line telephone subscription for every 20 people. In terms of Internet access, roughly half of all countries have fewer than one out of 20 people with Internet access. From this information, as well as educational data, the ITU was able to compile an index that measures the overall ability of citizens to access and use information and communication technologies. Using this measure, Sweden, Denmark and Iceland received the highest ranking while the African countries Nigeria, Burkina Faso and Mali received the lowest.
+
+Social impact.
+Telecommunication has played a significant role in social relationships. Nevertheless, devices like the telephone system were originally advertised with an emphasis on the practical dimensions of the device (such as the ability to conduct business or order home services) as opposed to the social dimensions. It was not until the late 1920s and 1930s that the social dimensions of the device became a prominent theme in telephone advertisements. New promotions started appealing to consumers' emotions, stressing the importance of social conversations and staying connected to family and friends.
+
+Since then the role that telecommunications has played in social relations has become increasingly important. In recent years, the popularity of social networking sites has increased dramatically. These sites allow users to communicate with each other as well as post photographs, events and profiles for others to see. The profiles can list a person's age, interests, sexual preference and relationship status. In this way, these sites can play important role in everything from organising social engagements to courtship.
+
+Prior to social networking sites, technologies like short message service (SMS) and the telephone also had a significant impact on social interactions. In 2000, market research group Ipsos MORI reported that 81% of 15- to 24-year-old SMS users in the United Kingdom had used the service to coordinate social arrangements and 42% to flirt.
+
+Other impacts.
+In cultural terms, telecommunication has increased the public's ability to access music and film. With television, people can watch films they have not seen before in their own home without having to travel to the video store or cinema. With radio and the Internet, people can listen to music they have not heard before without having to travel to the music store.
+
+Telecommunication has also transformed the way people receive their news. A 2006 survey (right table) of slightly more than 3,000 Americans by the non-profit Pew Internet and American Life Project in the United States the majority specified television or radio over newspapers. 
+
+Telecommunication has had an equally significant impact on advertising. TNS Media Intelligence reported that in 2007, 58% of advertising expenditure in the United States was spent on media that depend upon telecommunication.
+
+Government.
+Many countries have enacted legislation which conforms to the "International Telecommunication Regulations" established by the International Telecommunication Union (ITU), which is the "leading UN agency for information and communication technology issues." In 1947, at the Atlantic City Conference, the ITU decided to "afford international protection to all frequencies registered in a new international frequency list and used in conformity with the Radio Regulation." According to the ITU's "Radio Regulations" adopted in Atlantic City, all frequencies referenced in the "International Frequency Registration Board", examined by the board and registered on the "International Frequency List" "shall have the right to international protection from harmful interference."
+
+From a global perspective, there have been political debates and legislation regarding the management of telecommunication and broadcasting. The history of broadcasting discusses some debates in relation to balancing conventional communication such as printing and telecommunication such as radio broadcasting. The onset of World War II brought on the first explosion of international broadcasting propaganda. Countries, their governments, insurgents, terrorists, and militiamen have all used telecommunication and broadcasting techniques to promote propaganda. Patriotic propaganda for political movements and colonization started the mid-1930s. In 1936, the BBC broadcast propaganda to the Arab World to partly counter similar broadcasts from Italy, which also had colonial interests in North Africa.
+
+Modern insurgents, such as those in the latest Iraq war, often use intimidating telephone calls, SMSs and the distribution of sophisticated videos of an attack on coalition troops within hours of the operation. "The Sunni insurgents even have their own television station, Al-Zawraa, which while banned by the Iraqi government, still broadcasts from Erbil, Iraqi Kurdistan, even as coalition pressure has forced it to switch satellite hosts several times."
+
+On 10 November 2014, President Obama recommended the Federal Communications Commission reclassify broadband Internet service as a telecommunications service in order to preserve net neutrality.
+
+Modern media.
+Worldwide equipment sales.
+According to data collected by Gartner and Ars Technica sales of main consumer's telecommunication equipment worldwide in millions of units was:
+Telephone.
+In a telephone network, the caller is connected to the person they want to talk to by switches at various telephone exchanges. The switches form an electrical connection between the two users and the setting of these switches is determined electronically when the caller dials the number. Once the connection is made, the caller's voice is transformed to an electrical signal using a small microphone in the caller's handset. This electrical signal is then sent through the network to the user at the other end where it is transformed back into sound by a small speaker in that person's handset.
+
+The landline telephones in most residential homes are analog—that is, the speaker's voice directly determines the signal's voltage. Although short-distance calls may be handled from end-to-end as analog signals, increasingly telephone service providers are transparently converting the signals to digital signals for transmission. The advantage of this is that digitized voice data can travel side-by-side with data from the Internet and can be perfectly reproduced in long distance communication (as opposed to analog signals that are inevitably impacted by noise).
+
+Mobile phones have had a significant impact on telephone networks. Mobile phone subscriptions now outnumber fixed-line subscriptions in many markets. Sales of mobile phones in 2005 totalled 816.6 million with that figure being almost equally shared amongst the markets of Asia/Pacific (204 m), Western Europe (164 m), CEMEA (Central Europe, the Middle East and Africa) (153.5 m), North America (148 m) and Latin America (102 m). In terms of new subscriptions over the five years from 1999, Africa has outpaced other markets with 58.2% growth. Increasingly these phones are being serviced by systems where the voice content is transmitted digitally such as GSM or W-CDMA with many markets choosing to deprecate analog systems such as AMPS.
+
+There have also been dramatic changes in telephone communication behind the scenes. Starting with the operation of TAT-8 in 1988, the 1990s saw the widespread adoption of systems based on optical fibers. The benefit of communicating with optic fibers is that they offer a drastic increase in data capacity. TAT-8 itself was able to carry 10 times as many telephone calls as the last copper cable laid at that time and today's optic fibre cables are able to carry 25 times as many telephone calls as TAT-8. This increase in data capacity is due to several factors: First, optic fibres are physically much smaller than competing technologies. Second, they do not suffer from crosstalk which means several hundred of them can be easily bundled together in a single cable. Lastly, improvements in multiplexing have led to an exponential growth in the data capacity of a single fibre.
+
+Assisting communication across many modern optic fibre networks is a protocol known as Asynchronous Transfer Mode (ATM). The ATM protocol allows for the side-by-side data transmission mentioned in the second paragraph. It is suitable for public telephone networks because it establishes a pathway for data through the network and associates a traffic contract with that pathway. The traffic contract is essentially an agreement between the client and the network about how the network is to handle the data; if the network cannot meet the conditions of the traffic contract it does not accept the connection. This is important because telephone calls can negotiate a contract so as to guarantee themselves a constant bit rate, something that will ensure a caller's voice is not delayed in parts or cut off completely. There are competitors to ATM, such as Multiprotocol Label Switching (MPLS), that perform a similar task and are expected to supplant ATM in the future.
+
+Radio and television.
+In a broadcast system, the central high-powered broadcast tower transmits a high-frequency electromagnetic wave to numerous low-powered receivers. The high-frequency wave sent by the tower is modulated with a signal containing visual or audio information. The receiver is then tuned so as to pick up the high-frequency wave and a demodulator is used to retrieve the signal containing the visual or audio information. The broadcast signal can be either analog (signal is varied continuously with respect to the information) or digital (information is encoded as a set of discrete values).
+
+The broadcast media industry is at a critical turning point in its development, with many countries moving from analog to digital broadcasts. This move is made possible by the production of cheaper, faster and more capable integrated circuits. The chief advantage of digital broadcasts is that they prevent a number of complaints common to traditional analog broadcasts. For television, this includes the elimination of problems such as snowy pictures, ghosting and other distortion. These occur because of the nature of analog transmission, which means that perturbations due to noise will be evident in the final output. Digital transmission overcomes this problem because digital signals are reduced to discrete values upon reception and hence small perturbations do not affect the final output. In a simplified example, if a binary message 1011 was transmitted with signal amplitudes [1.0 0.0 1.0 1.0] and received with signal amplitudes [0.9 0.2 1.1 0.9] it would still decode to the binary message 1011 — a perfect reproduction of what was sent. From this example, a problem with digital transmissions can also be seen in that if the noise is great enough it can significantly alter the decoded message. Using forward error correction a receiver can correct a handful of bit errors in the resulting message but too much noise will lead to incomprehensible output and hence a breakdown of the transmission.
+
+In digital television broadcasting, there are three competing standards that are likely to be adopted worldwide. These are the ATSC, DVB and ISDB standards; the adoption of these standards thus far is presented in the captioned map. All three standards use MPEG-2 for video compression. ATSC uses Dolby Digital AC-3 for audio compression, ISDB uses Advanced Audio Coding (MPEG-2 Part 7) and DVB has no standard for audio compression but typically uses MPEG-1 Part 3 Layer 2. The choice of modulation also varies between the schemes. In digital audio broadcasting, standards are much more unified with practically all countries choosing to adopt the Digital Audio Broadcasting standard (also known as the Eureka 147 standard). The exception is the United States which has chosen to adopt HD Radio. HD Radio, unlike Eureka 147, is based upon a transmission method known as in-band on-channel transmission that allows digital information to "piggyback" on normal AM or FM analog transmissions. 
+
+However, despite the pending switch to digital, analog television remains being transmitted in most countries. An exception is the United States that ended analog television transmission (by all but the very low-power TV stations) on 12 June 2009 after twice delaying the switchover deadline,Kenya also ended analog television transmission in December 2014 after multiple delays. For analog television, there are three standards in use for broadcasting color TV (see a map on adoption ). These are known as PAL (German designed), NTSC (North American designed), and SECAM (French designed). (It is important to understand that these are the ways of sending color TV, and they do not have anything to do with the standards for black & white TV, which also vary from country to country.) For analog radio, the switch to digital radio is made more difficult by the fact that analog receivers are sold at a small fraction of the price of digital receivers. The choice of modulation for analog radio is typically between amplitude (AM) or frequency modulation (FM). To achieve stereo playback, an amplitude modulated subcarrier is used for stereo FM.
+
+Internet.
+The Internet is a worldwide network of computers and computer networks that communicate with each other using the Internet Protocol. Any computer on the Internet has a unique IP address that can be used by other computers to route information to it. Hence, any computer on the Internet can send a message to any other computer using its IP address. These messages carry with them the originating computer's IP address allowing for two-way communication. The Internet is thus an exchange of messages between computers.
+
+It is estimated that the 51% of the information flowing through two-way telecommunications networks in the year 2000 were flowing through the Internet (most of the rest (42%) through the landline telephone). By the year 2007 the Internet clearly dominated and captured 97% of all the information in telecommunication networks (most of the rest (2%) through mobile phones). , an estimated 21.9% of the world population has access to the Internet with the highest access rates (measured as a percentage of the population) in North America (73.6%), Oceania/Australia (59.5%) and Europe (48.1%). In terms of broadband access, Iceland (26.7%), South Korea (25.4%) and the Netherlands (25.3%) led the world.
+
+The Internet works in part because of protocols that govern how the computers and routers communicate with each other. The nature of computer network communication lends itself to a layered approach where individual protocols in the protocol stack run more-or-less independently of other protocols. This allows lower-level protocols to be customized for the network situation while not changing the way higher-level protocols operate. A practical example of why this is important is because it allows an Internet browser to run the same code regardless of whether the computer it is running on is connected to the Internet through an Ethernet or Wi-Fi connection. Protocols are often talked about in terms of their place in the OSI reference model (pictured on the right), which emerged in 1983 as the first step in an unsuccessful attempt to build a universally adopted networking protocol suite.
+
+For the Internet, the physical medium and data link protocol can vary several times as packets traverse the globe. This is because the Internet places no constraints on what physical medium or data link protocol is used. This leads to the adoption of media and protocols that best suit the local network situation. In practice, most intercontinental communication will use the Asynchronous Transfer Mode (ATM) protocol (or a modern equivalent) on top of optic fiber. This is because for most intercontinental communication the Internet shares the same infrastructure as the public switched telephone network.
+
+At the network layer, things become standardized with the Internet Protocol (IP) being adopted for logical addressing. For the World Wide Web, these "IP addresses" are derived from the human readable form using the Domain Name System (e.g. 72.14.207.99 is derived from www.google.com). At the moment, the most widely used version of the Internet Protocol is version four but a move to version six is imminent. 
+
+At the transport layer, most communication adopts either the Transmission Control Protocol (TCP) or the User Datagram Protocol (UDP). TCP is used when it is essential every message sent is received by the other computer whereas UDP is used when it is merely desirable. With TCP, packets are retransmitted if they are lost and placed in order before they are presented to higher layers. With UDP, packets are not ordered or retransmitted if lost. Both TCP and UDP packets carry port numbers with them to specify what application or process the packet should be handled by. Because certain application-level protocols use certain ports, network administrators can manipulate traffic to suit particular requirements. Examples are to restrict Internet access by blocking the traffic destined for a particular port or to affect the performance of certain applications by assigning priority.
+
+Above the transport layer, there are certain protocols that are sometimes used and loosely fit in the session and presentation layers, most notably the Secure Sockets Layer (SSL) and Transport Layer Security (TLS) protocols. These protocols ensure that data transferred between two parties remains completely confidential. Finally, at the application layer, are many of the protocols Internet users would be familiar with such as HTTP (web browsing), POP3 (e-mail), FTP (file transfer), IRC (Internet chat), BitTorrent (file sharing) and XMPP (instant messaging).
+
+Voice over Internet Protocol (VoIP) allows data packets to be used for synchronous voice communications. The data packets are marked as voice type packets and can be prioritized by the network administrators so that the real-time, synchronous conversation is less subject to contention with other types of data traffic which can be delayed (i.e. file transfer or email) or buffered in advance (i.e. audio and video) without detriment. That prioritization is fine when the network has sufficient capacity for all the VoIP calls taking place at the same time and the network is enabled for prioritization i.e. a private corporate style network, but the Internet is not generally managed in this way and so there can be a big difference in the quality of VoIP calls over a private network and over the public Internet.
+
+Local area networks and wide area networks.
+Despite the growth of the Internet, the characteristics of local area networks (LANs)--computer networks that do not extend beyond a few kilometers—remain distinct. This is because networks on this scale do not require all the features associated with larger networks and are often more cost-effective and efficient without them. When they are not connected with the Internet, they also have the advantages of privacy and security. However, purposefully lacking a direct connection to the Internet does not provide assured protection from hackers, military forces, or economic powers. These threats exist if there are any methods for connecting remotely to the LAN.
+
+Wide area networks (WANs) are private computer networks that may extend for thousands of kilometers. Once again, some of their advantages include privacy and security. Prime users of private LANs and WANs include armed forces and intelligence agencies that must keep their information secure and secret.
+
+In the mid-1980s, several sets of communication protocols emerged to fill the gaps between the data-link layer and the application layer of the OSI reference model. These included Appletalk, IPX, and NetBIOS with the dominant protocol set during the early 1990s being IPX due to its popularity with MS-DOS users. TCP/IP existed at this point, but it was typically only used by large government and research facilities.
+
+As the Internet grew in popularity and its traffic was required to be routed into private networks, the TCP/IP protocols replaced existing local area network technologies. Additional technologies, such as DHCP, allowed TCP/IP-based computers to self-configure in the network. Such functions also existed in the AppleTalk/ IPX/ NetBIOS protocol sets.
+
+Whereas Asynchronous Transfer Mode (ATM) or Multiprotocol Label Switching (MPLS) are typical data-link protocols for larger networks such as WANs; Ethernet and Token Ring are typical data-link protocols for LANs. These protocols differ from the former protocols in that they are simpler, e.g., they omit features such as quality of service guarantees, and offer collision prevention. Both of these differences allow for more economical systems.
+
+Despite the modest popularity of IBM Token Ring in the 1980s and 1990s, virtually all LANs now use either wired or wireless Ethernet facilities. At the physical layer, most wired Ethernet implementations use copper twisted-pair cables (including the common 10BASE-T networks). However, some early implementations used heavier coaxial cables and some recent implementations (especially high-speed ones) use optical fibers. When optic fibers are used, the distinction must be made between multimode fibers and single-mode fibers. Multimode fibers can be thought of as thicker optical fibers that are cheaper to manufacture devices for, but that suffers from less usable bandwidth and worse attenuation – implying poorer long-distance performance.
+
+Transmission capacity.
+The effective capacity to exchange information worldwide through two-way telecommunication networks grew from 281 petabytes of (optimally compressed) information in 1986, to 471 petabytes in 1993, to 2.2 (optimally compressed) exabytes in 2000, and to 65 (optimally compressed) exabytes in 2007. This is the informational equivalent of two newspaper pages per person per day in 1986, and six entire newspapers per person per day by 2007. Given this growth, telecommunications play an increasingly important role in the world economy and the global telecommunications industry was about a $4.7 trillion sector in 2012. The service revenue of the global telecommunications industry was estimated to be $1.5 trillion in 2010, corresponding to 2.4% of the world’s gross domestic product (GDP).
+
+Yuka Saitō (voice actress)
+
+Filmography.
+Anime.
+- 2009
+- "Student Council's Discretion" as Chizuru Akaba
+- "Umineko no Naku Koro ni" as Lucifer
+
+- 2010
+- "Shiki" as Aoi Muto
+
+- 2011
+- "" as Zenet Surrow
+- "Deadman Wonderland" as En
+- "Shakugan no Shana Final" as Hildegard
+
+- 2012
+- "Campione!" as Ena Seishuin
+- "High School DxD" as Mira
+- "Sakura Trick" as Megumi, Kaede's younger brother
+
+- 2014
+- "Witch Craft Works" as Ofuku, Evoque
+- "The Irregular at Magic High School" as Subaru Satomi
+- "One Piece" as Cotton
+- "A Good Librarian Like a Good Shepherd" as Tamamo Sakuraba
+
+- 2015
+- "" as Hitoe Madoka
+
+- 2016
+- "Gate" as Misery
+- "One Piece" as Milky
+
+- 2017
+- "The Silver Guardian" as Riku Lei
+
+Original video animation.
+- "Baby Princess" (2011), Mizore Amatsuka
+
+Video games.
+- "Ōgon Musōkyoku" (2010), Lucifer
+- "" (2010), Lucifer
+- "Rune Factory 4" (2012), Illuminata
+- "" (2012), Naotora Ii
+- "God Eater 2" (2013), Fran de Bourgogne
+- "The Idolmaster Million Live!" mobile (2013), Subaru Nagayoshi
+- "" (2013), Yuu
+- "" (2014), Laegrinna
+- "Samurai Warriors 4" (2014), Naotora Ii
+- "Dead or Alive 5 Last Round" (2016), Naotora Ii
+- "Persona 5" (2016), Tae Takemi
+- "" (2016), Naotora Ii, child Yukimura Sanada
+- "Musou Stars" (2017), Naotora Ii and Laegrinna
+
+Dubbing.
+- "4.3.2.1.", Cassandra
+- "The Derby Stallion", Tammy McCardle
+- "Easy A", Marianne Bryant
+- "Freezer", Alisa
+- "The Groomsmen", Tina
+- "The Mentalist", Grace Van Pelt
+- "", Dolores
+- "Robin Hood", Marian
+- "Swamp Shark", Krystal Bouchard
+
+Chos grub
+
+Chos grub (法成) was a Sino-Tibetan translator working in the area of Dunhuang in the 9th century. Among other works he translated the Mdzangs blun (Sutra of the Wise and the Fool) from Chinese into Tibetan.
+
+Indian states and territories ranking by sex ratio
+
+Sex ratio is used to describe the number of females per 1000 of males. In the Population Census of 2011 it was revealed that the population ratio of India 2011 is 943 females per 1000 of males. The Sex Ratio 2011 shows an upward trend from the census 2001 data. Census 2001 revealed that there were 933 females to that of 1000 males.
+
+The major cause of the decrease of the female birth ratio in India is considered to be the violent treatments meted out to the girl child at the time of the birth. The Sex Ratio in India was almost normal during the phase of the years of independence, but thereafter it started showing gradual signs of decrease.
+
+Ranking of States and Union Territories - Population Census 2011-2001.
+This is of the States and Union territories of India ranked in order of sex ratio for the years 2001 and 2011. The following data is based on the Population Census of 2011 and 2001. Interactive map visualizing below data is available here.
+
+In India, the Child Sex Ratio is defined as the number of females per thousand males in the age group 0–6 years in a human population.
+
+The data above does not include statistics of State of Telangana which was formed after 2011.Epilobium parviflorum
+
+Epilobium parviflorum, commonly known as the hoary willowherb or smallflower hairy willowherb, is a herbaceous perennial plant belonging to the Onagraceae family.
+
+Etymology.
+The genus name derives from the Greek words "epi" meaning "upon" and "lobos" meaning "lobe", with reference to position of the petals above the ovary. The specific Latin name of "parviflorum" means "small flowers".
+
+Description.
+The biological form of "Epilobium parviflorum" is hemicryptophyte scapose, as its overwintering buds are situated just below the soil surface and the floral axis is more or less erect with a few leaves.
+
+"Epilobium parviflorum" reaches on average in height. The stem is erect and densely covered with hairs, especially in the lower part. The leaves are opposite, unstalked but not amplexicaul, lanceolate and toothed, rounded at the base, long. The tiny flowers are pale pink or pale purple, in diameter, with four petals, eight stamens and a 4-lobed stigma. Flowering occurs from June to August. The hermaphroditic flowers are either self-fertilized (autogamy) or pollinated by insects (entomogamy). Fruit is a three-to seven-centimeter long capsule containing very small black seeds (about 1 mm long), with white fibres that allow the dispersal by wind. This species is quite similar to "Epilobium hirsutum", but the flowers are much smaller.
+
+Distribution.
+This plant occurs in most of Europe, including Britain, from Sweden to Northern Africa and Western Asia up to Kashmir, in United States and Canada.
+Habitat.
+It prefers marshes and swamps, moist mountain meadows and slopes, at an average altitude of above sea level, with a maximum of .
+
+Medicinal uses.
+Extracts of this plant have been used by traditional medicine in disorders of the prostate gland, bladder and kidney, having an antioxidant and antiinflammatory effect . "Epilobium parviflorum" herb has been prescribed internally as tea in the traditional Austrian medicine for treatment of disorders of the prostate, kidneys, and urinary tract. Extracts of Epilobium have been shown to inhibit proliferation of human prostate cells in-vitro by affecting progression of the cell cycle.
+
+Papaipema arctivorens
+
+Papaipema arctivorens, the northern burdock borer, is a species of moth of the Noctuidae family. It is found from Quebec to northern Georgia, west to Missouri and north to Minnesota and Ontario.
+
+The wingspan is 27–39 mm. The forewings are light orange with rusty red shading and speckling. The hindwings are pale brown with a darker discal lunule and subterminal band. Adults are on wing from August to October in one generation per year.
+
+The larvae feed on "Arctium", "Cirsium", "Dipsacus", and sometimes "Verbena" and "Verbascum" species. They bore in the rhizomes of their host plant.Sutra of the Wise and the Fool
+
+The Sutra of the Wise and the Fool is a collection of tales translated from Central Asian languages into Chinese in the 4th century and then translated by Chos-Grub (法成) into Tibetan in the 9th century. The simple plot lines of these tales has made them popular readings in first year Tibetan courses. 
+
+Geoffrey Somerset, 6th Baron Raglan
+
+Geoffrey Somerset, 6th Baron Raglan (born 29 August 1932) is a British peer, businessman, and Conservative politician.
+
+Early life.
+Raglan is the younger son of FitzRoy Richard Somerset, 4th Baron Raglan, by his marriage to the Hon. Julia Hamilton, daughter of the 11th Lord Belhaven & Stenton. He was educated at the Dragon School, Oxford, Westminster School, and the Royal Agricultural College.
+
+Field Marshal Lord Raglan, the first baron, was the eighth son of Henry Somerset, 5th Duke of Beaufort, so the Lords Raglan are distantly in the line of succession to the Dukedom of Beaufort.
+
+Life.
+After completing his National Service as an officer in the Grenadier Guards, Raglan was a trainee with the Rootes Group from 1954 to 1957, an Instructor at the Standard Motor Company 1957–1960, then sales and later Marketing Manager, Lambourn Engineering  1960–1971. From 1971 to 1994 he was a wine shipper and from 1994 to 2013 an insurance broker.
+
+He served as President of the Lambourn St John Ambulance Division 1964–1981, President of the Lambourn branch of the Royal British Legion 1963–1977, a member of Berkshire County Council 1966–1975 (Chairman Mental Welfare Sub-Committee, Chairman Children's Homes & Nurseries Sub-Committee, Chairman Children's Homes, Chairman of Governors of Tesdale & Bennet House special schools). He was a member of Newbury District Council from 1979 to 1983 and chaired its Recreation & Amenities Committee, Chairman of the Stanford Conservative Association 1984 to 1988 and again 1997 to 2000, member of the Oxfordshire Valuation Tribunal and later a Chairman of Thames Valley Valuation Tribunals between 1987 and 2004, a member of Oxfordshire County Council 1988–1993, Chairman Vale of White Horse District of the Campaign to Protect Rural England (CPRE) 2000–2004 (and a Committee Member to date). He is also a Vice-President of the Oxfordshire Grenadier Guards Association and a Liveryman of the Worshipful Company of Skinners.
+
+He succeeded to the title of Baron Raglan on 24 January 2010 on the death of his older brother, Fitzroy Somerset, the 5th Baron.
+
+Family.
+In 1956, Geoffrey Somerset married Caroline Rachel Hill (d. 5 July 2014), a daughter of Colonel Edward Roderick Hill DSO, of St Arvans Court, Chepstow, Monmouthshire, by his marriage to Rachel Hicks Beach. They have had three children, two daughters and a son now deceased.
+1. Hon. Belinda Caroline Somerset, now Boyd (born 9 February 1958), educated at St Gabriel's School, Newbury, Chatelard School, Bradfield College, Founder and Director 20-20 Public Relations, married 1989 Nicholas Gant Boyd, eldest son of Cdr Christopher Boyd DSC RN.
+2. Hon. Arthur Geoffrey Somerset (27 April 1960 – 25 July 2012), educated at Dragon School, Oxford, and Bradfield College, married 2001 Tanya Arabel, only daughter of Roger Broome. He was the founder and CEO of Mask Event Design & Production (1988–2008), President International Special Events Society UK & Europe (2002–2004), Regional Vice-President Europe, Middle East and Africa (2004–2005), Chairman Trellech Conservatives from 2011. Their children are Inigo Arthur Fitzroy Somerset (born 7 July 2004), now heir apparent to the barony; Ivo Geoffrey Arthur Tarsus Somerset (born 6 July 2007); and Oona-Vita Olwen Phyllis Caroline Somerset (born February 2010).
+3. Hon. Lucy Ann Somerset (born 8 February 1963) educated St Gabriel's School, Newbury, married 1998 Richard Scott-Watson FRCS and has issue Rachel Elise (born 2000), George Anthony (born 2002), Theo Alan (born 2004).
+
+Seats.
+Raglan lives at Stanford in the Vale, Faringdon, Oxfordshire SN7 8NN.
+
+The family seat is Cefntilla Court, Llandenny, in Monmouthshire. An inscription over the porch dated 1858 reads: "This house with 238 acres of land was purchased by 1623 of the friends, admirers and comrades in arms of the late Field Marshal Lord Raglan GCB and presented by them to his son and his heirs for ever in a lasting memorial of affectionate regard and respect". The 5th Baron Raglan willed Cefntilla to the son of his sister, and not to the heirs of the barony. The will was disputed by the Hon Arthur Somerset, son and heir of Geoffrey Somerset, but following his death on 25 July 2012 the dispute was settled.
+
+Tender Loving Care (album)
+
+Tender Loving Care is a 1967 album by Nancy Wilson, arranged by Billy May. Jason Ankeny of Allmusic wrote: "Wilson is at her best here, taking full command of the familiar songs and re-animating them with vocals that are bold, sophisticated, and daringly adult."
+
+Track listing.
+Side 1.
+1. "Don't Go to Strangers" (Arthur Kent, David Mann, Redd Evans)
+2. "Gee, Baby, Ain't I Good to You" (Don Redman, Andy Razaf)
+3. "Your Name Is Love" (Gene de Paul, Charles Rinker)
+4. "Too Late Now" (Burton Lane, Alan Jay Lerner)
+5. "Like Someone in Love" (Jimmy Van Heusen, Johnny Burke)
+6. "Tender Loving Care" (Johnny Mercer, Ronnell Bright)
+
+Side 2.
+1. "As You Desire Me" (Allie Wrubel)
+2. "I Want To Talk About You" (Billy Eckstine)
+3. "Love-Wise" (Marvin Fisher, Kenward Elmslie)
+4. "Try A Little Tenderness" (Harry M. Woods, Jimmy Campbell, Reg Connelly)
+5. "Close Your Eyes" (Bernice Petkere)
+
+Personnel.
+Performance.
+- Nancy Wilson – vocals
+- Ronnell Bright – pianoRebecca Brewer
+
+Rebecca Brewer (born in Wakefield, West Yorkshire) is a British actress.
+
+Career.
+After graduating from drama school in 2010, Rebecca got her first job playing Jenny in Trevor Nunn's 2010 revival of Aspects of Love. She has since worked at the Royal Shakespeare Company, Royal Court, National Theatre, Almeida Theatre as well as numerous times in the West End.
+
+Personal life.
+Brewer was born in Wakefield but moved to Derbyshire at the age of 11. She studied GSCEs and A Levels at Belper School. She also attended Ripley Academy of Dance and Drama and studied in ballet, tap and jazz dance. At 18, she got a full scholarship to study Musical Theatre at Guildford School of Acting where she trained for 3 years.
+
+Papaipema birdi
+
+Papaipema birdi, the umbellifer borer, is a species of moth of the Noctuidae family. It is found from Quebec to Alberta and south in the east to New Jersey.
+
+The wingspan is about 32 mm. The forewings are dull yellowish-brown. The basal spots are cream-colored and there is a large and elongate reniform patch. The hindwings are pale yellowish-brown or cream with darker veins and a diffuse indistinct band in the outer half. Adults are on wing from August to October.
+
+The larvae feed on "Cicuta maculata", "Angelica atropurpurea", and "Sium suave". They bore in the stems of their host plant.Eddie Halvey
+
+Eddie Halvey (born 11 August 1970 in Limerick, Ireland) is a retired Irish rugby union footballer for Munster, London Irish and Ireland. He played as a Flanker. On 12 May 2009 he received a 7-month suspended sentence for causing the death of Kevin Walsh, then 16, in 2006 while driving at over twice the legal limit.
+
+Munster.
+Halvey made his debut for Munster against Swansea in November 1995, a game that was also Munster's first ever Heineken Cup appearance.
+
+London Irish.
+He joined the Exiles in 2000, and made his debut against Harlequins in August of that year. He started in the 2002 Powergen Cup Final at Twickenham, as London Irish defeated the Northampton Saints.
+
+Return to Munster.
+In 2002 Halvey rejoined Munster, and went on to play a further two season with his home province, making his final appearance against Cardiff Blues in April 2004.
+
+Ireland.
+Halvey made his Ireland debut against France in March 1995, during the 1995 Five Nations Championship. He earnt three caps at the 1995 Rugby World Cup in South Africa, against Japan, Wales and France. The first of his two international tries came during the Japan match, and the second came four days later during the game against Wales. Halvey's last appearance for Ireland came against Canada in November 1997.
+
+Eric Schneider
+
+Eric Schneider (born September 15, 1977) is a Canadian professional ice hockey player. He currently plays in the semi-professional Chinook Hockey League with the Bentley Generals. He last played professionally in the top German tier with Adler Mannheim of the Deutsche Eishockey Liga (DEL).
+
+During the 2002–03 CHL season, Schneider represented the Laredo Bucks in the CHL All-Star game. 2 time Carwell Cup Winner.
+Stay at home father of 5 kids
+Papaipema unimoda
+
+The Meadow Rue Borer ("Papaipema unimoda") is a species of moth of the Noctuidae family. It is found in the north-eastern United States and southern Canada east of the Rocky Mountains.
+
+The wingspan is 30–40 mm. Adults are on wing from August to October in one generation per year.
+
+The larvae feed on "Thalictrum", "Rudbeckia", "Smilax", and "Polemonium" species. They bore in the roots and stems of their host plant.Patho Plains Important Bird Area
+
+The Patho Plains Important Bird Area comprises a 794 km tract of mainly pastoral farmland near the town of Gunbower in north-central Victoria, south-eastern Australia. It contains several relatively small nature conservation reserves as well as the 38 km Terrick Terrick National Park.
+
+Description.
+The site encompasses remnants of native grassland inhabited by an endangered grassland bird in a monotypic family – the plains-wanderer – with the intervening farmland. The area has a Mediterranean climate with cool, damp winters and hot dry summers, supporting native tussock grassland dominated by "Austrostipa" and "Austrodanthonia" species. Other vegetation types are temperate grassy woodlands dominated by white cypress-pine, grey box and yellow box. There are also small areas of black box riparian woodland and granite outcrop shrubland.
+
+Birds.
+The site has been identified by BirdLife International as an Important Bird Area (IBA) because it supports most of Victoria’s population of plains-wanderers. As well as the land used by the species, the IBA includes extensive areas of unsuitable farmland which has the potential for restoration to habitat suitable for plains-wanderers. It includes an area of woodland which supports the largest regional population of diamond firetails. Birds of prey that breed in the area include spotted harriers and black falcons. Bush stone-curlews and painted honeyeaters have been recorded. The woodland area is important for brown treecreepers, black-chinned honeyeaters, grey-crowned babblers and hooded robins. Inland species near the south-eastern limit of their range include Australian ringnecks, chestnut-crowned babblers and white-winged fairy-wrens.Cubixx HD
+
+Cubixx HD is a puzzle game developed by UK-based studio Laughing Jackal released on the PlayStation Network in Europe on August 17, 2011 and September 20, 2011 in North America. It is the HD sequel to "Cubixx", a 2009 PlayStation mini title.
+
+Gameplay.
+The gameplay of "Cubixx HD" is based upon the classic arcade game Qix. The player controls a robot that fires a laser at a cube with the objective of erasing its sides. A variety of enemies and power-ups become available as the player progresses.
+
+Reception.
+Reviews of "Cubixx HD" have been generally favorable with a Metacritic score of 77 out of 100, with Kristian Reed of Eurogamer praising the title as the best reinvention of its antecedent Qix and Joel Gregory of PlayStation Official Magazine (UK) calling it "one of the most
+gloriously addictive, knuckle-bitingly frustrating strategy experiences you can have on PSN."Guillermo Roldán
+
+Guillermo 'Guille' Roldán Méndez (born 23 June 1981 in Córdoba, Andalusia) is a Spanish footballer who plays for Gibraltarian club Europa F.C. as a winger.
+Wintermind
+
+Wintermind is the second novel of the "Masters of Solitude" trilogy, written by authors Marvin Kaye and Parke Godwin. The novel depicts a conflict between rural followers of a diseased mutant form of Christianity.Turkic tribal confederations
+
+The Turkic term oğuz or oğur (in z- and r-Turkic, respectively) is a historical term for "military division, clan, or tribe" among the Turkic peoples.
+With the Mongol invasions of 1206–21, the Turkic khaganates were replaced by Mongol or hybrid Turco-Mongol confederations, where the corresponding military division came to be known as "orda".
+
+The 8th-century Kül Tigin stela has the earliest attestation of the term in Old Turkic epigraphy, as "Toquz Oghuz" "nine tribes"
+The term occurs in numerous proper names of tribes or confederations of the time of the Turkic migration during the early medieval period, viz.
+- Onogur "ten tribes"
+- Toquz Oghuz "nine tribes"
+- Uyghur
+
+The Old Turkic stem "uq-, oq-" "kin, tribe" is from a Proto-Turkic "*uk".
+The Old Turkic word is sometimes connected with the Old Turkic word "oq" "arrow";
+Pohl (2002) in explanation of this connection adduces the Chinese T'ang-shu chronicle, which reports that
+"the khan divided his realm into ten tribes. To the leader of each tribe, he sent an arrow. The name [of these ten leaders] was 'the ten "she"', but they were also called 'the ten arrows'."
+
+An "oguz" ("ogur") was in origin a military division of a Nomadic empire, and only secondarily acquired tribal or ethnic connotations, by processes of ethnogenesis.
+
+Air KBZ
+
+Air KBZ () is a privately owned domestic Burmese airline based in Yangon. Air Kanbawza, otherwise known as AIR KBZ, was established in June 2010.The airline is owned by Kanbawza Bank and began operations with a Yangon-Bagan-Nyaung Oo-Mandalay-Heho-Yangon flight on April 2, 2011.
+
+Destinations.
+Air KBZ flies to the following destinations within Myanmar:
+
+- Bagan - Nyaung U Airport
+- Banmaw - Banmaw Airport
+- Heho - Heho Airport
+- Kalaymyo - Kalaymyo Airport
+- Kawthaung - Kawthaung Airport
+- Kengtung - Kengtung Airport
+- Lashio - Lashio Airport
+- Mandalay - Mandalay International Airport Base
+- Mergui - Mergui Airport
+- Myeik - Myeik Airport
+- Myitkyina - Myitkyina Airport
+- Putao - Putao Airport
+- Sittwe - Sittwe Airport
+- Dawei - Dawei Airport
+- Tachilek - Tachilek Airport
+- Thandwe - Thandwe Airport
+- Yangon - Yangon International Airport Main Base
+
+Fleet.
+Current Fleet.
+The Air KBZ fleet consists of the following aircraft (as of August 2017):
+
+Former Fleet.
+- 2 further ATR 72-500
+
+Sponsorships.
+In 2014, Air KBZ started sponsoring Myanmar's national sport, Lethwei. The event is called the "Air KBZ Aung Lan Golden Belt Championship" being held at Thein Phyu Stadium in Yangon.
+
+Edwin Brown (naturalist)
+
+Edwin Brown (died 1 September 1876, Tenby) was an English naturalist and entomologist.
+
+Edwin Brown was manager of the Burton, Uttoxeter and Ashbourne Union Bank in Burton on Trent. He had a private museum of geological, zoological and botanical specimens and a library of taxonomic works. 
+
+Brown was a Member of the Entomological Society of London from 1849. He specialised in Carabidae and Cicindelidae.
+
+Parts of his collection were purchased by Oxford University Museum of Natural History when it was sold at auction in March 1877. The purchase included insects collected by Alfred Russel Wallace.
+
+Edwin Brown was Henry Walter Bates's first naturalist friend.
+
+Works.
+Partial list
+- Contributions to Mosley, O. "Natural History of Tutbury"(1863)
+- On the Australian species of Tetracha. "Transactions of The Royal Entomological Society of London" 17: 351-353 (1869)Mercia Accident Rescue Service
+
+Mercia Accident Rescue Service (or MARS) is a charity operation based on providing a fast-response, highly experienced medical team to back up the emergency services of the English counties of Herefordshire and Worcestershire.
+
+MARS is staffed by a team of 14 Doctors and two Advanced Nurse Practitioners.Corruption in Indonesia
+
+While hard data on corruption is difficult to collect, corruption in Indonesia is clearly seen through public opinion, collated through surveys as well as observation of how each system runs. According to 2016 results of Corruption Perceptions Index of Transparency International, Indonesia ranks 90th place out of 176 countries.
+
+There are two key areas in the public sector in which corruption in Indonesia can be found. These are the justice and civil service sectors. Corruption within the justice sector is seen by its ineffectiveness to enforce laws, failure to uphold justice, hence undermining the rule of law. The areas of corruption within this sector include the police and the courts. In the 2008 Public Sector Integrity Survey, the Supreme Court ranked the lowest in integrity in comparison to the other public services in Indonesia. The courts were viewed to make decisions unfairly and have high unofficial costs.
+
+Evidence of corruption within the civil service comes from surveys conducted within the sector. Some surveys found out that almost half were found to have received bribes. Civil servants themselves admit to corruption.
+
+In January 2012, it was reported that Indonesia has lost as much as Rp 2.13 trillion (US$238.6 million) to corruption in 2011. A study conducted by Indonesia Corruption Watch, a non-profit organization co-ordinated by Danang Widoyoko, said that embezzlement accounted for most of the money lost and that “government investment was the sector most prone to gratification.”
+
+Companies are concerned about red tape and widespread extortion in the process of obtaining licences and permits, and they often faced demand for irregular fees or concessions based on personal relationships when obtaining government contracts. Companies have also reported regular demand for cash payments and expectations for gifts and special treatments by Indonesian officials.
+
+Economic and social costs.
+Corruption is an important development challenge that poses economic and social costs in Indonesia. Interference in public laws and policies for the sake of personal or private gain has weakened the competitiveness of Indonesia.
+About one-quarter of ministries suffer from budgetary diversions in Indonesia. Households spent approximately 1% while enterprises spent at least 5% of monthly company revenue on unofficial payments. Social costs due to corruption in Indonesia include the weakening of government institutions and the rule of law. Increases in crime due to smuggling and extortion involve the institutions that are supposed to be protecting citizens. The people who suffer most are the poor as they are pressured to finance payments through their already tight budgets and the effectiveness of social services are less accessible indirectly. These concerns were voiced by the poor urban communities of Indonesia themselves in a joint World Bank-Partnership for Governance Reform research project, entitled “Corruption and the Poor”.
+
+Efforts to curb corruption.
+There have been some efforts to battle corruption with the creation of the ombudsman and the Assets Auditing Commission (KPKPN). It has been an important agenda and part of Indonesia's official reform program since May 1998. However, the efforts made are questionable as there has been limited success to reduce corruption. Some obstacles that impeded the improvement of corruption included political and economic constraints, and the complex nature of the corruption itself.
+
+Most recently, these efforts have taken the shape of ordering corruption convicts to pay back all the money they have stolen. On 6 March 2012, the Jakarta Corruption Court sentenced Ridwan Sanjaya, an official from the Ministry of Energy and Mineral Resources, to six years in prison for rigging a tender bid for a home solar energy system project in 2009 worth IDR526 billion (US$57.86 million). This is an abnormal number in equation to other southeastern-Asian countries. The government isn't doing much for this case and the Indonesians are left to handle this on their own. 
+
+Ridwan was found guilty of accepting IDR 14.6 billion in kickbacks, resulting in IDR131 billion in state losses. The Corruption Eradication Commission (KPK) stated that it will use Ridwan’s verdict as material to develop the investigation on the graft scandal involving the Solar Home System project.Lisa Franks
+
+Lisa Franks (born 6 April 1982 in Moose Jaw, Saskatchewan) is a Canadian paralympic athlete from competing mainly in category T52 wheelchair sprint events. Throughout her wheelchair racing career she set world records in the 100m, 200m, 400m, 800m, 1500m, 5000m, and marathon events.
+
+Career.
+Lisa has won six paralympic gold medals. In the 2000 Summer Paralympics she won gold medals in the 200m, 400m, 800m and 1500m and a silver medal in the 100m. In 2004 she defended her 200m and 400m titles. She was coached by Clayton Gerein who was a Paralympic medallist in wheelchair racing. The two were introduced by Gerein's wife who was Lisa's physiotherapist. 
+
+In readiness for the 2008 Summer Paralympics Lisa had taken up wheelchair basketball and was a part of the Canadian team that finished fifth.
+
+Personal life.
+On April 18, 1996, just after Frank's fourteenth birthday, she woke up in the middle of the night unable to move her legs. By the end of that day she had lost function of her arms as well, though had regained use of those after rehabilitation. Franks was diagnosed with arteriovenous malformation, a condition that caused clusters of blood vessels to prevent blood from properly passing by her spinal cord.
+
+She graduated from the University of Saskatchewan in 2006 with a Bachelor of Engineering and a focus in mechanical engineering.
+
+She was awarded an Honorary Doctorate from the University of Regina in 2009. Watch While I Revise the World
+
+"Watch While I Revise the World" is the 160th episode of the ABC television series, "Desperate Housewives". It was the third episode of the show's eighth season and was broadcast on October 9, 2011.
+
+Plot.
+As Susan and Carlos bond over their feelings of guilt at the murder of Gabrielle's stepfather, Mike begins to think that the two are having an affair, and Bree suspects that her detective boyfriend, Chuck, may secretly be investigating her. As her marriage continues to crumble, the tables are turned on Lynette when her usually relationship-challenged sister Lydia (guest star Sarah Paulson) comes to town and announces she's engaged. Meanwhile, after asking Renee to help his daughter, Jenny, go shopping for her first bra, Lee fears that the child is starting to bond more with Renee and becoming more distant from him.
+
+Reception.
+According to Nielsen ratings, "Watch While I Revise the World" was watched by 8.63 million viewers and held 2.8 rating/7 share among viewers between 18 and 49 years of age. The episode was outperformed by "Sunday Night Football" on NBC, which averaged 22.05 million viewers and an 8.9 rating/22 share, "The Good Wife" on CBS, which was watched by 10.28 million viewers but held a 2.1 rating/5 share and "Family Guy" on Fox which was watched by 6.99 million viewers and held 3.5 rating in the 18-49 demographic. This episode was the least watched episode in terms of total viewers in the history of the show until the air date of next episode, School of Hard Knocks, although the episode was the most watched scripted program of the night in the 18-49 demographic. The episode gained an additional 2.0 million viewers and 0.9 rating in the week following the original broadcast due to DVR recordings.
+
+Notes.
+- Although credited, Doug Savant (Tom Scavo) and Madison De La Garza (Juanita Solis) do not appear in this episode.
+- The title is from the song "Beautiful" from "Sunday in the Park With George" by Stephen Sondheim
+
+International titles.
+- Italian:"Segreti Svelati" (Secrets revealed)
+- German: "Falsche Vorstellungen" (Wrong Idea)
+- Polish: "Patrz jak rewiduje świat" (Watch how I change the world)2011–12 CHA women's ice hockey season
+
+The 2011–12 College Hockey America women's ice hockey season marked the continuation of the annual tradition of competitive ice hockey among College Hockey America members.
+
+Offseason.
+- May 27: CHA member Wayne State University have announced that sponsorship of the women's ice hockey program has been dissolved. The decision was attributed due to continuing reductions in the state of Michigan appropriations for higher education. The Wayne State Warriors recorded an all-time CHA mark of 48-59-7 (.452) in nine seasons, tying for the CHA regular-season title in 2007-08.
+- June 13: Mercyhurst Lakers assistant coach Paul Colontino has left the club to become head coach of the Robert Morris Colonials. He is the third head coach in Colonials history, after the resignation of Nate Handrahan, who left to assume the head coaching position at Ohio State.
+- September 6: Robert DeGregorio, Commissioner for College Hockey America (CHA), announced that the Penn State Nittany Lions have been accepted into the CHA. The Nittany Lions will officially join the conference starting with the 2012-13 season.
+
+Exhibition.
+CIS.
+- September 17, 2011: Senior Bailey Bram registered a hat trick to go with her three assists, as the Lakers trounced the Wilfrid Laurier Golden Hawks women's ice hockey program by a 10-2 tally. Her sister, Shelby Bram scored one goal while freshman Kristine Grenier also registered a hat trick in the match. Kelley Steadman contributed with four assists.
+
+PWHL.
+- September 24, 2011: Sophomore Christine Bestland notched five points as the Lakers defeated the Stoney Creek Jr. Sabres of the PWHL by a 6-0 score. The Lakers scored four goals within a five and a half minute time span late in the second period.
+- September 25, 2011: Freshman Caroline Luczak notched a goal, while registering three assists as the Lakers defeated the Toronto Jr. Aeros of the PWHL.
+
+Regular season.
+News and notes.
+September.
+- September 14: The Lindenwood Lady Lions ice hockey program officially submitted an application to join College Hockey America (CHA) for the 2012–2013 season.
+- In the Mercyhurst Lakers season opener on September 30, 2011, Bestland was named the game's First Star in a 4-0 shutout over the nationally ranked Quinnipiac Bobcats. Bailey Bram scored the game-winning goal (it was the 61st goal of her career). Goaltender Hillary Pattenden earned her 13th career shutout (and 81st career win) while Bailey Bram scored the game-winning goal.
+
+October.
+- October 1, 2011: Bailey Bram played in her 100th career game for the Mercyhurst Lakers. Bram would be held pointless as the Lakers would lose the game by a 1-0 tally to Quinnipiac. It was Quinnipiac's first victory over Mercyhurst in twelve regular season matches.
+- October 7–8: Robert Morris freshman Katie Fergus accumulated three points in her NCAA debut with one goal and two assists. Against the Lindenwood Lions, she got her first-collegiate point fewer than nine minutes into the opening period. Later in the game, she scored her first goal as the Colonials were on the penalty kill. In the second game versus Lindenwood, she earned her first multi-goal game. Fergus became one of just two freshmen in Colonials history to register multi-point performances in the first two games of a season. Fergus finished the series versus Lindenwood by scoring three goals and two assists five points. In addition, she had eight shots to complement a +5 plus/minus.
+- October 8, 2011: Brianna Delaney registered the sixth three-point game of her career at Robert Morris. With the achievement, she tied the Colonials all-time record for career points. The 24th-career multi-point game of her career increased her point total to 97. The total now equals the record that Sara O'Malley set during the 2010-11 campaign.
+- October 27–28: The series versus the Lindenwood Lady Lions ice hockey program marked the first time that Lindenwood hosted an NCAA Division I opponent in their home arena. Mercyhurst would win the October 28 match by a 7-0 tally, in which Lakers freshman Shelby Bram would score her first career NCAA goal. The October 29 contest saw Mercyhurst emerge as the victor in a 14-0 whitewash. Kelley Steadman would score four goals and notch an assist, while Jess Jones would earn a hat trick. The Bram sisters (Shelby and Bailey) each earned two goals.
+
+December.
+- December 9: In a 4-2 loss to the Boston College Eagles on December 9, 2011, Kelley Steadman scored her 100th career point. The point was a goal in the second period on Boston College goalkeeper Corrine Boyles.
+- December 10: In a 3-2 overtime victory versus Boston College, Hillary Pattenden made a career high 48 saves to earn the 91st victory of her NCAA career, tying former Wisconsin goaltender Jessie Vetter for the NCAA Division I record. Jill Szandzik scored at 3:01 into overtime for her second goal of the season. Bailey Bram had three assists, including one on the game-winner to give her 40 points in 16 games. Christine Bestland also earned three points. Pattenden’s 48 saves broke her previous high of 38 (made earlier in the 2011-12 season) at Minnesota State-Mankato.
+- December 14: In a 9-0 defeat of the Lindenwood Lady Lions, Hillary Pattenden broke Jessie Vetter's record for career NCAA wins, by notching her 92nd career victory. Forward Bailey Bram scored two goals and added four assists while Kelley Steadman scored the game-winning goal.
+
+January.
+- On Friday, January 20, 2012, Brianna Delaney scored in the third period of a 4-2 loss to CHA rival Mercyhurst. After being hooked, she scored on a wrist shot top shelf as she was falling to the ice. With the score, Delaney reached three milestones. She became just the second Robert Morris player to reach the 50 goal plateau. In addition, the score marked her 20th point of the season. It made her the first player in school history to post four 20 point seasons. Said goal also marked the 113th point of her career, the most by any Robert Morris women's hockey player in school history.
+- January 31: Rebecca Vint logged an assist in the third period at Princeton to tie the Colonials’ single-season points mark.
+
+February.
+- February 3–4: In a sweep over CHA opponent Syracuse, Rebecca Vint led all Colonials skaters in points. In the first game, she scored the game-winning goal to break the Colonials’ single-season record for points in one season. In the 4-3 win versus the Orange, it was Vint’s fourth game-winning goal of the season (a Colonials record). The following day, Vint tied the Colonials’ single-sea¬son mark for goals in a 5-2 triumph. In addition, she assisted on the game-winning goal to notch her 10th multi-point effort of the season.
+- February 10: Rebecca Vint notched her fifth game-winning goal of the season, a new Colonials record. In addition, said goal also broke the school record for overall goals in a season. In the third period, she logged another goal to register her sixth multi-goal game of the campaign. The following day, Vint assisting on both RMU goals to break the single-season assist record. With the two assists, she also became the first Colonial to notch 40 points in a season. Her five game-winning goals leads all skaters in the CHA.
+- February 18: In a contest versus the Robert Morris Colonials, Hillary Pattenden competed in the final regular season game of her NCAA career. Heading into the game, she had 99 career regular season victories, and was aiming to be the first NCAA women's goaltender with 100 career wins. With a 4-3 Mercyhurst lead late in the third period, Colonials skater Dayna Newsom recorded a game-tying goal, as both teams skated to a 4-4 final score.Said Mohamed Otta
+
+Said Mohamed Otta (; born 3 January 1992) is an Egyptian footballer with Zamalek who is known with his dribbling and stunning speed .He started his career with Kaskada in the third division of the Egyptian league.My Life My Way
+
+My Life My Way is the tenth full-length studio album from New York hardcore band, Agnostic Front released on March 4, 2011. This album was recorded at Mana Recording Studio in Tampa, Florida by Erik Rutan and produced by Freddy Cricien of Madball, who is the half-brother of Agnostic Front frontman Roger Miret.
+
+Personnel.
+- Agnostic Front
+- Roger Miret - vocals
+- Vinnie Stigma - guitar
+- Joseph James - guitar
+- Mike Gallo - bass
+- Pokey Mo - drums
+- Production
+- Recorded at Mana Recording Studio, Tampa, Florida
+- Produced by Freddy Cricien
+- Engineered and mixed by Erik Rutan
+- Mastering by Alan Douches
+
+Sailing at the 1996 Summer Olympics – Europe
+
+The Women's Europe Competition was a sailing event on the program at the 1996 Summer Olympics that was held from July 22 to August 2, 1996 in Savannah, Georgia, United States. Points were awarded for placement in each race. Eleven races were scheduled and sailed. Each sailor had two discards.
+Justin Robinson (basketball, born 1987)
+
+Justin Robinson (born 17 October 1987) is a British professional basketball player for the London Lions of the British Basketball League.
+
+Early life.
+Robinson played for the Brixton TopCats before moving to the United States to attend high school at the Blair Academy. As a junior, he would lead Blair to a Mid-Atlantic Prep League title and was named to the All-MAPL first team.
+
+College career.
+Robinson played college basketball for the Rider Broncs. During his senior year as team captain he averaged 15.3 points, 3.8 assist, 2.8 rebounds and 1.0 steal a game.
+
+Professional career.
+In September 2011, Robinson began his professional career with Greek team Maroussi. The next month he left Maroussi and moved to Apollon Limassol of the Cypriot League where he spent the 2011–12 season.
+
+On 6 August 2012, he signed with BC Kyiv of Ukraine. On 26 February 2013, he parted ways with Kyiv. On 3 March 2013, he signed with Uppsala Basket of Sweden for the rest of the season.
+
+During the 2013–14 season he played in Hungary with Falco KC Szombathely and Atomerőmű SE.
+
+On 12 November 2014, he signed with his former team Apollon Limassol of Cyprus. On 25 February 2015, he left Apolon and signed with Kolossos Rodou of the Greek Basket League.
+
+On 17 August 2016, Robinson signed with Slovenian club Union Olimpija. However, only twelve days later, he left the club before appearing in a game for them. On 20 September 2016, he signed with Greek club Doxa Lefkadas. He left Doxa after appearing in 19 games. On 16 March 2017, he signed with the French Pro B club Saint-Quentin for the rest of the season.
+
+On 23 August 2017, Robinson signed with the London Lions of the British Basketball League.
+
+International.
+Robinson plays for the Great Britain national basketball team, making his debut against Poland in 2009.
+
+Jessica Matassa
+
+Jessica Matassa (born June 6, 1986) is a paralympic athlete from Canada competing mainly in category T54 sprint events. She was born in Windsor, Ontario.
+
+Athletics.
+Jessica has twice competed in the 200m, 400m and 800m at the Summer Paralympics, firstly in 2004 where she won a bronze medal in the T54 800m and then again in 2008.
+
+Matassa underwent numerous surgeries in 2006 that prevented her from competing in 2006. She was not expected to compete again. However, after months of rehabilitation she was given the all clear to compete in 2007 and qualified for the 2007 Para Panamerican games in Rio de Janeiro, Brazil. She won gold in all three of her events: 200m, 400m and 800m.
+
+Matassa competed as part of Team Canada at the 2008 Beijing Paralympic Games. Placing 5th in the 200m followed by 7th in the 400m.
+
+In 2009, Matassa competed in the Boston Marathon placing 5th overall.
+
+Since 2009, Matassa has retired from racing.
+
+Ice sledge hockey.
+For the 2015-16 season, Matassa was named to the roster of the Canada women's national ice sledge hockey team. Of note, her club team is the Windsor-Essex Ice Bullets. She is one of four women that comprise the roster of both men and women. Ashley Goure, Genna Norton, a former member of the national team and Heather Stewart consist of the other female players that Matassa has played with.A. Padmanabhan
+
+A. Padmanabhan IAS is a member of the Indian Administrative Service, is a former Governor of the state of Mizoram and a former chief secretary of the government of Tamil Nadu. Having had a career in the governments of Tamil Nadu and the government of India, he now focuses on providing help to the needy by partnering with organizations like the Foundation For Academic Excellence and Access (FAEA) where he is a member of the governing council. He was born in 1928 and did his BA and MA from Pachaiyappa's College in Chennai. He then was selected to the IAS. He served as Sub Collector Cheranmahadevi and was Collector of Salem and was instrumental in setting up healthcare and industries in the state of Tamil Nadu. He was chairman of TIDCO and launched the partnership for SPIC. He also set up the industrial parks in hosur and also other parts of Tamil Nadu when he was chairman of SIPCOT. He has also written several books.Trolleybuses in Esslingen am Neckar
+
+The Esslingen am Neckar trolleybus system serves the city of Esslingen am Neckar, in the "Land" of Baden-Württemberg, Germany.
+
+Opened on 10 July 1944, the system had two lines, and nine trolleybuses, as at 2011.Veenendaal West railway station
+
+Veenendaal West is a railway station located in Veenendaal, The Netherlands. The station was opened in 1981, and is located on the Kesteren–Amersfoort railway. The train services are operated by Nederlandse Spoorwegen.
+
+Train services.
+The following services currently call at Veenendaal West:
+- 2x per hour local service ("sprinter") (Amsterdam -) Breukelen - Utrecht (- Veenendaal Centrum) (peak hours only)
+- 2x per hour local service ("sprinter") Breukelen - Utrecht - Rhenen
+
+Brakemine
+
+Brakemine was an early surface-to-air missile (SAM) development project carried out in the United Kingdom during World War II. Brakemine used a beam riding guidance system developed at A.C. Cossor, while REME designed the testbed airframes. Trial launches were carried out between 1944 and 1945, and the effort wound down as the war ended. Although Brakemine would never be used in its original form, its use of the "twist-and-steer" guidance method would later be used on the much more capable Bristol Bloodhound. A single Brakemine survives in the REME Museum.
+
+History.
+Brakemine was the result of two independently developed versions of the beam riding guidance system concept. In 1942, Captain Sedgfield of the Royal Electrical and Mechanical Engineers (REME) wrote a technical paper on the concept. In 1943, Leslie H. Bedford, director of research at A.C. Cossor, independently developed the same idea while on a long train ride.
+
+The filing of two similar concepts led to a conference at the headquarters of Anti-Aircraft Command (AA Command), attended by Sir Frederick Pile and Brigadier J.A.E. Burls, Chief Mechanical Engineer of AA Command (and inventor of the Pile Platform). A follow-up meeting started planning for a number of committees to study development of the concept, but worried that this would lead to lengthy delays, Burls decided to allow Cossor a free hand to develop the guidance system while (now) Major Sedgfield would handle rocket development at the AA Command's workshops at Park Royal. Development began in February 1944.
+
+The Brakemine missile developed as a simple cylindrical airframe with an ogive nosecone, small elliptical wings mounted near the center of gravity, and four small fins at the rear. The missile was powered by eight solid rockets taken from the existing Unrotated Projectile anti-aircraft rocket (also used on the RP-3); later models used six rockets. Its flight was controlled using the "twist-and-steer" method of the two main wings. These were connected to the missile fuselage with pivots, allowing them to rotate to different angles of attack. To turn the missile, the wings would first rotate in opposite directions to cause the missile to roll. Once the wings were perpendicular to the required direction, they would then be rotated in the same direction, creating lift to change its course.
+
+A launcher consisting of a rail mounted to an QF 3.7 inch AA gun traversal mechanism was built at Walton-on-the-Naze and test firings started in September 1944. This pre-dates the Fairey Stooge, and is the first launch of an anti-aircraft missile of British design. Early tests resulted in numerous failures, but as the missiles fell into the ocean they could be retrieved for study and the flaws corrected. As the missile aerodynamics improved and the failure rate dropped, further launches were fit with the guidance system, although they were not turned on. A total of 20 of these early designs were built and flown, shots 11 through 20 with the guidance system installed.
+
+At this point an improved missile body was introduced, and launches of the fully operational system took place. This was guided using the Radar, AA No. 3 Mk. 7 "Blue Cedar", at that time the primary AA radar in the UK. A proximity fuse was ready for use, but a warhead was never tested. When the war in Europe ended in the midst of testing, the Army lost interest in the project. It was, at this time, the best-developed missile system in Britain.
+
+Further development was taken up by the Ministry of Supply (MoS), who also took over development of the competing Stooge. The MoS moved the project to their rocket testing facilities at RAF Aberporth in Wales, but no further launches took place. The dozen existing Stooge test airframes were fired from Aberporth before that program also ended. Further development on both projects ended in favour of the much more powerful English Electric Thunderbird, which had little in common with either project.
+
+Brakemine would have one lasting influence on British missile development, however. The MoS was interested in a much more capable design with altitude performance to 40,000 feet (12,000 m) and selected Brakemine's twist-and-steer manoeuvering system as the basis for this greatly improved LOPGAP design developed, ironically, by Fairey. Over time these early developments culminated in the Bristol Bloodhound, which competed with the Thunderbird.
+
+Description.
+The surviving Brakemine missile at the REME Museum is about 8 feet long, 2 feet in diameter. Two wide-chord elliptical wings are mounted on either side just below the center of the missile. Much smaller rectangular fins are at the extreme rear of the airframe. The launcher consisted of a bridgework placed on the gun mounting, with two rails on top of the bridgework. The missile fuselage rode in the gap between the rails, with the rockets wrapped around the fuselage and falling away after launch.
+
+One problem with the guidance system that was not solved during Brakemine's development was its reliance on a known launch orientation providing an "up" direction. If the missile rolled during its initial flight before the guidance system activated, this direction would not be set correctly and the automated system that attempted to keep the missile centered in the radar beam would instead send out corrections that would move it further away from it.
+
+Survivors.
+A single Brakemine missile is preserved in the REME Museum of Technology.Charles Rinker
+
+Charles Rinker was an American lyricist who worked frequently with Gene de Paul and Bob Rothberg, among others. His older brother, Al Rinker, formed the Rhythm Boys with Bing Crosby in 1925. His sister, Mildred Bailey, was a popular and influential American jazz singer during the 1930s.
+
+His mother, Josephine, was an enrolled member of the Coeur d'Alene people and a devout Roman Catholic. His father, Charles, played fiddle and called square dances. His mother played piano every evening after supper. His brother was vocalist and composer Al Rinker. His sister, Mildred Bailey, was a popular and influential American jazz singer during the 1930s. 
+
+Charles Rinker wrote twenty-seven songs with Gene de Paul, including "Your Name is Love", which has been recorded by George Shearing, Nancy Wilson, and others.August Strindberg paintings
+
+This is a gallery of August Strindberg's paintings.
+See also.
+- August Strindberg bibliography
+Essen–Gelsenkirchen railway
+
+The Gelsenkirchen Essen railway is a double-track, electrified main line railway in the central Ruhr area of the German state of North Rhine-Westphalia. It runs from Essen Hauptbahnhof via Essen-Kray Nord to Gelsenkirchen Hauptbahnhof.
+
+History.
+Between 1866 and 1874 the Rhenish Railway Company (, RhE) built its own Ruhr line from Osterath on the Lower Left Rhine Railway to Dortmund RhE station, in competition with the Witten/Dortmund–Oberhausen/Duisburg railway built by the Bergisch-Märkische Railway Company ("Bergisch-Märkische Eisenbahn-Gesellschaft", BME) between 1860 and 1862 and the Duisburg–Dortmund railway completed by the Cologne-Minden Railway Company ("Cöln-Mindener Eisenbahn-Gesellschaft", CME) in 1848 and which ran a little further north.
+
+The line was opened to "Wattenscheid RhE" (later called "Gelsenkirchen-Wattenscheid") station in 1868 and completed to "Dortmund RhE" six years later. During construction of the line a branch was built in 1870 joint CME and BME "Duisburg station" (now Duisburg Hauptbahnhof) in order to be competitive.
+
+Kray–Gelsenkirchen.
+For the same reason, the RhE built a branch from its Ruhr line at Kray station (now Essen-Kray Nord station) to the north, which was opened on 13 February 1872 for freight and on 1 June 1872 for passengers. The line ended at "Gelsenkirchen RhE" station, south of the CME Duisburg–Dortmund line, less than half a kilometre from "Gelsenkirchen CME" station (now "Gelsenkirchen Hauptbahnhof").
+
+In 1876, a passenger station was opened midway on the line near Dahlbusch colliery as "Dahlbusch" station; in 1895 a freight yard was opened there. The station has been renamed several times, first in 1898 as "Dahlbusch Rotthausen", in 1907 as "Rotthausen (Kreis Essen)" and finally in 1924 as Gelsenkirchen-Rotthausen station.
+
+After the nationalisation of all of the (nominally) private railway companies in Prussia at the end of the 19th century, the Prussian state railways began on the one hand to eliminate or merge unnecessary or redundant rail facilities, and on the other to build new lines connecting the individual sections of the former railway companies.
+
+For this reason, the "Rhenish" station in Gelsenkirchen was closed in 1904 and all traffic was moved to the "Cologne-Minden" station, which was then rebuilt on a large scale and renamed in 1907 as "Gelsenkirchen Hauptbahnhof". To be able to serve this station without a level crossing, an additional connection was built to Rotthausen (VzG line number 2237), which passes under the Cologne-Minden trunk line on the tracks of an old freight line (now occupied by the street of Rotthauser Strasse). The entire line was then duplicated to Kray Nord, which was completed in 1908.
+
+Rotthausen–Schalke/Gelsenkirchen–Hessler.
+Only half a year after completion of the line from Kray to Gelsenkirchen, on 18 September 1872, the RhE opened a siding to the Wilhelmine Victoria colliery in the district of Hessler, together with "Schalke RhE" station. Since this crossed the important Cologne-Minden main line on the level west of Gelsenkirchen, the station and siding were closed at the end of the 1880s following the nationalisation of the railways, after less than twenty years of operation. In 1893, the station reopened as "Schalke Süd" (from 1907 it was called "Gelsenkirchen-Schalke Süd").
+
+The siding from Gelsenkirchen was upgraded to a regular freight line and a connection was opened to Hessler station on the BME Emscher Valley Railway on 1 April 1897. The track was duplicated between Hessler and Schalke Süd in 1898 and two years later the track to Gelsenkirchen was also duplicated. The line was also used for passenger transport from 1 May 1902.
+
+On 12 September 1903, freight traffic was resumed on the original line between Rotthausen and Schalke Süd stations. Freight traffic on the line was abandoned on 28 May 1967 and the section was closed completely on 1 June 1969.
+
+By 1933, passenger traffic between Gelsenkirchen Hauptbahnhof and Gelsenkirchen-Hessler station had been closed. After the Second World War it had a short revival from 4 May 1947 to 8 May 1948. In the 1970s, the second track was dismantled and on 30 September 1979 the line was designated as a branch line.
+
+Kray–Wanne.
+On 25 March 1875, the RhE opened another branch line from Kray, this was a 9 km long line that ran almost directly to "Wanne CME" station (now Wanne-Eickel Hauptbahnhof). This was only ever used for freight and was closed on 1 August 1890. Following its closure, the line continued to be used under the VzG line number of 2209 as a colliery siding. Part of it later became part of the Gelsenkirchen–Wanne-Eickel freight line (line number 2231).
+
+Essen–Kray Nord.
+On 1 May 1905, the Royal Railway Division of Essen ("königliche Eisenbahndirection Essen") opened a southern extension of the reconstructed line from Gelsenkirchen to connect with the line from Essen Hauptbahnhof to Gelsenkirchen-Bismarck (via Stoppenberg and Katernberg-Nord), an originally single-track line, at Frillendorf junction.
+
+Platforms were built on the new line parallel to Kray station on the former RhE line. The station was renamed "Kray Nord" station in 1896 after the opening of the Kray Süd station on the Essen–Wattenscheid–Bochum line. Since 16 July 1914, the line has been fully duplicated from Essen Hauptbahnhof to Kray Nord.
+
+Development.
+More than 30 years passed between the construction of the two sections of the line, which were both originally intended only as supplements to the Rhenish line. Nevertheless, they became increasingly important, while the Rhenish line increasingly lost its importance because of its poor location between the Cologne-Minden and the Bergisch-Märkische lines.
+
+The combination of the two sections made a main line between two major railway stations. After the Second World War the line was upgraded and the whole line was electrified on 27 May 1962.
+
+Between 1972 and 1974, the line was realigned from the eastern end of Essen Hauptbahnhof as part of the redevelopment for the Rhine-Ruhr S-Bahn, its connection to the line via Stoppenberg to Gelsenkirchen-Bismarck, which had been abandoned in 1970, was removed and connections were built to Essen-Kray via a flying junction to the two S-Bahn tracks on the south side of the station, as well as to the terminating tracks on the north side of the station.
+
+Current operations.
+The Rhenish Ruhr line is now closed along with most of its branch lines or reduced to stations and sidings. The connecting line from Gelsenkirchen to Gelsenkirchen-Hessler only serves to connect with the Essen Katernberg Nord siding of the former Bergisch-Märkische Railway’s Emscher Valley Railway, which otherwise would have no connection to the railway network anymore.
+
+The line between Essen and Gelsenkirchen, however, is served by a variety of passenger services, with intermediate stops at Essen-Kray Nord and Gelsenkirchen-Rotthausen, which are served only once an hour by S-Bahn line S2.
+
+Rail services.
+In long-distance rail passenger traffic, the line is served two inter-city routes:
+
+In regional transport, the line is served, on behalf of the Verkehrsverbund Rhein-Ruhr, by the following Regional-Express, Regionalbahn and S-Bahn lines:
+Veenendaal Centrum railway station
+
+Veenendaal Centrum is a railway station located in Veenendaal, The Netherlands. The station was opened in 1886, closed in 1944 and reopened in 1981. It is located on the Kesteren–Amersfoort railway. The train services are operated by Nederlandse Spoorwegen.
+
+Train services.
+The following services currently call at Veenendaal Centrum:
+- 2x per hour local service ("sprinter") (Amsterdam -) Breukelen - Utrecht (- Veenendaal Centrum) (peak hours only)
+- 2x per hour local service ("sprinter") Breukelen - Utrecht - Rhenen
+
+Umaria Coalfield
+
+Umaria Coalfield is located in Umaria district in the Indian state of Madhya Pradesh in the valley of the Umrer River, a tributary of the Son River.
+
+History.
+In 1886, W.W. Hunter wrote, “Extensive coalfields have recently been discovered at Umaria, within the native state of Rewa…”
+
+Umaria Coalfield, which was owned by Rewa Coalfields Limited, was nationalized in 1973.
+
+The coalfield.
+Umaria Coalfield is a part of Central India Coalfields. The latter is spread over the districts of Surguja, Koriya (both in Chhattisgarh), Shahdol and Umaria (both in Madhya Pradesh). There are fourteen coalfields in this group, namely Korar, Umaria, Johilla, Sohagpur, Sonhat, Jhilimili, Chirimiri, Sendurgarh, Koreagarh, Damhamunda, Panchbahini, Hasdeo-Arand, Lakhanpur and Bishrampur. The group covers an area of about with estimated reserves of 15,613.98 million tonnes. The deposits are at a depth of 0-1200 meters. Therefore, extraction is mainly amenable to underground mining except a few blocks in eastern part of these coalfields which have opencast potential.
+
+In Umaria Coalfield, the Lower Gondwana rocks are well developed. The coalfield has an estimated reserve of 181.29 million tonnes, spread across six coal seams. The coals are relatively high in moisture (7-10%) and high in ash (18.6-29.4%). South Eastern Coalfields Limited operates eight mines.
+
+According to Geological Survey of India reserves of non-coking coal up to a depth of 300 m in Umaria Coalfield was 181.29 million tonnes. 
+Kanchan Open Cast Mine is being expanded from 0.32 million tonnes per annum to 0.65 million tonnes per annum, with a peak capacity of 0.75 million tonnes per annum. The entire overburden would be backfilled. There is 4 km metalled road connecting the mine to Vindhya Mine and onwards to Nowrozabad Railway siding. 
+
+Transport.
+The Katni Umaria Railways section was opened to traffic in 1886.The line from Katni, from Allahabad on the Jabalpur line, to Umaria, then in Rewa State, was accorded priority in construction, in order to connect Umaria Coalfield to the railway system.
+The Bilaspur-Umaria branch line was opened in 1891, linking the entire area to the GIPR system at Katni.Finanztest
+
+Finanztest (originally "FINANZtest") is a consumer magazine which focuses on providing objective information about financial services. Together with "test" it is one of the two main publications of Stiftung Warentest, the German foundation and consumer organisation.
+
+General background.
+"Finanztest" was first published in 1991. It has appeared monthly since 1997, and at the present time has a circulation of 251,000 copies per month. However, according to a survey by Allensbach, a well-known institute for public opinion research, each issue is actually read by 1.3 million readers. Approximately 205,000 copies are sold to subscribers and 46,000 at newsstands every month. The magazine is free of adverts in order to ensure that it is totally independent of manufacturer influence. Hermann-Josef Tenhagen has been the editor-in-chief since 1999.
+
+There are five main thematic sections in the magazine: "Legal and Everyday Life Issues", "Investment and Provision for Retirement", "Home and Living", "Tax", "Health and Insurance". It publishes the results of investigations of financial services, for example insurance, investment products and loans, as well as advice about tax and legal issues. Every month there is an extensive section providing a comparison of interest rates for various savings products, shares and investment funds, as well as loans for buying property or a car.
+
+In addition to the regular magazine, there are several special issues each year dealing in more detail with topics of particular interest. In the recent past these included financial advice for the self-employed, taking care of elderly parents, and maximising tax refunds. The Finanztest Yearbook with summaries of the year's investigations comes out every December. Details of all the investigations and reports can of course be downloaded, in part as a paid-for service. There are also product picker databases for investment funds and statutory health insurance that are continuously updated.
+
+Working procedures and effects of its investigations.
+The published data and reports are based on the investigations of the financial and insurance products on the market which are carried out using scientific methods by the foundation's own staff. There was a total of 85 investigations in 2010.
+
+Since more and more companies do not wish to be surveyed and refuse to provide the information requested, Stiftung Warentest now also evaluates databases and business reports, as well as relying on private providers as sources of data. In addition, specifically trained freelancers often act as customers. Mystery shoppers for example played an important role in testing out the investment advice services of banks (issue 08/2010) and the statutory health insurance providers (issue 09/2010).
+
+"Finanztest"'s investigations very definitely have an effect on both providers and politicians. For example, as a result of unfavourable results, consumer unfriendly financial services, such as some of the private health insurance tariffs, have been taken off the market. Following repeated criticism, more customer friendly terms and conditions have also been introduced by providers offering occupational disability insurance. As a consequence of several investigations published in Finanztest, Ilse Aigner, the Federal Minister for Consumer Protection announced in December 2010 that she also intends to make use of mystery shoppers to check the reliability of investment advice offered by banks.
+
+Advertising with investigation results.
+If they agree to abide by the specified terms and conditions and pay a one-off fee, providers are allowed to advertise using Stiftung Warentest's overall verdicts on quality and the Foundation's logos.
+
+"Finanztest"'s official logos as used in advertising:
+
+"Riester" – mistakes and their consequence.
+Stiftung Warentest has a reputation for providing accurate and reliable information with relevance for consumers. If mistakes are made, the Foundation deals with them openly and honestly, as was the case in 2002, with the publication of the incorrectly calculated results for the "Riester-Rente" (a state-subsidised privately funded pension introduced and named after the German politician Walter Riester). The complete issue of "Finanztest" was withdrawn and a public apology was made. The investigation was repeated, and the new results were published. In addition, they were also made available free of charge online. It was the first and only time in the then almost 40-year history of the Foundation that this happened – interestingly, over 100,000 copies of the magazine with the corrected information were subsequently sold at newsstands and it was the most popular "Finanztest" issue that year.
+
+Since 2005, Finanztest has published reports every year on its latest investigations of the various Riester state-subsidised pension schemes, the Riester fund savings plans and Riester bank savings plans. Stiftung Warentest's financial experts have regularly carried out investigations of Riester loans and also the Riester home pension scheme since it was introduced.Jerry Benjamin
+
+Jerry Charles Benjamin (November 9, 1909 – November 23, 1974) was an American Negro league baseball center fielder who played from 1931 to 1948. He played for the Knoxville Giants, Memphis Red Sox, Detroit Stars, Birmingham Black Barons, Homestead Grays, Newark Eagles, and New York Cubans. While with the Grays, Benjamin won Negro League championships in 1941, 1943, 1944, and 1948. A three time East-West All-Star, he had a .485 batting average in 1943.
+
+Benjamin was born in Montgomery, Alabama, and died in Detroit, Michigan.EUROGEO-European Association of Geographers
+
+EUROGEO is a European scientific society, which networks geographers from all walks of life. It is an international non-governmental organisation with a wide membership (http://www.eurogeography.eu/). Since 1987 EUROGEO has been a participative member of the Conference of International NGOs of the Council of Europe. The association has considerable experience in national and international activities and projects in geography including those related to education and training. It is a not profit organisation, which aims to develop, support and promote policies designed to advance the status of Geography; establish and promote cross-border cooperation; promote education and training in Geography from a European perspective and represent nationally and internationally the views of its members.
+
+EUROGEO activities include organising events, producing publications, supporting geographers in their jobs and careers, the teaching of geographical sciences, identifying and promoting good practise, co-operating with the European Union, Council of Europe, European Commission and other relevant organisations; lobbying at global, European and where relevant national level, providing a forum for the discussion of matters of common interest to geographers, giving advice on geography and making recommendations to policy makers.
+
+History.
+Origin.
+EUROGEO was first established in 1979 under the name of European Standing Conference of Geography Teachers Association (ESCGTA). In the beginning it was an association of associations. In 1994, when other European countries became members, the association took the name of its bulletin, EUROGEO: European Network of Geography Teachers´ Associations. The principal aims of that organisation were to advise and promote the European dimension in geographical education and teaching about the countries of Europe as a contribution towards the development of a European dimension in education. Members were geography teacher associations and geographical associations from around Europe. Presidents of these associations or their representatives attended the bi-annual meetings that were originally organised and funded by the European Commission in Brussels.
+
+First activities.
+EUROGEO was led by a small committee of volunteers headed by Henk Meier representing the Dutch Geographical Association (KNAG). In between each of these conferences a EUROGEO bulletin was published (see table 1).
+
+Table 1. Conferences and Bulletin of EUROGEO (1980-1996)
+
+Twentieth century.
+In 1987 EUROGEO applied for and was accepted as an international NGO with representation at the Council of Europe. Since this time representatives from the association have participated in NGO meetings in Strasbourg, being the voice of geography and geographers there. In 2003 the status of EUROGEO, along with other NGOs, was reviewed and the association became a fully participating NGO at the Council of Europe (http://www.coe.int/t/ngo/).
+
+In 1999 a successful application was made by EUROGEO for a European Minerva Project (Euro.Geo) to produce materials that promote European citizenship through the use of ICT in teaching geography in school education. The project was coordinated by Karl Donert at Liverpool Hope University.
+
+At the Liverpool meeting of EUROGEO in 2001, members of the association decided to apply for a project to share news and information about the state and status of Geography in Europe. The project produced a Web site, interactive maps of Europe as well as teaching and training resources in different languages.
+
+Henk Meijer decided to stand down and in 2002 and during the EUROGEO Annual meeting held in Madeira, Portugal at elections for new Presidium Karl Donert was elected President of the association.
+
+Twenty-first century: Networking: the HERODOT Network for Geography in higher education and teacher training.
+In 2002, the proposal to establish a Socrates-Erasmus Thematic Network project on university Geography and the Bologna Process funded by the European Commission was successful. This was the HERODOT Network for Geography in Higher Education (http://www.herodot.net). This thematic network was coordinated by Liverpool Hope University and led by Karl Donert. HERODOT sought to improve the quality of learning and teaching in higher education and teacher training and address issues raised by the Bologna Process like quality assurance, the use of new technologies and research in geographical education.
+
+There were two phases of the project that ran from 2002–2005 and 2006-2009. A large number of publications were produced and many events were held around Europe dealing with issues relating to Geography in higher education and teacher training. Members of EUROGEO participated in the funded network. Under HERODOT, Geography became a subject assessed under the project Tuning Educational Structures in Europe (http://tuningacademy.org/herodot-geography-2003-2010/).
+
+By 2009 HERODOT had connected more than 300 organizations throughout all European countries and 60 partners from other countries around the world. These partners joined HERODOT meetings and workshops to share their ideas, innovations and best practice online and face-to-face. The broad partnership of the network included universities and research centres, companies and NGOs as well as teacher training and other education bodies like Ministries of Education. Many of those who participated in the work of HERODOT are still actively collaborating in follow up activities, project and meetings.
+
+The idea to establish a European Geography association that supported not only teachers and educators, but also geographers working in other professions came as a result of the discussions that took place at several Herodot meetings.
+
+At the annual meeting of EUROGEO in Liverpool in September 2008, member associations unanimously agreed to change the legal status and remit of the association. This was presented to HERODOT partners, after which members of the EUROGEO Presidium and the HERODOT Core Group held a joint meeting to form a working group to restructure the association as a membership organisation.
+
+After lengthy discussions both organisations held a joint meeting in Ayvalik, Turkey in June 2009, where the new EUROGEO association held its first elections and passed its revised statutes. Karl Donert was then elected president of EUROGEO. This was the final meeting of the HERODOT network. The new, restructured organisation now deals with educational, scientific, research and applied parts of Geography with a European perspective.
+
+EUROGEO cooperates with many other international institutions and associations including the AAG (http://www.aag.org), SEAGA and the International Geographical Union (IGU) (http://igu-online.org) and is a stakeholder organisation in the UNEP, EyeonEarth and "Geo for All" (http://www.geoforall.org) initiatives.
+
+Membership.
+EUROGEO members are geographers and related professionals who work in the public, private, and academic sectors. They work in a wide range of careers, as teachers and trainers, state and local government employees, planners, cartographers, scientists, non-profit workers, entrepreneurs, business people, graduate students, retirees, and university administrators.
+
+There are three categories of membership:
+1. Individual members
+2. Organisational members
+3. Young members including EGEA (EGEA is the European Association of Young Geographers, http://www.egea.eu)
+
+Joining the association is easy, visit http://www.eurogeography.eu/about-2/membership/
+
+Publications.
+EUROGEO has published a large number of books, articles, magazines and conference proceedings and the society has developed the European Journal of Geography (http://www.eurogeographyjournal.eu/). The European Journal of Geography published its first issue in 2010 and since then has regularly produced issues and widely cited articles on geographical themes relevant to the activities of the association. In February 2014 the European Journal of Geography was accepted and indexed in Scopus.
+
+EUROGEO is associated with the geography education journal, the Review of International Geographical Education Online (http://www.rigeo.org/), which developed as an initiative from HERODOT members.
+
+Recent projects.
+EUROGEO regularly applies for new projects, currently under the Erasmus +, Jean Monnet, Citizenship and Horizon 2020 Programmes. They are available on: http://www.eurogeography.eu/projects (Table 2)
+
+Since 2009, the number of innovative geographical projects EUROGEO has been involved in has increased. Four types of projects have been developed and supported i) networks, ii) multilateral projects iii) awareness raising and iv) support for associations.
+
+EUROGEO has been responsible for the creation of networks of academics and educators on specific priority themes, such as the digitalearth.eu: geomedia in schools network (Lifelong Learning Programme) http://www.digital-earth.eu, where a number of Digital Earth Centres of Excellence (http://www.digital-earth-edu.net) were accredited, and since 2013, the School on the Cloud network: connecting education to the Cloud for digital citizenship http://www.schoolonthecloud.eu/.
+EUROGEO has participated in a large number of multi-lateral education development projects. These have established training of teachers and educators in important geographical areas, such as GIS (the iGuess and iGuess 2 Projects http://www.iguess.eu), data and statistics in schools (the I-Use Project http://www.i-use.eu) and more recently powerful disciplinary knowledge (the GeoCapabilities project http://www.geocapabilities.org).
+GeoCapabilities is a 3-year project with a key objective to create teacher training materials to develop teachers as curriculum leaders … through a 'capabilities' approach Capability approach. The project embraces diversity in culture and language and in how geography is understood and expressed in national school standards. The project believes that a capabilities approach helps geography educators in all jurisdictions articulate the relevance and power of learning how to think geographically. The key output is "to develop and pilot an online professional development communications platform for teacher preparation in geography." This includes resources (teaching materials and communications tools), international collaboration and online teacher exchanges.
+EUROGEO participates in the SeaChange Horizon 2020 Project http://www.seachangeproject.eu, raising awareness of the importance of Ocean Literacy. The project aims to establish a fundamental "Sea Change" in the way European citizens view their relationship with the sea, by empowering them, as Ocean Literate citizens, to take direct and sustainable action towards a healthy ocean and seas, healthy communities and ultimately a healthy planet.
+EUROGEO has been coordinating since 2016 the YouthMetre Forward Looking Project that addresses EU Youth Priority 7 "Using e-participation as an instrument to foster young people's empowerment and active participation in democratic life". The aim is to empower young people to become engaged and affect EU youth policy. An e-tool will be produced to close the gap between youth and institutions by collecting the perceived needs of youth in key policy areas and providing guidelines to public institutions that help address them. Through training YouthMetre will provide youngsters with necessary skills and knowledge to foster effective implementation by policy makers of the guidelines provided by the "Youthmetre".
+
+In 2013 EUROGEO was awarded a Jean Monnet grant for pan-European associations.
+
+Table 2. Participation of EUROGEO in EU projects
+
+Conferences.
+The Association organizes events and activities for members, the most relevant of these is the annual conference and the Annual Meeting (see table 3).
+
+Table 3. Annual Conferences
+
+Governance.
+EUROGEO is managed by its Presidium, which consists of a President, Secretary General, and Treasurer and up to five Vice Presidents. The Presidium is responsible for the finances and administration of the association and in maintaining the web site of the association and other information sources. Co-opted members may be invited to join the Presidium for specific activities.
+
+Coelostegus
+
+Coelostegus is an extinct genus of Late Carboniferous (late Westphalian stage) basal reptile known from Pilsen of Czech Republic. It is known from the holotype ČGH 3027, a partial skeleton of an immature individual. It was collected in the Nýřany site from the Nýřany Member of the Kladno Formation. It was first named by was first named by Robert L. Carroll and Donald Baird in 1972 and the type species is "Coelostegus prothales". The most recent phylogenic study of primitive reptile relationships found "Coelostegus" to be the basalmost known eureptile.Phantom Breaker
+
+Gameplay.
+"Phantom Breaker" is a 2D fighting game that supports two distinctive fighting styles, the player is able to choose between Quick style and Hard style. Quick style focuses on quick hits and combos while the other is more about defense.
+
+When the player reaches Overdrive mode, their character might get an extra increase in speed or defense. Every attack the player releases can cancel out their enemy's attack and raise their tension gauge; timing it right will maximise the player's gauge to boost their attack power.
+
+Plot.
+The game's setting takes place in Japan. A mystery organization led by "Phantom" organised a fighting tournament in Tokyo, whose winner will have their wish granted.
+
+Characters.
+There is a total of 18 playable characters in the game. An additional "female gang member" character was planned, but never made it into the final game.
+
+- A 19-year-old college violinist. Her weapon is a large, two-handed sword named Maestro. .
+- A 14-year-old idol. Her weapon is a magical wand called Candy. .
+- A high school girl, who is also a ninja-in-training from the Bakufu era. Her weapons are Shoukaku and Zuikaku — a ninja blade and a kunai. .
+- A descendent of the miko (a family of exorcists that have had some dealings with Phantom in the past). She fights with Kahoutou, her naginata, to stop the duels. .
+- One of the few males in this contest. He is fighting to cure his little sister of an incurable disease. He fights with a gauntlet named Koutarou. .
+- She has no memories and fights only to satisfy her lust for battles. Her weapon of choice is a mace made of scrap materials, named Humongous. .
+- She does not know much of the world and have a gentle personality but a strong sense of justice. She beats opponents over the head with her battle hammer, Maggie. .
+- She finds out that one of the other combatants in Phantom Breaker killed her mother, and she is on a quest for revenge. She fights with two blades called Aldina. .
+- The other male main character in this game. He is the CEO of a pharmaceutical company and he is fighting in order to resurrect his parents, who were assassinated fifteen years ago. He uses a long sword named Setsuna. .
+- She got bored with the real world and modified her body into an idealized version, based on a video game she liked. Her occupation is cosplaying. She fights with a giant claw called Kusenia’s Claw. .
+- A 9-year old time-traveler from the future who is part of the organization “Schrodinger”. She is accompanied by a droid named Mauchuu. Her weapons are all-purpose laser guns named JJ Apple. .
+- He is not a main character but the bodyguard to the mysterious Phantom. He fights using telekinesis. .
+- A new character added in "Phantom Breaker: Extra". Sofia is a Fu-mantion Artifact made by the Russian Science Academy that despises Phantom. .
+- A new character added in "Phantom Breaker: Extra". A former senior official that worked for Phantom who wants to bring Japan back to its militarism dogma. .
+- A new character added in "Phantom Breaker: Extra". Ende is from the Schrödinger Space-Time patrol group brings a giant robot named Nataku into battle. .
+- A new character added in "Phantom Breaker: Extra". Gaito & Rin are a team, but Rin, a 6-year-old girl, controls Gaito, an anti-soul that is brimming with power. (Gaito) & Yuka Ōtsubo (Rin).
+- Guest character from Chaos;Head. She is an Esper who can conjure whatever she imagines. She does not possess a known weapon. .
+- Guest character from "Steins;Gate". She is a genius who graduated early from an American university and helps out in a circle that develops strange inventions. She uses these strange inventions in gameplay. .
+
+Release.
+"Phantom Breaker" was initially slate to be launched in April 2011, but was delayed and released in June 2011. The game had been announced for a first quarter 2012 North American release by 7Sixty (a subsidiary of SouthPeak Games) but the release has since been cancelled for unknown reasons.
+
+"Phantom Breaker: Another Code".
+An arcade version of the game running on the RingEdge 2 board titled was released on April 4, 2013. Version 1.1 was released on June 2013. This version adds Infinity, the game’s final boss, as a playable character, rebalanced gameplay, and a new opening movie.
+
+"Phantom Breaker: Extra".
+In May 2013, 5pb. announced a new updated version of "Phantom Breaker" titled "Phantom Breaker: Extra" which was released for the PlayStation 3 and Xbox 360 on September 19, 2013. It features rebalanced gameplay, new characters, new techniques, new "Extra" fighting style, new stages, renewed background effects, and an online spectator mode. Unlike the first console release, it is region-free.Edward E. Kramer
+
+Edward E. Kramer (born March 20, 1961) is an American editor who has edited several science fiction, fantasy, and horror works, was co-founder and former part-owner of the Dragon*Con media convention and is a convicted child sex offender. He lives in Duluth, Georgia and is former program director of the Metropolitan Atlanta Council on Alcohol and Drugs. Before pleading guilty to three counts of child molestation, Kramer was the subject of a long-running legal battle.
+
+Early life.
+Kramer was born in Brooklyn, New York. He holds a Bachelor of Science in psychology from Emory College and a Master of Public Health in health administration and planning from the Rollins School of Public Health at Emory University School of Medicine.
+
+Career.
+Editing.
+Kramer is the editor of the anthologies "Dark Love" and "Grails" (Roc Books); "The Sandman: Book of Dreams" by Neil Gaiman (HarperPrism); "The Crow", by James O'Barr (Random House); "Free Space" (Tor Books); "Forbidden Acts" (Avon Books); "Elric: Tales of the White Wolf" and "Pawn of Chaos: Tales of the Eternal Champion" (based on the works and characters of Michael Moorcock); "Dante's Disciples", "Tombs", and the "Dark Destiny" trilogy (White Wolf); and "Strange Attraction: Turns of the Midnight Carnival Wheel" (Bereshith Publishing). He has also worked for over a decade as a music critic and photojournalist.
+
+Dragon Con and other events.
+In 1987, he co-founded Dragon*Con, a convention dedicated to science fiction, fantasy, comics, gaming, and the popular arts. He has not been involved with Dragon Con planning or activities since 2000; but still owned 34% of the business until Kramer's relationship with the convention was ended in July 2013 in a cash-out merger.
+He has also chaired the 1990 Atlanta Origins convention, the 1992 Georgia World Fantasy Convention, and the Nebula Awards Weekend, and both the Atlanta World Horror Convention, and the North American Science Fiction Convention (NASFiC) in 1995. In 1999, he chaired the Atlanta World Horror Convention.
+
+Child sex offense arrests and convictions.
+Kramer was arrested on August 25, 2000 following an investigation spurred by an anonymous tip, and charged with molesting three teenage boys. The investigation revealed that Kramer had previously been accused of molestation in 1997 before the alleged victim recanted.Before Kramer was arrested, he had a reputation for inappropriate relationships. According to "Atlanta Magazine", Kramer "was constantly surrounded by young boys."
+
+Kramer's first attempt to serve his pre-trial detention in house arrest lasted only a week due to a reported visit by a teenage boy. After Kramer suffered a spinal injury in jail, Judge Debra Turner allowed him to go back to house arrest in January 2001. This lasted until 2008 when his travel ban was lifted.
+
+In September 2011, Kramer was arrested after Connecticut police found him in a motel room, unsupervised, with a 14-year-old boy despite being banned from contacting anyone under 18. The felony "risk of injury to a child" was added to the list of charges for which Kramer was to stand trial.
+
+In September 2012, Kramer was being held at the MacDougall-Walker Correctional Institution, a maximum security facility in Suffield, Connecticut, before his extradition to Georgia in January 2013. On April 26, 2013, he was denied the chance to post bail, as the presiding judge concluded based on past behavior that he was likely to break the conditions of his bond.
+
+In 2007, Congressman Bob Barr said, "There is an overwhelming sense of injustice that pervades all of what has happened to Petitioner Appellant Edward Kramer." Protests to "Free Ed" gained the support of science fiction writers Harlan Ellison, Anne McCaffrey, Robert J Sawyer and J. Neil Schulman. Conversely, Gwinnett County District Attorney Danny Porter said in September 2010 that Kramer had "done nothing but delay and blame everyone else but himself", agreeing with an assessment that the Georgia Court of Appeals gave in September 2007: "The record strongly indicates that Kramer either sought or knowingly acquiesced in the great majority of the delay and did not want a speedy trial." Kramer and his lawyers disputed this, stating that he had serious health issues that prevented him from sitting through a long trial.
+
+On December 2, 2013 Kramer, in a plea bargaining deal, pleaded guilty by way of an Alford plea to one charge for each of the three victims, just before his trial was scheduled to start.
+In 2014, Kramer sought to reverse the 2013 plea, with his lawyer claiming Kramer was forced into the plea bargain through prosecutorial misconduct. The Georgia State Attorney’s Office ordered the recusal of both the district attorney and the Gwinnett District Attorney’s Office from the case, since they were also witnesses in the action. All Gwinnett County Judges voluntarily recused themselves as well.
+
+Bibliography.
+- "Tales of Riverworld" (1992)
+- "Grails: Quests, Visitations and Other Occurrences" (1992), a World Fantasy Award nominee for Best Anthology
+- "Quest to Riverworld" (1993)
+- "Confederacy of the Dead" (1993)
+- "Phobias" (1994)
+- "Michael Moorcock's Elric: Tales of the White Wolf" (1994)
+- "Grails: Visitations of the Night" (1994)
+- The "Dark Destiny" trilogy is set in White Wolf publishing's "World of Darkness":
+1. "Dark Destiny" (1994)
+2. "Dark Destiny II: Proprietors of Fate" (1995)
+3. "Dark Destiny III: Children of Dracula" (1996)
+- "Dante's Disciples" (1998)
+- "Excalibur" (1995)
+- "Tombs" (1995)
+- "More Phobias" (1995)
+- "Forbidden Acts" (1995)
+- "Dark Love" (1996), a World Fantasy Award and International Horror Guild Award nominee for Best Anthology
+- "The Sandman: Book of Dreams" (1996), a British Fantasy Award nominee for Best Anthology
+- "Michael Moorcock's Pawn of Chaos: Tales of the Eternal Champion" (1997)
+- "Free Space" (1997), recipient of the first Prometheus Special Award
+- "The Crow: Shattered Lives and Broken Dreams" (1998)
+- "Strange Attraction: Turns of the Midnight Carnival's Wheel" (2000)
+- "Grails: Quests of the Dawn" (2004)
+
+Chirimiri Coalfield
+
+Chirimiri Coalfield is located in Koriya district in the Indian state of Chhattisgarh in the valley of the Hasdeo River, a tributary of the Mahanadi.
+
+Other coalfields.
+There are several other coalfields in the region. Kotma sub-basin of Sohagpur Coalfield is from Chirimiri Coalfield. Jhilimili Coalfield is north of Chirimiri railway station. Sonhat Colliery lies north-east of Chirimiri.
+
+History.
+Tata Iron and Steel Company initiated prospecting of coal but no mining was carried out by them. The Chirimiri colliery was opened in 1930 (production started in 1932), New Chirimiri colliery came up in 1942, Pure Chirimiri colliery in 1945, and North Chirimiri colliery in 1946. Subsequently, New Chirimiri Pondi Hills, West Chirimiri, Duman Hill and Korea collieries started operating. Coal production rose from 264,000 tonnes in 1933 to 3,162,500 tonnes in 1980.
+
+The collieries in Chirimiri Coalfield were owned by several companies and owners such as Chirimiri Colliery Company Pvt. Ltd., Dababhoy's New Chirimiri Ponri Hill Company (Private) Limited, United Collieries Limited, K.N. Dhady and Indra Singh & Sons (Private) Limited. These were nationalized in 1973.
+
+The coalfield.
+Chirimiri Coalfield is a part of Central India Coalfields. The latter is spread over the districts of Surguja, Koriya (both in Chhattisgarh), Shahdol and Umaria (both in Madhya Pradesh). There are fourteen coalfields in this group, namely Korar, Umaria, Johilla, Sohagpur, Sonhat, Jhilimili, Chirimiri, Sendurgarh, Koreagarh, Damhamunda, Panchbahini, Hasdeo-Arand, Lakhanpur and Bishrampur. The group covers an area of about with estimated reserves of 15,613.98 million tonnes. The deposits are at a depth of 0–1200 meters. Therefore, extraction is mainly amenable to underground mining except a few blocks in eastern part of these coalfields which have opencast potential.
+
+Chirimiri coalfield is spread over of hilly country and includes both the sections – Kurasia and Chirimiri. Total reserves in Chirimiri coalfield have been estimated to be around 312.11 million tonnes.
+
+According to Geological Survey of India reserves of non-coking coal up to a depth of 300 m in Chirimiri Coalfield was 362.16 million tonnes.
+
+Transport.
+Chirimiri was connected to Anuppur by the Annupur-Chirimiri branch line in 1939.Sally Reddin
+
+Sally Reddin is a paralympic athlete from Great Britain competing mainly in category F54 shot putt events.
+
+Sally Reddin competed in the shot putt and javelin events at the 1996 Summer Paralympics. She then went on to win the gold medal four years later in 2000 in the shot putt but was unable to defend this title finishing fourth in 2008 Summer Paralympics.Barkhad Awale Adan
+
+Barkhad Awale Adan, also spelled Burkhat, (1950? – 24 August 2010) was a Somali journalist. He was the Director of Radio Hurma, based in Mogadishu, Somalia. He was killed in 2010 by a stray bullet during intensive fighting between Al-Shabaab militants and AMISOM soldiers in the Battle of Mogadishu.
+
+Life and career.
+Adan was born in Borama in northern Somalia. He was married, with three children.
+
+Adan was a veteran who had worked for 30 years in Mogadishu's radio industry. He had been working at Radio Hurma for 4 years.
+
+Death.
+On 24 August 2010, AMISOM forces were battling Al-Shabaab rebels in Mogadishu, after a suicide bombing attack earlier in the day on the Hotel Muna killed at least 33 people. Awale was helping a technician repair his radio station's roof transmitter when he was struck in the abdomen by a stray crossfire bullet. He was rushed to the Madina hospital, where he was later pronounced dead.
+
+Adan became the second journalist in Somalia to die in 2010, a year after the country had experienced its deadliest year for journalists up to that point, according to the Committee to Protect Journalists.
+
+Reactions.
+Faruk Osman, Secretary General of the National Union of Somali Journalists, said at the time of Adan's death: "The violence in Mogadishu has made it extremely dangerous for media professionals to carry out their work without falling victims to the ever flying bullets and widespread criminality. We have lost, yet again, another veteran journalist courtesy of the raging hostilities."
+
+Gabriel Baglo, Director of International Federation of Journalists' Africa Office, also stated: "This killing demonstrates again that journalists in Somalia are being targeted by gangs and militias in the country. The authorities must take concrete and urgent measures to protect journalists doing their work and innocent civilians in general."
+
+Additionally, Irina Bokova, Director General of UNESCO, said: "The Somali press is paying an exorbitant price for the instability prevailing in the country. Combatants must respect journalists’ immunity. Without it, without security, no freedom of expression worthy of the name can exist, even though it is a fundamental human right." Jhilimili Coalfield
+
+Jhilimili Coalfield is located in Surguja district in the Indian state of Chhattisgarh.

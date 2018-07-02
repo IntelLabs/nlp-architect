@@ -1,50 +1,64 @@
+# ******************************************************************************
+# Copyright 2017-2018 Intel Corporation
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ******************************************************************************
+
 import logging
 import sys
 import spacy
 from configargparse import ArgumentParser
-
 from nlp_architect.utils.io import check_size
 
+
+"""
+Script that prepares the input corpus for np2vec training: it runs NP extractor on the corpus
+and marks extracted NP's.
+
+"""
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-
-def mark_np(np):
-    return np.replace(' ', '_') + '_'
-
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     arg_parser = ArgumentParser(__doc__)
     arg_parser.add_argument(
         '--corpus',
         default='train.txt',
         type=str,
         action=check_size(min=1),
-        help='path to the input corpus. By default, '
-             'it is the training set of CONLL2000 shared task dataset.')
+        help='path to the input corpus. By default, it is a subset of English Wikipedia dump.')
     arg_parser.add_argument(
         '--marked_corpus',
         default='marked_train.txt',
         type=str,
         action=check_size(min=1),
-        help='path to the corpus. By default, '
-             'it is the training set of CONLL2000 shared task dataset.')
-
+        help='path to the marked corpus corpus.')
     arg_parser.add_argument(
         '--mark_char',
         default='_',
         type=str,
         action=check_size(1, 2),
-        help='special character that marks word separator and NP suffix.')
+        help='special character that marks NP\'s in the corpus (word separator and NP suffix).')
 
     args = arg_parser.parse_args()
 
+    corpus_file = open(args.corpus, 'r', encoding='utf8')
+    marked_corpus_file = open(args.marked_corpus, 'w', encoding='utf8')
+
+    # NP extractor using spacy
     logger.info('loading spacy')
     nlp = spacy.load('en_core_web_sm', disable=['textcat', 'ner'])
     logger.info('spacy loaded')
-
-    corpus_file = open(args.corpus, 'r', encoding='utf8')
-    marked_corpus_file = open(args.marked_corpus, 'w', encoding='utf8')
 
     num_lines = sum(1 for line in corpus_file)
     corpus_file.seek(0)
@@ -71,6 +85,7 @@ if __name__ == "__main__":
                         marked_corpus_file.write(token.text + ' ')
                 else:
                     if not spanWritten:
+                        # mark NP's
                         text = span.text.replace(' ', args.mark_char) + args.mark_char
                         marked_corpus_file.write(text + ' ')
                         spanWritten = True
@@ -84,5 +99,6 @@ if __name__ == "__main__":
         if i % 1000 == 0:
             logger.info(str(i) + ' of ' + str(num_lines) + ' lines')
 
+    corpus_file.close()
     marked_corpus_file.flush()
     marked_corpus_file.close()
