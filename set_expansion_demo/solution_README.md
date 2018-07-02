@@ -5,12 +5,13 @@ a more complete set of terms that belong to the same semantic class. This
 solution demonstrates the capability of a corpus-based set expansion system
 in a simple web application.
 
+![Image](assets/demo.png)
 
 ## Flow
 
 The solution is constructed of the following stages:
 
-1. Training:
+###Training:
 
    The first step in training is to prepare the data for generating a word embedding model.
    this is done by running:
@@ -21,9 +22,10 @@ The solution is constructed of the following stages:
      ```
     python3 examples/np2vec/train.py --workers 30 --size 100 --min_count 10 --window 10 --hs 0 --corpus
     set_expansion_demo/marked_train.txt --np2vec_model_file set_expansion_demo/np2vec --corpus_format txt
-  ```
+    ```
 
-2. Loading the expand server with the trained model:
+###Inference:
+1. Loading the expand server with the trained model:
     ```
     python expand_server.py [--host HOST] [--port PORT] model_path
     ```
@@ -34,7 +36,7 @@ The solution is constructed of the following stages:
     will listen on localhost:1234. If you set the host/port you should also
     set it in the ui/settings.py file.
 
-3. Run the UI application:
+2. Run the UI application:
     ```
     bokeh serve --show ui
     ```
