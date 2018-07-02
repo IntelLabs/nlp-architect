@@ -11,7 +11,7 @@ in a simple web application.
 
 The solution is constructed of the following stages:
 
-###Training:
+## Training:
 
    The first step in training is to prepare the data for generating a word embedding model.
    this is done by running:
@@ -19,12 +19,11 @@ The solution is constructed of the following stages:
     python3 mark_corpus.py -corpus train.txt -marked_corpus marked_train.txt
     ```
     the next step is to generate the model using NLP Architect np2vec module:
-     ```
-    python3 examples/np2vec/train.py --workers 30 --size 100 --min_count 10 --window 10 --hs 0 --corpus
-    set_expansion_demo/marked_train.txt --np2vec_model_file set_expansion_demo/np2vec --corpus_format txt
+   ```
+    python3 examples/np2vec/train.py --workers 30 --size 100 --min_count 10 --window 10 --hs 0 --corpus set_expansion_demo/marked_train.txt --np2vec_model_file set_expansion_demo/np2vec --corpus_format txt
     ```
 
-###Inference:
+## Inference:
 1. Loading the expand server with the trained model:
     ```
     python expand_server.py [--host HOST] [--port PORT] model_path
