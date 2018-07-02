@@ -5,6 +5,7 @@ a more complete set of terms that belong to the same semantic class. This
 solution demonstrates the capability of a corpus-based set expansion system
 in a simple web application.
 
+![Image](assets/demo.png)
 
 ## Flow
 
