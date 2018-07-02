@@ -5,13 +5,12 @@ from configargparse import ArgumentParser
 
 from nlp_architect.utils.io import check_size
 
+logging.basicConfig(stream=sys.stdout, level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 
 def mark_np(np):
     return np.replace(' ', '_') + '_'
-
-
-logging.basicConfig(stream=sys.stdout, level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 
 if __name__ == "__main__":
@@ -22,7 +21,7 @@ if __name__ == "__main__":
         type=str,
         action=check_size(min=1),
         help='path to the input corpus. By default, '
-                                 'it is the training set of CONLL2000 shared task dataset.')
+             'it is the training set of CONLL2000 shared task dataset.')
     arg_parser.add_argument(
         '--marked_corpus',
         default='marked_train.txt',
@@ -41,8 +40,7 @@ if __name__ == "__main__":
     args = arg_parser.parse_args()
 
     logger.info('loading spacy')
-    nlp = spacy.load('en_core_web_sm', disable=['textcat','ner'])
-    #nlp = spacy.load('en_core_web_sm')
+    nlp = spacy.load('en_core_web_sm', disable=['textcat', 'ner'])
     logger.info('spacy loaded')
 
     corpus_file = open(args.corpus, 'r', encoding='utf8')
@@ -76,8 +74,8 @@ if __name__ == "__main__":
                         text = span.text.replace(' ', args.mark_char) + args.mark_char
                         marked_corpus_file.write(text + ' ')
                         spanWritten = True
-                    if token.idx+len(token.text) == span.end_char:
-                        if len(spans)>0:
+                    if token.idx + len(token.text) == span.end_char:
+                        if len(spans) > 0:
                             span = spans.pop(0)
                         else:
                             span = None
