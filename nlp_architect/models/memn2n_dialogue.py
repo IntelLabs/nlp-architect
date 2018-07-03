@@ -135,10 +135,11 @@ class MemN2N_Dialog(object):
         self.saver = tf.train.Saver(max_to_keep=1)
 
     def _build_inputs(self):
+        # self._stories = tf.placeholder(tf.int32, [None, self._memory_size, self._sentence_size], name="stories")
         self._stories = tf.placeholder(tf.int32, [None, None, self._sentence_size], name="stories")
         self._queries = tf.placeholder(tf.int32, [None, self._sentence_size], name="queries")
         self._answers = tf.placeholder(tf.int32, [None, self._num_cands], name="answers")
-        self._cands = tf.placeholder(tf.int32, [None, self._num_cands, self._max_cand_len], name="candidate_answers")
+        self._cands = tf.placeholder(tf.int32, [None, self._num_cands, self._max_cand_len], name="answers")
 
     def _build_vars(self):
         with tf.variable_scope(self._name):
@@ -188,6 +189,9 @@ class MemN2N_Dialog(object):
 
             cands_emb = tf.nn.embedding_lookup(self.LUT_W, self._cands)
             cands_emb_sum = tf.reduce_sum(cands_emb, 2)
+
+            # logits = tf.matmul(u_k, tf.transpose(cands_emb_sum))
+            # logits = tf.reduce_sum(tf.multiply(u_k, cands_emb_sum), 2)
 
             logits = tf.reshape(tf.matmul(tf.expand_dims(u_k, 1), 
                                           tf.transpose(cands_emb_sum, [0,2,1])), 
