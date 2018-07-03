@@ -14,6 +14,11 @@
 # limitations under the License.
 # ******************************************************************************
 
+"""
+Script that prepares the input corpus for np2vec training: it runs NP extractor on the corpus and
+marks extracted NP's.
+"""
+
 import logging
 import sys
 import spacy
@@ -21,11 +26,6 @@ from configargparse import ArgumentParser
 from nlp_architect.utils.io import check_size
 
 
-"""
-Script that prepares the input corpus for np2vec training: it runs NP extractor on the corpus
-and marks extracted NP's.
-
-"""
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 logger = logging.getLogger(__name__)
 
@@ -35,13 +35,13 @@ if __name__ == '__main__':
         '--corpus',
         default='train.txt',
         type=str,
-        action=check_size(min=1),
+        action=check_size(min_size=1),
         help='path to the input corpus. By default, it is a subset of English Wikipedia dump.')
     arg_parser.add_argument(
         '--marked_corpus',
         default='marked_train.txt',
         type=str,
-        action=check_size(min=1),
+        action=check_size(min_size=1),
         help='path to the marked corpus corpus.')
     arg_parser.add_argument(
         '--mark_char',
@@ -62,7 +62,7 @@ if __name__ == '__main__':
 
     num_lines = sum(1 for line in corpus_file)
     corpus_file.seek(0)
-    logger.info(str(num_lines) + ' lines in corpus')
+    logger.info('%i lines in corpus', num_lines)
     i = 0
 
     for doc in nlp.pipe(corpus_file):
@@ -96,8 +96,8 @@ if __name__ == '__main__':
                             span = None
                         spanWritten = False
         marked_corpus_file.write('\n')
-        if i % 1000 == 0:
-            logger.info(str(i) + ' of ' + str(num_lines) + ' lines')
+        if i % 500 == 0:
+            logger.info('%i of %i lines', i, num_lines)
 
     corpus_file.close()
     marked_corpus_file.flush()

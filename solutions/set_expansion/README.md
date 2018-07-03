@@ -7,24 +7,38 @@ in a simple web application.
 
 ![Image](assets/demo.png)
 
+## Algorithm Overview
+Our approach is based on representing any term of a training corpus using word embeddings in order 
+to estimate the similarity between the seed terms and any candidate term. Noun phrases provide 
+good approximation for candidate terms and are extracted in our system using a noun phrase chunker. 
+At expansion time, given a seed of terms, the most similar terms are returned.
+
 ## Flow
 
 The solution is constructed of the following stages:
 
-## Training:
 
-   The first step in training is to prepare the data for generating a word embedding model.
-   this is done by running:
-     ```
-    python3 preprocess_corpus.py -corpus train.txt -marked_corpus marked_train.txt
-    ```
-    the next step is to generate the model using NLP Architect np2vec module:
-      ```
-    python3 examples/np2vec/train.py --workers 30 --size 100 --min_count 10 --window 10 --hs 0 --corpus solutions/set_expansion/marked_train.txt --np2vec_model_file solutions/set_expansion/np2vec --corpus_format txt
-    ```
+## Training:
+   
+The first step in training is to prepare the data for generating a word embedding model.
+This is done by running:
+```
+python prepare_data.py -corpus train.txt -marked_corpus marked_train.txt
+```
+The next step is to generate the model using [NLP Architect np2vec module](http://nlp_architect.nervanasys.com/np2vec.html):
+```
+python examples/np2vec/train.py --size 100 --min_count 10 --window 10 --hs 0 --corpus solutions/set_expansion/marked_train.txt --np2vec_model_file solutions/set_expansion/np2vec --corpus_format txt
+```
 
 ## Inference:
-1. Loading the expand server with the trained model:
+
+It consists in expanding the seed terms. This can be done in two manners:
+
+1. Running python script
+
+2. Web application
+
+2.1. Loading the expand server with the trained model:
     ```
     python expand_server.py [--host HOST] [--port PORT] model_path
     ```
@@ -35,7 +49,7 @@ The solution is constructed of the following stages:
     will listen on localhost:1234. If you set the host/port you should also
     set it in the ui/settings.py file.
 
-2. Run the UI application:
+2.2. Run the UI application:
     ```
     bokeh serve --show ui
     ```
@@ -51,3 +65,8 @@ The solution is constructed of the following stages:
     ```
     bokeh serve ui --address=127.0.0.1 --port=1234 --allow-websocket-origin=127.0.0.1:1234
     ```
+
+## Citation
+[Term Set Expansion based on Multi-Context Term Embeddings: an End-to-end Workflow](https://drive.google.com/open?id=164MvUGo0-iPeuGM1b8XrH2ysZZFrzomF), Jonathan Mamou,
+ Oren Pereg, Moshe Wasserblat, Ido Dagan, Yoav Goldberg, Alon Eirew, Yael Green, Shira Guskin, 
+ Peter Izsak, Daniel Korat, COLING 2018.

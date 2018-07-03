@@ -13,59 +13,124 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
+import logging
+
+from configargparse import ArgumentParser
 
 from nlp_architect.models.np2vec import NP2vec
+from nlp_architect.utils.io import validate_existing_filepath
 
-"""
-Set expansion module.
-"""
+logging.basicConfig(stream=sys.stdout, level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 
 class SetExpand():
     """
-        Load the np2vec model to allow set expansion.
+        Set expansion module, given a trained np2vec model.
     """
 
-    def __init__(self, np2vec_model_fn, mark_char='_', binary=False, word_ngrams=False):
+    def __init__(self, np2vec_model_file, binary=False, word_ngrams=False):
         """
+        Load the np2vec model for set expansion.
 
-        :param np2vec_model_fn:
-        :param mark_char:
-        :param binary:
-        :param word_ngrams:
+        Args:
+            np2vec_model_file (str): the file containing the np2vec model to load
+            binary (bool): boolean indicating whether the np2vec model to load is in binary format
+            word_ngrams (int {1,0}): If 1, np2vec model to load uses word vectors with subword (
+            ngrams) information.
+
+        Returns:
+            np2vec model to load
         """
-        self.np2vec_model = NP2vec.load(np2vec_model_fn, binary=binary, word_ngrams=word_ngrams)
-        self.mark_char = mark_char
+        self.np2vec_model = NP2vec.load(np2vec_model_file, binary=binary, word_ngrams=word_ngrams)
+        # extract the first term of the model in order to get the marking character
+        first_term = next(iter(self.np2vec_model.vocab.keys()))
+        self.mark_char = first_term[-1]
 
-    def np2id(self, np):
-        return np.replace(' ', self.mark_char) + self.mark_char
+    def __term2id(self, term):
+        """
+        Given an term, return its id.
 
-    def id2np(self, id):
+        Args:
+            term(str): term (noun phrase)
+
+        Returns:
+            its id
+        """
+        return term.replace(' ', self.mark_char) + self.mark_char
+
+    def __id2term(self, id):
+        """
+        Given the id of a noun phrase, return the noun phrase string.
+
+        Args:
+            id(str): id
+
+         Returns:
+            term (noun phrase)
+        """
         return id.replace(self.mark_char, ' ')[:-1]
 
     def get_vocab(self):
-        return [self.id2np(id) for id in self.np2vec_model.vocab]
+        """
+        Return the vocabulary as the list of terms.
+
+        Returns:
+            the list of terms.
+        """
+        return [self.__id2term(id) for id in self.np2vec_model.vocab]
 
     def expand(self, seed, topn=500):
+        """
+        Given a seed of terms, return the expanded set of terms.
+
+        Args:
+            seed: seed terms
+            topn: maximal number of expanded terms to return
+
+        Returns:
+            up to topn expanded terms and their probabilities
+        """
         seed_ids = list()
         for np in seed:
-            id = self.np2id(np)
+            id = self.__term2id(np)
             if id in self.np2vec_model.vocab:
                 seed_ids.append(id)
         if len(seed) > 0:
             res_id = self.np2vec_model.most_similar(seed_ids, topn=topn)
             res = list()
             for r in res_id:
-                res.append((self.id2np(r[0]), r[1]))
+                res.append((self.__id2term(r[0]), r[1]))
             return res
-        else:
-            return None
+        return None
 
 
 if __name__ == "__main__":
-    se = SetExpand(
-        '/Users/jmamou/work/set_expansion_research/experiments/w2v_model/np2vec_concatenate')
+    arg_parser = ArgumentParser(__doc__)
+    arg_parser.add_argument(
+        '--np2vec_model_file',
+        default='conll2000.train.model',
+        help='path to the file with the np2vec model to load.',
+        type=validate_existing_filepath)
+    arg_parser.add_argument(
+        '--binary',
+        help='boolean indicating whether the model to load has been stored in binary '
+        'format.',
+        action='store_true')
+    arg_parser.add_argument(
+        '--word_ngrams',
+        default=0,
+        type=int,
+        choices=[0, 1],
+        help='If 0, the model to load stores word information. If 1, the model to load stores '
+        'subword (ngrams) information; note that subword information is relevant only to '
+        'fasttext models.')
+    arg_parser.add_argument('--seed', type=str, help='seed terms')
+
+    args = arg_parser.parse_args()
+    se = SetExpand(np2vec_model_file=args.np2vec_model_file, binary=args.binary,
+                   word_ngrams=args.words_ngrams)
     # get vocabulary
-    print(se.get_vocab())
-    # exp = se.expand(['France','USA','Israel'])
-    # print(exp)
+    logger.info(se.get_vocab())
+    exp = se.expand(['France','USA','Israel'])
+    logger.info(exp)
