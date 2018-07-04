@@ -14,11 +14,12 @@
 # limitations under the License.
 # ******************************************************************************
 import logging
+import sys
 
 from configargparse import ArgumentParser
 
 from nlp_architect.models.np2vec import NP2vec
-from nlp_architect.utils.io import validate_existing_filepath
+from nlp_architect.utils.io import validate_existing_filepath, check_size
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -109,7 +110,6 @@ if __name__ == "__main__":
     arg_parser = ArgumentParser(__doc__)
     arg_parser.add_argument(
         '--np2vec_model_file',
-        default='conll2000.train.model',
         help='path to the file with the np2vec model to load.',
         type=validate_existing_filepath)
     arg_parser.add_argument(
@@ -125,12 +125,14 @@ if __name__ == "__main__":
         help='If 0, the model to load stores word information. If 1, the model to load stores '
         'subword (ngrams) information; note that subword information is relevant only to '
         'fasttext models.')
-    arg_parser.add_argument('--seed', type=str, help='seed terms')
+    arg_parser.add_argument('--seed', type=str, action=check_size(min_size=1),\
+    help='comma-separated seed terms')
+    arg_parser.add_argument('--topn', default=500, type=int, action=check_size(min_size=1),
+                            help='maximal number of expanded terms to return')
 
     args = arg_parser.parse_args()
     se = SetExpand(np2vec_model_file=args.np2vec_model_file, binary=args.binary,
-                   word_ngrams=args.words_ngrams)
-    # get vocabulary
-    logger.info(se.get_vocab())
-    exp = se.expand(['France','USA','Israel'])
+                   word_ngrams=args.word_ngrams)
+    exp = se.expand(args.seed, args.topn)
+    logger.info('Expanded results:')
     logger.info(exp)

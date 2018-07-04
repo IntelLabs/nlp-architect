@@ -23,22 +23,26 @@ The solution is constructed of the following stages:
 The first step in training is to prepare the data for generating a word embedding model.
 This is done by running:
 ```
-python prepare_data.py -corpus train.txt -marked_corpus marked_train.txt
+python solutions/set_expansion/prepare_data.py -corpus TRAINING_CORPUS -marked_corpus MARKED_TRAINING_CORPUS
 ```
-The next step is to generate the model using [NLP Architect np2vec module](http://nlp_architect.nervanasys.com/np2vec.html):
+The next step is to train the model using [NLP Architect np2vec module](http://nlp_architect.nervanasys.com/np2vec.html). 
+For set expansion, we recommend the following values 100, 10, 10, 0 for respectively, 
+size, min_count, window and hs hyperparameters.
 ```
-python examples/np2vec/train.py --size 100 --min_count 10 --window 10 --hs 0 --corpus solutions/set_expansion/marked_train.txt --np2vec_model_file solutions/set_expansion/np2vec --corpus_format txt
+python examples/np2vec/train.py --size 100 --min_count 10 --window 10 --hs 0 --corpus MARKED_TRAINING_CORPUS --np2vec_model_file MODEL_PATH --corpus_format txt
 ```
 
 ## Inference:
 
-It consists in expanding the seed terms. This can be done in two manners:
+It consists in expanding the seed terms. It can be done in two ways:
 
 1. Running python script
-
+```
+python solutions/set_expansion/set_expand.py --np2vec_model_file MODEL_PATH --seed SEED
+```
 2. Web application
 
-2.1. Loading the expand server with the trained model:
+    A. Loading the expand server with the trained model:
     ```
     python expand_server.py [--host HOST] [--port PORT] model_path
     ```
@@ -49,7 +53,7 @@ It consists in expanding the seed terms. This can be done in two manners:
     will listen on localhost:1234. If you set the host/port you should also
     set it in the ui/settings.py file.
 
-2.2. Run the UI application:
+    B. Run the UI application:
     ```
     bokeh serve --show ui
     ```
