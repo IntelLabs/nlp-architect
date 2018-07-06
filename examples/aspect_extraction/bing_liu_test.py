@@ -2,6 +2,7 @@ from pathlib import Path
 
 from train import run_aspect_sequence_tagging
 
+# TODO: add click and params for cmd line
 if __name__ == '__main__':
     datasets_path = Path('/home/lukasz/github/phd/sentiment-backend/aspects/data/aspects/bing_liu/bio_tags')
     conll_train_files = list(datasets_path.glob('*train.conll'))
