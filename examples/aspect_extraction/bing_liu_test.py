@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from train import run_ner
+from train import run_aspect_sequence_tagging
 
 if __name__ == '__main__':
     datasets_path = Path('/home/lukasz/github/phd/sentiment-backend/aspects/data/aspects/bing_liu/bio_tags')
@@ -11,7 +11,7 @@ if __name__ == '__main__':
 
     for train_file in conll_train_files:
         test_file = [f for f in conll_test_files if train_file.stem.replace('train', '') in f.as_posix()][0]
-        run_ner(
+        run_aspect_sequence_tagging(
             train_file=train_file.as_posix(),
             test_file=test_file.as_posix(),
             embedding_model=embedding_model,
