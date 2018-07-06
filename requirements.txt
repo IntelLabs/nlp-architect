@@ -3,6 +3,7 @@ numpy
 tqdm
 scipy
 gensim
+hugo
 six
 future
 requests

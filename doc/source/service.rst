@@ -32,26 +32,28 @@ Currently we provide 2 services:
 
  1. `bist` service which provides BIST Dependency parsing
  2. `spacy_ner` service which provides Spacy NER annotations.
+ 3. `ner` service which provides NER annotations without Spacy.
 
-To run the server, simply run `serve.py` with the Parameter `--name` as the name of the service you wish to serve.
-Once the model is loaded, the server will run on `http://localhost:8080/{service_name}`.
+To run the server, simply run `hug -f -p 8080 hug_server/server.py`, the server will run on `http://localhost:8080`.
 
-If you wish to use the server's visualization - enter `http://localhost:8080/{service_name}/demo.html`
+If you wish to use the server's visualization - enter `http://localhost:8080`
 
 Otherwise the expected Request for the server is the following:
 
 .. code:: json
 
-    {"docs":
-      [
-        {"id": 1,
-         "doc": "Time flies like an arrow. fruit flies like a banana."},
-        {"id": 2,
-         "doc": "the horse passed the barn fell"},
-        {"id": 3,
-         "doc": "the old man the boat"}
-       ]
-     }
+    {
+        "model_name": "ner" | "spacy_ner" | "bist",
+        "docs":
+        [
+            {"id": 1,
+            "doc": "Time flies like an arrow. fruit flies like a banana."},
+            {"id": 2,
+            "doc": "the horse passed the barn fell"},
+            {"id": 3,
+            "doc": "the old man the boat"}
+        ]
+    }
 
 Request Headers
 ---------------
@@ -68,25 +70,17 @@ We currently support only 2 services:
 
 - BIST parser - Core NLP models annotation structure
 
-.. code:: python
-
-    python server/serve.py --name bist
-
-Once the server is up and running you can go to `http://localhost:8080/bist/demo.html`
+Once the server is up and running you can go to `http://localhost:8080/demo.html`
 and check out a few test sentences, or you can send a POST request (as described above)
-to `http://localhost:8080/bist`, and receive `CoreNLPDoc` annotation structure response.
+to `http://localhost:8080/inference`, and receive `CoreNLPDoc` annotation structure response.
 
 .. image :: assets/bist_service.png
 
 - Spacy NER - High-level models annotation structure
 
-.. code:: python
-
-    python server/serve.py --name spacy_ner
-
-Once the server is up and running you can go to `http://localhost:8080/spacy_ner/demo.html`
+Once the server is up and running you can go to `http://localhost:8080`
 and check out a few test sentences, or you can send a Post request (as described above)
-to `http://localhost:8080/spacy_ner`, and receive `HighLevelDoc` annotation structure response.
+to `http://localhost:8080/inference`, and receive `HighLevelDoc` annotation structure response.
 
 .. image :: assets/spacy_ner_service.png
 
@@ -95,18 +89,24 @@ You can also take a look at the tests (tests/nlp_architect_server) to see more e
 Example CURL request
 --------------------
 
+Running `ner` model
+
+.. code:: json
+
+    curl -i -H "Response-Format:json" -H "Content-Type:application/json" -d '{"model_name": "ner", "docs": [{"id": 1,"doc": "Intel Corporation is an American multinational corporation and technology company headquartered in Santa Clara, California, in the Silicon Valley."}]}' http://{localhost_ip}:8080/inference
+
 Running `spacy_ner` model
 
 .. code:: json
 
-    curl -i -H "Response-Format:json" -H "Content-Type:application/json" -d '{"docs": [{"id": 1,"doc": "Intel Corporation is an American multinational corporation and technology company headquartered in Santa Clara, California, in the Silicon Valley."}]}' http://{localhost_ip}:8080/spacy_ner
+    curl -i -H "Response-Format:json" -H "Content-Type:application/json" -d '{"model_name": "spacy_ner", "docs": [{"id": 1,"doc": "Intel Corporation is an American multinational corporation and technology company headquartered in Santa Clara, California, in the Silicon Valley."}]}' http://{localhost_ip}:8080/inference
 
 
 Running `bist` model
 
 .. code:: json
 
-    curl -i -H "Response-Format:json" -H "Content-Type:application/json" -d '{"docs":[{"id": 1,"doc": "Time flies like an arrow. fruit flies like a banana."},{"id": 2,"doc": "the horse passed the barn fell"},{"id": 3,"doc": "the old man the boat"}]}' http://10.13.133.120:8080/bist
+    curl -i -H "Response-Format:json" -H "Content-Type:application/json" -d '{"model_name": "bist", "docs":[{"id": 1,"doc": "Time flies like an arrow. fruit flies like a banana."},{"id": 2,"doc": "the horse passed the barn fell"},{"id": 3,"doc": "the old man the boat"}]}' http://{localhost_ip}:8080/inference
 
 
 Annotation Structure Types - Server Responses
