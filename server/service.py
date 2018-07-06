@@ -128,6 +128,7 @@ def extract_module_name(model_path):
 class Service(object):
     def __init__(self, service_name):
         self.service_type = None
+        self.is_spacy = False
         self.service = self.load_service(service_name)
 
     def on_post(self, req, resp):
@@ -184,7 +185,7 @@ class Service(object):
         response_data = []
         for doc in docs:
             inference_doc = self.service.inference(doc["doc"])
-            if self.service_type != "not_spacy":
+            if self.is_spacy is True:
                 parsed_doc = inference_doc.displacy_doc()
                 doc_dic = {"id": doc["id"], "doc": parsed_doc}
                 if headers['IS-HTML'] is not None and eval(headers['IS-HTML']): # Potentially a security risk
@@ -221,13 +222,11 @@ class Service(object):
             logger.error(service_name_error)
             raise Exception(service_name_error)
         module_path = ".".join(model_relative_path.split(".")[:-1])
-        print(module_path)
         module_name = extract_module_name(model_relative_path)
-        print(str(module_name))
-        print(folder_path + module_path)
         module = import_module(folder_path + module_path)
         class_api = getattr(module, module_name)
         upload_service = class_api()
         upload_service.load_model()
         self.service_type = properties[name]["type"]
+        self.is_spacy = properties[name].get('spacy', False)
         return upload_service
