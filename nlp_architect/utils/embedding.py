@@ -13,20 +13,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
+from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
-from __future__ import absolute_import
+
+from functools import lru_cache
+
 import numpy as np
 
 
+@lru_cache(None)
 def load_word_embeddings(file_path):
     """
     Loads a word embedding model text file into a word(str) to numpy vector dictionary
 
     Args:
         file_path (str): path to model file
-        emb_size (int): embedding vectors size
 
     Returns:
         list: a dictionary of numpy.ndarray vectors
@@ -35,17 +38,25 @@ def load_word_embeddings(file_path):
     with open(file_path, encoding='utf-8') as fp:
         word_vectors = {}
         size = None
-        for line in fp:
-            line_fields = line.split()
-            if len(line_fields) < 5:
-                continue
-            else:
-                if line[0] == ' ':
-                    word_vectors[' '] = np.asarray(line_fields, dtype='float32')
+        try:
+            for line in fp:
+                line_fields = line.split()
+                if len(line_fields) < 5:
+                    continue
                 else:
-                    word_vectors[line_fields[0]] = np.asarray(line_fields[1:], dtype='float32')
-                    if size is None:
-                        size = len(line_fields[1:])
+                    if line[0] == ' ':
+                        word_vectors[' '] = np.asarray(line_fields, dtype='float32')
+                    else:
+                        word = line_fields[0]
+                        try:
+                            word_embedding = [float(embedding) for embedding in line_fields[1:]]
+                        except:
+                            continue
+                        word_vectors[word] = np.asarray(word_embedding, dtype='float32')
+                        if size is None:
+                            size = len(line_fields[1:])
+        except UnicodeDecodeError:
+            pass
     return word_vectors, size
 
 
