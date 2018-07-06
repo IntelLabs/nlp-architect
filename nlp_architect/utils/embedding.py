@@ -41,7 +41,6 @@ def load_word_embeddings(file_path):
         try:
             for line in fp:
                 line_fields = line.split()
-                # line_fields = [elem.replace('"', "") for elem in line_fields]
                 if len(line_fields) < 5:
                     continue
                 else:
@@ -52,7 +51,6 @@ def load_word_embeddings(file_path):
                         try:
                             word_embedding = [float(embedding) for embedding in line_fields[1:]]
                         except:
-                            # click.echo('Error with ' + str(line_fields[1:]))
                             continue
                         word_vectors[word] = np.asarray(word_embedding, dtype='float32')
                         if size is None:
@@ -81,7 +79,3 @@ def fill_embedding_mat(src_mat, src_lex, emb_lex, emb_size):
                 if w_emb is not None:
                     emb_mat[i][j] = w_emb
     return emb_mat
-
-# if __name__ == '__main__':
-#     emb, em_size = load_word_embeddings('/home/lukasz/data/AmazonWE/sentic2vec.csv')
-#     pass
