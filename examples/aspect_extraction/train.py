@@ -175,68 +175,18 @@ if __name__ == '__main__':
     # parse the input
     args = read_input_args()
 
-    # load dataset and parameters
-    dataset = SequentialTaggingDataset(args.train_file, args.test_file,
-                                       max_sentence_length=args.sentence_length,
-                                       max_word_length=args.word_length,
-                                       tag_field_no=args.tag_num)
-
-    # get the train and test data sets
-    x_train, x_char_train, y_train = dataset.train
-    x_test, x_char_test, y_test = dataset.test
-
-    num_y_labels = len(dataset.y_labels) + 1
-    vocabulary_size = dataset.word_vocab_size + 1
-    char_vocabulary_size = dataset.char_vocab_size + 1
-
-    y_test = to_categorical(y_test, num_y_labels)
-    y_train = to_categorical(y_train, num_y_labels)
-
-    aspect_model = NERCRF()
-    aspect_model.build(args.sentence_length,
-                       args.word_length,
-                       num_y_labels,
-                       dataset.word_vocab,
-                       vocabulary_size,
-                       char_vocabulary_size,
-                       word_embedding_dims=args.word_embedding_dims,
-                       char_embedding_dims=args.character_embedding_dims,
-                       word_lstm_dims=args.char_features_lstm_dims,
-                       tagger_lstm_dims=args.entity_tagger_lstm_dims,
-                       dropout=args.dropout,
-                       external_embedding_model=args.embedding_model)
-
-    conll_cb = ConllCallback([x_test, x_char_test], y_test, dataset.y_labels, batch_size=args.b)
-
-    aspect_model.fit(x=[x_train, x_char_train], y=y_train,
-                     batch_size=args.b,
-                     epochs=args.e,
-                     callbacks=[conll_cb],
-                     validation=([x_test, x_char_test], y_test))
-
-    # saving model
-    aspect_model.save(args.model_path)
-    with open(args.model_info_path, 'wb') as fp:
-        info = {
-            'sentence_len': args.sentence_length,
-            'word_len': args.word_length,
-            'num_of_labels': num_y_labels,
-            'labels_id_to_word': {v: k for k, v in dataset.y_labels.items()},
-            'word_vocab': dataset.word_vocab,
-            'vocab_size': vocabulary_size,
-            'char_vocab_size': char_vocabulary_size,
-            'char_vocab': dataset.char_vocab,
-            'word_embedding_dims': args.word_embedding_dims,
-            'char_embedding_dims': args.character_embedding_dims,
-            'word_lstm_dims': args.char_features_lstm_dims,
-            'tagger_lstm_dims': args.entity_tagger_lstm_dims,
-            'dropout': args.dropout,
-            'external_embedding_model': args.embedding_model
-        }
-        pickle.dump(info, fp)
-
-    # running predictions
-    predictions = aspect_model.predict(x=[x_test, x_char_test], batch_size=1)
-    eval = get_conll_scores(predictions, y_test, {v: k for k, v in dataset.y_labels.items()})
-    pp = pprint.PrettyPrinter(indent=4)
-    pp.pprint(eval)
+    run_aspect_sequence_tagging(
+        args.train_file,
+        args.test_file,
+        args.embedding_model,
+        args.batch_size,
+        args.epoch,
+        args.tag_num,
+        args.sentence_length,
+        args.word_length,
+        args.word_embedding_dims,
+        args.character_embedding_dims,
+        args.char_features_lstm_dims,
+        args.entity_tagger_lstm_dims,
+        args.dropout
+    )
