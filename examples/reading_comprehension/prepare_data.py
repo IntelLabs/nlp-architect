@@ -123,6 +123,7 @@ def extract_data_from_files(json_data):
     for article_id in range(len(json_data['data'])):
         sub_paragraphs = json_data['data'][article_id]['paragraphs']
         for para_id in range(len(sub_paragraphs)):
+
             req_para = sub_paragraphs[para_id]['context']
             req_para = req_para.replace("''", '" ').replace("``", '" ')
             para_tokens = tokenize_sentence(req_para)
@@ -151,7 +152,7 @@ def extract_data_from_files(json_data):
                         data_ques.append(question_tokens)
                         data_answer.append((a_start_idx, a_end_idx))
 
-                    except ValueError:
+                    except KeyError:
                         line_skipped += 1
 
     return data_para, data_ques, data_answer

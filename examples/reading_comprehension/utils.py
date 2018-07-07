@@ -147,8 +147,8 @@ def cal_f1_score(batch_size, ground_truths, predictions):
             precision = 1.0 * num_same / len(preds)
             recall = 1.0 * num_same / len(gts)
             f1 += (2 * precision * recall) / (precision + recall)
-    import ipdb
-    ipdb.set_trace
+    #import ipdb
+    #ipdb.set_trace
     return 100 * (f1 / batch_size), 100 * (exact_match / batch_size)
 
 
@@ -212,8 +212,16 @@ def obtain_indices(preds_start, preds_end):
 
     return (np.array(ans_start), np.array(ans_end))
 
-
+'''
 def sanitize_path(path):
     s_path = os.path.abspath(path)
+    assert len(s_path) < 255
+    return s_path
+'''
+
+
+
+def sanitize_path(path):
+    s_path = os.path.normpath('/' + path).lstrip('/')
     assert len(s_path) < 255
     return s_path

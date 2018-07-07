@@ -22,13 +22,17 @@ from random import shuffle
 import os
 import numpy as np
 from utils import *
-from layers import MatchLSTMAnswerPointer
+from nlp_architect.models.matchlstm_ansptr import MatchLSTM_AnswerPointer
 
 import math
 import argparse
 import tensorflow as tf
 import os
 import numpy as np
+from nlp_architect.utils.io import sanitize_path
+from utils import sanitize_path
+from nlp_architect.utils.io import validate, validate_existing_directory, \
+    validate_existing_filepath, validate_parent_exists, check_size
 
 # parse the command line arguments
 parser = argparse.ArgumentParser()
@@ -95,26 +99,27 @@ config = tf.ConfigProto()
 config.gpu_options.allow_growth = True
 
 # paths for data files
-try:
-    assert os.path.exists(args.data_path)
-except:
-    print("Please enter a valid data path")
-    exit()
+validate_existing_directory(args.data_path)
+path_gen = sanitize_path(args.data_path)
+path_gen=os.path.join(path_gen+"/")
 
-data_path = sanitize_path(args.data_path)
+file_name_dict={}
+file_name_dict['train_para_ids']='train.ids.context'
+file_name_dict['train_ques_ids']='train.ids.question'
+file_name_dict['train_answer']='train.span'
+file_name_dict['val_para_ids']='dev.ids.context'
+file_name_dict['val_ques_ids']='dev.ids.question'
+file_name_dict['val_ans']='dev.span'
+file_name_dict['vocab_file']='vocab.dat'
 
-path_gen = data_path
-train_para_file = os.path.join(path_gen + '/squad/train.context')
-train_para_ids = os.path.join(path_gen + '/squad/train.ids.context')
-train_ques_file = os.path.join(path_gen + '/squad/train.question')
-train_ques_ids = os.path.join(path_gen + '/squad/train.ids.question')
-answer_file = os.path.join(path_gen + '/squad/train.span')
-vocab_file = os.path.join(path_gen + '/squad/vocab.dat')
-val_paras_ids = os.path.join(path_gen + '/squad/dev.ids.context')
-val_ques_ids = os.path.join(path_gen + '/squad/dev.ids.question')
-val_ans_file = os.path.join(path_gen + '/squad/dev.span')
-vocab_file = os.path.join(path_gen + '/squad/vocab.dat')
 
+train_para_ids = os.path.join(path_gen + file_name_dict['train_para_ids'])
+train_ques_ids = os.path.join(path_gen + file_name_dict['train_ques_ids'])
+answer_file = os.path.join(path_gen + file_name_dict['train_answer'])
+val_paras_ids = os.path.join(path_gen + file_name_dict['val_para_ids'])
+val_ques_ids = os.path.join(path_gen + file_name_dict['val_ques_ids'])
+val_ans_file = os.path.join(path_gen + file_name_dict['val_ans'])
+vocab_file = os.path.join(path_gen + file_name_dict['vocab_file'])
 # Create lists for train and validation sets
 data_train = create_squad_training(train_para_ids, train_ques_ids, answer_file)
 data_dev = create_squad_training(val_paras_ids, val_ques_ids, val_ans_file)
@@ -135,7 +140,10 @@ params_dict['max_question'] = max_question
 
 # Load embeddings for vocab
 print('Loading Embeddings')
-embeddingz = np.load(os.path.join(path_gen +"/squad/glove.trimmed_zeroinit.300.npz"))
+embeddingz = np.load(
+    os.path.join(
+        path_gen +
+        "glove.trimmed.300.npz"))
 embeddings = embeddingz['glove']
 
 print("creating training Set ")
@@ -144,7 +152,7 @@ dev = get_data_array_squad(params_dict, data_dev, set_val='val')
 
 # Define Model Graph
 with tf.device('/device:' + args.select_device + ':0'):
-    model = MatchLSTMAnswerPointer(params_dict, embeddings)
+    model = MatchLSTM_AnswerPointer(params_dict, embeddings)
 
 run_config=tf.ConfigProto(allow_soft_placement=True, log_device_placement=False)
 
@@ -152,7 +160,7 @@ with tf.Session(config=run_config) as sess:
     init = tf.global_variables_initializer()
     model_saver = tf.train.Saver()
 
-    train_dir = os.path.join(model_dir)
+    train_dir = os.path.join(args.model_dir)
     ckpt = tf.train.get_checkpoint_state(train_dir)
     v2_path = ckpt.model_checkpoint_path + ".index" if ckpt else ""
     if ckpt and args.restore_training and (tf.gfile.Exists(
