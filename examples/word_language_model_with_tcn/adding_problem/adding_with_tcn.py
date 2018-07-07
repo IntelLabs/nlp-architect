@@ -18,6 +18,8 @@ import argparse
 import tensorflow as tf
 from nlp_architect.models.temporal_convolutional_network import TCN
 from examples.word_language_model_with_tcn.toy_data.adding import Adding
+from nlp_architect.utils.io import validate, validate_existing_directory, \
+    validate_existing_filepath, validate_parent_exists, check_size
 
 
 class TCNForAdding(TCN):
@@ -142,6 +144,7 @@ def main(args):
     batch_size = args.batch_size
     n_epochs = args.epochs
     num_iterations = int(n_train * n_epochs * 1.0 / batch_size)
+    results_dir = os.path.abspath(args.results_dir)
 
     adding_dataset = Adding(seq_len=seq_len, n_train=n_train, n_test=n_val)
 
@@ -152,7 +155,7 @@ def main(args):
         model.build_train_graph(args.lr, max_gradient_norm=args.grad_clip_value)
 
         model.run(adding_dataset, num_iterations=num_iterations, log_interval=args.log_interval,
-                  result_dir=args.results_dir)
+                  result_dir=results_dir)
 
 
 PARSER = argparse.ArgumentParser()
@@ -161,9 +164,10 @@ PARSER.add_argument('--seq_len', type=int,
                     default=200)
 PARSER.add_argument('--log_interval', type=int, default=100,
                     help="frequency, in number of iterations, after which loss is evaluated")
-PARSER.add_argument('--results_dir', type=str, help="Directory to write results to", default='./')
-PARSER.add_argument('--dropout', type=float, default=0.0,
-                    help='dropout applied to layers (default: 0.0)')
+PARSER.add_argument('--results_dir', type=validate_parent_exists,
+                    help="Directory to write results to", default='./')
+PARSER.add_argument('--dropout', type=float, default=0.0, action=check_size(0, 1),
+                    help='dropout applied to layers, between 0 and 1 (default: 0.0)')
 PARSER.add_argument('--ksize', type=int, default=6,
                     help='kernel size (default: 6)')
 PARSER.add_argument('--levels', type=int, default=7,

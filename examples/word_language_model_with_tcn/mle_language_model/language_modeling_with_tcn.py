@@ -20,6 +20,8 @@ import numpy as np
 from tqdm import tqdm
 from nlp_architect.data.ptb import PTBDataLoader, PTBDictionary
 from nlp_architect.models.temporal_convolutional_network import TCN, CommonLayers
+from nlp_architect.utils.io import validate, validate_existing_directory, \
+    validate_existing_filepath, validate_parent_exists, check_size
 
 
 class TCNForLM(TCN, CommonLayers):
@@ -278,14 +280,16 @@ def main(args):
     batch_size = args.batch_size
     n_epochs = args.epochs
     embedding_size = args.em_len
+    datadir = os.path.abspath(args.datadir)
+    results_dir = os.path.abspath(args.results_dir)
 
-    ptb_dict = PTBDictionary(data_dir=args.datadir, dataset=args.dataset)
-    ptb_dataset_train = PTBDataLoader(ptb_dict, data_dir=args.datadir, seq_len=seq_len,
+    ptb_dict = PTBDictionary(data_dir=datadir, dataset=args.dataset)
+    ptb_dataset_train = PTBDataLoader(ptb_dict, data_dir=datadir, seq_len=seq_len,
                                       split_type="train", skip=seq_len / 2, dataset=args.dataset)
-    ptb_dataset_valid = PTBDataLoader(ptb_dict, data_dir=args.datadir, seq_len=seq_len,
+    ptb_dataset_valid = PTBDataLoader(ptb_dict, data_dir=datadir, seq_len=seq_len,
                                       split_type="valid", loop=False, skip=seq_len / 2,
                                       dataset=args.dataset)
-    ptb_dataset_test = PTBDataLoader(ptb_dict, data_dir=args.datadir, seq_len=seq_len,
+    ptb_dataset_test = PTBDataLoader(ptb_dict, data_dir=datadir, seq_len=seq_len,
                                      split_type="test", loop=False, skip=seq_len / 2,
                                      dataset=args.dataset)
 
@@ -310,7 +314,7 @@ def main(args):
             model.run(
                 {"train": ptb_dataset_train, "valid": ptb_dataset_valid, "test": ptb_dataset_test},
                 args.lr, num_iterations=num_iterations, log_interval=n_per_epoch,
-                result_dir=args.results_dir, ckpt=None)
+                result_dir=results_dir, ckpt=None)
         else:
             sequences = model.run_inference(args.ckpt, num_samples=args.num_samples,
                                             sos=ptb_dict.sos_symbol, eos=ptb_dict.eos_symbol)
@@ -327,9 +331,10 @@ PARSER = argparse.ArgumentParser()
 PARSER.add_argument('--seq_len', type=int,
                     help="Number of time points in each input sequence",
                     default=60)
-PARSER.add_argument('--results_dir', type=str, help="Directory to write results to", default='./')
-PARSER.add_argument('--dropout', type=float, default=0.45,
-                    help='dropout applied to layers (default: 0.45)')
+PARSER.add_argument('--results_dir', type=validate_parent_exists,
+                    help="Directory to write results to", default='./')
+PARSER.add_argument('--dropout', type=float, default=0.45, action=check_size(0, 1),
+                    help='dropout applied to layers, value in [0, 1] (default: 0.45)')
 PARSER.add_argument('--ksize', type=int, default=3,
                     help='kernel size (default: 3)')
 PARSER.add_argument('--levels', type=int, default=4,
@@ -340,21 +345,21 @@ PARSER.add_argument('--nhid', type=int, default=600,
                     help='number of hidden units per layer (default: 600)')
 PARSER.add_argument('--em_len', type=int, default=600,
                     help='Length of embedding (default: 600)')
-PARSER.add_argument('--em_dropout', type=float, default=0.25,
-                    help='dropout applied to layers (default: 0.25)')
+PARSER.add_argument('--em_dropout', type=float, default=0.25, action=check_size(0, 1),
+                    help='dropout applied to layers, value in [0, 1] (default: 0.25)')
 PARSER.add_argument('--grad_clip_value', type=float, default=0.35,
                     help='value to clip each element of gradient')
 PARSER.add_argument('--batch_size', type=int, default=16,
                     help='Batch size')
 PARSER.add_argument('--epochs', type=int, default=100,
                     help='Number of epochs')
-PARSER.add_argument('--datadir', type=str, default="../data/",
+PARSER.add_argument('--datadir', type=validate_existing_directory, default="../data/",
                     help='dir to download data if not already present')
 PARSER.add_argument('--dataset', type=str, default="PTB", choices=['PTB', 'WikiText-103'],
                     help='dataset name')
 PARSER.add_argument('--inference', action='store_true',
                     help='whether to run in inference mode')
-PARSER.add_argument('--ckpt', type=str,
+PARSER.add_argument('--ckpt', type=validate_existing_filepath,
                     help='checkpoint file')
 PARSER.add_argument('--num_samples', type=int, default=10,
                     help='number of samples to generate during inference')
