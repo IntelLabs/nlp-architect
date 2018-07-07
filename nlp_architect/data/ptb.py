@@ -2,6 +2,7 @@
 Data loader for penn tree bank dataset
 """
 import os
+import sys
 import numpy as np
 import urllib.request
 
@@ -91,8 +92,32 @@ class PTBDictionary:
             None
         """
         if not os.path.exists(self.filepath):
-            print("data does not exist, downloading...")
-            self._download_data(work_directory)
+            print('{} was not found in the directory: {}, looking for compressed version'
+                  .format(FILENAME[self.dataset], self.filepath))
+            full_filepath = os.path.join(work_directory,
+                                         FILENAME[self.dataset] + "." + EXTENSION[self.dataset])
+            if not os.path.exists(full_filepath):
+                print('{} was not found in the directory: {}'
+                      .format(FILENAME[self.dataset], full_filepath))
+                print('{} can be downloaded from {}'.format(FILENAME[self.dataset],
+                                                            SOURCE_URL[self.dataset]))
+                print('\nThe terms and conditions of the data set license apply. Intel does not '
+                      'grant any rights to the data files or database\n')
+                response = input('\nTo download \'{}\' from {}, please enter YES: '
+                                 .format(FILENAME[self.dataset], SOURCE_URL[self.dataset]))
+                res = response.lower().strip()
+                if res == "yes" or (len(res) == 1 and res == 'y'):
+                    print("Downloading...")
+                    self._download_data(work_directory)
+                    self._uncompress_data(work_directory)
+                else:
+                    print('Download declined. Response received {} != YES|Y. '.format(res))
+                    print('Please download the model manually from {} and place in directory: {}'
+                          .format(SOURCE_URL[self.dataset], work_directory))
+                    sys.exit()
+            else:
+                self._uncompress_data(work_directory)
+        return
 
     def _download_data(self, work_directory):
         """
@@ -108,24 +133,26 @@ class PTBDictionary:
 
         headers = {'User-Agent': 'Mozilla/5.0'}
 
-        filepath = os.path.join(work_directory, FILENAME[self.dataset] + "." +
-                                EXTENSION[self.dataset])
+        full_filepath = os.path.join(work_directory, FILENAME[self.dataset] + "." +
+                                     EXTENSION[self.dataset])
         req = urllib.request.Request(SOURCE_URL[self.dataset], headers=headers)
         data_handle = urllib.request.urlopen(req)
-        with open(filepath, "wb") as fp:
+        with open(full_filepath, "wb") as fp:
             fp.write(data_handle.read())
-        print('Successfully downloaded data to {}'.format(filepath))
+        print('Successfully downloaded data to {}'.format(full_filepath))
 
+    def _uncompress_data(self, work_directory):
+        full_filepath = os.path.join(work_directory,
+                                     FILENAME[self.dataset] + "." + EXTENSION[self.dataset])
         if EXTENSION[self.dataset] == "tgz":
             import tarfile
-            tar = tarfile.open(filepath, "r:gz")
+            tar = tarfile.open(full_filepath, "r:gz")
             tar.extractall(path=work_directory)
             tar.close()
         if EXTENSION[self.dataset] == "zip":
             import zipfile
-            zip = zipfile.ZipFile(filepath, 'r')
-            zip.extractall(work_directory)
-            zip.close()
+            with zipfile.ZipFile(full_filepath, 'r') as zip_handle:
+                zip_handle.extractall(work_directory)
 
         print('Successfully unzipped data to {}'.format(os.path.join(work_directory,
                                                                      FILENAME[self.dataset])))
