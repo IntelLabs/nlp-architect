@@ -14,16 +14,14 @@
 # limitations under the License.
 # ******************************************************************************
 
-from neon import logger as neon_logger
-from neon.backends import gen_backend
-from neon.util.argparser import NeonArgparser
+import argparse
 
 from examples.np_semantic_segmentation.data import NpSemanticSegData, absolute_path
 from nlp_architect.models.np_semantic_segmentation import NpSemanticSegClassifier
 from nlp_architect.utils.io import validate_existing_filepath, validate_parent_exists
 
 
-def train_mlp_classifier(dataset, model_file_path, num_epochs, callback_args):
+def train_mlp_classifier(dataset, model_file_path, num_epochs, callback_args=None):
     """
     Train the np_semantic_segmentation mlp classifier
     Args:
@@ -37,26 +35,24 @@ def train_mlp_classifier(dataset, model_file_path, num_epochs, callback_args):
 
     """
     model = NpSemanticSegClassifier(num_epochs, callback_args)
-    model.build()
+    input_dim = dataset.train_set_x.shape[1]
+    model.build(input_dim)
     # run fit
-    model.fit(dataset.test_set, dataset.train_set)
+    model.fit(dataset.train_set)
     # save model params
     model.save(model_file_path)
     # set evaluation error rates
-    error_rate, test_accuracy_rate, precision_recall_rate = model.eval(dataset.test_set)
-    neon_logger.display('Misclassification error = %.1f%%' %
-                        (error_rate * 100))
-    neon_logger.display('Test accuracy rate = %.1f%%' %
-                        (test_accuracy_rate * 100))
-    neon_logger.display('precision rate = %s!!' %
-                        (str(precision_recall_rate[0])))
-    neon_logger.display('recall rate = %s!!' %
-                        (str(precision_recall_rate[1])))
+    loss, binary_accuracy, precision, recall, f1 = model.eval(dataset.test_set)
+    print('loss = %.1f%%' % (loss))
+    print('Test binary_accuracy rate = %.1f%%' % (binary_accuracy * 100))
+    print('Test precision rate = %.1f%%' % (precision * 100))
+    print('Test recall rate = %.1f%%' % (recall * 100))
+    print('Test f1 rate = %.1f%%' % (f1 * 100))
 
 
 if __name__ == "__main__":
     # parse the command line arguments
-    parser = NeonArgparser()
+    parser = argparse.ArgumentParser()
     parser.set_defaults(epochs=200)
     parser.add_argument('--data', type=validate_existing_filepath,
                         help='Path to the CSV file where the prepared dataset is saved')
@@ -65,9 +61,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     data_path = absolute_path(args.data)
     model_path = absolute_path(args.model_path)
-    # generate backend
-    be = gen_backend(batch_size=64)
     # load data sets from file
     data_set = NpSemanticSegData(data_path, train_to_test_ratio=0.8)
     # train the mlp classifier
-    train_mlp_classifier(data_set, model_path, args.epochs, args.callback_args)
+    train_mlp_classifier(data_set, model_path, args.epochs)

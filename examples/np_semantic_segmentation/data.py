@@ -23,7 +23,6 @@ import os
 from multiprocessing import Pool
 
 import numpy
-from neon.data import ArrayIterator
 from tqdm import tqdm
 
 import examples.np_semantic_segmentation.feature_extraction as fe
@@ -251,7 +250,7 @@ class NpSemanticSegData:
         self.train_to_test_ratio = train_to_test_ratio
         self.is_y_labels = None
         self.y_labels = None
-        self.train_set, self.test_set = self.load_data_to_array_iterator()
+        self.data_set = self.load_data_to_array_iterator()
 
     def load_data_from_file(self):
         """
@@ -294,18 +293,44 @@ class NpSemanticSegData:
 
     def load_data_to_array_iterator(self):
         """
-        Load data into ArrayIterators
+        Load data into dict of 'train' and 'test' datasets
 
         Returns:
-            tuple(:obj:`neon.data.ArrayIterators`): ArrayIterator train_set, ArrayIterator test_set
+            dict: dict with train set & test_set (each is dict with X and y)
         """
         X_train, y_train, X_test, y_test = self.load_data_from_file()
-        train_set = ArrayIterator(X=X_train, y=y_train, nclass=2)
-        if X_test.size == 0 and y_test.size == 0:
-            test_set = None
-        else:
-            test_set = ArrayIterator(X=X_test, y=y_test, nclass=2)
-        return train_set, test_set
+        data_set = {'train': {'X': X_train, 'y': y_train}, 'test': {'X': X_test, 'y': y_test}}
+        return data_set
+
+    @property
+    def train_set(self):
+        """dict(:obj:`numpy.ndarray`): train set (X & y)"""
+        return self.data_set['train']
+
+    @property
+    def train_set_x(self):
+        """dict(:obj:`numpy.ndarray`): train set (X)"""
+        return self.data_set['train']['X']
+
+    @property
+    def train_set_y(self):
+        """dict(:obj:`numpy.ndarray`): train set (y)"""
+        return self.data_set['train']['y']
+
+    @property
+    def test_set(self):
+        """dict(:obj:`numpy.ndarray`): test set (X & y)"""
+        return self.data_set['test']
+
+    @property
+    def test_set_x(self):
+        """dict(:obj:`numpy.ndarray`): test set (X)"""
+        return self.data_set['test']['X']
+
+    @property
+    def test_set_y(self):
+        """dict(:obj:`numpy.ndarray`): test set (y)"""
+        return self.data_set['test']['']
 
 
 def absolute_path(input_path):
@@ -329,7 +354,6 @@ if __name__ == "__main__":
     # parse the command line arguments
     parser = argparse.ArgumentParser(
         description='Prepare data')
-
     parser.add_argument('--data', type=validate_existing_filepath,
                         help='path the CSV file where the raw dataset is saved')
     parser.add_argument('--output', type=validate_parent_exists,
