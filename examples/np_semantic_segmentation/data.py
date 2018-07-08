@@ -330,7 +330,7 @@ class NpSemanticSegData:
     @property
     def test_set_y(self):
         """dict(:obj:`numpy.ndarray`): test set (y)"""
-        return self.data_set['test']['']
+        return self.data_set['test']['y']
 
 
 def absolute_path(input_path):

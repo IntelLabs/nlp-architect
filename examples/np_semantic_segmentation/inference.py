@@ -14,17 +14,16 @@
 # limitations under the License.
 # ******************************************************************************
 
+import argparse
 import csv
 import os
-import argparse
 
-from examples.np_semantic_segmentation.data import NpSemanticSegData, extract_y_labels, \
-    absolute_path
+from examples.np_semantic_segmentation.data import NpSemanticSegData, absolute_path
 from nlp_architect.models.np_semantic_segmentation import NpSemanticSegClassifier
 from nlp_architect.utils.io import validate_existing_filepath, validate_parent_exists
 
 
-def classify_collocation(dataset, model_file_path, num_epochs, callback_args=None):
+def classify_collocation(test_set, model_file_path, num_epochs, callback_args=None):
     """
     Classify the dataset by the given trained model
 
@@ -32,7 +31,7 @@ def classify_collocation(dataset, model_file_path, num_epochs, callback_args=Non
         model_file_path (str): model path
         num_epochs (int): number of epochs
         callback_args (dict): callback_arg
-        dataset (:obj:`core_models.np_semantic_segmentation.data.NpSemanticSegData`):
+        test_set (:obj:`core_models.np_semantic_segmentation.data.NpSemanticSegData`):
             NpSemanticSegData object containing the dataset
 
     Returns:
@@ -46,7 +45,7 @@ def classify_collocation(dataset, model_file_path, num_epochs, callback_args=Non
     loaded_model.load(model_file_path)
     print("Model loaded")
     # arrange the data
-    return loaded_model.get_outputs(dataset.test_set_x)
+    return loaded_model.get_outputs(test_set['X'])
 
 
 def print_evaluation(y_test, predictions):
@@ -55,13 +54,13 @@ def print_evaluation(y_test, predictions):
 
     Args:
         y_test (list(str)): list of the labels given in the data
-        predictions: the model's predictions
+        predictions(obj:`numpy.ndarray`): the model's predictions
     """
     tp = 0.0
     fp = 0.0
     tn = 0.0
     fn = 0.0
-    for y_true, prediction in zip(y_test, predictions):
+    for y_true, prediction in zip(y_test, [round(p[0]) for p in predictions.tolist()]):
         if prediction == 1:
             if y_true == 1:
                 tp = tp + 1
@@ -91,7 +90,7 @@ def write_results(predictions, output):
         predictions:
             the model's predictions
     """
-    results_list = predictions.tolist()
+    results_list = [round(p[0]) for p in predictions.tolist()]
     with open(output, 'w', encoding='utf-8') as out_file:
         writer = csv.writer(out_file, delimiter=',', quotechar='"')
         for result in results_list:
@@ -118,8 +117,8 @@ if __name__ == "__main__":
     print_stats = args.print_stats
     output_path = absolute_path(args.output)
     data_set = NpSemanticSegData(data_path)
-    results = classify_collocation(data_set, model_path, args.epochs)
+    results = classify_collocation(data_set.test_set, model_path, args.epochs)
     if print_stats and (data_set.is_y_labels is not None):
-        y_labels = extract_y_labels(data_path)
-        print_evaluation(y_labels, results.argmax(1))
-    write_results(results.argmax(1), output_path)
+        y_labels = data_set.test_set_y
+        print_evaluation(y_labels, results)
+    write_results(results, output_path)
