@@ -19,7 +19,7 @@ import sys
 from configargparse import ArgumentParser
 
 from nlp_architect.models.np2vec import NP2vec
-from nlp_architect.utils.io import validate_existing_filepath
+from nlp_architect.utils.io import validate_existing_filepath, check_size
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -47,6 +47,8 @@ class SetExpand():
         # extract the first term of the model in order to get the marking character
         first_term = next(iter(self.np2vec_model.vocab.keys()))
         self.mark_char = first_term[-1]
+        # Precompute L2-normalized vectors.
+        self.np2vec_model.init_sims()
 
     def __term2id(self, term):
         """
@@ -97,12 +99,14 @@ class SetExpand():
             id = self.__term2id(np)
             if id in self.np2vec_model.vocab:
                 seed_ids.append(id)
-        if len(seed) > 0:
+        if len(seed_ids) > 0:
             res_id = self.np2vec_model.most_similar(seed_ids, topn=topn)
             res = list()
             for r in res_id:
                 res.append((self.__id2term(r[0]), r[1]))
             return res
+        else:
+            logger.info("All the seed terms are out-of-vocabulary.")
         return None
 
 
@@ -110,7 +114,6 @@ if __name__ == "__main__":
     arg_parser = ArgumentParser(__doc__)
     arg_parser.add_argument(
         '--np2vec_model_file',
-        default='conll2000.train.model',
         help='path to the file with the np2vec model to load.',
         type=validate_existing_filepath)
     arg_parser.add_argument(
@@ -126,12 +129,14 @@ if __name__ == "__main__":
         help='If 0, the model to load stores word information. If 1, the model to load stores '
         'subword (ngrams) information; note that subword information is relevant only to '
         'fasttext models.')
-    arg_parser.add_argument('--seed', type=str, help='seed terms')
+    arg_parser.add_argument('--seed', type=str, action=check_size(min_size=1),\
+    help='comma-separated seed terms')
+    arg_parser.add_argument('--topn', default=500, type=int, action=check_size(min_size=1),
+                            help='maximal number of expanded terms to return')
 
     args = arg_parser.parse_args()
     se = SetExpand(np2vec_model_file=args.np2vec_model_file, binary=args.binary,
-                   word_ngrams=args.words_ngrams)
-    # get vocabulary
-    logger.info(se.get_vocab())
-    exp = se.expand(['France','USA','Israel'])
+                   word_ngrams=args.word_ngrams)
+    exp = se.expand(args.seed, args.topn)
+    logger.info('Expanded results:')
     logger.info(exp)
