@@ -47,6 +47,8 @@ class SetExpand():
         # extract the first term of the model in order to get the marking character
         first_term = next(iter(self.np2vec_model.vocab.keys()))
         self.mark_char = first_term[-1]
+        # Precompute L2-normalized vectors.
+        self.np2vec_model.init_sims()
 
     def __term2id(self, term):
         """
