@@ -1,7 +1,7 @@
 
 # Machine Reading Comprehension using Match LSTM and Answer Pointer
 
-This directory contains an implementation of the boundary model(b in the Figure) Match LSTM and Answer Pointer network for Machine Reading Comprehension in Intel-Ngraph. The idea behind this method is to build a question aware representation of the passage and use this representation as an input to the pointer network which identifies the start and end indices of the answer.
+This directory contains an implementation of the boundary model(b in the Figure) Match LSTM and Answer Pointer network for Machine Reading Comprehension in Tensorflow. The idea behind this method is to build a question aware representation of the passage and use this representation as an input to the pointer network which identifies the start and end indices of the answer.
 
 ## Dataset
 1. mkdir data
@@ -42,6 +42,6 @@ Considering the default setting, which has training set of 19260 examples and a 
 after 15 epochs, you should expect to see a F1 and EM scores on the development set similar to this:
 
 ```
-F1 Score ~35%
-EM Score ~25%
+F1 Score ~62%
+EM Score ~48%
 ```

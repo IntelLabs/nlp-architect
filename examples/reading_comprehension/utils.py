@@ -15,9 +15,6 @@
 # ******************************************************************************
 
 import numpy as np
-from collections import Counter
-import os
-from tqdm import tqdm
 
 
 def max_values_squad(data_train):
@@ -33,7 +30,6 @@ def max_values_squad(data_train):
             max_hypothesis = len2
 
     return max_premise, max_hypothesis
-
 
 
 def get_qids(args, q_id_path, data_dev):
@@ -52,7 +48,7 @@ def get_qids(args, q_id_path, data_dev):
     return final_qidlist
 
 
-def create_squad_training(paras_file,ques_file,answer_file,data_train_len=None):
+def create_squad_training(paras_file, ques_file, answer_file, data_train_len=None):
 
     f_para = open(paras_file)
     f_ques = open(ques_file)
@@ -82,9 +78,6 @@ def get_data_array_squad(params_dict, data_train, set_val='train'):
 
     max_para = params_dict['max_para']
     max_question = params_dict['max_question']
-
-    question_mask = np.zeros([1, max_question])
-    para_mask = np.zeros([1, max_para])
     train_set = []
     count = 0
     for ele in data_train:
@@ -111,8 +104,8 @@ def get_data_array_squad(params_dict, data_train, set_val='train'):
                 ques_mask[0, 0:question_len] = 1
                 ques_mask = ques_mask.tolist()[0]
 
-            train_set.append((para_idx,question_idx,para_len,question_len,
-                            ele[2],para_mask,ques_mask))
+            train_set.append((para_idx, question_idx, para_len, question_len,
+                              ele[2], para_mask, ques_mask))
 
             if set_val == 'train':
                 count += 1
@@ -121,35 +114,6 @@ def get_data_array_squad(params_dict, data_train, set_val='train'):
 
     print(len(train_set))
     return train_set
-
-
-def cal_f1_score(batch_size, ground_truths, predictions):
-    """
-    Function to calculate F-1 and EM scores given predictions and ground truths
-    """
-
-    start_idx, end_idx = obtain_indices(predictions[0], predictions[1])
-    f1 = 0
-    exact_match = 0
-    for i in range(batch_size):
-        ele1 = start_idx[i]
-        ele2 = end_idx[i]
-        preds = np.linspace(ele1, ele2, abs(ele2 - ele1 + 1))
-        length_gts = abs(ground_truths[i][1] - ground_truths[i][0] + 1)
-        gts = np.linspace(ground_truths[i][0], ground_truths[i][1], length_gts)
-        common = Counter(preds) & Counter(gts)
-        num_same = sum(common.values())
-
-        exact_match += int(np.array_equal(preds, gts))
-        if num_same == 0:
-            f1 += 0
-        else:
-            precision = 1.0 * num_same / len(preds)
-            recall = 1.0 * num_same / len(gts)
-            f1 += (2 * precision * recall) / (precision + recall)
-    #import ipdb
-    #ipdb.set_trace
-    return 100 * (f1 / batch_size), 100 * (exact_match / batch_size)
 
 
 def create_data_dict(data):
@@ -181,47 +145,3 @@ def create_data_dict(data):
         train['question_mask'].append(ques_mask)
 
     return train
-
-
-def obtain_indices(preds_start, preds_end):
-    """
-    Function to get answer indices given the predictions
-    """
-    ans_start = []
-    ans_end = []
-    for i in range(preds_start.shape[0]):
-        max_ans_id = -100000000
-        st_idx = 0
-        en_idx = 0
-        ele1 = preds_start[i]
-        ele2 = preds_end[i]
-        len_para = len(ele1)
-        for j in range(len_para):
-            for k in range(15):
-                if j + k >= len_para:
-                    break
-                ans_start_int = ele1[j]
-                ans_end_int = ele2[j + k]
-                if (ans_start_int + ans_end_int) > max_ans_id:
-                    max_ans_id = ans_start_int + ans_end_int
-                    st_idx = j
-                    en_idx = j + k
-
-        ans_start.append(st_idx)
-        ans_end.append(en_idx)
-
-    return (np.array(ans_start), np.array(ans_end))
-
-'''
-def sanitize_path(path):
-    s_path = os.path.abspath(path)
-    assert len(s_path) < 255
-    return s_path
-'''
-
-
-
-def sanitize_path(path):
-    s_path = os.path.normpath('/' + path).lstrip('/')
-    assert len(s_path) < 255
-    return s_path

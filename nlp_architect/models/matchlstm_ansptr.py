@@ -19,9 +19,6 @@ from __future__ import print_function
 import numpy as np
 import tensorflow as tf
 from collections import Counter
-import os
-from random import shuffle
-from utils import *
 
 
 class MatchLSTM_AnswerPointer(object):
@@ -41,7 +38,7 @@ class MatchLSTM_AnswerPointer(object):
 
         # Create Placeholders
         # Question ids
-        self.question_ids = tf.placeholder(tf.int32,shape=[None,self.max_question],
+        self.question_ids = tf.placeholder(tf.int32, shape=[None, self.max_question],
                                            name="question_ids")
         # Paragraph ids
         self.para_ids = tf.placeholder(tf.int32, shape=[None, self.max_para],
@@ -101,7 +98,6 @@ class MatchLSTM_AnswerPointer(object):
         self.Wans_q = tf.get_variable("Wans_q", [1, self.hidden_size, self.hidden_size])
         self.Wans_v = tf.get_variable("Wans_v", [1, self.hidden_size, self.hidden_size])
         self.Vans_r = tf.get_variable("Vans_r", [1, self.hidden_size, self.max_question])
-        self.v_ans_lr = tf.get_variable("v_ans_lr", [1, 1, self.hidden_size])
 
         self.mask_ques_mul = tf.matmul(tf.transpose(self.ones_embed, [0, 2, 1]),
                                        tf.expand_dims(self.ques_mask, 1))
@@ -112,10 +108,10 @@ class MatchLSTM_AnswerPointer(object):
 
         """
         # Embedding Layer
-        embedding_lookup = tf.Variable(self.embeddings,name="word_embeddings",
-                                       dtype=tf.float32,trainable=False)
+        embedding_lookup = tf.Variable(self.embeddings, name="word_embeddings",
+                                       dtype=tf.float32, trainable=False)
 
-        self.question_emb = tf.nn.embedding_lookup(embedding_lookup,self.question_ids,
+        self.question_emb = tf.nn.embedding_lookup(embedding_lookup, self.question_ids,
                                                    name="question_embed")
 
         self.para_emb = tf.nn.embedding_lookup(embedding_lookup, self.para_ids,
@@ -158,28 +154,28 @@ class MatchLSTM_AnswerPointer(object):
         self.unroll_with_attention(reverse=True)
         # Apply dropout
         self.stacked_lists = tf.concat([tf.nn.dropout(self.stacked_lists_forward,
-                                       tf.maximum(self.dropout, 0.8)),
+                                                      tf.maximum(self.dropout, 0.8)),
                                        tf.nn.dropout(self.stacked_lists_reverse,
-                                       tf.maximum(self.dropout, 0.8))], 1)
+                                                     tf.maximum(self.dropout, 0.8))], 1)
 
         # Answer pointer pass
         self.logits = self.answer_pointer_pass()
 
         print('Set up Loss')
         # Compute Losses
-        loss_1 = tf.nn.sparse_softmax_cross_entropy_with_logits(
-                 logits=self.logits[0], labels=self.labels[:, 0])
+        loss_1 = tf.nn.sparse_softmax_cross_entropy_with_logits(logits=self.logits[0],
+                                                                labels=self.labels[:, 0])
 
-        loss_2 = tf.nn.sparse_softmax_cross_entropy_with_logits(
-                 logits=self.logits[1], labels=self.labels[:, 1])
+        loss_2 = tf.nn.sparse_softmax_cross_entropy_with_logits(logits=self.logits[1],
+                                                                labels=self.labels[:, 1])
 
         self.loss = tf.reduce_mean(loss_1 + loss_2)
         self.learning_rate = tf.constant(0.002)
 
         print('Set up optmizer')
         # Optmizer
-        self.optimizer = tf.train.AdamOptimizer(self.learning_rate).minimize(
-                                                self.loss, global_step=self.global_step)
+        self.optimizer = tf.train.AdamOptimizer(self.learning_rate). \
+            minimize(self.loss, global_step=self.global_step)
 
     def unroll_with_attention(self, reverse=False):
         """
@@ -211,14 +207,16 @@ class MatchLSTM_AnswerPointer(object):
             w_lr_expanded = tf.tile(self.w_lr, [self.batch_size, 1, 1])
             b_p_expanded = tf.tile(self.b_p, [self.batch_size, 1, 1])
 
-            int_sum = tf.matmul(W_p_expanded, tf.expand_dims(encoded_paraslice, 2))+tf.matmul(W_r_expanded, h_r_old) + b_p_expanded
+            int_sum = tf.matmul(W_p_expanded, tf.expand_dims(encoded_paraslice, 2)) + \
+                tf.matmul(W_r_expanded, h_r_old) + b_p_expanded
 
             int_sum_new = tf.matmul(int_sum, tf.expand_dims(self.ques_mask, 1))
 
             int_sum1 = tf.matmul(W_q_expanded,
                                  tf.transpose(self.encoded_question, [0, 2, 1]))
-            # change back to int_sum please
-            self.G_i = tf.nn.tanh(int_sum_new + int_sum1) + tf.expand_dims(self.c_p * self.ques_mask, 1)
+
+            self.G_i = tf.nn.tanh(int_sum_new + int_sum1) + \
+                tf.expand_dims(self.c_p * self.ques_mask, 1)
 
             self.attn = tf.nn.softmax(tf.matmul(w_lr_expanded, self.G_i))
 
@@ -229,12 +227,12 @@ class MatchLSTM_AnswerPointer(object):
 
             z_i_stacked = tf.concat([z1, z2], 1)
             if i == 0:
-                h_r_old, cell_state_old = self.match_lstm_cell(z_i_stacked,
-                                          state=self.match_lstm_cell.zero_state(self.batch_size,
-                                          dtype=tf.float32))
+                h_r_old, cell_state_old = self.match_lstm_cell(
+                    z_i_stacked, state=self.match_lstm_cell.zero_state(self.batch_size,
+                                                                       dtype=tf.float32))
             else:
                 h_r_old, cell_state_old = self.match_lstm_cell(z_i_stacked,
-                                          state=cell_state_old)
+                                                               state=cell_state_old)
 
             final_state_list.append(h_r_old)
             h_r_old = tf.expand_dims(h_r_old, 2)
@@ -247,13 +245,12 @@ class MatchLSTM_AnswerPointer(object):
             self.stacked_lists_forward = tf.multiply(tf.transpose(stacked_lists, [0, 2, 1]),
                                                      mask_mult_lstm_forward)
         else:
-            mask_mult_lstm_reverse = tf.matmul(tf.transpose(self.ones_embed, [0, 2, 1]),
-                                     tf.expand_dims(tf.reverse(self.para_mask,
-                                     axis=[1]), 1))
+            mask_mult_lstm_reverse = tf.matmul(tf.transpose(
+                self.ones_embed, [0, 2, 1]), tf.expand_dims(tf.reverse(
+                                                            self.para_mask, axis=[1]), 1))
 
             self.stacked_lists_reverse = tf.reverse(tf.multiply(tf.transpose(
-                                         stacked_lists, [0, 2, 1]), mask_mult_lstm_reverse),
-                                         axis=[2])
+                stacked_lists, [0, 2, 1]), mask_mult_lstm_reverse), axis=[2])
 
     def answer_pointer_pass(self):
         """
@@ -271,31 +268,16 @@ class MatchLSTM_AnswerPointer(object):
         V_r_expanded = tf.tile(self.V_r, [self.batch_size, 1, 1])
         W_a_expanded = tf.tile(self.W_a, [self.batch_size, 1, 1])
         b_a_expanded = tf.tile(self.b_a, [self.batch_size, 1, 1])
-        c_pointer_exp = tf.tile(self.c_pointer, [self.batch_size, 1, 1])
-        Wans_q_expanded = tf.tile(self.Wans_q, [self.batch_size, 1, 1])
-        Wans_v_question = tf.tile(self.Wans_v, [self.batch_size, 1, 1])
-        Vans_r_expanded = tf.tile(self.Vans_r, [self.batch_size, 1, 1])
-        v_ans_lr_exp = tf.tile(self.v_ans_lr, [self.batch_size, 1, 1])
-
         mask_multiplier_1 = tf.expand_dims(self.para_mask, 1)
-        # tf.expand_dims(self.ones_vector_para,1)
         mask_multiplier = self.ones_para_exp
 
         v_apointer_exp = tf.tile(self.v_a_pointer, [self.batch_size, 1, 1])
 
-        # h_k_old
         # Zero initialization
         h_k_old = tf.constant(
             np.zeros([self.batch_size, self.hidden_size, 1]), dtype=tf.float32)
 
         b_k_lists = []
-        b_k_list_withsf = []
-
-        # Set dropout value
-        if self.dropout == 1:
-            dp_val = 1
-        else:
-            dp_val = 0.8
 
         print("Answer Pointer Pass")
 
@@ -303,7 +285,6 @@ class MatchLSTM_AnswerPointer(object):
             sum1 = tf.matmul(V_r_expanded, self.stacked_lists)
             sum2 = tf.matmul(W_a_expanded, h_k_old) + b_a_expanded
             F_k = tf.nn.tanh(sum1 + tf.matmul(sum2, mask_multiplier))
-            # tf.matmul(c_pointer_exp,mask_multiplier)
 
             b_k_withoutsf = tf.matmul(v_apointer_exp, F_k)
 
@@ -313,25 +294,75 @@ class MatchLSTM_AnswerPointer(object):
 
             with tf.variable_scope("lstm_pointer"):
                 if i == 0:
-                    h_k_old, cell_state_pointer = self.lstm_pointer_cell(lstm_cell_inp,
-                             state=self.lstm_pointer_cell.zero_state(self.batch_size,
-                             dtype=tf.float32))
+                    h_k_old, cell_state_pointer = self.lstm_pointer_cell(
+                        lstm_cell_inp, state=self.lstm_pointer_cell.zero_state(self.batch_size,
+                                                                               dtype=tf.float32))
                 else:
                     h_k_old, cell_state_pointer = self.lstm_pointer_cell(lstm_cell_inp,
-                                                  state=cell_state_pointer)
+                                                                         state=cell_state_pointer)
 
             h_k_old = tf.expand_dims(h_k_old, 2)
-            b_k_lists.append(b_k_withoutsf +tf.log(mask_multiplier_1))
-
-        mask_mul2_withlog = tf.tile(tf.log(mask_multiplier_1), [1, 2, 1])
-        mask_mul2 = tf.tile(mask_multiplier_1, [1, 2, 1])
+            b_k_lists.append(b_k_withoutsf + tf.log(mask_multiplier_1))
 
         self.logits_withsf = [tf.nn.softmax(tf.squeeze(b_k_lists[0])),
                               tf.nn.softmax(tf.squeeze(b_k_lists[1]))]
 
-        #self.results = tf.argmax(self.logits_withsf, axis=2)
-
         return [tf.squeeze(b_k_lists[0]), tf.squeeze(b_k_lists[1])]
+
+    def obtain_indices(self, preds_start, preds_end):
+        """
+        Function to get answer indices given the predictions
+        """
+        ans_start = []
+        ans_end = []
+        for i in range(preds_start.shape[0]):
+            max_ans_id = -100000000
+            st_idx = 0
+            en_idx = 0
+            ele1 = preds_start[i]
+            ele2 = preds_end[i]
+            len_para = len(ele1)
+            for j in range(len_para):
+                for k in range(15):
+                    if j + k >= len_para:
+                        break
+                    ans_start_int = ele1[j]
+                    ans_end_int = ele2[j + k]
+                    if (ans_start_int + ans_end_int) > max_ans_id:
+                        max_ans_id = ans_start_int + ans_end_int
+                        st_idx = j
+                        en_idx = j + k
+
+            ans_start.append(st_idx)
+            ans_end.append(en_idx)
+
+        return (np.array(ans_start), np.array(ans_end))
+
+    def cal_f1_score(self, batch_size, ground_truths, predictions):
+        """
+        Function to calculate F-1 and EM scores given predictions and ground truths
+        """
+        start_idx, end_idx = self.obtain_indices(predictions[0], predictions[1])
+        f1 = 0
+        exact_match = 0
+        for i in range(batch_size):
+            ele1 = start_idx[i]
+            ele2 = end_idx[i]
+            preds = np.linspace(ele1, ele2, abs(ele2 - ele1 + 1))
+            length_gts = abs(ground_truths[i][1] - ground_truths[i][0] + 1)
+            gts = np.linspace(ground_truths[i][0], ground_truths[i][1], length_gts)
+            common = Counter(preds) & Counter(gts)
+            num_same = sum(common.values())
+
+            exact_match += int(np.array_equal(preds, gts))
+            if num_same == 0:
+                f1 += 0
+            else:
+                precision = 1.0 * num_same / len(preds)
+                recall = 1.0 * num_same / len(gts)
+                f1 += (2 * precision * recall) / (precision + recall)
+
+        return 100 * (f1 / batch_size), 100 * (exact_match / batch_size)
 
     def run_loop(self, session, train, mode='train', dropout=0.6):
         """
@@ -376,8 +407,8 @@ class MatchLSTM_AnswerPointer(object):
 
                 if (idx % 20 == 0):
                     print("Iteration No and loss is", idx, train_loss, l_rate)
-                    f1_score, em_score = cal_f1_score(self.batch_size,
-                                                      labels, logits)
+                    f1_score, em_score = self.cal_f1_score(self.batch_size,
+                                                           labels, logits)
                     print("F-1 Score and EM is", f1_score, em_score)
 
                 self.global_step.assign(self.global_step + 1)
@@ -386,8 +417,8 @@ class MatchLSTM_AnswerPointer(object):
                 logits, labels = session.run([self.logits_withsf, self.labels],
                                              feed_dict=feed_dict_qa)
 
-                f1_score_int, em_score_int = cal_f1_score(self.batch_size,
-                                                          labels, logits)
+                f1_score_int, em_score_int = self.cal_f1_score(self.batch_size,
+                                                               labels, logits)
                 f1_score += f1_score_int
                 em_score += em_score_int
         # validation Phase
