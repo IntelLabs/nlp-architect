@@ -188,10 +188,6 @@ with tf.Session() as sess:
         babi.max_cand_len,
         hops=FLAGS.nhops,
         max_grad_norm=FLAGS.grad_clip_norm,
-        use_match_type=FLAGS.use_match_type,
-        kb_ents_to_type=babi.kb_ents_to_type,
-        kb_ents_to_cand_idxs=babi.kb_ents_to_cand_idxs,
-        match_type_idxs=babi.match_type_idxs,
         optimizer=tf.train.AdamOptimizer(learning_rate=FLAGS.lr, epsilon=FLAGS.eps),
         session=sess)
 
@@ -269,7 +265,7 @@ with tf.Session() as sess:
         test_error = []
         # Eval after each epoch
         for start, end in tqdm(test_batches, total=len(test_batches),
-                               unit='minibatches', desc="Epoch {}".format(e)):
+                               unit='minibatches'):
             s = test_set['memory']['data'][start:end]
             q = test_set['user_utt']['data'][start:end]
             a = test_set['answer']['data'][start:end]
@@ -284,7 +280,7 @@ with tf.Session() as sess:
             error = np.mean(a.argmax(axis=1) != a_pred)
             test_error.append(error)
 
-        test_err_str = "Epoch {}: Validation Error: {}".format(e, np.mean(test_error))
+        test_err_str = "Test Error: {}".format(np.mean(test_error))
         print(test_err_str)
         if FLAGS.save_log:
             with open(log_file, 'a') as f:

@@ -235,9 +235,8 @@ class BABI_Dialog(object):
             self.candidate_answer_filename = 'dialog-babi-candidates.txt'
             self.kb_filename = 'dialog-babi-kb-all.txt'
             self.cands_mat_filename = 'babi-cands-with-matchtype_{}.npy'
-            self.vocab_filename = 'dialog-babi-vocab-task{}' +\
-                                  '_matchtype{}.pkl'.format(self.task + 1,
-                                                            self.use_match_type)
+            self.vocab_filename = 'dialog-babi-vocab-task{}'.format(self.task + 1) +\
+                                  '_matchtype{}.pkl'.format(self.use_match_type)
         else:
             self.candidate_answer_filename = 'dialog-babi-task6-dstc2-candidates.txt'
             self.kb_filename = 'dialog-babi-task6-dstc2-kb.txt'
@@ -616,7 +615,7 @@ class BABI_Dialog(object):
 
         time_feat += 1
 
-        return user_utt_pad, context, memory_pad, m_mask, cands_mat, time_feat
+        return user_utt_pad, context, memory_pad, cands_mat, time_feat
 
     def load_kb(self):
         """

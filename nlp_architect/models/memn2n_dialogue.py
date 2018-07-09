@@ -9,18 +9,17 @@ import tensorflow as tf
 from six.moves import range
 
 
-def zero_nil_slot(t, name=None):
+def zero_nil_slot(t):
     """
     Overwrites the nil_slot (first row) of the input Tensor with zeros.
 
     The nil_slot is a dummy slot and should not be trained and influence
     the training algorithm.
     """
-    with tf.op_scope([t], name, "zero_nil_slot") as name:
-        t = tf.convert_to_tensor(t, name="t")
-        s = tf.shape(t)[1]
-        z = tf.zeros(tf.stack([1, s]))
-        return tf.concat(axis=0, values=[z, tf.slice(t, [1, 0], [-1, -1])], name=name)
+    t = tf.convert_to_tensor(t, name="t")
+    s = tf.shape(t)[1]
+    z = tf.zeros(tf.stack([1, s]))
+    return tf.concat(axis=0, values=[z, tf.slice(t, [1, 0], [-1, -1])])
 
 
 class MemN2N_Dialog(object):
@@ -35,10 +34,6 @@ class MemN2N_Dialog(object):
                  max_cand_len,
                  hops=3,
                  max_grad_norm=40.0,
-                 use_match_type=False,
-                 kb_ents_to_type=None,
-                 kb_ents_to_cand_idxs=None,
-                 match_type_idxs=None,
                  nonlin=None,
                  initializer=tf.random_normal_initializer(stddev=0.1),
                  optimizer=tf.train.AdamOptimizer(learning_rate=0.001, epsilon=1e-8),
@@ -168,7 +163,7 @@ class MemN2N_Dialog(object):
             u_0 = tf.reduce_sum(q_emb, 1)
             u = [u_0]
 
-            for hopn in range(self._hops):
+            for _ in range(self._hops):
                 m_emb_A = tf.nn.embedding_lookup(self.LUT_A, stories)
                 m_A = tf.reduce_sum(m_emb_A, 2)
 

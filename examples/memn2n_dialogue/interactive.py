@@ -114,10 +114,6 @@ with tf.Session() as sess:
         babi.max_cand_len,
         hops=FLAGS.nhops,
         max_grad_norm=40.0,
-        use_match_type=FLAGS.use_match_type,
-        kb_ents_to_type=babi.kb_ents_to_type,
-        kb_ents_to_cand_idxs=babi.kb_ents_to_cand_idxs,
-        match_type_idxs=babi.match_type_idxs,
         session=sess)
 
     if os.path.exists(weights_save_path):

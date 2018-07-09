@@ -74,7 +74,7 @@ def interactive_loop(model, babi):
                 line_in, db, names_to_idxs, kb_text, babi)
 
         old_context = copy(context)
-        user_utt, context, memory, mem_mask, cands_mat, time_feat = babi.process_interactive(
+        user_utt, context, memory, cands_mat, time_feat = babi.process_interactive(
             line_in, context, response, db_results, time_feat)
 
         if babi.word_to_index['<OOV>'] in user_utt and allow_oov is False:
