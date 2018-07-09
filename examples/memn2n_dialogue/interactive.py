@@ -78,7 +78,7 @@ tf.flags.DEFINE_boolean(
     'use OOV test set')
 tf.flags.DEFINE_string(
     'data_dir',
-    './data',
+    'data/',
     'File to save model weights to.')
 tf.flags.DEFINE_string(
     'weights_save_path',
@@ -87,13 +87,16 @@ tf.flags.DEFINE_string(
 FLAGS = tf.flags.FLAGS
 
 
-validate((FLAGS.emb_size, int, 1, 10000))
+validate((FLAGS.task, int, 1, 7),
+         (FLAGS.nhops, int, 1, 100),
+         (FLAGS.emb_size, int, 1, 10000))
 
 # Validate inputs
-validate_parent_exists(FLAGS.weights_save_path)
-weights_save_path = FLAGS.weights_save_path
-validate_parent_exists(FLAGS.data_dir)
-data_dir = FLAGS.data_dir
+current_dir = os.path.dirname(os.path.realpath(__file__))
+weights_save_path = os.path.join(current_dir, FLAGS.weights_save_path)
+validate_parent_exists(weights_save_path)
+data_dir = os.path.join(current_dir, FLAGS.data_dir) 
+validate_parent_exists(data_dir)
 
 babi = BABI_Dialog(
     path=data_dir,

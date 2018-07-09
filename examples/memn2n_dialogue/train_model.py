@@ -97,7 +97,7 @@ tf.flags.DEFINE_boolean(
     'Save evaluation results to log file.')
 tf.flags.DEFINE_string(
     'data_dir',
-    './data',
+    'data/',
     'File to save model weights to.')
 tf.flags.DEFINE_string(
     'log_file',
@@ -129,19 +129,24 @@ tf.flags.DEFINE_boolean(
     'evaluate on the test set at the end of training.')
 FLAGS = tf.flags.FLAGS
 
-
-validate((FLAGS.emb_size, int, 1, 10000),
+# Validate inputs
+validate((FLAGS.task, int, 1, 7),
+         (FLAGS.nhops, int, 1, 10),
+         (FLAGS.batch_size, int, 1, 32000),
+         (FLAGS.emb_size, int, 1, 10000),
          (FLAGS.eps, float, 1e-15, 1e-2),
          (FLAGS.lr, float, 1e-8, 10),
-         (FLAGS.grad_clip_norm, float, 1e-3, 1e5))
+         (FLAGS.grad_clip_norm, float, 1e-3, 1e5),
+         (FLAGS.epochs, int, 1, 1e10),
+         (FLAGS.save_epochs, int, 1, 1e10))
 
-# Validate inputs
-validate_parent_exists(FLAGS.log_file)
-log_file = FLAGS.log_file
-validate_parent_exists(FLAGS.weights_save_path)
-weights_save_path = FLAGS.weights_save_path
-validate_parent_exists(FLAGS.data_dir)
-data_dir = FLAGS.data_dir
+current_dir = os.path.dirname(os.path.realpath(__file__))
+log_file = os.path.join(current_dir, FLAGS.log_file)
+validate_parent_exists(log_file)
+weights_save_path = os.path.join(current_dir, FLAGS.weights_save_path)
+validate_parent_exists(weights_save_path)
+data_dir = os.path.join(current_dir, FLAGS.data_dir) 
+validate_parent_exists(data_dir)
 assert log_file.endswith('.txt')
 
 babi = BABI_Dialog(
