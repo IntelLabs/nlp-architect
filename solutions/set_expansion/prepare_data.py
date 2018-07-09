@@ -24,10 +24,13 @@ import sys
 import spacy
 from configargparse import ArgumentParser
 from nlp_architect.utils.io import check_size
-
+from solutions.set_expansion.text_normalizer import simple_normalizer
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+np2id = {}
+id2group = {}
 
 if __name__ == '__main__':
     arg_parser = ArgumentParser(__doc__)
@@ -85,8 +88,16 @@ if __name__ == '__main__':
                         marked_corpus_file.write(token.text + ' ')
                 else:
                     if not spanWritten:
+                        # normalize NP
+                        norm = simple_normalizer(span.text)
+                        np2id[span.text] = norm
+                        if norm in id2group:
+                            id2group[norm].append(span.text)
+                        else:
+                            id2group[norm] = [span.text]
                         # mark NP's
-                        text = span.text.replace(' ', args.mark_char) + args.mark_char
+                        text = norm.replace(' ', args.mark_char) + args.mark_char
+                        # text = span.text.replace(' ', args.mark_char) + args.mark_char
                         marked_corpus_file.write(text + ' ')
                         spanWritten = True
                     if token.idx + len(token.text) == span.end_char:
