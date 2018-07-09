@@ -234,6 +234,8 @@ def get_expand_results_callback():
                 'res': res,
                 'score': scores
             }
+        else:
+            print('Nothing received from server')
     except Exception as e:
         print('Exception: ' + str(e))
     finally:
