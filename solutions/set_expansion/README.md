@@ -63,7 +63,7 @@ It consists in expanding the seed terms. This can be done in two manners:
     should also set it in the ui/settings.py file. You can also load the ui
     application as a server using the bokeh options --address and --port, for example:
     ```
-    bokeh serve ui --address=127.0.0.1 --port=1234 --allow-websocket-origin=127.0.0.1:1234
+    bokeh serve ui --address=127.0.0.1 --port=1111 --allow-websocket-origin=127.0.0.1:1111
     ```
 
 ## Citation

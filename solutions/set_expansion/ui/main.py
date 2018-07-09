@@ -1,14 +1,30 @@
+# ******************************************************************************
+# Copyright 2017-2018 Intel Corporation
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ******************************************************************************
+
+import socket
+import pickle
+import time
+import numpy as np
+import pandas
+import solutions.set_expansion.ui.settings as settings
 from bokeh.layouts import column, layout
 from bokeh.models import ColumnDataSource, Div, Row
 from bokeh.models.widgets import Button, DataTable, TableColumn, CheckboxGroup, MultiSelect
 from bokeh.models.widgets.inputs import TextInput
 from bokeh.io import curdoc
-import numpy as np
-import pandas
-import socket
-import pickle
-import time
-import solutions.set_expansion.ui.settings as settings
 
 
 hash2group = {}
@@ -65,7 +81,6 @@ grid = layout([
 def get_phrases(top_n=100000):
     global all_phrases
     received = send_request_to_server('get_vocab')
-    # all_phrases.extend(x for x in received if len(x) < max_phrase_length)
     all_phrases=received
     for p in all_phrases:
         if len(p) < max_phrase_length:
@@ -75,8 +90,6 @@ def get_phrases(top_n=100000):
             all_phrases_dict[p] = p[:max_phrase_length-1] + '...'
             all_cut_phrases_dict[p[:max_phrase_length-1] + '...'] = p
     print('done. vocab count = ' + str(len(all_phrases)))
-    # pp = pprint.PrettyPrinter()
-    # pp.pprint(all_phrases_dict)
 
 
 def send_request_to_server(request):
@@ -100,7 +113,8 @@ def send_request_to_server(request):
         received = pickle.loads(data)
         # print("Received: {}".format(received))
         return received
-
+    except EOFError as e:
+        print('No data received')
     finally:
         sock.close()
 
@@ -176,11 +190,12 @@ def show_phrases_callback(checked_value):
         if all_phrases is None:
             getvocab_working_label.text = fetching_text
             get_phrases()
+        if not phrases_list.options:
+            getvocab_working_label.text = working_text
             phrases_list.options = list(all_cut_phrases_dict.keys())[0:max_visible_phrases] #show the cut representation
-            # phrases_list.options.sort()
-            getvocab_working_label.text = ''
         search_box_area.children=[search_input_box]
         phrases_area.children=[search_working_label, phrases_list]
+        getvocab_working_label.text = ''
     else:
         search_box_area.children=[]
         phrases_area.children=[]
@@ -190,10 +205,12 @@ def get_expand_results_callback():
     expand_working_label.text = working_text
     global seed_check_text, table_area
     try:
+        if all_phrases is None:
+            expand_working_label.text = fetching_text
+            get_phrases()
         seed_check_label.text = ''
         table_area.children = [table_layout]
         seed = seed_input_box.value
-        # print('seed= ' + user_input)
         if seed == '':
             expand_table_source.data=empty_table
             return
@@ -202,22 +219,23 @@ def get_expand_results_callback():
             bad_words = ''
             for w in seed_words:
                 if w not in all_phrases:
-                    bad_words += ("'"+ w + "',")
+                    bad_words += ("'" + w + "',")
             if bad_words != '':
                 seed_check_label.text = 'the words: <span class="bad-word">' + bad_words[:-1] + '</span> are not in the vocabulary and will be ignored'
                 print('setting table area')
                 table_area.children = [seed_check_label,table_layout]
         print('sending expand request to server')
         received = send_request_to_server(seed)
-        res = [x[0] for x in received]
-        scores = [y[1] for y in received]
-        print('setting table data')
-        expand_table_source.data = {
-            'res': res,
-            'score': scores
-        }
+        if received is not None:
+            res = [x[0] for x in received]
+            scores = [y[1] for y in received]
+            print('setting table data')
+            expand_table_source.data = {
+                'res': res,
+                'score': scores
+            }
     except Exception as e:
-        print(str(e))
+        print('Exception: ' + str(e))
     finally:
         expand_working_label.text = ''
 
@@ -290,9 +308,12 @@ def clear_seed_callback():
     clear_working_label.text = ''
 
 
-
 def export_data_callback():
-    if export_working_label.text != working_text:
+    if expand_table_source.data == empty_table:
+        export_working_label.text = 'Nothing to export'
+        time.sleep(1)
+        export_working_label.text = ''
+    elif export_working_label.text != working_text:
         path = settings.export_path
         print('saving expansion results to: ' + path)
         export_working_label.style = {'color': 'red'}

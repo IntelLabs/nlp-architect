@@ -1,4 +1,19 @@
-import logging
+# ******************************************************************************
+# Copyright 2017-2018 Intel Corporation
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ******************************************************************************
+
 import socketserver
 import argparse
 import pickle
@@ -10,13 +25,13 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
         print("handling expand request")
         res = ''
         self.data = str(self.request.recv(10240).strip(), 'utf-8')
-        logger.debug('request data: ' + self.data)
+        print('request data: ' + self.data)
         if self.data == 'get_vocab':
             print('getting vocabulary')
             res = se.get_vocab()
         else:
             data = [x.strip() for x in self.data.split(',')]
-            print('expanding)')
+            print('expanding')
             res = se.expand(data)
         print('compressing response')
         packet = pickle.dumps(res)
@@ -36,18 +51,15 @@ if __name__ == "__main__":
                         help='set port for the server')
     parser.add_argument('--port', type=int, default=1234,
                         help='set port for the server')
-
     args = parser.parse_args()
 
     port = args.port
     model_path = args.model_path
-    logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.DEBUG)
-    logger = logging.getLogger("set_expantion_demo")
-    logger.debug("initialize model\n")
+    print("loading model")
     se = set_expand.SetExpand(model_path)
-    logger.debug("loading server\n")
+    print("loading server")
     HOST, PORT = args.host, port
     server = socketserver.TCPServer((HOST, PORT), MyTCPHandler)
-    logger.debug("server loaded\n")
+    print("server loaded")
     server.serve_forever()
 

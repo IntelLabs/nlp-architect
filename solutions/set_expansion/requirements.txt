@@ -1,6 +1,5 @@
 bokeh
 gensim
-ftfy
-textacy
-nltk
 pandas
+configargparse
+spacy
