@@ -44,7 +44,7 @@ import tensorflow as tf
 from interactive_utils import interactive_loop
 from nlp_architect.data.babi_dialog import BABI_Dialog
 from nlp_architect.models.memn2n_dialogue import MemN2N_Dialog
-from nlp_architect.utils.io import validate_parent_exists, check_size, validate
+from nlp_architect.utils.io import validate_parent_exists, validate
 
 # parse the command line arguments
 tf.flags.DEFINE_integer(
@@ -145,7 +145,7 @@ log_file = os.path.join(current_dir, FLAGS.log_file)
 validate_parent_exists(log_file)
 weights_save_path = os.path.join(current_dir, FLAGS.weights_save_path)
 validate_parent_exists(weights_save_path)
-data_dir = os.path.join(current_dir, FLAGS.data_dir) 
+data_dir = os.path.join(current_dir, FLAGS.data_dir)
 validate_parent_exists(data_dir)
 assert log_file.endswith('.txt')
 
@@ -170,11 +170,11 @@ train_batches = zip(range(0, n_train - FLAGS.batch_size, FLAGS.batch_size),
 train_batches = [(start, end) for start, end in train_batches]
 
 val_batches = zip(range(0, n_val - FLAGS.batch_size, FLAGS.batch_size),
-                    range(FLAGS.batch_size, n_val, FLAGS.batch_size))
+                  range(FLAGS.batch_size, n_val, FLAGS.batch_size))
 val_batches = [(start, end) for start, end in val_batches]
 
 test_batches = zip(range(0, n_test - FLAGS.batch_size, FLAGS.batch_size),
-                    range(FLAGS.batch_size, n_test, FLAGS.batch_size))
+                   range(FLAGS.batch_size, n_test, FLAGS.batch_size))
 test_batches = [(start, end) for start, end in test_batches]
 
 with tf.Session() as sess:

@@ -132,6 +132,7 @@ def print_help():
         " >> allow_oov: Allow out of vocab words to be replaced with <OOV> token\n" +
         " >> show_memory: Display the current contents of the bot's memory\n")
 
+
 def build_kb_db(babi):
     """
     Build a searchable database from the kb files to be used in interactive mode
