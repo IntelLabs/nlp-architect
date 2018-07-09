@@ -99,12 +99,14 @@ class SetExpand():
             id = self.__term2id(np)
             if id in self.np2vec_model.vocab:
                 seed_ids.append(id)
-        if len(seed) > 0:
+        if len(seed_ids) > 0:
             res_id = self.np2vec_model.most_similar(seed_ids, topn=topn)
             res = list()
             for r in res_id:
                 res.append((self.__id2term(r[0]), r[1]))
             return res
+        else:
+            logger.info("All the seed terms are out-of-vocabulary.")
         return None
 
 
