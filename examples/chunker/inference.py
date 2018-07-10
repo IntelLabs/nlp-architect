@@ -69,16 +69,16 @@ if __name__ == '__main__':
     # parse documents and get tokens
     nlp = SpacyInstance(disable=['tagger', 'ner', 'parser', 'vectors', 'textcat'])
     with open(args.input_file) as fp:
-        documents = [nlp.tokenize(t.strip()) for t in fp.readlines()]
+        document_texts = [nlp.tokenize(t.strip()) for t in fp.readlines()]
 
     # vectorize input tokens and run inference
-    doc_vecs = vectorize(documents, word_vocab)
-    annotations = []
-    for doc in doc_vecs:
-        doc_pos, doc_chunks = model.predict(doc, batch_size=1)
+    doc_vecs = vectorize(document_texts, word_vocab)
+    document_annotations = []
+    for vec in doc_vecs:
+        doc_pos, doc_chunks = model.predict(vec, batch_size=1)
         pos_a = [pos_vocab.id_to_word(l) for l in doc_pos.argmax(2).flatten()]
         chunk_a = [chunk_vocab.id_to_word(l) for l in doc_chunks.argmax(2).flatten()]
-        annotations.append((pos_a, chunk_a))
+        document_annotations.append((pos_a, chunk_a))
 
     # print document text and annotations
-    build_annotation(documents, annotations)
+    build_annotation(document_texts, document_annotations)

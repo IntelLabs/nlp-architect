@@ -31,24 +31,24 @@ from nlp_architect.utils.metrics import get_conll_scores
 
 
 def create_argument_parser():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--embedding_model', type=validate_existing_filepath,
-                        help='Word embedding model path (GloVe/Fasttext/textual)')
-    parser.add_argument('--sentence_length', default=50, type=int,
-                        help='Maximum sentence length')
-    parser.add_argument('--feature_size', default=100, type=int,
-                        help='Feature vector size (in embedding and LSTM layers)')
-    parser.add_argument('--use_gpu', default=False, action='store_true',
-                        help='use GPU backend (CUDNN enabled)')
-    parser.add_argument('-b', default=10, type=int,
-                        help='batch size')
-    parser.add_argument('-e', default=10, type=int,
-                        help='number of epochs run fit model')
-    parser.add_argument('--model_name', default='chunker_model', type=str,
-                        help='Model name (used for saving the model)')
-    parser.add_argument('--print_np', default=False, action='store_true',
-                        help='Print only Noun Phrase (NP) tags accuracy')
-    return parser
+    _parser = argparse.ArgumentParser()
+    _parser.add_argument('--embedding_model', type=validate_existing_filepath,
+                         help='Word embedding model path (GloVe/Fasttext/textual)')
+    _parser.add_argument('--sentence_length', default=50, type=int,
+                         help='Maximum sentence length')
+    _parser.add_argument('--feature_size', default=100, type=int,
+                         help='Feature vector size (in embedding and LSTM layers)')
+    _parser.add_argument('--use_gpu', default=False, action='store_true',
+                         help='use GPU backend (CUDNN enabled)')
+    _parser.add_argument('-b', default=10, type=int,
+                         help='batch size')
+    _parser.add_argument('-e', default=10, type=int,
+                         help='number of epochs run fit model')
+    _parser.add_argument('--model_name', default='chunker_model', type=str,
+                         help='Model name (used for saving the model)')
+    _parser.add_argument('--print_np', default=False, action='store_true',
+                         help='Print only Noun Phrase (NP) tags accuracy')
+    return _parser
 
 
 def _save_model():

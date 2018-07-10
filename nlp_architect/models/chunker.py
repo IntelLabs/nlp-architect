@@ -30,6 +30,7 @@ class SequenceChunker(object):
     Args:
         use_gpu (bool, optional): use GPU based model (CUDNNA cells)
     """
+
     def __init__(self, use_gpu=False):
         self.vocabulary_size = None
         self.num_pos_labels = None
@@ -72,14 +73,13 @@ class SequenceChunker(object):
         rnn_layer_2 = keras.layers.Bidirectional(self._rnn_cell())(rnn_layer_1)
         rnn_layer_3 = keras.layers.Bidirectional(self._rnn_cell())(rnn_layer_2)
         rnn_layer_3 = keras.layers.Dropout(self.dropout)(rnn_layer_3)
-        pos_out = keras.layers.TimeDistributed(
-                keras.layers.Dense(self.num_pos_labels,
-                                   activation='softmax',
-                                   name='POS output'))(rnn_layer_1)
-        chunks_out = keras.layers.TimeDistributed(
-                keras.layers.Dense(self.num_chunk_labels,
-                                   activation='softmax',
-                                   name='Chunk output'))(rnn_layer_3)
+        pos_out = keras.layers.TimeDistributed(keras.layers.Dense(self.num_pos_labels,
+                                               activation='softmax',
+                                               name='POS output'))(rnn_layer_1)
+        chunks_out = keras.layers.TimeDistributed(keras.layers.Dense(self.num_chunk_labels,
+                                                                     activation='softmax',
+                                                                     name='Chunk output')
+                                                  )(rnn_layer_3)
         model = keras.Model(word_input, [pos_out, chunks_out])
         if optimizer is None:
             self.optimizer = tf.train.GradientDescentOptimizer(0.1)
@@ -103,17 +103,19 @@ class SequenceChunker(object):
 
     def _rnn_cell(self):
         if self.use_gpu:
-            return keras.layers.CuDNNLSTM(self.feature_size, return_sequences=True)
+            rnn_cell = keras.layers.CuDNNLSTM(self.feature_size, return_sequences=True)
         else:
-            return keras.layers.LSTM(self.feature_size, return_sequences=True)
+            rnn_cell = keras.layers.LSTM(self.feature_size, return_sequences=True)
+        return rnn_cell
 
     def _embedding_layer(self):
         if self.use_gpu:
-            return keras.layers.Embedding(self.vocabulary_size, self.feature_size,
-                                          name='embedding', mask_zero=False)
+            emb_layer = keras.layers.Embedding(self.vocabulary_size, self.feature_size,
+                                               name='embedding', mask_zero=False)
         else:
-            return keras.layers.Embedding(self.vocabulary_size, self.feature_size,
-                                          name='embedding', mask_zero=True)
+            emb_layer = keras.layers.Embedding(self.vocabulary_size, self.feature_size,
+                                               name='embedding', mask_zero=True)
+            return emb_layer
 
     def fit(self, x, y, batch_size=1, epochs=1, validation_data=None, callbacks=None):
         """
