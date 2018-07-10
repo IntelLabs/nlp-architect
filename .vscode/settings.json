@@ -1,0 +1,4 @@
+{
+    "python.pythonPath": "${workspaceFolder}/.nlp_architect_env/bin/python",
+    "python.formatting.provider": "yapf"
+}
