@@ -15,7 +15,6 @@ python ./adding_with_tcn.py --batch_size 32 --dropout 0.0 --epochs 20 --ksize 8 
 """
 import os
 import argparse
-import tensorflow as tf
 from examples.word_language_model_with_tcn.toy_data.adding import Adding
 from nlp_architect.utils.io import validate_parent_exists, check_size
 from examples.word_language_model_with_tcn.adding_problem.adding_model import TCNForAdding

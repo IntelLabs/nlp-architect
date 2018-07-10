@@ -15,7 +15,6 @@ python ./language_modeling_with_tcn.py --batch_size 16 --dropout 0.5 --epochs 10
 """
 import os
 import argparse
-import tensorflow as tf
 from nlp_architect.data.ptb import PTBDataLoader, PTBDictionary
 from nlp_architect.utils.io import validate_existing_directory, validate_existing_filepath,\
     validate_parent_exists, check_size

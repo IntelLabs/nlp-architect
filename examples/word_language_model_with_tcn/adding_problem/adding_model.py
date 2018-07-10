@@ -54,7 +54,8 @@ class TCNForAdding(TCN):
                 saver.save(sess, result_dir, global_step=i)
 
                 feed_dict = {self.input_placeholder: data_loader.test[0],
-                             self.label_placeholder: data_loader.test[1], self.training_mode: False}
+                             self.label_placeholder: data_loader.test[1],
+                             self.training_mode: False}
                 val_loss, summary_val = sess.run([self.training_loss, self.merged_summary_op_val],
                                                  feed_dict=feed_dict)
 

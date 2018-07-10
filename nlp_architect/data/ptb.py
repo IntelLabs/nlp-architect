@@ -114,8 +114,8 @@ class PTBDictionary:
                 else:
 
                     print('Download declined. Response received {} != YES|Y. '.format(res))
-                    print('Please download the model manually from the links above and place in directory: {}'
-                          .format(work_directory))
+                    print('Please download the model manually from the links above '
+                          'and place in directory: {}'.format(work_directory))
                     sys.exit()
             else:
                 self._uncompress_data(work_directory)

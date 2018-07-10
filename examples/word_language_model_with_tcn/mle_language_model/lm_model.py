@@ -31,8 +31,8 @@ class TCNForLM(TCN, CommonLayers):
             ckpt=None):
         """
         Args:
-            data_loaders: dict, keys are "train", "valid", "test", values are corresponding iterator
-                                dataloaders
+            data_loaders: dict, keys are "train", "valid", "test",
+                          values are corresponding iterator dataloaders
             lr: float, learning rate
             num_iterations: int, number of iterations to run
             log_interval: int, number of iterations after which to run validation and log

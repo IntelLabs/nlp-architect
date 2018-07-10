@@ -34,7 +34,7 @@ class _ConvWeightNorm(_Conv):
         input_dim = input_shape[channel_axis].value
         kernel_shape = self.kernel_size + (input_dim, self.filters)
 
-        #### The variables defined below are specific to the weight normed conv class
+        # The variables defined below are specific to the weight normed conv class
         self.kernel_v = self.add_variable(name='kernel_v',
                                           shape=kernel_shape,
                                           initializer=self.kernel_initializer,
@@ -152,11 +152,11 @@ class TCN:
             else:
                 # last time point size (batch_size, hidden_sizes_encoder)
                 width = self.sequence_output.shape[1].value
-                last_tp = tf.squeeze(tf.slice(self.sequence_output, [0, width - 1, 0],
-                                              [-1, 1, -1]), axis=1)
+                lt = tf.squeeze(tf.slice(self.sequence_output, [0, width - 1, 0],
+                                         [-1, 1, -1]), axis=1)
                 prediction = \
-                tf.layers.Dense(1, kernel_initializer=tf.initializers.random_normal(0, 0.01),
-                                bias_initializer=tf.initializers.random_normal(0, 0.01))(last_tp)
+                    tf.layers.Dense(1, kernel_initializer=tf.initializers.random_normal(0, 0.01),
+                                    bias_initializer=tf.initializers.random_normal(0, 0.01))(lt)
 
         return prediction
 
@@ -173,7 +173,7 @@ class TCN:
         Returns:
             Output of residual path
         """
-        x_in = x
+        xin = x
         # define two temporal blocks
         for i in range(2):
             with tf.variable_scope("temporal_block_" + str(i)):
@@ -184,9 +184,9 @@ class TCN:
             x_side = tf.layers.Conv1D(filters=out_channels, kernel_size=1, padding='same',
                                       strides=1, activation=None, dilation_rate=1,
                                       kernel_initializer=tf.initializers.random_normal(0, 0.01),
-                                      bias_initializer=tf.initializers.random_normal(0, 0.01))(x_in)
+                                      bias_initializer=tf.initializers.random_normal(0, 0.01))(xin)
         else:
-            x_side = x_in
+            x_side = xin
 
         # combine both
         return tf.add(x, x_side)
@@ -260,12 +260,9 @@ class CommonLayers:
     Class that contains the common layers for language modeling -
             word embeddings and projection layer
     """
-    def __init__(self, *args, **kwargs):
+    def __init__(self):
         """
         Initialize class
-        Args:
-            *args:
-            **kwargs:
         """
         self.word_embeddings_tf = None
         self.num_words = None
@@ -315,7 +312,7 @@ class CommonLayers:
                 with tf.variable_scope("embedding_layer", reuse=tf.AUTO_REUSE):
                     softmax_w = tf.matrix_transpose(self.word_embeddings_tf)
                     softmax_b = tf.get_variable('softmax_b', [self.num_words])
-                    n, l, k = prediction.shape.as_list()
+                    _, l, k = prediction.shape.as_list()
                     prediction_reshaped = tf.reshape(prediction, [-1, k])
                     mult_out = tf.nn.bias_add(tf.matmul(prediction_reshaped, softmax_w), softmax_b)
                     projection_out = tf.reshape(mult_out, [-1, l, self.num_words])
