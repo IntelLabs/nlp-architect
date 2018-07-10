@@ -20,7 +20,7 @@ class PTBDictionary:
     """
     Class for generating a dictionary of all words in the PTB corpus
     """
-    def __init__(self, data_dir="./data", dataset='WikiText-103'):
+    def __init__(self, data_dir=os.path.expanduser('~/data'), dataset='WikiText-103'):
         """
         Initialize class
         Args:
@@ -97,10 +97,11 @@ class PTBDictionary:
             full_filepath = os.path.join(work_directory,
                                          FILENAME[self.dataset] + "." + EXTENSION[self.dataset])
             if not os.path.exists(full_filepath):
-                print('{} was not found in the directory: {}'
-                      .format(FILENAME[self.dataset], full_filepath))
-                print('{} can be downloaded from {}'.format(FILENAME[self.dataset],
-                                                            SOURCE_URL[self.dataset]))
+                print('Did not find data')
+                print('PTB can be downloaded from http://www.fit.vutbr.cz/~imikolov/rnnlm/ \n'
+                      'wikitext can be downloaded from'
+                      ' https://einstein.ai/research/the-wikitext-long-term-dependency-language'
+                      '-modeling-dataset')
                 print('\nThe terms and conditions of the data set license apply. Intel does not '
                       'grant any rights to the data files or database\n')
                 response = input('\nTo download \'{}\' from {}, please enter YES: '
@@ -111,9 +112,10 @@ class PTBDictionary:
                     self._download_data(work_directory)
                     self._uncompress_data(work_directory)
                 else:
+
                     print('Download declined. Response received {} != YES|Y. '.format(res))
-                    print('Please download the model manually from {} and place in directory: {}'
-                          .format(SOURCE_URL[self.dataset], work_directory))
+                    print('Please download the model manually from the links above and place in directory: {}'
+                          .format(work_directory))
                     sys.exit()
             else:
                 self._uncompress_data(work_directory)
@@ -164,8 +166,8 @@ class PTBDataLoader:
     """
     Class that defines data loader
     """
-    def __init__(self, word_dict, seq_len=100, data_dir="./data", dataset='WikiText-103',
-                 batch_size=32, skip=30, split_type="train", loop=True):
+    def __init__(self, word_dict, seq_len=100, data_dir=os.path.expanduser('~/data'),
+                 dataset='WikiText-103', batch_size=32, skip=30, split_type="train", loop=True):
         """
         Initialize class
         Args:

@@ -54,28 +54,28 @@ def main(args):
 
 
 PARSER = argparse.ArgumentParser()
-PARSER.add_argument('--seq_len', type=int,
+PARSER.add_argument('--seq_len', type=int, action=check_size(0, 1000),
                     help="Number of time points in each input sequence",
                     default=200)
-PARSER.add_argument('--log_interval', type=int, default=100,
+PARSER.add_argument('--log_interval', type=int, default=100, action=check_size(0, 10000),
                     help="frequency, in number of iterations, after which loss is evaluated")
 PARSER.add_argument('--results_dir', type=validate_parent_exists,
-                    help="Directory to write results to", default='./')
+                    help="Directory to write results to", default=os.path.expanduser('~/results'))
 PARSER.add_argument('--dropout', type=float, default=0.0, action=check_size(0, 1),
                     help='dropout applied to layers, between 0 and 1 (default: 0.0)')
-PARSER.add_argument('--ksize', type=int, default=6,
+PARSER.add_argument('--ksize', type=int, default=6, action=check_size(0, 10),
                     help='kernel size (default: 6)')
-PARSER.add_argument('--levels', type=int, default=7,
+PARSER.add_argument('--levels', type=int, default=7, action=check_size(0, 10),
                     help='# of levels (default: 7)')
-PARSER.add_argument('--lr', type=float, default=2e-3,
+PARSER.add_argument('--lr', type=float, default=2e-3, action=check_size(0, 1),
                     help='initial learning rate (default: 2e-3)')
-PARSER.add_argument('--nhid', type=int, default=27,
+PARSER.add_argument('--nhid', type=int, default=27, action=check_size(0, 1000),
                     help='number of hidden units per layer (default: 27)')
-PARSER.add_argument('--grad_clip_value', type=float, default=None,
+PARSER.add_argument('--grad_clip_value', type=float, default=10, action=check_size(0, 10),
                     help='value to clip each element of gradient')
-PARSER.add_argument('--batch_size', type=int, default=32,
+PARSER.add_argument('--batch_size', type=int, default=32, action=check_size(0, 512),
                     help='Batch size')
-PARSER.add_argument('--epochs', type=int, default=20,
+PARSER.add_argument('--epochs', type=int, default=20, action=check_size(0, 1000),
                     help='Number of epochs')
 PARSER.set_defaults()
 ARGS = PARSER.parse_args()

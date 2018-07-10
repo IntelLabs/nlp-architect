@@ -86,32 +86,34 @@ def main(args):
 
 
 PARSER = argparse.ArgumentParser()
-PARSER.add_argument('--seq_len', type=int,
+PARSER.add_argument('--seq_len', type=int, action=check_size(0, 1000),
                     help="Number of time points in each input sequence",
                     default=60)
 PARSER.add_argument('--results_dir', type=validate_parent_exists,
-                    help="Directory to write results to", default='./')
+                    help="Directory to write results to",
+                    default=os.path.expanduser('~/results'))
 PARSER.add_argument('--dropout', type=float, default=0.45, action=check_size(0, 1),
                     help='dropout applied to layers, value in [0, 1] (default: 0.45)')
-PARSER.add_argument('--ksize', type=int, default=3,
+PARSER.add_argument('--ksize', type=int, default=3, action=check_size(0, 10),
                     help='kernel size (default: 3)')
-PARSER.add_argument('--levels', type=int, default=4,
+PARSER.add_argument('--levels', type=int, default=4, action=check_size(0, 10),
                     help='# of levels (default: 4)')
-PARSER.add_argument('--lr', type=float, default=4,
+PARSER.add_argument('--lr', type=float, default=4, action=check_size(0, 100),
                     help='initial learning rate (default: 4)')
-PARSER.add_argument('--nhid', type=int, default=600,
+PARSER.add_argument('--nhid', type=int, default=600, action=check_size(0, 1000),
                     help='number of hidden units per layer (default: 600)')
-PARSER.add_argument('--em_len', type=int, default=600,
+PARSER.add_argument('--em_len', type=int, default=600, action=check_size(0, 10000),
                     help='Length of embedding (default: 600)')
 PARSER.add_argument('--em_dropout', type=float, default=0.25, action=check_size(0, 1),
                     help='dropout applied to layers, value in [0, 1] (default: 0.25)')
-PARSER.add_argument('--grad_clip_value', type=float, default=0.35,
+PARSER.add_argument('--grad_clip_value', type=float, default=0.35, action=check_size(0, 10),
                     help='value to clip each element of gradient')
-PARSER.add_argument('--batch_size', type=int, default=16,
+PARSER.add_argument('--batch_size', type=int, default=16, action=check_size(0, 512),
                     help='Batch size')
-PARSER.add_argument('--epochs', type=int, default=100,
+PARSER.add_argument('--epochs', type=int, default=100, action=check_size(0, 1000),
                     help='Number of epochs')
-PARSER.add_argument('--datadir', type=validate_existing_directory, default="../data/",
+PARSER.add_argument('--datadir', type=validate_existing_directory,
+                    default=os.path.expanduser('~/data'),
                     help='dir to download data if not already present')
 PARSER.add_argument('--dataset', type=str, default="PTB", choices=['PTB', 'WikiText-103'],
                     help='dataset name')
@@ -119,7 +121,7 @@ PARSER.add_argument('--inference', action='store_true',
                     help='whether to run in inference mode')
 PARSER.add_argument('--ckpt', type=validate_existing_filepath,
                     help='checkpoint file')
-PARSER.add_argument('--num_samples', type=int, default=10,
+PARSER.add_argument('--num_samples', type=int, default=10, action=check_size(0, 10000),
                     help='number of samples to generate during inference')
 PARSER.set_defaults()
 ARGS = PARSER.parse_args()
