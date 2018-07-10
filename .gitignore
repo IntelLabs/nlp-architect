@@ -19,7 +19,8 @@ generated
 *.hdf5
 *.h5
 *.html
-!server/web_service/visualizer/displacy/*.html
+.vscode
+!server/web_service/static/*.html
 !tests/fixtures/data/server/*.gz
 *.log
 .idea/
