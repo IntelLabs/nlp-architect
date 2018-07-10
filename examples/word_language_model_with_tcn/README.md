@@ -1,14 +1,13 @@
 ## Language Modeling
-A language model (LM) is a probability distribution over a sequence of words. Given a sequence, a trained language model can provide the probability that the sequence is realistic. Using deep learning, one manner of creating an LM is by training a neural network to predict the probability of occurrence of the next word (or character) in the sequence given all the words (or characters) preceding it. (In other words, the joint distribution over elements in a sequence is broken up using the chain rule.) 
-
-This folder contains scripts that implement a word-level language model using Temporal Convolutional Network (TCN) as described in the paper [An Empirical Evaluation of Generic Convolutional and Recurrent Networks for Sequence Modeling](https://arxiv.org/abs/1803.01271) by Shaojie Bai, J. Zico Kolter and Vladlen Koltun. In this paper, the 
-authors show that TCNs architectures perform comparably across a diverse set of discrete sequence
- tasks. For language modeling, it is shown that TCN's performance on two datasets (Penn Tree Bank
-  and WikiText) is comparable to that of an optimized LSTM architecture (with recurrent and 
-  embedding dropout, etc).
-
+This folder contains scripts that implement a word-level language model using Temporal Convolutional Network (TCN) as described in the paper [An Empirical Evaluation of Generic Convolutional and Recurrent Networks for Sequence Modeling](https://arxiv.org/abs/1803.01271) by Shaojie Bai, J. Zico Kolter and Vladlen Koltun. 
 
 ### Data Loading
+* PTB can be downloaded from [here](http://www.fit.vutbr.cz/~imikolov/rnnlm/)
+
+* Wikitext can be downloaded from [here](https://einstein.ai/research/the-wikitext-long-term-dependency-language-modeling-dataset)
+
+* The terms and conditions of the data set licenses apply. Intel does not grant any rights to the data files or databases.
+
 * For the language modeling task, dataloader for the Penn tree bank (PTB) dataset (or the wikitext-103 dataset) can be imported as `from nlp_architect.data.ptb import PTBDataLoader, PTBDictionary`
 * Note that the data loader automatically downloads the data if not already present. Please 
 provide the location to save the data as an argument to the data loader.

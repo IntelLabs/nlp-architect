@@ -114,6 +114,7 @@ on this project, please see the :doc:`developer guide <developer_guide>`.
    spacy_bist.rst
    word_sense.rst
    np2vec.rst
+   tcn.rst
 
 .. toctree::
    :hidden:
