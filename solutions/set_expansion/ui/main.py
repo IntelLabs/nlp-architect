@@ -19,18 +19,19 @@ import pickle
 import time
 import numpy as np
 import pandas
+import json
 import solutions.set_expansion.ui.settings as settings
 from bokeh.layouts import column, layout
 from bokeh.models import ColumnDataSource, Div, Row
 from bokeh.models.widgets import Button, DataTable, TableColumn, CheckboxGroup, MultiSelect
 from bokeh.models.widgets.inputs import TextInput
 from bokeh.io import curdoc
+from solutions.set_expansion.text_normalizer import simple_normalizer
 
-
-hash2group = {}
-all_phrases = None
-all_phrases_dict = {}
-all_cut_phrases_dict = {}
+vocab = None
+np2id, id2group, id2rep = {}, {}, {}
+vocab_dict = {}
+cut_vocab_dict = {}
 max_visible_phrases = 5000
 working_text = 'please wait...'
 fetching_text = 'fetching vocabulary from server. please wait...'
@@ -78,18 +79,24 @@ grid = layout([
 
 # define callbacks
 
-def get_phrases(top_n=100000):
-    global all_phrases
+def get_vocab(top_n=100000):
+    global vocab, np2id, id2group, id2rep
+    with open('np2id') as f:
+        np2id = json.load(f)
+    with open('id2group') as f:
+        id2group = json.load(f)
+    with open('id2rep') as f:
+        id2rep = json.load(f)
     received = send_request_to_server('get_vocab')
-    all_phrases=received
-    for p in all_phrases:
+    vocab = received
+    for p in vocab:
         if len(p) < max_phrase_length:
-            all_phrases_dict[p] = p
-            all_cut_phrases_dict[p] = p
+            vocab_dict[p] = p
+            cut_vocab_dict[p] = p
         else:
-            all_phrases_dict[p] = p[:max_phrase_length-1] + '...'
-            all_cut_phrases_dict[p[:max_phrase_length-1] + '...'] = p
-    print('done. vocab count = ' + str(len(all_phrases)))
+            vocab_dict[p] = p[:max_phrase_length-1] + '...'
+            cut_vocab_dict[p[:max_phrase_length-1] + '...'] = p
+    print('done. vocab count = ' + str(len(vocab)))
 
 
 def send_request_to_server(request):
@@ -144,14 +151,14 @@ def row_selected_callback(attr, old, new):
             old_phrases) + ' ,new=' + str(new_phrases))
         #phrase was de-selected from expand list:
         for o in old_phrases:
-            if o not in new_phrases and (all_phrases is not None and all_phrases_dict[o] in phrases_list.value):
+            if o not in new_phrases and (vocab is not None and vocab_dict[o] in phrases_list.value):
                 print('removing ' + o + 'from vocab selected')
-                phrases_list.value.remove(all_phrases_dict[o])
+                phrases_list.value.remove(vocab_dict[o])
                 break
         #new phrase was selected from expand list:
         for n in new_phrases:
-            if n not in old_phrases and (all_phrases is not None and all_phrases_dict[n] in phrases_list.options and all_phrases_dict[n] not in phrases_list.value):
-                phrases_list.value.append(all_phrases_dict[n])
+            if n not in old_phrases and (vocab is not None and vocab_dict[n] in phrases_list.options and vocab_dict[n] not in phrases_list.value):
+                phrases_list.value.append(vocab_dict[n])
                 break
         update_all_selected_phrases()
         seed_input_box.value = get_selected_phrases_for_seed()
@@ -168,7 +175,7 @@ def update_all_selected_phrases():
     print('current all_selected_phrases=' + str(all_selected_phrases))
     for x in all_selected_phrases:
         print('x=' + x)
-        if (x in expand_table_source.data['res'] and x not in selected_expand) or (all_phrases is not None and all_phrases_dict[x] in phrases_list.options and all_phrases_dict[x] not in selected_vocab):
+        if (x in expand_table_source.data['res'] and x not in selected_expand) or (vocab is not None and vocab_dict[x] in phrases_list.options and vocab_dict[x] not in selected_vocab):
             print('removing ' + x)
             updated_selected_phrases.remove(x)
     for e in selected_expand:
@@ -176,7 +183,7 @@ def update_all_selected_phrases():
             print('adding ' + e)
             updated_selected_phrases.append(e)
     for v in selected_vocab:
-        full_v = all_cut_phrases_dict[v]
+        full_v = cut_vocab_dict[v]
         if full_v not in updated_selected_phrases:
             print('adding ' + full_v)
             updated_selected_phrases.append(full_v)
@@ -187,12 +194,12 @@ def update_all_selected_phrases():
 def show_phrases_callback(checked_value):
     global search_box_area, phrases_area
     if len(checked_value) == 1:
-        if all_phrases is None:
+        if vocab is None:
             getvocab_working_label.text = fetching_text
-            get_phrases()
+            get_vocab()
         if not phrases_list.options:
             getvocab_working_label.text = working_text
-            phrases_list.options = list(all_cut_phrases_dict.keys())[0:max_visible_phrases] #show the cut representation
+            phrases_list.options = list(cut_vocab_dict.keys())[0:max_visible_phrases] #show the cut representation
         search_box_area.children=[search_input_box]
         phrases_area.children=[search_working_label, phrases_list]
         getvocab_working_label.text = ''
@@ -202,40 +209,48 @@ def show_phrases_callback(checked_value):
 
 
 def get_expand_results_callback():
+    print('### new expand request')
     expand_working_label.text = working_text
     global seed_check_text, table_area
+    request = ''
     try:
-        if all_phrases is None:
+        if vocab is None:
             expand_working_label.text = fetching_text
-            get_phrases()
+            get_vocab()
         seed_check_label.text = ''
         table_area.children = [table_layout]
         seed = seed_input_box.value
+        print('input seed: ' + seed)
         if seed == '':
             expand_table_source.data=empty_table
             return
-        if all_phrases is not None:
-            seed_words = [x.strip() for x in seed.split(',')]
+        if vocab is not None:
+            seed_words = [x for x in seed.split(',')]
             bad_words = ''
             for w in seed_words:
-                if w not in all_phrases:
+                norm = simple_normalizer(w)
+                if norm not in id2rep or id2rep[norm] not in vocab:
                     bad_words += ("'" + w + "',")
+                else:
+                    request += id2rep[norm] + ','
             if bad_words != '':
                 seed_check_label.text = 'the words: <span class="bad-word">' + bad_words[:-1] + '</span> are not in the vocabulary and will be ignored'
                 print('setting table area')
                 table_area.children = [seed_check_label,table_layout]
-        print('sending expand request to server')
-        received = send_request_to_server(seed)
-        if received is not None:
-            res = [x[0] for x in received]
-            scores = [y[1] for y in received]
-            print('setting table data')
-            expand_table_source.data = {
-                'res': res,
-                'score': scores
-            }
-        else:
-            print('Nothing received from server')
+        request = request[:-1]
+        if request != '':
+            print('sending expand request to server with seed= ' + request)
+            received = send_request_to_server(request)
+            if received is not None:
+                res = [x[0] for x in received]
+                scores = [y[1] for y in received]
+                print('setting table data')
+                expand_table_source.data = {
+                    'res': res,
+                    'score': scores
+                }
+            else:
+                print('Nothing received from server')
     except Exception as e:
         print('Exception: ' + str(e))
     finally:
@@ -245,19 +260,24 @@ def get_expand_results_callback():
 def search_callback(value, old, new):
     search_working_label.text = working_text
     print('search vocab')
-    global all_phrases, phrases_list, all_selected_phrases, search_flag
+    global vocab, phrases_list, all_selected_phrases, search_flag
     search_flag = True
     if new == '':
-        new_phrases = list(all_cut_phrases_dict.keys())
+        new_phrases = list(cut_vocab_dict.keys())
     else:
-        # new_phrases = [x for x in all_phrases if x.startswith(new)]
-        new_phrases = [all_phrases_dict[x] for x in all_phrases if
-                       x.lower().startswith(new.lower())]
-        # new_phrases = [all_phrases_dict[x] for x in all_phrases if (new.lower() in x.lower() or x.lower()==new.lower())]
+        new_phrases = []
+        # new_phrases = [vocab_dict[id2rep[np2id[x]]] for x in np2id.keys() if
+        #                x.lower().startswith(new.lower()) and vocab_dict[id2rep[np2id[x]]] not in new_phrases]
+        for x in np2id.keys():
+            if x.lower().startswith(new.lower()) and id2rep[
+                    np2id[x]] in vocab_dict and vocab_dict[id2rep[
+                    np2id[x]]] not in new_phrases:
+                new_phrases.append(vocab_dict[id2rep[np2id[x]]])
+        # new_phrases = [vocab_dict[x] for x in vocab if (new.lower() in x.lower() or x.lower()==new.lower())]
     phrases_list.options=new_phrases[0:max_visible_phrases]
     if new != '':
         phrases_list.options.sort()
-    phrases_list.value = [all_phrases_dict[x] for x in all_selected_phrases if all_phrases_dict[x] in phrases_list.options]
+    phrases_list.value = [vocab_dict[x] for x in all_selected_phrases if vocab_dict[x] in phrases_list.options]
     print('selected vocab after search=' + str(phrases_list.value))
     search_working_label.text = ''
     search_flag = False
@@ -275,7 +295,7 @@ def vocab_phrase_selected_callback(attr, old_selected, new_selected):
         # phrase was de-selected from vocab list:
         expand_selected = [expand_table_source.data['res'][p] for p in expand_table_source.selected.indices]
         for o in old_selected:
-            full_o = all_cut_phrases_dict[o]
+            full_o = cut_vocab_dict[o]
             if o not in new_selected and full_o in expand_selected:
                 print(full_o + ' removed from vocab selected and exists in expand selected')
                 print('removing ' + full_o + 'from expand selected indices. index=' + str(expand_table_source.data['res'].index(full_o)))
@@ -285,7 +305,7 @@ def vocab_phrase_selected_callback(attr, old_selected, new_selected):
                 break
         # new phrase was selected from vocab list:
         for n in new_selected:
-            full_n = all_cut_phrases_dict[n]
+            full_n = cut_vocab_dict[n]
             print('selected phrase=' + n + ', full phrase=' + full_n)
             if n not in old_selected and full_n in expand_table_source.data['res'] and full_n not in expand_selected:
                 expand_table_source.selected.indices.append(expand_table_source.data['res'].index(full_n))

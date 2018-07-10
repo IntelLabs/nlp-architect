@@ -21,6 +21,7 @@ marks extracted NP's.
 
 import logging
 import sys
+import json
 import spacy
 from configargparse import ArgumentParser
 from nlp_architect.utils.io import check_size
@@ -31,6 +32,7 @@ logger = logging.getLogger(__name__)
 
 np2id = {}
 id2group = {}
+id2rep = {}
 
 if __name__ == '__main__':
     arg_parser = ArgumentParser(__doc__)
@@ -89,15 +91,18 @@ if __name__ == '__main__':
                 else:
                     if not spanWritten:
                         # normalize NP
-                        norm = simple_normalizer(span.text)
-                        np2id[span.text] = norm
+                        np = span.text
+                        norm = simple_normalizer(np)
+                        np2id[np] = norm
+                        if norm not in id2rep:
+                            id2rep[norm] = np
                         if norm in id2group:
-                            id2group[norm].append(span.text)
+                            if np not in id2group[norm]:
+                                id2group[norm].append(np)
                         else:
-                            id2group[norm] = [span.text]
+                            id2group[norm] = [np]
                         # mark NP's
-                        text = norm.replace(' ', args.mark_char) + args.mark_char
-                        # text = span.text.replace(' ', args.mark_char) + args.mark_char
+                        text = id2rep[norm].replace(' ', args.mark_char) + args.mark_char
                         marked_corpus_file.write(text + ' ')
                         spanWritten = True
                     if token.idx + len(token.text) == span.end_char:
@@ -109,6 +114,16 @@ if __name__ == '__main__':
         marked_corpus_file.write('\n')
         if i % 500 == 0:
             logger.info('%i of %i lines', i, num_lines)
+
+# write grouping data :
+    with open('id2group', 'w', encoding='utf8') as id2group_file:
+        id2group_file.write(json.dumps(id2group))
+
+    with open('id2rep', 'w', encoding='utf8') as id2rep_file:
+        id2rep_file.write(json.dumps(id2rep))
+
+    with open('np2id', 'w', encoding='utf8') as np2id_file:
+        np2id_file.write(json.dumps(np2id))
 
     corpus_file.close()
     marked_corpus_file.flush()
