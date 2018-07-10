@@ -25,7 +25,7 @@ import numpy as np
 def pad_sentences(sequences, max_length=None, padding_value=0.):
     """
     Pad input sequences up to max_length
-    padding is aligned to the right
+    values are aligned to the right
 
     Args:
         sequences (iter): a 2D matrix (np.array) to pad

@@ -60,8 +60,22 @@ class Vocabulary:
         """
         return self._vocab.get(word, None)
 
+    def __getitem__(self, item):
+        """
+        Get the word_id of given word (same as `word_id`)
+        """
+        return self.word_id(item)
+
     def __len__(self):
         return len(self._vocab)
+
+    def __iter__(self):
+        for word in self.vocab.keys():
+            yield word
+
+    @property
+    def max(self):
+        return self.next
 
     def id_to_word(self, wid):
         """
@@ -153,3 +167,102 @@ class SpacyInstance:
         # pylint: disable=not-callable
 
         return [t.text for t in self.parser(text)]
+
+
+def read_sequential_tagging_file(file_path, ignore_line_patterns=None):
+    """
+    Read a tab separated sequential tagging file.
+    Returns a list of list of tuple of tags (sentences, words)
+
+    Args:
+        file_path (str): input file path
+        ignore_line_patterns (list, optional): list of string patterns to ignore
+
+    Returns:
+        list of list of tuples
+    """
+    if ignore_line_patterns:
+        assert isinstance(ignore_line_patterns, list), 'ignore_line_patterns must be a list'
+
+    def _split_into_sentences(file_lines):
+        sentences = []
+        s = []
+        for line in file_lines:
+            if len(line) == 0:
+                sentences.append(s)
+                s = []
+                continue
+            s.append(line)
+        if len(s) > 0:
+            sentences.append(s)
+        return sentences
+
+    with open(file_path, encoding='utf-8') as fp:
+        data = fp.readlines()
+        data = [d.strip() for d in data]
+        if ignore_line_patterns:
+            for s in ignore_line_patterns:
+                data = [d for d in data if s not in d]
+        data = [tuple(d.split()) for d in data]
+    return _split_into_sentences(data)
+
+
+def word_vector_generator(data, lower=False, start=0):
+    """
+    Word vector generator util.
+    Transforms a list of sentences into numpy int vectors and returns the
+    constructed vocabulary
+
+    Arguments:
+        data (list): list of list of strings
+        lower (bool, optional): transform strings into lower case
+        start (int, optional): vocabulary index start integer
+
+    Returns:
+        np.array: a 2D numpy array
+        Vocabulary: constructed vocabulary
+    """
+    vocab = Vocabulary(start)
+    data_vec = []
+    for sentence in data:
+        sentence_vec = []
+        for w in sentence:
+            word = w
+            if lower:
+                word = word.lower()
+            wid = vocab[word]
+            if wid is None:
+                wid = vocab.add(word)
+            sentence_vec.append(wid)
+        data_vec.append(sentence_vec)
+    return data_vec, vocab
+
+
+def character_vector_generator(data, start=0):
+    """
+    Character word vector generator util.
+    Transforms a list of sentences into numpy int vectors of the characters
+    of the words of the sentence, and returns the constructed vocabulary
+
+    Arguments:
+        data (list): list of list of strings
+        start (int, optional): vocabulary index start integer
+
+    Returns:
+        np.array: a 2D numpy array
+        Vocabulary: constructed vocabulary
+    """
+    vocab = Vocabulary(start)
+    data_vec = []
+    for sentence in data:
+        sentence_vec = []
+        for w in sentence:
+            word_vec = []
+            for char in w:
+                cid = vocab[char]
+                if cid is None:
+                    cid = vocab.add(char)
+                word_vec.append(cid)
+            sentence_vec.append(word_vec)
+        data_vec.append(sentence_vec)
+    return data_vec, vocab
