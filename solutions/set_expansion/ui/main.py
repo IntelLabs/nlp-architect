@@ -212,7 +212,6 @@ def get_expand_results_callback():
     print('### new expand request')
     expand_working_label.text = working_text
     global seed_check_text, table_area
-    request = ''
     try:
         if vocab is None:
             expand_working_label.text = fetching_text
@@ -231,26 +230,22 @@ def get_expand_results_callback():
                 norm = simple_normalizer(w)
                 if norm not in id2rep or id2rep[norm] not in vocab:
                     bad_words += ("'" + w + "',")
-                else:
-                    request += id2rep[norm] + ','
             if bad_words != '':
                 seed_check_label.text = 'the words: <span class="bad-word">' + bad_words[:-1] + '</span> are not in the vocabulary and will be ignored'
                 print('setting table area')
                 table_area.children = [seed_check_label,table_layout]
-        request = request[:-1]
-        if request != '':
-            print('sending expand request to server with seed= ' + request)
-            received = send_request_to_server(request)
-            if received is not None:
-                res = [x[0] for x in received]
-                scores = [y[1] for y in received]
-                print('setting table data')
-                expand_table_source.data = {
-                    'res': res,
-                    'score': scores
-                }
-            else:
-                print('Nothing received from server')
+        print('sending expand request to server with seed= ' + seed)
+        received = send_request_to_server(seed)
+        if received is not None:
+            res = [x[0] for x in received]
+            scores = [y[1] for y in received]
+            print('setting table data')
+            expand_table_source.data = {
+                'res': res,
+                'score': scores
+            }
+        else:
+            print('Nothing received from server')
     except Exception as e:
         print('Exception: ' + str(e))
     finally:

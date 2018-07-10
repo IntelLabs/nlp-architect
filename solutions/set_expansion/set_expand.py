@@ -15,11 +15,13 @@
 # ******************************************************************************
 import logging
 import sys
+import json
 
 from configargparse import ArgumentParser
 
 from nlp_architect.models.np2vec import NP2vec
 from nlp_architect.utils.io import validate_existing_filepath, check_size
+from solutions.set_expansion.text_normalizer import simple_normalizer
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -49,6 +51,9 @@ class SetExpand():
         self.mark_char = first_term[-1]
         # Precompute L2-normalized vectors.
         self.np2vec_model.init_sims()
+        # load grouping info
+        with open('id2rep') as f:
+            self.id2rep = json.load(f)
 
     def __term2id(self, term):
         """
@@ -96,10 +101,14 @@ class SetExpand():
         """
         seed_ids = list()
         for np in seed:
-            id = self.__term2id(np)
-            if id in self.np2vec_model.vocab:
+            norm = simple_normalizer(np)
+            if norm not in self.id2rep or self.__term2id(self.id2rep[norm]) not in self.np2vec_model.vocab:
+                logger.warning("The term: '" + np + "' is out-of-vocabulary.")
+            else:
+                id = self.__term2id(self.id2rep[norm])
                 seed_ids.append(id)
         if len(seed_ids) > 0:
+            logger.info("seed_ids=" + str(seed_ids))
             res_id = self.np2vec_model.most_similar(seed_ids, topn=topn)
             res = list()
             for r in res_id:

@@ -23,7 +23,7 @@ The solution is constructed of the following stages:
 The first step in training is to prepare the data for generating a word embedding model.
 This is done by running:
 ```
-python solutions/set_expansion/prepare_data.py -corpus TRAINING_CORPUS -marked_corpus MARKED_TRAINING_CORPUS
+python solutions/set_expansion/prepare_data.py --corpus TRAINING_CORPUS --marked_corpus MARKED_TRAINING_CORPUS
 ```
 The next step is to train the model using [NLP Architect np2vec module](http://nlp_architect.nervanasys.com/np2vec.html). 
 For set expansion, we recommend the following values 100, 10, 10, 0 for respectively, 
