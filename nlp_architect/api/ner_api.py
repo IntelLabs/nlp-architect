@@ -24,6 +24,7 @@ from nlp_architect.utils.text import SpacyInstance
 
 nlp = SpacyInstance(disable=['tagger', 'ner', 'parser', 'vectors', 'textcat'])
 
+
 class NerApi(AbstractApi):
     """
     Ner model API
@@ -33,14 +34,11 @@ class NerApi(AbstractApi):
         self.model = None
         self.model_info = None
 
-
     def encode_word(self, word):
         return self.model_info['word_vocab'].get(word, 1.0)
 
-
     def encode_word_chars(self, word):
         return [self.model_info['char_vocab'].get(c, 1.0) for c in word]
-
 
     def encode_input(self, text_arr):
         sentence = []
@@ -55,9 +53,9 @@ class NerApi(AbstractApi):
         if self.model_info['sentence_len'] - chars_padded.shape[0] > 0:
             chars_padded = np.concatenate((np.zeros(
                 (self.model_info['sentence_len'] - chars_padded.shape[0],
-                self.model_info['word_len'])), chars_padded))
+                    self.model_info['word_len'])), chars_padded))
         encoded_chars = chars_padded.reshape(1, self.model_info['sentence_len'],
-                                            self.model_info['word_len'])
+                                             self.model_info['word_len'])
         return encoded_sentence, encoded_chars
 
     def load_model(self):
@@ -81,8 +79,11 @@ class NerApi(AbstractApi):
             self.model.load('examples/ner/model.h5')  # Also needs to be approved
 
     def pretty_print(self, text, tags):
-        tags_str = [self.model_info['labels_id_to_word'].get(t, None) for t in tags[0]][-len(text):]
-        mapped = [{'index': idx, 'word': el, 'label': tags_str[idx]} for idx, el in enumerate(text)]
+        tags_str = [self.model_info['labels_id_to_word']
+                    .get(t, None) for t in tags[0]][-len(text):]
+        mapped = [
+            {'index': idx, 'word': el, 'label': tags_str[idx]} for idx, el in enumerate(text)
+        ]
         counter = 0
         ents = []
         spans = []
@@ -97,7 +98,7 @@ class NerApi(AbstractApi):
         ents = dict((obj['type'].lower(), obj) for obj in spans).keys()
         ret = {}
         ret['doc_text'] = ' '.join(text)
-        ret['annotation_set'] = ents
+        ret['annotation_set'] = list(ents)
         ret['spans'] = spans
         ret['title'] = 'None'
         return {"doc": ret, 'type': 'high_level'}

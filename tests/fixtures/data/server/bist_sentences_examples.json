@@ -1,1 +1,1 @@
-{"docs" : [{"id":1, "doc":"Intel is a big organization. The fox jumps quickly"}, {"id":2, "doc":"the horse passed the barn fell"}, {"id":3, "doc":"the old man the boat"}]}
+{"model_name": "bist", "docs" : [{"id":1, "doc":"Intel is a big organization. The fox jumps quickly"}, {"id":2, "doc":"the horse passed the barn fell"}, {"id":3, "doc":"the old man the boat"}]}

@@ -331,5 +331,120 @@
         }
       }
     ]
+  },
+  "ner": {
+    "input": {
+      "docs": [
+        {
+          "id": 1,
+          "doc": "Apple is looking at buying U.K. startup for $1 billion"
+        },
+        {
+          "id": 2,
+          "doc": "Autonomous cars shift insurance liability toward manufacturers"
+        },
+        {
+          "id": 3,
+          "doc": "San Francisco considers banning sidewalk delivery robots"
+        },
+        {
+          "id": 4,
+          "doc": "London is a big city in the United Kingdom."
+        }
+      ]
+    },
+    "response": [
+      {
+        "id": 1,
+        "doc": {
+          "spans": [
+            {
+              "type": "B-ORG",
+              "start": 0,
+              "end": 5
+            },
+            {
+              "type": "B-LOC",
+              "start": 27,
+              "end": 31
+            }
+          ],
+          "annotation_set": [
+            "b-org",
+            "b-loc"
+          ],
+          "title": "None",
+          "doc_text": "Apple is looking at buying U.K. startup for $ 1 billion"
+        }
+      },
+      {
+        "id": 2,
+        "doc": {
+          "spans": [
+            {
+              "type": "B-PER",
+              "start": 0,
+              "end": 10
+            }
+          ],
+          "annotation_set": [
+            "b-per"
+          ],
+          "title": "None",
+          "doc_text": "Autonomous cars shift insurance liability toward manufacturers"
+        }
+      },
+      {
+        "id": 3,
+        "doc": {
+          "spans": [
+            {
+              "type": "B-LOC",
+              "start": 0,
+              "end": 3
+            },
+            {
+              "type": "I-LOC",
+              "start": 4,
+              "end": 13
+            }
+          ],
+          "annotation_set": [
+            "i-loc",
+            "b-loc"
+          ],
+          "title": "None",
+          "doc_text": "San Francisco considers banning sidewalk delivery robots"
+        }
+      },
+      {
+        "id": "4",
+        "doc": {
+          "spans": [
+            {
+              "type": "B-LOC",
+              "start": 0,
+              "end": 6
+            },
+            {
+              "type": "B-LOC",
+              "start": 28,
+              "end": 34
+            },
+            {
+              "type": "I-LOC",
+              "start": 35,
+              "end": 42
+            }
+          ],
+          "annotation_set": [
+            "i-loc",
+            "b-loc"
+          ],
+          "title": "None",
+          "doc_text": "London is a big city in the United Kingdom ."
+        }
+      }
+    ]
   }
 }

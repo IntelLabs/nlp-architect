@@ -15,30 +15,55 @@
 # ******************************************************************************
 import os
 import hug
+import gzip
+import json
 from falcon import status_codes
-from service import Service
+from server.service import format_response
+from server.service import Service
 services = {}
+
+api = hug.API(__name__)
+
 
 @hug.post()
 def inference(request, body, response):
     """Makes an inference to a certain model"""
     # Consider putting model_name as a param
-    if(request.headers.get('CONTENT-TYPE') != 'application/json'):
+    if(request.headers.get('CONTENT-TYPE') == 'application/gzip'):
+        try:
+            original_data = gzip.decompress(request.stream.read())
+            input_docs = json.loads(str(original_data, 'utf-8'))["docs"]
+            model_name = json.loads(str(original_data, 'utf-8'))["model_name"]
+        except Exception as ex:
+            response.status = hug.HTTP_500
+            return {'status': 'unexpected gzip error'}
+    elif(request.headers.get('CONTENT-TYPE') == 'application/json'):
+        if(isinstance(body, str)):
+            body = json.loads(body)
+        model_name = body.get('model_name')
+        input_docs = body.get('docs')
+    else:
         response.status = status_codes.HTTP_400
-        return { 'status': 'Content-Type header must be application/json'}
-    model_name = body.get('model_name')
+        return {'status': 'Content-Type header must be application/json or application/gzip'}
     if(not model_name):
         response.status = status_codes.HTTP_400
         return {'status': 'model_name is required'}
     # If we've already initialized it, no use in reinitializing
     if not services.get(model_name):
         services[model_name] = Service(model_name)
-    input_docs = body.get('docs')
-    if not isinstance(input_docs, list): # check if it's an array instead
+    if not isinstance(input_docs, list):  # check if it's an array instead
         response.status = status_codes.HTTP_400
-        return { 'status': 'request not in proper format '}
+        return {'status': 'request not in proper format '}
     parsed_doc = services[model_name].get_service_inference(input_docs, request.headers)
-    return parsed_doc
+    resp_format = request.headers["RESPONSE-FORMAT"]
+    ret = format_response(resp_format, parsed_doc)
+    if(request.headers.get('CONTENT-TYPE') == 'application/gzip'):
+        response.content_type = resp_format
+        response.body = ret
+        # no return due to the fact that hug seems to assume json type upon return
+    else:
+        return ret
+
 
 @hug.static('/')
 def static():

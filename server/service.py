@@ -25,6 +25,7 @@ import falcon
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
+
 # Utility functions, need to move to a util file
 def gzip_str(g_str):
     """
@@ -57,9 +58,10 @@ def format_response(resp_format, parsed_doc):
     logger.info('preparing response JSON')
     if (resp_format == "json") or ('json' in resp_format) or (not resp_format):
         # if not specified resp_format then default is json
-        return json.dumps(parsed_doc)
+        return parsed_doc
     if resp_format == "gzip" or 'gzip' in resp_format:
-        return gzip_str(parsed_doc)
+        ret = gzip_str(parsed_doc)
+        return ret
 
 
 def parse_headers(req_headers):
@@ -125,6 +127,7 @@ def extract_module_name(model_path):
     return class_name
 ########################################
 
+
 class Service(object):
     def __init__(self, service_name):
         self.service_type = None
@@ -183,16 +186,18 @@ class Service(object):
         """
         logger.info('sending documents to parser')
         response_data = []
-        for doc in docs:
+        for i, doc in enumerate(docs):
             inference_doc = self.service.inference(doc["doc"])
             if self.is_spacy is True:
                 parsed_doc = inference_doc.displacy_doc()
                 doc_dic = {"id": doc["id"], "doc": parsed_doc}
-                if headers['IS-HTML'] is not None and eval(headers['IS-HTML']): # Potentially a security risk
-                    # this is a visualizer request - add type of service (core/annotate) to response
+                # Potentially a security risk
+                if headers['IS-HTML'] is not None and eval(headers['IS-HTML']):
+                    # a visualizer requestadd type of service (core/annotate) to response
                     doc_dic["type"] = self.service_type
                 response_data.append(doc_dic)
             else:
+                inference_doc['id'] = i + 1
                 response_data.append(inference_doc)
         return response_data
 
