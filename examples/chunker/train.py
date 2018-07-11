@@ -109,7 +109,8 @@ if __name__ == '__main__':
     _save_model()
 
     # print evaluation metric
-    chunk_pred = model.predict_chunk(words_test, 64)
+    model.chunk_inference_mode()
+    chunk_pred = model.predict(words_test, 64)
     _, _, chunk_test = dataset.test_set
     chunk_f1 = get_conll_scores(chunk_pred, chunk_test, dataset.chunk_vocab.reverse_vocab())[0][-1]
     print('Chunk F1: {}'.format(chunk_f1))

@@ -16,6 +16,9 @@
 
 from __future__ import division, print_function, unicode_literals, absolute_import
 
+import pickle
+import tempfile
+
 import tensorflow as tf
 from tensorflow import keras
 from tensorflow.python.keras.models import load_model
@@ -74,8 +77,8 @@ class SequenceChunker(object):
         rnn_layer_3 = keras.layers.Bidirectional(self._rnn_cell())(rnn_layer_2)
         rnn_layer_3 = keras.layers.Dropout(self.dropout)(rnn_layer_3)
         pos_out = keras.layers.TimeDistributed(keras.layers.Dense(self.num_pos_labels,
-                                               activation='softmax',
-                                               name='POS output'))(rnn_layer_1)
+                                                                  activation='softmax',
+                                                                  name='POS output'))(rnn_layer_1)
         chunks_out = keras.layers.TimeDistributed(keras.layers.Dense(self.num_chunk_labels,
                                                                      activation='softmax',
                                                                      name='Chunk output')
@@ -109,13 +112,8 @@ class SequenceChunker(object):
         return rnn_cell
 
     def _embedding_layer(self):
-        if self.use_gpu:
-            emb_layer = keras.layers.Embedding(self.vocabulary_size, self.feature_size,
-                                               name='embedding', mask_zero=False)
-        else:
-            emb_layer = keras.layers.Embedding(self.vocabulary_size, self.feature_size,
-                                               name='embedding', mask_zero=True)
-            return emb_layer
+        return keras.layers.Embedding(self.vocabulary_size, self.feature_size,
+                                      name='embedding', mask_zero=self.use_gpu is False)
 
     def fit(self, x, y, batch_size=1, epochs=1, validation_data=None, callbacks=None):
         """
@@ -145,19 +143,21 @@ class SequenceChunker(object):
         """
         return self.model.predict(x=x, batch_size=batch_size)
 
-    def predict_chunk(self, x, batch_size=1):
+    def chunk_inference_mode(self):
         """
-        Predict only the chunks of given input samples
-
-        Args:
-            x: samples for inference
-            batch_size (int, optional): forward pass batch size
-
-        Returns:
-            numpy array of chunk labels
+        Convert model into chunking tagging inference mode.
+        Model can only be used for inference for chunking after calling this method,
+        re-build the model for other use.
         """
-        model = keras.Model(self.model.input, self.model.output[-1])
-        return model.predict(x=x, batch_size=batch_size)
+        self.model = keras.Model(self.model.input, self.model.output[-1])
+
+    def pos_inference_mode(self):
+        """
+        Convert model into POS tagging inference mode.
+        Model can only be used for inference for POS after calling this method,
+        re-build the model for other use.
+        """
+        self.model = keras.Model(self.model.input, self.model.output[0])
 
     def save(self, filepath):
         """
@@ -166,7 +166,16 @@ class SequenceChunker(object):
         Args:
             filepath (str): file name to save model
         """
-        self.model.save(filepath, include_optimizer=False)
+        with tempfile.NamedTemporaryFile(suffix='.h5', delete=True) as fd:
+            self.model.save_weights(fd.name)
+            model_weights = fd.read()
+        topology = {k: v for k, v in self.__dict__.items()}
+        topology.pop('model')
+        topology.pop('optimizer')
+        data = {'model_weights': model_weights,
+                'model_topology': topology}
+        with open(filepath, 'wb') as fp:
+            pickle.dump(data, fp)
 
     def load(self, filepath):
         """
@@ -175,4 +184,16 @@ class SequenceChunker(object):
         Args:
             filepath (str): file name of model
         """
-        self.model = load_model(filepath)
+        with open(filepath, 'rb') as fp:
+            model_data = pickle.load(fp)
+        topology = model_data['model_topology']
+        self.build(topology['vocabulary_size'],
+                   topology['num_pos_labels'],
+                   topology['num_chunk_labels'],
+                   topology['feature_size'],
+                   topology['dropout'],
+                   optimizer=None)
+        with tempfile.NamedTemporaryFile(suffix='.h5', delete=True) as fd:
+            fd.write(model_data['model_weights'])
+            fd.flush()
+            self.model.load_weights(fd.name)

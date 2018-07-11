@@ -266,3 +266,29 @@ def character_vector_generator(data, start=0):
             sentence_vec.append(word_vec)
         data_vec.append(sentence_vec)
     return data_vec, vocab
+
+
+def extract_nps(annotation_list, text=None):
+    """
+    Extract Noun Phrases from given text tokens and phrase annotations.
+    Returns a list of tuples with start/end indexes.
+
+    Args:
+        annotation_list (list): a list of annotation tags in str
+        text (list, optional): a list of token texts in str
+
+    Returns:
+        list of start/end markers of noun phrases, if text is provided a list of noun phrase texts
+    """
+    np_starts = [i for i in range(len(annotation_list)) if annotation_list[i] == 'B-NP']
+    np_markers = []
+    for s in np_starts:
+        i = 1
+        while s + i < len(annotation_list) and annotation_list[s + i] == 'I-NP':
+            i += 1
+        np_markers.append((s, s + i))
+    if text:
+        assert len(text) == len(annotation_list), 'annotations/text length mismatch'
+        return [' '.join(text[s:e]) for s, e in np_markers]
+    else:
+        return np_markers
