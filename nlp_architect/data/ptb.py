@@ -6,6 +6,9 @@ import sys
 import numpy as np
 import urllib.request
 
+LICENSE_URL = {'PTB': "http://www.fit.vutbr.cz/~imikolov/rnnlm/",
+              'WikiText-103': "https://einstein.ai/research/the-wikitext-long-term-dependency-"
+                              "language-modeling-dataset"}
 
 SOURCE_URL = {'PTB': "http://www.fit.vutbr.cz/~imikolov/rnnlm/simple-examples.tgz",
               'WikiText-103': "https://s3.amazonaws.com/research.metamind.io/wikitext/" +
@@ -104,15 +107,14 @@ class PTBDictionary:
                       '-modeling-dataset')
                 print('\nThe terms and conditions of the data set license apply. Intel does not '
                       'grant any rights to the data files or database\n')
-                response = input('\nTo download \'{}\' from {}, please enter YES: '
-                                 .format(FILENAME[self.dataset], SOURCE_URL[self.dataset]))
+                response = input('\nTo download data from {}, please enter YES: '
+                                 .format(LICENSE_URL[self.dataset]))
                 res = response.lower().strip()
                 if res == "yes" or (len(res) == 1 and res == 'y'):
                     print("Downloading...")
                     self._download_data(work_directory)
                     self._uncompress_data(work_directory)
                 else:
-
                     print('Download declined. Response received {} != YES|Y. '.format(res))
                     print('Please download the model manually from the links above '
                           'and place in directory: {}'.format(work_directory))
