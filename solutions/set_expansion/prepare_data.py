@@ -92,8 +92,11 @@ if __name__ == '__main__':
                 else:
                     if not spanWritten:
                         # mark NP's
-                        text = span.text.replace(' ', args.mark_char) + args.mark_char
-                        marked_corpus_file.write(text + ' ')
+                        if len(span.text) > 1:
+                            text = span.text.replace(' ', args.mark_char) + args.mark_char
+                            marked_corpus_file.write(text + ' ')
+                        else:
+                            marked_corpus_file.write(span.text + ' ')
                         spanWritten = True
                     if token.idx + len(token.text) == span.end_char:
                         if len(spans) > 0:
