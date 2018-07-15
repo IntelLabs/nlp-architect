@@ -32,13 +32,16 @@ size, min_count, window and hs hyperparameters.
 python examples/np2vec/train.py --size 100 --min_count 10 --window 10 --hs 0 --corpus MARKED_TRAINING_CORPUS --np2vec_model_file MODEL_PATH --corpus_format txt
 ```
 
+A pretrained model on English Wikipedia dump (enwiki-20171201-pages-articles-multistream.xml
+.bz2) is supplied at . It has been trained with hyperparameters values recommended above.
+
 ## Inference:
 
 It consists in expanding the seed terms. It can be done in two ways:
 
 1. Running python script
 ```
-python solutions/set_expansion/set_expand.py --np2vec_model_file MODEL_PATH --seed SEED
+python solutions/set_expansion/set_expand.py --np2vec_model_file MODEL_PATH --topn TOPN
 ```
 2. Web application
 

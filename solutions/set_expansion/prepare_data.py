@@ -18,7 +18,7 @@
 Script that prepares the input corpus for np2vec training: it runs NP extractor on the corpus and
 marks extracted NP's.
 """
-
+import gzip
 import logging
 import sys
 import spacy
@@ -33,13 +33,14 @@ if __name__ == '__main__':
     arg_parser = ArgumentParser(__doc__)
     arg_parser.add_argument(
         '--corpus',
-        default='train.txt',
+        default='../../datasets/wikipedia/enwiki-20171201_subset.txt.gz',
         type=str,
         action=check_size(min_size=1),
-        help='path to the input corpus. By default, it is a subset of English Wikipedia dump.')
+        help='path to the input corpus. Compressed files (gz) are also supported. By default, '
+             'it is a subset of English Wikipedia.')
     arg_parser.add_argument(
         '--marked_corpus',
-        default='marked_train.txt',
+        default='enwiki-20171201_subset_marked.txt',
         type=str,
         action=check_size(min_size=1),
         help='path to the marked corpus corpus.')
@@ -48,14 +49,19 @@ if __name__ == '__main__':
         default='_',
         type=str,
         action=check_size(1, 2),
-        help='special character that marks NP\'s in the corpus (word separator and NP suffix).')
+        help='special character that marks NP\'s in the corpus (word separator and NP suffix). '
+             'Default value is _.')
 
     args = arg_parser.parse_args()
 
-    corpus_file = open(args.corpus, 'r', encoding='utf8')
+    if args.corpus.endswith('gz'):
+        corpus_file = gzip.open(args.corpus, 'rt', encoding='utf8')
+    else:
+        corpus_file = open(args.corpus, 'r', encoding='utf8')
+
     marked_corpus_file = open(args.marked_corpus, 'w', encoding='utf8')
 
-    # NP extractor using spacy
+    # spacy NP extractor
     logger.info('loading spacy')
     nlp = spacy.load('en_core_web_sm', disable=['textcat', 'ner'])
     logger.info('spacy loaded')

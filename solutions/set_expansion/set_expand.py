@@ -118,8 +118,7 @@ if __name__ == "__main__":
         type=validate_existing_filepath)
     arg_parser.add_argument(
         '--binary',
-        help='boolean indicating whether the model to load has been stored in binary '
-        'format.',
+        help='boolean indicating whether the model to load has been stored in binary format.',
         action='store_true')
     arg_parser.add_argument(
         '--word_ngrams',
@@ -129,14 +128,19 @@ if __name__ == "__main__":
         help='If 0, the model to load stores word information. If 1, the model to load stores '
         'subword (ngrams) information; note that subword information is relevant only to '
         'fasttext models.')
-    arg_parser.add_argument('--seed', type=str, action=check_size(min_size=1),\
-    help='comma-separated seed terms')
-    arg_parser.add_argument('--topn', default=500, type=int, action=check_size(min_size=1),
-                            help='maximal number of expanded terms to return')
+    arg_parser.add_argument(
+        '--topn',
+        default=500,
+        type=int,
+        action=check_size(min_size=1),
+        help='maximal number of expanded terms to return')
 
     args = arg_parser.parse_args()
     se = SetExpand(np2vec_model_file=args.np2vec_model_file, binary=args.binary,
                    word_ngrams=args.word_ngrams)
-    exp = se.expand(args.seed, args.topn)
-    logger.info('Expanded results:')
-    logger.info(exp)
+    logger.info('Enter the seed (comma-separated seed terms):')
+    for seed in sys.stdin:
+        exp = se.expand(seed, args.topn)
+        logger.info('Expanded results:')
+        logger.info(exp)
+        logger.info('Enter the seed (comma-separated seed terms):')
