@@ -27,7 +27,7 @@ import datetime
 import spacy
 from configargparse import ArgumentParser
 from nlp_architect.utils.io import check_size
-from solutions.set_expansion.text_normalizer import simple_normalizer
+from solutions.set_expansion.text_normalizer import spacy_normalizer
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -35,6 +35,7 @@ logger = logging.getLogger(__name__)
 np2id = {}
 id2group = {}
 id2rep = {}
+np2count = {}
 
 if __name__ == '__main__':
     arg_parser = ArgumentParser(__doc__)
@@ -94,15 +95,22 @@ if __name__ == '__main__':
                     if not spanWritten:
                         # normalize NP
                         np = span.text
-                        norm = simple_normalizer(np, span.lemma_)
+                        if np not in np2count:
+                            np2count[np] = 1
+                        else:
+                            np2count[np] += 1
+                        norm = spacy_normalizer(np, span.lemma_)
                         np2id[np] = norm
                         if norm not in id2rep:
                             id2rep[norm] = np
                         if norm in id2group:
                             if np not in id2group[norm]:
                                 id2group[norm].append(np)
+                            elif np2count[np] > np2count[id2rep[norm]]:
+                                id2rep[norm] = np  # replace rep
                         else:
                             id2group[norm] = [np]
+                            id2rep[norm] = np
                         # mark NP's
                         text = id2rep[norm].replace(' ', args.mark_char) + args.mark_char
                         marked_corpus_file.write(text + ' ')
@@ -119,13 +127,13 @@ if __name__ == '__main__':
 
 # write grouping data :
     corpus_name = os.path.basename(args.corpus)
-    with open('id2group_' + corpus_name + '_' + str(datetime.datetime.now()), 'w', encoding='utf8') as id2group_file:
+    with open('id2group_' + corpus_name + '_' + str(datetime.datetime.now().time()), 'w', encoding='utf8') as id2group_file:
         id2group_file.write(json.dumps(id2group))
 
-    with open('id2rep_' + corpus_name + '_' +str(datetime.datetime.now()), 'w', encoding='utf8') as id2rep_file:
+    with open('id2rep_' + corpus_name + '_' +str(datetime.datetime.now().time()), 'w', encoding='utf8') as id2rep_file:
         id2rep_file.write(json.dumps(id2rep))
 
-    with open('np2id_' + corpus_name + '_' + str(datetime.datetime.now()), 'w', encoding='utf8') as np2id_file:
+    with open('np2id_' + corpus_name + '_' + str(datetime.datetime.now().time()), 'w', encoding='utf8') as np2id_file:
         np2id_file.write(json.dumps(np2id))
 
     corpus_file.close()

@@ -21,7 +21,7 @@ from configargparse import ArgumentParser
 
 from nlp_architect.models.np2vec import NP2vec
 from nlp_architect.utils.io import validate_existing_filepath, check_size
-from solutions.set_expansion.text_normalizer import simple_normalizer
+from solutions.set_expansion.text_normalizer import spacy_normalizer
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -101,7 +101,7 @@ class SetExpand():
         """
         seed_ids = list()
         for np in seed:
-            norm = simple_normalizer(np)
+            norm = spacy_normalizer(np)
             if norm not in self.id2rep or self.__term2id(self.id2rep[norm]) not in self.np2vec_model.vocab:
                 logger.warning("The term: '" + np + "' is out-of-vocabulary.")
             else:

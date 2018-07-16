@@ -14,7 +14,7 @@ lemmatizer = Lemmatizer(LEMMA_INDEX, LEMMA_EXC, LEMMA_RULES)
 p = re.compile(r'[ \-,;.@&]')
 
 
-def simple_normalizer(text, lemma=None):
+def spacy_normalizer(text, lemma=None):
     """
     Simple text normalizer. Runs each token of a phrase thru a lemmatizer
     and a stemmer.
