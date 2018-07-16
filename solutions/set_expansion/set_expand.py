@@ -140,6 +140,7 @@ if __name__ == "__main__":
                    word_ngrams=args.word_ngrams)
     logger.info('Enter the seed (comma-separated seed terms):')
     for seed in sys.stdin:
+        seed = seed.strip().split(',')
         exp = se.expand(seed, args.topn)
         logger.info('Expanded results:')
         logger.info(exp)

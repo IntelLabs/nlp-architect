@@ -63,7 +63,7 @@ if __name__ == '__main__':
 
     # spacy NP extractor
     logger.info('loading spacy')
-    nlp = spacy.load('en_core_web_sm', disable=['textcat', 'ner'])
+    nlp = spacy.load('en_core_web_sm', disable=['textcat', 'parser' 'ner'])
     logger.info('spacy loaded')
 
     num_lines = sum(1 for line in corpus_file)
@@ -86,13 +86,14 @@ if __name__ == '__main__':
                 if len(token.text.strip()) > 0:
                     marked_corpus_file.write(token.text + ' ')
             else:
-                if token.idx < span.start_char or token.idx >= span.end_char:  # outside a span
+                if token.idx < span.start_char or token.idx >= span.end_char:  # outside a
+                    # span
                     if len(token.text.strip()) > 0:
                         marked_corpus_file.write(token.text + ' ')
                 else:
                     if not spanWritten:
                         # mark NP's
-                        if len(span.text) > 1:
+                        if len(span.text) > 1 and span.lemma_ != '-PRON-':
                             text = span.text.replace(' ', args.mark_char) + args.mark_char
                             marked_corpus_file.write(text + ' ')
                         else:
