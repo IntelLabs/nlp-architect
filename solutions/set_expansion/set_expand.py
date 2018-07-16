@@ -83,6 +83,7 @@ class SetExpand():
         """
         return [self.__id2term(id) for id in self.np2vec_model.vocab]
 
+
     def expand(self, seed, topn=500):
         """
         Given a seed of terms, return the expanded set of terms.
@@ -95,15 +96,24 @@ class SetExpand():
             up to topn expanded terms and their probabilities
         """
         seed_ids = list()
+        upper = True
         for np in seed:
+            if np[0].islower():
+                upper = False
             id = self.__term2id(np)
             if id in self.np2vec_model.vocab:
                 seed_ids.append(id)
         if len(seed_ids) > 0:
-            res_id = self.np2vec_model.most_similar(seed_ids, topn=topn)
+            if upper:
+                res_id = self.np2vec_model.most_similar(seed_ids, topn=2*topn)
+            else:
+                res_id = self.np2vec_model.most_similar(seed_ids, topn=topn)
             res = list()
             for r in res_id:
-                res.append((self.__id2term(r[0]), r[1]))
+                if len(res) == topn:
+                    break
+                if upper and r[0][0].isupper():
+                    res.append((self.__id2term(r[0]), r[1]))
             return res
         else:
             logger.info("All the seed terms are out-of-vocabulary.")
@@ -126,8 +136,8 @@ if __name__ == "__main__":
         type=int,
         choices=[0, 1],
         help='If 0, the model to load stores word information. If 1, the model to load stores '
-        'subword (ngrams) information; note that subword information is relevant only to '
-        'fasttext models.')
+             'subword (ngrams) information; note that subword information is relevant only to '
+             'fasttext models.')
     arg_parser.add_argument(
         '--topn',
         default=500,
