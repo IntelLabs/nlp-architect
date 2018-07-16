@@ -21,6 +21,11 @@ from solutions.set_expansion import set_expand
 
 
 class MyTCPHandler(socketserver.BaseRequestHandler):
+    """
+    A simple server to load the w2v model and handle expand requests from the
+    ui
+    """
+
     def handle(self):
         print("handling expand request")
         res = ''

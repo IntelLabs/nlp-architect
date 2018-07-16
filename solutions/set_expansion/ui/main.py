@@ -14,19 +14,20 @@
 # limitations under the License.
 # ******************************************************************************
 
+import os
 import socket
 import pickle
 import time
-import numpy as np
-import pandas
 import json
-import solutions.set_expansion.ui.settings as settings
+
+import pandas
 from bokeh.layouts import column, layout
 from bokeh.models import ColumnDataSource, Div, Row
 from bokeh.models.widgets import Button, DataTable, TableColumn, CheckboxGroup, MultiSelect
 from bokeh.models.widgets.inputs import TextInput
 from bokeh.io import curdoc
-from solutions.set_expansion.text_normalizer import simple_normalizer
+
+import solutions.set_expansion.ui.settings as settings
 
 vocab = None
 np2id, id2group, id2rep = {}, {}, {}
@@ -44,9 +45,11 @@ expand_columns = [
     TableColumn(field="res", title="Results"),
     TableColumn(field="score", title="Score")
 ]
-empty_table = {'res': 15*[''], 'score':15*['']}
+empty_table = {'res': 15*[''], 'score': 15*['']}
+
 
 # create ui components
+
 seed_input_title = 'Please enter a comma separated seed list of terms:'
 seed_input_box = TextInput(title=seed_input_title, value="USA, Israel, France", width=450, css_classes=["seed-input"])
 search_input_box = TextInput(title="Search:", value="", width=300)
@@ -79,24 +82,30 @@ grid = layout([
 
 # define callbacks
 
-def get_vocab(top_n=100000):
+def get_vocab():
+    """
+    Get vocabulary of the np2vec model from the server and load grouping data
+    """
     global vocab, np2id, id2group, id2rep
-    with open('np2id') as f:
-        np2id = json.load(f)
-    with open('id2group') as f:
-        id2group = json.load(f)
-    with open('id2rep') as f:
-        id2rep = json.load(f)
-    received = send_request_to_server('get_vocab')
-    vocab = received
-    for p in vocab:
-        if len(p) < max_phrase_length:
-            vocab_dict[p] = p
-            cut_vocab_dict[p] = p
-        else:
-            vocab_dict[p] = p[:max_phrase_length-1] + '...'
-            cut_vocab_dict[p[:max_phrase_length-1] + '...'] = p
-    print('done. vocab count = ' + str(len(vocab)))
+    if os.path.isfile('np2id') and os.path.isfile('id2group') and os.path.isfile('id2rep'):
+        with open('np2id') as f:
+            np2id = json.load(f)
+        with open('id2group') as f:
+            id2group = json.load(f)
+        with open('id2rep') as f:
+            id2rep = json.load(f)
+        received = send_request_to_server('get_vocab')
+        vocab = received
+        for p in vocab:
+            if len(p) < max_phrase_length:
+                vocab_dict[p] = p
+                cut_vocab_dict[p] = p
+            else:
+                vocab_dict[p] = p[:max_phrase_length-1] + '...'
+                cut_vocab_dict[p[:max_phrase_length-1] + '...'] = p
+        print('done. vocab count = ' + str(len(vocab)))
+    else:
+        print('grouping data is missing.')
 
 
 def send_request_to_server(request):
@@ -126,17 +135,6 @@ def send_request_to_server(request):
         sock.close()
 
 
-def clean_group(phrase_group):
-    text = [x.lstrip() for x in phrase_group.split(';')]
-    return min(text, key=len)
-
-
-def conv(val):
-    if val == np.nan:
-        return 0 # or whatever else you want to represent your NaN with
-    return val
-
-
 def row_selected_callback(attr, old, new):
     global clear_flag
     if not clear_flag and expand_table_source.data != empty_table:
@@ -144,18 +142,18 @@ def row_selected_callback(attr, old, new):
         print('old indices=' + str(old.indices))
         print('new indices=' + str(new.indices))
         global all_selected_phrases
-        #sync phrases lists:
+        # sync phrases lists:
         old_phrases = [expand_table_source.data['res'][p] for p in old.indices]
         new_phrases = [expand_table_source.data['res'][p] for p in new.indices]
         print('selected_expand was updated: old=' + str(
             old_phrases) + ' ,new=' + str(new_phrases))
-        #phrase was de-selected from expand list:
+        # phrase was de-selected from expand list:
         for o in old_phrases:
             if o not in new_phrases and (vocab is not None and vocab_dict[o] in phrases_list.value):
                 print('removing ' + o + 'from vocab selected')
                 phrases_list.value.remove(vocab_dict[o])
                 break
-        #new phrase was selected from expand list:
+        # new phrase was selected from expand list:
         for n in new_phrases:
             if n not in old_phrases and (vocab is not None and vocab_dict[n] in phrases_list.options and vocab_dict[n] not in phrases_list.value):
                 phrases_list.value.append(vocab_dict[n])
@@ -165,6 +163,9 @@ def row_selected_callback(attr, old, new):
 
 
 def update_all_selected_phrases():
+    """
+    Sync selected values from both the expand-table and the vocabulary list
+    """
     print('update selected phrases')
     global all_selected_phrases
     updated_selected_phrases = all_selected_phrases[:]
@@ -209,6 +210,10 @@ def show_phrases_callback(checked_value):
 
 
 def get_expand_results_callback():
+    """
+    Send to the server the seed to expand and set the results in the expand
+    table.
+    """
     print('### new expand request')
     expand_working_label.text = working_text
     global seed_check_text, table_area
@@ -227,7 +232,7 @@ def get_expand_results_callback():
             seed_words = [x for x in seed.split(',')]
             bad_words = ''
             for w in seed_words:
-                norm = simple_normalizer(w)
+                norm = np2id[w]
                 if norm not in id2rep or id2rep[norm] not in vocab:
                     bad_words += ("'" + w + "',")
             if bad_words != '':
@@ -261,14 +266,11 @@ def search_callback(value, old, new):
         new_phrases = list(cut_vocab_dict.keys())
     else:
         new_phrases = []
-        # new_phrases = [vocab_dict[id2rep[np2id[x]]] for x in np2id.keys() if
-        #                x.lower().startswith(new.lower()) and vocab_dict[id2rep[np2id[x]]] not in new_phrases]
         for x in np2id.keys():
             if x.lower().startswith(new.lower()) and id2rep[
                     np2id[x]] in vocab_dict and vocab_dict[id2rep[
                     np2id[x]]] not in new_phrases:
                 new_phrases.append(vocab_dict[id2rep[np2id[x]]])
-        # new_phrases = [vocab_dict[x] for x in vocab if (new.lower() in x.lower() or x.lower()==new.lower())]
     phrases_list.options=new_phrases[0:max_visible_phrases]
     if new != '':
         phrases_list.options.sort()
@@ -344,6 +346,9 @@ def export_data_callback():
 
 
 def get_selected_phrases_for_seed():
+    """
+     create the seed string to send to the server
+    """
     global all_selected_phrases
     phrases = ''
     for x in all_selected_phrases:
@@ -353,11 +358,15 @@ def get_selected_phrases_for_seed():
 
 
 def expand_data_changed_callback(attr, old, new):
+    """
+    remove the selected indices when table is empty
+    """
     if old == empty_table:
         expand_table_source.selected.indices = []
 
 
 # set callbacks
+
 expand_button.on_click(get_expand_results_callback)
 expand_table_source.on_change('selected', row_selected_callback)
 expand_table_source.on_change('data', expand_data_changed_callback)
@@ -370,6 +379,7 @@ export_button.on_click(export_data_callback)
 
 
 # arrange components in page
+
 doc = curdoc()
 main_title = "Set Expansion Demo"
 doc.title = main_title

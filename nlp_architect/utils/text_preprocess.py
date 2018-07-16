@@ -9,6 +9,8 @@ from nltk import WordNetLemmatizer
 from nltk.corpus import stopwords
 from nltk.stem.snowball import EnglishStemmer
 from textacy.preprocess import unpack_contractions
+from spacy.lemmatizer import Lemmatizer
+from spacy.lang.en import LEMMA_INDEX, LEMMA_EXC, LEMMA_RULES
 
 LINE_BREAK = re.compile(r'(\r\n)+')
 SPACE_CHAR = re.compile(r'(?!\n)\s+')
@@ -110,6 +112,29 @@ def simple_normalizer(text):
                          for t in tokens])
     return text
 
+spacy_lemmatizer = Lemmatizer(LEMMA_INDEX, LEMMA_EXC, LEMMA_RULES)
+
+def spacy_normalizer(text, lemma=None):
+    """
+    Simple text normalizer using spacy lemmatizer. Runs each token of a phrase
+    thru a lemmatizer and a stemmer.
+    Arguments:
+        text(string): the text to normalize.
+        lemma(string): lemma of the given text. in this case only stemmer will
+        run.
+    """
+    if not str(text).isupper() or \
+            not str(text).endswith('S') or \
+            not len(text.split()) == 1:
+        tokens = list(filter(lambda x: len(x) != 0, p.split(text.strip())))
+        if lemma:
+            lemma = lemma.split(' ')
+            text = ' '.join([stemmer.stem(l)
+                             for l in lemma])
+        else:
+            text = ' '.join([stemmer.stem(spacy_lemmatizer(t, u'NOUN')[0])
+                             for t in tokens])
+    return text
 
 class Stopwords:
     """

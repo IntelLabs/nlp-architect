@@ -21,7 +21,6 @@ from configargparse import ArgumentParser
 
 from nlp_architect.models.np2vec import NP2vec
 from nlp_architect.utils.io import validate_existing_filepath, check_size
-from solutions.set_expansion.text_normalizer import spacy_normalizer
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -52,8 +51,10 @@ class SetExpand():
         # Precompute L2-normalized vectors.
         self.np2vec_model.init_sims()
         # load grouping info
-        with open('id2rep') as f:
-            self.id2rep = json.load(f)
+        with open('id2rep') as id2rep_file:
+            self.id2rep = json.load(id2rep_file)
+        with open('np2id') as np2id_file:
+            self.np2id = json.load(np2id_file)
 
     def __term2id(self, term):
         """
@@ -101,7 +102,7 @@ class SetExpand():
         """
         seed_ids = list()
         for np in seed:
-            norm = spacy_normalizer(np)
+            norm = self.np2id[np]
             if norm not in self.id2rep or self.__term2id(self.id2rep[norm]) not in self.np2vec_model.vocab:
                 logger.warning("The term: '" + np + "' is out-of-vocabulary.")
             else:

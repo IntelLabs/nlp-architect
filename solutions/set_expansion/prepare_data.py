@@ -27,7 +27,7 @@ import datetime
 import spacy
 from configargparse import ArgumentParser
 from nlp_architect.utils.io import check_size
-from solutions.set_expansion.text_normalizer import spacy_normalizer
+from nlp_architect.utils.text_preprocess import spacy_normalizer
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -126,6 +126,7 @@ if __name__ == '__main__':
             logger.info('%i of %i lines', i, num_lines)
 
 # write grouping data :
+
     corpus_name = os.path.basename(args.corpus)
     with open('id2group_' + corpus_name + '_' + str(datetime.datetime.now().time()), 'w', encoding='utf8') as id2group_file:
         id2group_file.write(json.dumps(id2group))
