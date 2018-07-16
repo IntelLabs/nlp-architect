@@ -59,56 +59,54 @@ if __name__ == '__main__':
     else:
         corpus_file = open(args.corpus, 'r', encoding='utf8')
 
-    marked_corpus_file = open(args.marked_corpus, 'w', encoding='utf8')
+    with open(args.marked_corpus, 'w', encoding='utf8') as marked_corpus_file:
 
-    # spacy NP extractor
-    logger.info('loading spacy')
-    nlp = spacy.load('en_core_web_sm', disable=['textcat', 'parser' 'ner'])
-    logger.info('spacy loaded')
+        # spacy NP extractor
+        logger.info('loading spacy')
+        nlp = spacy.load('en_core_web_sm', disable=['textcat', 'parser' 'ner'])
+        logger.info('spacy loaded')
 
-    num_lines = sum(1 for line in corpus_file)
-    corpus_file.seek(0)
-    logger.info('%i lines in corpus', num_lines)
-    i = 0
+        num_lines = sum(1 for line in corpus_file)
+        corpus_file.seek(0)
+        logger.info('%i lines in corpus', num_lines)
+        i = 0
 
-    for doc in nlp.pipe(corpus_file):
-        spans = list()
-        for p in doc.noun_chunks:
-            spans.append(p)
-        i += 1
-        if len(spans) > 0:
-            span = spans.pop(0)
-        else:
-            span = None
-        spanWritten = False
-        for token in doc:
-            if span is None:
-                if len(token.text.strip()) > 0:
-                    marked_corpus_file.write(token.text + ' ')
+        for doc in nlp.pipe(corpus_file):
+            spans = list()
+            for p in doc.noun_chunks:
+                spans.append(p)
+            i += 1
+            if len(spans) > 0:
+                span = spans.pop(0)
             else:
-                if token.idx < span.start_char or token.idx >= span.end_char:  # outside a
-                    # span
+                span = None
+            spanWritten = False
+            for token in doc:
+                if span is None:
                     if len(token.text.strip()) > 0:
                         marked_corpus_file.write(token.text + ' ')
                 else:
-                    if not spanWritten:
-                        # mark NP's
-                        if len(span.text) > 1 and span.lemma_ != '-PRON-':
-                            text = span.text.replace(' ', args.mark_char) + args.mark_char
-                            marked_corpus_file.write(text + ' ')
-                        else:
-                            marked_corpus_file.write(span.text + ' ')
-                        spanWritten = True
-                    if token.idx + len(token.text) == span.end_char:
-                        if len(spans) > 0:
-                            span = spans.pop(0)
-                        else:
-                            span = None
-                        spanWritten = False
-        marked_corpus_file.write('\n')
-        if i % 500 == 0:
-            logger.info('%i of %i lines', i, num_lines)
+                    if token.idx < span.start_char or token.idx >= span.end_char:  # outside a
+                        # span
+                        if len(token.text.strip()) > 0:
+                            marked_corpus_file.write(token.text + ' ')
+                    else:
+                        if not spanWritten:
+                            # mark NP's
+                            if len(span.text) > 1 and span.lemma_ != '-PRON-':
+                                text = span.text.replace(' ', args.mark_char) + args.mark_char
+                                marked_corpus_file.write(text + ' ')
+                            else:
+                                marked_corpus_file.write(span.text + ' ')
+                            spanWritten = True
+                        if token.idx + len(token.text) == span.end_char:
+                            if len(spans) > 0:
+                                span = spans.pop(0)
+                            else:
+                                span = None
+                            spanWritten = False
+            marked_corpus_file.write('\n')
+            if i % 500 == 0:
+                logger.info('%i of %i lines', i, num_lines)
 
     corpus_file.close()
-    marked_corpus_file.flush()
-    marked_corpus_file.close()
