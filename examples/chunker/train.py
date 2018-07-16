@@ -112,5 +112,9 @@ if __name__ == '__main__':
     model.chunk_inference_mode()
     chunk_pred = model.predict(words_test, 64)
     _, _, chunk_test = dataset.test_set
-    chunk_f1 = get_conll_scores(chunk_pred, chunk_test, dataset.chunk_vocab.reverse_vocab())[0][-1]
-    print('Chunk F1: {}'.format(chunk_f1))
+
+    res = get_conll_scores(chunk_pred, chunk_test, dataset.chunk_vocab.reverse_vocab())
+    if args.print_np is True:
+        print('NP F1: {}'.format(res[1]['NP'][-1]))
+    else:
+        print('Chunk F1: {}'.format(res[0][-1]))

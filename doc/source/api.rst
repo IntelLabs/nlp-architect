@@ -67,10 +67,6 @@ These are currently stored in the various models or related to which DL framewor
    nlp_architect.contrib.ngraph.match_lstm.Dropout_Modified
    nlp_architect.contrib.ngraph.match_lstm.LookupTable
    nlp_architect.contrib.ngraph.modified_lookup_table.ModifiedLookupTable
-   nlp_architect.contrib.neon.layers.DataInput
-   nlp_architect.contrib.neon.layers.TimeDistributedRecurrentOutput
-   nlp_architect.contrib.neon.layers.TimeDistributedRecurrentLast
-   nlp_architect.contrib.neon.layers.TimeDistBiLSTM
    nlp_architect.contrib.keras.callbacks.ConllCallback
 
 
@@ -86,12 +82,10 @@ these will be placed into a central repository.
     :toctree: generated/
     :nosignatures:
 
-    nlp_architect.data.conll2000.TaggedTextSequence
-    nlp_architect.data.conll2000.MultiSequenceDataIterator
-    nlp_architect.data.conll2000.CONLL2000
     nlp_architect.data.intent_datasets.IntentDataset
     nlp_architect.data.intent_datasets.TabularIntentDataset
     nlp_architect.data.intent_datasets.SNIPS
+    nlp_architect.data.sequential_tagging.CONLL2000
     nlp_architect.data.sequential_tagging.SequentialTaggingDataset
     nlp_architect.data.babi_dialog.BABI_Dialog
     nlp_architect.data.wikimovies.WIKIMOVIES
