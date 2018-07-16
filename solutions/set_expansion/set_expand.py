@@ -83,7 +83,6 @@ class SetExpand():
         """
         return [self.__id2term(id) for id in self.np2vec_model.vocab]
 
-
     def expand(self, seed, topn=500):
         """
         Given a seed of terms, return the expanded set of terms.
@@ -105,7 +104,7 @@ class SetExpand():
                 seed_ids.append(id)
         if len(seed_ids) > 0:
             if upper:
-                res_id = self.np2vec_model.most_similar(seed_ids, topn=2*topn)
+                res_id = self.np2vec_model.most_similar(seed_ids, topn=2 * topn)
             else:
                 res_id = self.np2vec_model.most_similar(seed_ids, topn=topn)
             res = list()
@@ -148,10 +147,11 @@ if __name__ == "__main__":
     args = arg_parser.parse_args()
     se = SetExpand(np2vec_model_file=args.np2vec_model_file, binary=args.binary,
                    word_ngrams=args.word_ngrams)
-    logger.info('Enter the seed (comma-separated seed terms):')
-    for seed in sys.stdin:
-        seed = seed.strip().split(',')
-        exp = se.expand(seed, args.topn)
+    enter_seed_str = 'Enter the seed (comma-separated seed terms):'
+    logger.info(enter_seed_str)
+    for seed_str in sys.stdin:
+        seed_list = seed_str.strip().split(',')
+        exp = se.expand(seed_list, args.topn)
         logger.info('Expanded results:')
         logger.info(exp)
-        logger.info('Enter the seed (comma-separated seed terms):')
+        logger.info(enter_seed_str)
