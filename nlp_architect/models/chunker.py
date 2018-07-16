@@ -21,7 +21,6 @@ import tempfile
 
 import tensorflow as tf
 from tensorflow import keras
-from tensorflow.python.keras.models import load_model
 
 
 class SequenceChunker(object):
