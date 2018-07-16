@@ -70,7 +70,6 @@ These are currently stored in the various models or related to which DL framewor
    nlp_architect.contrib.keras.callbacks.ConllCallback
 
 
-
 ``nlp_architect.data``
 ----------------------
 .. py:module:: nlp_architect.data
@@ -89,3 +88,18 @@ these will be placed into a central repository.
     nlp_architect.data.sequential_tagging.SequentialTaggingDataset
     nlp_architect.data.babi_dialog.BABI_Dialog
     nlp_architect.data.wikimovies.WIKIMOVIES
+
+``nlp_architect.pipelines``
+---------------------------
+.. py:module:: nlp_architect.pipelines
+
+NLP pipelines modules using models implemented from ``nlp_architect.models``.
+
+.. autosummary::
+    :toctree: generated/
+    :nosignatures:
+
+    nlp_architect.pipelines.spacy_bist.SpacyBISTParser
+    nlp_architect.pipelines.spacy_np_annotator.NPAnnotator
+    nlp_architect.pipelines.spacy_np_annotator.SpacyNPAnnotator
+

@@ -296,4 +296,13 @@ class SpacyNPAnnotator(object):
         self.nlp = nlp
 
     def __call__(self, text: str) -> [str]:
+        """
+        Parse a given text and return a list of noun phrases found
+
+        Args:
+            text (str): a text string
+
+        Returns:
+            list of noun phrases as strings
+        """
         return [np.text for np in get_noun_phrases(self.nlp(text))]

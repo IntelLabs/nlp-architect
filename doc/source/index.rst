@@ -111,7 +111,6 @@ on this project, please see the :doc:`developer guide <developer_guide>`.
    intent.rst
    np_segmentation.rst
    bist_parser.rst
-   spacy_bist.rst
    word_sense.rst
    np2vec.rst
 
@@ -124,6 +123,13 @@ on this project, please see the :doc:`developer guide <developer_guide>`.
    memn2n.rst
    kvmemn2n.rst
 
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+   :caption: Pipelines
+
+   spacy_bist.rst
+   spacy_np_annotator.rst
 
 .. toctree::
   :hidden:

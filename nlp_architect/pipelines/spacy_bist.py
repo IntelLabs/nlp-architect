@@ -32,8 +32,8 @@ class SpacyBISTParser(object):
         (see https://spacy.io/api/top-level#spacy.load).
         bist_model (str, optional): Path to a .model file to load. Defaults pre-trained model'.
     """
-    dir = path.dirname(path.realpath(__file__))
-    pretrained = path.join(dir, 'bist-pretrained', 'bist.model')
+    _dir = path.dirname(path.realpath(__file__))
+    _pretrained = path.join(_dir, 'bist-pretrained', 'bist.model')
 
     def __init__(self, verbose=False, spacy_model='en', bist_model=None):
         validate((verbose, bool), (spacy_model, str, 0, 1000),
@@ -41,11 +41,11 @@ class SpacyBISTParser(object):
         if not bist_model:
             print("Using pre-trained BIST model.")
             _download_pretrained_model()
-            bist_model = SpacyBISTParser.pretrained
+            bist_model = SpacyBISTParser._pretrained
 
         self.verbose = verbose
         self.bist_parser = BISTModel()
-        self.bist_parser.load(bist_model if bist_model else SpacyBISTParser.pretrained)
+        self.bist_parser.load(bist_model if bist_model else SpacyBISTParser._pretrained)
         self.spacy_parser = SpacyInstance(spacy_model,
                                           disable=['ner', 'vectors', 'textcat']).parser
 
@@ -137,16 +137,16 @@ class SpacyBISTParser(object):
 
 def _download_pretrained_model():
     """Downloads the pre-trained BIST model if non-existent."""
-    dir_path = path.join(SpacyBISTParser.dir, 'bist-pretrained')
+    dir_path = path.join(SpacyBISTParser._dir, 'bist-pretrained')
     if not path.isfile(path.join(dir_path, 'bist.model')):
         print('Downloading pre-trained BIST model...')
-        zip_path = path.join(SpacyBISTParser.dir, 'bist-pretrained.zip')
+        zip_path = path.join(SpacyBISTParser._dir, 'bist-pretrained.zip')
         download_unlicensed_file('https://s3-us-west-1.amazonaws.com/nervana-modelzoo/parse/',
                                  'bist-pretrained.zip', zip_path)
 
         makedirs(dir_path, exist_ok=True)
         print('Unzipping...')
-        uncompress_file(zip_path, outpath=SpacyBISTParser.dir)
+        uncompress_file(zip_path, outpath=SpacyBISTParser._dir)
         remove(zip_path)
         print('Done.')
 
