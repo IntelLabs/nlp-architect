@@ -2,8 +2,8 @@ import pickle
 
 import numpy as np
 import spacy
-from spacy.tokens.doc import Doc
-from spacy.tokens.span import Span
+from spacy.tokens import Doc
+from spacy.tokens import Span
 
 from nlp_architect.models.chunker import SequenceChunker
 from nlp_architect.utils.generic import pad_sentences

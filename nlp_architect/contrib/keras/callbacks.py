@@ -19,7 +19,7 @@ from __future__ import print_function
 from __future__ import unicode_literals
 from __future__ import absolute_import
 
-from tensorflow.python.keras.callbacks import Callback
+from tensorflow.keras.callbacks import Callback
 
 from nlp_architect.utils.metrics import get_conll_scores
 
