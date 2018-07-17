@@ -73,8 +73,8 @@ if __name__ == '__main__':
 
         for doc in nlp.pipe(corpus_file):
             spans = list()
-            for p in doc.noun_chunks:
-                spans.append(p)
+            for span in doc.noun_chunks:
+                spans.append(span)
             i += 1
             if len(spans) > 0:
                 span = spans.pop(0)
