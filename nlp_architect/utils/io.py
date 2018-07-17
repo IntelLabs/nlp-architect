@@ -19,7 +19,6 @@ import os
 import posixpath
 import re
 import zipfile
-from os import walk, path
 
 import requests
 from tqdm import tqdm
@@ -71,10 +70,10 @@ def unzip_file(filepath, outpath='.'):
 
 def walk_directory(directory):
     """Iterates a directory's text files and their contents."""
-    for dir_path, _, filenames in walk(directory):
+    for dir_path, _, filenames in os.walk(directory):
         for filename in filenames:
-            file_path = path.join(dir_path, filename)
-            if path.isfile(file_path) and not filename.startswith('.'):
+            file_path = os.path.join(dir_path, filename)
+            if os.path.isfile(file_path) and not filename.startswith('.'):
                 with io.open(file_path, 'r', encoding='utf-8') as file:
                     print('Reading ' + filename)
                     doc_text = file.read()
@@ -126,7 +125,7 @@ def validate_existing_filepath(arg):
 
 def validate_existing_directory(arg):
     """Validates an input argument is a path string to an existing directory."""
-    arg = path.abspath(arg)
+    arg = os.path.abspath(arg)
     validate((arg, str, 0, 255))
     if not os.path.isdir(arg):
         raise ValueError("{0} does not exist".format(arg))
@@ -135,10 +134,11 @@ def validate_existing_directory(arg):
 
 def validate_parent_exists(arg):
     """Validates an input argument is a path string, and its parent directory exists."""
-    arg = path.abspath(arg)
+    arg = os.path.abspath(arg)
     dir_arg = os.path.dirname(os.path.abspath(arg))
-    if not validate_existing_directory(dir_arg) is None:
+    if validate_existing_directory(dir_arg):
         return arg
+    return None
 
 
 def sanitize_path(path):
@@ -156,10 +156,10 @@ def check(validator):
     return CustomAction
 
 
-def check_size(min=None, max=None):
+def check_size(min_size=None, max_size=None):
     class CustomAction(argparse.Action):
         def __call__(self, parser, namespace, values, option_string=None):
-            validate((values, self.type, min, max, self.dest))
+            validate((values, self.type, min_size, max_size, self.dest))
             setattr(namespace, self.dest, values)
 
     return CustomAction

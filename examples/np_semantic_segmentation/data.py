@@ -14,6 +14,8 @@
 # limitations under the License.
 # ******************************************************************************
 
+# pylint: disable=global-statement
+
 import argparse
 import csv
 import math

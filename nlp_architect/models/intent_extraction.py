@@ -108,9 +108,6 @@ class MultiTaskIntentModel(IntentExtractionModel):
     Multi-Task Intent and Slot tagging model (with character embedding)
     """
 
-    def __init__(self):
-        super(MultiTaskIntentModel, self).__init__()
-
     def save(self, path):
         save_load_utils.save_all_weights(self.model, path)
 
@@ -184,7 +181,7 @@ class MultiTaskIntentModel(IntentExtractionModel):
 
         lstm_y_sequence = first_lstm_out[:1][0]  # save y states of the LSTM layer
         states = first_lstm_out[1:]
-        hf, cf, hb, cb = states  # extract last hidden states
+        hf, _, hb, _ = states  # extract last hidden states
         h_state = concatenate([hf, hb], axis=-1)
         intent_out = Dense(num_intent_labels, activation='softmax',
                            name='intent_classifier_output')(h_state)
@@ -193,8 +190,8 @@ class MultiTaskIntentModel(IntentExtractionModel):
         combined_features = concatenate([lstm_y_sequence, char_embeddings], axis=-1)
 
         # 2nd BiLSTM layer for label classification
-        second_bilstm_layer = Bidirectional(
-                LSTM(tagger_lstm_dims, return_sequences=True))(combined_features)
+        second_bilstm_layer = Bidirectional(LSTM(tagger_lstm_dims,
+                                                 return_sequences=True))(combined_features)
         second_bilstm_layer = Dropout(dropout)(second_bilstm_layer)
 
         # feed BiLSTM vectors into CRF
@@ -221,9 +218,6 @@ class JointSequentialIntentModel(IntentExtractionModel):
     """
     Joint Intent classification and Slot tagging Model
     """
-
-    def __init__(self):
-        super(JointSequentialIntentModel, self).__init__()
 
     def build(self,
               sentence_length,
@@ -260,12 +254,10 @@ class JointSequentialIntentModel(IntentExtractionModel):
 
         slot_emb = Bidirectional(LSTM(tagger_hidden, return_sequences=True))(token_emb)
         tagger_features = concatenate([slot_emb, intent_vec_rep], axis=-1)
-        tagger = Bidirectional(
-                LSTM(tagger_hidden, return_sequences=True))(tagger_features)
+        tagger = Bidirectional(LSTM(tagger_hidden, return_sequences=True))(tagger_features)
         tagger = Dropout(tagger_dropout)(tagger)
-        tagger_out = TimeDistributed(
-                Dense(tag_labels, activation='softmax'),
-                name='slot_tag_classifier')(tagger)
+        tagger_out = TimeDistributed(Dense(tag_labels, activation='softmax'),
+                                     name='slot_tag_classifier')(tagger)
 
         self.model = Model(inputs=tokens_input, outputs=[
             intent_out, tagger_out])
@@ -277,9 +269,6 @@ class EncDecIntentModel(IntentExtractionModel):
     """
     Encoder Decoder Deep LSTM Tagger Model
     """
-
-    def __init__(self):
-        super(EncDecIntentModel, self).__init__()
 
     def build(self,
               sentence_length,
@@ -330,9 +319,8 @@ class EncDecIntentModel(IntentExtractionModel):
                                                                             bene_c])
             decoder_inputs = decoder
         decoder_outputs = Dropout(decoder_dropout)(decoder)
-        decoder_predictions = TimeDistributed(
-                Dense(tag_labels, activation='softmax'),
-                name='decoder_classifier')(decoder_outputs)
+        decoder_predictions = TimeDistributed(Dense(tag_labels, activation='softmax'),
+                                              name='decoder_classifier')(decoder_outputs)
 
         self.model = Model(tokens_input, decoder_predictions)
         self.model.compile(optimizer='rmsprop', loss='categorical_crossentropy',

@@ -52,13 +52,13 @@ def parse_proj(scores, gold=None):
 
             # First, create incomplete items.
             # left tree
-            incomplete_vals0 = complete[s, s:t, 1] + complete[(s + 1):(t + 1), t, 0] + \
-                               scores[t, s] + (0.0 if gold is not None and gold[s] == t else 1.0)
+            incomplete_vals0 = complete[s, s:t, 1] + complete[(s + 1):(t + 1), t, 0] + scores[
+                t, s] + (0.0 if gold is not None and gold[s] == t else 1.0)
             incomplete[s, t, 0] = np.max(incomplete_vals0)
             incomplete_backtrack[s, t, 0] = s + np.argmax(incomplete_vals0)
             # right tree
-            incomplete_vals1 = complete[s, s:t, 1] + complete[(s + 1):(t + 1), t, 0] + \
-                               scores[s, t] + (0.0 if gold is not None and gold[t] == s else 1.0)
+            incomplete_vals1 = complete[s, s:t, 1] + complete[(s + 1):(t + 1), t, 0] + scores[
+                s, t] + (0.0 if gold is not None and gold[t] == s else 1.0)
             incomplete[s, t, 1] = np.max(incomplete_vals1)
             incomplete_backtrack[s, t, 1] = s + np.argmax(incomplete_vals1)
 

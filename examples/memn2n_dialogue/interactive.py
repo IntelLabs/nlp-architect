@@ -50,9 +50,10 @@ from ngraph.frontends.neon import Saver
 import ngraph.transformers as ngt
 from nlp_architect.data.babi_dialog import BABI_Dialog
 from nlp_architect.models.memn2n_dialogue import MemN2N_Dialog
-from utils import interactive_loop
-from nlp_architect.utils.io import validate_existing_filepath, validate_parent_exists, validate, \
-    check_size
+from nlp_architect.utils.io import validate_existing_filepath, validate_parent_exists, \
+    validate, check_size
+from interactive_utils import interactive_loop
+
 
 # parse the command line arguments
 parser = NgraphArgparser(__doc__)
@@ -72,7 +73,7 @@ parser.add_argument(
     type=int,
     default='3',
     help='Number of memory hops in the network',
-    choices=range(1,10))
+    choices=range(1, 10))
 parser.add_argument(
     '--use_match_type',
     default=False,
@@ -98,7 +99,7 @@ parser.add_argument(
     type=float,
     default=1e-8,
     help='epsilon used to avoid divide by zero in softmax renormalization.',
-    action=check_size(1e-100,1e-2))
+    action=check_size(1e-100, 1e-2))
 parser.add_argument(
     '--model_file',
     default='memn2n_weights.npz',

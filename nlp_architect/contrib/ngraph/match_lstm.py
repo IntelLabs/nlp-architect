@@ -13,20 +13,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
+# pylint: disable=all
 
 from __future__ import division
 from __future__ import print_function
+
 import ngraph as ng
+import numpy as np
 from ngraph.frontends.neon import (
     Layer,
     Affine,
     BaseRNNCell,
     Linear,
-    get_steps,
-    ax)
-from ngraph.frontends.neon.graph import SubGraph
+    get_steps)
 from ngraph.frontends.neon.axis import shadow_axes_map
-import numpy as np
+from ngraph.frontends.neon.graph import SubGraph
 
 
 class MatchLSTMCell_withAttention(BaseRNNCell):
@@ -226,15 +227,15 @@ class MatchLSTMCell_withAttention(BaseRNNCell):
             ng.cast_axes(
                 ng.dot(
                     self.e_q2, input_data['question_len']), [
-                    self.hidden_rows, self.N, self.hidden_cols_ques]), [
-                self.hidden_rows, self.hidden_cols_ques, self.N])
+                        self.hidden_rows, self.N, self.hidden_cols_ques]), [
+                            self.hidden_rows, self.hidden_cols_ques, self.N])
 
         req_mask_2 = ng.axes_with_order(
             ng.cast_axes(
                 ng.dot(
                     const_one, input_data['question_len']), [
-                    self.N, self.hidden_cols_ques]), [
-                self.hidden_cols_ques, self.N])
+                        self.N, self.hidden_cols_ques]), [
+                            self.hidden_cols_ques, self.N])
 
         G_i_int = sum_1 + ng.multiply(req_mask,
                                       ng.axes_with_order(ng.dot(int_sum,
@@ -251,7 +252,7 @@ class MatchLSTMCell_withAttention(BaseRNNCell):
             ng.dot(
                 self.e_q2, ng.ExpandDims(
                     at, self.dummy_axis, 0)), [
-                self.F, rec_axis_pr, self.N])
+                        self.F, rec_axis_pr, self.N])
 
         # Stack the 2 vectors as per the equation in the paper
         z1 = h_ip
@@ -478,7 +479,7 @@ class AnswerPointer_withAttention(BaseRNNCell):
             F_i_int = sum_1 + ng.axes_with_order(
                 ng.dot(
                     int_sum, self.e_q), [
-                    self.hidden_rows, self.hidden_cols_para, self.N])
+                        self.hidden_rows, self.hidden_cols_para, self.N])
 
             F_i = ng.tanh(F_i_int)  # Attention Vector
 
@@ -493,7 +494,7 @@ class AnswerPointer_withAttention(BaseRNNCell):
                 ng.cast_axes(
                     mask_loss_new, [
                         self.N, self.hidden_cols_para]), [
-                    self.hidden_cols_para, self.N])
+                            self.hidden_cols_para, self.N])
 
             # Add mask to the required logits
             b_k = ng.softmax(b_k_sum1 + mask_loss_new)
@@ -502,7 +503,7 @@ class AnswerPointer_withAttention(BaseRNNCell):
                 ng.dot(
                     self.e_q2, ng.ExpandDims(
                         b_k, self.dummy_axis, 0)), [
-                    H_concat.axes[0], rec_axis_pr, self.N])
+                            H_concat.axes[0], rec_axis_pr, self.N])
 
             inputs_lstm = ng.sum(
                 ng.multiply(
@@ -685,7 +686,7 @@ def unroll_with_attention(
     recurrent_axis = H_hy.axes.recurrent_axis()
 
     if init_states is not None:
-        states = {k: ng.cast_role(v, out_axes)
+        states = {k: ng.cast_role(v, out_axes)  # noqa: F821
                   for (k, v) in init_states.items()}
     else:
         states = init_states

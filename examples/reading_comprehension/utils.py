@@ -139,7 +139,7 @@ def get_data_array_squad_ngraph(
     Returns a dictionary in the format required by ArrayIterator object
 
     """
-    train=create_train_dict()
+    train = create_train_dict()
     max_para = params_dict['max_para']
     max_question = params_dict['max_question']
     question_mask = np.zeros([1, max_question])
@@ -152,7 +152,6 @@ def get_data_array_squad_ngraph(
         para_idx = ele[0]
 
         if len(para) < max_para:
-            #import ipdb;ipdb.set_trace()
             pad_length = max_para - len(para)
             para_idx = para_idx + [0] * pad_length
             para_len = np.zeros([1, max_para])
@@ -196,7 +195,7 @@ def get_data_array_squad_ngraph(
                     break
                 count += 1
 
-    train_out=get_output_dict(train,max_question)
+    train_out = get_output_dict(train, max_question)
 
     return train_out
 
@@ -239,7 +238,8 @@ def create_train_dict():
 
     return data
 
-def get_output_dict(train,max_question):
+
+def get_output_dict(train, max_question):
     """
     Function to populate data dictionary with data and defined axes as
     required by ArrayIterator object in ngraph
@@ -263,10 +263,10 @@ def get_output_dict(train,max_question):
     train['dropout_val']['data'] = np.array(
         train['dropout_val']['data'][:-1], dtype=np.float32)
 
-    REC2 = ng.make_axis(length=max_question, name='REC2')
+    REC2 = ng.make_axis(length=max_question, name='REC2')  # noqa: F841
 
-    span = ng.make_axis(length=2, name='span')
-    dummy_axis = ng.make_axis(length=1, name='dummy_axis')
+    span = ng.make_axis(length=2, name='span')  # noqa: F841
+    dummy_axis = ng.make_axis(length=1, name='dummy_axis')  # noqa: F841
     train['para']['axes'] = ('batch', 'REC')
     train['question']['axes'] = ('batch', 'REC2')
     train['para_len']['axes'] = ('batch', 'dummy_axis', 'REC')
@@ -278,9 +278,11 @@ def get_output_dict(train,max_question):
 
     return train
 
+
 def cal_f1_score(params_dict, ground_truths, predictions):
     """
-    Function to calculate F-1 and EM scores given predictions and ground truths
+    Function to calculate F-1 and EM scores given predictions
+    and ground truths
     """
     preds1 = np.transpose(predictions[:, 0, :])
     preds2 = np.transpose(predictions[:, 1, :])
@@ -303,7 +305,7 @@ def cal_f1_score(params_dict, ground_truths, predictions):
         if num_same == 0:
             f1 += 0
         else:
-            assert(len(preds)>0 and len(gts)>0)
+            assert(len(preds) > 0 and len(gts) > 0)
 
             precision = 1.0 * num_same / len(preds)
             recall = 1.0 * num_same / len(gts)
@@ -313,18 +315,18 @@ def cal_f1_score(params_dict, ground_truths, predictions):
         (exact_match / params_dict['batch_size'])
 
 
-def obtain_indices(preds_start,preds_end):
+def obtain_indices(preds_start, preds_end):
     """
     Function to get answer indices given the predictions
     """
-    ans_start=[]
-    ans_end=[]
+    ans_start = []
+    ans_end = []
     for i in range(preds_start.shape[0]):
         max_ans_id = -100000000
-        st_idx=0
-        en_idx=0
-        ele1=preds_start[i]
-        ele2=preds_end[i]
+        st_idx = 0
+        en_idx = 0
+        ele1 = preds_start[i]
+        ele2 = preds_end[i]
         len_para = len(ele1)
         for j in range(len_para):
             for k in range(15):
@@ -335,7 +337,7 @@ def obtain_indices(preds_start,preds_end):
                 if (ans_start_int + ans_end_int) > max_ans_id:
                     max_ans_id = ans_start_int + ans_end_int
                     st_idx = j
-                    en_idx=j+k
+                    en_idx = j + k
 
         ans_start.append(st_idx)
         ans_end.append(en_idx)

@@ -51,7 +51,3 @@ class SpacyNerApi(AbstractApi):
         annot_doc.annotation_set = [e.label_ for e in spacy_doc.ents]
         annot_doc.spans = ents
         return annot_doc
-
-
-
-

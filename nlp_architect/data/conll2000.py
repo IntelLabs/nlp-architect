@@ -21,12 +21,12 @@ from __future__ import absolute_import
 import sys
 
 import nltk
+from nltk.corpus import conll2000
 import numpy as np
 from neon.data.text_preprocessing import pad_sentences
 from nlp_architect.contrib.neon.text_iterators import TaggedTextSequence, MultiSequenceDataIterator
 from nlp_architect.utils.embedding import load_word_embeddings
 from nlp_architect.utils.generic import get_paddedXY_sequence, license_prompt
-from nltk.corpus import conll2000
 
 
 class CONLL2000(object):
@@ -55,7 +55,11 @@ class CONLL2000(object):
         self.embedding_model_path = embedding_model_path
         self.vocabs = {}
         self._data_dict = {}
+        self.emb_size = None
+        self.y_vocab = None
+        self.y_size = None
 
+    # pylint: disable=broad-except
     @staticmethod
     def _load_data():
         try:
@@ -114,6 +118,7 @@ class CONLL2000(object):
             self._gen_iterators()
         return self._data_dict.get('test')
 
+    # pylint: disable=too-many-statements
     def _gen_iterators(self):
         train_set, test_set = self._load_data()
         num_train_samples = len(train_set)
