@@ -34,7 +34,6 @@ if __name__ == '__main__':
         '--corpus',
         default='../../datasets/wikipedia/enwiki-20171201_subset.txt.gz',
         type=validate_existing_filepath,
-        action=check_size(min_size=1),
         help='path to the input corpus. Compressed files (gz) are also supported. By default, '
              'it is a subset of English Wikipedia.')
     arg_parser.add_argument(
