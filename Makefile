@@ -14,8 +14,8 @@
 # limitations under the License.
 # ******************************************************************************
 
-FLAKE8_CHECK_DIRS := examples nlp_architect/* server tests
-PYLINT_CHECK_DIRS := examples nlp_architect server tests setup
+FLAKE8_CHECK_DIRS := examples nlp_architect/* server tests solutions
+PYLINT_CHECK_DIRS := examples nlp_architect server tests setup solutions
 DOC_DIR := doc
 DOC_PUB_RELEASE_PATH := $(DOC_PUB_PATH)/$(RELEASE)
 

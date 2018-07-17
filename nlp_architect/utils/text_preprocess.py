@@ -112,7 +112,9 @@ def simple_normalizer(text):
                          for t in tokens])
     return text
 
+
 spacy_lemmatizer = Lemmatizer(LEMMA_INDEX, LEMMA_EXC, LEMMA_RULES)
+
 
 def spacy_normalizer(text, lemma=None):
     """
@@ -135,6 +137,7 @@ def spacy_normalizer(text, lemma=None):
             text = ' '.join([stemmer.stem(spacy_lemmatizer(t, u'NOUN')[0])
                              for t in tokens])
     return text
+
 
 class Stopwords:
     """
@@ -159,8 +162,8 @@ if __name__ == '__main__':
     # text = 'this is a sample    text with ßåµπ¬'
     sample_text = 'this is a sample    ' \
                   'http://www.google.com/dbla?sdfjowef=jfsdf&gjosi' \
-           'djf&fgsdf=3 text with email@google.com and my phone ' \
-           'number is +972123123123        ' \
+                  'djf&fgsdf=3 text with email@google.com and my phone ' \
+                  'number is +972123123123        ' \
                   'sjdf isdof sijf < > s<<<<  () sdf sdSD F) s( S)) .' \
                   'isn\'t this great?'
     p = TextCleaner()

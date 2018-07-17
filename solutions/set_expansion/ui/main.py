@@ -45,39 +45,56 @@ expand_columns = [
     TableColumn(field="res", title="Results"),
     TableColumn(field="score", title="Score")
 ]
-empty_table = {'res': 15*[''], 'score': 15*['']}
+empty_table = {'res': 15 * [''], 'score': 15 * ['']}
 
 
 # create ui components
 
 seed_input_title = 'Please enter a comma separated seed list of terms:'
-seed_input_box = TextInput(title=seed_input_title, value="USA, Israel, France", width=450, css_classes=["seed-input"])
+seed_input_box = TextInput(
+    title=seed_input_title, value="USA, Israel, France", width=450, css_classes=["seed-input"])
 search_input_box = TextInput(title="Search:", value="", width=300)
 expand_button = Button(label="Expand", button_type="success", width=150)
-clear_seed_button = Button(label="Clear", button_type="success", css_classes=['clear_button'], width=50)
-export_button = Button(label="Export", button_type="success", css_classes=['export_button'], width=100)
+clear_seed_button = Button(
+    label="Clear", button_type="success", css_classes=['clear_button'], width=50)
+export_button = Button(
+    label="Export", button_type="success", css_classes=['export_button'], width=100)
 expand_table_source = ColumnDataSource(data=empty_table)
-expand_table = DataTable(source=expand_table_source, columns=expand_columns, width=500, css_classes=['expand_table'])
-phrases_list = MultiSelect(title="", value=[],options=[], width=300, size=27, css_classes=['phrases_list'])
-checkbox_group = CheckboxGroup(labels=["Show extracted phrases"], active=[], width=400, css_classes=['checkbox_group'])
+expand_table = DataTable(
+    source=expand_table_source, columns=expand_columns, width=500, css_classes=['expand_table'])
+phrases_list = MultiSelect(
+    title="", value=[], options=[], width=300, size=27, css_classes=['phrases_list'])
+checkbox_group = CheckboxGroup(
+    labels=["Show extracted phrases"], active=[], width=400, css_classes=['checkbox_group'])
 search_box_area = column(children=[Div(width=200)])
-export_working_label = Div(text="", style={'color':'red'})
-getvocab_working_label = Div(text="", style={'color':'blue', 'padding-top': '0px', 'font-size':'15px'})
-search_working_label = Div(text="", style={'color':'blue', 'padding-bottom': '0px', 'font-size':'15px'})
-expand_working_label = Div(text="", style={'color':'blue', 'padding-top': '7px', 'padding-left':'10px', 'font-size':'15px'})
-clear_working_label = Div(text="", style={'color':'blue', 'padding-top': '30px', 'padding-left':'20px', 'font-size':'15px'})
-seed_check_label = Div(text='',style={'font-size':'15px'}, height=20, width=500)
-seed_layout = Row(seed_input_box,column(Div(height=0, width=0),clear_seed_button), clear_working_label)
-table_layout = Row(expand_table,Div(width=25), column(Div(height=350),export_button,export_working_label))
+export_working_label = Div(text="", style={'color': 'red'})
+getvocab_working_label = Div(
+    text="", style={'color': 'blue', 'padding-top': '0px', 'font-size': '15px'})
+search_working_label = Div(
+    text="", style={'color': 'blue', 'padding-bottom': '0px', 'font-size': '15px'})
+expand_working_label = Div(
+    text="", style={
+        'color': 'blue', 'padding-top': '7px', 'padding-left': '10px', 'font-size': '15px'})
+clear_working_label = Div(
+    text="", style={
+        'color': 'blue', 'padding-top': '30px', 'padding-left': '20px', 'font-size': '15px'})
+seed_check_label = Div(
+    text='', style={'font-size': '15px'}, height=20, width=500)
+seed_layout = Row(
+    seed_input_box, column(Div(height=0, width=0), clear_seed_button), clear_working_label)
+table_layout = Row(
+    expand_table, Div(width=25), column(Div(height=350), export_button, export_working_label))
 table_area = column(children=[table_layout])
 phrases_area = column(children=[search_working_label, Div(width=300)])
 checkbox_layout = column(checkbox_group, getvocab_working_label)
-grid = layout([
-                [Div(width=500), Div(text="<H1>Set Expansion Demo</H1>")],
-                [checkbox_layout, seed_layout],
-                [search_box_area,Div(width=370), expand_button, expand_working_label],
-                [phrases_area, Div(width=100), table_area]
-            ])
+grid = layout(
+    [
+        [Div(width=500), Div(text="<H1>Set Expansion Demo</H1>")],
+        [checkbox_layout, seed_layout], [search_box_area, Div(width=370),
+                                         expand_button, expand_working_label],
+        [phrases_area, Div(width=100), table_area]
+    ]
+)
 
 
 # define callbacks
@@ -101,8 +118,8 @@ def get_vocab():
                 vocab_dict[p] = p
                 cut_vocab_dict[p] = p
             else:
-                vocab_dict[p] = p[:max_phrase_length-1] + '...'
-                cut_vocab_dict[p[:max_phrase_length-1] + '...'] = p
+                vocab_dict[p] = p[:max_phrase_length - 1] + '...'
+                cut_vocab_dict[p[:max_phrase_length - 1] + '...'] = p
         print('done. vocab count = ' + str(len(vocab)))
     else:
         print('grouping data is missing.')
@@ -129,7 +146,7 @@ def send_request_to_server(request):
         received = pickle.loads(data)
         # print("Received: {}".format(received))
         return received
-    except EOFError as e:
+    except EOFError:
         print('No data received')
     finally:
         sock.close()
@@ -149,13 +166,16 @@ def row_selected_callback(attr, old, new):
             old_phrases) + ' ,new=' + str(new_phrases))
         # phrase was de-selected from expand list:
         for o in old_phrases:
-            if o not in new_phrases and (vocab is not None and vocab_dict[o] in phrases_list.value):
+            if o not in new_phrases and \
+                    (vocab is not None and vocab_dict[o] in phrases_list.value):
                 print('removing ' + o + 'from vocab selected')
                 phrases_list.value.remove(vocab_dict[o])
                 break
         # new phrase was selected from expand list:
         for n in new_phrases:
-            if n not in old_phrases and (vocab is not None and vocab_dict[n] in phrases_list.options and vocab_dict[n] not in phrases_list.value):
+            if n not in old_phrases and \
+                    (vocab is not None and vocab_dict[n] in
+                        phrases_list.options and vocab_dict[n] not in phrases_list.value):
                 phrases_list.value.append(vocab_dict[n])
                 break
         update_all_selected_phrases()
@@ -169,14 +189,20 @@ def update_all_selected_phrases():
     print('update selected phrases')
     global all_selected_phrases
     updated_selected_phrases = all_selected_phrases[:]
-    selected_expand = [expand_table_source.data['res'][i] for i in expand_table_source.selected.indices if expand_table_source.data['res'][i] != '']
+    selected_expand = [expand_table_source.data['res'][i] for
+                       i in expand_table_source.selected.indices if
+                       expand_table_source.data['res'][i] != '']
     selected_vocab = phrases_list.value
     print('selected expand=' + str(selected_expand))
     print('selected vocab=' + str(selected_vocab))
     print('current all_selected_phrases=' + str(all_selected_phrases))
     for x in all_selected_phrases:
         print('x=' + x)
-        if (x in expand_table_source.data['res'] and x not in selected_expand) or (vocab is not None and vocab_dict[x] in phrases_list.options and vocab_dict[x] not in selected_vocab):
+        if (x in expand_table_source.data['res'] and x not in selected_expand) or (
+            vocab is not None and (vocab_dict[x] in phrases_list.options) and (
+                vocab_dict[x] not in selected_vocab
+            )
+        ):
             print('removing ' + x)
             updated_selected_phrases.remove(x)
     for e in selected_expand:
@@ -200,13 +226,14 @@ def show_phrases_callback(checked_value):
             get_vocab()
         if not phrases_list.options:
             getvocab_working_label.text = working_text
-            phrases_list.options = list(cut_vocab_dict.keys())[0:max_visible_phrases] #show the cut representation
-        search_box_area.children=[search_input_box]
-        phrases_area.children=[search_working_label, phrases_list]
+            phrases_list.options = list(
+                cut_vocab_dict.keys())[0:max_visible_phrases]  # show the cut representation
+        search_box_area.children = [search_input_box]
+        phrases_area.children = [search_working_label, phrases_list]
         getvocab_working_label.text = ''
     else:
-        search_box_area.children=[]
-        phrases_area.children=[]
+        search_box_area.children = []
+        phrases_area.children = []
 
 
 def get_expand_results_callback():
@@ -226,7 +253,7 @@ def get_expand_results_callback():
         seed = seed_input_box.value
         print('input seed: ' + seed)
         if seed == '':
-            expand_table_source.data=empty_table
+            expand_table_source.data = empty_table
             return
         if vocab is not None:
             seed_words = [x for x in seed.split(',')]
@@ -236,9 +263,11 @@ def get_expand_results_callback():
                 if norm not in id2rep or id2rep[norm] not in vocab:
                     bad_words += ("'" + w + "',")
             if bad_words != '':
-                seed_check_label.text = 'the words: <span class="bad-word">' + bad_words[:-1] + '</span> are not in the vocabulary and will be ignored'
+                seed_check_label.text = 'the words: <span class="bad-word">' \
+                                        + bad_words[:-1] \
+                                        + '</span> are not in the vocabulary and will be ignored'
                 print('setting table area')
-                table_area.children = [seed_check_label,table_layout]
+                table_area.children = [seed_check_label, table_layout]
         print('sending expand request to server with seed= ' + seed)
         received = send_request_to_server(seed)
         if received is not None:
@@ -271,10 +300,11 @@ def search_callback(value, old, new):
                     np2id[x]] in vocab_dict and vocab_dict[id2rep[
                     np2id[x]]] not in new_phrases:
                 new_phrases.append(vocab_dict[id2rep[np2id[x]]])
-    phrases_list.options=new_phrases[0:max_visible_phrases]
+    phrases_list.options = new_phrases[0:max_visible_phrases]
     if new != '':
         phrases_list.options.sort()
-    phrases_list.value = [vocab_dict[x] for x in all_selected_phrases if vocab_dict[x] in phrases_list.options]
+    phrases_list.value = [
+        vocab_dict[x] for x in all_selected_phrases if vocab_dict[x] in phrases_list.options]
     print('selected vocab after search=' + str(phrases_list.value))
     search_working_label.text = ''
     search_flag = False
@@ -287,25 +317,32 @@ def vocab_phrase_selected_callback(attr, old_selected, new_selected):
         global all_selected_phrases, search_flag
         if(search_flag):
             return
-        print('selected_vocab was updated: old=' + str(old_selected) + ' ,new=' + str(new_selected))
+        print('selected_vocab was updated: old=' + str(
+            old_selected) + ' ,new=' + str(new_selected))
         # sync expand table:
         # phrase was de-selected from vocab list:
-        expand_selected = [expand_table_source.data['res'][p] for p in expand_table_source.selected.indices]
+        expand_selected = [expand_table_source.data['res'][p] for
+                           p in expand_table_source.selected.indices]
         for o in old_selected:
             full_o = cut_vocab_dict[o]
             if o not in new_selected and full_o in expand_selected:
                 print(full_o + ' removed from vocab selected and exists in expand selected')
-                print('removing ' + full_o + 'from expand selected indices. index=' + str(expand_table_source.data['res'].index(full_o)))
+                print('removing ' + full_o
+                      + 'from expand selected indices. index='
+                      + str(expand_table_source.data['res'].index(full_o)))
                 print('current expand indices: ' + str(expand_table_source.selected.indices))
-                expand_table_source.selected.indices.remove(expand_table_source.data['res'].index(full_o))
+                expand_table_source.selected.indices.remove(
+                    expand_table_source.data['res'].index(full_o))
                 print('new expand indices: ' + str(expand_table_source.selected.indices))
                 break
         # new phrase was selected from vocab list:
         for n in new_selected:
             full_n = cut_vocab_dict[n]
             print('selected phrase=' + n + ', full phrase=' + full_n)
-            if n not in old_selected and full_n in expand_table_source.data['res'] and full_n not in expand_selected:
-                expand_table_source.selected.indices.append(expand_table_source.data['res'].index(full_n))
+            if n not in old_selected and full_n in \
+                    expand_table_source.data['res'] and full_n not in expand_selected:
+                expand_table_source.selected.indices.append(
+                    expand_table_source.data['res'].index(full_n))
                 break
         update_all_selected_phrases()
         seed_input_box.value = get_selected_phrases_for_seed()
@@ -319,7 +356,7 @@ def clear_seed_callback():
     clear_flag = True
     seed_input_box.value = ''
     seed_check_label.text = ''
-    expand_table_source.selected.indices=[]
+    expand_table_source.selected.indices = []
     phrases_list.value = []
     all_selected_phrases = []
     table_area.children = [table_layout]
@@ -336,10 +373,10 @@ def export_data_callback():
         path = settings.export_path
         print('saving expansion results to: ' + path)
         export_working_label.style = {'color': 'red'}
-        export_working_label.text=working_text
+        export_working_label.text = working_text
         table_df = pandas.DataFrame(expand_table_source.data)
         table_df.to_csv(path)
-        export_working_label.style={'color':'green'}
+        export_working_label.style = {'color': 'green'}
         export_working_label.text = 'Done!'
         time.sleep(1)
         export_working_label.text = ''
@@ -371,7 +408,7 @@ expand_button.on_click(get_expand_results_callback)
 expand_table_source.on_change('selected', row_selected_callback)
 expand_table_source.on_change('data', expand_data_changed_callback)
 checkbox_group.on_click(show_phrases_callback)
-search_input_box.on_change('value',search_callback)
+search_input_box.on_change('value', search_callback)
 phrases_list.on_change('value', vocab_phrase_selected_callback)
 clear_seed_button.on_click(clear_seed_callback)
 export_button.on_click(export_data_callback)

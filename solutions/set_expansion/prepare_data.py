@@ -128,13 +128,22 @@ if __name__ == '__main__':
 # write grouping data :
 
     corpus_name = os.path.basename(args.corpus)
-    with open('id2group_' + corpus_name + '_' + str(datetime.datetime.now().time()), 'w', encoding='utf8') as id2group_file:
+    with open(
+            'id2group_' + corpus_name + '_' + str(
+                datetime.datetime.now().time()
+            ), 'w', encoding='utf8') as id2group_file:
         id2group_file.write(json.dumps(id2group))
 
-    with open('id2rep_' + corpus_name + '_' +str(datetime.datetime.now().time()), 'w', encoding='utf8') as id2rep_file:
+    with open(
+            'id2rep_' + corpus_name + '_' + str(
+                datetime.datetime.now().time()
+            ), 'w', encoding='utf8') as id2rep_file:
         id2rep_file.write(json.dumps(id2rep))
 
-    with open('np2id_' + corpus_name + '_' + str(datetime.datetime.now().time()), 'w', encoding='utf8') as np2id_file:
+    with open(
+            'np2id_' + corpus_name + '_' + str(
+                datetime.datetime.now().time()
+            ), 'w', encoding='utf8') as np2id_file:
         np2id_file.write(json.dumps(np2id))
 
     corpus_file.close()

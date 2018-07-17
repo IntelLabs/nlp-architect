@@ -103,7 +103,8 @@ class SetExpand():
         seed_ids = list()
         for np in seed:
             norm = self.np2id[np]
-            if norm not in self.id2rep or self.__term2id(self.id2rep[norm]) not in self.np2vec_model.vocab:
+            if norm not in self.id2rep or self.__term2id(
+                    self.id2rep[norm]) not in self.np2vec_model.vocab:
                 logger.warning("The term: '" + np + "' is out-of-vocabulary.")
             else:
                 id = self.__term2id(self.id2rep[norm])
@@ -139,8 +140,8 @@ if __name__ == "__main__":
         help='If 0, the model to load stores word information. If 1, the model to load stores '
         'subword (ngrams) information; note that subword information is relevant only to '
         'fasttext models.')
-    arg_parser.add_argument('--seed', type=str, action=check_size(min_size=1),\
-    help='comma-separated seed terms')
+    arg_parser.add_argument(
+        '--seed', type=str, action=check_size(min_size=1), help='comma-separated seed terms')
     arg_parser.add_argument('--topn', default=500, type=int, action=check_size(min_size=1),
                             help='maximal number of expanded terms to return')
 
