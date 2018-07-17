@@ -89,6 +89,18 @@ class SetExpand():
         """
         return [self.__id2term(id) for id in self.np2vec_model.vocab]
 
+    def in_vocab(self, term):
+        norm = None
+        print("is in vocab: " + term)
+        if term in self.np2id.keys():
+            norm = self.np2id[term]
+        if norm is None or norm not in self.id2rep or self.__term2id(
+                    self.id2rep[norm]) not in self.np2vec_model.vocab:
+            print("false")
+            return False
+        print("true")
+        return True
+
     def expand(self, seed, topn=500):
         """
         Given a seed of terms, return the expanded set of terms.
@@ -101,9 +113,11 @@ class SetExpand():
             up to topn expanded terms and their probabilities
         """
         seed_ids = list()
+        norm = None
         for np in seed:
-            norm = self.np2id[np]
-            if norm not in self.id2rep or self.__term2id(
+            if np in self.np2id.keys():
+                norm = self.np2id[np]
+            if norm is None or norm not in self.id2rep or self.__term2id(
                     self.id2rep[norm]) not in self.np2vec_model.vocab:
                 logger.warning("The term: '" + np + "' is out-of-vocabulary.")
             else:
@@ -140,8 +154,8 @@ if __name__ == "__main__":
         help='If 0, the model to load stores word information. If 1, the model to load stores '
         'subword (ngrams) information; note that subword information is relevant only to '
         'fasttext models.')
-    arg_parser.add_argument(
-        '--seed', type=str, action=check_size(min_size=1), help='comma-separated seed terms')
+    arg_parser.add_argument('--seed', type=str, action=check_size(min_size=1),\
+    help='comma-separated seed terms')
     arg_parser.add_argument('--topn', default=500, type=int, action=check_size(min_size=1),
                             help='maximal number of expanded terms to return')
 

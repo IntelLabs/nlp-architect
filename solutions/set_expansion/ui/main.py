@@ -104,25 +104,24 @@ def get_vocab():
     Get vocabulary of the np2vec model from the server and load grouping data
     """
     global vocab, np2id, id2group, id2rep
-    if os.path.isfile('np2id') and os.path.isfile('id2group') and os.path.isfile('id2rep'):
-        with open('np2id') as f:
-            np2id = json.load(f)
-        with open('id2group') as f:
-            id2group = json.load(f)
-        with open('id2rep') as f:
-            id2rep = json.load(f)
-        received = send_request_to_server('get_vocab')
-        vocab = received
-        for p in vocab:
-            if len(p) < max_phrase_length:
-                vocab_dict[p] = p
-                cut_vocab_dict[p] = p
-            else:
-                vocab_dict[p] = p[:max_phrase_length - 1] + '...'
-                cut_vocab_dict[p[:max_phrase_length - 1] + '...'] = p
-        print('done. vocab count = ' + str(len(vocab)))
-    else:
-        print('grouping data is missing.')
+    # print('loading grouping info')
+    # with open('np2id') as np2id_file:
+    #     np2id = json.load(np2id_file)
+    # # with open('id2group') as f:
+    # #     id2group = json.load(f)
+    # print('np2id loaded. loading id2rep...')
+    # with open('id2rep') as id2rep_file:
+    #     id2rep = json.load(id2rep_file)
+    print('sending get_vocab request to server...')
+    received = send_request_to_server('get_vocab')
+    vocab = received
+    for p in vocab:
+        if len(p) < max_phrase_length:
+            vocab_dict[p] = p
+            cut_vocab_dict[p] = p
+        else:
+            vocab_dict[p] = p[:max_phrase_length - 1] + '...'
+            cut_vocab_dict[p[:max_phrase_length - 1] + '...'] = p
 
 
 def send_request_to_server(request):
@@ -256,11 +255,16 @@ def get_expand_results_callback():
             expand_table_source.data = empty_table
             return
         if vocab is not None:
-            seed_words = [x for x in seed.split(',')]
+            seed_words = [x.strip() for x in seed.split(',')]
             bad_words = ''
             for w in seed_words:
-                norm = np2id[w]
-                if norm not in id2rep or id2rep[norm] not in vocab:
+                # norm = None
+                # if w in np2id.keys():
+                #     norm = np2id[w]
+                # if norm is None or norm not in id2rep or id2rep[norm] not in vocab:
+                #     bad_words += ("'" + w + "',")
+                res = send_request_to_server('in_vocab,' + w)
+                if res is False:
                     bad_words += ("'" + w + "',")
             if bad_words != '':
                 seed_check_label.text = 'the words: <span class="bad-word">' \
@@ -295,11 +299,9 @@ def search_callback(value, old, new):
         new_phrases = list(cut_vocab_dict.keys())
     else:
         new_phrases = []
-        for x in np2id.keys():
-            if x.lower().startswith(new.lower()) and id2rep[
-                    np2id[x]] in vocab_dict and vocab_dict[id2rep[
-                    np2id[x]]] not in new_phrases:
-                new_phrases.append(vocab_dict[id2rep[np2id[x]]])
+        for x in vocab:
+            if x.lower().startswith(new.lower()) and vocab_dict[x] not in new_phrases:
+                new_phrases.append(vocab_dict[x])
     phrases_list.options = new_phrases[0:max_visible_phrases]
     if new != '':
         phrases_list.options.sort()

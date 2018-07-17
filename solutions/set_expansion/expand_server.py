@@ -18,7 +18,7 @@ import socketserver
 import argparse
 import pickle
 from solutions.set_expansion import set_expand
-
+from nlp_architect.utils.io import validate_existing_filepath, check_size
 
 class MyTCPHandler(socketserver.BaseRequestHandler):
     """
@@ -34,10 +34,15 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
         if self.data == 'get_vocab':
             print('getting vocabulary')
             res = se.get_vocab()
+        elif 'in_vocab' in self.data:
+            term = self.data.split(',')[1]
+            res = se.in_vocab(term)
+            print('res: '+ str(res))
         else:
             data = [x.strip() for x in self.data.split(',')]
             print('expanding')
             res = se.expand(data)
+            print(str(res))
         print('compressing response')
         packet = pickle.dumps(res)
         print('response length= ' + str(len(packet)))
@@ -50,12 +55,12 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(prog='expand_server.py')
-    parser.add_argument('model_path', metavar='model_path', type=str,
+    parser.add_argument('model_path', metavar='model_path', type=validate_existing_filepath,
                         help='a path to the w2v model file')
     parser.add_argument('--host', type=str, default='localhost',
-                        help='set port for the server')
+                        help='set port for the server', action=check_size(1, 20))
     parser.add_argument('--port', type=int, default=1234,
-                        help='set port for the server')
+                        help='set port for the server', action=check_size(0, 65535))
     args = parser.parse_args()
 
     port = args.port
