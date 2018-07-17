@@ -15,7 +15,10 @@
 # ******************************************************************************
 from __future__ import division
 from __future__ import print_function
+import os
 from contextlib import closing
+from tqdm import tqdm
+import numpy as np
 import ngraph as ng
 from ngraph.frontends.neon import Layer
 from ngraph.frontends.neon import Adam
@@ -27,13 +30,8 @@ import ngraph.transformers as ngt
 
 from nlp_architect.models.kvmemn2n import KVMemN2N
 from nlp_architect.data.wikimovies import WIKIMOVIES
-from nlp_architect.utils.io import validate, validate_existing_directory, \
-    validate_existing_filepath, validate_parent_exists, check_size
-from interactive_util import interactive_loop
-
-from tqdm import tqdm
-import numpy as np
-import os
+from nlp_architect.utils.io import validate_parent_exists, check_size
+from examples.kvmemn2n.interactive_util import interactive_loop
 
 
 # parse the command line arguments
@@ -75,7 +73,7 @@ if (args.inference is True) and (args.model_file is None):
     print("Need to set --model_file for Inference problem")
     quit()
 
-if(args.model_file is not None):
+if args.model_file is not None:
     model_file = os.path.expanduser(args.model_file)
 else:
     model_file = None
@@ -122,11 +120,11 @@ eval_outputs = dict(test_cross_ent_loss=eval_loss, test_preds=a_pred_inference)
 if args.interactive:
     interactive_outputs = dict(test_preds=a_pred_inference)
 
-if (model_file is not None):
+if model_file is not None:
     # Instantiate the Saver object to save weights
     weight_saver = Saver()
 
-if (args.inference is False):
+if args.inference is False:
     # Train Loop
     with closing(ngt.make_transformer()) as transformer:
         # bind the computations
@@ -138,10 +136,10 @@ if (args.inference is False):
                                        filename=model_file)
             # Restore weight
             weight_saver.restore()
-        if(model_file is not None):
+        if model_file is not None:
             weight_saver.setup_save(transformer=transformer, computation=train_outputs)
 
-        for e in range(args.epochs+1):
+        for e in range(args.epochs + 1):
             train_error = []
             train_loss = []
             for idx, data in tqdm(enumerate(train_set)):
@@ -161,8 +159,8 @@ if (args.inference is False):
                 preds = np.argmax(test_output['test_preds'], axis=0)
                 error = np.mean(data['answer'] != preds)
                 test_error.append(error)
-            print("\ Epoch {}, Test_loss {}, test_batch_error {}".format(e, np.mean(test_loss),
-                  np.mean(test_error)))
+            print("Epoch {}, Test_loss {}, test_batch_error {}".format(e, np.mean(test_loss),
+                                                                       np.mean(test_error)))
             # Shuffle training set and reset the others
             shuf_idx = np.random.permutation(range(train_set.data_arrays['query'].shape[0]))
             train_set.data_arrays = {k: v[shuf_idx] for k, v in train_set.data_arrays.items()}
@@ -176,8 +174,9 @@ else:
     print('Loading saved model')
     with closing(ngt.make_transformer()) as transformer:
         eval_computation = make_bound_computation(transformer, eval_outputs, inputs)
-        if (args.interactive):
-            interactive_computation = make_bound_computation(transformer, interactive_outputs, inputs)
+        if args.interactive:
+            interactive_computation = make_bound_computation(transformer, interactive_outputs,
+                                                             inputs)
         weight_saver.setup_restore(transformer=transformer, computation=eval_outputs,
                                    filename=model_file)
         # Restore weight
@@ -191,9 +190,9 @@ else:
             preds = np.argmax(test_output['test_preds'], axis=0)
             error = np.mean(data['answer'] != preds)
             test_error.append(error)
-        print("\Test_loss {}, test_batch_error {}".format(np.mean(test_loss), np.mean(test_error)))
+        print("Test_loss {}, test_batch_error {}".format(np.mean(test_loss), np.mean(test_error)))
 
-if (args.interactive):
+if args.interactive:
     with closing(ngt.make_transformer()) as transformer:
         print("Beginning interactive mode...")
         # Begin interactive loop

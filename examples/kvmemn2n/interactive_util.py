@@ -21,6 +21,7 @@ import numpy as np
 from nlp_architect.data.wikimovies import ex_entity_names, pad_stories, pad_values, pad_sentences
 
 
+# pylint: disable=unused-argument
 def interactive_loop(interactive_computation, wikimovies, batch_size):
     # The primary thing this interactive mode can do is for the user to ask a question
     # If none of the words in the question has a memory aspect (i.e. is not in the entities)
@@ -44,7 +45,7 @@ def interactive_loop(interactive_computation, wikimovies, batch_size):
             related_facts = wikimovies.knowledge_dict[key]
             q = wikimovies.tokenize(q)
 
-            data = transform_data(q, related_facts, wikimovies, batch_size)
+            data = transform_data(q, related_facts, wikimovies)
 
             interactive_output = interactive_computation(data)
             pred_cand_idx = np.argmax(interactive_output['test_preds'], axis=0)[0]
@@ -57,7 +58,7 @@ def interactive_loop(interactive_computation, wikimovies, batch_size):
             print(answer)
 
 
-def transform_data(q, related_facts, wikimovies, batch_size):
+def transform_data(q, related_facts, wikimovies):
 
     k = [[wikimovies.words_to_vector(sent[0].split()) for sent in related_facts]]
     v = [[wikimovies.words_to_vector(sent[1]) for sent in related_facts]]

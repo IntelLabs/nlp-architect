@@ -109,8 +109,10 @@ class BISTModel(object):
             res (list of list of ConllEntry): The list of input sentences with predicted
             dependencies attached.
         """
+        res = None
         if hasattr(dataset, '__iter__'):
-            return list(self.model.predict(conll=dataset))
+            res = list(self.model.predict(conll=dataset))
+        return res
 
     def load(self, path):
         """Loads and initializes a BIST model from file."""

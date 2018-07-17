@@ -118,7 +118,7 @@ def convert_string_to_list_of_words(string_list_of_words):
         list(str): vector of words
 
     """
-    string_list_of_words = re.sub('[-+.^:,\[\]()]', '', str(string_list_of_words))
+    string_list_of_words = re.sub(r'[-+.^:,\[\]()]', '', str(string_list_of_words))
     tokens = nltk.word_tokenize(string_list_of_words)
 
     words_vec = []
@@ -152,7 +152,7 @@ def calc_word_to_sentence_dist_cbow(target_word, sentence, model):
         wv_target_word = model[target_word]
         cosine_sim = cosine_similarity(wv_target_word, cbow_sentence_emb)
     # if target word is not in embedding dictionary
-    except Exception:
+    except KeyError:
         cosine_sim = 0
 
     return cbow_sentence_emb, cosine_sim
@@ -178,10 +178,10 @@ def cosine_similarity(vec1, vec2):
     try:
         norm_vec1 = norm(vec1)
         norm_vec2 = norm(vec2)
-        den = norm_vec1*norm_vec2
+        den = norm_vec1 * norm_vec2
         if den != 0:
             cosine_sim = dot(vec1, vec2) / den
-    except Exception:  # if target word is not in embedding dictionary
+    except ValueError:  # if target word is not in embedding dictionary
         cosine_sim = 0
 
     return cosine_sim
@@ -207,7 +207,9 @@ def calc_cbow_sentence(sentence, model):
             wv = model[word]
             cbow_sentence = cbow_sentence + wv
             i += 1
-        except Exception:  # if word is not in embedding dictionary
+        except KeyError:  # if word is not in embedding dictionary
+            pass  # no-operation
+        except IndexError:  # if word is not in embedding dictionary
             pass  # no-operation
 
     if i > 0:
@@ -275,11 +277,11 @@ def w2v_similarity_envelope(word_a, phrase_b, model):
                 if sim > -1:
                     sim_scores_vec.insert(i, sim)
                     i = i + 1
-        if len(sim_scores_vec) > 0:
+        if sim_scores_vec:
             similarity = numpy.mean(sim_scores_vec)
 
         return similarity
-    except Exception:
+    except ValueError:
         return -1
 
 
@@ -300,7 +302,11 @@ def w2v_similarity(word_a, word_b, model):
     try:
         similarity = model.similarity(word_a, word_b)
         return similarity
-    except Exception:
+    except ValueError:
+        return -1
+    except IndexError:
+        return -1
+    except KeyError:
         return -1
 
 
@@ -323,7 +329,11 @@ def return_w2v(word_a, model):
         w2v = numpy.array
         w2v = model[word_a]
         return True, w2v
-    except Exception:
+    except ValueError:
+        return False, w2v
+    except IndexError:
+        return False, w2v
+    except KeyError:
         return False, w2v
 
 
@@ -424,4 +434,3 @@ def extract_synset_data(synset):
     synonym_list = get_synonyms(synset)
 
     return definition, hyps_list, synonym_list
-

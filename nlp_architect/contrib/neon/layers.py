@@ -14,6 +14,7 @@
 # limitations under the License.
 # ******************************************************************************
 
+# pylint: skip-file
 from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
@@ -107,6 +108,7 @@ class TimeDistributedRecurrentOutput(Layer):
         self.timesteps = timesteps
         self.owns_output = self.owns_delta = True
         self.x = None
+        self.out_idxs = slice(0, None)
 
         # Change how the deltas are assigned based on CPU or GPU backend to get
         # around how numpy creates a view of a numpy array when using advanced indexing
@@ -367,31 +369,26 @@ class TimeDistBiLSTM(BiLSTM):
                 in enumerate(reversed(list(zip(*params_f)))):
 
             # current cell delta
-            c_delta[:] = c_delta + \
-                         self.activation.bprop(c_act) * (o * in_deltas)
+            c_delta[:] = c_delta + self.activation.bprop(c_act) * (o * in_deltas)
             i_delta[:] = self.gate_activation.bprop(i) * c_delta * g
             f_delta[:] = self.gate_activation.bprop(f) * c_delta * c_prev
             o_delta[:] = self.gate_activation.bprop(o) * in_deltas * c_act
             g_delta[:] = self.activation.bprop(g) * c_delta * i
 
             # bprop the errors to prev_in_delta and c_delta_prev
-            self.be.compound_dot(
-                    self.W_recur_f.T, ifog_delta, prev_in_deltas, beta=1.0)
+            self.be.compound_dot(self.W_recur_f.T, ifog_delta, prev_in_deltas, beta=1.0)
             if c_delta_prev is not None:
                 c_delta_prev[:] = c_delta * f
 
         # Weight deltas and accumulate
-        self.be.compound_dot(
-                self.ifog_delta_last_steps, self.h_first_steps.T, self.dW_recur_f)
-        self.be.compound_dot(
-                self.ifog_delta_buffer, self.x_f.T, self.dW_input_f)
+        self.be.compound_dot(self.ifog_delta_last_steps, self.h_first_steps.T, self.dW_recur_f)
+        self.be.compound_dot(self.ifog_delta_buffer, self.x_f.T, self.dW_input_f)
         self.db_f[:] = self.be.sum(self.ifog_delta_buffer, axis=1)
         # out deltas to input units
         if self.out_deltas_buffer:
-            self.be.compound_dot(
-                    self.W_input_f.T, self.ifog_delta_buffer,
-                    self.out_deltas_buffer_f_v,
-                    alpha=alpha, beta=beta)
+            self.be.compound_dot(self.W_input_f.T, self.ifog_delta_buffer,
+                                 self.out_deltas_buffer_f_v,
+                                 alpha=alpha, beta=beta)
 
         # bprop for backward direction connections. Error flow from left to right
         self.c_delta_buffer[:] = 0
@@ -403,24 +400,20 @@ class TimeDistBiLSTM(BiLSTM):
                 in enumerate(zip(*params_b)):
 
             # current cell delta
-            c_delta[:] = c_delta[:] + \
-                         self.activation.bprop(c_act) * (o * in_deltas)
+            c_delta[:] = c_delta[:] + self.activation.bprop(c_act) * (o * in_deltas)
             i_delta[:] = self.gate_activation.bprop(i) * c_delta * g
             f_delta[:] = self.gate_activation.bprop(f) * c_delta * c_next
             o_delta[:] = self.gate_activation.bprop(o) * in_deltas * c_act
             g_delta[:] = self.activation.bprop(g) * c_delta * i
 
             # bprop the errors to next_in_delta and c_next_delta
-            self.be.compound_dot(
-                    self.W_recur_b.T, ifog_delta, next_in_deltas, beta=1.0)
+            self.be.compound_dot(self.W_recur_b.T, ifog_delta, next_in_deltas, beta=1.0)
             if c_delta_next is not None:
                 c_delta_next[:] = c_delta * f
 
         # Weight deltas and accumulate
-        self.be.compound_dot(
-                self.ifog_delta_first_steps, self.h_last_steps.T, self.dW_recur_b)
-        self.be.compound_dot(
-                self.ifog_delta_buffer, self.x_b.T, self.dW_input_b)
+        self.be.compound_dot(self.ifog_delta_first_steps, self.h_last_steps.T, self.dW_recur_b)
+        self.be.compound_dot(self.ifog_delta_buffer, self.x_b.T, self.dW_input_b)
         self.db_b[:] = self.be.sum(self.ifog_delta_buffer, axis=1)
         # out deltas to input units. bprop to the same inputs if
         # split_inputs=False

@@ -38,7 +38,7 @@ def run_conlleval(data):
 
 
 def get_conll_scores(predictions, y, y_lex):
-    if type(predictions) == list:
+    if isinstance(predictions, list):
         predictions = predictions[-1]
     test_p = predictions
     if len(test_p.shape) > 2:

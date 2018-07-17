@@ -26,3 +26,7 @@ generated
 dist
 .nlp_architect_env/
 _generated_reqs.txt
+pylint.html
+pylint.txt
+flake8.txt
+nlp_architect/pipelines/bist-pretrained/*

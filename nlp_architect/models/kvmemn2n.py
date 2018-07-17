@@ -46,6 +46,8 @@ class KVMemN2N(Layer):
         a_logits (tensor, batch): predicted answer for each question in the batch
 
     """
+
+    # pylint: disable=super-init-not-called
     def __init__(self, num_iterations, batch_size, emb_size, nhops,
                  story_length, memory_size, vocab_size, vocab_axis, use_v_luts):
 
@@ -81,8 +83,9 @@ class KVMemN2N(Layer):
                                          pad_idx=0, name='LUT_A')
         if use_v_luts:
             self.LUTs_C = [ModifiedLookupTable(self.vocab_size, self.emb_size, self.init,
-                           update=True, pad_idx=0) for n in range(self.nhops)]
+                                               update=True, pad_idx=0) for n in range(self.nhops)]
 
+    # pylint: disable=arguments-differ
     def __call__(self, inputs):
         query = ng.cast_axes(inputs['query'], [self.batch_axis, self.sentence_rec_axis])
 
@@ -98,9 +101,9 @@ class KVMemN2N(Layer):
 
         for hopn in range(self.nhops):
             keys = ng.cast_axes(inputs['keys'], [self.batch_axis, self.memory_axis,
-                                self.sentence_rec_axis])
+                                                 self.sentence_rec_axis])
             value = ng.cast_axes(inputs['values'], [self.batch_axis, self.memory_axis,
-                                 self.val_len_axis])
+                                                    self.val_len_axis])
 
             # Embed keys
             m_emb_A = self.LUT_A(keys)
