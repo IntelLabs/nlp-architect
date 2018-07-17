@@ -23,8 +23,7 @@ import logging
 import sys
 import spacy
 from configargparse import ArgumentParser
-from nlp_architect.utils.io import check_size
-
+from nlp_architect.utils.io import check_size, validate_existing_filepath
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -34,7 +33,7 @@ if __name__ == '__main__':
     arg_parser.add_argument(
         '--corpus',
         default='../../datasets/wikipedia/enwiki-20171201_subset.txt.gz',
-        type=str,
+        type=validate_existing_filepath,
         action=check_size(min_size=1),
         help='path to the input corpus. Compressed files (gz) are also supported. By default, '
              'it is a subset of English Wikipedia.')
@@ -63,7 +62,7 @@ if __name__ == '__main__':
 
         # spacy NP extractor
         logger.info('loading spacy')
-        nlp = spacy.load('en_core_web_sm', disable=['textcat', 'parser' 'ner'])
+        nlp = spacy.load('en_core_web_sm', disable=['textcat', 'ner'])
         logger.info('spacy loaded')
 
         num_lines = sum(1 for line in corpus_file)

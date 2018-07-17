@@ -145,12 +145,14 @@ if __name__ == "__main__":
         help='maximal number of expanded terms to return')
 
     args = arg_parser.parse_args()
+
     se = SetExpand(np2vec_model_file=args.np2vec_model_file, binary=args.binary,
                    word_ngrams=args.word_ngrams)
     enter_seed_str = 'Enter the seed (comma-separated seed terms):'
     logger.info(enter_seed_str)
     for seed_str in sys.stdin:
         seed_list = seed_str.strip().split(',')
+        seed_list = (seed.strip() for seed in seed_list)
         exp = se.expand(seed_list, args.topn)
         logger.info('Expanded results:')
         logger.info(exp)
