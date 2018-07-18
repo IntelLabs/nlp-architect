@@ -40,7 +40,6 @@ class MatchLSTM_AnswerPointer(object):
         """
 
         # Assign Variables:
-        self.params_dict = params_dict
         self.max_question = params_dict['max_question']
         self.max_para = params_dict['max_para']
         self.hidden_size = params_dict['hidden_size']
