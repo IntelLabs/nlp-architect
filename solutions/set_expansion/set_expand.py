@@ -96,14 +96,18 @@ class SetExpand():
         """
         seed_ids = list()
         upper = True
+        lower = True
         for np in seed:
+            np = np.strip()
             if np[0].islower():
                 upper = False
+            else:
+                lower = False
             id = self.__term2id(np)
             if id in self.np2vec_model.vocab:
                 seed_ids.append(id)
         if len(seed_ids) > 0:
-            if upper:
+            if upper or lower:
                 res_id = self.np2vec_model.most_similar(seed_ids, topn=2 * topn)
             else:
                 res_id = self.np2vec_model.most_similar(seed_ids, topn=topn)
@@ -111,7 +115,8 @@ class SetExpand():
             for r in res_id:
                 if len(res) == topn:
                     break
-                if upper and r[0][0].isupper():
+                if (not lower and not upper) or (upper and r[0][0].isupper()) or (lower and r[0][
+                    0].islower()):
                     res.append((self.__id2term(r[0]), r[1]))
             return res
         else:
@@ -152,7 +157,6 @@ if __name__ == "__main__":
     logger.info(enter_seed_str)
     for seed_str in sys.stdin:
         seed_list = seed_str.strip().split(',')
-        seed_list = (seed.strip() for seed in seed_list)
         exp = se.expand(seed_list, args.topn)
         logger.info('Expanded results:')
         logger.info(exp)
