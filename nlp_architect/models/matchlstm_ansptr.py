@@ -335,7 +335,6 @@ class MatchLSTM_AnswerPointer(object):
         Returns:
         -------
         final start and end indices for the answer
-        
         """
         ans_start = []
         ans_end = []
