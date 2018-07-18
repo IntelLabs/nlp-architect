@@ -115,8 +115,7 @@ class SetExpand():
             for r in res_id:
                 if len(res) == topn:
                     break
-                if (not lower and not upper) or (upper and r[0][0].isupper()) or (lower and r[0][
-                    0].islower()):
+                if (not lower and not upper) or (upper and r[0][0].isupper()) or r[0][0].islower():
                     res.append((self.__id2term(r[0]), r[1]))
             return res
         else:
