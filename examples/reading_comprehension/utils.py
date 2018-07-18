@@ -61,8 +61,9 @@ def get_qids(args, q_id_path, data_dev):
     """
     q_ids = open(q_id_path)
     qids_list = []
-    for ele in q_ids:
-        qids_list.append(ele.strip().replace(" ", ""))
+    with open(q_id_path) as q_ids:
+        for ele in q_ids:
+            qids_list.append(ele.strip().replace(" ", ""))
 
     final_qidlist = []
     count = 0
@@ -94,19 +95,20 @@ def create_squad_training(paras_file, ques_file, answer_file, data_train_len=Non
     appended list for train/dev dataset
     """
 
-    f_para = open(paras_file)
-    f_ques = open(ques_file)
-    f_ans = open(answer_file)
     para_list = []
     ques_list = []
     ans_list = []
-    for ele in f_para:
-        para_list.append(list(map(int, ele.strip().split())))
-    for ele in f_ques:
-        ques_list.append(list(map(int, ele.strip().split())))
+    with open(paras_file) as f_para:
+        for ele in f_para:
+            para_list.append(list(map(int, ele.strip().split())))
 
-    for ele in f_ans:
-        ans_list.append(list(map(int, ele.strip().split())))
+    with open(ques_file) as f_ques:
+        for ele in f_ques:
+            ques_list.append(list(map(int, ele.strip().split())))
+
+    with open(answer_file) as f_ans:
+        for ele in f_ans:
+            ans_list.append(list(map(int, ele.strip().split())))
 
     data_train = []
     if data_train_len is None:

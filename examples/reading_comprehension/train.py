@@ -42,7 +42,7 @@ parser.add_argument('--select_device', default='GPU', type=str,
                     help='enter the device to execute on')
 
 parser.add_argument('--train_set_size', default=None, type=int,
-                    help='enter the length of training set size')
+                    help='enter the length of training set size', action=check_size(200, 90000))
 
 parser.add_argument('--hidden_size', default=150, type=int,
                     help='enter the number of hidden units', action=check_size(30, 300))
@@ -69,6 +69,10 @@ params_dict['hidden_size'] = args.hidden_size
 params_dict['max_para'] = args.max_para_req
 params_dict['epoch_no'] = args.epochs
 
+# Validate select_device
+if args.select_device not in ['CPU', 'GPU']:
+    print("Please enter a valid device name")
+    exit()
 
 # Create dictionary of filenames
 file_name_dict = {}
@@ -79,16 +83,28 @@ file_name_dict['val_para_ids'] = 'dev.ids.context'
 file_name_dict['val_ques_ids'] = 'dev.ids.question'
 file_name_dict['val_ans'] = 'dev.span'
 file_name_dict['vocab_file'] = 'vocab.dat'
+file_name_dict['embedding'] = 'glove.trimmed.300.npz'
+
+# Validate contents of data_path folder:
+missing_flag = 0
+for file_name in file_name_dict.values():
+    if not os.path.exists(os.path.join(args.data_path, file_name)):
+            print("The following required file is missing :", file_name)
+            missing_flag = 1
+
+if missing_flag:
+    print("Please rereun prepare_data.py to generate missing files")
+    exit()
 
 # Paths for preprcessed files
-path_gen = os.path.join(args.data_path + "/")
-train_para_ids = os.path.join(path_gen + file_name_dict['train_para_ids'])
-train_ques_ids = os.path.join(path_gen + file_name_dict['train_ques_ids'])
-answer_file = os.path.join(path_gen + file_name_dict['train_answer'])
-val_paras_ids = os.path.join(path_gen + file_name_dict['val_para_ids'])
-val_ques_ids = os.path.join(path_gen + file_name_dict['val_ques_ids'])
-val_ans_file = os.path.join(path_gen + file_name_dict['val_ans'])
-vocab_file = os.path.join(path_gen + file_name_dict['vocab_file'])
+path_gen = args.data_path
+train_para_ids = os.path.join(path_gen, file_name_dict['train_para_ids'])
+train_ques_ids = os.path.join(path_gen, file_name_dict['train_ques_ids'])
+answer_file = os.path.join(path_gen, file_name_dict['train_answer'])
+val_paras_ids = os.path.join(path_gen, file_name_dict['val_para_ids'])
+val_ques_ids = os.path.join(path_gen, file_name_dict['val_ques_ids'])
+val_ans_file = os.path.join(path_gen, file_name_dict['val_ans'])
+vocab_file = os.path.join(path_gen, file_name_dict['vocab_file'])
 
 # Create model dir if it doesn't exist
 if not os.path.exists(args.model_dir):
@@ -103,6 +119,8 @@ data_dev = create_squad_training(val_paras_ids, val_ques_ids, val_ans_file)
 
 if args.train_set_size is None:
     params_dict['train_set_size'] = len(data_train)
+else:
+    params_dict['train_set_size'] = args.train_set_size
 
 # Combine train and dev data
 data_total = data_train + data_dev
@@ -113,7 +131,7 @@ params_dict['max_question'] = max_question
 
 # Load embeddings for vocab
 print('Loading Embeddings')
-embeddingz = np.load(os.path.join(path_gen + "glove.trimmed.300.npz"))
+embeddingz = np.load(os.path.join(path_gen, file_name_dict['embedding']))
 embeddings = embeddingz['glove']
 
 # Create train and dev sets

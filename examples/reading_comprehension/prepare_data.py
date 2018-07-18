@@ -206,10 +206,23 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     glove_flag = not args.no_preprocess_glove
-    data_path = os.path.join(args.data_path + "/")
+
+    # Validate files in the folder:
+    missing_flag = 0
+    files_list = ["train-v1.1.json", "dev-v1.1.json"]
+    for file_name in files_list:
+        if not os.path.exists(os.path.join(args.data_path, file_name)):
+                print("The following required file is missing :", file_name)
+                missing_flag = 1
+
+    if missing_flag:
+        print("Please ensure that required datasets are downloaded")
+        exit()
+
+    data_path = args.data_path
     # Load Train and Dev Data
-    train_filename = os.path.join(data_path + "train-v1.1.json")
-    dev_filename = os.path.join(data_path + "dev-v1.1.json")
+    train_filename = os.path.join(data_path, "train-v1.1.json")
+    dev_filename = os.path.join(data_path, "dev-v1.1.json")
     with open(train_filename) as train_file:
         train_data = json.load(train_file)
 
