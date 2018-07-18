@@ -23,10 +23,21 @@ from collections import Counter
 
 class MatchLSTM_AnswerPointer(object):
     """
-    Class that defines the match lstm and answer pointer blocks
+    Defines end to end MatchLSTM and Answer_Pointer network for Reading Comprehension
     """
 
     def __init__(self, params_dict, embeddings):
+        """
+        Args:
+        --------
+        params_dict: Dictionary containing the following keys-
+                     'max_question' : max length of all questions in the dataset
+                     'max_para' :  max length of all paragraphs in the dataset
+                     'hidden_size': number of hidden units in the network
+                     'batch_size' : batch size defined by user
+
+        embeddings: Glove pretrained embedding matrix
+        """
 
         # Assign Variables:
         self.params_dict = params_dict
@@ -68,7 +79,10 @@ class MatchLSTM_AnswerPointer(object):
         self.create_model()
 
     def create_variables(self):
+        """
+        Function to create variables used for training
 
+        """
         # define all variables required for training
         self.W_p = tf.get_variable("W_p", [1, self.hidden_size, self.hidden_size])
         self.W_r = tf.get_variable("W_r", [1, self.hidden_size, self.hidden_size])
@@ -110,7 +124,7 @@ class MatchLSTM_AnswerPointer(object):
         # Embedding Layer
         embedding_lookup = tf.Variable(self.embeddings, name="word_embeddings",
                                        dtype=tf.float32, trainable=False)
-
+        # Embedding Lookups
         self.question_emb = tf.nn.embedding_lookup(embedding_lookup, self.question_ids,
                                                    name="question_embed")
 
@@ -161,14 +175,14 @@ class MatchLSTM_AnswerPointer(object):
         # Answer pointer pass
         self.logits = self.answer_pointer_pass()
 
-        print('Set up Loss')
+        print('Settting up Loss')
         # Compute Losses
         loss_1 = tf.nn.sparse_softmax_cross_entropy_with_logits(logits=self.logits[0],
                                                                 labels=self.labels[:, 0])
 
         loss_2 = tf.nn.sparse_softmax_cross_entropy_with_logits(logits=self.logits[1],
                                                                 labels=self.labels[:, 1])
-
+        # Total Loss
         self.loss = tf.reduce_mean(loss_1 + loss_2)
         self.learning_rate = tf.constant(0.002)
 
@@ -179,14 +193,12 @@ class MatchLSTM_AnswerPointer(object):
 
     def unroll_with_attention(self, reverse=False):
         """
-        Function to run the match_lstm pass for both forward and reverse directions
+        Function to run the match_lstm pass in both forward and reverse directions
 
-        Arguments:
+        Args:
         ----------
         reverse: Boolean indicating whether to unroll in reverse directions
-        Return:
-        --------
-        None
+
         """
         # Intitialze first hidden_state with zeros
         h_r_old = tf.constant(
@@ -218,6 +230,7 @@ class MatchLSTM_AnswerPointer(object):
             self.G_i = tf.nn.tanh(int_sum_new + int_sum1) + \
                 tf.expand_dims(self.c_p * self.ques_mask, 1)
 
+            # Attention Vector
             self.attn = tf.nn.softmax(tf.matmul(w_lr_expanded, self.G_i))
 
             z1 = encoded_paraslice
@@ -239,12 +252,14 @@ class MatchLSTM_AnswerPointer(object):
             stacked_lists = tf.stack(final_state_list, 1)
 
         if not reverse:
+            # Mask Output
             mask_mult_lstm_forward = tf.matmul(tf.transpose(self.ones_embed, [0, 2, 1]),
                                                tf.expand_dims(self.para_mask, 1))
 
             self.stacked_lists_forward = tf.multiply(tf.transpose(stacked_lists, [0, 2, 1]),
                                                      mask_mult_lstm_forward)
         else:
+            # Mask Output
             mask_mult_lstm_reverse = tf.matmul(tf.transpose(
                 self.ones_embed, [0, 2, 1]), tf.expand_dims(tf.reverse(
                                                             self.para_mask, axis=[1]), 1))
@@ -256,11 +271,11 @@ class MatchLSTM_AnswerPointer(object):
         """
         Function to run the answer pointer pass:
 
-        Arguments:
+        Args:
         ---------
         None
 
-        Return:
+        Returns:
         --------
         List of logits for start and end indices of the answer
         """
@@ -338,14 +353,23 @@ class MatchLSTM_AnswerPointer(object):
 
         return (np.array(ans_start), np.array(ans_end))
 
-    def cal_f1_score(self, batch_size, ground_truths, predictions):
+    def cal_f1_score(self, ground_truths, predictions):
         """
-        Function to calculate F-1 and EM scores given predictions and ground truths
+        Function to calculate F-1 and EM scores
+
+        Args:
+        ------
+        ground_truths: labels given in the dataset
+        predictions: logits predicted by the network
+
+        Returns:
+        -------
+        F1 score and Exact-Match score
         """
         start_idx, end_idx = self.obtain_indices(predictions[0], predictions[1])
         f1 = 0
         exact_match = 0
-        for i in range(batch_size):
+        for i in range(self.batch_size):
             ele1 = start_idx[i]
             ele2 = end_idx[i]
             preds = np.linspace(ele1, ele2, abs(ele2 - ele1 + 1))
@@ -362,20 +386,19 @@ class MatchLSTM_AnswerPointer(object):
                 recall = 1.0 * num_same / len(gts)
                 f1 += (2 * precision * recall) / (precision + recall)
 
-        return 100 * (f1 / batch_size), 100 * (exact_match / batch_size)
+        return 100 * (f1 / self.batch_size), 100 * (exact_match / self.batch_size)
 
     def run_loop(self, session, train, mode='train', dropout=0.6):
         """
-        Function to run training/validation loop
-        Arguments:
+        Function to run training/validation loop and display training loss, F1 & EM scores
+
+        Args:
         ----------
         session: tensorflow session
         train:   data dictionary for training/validation
         dropout: float value
         mode: 'train'/'val'
-        Return:
-        --------
-        None
+
         """
 
         nbatches = int((len(train['para']) / self.batch_size))
@@ -399,17 +422,16 @@ class MatchLSTM_AnswerPointer(object):
                 self.ques_mask: np.asarray(train['question_mask'][start_batch:end_batch]),
                 self.dropout: dropout
             }
-            # Training Pass
+            # Training Phase
             if mode == 'train':
                 _, train_loss, l_rate, logits, labels = session.run(
                     [self.optimizer, self.loss, self.learning_rate, self.logits_withsf,
                      self.labels], feed_dict=feed_dict_qa)
 
                 if (idx % 20 == 0):
-                    print("Iteration No and loss is", idx, train_loss, l_rate)
-                    f1_score, em_score = self.cal_f1_score(self.batch_size,
-                                                           labels, logits)
-                    print("F-1 Score and EM is", f1_score, em_score)
+                    print('iteration = {}, train loss = {}'.format(idx, train_loss))
+                    f1_score, em_score = self.cal_f1_score(labels, logits)
+                    print("F-1 and EM Scores are", f1_score, em_score)
 
                 self.global_step.assign(self.global_step + 1)
 
@@ -417,13 +439,13 @@ class MatchLSTM_AnswerPointer(object):
                 logits, labels = session.run([self.logits_withsf, self.labels],
                                              feed_dict=feed_dict_qa)
 
-                f1_score_int, em_score_int = self.cal_f1_score(self.batch_size,
-                                                               labels, logits)
+                f1_score_int, em_score_int = self.cal_f1_score(labels, logits)
                 f1_score += f1_score_int
                 em_score += em_score_int
-        # validation Phase
+
+        # Validation Phase
         if mode == 'val':
             print(
-                "Validation F1score and EM score is",
+                "Validation F1 and EM scores are",
                 f1_score / nbatches,
                 em_score / nbatches)
