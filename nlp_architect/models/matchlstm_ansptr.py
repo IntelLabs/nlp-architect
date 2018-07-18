@@ -326,6 +326,16 @@ class MatchLSTM_AnswerPointer(object):
     def obtain_indices(self, preds_start, preds_end):
         """
         Function to get answer indices given the predictions
+
+        Args:
+        ------
+        preds_start: predicted start indices
+        predictions: predicted end indices
+
+        Returns:
+        -------
+        final start and end indices for the answer
+        
         """
         ans_start = []
         ans_end = []
@@ -404,13 +414,13 @@ class MatchLSTM_AnswerPointer(object):
         f1_score = 0
         em_score = 0
         for idx in range(nbatches):
-            # train for all batches
+            # Train for all batches
             start_batch = self.batch_size * idx
             end_batch = self.batch_size * (idx + 1)
             if end_batch > len(train['para']):
                 break
 
-            # create feed dictionary
+            # Create feed dictionary
             feed_dict_qa = {
                 self.para_ids: np.asarray(train['para'][start_batch:end_batch]),
                 self.question_ids: np.asarray(train['question'][start_batch:end_batch]),

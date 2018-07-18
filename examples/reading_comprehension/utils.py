@@ -18,6 +18,19 @@ import numpy as np
 
 
 def max_values_squad(data_train):
+
+    """
+    Function to compute the maximum length of sentences in
+    paragraphs and questions
+
+    Args:
+    -----------
+    data_train: list containing the entire dataset
+
+    Returns:
+    --------
+    maximum length of question and paragraph
+    """
     max_hypothesis = len(data_train[0][1])
     max_premise = len(data_train[0][0])
 
@@ -33,10 +46,24 @@ def max_values_squad(data_train):
 
 
 def get_qids(args, q_id_path, data_dev):
+
+    """
+    Function to create a list of question_ids in dev set
+
+    Args:
+    -----------
+    q_id_path: path to question_ids file
+    data_dev: development set
+
+    Returns:
+    --------
+    list of question ids
+    """
     q_ids = open(q_id_path)
     qids_list = []
     for ele in q_ids:
         qids_list.append(ele.strip().replace(" ", ""))
+
     final_qidlist = []
     count = 0
     for ele in data_dev:
@@ -49,6 +76,23 @@ def get_qids(args, q_id_path, data_dev):
 
 
 def create_squad_training(paras_file, ques_file, answer_file, data_train_len=None):
+
+    """
+    Function to read data from preprocessed files and return
+    data in the form of a list
+
+    Args:
+    -----------
+    paras_file: File name for preprocessed paragraphs
+    ques_file: File name for preprocessed questions
+    answer_file: File name for preprocessed answer spans
+    vocab_file:  File name for preprocessed vocab
+    data_train_len= length of train dataset to use
+
+    Returns:
+    --------
+    appended list for train/dev dataset
+    """
 
     f_para = open(paras_file)
     f_ques = open(ques_file)
@@ -75,6 +119,19 @@ def create_squad_training(paras_file, ques_file, answer_file, data_train_len=Non
 
 
 def get_data_array_squad(params_dict, data_train, set_val='train'):
+    """
+    Function to pad all sentences and restrict to max length defined by user
+
+    Args:
+    ---------
+    params_dict: dictionary containing all input parameters
+    data_train: list containing the training/dev data_train
+    set_val: indicates id its a training set or dev set
+
+    Returns:
+    ----------
+    Returns a list of tuples with padded sentences and masks
+    """
 
     max_para = params_dict['max_para']
     max_question = params_dict['max_question']
@@ -111,12 +168,22 @@ def get_data_array_squad(params_dict, data_train, set_val='train'):
                 count += 1
                 if count >= params_dict['train_set_size']:
                     break
-
-    print(len(train_set))
     return train_set
 
 
 def create_data_dict(data):
+
+    """
+    Function to convert data to dictionary format
+
+    Args:
+    -----------
+    data: train/dev data as a list
+
+    Returns:
+    --------
+    a dictionary containing dev/train data
+    """
 
     train = {}
     train['para'] = []
@@ -127,14 +194,7 @@ def create_data_dict(data):
     train['para_mask'] = []
     train['question_mask'] = []
 
-    for (
-        para_idx,
-        question_idx,
-        para_len,
-        question_len,
-        answer,
-        para_mask,
-            ques_mask) in data:
+    for (para_idx, question_idx, para_len, question_len, answer, para_mask, ques_mask) in data:
 
         train['para'].append(para_idx)
         train['question'].append(question_idx)

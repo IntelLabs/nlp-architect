@@ -21,7 +21,6 @@ import argparse
 import json
 import os
 from tqdm import tqdm
-from nlp_architect.utils.io import sanitize_path
 from nlp_architect.utils.io import validate_existing_directory
 
 PAD = "<pad>"
@@ -198,17 +197,16 @@ if __name__ == '__main__':
 
     parser.add_argument('--data_path', help='enter path where training data and the \
                         glove embeddings were downloaded',
-                        type=str)
+                        type=validate_existing_directory)
 
     parser.add_argument('--no_preprocess_glove', action="store_true",
                         help='Chose whether or not to preprocess glove embeddings')
+
     parser.set_defaults()
     args = parser.parse_args()
-    glove_flag = not args.no_preprocess_glove
 
-    validate_existing_directory(args.data_path)
-    data_path = sanitize_path(args.data_path)
-    data_path = os.path.join(data_path + "/")
+    glove_flag = not args.no_preprocess_glove
+    data_path = os.path.join(args.data_path + "/")
     # Load Train and Dev Data
     train_filename = os.path.join(data_path + "train-v1.1.json")
     dev_filename = os.path.join(data_path + "dev-v1.1.json")

@@ -4,7 +4,7 @@
 This directory contains an implementation of the boundary model(b in the Figure) Match LSTM and Answer Pointer network for Machine Reading Comprehension in Tensorflow. The idea behind this method is to build a question aware representation of the passage and use this representation as an input to the pointer network which identifies the start and end indices of the answer.
 
 ## Dataset
-1. mkdir data; mkdir trained_model
+1. mkdir data
 
 2. Download the official SQuAD-v1.1 training (train-v1.1.json) and development(dev-v1.1.json) datasets  from here
 https://worksheets.codalab.org/worksheets/0x62eefc3e64e04430a1a24785a9293fff/ and place the extracted json files in the `data` directory.The terms and conditions of the data set license apply. Intel does not grant any rights to the data files.
