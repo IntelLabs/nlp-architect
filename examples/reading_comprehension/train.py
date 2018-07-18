@@ -28,7 +28,7 @@ from nlp_architect.utils.io import validate_existing_directory, check_size
 # Parse the command line arguments
 parser = argparse.ArgumentParser()
 
-parser.add_argument('--data_path',default='data', type=str,
+parser.add_argument('--data_path', default='data', type=str,
                     help='enter path for training data')
 
 parser.add_argument('--gpu_id', default="0", type=str,
@@ -88,7 +88,7 @@ validate_existing_directory(args.data_path)
 path_gen = sanitize_path(args.data_path)
 path_gen = os.path.join(path_gen + "/")
 
-#Validate model dir path
+# Validate model dir path
 validate_existing_directory(args.model_dir)
 model_path = sanitize_path(args.model_dir)
 
@@ -131,7 +131,7 @@ print('Loading Embeddings')
 embeddingz = np.load(os.path.join(path_gen + "glove.trimmed.300.npz"))
 embeddings = embeddingz['glove']
 
-#Create train and dev sets
+# Create train and dev sets
 print("creating training and development sets")
 train = get_data_array_squad(params_dict, data_train, set_val='train')
 dev = get_data_array_squad(params_dict, data_dev, set_val='val')
