@@ -20,7 +20,7 @@ import json
 from configargparse import ArgumentParser
 
 from nlp_architect.models.np2vec import NP2vec
-from nlp_architect.utils.io import validate_existing_filepath, check_size
+from nlp_architect.utils.io import validate_existing_filepath, check_size, load_json_file
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -46,12 +46,9 @@ class SetExpand():
         """
         # load grouping info
         logger.info('loading grouping data')
-        with open('id2rep') as id2rep_file:
-            self.id2rep = json.load(id2rep_file)
-        with open('np2id') as np2id_file:
-            self.np2id = json.load(np2id_file)
-        with open('id2group') as id2group_file:
-            self.id2group = json.load(id2group_file)
+        self.id2rep = load_json_file('id2rep')
+        self.np2id = load_json_file('np2id')
+        self.id2group = load_json_file('id2group')
         logger.info('loadind model...')
         self.np2vec_model = NP2vec.load(np2vec_model_file, binary=binary, word_ngrams=word_ngrams)
         # extract the first term of the model in order to get the marking character

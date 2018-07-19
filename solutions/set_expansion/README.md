@@ -67,7 +67,7 @@ python solutions/set_expansion/set_expand.py --np2vec_model_file MODEL_PATH --se
     should also set it in the ui/settings.py file. You can also load the ui
     application as a server using the bokeh options --address and --port, for example:
     ```
-    bokeh serve ui --address=127.0.0.1 --port=1111 --allow-websocket-origin=127.0.0.1:1111
+    bokeh serve ui --address=12.13.14.15 --port=1010 --allow-websocket-origin=12.13.14.15:1010
     ```
 
 ## Citation

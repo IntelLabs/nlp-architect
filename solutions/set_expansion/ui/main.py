@@ -57,7 +57,7 @@ empty_table = {'res': 15 * [''], 'score': 15 * ['']}
 seed_input_title = 'Please enter a comma separated seed list of terms:'
 seed_input_box = TextInput(
     title=seed_input_title, value="USA, Israel, France", width=450, css_classes=["seed-input"])
-group_info_box = Div(text='group',height= 30)
+group_info_box = Div(text='',height= 30)
 search_input_box = TextInput(title="Search:", value="", width=300)
 expand_button = Button(label="Expand", button_type="success", width=150)
 clear_seed_button = Button(
@@ -282,7 +282,7 @@ def get_expand_results_callback():
         received = send_request_to_server(seed)
         if received is not None:
             res = [x[0] for x in received]
-            scores = [y[1] for y in received]
+            scores = ["{0:.5f}".format(y[1]) for y in received]
             logger.info('setting table data')
             expand_table_source.data = {
                 'res': res,
