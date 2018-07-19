@@ -80,7 +80,8 @@ ifneq ($(ENV_EXIST), yes)
 	@echo "**************************"
 	@echo "Creating new environment"
 	@echo
-	virtualenv -p python3 $(VIRTUALENV_DIR)
+#	virtualenv -p python3 $(VIRTUALENV_DIR)
+	python3 -m venv $(VIRTUALENV_DIR)
 	@. $(ACTIVATE); pip3 install -U pip
 endif
 
