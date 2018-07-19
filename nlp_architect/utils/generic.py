@@ -21,6 +21,7 @@ from __future__ import absolute_import
 import numpy as np
 import re
 
+
 # pylint: disable=invalid-unary-operand-type
 def pad_sentences(sequences, max_length=None, padding_value=0.):
     """
@@ -156,13 +157,13 @@ def license_prompt(model_name, model_website, dataset_dir=None):
 
 
 # character vocab
-zhang_lecun_vocab=list("abcdefghijklmnopqrstuvwxyz0123456789-,;.!?:’’’/\|_@#$%ˆ&*˜‘+-=<>()[]{}")
+zhang_lecun_vocab = list("abcdefghijklmnopqrstuvwxyz0123456789-,;.!?:’’’/\|_@#$%ˆ&*˜‘+-=<>()[]{}")
 vocab_hash = {b: a for a, b in enumerate(zhang_lecun_vocab)}
 
 
 def normalize(txt, vocab=None, replace_char=' ',
               max_length=300, pad_out=True,
-              to_lower=True, reverse = False,
+              to_lower=True, reverse=False,
               truncate_left=False, encoding=None):
 
     # remove html
@@ -198,7 +199,7 @@ def normalize(txt, vocab=None, replace_char=' ',
     if encoding is not None:
         txt = txt.encode(encoding, errors="ignore")
     # pad out if needed
-    if pad_out and max_length>txt_len:
+    if pad_out and max_length > txt_len:
         txt = txt + replace_char * (max_length - txt_len)
     return txt
 
@@ -206,14 +207,14 @@ def normalize(txt, vocab=None, replace_char=' ',
 def to_one_hot(txt, vocab=vocab_hash):
 
     vocab_size = len(vocab.keys())
-    one_hot_vec = np.zeros((vocab_size, len(txt)), dtype=np.float32)
+    one_hot_vec = np.zeros((vocab_size + 1, len(txt)), dtype=np.float32)
     # run through txt and "switch on" relevant positions in one-hot vector
     for idx, char in enumerate(txt):
-        try:
+        if char in vocab_hash:
             vocab_idx = vocab_hash[char]
             one_hot_vec[vocab_idx, idx] = 1
         # raised if character is out of vocabulary
-        except:
+        else:
             pass
     return one_hot_vec
 

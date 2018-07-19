@@ -66,12 +66,12 @@ def run_loss(args):
 
     es = EarlyStopping(monitor='val_acc', min_delta=0, patience=6, verbose=0, mode='max')
     model_hist = lstm_model.fit(X_train, Y_train, epochs=args['epochs'], batch_size=batch_size,
-                                verbose=1, validation_data=(X_test,Y_test), callbacks=[es])
+                                verbose=1, validation_data=(X_test, Y_test), callbacks=[es])
     lstm_acc = model_hist.history['val_acc'][-1]
     print("LSTM model accuracy ", lstm_acc)
-    run_num +=1
+    run_num += 1
     # This minimizes, so the maximize we have to take the inverse :)
-    return 1-lstm_acc
+    return 1 - lstm_acc
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -82,21 +82,21 @@ if __name__ == '__main__':
     parser.add_argument('--ouput_file', type=str, default='./opt_trials.pkl',
                         help='file_path where the output of the trials will be located')
     parser.add_argument('--new_trails', type=int, default=20, action=check_size(1, 20000))
-    args = parser.parse_args()
+    args_in = parser.parse_args()
 
     # Check inputs
-    if args.file_path:
-        validate_parent_exists(args.file_path)
-    if args.ouput_file:
-        validate_parent_exists(args.ouput_file)
+    if args_in.file_path:
+        validate_parent_exists(args_in.file_path)
+    if args_in.ouput_file:
+        validate_parent_exists(args_in.ouput_file)
 
-    if args.data_type == 'amazon':
-        data_in = Amazon_Reviews(args.file_path)
+    if args_in.data_type == 'amazon':
+        data_in = Amazon_Reviews(args_in.file_path)
 
-    try:
-        with open(args.ouput_file, 'rb') as read_f:
+    if args_in.ouput_file:
+        with open(args_in.ouput_file, 'rb') as read_f:
             trials_to_keep = pickle.load(read_f)
-    except:
+    else:
         trials_to_keep = Trials()
 
     space = {'data': data_in,
@@ -107,7 +107,7 @@ if __name__ == '__main__':
              'dropout': hp.uniform('dropout', 0, 0.1)
              }
 
-    num_evals = len(trials_to_keep.trials)+args.new_trails
+    num_evals = len(trials_to_keep.trials)+args_in.new_trails
     best = fmin(run_loss,
                 space=space,
                 algo=tpe.suggest,
@@ -115,5 +115,5 @@ if __name__ == '__main__':
                 trials=trials_to_keep
                 )
     # Write out the trials
-    with open(args.ouput_file, 'wb') as f:
+    with open(args_in.ouput_file, 'wb') as f:
         pickle.dump(trials_to_keep, f)

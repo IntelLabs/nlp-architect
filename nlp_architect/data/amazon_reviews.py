@@ -15,10 +15,12 @@
 # ******************************************************************************
 
 # This dataset should be downloaded from http://jmcauley.ucsd.edu/data/amazon/
-# The terms and conditions of the data set license apply. Intel does not grant any rights to the data files.
+# The terms and conditions of the data set license apply.
+# Intel does not grant any rights to the data files.
 # The Amazon Review Dataset was published in the following papers:
 #
-# Ups and downs: Modeling the visual evolution of fashion trends with one-class collaborative filtering
+# Ups and downs:
+# Modeling the visual evolution of fashion trends with one-class collaborative filtering
 # R. He, J. McAuley
 # WWW, 2016
 # http://cseweb.ucsd.edu/~jmcauley/pdfs/www16a.pdf
@@ -75,9 +77,12 @@ class Amazon_Reviews(object):
 
         # Not sure how to easily balance outside of pandas...but should replace eventually
         self.amazon = pd.DataFrame(data, columns=['Sentiment', 'clean_text'])
+        self.all_text = self.amazon['clean_text']
+        self.labels_0 = pd.get_dummies(self.amazon['Sentiment'])
+        self.labels = self.labels_0.values
+        self.text = self.amazon['clean_text'].values
 
     def process(self):
-        self.all_text = self.amazon['clean_text']
         self.amazon = self.amazon[self.amazon['Sentiment'].isin(['positive', 'negative'])]
 
         if self.run_balance:

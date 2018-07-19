@@ -44,7 +44,7 @@ from nlp_architect.utils.ensembler import simple_ensembler
 from nlp_architect.utils.io import validate_parent_exists, check_size
 
 max_fatures = 2000
-max_len=300
+max_len = 300
 batch_size = 32
 embed_dim = 256
 lstm_out = 140
@@ -53,7 +53,7 @@ lstm_out = 140
 def ensemble_models(data, args):
     # split, train, test
     data.process()
-    dense_out=len(data.labels[0])
+    dense_out = len(data.labels[0])
     # split for all models
     X_train_, X_test_, Y_train, Y_test = train_test_split(data.text, data.labels,
                                                           test_size=0.20, random_state=42)
@@ -69,7 +69,7 @@ def ensemble_models(data, args):
     # Train the LSTM model
     lstm_model = simple_lstm(max_fatures, dense_out, X_train.shape[1], embed_dim, lstm_out)
     model_hist = lstm_model.fit(X_train, Y_train, epochs=args.epochs, batch_size=batch_size,
-                                verbose=1, validation_data=(X_test,Y_test))
+                                verbose=1, validation_data=(X_test, Y_test))
     lstm_acc = model_hist.history['acc'][-1]
     print("LSTM model accuracy ", lstm_acc)
 
@@ -83,7 +83,7 @@ def ensemble_models(data, args):
     # And train the one-hot CNN classifier
     model_cnn = one_hot_cnn(dense_out, max_len)
     model_hist_cnn = model_cnn.fit(X_train_cnn, Y_train, batch_size=batch_size, epochs=args.epochs,
-                                   verbose=1, validation_data=(X_test_cnn,Y_test))
+                                   verbose=1, validation_data=(X_test_cnn, Y_test))
     cnn_acc = model_hist_cnn.history['acc'][-1]
     print("CNN model accuracy: ", cnn_acc)
 
@@ -92,12 +92,13 @@ def ensemble_models(data, args):
 
     # Using the accuracies create an ensemble
     accuracies = [lstm_acc, cnn_acc]
-    norm_accuracies = [a/sum(accuracies) for a in accuracies]
+    norm_accuracies = [a / sum(accuracies) for a in accuracies]
 
     print("Ensembling with weights: ")
     for na in norm_accuracies:
         print(na)
-    ensembled_predictions = simple_ensembler([lstm_predictions, one_hot_cnn_predictions], norm_accuracies)
+    ensembled_predictions = simple_ensembler([lstm_predictions, one_hot_cnn_predictions],
+                                             norm_accuracies)
     final_preds = np.argmax(ensembled_predictions, axis=1)
 
     # Get the final accuracy

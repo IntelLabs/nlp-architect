@@ -32,6 +32,6 @@ def simple_ensembler(np_arrays, weights):
                        have the vector representing pad value to be 0s.
     """
     ensembled_matrix = np_arrays[0] * weights[0]
-    for i in range(1,len(np_arrays)):
+    for i in range(1, len(np_arrays)):
         ensembled_matrix = ensembled_matrix + np_arrays[i] * weights[i]
     return ensembled_matrix

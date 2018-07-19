@@ -20,13 +20,13 @@ from keras.layers.convolutional import Conv1D, MaxPooling1D
 from keras.optimizers import SGD
 
 
-def simple_lstm(max_fatures, dense_out, input_length, embed_dim = 256, lstm_out = 140,
-                dropout = 0.5):
+def simple_lstm(max_fatures, dense_out, input_length, embed_dim=256, lstm_out=140,
+                dropout=0.5):
     model = Sequential()
-    model.add(Embedding(max_fatures, embed_dim,  input_length=input_length))
-    model.add(Bidirectional(LSTM(lstm_out, recurrent_dropout=dropout,activation='tanh')))
+    model.add(Embedding(max_fatures, embed_dim, input_length=input_length))
+    model.add(Bidirectional(LSTM(lstm_out, recurrent_dropout=dropout, activation='tanh')))
     model.add(Dense(dense_out, activation='softmax'))
-    model.compile(loss = 'categorical_crossentropy', optimizer='adam',metrics = ['accuracy'])
+    model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 
     return model
 
@@ -35,14 +35,14 @@ def one_hot_cnn(dense_out, max_len=300, frame='small'):
 
     if frame == 'large':
         cnn_size = 1024
-        fully_connected = [2048,2048,dense_out]
+        fully_connected = [2048, 2048, dense_out]
     else:
         cnn_size = 256
-        fully_connected = [1024,1024,dense_out]
+        fully_connected = [1024, 1024, dense_out]
 
     model = Sequential()
 
-    model.add(Conv1D(cnn_size, 7, padding='same', input_shape=(67, max_len)))
+    model.add(Conv1D(cnn_size, 7, padding='same', input_shape=(68, max_len)))
     model.add(MaxPooling1D(pool_size=3))
 
     print(model.output_shape)
@@ -53,12 +53,12 @@ def one_hot_cnn(dense_out, max_len=300, frame='small'):
 
     print(model.output_shape)
     # Input = 7 x 256
-    model.add(Conv1D(cnn_size,3, padding='same'))
+    model.add(Conv1D(cnn_size, 3, padding='same'))
 
     # Input = 7 x 256
-    model.add(Conv1D(cnn_size,3, padding='same'))
+    model.add(Conv1D(cnn_size, 3, padding='same'))
 
-    model.add(Conv1D(cnn_size,3, padding='same'))
+    model.add(Conv1D(cnn_size, 3, padding='same'))
 
     # Input = 7 x 256
     model.add(Conv1D(cnn_size, 3, padding='same'))
