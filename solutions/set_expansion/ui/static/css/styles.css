@@ -30,3 +30,7 @@
 .phrases_list {
     padding-top: 0px;
 }
+
+.group-div {
+    white-space: pre-wrap;
+}

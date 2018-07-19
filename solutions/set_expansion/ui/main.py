@@ -39,7 +39,7 @@ vocab_dict = {}
 cut_vocab_dict = {}
 max_visible_phrases = 5000
 working_text = 'please wait...'
-fetching_text = 'fetching vocabulary from server. please wait...'
+fetching_text = 'fetching vocabulary from server (only once). this can take few minutes...'
 seed_check_text = ''
 all_selected_phrases = []
 search_flag = False
@@ -57,7 +57,7 @@ empty_table = {'res': 15 * [''], 'score': 15 * ['']}
 seed_input_title = 'Please enter a comma separated seed list of terms:'
 seed_input_box = TextInput(
     title=seed_input_title, value="USA, Israel, France", width=450, css_classes=["seed-input"])
-group_info_box = Div(text='',height= 30)
+group_info_box = Div(text='',height= 30, css_classes=["group-div"])
 search_input_box = TextInput(title="Search:", value="", width=300)
 expand_button = Button(label="Expand", button_type="success", width=150)
 clear_seed_button = Button(
@@ -250,9 +250,6 @@ def get_expand_results_callback():
     expand_working_label.text = working_text
     global seed_check_text, table_area
     try:
-        if vocab is None:
-            expand_working_label.text = fetching_text
-            get_vocab()
         seed_check_label.text = ''
         table_area.children = [table_layout]
         seed = seed_input_box.value
@@ -264,11 +261,6 @@ def get_expand_results_callback():
             seed_words = [x.strip() for x in seed.split(',')]
             bad_words = ''
             for w in seed_words:
-                # norm = None
-                # if w in np2id.keys():
-                #     norm = np2id[w]
-                # if norm is None or norm not in id2rep or id2rep[norm] not in vocab:
-                #     bad_words += ("'" + w + "',")
                 res = send_request_to_server('in_vocab,' + w)
                 if res is False:
                     bad_words += ("'" + w + "',")
@@ -331,6 +323,9 @@ def vocab_phrase_selected_callback(attr, old_selected, new_selected):
         if len(new_selected)==1:
             res = send_request_to_server('get_group,' + new_selected[0])
             if res is not None:
+                group_text = ''
+                for x in res:
+                    group_text = group_text + x + '<br>'
                 group_info_box.text = str(res)
         # sync expand table:
         # phrase was de-selected from vocab list:
