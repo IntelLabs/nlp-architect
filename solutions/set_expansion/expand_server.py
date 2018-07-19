@@ -17,8 +17,14 @@
 import socketserver
 import argparse
 import pickle
+import logging
+import sys
 from solutions.set_expansion import set_expand
 from nlp_architect.utils.io import validate_existing_filepath, check_size
+
+logging.basicConfig(stream=sys.stdout, level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 
 class MyTCPHandler(socketserver.BaseRequestHandler):
     """
@@ -27,30 +33,32 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
     """
 
     def handle(self):
-        print("handling expand request")
+        logger.info("handling expand request")
         res = ''
         self.data = str(self.request.recv(10240).strip(), 'utf-8')
-        print('request data: ' + self.data)
+        logger.info('request data: ' + self.data)
         if self.data == 'get_vocab':
-            print('getting vocabulary')
+            logger.info('getting vocabulary')
             res = se.get_vocab()
         elif 'in_vocab' in self.data:
             term = self.data.split(',')[1]
             res = se.in_vocab(term)
-            print('res: '+ str(res))
+        elif 'get_group' in self.data:
+            term = self.data.split(',')[1]
+            res = se.get_group(term)
         else:
             data = [x.strip() for x in self.data.split(',')]
-            print('expanding')
+            logger.info('expanding')
             res = se.expand(data)
-            print(str(res))
-        print('compressing response')
+        logger.info('res: ' + str(res))
+        logger.info('compressing response')
         packet = pickle.dumps(res)
-        print('response length= ' + str(len(packet)))
+        logger.info('response length= ' + str(len(packet)))
         # length = struct.pack('!I', len(packet))
         # packet = length + packet
-        print('sending response')
+        logger.info('sending response')
         self.request.sendall(packet)
-        print('done')
+        logger.info('done')
 
 
 if __name__ == "__main__":
@@ -65,10 +73,10 @@ if __name__ == "__main__":
 
     port = args.port
     model_path = args.model_path
-    print("loading model")
+    logger.info("loading model")
     se = set_expand.SetExpand(model_path)
-    print("loading server")
+    logger.info("loading server")
     HOST, PORT = args.host, port
     server = socketserver.TCPServer((HOST, PORT), MyTCPHandler)
-    print("server loaded")
+    logger.info("server loaded")
     server.serve_forever()

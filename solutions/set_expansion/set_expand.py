@@ -44,17 +44,24 @@ class SetExpand():
         Returns:
             np2vec model to load
         """
-        self.np2vec_model = NP2vec.load(np2vec_model_file, binary=binary, word_ngrams=word_ngrams)
-        # extract the first term of the model in order to get the marking character
-        first_term = next(iter(self.np2vec_model.vocab.keys()))
-        self.mark_char = first_term[-1]
-        # Precompute L2-normalized vectors.
-        self.np2vec_model.init_sims()
         # load grouping info
+        logger.info('loading grouping data')
         with open('id2rep') as id2rep_file:
             self.id2rep = json.load(id2rep_file)
         with open('np2id') as np2id_file:
             self.np2id = json.load(np2id_file)
+        with open('id2group') as id2group_file:
+            self.id2group = json.load(id2group_file)
+        logger.info('loadind model...')
+        self.np2vec_model = NP2vec.load(np2vec_model_file, binary=binary, word_ngrams=word_ngrams)
+        # extract the first term of the model in order to get the marking character
+        logger.info('compute L2 norm')
+        first_term = next(iter(self.np2vec_model.vocab.keys()))
+        self.mark_char = first_term[-1]
+        # Precompute L2-normalized vectors.
+        self.np2vec_model.init_sims()
+        logger.info('done init')
+
 
     def __term2id(self, term):
         """
@@ -91,15 +98,22 @@ class SetExpand():
 
     def in_vocab(self, term):
         norm = None
-        print("is in vocab: " + term)
+        logger.info("check is in vocab: " + term)
         if term in self.np2id.keys():
             norm = self.np2id[term]
         if norm is None or norm not in self.id2rep or self.__term2id(
                     self.id2rep[norm]) not in self.np2vec_model.vocab:
-            print("false")
             return False
-        print("true")
         return True
+
+    def get_group(self, term):
+        logger.info("check is in vocab: " + term)
+        group = []
+        if term in self.np2id:
+            id = self.np2id[term]
+            if id in self.id2group:
+                group = self.id2group[id]
+        return group
 
     def expand(self, seed, topn=500):
         """
