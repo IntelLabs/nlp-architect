@@ -22,6 +22,22 @@ from keras.optimizers import SGD
 
 def simple_lstm(max_fatures, dense_out, input_length, embed_dim=256, lstm_out=140,
                 dropout=0.5):
+    """
+    Simple Bi-direction LSTM Model in Keras
+
+    Single layer bi-directional lstm with recurrent dropout and a fully connected layer
+
+    Args:
+        max_features (int): vocabulary size
+        dense_out (int): size out the output dense layer, this is the number of classes
+        input_length (int): length of the input text
+        embed_dim (int): internal embedding size used in the lstm
+        lstm_out (int): size of the bi-directional output layer
+        dropout (float): value for recurrent dropout, between 0 and 1
+
+    Returns:
+        model (model): LSTM model
+    """
     model = Sequential()
     model.add(Embedding(max_fatures, embed_dim, input_length=input_length))
     model.add(Bidirectional(LSTM(lstm_out, recurrent_dropout=dropout, activation='tanh')))
@@ -32,6 +48,23 @@ def simple_lstm(max_fatures, dense_out, input_length, embed_dim=256, lstm_out=14
 
 
 def one_hot_cnn(dense_out, max_len=300, frame='small'):
+
+    """
+    Temporal CNN Model
+
+    As defined in "Text Understanding from Scratch" by Zhang, LeCun 2015 https://arxiv.org/pdf/1502.01710v4.pdf
+    This model is a series of 1D CNNs, with a maxpooling and fully connected layers.
+    The frame sizes may either be large or small.
+
+
+    Args:
+        dense_out (int): size out the output dense layer, this is the number of classes
+        max_len (int): length of the input text
+        frame (str): frame size, either large or small
+
+    Returns:
+        model (model): temporal CNN model
+    """
 
     if frame == 'large':
         cnn_size = 1024

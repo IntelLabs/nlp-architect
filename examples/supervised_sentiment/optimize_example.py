@@ -73,6 +73,7 @@ def run_loss(args):
     # This minimizes, so the maximize we have to take the inverse :)
     return 1 - lstm_acc
 
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--file_path', type=str, default='./',
@@ -107,7 +108,7 @@ if __name__ == '__main__':
              'dropout': hp.uniform('dropout', 0, 0.1)
              }
 
-    num_evals = len(trials_to_keep.trials)+args_in.new_trails
+    num_evals = len(trials_to_keep.trials) + args_in.new_trails
     best = fmin(run_loss,
                 space=space,
                 algo=tpe.suggest,

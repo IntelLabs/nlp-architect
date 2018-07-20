@@ -57,6 +57,7 @@ The library contains state-of-art and novel NLP and NLU models in a varity of to
 - NER and NE expansion
 - Text chunking
 - Reading comprehension
+- Supervised sentiment analysis
 
 
 Deep Learning frameworks
@@ -114,6 +115,7 @@ on this project, please see the :doc:`developer guide <developer_guide>`.
    spacy_bist.rst
    word_sense.rst
    np2vec.rst
+   supervised_sentiment.rst
 
 .. toctree::
    :hidden:
