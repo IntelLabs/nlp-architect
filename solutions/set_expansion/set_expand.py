@@ -15,7 +15,6 @@
 # ******************************************************************************
 import logging
 import sys
-import json
 
 from configargparse import ArgumentParser
 
@@ -70,7 +69,11 @@ class SetExpand():
         Returns:
             its id
         """
-        return term.replace(' ', self.mark_char) + self.mark_char
+        if term in self.np2id.keys():
+            norm = self.np2id[term]
+            rep = self.id2rep[norm]
+            return rep.replace(' ', self.mark_char) + self.mark_char
+        return None
 
     def __id2term(self, id):
         """
@@ -124,22 +127,30 @@ class SetExpand():
             up to topn expanded terms and their probabilities
         """
         seed_ids = list()
-        norm = None
+        upper = True
+        lower = True
         for np in seed:
-            if np in self.np2id.keys():
-                norm = self.np2id[np]
-            if norm is None or norm not in self.id2rep or self.__term2id(
-                    self.id2rep[norm]) not in self.np2vec_model.vocab:
-                logger.warning("The term: '" + np + "' is out-of-vocabulary.")
+            np = np.strip()
+            if np[0].islower():
+                upper = False
             else:
-                id = self.__term2id(self.id2rep[norm])
+                lower = False
+            id = self.__term2id(np)
+            if id is not None:
                 seed_ids.append(id)
+            else:
+                logger.warning("The term: '" + np + "' is out-of-vocabulary.")
         if len(seed_ids) > 0:
-            logger.info("seed_ids=" + str(seed_ids))
-            res_id = self.np2vec_model.most_similar(seed_ids, topn=topn)
+            if upper or lower:
+                res_id = self.np2vec_model.most_similar(seed_ids, topn=2 * topn)
+            else:
+                res_id = self.np2vec_model.most_similar(seed_ids, topn=topn)
             res = list()
             for r in res_id:
-                res.append((self.__id2term(r[0]), r[1]))
+                if len(res) == topn:
+                    break
+                if (not lower and not upper) or (upper and r[0][0].isupper()) or r[0][0].islower():
+                    res.append((self.__id2term(r[0]), r[1]))
             return res
         else:
             logger.info("All the seed terms are out-of-vocabulary.")
@@ -154,8 +165,7 @@ if __name__ == "__main__":
         type=validate_existing_filepath)
     arg_parser.add_argument(
         '--binary',
-        help='boolean indicating whether the model to load has been stored in binary '
-        'format.',
+        help='boolean indicating whether the model to load has been stored in binary format.',
         action='store_true')
     arg_parser.add_argument(
         '--word_ngrams',
@@ -163,16 +173,24 @@ if __name__ == "__main__":
         type=int,
         choices=[0, 1],
         help='If 0, the model to load stores word information. If 1, the model to load stores '
-        'subword (ngrams) information; note that subword information is relevant only to '
-        'fasttext models.')
-    arg_parser.add_argument('--seed', type=str, action=check_size(min_size=1),\
-    help='comma-separated seed terms')
-    arg_parser.add_argument('--topn', default=500, type=int, action=check_size(min_size=1),
-                            help='maximal number of expanded terms to return')
+             'subword (ngrams) information; note that subword information is relevant only to '
+             'fasttext models.')
+    arg_parser.add_argument(
+        '--topn',
+        default=500,
+        type=int,
+        action=check_size(min_size=1),
+        help='maximal number of expanded terms to return')
 
     args = arg_parser.parse_args()
+
     se = SetExpand(np2vec_model_file=args.np2vec_model_file, binary=args.binary,
                    word_ngrams=args.word_ngrams)
-    exp = se.expand(args.seed, args.topn)
-    logger.info('Expanded results:')
-    logger.info(exp)
+    enter_seed_str = 'Enter the seed (comma-separated seed terms):'
+    logger.info(enter_seed_str)
+    for seed_str in sys.stdin:
+        seed_list = seed_str.strip().split(',')
+        exp = se.expand(seed_list, args.topn)
+        logger.info('Expanded results:')
+        logger.info(exp)
+        logger.info(enter_seed_str)

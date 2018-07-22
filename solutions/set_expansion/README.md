@@ -20,7 +20,9 @@ The solution is constructed of the following stages:
 
 ## Training:
    
-The first step in training is to prepare the data for generating a word embedding model.
+The first step in training is to prepare the data for generating a word embedding model. We 
+provide a subset of English Wikipedia at datasets/wikipedia as a sample corpus under the  
+[Creative Commons Attribution-Share-Alike 3.0 License](https://creativecommons.org/licenses/by-sa/3.0/).
 This is done by running:
 ```
 python solutions/set_expansion/prepare_data.py --corpus TRAINING_CORPUS --marked_corpus MARKED_TRAINING_CORPUS
@@ -32,13 +34,17 @@ size, min_count, window and hs hyperparameters.
 python examples/np2vec/train.py --size 100 --min_count 10 --window 10 --hs 0 --corpus MARKED_TRAINING_CORPUS --np2vec_model_file MODEL_PATH --corpus_format txt
 ```
 
+A pretrained model on English Wikipedia dump (enwiki-20171201-pages-articles-multistream.xml
+.bz2) is provided at ... under Apache license. It has been trained with hyperparameters values 
+recommended above.
+
 ## Inference:
 
 It consists in expanding the seed terms. It can be done in two ways:
 
 1. Running python script
 ```
-python solutions/set_expansion/set_expand.py --np2vec_model_file MODEL_PATH --seed SEED
+python solutions/set_expansion/set_expand.py --np2vec_model_file MODEL_PATH --topn TOPN
 ```
 2. Web application
 
