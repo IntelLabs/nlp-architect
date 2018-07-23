@@ -559,9 +559,7 @@ class BABI_Dialog(object):
         # and making a correction
         if db_results and line_in == '<SILENCE>':
             for result in db_results:
-                res_utt_w = result.split(' ')
-                # Dont add time words to DB results
-                # res_utt_w += [str(time_feat) + "_TIME", '<USER>']
+                res_utt_w = [str(time_feat)] + result.split(' ') + ['<USER>']
                 context += [res_utt_w]
                 time_feat += 1
 
