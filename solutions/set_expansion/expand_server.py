@@ -50,7 +50,7 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
             data = [x.strip() for x in self.data.split(',')]
             logger.info('expanding')
             res = se.expand(data)
-        logger.info('res: ' + str(res))
+        # logger.info('res: ' + str(res))
         logger.info('compressing response')
         packet = pickle.dumps(res)
         logger.info('response length= ' + str(len(packet)))
@@ -69,12 +69,13 @@ if __name__ == "__main__":
                         help='set port for the server', action=check_size(1, 20))
     parser.add_argument('--port', type=int, default=1234,
                         help='set port for the server', action=check_size(0, 65535))
+    parser.add_argument('--grouping',action='store_true',default=False,help='grouping mode')
     args = parser.parse_args()
 
     port = args.port
     model_path = args.model_path
     logger.info("loading model")
-    se = set_expand.SetExpand(model_path)
+    se = set_expand.SetExpand(model_path, grouping=args.grouping)
     logger.info("loading server")
     HOST, PORT = args.host, port
     server = socketserver.TCPServer((HOST, PORT), MyTCPHandler)

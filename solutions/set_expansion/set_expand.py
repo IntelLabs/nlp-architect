@@ -15,6 +15,7 @@
 # ******************************************************************************
 import logging
 import sys
+from os import path
 
 from configargparse import ArgumentParser
 
@@ -24,13 +25,14 @@ from nlp_architect.utils.io import validate_existing_filepath, check_size, load_
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+cur_dir = path.dirname(path.realpath(__file__))
 
 class SetExpand():
     """
         Set expansion module, given a trained np2vec model.
     """
 
-    def __init__(self, np2vec_model_file, binary=False, word_ngrams=False):
+    def __init__(self, np2vec_model_file, binary=False, word_ngrams=False, grouping=False):
         """
         Load the np2vec model for set expansion.
 
@@ -43,11 +45,13 @@ class SetExpand():
         Returns:
             np2vec model to load
         """
-        # load grouping info
-        logger.info('loading grouping data')
-        self.id2rep = load_json_file('id2rep')
-        self.np2id = load_json_file('np2id')
-        self.id2group = load_json_file('id2group')
+        self.grouping = grouping
+        if grouping:
+            # load grouping info
+            logger.info('loading grouping data')
+            self.id2rep = load_json_file(path.join(cur_dir, 'id2rep'))
+            self.np2id = load_json_file(path.join(cur_dir, 'np2id'))
+            self.id2group = load_json_file(path.join(cur_dir, 'id2group'))
         logger.info('loadind model...')
         self.np2vec_model = NP2vec.load(np2vec_model_file, binary=binary, word_ngrams=word_ngrams)
         # extract the first term of the model in order to get the marking character
@@ -67,13 +71,16 @@ class SetExpand():
             term(str): term (noun phrase)
 
         Returns:
-            its id
+            its id (if is part of the model)
         """
-        if term in self.np2id.keys():
-            norm = self.np2id[term]
-            rep = self.id2rep[norm]
-            return rep.replace(' ', self.mark_char) + self.mark_char
-        return None
+        if self.grouping:
+            if term not in self.np2id.keys():
+                return None
+            term = self.id2rep[self.np2id[term]]
+        id = term.replace(' ', self.mark_char) + self.mark_char
+        if id not in self.np2vec_model.vocab:
+            return None
+        return id
 
     def __id2term(self, id):
         """
@@ -97,22 +104,17 @@ class SetExpand():
         return [self.__id2term(id) for id in self.np2vec_model.vocab]
 
     def in_vocab(self, term):
-        norm = None
-        logger.info("check is in vocab: " + term)
-        if term in self.np2id.keys():
-            norm = self.np2id[term]
-        if norm is None or norm not in self.id2rep or self.__term2id(
-                    self.id2rep[norm]) not in self.np2vec_model.vocab:
+        id = self.__term2id(term)
+        if id is None:
             return False
         return True
 
     def get_group(self, term):
-        logger.info("check is in vocab: " + term)
+        logger.info("get group of: " + term)
         group = []
         if term in self.np2id:
             id = self.np2id[term]
-            if id in self.id2group:
-                group = self.id2group[id]
+            group = self.id2group[id]
         return group
 
     def expand(self, seed, topn=500):
@@ -181,11 +183,16 @@ if __name__ == "__main__":
         type=int,
         action=check_size(min_size=1),
         help='maximal number of expanded terms to return')
+    arg_parser.add_argument(
+        '--grouping',
+        action='store_true',
+        default=False,
+        help='grouping mode')
 
     args = arg_parser.parse_args()
 
     se = SetExpand(np2vec_model_file=args.np2vec_model_file, binary=args.binary,
-                   word_ngrams=args.word_ngrams)
+                   word_ngrams=args.word_ngrams, grouping=args.grouping)
     enter_seed_str = 'Enter the seed (comma-separated seed terms):'
     logger.info(enter_seed_str)
     for seed_str in sys.stdin:

@@ -22,7 +22,7 @@ import gzip
 import logging
 import sys
 import json
-import os
+from os import path
 import spacy
 from configargparse import ArgumentParser
 
@@ -36,6 +36,9 @@ np2id = {}
 id2group = {}
 id2rep = {}
 np2count = {}
+cur_dir = path.dirname(path.realpath(__file__))
+
+
 
 if __name__ == '__main__':
     arg_parser = ArgumentParser(__doc__)
@@ -58,6 +61,11 @@ if __name__ == '__main__':
         action=check_size(1, 2),
         help='special character that marks NP\'s in the corpus (word separator and NP suffix). '
              'Default value is _.')
+    arg_parser.add_argument(
+        '--grouping',
+        action='store_true',
+        default=False,
+        help='perform noun-phrase grouping')
 
     args = arg_parser.parse_args()
 
@@ -102,27 +110,31 @@ if __name__ == '__main__':
                             # mark NP's
                             if len(span.text) > 1 and span.lemma_ != '-PRON-':
                                 #######
-                                np = span.text
-                                if np not in np2count:
-                                    np2count[np] = 1
-                                else:
-                                    np2count[np] += 1
-                                norm = spacy_normalizer(np, span.lemma_)
-                                np2id[np] = norm
-                                if norm not in id2rep:
-                                    id2rep[norm] = np
-                                if norm in id2group:
-                                    if np not in id2group[norm]:
-                                        id2group[norm].append(np)
-                                    elif np2count[np] > np2count[id2rep[norm]]:
-                                        id2rep[norm] = np  # replace rep
-                                else:
-                                    id2group[norm] = [np]
-                                    id2rep[norm] = np
-                                # mark NP's
-                                text = id2rep[norm].replace(' ',
-                                                            args.mark_char) + args.mark_char
+                                if args.grouping:
+                                    np = span.text
+                                    if np not in np2count:
+                                        np2count[np] = 1
+                                    else:
+                                        np2count[np] += 1
+                                    norm = spacy_normalizer(np, span.lemma_)
+                                    np2id[np] = norm
+                                    if norm not in id2rep:
+                                        id2rep[norm] = np
+                                    if norm in id2group:
+                                        if np not in id2group[norm]:
+                                            id2group[norm].append(np)
+                                        elif np2count[np] > np2count[id2rep[norm]]:
+                                            id2rep[norm] = np  # replace rep
+                                    else:
+                                        id2group[norm] = [np]
+                                        id2rep[norm] = np
+                                    # mark NP's
+                                    text = id2rep[norm].replace(' ',
+                                                                args.mark_char) + args.mark_char
                                 #######
+                                else:
+                                    text = span.text.replace(' ',
+                                                         args.mark_char) + args.mark_char
                                 marked_corpus_file.write(text + ' ')
                             else:
                                 marked_corpus_file.write(span.text + ' ')
@@ -137,17 +149,17 @@ if __name__ == '__main__':
             if i % 500 == 0:
                 logger.info('%i of %i lines', i, num_lines)
 
+
 # write grouping data :
+    if args.grouping:
+        corpus_name = path.basename(args.corpus)
+        with open(path.join(cur_dir, 'id2group'), 'w', encoding='utf8') as id2group_file:
+            id2group_file.write(json.dumps(id2group))
 
-    corpus_name = os.path.basename(args.corpus)
-    with open(
-            'id2group', 'w', encoding='utf8') as id2group_file:
-        id2group_file.write(json.dumps(id2group))
+        with open(path.join(cur_dir, 'id2rep'), 'w', encoding='utf8') as id2rep_file:
+            id2rep_file.write(json.dumps(id2rep))
 
-    with open('id2rep', 'w', encoding='utf8') as id2rep_file:
-        id2rep_file.write(json.dumps(id2rep))
-
-    with open('np2id', 'w', encoding='utf8') as np2id_file:
-        np2id_file.write(json.dumps(np2id))
+        with open(path.join(cur_dir, 'np2id'), 'w', encoding='utf8') as np2id_file:
+            np2id_file.write(json.dumps(np2id))
 
     corpus_file.close()

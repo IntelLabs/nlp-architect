@@ -34,7 +34,7 @@ logger = logging.getLogger(__name__)
 
 
 vocab = None
-np2id, id2group, id2rep = {}, {}, {}
+
 vocab_dict = {}
 cut_vocab_dict = {}
 max_visible_phrases = 5000
@@ -50,7 +50,6 @@ expand_columns = [
     TableColumn(field="score", title="Score")
 ]
 empty_table = {'res': 15 * [''], 'score': 15 * ['']}
-
 
 # create ui components
 
@@ -107,17 +106,9 @@ grid = layout(
 
 def get_vocab():
     """
-    Get vocabulary of the np2vec model from the server and load grouping data
+    Get vocabulary of the np2vec model from the server
     """
-    global vocab, np2id, id2group, id2rep
-    # logger.info('loading grouping info')
-    # with open('np2id') as np2id_file:
-    #     np2id = json.load(np2id_file)
-    # # with open('id2group') as f:
-    # #     id2group = json.load(f)
-    # logger.info('np2id loaded. loading id2rep...')
-    # with open('id2rep') as id2rep_file:
-    #     id2rep = json.load(id2rep_file)
+    global vocab
     logger.info('sending get_vocab request to server...')
     received = send_request_to_server('get_vocab')
     vocab = received
@@ -158,12 +149,9 @@ def send_request_to_server(request):
 
 
 def row_selected_callback(attr, old, new):
-    global clear_flag
+    global clear_flag, all_selected_phrases
     if not clear_flag and expand_table_source.data != empty_table:
-        logger.info('row selected callback')
-        logger.info('old indices=' + str(old.indices))
-        logger.info('new indices=' + str(new.indices))
-        global all_selected_phrases
+        logger.info('row selected callback. old indices=' + str(old.indices) + '. new indices=' + str(new.indices))
         # sync phrases lists:
         old_phrases = [expand_table_source.data['res'][p] for p in old.indices]
         new_phrases = [expand_table_source.data['res'][p] for p in new.indices]
@@ -257,19 +245,18 @@ def get_expand_results_callback():
         if seed == '':
             expand_table_source.data = empty_table
             return
-        if vocab is not None:
-            seed_words = [x.strip() for x in seed.split(',')]
-            bad_words = ''
-            for w in seed_words:
-                res = send_request_to_server('in_vocab,' + w)
-                if res is False:
-                    bad_words += ("'" + w + "',")
-            if bad_words != '':
-                seed_check_label.text = 'the words: <span class="bad-word">' \
-                                        + bad_words[:-1] \
-                                        + '</span> are not in the vocabulary and will be ignored'
-                logger.info('setting table area')
-                table_area.children = [seed_check_label, table_layout]
+        seed_words = [x.strip() for x in seed.split(',')]
+        bad_words = ''
+        for w in seed_words:
+            res = send_request_to_server('in_vocab,' + w)
+            if res is False:
+                bad_words += ("'" + w + "',")
+        if bad_words != '':
+            seed_check_label.text = 'the words: <span class="bad-word">' \
+                                    + bad_words[:-1] \
+                                    + '</span> are not in the vocabulary and will be ignored'
+            logger.info('setting table area')
+            table_area.children = [seed_check_label, table_layout]
         logger.info('sending expand request to server with seed= ' + seed)
         received = send_request_to_server(seed)
         if received is not None:
@@ -319,14 +306,15 @@ def vocab_phrase_selected_callback(attr, old_selected, new_selected):
             return
         logger.info('selected_vocab was updated: old=' + str(
             old_selected) + ' ,new=' + str(new_selected))
-        #get group info
-        if len(new_selected)==1:
-            res = send_request_to_server('get_group,' + new_selected[0])
-            if res is not None:
-                group_text = ''
-                for x in res:
-                    group_text = group_text + x + '<br>'
-                group_info_box.text = str(res)
+        if settings.grouping:
+            #show group info
+            if len(new_selected)==1:
+                res = send_request_to_server('get_group,' + new_selected[0])
+                if res is not None:
+                    group_text = ''
+                    for x in res:
+                        group_text = group_text + x + '<br>'
+                    group_info_box.text = str(res)
         # sync expand table:
         # phrase was de-selected from vocab list:
         expand_selected = [expand_table_source.data['res'][p] for
