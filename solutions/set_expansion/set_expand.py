@@ -76,7 +76,7 @@ class SetExpand():
         if self.grouping:
             if term not in self.np2id.keys():
                 return None
-            term = self.id2rep[self.np2id[term]]
+            term = self.np2id[term]
         id = term.replace(' ', self.mark_char) + self.mark_char
         if id not in self.np2vec_model.vocab:
             return None
@@ -92,6 +92,12 @@ class SetExpand():
          Returns:
             term (noun phrase)
         """
+        if self.grouping:
+            norm = id.replace(self.mark_char, ' ')[:-1]
+            if norm in self.id2rep:
+                return self.id2rep[norm]
+            else:
+                return None
         return id.replace(self.mark_char, ' ')[:-1]
 
     def get_vocab(self):
@@ -101,7 +107,15 @@ class SetExpand():
         Returns:
             the list of terms.
         """
-        return [self.__id2term(id) for id in self.np2vec_model.vocab]
+        vocab = list()
+        for id in self.np2vec_model.vocab:
+            term = self.__id2term(id)
+            if term is not None:
+                vocab.append(term)
+            else:
+                logger.warning('no term found for id: ' + id)
+        return vocab
+        # return [self.__id2term(id) for id in self.np2vec_model.vocab]
 
     def in_vocab(self, term):
         id = self.__term2id(term)

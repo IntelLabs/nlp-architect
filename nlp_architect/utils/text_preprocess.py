@@ -96,7 +96,7 @@ class TextCleaner:
 
 stemmer = EnglishStemmer()
 lemmatizer = WordNetLemmatizer()
-p = re.compile(r'[ \-,;.@&]')
+p = re.compile(r'[ \-,;.@&_]')
 
 
 def simple_normalizer(text):

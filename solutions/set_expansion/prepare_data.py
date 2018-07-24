@@ -117,6 +117,8 @@ if __name__ == '__main__':
                                     else:
                                         np2count[np] += 1
                                     norm = spacy_normalizer(np, span.lemma_)
+                                    if args.mark_char in norm:
+                                        norm = norm.replace(args.mark_char, ' ')
                                     np2id[np] = norm
                                     if norm not in id2rep:
                                         id2rep[norm] = np
@@ -129,7 +131,7 @@ if __name__ == '__main__':
                                         id2group[norm] = [np]
                                         id2rep[norm] = np
                                     # mark NP's
-                                    text = id2rep[norm].replace(' ',
+                                    text = norm.replace(' ',
                                                                 args.mark_char) + args.mark_char
                                 #######
                                 else:
