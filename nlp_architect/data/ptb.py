@@ -8,7 +8,7 @@ import urllib.request
 
 LICENSE_URL = {'PTB': "http://www.fit.vutbr.cz/~imikolov/rnnlm/",
                'WikiText-103': "https://einstein.ai/research/the-wikitext-long-term-dependency-"
-                              "language-modeling-dataset"}
+                               "language-modeling-dataset"}
 
 SOURCE_URL = {'PTB': "http://www.fit.vutbr.cz/~imikolov/rnnlm/simple-examples.tgz",
               'WikiText-103': "https://s3.amazonaws.com/research.metamind.io/wikitext/" +
