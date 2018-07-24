@@ -67,8 +67,11 @@ class IntentDataset(object):
         self._tokens_vocab.add_vocab_offset(2)
         self._chars_vocab.add_vocab_offset(2)
         self._tags_vocab.add_vocab_offset(1)
-        for f, v in datasets.items():
-            tokens, words, intents, tags = self._prepare_vectors(v)
+        vec_data = {}
+        for f in sorted(datasets.keys()):
+            vec_data[f] = self._prepare_vectors(datasets[f])
+        for f in sorted(datasets.keys()):
+            tokens, words, intents, tags = vec_data[f]
             x = pad_sequences(tokens, maxlen=self.sentence_len)
             _w = []
             for s in words:
@@ -273,13 +276,13 @@ class SNIPS(IntentDataset):
         """returns a tuple of train/test with 3-tuple of tokens, tags, intent_type"""
         train_data = self._load_intents(self.train_files)
         test_data = self._load_intents(self.test_files)
-        train = [(t, l, i) for i in train_data for t, l in train_data[i]]
-        test = [(t, l, i) for i in test_data for t, l in test_data[i]]
+        train = [(t, l, i) for i in sorted(train_data) for t, l in train_data[i]]
+        test = [(t, l, i) for i in sorted(test_data) for t, l in test_data[i]]
         return train, test
 
     def _load_intents(self, files):
         data = {}
-        for f in files:
+        for f in sorted(files):
             fname = os.path.join(self.dataset_root, f)
             intent = f.split(os.sep)[0]
             fdata = json.load(open(fname, encoding='utf-8', errors='ignore'))
