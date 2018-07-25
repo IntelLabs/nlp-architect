@@ -1,5 +1,0 @@
-bokeh
-gensim
-pandas
-configargparse
-spacy
