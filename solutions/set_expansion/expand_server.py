@@ -36,7 +36,7 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
         logger.info("handling expand request")
         res = ''
         self.data = str(self.request.recv(10240).strip(), 'utf-8')
-        logger.info('request data: ' + self.data)
+        logger.info('request data: %s', self.data)
         if self.data == 'get_vocab':
             logger.info('getting vocabulary')
             res = se.get_vocab()
@@ -53,7 +53,7 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
         # logger.info('res: ' + str(res))
         logger.info('compressing response')
         packet = pickle.dumps(res)
-        logger.info('response length= ' + str(len(packet)))
+        logger.info('response length= %s', str(len(packet)))
         # length = struct.pack('!I', len(packet))
         # packet = length + packet
         logger.info('sending response')
@@ -69,7 +69,7 @@ if __name__ == "__main__":
                         help='set port for the server', action=check_size(1, 20))
     parser.add_argument('--port', type=int, default=1234,
                         help='set port for the server', action=check_size(0, 65535))
-    parser.add_argument('--grouping',action='store_true',default=False,help='grouping mode')
+    parser.add_argument('--grouping', action='store_true', default=False, help='grouping mode')
     args = parser.parse_args()
 
     port = args.port

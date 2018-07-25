@@ -27,6 +27,7 @@ logger = logging.getLogger(__name__)
 
 cur_dir = path.dirname(path.realpath(__file__))
 
+
 class SetExpand():
     """
         Set expansion module, given a trained np2vec model.
@@ -62,7 +63,6 @@ class SetExpand():
         self.np2vec_model.init_sims()
         logger.info('done init')
 
-
     def __term2id(self, term):
         """
         Given an term, return its id.
@@ -96,8 +96,7 @@ class SetExpand():
             norm = id.replace(self.mark_char, ' ')[:-1]
             if norm in self.id2rep:
                 return self.id2rep[norm]
-            else:
-                return None
+            return None
         return id.replace(self.mark_char, ' ')[:-1]
 
     def get_vocab(self):
@@ -113,7 +112,7 @@ class SetExpand():
             if term is not None:
                 vocab.append(term)
             else:
-                logger.warning('no term found for id: ' + id)
+                logger.warning('no term found for id: %s', id)
         return vocab
         # return [self.__id2term(id) for id in self.np2vec_model.vocab]
 
@@ -124,7 +123,7 @@ class SetExpand():
         return True
 
     def get_group(self, term):
-        logger.info("get group of: " + term)
+        logger.info("get group of: %s", term)
         group = []
         if term in self.np2id:
             id = self.np2id[term]
@@ -155,7 +154,7 @@ class SetExpand():
             if id is not None:
                 seed_ids.append(id)
             else:
-                logger.warning("The term: '" + np + "' is out-of-vocabulary.")
+                logger.warning("The term: '%s' is out-of-vocabulary.", np)
         if len(seed_ids) > 0:
             if upper or lower:
                 res_id = self.np2vec_model.most_similar(seed_ids, topn=2 * topn)

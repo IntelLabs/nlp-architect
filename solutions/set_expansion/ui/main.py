@@ -56,7 +56,7 @@ empty_table = {'res': 15 * [''], 'score': 15 * ['']}
 seed_input_title = 'Please enter a comma separated seed list of terms:'
 seed_input_box = TextInput(
     title=seed_input_title, value="USA, Israel, France", width=450, css_classes=["seed-input"])
-group_info_box = Div(text='',height= 30, css_classes=["group-div"])
+group_info_box = Div(text='', height=30, css_classes=["group-div"])
 search_input_box = TextInput(title="Search:", value="", width=300)
 expand_button = Button(label="Expand", button_type="success", width=150)
 clear_seed_button = Button(
@@ -133,7 +133,7 @@ def send_request_to_server(request):
         ctr = 0
         while True:
             packet = sock.recv(134217728)
-            logger.info(str(ctr) + '. received: ' + str(len(packet)))
+            logger.info("%s. received: %s", str(ctr), str(len(packet)))
             ctr += 1
             if not packet:
                 break
@@ -151,17 +151,18 @@ def send_request_to_server(request):
 def row_selected_callback(attr, old, new):
     global clear_flag, all_selected_phrases
     if not clear_flag and expand_table_source.data != empty_table:
-        logger.info('row selected callback. old indices=' + str(old.indices) + '. new indices=' + str(new.indices))
+        logger.info('row selected callback. old indices=%s. new indices=%s',
+                    str(old.indices), str(new.indices))
         # sync phrases lists:
         old_phrases = [expand_table_source.data['res'][p] for p in old.indices]
         new_phrases = [expand_table_source.data['res'][p] for p in new.indices]
-        logger.info('selected_expand was updated: old=' + str(
-            old_phrases) + ' ,new=' + str(new_phrases))
+        logger.info('selected_expand was updated: old=%s ,new=%s', str(
+            old_phrases), str(new_phrases))
         # phrase was de-selected from expand list:
         for o in old_phrases:
             if o not in new_phrases and \
                     (vocab is not None and vocab_dict[o] in phrases_list.value):
-                logger.info('removing ' + o + 'from vocab selected')
+                logger.info('removing %s from vocab selected', o)
                 phrases_list.value.remove(vocab_dict[o])
                 break
         # new phrase was selected from expand list:
@@ -186,29 +187,29 @@ def update_all_selected_phrases():
                        i in expand_table_source.selected.indices if
                        expand_table_source.data['res'][i] != '']
     selected_vocab = phrases_list.value
-    logger.info('selected expand=' + str(selected_expand))
-    logger.info('selected vocab=' + str(selected_vocab))
-    logger.info('current all_selected_phrases=' + str(all_selected_phrases))
+    logger.info('selected expand= %s', str(selected_expand))
+    logger.info('selected vocab= %s', str(selected_vocab))
+    logger.info('current all_selected_phrases= %s', str(all_selected_phrases))
     for x in all_selected_phrases:
-        logger.info('x=' + x)
+        logger.info('x= %s', x)
         if (x in expand_table_source.data['res'] and x not in selected_expand) or (
             vocab is not None and (vocab_dict[x] in phrases_list.options) and (
                 vocab_dict[x] not in selected_vocab
             )
         ):
-            logger.info('removing ' + x)
+            logger.info('removing %s', x)
             updated_selected_phrases.remove(x)
     for e in selected_expand:
         if e not in updated_selected_phrases:
-            logger.info('adding ' + e)
+            logger.info('adding %s', e)
             updated_selected_phrases.append(e)
     for v in selected_vocab:
         full_v = cut_vocab_dict[v]
         if full_v not in updated_selected_phrases:
-            logger.info('adding ' + full_v)
+            logger.info('adding %s', full_v)
             updated_selected_phrases.append(full_v)
     all_selected_phrases = updated_selected_phrases[:]
-    logger.info('all_selected_phrases list was updated: ' + str(all_selected_phrases))
+    logger.info('all_selected_phrases list was updated: %s', str(all_selected_phrases))
 
 
 def show_phrases_callback(checked_value):
@@ -241,7 +242,7 @@ def get_expand_results_callback():
         seed_check_label.text = ''
         table_area.children = [table_layout]
         seed = seed_input_box.value
-        logger.info('input seed: ' + seed)
+        logger.info('input seed: %s', seed)
         if seed == '':
             expand_table_source.data = empty_table
             return
@@ -257,7 +258,7 @@ def get_expand_results_callback():
                                     + '</span> are not in the vocabulary and will be ignored'
             logger.info('setting table area')
             table_area.children = [seed_check_label, table_layout]
-        logger.info('sending expand request to server with seed= ' + seed)
+        logger.info('sending expand request to server with seed= %s', seed)
         received = send_request_to_server(seed)
         if received is not None:
             res = [x[0] for x in received]
@@ -270,7 +271,7 @@ def get_expand_results_callback():
         else:
             logger.info('Nothing received from server')
     except Exception as e:
-        logger.info('Exception: ' + str(e))
+        logger.info('Exception: %s', str(e))
     finally:
         expand_working_label.text = ''
 
@@ -292,7 +293,7 @@ def search_callback(value, old, new):
         phrases_list.options.sort()
     phrases_list.value = [
         vocab_dict[x] for x in all_selected_phrases if vocab_dict[x] in phrases_list.options]
-    logger.info('selected vocab after search=' + str(phrases_list.value))
+    logger.info('selected vocab after search= %s', str(phrases_list.value))
     search_working_label.text = ''
     search_flag = False
 
@@ -304,11 +305,11 @@ def vocab_phrase_selected_callback(attr, old_selected, new_selected):
         global all_selected_phrases, search_flag
         if(search_flag):
             return
-        logger.info('selected_vocab was updated: old=' + str(
-            old_selected) + ' ,new=' + str(new_selected))
+        logger.info('selected_vocab was updated: old= %s, new= %s', str(
+            old_selected), str(new_selected))
         if settings.grouping:
-            #show group info
-            if len(new_selected)==1:
+            # show group info
+            if len(new_selected) == 1:
                 res = send_request_to_server('get_group,' + new_selected[0])
                 if res is not None:
                     group_text = ''
@@ -322,14 +323,14 @@ def vocab_phrase_selected_callback(attr, old_selected, new_selected):
         for o in old_selected:
             full_o = cut_vocab_dict[o]
             if o not in new_selected and full_o in expand_selected:
-                logger.info(full_o + ' removed from vocab selected and exists in expand selected')
-                logger.info('removing ' + full_o
-                      + 'from expand selected indices. index='
-                      + str(expand_table_source.data['res'].index(full_o)))
-                logger.info('current expand indices: ' + str(expand_table_source.selected.indices))
+                logger.info('%s removed from vocab selected and exists in expand selected', full_o)
+                logger.info('removing %s from expand selected indices. index=%s',
+                            full_o, str(expand_table_source.data['res'].index(full_o)))
+                logger.info('current expand indices: %s',
+                            str(expand_table_source.selected.indices))
                 expand_table_source.selected.indices.remove(
                     expand_table_source.data['res'].index(full_o))
-                logger.info('new expand indices: ' + str(expand_table_source.selected.indices))
+                logger.info('new expand indices: %s', str(expand_table_source.selected.indices))
                 break
         # new phrase was selected from vocab list:
         for n in new_selected:
@@ -367,7 +368,7 @@ def export_data_callback():
         export_working_label.text = ''
     elif export_working_label.text != working_text:
         path = settings.export_path
-        logger.info('saving expansion results to: ' + path)
+        logger.info('saving expansion results to: %s', path)
         export_working_label.style = {'color': 'red'}
         export_working_label.text = working_text
         table_df = pandas.DataFrame(expand_table_source.data)

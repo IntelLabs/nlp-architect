@@ -39,7 +39,6 @@ np2count = {}
 cur_dir = path.dirname(path.realpath(__file__))
 
 
-
 if __name__ == '__main__':
     arg_parser = ArgumentParser(__doc__)
     arg_parser.add_argument(
@@ -131,12 +130,10 @@ if __name__ == '__main__':
                                         id2group[norm] = [np]
                                         id2rep[norm] = np
                                     # mark NP's
-                                    text = norm.replace(' ',
-                                                                args.mark_char) + args.mark_char
+                                    text = norm.replace(' ', args.mark_char) + args.mark_char
                                 #######
                                 else:
-                                    text = span.text.replace(' ',
-                                                         args.mark_char) + args.mark_char
+                                    text = span.text.replace(' ', args.mark_char) + args.mark_char
                                 marked_corpus_file.write(text + ' ')
                             else:
                                 marked_corpus_file.write(span.text + ' ')
