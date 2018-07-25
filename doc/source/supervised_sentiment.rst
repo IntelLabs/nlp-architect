@@ -82,6 +82,6 @@ Hyperparameter optimization
 ---------------------------
 An example of hyperparameter optimization is given using the python package hyperopt which uses a Tree of Parzen estimator to optimize the simple bi-lstm algorithm. To run this example the following command can be utilized:
 ```
- python optimize_example.py --file_path ./reviews_Movies_and_TV.json/ --new_trails 50 --ouput_file ./data/optimize_output.pkl
+ python optimize_example.py --file_path ./reviews_Movies_and_TV.json/ --new_trials 50 --output_file ./data/optimize_output.pkl
 ```
 The file will output a result of each of the trial attempts to the specified pickle file.

@@ -41,7 +41,7 @@ from nlp_architect.data.amazon_reviews import Amazon_Reviews
 from nlp_architect.utils.generic import to_one_hot
 from nlp_architect.models.supervised_sentiment import simple_lstm, one_hot_cnn
 from nlp_architect.utils.ensembler import simple_ensembler
-from nlp_architect.utils.io import validate_parent_exists, check_size
+from nlp_architect.utils.io import validate_existing_filepath, check_size
 
 max_fatures = 2000
 max_len = 300
@@ -119,7 +119,7 @@ if __name__ == '__main__':
 
     # Check file path
     if args_in.file_path:
-        validate_parent_exists(args_in.file_path)
+        validate_existing_filepath(args_in.file_path)
 
     if args_in.data_type == 'amazon':
         data_in = Amazon_Reviews(args_in.file_path)

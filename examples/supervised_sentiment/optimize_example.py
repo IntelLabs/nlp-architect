@@ -24,7 +24,7 @@ from hyperopt import fmin, tpe, hp, Trials
 
 from nlp_architect.data.amazon_reviews import Amazon_Reviews
 from nlp_architect.models.supervised_sentiment import simple_lstm
-from nlp_architect.utils.io import validate_parent_exists, check_size
+from nlp_architect.utils.io import validate_parent_exists, check_size, validate_existing_filepath
 
 max_len = 100
 batch_size = 32
@@ -80,24 +80,30 @@ if __name__ == '__main__':
                         help='file_path where the files to parse are located')
     parser.add_argument('--data_type', type=str, default='amazon',
                         choices=['amazon'])
-    parser.add_argument('--ouput_file', type=str, default='./opt_trials.pkl',
+    parser.add_argument('--output_file', type=str, default='./opt_trials.pkl',
                         help='file_path where the output of the trials will be located')
-    parser.add_argument('--new_trails', type=int, default=20, action=check_size(1, 20000))
+    parser.add_argument('--new_trials', type=int, default=20, action=check_size(1, 20000))
     args_in = parser.parse_args()
 
     # Check inputs
     if args_in.file_path:
-        validate_parent_exists(args_in.file_path)
-    if args_in.ouput_file:
-        validate_parent_exists(args_in.ouput_file)
+        validate_existing_filepath(args_in.file_path)
+    if args_in.output_file:
+        validate_parent_exists(args_in.output_file)
 
     if args_in.data_type == 'amazon':
         data_in = Amazon_Reviews(args_in.file_path)
 
-    if args_in.ouput_file:
-        with open(args_in.ouput_file, 'rb') as read_f:
-            trials_to_keep = pickle.load(read_f)
-    else:
+    try:
+        import ipdb
+        if args_in.output_file.endswith('.pkl'):
+            with open(args_in.output_file, 'rb') as read_f:
+                trials_to_keep = pickle.load(read_f)
+            print("Utilizing existing trial files")
+        else:
+            trials_to_keep = Trials()
+    # If the file does not already exist we will start with a new set of trials
+    except FileNotFoundError:
         trials_to_keep = Trials()
 
     space = {'data': data_in,
@@ -108,7 +114,7 @@ if __name__ == '__main__':
              'dropout': hp.uniform('dropout', 0, 0.1)
              }
 
-    num_evals = len(trials_to_keep.trials) + args_in.new_trails
+    num_evals = len(trials_to_keep.trials) + args_in.new_trials
     best = fmin(run_loss,
                 space=space,
                 algo=tpe.suggest,
@@ -116,5 +122,5 @@ if __name__ == '__main__':
                 trials=trials_to_keep
                 )
     # Write out the trials
-    with open(args_in.ouput_file, 'wb') as f:
+    with open(args_in.output_file, 'wb') as f:
         pickle.dump(trials_to_keep, f)
