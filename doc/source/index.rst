@@ -124,6 +124,13 @@ on this project, please see the :doc:`developer guide <developer_guide>`.
    memn2n.rst
    kvmemn2n.rst
 
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+   :caption: Solutions
+
+   set_expansion.rst
+
 
 .. toctree::
   :hidden:
