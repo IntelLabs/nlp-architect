@@ -92,12 +92,11 @@ class SetExpand():
          Returns:
             term (noun phrase)
         """
+        norm = id.replace(self.mark_char, ' ')[:-1]
         if self.grouping:
-            norm = id.replace(self.mark_char, ' ')[:-1]
-            if norm in self.id2rep:
-                return self.id2rep[norm]
-            return None
-        return id.replace(self.mark_char, ' ')[:-1]
+            assert(norm in self.id2rep)
+            return self.id2rep[norm]
+        return norm
 
     def get_vocab(self):
         """
@@ -106,15 +105,7 @@ class SetExpand():
         Returns:
             the list of terms.
         """
-        vocab = list()
-        for id in self.np2vec_model.vocab:
-            term = self.__id2term(id)
-            if term is not None:
-                vocab.append(term)
-            else:
-                logger.warning('no term found for id: %s', id)
-        return vocab
-        # return [self.__id2term(id) for id in self.np2vec_model.vocab]
+        return [self.__id2term(id) for id in self.np2vec_model.vocab]
 
     def in_vocab(self, term):
         id = self.__term2id(term)
@@ -164,7 +155,8 @@ class SetExpand():
             for r in res_id:
                 if len(res) == topn:
                     break
-                if (not lower and not upper) or (upper and r[0][0].isupper()) or r[0][0].islower():
+                if (not lower and not upper) or (upper and r[0][0].isupper()) or (lower and r[0][
+                    0].islower()):
                     res.append((self.__id2term(r[0]), r[1]))
             return res
         else:
