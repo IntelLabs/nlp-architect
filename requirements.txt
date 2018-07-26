@@ -16,9 +16,10 @@ termcolor
 falcon
 falcon_multipart
 pillow
+setuptools
 spacy>=2.0
 keras==2.1.5
-git+https://www.github.com/keras-team/keras-contrib.git#egg=keras-contrib
+git+https://www.github.com/keras-team/keras-contrib.git@196dd51e915712ec1bb31fc6925f26707c7c2cea#egg=keras-contrib
 nervananeon==2.6.0
 dynet==2.0.2
 -e git+https://github.com/NervanaSystems/ngraph-python.git#egg=ngraph
