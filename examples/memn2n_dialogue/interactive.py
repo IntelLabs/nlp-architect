@@ -54,6 +54,7 @@ from nlp_architect.utils.io import validate_existing_filepath, validate_parent_e
     validate, check_size
 from interactive_utils import interactive_loop
 
+
 # parse the command line arguments
 parser = NgraphArgparser(__doc__)
 parser.add_argument(
