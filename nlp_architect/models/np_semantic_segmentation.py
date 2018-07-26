@@ -13,14 +13,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, Dropout
+from tensorflow.keras.models import model_from_json
+from tensorflow.keras import backend as K
 
-from keras.models import Sequential
-from keras.layers import Dense, Dropout
-from keras.models import model_from_json
-from keras import backend as K
 
-
-# taken from: https://github.com/keras-team/keras/issues/5400
+# taken from keras previous versions: https://github.com/keras-team/keras/issues/5400
 def precision_score(y_true, y_pred):
     """Precision metric.
 
@@ -123,7 +122,7 @@ class NpSemanticSegClassifier:
             args: callback_args and epochs from ArgParser input
         """
         self.model.fit(train_set['X'], train_set['y'], epochs=self.epochs,
-                       batch_size=self.batch_size, verbose=2)  # , callbacks=callbacks)
+                       batch_size=self.batch_size, verbose=2)
 
     def save(self, model_path):
         """
