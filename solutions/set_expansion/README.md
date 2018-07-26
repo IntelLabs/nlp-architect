@@ -34,9 +34,13 @@ size, min_count, window and hs hyperparameters.
 python examples/np2vec/train.py --size 100 --min_count 10 --window 10 --hs 0 --corpus MARKED_TRAINING_CORPUS --np2vec_model_file MODEL_PATH --corpus_format txt
 ```
 
-A pretrained model on English Wikipedia dump (enwiki-20171201-pages-articles-multistream.xml
-.bz2) is provided at ... under Apache license. It has been trained with hyperparameters values 
-recommended above.
+A [pretrained model](http://nervana-modelzoo.s3.amazonaws.com/NLP/SetExp/enwiki-20171201_pretrained_set_expansion.txt) 
+on English Wikipedia dump (enwiki-20171201-pages-articles-multistream.xml.bz2) is available under 
+Apache license. It has been trained with hyperparameters values 
+recommended above. Full English Wikipedia [raw corpus](http://nervana-modelzoo.s3.amazonaws.com/NLP/SetExp/enwiki-20171201.txt) and 
+[marked corpus](http://nervana-modelzoo.s3.amazonaws.com/NLP/SetExp/enwiki-20171201_spacy_marked.txt) 
+are also available under the  
+[Creative Commons Attribution-Share-Alike 3.0 License](https://creativecommons.org/licenses/by-sa/3.0/).
 
 ## Inference:
 
