@@ -287,8 +287,8 @@ def extract_nps(annotation_list, text=None):
         while s + i < len(annotation_list) and annotation_list[s + i] == 'I-NP':
             i += 1
         np_markers.append((s, s + i))
+    return_markers = np_markers
     if text:
         assert len(text) == len(annotation_list), 'annotations/text length mismatch'
-        return [' '.join(text[s:e]) for s, e in np_markers]
-    else:
-        return np_markers
+        return_markers = [' '.join(text[s:e]) for s, e in np_markers]
+    return return_markers

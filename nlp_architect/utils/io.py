@@ -71,13 +71,13 @@ def uncompress_file(filepath, outpath='.'):
         z.close()
     elif filepath.endswith('.gz'):
         if os.path.isdir(outpath):
-            return ValueError('output path for gzip must be a file')
+            raise ValueError('output path for gzip must be a file')
         with gzip.open(filepath, 'rb') as fp:
             file_content = fp.read()
         with open(outpath, 'wb') as fp:
             fp.write(file_content)
     else:
-        return ValueError('Unsupported archive provided. Method supports only .zip/.gz files.')
+        raise ValueError('Unsupported archive provided. Method supports only .zip/.gz files.')
 
 
 def check_directory_and_create(dir_path):

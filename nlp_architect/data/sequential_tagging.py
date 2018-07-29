@@ -14,10 +14,7 @@
 # limitations under the License.
 # ******************************************************************************
 
-from __future__ import division
-from __future__ import print_function
-from __future__ import unicode_literals
-from __future__ import absolute_import
+from __future__ import division, print_function, unicode_literals, absolute_import
 
 from os import path, remove
 from pathlib import Path
@@ -25,10 +22,9 @@ from pathlib import Path
 import numpy as np
 from keras.preprocessing.sequence import pad_sequences
 
-from nlp_architect.utils.generic import pad_sentences
+from nlp_architect.utils.generic import pad_sentences, license_prompt
 from nlp_architect.utils.io import check_directory_and_create, download_unlicensed_file, \
-    uncompress_file
-
+    uncompress_file, validate_existing_directory, validate_existing_filepath
 from nlp_architect.utils.text import Vocabulary, read_sequential_tagging_file, \
     word_vector_generator, character_vector_generator
 
@@ -45,6 +41,7 @@ class SequentialTaggingDataset(object):
         max_word_length (int, optional): max word length
         tag_field_no (int, optional): index of column to use a y-samples
     """
+
     def __init__(self,
                  train_file,
                  test_file,
@@ -193,6 +190,15 @@ class CONLL2000(object):
         self._data_dict = {}
 
     def _download_dataset(self):
+        try:
+            validate_existing_directory(self._data_dir)
+            for f in self.dataset_files.values():
+                validate_existing_filepath(path.join(self._data_dir, f[:-3]))
+        except ValueError:
+            if not license_prompt('conll2000',
+                                  'https://www.clips.uantwerpen.be/conll2000/chunking/',
+                                  dataset_dir=None):
+                raise AssertionError()
         check_directory_and_create(self._data_dir)
         downloaded_files = {}
         for f, f_name in self.dataset_files.items():
@@ -208,7 +214,7 @@ class CONLL2000(object):
 
     def _load_data(self):
         """
-        return CONLL2000 data from nltk
+        return CONLL2000 data from web
         return format: list of 3-tuples (word list, POS list, chunk list)
         """
         local_files = self._download_dataset()

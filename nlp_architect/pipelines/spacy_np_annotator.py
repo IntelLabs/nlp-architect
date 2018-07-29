@@ -16,12 +16,14 @@
 import pickle
 
 import numpy as np
+from os import path
 import spacy
 from spacy.tokens import Doc
 from spacy.tokens import Span
 
 from nlp_architect.models.chunker import SequenceChunker
 from nlp_architect.utils.generic import pad_sentences
+from nlp_architect.utils.io import validate_existing_filepath
 from nlp_architect.utils.text import extract_nps
 
 
@@ -58,9 +60,15 @@ class NPAnnotator(object):
         Returns:
             NPAnnotator class with loaded model
         """
+
+        _model_path = path.join(path.dirname(path.realpath(__file__)), model_path)
+        validate_existing_filepath(_model_path)
+        _parameter_path = path.join(path.dirname(path.realpath(__file__)), parameter_path)
+        validate_existing_filepath(_parameter_path)
+
         model = SequenceChunker(use_gpu=use_gpu)
-        model.load(model_path)
-        with open(parameter_path, 'rb') as fp:
+        model.load(_model_path)
+        with open(_parameter_path, 'rb') as fp:
             model_params = pickle.load(fp)
             word_vocab = model_params['word_vocab']
             chunk_vocab = model_params['chunk_vocab']
@@ -286,12 +294,17 @@ class SpacyNPAnnotator(object):
     """
 
     def __init__(self, model_path, settings_path, spacy_model='en', batch_size=32, use_gpu=False):
+        _model_path = path.join(path.dirname(path.realpath(__file__)), model_path)
+        validate_existing_filepath(_model_path)
+        _settings_path = path.join(path.dirname(path.realpath(__file__)), settings_path)
+        validate_existing_filepath(_settings_path)
+
         nlp = spacy.load(spacy_model)
         for p in nlp.pipe_names:
             if p not in ['tagger']:
                 nlp.remove_pipe(p)
         nlp.add_pipe(nlp.create_pipe('sentencizer'), first=True)
-        nlp.add_pipe(NPAnnotator.load(model_path, settings_path, batch_size=batch_size,
+        nlp.add_pipe(NPAnnotator.load(_model_path, settings_path, batch_size=batch_size,
                                       use_gpu=use_gpu), last=True)
         self.nlp = nlp
 
