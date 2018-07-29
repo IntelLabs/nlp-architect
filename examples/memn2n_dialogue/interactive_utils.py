@@ -27,7 +27,7 @@ from functools import reduce
 import numpy as np
 
 
-def interactive_loop(interactive_computation, babi):
+def interactive_loop(model, babi):
     """
     Loop used to interact with trained conversational agent with access to knowledge base API
     """
@@ -65,9 +65,6 @@ def interactive_loop(interactive_computation, babi):
         if line_in == 'show_memory':
             print_memory(context)
             continue
-        if line_in == 'show_attention':
-            print_attention(context, interactive_output)
-            continue
         if line_in == 'allow_oov':
             allow_oov = not allow_oov
             print("Allow OOV = {}".format(allow_oov))
@@ -77,7 +74,7 @@ def interactive_loop(interactive_computation, babi):
                 line_in, db, names_to_idxs, kb_text, babi)
 
         old_context = copy(context)
-        user_utt, context, memory, mem_mask, cands_mat, time_feat = babi.process_interactive(
+        user_utt, context, memory, cands_mat, time_feat = babi.process_interactive(
             line_in, context, response, db_results, time_feat)
 
         if babi.word_to_index['<OOV>'] in user_utt and allow_oov is False:
@@ -90,17 +87,10 @@ def interactive_loop(interactive_computation, babi):
             context = old_context
             continue
 
-        # If use_match_type add 'cands_mat' to inputs
-        data = {
-            'memory': memory,
-            'memory_mask': mem_mask,
-            'user_utt': user_utt,
-            'answer': None,
-            'cands_mat': cands_mat
-        }
-
-        interactive_output = interactive_computation(data)
-        pred_cand_idx = np.argmax(interactive_output['test_preds'][0])
+        interactive_output = model.predict(np.expand_dims(memory, 0),
+                                           np.expand_dims(user_utt, 0),
+                                           np.expand_dims(cands_mat, 0))
+        pred_cand_idx = interactive_output[0]
         response = babi.candidate_answers[pred_cand_idx]
 
         print(response)
@@ -125,24 +115,6 @@ def print_memory(context):
     print("-" * max_sent_len)
 
 
-def print_attention(context, interactive_output):
-    if not interactive_output or not context:
-        return
-
-    max_sent_len = max(
-        map(len, map(lambda z: reduce(lambda x, y: x + ' ' + y, z), context)))
-    attn_round = map(lambda x: round(x, 2), interactive_output['attention'][0])
-
-    str_format = "{:<" + str(max_sent_len) + "}"
-
-    print("-" * max_sent_len + "-|| Attention ")
-    for sent, attn in zip(context, attn_round):
-        sent_str = " ".join(sent)
-        print(str_format.format(sent_str)
-              + " || {}".format(attn))
-    print("-" * max_sent_len + "-||")
-
-
 def print_human_vocab(babi):
     if babi.task + 1 < 6:
         print([x for x in babi.vocab if 'resto' not in x])
@@ -158,9 +130,7 @@ def print_help():
         " >> restart / clear: Restart the conversation and erase the bot's memory\n" +
         " >> vocab: Display usable vocabulary\n" +
         " >> allow_oov: Allow out of vocab words to be replaced with <OOV> token\n" +
-        " >> show_memory: Display the current contents of the bot's memory\n" +
-        " >> show_attention: Show the bot's memory & associated computed" +
-        " attention for the last memory hop\n")
+        " >> show_memory: Display the current contents of the bot's memory\n")
 
 
 def build_kb_db(babi):
