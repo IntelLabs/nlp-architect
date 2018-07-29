@@ -23,16 +23,16 @@ Chunker based noun phrase annotator
 
 The noun phrase annotator is a plug-in that can be used with Spacy_ pipeline structure.
 
-The annotator loads a trained `SequentialChunker` model that is able to predict chunk labels, creates 
-Spacy based Span objects and applies a sequence of filtering to produce a set of noun phrases, finally, 
+The annotator loads a trained `SequentialChunker` model that is able to predict chunk labels, creates
+Spacy based Span objects and applies a sequence of filtering to produce a set of noun phrases, finally,
 it attaches it to the document object.
 
-The annotator implementation can be found in `nlp_architect.pipelines.NPAnnotator </generated/nlp_architect.pipelines.spacy_np_annotator.NPAnnotator.html#nlp_architect.pipelines.spacy_np_annotator.NPAnnotator>`__
+The annotator implementation can be found in :py:class:`NPAnnotator <nlp_architect.pipelines.spacy_np_annotator.NPAnnotator>`.
 
 Usage example
 -------------
 
-Loading a spacy pipeline and adding a sentence breaker (required) and ``NPAnnotator`` annotator as the last annotator in the pipeline:
+Loading a spacy pipeline and adding a sentence breaker (required) and :py:class:`NPAnnotator <nlp_architect.pipelines.spacy_np_annotator.NPAnnotator>` annotator as the last annotator in the pipeline:
 
 .. code:: python
 
@@ -51,12 +51,12 @@ Parse documents regularly and get the noun phrase annotations using a dedicated 
 Standalone Spacy-NPAnnotator
 ============================
 
-For usecases in which the user is not interested in specialized Spacy pipelines we have implemented `SpacyNPAnnotator </generated/nlp_architect.pipelines.spacy_np_annotator.SpacyNPAnnotator.html#nlp_architect.pipelines.spacy_np_annotator.SpacyNPAnnotator>`__ which will run a spacy pipeline internally and provide string based noun phrase chunks given documents in string format.
+For usecases in which the user is not interested in specialized Spacy pipelines we have implemented :py:class:`SpacyNPAnnotator <nlp_architect.pipelines.spacy_np_annotator.SpacyNPAnnotator>` which will run a spacy pipeline internally and provide string based noun phrase chunks given documents in string format.
 
 Usage example
 -------------
 
-Just as in ``NPAnnotator``, we need to provide a trained ``SequentialChunker`` model and its parameters file. It is also possible to provide a specific spacy model to base the pipeline on.
+Just as in :py:class:`NPAnnotator <nlp_architect.pipelines.spacy_np_annotator.NPAnnotator>`, we need to provide a trained :py:class:`SequenceChunker <nlp_architect.models.chunker.SequenceChunker>` model and its parameters file. It is also possible to provide a specific spacy model to base the pipeline on.
 
 The following example shows how to load a model/parameters using the default Spacy English model (`en`) and how to get the noun phrase annotations.
 
