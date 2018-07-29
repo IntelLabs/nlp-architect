@@ -146,7 +146,7 @@ def _download_pretrained_model():
 
         makedirs(dir_path, exist_ok=True)
         print('Unzipping...')
-        uncompress_file(zip_path, outpath=SpacyBISTParser.dir)
+        uncompress_file(zip_path, outpath=dir_path)
         remove(zip_path)
         print('Done.')
 
