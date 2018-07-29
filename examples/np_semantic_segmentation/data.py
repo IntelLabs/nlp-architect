@@ -31,15 +31,14 @@ from nlp_architect.utils.io import validate_existing_filepath, validate_parent_e
 
 wordnet = None
 wikidata = None
-nltk_collocations = None
 word2vec = None
 
 
 def build_feature_vector(np):
     """
     Build a feature vector for the given noun-phrase. the size of the
-    vector = (6 + (#WORDS X 300)) = 1506. ==> (the number of words in a noun-phrase X size
-    of the word2vec(300)) + 6 additional features from external sources
+    vector = (4 + (#WORDS X 300)) = 1506. ==> (the number of words in a noun-phrase X size
+    of the word2vec(300)) + 4 additional features from external sources
 
     Args:
         np (str): a noun-phrase
@@ -54,10 +53,7 @@ def build_feature_vector(np):
     # 2. find if np exist as an entity in Wikidata
     wikidata_feature = find_wikidata_entity(np)
     feature_vector.append(wikidata_feature)
-    # 3. pmi score: npmi & uci scores
-    pmi_score = get_pmi_score(np)
-    feature_vector.extend(pmi_score)
-    # 4. word2vec score: from
+    # 3. word2vec score: from
     word2vec_distance = word2vec.get_similarity_score(np)
     feature_vector.append(word2vec_distance)
     for w in np.split(" "):
@@ -113,19 +109,6 @@ def expand_np_candidates(np, stemming):
     return candidates
 
 
-def get_pmi_score(np):
-    """
-    Extract NLTKCollocations score & Chi-square score from NLTK bigram service, on brown dataset
-
-    Args:
-        np (str): a noun-phrase
-
-    Returns:
-        list(float): a list with NLTKCollocations score & "Chi-square" score
-    """
-    return nltk_collocations.get_pmi_score(np)
-
-
 def get_all_case_combinations(np):
     """
     Returns all case combinations for the noun-phrase (regular, upper, lower, title)
@@ -170,11 +153,9 @@ def prepare_data(data_file, output_file, word2vec_file, http_prox=None, https_pr
         https_prox(str): https_proxy
     """
     # init_resources:
-    global wordnet, wikidata, nltk_collocations, word2vec
+    global wordnet, wikidata, word2vec
     wordnet = fe.Wordnet()
     wikidata = fe.Wikidata(http_prox, https_prox)
-    print("Start loading NLTK Collocation scoring (this might take a while...)")
-    nltk_collocations = fe.NLTKCollocations()
     print("Start loading Word2Vec model (this might take a while...)")
     word2vec = fe.Word2Vec(word2vec_file)
     print("Finish loading feature extraction services")
@@ -244,7 +225,7 @@ class NpSemanticSegData:
             feature_vec_dim (:obj:`int`): the size of the feature vector for each noun-phrase
     """
 
-    def __init__(self, file_path, train_to_test_ratio=0.8, feature_vec_dim=605):
+    def __init__(self, file_path, train_to_test_ratio=0.8, feature_vec_dim=603):
         self.file_path = file_path
         self.feature_vec_dim = feature_vec_dim
         self.train_to_test_ratio = train_to_test_ratio

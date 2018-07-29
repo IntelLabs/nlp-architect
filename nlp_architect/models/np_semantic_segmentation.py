@@ -65,14 +65,14 @@ def f1(y_true, y_pred):
 
 class NpSemanticSegClassifier:
     """
-    NP Semantic Segmentation classifier model (based on Keras framework).
+    NP Semantic Segmentation classifier model (based on tf.Keras framework).
 
     Args:
         num_epochs(int): number of epochs to train the model
         **callback_args (dict): callback args keyword arguments to init a Callback for the model
-        loss: the model's cost function. Default is 'keras.losses.binary_crossentropy' loss
-        optimizer (:obj:`keras.optimizers`): the model's optimizer. Default is
-        'keras.optimizers.SGD(0.07, momentum=0.9)'
+        loss: the model's cost function. Default is 'tf.keras.losses.binary_crossentropy' loss
+        optimizer (:obj:`tf.keras.optimizers`): the model's optimizer. Default is
+        'tf.keras.optimizers.SGD(0.07, momentum=0.9)'
     """
 
     def __init__(self, num_epochs, callback_args, loss='binary_crossentropy', optimizer='adam',
@@ -81,8 +81,8 @@ class NpSemanticSegClassifier:
         Args:
             num_epochs(int): number of epochs to train the model
             callback_args (dict): callback args keyword arguments to init Callback for the model
-            loss: the model's loss function. Default is 'keras.losses.binary_crossentropy' loss
-            optimizer (:obj:`keras.optimizers`): the model's optimizer. Default is `adam`
+            loss: the model's loss function. Default is 'tf.keras.losses.binary_crossentropy' loss
+            optimizer (:obj:`tf.keras.optimizers`): the model's optimizer. Default is `adam`
             batch_size (int):  batch size
         """
         self.model = None
@@ -108,7 +108,6 @@ class NpSemanticSegClassifier:
         model.add(Dropout(0.5))
         model.add(Dense(output_layer_dens, activation='sigmoid'))
         metrics = ['binary_accuracy', precision_score, recall_score, f1]
-        # sgd = SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
         # Compile model
         model.compile(loss=self.loss, optimizer=self.optimizer, metrics=metrics)
         self.model = model
