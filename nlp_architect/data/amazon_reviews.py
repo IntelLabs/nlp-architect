@@ -47,12 +47,13 @@ def review_to_sentiment(review):
     # Review is coming in as overall (the rating, reviewText, and summary)
     # this then cleans the summary and review and gives it a positive or negative value
     norm_text = normalize(review[2] + " " + review[1])
+    review_sent = ['neutral', norm_text]
     if review[0] > 3:
-        return ['positive', norm_text]
+        review_sent = ['positive', norm_text]
     elif review[0] < 3:
-        return ['negative', norm_text]
-    else:
-        return ['neutral', norm_text]
+        review_sent = ['negative', norm_text]
+
+    return review_sent
 
 
 class Amazon_Reviews(object):

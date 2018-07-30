@@ -52,7 +52,8 @@ def one_hot_cnn(dense_out, max_len=300, frame='small'):
     """
     Temporal CNN Model
 
-    As defined in "Text Understanding from Scratch" by Zhang, LeCun 2015 https://arxiv.org/pdf/1502.01710v4.pdf
+    As defined in "Text Understanding from Scratch" by Zhang, LeCun 2015
+    https://arxiv.org/pdf/1502.01710v4.pdf
     This model is a series of 1D CNNs, with a maxpooling and fully connected layers.
     The frame sizes may either be large or small.
 

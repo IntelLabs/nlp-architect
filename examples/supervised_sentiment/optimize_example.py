@@ -28,11 +28,9 @@ from nlp_architect.utils.io import validate_parent_exists, check_size, validate_
 
 max_len = 100
 batch_size = 32
-run_num = 1
 
 
 def run_loss(args):
-    global run_num
     data = args['data']
 
     # For each run we want to get a new random balance
@@ -43,7 +41,6 @@ def run_loss(args):
     X_train_, X_test_, Y_train, Y_test = train_test_split(data.text, data.labels,
                                                           test_size=0.20, random_state=42)
 
-    print(run_num)
     print(args)
 
     # Prep data for the LSTM model
@@ -69,7 +66,6 @@ def run_loss(args):
                                 verbose=1, validation_data=(X_test, Y_test), callbacks=[es])
     lstm_acc = model_hist.history['val_acc'][-1]
     print("LSTM model accuracy ", lstm_acc)
-    run_num += 1
     # This minimizes, so the maximize we have to take the inverse :)
     return 1 - lstm_acc
 
@@ -95,7 +91,6 @@ if __name__ == '__main__':
         data_in = Amazon_Reviews(args_in.file_path)
 
     try:
-        import ipdb
         if args_in.output_file.endswith('.pkl'):
             with open(args_in.output_file, 'rb') as read_f:
                 trials_to_keep = pickle.load(read_f)
