@@ -1,5 +1,5 @@
 # End-to-End Memory Network for Goal Oriented Dialogue
-This directory contains an implementation of an End-to-End Memory Network for goal oriented dialogue in ngraph. 
+This directory contains an implementation of an End-to-End Memory Network for goal oriented dialogue in TensorFlow. 
 
 Goal oriented dialogue is a subset of open-domain dialogue where an automated agent has a specific goal for the outcome of the interaction. At a high level, the system needs to understand a user request and complete a related task with a clear goal within a limited number of dialog turns. This task could be making a restaurant reservation, placing an order, setting a timer, or many of the digital personal assistant tasks.
 
@@ -10,11 +10,11 @@ The dataset used for training and evaluation is under the umbrella of the Facebo
 
 ## Training
 To train the model without match type on full dialog tasks, and test on the test set at the end, the following command can be used:
-`python train_model.py --task 5 --weights_save_path memn2n_weights.npz --test`
+`python train_model.py --task 5 --weights_save_path saved_tf/ --test`
 
 The flag `--use_match_type` can also be used to enable match type features (for improved out-of-vocab performance but slower training).
 
 ## Interactive 
 To begin interactive evaluation with a trained model, the following command can be used:
-`python interactive.py --task 5 --model_file memn2n_weights.npz`
+`python interactive.py --task 5 --weight_save_path saved_tf/`
 
