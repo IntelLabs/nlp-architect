@@ -38,291 +38,250 @@ from __future__ import print_function
 from __future__ import unicode_literals
 from __future__ import absolute_import
 import os
-from contextlib import closing
 import numpy as np
 from tqdm import tqdm
-import ngraph as ng
-from ngraph.frontends.neon import Layer
-from ngraph.frontends.neon import GaussianInit, Adam
-from ngraph.frontends.neon import make_bound_computation
-from ngraph.frontends.neon import NgraphArgparser
-from ngraph.frontends.neon import ArrayIterator
-from ngraph.frontends.neon import Saver
-import ngraph.transformers as ngt
+import tensorflow as tf
 from interactive_utils import interactive_loop
 from nlp_architect.data.babi_dialog import BABI_Dialog
 from nlp_architect.models.memn2n_dialogue import MemN2N_Dialog
-from nlp_architect.utils.io import validate_parent_exists, check_size, validate
-
+from nlp_architect.utils.io import validate_parent_exists, validate
 
 # parse the command line arguments
-parser = NgraphArgparser(__doc__)
-parser.add_argument(
-    '--task',
-    type=int,
-    default='1',
-    choices=range(1, 7),
-    help='the task ID to train/test on from bAbI-dialog dataset (1-6)')
-parser.add_argument(
-    '--emb_size',
-    type=int,
-    default='32',
-    help='Size of the word-embedding used in the model.')
-parser.add_argument(
-    '--nhops',
-    type=int,
-    default='3',
-    help='Number of memory hops in the network',
-    choices=range(1, 10))
-parser.add_argument(
-    '--use_match_type',
-    default=False,
-    action='store_true',
-    help='use match type features')
-parser.add_argument(
-    '--cache_match_type',
-    default=False,
-    action='store_true',
-    help='cache match type answers')
-parser.add_argument(
-    '--cache_vectorized',
-    default=False,
-    action='store_true',
-    help='cache vectorized data')
-parser.add_argument(
-    '--use_oov',
-    default=False,
-    action='store_true',
-    help='use OOV test set')
-parser.add_argument(
-    '--lr',
-    type=float,
-    default=0.001,
-    help='learning rate')
-parser.add_argument(
-    '--grad_clip_norm',
-    type=float,
-    default=40.0,
-    help='Clip gradients such that norm is below this value.',
-    action=check_size(0, 100))
-parser.add_argument(
-    '--eps',
-    type=float,
-    default=1e-8,
-    help='epsilon used to avoid divide by zero in softmax renormalization.',
-    action=check_size(1e-100, 1e-2))
-parser.add_argument(
-    '--save_log',
-    action='store_true',
-    default=False,
-    help='Save evaluation results to log file.')
-parser.add_argument(
-    '--log_file',
-    type=str,
-    default='memn2n_dialgoue_results.txt',
-    help='File to write evaluation set results to.')
-parser.add_argument(
-    '--weights_save_path',
-    type=str,
-    default='memn2n_weights.npz',
-    help='File to save model weights to.')
-parser.add_argument(
-    '--save_epochs',
-    type=int,
-    default=1,
-    help='Number of epochs between saving model weights.',
-    action=check_size(1, 1000))
-parser.add_argument(
-    '--restore',
-    default=False,
-    action='store_true',
-    help='Restore weights if found.')
-parser.add_argument(
-    '--interactive',
-    default=False,
-    action='store_true',
-    help='enable interactive mode at the end of training.')
-parser.add_argument(
-    '--test',
-    default=False,
-    action='store_true',
-    help='evaluate on the test set at the end of training.')
-
-parser.set_defaults(batch_size=32, epochs=200)
-args = parser.parse_args()
-
-validate((args.emb_size, int, 1, 10000),
-         (args.eps, float, 1e-15, 1e-2),
-         (args.lr, float, 1e-8, 10),
-         (args.grad_clip_norm, float, 1e-3, 1e5))
+tf.flags.DEFINE_integer(
+    'task',
+    1,
+    'the task ID to train/test on from bAbI-dialog dataset (1-6)')
+tf.flags.DEFINE_integer(
+    'emb_size',
+    20,
+    'Size of the word-embedding used in the model.')
+tf.flags.DEFINE_integer(
+    'batch_size',
+    32,
+    'Size of the batch for optimization.')
+tf.flags.DEFINE_integer(
+    'nhops',
+    3,
+    'Number of memory hops in the network')
+tf.flags.DEFINE_boolean(
+    'use_match_type',
+    False,
+    'use match type features')
+tf.flags.DEFINE_boolean(
+    'cache_match_type',
+    False,
+    'cache match type answers')
+tf.flags.DEFINE_boolean(
+    'cache_vectorized',
+    False,
+    'cache vectorized data')
+tf.flags.DEFINE_boolean(
+    'use_oov',
+    False,
+    'use OOV test set')
+tf.flags.DEFINE_float(
+    'lr',
+    0.001,
+    'learning rate')
+tf.flags.DEFINE_float(
+    'grad_clip_norm',
+    40.0,
+    'Clip gradients such that norm is below this value.')
+tf.flags.DEFINE_float(
+    'eps',
+    1e-8,
+    'epsilon used to avoid divide by zero in softmax renormalization.')
+tf.flags.DEFINE_boolean(
+    'save_log',
+    False,
+    'Save evaluation results to log file.')
+tf.flags.DEFINE_string(
+    'data_dir',
+    'data/',
+    'File to save model weights to.')
+tf.flags.DEFINE_string(
+    'log_file',
+    'memn2n_dialgoue_results.txt',
+    'File to write evaluation set results to.')
+tf.flags.DEFINE_string(
+    'weights_save_path',
+    'saved_tf/',
+    'File to save model weights to.')
+tf.flags.DEFINE_integer(
+    'save_epochs',
+    10,
+    'Number of epochs between saving model weights.')
+tf.flags.DEFINE_integer(
+    'epochs',
+    100,
+    'Number of epochs between saving model weights.')
+tf.flags.DEFINE_boolean(
+    'restore',
+    False,
+    'Restore weights if found.')
+tf.flags.DEFINE_boolean(
+    'interactive',
+    False,
+    'enable interactive mode at the end of training.')
+tf.flags.DEFINE_boolean(
+    'test',
+    False,
+    'evaluate on the test set at the end of training.')
+FLAGS = tf.flags.FLAGS
 
 # Validate inputs
-validate_parent_exists(args.log_file)
-log_file = args.log_file
-validate_parent_exists(args.weights_save_path)
-weights_save_path = args.weights_save_path
-validate_parent_exists(args.data_dir)
-data_dir = args.data_dir
-assert weights_save_path.endswith('.npz')
-assert log_file.endswith('.txt')
+validate((FLAGS.task, int, 1, 7),
+         (FLAGS.nhops, int, 1, 10),
+         (FLAGS.batch_size, int, 1, 32000),
+         (FLAGS.emb_size, int, 1, 10000),
+         (FLAGS.eps, float, 1e-15, 1e-2),
+         (FLAGS.lr, float, 1e-8, 10),
+         (FLAGS.grad_clip_norm, float, 1e-3, 1e5),
+         (FLAGS.epochs, int, 1, 1e10),
+         (FLAGS.save_epochs, int, 1, 1e10))
 
-gradient_clip_norm = args.grad_clip_norm
+current_dir = os.path.dirname(os.path.realpath(__file__))
+log_file = os.path.join(current_dir, FLAGS.log_file)
+validate_parent_exists(log_file)
+weights_save_path = os.path.join(current_dir, FLAGS.weights_save_path)
+validate_parent_exists(weights_save_path)
+data_dir = os.path.join(current_dir, FLAGS.data_dir)
+validate_parent_exists(data_dir)
+assert log_file.endswith('.txt')
 
 babi = BABI_Dialog(
     path=data_dir,
-    task=args.task,
-    oov=args.use_oov,
-    use_match_type=args.use_match_type,
-    cache_match_type=args.cache_match_type,
-    cache_vectorized=args.cache_vectorized)
+    task=FLAGS.task,
+    oov=FLAGS.use_oov,
+    use_match_type=FLAGS.use_match_type,
+    cache_match_type=FLAGS.cache_match_type,
+    cache_vectorized=FLAGS.cache_vectorized)
 
-weight_saver = Saver()
+train_set = babi.data_dict['train']
+dev_set = babi.data_dict['dev']
+test_set = babi.data_dict['test']
 
-# Set num iterations to 1 epoch since we loop over epochs & shuffle
-ndata = babi.data_dict['train']['memory']['data'].shape[0]
-num_iterations = ndata // args.batch_size
+n_train = train_set['memory']['data'].shape[0]
+n_val = dev_set['memory']['data'].shape[0]
+n_test = test_set['memory']['data'].shape[0]
 
-train_set = ArrayIterator(babi.data_dict['train'], batch_size=args.batch_size,
-                          total_iterations=num_iterations)
-dev_set = ArrayIterator(babi.data_dict['dev'], batch_size=args.batch_size)
-test_set = ArrayIterator(babi.data_dict['test'], batch_size=args.batch_size)
-inputs = train_set.make_placeholders()
+train_batches = zip(range(0, n_train - FLAGS.batch_size, FLAGS.batch_size),
+                    range(FLAGS.batch_size, n_train, FLAGS.batch_size))
+train_batches = [(start, end) for start, end in train_batches]
 
-memn2n = MemN2N_Dialog(
-    babi.cands,
-    babi.num_cands,
-    babi.max_cand_len,
-    babi.memory_size,
-    babi.max_utt_len,
-    babi.vocab_size,
-    args.emb_size,
-    args.batch_size,
-    use_match_type=args.use_match_type,
-    kb_ents_to_type=babi.kb_ents_to_type,
-    kb_ents_to_cand_idxs=babi.kb_ents_to_cand_idxs,
-    match_type_idxs=babi.match_type_idxs,
-    nhops=args.nhops,
-    eps=args.eps,
-    init=GaussianInit(
-        mean=0.0,
-        std=0.1))
+val_batches = zip(range(0, n_val - FLAGS.batch_size, FLAGS.batch_size),
+                  range(FLAGS.batch_size, n_val, FLAGS.batch_size))
+val_batches = [(start, end) for start, end in val_batches]
 
-# Compute answer predictions
-a_pred, attention = memn2n(inputs)
+test_batches = zip(range(0, n_test - FLAGS.batch_size, FLAGS.batch_size),
+                   range(FLAGS.batch_size, n_test, FLAGS.batch_size))
+test_batches = [(start, end) for start, end in test_batches]
 
-# specify loss function, calculate loss and update weights
-loss = ng.cross_entropy_multi(a_pred, inputs['answer'], usebits=True)
+with tf.Session() as sess:
+    memn2n = MemN2N_Dialog(
+        FLAGS.batch_size,
+        babi.vocab_size,
+        babi.max_utt_len,
+        babi.memory_size,
+        FLAGS.emb_size,
+        babi.num_cands,
+        babi.max_cand_len,
+        hops=FLAGS.nhops,
+        max_grad_norm=FLAGS.grad_clip_norm,
+        optimizer=tf.train.AdamOptimizer(learning_rate=FLAGS.lr, epsilon=FLAGS.eps),
+        session=sess)
 
-mean_cost = ng.sum(loss, out_axes=[])
-optimizer = Adam(learning_rate=args.lr)
-updates = optimizer(loss)
-
-batch_cost = ng.sequential([updates, mean_cost])
-
-# provide outputs for bound computation
-train_outputs = dict(batch_cost=batch_cost, train_preds=a_pred)
-
-with Layer.inference_mode_on():
-    a_pred_inference, attention_inference = memn2n(inputs)
-    eval_loss = ng.cross_entropy_multi(
-        a_pred_inference, inputs['answer'], usebits=True)
-
-interactive_outputs = dict(
-    test_preds=a_pred_inference,
-    attention=attention_inference)
-eval_outputs = dict(test_cross_ent_loss=eval_loss, test_preds=a_pred_inference)
-
-# Train Loop
-with closing(ngt.make_transformer()) as transformer:
-    # bind the computations
-    train_computation = make_bound_computation(
-        transformer, train_outputs, inputs)
-    loss_computation = make_bound_computation(
-        transformer, eval_outputs, inputs)
-    interactive_computation = make_bound_computation(
-        transformer, interactive_outputs, inputs)
-
-    weight_saver.setup_save(transformer=transformer, computation=train_outputs)
-
-    if args.restore and os.path.exists(weights_save_path):
+    if FLAGS.restore and os.path.exists(weights_save_path):
         print("Loading weights from {}".format(weights_save_path))
-        weight_saver.setup_restore(
-            transformer=transformer,
-            computation=train_outputs,
-            filename=weights_save_path)
-        weight_saver.restore()
-    elif args.restore and os.path.exists(weights_save_path) is False:
+        memn2n.saver.restore(sess, weights_save_path)
+    elif FLAGS.restore and os.path.exists(weights_save_path) is False:
         print("Could not find weights at {}. ".format(weights_save_path)
               + "Running with random initialization.")
 
-    for e in range(args.epochs):
-        train_error = []
+    for e in range(FLAGS.epochs):
+        np.random.shuffle(train_batches)
         train_cost = []
-        for idx, data in enumerate(
-                tqdm(train_set, total=train_set.nbatches,
-                     unit='minibatches', desc="Epoch {}".format(e))):
-            train_output = train_computation(data)
-            train_cost.append(train_output['batch_cost'])
-            preds = np.argmax(train_output['train_preds'], axis=1)
-            error = np.mean(data['answer'].argmax(axis=1) != preds)
-            train_error.append(error)
 
-        train_cost_str = "Epoch {}: train_cost {}, train_error {}".format(
-            e, np.mean(train_cost), np.mean(train_error))
+        for start, end in tqdm(train_batches, total=len(train_batches),
+                               unit='minibatches', desc="Epoch {}".format(e)):
+            s = train_set['memory']['data'][start:end]
+            q = train_set['user_utt']['data'][start:end]
+            a = train_set['answer']['data'][start:end]
+
+            if not FLAGS.use_match_type:
+                c = np.tile(np.expand_dims(babi.cands, 0), [FLAGS.batch_size, 1, 1])
+            else:
+                c = train_set['cands_mat']['data'][start:end]
+
+            cost = memn2n.batch_fit(s, q, a, c)
+            train_cost.append(cost)
+
+        train_cost_str = "Epoch {}: train_cost {}".format(e, np.mean(train_cost))
         print(train_cost_str)
-        if args.save_log:
+
+        if FLAGS.save_log:
             with open(log_file, 'a') as f:
                 f.write(train_cost_str + '\n')
 
-        if e % args.save_epochs == 0:
+        if e % FLAGS.save_epochs == 0:
             print("Saving model to {}".format(weights_save_path))
-            weight_saver.save(filename=weights_save_path)
+            memn2n.saver.save(sess, weights_save_path)
             print("Saving complete")
 
-        # Eval after each epoch
-        test_loss = []
-        test_error = []
-        for idx, data in enumerate(dev_set):
-            test_output = loss_computation(data)
-            test_loss.append(np.sum(test_output['test_cross_ent_loss']))
-            preds = np.argmax(test_output['test_preds'], axis=1)
-            error = np.mean(data['answer'].argmax(axis=1) != preds)
-            test_error.append(error)
+            val_error = []
+            # Eval after each epoch
+            for start, end in tqdm(val_batches, total=len(val_batches),
+                                   unit='minibatches', desc="Epoch {}".format(e)):
+                s = dev_set['memory']['data'][start:end]
+                q = dev_set['user_utt']['data'][start:end]
+                a = dev_set['answer']['data'][start:end]
 
-        val_cost_str = "Epoch {}: validation_cost {}, validation_error {}".format(
-            e, np.mean(test_loss), np.mean(test_error))
-        print(val_cost_str)
-        if args.save_log:
-            with open(log_file, 'a') as f:
-                f.write(val_cost_str + '\n')
+                if not FLAGS.use_match_type:
+                    c = np.tile(np.expand_dims(babi.cands, 0), [FLAGS.batch_size, 1, 1])
+                else:
+                    c = dev_set['cands_mat']['data'][start:end]
 
-        # Shuffle training set and reset the others
-        shuf_idx = np.random.permutation(
-            range(train_set.data_arrays['memory'].shape[0]))
-        train_set.data_arrays = {k: v[shuf_idx]
-                                 for k, v in train_set.data_arrays.items()}
-        train_set.reset()
-        dev_set.reset()
+                a_pred = memn2n.predict(s, q, c)
+
+                error = np.mean(a.argmax(axis=1) != a_pred)
+                val_error.append(error)
+
+            val_err_str = "Epoch {}: Validation Error: {}".format(e, np.mean(val_error))
+            print(val_err_str)
+            if FLAGS.save_log:
+                with open(log_file, 'a') as f:
+                    f.write(val_err_str + '\n')
 
     print('Training Complete.')
+    print("Saving model to {}".format(weights_save_path))
+    memn2n.saver.save(sess, weights_save_path)
+    print("Saving complete")
 
-    if args.interactive:
-        interactive_loop(interactive_computation, babi)
+    if FLAGS.interactive:
+        interactive_loop(memn2n, babi)
 
-    if args.test:
+    if FLAGS.test:
         # Final evaluation on test set
-        test_loss = []
         test_error = []
-        for idx, data in enumerate(test_set):
-            test_output = loss_computation(data)
-            test_loss.append(np.sum(test_output['test_cross_ent_loss']))
-            preds = np.argmax(test_output['test_preds'], axis=1)
-            error = np.mean(data['answer'].argmax(axis=1) != preds)
+        # Eval after each epoch
+        for start, end in tqdm(test_batches, total=len(test_batches),
+                               unit='minibatches'):
+            s = test_set['memory']['data'][start:end]
+            q = test_set['user_utt']['data'][start:end]
+            a = test_set['answer']['data'][start:end]
+
+            if not FLAGS.use_match_type:
+                c = np.tile(np.expand_dims(babi.cands, 0), [FLAGS.batch_size, 1, 1])
+            else:
+                c = test_set['cands_mat']['data'][start:end]
+
+            a_pred = memn2n.predict(s, q, c)
+
+            error = np.mean(a.argmax(axis=1) != a_pred)
             test_error.append(error)
 
-        test_cost_str = "test_cost {}, test_error {}".format(
-            np.mean(test_loss), np.mean(test_error))
-        print(test_cost_str)
-        if args.save_log:
+        test_err_str = "Test Error: {}".format(np.mean(test_error))
+        print(test_err_str)
+        if FLAGS.save_log:
             with open(log_file, 'a') as f:
-                f.write(test_cost_str + '\n')
+                f.write(test_err_str + '\n')
