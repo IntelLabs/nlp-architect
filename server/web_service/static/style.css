@@ -87,10 +87,6 @@ License: MIT -> https://github.com/explosion/displacy-ent/blob/master/LICENSE
     margin: 0px 0px 0.1rem 0.5rem;
 }
 
-.displacy-label, .displacy-word {
-    color: white;
-}
-
-#displacy-svg {
-    background: #003c72 !important;
+.displacy-word  {
+    color: white !important;
 }

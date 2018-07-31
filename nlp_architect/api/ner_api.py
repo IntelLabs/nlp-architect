@@ -15,11 +15,11 @@
 # ******************************************************************************
 import pickle
 
-from os import path, remove, makedirs
+from os import path, makedirs
 from keras.preprocessing.sequence import pad_sequences
 import numpy as np
 from nlp_architect.api.abstract_api import AbstractApi
-from nlp_architect.utils.io import download_unlicensed_file, unzip_file
+from nlp_architect.utils.io import download_unlicensed_file
 from nlp_architect.models.ner_crf import NERCRF
 
 from nlp_architect.utils.text import SpacyInstance
@@ -32,17 +32,17 @@ class NerApi(AbstractApi):
     Ner model API
     """
     dir = path.dirname(path.realpath(__file__))
-    pretrained_model = path.join(dir, 'ner-pretrained', 'ner.model')
-    pretrained_model_info = path.join(dir, 'ner-pretrained', 'ner.model_info')
+    pretrained_model = path.join(dir, 'ner-pretrained', 'model.h5')
+    pretrained_model_info = path.join(dir, 'ner-pretrained', 'model_info.dat')
 
     def __init__(self, ner_model=None):
         self.model = None
         self.model_info = None
-        if not ner_model:
+        self.model_path = NerApi.pretrained_model
+        self.model_info_path = NerApi.pretrained_model_info
+        if ner_model is None:
             print("Using pre-trained BIST model.")
             self._download_pretrained_model()
-            self.model_path = NerApi.pretrained_model
-            self.model_info_path = NerApi.pretrained_model_info
 
     def encode_word(self, word):
         return self.model_info['word_vocab'].get(word, 1.0)
@@ -71,16 +71,14 @@ class NerApi(AbstractApi):
     def _download_pretrained_model(self):
         """Downloads the pre-trained BIST model if non-existent."""
         dir_path = path.join(self.dir, 'ner-pretrained')
-        if not path.isfile(path.join(dir_path, 'ner.model')):
-            print('Downloading pre-trained BIST model...')
-            zip_path = path.join(self.dir, 'ner-pretrained.zip')
-            download_unlicensed_file('https://s3-us-west-1.amazonaws.com/nervana-modelzoo/parse/',
-                                     'ner-pretrained.zip', zip_path)
-
+        if not path.isfile(path.join(dir_path, 'model.h5')):
+            print('The pre-trained models to be downloaded for the NER dataset'
+                  'are licensed under Apache 2.0')
             makedirs(dir_path, exist_ok=True)
-            print('Unzipping...')
-            unzip_file(zip_path, outpath=dir_path)
-            remove(zip_path)
+            download_unlicensed_file('http://nervana-modelzoo.s3.amazonaws.com/NLP/NER/',
+                                     'model.h5', self.model_path)
+            download_unlicensed_file('http://nervana-modelzoo.s3.amazonaws.com/NLP/NER/',
+                                     'model_info.dat', self.model_info_path)
             print('Done.')
 
     def load_model(self):

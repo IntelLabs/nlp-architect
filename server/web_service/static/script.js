@@ -15,7 +15,7 @@
 //# ******************************************************************************
 
 const api = '/inference';
-const models = [ //TODO: eventually change this to an API request
+const models = [
     'ner',
     'spacy_ner',
     'bist'
@@ -44,14 +44,14 @@ function doAnnotate(text) {
     while (displacy_div.firstChild) {
         displacy_div.removeChild(displacy_div.firstChild);
     }
-    let res_data = postData(text, api);
+    postData(text, api);
 }
 
 function getRandomColor() {
     let o = Math.round, r = Math.random, s = 255;
-    let r_1 = o(r()*s);
-    let r_2 = o(r()*s);
-    let r_3 = o(r()*s);
+    let r_1 = o(r() * s);
+    let r_2 = o(r() * s);
+    let r_3 = o(r() * s);
     let rgb = 'rgb(' + r_1 + ',' + r_2 + ',' + r_3 + ')';
     let rgba = 'rgba(' + r_1 + ',' + r_2 + ',' + r_3 + ', 0.2)';
     return [rgb, rgba];
@@ -63,16 +63,16 @@ function addColorToAnnotationSet(annotation_set) {
         let colors = getRandomColor();
         let rgb_color = colors[0];
         let rgba_color = colors[1];
-        let data1 = '[data-entity][data-entity=' + annotation_set[i] + '] {background: ' + rgba_color +'; border-color: ' + rgb_color + ';}';
-        let data2 ='[data-entity][data-entity=' + annotation_set[i] + ']::after {background: ' + rgb_color + ';}';
+        let data1 = '[data-entity][data-entity=' + annotation_set[i] + '] {background: ' + rgba_color + '; border-color: ' + rgb_color + ';}';
+        let data2 = '[data-entity][data-entity=' + annotation_set[i] + ']::after {background: ' + rgb_color + ';}';
         document.styleSheets[0].insertRule(data1);
         document.styleSheets[0].insertRule(data2);
     }
 }
 
 function renderData(data, type) {
-    if (type == 'core'){
-        //    for dep
+    if (type == 'core') {
+        //    for dependency
         let dataLength = data.length;
         for (let i = 0; i < dataLength; i++) {
             let displacy_div = document.getElementById("displacy_parse");
@@ -89,8 +89,8 @@ function renderData(data, type) {
                 offsetX: 100,
                 collapsePunct: false,
                 collapsePhrase: false,
-                bg: '#006680',
-                color: '#000000',
+                bg: '#003c72',
+                color: 'white',
                 wordSpacing: 50
             });
             displacy_core.render(data[i]);
@@ -104,7 +104,7 @@ function renderData(data, type) {
             collapsePunct: false,
             collapsePhrase: false,
             bg: '#006680',
-            color: '#000000',
+            color: 'white',
             wordSpacing: 50
         });
         addColorToAnnotationSet(data.annotation_set);
@@ -135,17 +135,13 @@ function postData(text, url) {
         referrer: 'no-referrer',
     })
     .then(response => response.json())
-    .then(data => {
-        renderData(data[0].doc, data[0].type);
-    })
-    .catch(error => {
-        displayError(error);
-    })
+    .then(data => renderData(data[0].doc, data[0].type))
+    .catch(error => displayError(error))
 }
 function displayError(error) {
     let errorAlert = document.getElementById('error_alert');
     errorAlert.innerHTML = error;
-    if(errorAlert.classList.contains('d-none')) {
+    if (errorAlert.classList.contains('d-none')) {
         errorAlert.classList.remove('d-none');
     }
 }
