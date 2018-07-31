@@ -22,7 +22,7 @@ The solution is constructed of the following stages:
    
 The first step in training is to prepare the data for generating a word embedding model. We 
 provide a subset of English Wikipedia at datasets/wikipedia as a sample corpus under the  
-[Creative Commons Attribution-Share-Alike 3.0 License](https://creativecommons.org/licenses/by-sa/3.0/).
+[Creative Commons Attribution-Share-Alike 3.0 License](https://creativecommons.org/licenses/by-sa/3.0/)- Copyright 2018 Wikimedia Foundation.
 This is done by running:
 ```
 python solutions/set_expansion/prepare_data.py --corpus TRAINING_CORPUS --marked_corpus MARKED_TRAINING_CORPUS
