@@ -51,6 +51,7 @@ EM Score ~48%
 ## Citations
 
 1. SQuAD: 100,000+ Questions for Machine Comprehension of Text. Authors: Pranav Rajpurkar, Jian Zhang, Konstantin Lopyrev, Percy Liang.
-   Subjects: Computation and Language(cs.CL). arXiv:1606.05250 [cs.CL][https://arxiv.org/abs/1606.05250]. License: https://creativecommons.org/licenses/by-sa/4.0/legalcode
+   Subjects: Computation and Language(cs.CL). arXiv:1606.05250 [cs.CL][https://arxiv.org/abs/1606.05250].
+   License: https://creativecommons.org/licenses/by-sa/4.0/legalcode
 2. Jeffrey Pennington, Richard Socher, and Christopher D. Manning. 2014 https://nlp.stanford.edu/pubs/glove.pdf. License: http://www.opendatacommons.org/licenses/pddl/1.0/
 3. Wang, S., & Jiang, J. (2016). Machine comprehension using match-lstm and answer pointer. arXiv preprint arXiv:1608.07905. [https://arxiv.org/abs/1608.07905]

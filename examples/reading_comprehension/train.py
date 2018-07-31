@@ -85,7 +85,6 @@ file_name_dict['vocab_file'] = 'vocab.dat'
 file_name_dict['embedding'] = 'glove.trimmed.300.npz'
 
 # Validate contents of data_path folder:
-import ipdb; ipdb.set_trace()
 missing_flag = 0
 for file_name in file_name_dict.values():
     if not os.path.exists(os.path.join(args.data_path, file_name)):
