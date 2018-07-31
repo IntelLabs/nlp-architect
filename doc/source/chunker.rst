@@ -35,18 +35,25 @@ are noun phrases, ``jumped`` is a verb phrase and ``over`` is a prepositional ph
 Dataset
 =======
 
-We used the CONLL2000_ shared task dataset in our example for training a phrase chunker. More info about the CONLL2000_ shared task can be found here: https://www.clips.uantwerpen.be/conll2000/chunking/. The terms and conditions of the data set license apply. Intel does not grant any rights to the data files.
+We used the CONLL2000_ shared task dataset in our example for training a phrase chunker. More info about the CONLL2000_ shared task can be found here: https://www.clips.uantwerpen.be/conll2000/chunking/. The terms and conditions of the data set license apply. Intel does not grant any rights to the data files. The annotation of the data has been derived from the WSJ corpus by a program written by Sabine Buchholz from Tilburg University, The Netherlands.
 
 
 The CONLL2000_ dataset has a ``train_set`` and ``test_set`` sets consisting of 8926 and 2009 sentences annotated with Part-of-speech and chuking information.
 We implemented a dataset loader, :py:class:`CONLL2000 <nlp_architect.data.sequential_tagging.CONLL2000>`, for loading and parsing :py:class:`CONLL2000 <nlp_architect.data.sequential_tagging.CONLL2000>` data into numpy arrays ready to be used sequential tagging models. For full set of options please see :py:class:`CONLL2000 <nlp_architect.data.sequential_tagging.CONLL2000>`.
 
-The :py:class:`CONLL2000 <nlp_architect.data.sequential_tagging.CONLL2000>` loader supports the following feature generation when loading the dataset:
+NLP Architect has a dataloader to easily load CONLL2000 which can be found in :py:class:`CONLL2000 <nlp_architect.data.sequential_tagging.CONLL2000>`. The loader supports the following feature generation when loading the dataset:
 
 1. Sentence words in sparse int representation
 2. Part-of-speech tags of words
 3. Chunk tag of words (IOB format)
 4. Characters of sentence words in sparse int representation (optional)
+
+
+To get the dataset follow these steps:
+
+1. download train and test files from dataset website.
+2. unzip files: ``gunzip *.gz``
+3. provide ``CONLL2000`` dataloader or ``train.py`` sample below the directory containing the files.
 
 Model
 =====
@@ -76,7 +83,7 @@ Train a model with default parameters (use sentence words and default network se
 
 .. code:: python
 
-	python train.py
+	python train.py --data_dir <path to CONLL2000 files>
 
 Custom training parameters
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -84,13 +91,14 @@ All customizable parameters can be obtained by running: ``python train.py -h``
 
 .. code:: bash
 
-  usage: train.py [-h] [--embedding_model EMBEDDING_MODEL]
+  usage: train.py [-h] [--data_dir DATA_DIR] [--embedding_model EMBEDDING_MODEL]
                   [--sentence_length SENTENCE_LENGTH]
                   [--feature_size FEATURE_SIZE] [--use_gpu] [-b B] [-e E]
                   [--model_name MODEL_NAME] [--print_np]
 
   optional arguments:
     -h, --help            show this help message and exit
+    --data_dir DATA_DIR   Path to directory containing CONLL2000 files
     --embedding_model EMBEDDING_MODEL
                           Word embedding model path (GloVe/Fasttext/textual)
     --sentence_length SENTENCE_LENGTH

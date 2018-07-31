@@ -26,12 +26,15 @@ from nlp_architect.contrib.keras.callbacks import ConllCallback
 from nlp_architect.data.sequential_tagging import CONLL2000
 from nlp_architect.models.chunker import SequenceChunker
 from nlp_architect.utils.embedding import load_word_embeddings, get_embedding_matrix
-from nlp_architect.utils.io import validate_existing_filepath, validate_parent_exists, validate
+from nlp_architect.utils.io import validate_existing_filepath, validate_parent_exists, validate, \
+    validate_existing_directory
 from nlp_architect.utils.metrics import get_conll_scores
 
 
 def create_argument_parser():
     _parser = argparse.ArgumentParser()
+    _parser.add_argument('--data_dir', type=validate_existing_directory,
+                         help='Path to directory containing CONLL2000 files')
     _parser.add_argument('--embedding_model', type=validate_existing_filepath,
                          help='Word embedding model path (GloVe/Fasttext/textual)')
     _parser.add_argument('--sentence_length', default=50, type=int,
@@ -75,7 +78,7 @@ if __name__ == '__main__':
     validate_parent_exists(model_path)
 
     # load dataset and get tokens/chunks/pos tags
-    dataset = CONLL2000(sentence_length=args.sentence_length)
+    dataset = CONLL2000(data_path=args.data_dir, sentence_length=args.sentence_length)
     words_train, pos_train, chunk_train = dataset.train_set
     words_test, pos_test, chunk_test = dataset.test_set
 

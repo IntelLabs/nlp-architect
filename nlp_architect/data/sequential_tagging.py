@@ -16,15 +16,13 @@
 
 from __future__ import division, print_function, unicode_literals, absolute_import
 
-from os import path, remove
-from pathlib import Path
+from os import path
 
 import numpy as np
 from keras.preprocessing.sequence import pad_sequences
 
-from nlp_architect.utils.generic import pad_sentences, license_prompt
-from nlp_architect.utils.io import check_directory_and_create, download_unlicensed_file, \
-    uncompress_file, validate_existing_directory, validate_existing_filepath
+from nlp_architect.utils.generic import pad_sentences
+from nlp_architect.utils.io import validate_existing_directory, validate_existing_filepath
 from nlp_architect.utils.text import Vocabulary, read_sequential_tagging_file, \
     word_vector_generator, character_vector_generator
 
@@ -160,6 +158,7 @@ class CONLL2000(object):
         CONLL 2000 POS/chunking task data set (numpy)
 
         Arguments:
+            data_path (str): directory containing CONLL2000 files
             sentence_length (int, optional): number of time steps to embed the data.
                 None value will not truncate vectors
             max_word_length (int, optional): max word length in characters.
@@ -168,17 +167,17 @@ class CONLL2000(object):
             lowercase (bool, optional): lower case sentence words
         """
 
-    dataset_url = 'https://www.clips.uantwerpen.be/conll2000/chunking/'
-    dataset_files = {'train': 'train.txt.gz',
-                     'test': 'test.txt.gz'}
-    dir = path.dirname(path.realpath(__file__))
-    _data_dir = path.join(str(Path.home()), 'nlp-architect/datasets/conll2000/')
+    dataset_files = {'train': 'train.txt',
+                     'test': 'test.txt'}
 
     def __init__(self,
+                 data_path,
                  sentence_length=None,
                  max_word_length=None,
                  extract_chars=False,
                  lowercase=True):
+        self._validate_paths(data_path)
+        self.data_path = data_path
         self.sentence_length = sentence_length
         self.use_chars = extract_chars
         self.max_word_length = max_word_length
@@ -189,37 +188,20 @@ class CONLL2000(object):
                        'chunk': None}
         self._data_dict = {}
 
-    def _download_dataset(self):
-        try:
-            validate_existing_directory(self._data_dir)
-            for f in self.dataset_files.values():
-                validate_existing_filepath(path.join(self._data_dir, f[:-3]))
-        except ValueError:
-            if not license_prompt('conll2000',
-                                  'https://www.clips.uantwerpen.be/conll2000/chunking/',
-                                  dataset_dir=None):
-                raise AssertionError()
-        check_directory_and_create(self._data_dir)
-        downloaded_files = {}
-        for f, f_name in self.dataset_files.items():
-            _local_f_name = path.join(self._data_dir, f_name[:-3])
-            if not path.exists(_local_f_name):
-                download_unlicensed_file(self.dataset_url, f_name,
-                                         path.join(self._data_dir, f_name))
-                gzipped_file = path.join(self._data_dir, f_name)
-                uncompress_file(gzipped_file, outpath=_local_f_name)
-                remove(gzipped_file)
-            downloaded_files.update({f: _local_f_name})
-        return downloaded_files
+    def _validate_paths(self, data_path):
+        validate_existing_directory(data_path)
+        for f in self.dataset_files:
+            _f_path = path.join(data_path, self.dataset_files[f])
+            validate_existing_filepath(_f_path)
+            self.dataset_files[f] = _f_path
 
     def _load_data(self):
         """
-        return CONLL2000 data from web
+        open files and parse
         return format: list of 3-tuples (word list, POS list, chunk list)
         """
-        local_files = self._download_dataset()
-        train_set = read_sequential_tagging_file(local_files['train'])
-        test_set = read_sequential_tagging_file(local_files['test'])
+        train_set = read_sequential_tagging_file(self.dataset_files['train'])
+        test_set = read_sequential_tagging_file(self.dataset_files['test'])
         train_data = [list(zip(*x)) for x in train_set]
         test_data = [list(zip(*x)) for x in test_set]
         return train_data, test_data
