@@ -147,7 +147,6 @@ class Service(object):
         set_headers(resp)
         headers = parse_headers(req.headers)
         req_content_type = headers["CONTENT-TYPE"]
-        # req_content_encoding = headers["CONTENT-ENCODING"]
         resp_format = headers["RESPONSE-FORMAT"]
         if req_content_type == "application/json" or "application/json" in req_content_type:
             logger.info('Json request')

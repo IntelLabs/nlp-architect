@@ -53,11 +53,10 @@ License: MIT -> https://github.com/explosion/displacy-ent/blob/master/LICENSE
 
 
 
-/* Make all right arrows red and hide their labels */
 
 .displacy-arc,
 .displacy-arrowhead{
-    color: #bfbfbf;
+    color: #0baaeb;
 }
 
 
@@ -80,9 +79,18 @@ License: MIT -> https://github.com/explosion/displacy-ent/blob/master/LICENSE
     font-size: 0.6em;
     line-height: 1;
     padding: 0.35em;
+    color: white;
     border-radius: 0.35em;
     text-transform: uppercase;
     display: inline-block;
     vertical-align: middle;
     margin: 0px 0px 0.1rem 0.5rem;
+}
+
+.displacy-label, .displacy-word {
+    color: white;
+}
+
+#displacy-svg {
+    background: #003c72 !important;
 }

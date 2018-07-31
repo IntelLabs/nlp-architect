@@ -34,6 +34,7 @@ class NerApi(AbstractApi):
     dir = path.dirname(path.realpath(__file__))
     pretrained_model = path.join(dir, 'ner-pretrained', 'ner.model')
     pretrained_model_info = path.join(dir, 'ner-pretrained', 'ner.model_info')
+
     def __init__(self, ner_model=None):
         self.model = None
         self.model_info = None
@@ -74,7 +75,7 @@ class NerApi(AbstractApi):
             print('Downloading pre-trained BIST model...')
             zip_path = path.join(self.dir, 'ner-pretrained.zip')
             download_unlicensed_file('https://s3-us-west-1.amazonaws.com/nervana-modelzoo/parse/',
-                                    'ner-pretrained.zip', zip_path)
+                                     'ner-pretrained.zip', zip_path)
 
             makedirs(dir_path, exist_ok=True)
             print('Unzipping...')

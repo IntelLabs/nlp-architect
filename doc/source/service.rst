@@ -34,7 +34,7 @@ Currently we provide 2 services:
  2. `spacy_ner` service which provides Spacy NER annotations.
  3. `ner` service which provides NER annotations without Spacy.
 
-To run the server, simply run `hug -f -p 8080 hug_server/server.py`, the server will run on `http://localhost:8080`.
+To run the server, simply run ``hug -f -p 8080 server/serve.py``, the server will run on `http://localhost:8080`.
 
 If you wish to use the server's visualization - enter `http://localhost:8080`
 
@@ -70,7 +70,7 @@ We currently support only 2 services:
 
 - BIST parser - Core NLP models annotation structure
 
-Once the server is up and running you can go to `http://localhost:8080/demo.html`
+Once the server is up and running you can go to `http://localhost:8080`
 and check out a few test sentences, or you can send a POST request (as described above)
 to `http://localhost:8080/inference`, and receive `CoreNLPDoc` annotation structure response.
 
@@ -83,6 +83,7 @@ and check out a few test sentences, or you can send a Post request (as described
 to `http://localhost:8080/inference`, and receive `HighLevelDoc` annotation structure response.
 
 .. image :: assets/spacy_ner_service.png
+.. image :: assets/ner_service.png
 
 You can also take a look at the tests (tests/nlp_architect_server) to see more examples.
 
