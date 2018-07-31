@@ -7,7 +7,7 @@ This directory contains an implementation of the boundary model(b in the Figure)
 1. mkdir data
 
 2. Download the official SQuAD-v1.1 training (train-v1.1.json) and development(dev-v1.1.json) datasets  from here
-https://worksheets.codalab.org/worksheets/0x62eefc3e64e04430a1a24785a9293fff/ and place the extracted json files in the `data` directory.The terms and conditions of the data set license apply. Intel does not grant any rights to the data files.
+https://worksheets.codalab.org/worksheets/0x62eefc3e64e04430a1a24785a9293fff/ and place the extracted json files in the `data` directory. For more information about SQuAD, please visit https://rajpurkar.github.io/SQuAD-explorer/. The terms and conditions of the data set license apply. Intel does not grant any rights to the data files.
 
 3. Download the GloVe pretrained embeddings from  http://nlp.stanford.edu/data/glove.6B.zip and copy "glove.6B.300d.txt" file into the  `data` directory.
 For more information about GloVe please visit https://nlp.stanford.edu/projects/glove/. The terms and conditions of the data set license apply. Intel does not grant any rights to the data files.
@@ -47,3 +47,10 @@ after 15 epochs, you should expect to see a F1 and EM scores on the development 
 F1 Score ~62%
 EM Score ~48%
 ```
+
+## Citations
+
+1. SQuAD: 100,000+ Questions for Machine Comprehension of Text. Authors: Pranav Rajpurkar, Jian Zhang, Konstantin Lopyrev, Percy Liang.
+   Subjects: Computation and Language(cs.CL). arXiv:1606.05250 [cs.CL][https://arxiv.org/abs/1606.05250]. License: https://creativecommons.org/licenses/by-sa/4.0/legalcode
+2. Jeffrey Pennington, Richard Socher, and Christopher D. Manning. 2014 https://nlp.stanford.edu/pubs/glove.pdf. License: http://www.opendatacommons.org/licenses/pddl/1.0/
+3. Wang, S., & Jiang, J. (2016). Machine comprehension using match-lstm and answer pointer. arXiv preprint arXiv:1608.07905. [https://arxiv.org/abs/1608.07905]

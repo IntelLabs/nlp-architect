@@ -39,10 +39,10 @@ parser.add_argument('--epochs', default=15, type=int,
                     help='enter the number of epochs', action=check_size(1, 30))
 
 parser.add_argument('--select_device', default='GPU', type=str,
-                    help='enter the device to execute on')
+                    help='enter the device to execute on', action=check_size(3, 9))
 
 parser.add_argument('--train_set_size', default=None, type=int,
-                    help='enter the length of training set size', action=check_size(200, 90000))
+                    help='enter the size of the training set', action=check_size(200, 90000))
 
 parser.add_argument('--hidden_size', default=150, type=int,
                     help='enter the number of hidden units', action=check_size(30, 300))
@@ -58,7 +58,6 @@ parser.add_argument('--batch_size', default=64, type=int,
 
 parser.set_defaults()
 args = parser.parse_args()
-
 # Set GPU
 os.environ["CUDA_VISIBLE_DEVICES"] = args.gpu_id
 
@@ -86,6 +85,7 @@ file_name_dict['vocab_file'] = 'vocab.dat'
 file_name_dict['embedding'] = 'glove.trimmed.300.npz'
 
 # Validate contents of data_path folder:
+import ipdb; ipdb.set_trace()
 missing_flag = 0
 for file_name in file_name_dict.values():
     if not os.path.exists(os.path.join(args.data_path, file_name)):
