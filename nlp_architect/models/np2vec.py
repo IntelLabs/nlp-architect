@@ -239,7 +239,7 @@ class NP2vec:
             total_vec = 0
             vector_size = self.model.vector_size
             for word in self.model.wv.vocab.keys():
-                if self.is_marked(word):
+                if self.is_marked(word) and len(word) > 1:
                     total_vec += 1
             logger.info(
                 "storing %sx%s projection weights for NP's into %s",
