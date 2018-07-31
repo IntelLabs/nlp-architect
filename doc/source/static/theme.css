@@ -24,3 +24,11 @@
   font-family: "Monaco", "Consolas", "Menlo", "Andale Mono WT", "Andale Mono", "Lucida Console", "monospace";
   font-size: 13px;
 }
+
+body, h1, h2, .rst-content .toctree-wrapper p.caption, h3, h4, h5, h6, legend {
+    font-family: "Lato", "Menlo", "Andale Mono WT", "Andale Mono", "Lucida Console", "monospace";
+}
+
+.wy-nav-top {
+    background: #8eb0af;
+}
