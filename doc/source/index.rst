@@ -99,6 +99,8 @@ on this project, please see the :doc:`developer guide <developer_guide>`.
 
    overview.rst
    installation.rst
+   publications.rst
+   tutorials.rst
    service.rst
 
 .. toctree::
