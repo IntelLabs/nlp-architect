@@ -17,7 +17,10 @@ from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
 from __future__ import absolute_import
+
 import numpy as np
+
+from nlp_architect.utils.text import Vocabulary
 
 
 def load_word_embeddings(file_path):
@@ -68,3 +71,23 @@ def fill_embedding_mat(src_mat, src_lex, emb_lex, emb_size):
                 if w_emb is not None:
                     emb_mat[i][j] = w_emb
     return emb_mat
+
+
+def get_embedding_matrix(embeddings: dict, vocab: Vocabulary) -> np.ndarray:
+    """
+    Generate a matrix of word embeddings given a vocabulary
+
+    Args:
+        embeddings (dict): a dictionary of embedding vectors
+        vocab (Vocabulary): a Vocabulary
+
+    Returns:
+        a 2D numpy matrix of lexicon embeddings
+    """
+    emb_size = len(next(iter(embeddings.values())))
+    mat = np.zeros((vocab.max, emb_size))
+    for word, wid in vocab.vocab.items():
+        vec = embeddings.get(word.lower(), None)
+        if vec is not None:
+            mat[wid] = vec
+    return mat
