@@ -32,3 +32,4 @@ flake8.txt
 nlp_architect/pipelines/bist-pretrained/*
 solutions/set_expansion/enwiki-20171201_subset_marked.txt
 solutions/set_expansion/tmp.py
+venv

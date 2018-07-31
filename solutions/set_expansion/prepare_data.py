@@ -43,7 +43,7 @@ if __name__ == '__main__':
     arg_parser = ArgumentParser(__doc__)
     arg_parser.add_argument(
         '--corpus',
-        default='../../datasets/wikipedia/enwiki-20171201_subset.txt.gz',
+        default='datasets/wikipedia/enwiki-20171201_subset.txt.gz',
         type=validate_existing_filepath,
         help='path to the input corpus. Compressed files (gz) are also supported. By default, '
              'it is a subset of English Wikipedia.')
@@ -69,9 +69,9 @@ if __name__ == '__main__':
     args = arg_parser.parse_args()
 
     if args.corpus.endswith('gz'):
-        corpus_file = gzip.open(args.corpus, 'rt', encoding='utf8')
+        corpus_file = gzip.open(args.corpus, 'rt', encoding='utf8', errors='ignore')
     else:
-        corpus_file = open(args.corpus, 'r', encoding='utf8')
+        corpus_file = open(args.corpus, 'r', encoding='utf8', errors='ignore')
 
     with open(args.marked_corpus, 'w', encoding='utf8') as marked_corpus_file:
 
