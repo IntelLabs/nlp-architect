@@ -17,7 +17,7 @@ for the given NP.
 ## Dataset
 The expected dataset is a CSV file with 2 columns. the first column contains the Noun-Phrase string (a Noun-Phrase containing 2 words), and the second column contains the correct label (if the 2 word Noun-Phrase is a collocation - the label is 1, else 0)
 
-If you wish to use an existing dataset for training the model, you can download Tratz 2011 et al. dataset [1,2] from the following link:
+If you wish to use an existing dataset for training the model, you can download Tratz 2011 et al. dataset [1] from the following link:
 [Tratz 2011 Dataset](https://vered1986.github.io/papers/Tratz2011_Dataset.tar.gz). Is also available in [here](https://www.isi.edu/publications/licensed-sw/fanseparser/index.html).
 (The terms and conditions of the data set license apply. Intel does not grant any rights to the data files or database.
 
@@ -61,3 +61,17 @@ The result of `python inference.py` is a CSV file, each row contains the model's
 Quick example:
 
     python inference.py --model np_semantic_segmentation_path.h5 --data prepared_data_path.csv --output inference_data.csv --print_stats
+
+
+
+### Citatons
+[1] Stephen Tratz and Eduard Hovy. 2011. A Fast, Accurate, Non-Projective, Semantically-Enriched
+Parser. In Proceedings of the 2011 Conference on Empirical Methods in Natural Language Processing.
+Edinburgh, Scotland, UK. Dirk Hovy, Stephen Tratz, and Eduard Hovy. 2010. What’s in a Preposition?
+Dimensions of Sense Disambiguation for an Interesting Word Class. In Proceedings of COLING 2010:
+Poster Volume. Beijing, China. Stephen Tratz and Dirk Hovy. 2009. Disambiguation of Preposition
+Sense using Linguistically Motivated Features. In Proceedings of Human Language Technologies:
+The 2009 Annual Conference of the North American Chapter of the Association for Computational
+Linguistics, Companion Volume: Student Research Workshop and Doctoral Consortium. Boulder, Colorado.
+Stephen Tratz and Eduard Hovy. 2010. A Taxonomy, Dataset, and Classifier for Automatic Noun Compound Interpretation.
+In Proceedings of the 48th Annual Meeting of the Association for Computational Linguistics. Uppsala, Sweden
