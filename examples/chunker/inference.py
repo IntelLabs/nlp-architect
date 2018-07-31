@@ -16,106 +16,69 @@
 
 from __future__ import division, print_function, unicode_literals, absolute_import
 
+import argparse
 import pickle
-import sys
+from os import path
 
 import numpy as np
-import spacy
-from neon.backends import gen_backend
-from neon.models import Model
-from neon.util.argparser import NeonArgparser, extract_valid_args
 
-from nlp_architect.contrib.neon.text_iterators import TaggedTextSequence, MultiSequenceDataIterator
-from nlp_architect.utils.embedding import load_word_embeddings
-from nlp_architect.utils.generic import get_paddedXY_sequence
+from nlp_architect.models.chunker import SequenceChunker
 from nlp_architect.utils.io import validate_existing_filepath
-from examples.chunker.utils import extract_nps
+from nlp_architect.utils.text import SpacyInstance
+
+
+def vectorize(docs, vocab):
+    data = []
+    for doc in docs:
+        data.append(np.asarray([vocab[w] if vocab[w] is not None else 1 for w in doc])
+                    .reshape(1, -1))
+    return data
+
+
+def build_annotation(documents, annotations):
+    for d, i in zip(documents, annotations):
+        for w, p, c in zip(d, i[0], i[1]):
+            print('{}\t{}\t{}'.format(w, p, c))
+        print('')
+
 
 if __name__ == '__main__':
-
-    parser = NeonArgparser()
-    parser.add_argument('--model', type=validate_existing_filepath, required=True,
-                        help='Path to model file')
-    parser.add_argument('--settings', type=validate_existing_filepath, required=True,
-                        help='Path to model settings file')
-    parser.add_argument('--input', type=validate_existing_filepath, required=True,
+    # read input args and validate
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--input_file', type=validate_existing_filepath, required=True,
                         help='Input texts file path (samples to pass for inference)')
-    parser.add_argument('--embedding_model', type=validate_existing_filepath,
-                        help='Pre-trained word embedding model file path')
-    parser.add_argument('--print_only_nps', default=False, action='store_true',
-                        help='Print inferred Noun Phrases')
+    parser.add_argument('--model_name', default='chunker_model', type=str,
+                        required=True, help='Model name (used for saving the model)')
     args = parser.parse_args()
-    be = gen_backend(**extract_valid_args(args, gen_backend))
+    model_path = path.join(path.dirname(path.realpath(__file__)),
+                           '{}.h5'.format(str(args.model_name)))
+    settings_path = path.join(path.dirname(path.realpath(__file__)),
+                              '{}.params'.format(str(args.model_name)))
+    validate_existing_filepath(model_path)
+    validate_existing_filepath(settings_path)
 
-    with open(args.settings, 'rb') as fp:
-        mp = pickle.load(fp)
+    # load model and parameters
+    model = SequenceChunker()
+    model.load(model_path)
+    with open(settings_path, 'rb') as fp:
+        model_params = pickle.load(fp)
+        word_vocab = model_params['word_vocab']
+        chunk_vocab = model_params['chunk_vocab']
+        pos_vocab = model_params['pos_vocab']
 
-    if mp['char_rnn'] is not False:
-        raise NotImplementedError
+    # parse documents and get tokens
+    nlp = SpacyInstance(disable=['tagger', 'ner', 'parser', 'vectors', 'textcat'])
+    with open(args.input_file) as fp:
+        document_texts = [nlp.tokenize(t.strip()) for t in fp.readlines()]
 
-    sentence_len = mp['sentence_len']
+    # vectorize input tokens and run inference
+    doc_vecs = vectorize(document_texts, word_vocab)
+    document_annotations = []
+    for vec in doc_vecs:
+        doc_pos, doc_chunks = model.predict(vec, batch_size=1)
+        pos_a = [pos_vocab.id_to_word(l) for l in doc_pos.argmax(2).flatten()]
+        chunk_a = [chunk_vocab.id_to_word(l) for l in doc_chunks.argmax(2).flatten()]
+        document_annotations.append((pos_a, chunk_a))
 
-    with open(args.input) as fp:
-        input_texts = [t.strip() for t in fp.readlines()]
-
-    be.bsz = len(input_texts)
-    input_features = []
-    text_tokens = []
-    if mp['use_embeddings'] is True:
-        if args.embedding_model is None:
-            print('word embedding model was not supplied')
-            sys.exit(0)
-        emb_model, emb_size = load_word_embeddings(args.embedding_model)
-        pad_vector = np.zeros(emb_size)
-        for t in input_texts:
-            vector = [
-                emb_model[t] if t in emb_model else pad_vector
-                for t in t.lower().split()
-            ]
-            vector = [pad_vector] * (sentence_len - len(vector)) + vector
-            text_tokens.append(np.asarray(vector))
-        token_features = np.asarray(text_tokens)
-        del emb_model
-    else:
-        x_vocab = mp.get('vocabs').get('token')
-        for t in input_texts:
-            tokens = [x_vocab[t] if t in x_vocab else len(
-                x_vocab) + 1 for t in t.lower().split()]
-            text_tokens.append(tokens)
-        token_features, _ = get_paddedXY_sequence(
-            text_tokens, [], sentence_length=sentence_len, shuffle=False)
-    input_features.append(TaggedTextSequence(
-        sentence_len, token_features, vec_input=mp['use_embeddings']))
-
-    if mp['pos'] is True:
-        pos_vocab = mp['vocabs']['pos']
-        nlp = spacy.load('en')
-        pos_tokens = []
-        for doc in [nlp(t) for t in input_texts]:
-            vec = [pos_vocab[t.tag_.lower()] if t.tag_.lower(
-            ) in pos_vocab else len(pos_vocab) + 1 for t in doc]
-            pos_tokens.append(vec)
-        pos_features, _ = get_paddedXY_sequence(
-            pos_tokens, [], sentence_length=sentence_len, shuffle=False)
-        input_features.append(TaggedTextSequence(
-            sentence_len, pos_features, vec_input=False))
-
-    if len(input_features) > 1:
-        x = MultiSequenceDataIterator(input_features, ignore_y=True)
-    else:
-        x = input_features[0]
-
-    model = Model(args.model)
-    model.initialize(dataset=x)
-    preds = model.get_outputs(x).argmax(2)
-
-    # print inferred tags and original text
-    print_nps = args.print_only_nps
-    rev_y = {v + 1: k for k, v in mp['y_vocab'].items()}
-    for sen, text in zip(preds, input_texts):
-        text_tokens = text.lower().split()
-        text_tags = [rev_y[i] for i in sen if i > 0]
-        if print_nps is True:
-            print(extract_nps(text_tokens, text_tags))
-        else:
-            print(list(zip(text_tokens, text_tags)))
+    # print document text and annotations
+    build_annotation(document_texts, document_annotations)

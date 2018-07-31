@@ -35,62 +35,45 @@ are noun phrases, ``jumped`` is a verb phrase and ``over`` is a prepositional ph
 Dataset
 =======
 
-We used the CONLL2000_ shared task dataset in our example for training a phrase chunker. More info about the CONLL2000_ shared task can be found here: https://www.clips.uantwerpen.be/conll2000/chunking/.
+We used the CONLL2000_ shared task dataset in our example for training a phrase chunker. More info about the CONLL2000_ shared task can be found here: https://www.clips.uantwerpen.be/conll2000/chunking/. The terms and conditions of the data set license apply. Intel does not grant any rights to the data files. The annotation of the data has been derived from the WSJ corpus by a program written by Sabine Buchholz from Tilburg University, The Netherlands.
 
-If CONLL2000 is not found in NLTK, ``nlp_architect.data.conll2000.CONLL2000`` will attempt to download the dataset if the user agrees by using  ``nltk.download('conll2000')``.
 
-The dataset can be downloaded from here: https://www.nltk.org/data.html The terms and conditions of the data set license apply. Intel does not grant any rights to the data files.
+The CONLL2000_ dataset has a ``train_set`` and ``test_set`` sets consisting of 8926 and 2009 sentences annotated with Part-of-speech and chuking information.
+We implemented a dataset loader, :py:class:`CONLL2000 <nlp_architect.data.sequential_tagging.CONLL2000>`, for loading and parsing :py:class:`CONLL2000 <nlp_architect.data.sequential_tagging.CONLL2000>` data into numpy arrays ready to be used sequential tagging models. For full set of options please see :py:class:`CONLL2000 <nlp_architect.data.sequential_tagging.CONLL2000>`.
 
-The dataset has a ``train`` and ``test`` sets consisting of 8926 and 2009 sentences annotated with Part-of-speech and chuking information.
-We implemented a dataset loader, ``nlp_architect.data.conll2000.CONLL2000``, for loading and parsing CONLL2000 data into iterators ready to be used by the chunker model.
-``CONLL2000`` supports the following feature generation when loading the dataset:
+NLP Architect has a dataloader to easily load CONLL2000 which can be found in :py:class:`CONLL2000 <nlp_architect.data.sequential_tagging.CONLL2000>`. The loader supports the following feature generation when loading the dataset:
 
-1. Sentence words as sparse int representation
-2. Pre-train word embeddings
-3. Part-of-speech tags of words
-4. Word character sparse representation (for extracting character features)
+1. Sentence words in sparse int representation
+2. Part-of-speech tags of words
+3. Chunk tag of words (IOB format)
+4. Characters of sentence words in sparse int representation (optional)
+
+
+To get the dataset follow these steps:
+
+1. download train and test files from dataset website.
+2. unzip files: ``gunzip *.gz``
+3. provide ``CONLL2000`` dataloader or ``train.py`` sample below the directory containing the files.
 
 Model
 =====
 
-The Chunker model example comes with several options for creating the NN topology depending on what
-input is given (tokens/POS/embeddings/char features).
+The sequence chunker is a Tensorflow-keras based model and it is implemented in :py:class:`SequenceChunker <nlp_architect.models.chunker.SequenceChunker>` and comes with several options for creating the topology depending on what input is given (tokens, external word embedding model, topology paramters).
 
-.. image :: assets/model_diag.png
+The model is based on the paper: `Deep multi-task learning with low level tasks supervised at lower layers`_ by Søgaard and Goldberg (2016), but with minor alterations.
 
-The model above depicts the main topology.
-Given sentence ``S`` of length ``n``, and sentence tokens ``S = (s1, s2, .. , sn)`` we can input
-vectors ``x1, x2, .., xn`` to the model where each sentence position ``i`` is a vector consisting
-of the following values:
+The described model in the paper consists of multiple sequential Bi-directional LSTM layers which are set to predict different tags. the Part-of-speech tags are projected onto a fully connected layer with softmax (in each time-stamp) after the first LSTM layer. The chunk labels are predicted similarly using a softmax layer connected to the 3rd LSTM layer.
 
-* token vector embedding using pre-trained word embedding
-* token vector embedding (trained by model)
-* part-of-speech embedding (trained by model)
-* character features vector (trained by char-rnn)
-
-.. image:: assets/char_diag.png
-
-The Char-RNN feature extractor model uses 2 layers of LSTM such that each RNN layer outputs the
-last hidden state. The final feature vector for a token is a concatenation of final hidden state of
-the forward layer ``Hf`` and the backward ``Hb``. In the above example, the word ``apple`` is encoded to vector ``[Hf|Hb]``.
-
-Following input vectors are 2 layers of LSTM cells, one LSTM reads input sentence from the token at
-index ``1`` to ``n`` and the other backwards from ``n`` until ``1``. At each time step the forward
-LSTM layer's hidden state is concatenated with the backward LSTM hidden state, and then used in a MLP
-that predicts the token's tag at position ``i`` using a softmax activation layer. Eventually, the
-model output are the tokens tags ``(tag_1, tag_2, .., tagn)`` as predicted in each step.
-
-Deep Bi-directional LSTM
-------------------------
-
-In addition to the model described above, the model support the use of multiple stacked LSTM layers
-as recent literature has indicated that several layers of RNN layers might be beneficial int sequential prediction.
-When using multiple BiLSTM layers the hidden state of the forward and backward layers are at step ``i``
-are used as the input to the next layer of BiLSTM at step ``i`` accordingly.
-
+The model's embedding vector size and LSTM layer hidden state have equal sizes, the default training optimizer is SGD with default parameters and batch size of 10.
 
 Running Models
 ==============
+
+We provide a simple example for training and running inference using the :py:class:`SequenceChunker <nlp_architect.models.chunker.SequenceChunker>` model.
+
+``train.py`` will load CONLL2000 dataset and train a model using given training parameters (batch size, epochs, external word embedding, etc.), save the model once done training and print the performance of the model on the test set. The example supports loading GloVe/Fasttext word embedding models to be used when training a model. The training method used in this example trains on both POS and Chunk labels concurently with equal targer loss weights, this is different than what is described in the paper_.
+
+``inference.py`` will load a saved model and a given text file with sentences and print the chunks found on the stdout.
 
 Training
 --------
@@ -100,7 +83,7 @@ Train a model with default parameters (use sentence words and default network se
 
 .. code:: python
 
-	python train.py
+	python train.py --data_dir <path to CONLL2000 files>
 
 Custom training parameters
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -108,80 +91,43 @@ All customizable parameters can be obtained by running: ``python train.py -h``
 
 .. code:: bash
 
-  --embedding_model EMBEDDING_MODEL
-                        word embedding model path (only GloVe and Fasttext are
-                        supported (default: None)
-  --use_pos             Use part-of-speech tags of tokens (default: False)
-  --use_char_rnn        Use char-RNN features of tokens (default: False)
-  --sentence_len SENTENCE_LEN
-                        Sentence token length (default: 100)
-  --lstm_depth LSTM_DEPTH
-                        Deep BiLSTM depth (default: 1)
-  --lstm_hidden_size LSTM_HIDDEN_SIZE
-                        LSTM cell hidden vector size (default: 100)
-  --token_embedding_size TOKEN_EMBEDDING_SIZE
-                        Token embedding vector size (default: 50)
-  --pos_embedding_size POS_EMBEDDING_SIZE
-                        Part-of-speech embedding vector size (default: 25)
-  --vocab_size VOCAB_SIZE
-                        Vocabulary size to use (only if pre-trained embedding
-                        is not used) (default: 25000)
-  --char_hidden_size CHAR_HIDDEN_SIZE
-                        Char-RNN cell hidden vector size (default: 25)
-  --max_char_word_length MAX_CHAR_WORD_LENGTH
-                        max characters per one word (default: 20)
-  --model_name MODEL_NAME
-                        Model file name (default: chunker)
-  --settings SETTINGS   Model settings file name (default: chunker_settings)
-  --print_np_perf       Print Noun Phrase (NP) tags accuracy (default: False)
+  usage: train.py [-h] [--data_dir DATA_DIR] [--embedding_model EMBEDDING_MODEL]
+                  [--sentence_length SENTENCE_LENGTH]
+                  [--feature_size FEATURE_SIZE] [--use_gpu] [-b B] [-e E]
+                  [--model_name MODEL_NAME] [--print_np]
 
+  optional arguments:
+    -h, --help            show this help message and exit
+    --data_dir DATA_DIR   Path to directory containing CONLL2000 files
+    --embedding_model EMBEDDING_MODEL
+                          Word embedding model path (GloVe/Fasttext/textual)
+    --sentence_length SENTENCE_LENGTH
+                          Maximum sentence length
+    --feature_size FEATURE_SIZE
+                          Feature vector size (in embedding and LSTM layers)
+    --use_gpu             use GPU backend (CUDNN enabled)
+    -b B                  batch size
+    -e E                  number of epochs run fit model
+    --model_name MODEL_NAME
+                          Model name (used for saving the model)
+    --print_np            Print only Noun Phrase (NP) tags accuracy
 
-The model will automatically save after training is complete:
+Saving the model after training is done automatically by specifying a model name with the keyword `--model_name`, the following files will be created:
 
-* ``<chunker>`` - Neon NN model file
-* ``<chunker>_settings.dat`` - Model topology and input settings
+* ``chunker_model.h5`` - model file
+* ``chunker_model.params`` - model parameter files (topology parameters, vocabs)
 
 Inference
 ---------
-Quick inference
-^^^^^^^^^^^^^^^
 
-Running inference on a trained model ``chunker`` and ``chunker_settings.dat`` on input samples from ``inference_sentences.txt``
+Running inference on a trained model using an input file (text based, each line is a document):
 
 .. code:: python
 
-	python inference.py --model chunker --settings chunker_settings.dat --input inference_sentences.txt
-
-Run ``python inference.py -h`` for a full list of options:
-
-.. code:: bash
-
-  --model MODEL         Path to model file (default: None)
-  --settings SETTINGS   Path to model settings file (default: None)
-  --input INPUT         Input texts file path (samples to pass for inference)
-                        (default: None)
-  --embedding_model EMBEDDING_MODEL
-                        Pre-trained word embedding model file path (default:
-                        None)
-  --print_only_nps      Print inferred Noun Phrases (default: True)
-
-.. note::
-	currently char-RNN feature (character embedding) is not supported in inference mode (will be added in the future).
-
-Evaluation
-==========
-The reported performance below is on Noun Phrase (NP) detection (using B-NP and consecutive I-NP labels).
-
-.. csv-table::
-    :header: "Model", "Precision", "Recall", "F1"
-    :widths: 40, 20, 20, 20
-    :escape: ~
-
-		CRF, 0.964, 0.964, 0.964
-		Our model, 0.985, 0.959, 0.971
+	python inference.py --model_name <model_name> --input <input_file>.txt
 
 
 .. _CONLL2000: https://www.clips.uantwerpen.be/conll2000/chunking/
 .. _"https://www.clips.uantwerpen.be/conll2000/chunking/": https://www.clips.uantwerpen.be/conll2000/chunking/
-.. _"https://www.nltk.org/data.html": https://www.nltk.org/data.html
-.. _"http://www.apache.org/licenses/LICENSE-2.0": http://www.apache.org/licenses/LICENSE-2.0
+.. _`Deep multi-task learning with low level tasks supervised at lower layers`: http://anthology.aclweb.org/P16-2038
+.. _paper: http://anthology.aclweb.org/P16-2038

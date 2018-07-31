@@ -20,11 +20,10 @@ from os import path
 
 from neon.backends import gen_backend
 
-from examples.np_semantic_segmentation.inference import classify_collocation, extract_y_labels, \
-    print_evaluation, write_results
-from examples.np_semantic_segmentation.train import train_mlp_classifier
 from examples.np_semantic_segmentation.data \
     import NpSemanticSegData, read_csv_file_data
+from examples.np_semantic_segmentation.inference import classify_collocation, write_results
+from examples.np_semantic_segmentation.train import train_mlp_classifier
 
 
 def get_data_real_path():
@@ -56,13 +55,9 @@ def test_model_inference():
     num_epochs = 200
     callback_args = {}
     gen_backend(batch_size=64, backend='cpu')
-    print_stats = False
     data_set = NpSemanticSegData(data_path, train_to_test_ratio=1)
-    results = classify_collocation(data_set, model_path, num_epochs, callback_args)
-    if print_stats and (data_set.is_y_labels is not None):
-        y_labels = extract_y_labels(data_path)
-        print_evaluation(y_labels, results.argmax(1))
-    write_results(results.argmax(1), output_path)
+    results = classify_collocation(data_set.train_set, model_path, num_epochs, callback_args)
+    write_results(results, output_path)
     assert \
         path.isfile(path.join(get_data_real_path(), 'np_semantic_segmentation_output.csv')) is True
     input_reader_list = read_csv_file_data(data_path)
