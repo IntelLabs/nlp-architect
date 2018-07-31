@@ -95,3 +95,17 @@ these will be placed into a central repository.
     nlp_architect.data.sequential_tagging.SequentialTaggingDataset
     nlp_architect.data.babi_dialog.BABI_Dialog
     nlp_architect.data.wikimovies.WIKIMOVIES
+
+
+``nlp_architect.server``
+------------------------
+.. py:module:: server
+
+.. autosummary::
+    :toctree: generated/
+    :nosignatures:
+
+    server.serve
+    server.service
+
+

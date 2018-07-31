@@ -28,13 +28,18 @@ Running NLP Architect server
 ============================
 Some of the components, which we provide pre-trained models, are exposed through this server. In order to run the server, a user needs to specify which service, so NLP Archtiect serer will only upload the needed model.
 
-Currently we provide 2 services:
+Currently we provide 3 services:
 
  1. `bist` service which provides BIST Dependency parsing
  2. `spacy_ner` service which provides Spacy NER annotations.
  3. `ner` service which provides NER annotations without Spacy.
 
-To run the server, simply run ``hug -f -p 8080 server/serve.py``, the server will run on `http://localhost:8080`.
+The server code is split into two pieces:
+
+1. :py:class:`Service <server.service>` which is a representation of each model's API
+2. :py:mod:`Server <server.serve>` which handles processing of HTTP requests
+
+To run the server, from the root directory simply run ``hug -f -p 8080 server/serve.py``, the server will run on `http://localhost:8080`.
 
 If you wish to use the server's visualization - enter `http://localhost:8080`
 
@@ -174,7 +179,7 @@ In order to add a new service to the server you need to go over 3 steps:
 
 1. Choose the type of your service: Core NLP models or High-level models
 
-2. Create API for your service. Create the file under `nlp_architect/api/abstract_api` folder. Make sure your class inherits from `AbstractApi` (`from nlp_architect.api.abstract_api import AbstractApi`) and implements all its methods. Notice that your `inference` class_method must return either "CoreNLPDoc" or "HighLevelDoc".
+2. Create API for your service. Create the file under `nlp_architect/api/abstract_api` folder. Make sure your class inherits from :py:class`AbstractApi <nlp_architect.api.abstract_api>` and implements all its methods. Notice that your `inference` class_method must return either "CoreNLPDoc" or "HighLevelDoc".
 
 3. Add new service to `services.json` in the following template:
 

@@ -13,6 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
+""" REST Server to respond to different API requests """
 import os
 import hug
 import gzip
@@ -67,4 +68,10 @@ def inference(request, body, response):
 
 @hug.static('/')
 def static():
+    """Statically serves a directory to client"""
     return [os.path.realpath(os.path.join('./', 'server/web_service/static'))]
+
+
+@hug.not_found()
+def not_found_handler():
+    return "Not Found"

@@ -20,7 +20,6 @@ import io
 import json
 import os.path
 import gzip
-import falcon
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -129,48 +128,11 @@ def extract_module_name(model_path):
 
 
 class Service(object):
+    """Handles loading and inference using specific models"""
     def __init__(self, service_name):
         self.service_type = None
         self.is_spacy = False
         self.service = self.load_service(service_name)
-
-    def on_post(self, req, resp):
-        """
-        Handles POST requests
-
-        Args:
-            req (:obj:`falcon.Request`): the client’s HTTP POST request
-            resp (:obj:`falcon.Response`):: the server's HTTP response
-        """
-        logger.info('handle POST request')
-        resp.status = falcon.HTTP_200
-        set_headers(resp)
-        headers = parse_headers(req.headers)
-        req_content_type = headers["CONTENT-TYPE"]
-        resp_format = headers["RESPONSE-FORMAT"]
-        if req_content_type == "application/json" or "application/json" in req_content_type:
-            logger.info('Json request')
-            try:
-                input_json = req.media
-                if isinstance(input_json, list):
-                    input_json = json.loads(input_json[0])
-                input_docs = input_json["docs"]
-            except Exception as ex:
-                raise falcon.HTTPError(falcon.HTTP_400, 'Error', ex)
-        elif req_content_type == "application/gzip":
-            logger.info('Gzip request')
-            try:
-                original_data = gzip.decompress(req.stream.read())
-                input_docs = json.loads(str(original_data, 'utf-8'))["docs"]
-            except Exception as ex:
-                raise falcon.HTTPError(falcon.HTTP_400, 'Error', ex)
-        else:
-            logger.info('Bad Request Type')
-            msg = 'Doc type not allowed. Must be Gzip or Json'
-            raise falcon.HTTPBadRequest('Bad request', msg)
-        parsed_doc = self.get_service_inference(input_docs, headers)
-        logger.info('parsed document processing done')
-        resp.body = format_response(resp_format, parsed_doc)
 
     def get_service_inference(self, docs, headers):
         """
