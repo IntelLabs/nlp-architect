@@ -39,7 +39,7 @@ The server code is split into two pieces:
 1. :py:class:`Service <server.service>` which is a representation of each model's API
 2. :py:mod:`Server <server.serve>` which handles processing of HTTP requests
 
-To run the server, from the root directory simply run ``hug  -p 8080 -f server/serve.py``, the server will run on `http://localhost:8080`.
+To run the server, from the root directory simply run ``hug -p 8080 -f server/serve.py``, the server will run on `http://localhost:8080`.
 
 If you wish to use the server's visualization - enter `http://localhost:8080`
 
