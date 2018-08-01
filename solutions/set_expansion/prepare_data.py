@@ -26,7 +26,7 @@ from os import path
 import spacy
 from configargparse import ArgumentParser
 
-from nlp_architect.utils.text_preprocess import spacy_normalizer
+from nlp_architect.utils.text import spacy_normalizer
 from nlp_architect.utils.io import check_size, validate_existing_filepath
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)

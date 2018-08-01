@@ -131,7 +131,7 @@ on this project, please see the :doc:`developer guide <developer_guide>`.
    :maxdepth: 1
    :caption: Solutions
 
-   set_expansion.rst
+   term_set_expansion.rst
 
 
 .. toctree::

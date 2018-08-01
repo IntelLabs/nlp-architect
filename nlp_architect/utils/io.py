@@ -181,6 +181,7 @@ def validate_proxy_path(arg):
 
 
 def load_json_file(file_path):
+    """load a file into a json object"""
     try:
         with open(file_path) as small_file:
             return json.load(small_file)

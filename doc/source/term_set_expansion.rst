@@ -40,6 +40,7 @@ Training
 The first step in training is to prepare the data for generating a word embedding model. We 
 provide a subset of English Wikipedia at datasets/wikipedia as a sample corpus under the  
 `Creative Commons Attribution-Share-Alike 3.0 License <https://creativecommons.org/licenses/by-sa/3.0/>`__ (Copyright 2018 Wikimedia Foundation).
+The output of this step is the marked corpus where noun phrases are marked with the marking character (default: "\_") as described in the `NLP Architect np2vec module documentation <http://nlp_architect.nervanasys.com/np2vec.html>`__.
 This is done by running:
 
 .. code:: python
@@ -48,7 +49,7 @@ This is done by running:
 
 The next step is to train the model using `NLP Architect np2vec module <http://nlp_architect.nervanasys.com/np2vec.html>`__.
 For set expansion, we recommend the following values 100, 10, 10, 0 for respectively, 
-size, min_count, window and hs hyperparameters.
+size, min_count, window and hs hyperparameters. Please refer to the np2vec module documentation for more details about these parameters.
 
 .. code:: python
 
@@ -67,7 +68,8 @@ are also available under the
 Inference
 =========
 
-It consists in expanding the seed terms. It can be done in two ways:
+The inference step consists of expanding given seed terms into a set of terms that belong to the same semantic class.
+It can be done in two ways:
 
 1. Running a python script:
 
