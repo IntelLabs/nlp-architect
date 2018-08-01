@@ -26,7 +26,6 @@ from spacy.lang.en import LEMMA_INDEX, LEMMA_EXC, LEMMA_RULES
 from nlp_architect.utils.generic import license_prompt
 
 
-
 class Vocabulary:
     """
     A vocabulary that maps words to ints (storing a vocabulary)

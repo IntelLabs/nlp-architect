@@ -250,7 +250,7 @@ class NP2vec:
                 for word, vocab in sorted(
                         iteritems(
                             self.model.wv.vocab), key=lambda item: -item[1].count):
-                    if self.is_marked(word) and len(word) > 1: # discard empty marked np's
+                    if self.is_marked(word) and len(word) > 1:  # discard empty marked np's
                         embedding_vec = self.model.wv.syn0[vocab.index]
                         if binary:
                             fout.write(

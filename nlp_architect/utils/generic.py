@@ -133,13 +133,13 @@ def get_paddedXY_sequence(X, y, vocab_size=20000, sentence_length=100, oov=2,
 
 def license_prompt(model_name, model_website, dataset_dir=None):
     if dataset_dir:
-        print('{} was not found in the directory: {}'.format(model_name, dataset_dir))
+        print('\n\n***\n{} was not found in the directory: {}'.format(model_name, dataset_dir))
     else:
-        print('{} was not found on local installation'.format(model_name))
+        print('\n\n***\n\n{} was not found on local installation'.format(model_name))
     print('{} can be downloaded from {}'.format(model_name, model_website))
-    print('\nThe terms and conditions of the data set license apply. Intel does not '
+    print('The terms and conditions of the data set license apply. Intel does not '
           'grant any rights to the data files or database\n')
-    response = input('\nTo download \'{}\' from {}, please enter YES: '.
+    response = input('To download \'{}\' from {}, please enter YES: '.
                      format(model_name, model_website))
     res = response.lower().strip()
     if res == "yes" or (len(res) == 1 and res == 'y'):

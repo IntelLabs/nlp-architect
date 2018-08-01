@@ -29,6 +29,7 @@ from bokeh.io import curdoc
 
 import solutions.set_expansion.ui.settings as settings
 
+# pylint: skip-file
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 logger = logging.getLogger(__name__)
 
@@ -55,7 +56,7 @@ empty_table = {'res': 15 * [''], 'score': 15 * ['']}
 
 seed_input_title = 'Please enter a comma separated seed list of terms:'
 seed_input_box = TextInput(
-    title=seed_input_title, value="USA, Israel, France", width=450, css_classes=["seed-input"])
+    title=seed_input_title, value="", width=450, css_classes=["seed-input"])
 group_info_box = Div(text='', height=30, css_classes=["group-div"])
 search_input_box = TextInput(title="Search:", value="", width=300)
 expand_button = Button(label="Expand", button_type="success", width=150)

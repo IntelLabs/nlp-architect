@@ -26,7 +26,7 @@ from os import path
 import spacy
 from configargparse import ArgumentParser
 
-from nlp_architect.utils.text import spacy_normalizer
+from nlp_architect.utils.text import spacy_normalizer, SpacyInstance
 from nlp_architect.utils.io import check_size, validate_existing_filepath
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
@@ -43,7 +43,7 @@ if __name__ == '__main__':
     arg_parser = ArgumentParser(__doc__)
     arg_parser.add_argument(
         '--corpus',
-        default='datasets/wikipedia/enwiki-20171201_subset.txt.gz',
+        default=path.abspath("../../datasets/wikipedia/enwiki-20171201_subset.txt.gz"),
         type=validate_existing_filepath,
         help='path to the input corpus. Compressed files (gz) are also supported. By default, '
              'it is a subset of English Wikipedia.')
@@ -67,7 +67,7 @@ if __name__ == '__main__':
         help='perform noun-phrase grouping')
 
     args = arg_parser.parse_args()
-
+    print(path.abspath("../../datasets/wikipedia/enwiki-20171201_subset.txt.gz"))
     if args.corpus.endswith('gz'):
         corpus_file = gzip.open(args.corpus, 'rt', encoding='utf8', errors='ignore')
     else:
@@ -77,7 +77,8 @@ if __name__ == '__main__':
 
         # spacy NP extractor
         logger.info('loading spacy')
-        nlp = spacy.load('en_core_web_sm', disable=['textcat', 'ner'])
+        # nlp = spacy.load('en_core_web_sm', disable=['textcat', 'ner'])
+        nlp = SpacyInstance(model='en_core_web_sm', disable=['textcat', 'ner']).parser
         logger.info('spacy loaded')
 
         num_lines = sum(1 for line in corpus_file)
@@ -85,7 +86,7 @@ if __name__ == '__main__':
         logger.info('%i lines in corpus', num_lines)
         i = 0
 
-        for doc in nlp.pipe(corpus_file):
+        for doc in nlp.pipe(corpus_file, n_threads=-1):
             spans = list()
             for span in doc.noun_chunks:
                 spans.append(span)
