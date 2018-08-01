@@ -16,9 +16,9 @@
 
 const api = '/inference';
 const models = [
-    'ner',
-    'spacy_ner',
-    'bist'
+    { name: 'ner', description: 'Name Entity Recognition'},
+    { name: 'spacy_ner', description: 'Name Entity Recognition using spacy',},
+    { name: 'bist', description: 'BIST Dependency Parsing'}
 ];
 
 let annotateForm = document.getElementById('annotateForm');
@@ -32,17 +32,21 @@ annotateForm.onsubmit = (event) => {
 }
 
 function populateDropdown() {
-    models.forEach(str => {
+    models.forEach(model => {
         let option = document.createElement('option');
-        option.text = str;
+        option.text = model.description;
         dropdown.add(option);
     });
 }
 
 function doAnnotate(text) {
-    let displacy_div = document.getElementById("displacy_parse");
-    while (displacy_div.firstChild) {
-        displacy_div.removeChild(displacy_div.firstChild);
+    let displacyParseDiv = document.getElementById("displacy_parse");
+    let displacyDiv = document.getElementById("displacy");
+    while (displacyDiv.firstChild) {
+        displacyDiv.removeChild(displacyDiv.firstChild);
+    }
+    while(displacyParseDiv.firstChild) {
+        displacyParseDiv.removeChild(displacyParseDiv.firstChild);
     }
     postData(text, api);
 }
@@ -116,7 +120,7 @@ function renderData(data, type) {
 }
 
 function postData(text, url) {
-    let selectedModel = dropdown.value;
+    let selectedModel = models[dropdown.selectedIndex].name;
     fetch(url, {
         body: JSON.stringify({ model_name: selectedModel, "docs": [{ "id": 1, "doc": text }] }),
         cache: 'no-cache',
