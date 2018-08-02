@@ -8,12 +8,15 @@ in a simple web application.
 ![Image](assets/demo.png)
 
 ## Algorithm Overview
-Our approach is based on representing any term of a training corpus using word embeddings in order 
+Our approach is described by (Mamou et al, 2018).
+It is based on representing any term of a training corpus using word embeddings in order 
 to estimate the similarity between the seed terms and any candidate term. Noun phrases provide 
 good approximation for candidate terms and are extracted in our system using a noun phrase chunker. 
 At expansion time, given a seed of terms, the most similar terms are returned.
 
 ## Flow
+
+![Image](assets/flow.png)
 
 The solution is constructed of the following stages:
 
@@ -82,7 +85,7 @@ python solutions/set_expansion/set_expand.py --np2vec_model_file MODEL_PATH --to
     bokeh serve ui --address=12.13.14.15 --port=1010 --allow-websocket-origin=12.13.14.15:1010
     ```
 
-## Citation
-[Term Set Expansion based on Multi-Context Term Embeddings: an End-to-end Workflow](https://drive.google.com/open?id=164MvUGo0-iPeuGM1b8XrH2ysZZFrzomF), Jonathan Mamou,
+ ## Citation
+[Term Set Expansion based on Multi-Context Term Embeddings: an End-to-end Workflow](http://arxiv.org/abs/1807.10104), Jonathan Mamou,
  Oren Pereg, Moshe Wasserblat, Ido Dagan, Yoav Goldberg, Alon Eirew, Yael Green, Shira Guskin, 
- Peter Izsak, Daniel Korat, COLING 2018.
+ Peter Izsak, Daniel Korat, COLING 2018 System Demonstration paper.
