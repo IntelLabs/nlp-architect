@@ -66,7 +66,7 @@ def inference(request, body, response):
         return ret
 
 
-@hug.static()
+@hug.static('/')
 def static():
     """Statically serves a directory to client"""
     return [os.path.realpath(os.path.join('./', 'server/web_service/static'))]

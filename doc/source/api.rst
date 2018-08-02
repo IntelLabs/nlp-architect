@@ -95,6 +95,8 @@ these will be placed into a central repository.
 ---------------------------
 .. py:module:: nlp_architect.pipelines
 
+NLP pipelines modules using models implemented from ``nlp_architect.models``.
+
 .. autosummary::
     :toctree: generated/
     :nosignatures:
