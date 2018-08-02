@@ -31,3 +31,4 @@ pylint.html
 pylint.txt
 flake8.txt
 nlp_architect/pipelines/bist-pretrained/*
+nlp_architect/api/ner-pretrained/*

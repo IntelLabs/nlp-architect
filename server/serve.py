@@ -26,6 +26,12 @@ services = {}
 api = hug.API(__name__)
 
 
+def prefetchModels():
+    models = ['bist', 'spacy_ner', 'ner']
+    for model in models:
+        services[model] = Service(model)
+
+
 @hug.post()
 def inference(request, body, response):
     """Makes an inference to a certain model"""
@@ -70,3 +76,6 @@ def inference(request, body, response):
 def static():
     """Statically serves a directory to client"""
     return [os.path.realpath(os.path.join('./', 'server/web_service/static'))]
+
+
+prefetchModels()

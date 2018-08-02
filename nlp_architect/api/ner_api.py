@@ -15,7 +15,7 @@
 # ******************************************************************************
 import pickle
 
-from os import path, makedirs
+from os import path, makedirs, sys
 from keras.preprocessing.sequence import pad_sequences
 import numpy as np
 from nlp_architect.api.abstract_api import AbstractApi
@@ -68,13 +68,29 @@ class NerApi(AbstractApi):
                                              self.model_info['word_len'])
         return encoded_sentence, encoded_chars
 
+    def _prompt(self):
+        response = input('\nTo download \'{}\', please enter YES: '.
+                         format('ner'))
+        res = response.lower().strip()
+        if res == "yes" or (len(res) == 1 and res == 'y'):
+            print('Downloading {}...'.format('ner'))
+            responded_yes = True
+        else:
+            print('Download declined. Response received {} != YES|Y. '.format(res))
+            responded_yes = False
+        return responded_yes
+
     def _download_pretrained_model(self):
         """Downloads the pre-trained BIST model if non-existent."""
         dir_path = path.join(self.dir, 'ner-pretrained')
         if not path.isfile(path.join(dir_path, 'model.h5')):
             print('The pre-trained models to be downloaded for the NER dataset'
-                  'are licensed under Apache 2.0')
+                  'are licensed under Apache 2.0. By downloading, you accept the terms'
+                  'and conditions provided by the license')
             makedirs(dir_path, exist_ok=True)
+            agreed = self._prompt()
+            if agreed is False:
+                sys.exit(0)
             download_unlicensed_file('http://nervana-modelzoo.s3.amazonaws.com/NLP/NER/',
                                      'model.h5', self.model_path)
             download_unlicensed_file('http://nervana-modelzoo.s3.amazonaws.com/NLP/NER/',
