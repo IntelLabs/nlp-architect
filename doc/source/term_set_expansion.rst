@@ -38,7 +38,7 @@ At expansion time, given a seed of terms, the most similar terms are returned.
 Flow
 ====
 
-.. image :: assets/flow.png
+.. image :: assets/expansion_flow.png
 
 Training
 ========
