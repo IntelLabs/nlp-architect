@@ -216,8 +216,8 @@ def spacy_normalizer(text, lemma=None):
                              for t in tokens])
     return text
 
- 
- def read_sequential_tagging_file(file_path, ignore_line_patterns=None):
+
+def read_sequential_tagging_file(file_path, ignore_line_patterns=None):
     """
     Read a tab separated sequential tagging file.
     Returns a list of list of tuple of tags (sentences, words)

@@ -25,8 +25,11 @@ import json
 from os import path
 from configargparse import ArgumentParser
 
+from nlp_architect.pipelines.spacy_np_annotator import NPAnnotator, get_noun_phrases
 from nlp_architect.utils.text import spacy_normalizer, SpacyInstance
-from nlp_architect.utils.io import check_size, validate_existing_filepath
+from nlp_architect.utils.io import check_size, validate_existing_filepath, \
+    download_unlicensed_file
+from tqdm import tqdm
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -36,6 +39,7 @@ id2group = {}
 id2rep = {}
 np2count = {}
 cur_dir = path.dirname(path.realpath(__file__))
+nlp_chunker_url = 'http://nervana-modelzoo.s3.amazonaws.com/nlp/chunker/'
 
 
 def get_group_norm(span):
@@ -93,6 +97,12 @@ if __name__ == '__main__':
         action='store_true',
         default=False,
         help='perform noun-phrase grouping')
+    arg_parser.add_argument(
+        '--chunker', type=str,
+        choices=['spacy', 'nlp_arch'],
+        default='spacy',
+        help='chunker to use for detecting noun phrases. \'spacy\' for using spacy built-in '
+             'chunker or \'nlp_arch\' for NLP Architect NP Extractor')
 
     args = arg_parser.parse_args()
     print(path.abspath("../../datasets/wikipedia/enwiki-20171201_subset.txt.gz"))
@@ -102,59 +112,70 @@ if __name__ == '__main__':
         corpus_file = open(args.corpus, 'r', encoding='utf8', errors='ignore')
 
     with open(args.marked_corpus, 'w', encoding='utf8') as marked_corpus_file:
-
-        # spacy NP extractor
+        # load spacy parser
         logger.info('loading spacy')
         nlp = SpacyInstance(model='en_core_web_sm', disable=['textcat', 'ner']).parser
         logger.info('spacy loaded')
+
+        if 'nlp_arch' in args.chunker:
+            print('The pre-trained model to be downloaded for NLP Architect word chunker model '
+                  'is licensed under Apache 2.0')
+            print('Download chunker model')
+            _path_to_model = path.join(cur_dir, 'chunker_model.h5')
+            download_unlicensed_file(nlp_chunker_url, 'chunker_model.h5', _path_to_model)
+            _path_to_params = path.join(cur_dir, 'chunker_model.params')
+            download_unlicensed_file(nlp_chunker_url, 'chunker_model.params', _path_to_params)
+            print('Done.')
+            nlp.add_pipe(NPAnnotator.load(_path_to_model, _path_to_params), last=True)
 
         num_lines = sum(1 for line in corpus_file)
         corpus_file.seek(0)
         logger.info('%i lines in corpus', num_lines)
         i = 0
 
-        for doc in nlp.pipe(corpus_file, n_threads=-1):
-            spans = list()
-            for span in doc.noun_chunks:
-                spans.append(span)
-            i += 1
-            if len(spans) > 0:
-                span = spans.pop(0)
-            else:
-                span = None
-            spanWritten = False
-            for token in doc:
-                if span is None:
-                    if len(token.text.strip()) > 0:
-                        marked_corpus_file.write(token.text + ' ')
+        with tqdm(total=num_lines) as pbar:
+            for doc in nlp.pipe(corpus_file, n_threads=-1):
+                if 'nlp_arch' in args.chunker:
+                    spans = get_noun_phrases(doc)
                 else:
-                    if token.idx < span.start_char or token.idx >= span.end_char:  # outside a
-                        # span
+                    spans = list(doc.noun_chunks)
+                i += 1
+                if len(spans) > 0:
+                    span = spans.pop(0)
+                else:
+                    span = None
+                spanWritten = False
+                for token in doc:
+                    if span is None:
                         if len(token.text.strip()) > 0:
                             marked_corpus_file.write(token.text + ' ')
                     else:
-                        if not spanWritten:
-                            # mark NP's
-                            if len(span.text) > 1 and span.lemma_ != '-PRON-':
-                                if args.grouping:
-                                    text = get_group_norm(span)
-                                else:
-                                    text = span.text
+                        if token.idx < span.start_char or token.idx >= span.end_char:  # outside a
+                            # span
+                            if len(token.text.strip()) > 0:
+                                marked_corpus_file.write(token.text + ' ')
+                        else:
+                            if not spanWritten:
                                 # mark NP's
-                                text = text.replace(' ', args.mark_char) + args.mark_char
-                                marked_corpus_file.write(text + ' ')
-                            else:
-                                marked_corpus_file.write(span.text + ' ')
-                            spanWritten = True
-                        if token.idx + len(token.text) == span.end_char:
-                            if len(spans) > 0:
-                                span = spans.pop(0)
-                            else:
-                                span = None
-                            spanWritten = False
-            marked_corpus_file.write('\n')
-            if i % 500 == 0:
-                logger.info('%i of %i lines', i, num_lines)
+                                if len(span.text) > 1 and span.lemma_ != '-PRON-':
+                                    if args.grouping:
+                                        text = get_group_norm(span)
+                                    else:
+                                        text = span.text
+                                    # mark NP's
+                                    text = text.replace(' ', args.mark_char) + args.mark_char
+                                    marked_corpus_file.write(text + ' ')
+                                else:
+                                    marked_corpus_file.write(span.text + ' ')
+                                spanWritten = True
+                            if token.idx + len(token.text) == span.end_char:
+                                if len(spans) > 0:
+                                    span = spans.pop(0)
+                                else:
+                                    span = None
+                                spanWritten = False
+                marked_corpus_file.write('\n')
+                pbar.update(1)
 
     # write grouping data :
     if args.grouping:
