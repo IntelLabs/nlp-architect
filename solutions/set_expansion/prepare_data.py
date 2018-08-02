@@ -39,7 +39,7 @@ id2group = {}
 id2rep = {}
 np2count = {}
 cur_dir = path.dirname(path.realpath(__file__))
-nlp_chunker_url = 'http://nervana-modelzoo.s3.amazonaws.com/nlp/chunker/'
+nlp_chunker_url = 'http://nervana-modelzoo.s3.amazonaws.com/NLP/chunker/'
 
 
 def get_group_norm(span):
@@ -121,10 +121,10 @@ if __name__ == '__main__':
             print('The pre-trained model to be downloaded for NLP Architect word chunker model '
                   'is licensed under Apache 2.0')
             print('Download chunker model')
-            _path_to_model = path.join(cur_dir, 'chunker_model.h5')
-            download_unlicensed_file(nlp_chunker_url, 'chunker_model.h5', _path_to_model)
-            _path_to_params = path.join(cur_dir, 'chunker_model.params')
-            download_unlicensed_file(nlp_chunker_url, 'chunker_model.params', _path_to_params)
+            _path_to_model = path.join(cur_dir, 'model.h5')
+            download_unlicensed_file(nlp_chunker_url, 'model.h5', _path_to_model)
+            _path_to_params = path.join(cur_dir, 'model_info.dat')
+            download_unlicensed_file(nlp_chunker_url, 'model_info.dat', _path_to_params)
             print('Done.')
             nlp.add_pipe(NPAnnotator.load(_path_to_model, _path_to_params), last=True)
 
