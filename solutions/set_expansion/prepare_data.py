@@ -109,7 +109,6 @@ if __name__ == '__main__':
                         if not spanWritten:
                             # mark NP's
                             if len(span.text) > 1 and span.lemma_ != '-PRON-':
-                                #######
                                 if args.grouping:
                                     np = span.text
                                     if np not in np2count:
@@ -132,7 +131,6 @@ if __name__ == '__main__':
                                         id2rep[norm] = np
                                     # mark NP's
                                     text = norm.replace(' ', args.mark_char) + args.mark_char
-                                #######
                                 else:
                                     text = span.text.replace(' ', args.mark_char) + args.mark_char
                                 marked_corpus_file.write(text + ' ')
