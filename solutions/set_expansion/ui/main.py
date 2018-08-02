@@ -16,26 +16,24 @@
 
 import socket
 import pickle
-import time
 import logging
 import sys
+from os.path import dirname, join
 
-import pandas
 from bokeh.layouts import column, layout
-from bokeh.models import ColumnDataSource, Div, Row
+from bokeh.models import ColumnDataSource, Div, Row, CustomJS
 from bokeh.models.widgets import Button, DataTable, TableColumn, CheckboxGroup, MultiSelect
 from bokeh.models.widgets.inputs import TextInput
 from bokeh.io import curdoc
 
 import solutions.set_expansion.ui.settings as settings
 
-# pylint: skip-file
+
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
 vocab = None
-
 vocab_dict = {}
 cut_vocab_dict = {}
 max_visible_phrases = 5000
@@ -362,24 +360,6 @@ def clear_seed_callback():
     clear_working_label.text = ''
 
 
-def export_data_callback():
-    if expand_table_source.data == empty_table:
-        export_working_label.text = 'Nothing to export'
-        time.sleep(1)
-        export_working_label.text = ''
-    elif export_working_label.text != working_text:
-        path = settings.export_path
-        logger.info('saving expansion results to: %s', path)
-        export_working_label.style = {'color': 'red'}
-        export_working_label.text = working_text
-        table_df = pandas.DataFrame(expand_table_source.data)
-        table_df.to_csv(path)
-        export_working_label.style = {'color': 'green'}
-        export_working_label.text = 'Done!'
-        time.sleep(1)
-        export_working_label.text = ''
-
-
 def get_selected_phrases_for_seed():
     """
      create the seed string to send to the server
@@ -403,15 +383,16 @@ def expand_data_changed_callback(attr, old, new):
 # set callbacks
 
 expand_button.on_click(get_expand_results_callback)
+# save_button.on_click(save_data_callback)
 expand_table_source.on_change('selected', row_selected_callback)
 expand_table_source.on_change('data', expand_data_changed_callback)
 checkbox_group.on_click(show_phrases_callback)
 search_input_box.on_change('value', search_callback)
 phrases_list.on_change('value', vocab_phrase_selected_callback)
 clear_seed_button.on_click(clear_seed_callback)
-export_button.on_click(export_data_callback)
+export_button.callback = CustomJS(args=dict(source=expand_table_source),
+                                  code=open(join(dirname(__file__), "download.js")).read())
 # table_area.on_change('children', table_area_change_callback)
-
 
 # arrange components in page
 
@@ -419,7 +400,3 @@ doc = curdoc()
 main_title = "Set Expansion Demo"
 doc.title = main_title
 doc.add_root(grid)
-
-
-# present initial example:
-# get_expand_results_callback()
