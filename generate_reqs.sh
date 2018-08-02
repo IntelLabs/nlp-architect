@@ -16,7 +16,7 @@
 # ******************************************************************************
 
 # optimized pacakge links
-tf_ver='1.6.0'
+tf_ver='1.9.0'
 tf_to_install='tensorflow=='${tf_ver}
 tf35='https://anaconda.org/intel/tensorflow/1.6.0/download/tensorflow-1.6.0-cp35-cp35m-linux_x86_64.whl'
 tf36='https://anaconda.org/intel/tensorflow/1.6.0/download/tensorflow-1.6.0-cp36-cp36m-linux_x86_64.whl'

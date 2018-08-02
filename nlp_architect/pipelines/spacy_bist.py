@@ -15,10 +15,10 @@
 # ******************************************************************************
 from os import path, remove, makedirs
 
-from nlp_architect.common.core_nlp_doc import CoreNLPDoc
 from nlp_architect.data.conll import ConllEntry
 from nlp_architect.models.bist_parser import BISTModel
-from nlp_architect.utils.io import download_unlicensed_file, unzip_file
+from nlp_architect.common.core_nlp_doc import CoreNLPDoc
+from nlp_architect.utils.io import download_unlicensed_file, uncompress_file
 from nlp_architect.utils.io import validate
 from nlp_architect.utils.text import SpacyInstance
 
@@ -33,7 +33,7 @@ class SpacyBISTParser(object):
         bist_model (str, optional): Path to a .model file to load. Defaults pre-trained model'.
     """
     dir = path.dirname(path.realpath(__file__))
-    pretrained = path.join(dir, 'bist-pretrained', 'bist.model')
+    _pretrained = path.join(dir, 'bist-pretrained', 'bist.model')
 
     def __init__(self, verbose=False, spacy_model='en', bist_model=None):
         validate((verbose, bool), (spacy_model, str, 0, 1000),
@@ -41,11 +41,11 @@ class SpacyBISTParser(object):
         if not bist_model:
             print("Using pre-trained BIST model.")
             _download_pretrained_model()
-            bist_model = SpacyBISTParser.pretrained
+            bist_model = SpacyBISTParser._pretrained
 
         self.verbose = verbose
         self.bist_parser = BISTModel()
-        self.bist_parser.load(bist_model if bist_model else SpacyBISTParser.pretrained)
+        self.bist_parser.load(bist_model if bist_model else SpacyBISTParser._pretrained)
         self.spacy_parser = SpacyInstance(spacy_model,
                                           disable=['ner', 'vectors', 'textcat']).parser
 
@@ -146,7 +146,7 @@ def _download_pretrained_model():
 
         makedirs(dir_path, exist_ok=True)
         print('Unzipping...')
-        unzip_file(zip_path, outpath=dir_path)
+        uncompress_file(zip_path, outpath=dir_path)
         remove(zip_path)
         print('Done.')
 

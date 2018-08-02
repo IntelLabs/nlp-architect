@@ -143,7 +143,8 @@ disable=print-statement,
         anomalous-backslash-in-string,
         broad-except,
         redefined-builtin,
-        C
+        C,
+        useless-object-inheritance
 
 # Enable the message, report, category or checker with the given id(s). You can
 # either give multiple identifier separated by comma (,) or put this option

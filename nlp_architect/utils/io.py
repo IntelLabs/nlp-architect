@@ -14,6 +14,7 @@
 # limitations under the License.
 # ******************************************************************************
 import argparse
+import gzip
 import io
 import os
 import posixpath
@@ -56,17 +57,39 @@ def download_unlicensed_file(url, sourcefile, destfile, totalsz=None):
     print("Download Complete")
 
 
-def unzip_file(filepath, outpath='.'):
+def uncompress_file(filepath, outpath='.'):
     """
     Unzip a file to the same location of filepath
+    uses uncompressing algorithm by file extension
 
     Args:
         filepath (str): path to file
         outpath (str): path to extract to
     """
-    z = zipfile.ZipFile(filepath, 'r')
-    z.extractall(outpath)
-    z.close()
+    if filepath.endswith('.zip'):
+        z = zipfile.ZipFile(filepath, 'r')
+        z.extractall(outpath)
+        z.close()
+    elif filepath.endswith('.gz'):
+        if os.path.isdir(outpath):
+            raise ValueError('output path for gzip must be a file')
+        with gzip.open(filepath, 'rb') as fp:
+            file_content = fp.read()
+        with open(outpath, 'wb') as fp:
+            fp.write(file_content)
+    else:
+        raise ValueError('Unsupported archive provided. Method supports only .zip/.gz files.')
+
+
+def check_directory_and_create(dir_path):
+    """
+    Check if given directory exists, create if not.
+
+    Args:
+        dir_path (str): path to directory
+    """
+    if not os.path.exists(dir_path):
+        os.makedirs(dir_path)
 
 
 def walk_directory(directory):

@@ -21,7 +21,6 @@ import argparse
 import json
 import os
 from tqdm import tqdm
-from nlp_architect.utils.io import sanitize_path
 from nlp_architect.utils.io import validate_existing_directory
 
 PAD = "<pad>"
@@ -123,6 +122,7 @@ def extract_data_from_files(json_data):
     for article_id in range(len(json_data['data'])):
         sub_paragraphs = json_data['data'][article_id]['paragraphs']
         for para_id in range(len(sub_paragraphs)):
+
             req_para = sub_paragraphs[para_id]['context']
             req_para = req_para.replace("''", '" ').replace("``", '" ')
             para_tokens = tokenize_sentence(req_para)
@@ -151,7 +151,7 @@ def extract_data_from_files(json_data):
                         data_ques.append(question_tokens)
                         data_answer.append((a_start_idx, a_end_idx))
 
-                    except ValueError:
+                    except KeyError:
                         line_skipped += 1
 
     return data_para, data_ques, data_answer
@@ -197,20 +197,32 @@ if __name__ == '__main__':
 
     parser.add_argument('--data_path', help='enter path where training data and the \
                         glove embeddings were downloaded',
-                        type=str)
+                        type=validate_existing_directory)
 
     parser.add_argument('--no_preprocess_glove', action="store_true",
                         help='Chose whether or not to preprocess glove embeddings')
+
     parser.set_defaults()
     args = parser.parse_args()
+
     glove_flag = not args.no_preprocess_glove
 
-    validate_existing_directory(args.data_path)
-    data_path = sanitize_path(args.data_path)
-    data_path = os.path.join(data_path + "/")
+    # Validate files in the folder:
+    missing_flag = 0
+    files_list = ["train-v1.1.json", "dev-v1.1.json"]
+    for file_name in files_list:
+        if not os.path.exists(os.path.join(args.data_path, file_name)):
+                print("The following required file is missing :", file_name)
+                missing_flag = 1
+
+    if missing_flag:
+        print("Please ensure that required datasets are downloaded")
+        exit()
+
+    data_path = args.data_path
     # Load Train and Dev Data
-    train_filename = os.path.join(data_path + "train-v1.1.json")
-    dev_filename = os.path.join(data_path + "dev-v1.1.json")
+    train_filename = os.path.join(data_path, "train-v1.1.json")
+    dev_filename = os.path.join(data_path, "dev-v1.1.json")
     with open(train_filename) as train_file:
         train_data = json.load(train_file)
 

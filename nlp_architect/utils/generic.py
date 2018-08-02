@@ -25,7 +25,7 @@ import numpy as np
 def pad_sentences(sequences, max_length=None, padding_value=0.):
     """
     Pad input sequences up to max_length
-    padding is aligned to the right
+    values are aligned to the right
 
     Args:
         sequences (iter): a 2D matrix (np.array) to pad
@@ -144,7 +144,7 @@ def license_prompt(model_name, model_website, dataset_dir=None):
     res = response.lower().strip()
     if res == "yes" or (len(res) == 1 and res == 'y'):
         print('Downloading {}...'.format(model_name))
-        return True
+        responded_yes = True
     else:
         print('Download declined. Response received {} != YES|Y. '.format(res))
         if dataset_dir:
@@ -152,4 +152,5 @@ def license_prompt(model_name, model_website, dataset_dir=None):
                   .format(model_website, dataset_dir))
         else:
             print('Please download the model manually from {}'.format(model_website))
-        return False
+        responded_yes = False
+    return responded_yes
