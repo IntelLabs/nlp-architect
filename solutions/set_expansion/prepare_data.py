@@ -120,7 +120,7 @@ if __name__ == '__main__':
         if 'nlp_arch' in args.chunker:
             print('The pre-trained model to be downloaded for NLP Architect word chunker model '
                   'is licensed under Apache 2.0')
-            print('Download chunker model')
+            print('Downloading chunker model')
             _path_to_model = path.join(cur_dir, 'model.h5')
             download_unlicensed_file(nlp_chunker_url, 'model.h5', _path_to_model)
             _path_to_params = path.join(cur_dir, 'model_info.dat')
