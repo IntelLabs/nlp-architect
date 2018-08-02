@@ -32,7 +32,7 @@ Our approach is based on representing any term of a training corpus using word e
 to estimate the similarity between the seed terms and any candidate term. Noun phrases provide 
 good approximation for candidate terms and are extracted in our system using a noun phrase chunker. 
 At expansion time, given a seed of terms, the most similar terms are returned.
-
+Algorithm description and evaluation are available at [Mamou et al., 2018]_.
 
 Training
 ========
@@ -117,7 +117,9 @@ It can be done in two ways:
 Citation
 ========
 
-`Term Set Expansion based on Multi-Context Term Embeddings: an End-to-end Workflow <https://drive.google.com/open?id=164MvUGo0-iPeuGM1b8XrH2ysZZFrzomF>`__, Jonathan Mamou,
+.. [Mamou et al., 2018] `Term Set Expansion based on Multi-Context Term Embeddings: an End-to-end
+Workflow
+<http://arxiv.org/abs/1807.10104>`__, Jonathan Mamou,
  Oren Pereg, Moshe Wasserblat, Ido Dagan, Yoav Goldberg, Alon Eirew, Yael Green, Shira Guskin,
- Peter Izsak, Daniel Korat, COLING 2018.
+ Peter Izsak, Daniel Korat, COLING 2018 System Demonstration paper.
 
