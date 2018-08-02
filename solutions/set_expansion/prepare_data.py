@@ -23,7 +23,6 @@ import logging
 import sys
 import json
 from os import path
-import spacy
 from configargparse import ArgumentParser
 
 from nlp_architect.utils.text import spacy_normalizer, SpacyInstance
@@ -37,6 +36,35 @@ id2group = {}
 id2rep = {}
 np2count = {}
 cur_dir = path.dirname(path.realpath(__file__))
+
+
+def get_group_norm(span):
+    """
+    Give a span, determine the its group and return the normalized text representing the group
+
+    Args:
+            span (spacy.tokens.Span)
+    """
+    np = span.text
+    if np not in np2count:
+        np2count[np] = 1
+    else:
+        np2count[np] += 1
+    norm = spacy_normalizer(np, span.lemma_)
+    if args.mark_char in norm:
+        norm = norm.replace(args.mark_char, ' ')
+    np2id[np] = norm
+    if norm not in id2rep:
+        id2rep[norm] = np
+    if norm in id2group:
+        if np not in id2group[norm]:
+            id2group[norm].append(np)
+        elif np2count[np] > np2count[id2rep[norm]]:
+            id2rep[norm] = np  # replace rep
+    else:
+        id2group[norm] = [np]
+        id2rep[norm] = np
+    return norm
 
 
 if __name__ == '__main__':
@@ -77,7 +105,6 @@ if __name__ == '__main__':
 
         # spacy NP extractor
         logger.info('loading spacy')
-        # nlp = spacy.load('en_core_web_sm', disable=['textcat', 'ner'])
         nlp = SpacyInstance(model='en_core_web_sm', disable=['textcat', 'ner']).parser
         logger.info('spacy loaded')
 
@@ -110,29 +137,11 @@ if __name__ == '__main__':
                             # mark NP's
                             if len(span.text) > 1 and span.lemma_ != '-PRON-':
                                 if args.grouping:
-                                    np = span.text
-                                    if np not in np2count:
-                                        np2count[np] = 1
-                                    else:
-                                        np2count[np] += 1
-                                    norm = spacy_normalizer(np, span.lemma_)
-                                    if args.mark_char in norm:
-                                        norm = norm.replace(args.mark_char, ' ')
-                                    np2id[np] = norm
-                                    if norm not in id2rep:
-                                        id2rep[norm] = np
-                                    if norm in id2group:
-                                        if np not in id2group[norm]:
-                                            id2group[norm].append(np)
-                                        elif np2count[np] > np2count[id2rep[norm]]:
-                                            id2rep[norm] = np  # replace rep
-                                    else:
-                                        id2group[norm] = [np]
-                                        id2rep[norm] = np
-                                    # mark NP's
-                                    text = norm.replace(' ', args.mark_char) + args.mark_char
+                                    text = get_group_norm(span)
                                 else:
-                                    text = span.text.replace(' ', args.mark_char) + args.mark_char
+                                    text = span.text
+                                # mark NP's
+                                text = text.replace(' ', args.mark_char) + args.mark_char
                                 marked_corpus_file.write(text + ' ')
                             else:
                                 marked_corpus_file.write(span.text + ' ')
@@ -147,8 +156,7 @@ if __name__ == '__main__':
             if i % 500 == 0:
                 logger.info('%i of %i lines', i, num_lines)
 
-
-# write grouping data :
+    # write grouping data :
     if args.grouping:
         corpus_name = path.basename(args.corpus)
         with open(path.join(cur_dir, 'id2group'), 'w', encoding='utf8') as id2group_file:
