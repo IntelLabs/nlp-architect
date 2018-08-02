@@ -20,7 +20,7 @@ import gzip
 import json
 from falcon import status_codes
 from server.service import format_response
-from server.service import Service
+from server.service import Service, parse_headers
 services = {}
 
 api = hug.API(__name__)
@@ -29,7 +29,6 @@ api = hug.API(__name__)
 @hug.post()
 def inference(request, body, response):
     """Makes an inference to a certain model"""
-    # Consider putting model_name as a param
     if(request.headers.get('CONTENT-TYPE') == 'application/gzip'):
         try:
             original_data = gzip.decompress(request.stream.read())
@@ -55,7 +54,8 @@ def inference(request, body, response):
     if not isinstance(input_docs, list):  # check if it's an array instead
         response.status = status_codes.HTTP_400
         return {'status': 'request not in proper format '}
-    parsed_doc = services[model_name].get_service_inference(input_docs, request.headers)
+    headers = parse_headers(request.headers)
+    parsed_doc = services[model_name].get_service_inference(input_docs, headers)
     resp_format = request.headers["RESPONSE-FORMAT"]
     ret = format_response(resp_format, parsed_doc)
     if(request.headers.get('CONTENT-TYPE') == 'application/gzip'):
@@ -66,12 +66,7 @@ def inference(request, body, response):
         return ret
 
 
-@hug.static('/')
+@hug.static()
 def static():
     """Statically serves a directory to client"""
     return [os.path.realpath(os.path.join('./', 'server/web_service/static'))]
-
-
-@hug.not_found()
-def not_found_handler():
-    return "Not Found"

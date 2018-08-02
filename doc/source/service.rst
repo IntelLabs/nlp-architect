@@ -71,7 +71,7 @@ The server supports 2 types of Responses (see `Annotation Structure Types - Serv
 
 Examples for running NLP Architect server
 =========================================
-We currently support only 2 services:
+We currently support 3 services:
 
 - BIST parser - Core NLP models annotation structure
 
@@ -81,13 +81,18 @@ to `http://localhost:8080/inference`, and receive `CoreNLPDoc` annotation struct
 
 .. image :: assets/bist_service.png
 
-- Spacy NER - High-level models annotation structure
+- Spacy NER, NER - High-level models annotation structure
 
 Once the server is up and running you can go to `http://localhost:8080`
 and check out a few test sentences, or you can send a Post request (as described above)
 to `http://localhost:8080/inference`, and receive `HighLevelDoc` annotation structure response.
 
+Spacy NER:
+
 .. image :: assets/spacy_ner_service.png
+
+NER:
+
 .. image :: assets/ner_service.png
 
 You can also take a look at the tests (tests/nlp_architect_server) to see more examples.

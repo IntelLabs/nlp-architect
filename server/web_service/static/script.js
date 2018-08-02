@@ -18,7 +18,7 @@ const api = '/inference';
 const models = [
     { name: 'ner', description: 'Name Entity Recognition'},
     { name: 'spacy_ner', description: 'Name Entity Recognition using spacy',},
-    { name: 'bist', description: 'BIST Dependency Parsing'}
+    { name: 'bist', description: 'BIST Dependency Parser'}
 ];
 
 let annotateForm = document.getElementById('annotateForm');
