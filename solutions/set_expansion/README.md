@@ -16,7 +16,7 @@ At expansion time, given a seed of terms, the most similar terms are returned.
 
 ## Flow
 
-![Image](../../doc/source/assets/flow.png)
+![Image](../../doc/source/assets/expansion_flow.png)
 
 The solution is constructed of the following stages:
 
