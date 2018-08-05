@@ -31,6 +31,10 @@ from nlp_architect.utils.io import check_size, validate_existing_filepath, \
     download_unlicensed_file
 from tqdm import tqdm
 
+chunker_model_dat_file = 'model_info.dat'
+
+chunker_model_file = 'model.h5'
+
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 logger = logging.getLogger(__name__)
 
@@ -75,7 +79,7 @@ if __name__ == '__main__':
     arg_parser = ArgumentParser(__doc__)
     arg_parser.add_argument(
         '--corpus',
-        default=path.abspath("../../datasets/wikipedia/enwiki-20171201_subset.txt.gz"),
+        default=path.abspath(cur_dir + "../../../datasets/wikipedia/enwiki-20171201_subset.txt.gz"),
         type=validate_existing_filepath,
         help='path to the input corpus. Compressed files (gz) are also supported. By default, '
              'it is a subset of English Wikipedia.')
@@ -120,11 +124,10 @@ if __name__ == '__main__':
         if 'nlp_arch' in args.chunker:
             print('The pre-trained model to be downloaded for NLP Architect word chunker model '
                   'is licensed under Apache 2.0')
-            print('Downloading chunker model')
-            _path_to_model = path.join(cur_dir, 'model.h5')
-            download_unlicensed_file(nlp_chunker_url, 'model.h5', _path_to_model)
-            _path_to_params = path.join(cur_dir, 'model_info.dat')
-            download_unlicensed_file(nlp_chunker_url, 'model_info.dat', _path_to_params)
+            _path_to_model = path.join(cur_dir, chunker_model_file)
+            download_unlicensed_file(nlp_chunker_url, chunker_model_file, _path_to_model)
+            _path_to_params = path.join(cur_dir, chunker_model_dat_file)
+            download_unlicensed_file(nlp_chunker_url, chunker_model_dat_file, _path_to_params)
             print('Done.')
             nlp.add_pipe(NPAnnotator.load(_path_to_model, _path_to_params), last=True)
 
