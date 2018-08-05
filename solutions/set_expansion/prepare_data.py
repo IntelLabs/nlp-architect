@@ -140,48 +140,49 @@ if __name__ == '__main__':
         logger.info('%i lines in corpus', num_lines)
         i = 0
 
-
-        for doc in nlp.pipe(corpus_file, n_threads=-1):
-            if 'nlp_arch' in args.chunker:
-                spans = get_noun_phrases(doc)
-            else:
-                spans = list(doc.noun_chunks)
-            i += 1
-            if len(spans) > 0:
-                span = spans.pop(0)
-            else:
-                span = None
-            spanWritten = False
-            for token in doc:
-                if span is None:
-                    if len(token.text.strip()) > 0:
-                        marked_corpus_file.write(token.text + ' ')
+        with tqdm(total=num_lines) as pbar:
+            for doc in nlp.pipe(corpus_file, n_threads=-1):
+                if 'nlp_arch' in args.chunker:
+                    spans = get_noun_phrases(doc)
                 else:
-                    if token.idx < span.start_char or token.idx >= span.end_char:  # outside a
-                        # span
+                    spans = list(doc.noun_chunks)
+                i += 1
+                if len(spans) > 0:
+                    span = spans.pop(0)
+                else:
+                    span = None
+                spanWritten = False
+                for token in doc:
+                    if span is None:
                         if len(token.text.strip()) > 0:
                             marked_corpus_file.write(token.text + ' ')
                     else:
-                        if not spanWritten:
-                            # mark NP's
-                            if len(span.text) > 1 and span.lemma_ != '-PRON-':
-                                if args.grouping:
-                                    text = get_group_norm(span)
-                                else:
-                                    text = span.text
+                        if token.idx < span.start_char or token.idx >= span.end_char:  # outside a
+                            # span
+                            if len(token.text.strip()) > 0:
+                                marked_corpus_file.write(token.text + ' ')
+                        else:
+                            if not spanWritten:
                                 # mark NP's
-                                text = text.replace(' ', args.mark_char) + args.mark_char
-                                marked_corpus_file.write(text + ' ')
-                            else:
-                                marked_corpus_file.write(span.text + ' ')
-                            spanWritten = True
-                        if token.idx + len(token.text) == span.end_char:
-                            if len(spans) > 0:
-                                span = spans.pop(0)
-                            else:
-                                span = None
-                            spanWritten = False
-            marked_corpus_file.write('\n')
+                                if len(span.text) > 1 and span.lemma_ != '-PRON-':
+                                    if args.grouping:
+                                        text = get_group_norm(span)
+                                    else:
+                                        text = span.text
+                                    # mark NP's
+                                    text = text.replace(' ', args.mark_char) + args.mark_char
+                                    marked_corpus_file.write(text + ' ')
+                                else:
+                                    marked_corpus_file.write(span.text + ' ')
+                                spanWritten = True
+                            if token.idx + len(token.text) == span.end_char:
+                                if len(spans) > 0:
+                                    span = spans.pop(0)
+                                else:
+                                    span = None
+                                spanWritten = False
+                marked_corpus_file.write('\n')
+                pbar.update(1)
 
     # write grouping data :
     if args.grouping:
