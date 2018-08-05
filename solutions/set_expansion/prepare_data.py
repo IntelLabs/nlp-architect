@@ -120,20 +120,17 @@ if __name__ == '__main__':
         logger.info('loading spacy')
         nlp = SpacyInstance(model='en_core_web_sm', disable=['textcat', 'ner']).parser
         logger.info('spacy loaded')
+
         if 'nlp_arch' in args.chunker:
             logger.info(
                 'The pre-trained model to be downloaded for NLP Architect word'
                 ' chunker model is licensed under Apache 2.0')
             _path_to_model = path.join(cur_dir, chunker_model_file)
-            download_unlicensed_file(nlp_chunker_url, chunker_model_file,
-                                     _path_to_model)
+            download_unlicensed_file(nlp_chunker_url, chunker_model_file, _path_to_model)
             _path_to_params = path.join(cur_dir, chunker_model_dat_file)
-            download_unlicensed_file(nlp_chunker_url, chunker_model_dat_file,
-                                     _path_to_params)
+            download_unlicensed_file(nlp_chunker_url, chunker_model_dat_file, _path_to_params)
             logger.info('Done.')
-            nlp.add_pipe(NPAnnotator.load(_path_to_model, _path_to_params),
-                         last=True)
-
+            nlp.add_pipe(NPAnnotator.load(_path_to_model, _path_to_params), last=True)
 
         num_lines = sum(1 for line in corpus_file)
         corpus_file.seek(0)
