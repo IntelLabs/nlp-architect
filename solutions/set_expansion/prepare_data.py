@@ -46,19 +46,19 @@ cur_dir = path.dirname(path.realpath(__file__))
 nlp_chunker_url = 'http://nervana-modelzoo.s3.amazonaws.com/NLP/chunker/'
 
 
-def get_group_norm(span):
+def get_group_norm(spacy_span):
     """
     Give a span, determine the its group and return the normalized text representing the group
 
     Args:
-            span (spacy.tokens.Span)
+            spacy_span (spacy.tokens.Span)
     """
-    np = span.text
+    np = spacy_span.text
     if np not in np2count:
         np2count[np] = 1
     else:
         np2count[np] += 1
-    norm = spacy_normalizer(np, span.lemma_)
+    norm = spacy_normalizer(np, spacy_span.lemma_)
     if args.mark_char in norm:
         norm = norm.replace(args.mark_char, ' ')
     np2id[np] = norm
@@ -79,7 +79,8 @@ if __name__ == '__main__':
     arg_parser = ArgumentParser(__doc__)
     arg_parser.add_argument(
         '--corpus',
-        default=path.abspath(cur_dir + "../../../datasets/wikipedia/enwiki-20171201_subset.txt.gz"),
+        default=path.abspath(
+            cur_dir + "../../../datasets/wikipedia/enwiki-20171201_subset.txt.gz"),
         type=validate_existing_filepath,
         help='path to the input corpus. Compressed files (gz) are also supported. By default, '
              'it is a subset of English Wikipedia.')
@@ -122,13 +123,14 @@ if __name__ == '__main__':
         logger.info('spacy loaded')
 
         if 'nlp_arch' in args.chunker:
-            print('The pre-trained model to be downloaded for NLP Architect word chunker model '
-                  'is licensed under Apache 2.0')
+            logger.info(
+                'The pre-trained model to be downloaded for NLP Architect word'
+                ' chunker model is licensed under Apache 2.0')
             _path_to_model = path.join(cur_dir, chunker_model_file)
             download_unlicensed_file(nlp_chunker_url, chunker_model_file, _path_to_model)
             _path_to_params = path.join(cur_dir, chunker_model_dat_file)
             download_unlicensed_file(nlp_chunker_url, chunker_model_dat_file, _path_to_params)
-            print('Done.')
+            logger.info('Done.')
             nlp.add_pipe(NPAnnotator.load(_path_to_model, _path_to_params), last=True)
 
         num_lines = sum(1 for line in corpus_file)

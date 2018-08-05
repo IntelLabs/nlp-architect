@@ -16,4 +16,4 @@
 
 expand_host = 'localhost'
 expand_port = 1234
-grouping = True
+grouping = False

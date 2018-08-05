@@ -39,8 +39,8 @@ python examples/np2vec/train.py --size 100 --min_count 10 --window 10 --hs 0 --c
 ```
 
 A [pretrained model](http://nervana-modelzoo.s3.amazonaws.com/NLP/SetExp/enwiki-20171201_pretrained_set_expansion.txt) 
-on English Wikipedia dump (enwiki-20171201-pages-articles-multistream.xml.bz2) is available under 
-Apache license. It has been trained with hyperparameters values 
+on English Wikipedia dump (enwiki-20171201-pages-articles-multistream.xml.bz2) is available under the
+Apache 2.0 license. It has been trained with hyperparameters values
 recommended above. Full English Wikipedia [raw corpus](http://nervana-modelzoo.s3.amazonaws.com/NLP/SetExp/enwiki-20171201.txt) and 
 [marked corpus](http://nervana-modelzoo.s3.amazonaws.com/NLP/SetExp/enwiki-20171201_spacy_marked.txt) 
 are also available under the  
