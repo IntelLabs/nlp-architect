@@ -23,6 +23,8 @@ import io
 import os
 from os.path import dirname
 import pytest
+from nlp_architect.api.ner_api import NerApi
+ner_api = NerApi(prompt=False) # to download NER model without prompt
 import server.serve
 from nlp_architect.utils.text import is_spacy_model_installed
 from server.serve import api
@@ -39,6 +41,8 @@ headers = {"clean": "True", "display_post_preprocces": "True",
            "display_tokens": "", "display_token_text": "True",
            "IS-HTML": "False"}
 server_data_rel_path = 'fixtures/data/server/'
+
+
 
 
 def load_test_data(service_name):

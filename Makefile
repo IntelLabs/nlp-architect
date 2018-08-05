@@ -35,7 +35,6 @@ test_prepare: test_requirements.txt $(ACTIVATE)
 
 test: test_prepare $(ACTIVATE) dev
 	@. $(ACTIVATE); spacy download en
-	@. $(ACTIVATE); python download_ner_model.py
 	@. $(ACTIVATE); py.test -rs -vv tests
 
 flake: test_prepare
