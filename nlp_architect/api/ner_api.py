@@ -40,7 +40,7 @@ class NerApi(AbstractApi):
         self.model_info = None
         self.model_path = NerApi.pretrained_model
         self.model_info_path = NerApi.pretrained_model_info
-        print("prompt value", prompt)
+        print(prompt)
         self._download_pretrained_model(prompt)
 
     def encode_word(self, word):

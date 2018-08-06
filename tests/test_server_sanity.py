@@ -23,8 +23,7 @@ import io
 import os
 from os.path import dirname
 import pytest
-from tests.download_ner import download
-import server.serve
+import tests.download_ner
 from nlp_architect.utils.text import is_spacy_model_installed
 from server.serve import api
 if not is_spacy_model_installed('en'):
@@ -40,10 +39,6 @@ headers = {"clean": "True", "display_post_preprocces": "True",
            "display_tokens": "", "display_token_text": "True",
            "IS-HTML": "False"}
 server_data_rel_path = 'fixtures/data/server/'
-
-
-server.serve.prefetchModels()
-download()
 
 
 def load_test_data(service_name):
@@ -156,7 +151,7 @@ def test_json_file_request(service_name):
     myHeaders = headers.copy()
     myHeaders["Content-Type"] = "application/json"
     myHeaders["RESPONSE-FORMAT"] = "json"
-    response = hug.test.post(server.serve, '/inference', body=doc, headers=myHeaders)
+    response = hug.test.post(api, '/inference', body=doc, headers=myHeaders)
     assert_response_struct(response.data, json.loads(expected_result))
     assert response.status == hug.HTTP_OK
 

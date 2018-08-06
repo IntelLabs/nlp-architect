@@ -78,5 +78,4 @@ def static():
     return [os.path.realpath(os.path.join('./', 'server/web_service/static'))]
 
 
-if __name__ == 'server/serve':
-    prefetchModels()
+prefetchModels()
