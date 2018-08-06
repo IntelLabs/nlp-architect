@@ -157,7 +157,7 @@ def license_prompt(model_name, model_website, dataset_dir=None):
 
 
 # character vocab
-zhang_lecun_vocab = list("abcdefghijklmnopqrstuvwxyz0123456789-,;.!?:’’’/\|_@#$%ˆ&*˜‘+-=<>()[]{}")
+zhang_lecun_vocab = list("abcdefghijklmnopqrstuvwxyz0123456789-,;.!?:’/\|_@#$%ˆ&*˜‘+=<>()[]{}")
 vocab_hash = {b: a for a, b in enumerate(zhang_lecun_vocab)}
 
 
