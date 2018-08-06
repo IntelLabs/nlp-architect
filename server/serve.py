@@ -27,7 +27,7 @@ services = {}
 parser = ArgumentParser()
 parser.add_argument('--fetch', action='store_true')
 args = parser.parse_known_args()
-prefetch_val = args[0].prefetch
+prefetch_val = args[0].fetch
 
 api = hug.API(__name__)
 

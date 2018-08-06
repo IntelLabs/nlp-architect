@@ -85,7 +85,6 @@ class NerApi(AbstractApi):
             print('The pre-trained models to be downloaded for the NER dataset'
                   'are licensed under Apache 2.0. By downloading, you accept the terms'
                   'and conditions provided by the license')
-            print(prompt)
             makedirs(dir_path, exist_ok=True)
             if prompt is True:
                 agreed = self._prompt()
