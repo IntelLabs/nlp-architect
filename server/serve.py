@@ -20,8 +20,14 @@ import gzip
 import json
 from falcon import status_codes
 from server.service import format_response
+from argparse import ArgumentParser
 from server.service import Service, parse_headers
 services = {}
+
+parser = ArgumentParser()
+parser.add_argument('--fetch', action='store_true')
+args = parser.parse_known_args()
+prefetch_val = args[0].prefetch
 
 api = hug.API(__name__)
 
@@ -78,4 +84,5 @@ def static():
     return [os.path.realpath(os.path.join('./', 'server/web_service/static'))]
 
 
-prefetchModels()
+if prefetch_val is True:
+    prefetchModels()

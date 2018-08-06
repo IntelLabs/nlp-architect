@@ -23,7 +23,7 @@ import io
 import os
 from os.path import dirname
 import pytest
-import tests.download_ner
+from tests.download_ner import download
 from nlp_architect.utils.text import is_spacy_model_installed
 from server.serve import api
 if not is_spacy_model_installed('en'):
@@ -39,6 +39,8 @@ headers = {"clean": "True", "display_post_preprocces": "True",
            "display_tokens": "", "display_token_text": "True",
            "IS-HTML": "False"}
 server_data_rel_path = 'fixtures/data/server/'
+
+download()
 
 
 def load_test_data(service_name):
