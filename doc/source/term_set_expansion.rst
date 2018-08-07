@@ -31,8 +31,8 @@ Algorithm Overview
 Our approach is described by (Mamou et al, 2018). It is based on representing any
 term of a
 training corpus using word embeddings in order
-to estimate the similarity between the seed terms and any candidate term. Noun phrases provide 
-good approximation for candidate terms and are extracted in our system using a noun phrase chunker. 
+to estimate the similarity between the seed terms and any candidate term. Noun phrases provide
+good approximation for candidate terms and are extracted in our system using a noun phrase chunker.
 At expansion time, given a seed of terms, the most similar terms are returned.
 
 Flow
@@ -42,19 +42,19 @@ Flow
 
 Training
 ========
-   
-The first step in training is to prepare the data for generating a word embedding model. We 
-provide a subset of English Wikipedia at datasets/wikipedia as a sample corpus under the  
+
+The first step in training is to prepare the data for generating a word embedding model. We
+provide a subset of English Wikipedia at datasets/wikipedia as a sample corpus under the
 `Creative Commons Attribution-Share-Alike 3.0 License <https://creativecommons.org/licenses/by-sa/3.0/>`__ (Copyright 2018 Wikimedia Foundation).
-The output of this step is the marked corpus where noun phrases are marked with the marking character (default: "\_") as described in the `NLP Architect np2vec module documentation <http://nlp_architect.nervanasys.com/np2vec.html>`__.
+The output of this step is the marked corpus where noun phrases are marked with the marking character (default: "\_") as described in the NLP Architect :doc:`np2vec` module documentation. The pre-process script supports using NLP Architect :doc:`noun phrase extractor <spacy_np_annotator>` which uses an LSTM :doc:`chunker` model or using spaCy's own noun phrases matcher.
 This is done by running:
 
 .. code:: python
 
   python solutions/set_expansion/prepare_data.py --corpus TRAINING_CORPUS --marked_corpus MARKED_TRAINING_CORPUS
 
-The next step is to train the model using `NLP Architect np2vec module <http://nlp_architect.nervanasys.com/np2vec.html>`__.
-For set expansion, we recommend the following values 100, 10, 10, 0 for respectively, 
+The next step is to train the model using NLP Architect :doc:`np2vec` module.
+For set expansion, we recommend the following values 100, 10, 10, 0 for respectively,
 size, min_count, window and hs hyperparameters. Please refer to the np2vec module documentation for more details about these parameters.
 
 .. code:: python
@@ -125,6 +125,5 @@ Citation
 
 `Term Set Expansion based on Multi-Context Term Embeddings: an End-to-end Workflow
 <http://arxiv.org/abs/1807.10104>`__, Jonathan Mamou,
- Oren Pereg, Moshe Wasserblat, Ido Dagan, Yoav Goldberg, Alon Eirew, Yael Green, Shira Guskin,
- Peter Izsak, Daniel Korat, COLING 2018 System Demonstration paper.
-
+Oren Pereg, Moshe Wasserblat, Ido Dagan, Yoav Goldberg, Alon Eirew, Yael Green, Shira Guskin,
+Peter Izsak, Daniel Korat, COLING 2018 System Demonstration paper.
