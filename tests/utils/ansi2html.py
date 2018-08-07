@@ -2,6 +2,7 @@
 
 # This file was taken from:
 # https://github.com/Kronuz/ansi2html/blob/master/ansi2html.py
+# Copyright © 2013 German M. Bravo (Kronuz)
 # License: https://github.com/Kronuz/ansi2html/blob/master/LICENSE
 
 from __future__ import print_function
