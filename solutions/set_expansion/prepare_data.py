@@ -31,8 +31,7 @@ from nlp_architect.utils.io import check_size, validate_existing_filepath, \
     download_unlicensed_file
 from tqdm import tqdm
 
-chunker_model_dat_file = 'model_info.dat'
-
+chunker_model_dat_file = 'model_info.dat.params'
 chunker_model_file = 'model.h5'
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
@@ -118,10 +117,10 @@ if __name__ == '__main__':
     with open(args.marked_corpus, 'w', encoding='utf8') as marked_corpus_file:
         # load spacy parser
         logger.info('loading spacy')
-        nlp = SpacyInstance(model='en_core_web_sm', disable=['textcat', 'ner']).parser
-        logger.info('spacy loaded')
-
         if 'nlp_arch' in args.chunker:
+            nlp = SpacyInstance(model='en_core_web_sm',
+                                disable=['textcat', 'ner', 'parser']).parser
+            nlp.add_pipe(nlp.create_pipe('sentencizer'), first=True)
             logger.info(
                 'The pre-trained model to be downloaded for NLP Architect word'
                 ' chunker model is licensed under Apache 2.0')
@@ -131,6 +130,9 @@ if __name__ == '__main__':
             download_unlicensed_file(nlp_chunker_url, chunker_model_dat_file, _path_to_params)
             logger.info('Done.')
             nlp.add_pipe(NPAnnotator.load(_path_to_model, _path_to_params), last=True)
+        else:
+            nlp = SpacyInstance(model='en_core_web_sm', disable=['textcat', 'ner']).parser
+        logger.info('spacy loaded')
 
         num_lines = sum(1 for line in corpus_file)
         corpus_file.seek(0)
