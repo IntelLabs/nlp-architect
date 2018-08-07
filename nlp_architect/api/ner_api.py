@@ -35,7 +35,7 @@ class NerApi(AbstractApi):
     pretrained_model = path.join(dir, 'ner-pretrained', 'model.h5')
     pretrained_model_info = path.join(dir, 'ner-pretrained', 'model_info.dat')
 
-    def __init__(self, prompt=True):
+    def __init__(self, ner_model=None, prompt=True):
         self.model = None
         self.model_info = None
         self.model_path = NerApi.pretrained_model
@@ -81,7 +81,7 @@ class NerApi(AbstractApi):
     def _download_pretrained_model(self, prompt=True):
         """Downloads the pre-trained BIST model if non-existent."""
         dir_path = path.join(self.dir, 'ner-pretrained')
-        if not path.isfile(self.model_path) or not path.isfile(self.model_info_path):
+        if not path.isfile(path.join(dir_path, 'model.h5')):
             print('The pre-trained models to be downloaded for the NER dataset'
                   'are licensed under Apache 2.0. By downloading, you accept the terms'
                   'and conditions provided by the license')

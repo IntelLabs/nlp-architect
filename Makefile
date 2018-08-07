@@ -35,6 +35,7 @@ test_prepare: test_requirements.txt $(ACTIVATE)
 
 test: test_prepare $(ACTIVATE) dev
 	@. $(ACTIVATE); spacy download en
+	@. $(ACTIVATE); python -c 'from nlp_architect.api.ner_api import NerApi; NerApi(prompt=False)'
 	@. $(ACTIVATE); py.test -rs -vv tests
 
 flake: test_prepare
