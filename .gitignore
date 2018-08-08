@@ -18,8 +18,9 @@ generated
 *.hdf5
 *.h5
 *.html
-!server/web_service/visualizer/displacy/*.html
 !solutions/set_expansion/ui/templates/*.html
+.vscode
+!server/web_service/static/*.html
 !tests/fixtures/data/server/*.gz
 *.log
 .idea/
@@ -31,3 +32,4 @@ pylint.txt
 flake8.txt
 nlp_architect/pipelines/bist-pretrained/*
 venv
+nlp_architect/api/ner-pretrained/*

@@ -89,6 +89,8 @@ these will be placed into a central repository.
     nlp_architect.data.babi_dialog.BABI_Dialog
     nlp_architect.data.wikimovies.WIKIMOVIES
 
+
+
 ``nlp_architect.pipelines``
 ---------------------------
 .. py:module:: nlp_architect.pipelines
@@ -102,4 +104,17 @@ NLP pipelines modules using models implemented from ``nlp_architect.models``.
     nlp_architect.pipelines.spacy_bist.SpacyBISTParser
     nlp_architect.pipelines.spacy_np_annotator.NPAnnotator
     nlp_architect.pipelines.spacy_np_annotator.SpacyNPAnnotator
+
+
+
+``nlp_architect.server``
+------------------------
+.. py:module:: server
+
+.. autosummary::
+    :toctree: generated/
+    :nosignatures:
+
+    server.serve
+    server.service
 
