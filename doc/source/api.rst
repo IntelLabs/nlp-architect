@@ -49,6 +49,8 @@ to train the model weights, perform inference, and save/load the model.
    nlp_architect.models.bist_parser.BISTModel
    nlp_architect.models.memn2n_dialogue.MemN2N_Dialog
    nlp_architect.models.kvmemn2n.KVMemN2N
+   nlp_architect.models.supervised_sentiment.simple_lstm
+   nlp_architect.models.supervised_sentiment.one_hot_cnn
 
 
 ``nlp_architect.layers``
@@ -88,7 +90,7 @@ these will be placed into a central repository.
     nlp_architect.data.sequential_tagging.SequentialTaggingDataset
     nlp_architect.data.babi_dialog.BABI_Dialog
     nlp_architect.data.wikimovies.WIKIMOVIES
-
+    nlp_architect.data.amazon_reviews.Amazon_Reviews
 
 
 ``nlp_architect.pipelines``
@@ -117,4 +119,3 @@ NLP pipelines modules using models implemented from ``nlp_architect.models``.
 
     server.serve
     server.service
-
