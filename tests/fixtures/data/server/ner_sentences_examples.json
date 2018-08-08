@@ -1,0 +1,21 @@
+{
+  "model_name": "ner",
+  "docs": [
+    {
+      "id": 1,
+      "doc": "Apple is looking at buying U.K. startup for $1 billion"
+    },
+    {
+      "id": 2,
+      "doc": "Autonomous cars shift insurance liability toward manufacturers"
+    },
+    {
+      "id": 3,
+      "doc": "San Francisco considers banning sidewalk delivery robots"
+    },
+    {
+      "id": 4,
+      "doc": "London is a big city in the United Kingdom."
+    }
+  ]
+}

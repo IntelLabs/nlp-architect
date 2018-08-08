@@ -69,12 +69,7 @@ These are currently stored in the various models or related to which DL framewor
    nlp_architect.contrib.ngraph.match_lstm.Dropout_Modified
    nlp_architect.contrib.ngraph.match_lstm.LookupTable
    nlp_architect.contrib.ngraph.modified_lookup_table.ModifiedLookupTable
-   nlp_architect.contrib.neon.layers.DataInput
-   nlp_architect.contrib.neon.layers.TimeDistributedRecurrentOutput
-   nlp_architect.contrib.neon.layers.TimeDistributedRecurrentLast
-   nlp_architect.contrib.neon.layers.TimeDistBiLSTM
    nlp_architect.contrib.keras.callbacks.ConllCallback
-
 
 
 ``nlp_architect.data``
@@ -88,13 +83,39 @@ these will be placed into a central repository.
     :toctree: generated/
     :nosignatures:
 
-    nlp_architect.data.conll2000.TaggedTextSequence
-    nlp_architect.data.conll2000.MultiSequenceDataIterator
-    nlp_architect.data.conll2000.CONLL2000
     nlp_architect.data.intent_datasets.IntentDataset
     nlp_architect.data.intent_datasets.TabularIntentDataset
     nlp_architect.data.intent_datasets.SNIPS
+    nlp_architect.data.sequential_tagging.CONLL2000
     nlp_architect.data.sequential_tagging.SequentialTaggingDataset
     nlp_architect.data.babi_dialog.BABI_Dialog
     nlp_architect.data.wikimovies.WIKIMOVIES
     nlp_architect.data.amazon_reviews.Amazon_Reviews
+
+
+``nlp_architect.pipelines``
+---------------------------
+.. py:module:: nlp_architect.pipelines
+
+NLP pipelines modules using models implemented from ``nlp_architect.models``.
+
+.. autosummary::
+    :toctree: generated/
+    :nosignatures:
+
+    nlp_architect.pipelines.spacy_bist.SpacyBISTParser
+    nlp_architect.pipelines.spacy_np_annotator.NPAnnotator
+    nlp_architect.pipelines.spacy_np_annotator.SpacyNPAnnotator
+
+
+
+``nlp_architect.server``
+------------------------
+.. py:module:: server
+
+.. autosummary::
+    :toctree: generated/
+    :nosignatures:
+
+    server.serve
+    server.service

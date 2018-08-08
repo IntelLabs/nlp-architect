@@ -23,7 +23,6 @@ import os
 from multiprocessing import Pool
 
 import numpy
-from neon.data import ArrayIterator
 from tqdm import tqdm
 
 import examples.np_semantic_segmentation.feature_extraction as fe
@@ -32,15 +31,14 @@ from nlp_architect.utils.io import validate_existing_filepath, validate_parent_e
 
 wordnet = None
 wikidata = None
-nltk_collocations = None
 word2vec = None
 
 
 def build_feature_vector(np):
     """
     Build a feature vector for the given noun-phrase. the size of the
-    vector = (6 + (#WORDS X 300)) = 1506. ==> (the number of words in a noun-phrase X size
-    of the word2vec(300)) + 6 additional features from external sources
+    vector = (4 + (#WORDS X 300)) = 1506. ==> (the number of words in a noun-phrase X size
+    of the word2vec(300)) + 4 additional features from external sources
 
     Args:
         np (str): a noun-phrase
@@ -55,10 +53,7 @@ def build_feature_vector(np):
     # 2. find if np exist as an entity in Wikidata
     wikidata_feature = find_wikidata_entity(np)
     feature_vector.append(wikidata_feature)
-    # 3. pmi score: npmi & uci scores
-    pmi_score = get_pmi_score(np)
-    feature_vector.extend(pmi_score)
-    # 4. word2vec score: from
+    # 3. word2vec score: from
     word2vec_distance = word2vec.get_similarity_score(np)
     feature_vector.append(word2vec_distance)
     for w in np.split(" "):
@@ -114,19 +109,6 @@ def expand_np_candidates(np, stemming):
     return candidates
 
 
-def get_pmi_score(np):
-    """
-    Extract NLTKCollocations score & Chi-square score from NLTK bigram service, on brown dataset
-
-    Args:
-        np (str): a noun-phrase
-
-    Returns:
-        list(float): a list with NLTKCollocations score & "Chi-square" score
-    """
-    return nltk_collocations.get_pmi_score(np)
-
-
 def get_all_case_combinations(np):
     """
     Returns all case combinations for the noun-phrase (regular, upper, lower, title)
@@ -171,11 +153,9 @@ def prepare_data(data_file, output_file, word2vec_file, http_prox=None, https_pr
         https_prox(str): https_proxy
     """
     # init_resources:
-    global wordnet, wikidata, nltk_collocations, word2vec
+    global wordnet, wikidata, word2vec
     wordnet = fe.Wordnet()
     wikidata = fe.Wikidata(http_prox, https_prox)
-    print("Start loading NLTK Collocation scoring (this might take a while...)")
-    nltk_collocations = fe.NLTKCollocations()
     print("Start loading Word2Vec model (this might take a while...)")
     word2vec = fe.Word2Vec(word2vec_file)
     print("Finish loading feature extraction services")
@@ -245,13 +225,13 @@ class NpSemanticSegData:
             feature_vec_dim (:obj:`int`): the size of the feature vector for each noun-phrase
     """
 
-    def __init__(self, file_path, train_to_test_ratio=0.8, feature_vec_dim=605):
+    def __init__(self, file_path, train_to_test_ratio=0.8, feature_vec_dim=603):
         self.file_path = file_path
         self.feature_vec_dim = feature_vec_dim
         self.train_to_test_ratio = train_to_test_ratio
         self.is_y_labels = None
         self.y_labels = None
-        self.train_set, self.test_set = self.load_data_to_array_iterator()
+        self.data_set = self.load_data_to_array_iterator()
 
     def load_data_from_file(self):
         """
@@ -294,18 +274,44 @@ class NpSemanticSegData:
 
     def load_data_to_array_iterator(self):
         """
-        Load data into ArrayIterators
+        Load data into dict of 'train' and 'test' datasets
 
         Returns:
-            tuple(:obj:`neon.data.ArrayIterators`): ArrayIterator train_set, ArrayIterator test_set
+            dict: dict with train set & test_set (each is dict with X and y)
         """
         X_train, y_train, X_test, y_test = self.load_data_from_file()
-        train_set = ArrayIterator(X=X_train, y=y_train, nclass=2)
-        if X_test.size == 0 and y_test.size == 0:
-            test_set = None
-        else:
-            test_set = ArrayIterator(X=X_test, y=y_test, nclass=2)
-        return train_set, test_set
+        data_set = {'train': {'X': X_train, 'y': y_train}, 'test': {'X': X_test, 'y': y_test}}
+        return data_set
+
+    @property
+    def train_set(self):
+        """dict(:obj:`numpy.ndarray`): train set (X & y)"""
+        return self.data_set['train']
+
+    @property
+    def train_set_x(self):
+        """dict(:obj:`numpy.ndarray`): train set (X)"""
+        return self.data_set['train']['X']
+
+    @property
+    def train_set_y(self):
+        """dict(:obj:`numpy.ndarray`): train set (y)"""
+        return self.data_set['train']['y']
+
+    @property
+    def test_set(self):
+        """dict(:obj:`numpy.ndarray`): test set (X & y)"""
+        return self.data_set['test']
+
+    @property
+    def test_set_x(self):
+        """dict(:obj:`numpy.ndarray`): test set (X)"""
+        return self.data_set['test']['X']
+
+    @property
+    def test_set_y(self):
+        """dict(:obj:`numpy.ndarray`): test set (y)"""
+        return self.data_set['test']['y']
 
 
 def absolute_path(input_path):
@@ -329,7 +335,6 @@ if __name__ == "__main__":
     # parse the command line arguments
     parser = argparse.ArgumentParser(
         description='Prepare data')
-
     parser.add_argument('--data', type=validate_existing_filepath,
                         help='path the CSV file where the raw dataset is saved')
     parser.add_argument('--output', type=validate_parent_exists,

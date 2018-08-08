@@ -1,4 +1,5 @@
 {
+  "model_name": "spacy_ner",
   "docs": [
     {
       "id": 1,

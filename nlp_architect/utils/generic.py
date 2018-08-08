@@ -26,7 +26,7 @@ import re
 def pad_sentences(sequences, max_length=None, padding_value=0.):
     """
     Pad input sequences up to max_length
-    padding is aligned to the right
+    values are aligned to the right
 
     Args:
         sequences (iter): a 2D matrix (np.array) to pad
@@ -145,7 +145,7 @@ def license_prompt(model_name, model_website, dataset_dir=None):
     res = response.lower().strip()
     if res == "yes" or (len(res) == 1 and res == 'y'):
         print('Downloading {}...'.format(model_name))
-        return True
+        responded_yes = True
     else:
         print('Download declined. Response received {} != YES|Y. '.format(res))
         if dataset_dir:
@@ -153,9 +153,10 @@ def license_prompt(model_name, model_website, dataset_dir=None):
                   .format(model_website, dataset_dir))
         else:
             print('Please download the model manually from {}'.format(model_website))
-        return False
+        responded_yes = False
+    return responded_yes
 
-
+  
 # character vocab
 zhang_lecun_vocab = list("abcdefghijklmnopqrstuvwxyz0123456789-,;.!?:’/\|_@#$%ˆ&*˜‘+=<>()[]{}")
 vocab_hash = {b: a for a, b in enumerate(zhang_lecun_vocab)}
@@ -205,7 +206,6 @@ def normalize(txt, vocab=None, replace_char=' ',
 
 
 def to_one_hot(txt, vocab=vocab_hash):
-
     vocab_size = len(vocab.keys())
     one_hot_vec = np.zeros((vocab_size + 1, len(txt)), dtype=np.float32)
     # run through txt and "switch on" relevant positions in one-hot vector

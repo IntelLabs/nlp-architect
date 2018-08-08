@@ -17,16 +17,15 @@
 import gzip
 import json
 import sys
-import io
+import hug
 from io import open
+import io
 import os
 from os.path import dirname
-import falcon
-from falcon import testing
-from falcon_multipart.middleware import MultipartMiddleware
 import pytest
-from nlp_architect.utils.text import is_spacy_model_installed
 import server.serve
+from nlp_architect.utils.text import is_spacy_model_installed
+from server.serve import api
 if not is_spacy_model_installed('en'):
     pytest.skip("\n\nSkipping test_server_sanity.py. Reason: 'spacy en' model not installed. "
                 "Please see https://spacy.io/models/ for installation instructions.\n"
@@ -37,7 +36,8 @@ if not is_spacy_model_installed('en'):
 sys.path.insert(0, (dirname(dirname(os.path.abspath(__file__)))))
 
 headers = {"clean": "True", "display_post_preprocces": "True",
-           "display_tokens": "", "display_token_text": "True"}
+           "display_tokens": "", "display_token_text": "True",
+           "IS-HTML": "False"}
 server_data_rel_path = 'fixtures/data/server/'
 
 
@@ -55,30 +55,7 @@ def load_test_data(service_name):
     return service_test_data
 
 
-def init_client(service_name):
-    """
-    init dummy client for testing.
-    Args:
-        service_name(str):  the service name)
-        result_spans = result_dict['spans'][0]
-        expected_result_spans = expected_result_dict['spans'][0]
-        assert isinstance(result_spans, dict)
-        for key in expected_result_spans.keys():
-            assert key in result_spans
-    # 6. check displacy html rendering input
-    elif 'arcs' in expected_result_dict.keys():
-        assert isinstance(result_dict['arcs'], list)
-        assert isinstance(result_dict['words'], list)
-        result_arcs
-    Returns:
-        client for testing
-    """
-    app = falcon.API(middleware=[MultipartMiddleware()])
-    server.serve.set_server_properties(app, service_name)
-    return testing.TestClient(app)
-
-
-def assert_response_srtuct(result_doc, expected_result):
+def assert_response_struct(result_doc, expected_result):
     # 1. assert docs list
     assert isinstance(result_doc, list)
     assert len(result_doc) == len(expected_result)
@@ -132,51 +109,51 @@ def assert_response_srtuct(result_doc, expected_result):
             assert key in result_words
 
 
-@pytest.mark.parametrize('service_name', ['bist', 'spacy_ner'])
+@pytest.mark.parametrize('service_name', ['bist', 'spacy_ner', 'ner'])
 def test_request(service_name):
-    client = init_client(service_name)
     test_data = load_test_data(service_name)
+    test_data['input']['model_name'] = service_name
     doc = json.dumps(test_data["input"])
     expected_result = json.dumps(test_data["response"])
-    headers["Content-Type"] = "application/json"
-    headers["Response-Format"] = "json"
-    response = client.simulate_post('/' + service_name, body=doc, headers=headers)
-    result_doc = json.loads(response.content.decode('utf8'), encoding='utf-8')
-    assert_response_srtuct(result_doc, json.loads(expected_result))
-    assert response.status == falcon.HTTP_OK
+    myHeaders = headers.copy()
+    myHeaders["content-type"] = "application/json"
+    myHeaders["Response-Format"] = "json"
+    response = hug.test.post(api, '/inference', body=doc, headers=myHeaders)
+
+    assert_response_struct(response.data, json.loads(expected_result))
+    assert response.status == hug.HTTP_OK
 
 
-@pytest.mark.parametrize('service_name', ['bist', 'spacy_ner'])
+@pytest.mark.parametrize('service_name', ['bist', 'spacy_ner', 'ner'])
 def test_gzip_file_request(service_name):
-    client = init_client(service_name)
     file_path = os.path.join(os.path.dirname(__file__), server_data_rel_path + service_name +
                              "_sentences_examples.json.gz")
     with open(file_path, 'rb') as file_data:
         doc = file_data.read()
     expected_result = json.dumps(load_test_data(service_name)["response"])
-    headers["Content-Type"] = "application/gzip"
-    headers["Content-Encoding"] = "gzip"
-    headers["Response-Format"] = "gzip"
-    response = client.simulate_post('/' + service_name, body=doc, headers=headers)
-    result_doc = get_decompressed_gzip(response.content)
-    assert_response_srtuct(result_doc, json.loads(expected_result))
-    assert response.status == falcon.HTTP_OK
+    myHeaders = headers.copy()
+    myHeaders["content-type"] = "application/gzip"
+    myHeaders["Response-Format"] = "gzip"
+    myHeaders["content-encoding"] = "gzip"
+    response = hug.test.post(api, '/inference', body=doc, headers=myHeaders)
+    result_doc = get_decompressed_gzip(response.data)
+    assert_response_struct(result_doc, json.loads(expected_result))
+    assert response.status == hug.HTTP_OK
 
 
-@pytest.mark.parametrize('service_name', ['bist', 'spacy_ner'])
+@pytest.mark.parametrize('service_name', ['bist', 'spacy_ner', 'ner'])
 def test_json_file_request(service_name):
-    client = init_client(service_name)
     file_path = os.path.join(os.path.dirname(__file__), server_data_rel_path + service_name +
                              "_sentences_examples.json")
     with open(file_path, 'rb') as file:
         doc = file.read()
     expected_result = json.dumps(load_test_data(service_name)["response"])
-    headers["Content-Type"] = "application/json"
-    headers["Response-Format"] = "json"
-    response = client.simulate_post('/' + service_name, body=doc, headers=headers)
-    result_doc = json.loads(response.content.decode('utf8'), encoding='utf-8')
-    assert_response_srtuct(result_doc, json.loads(expected_result))
-    assert response.status == falcon.HTTP_OK
+    myHeaders = headers.copy()
+    myHeaders["Content-Type"] = "application/json"
+    myHeaders["RESPONSE-FORMAT"] = "json"
+    response = hug.test.post(server.serve, '/inference', body=doc, headers=myHeaders)
+    assert_response_struct(response.data, json.loads(expected_result))
+    assert response.status == hug.HTTP_OK
 
 
 def get_decompressed_gzip(req_resp):
