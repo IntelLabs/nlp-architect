@@ -26,6 +26,7 @@ generated
 .idea/
 dist
 .nlp_architect_env/
+src/
 _generated_reqs.txt
 pylint.html
 pylint.txt
