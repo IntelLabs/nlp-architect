@@ -13,7 +13,8 @@ termcolor
 falcon
 falcon_multipart
 pillow
-setuptools
+# required for tensorflow 1.9
+setuptools==39.1.0
 spacy>=2.0
 keras==2.1.5
 git+https://www.github.com/keras-team/keras-contrib.git@196dd51e915712ec1bb31fc6925f26707c7c2cea#egg=keras-contrib
