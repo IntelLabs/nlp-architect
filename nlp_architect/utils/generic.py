@@ -19,6 +19,7 @@ from __future__ import unicode_literals
 from __future__ import absolute_import
 
 import numpy as np
+import re
 
 
 # pylint: disable=invalid-unary-operand-type
@@ -154,3 +155,80 @@ def license_prompt(model_name, model_website, dataset_dir=None):
             print('Please download the model manually from {}'.format(model_website))
         responded_yes = False
     return responded_yes
+
+
+# character vocab
+zhang_lecun_vocab = list("abcdefghijklmnopqrstuvwxyz0123456789-,;.!?:’/\|_@#$%ˆ&*˜‘+=<>()[]{}")
+vocab_hash = {b: a for a, b in enumerate(zhang_lecun_vocab)}
+
+
+def normalize(txt, vocab=None, replace_char=' ',
+              max_length=300, pad_out=True,
+              to_lower=True, reverse=False,
+              truncate_left=False, encoding=None):
+
+    # remove html
+    # This will keep characters and other symbols
+    txt = txt.split()
+    # Remove HTML
+    txt = [re.sub(r'http:.*', '', r) for r in txt]
+    txt = [re.sub(r'https:.*', '', r) for r in txt]
+
+    txt = (" ".join(txt))
+
+    # Remove punctuation
+    txt = re.sub("[.,!]", " ", txt)
+    txt = " ".join(txt.split())
+
+    # store length for multiple comparisons
+    txt_len = len(txt)
+
+    if truncate_left:
+        txt = txt[-max_length:]
+    else:
+        txt = txt[:max_length]
+    # change case
+    if to_lower:
+        txt = txt.lower()
+    # Reverse order
+    if reverse:
+        txt = txt[::-1]
+    # replace chars
+    if vocab is not None:
+        txt = ''.join([c if c in vocab else replace_char for c in txt])
+    # re-encode text
+    if encoding is not None:
+        txt = txt.encode(encoding, errors="ignore")
+    # pad out if needed
+    if pad_out and max_length > txt_len:
+        txt = txt + replace_char * (max_length - txt_len)
+    return txt
+
+
+def to_one_hot(txt, vocab=vocab_hash):
+    vocab_size = len(vocab.keys())
+    one_hot_vec = np.zeros((vocab_size + 1, len(txt)), dtype=np.float32)
+    # run through txt and "switch on" relevant positions in one-hot vector
+    for idx, char in enumerate(txt):
+        if char in vocab_hash:
+            vocab_idx = vocab_hash[char]
+            one_hot_vec[vocab_idx, idx] = 1
+        # raised if character is out of vocabulary
+        else:
+            pass
+    return one_hot_vec
+
+
+def balance(df):
+    print("Balancing the classes")
+    type_counts = df['Sentiment'].value_counts()
+    min_count = min(type_counts.values)
+
+    balanced_df = None
+    for key in type_counts.keys():
+        df_sub = df[df['Sentiment'] == key].sample(n=min_count, replace=False)
+        if balanced_df is not None:
+            balanced_df = balanced_df.append(df_sub)
+        else:
+            balanced_df = df_sub
+    return balanced_df

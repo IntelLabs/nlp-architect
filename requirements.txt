@@ -17,6 +17,7 @@ termcolor
 falcon
 falcon_multipart
 pillow
+pandas
 setuptools
 spacy>=2.0
 keras==2.1.5
