@@ -53,6 +53,7 @@ The library contains state-of-art and novel NLP and NLU models in a varity of to
 - NER and NE expansion
 - Text chunking
 - Reading comprehension
+- Supervised sentiment analysis
 
 Deep Learning frameworks
 ````````````````````````

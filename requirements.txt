@@ -1,4 +1,8 @@
 ConfigArgParse==0.11.0
+ftfy
+textacy
+bokeh
+pandas
 numpy
 tqdm
 scipy
@@ -12,6 +16,7 @@ sklearn
 termcolor
 falcon
 falcon_multipart
+pandas
 pillow
 # required for tensorflow 1.9
 setuptools==39.1.0

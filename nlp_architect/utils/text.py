@@ -14,9 +14,14 @@
 # limitations under the License.
 # ******************************************************************************
 import sys
+import re
 
 import spacy
 from spacy.cli.download import download as spacy_download
+from nltk.stem.snowball import EnglishStemmer
+from nltk import WordNetLemmatizer
+from spacy.lemmatizer import Lemmatizer
+from spacy.lang.en import LEMMA_INDEX, LEMMA_EXC, LEMMA_RULES
 
 from nlp_architect.utils.generic import license_prompt
 
@@ -167,6 +172,49 @@ class SpacyInstance:
         # pylint: disable=not-callable
 
         return [t.text for t in self.parser(text)]
+
+
+stemmer = EnglishStemmer()
+lemmatizer = WordNetLemmatizer()
+spacy_lemmatizer = Lemmatizer(LEMMA_INDEX, LEMMA_EXC, LEMMA_RULES)
+p = re.compile(r'[ \-,;.@&_]')
+
+
+def simple_normalizer(text):
+    """
+    Simple text normalizer. Runs each token of a phrase thru wordnet lemmatizer
+    and a stemmer.
+    """
+    if not str(text).isupper() or \
+            not str(text).endswith('S') or \
+            not len(text.split()) == 1:
+        tokens = list(filter(lambda x: len(x) != 0, p.split(text.strip())))
+        text = ' '.join([stemmer.stem(lemmatizer.lemmatize(t))
+                         for t in tokens])
+    return text
+
+
+def spacy_normalizer(text, lemma=None):
+    """
+    Simple text normalizer using spacy lemmatizer. Runs each token of a phrase
+    thru a lemmatizer and a stemmer.
+    Arguments:
+        text(string): the text to normalize.
+        lemma(string): lemma of the given text. in this case only stemmer will
+        run.
+    """
+    if not str(text).isupper() or \
+            not str(text).endswith('S') or \
+            not len(text.split()) == 1:
+        tokens = list(filter(lambda x: len(x) != 0, p.split(text.strip())))
+        if lemma:
+            lemma = lemma.split(' ')
+            text = ' '.join([stemmer.stem(l)
+                             for l in lemma])
+        else:
+            text = ' '.join([stemmer.stem(spacy_lemmatizer(t, u'NOUN')[0])
+                             for t in tokens])
+    return text
 
 
 def read_sequential_tagging_file(file_path, ignore_line_patterns=None):

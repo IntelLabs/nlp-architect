@@ -1,0 +1,36 @@
+
+.clear_button button.bk-bs-btn.bk-bs-btn-success {
+	background-color: #d2d4d8;
+	border-color: #d2d4d8;
+	color: white;
+}
+
+.export_button button.bk-bs-btn.bk-bs-btn-success {
+	background-color: #d2d4d8;
+	border-color: #d2d4d8;
+	color: white;
+}
+
+.content {
+    font-size: 200px;
+}
+
+.seed-input {
+    color: black;
+}
+
+.bad-word {
+    color: #ed380b;
+}
+
+.checkbox_group {
+    padding-bottom: 0px;
+}
+
+.phrases_list {
+    padding-top: 0px;
+}
+
+.group-div {
+    white-space: pre-wrap;
+}
