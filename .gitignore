@@ -12,13 +12,13 @@
 .styleenv
 .coverage
 build
-*.gz
 generated
 *.ropeproject
 *.cubin
 *.hdf5
 *.h5
 *.html
+!solutions/set_expansion/ui/templates/*.html
 .vscode
 !server/web_service/static/*.html
 !tests/fixtures/data/server/*.gz
@@ -31,4 +31,5 @@ pylint.html
 pylint.txt
 flake8.txt
 nlp_architect/pipelines/bist-pretrained/*
+venv
 nlp_architect/api/ner-pretrained/*

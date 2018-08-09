@@ -1,0 +1,14 @@
+
+Data:
+==========
+enwiki-20171201_subset.txt is a subset of Wikimedia English data dumps:
+
+https://meta.wikimedia.org/wiki/Data_dumps
+https://dumps.wikimedia.org/enwiki/
+
+
+
+License: 
+==========
+Creative Commons Attribution-Share-Alike 3.0 License
+https://creativecommons.org/licenses/by-sa/3.0/

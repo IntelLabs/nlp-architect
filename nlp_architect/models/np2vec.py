@@ -239,7 +239,7 @@ class NP2vec:
             total_vec = 0
             vector_size = self.model.vector_size
             for word in self.model.wv.vocab.keys():
-                if self.is_marked(word):
+                if self.is_marked(word) and len(word) > 1:
                     total_vec += 1
             logger.info(
                 "storing %sx%s projection weights for NP's into %s",
@@ -250,7 +250,7 @@ class NP2vec:
                 for word, vocab in sorted(
                         iteritems(
                             self.model.wv.vocab), key=lambda item: -item[1].count):
-                    if self.is_marked(word):
+                    if self.is_marked(word) and len(word) > 1:  # discard empty marked np's
                         embedding_vec = self.model.wv.syn0[vocab.index]
                         if binary:
                             fout.write(

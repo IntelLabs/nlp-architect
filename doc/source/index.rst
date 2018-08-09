@@ -131,6 +131,13 @@ on this project, please see the :doc:`developer guide <developer_guide>`.
 .. toctree::
    :hidden:
    :maxdepth: 1
+   :caption: Solutions
+
+   term_set_expansion.rst
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
    :caption: Pipelines
 
    spacy_bist.rst
