@@ -100,15 +100,21 @@ supports extensions via a template for developers to add a new service. For
 detailed documentation see this
 [page](http://nlp_architect.nervanasys.com/service.html).
 
-See and example of the BIST parser model UI:
+Below are examples of NLP Architect server in action
 
+BIST Parser UI
 <center> <img src="doc/source/assets/bist_service.png"></center>
+
+NER Parser UI
+<center> <img src="doc/source/assets/ner_service.png"></center>
+
+Spacy NER Parser UI
+<center> <img src="doc/source/assets/spacy_ner_service.png"></center>
 
 ### Deep Learning Frameworks
 Because of its current research nature, several open source deep learning
 frameworks are used in this repository including:
 
-* [Intel® neon]
 * [Intel® nGraph Python API]
 * [TensorFlow]
 * [Intel-Optimized TensorFlow]
