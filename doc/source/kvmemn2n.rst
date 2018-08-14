@@ -28,13 +28,11 @@ The idea behind this method is to be able to answer wide range of questions base
 
 Files
 =====
-- **nlp_architect/models/kvmemn2n.py**: Defines the key-value memory network model.
-- **nlp_architect/data/wikimovies.py**: Will download and process the data necessary to train the key-value memory network model.
-- **examples/train_kvmemn2n.py**: The primary class which processes the request to train or run inference on the key-value memory network model. It in turn will call the data processing algorithm when necessary.
-- **examples/wikiwindows.py**: A key data preprocessing stage necessary when using the raw Wikipedia text knowledge base. It is called by data.py, or can be run independently.
-- **examples/interactive_util.py**: Called by train_kvmemn2n.py to facilitate the interactive mode.
-
-
+- **nlp_architect/models/kvmemn2n.py**: Key-value memory network :py:class:`model <nlp_architect.models.kvmemn2n.KVMemN2N>`.
+- **nlp_architect/data/wikimovies.py**: :py:class:`WIKIMOVIES <nlp_architect.data.wikimovies.WIKIMOVIES>` class that downloads and processes the data necessary to train the key-value memory network model.
+- **examples/kvmemn2n/train_kvmemn2n.py**: The primary class which processes the request to train or run inference on the key-value memory network model. It in turn will call the data processing algorithm when necessary.
+- **examples/kvmemn2n/wikiwindows.py**: A key data preprocessing stage necessary when using the raw Wikipedia text knowledge base. It is called by data.py, or can be run independently.
+- **examples/kvmemn2n/interactive_util.py**: Called by train_kvmemn2n.py to facilitate the interactive mode.
 
 Dataset
 =======
@@ -70,34 +68,33 @@ Training
 --------
 The base command to train is ``python train_kvmemn2n.py``. This algorithm inherits the argument parsing from NGraph, and takes the additional arguments:
 
-- ``--emb_size`` Size of the word-embedding used in the model. (default 50)
-- ``--nhops`` Number of memory hops in the network. (default 3)
-- ``--lr`` Learning rate (default 0.01)
-- ``--subset`` WikiMovies dataset to use for training examples. 'full' or 'wiki-entities' (default 'wiki-entities')
-- ``--reparse`` When present, the data preprocessing will be redone
-- ``--mem_mode`` The memory source for the model. 'kb' or 'text' (default 'kb')
-- ``--use_v_luts`` Run the model using separate value lookup tables for each hop
-- ``--model_file`` File path and name to save the model to. When it is not present (default), the model will not be saved
-- ``--inference`` Will load a saved model from ``--model_file`` and run inference without further training
-- ``--restore`` Loads a saved model from ``--model_file`` and continues training, saving the updated weights
-- ``--interactive`` Kicks off the interactive session, either at the end of training or with loaded weights in ``--inference`` mode
+--emb_size       Size of the word-embedding used in the model. (default 50)
+--nhops          Number of memory hops in the network. (default 3)
+--lr             Learning rate (default 0.01)
+--subset         WikiMovies dataset to use for training examples. 'full' or 'wiki-entities' (default 'wiki-entities')
+--reparse        When present, the data preprocessing will be redone
+--mem_mode       The memory source for the model. 'kb' or 'text' (default 'kb')
+--use_v_luts     Run the model using separate value lookup tables for each hop
+--model_file     File path and name to save the model to. When it is not present (default), the model will not be saved
+--inference      Will load a saved model from ``--model_file`` and run inference without further training
+--restore        Loads a saved model from ``--model_file`` and continues training, saving the updated weights
+--interactive    Kicks off the interactive session, either at the end of training or with loaded weights in ``--inference`` mode
 
 Some key arguments from NGraph include:
 
-- ``--epochs`` Number of epochs (default 10)
-- ``--batch_size`` Batch size (default 128)
-- ``--data_dir`` The directory where the data will be stored (default ~/nervana/data)
+--epochs      Number of epochs (default 10)
+--batch_size  Batch size (default 128)
+--data_dir    The directory where the data will be stored (default ~/nervana/data)
 
 The run commands for the results below were:
 
 .. code:: python
 
-    python train_kvmemn2n.py --epochs 2000 --batch_size 32 --emb_size 100 \
+  python examples/kvmemn2n/train_kvmemn2n.py --epochs 2000 --batch_size 32 --emb_size 100 \
     --use_v_luts --model_file path_to_model_dir/kb_model
 
-    python train_kvmemn2n.py --mem_mode text --epochs 2000 --batch_size 32 \
+  python examples/kvmemn2n/train_kvmemn2n.py --mem_mode text --epochs 2000 --batch_size 32 \
     --emb_size 50 --model_file path_to_model_dir/text_model
-
 
 Saving and Loading a Model
 --------------------------
@@ -113,7 +110,7 @@ the KB model from above we would call:
 
 .. code:: python
 
-    python train_kvmemn2n.py --batch_size 32 --emb_size 100 --use_v_luts \
+  python examples/kvmemn2n/train_kvmemn2n.py --batch_size 32 --emb_size 100 --use_v_luts \
     --model_file path_to_model_dir/kb_model --inference --interactive
 
 Note that we set ``--emb_size 100`` and ``--use_v_luts`` as the original model used these parameters.
@@ -135,9 +132,8 @@ The model was trained and evaluated for two different memory modes with the foll
     KB, 99.96%, 93.9%
     Text (Window-level), 67.6%, 66.8%
 
-
-Citations
-=========
+References
+==========
 - **Paper**: https://arxiv.org/abs/1606.03126
 - **Torch Lua implementation**: https://github.com/facebook/MemNN, the function wikiwindows.py was taken from that repository and modified for integration into this code base. Modifications are listed at the beginning of the function.
 - **TensorFlow implementation**: https://github.com/siyuanzhao/key-value-memory-networks, for the model diagram and implementation comparisons

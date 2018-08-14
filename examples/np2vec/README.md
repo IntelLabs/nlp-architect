@@ -18,13 +18,6 @@ from [NLTK](https://www.nltk.org/data.html) using the following command ```nltk.
 conditions of the data set license apply. Intel does 
 not grant any rights to the data files.
 
-## Files
-- *np2vec.py*: NP2vec model training, store and load code.
-- *main_train.py*: illustrates how to call NP2vec training and store code.
-- *main_inference.py*: illustrates how to call NP2vec load code and get the embedding vector of 
-an NP.
-
-
 ## Training Usage
 
 ```

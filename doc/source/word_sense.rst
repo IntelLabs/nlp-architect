@@ -15,7 +15,7 @@
 .. ---------------------------------------------------------------------------
 
 Most Common Word Sense
-########################
+######################
 
 Overview
 ========
@@ -55,8 +55,10 @@ The feature vector consists of:
 - the word embedding of the target_word
 - the CBOW word embedding of the definition
 
+The model above is implemented in the :py:class:`MostCommonWordSense <nlp_architect.models.most_common_word_sense.MostCommonWordSense>` class.
+
 Dataset
-============
+=======
 The training module requires a gold standard csv file which is list of target_words where each word
 is associated with a CLASS_LABEL - a correct (true example) or an incorrect (false example) sense.
 The sense consists of the definition and the inherited hypernyms of the target word in a specific sense.
@@ -87,7 +89,7 @@ The terms and conditions of the data set license apply. Intel does not grant any
 
 .. code:: python
 
-  python prepare_data.py --gold_standard_file data/gold_standard.csv
+  python examples/most_common_word_sense/prepare_data.py --gold_standard_file data/gold_standard.csv
        --word_embedding_model_file pretrained_models/GoogleNews-vectors-negative300.bin
        --training_to_validation_size_ratio 0.8
        --data_set_file data/data_set.pkl
@@ -95,18 +97,18 @@ The terms and conditions of the data set license apply. Intel does not grant any
 Training
 --------
 
-Trains the MLP classifier and evaluate it.
+Trains the MLP classifier (:py:class:`model  <nlp_architect.models.most_common_word_sense.MostCommonWordSense>`) and evaluate it.
 
 .. code:: python
 
-  python train.py --data_set_file data/data_set.pkl
+  python examples/most_common_word_sense/train.py --data_set_file data/data_set.pkl
                  --model_prm data/wsd_classification_model.prm
 
 Inference
 ---------
 .. code:: python
 
-  python inference.py --max_num_of_senses_to_search 3
+  python examples/most_common_word_sense/inference.py --max_num_of_senses_to_search 3
        --input_inference_examples_file data/input_inference_examples.csv
        --word_embedding_model_file pretrained_models/GoogleNews-vectors-negative300.bin
        --model_prm data/wsd_classification_model.prm

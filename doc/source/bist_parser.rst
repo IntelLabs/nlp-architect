@@ -22,7 +22,7 @@ Graph-based dependency parser using BiLSTM feature extractors
 
 The techniques behind the parser are described in the `Simple and
 Accurate Dependency Parsing Using Bidirectional LSTM Feature
-Representations <https://www.transacl.org/ojs/index.php/tacl/article/viewFile/885/198>`__.
+Representations <https://www.transacl.org/ojs/index.php/tacl/article/viewFile/885/198>`__ [1]_.
 
 Usage
 =====
@@ -86,7 +86,7 @@ directory:
 Inference
 =========
 
-Once you have a trained ``BISTModel``, there are two acceptable input modes for running inference
+Once you have a trained :py:class:`BISTModel <nlp_architect.models.bist_parser.BISTModel>`, there are two acceptable input modes for running inference
 with it. For both modes, the input must be annotated with part-of-speech tags.
 
 File Input Mode
@@ -99,14 +99,14 @@ Supply a path to a dataset file in the CoNLL-U_ data format.
     predictions = parser.predict(dataset='/path/to/test.conllu')
 
 After running the above example, ``predictions`` will hold the input sentences with annotated
-dependencies, as a collection of ``ConllEntry`` objects, where each ``ConllEntry`` represents an
+dependencies, as a collection of :py:class:`ConllEntry <nlp_architect.data.conll.ConllEntry>` objects, where each :py:class:`ConllEntry <nlp_architect.data.conll.ConllEntry>` represents an
 annotated token.
 
 ConllEntry Input Mode
 ---------------------
 
 Supply a list of sentences, where each sentence is a list of annotated tokens, represented by
-``ConllEntry`` instances.
+:py:class:`ConllEntry <nlp_architect.data.conll.ConllEntry>` instances.
 
 .. code:: python
 
@@ -135,7 +135,7 @@ This will produce 2 files in your input dataset's directory:
 Saving and Loading a Model
 ==========================
 
-To save a ``BISTModel`` to some path, type:
+To save a :py:class:`BISTModel <nlp_architect.models.bist_parser.BISTModel>` to some path, type:
 
 .. code:: python
 
@@ -144,7 +144,7 @@ To save a ``BISTModel`` to some path, type:
 This operation will also produce a model parameters file named *params.json*, in the same directory.
 This file is required for loading the model afterwards.
 
-To load a ``BISTModel`` from some path, type:
+To load a :py:class:`BISTModel <nlp_architect.models.bist_parser.BISTModel>` from some path, type:
 
 .. code:: python
 
@@ -152,8 +152,8 @@ To load a ``BISTModel`` from some path, type:
 
 Note that this operation will also look for the *params.json* in the same directory.
 
-Citations
-=========
-* Kiperwasser, E., & Goldberg, Y. (2016). Simple and Accurate Dependency Parsing Using Bidirectional LSTM Feature Representations. Transactions Of The Association For Computational Linguistics, 4, 313-327. https://transacl.org/ojs/index.php/tacl/article/view/885/198
+References
+==========
+.. [1] Kiperwasser, E., & Goldberg, Y. (2016). Simple and Accurate Dependency Parsing Using Bidirectional LSTM Feature Representations. Transactions Of The Association For Computational Linguistics, 4, 313-327. https://transacl.org/ojs/index.php/tacl/article/view/885/198
 
 .. _CoNLL-U:  http://universaldependencies.org/format.html

@@ -29,14 +29,13 @@ class MatchLSTM_AnswerPointer(object):
     def __init__(self, params_dict, embeddings):
         """
         Args:
-        --------
-        params_dict: Dictionary containing the following keys-
-                     'max_question' : max length of all questions in the dataset
-                     'max_para' :  max length of all paragraphs in the dataset
-                     'hidden_size': number of hidden units in the network
-                     'batch_size' : batch size defined by user
+            params_dict: Dictionary containing the following keys-
+                         'max_question' : max length of all questions in the dataset
+                         'max_para' :  max length of all paragraphs in the dataset
+                         'hidden_size': number of hidden units in the network
+                         'batch_size' : batch size defined by user
 
-        embeddings: Glove pretrained embedding matrix
+            embeddings: Glove pretrained embedding matrix
         """
 
         # Assign Variables:
@@ -195,7 +194,6 @@ class MatchLSTM_AnswerPointer(object):
         Function to run the match_lstm pass in both forward and reverse directions
 
         Args:
-        ----------
         reverse: Boolean indicating whether to unroll in reverse directions
 
         """
@@ -271,12 +269,10 @@ class MatchLSTM_AnswerPointer(object):
         Function to run the answer pointer pass:
 
         Args:
-        ---------
-        None
+            None
 
         Returns:
-        --------
-        List of logits for start and end indices of the answer
+            List of logits for start and end indices of the answer
         """
 
         V_r_expanded = tf.tile(self.V_r, [self.batch_size, 1, 1])
@@ -328,13 +324,11 @@ class MatchLSTM_AnswerPointer(object):
         Function to get answer indices given the predictions
 
         Args:
-        ------
-        preds_start: predicted start indices
-        predictions: predicted end indices
+            preds_start: predicted start indices
+            predictions: predicted end indices
 
         Returns:
-        -------
-        final start and end indices for the answer
+            final start and end indices for the answer
         """
         ans_start = []
         ans_end = []
@@ -366,13 +360,11 @@ class MatchLSTM_AnswerPointer(object):
         Function to calculate F-1 and EM scores
 
         Args:
-        ------
-        ground_truths: labels given in the dataset
-        predictions: logits predicted by the network
+            ground_truths: labels given in the dataset
+            predictions: logits predicted by the network
 
         Returns:
-        -------
-        F1 score and Exact-Match score
+            F1 score and Exact-Match score
         """
         start_idx, end_idx = self.obtain_indices(predictions[0], predictions[1])
         f1 = 0
@@ -401,12 +393,10 @@ class MatchLSTM_AnswerPointer(object):
         Function to run training/validation loop and display training loss, F1 & EM scores
 
         Args:
-        ----------
-        session: tensorflow session
-        train:   data dictionary for training/validation
-        dropout: float value
-        mode: 'train'/'val'
-
+            session: tensorflow session
+            train:   data dictionary for training/validation
+            dropout: float value
+            mode: 'train'/'val'
         """
 
         nbatches = int((len(train['para']) / self.batch_size))

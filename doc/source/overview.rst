@@ -27,7 +27,7 @@ The library includes our past and ongoing NLP research efforts as part of Intel 
 
 
 How can NLP Architect be used
-===============================
+=============================
 
 - Train models using provided algorithms, reference datasets and configurations
 - Train models using your own data
@@ -42,7 +42,7 @@ Library Overview
 
 Research driven NLP/NLU models
 ``````````````````````````````
-The library contains state-of-art and novel NLP and NLU models in a varity of topics:
+The library contains state-of-art and novel NLP and NLU models in a variety of topics:
 
 - Dependency parsing
 - Intent detection and Slot tagging model for Intent based applications
@@ -50,10 +50,13 @@ The library contains state-of-art and novel NLP and NLU models in a varity of to
 - Key-value Network for question&answer system
 - Noun phrase embedding vectors model
 - Noun phrase semantic segmentation
-- NER and NE expansion
-- Text chunking
+- Named Entity Recognition
+- Word Chunking
 - Reading comprehension
+- Language modeling using Temporal Convolution Network
+- Unsupervised Crosslingual Word Embedding
 - Supervised sentiment analysis
+
 
 Deep Learning frameworks
 ````````````````````````

@@ -1,9 +1,9 @@
 .wy-side-nav-search {
-  background-color: #8eb0af;
+  background-color: #0071c5;
 }
 
 .wy-nav-content-wrap {
-    background: rgba(0,0,0,0.05);
+    background: #ffffff;
 }
 
 .wy-nav-content {
@@ -11,6 +11,7 @@
     height: 100%;
     max-width: 1000px !important;
     margin: 0;
+    background: #ffffff;
 }
 
 .wy-nav-side {
@@ -27,8 +28,9 @@
 
 body, h1, h2, .rst-content .toctree-wrapper p.caption, h3, h4, h5, h6, legend {
     font-family: "Lato", "Menlo", "Andale Mono WT", "Andale Mono", "Lucida Console", "monospace";
+    background: #ffffff;
 }
 
 .wy-nav-top {
-    background: #8eb0af;
+    background: #0071c5;
 }

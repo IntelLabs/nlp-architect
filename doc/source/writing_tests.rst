@@ -14,8 +14,8 @@
 .. limitations under the License.
 .. ---------------------------------------------------------------------------
 
-Test Conventions
-################
+Tests Conventions
+=================
 
 To ensure code stability, developers are required to write tests for contributed modules,
 according to these guidelines:
@@ -30,7 +30,7 @@ according to these guidelines:
 
 
 Test Types
-==========
+----------
 
 * **Regression tests** – check that claimed model/pipeline end-to-end functionality is preserved after changes. Test sub-components where appropriate.
 

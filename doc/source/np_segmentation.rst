@@ -32,7 +32,10 @@ For example:
 - ``fresh hot dog`` - hot dog is a collocation, and changes the head (``dog``) semantic meaning.
 - ``fresh hot pizza`` - fresh and hot are descriptions for the pizza.
 
-This model is the first step in the Semantic Segmentation algorithm - the MLP classifier.
+Model
+=====
+
+The :py:class:`NpSemanticSegClassifier <nlp_architect.models.np_semantic_segmentation.NpSemanticSegClassifier>` model is the first step in the Semantic Segmentation algorithm - the MLP classifier.
 The Semantic Segmentation algorithm takes the dependency relations between the Noun-Phrase words, and the MLP classifier inference as the
 input - and build a semantic hierarchy that represents the semantic meaning.
 The Semantic Segmentation algorithm eventually create a tree where each tier represent a semantic meaning -> if a sequence of words is a
@@ -42,28 +45,26 @@ to different tier in the tree.
 This model trains MLP classifier and inference from such classifier in order to conclude the correct segmentation
 for the given NP.
 
-for the examples above the classifier will output 1 (==Collocation) for ``hot dog`` and output 0 (== not collocation)
+For the examples above the classifier will output 1 (==Collocation) for ``hot dog`` and output 0 (== not collocation)
 for ``hot pizza``.
 
-
 Files
-=========
-- **nlp_architect/models/np_semantic_segmentation.py**: contains the MLP classifier model.
-- **examples/data.py**: Prepare string data for both ``train.py`` and ``inference.py`` using pre-trained word embedding, NLTKCollocations score, Wordnet and wikidata.
-- **examples/feature_extraction.py**: contains the feature extraction services
-- **examples/train.py**: train the MLP classifier.
-- **examples/inference.py**: load the trained model and inference the input data by the model.
+=====
+- :py:class:`NpSemanticSegClassifier <nlp_architect.models.np_semantic_segmentation.NpSemanticSegClassifier>`: is the MLP classifier model.
+- **examples/np_semantic_segmentation/data.py**: Prepare string data for both ``train.py`` and ``inference.py`` using pre-trained word embedding, NLTKCollocations score, Wordnet and wikidata.
+- **examples/np_semantic_segmentation/feature_extraction.py**: contains the feature extraction services
+- **examples/np_semantic_segmentation/train.py**: train the MLP classifier.
+- **examples/np_semantic_segmentation/inference.py**: load the trained model and inference the input data by the model.
 
 Dataset
--------
-
+=======
 The expected dataset is a CSV file with 2 columns. the first column
 contains the Noun-Phrase string (a Noun-Phrase containing 2 words), and
 the second column contains the correct label (if the 2 word Noun-Phrase
 is a collocation - the label is 1, else 0)
 
 If you wish to use an existing dataset for training the model, you can
-download Tratz 2011 et al. dataset [1] from the following link: `Tratz
+download Tratz 2011 et al. dataset [1]_ [2]_ [3]_ [4]_ from the following link: `Tratz
 2011
 Dataset <https://vered1986.github.io/papers/Tratz2011_Dataset.tar.gz>`__.
 Is also available in
@@ -73,7 +74,7 @@ grant any rights to the data files or database.
 
 After downloading and unzipping the dataset, run
 ``preprocess_tratz2011.py`` in order to construct the labeled data and
-save it in a CSV file (as expected for the model). the scripts read 2
+save it in a CSV file (as expected for the model). The scripts read 2
 .tsv files ('tratz2011\_coarse\_grained\_random/train.tsv' and
 'tratz2011\_coarse\_grained\_random/val.tsv') and outputs 2 .csv files
 accordingly to the same location.
@@ -82,10 +83,10 @@ Quick example:
 
 ::
 
-    python preprocess_tratz2011.py --data path_to_Tratz_2011_dataset_folder
+    python examples/np_semantic_segmentation/preprocess_tratz2011.py --data path_to_Tratz_2011_dataset_folder
 
-Pre-processing the data:
-~~~~~~~~~~~~~~~~~~~~~~~~
+Pre-processing the data
+-----------------------
 
 A feature vector is extracted from each Noun-Phrase string using the
 command ``python data.py``
@@ -107,21 +108,25 @@ command ``python data.py``
 
 Quick example:
 
-::
+.. code:: python
 
-    python data.py --data input_data_path.csv --output output_prepared_path.csv --w2v_path <path_to_w2v>/GoogleNews-vectors-negative300.bin.gz
+  python data.py --data input_data_path.csv --output output_prepared_path.csv --w2v_path <path_to_w2v>/GoogleNews-vectors-negative300.bin.gz
 
+Running Modalities
+==================
 Training
 --------
 
-The command ``python train.py`` will train the MLP classifier and
+The command ``python examples/np_semantic_segmentation/train.py`` will train the MLP classifier and
 evaluate it. After training is done, the model is saved automatically:
 
 Quick example:
 
-::
+.. code:: python
 
-    python train.py --data prepared_data_path.csv --model_path np_semantic_segmentation_path.h5
+  python examples/np_semantic_segmentation/train.py \
+    --data prepared_data_path.csv \
+    --model_path np_semantic_segmentation_path.h5
 
 Inference
 ---------
@@ -134,21 +139,18 @@ data.
 
 Quick example:
 
-::
+.. code:: python
 
-    python inference.py --model np_semantic_segmentation_path.prm --data prepared_data_path.csv --output inference_data.csv --print_stats
+  python examples/np_semantic_segmentation/inference.py \
+    --model np_semantic_segmentation_path.prm \
+    --data prepared_data_path.csv \
+    --output inference_data.csv \
+    --print_stats
 
+References
+==========
 
-Citations
----------
-
-[1] Stephen Tratz and Eduard Hovy. 2011. A Fast, Accurate, Non-Projective, Semantically-Enriched
-Parser. In Proceedings of the 2011 Conference on Empirical Methods in Natural Language Processing.
-Edinburgh, Scotland, UK. Dirk Hovy, Stephen Tratz, and Eduard Hovy. 2010. What’s in a Preposition?
-Dimensions of Sense Disambiguation for an Interesting Word Class. In Proceedings of COLING 2010:
-Poster Volume. Beijing, China. Stephen Tratz and Dirk Hovy. 2009. Disambiguation of Preposition
-Sense using Linguistically Motivated Features. In Proceedings of Human Language Technologies:
-The 2009 Annual Conference of the North American Chapter of the Association for Computational
-Linguistics, Companion Volume: Student Research Workshop and Doctoral Consortium. Boulder, Colorado.
-Stephen Tratz and Eduard Hovy. 2010. A Taxonomy, Dataset, and Classifier for Automatic Noun Compound Interpretation.
-In Proceedings of the 48th Annual Meeting of the Association for Computational Linguistics. Uppsala, Sweden
+.. [1] Stephen Tratz and Eduard Hovy. 2011. A Fast, Accurate, Non-Projective, Semantically-Enriched Parser. In Proceedings of the 2011 Conference on Empirical Methods in Natural Language Processing. Edinburgh, Scotland, UK.
+.. [2] Dirk Hovy, Stephen Tratz, and Eduard Hovy. 2010. What’s in a Preposition? Dimensions of Sense Disambiguation for an Interesting Word Class. In Proceedings of COLING 2010: Poster Volume. Beijing, China.
+.. [3] Stephen Tratz and Dirk Hovy. 2009. Disambiguation of Preposition Sense using Linguistically Motivated Features. In Proceedings of Human Language Technologies: The 2009 Annual Conference of the North American Chapter of the Association for Computational Linguistics, Companion Volume: Student Research Workshop and Doctoral Consortium. Boulder, Colorado.
+.. [4] Stephen Tratz and Eduard Hovy. 2010. A Taxonomy, Dataset, and Classifier for Automatic Noun Compound Interpretation. In Proceedings of the 48th Annual Meeting of the Association for Computational Linguistics. Uppsala, Sweden

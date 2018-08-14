@@ -52,5 +52,7 @@ Documentation Conventions
 
 * Every time you make a significant contribution, add a short description of it in the relevant document.
 
+.. include:: writing_tests.rst
+
 .. _reStructuredText: http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html
 .. _autosummary: http://sphinx-doc.org/latest/ext/autosummary.html

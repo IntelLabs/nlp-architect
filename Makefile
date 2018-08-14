@@ -21,7 +21,7 @@ DOC_PUB_RELEASE_PATH := $(DOC_PUB_PATH)/$(RELEASE)
 
 LIBRARY_NAME := nlp_architect
 VIRTUALENV_DIR := .nlp_architect_env
-REQ_FILE := _generated_reqs.txt
+REQ_FILE := requirements.txt
 ACTIVATE := $(VIRTUALENV_DIR)/bin/activate
 MODELS_DIR := $(LIBRARY_NAME)/models
 NLP_DIR := $(LIBRARY_NAME)/nlp
@@ -47,6 +47,8 @@ pylint: test_prepare
 	@. $(ACTIVATE); pylint $(PYLINT_CHECK_DIRS) | tee pylint.txt
 	@. $(ACTIVATE); python3 tests/utils/ansi2html.py pylint.txt > pylint.html
 
+style: flake pylint
+
 doc_prepare: doc_requirements.txt $(ACTIVATE)
 	@. $(ACTIVATE); pip3 install -r doc_requirements.txt > /dev/null 2>&1
 
@@ -64,16 +66,8 @@ html: doc_prepare $(ACTIVATE)
 clean:
 	@echo "Cleaning files.."
 	@rm -rf $(VIRTUALENV_DIR)
-	@rm -rf $(REQ_FILE)
 
 ENV_EXIST := $(shell test -d $(VIRTUALENV_DIR) && echo -n yes)
-REQ_EXIST := $(shell test -f $(REQ_FILE) && echo -n yes)
-
-$(REQ_FILE):
-ifneq ($(REQ_EXIST), yes)
-	@echo "Generating pip requirements file"
-	@bash generate_reqs.sh
-endif
 
 $(ACTIVATE): $(REQ_FILE)
 ifneq ($(ENV_EXIST), yes)
@@ -81,7 +75,6 @@ ifneq ($(ENV_EXIST), yes)
 	@echo "**************************"
 	@echo "Creating new environment"
 	@echo
-#	virtualenv -p python3 $(VIRTUALENV_DIR)
 	python3 -m venv $(VIRTUALENV_DIR)
 	@. $(ACTIVATE); pip3 install -U pip
 endif

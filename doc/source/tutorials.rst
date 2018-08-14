@@ -49,3 +49,4 @@ List of tutorials
 - `Intent Extraction <https://github.com/NervanaSystems/nlp-architect/blob/master/tutorials/intent_extraction/intent_extraction_demo.ipynb>`_
 - `Named Entity Recognition <https://github.com/NervanaSystems/nlp-architect/blob/master/tutorials/ner/ner_demo.ipynb>`_
 - `NP Semantic Segmentation <https://github.com/NervanaSystems/nlp-architect/blob/master/tutorials/np_semantic_segmentation/np_semantic_segmentation_demo.ipynb>`_
+- `Sentiment Analysis <https://github.com/NervanaSystems/nlp-architect/blob/master/tutorials/sentiment/Deep_Learning_Sentiment_Demo.ipynb>`_

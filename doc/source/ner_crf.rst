@@ -49,7 +49,7 @@ In the above format each sentence is separated by an empty line. Each line consi
 Data loader
 -----------
 
-Loading data into the model can be done using the ``SequentialTaggingDataset`` data loader from ``nlp_architect.data.sequential_tagging`` package, which can be used with the preprared train and test data sets described above.
+Loading data into the model can be done using the :py:class:`SequentialTaggingDataset <nlp_architect.data.sequential_tagging.SequentialTaggingDataset>` data loader which can be used with the preprared train and test data sets described above.
 
 The data loader returns 2 numpy matrices:
 1. sparse word representation of the sentence words
@@ -100,40 +100,38 @@ Train a model with default parameters given input data files:
 
 .. code:: python
 
-	python train.py --train_file train.txt --test_file test.txt
+	python examples/ner/train.py --train_file train.txt --test_file test.txt
 
 Full training parameters
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-All customizable parameters can be obtained by running: ``python train.py -h``
+All customizable parameters can be obtained by running: ``python examples/ner/train.py -h``
 
-.. code:: bash
-
-  -b B                  Batch size
-  -e E                  Number of epochs
-  --train_file TRAIN_FILE
-                        Train file (sequential tagging dataset format)
-  --test_file TEST_FILE
-                        Test file (sequential tagging dataset format)
-  --tag_num TAG_NUM     Entity labels tab number in train/test files
-  --sentence_length SENTENCE_LENGTH
-                        Max sentence length
-  --word_length WORD_LENGTH
-                        Max word length in characters
-  --word_embedding_dims WORD_EMBEDDING_DIMS
-                        Word features embedding dimension size
-  --character_embedding_dims CHARACTER_EMBEDDING_DIMS
-                        Character features embedding dimension size
-  --char_features_lstm_dims CHAR_FEATURES_LSTM_DIMS
-                        Character feature extractor LSTM dimension size
-  --entity_tagger_lstm_dims ENTITY_TAGGER_LSTM_DIMS
-                        Entity tagger LSTM dimension size
-  --dropout DROPOUT     Dropout rate
-  --embedding_model EMBEDDING_MODEL
-                        Path to external word embedding model file
-  --model_path MODEL_PATH
-                        Path for saving model weights
-  --model_info_path MODEL_INFO_PATH
-                        Path for saving model topology
+-b B                  Batch size
+-e E                  Number of epochs
+--train_file TRAIN_FILE
+                      Train file (sequential tagging dataset format)
+--test_file TEST_FILE
+                      Test file (sequential tagging dataset format)
+--tag_num TAG_NUM     Entity labels tab number in train/test files
+--sentence_length SENTENCE_LENGTH
+                      Max sentence length
+--word_length WORD_LENGTH
+                      Max word length in characters
+--word_embedding_dims WORD_EMBEDDING_DIMS
+                      Word features embedding dimension size
+--character_embedding_dims CHARACTER_EMBEDDING_DIMS
+                      Character features embedding dimension size
+--char_features_lstm_dims CHAR_FEATURES_LSTM_DIMS
+                      Character feature extractor LSTM dimension size
+--entity_tagger_lstm_dims ENTITY_TAGGER_LSTM_DIMS
+                      Entity tagger LSTM dimension size
+--dropout DROPOUT     Dropout rate
+--embedding_model EMBEDDING_MODEL
+                      Path to external word embedding model file
+--model_path MODEL_PATH
+                      Path for saving model weights
+--model_info_path MODEL_INFO_PATH
+                      Path for saving model topology
 
 The model will automatically save the model weights and topology information after training is complete (user can provide file names as above).
 
@@ -142,32 +140,23 @@ Interactive mode
 
 The provided ``interactive.py`` file enables using a pre-trained model in interactive mode, providing input directly from stdin.
 
-Run ``python interactive.py -h`` for a full list of options:
+Run ``python examples/ner/interactive.py -h`` for a full list of options:
 
-.. code:: bash
-
-  --model_path MODEL_PATH
-                        Path of model weights
-  --model_info_path MODEL_INFO_PATH
-                        Path of model topology
+--model_path MODEL_PATH
+                      Path of model weights
+--model_info_path MODEL_INFO_PATH
+                      Path of model topology
 
 Quick example:
 
 .. code:: python
 
-	python interactive.py --model_path model.h5 --model_info_path model_info.dat
-
-
-Evaluation
-==========
-TBD
-
+	python examples/ner/interactive.py --model_path model.h5 --model_info_path model_info.dat
 
 References
 ==========
 
-[1] - `Neural Architectures for Named Entity Recognition`_ - Guillaume Lample, Miguel Ballesteros, Sandeep Subramanian, Kazuya Kawakami, Chris Dyer. 2016
-
+1. `Neural Architectures for Named Entity Recognition`_ - Guillaume Lample, Miguel Ballesteros, Sandeep Subramanian, Kazuya Kawakami, Chris Dyer. 2016
 
 .. _BIO: https://en.wikipedia.org/wiki/Inside%E2%80%93outside%E2%80%93beginning_(tagging)
 .. _`Lample et al.`: https://arxiv.org/abs/1603.01360

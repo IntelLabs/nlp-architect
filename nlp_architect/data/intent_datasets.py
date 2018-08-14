@@ -156,17 +156,17 @@ class TabularIntentDataset(IntentDataset):
     Tabular Intent/Slot tags dataset loader.
     Compatible with many sequence tagging datasets (ATIS, CoNLL, etc..)
     data format must be int tabular format where:
-        - one word per line with tag annotation and intent type separated by tabs
-            <token>\t<tag_label>\t<intent>\n
-        - sentences are separated by an empty line
+    - one word per line with tag annotation and intent type separated
+    by tabs <token>\t<tag_label>\t<intent>\n
+    - sentences are separated by an empty line
 
     Args:
-            train_file (str): path to train set file
-            test_file (str): path to test set file
-            sentence_length (int): max sentence length
-            word_length (int): max word length
-            embedding_model (str): external word embedding model path
-            embedding_size (int): external word embedding vector size
+        train_file (str): path to train set file
+        test_file (str): path to test set file
+        sentence_length (int): max sentence length
+        word_length (int): max word length
+        embedding_model (str): external word embedding model path
+        embedding_size (int): external word embedding vector size
     """
     files = ['train', 'test']
 

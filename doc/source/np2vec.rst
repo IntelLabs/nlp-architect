@@ -15,7 +15,7 @@
 .. ---------------------------------------------------------------------------
 
 Noun Phrase to Vec
-###################
+##################
 
 Overview
 ========
@@ -37,28 +37,29 @@ NP's have to be marked in the corpus by a marking character between the words of
 For example, if the marking character is "\_", the NP "Natural Language Processing" will be marked as "Natural_Language_Processing".
 
 We use the CONLL2000_ shared task dataset in the default parameters of our example for training
-np2vec model. You can download the dataset
-from NLTK_ using the following command ``nltk.download('conll2000')``. The terms and
-conditions of the data set license apply. Intel does
-not grant any rights to the data files.
+:py:class:`NP2vec <nlp_architect.models.np2vec.NP2vec>` model. You can download the dataset
+from NLTK_ using the following command ``nltk.download('conll2000')``. The terms and conditions of the data set license apply. Intel does not grant any rights to the data files.
 
 Files
-======
+=====
 
-- **nlp_architect/models/np2vec.py**: NP2vec model training, store and load code.
-- **examples/train.py**: illustrates how to call NP2vec training and store code.
-- **examples/inference.py**: illustrates how to call NP2vec load code.
+- :py:class:`NP2vec <nlp_architect.models.np2vec.NP2vec>` model training, store and load code.
+- **examples/np2vec/train.py**: illustrates how to call :py:class:`NP2vec <nlp_architect.models.np2vec.NP2vec>` training and store code.
+- **examples/np2vec/inference.py**: illustrates how to call :py:class:`NP2vec <nlp_architect.models.np2vec.NP2vec>` load code.
 
 Running Modalities
 ==================
 
 Training
 --------
-To train the model in it's default mode, the following command can be used:
+To train the model with default parameters, the following command can be used:
 
 .. code:: python
 
-  python main_train.py --corpus sample_corpus.json --np2vec_model_file sample_np2vec.model
+  python examples/np2vec/train.py \
+    --corpus sample_corpus.json \
+    --corpus_format json \
+    --np2vec_model_file sample_np2vec.model
 
 Inference
 ----------------
@@ -66,11 +67,10 @@ To run inference with a saved model, the following command can be used:
 
 .. code:: python
 
-  python main_inference.py --np2vec_model_file sample_np2vec.model
+  python examples/np2vec/inference.py --np2vec_model_file sample_np2vec.model --np <noun phrase>
 
 
-More details about the hyperparameters at https://radimrehurek.com/gensim/models/word2vec.html#gensim.models.word2vec.Word2Vec
-for word2vec and https://radimrehurek.com/gensim/models/fasttext.html#gensim.models.fasttext.FastText for fasttext.
+More details about the hyperparameters at https://radimrehurek.com/gensim/models/word2vec.html#gensim.models.word2vec.Word2Vec for word2vec and https://radimrehurek.com/gensim/models/fasttext.html#gensim.models.fasttext.FastText for fasttext.
 
 .. _word2vec: https://code.google.com/archive/p/word2vec/
 .. _fasttext: https://github.com/facebookresearch/fastText

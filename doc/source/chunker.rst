@@ -18,7 +18,7 @@ Sequence Chunker
 ################
 
 Overview
-================
+========
 
 Phrase chunking is a basic NLP task that consists of tagging parts of a sentence (1 or more tokens)
 syntactically, i.e. POS tagging.
@@ -66,14 +66,14 @@ The described model in the paper consists of multiple sequential Bi-directional 
 
 The model's embedding vector size and LSTM layer hidden state have equal sizes, the default training optimizer is SGD with default parameters and batch size of 10.
 
-Running Models
-==============
+Running Modalities
+==================
 
 We provide a simple example for training and running inference using the :py:class:`SequenceChunker <nlp_architect.models.chunker.SequenceChunker>` model.
 
-``train.py`` will load CONLL2000 dataset and train a model using given training parameters (batch size, epochs, external word embedding, etc.), save the model once done training and print the performance of the model on the test set. The example supports loading GloVe/Fasttext word embedding models to be used when training a model. The training method used in this example trains on both POS and Chunk labels concurently with equal targer loss weights, this is different than what is described in the paper_.
+``examples/chunker/train.py`` will load CONLL2000 dataset and train a model using given training parameters (batch size, epochs, external word embedding, etc.), save the model once done training and print the performance of the model on the test set. The example supports loading GloVe/Fasttext word embedding models to be used when training a model. The training method used in this example trains on both POS and Chunk labels concurently with equal targer loss weights, this is different than what is described in the paper_.
 
-``inference.py`` will load a saved model and a given text file with sentences and print the chunks found on the stdout.
+``examples/chunker/inference.py`` will load a saved model and a given text file with sentences and print the chunks found on the stdout.
 
 Training
 --------
@@ -83,34 +83,26 @@ Train a model with default parameters (use sentence words and default network se
 
 .. code:: python
 
-	python train.py --data_dir <path to CONLL2000 files>
+	python examples/chunker/train.py --data_dir <path to CONLL2000 files>
 
 Custom training parameters
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 All customizable parameters can be obtained by running: ``python train.py -h``
 
-.. code:: bash
-
-  usage: train.py [-h] [--data_dir DATA_DIR] [--embedding_model EMBEDDING_MODEL]
-                  [--sentence_length SENTENCE_LENGTH]
-                  [--feature_size FEATURE_SIZE] [--use_gpu] [-b B] [-e E]
-                  [--model_name MODEL_NAME] [--print_np]
-
-  optional arguments:
-    -h, --help            show this help message and exit
-    --data_dir DATA_DIR   Path to directory containing CONLL2000 files
-    --embedding_model EMBEDDING_MODEL
-                          Word embedding model path (GloVe/Fasttext/textual)
-    --sentence_length SENTENCE_LENGTH
-                          Maximum sentence length
-    --feature_size FEATURE_SIZE
-                          Feature vector size (in embedding and LSTM layers)
-    --use_gpu             use GPU backend (CUDNN enabled)
-    -b B                  batch size
-    -e E                  number of epochs run fit model
-    --model_name MODEL_NAME
-                          Model name (used for saving the model)
-    --print_np            Print only Noun Phrase (NP) tags accuracy
+-h, --help            show this help message and exit
+--data_dir DATA_DIR   Path to directory containing CONLL2000 files
+--embedding_model EMBEDDING_MODEL
+                      Word embedding model path (GloVe/Fasttext/textual)
+--sentence_length SENTENCE_LENGTH
+                      Maximum sentence length
+--feature_size FEATURE_SIZE
+                      Feature vector size (in embedding and LSTM layers)
+--use_gpu             use GPU backend (CUDNN enabled)
+-b B                  batch size
+-e E                  number of epochs run fit model
+--model_name MODEL_NAME
+                      Model name (used for saving the model)
+--print_np            Print only Noun Phrase (NP) tags accuracy
 
 Saving the model after training is done automatically by specifying a model name with the keyword `--model_name`, the following files will be created:
 
@@ -124,7 +116,7 @@ Running inference on a trained model using an input file (text based, each line 
 
 .. code:: python
 
-	python inference.py --model_name <model_name> --input <input_file>.txt
+	python examples/chunker/inference.py --model_name <model_name> --input <input_file>.txt
 
 
 .. _CONLL2000: https://www.clips.uantwerpen.be/conll2000/chunking/

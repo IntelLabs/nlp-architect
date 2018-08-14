@@ -20,30 +20,43 @@ Using as a REST service
 
 Overview
 ========
-NLP Architect server is a Falcon server for serving predictions to different models in NLP Architect.
-The server also includes a web front-end exposing the model's annotations using displaCy and displaCyENT visualizations.
-The server supports both `json` and `gzip` formats.
-
-Running NLP Architect server
-============================
-Some of the components, which we provide pre-trained models, are exposed through this server. In order to run the server, a user needs to specify which service, so NLP Archtiect serer will only upload the needed model.
+NLP Architect server is a `hug <http://www.hug.rest/>`_ REST server that is
+able to run predictions on different models configured using NLP Architect.
+The server includes a web front-end exposing the model's annotations.
 
 Currently we provide 3 services:
 
- 1. `bist` service which provides BIST Dependency parsing
- 2. `spacy_ner` service which provides Spacy NER annotations.
- 3. `ner` service which provides NER annotations without Spacy.
+ 1. **bist** - :doc:`BIST <spacy_bist>` Dependency parsing
+ 2. **ner** - :doc:`NER <ner_crf>` annotations
+ 3. **spacy_ner** - spaCy's NER annotations
 
-The server code is split into two pieces:
+The server has two main components:
 
-1. :py:class:`Service <server.service>` which is a representation of each model's API
-2. :py:mod:`Server <server.serve>` which handles processing of HTTP requests
+- :py:class:`Service <server.service.Service>` which is a representation of each model's API.
+- ``server.serve`` module which is a `hug <http://www.hug.rest/>`_ application which handles processing of HTTP requests and initiating calls to the desired model.
 
-To run the server, from the root directory simply run ``hug -p 8080 -f server/serve.py``, the server will run on `http://localhost:8080`.
+The server supports extending with new services using provided API classes, see `Annotation Structure Types - Server Responses`_ for more details.
 
-If you wish to use the server's visualization - enter `http://localhost:8080`
+Running NLP Architect Server
+============================
+Starting the server
+-------------------
+To run the server, from the root directory simply run::
 
-Otherwise the expected Request for the server is the following:
+  hug -p 8080 -f server/serve.py
+
+The server will run locally on port 8080 and can be queried on ``/inference`` directive.
+
+To access the visualization - http://localhost:8080
+
+Requests
+--------
+The following headers are required when communicating with the server:
+
+- Content-Type: "application/json" or "application/gzip"
+- Response-Format: The response format, "json" or "gzip". The default response format is json.
+
+The request content has the following format:
 
 .. code:: json
 
@@ -60,134 +73,113 @@ Otherwise the expected Request for the server is the following:
         ]
     }
 
-Request Headers
----------------
+In the example above, ``model_name`` is the desirted model to run the documents through and each input document is marked with an id and content.
 
-- Content-Type: "application/json" or "application/gzip"
+Responses
+---------
+The server supports 2 types of Responses (see `Annotation Structure Types - Server Responses`_ bellow).
 
-- Response-Format: The response format, "json" or "gzip". The default response format is json.
+Example
+-------
 
-The server supports 2 types of Responses (see `Annotation Structure Types - Server Responses` bellow).
+Request annotations using the :doc:`NER <ner_crf>` model:
 
-Examples for running NLP Architect server
-=========================================
-We currently support 3 services:
+.. code:: json
 
-- BIST parser - Core NLP models annotation structure
+    curl -i \
+      -H "Response-Format:json" \
+      -H "Content-Type:application/json" \
+      -d '{"model_name": "ner", \
+           "docs": [ \
+             {"id": 1, \
+              "doc": "Intel Corporation is an American multinational \
+                      corporation and technology company headquartered in \
+                      Santa Clara, California, in the Silicon Valley."}]}' \
+      http://<server_ip>:8080/inference
 
-Once the server is up and running you can go to `http://localhost:8080`
-and check out a few test sentences, or you can send a POST request (as described above)
-to `http://localhost:8080/inference`, and receive `CoreNLPDoc` annotation structure response.
+The above can be used with `spacy_ner` and `bist` by replacing the ``model_name``.
 
-.. image :: assets/bist_service.png
+Visualization previews
+----------------------
 
-- Spacy NER, NER - High-level models annotation structure
+- :doc:`BIST <spacy_bist>` parser - Core NLP models annotation structure:
 
-Once the server is up and running you can go to `http://localhost:8080`
-and check out a few test sentences, or you can send a Post request (as described above)
-to `http://localhost:8080/inference`, and receive `HighLevelDoc` annotation structure response.
+  .. image :: assets/bist_service.png
 
-Spacy NER:
+- NLP Architect :doc:`NER <ner_crf>`:
 
-.. image :: assets/spacy_ner_service.png
+  .. image :: assets/ner_service.png
 
-NER:
+  - spaCy NER:
 
-.. image :: assets/ner_service.png
+  .. image :: assets/spacy_ner_service.png
 
 You can also take a look at the tests (tests/nlp_architect_server) to see more examples.
-
-Example CURL request
---------------------
-
-Running `ner` model
-
-.. code:: json
-
-    curl -i -H "Response-Format:json" -H "Content-Type:application/json" -d '{"model_name": "ner", "docs": [{"id": 1,"doc": "Intel Corporation is an American multinational corporation and technology company headquartered in Santa Clara, California, in the Silicon Valley."}]}' http://{localhost_ip}:8080/inference
-
-Running `spacy_ner` model
-
-.. code:: json
-
-    curl -i -H "Response-Format:json" -H "Content-Type:application/json" -d '{"model_name": "spacy_ner", "docs": [{"id": 1,"doc": "Intel Corporation is an American multinational corporation and technology company headquartered in Santa Clara, California, in the Silicon Valley."}]}' http://{localhost_ip}:8080/inference
-
-
-Running `bist` model
-
-.. code:: json
-
-    curl -i -H "Response-Format:json" -H "Content-Type:application/json" -d '{"model_name": "bist", "docs":[{"id": 1,"doc": "Time flies like an arrow. fruit flies like a banana."},{"id": 2,"doc": "the horse passed the barn fell"},{"id": 3,"doc": "the old man the boat"}]}' http://{localhost_ip}:8080/inference
-
 
 Annotation Structure Types - Server Responses
 =============================================
 The server supports 2 types of annotation structure (responses from the server):
 
--  **Core NLP models annotation structure**:
+-  `Core NLP models annotation structure`_:
+  A annotation of a Core NLP model (Part-of-speech (POS), lemma, dependency relations etc.), usually a word-to-label annotation.
 
-A annotation of a Core NLP model (POS, LEMMA, dependency relations etc.). usually a word-to-label annotation used for the lower level of NLP task.
+-  `High-level models annotation structure`_:
+  An annotation of a more high-level model (Intent Extraction, NER, Chunking, etc.). usually a span-to-label annotation used for higher level of nlp tasks and applications.
 
--  **High-level models annotation structure**:
-
-An annotation of a more high-level model (Intent Extraction, NER, Noun-Phrase chunking, etc.). usually a span-to-label annotation used for higher
-level of nlp tasks and applications.
 
 Core NLP models annotation structure
 ------------------------------------
-`CoreNLPDoc` class is hosting the Core NLP models annotation structure.
-(can be imported using: `from nlp_architect.utils.core_nlp_models_doc import CoreNLPDoc`).
+:py:class:`CoreNLPDoc <nlp_architect.common.core_nlp_doc.CoreNLPDoc>` class is hosting the Core NLP models annotation structure.
+(can be imported using: ``from nlp_architect.common.core_nlp_doc import CoreNLPDoc``).
 
 .. code:: json
 
-    {
-        "doc_text" : "<the_document_text>" (string)
-        "sentences" : list of sentences, each word in a sentence is represented in a dict (list(list(dict))). the dict is structured as follows:
-                    {
-                        "start": <start_index> (int),
-                        "len": <word_length> (int),
-                        "pos": <POS_label> (string),
-                        "ner": <NER_label> (string),
-                        "lemma": <Lemma_string> (string),
-                        "gov": <GOV_index> (int),
-                        "rel": <Dependency_Relation_label> (string)
-                     }
-    }
-
+  {
+    "doc_text": "<the_document_text>",
+    "sentences": list of sentences, each word in a sentence is represented in \
+      a dict (list(list(dict))). the dict is structured as follows:
+              {
+                "start": <start_index> (int),
+                "len": <word_length> (int),
+                "pos": <POS_label> (string),
+                "ner": <NER_label> (string),
+                "lemma": <Lemma_string> (string),
+                "gov": <GOV_index> (int),
+                "rel": <Dependency_Relation_label> (string)
+               }
+   }
 
 High-level models annotation structure
 --------------------------------------
-`HighLevelDoc` class is hosting the High-level models annotation structure.
-(can be imported using: `from nlp_architect.utils.high_level_models_doc import HighLevelDoc`).
+:py:class:`HighLevelDoc <nlp_architect.common.high_level_doc.HighLevelDoc>` class is hosting the High-level models annotation structure.
+(can be imported using: ``from nlp_architect.common.high_level_doc import HighLevelDoc``).
 
 .. code:: json
 
-    {
-        "doc_text" : "<the_document_text>" (string)
-        "annotation_set" : list of all annotations in document (list(string))
-        "spans" : list of span dict (list(dict)), each span_dict is structured as follows:
-                {
-                    "end": <end_index> (int),
-                    "start": <start_index> (int),
-                    "type": <annotation_string> (string)
-                 }
+  {
+      "doc_text" : "<the_document_text>",
+      "annotation_set" : list of all annotations in document (list(string)),
+      "spans" : list of span dict (list(dict)), each span_dict is structured as follows:
+              {
+                "end": <end_index> (int),
+                "start": <start_index> (int),
+                "type": <annotation_string> (string)
+               }
+   }
 
-NLP Architect server - developers guide
-=======================================
-This section is for developers who wish to add a new service to NLP Architect server.
-
+Adding new services
+===================
 Adding a new service to the server
 ----------------------------------
-All the services are documented in `services.json` file under `nlp_architect_server` folder (each key is a service name).
+All the services are declared in a ``JSON`` file found at ``server/services.json``.
 
 In order to add a new service to the server you need to go over 3 steps:
 
-1. Choose the type of your service: Core NLP models or High-level models
+1. Detect the type of your service suitable for your model, either Core NLP model or High-level model.
+2. Create an API class for your service in  ``nlp_architect/api/`` folder. Make your class inherit from :py:class:`AbstractApi <nlp_architect.api.abstract_api.AbstractApi>` and implement all relevant methods. Notice that your `inference` ``class_method`` must return either :py:class:`CoreNLPDoc <nlp_architect.common.core_nlp_doc.CoreNLPDoc>` or :py:class:`HighLevelDoc <nlp_architect.common.high_level_doc.HighLevelDoc>`.
 
-2. Create API for your service. Create the file under `nlp_architect/api/abstract_api` folder. Make sure your class inherits from :py:class`AbstractApi <nlp_architect.api.abstract_api>` and implements all its methods. Notice that your `inference` class_method must return either "CoreNLPDoc" or "HighLevelDoc".
-
-3. Add new service to `services.json` in the following template:
+3. Add the definition of the new service to ``services.json`` as follows:
 
 .. code:: json
 
-    "<service_name>" : {"file_name": "<api_file_name>", "type": "core"\"high_level"}
+    "<service_name>" : {"file_name": "<api_file_name>", "type": <"core"/"high_level>"}

@@ -13,10 +13,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
-
+import argparse
 import logging
 import sys
-from configargparse import ArgumentParser
 
 from nlp_architect.models.np2vec import NP2vec
 from nlp_architect.utils.io import validate_existing_filepath, check_size
@@ -25,7 +24,7 @@ logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 if __name__ == "__main__":
-    arg_parser = ArgumentParser(__doc__)
+    arg_parser = argparse.ArgumentParser()
     arg_parser.add_argument(
         '--np2vec_model_file',
         default='conll2000.train.model',
@@ -55,6 +54,7 @@ if __name__ == "__main__":
         default='Intel Corp.',
         type=str,
         action=check_size(min_size=1),
+        required=True,
         help='NP to print its word vector.')
 
     args = arg_parser.parse_args()

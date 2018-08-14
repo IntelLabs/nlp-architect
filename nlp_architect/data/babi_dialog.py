@@ -26,8 +26,9 @@ import os
 import sys
 import numpy as np
 from tqdm import tqdm
-from ngraph.util.persist import valid_path_append, fetch_file
+from ngraph.util.persist import valid_path_append
 from nlp_architect.utils.generic import license_prompt
+from nlp_architect.utils.io import download_unlicensed_file
 
 
 def pad_sentences(sentences, sentence_length=0, pad_val=0.):
@@ -256,7 +257,7 @@ class BABI_Dialog(object):
                               self.path) is False:
                 sys.exit(0)
 
-            fetch_file(self.url, self.filename, filepath, self.size)
+            download_unlicensed_file(self.url, self.filename, filepath, self.size)
 
         self.babi_dir_name = self.filename.split('.')[0]
 

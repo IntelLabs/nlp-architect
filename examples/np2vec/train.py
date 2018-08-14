@@ -13,10 +13,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
-
+import argparse
 import logging
 import sys
-from configargparse import ArgumentParser
 
 from nlp_architect.models.np2vec import NP2vec
 from nlp_architect.utils.io import check_size, validate_existing_filepath
@@ -26,7 +25,7 @@ logger = logging.getLogger(__name__)
 
 
 if __name__ == "__main__":
-    arg_parser = ArgumentParser(__doc__)
+    arg_parser = argparse.ArgumentParser()
     arg_parser.add_argument(
         '--corpus',
         default='train.txt',

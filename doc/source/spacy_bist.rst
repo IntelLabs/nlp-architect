@@ -25,7 +25,7 @@ The parser uses Spacy's english model for sentence breaking,
 tokenization and token annotations (part-of-speech, lemma, NER).
 Dependency relations between tokens are extracted using BIST parser.
 The BIST parser is described `here <https://www.transacl.org/ojs/index.php/tacl/article/viewFile/885/198>`__,
-and its code is documented `here <bist_parser.html>`__.
+and its code is documented :doc:`here <bist_parser>`.
 
 
 Usage
@@ -46,7 +46,7 @@ downloaded (on-demand) to ``spacy_bist/bist-pretrained/`` and then loaded
 from that directory. To use other models, supply a path or link to each
 model at initialization (see example below).
 
-For instructions on how to train a BIST model, see `BIST documentation <bist_parser.rst>`__
+For instructions on how to train a BIST model, see :doc:`BIST documentation <bist_parser>`.
 For instructions on how to get spaCy models_ or how to train a model see `spaCy training instructions <https://spacy.io/usage/training>`__
 
 Example
@@ -57,11 +57,10 @@ Example
     parser = SpacyBISTParser(spacy_model='/path/or/link/to/spacy/model', bist_model='/path/to/bist/model')
 
 Parsing
-=========
+=======
 
 The parser accepts a document as a raw text string encoded in UTF-8 format and outputs a
-``CoreNLPDoc`` instance which contains the annotations (example output below).
-
+:py:class:`CoreNLPDoc nlp_architect.common.core_nlp_doc.CoreNLPDoc` instance which contains the annotations (example output below).
 
 Example
 -------
@@ -137,9 +136,9 @@ Output
         ]
     }
 
-Citations
-=========
+References
+==========
 
-* Kiperwasser, E., & Goldberg, Y. (2016). Simple and Accurate Dependency Parsing Using Bidirectional LSTM Feature Representations. Transactions Of The Association For Computational Linguistics, 4, 313-327. https://transacl.org/ojs/index.php/tacl/article/view/885/198
+.. [1] Kiperwasser, E., & Goldberg, Y. (2016). Simple and Accurate Dependency Parsing Using Bidirectional LSTM Feature Representations. Transactions Of The Association For Computational Linguistics, 4, 313-327. https://transacl.org/ojs/index.php/tacl/article/view/885/198
 
 .. _models: https://spacy.io/usage/models

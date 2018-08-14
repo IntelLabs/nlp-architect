@@ -31,7 +31,7 @@ The library includes our past and ongoing NLP research and development efforts a
 NLP Architect can be downloaded from Github: https://github.com/NervanaSystems/nlp-architect
 
 How can NLP Architect be used
-===============================
+=============================
 
 - Train models using provided algorithms, reference datasets and configurations
 - Train models using your own data
@@ -46,7 +46,7 @@ Library Overview
 
 Research driven NLP/NLU models
 ``````````````````````````````
-The library contains state-of-art and novel NLP and NLU models in a varity of topics:
+The library contains state-of-art and novel NLP and NLU models in a variety of topics:
 
 - Dependency parsing
 - Intent detection and Slot tagging model for Intent based applications
@@ -54,10 +54,11 @@ The library contains state-of-art and novel NLP and NLU models in a varity of to
 - Key-value Network for question&answer system
 - Noun phrase embedding vectors model
 - Noun phrase semantic segmentation
-- NER and NE expansion
-- Text chunking
+- Named Entity Recognition
+- Word Chunking
 - Reading comprehension
-- Crosslingual Embeddings
+- Language modeling using Temporal Convolution Network
+- Unsupervised Crosslingual Word Embedding
 - Supervised sentiment analysis
 
 
@@ -71,7 +72,11 @@ Because of the current research nature of the library, several open source deep 
 - Dynet_
 - Keras_
 
-Overtime the list of models included in this space will change, though all generally run with Python 3.5+
+Overtime the list of models and frameworks included in this space will change, though all generally run with Python 3.5+
+
+.. note::
+
+  The default installations script use CPU-based installations of Tensorflow/Dynet/Neon/nGraph. To install GPU supported binaries please refer to the framework's website for installation instructions.
 
 
 Using the Models
@@ -96,13 +101,12 @@ on this project, please see the :doc:`developer guide <developer_guide>`.
 .. toctree::
    :hidden:
    :maxdepth: 1
-   :caption: NLP Architect
 
    overview.rst
    installation.rst
    publications.rst
    tutorials.rst
-   service.rst
+   REST Server <service.rst>
 
 .. toctree::
    :hidden:
@@ -111,14 +115,13 @@ on this project, please see the :doc:`developer guide <developer_guide>`.
 
    chunker.rst
    ner_crf.rst
-   ne_expansion.rst
    intent.rst
    np_segmentation.rst
    bist_parser.rst
    word_sense.rst
    np2vec.rst
    supervised_sentiment.rst
-   tcn.rst
+   TCN Language Model <tcn.rst>
    Unsupervised Crosslingual Embeddings <crosslingual_emb.rst>
 
 .. toctree::
@@ -135,7 +138,7 @@ on this project, please see the :doc:`developer guide <developer_guide>`.
    :maxdepth: 1
    :caption: Solutions
 
-   term_set_expansion.rst
+   Set Expansion <term_set_expansion.rst>
 
 .. toctree::
    :hidden:
@@ -151,13 +154,6 @@ on this project, please see the :doc:`developer guide <developer_guide>`.
   :caption: For Developers
 
   developer_guide.rst
-  writing_tests.rst
-
-.. toctree::
-   :hidden:
-   :maxdepth: 1
-   :caption: Full API
-
-   api.rst
+  api.rst
 
 .. _https://github.com/NervanaSystems/nlp-architect: https://github.com/NervanaSystems/nlp-architect
