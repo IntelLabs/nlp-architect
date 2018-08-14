@@ -57,6 +57,7 @@ The library contains state-of-art and novel NLP and NLU models in a varity of to
 - NER and NE expansion
 - Text chunking
 - Reading comprehension
+- Crosslingual Embeddings
 - Supervised sentiment analysis
 
 
@@ -118,6 +119,7 @@ on this project, please see the :doc:`developer guide <developer_guide>`.
    np2vec.rst
    supervised_sentiment.rst
    tcn.rst
+   Unsupervised Crosslingual Embeddings <crosslingual_emb.rst>
 
 .. toctree::
    :hidden:
