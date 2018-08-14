@@ -147,14 +147,15 @@ def send_request_to_server(request):
         sock.close()
 
 
-def row_selected_callback(attr, old, new):
+def row_selected_callback(indices, old, new):
+    logger.info('row selected callback')
     global clear_flag, all_selected_phrases
     if not clear_flag and expand_table_source.data != empty_table:
         logger.info('row selected callback. old indices=%s. new indices=%s',
-                    str(old.indices), str(new.indices))
+                    str(old), str(new))
         # sync phrases lists:
-        old_phrases = [expand_table_source.data['res'][p] for p in old.indices]
-        new_phrases = [expand_table_source.data['res'][p] for p in new.indices]
+        old_phrases = [expand_table_source.data['res'][p] for p in old]
+        new_phrases = [expand_table_source.data['res'][p] for p in new]
         logger.info('selected_expand was updated: old=%s ,new=%s', str(
             old_phrases), str(new_phrases))
         # phrase was de-selected from expand list:
@@ -372,7 +373,7 @@ def get_selected_phrases_for_seed():
     return phrases
 
 
-def expand_data_changed_callback(attr, old, new):
+def expand_data_changed_callback(data, old, new):
     """
     remove the selected indices when table is empty
     """
@@ -384,7 +385,7 @@ def expand_data_changed_callback(attr, old, new):
 
 expand_button.on_click(get_expand_results_callback)
 # save_button.on_click(save_data_callback)
-expand_table_source.on_change('selected', row_selected_callback)
+expand_table_source.selected.on_change('indices', row_selected_callback)
 expand_table_source.on_change('data', expand_data_changed_callback)
 checkbox_group.on_click(show_phrases_callback)
 search_input_box.on_change('value', search_callback)

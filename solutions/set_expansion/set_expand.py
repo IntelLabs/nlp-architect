@@ -94,8 +94,11 @@ class SetExpand():
         """
         norm = id.replace(self.mark_char, ' ')[:-1]
         if self.grouping:
-            assert(norm in self.id2rep)
-            return self.id2rep[norm]
+            if norm in self.id2rep:
+                return self.id2rep[norm]
+            else:
+                logger.warning("id:#%s#, norm:#%s# is not in id2rep")
+                return ""
         return norm
 
     def get_vocab(self):
@@ -137,17 +140,19 @@ class SetExpand():
         lower = True
         for np in seed:
             np = np.strip()
-            if np[0].islower():
-                upper = False
-            else:
-                lower = False
+            if not self.grouping and (upper or lower):
+                # case feature is relevant only if we don't have grouping
+                if np[0].islower():
+                    upper = False
+                else:
+                    lower = False
             id = self.__term2id(np)
             if id is not None:
                 seed_ids.append(id)
             else:
                 logger.warning("The term: '%s' is out-of-vocabulary.", np)
         if len(seed_ids) > 0:
-            if upper or lower:
+            if not self.grouping and (upper or lower):
                 res_id = self.np2vec_model.most_similar(seed_ids, topn=2 * topn)
             else:
                 res_id = self.np2vec_model.most_similar(seed_ids, topn=topn)
@@ -156,7 +161,7 @@ class SetExpand():
                 if len(res) == topn:
                     break
                 # pylint: disable=R0916
-                if (not lower and not upper) or (upper and r[0][0].isupper()) or \
+                if self.grouping or (not lower and not upper) or (upper and r[0][0].isupper()) or \
                         (lower and r[0][0].islower()):
                     res.append((self.__id2term(r[0]), r[1]))
             return res
