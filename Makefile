@@ -45,7 +45,7 @@ flake: test_prepare
 pylint: test_prepare
 	@echo "Running pylint..."
 	@. $(ACTIVATE); pylint $(PYLINT_CHECK_DIRS) | tee pylint.txt
-	@. $(ACTIVATE); python3 tests/utils/ansi2html.py pylint.txt > pylint.html
+	@. $(ACTIVATE); python3 tests/utils/ansi2html.py > pylint.html
 
 style: flake pylint
 

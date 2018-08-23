@@ -4,7 +4,7 @@
 # https://github.com/Kronuz/ansi2html/blob/master/ansi2html.py
 # Copyright © 2013 German M. Bravo (Kronuz)
 # License: https://github.com/Kronuz/ansi2html/blob/master/LICENSE
-
+# Changes made to original file: removed input arguments. Fixed input to 'pylint.txt' file.
 from __future__ import print_function
 
 import re
@@ -153,41 +153,13 @@ def ansi2html(text, palette='solarized'):
 
 def main():
     import sys
-    from optparse import OptionParser, SUPPRESS_HELP
-
-    parser = OptionParser(usage="Usage: %prog [options] [file]",
-                          description="Converts ANSI colored input to HTML.",
-                          add_help_option=False)
-    parser.add_option("-o", "--output", metavar="PATH",
-                      help="Write output to PATH (otherwise it goes to the standard output)")
-    parser.add_option("--palette", metavar="PALETTE",
-                      help="Selects a palette. Avaliable palettes are: solarized,"
-                           " solarized-xterm, tango, xterm, console")
-    parser.add_option("-?", action="help", help=SUPPRESS_HELP)
-    parser.add_option("-h", "--help", action="help",
-                      help="Show this message and exit")
-    parser.add_option("-v", "--version", action="store_true",
-                      help="Print version and exit")
-
-    options, args = parser.parse_args()
-
-    if options.output is not None:
-        output = open(options.output, 'wt')
-    else:
-        output = sys.stdout
-
     try:
         html = ''
-        if args:
-            for path in args:
-                try:
-                    html += '<pre>' + ansi2html(open(path).read(),
-                                                palette=options.palette) + '</pre>'
-                except IOError:
-                    print("File not found: %r" % path, file=sys.stderr)
-        else:
-            html += '<pre>' + ansi2html(sys.stdin.read(), palette=options.palette) + '</pre>'
-        output.write(html)
+        try:
+            html += '<pre>' + ansi2html(open('pylint.txt').read()) + '</pre>'
+        except IOError:
+            print("File not found: %r" % 'pylint.txt', file=sys.stderr)
+        sys.stdout.write(html)
     except KeyboardInterrupt:
         pass
 
