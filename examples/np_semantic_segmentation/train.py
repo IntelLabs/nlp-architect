@@ -17,7 +17,7 @@
 import argparse
 from examples.np_semantic_segmentation.data import NpSemanticSegData, absolute_path
 from nlp_architect.models.np_semantic_segmentation import NpSemanticSegClassifier
-from nlp_architect.utils.io import validate_existing_filepath, validate_parent_exists
+from nlp_architect.utils.io import validate_existing_filepath, validate_parent_exists, validate
 
 
 def train_mlp_classifier(dataset, model_file_path, num_epochs, callback_args=None):
@@ -58,8 +58,10 @@ if __name__ == "__main__":
     parser.add_argument('--model_path', type=validate_parent_exists,
                         help='Path to save the model')
     args = parser.parse_args()
+    validate((args.epochs, int, 1, 100000))
     data_path = absolute_path(args.data)
     model_path = absolute_path(args.model_path)
+    num_epochs = args.epochs
     # load data sets from file
     data_set = NpSemanticSegData(data_path, train_to_test_ratio=0.8)
     # train the mlp classifier
