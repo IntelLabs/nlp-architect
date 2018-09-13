@@ -23,7 +23,7 @@ import re
 
 
 # pylint: disable=invalid-unary-operand-type
-def pad_sentences(sequences, max_length=None, padding_value=0.):
+def pad_sentences(sequences: np.ndarray, max_length: int=None, padding_value: int=0) -> np.ndarray:
     """
     Pad input sequences up to max_length
     values are aligned to the right
@@ -36,19 +36,25 @@ def pad_sentences(sequences, max_length=None, padding_value=0.):
     Returns:
         input sequences padded to size 'max_length'
     """
+    assert hasattr(sequences, 'shape')
+    assert len(sequences.shape) == 2
+    if len(sequences) < 1:
+        return sequences
+    max_len = max_length
     if max_length is None:
-        max_length = np.max([len(s) for s in sequences])
+        max_len = np.max([len(s) for s in sequences])
     elif max_length < 1:
         raise ValueError('max sequence length must be > 0')
-
-    padded_sequences = (np.ones((len(sequences), max_length)) * padding_value)
+    if max_len < 1:
+        return sequences
+    padded_sequences = (np.ones((len(sequences), max_len)) * padding_value)
     for i, sent in enumerate(sequences):
-        trunc = sent[-max_length:]
+        trunc = sent[-max_len:]
         padded_sequences[i, -len(trunc):] = trunc
     return padded_sequences.astype(dtype=np.int32)
 
 
-def one_hot(mat, num_classes):
+def one_hot(mat: np.ndarray, num_classes: int) -> np.ndarray:
     """
     Convert a 1D matrix of ints into one-hot encoded vectors.
 
@@ -66,7 +72,7 @@ def one_hot(mat, num_classes):
     return vec
 
 
-def one_hot_sentence(mat, num_classes):
+def one_hot_sentence(mat: np.ndarray, num_classes: int) -> np.ndarray:
     """
     Convert a 2D matrix of ints into one-hot encoded 3D matrix
 
@@ -83,7 +89,7 @@ def one_hot_sentence(mat, num_classes):
     return np.asarray(new_mat)
 
 
-def add_offset(mat, offset=1):
+def add_offset(mat: np.ndarray, offset: int=1) -> np.ndarray:
     """
     Add +1 to all values in matrix mat
 
@@ -99,37 +105,6 @@ def add_offset(mat, offset=1):
         offset_arr.fill(offset)
         mat[i] = vec + offset_arr
     return mat
-
-
-# pylint: disable=no-member
-def get_paddedXY_sequence(X, y, vocab_size=20000, sentence_length=100, oov=2,
-                          start=1, index_from=3, seed=113, shuffle=True):
-    if shuffle:
-        np.random.seed(seed)
-        np.random.shuffle(X)
-        np.random.seed(seed)
-        np.random.shuffle(y)
-
-    if start is not None:
-        X = [[start] + [w + index_from for w in x] for x in X]
-    else:
-        X = [[w + index_from for w in x] for x in X]
-
-    if not vocab_size:
-        vocab_size = max([max(x) for x in X])
-
-    # word ids - pad (0), start (1), oov (2)
-    if oov is not None:
-        X = [[oov if w >= vocab_size else w for w in x] for x in X]
-    else:
-        X = [[w for w in x if w < vocab_size] for x in X]
-
-    X = pad_sentences(X, max_length=sentence_length)
-
-    y = [[w + 1.0 for w in i] for i in y]
-    y = pad_sentences(y, max_length=sentence_length)
-
-    return X, y
 
 
 def license_prompt(model_name, model_website, dataset_dir=None):

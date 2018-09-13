@@ -16,10 +16,10 @@
 # pylint: disable=redefined-outer-name
 import pytest
 
-from nlp_architect.utils.text import is_spacy_model_installed
+from nlp_architect.utils.text import try_to_load_spacy
 from nlp_architect.pipelines.spacy_bist import SpacyBISTParser
 
-if not is_spacy_model_installed('en'):
+if not try_to_load_spacy('en'):
     pytest.skip("\n\nSkipping test_spacy_bist.py. Reason: 'spacy en' model not installed. "
                 "Please see https://spacy.io/models/ for installation instructions.\n"
                 "The terms and conditions of the data set and/or model license apply.\n"

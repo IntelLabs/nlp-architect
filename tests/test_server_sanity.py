@@ -24,9 +24,9 @@ import os
 from os.path import dirname
 import pytest
 import server.serve
-from nlp_architect.utils.text import is_spacy_model_installed
+from nlp_architect.utils.text import try_to_load_spacy
 from server.serve import api
-if not is_spacy_model_installed('en'):
+if not try_to_load_spacy('en'):
     pytest.skip("\n\nSkipping test_server_sanity.py. Reason: 'spacy en' model not installed. "
                 "Please see https://spacy.io/models/ for installation instructions.\n"
                 "The terms and conditions of the data set and/or model license apply.\n"

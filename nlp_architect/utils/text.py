@@ -125,7 +125,7 @@ class Vocabulary:
         return self._rev_vocab
 
 
-def is_spacy_model_installed(model_name):
+def try_to_load_spacy(model_name):
     try:
         spacy.load(model_name)
         return True

@@ -43,7 +43,7 @@ class NPAnnotator(object):
         self.bs = batch_size
         self.word_vocab = word_vocab
         self.chunk_vocab = chunk_vocab
-        Doc.set_extension('noun_phrases', default=[])
+        Doc.set_extension('noun_phrases', default=[], force=True)
 
     @classmethod
     def load(cls, model_path: str, parameter_path: str, batch_size: int = 32,
@@ -95,11 +95,13 @@ class NPAnnotator(object):
         spans = []
         doc_vecs = []
         doc_lens = []
+        if len(doc) < 1:
+            return doc
         for sentence in doc.sents:
             doc_vec = self._feature_extractor([t.text for t in sentence])
             doc_vecs.append(doc_vec)
             doc_lens.append(len(doc_vec))
-        doc_vectors = pad_sentences(doc_vecs)
+        doc_vectors = pad_sentences(np.asarray(doc_vecs))
         np_indexes = self._infer_chunks(doc_vectors, doc_lens)
         for s, e in np_indexes:
             np_span = Span(doc, s, e)
