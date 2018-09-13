@@ -125,9 +125,11 @@ if __name__ == '__main__':
                 'The pre-trained model to be downloaded for NLP Architect word'
                 ' chunker model is licensed under Apache 2.0')
             _path_to_model = path.join(cur_dir, chunker_model_file)
-            download_unlicensed_file(nlp_chunker_url, chunker_model_file, _path_to_model)
+            if not path.exists(_path_to_model):
+                download_unlicensed_file(nlp_chunker_url, chunker_model_file, _path_to_model)
             _path_to_params = path.join(cur_dir, chunker_model_dat_file)
-            download_unlicensed_file(nlp_chunker_url, chunker_model_dat_file, _path_to_params)
+            if not path.exists(_path_to_params):
+                download_unlicensed_file(nlp_chunker_url, chunker_model_dat_file, _path_to_params)
             logger.info('Done.')
             nlp.add_pipe(NPAnnotator.load(_path_to_model, _path_to_params), last=True)
         else:
