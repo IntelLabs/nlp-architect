@@ -81,7 +81,9 @@ class NerApi(AbstractApi):
     def _download_pretrained_model(self, prompt=True):
         """Downloads the pre-trained BIST model if non-existent."""
         dir_path = path.join(self.dir, 'ner-pretrained')
-        if not path.isfile(path.join(dir_path, 'model.h5')):
+        model_exists = path.isfile(path.join(dir_path, 'model.h5'))
+        model_info_exists = path.isfile(path.join(dir_path, 'model_info.dat'))
+        if (not model_exists or not model_info_exists):
             print('The pre-trained models to be downloaded for the NER dataset '
                   'are licensed under Apache 2.0. By downloading, you accept the terms '
                   'and conditions provided by the license')
