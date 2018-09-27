@@ -26,7 +26,10 @@ The solution is constructed of the following stages:
 The first step in training is to prepare the data for generating a word embedding model. We 
 provide a subset of English Wikipedia at datasets/wikipedia as a sample corpus under the  
 [Creative Commons Attribution-Share-Alike 3.0 License](https://creativecommons.org/licenses/by-sa/3.0/)- Copyright 2018 Wikimedia Foundation.
+
 The output of this step is the marked corpus where noun phrases are marked with the marking character (default: "\_") as described in the [NLP Architect np2vec module documentation](http://nlp_architect.nervanasys.com/np2vec.html).
+The Noun phrase extraction module is using a pre-trained [model](http://nervana-modelzoo.s3.amazonaws.com/NLP/chunker/model.h5) which is available under the Apache 2.0 license. 
+
 This is done by running:
 ```
 python solutions/set_expansion/prepare_data.py --corpus TRAINING_CORPUS --marked_corpus MARKED_TRAINING_CORPUS
