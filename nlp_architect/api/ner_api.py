@@ -49,15 +49,20 @@ class NerApi(AbstractApi):
         return [self.model_info['char_vocab'].get(c, 1.0) for c in word]
 
     def encode_input(self, text_arr):
+        print (text_arr)
         sentence = []
         sentence_chars = []
         for word in text_arr:
             sentence.append(self.encode_word(word))
+
+            print (word,": ",self.encode_word_chars(word))
             sentence_chars.append(self.encode_word_chars(word))
         encoded_sentence = pad_sequences(
             [np.asarray(sentence)], maxlen=self.model_info['sentence_len'])
+        print (encoded_sentence)
         chars_padded = pad_sequences(
             sentence_chars, maxlen=self.model_info['word_len'])
+        print (chars_padded)
         if self.model_info['sentence_len'] - chars_padded.shape[0] > 0:
             chars_padded = np.concatenate((np.zeros(
                 (self.model_info['sentence_len'] - chars_padded.shape[0],

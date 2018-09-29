@@ -1,4 +1,4 @@
-#!/usr/bin/python
+ #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import codecs
@@ -121,7 +121,7 @@ def origin2tag():
 			        temp+=line[i]
 			        i+=1
 		        i+=2
-		        word=temp.split(':')
+		        word=temp.split(':') 
 		        sen = word[1]
 		        output_data.write(sen[0]+"/B_"+word[0]+" ")
 		        for j in sen[1:len(sen)-1]:

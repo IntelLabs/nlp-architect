@@ -143,7 +143,7 @@ class SpacyInstance:
             (default: [])
     """
 
-    def __init__(self, model='en', disable=None):
+    def __init__(self, model='en_core_web_sm', disable=None):
         if disable is None:
             disable = []
         try:

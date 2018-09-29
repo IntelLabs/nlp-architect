@@ -33,14 +33,10 @@ class NERCRF(object):
 
     def build(self,
               sentence_length,
-              word_length,
               target_label_dims,
               word_vocab,
               word_vocab_size,
-              char_vocab_size,
               word_embedding_dims=100,
-              char_embedding_dims=25,
-              word_lstm_dims=25,
               tagger_lstm_dims=100,
               tagger_fc_dims=100,
               dropout=0.2,
@@ -54,10 +50,7 @@ class NERCRF(object):
             target_label_dims (int): number of entity labels (for classification)
             word_vocab (dict): word to int dictionary
             word_vocab_size (int): word vocabulary size
-            char_vocab_size (int): character vocabulary size
             word_embedding_dims (int): word embedding dimensions
-            char_embedding_dims (int): character embedding dimensions
-            word_lstm_dims (int): character LSTM feature extractor output dimensions
             tagger_lstm_dims (int): word tagger LSTM output dimensions
             tagger_fc_dims (int): output fully-connected layer size
             dropout (float): dropout rate
@@ -91,17 +84,6 @@ class NERCRF(object):
 
         word_embeddings = embedding_layer(words_input)
         word_embeddings = Dropout(dropout)(word_embeddings)
-
-        # # create word character embeddings
-        # word_chars_input = Input(shape=(sentence_length, word_length), name='word_chars_input')
-        # char_embedding_layer = Embedding(char_vocab_size, char_embedding_dims,
-        #                                  input_length=word_length)
-        # char_embeddings = TimeDistributed(char_embedding_layer)(word_chars_input)
-        # char_embeddings = TimeDistributed(Bidirectional(LSTM(word_lstm_dims)))(char_embeddings)
-        # char_embeddings = Dropout(dropout)(char_embeddings)
-
-        # create the final feature vectors
-        # features = concatenate([word_embeddings, char_embeddings], axis=-1)
 
         # encode using a bi-lstm
         bilstm = Bidirectional(LSTM(tagger_lstm_dims, return_sequences=True))(word_embeddings)

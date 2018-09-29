@@ -21,7 +21,7 @@ from os import path
 
 from keras.utils import to_categorical
 from nlp_architect.contrib.keras.callbacks import ConllCallback
-from nlp_architect.data.sequential_tagging import SequentialTaggingDataset
+from nlp_architect.data.sequential_tagging import BosonCN
 from nlp_architect.models.ner_crf import NERCRF
 from nlp_architect.utils.io import validate_existing_filepath, validate_parent_exists, validate
 from nlp_architect.utils.metrics import get_conll_scores
@@ -33,11 +33,11 @@ def read_input_args():
                         help='Batch size')
     parser.add_argument('-e', type=int, default=10,
                         help='Number of epochs')
-    parser.add_argument('--train_file', type=validate_existing_filepath, required=True,
+    parser.add_argument('--train_file', type=validate_existing_filepath, default="F:\\WorkSpace\\Pycharm\\nlp-architect\\datasets\\ner\\boson\\wordtagsplit.txt",
                         help='Train file (sequential tagging dataset format)')
-    parser.add_argument('--test_file', type=validate_existing_filepath, required=True,
+    parser.add_argument('--test_file', type=validate_existing_filepath, default="F:\\WorkSpace\\Pycharm\\nlp-architect\\datasets\\ner\\boson\\wordtagsplit.txt",
                         help='Test file (sequential tagging dataset format)')
-    parser.add_argument('--tag_num', type=int, default=4,
+    parser.add_argument('--tag_num', type=int, default=2,
                         help='Entity labels tab number in train/test files')
     parser.add_argument('--sentence_length', type=int, default=30,
                         help='Max sentence length')
@@ -60,7 +60,7 @@ def read_input_args():
     parser.add_argument('--model_info_path', type=str, default='model_info.dat',
                         help='Path for saving model topology')
     input_args = parser.parse_args()
-    validate_input_args(input_args)
+    # validate_input_args(input_args)
     return input_args
 
 
@@ -71,8 +71,6 @@ def validate_input_args(args):
     validate((args.sentence_length, int, 1, 10000))
     validate((args.word_length, int, 1, 100))
     validate((args.word_embedding_dims, int, 1, 10000))
-    validate((args.character_embedding_dims, int, 1, 1000))
-    validate((args.char_features_lstm_dims, int, 1, 10000))
     validate((args.entity_tagger_lstm_dims, int, 1, 10000))
     validate((args.dropout, float, 0, 1))
     model_path = path.join(path.dirname(path.realpath(__file__)), str(args.model_path))
@@ -86,44 +84,41 @@ if __name__ == '__main__':
     args = read_input_args()
 
     # load dataset and parameters
-    dataset = SequentialTaggingDataset(args.train_file, args.test_file,
+    dataset = BosonCN(args.train_file, args.test_file,
                                        max_sentence_length=args.sentence_length,
                                        max_word_length=args.word_length,
                                        tag_field_no=args.tag_num)
 
     # get the train and test data sets
-    x_train, x_char_train, y_train = dataset.train
-    x_test, x_char_test, y_test = dataset.test
+    x_train, y_train = dataset.train
+    print ('x_train',x_train)
+    x_test, y_test = dataset.test
 
     num_y_labels = len(dataset.y_labels) + 1
+    print (num_y_labels)
     vocabulary_size = dataset.word_vocab_size + 1
-    char_vocabulary_size = dataset.char_vocab_size + 1
 
     y_test = to_categorical(y_test, num_y_labels)
     y_train = to_categorical(y_train, num_y_labels)
 
     ner_model = NERCRF()
     ner_model.build(args.sentence_length,
-                    args.word_length,
                     num_y_labels,
                     dataset.word_vocab,
                     vocabulary_size,
-                    char_vocabulary_size,
                     word_embedding_dims=args.word_embedding_dims,
-                    char_embedding_dims=args.character_embedding_dims,
-                    word_lstm_dims=args.char_features_lstm_dims,
                     tagger_lstm_dims=args.entity_tagger_lstm_dims,
                     dropout=args.dropout,
                     external_embedding_model=args.embedding_model)
 
-    conll_cb = ConllCallback([x_test, x_char_test], y_test, dataset.y_labels,
+    conll_cb = ConllCallback(x_test, y_test, dataset.y_labels,
                              batch_size=args.b)
 
-    ner_model.fit(x=[x_train, x_char_train], y=y_train,
+    ner_model.fit(x=x_train , y=y_train,
                   batch_size=args.b,
                   epochs=args.e,
                   callbacks=[conll_cb],
-                  validation=([x_test, x_char_test], y_test))
+                  validation=(x_test, y_test))
 
     # saving model
     ner_model.save(args.model_path)
@@ -135,10 +130,7 @@ if __name__ == '__main__':
             'labels_id_to_word': {v: k for k, v in dataset.y_labels.items()},
             'word_vocab': dataset.word_vocab,
             'vocab_size': vocabulary_size,
-            'char_vocab_size': char_vocabulary_size,
-            'char_vocab': dataset.char_vocab,
             'word_embedding_dims': args.word_embedding_dims,
-            'char_embedding_dims': args.character_embedding_dims,
             'word_lstm_dims': args.char_features_lstm_dims,
             'tagger_lstm_dims': args.entity_tagger_lstm_dims,
             'dropout': args.dropout,
@@ -147,7 +139,7 @@ if __name__ == '__main__':
         pickle.dump(info, fp)
 
     # running predictions
-    predictions = ner_model.predict(x=[x_test, x_char_test], batch_size=1)
+    predictions = ner_model.predict(x=x_test, batch_size=1)
     eval = get_conll_scores(predictions, y_test, {v: k for k, v in dataset.y_labels.items()})
     pp = pprint.PrettyPrinter(indent=4)
     pp.pprint(eval)
