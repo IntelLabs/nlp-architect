@@ -2,9 +2,9 @@
 This folder contains scripts that implement a word-level language model using Temporal Convolutional Network (TCN) as described in the paper [An Empirical Evaluation of Generic Convolutional and Recurrent Networks for Sequence Modeling](https://arxiv.org/abs/1803.01271) by Shaojie Bai, J. Zico Kolter and Vladlen Koltun. 
 
 ### Data Loading
-* PTB can be downloaded from [here](http://www.fit.vutbr.cz/~imikolov/rnnlm/)
+* Penn Tree Bank (PTB) data [1] can be downloaded from [here](http://www.fit.vutbr.cz/~imikolov/rnnlm/)
 
-* Wikitext can be downloaded from [here](https://einstein.ai/research/the-wikitext-long-term-dependency-language-modeling-dataset)
+* Wikitext [2] can be downloaded from [here](https://einstein.ai/research/the-wikitext-long-term-dependency-language-modeling-dataset)
 
 * The terms and conditions of the data set licenses apply. Intel does not grant any rights to the data files or databases.
 
@@ -59,6 +59,11 @@ new jersey stock exchanges say i mean a <unk> <unk> part of those affecting the 
 
 book values of about N department stores in france
 ```
-   
+
+### References
+
+[1] Marcus, Mitchell, et al. Treebank-3 LDC99T42. Web Download. Philadelphia: Linguistic Data Consortium, 1999
+
+[2] Stephen Merity, Caiming Xiong, James Bradbury, and Richard Socher. 2016. Pointer Sentinel Mixture Models
 
 
