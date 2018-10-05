@@ -22,9 +22,9 @@ from nlp_architect.api.abstract_api import AbstractApi
 from nlp_architect.utils.io import download_unlicensed_file
 from nlp_architect.models.ner_crf import NERCRF
 
-from nlp_architect.utils.text import SpacyInstance
+# from nlp_architect.utils.text import SpacyInstance
 
-nlp = SpacyInstance(disable=['tagger', 'ner', 'parser', 'vectors', 'textcat'])
+#nlp = SpacyInstance(disable=['tagger', 'ner', 'parser', 'vectors', 'textcat'])
 
 
 class NerApi(AbstractApi):
@@ -50,21 +50,11 @@ class NerApi(AbstractApi):
 
     def encode_input(self, text_arr):
         sentence = []
-        sentence_chars = []
         for word in text_arr:
             sentence.append(self.encode_word(word))
-            sentence_chars.append(self.encode_word_chars(word))
         encoded_sentence = pad_sequences(
             [np.asarray(sentence)], maxlen=self.model_info['sentence_len'])
-        chars_padded = pad_sequences(
-            sentence_chars, maxlen=self.model_info['word_len'])
-        if self.model_info['sentence_len'] - chars_padded.shape[0] > 0:
-            chars_padded = np.concatenate((np.zeros(
-                (self.model_info['sentence_len'] - chars_padded.shape[0],
-                    self.model_info['word_len'])), chars_padded))
-        encoded_chars = chars_padded.reshape(1, self.model_info['sentence_len'],
-                                             self.model_info['word_len'])
-        return encoded_sentence, encoded_chars
+        return encoded_sentence
 
     def _prompt(self):
         response = input('\nTo download \'{}\', please enter YES: '.
@@ -125,17 +115,31 @@ class NerApi(AbstractApi):
         counter = 0
         ents = []
         spans = []
-        for obj in mapped:
-            if(obj['label'] != 'O'):
-                spans.append({
-                    'start': counter,
-                    'end': (counter + len(obj['word'])),
-                    'type': obj['label']
-                })
-            counter += len(obj['word']) + 1
+        words = []
+        word = ''
+        i = 0
+        while i < len(mapped):
+            word = word + mapped[i]['word']
+            if mapped[i]['label'].startswith('B-'):
+                i = i + 1
+                while not mapped[i]['label'].startswith('E-'):
+                    word = word + mapped[i]['word']
+                    i = i + 1
+                if(mapped[i]['label'].startswith('E-')):
+                    word = word + mapped[i]['word']
+                    spans.append({
+                        'start': counter,
+                        'end': (counter + len(word)),
+                        'type': mapped[i]['label'].replace('E-','')
+                    })
+            words.append(word)
+            counter += len(word) + 1
+            word = ''
+            i = i + 1
+            
         ents = dict((obj['type'].lower(), obj) for obj in spans).keys()
         ret = {}
-        ret['doc_text'] = ' '.join(text)
+        ret['doc_text'] = ' '.join(words)
         ret['annotation_set'] = list(ents)
         ret['spans'] = spans
         ret['title'] = 'None'
@@ -143,11 +147,13 @@ class NerApi(AbstractApi):
 
     def process_text(self, text):
         input_text = ' '.join(text.strip().split())
-        return nlp.tokenize(input_text)
+        return [text_arr for text_arr in input_text]
+        
 
     def inference(self, doc):
         text_arr = self.process_text(doc)
-        words, chars = self.encode_input(text_arr)
-        tags = self.model.predict([words, chars])
+        words = self.encode_input(text_arr)
+        tags = self.model.predict(words)
         tags = tags.argmax(2)
+        print (tags)
         return self.pretty_print(text_arr, tags)

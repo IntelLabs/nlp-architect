@@ -45,17 +45,17 @@ class SequentialTaggingDataset(object):
                  test_file,
                  max_sentence_length=30,
                  max_word_length=20,
-                 tag_field_no=4):
+                 tag_field_no=2):
         self.files = {'train': train_file,
                       'test': test_file}
         self.max_sent_len = max_sentence_length
         self.max_word_len = max_word_length
         self.tf = tag_field_no
-
+    
         self.vocabs = {'token': Vocabulary(2),  # 0=pad, 1=unk
-                       'char': Vocabulary(2),   # 0=pad, 1=unk
-                       'tag': Vocabulary(1)}    # 0=pad
-
+                       'char': Vocabulary(2),  # 0=pad, 1=unk
+                       'tag': Vocabulary(1)}  # 0=pad
+    
         self.data = {}
         for f in self.files:
             raw_sentences = self._read_file(self.files[f])
@@ -64,20 +64,8 @@ class SequentialTaggingDataset(object):
             tag_vecs = []
             for tokens, tags in raw_sentences:
                 word_vecs.append(np.array([self.vocabs['token'].add(t) for t in tokens]))
-                word_chars = []
-                for t in tokens:
-                    word_chars.append(np.array([self.vocabs['char'].add(c) for c in t]))
-                word_chars = pad_sequences(word_chars, maxlen=self.max_word_len)
-                if self.max_sent_len - len(tokens) > 0:
-                    char_padding = self.max_sent_len - len(word_chars)
-                    char_vecs.append(
-                        np.concatenate((np.zeros((char_padding, self.max_word_len)), word_chars),
-                                       axis=0))
-                else:
-                    char_vecs.append(word_chars[-self.max_sent_len:])
                 tag_vecs.append(np.array([self.vocabs['tag'].add(t) for t in tags]))
             word_vecs = pad_sequences(word_vecs, maxlen=self.max_sent_len)
-            char_vecs = np.asarray(char_vecs)
             tag_vecs = pad_sequences(tag_vecs, maxlen=self.max_sent_len)
             self.data[f] = word_vecs, char_vecs, tag_vecs
 
@@ -129,8 +117,13 @@ class SequentialTaggingDataset(object):
         tokens = []
         tags = []
         for line in sentence:
-            fields = line.split()
-            assert len(fields) >= self.tf, 'tag field exceeds number of fields'
+            print (line)
+            fields = line.split(' ')
+            print (len(fields), self.tf)
+            if len(fields) < self.tf:
+                continue
+            # assert len(fields) >= self.tf, 'tag field exceeds number of fields'
+            
             if 'CD' in fields[1]:
                 tokens.append('0')
             else:

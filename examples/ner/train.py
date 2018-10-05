@@ -39,7 +39,7 @@ def read_input_args():
                         help='Train file (sequential tagging dataset format)')
     parser.add_argument('--test_file', type=validate_existing_filepath, required=True,
                         help='Test file (sequential tagging dataset format)')
-    parser.add_argument('--tag_num', type=int, default=4,
+    parser.add_argument('--tag_num', type=int, default=2,
                         help='Entity labels tab number in train/test files')
     parser.add_argument('--sentence_length', type=int, default=30,
                         help='Max sentence length')
@@ -118,14 +118,14 @@ if __name__ == '__main__':
                     dropout=args.dropout,
                     external_embedding_model=args.embedding_model)
 
-    conll_cb = ConllCallback([x_test, x_char_test], y_test, dataset.y_labels,
+    conll_cb = ConllCallback(x_test, y_test, dataset.y_labels,
                              batch_size=args.b)
 
-    ner_model.fit(x=[x_train, x_char_train], y=y_train,
+    ner_model.fit(x=x_train, y=y_train,
                   batch_size=args.b,
                   epochs=args.e,
                   callbacks=[conll_cb],
-                  validation=([x_test, x_char_test], y_test))
+                  validation=(x_test, y_test))
 
     # saving model
     ner_model.save(args.model_path)
@@ -149,7 +149,7 @@ if __name__ == '__main__':
         pickle.dump(info, fp)
 
     # running predictions
-    predictions = ner_model.predict(x=[x_test, x_char_test], batch_size=1)
+    predictions = ner_model.predict(x=x_test, batch_size=1)
     eval = get_conll_scores(predictions, y_test, {v: k for k, v in dataset.y_labels.items()})
     pp = pprint.PrettyPrinter(indent=4)
     pp.pprint(eval)

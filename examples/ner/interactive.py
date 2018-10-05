@@ -23,9 +23,9 @@ import numpy as np
 from keras.preprocessing.sequence import pad_sequences
 from nlp_architect.models.ner_crf import NERCRF
 from nlp_architect.utils.io import validate_existing_filepath
-from nlp_architect.utils.text import SpacyInstance
+# from nlp_architect.utils.text import SpacyInstance
 
-nlp = SpacyInstance(disable=['tagger', 'ner', 'parser', 'vectors', 'textcat'])
+# nlp = SpacyInstance(disable=['tagger', 'ner', 'parser', 'vectors', 'textcat'])
 
 
 def read_input_args():
@@ -58,7 +58,7 @@ def load_saved_model():
 
 def process_text(text):
     input_text = ' '.join(text.strip().split())
-    return nlp.tokenize(input_text)
+    return [text_arr for text_arr in input_text]
 
 
 def encode_word(word):
