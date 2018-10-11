@@ -43,8 +43,7 @@ to train the model weights, perform inference, and save/load the model.
 
     bist_parser.BISTModel
     chunker.SequenceChunker
-    intent_extraction.JointSequentialIntentModel
-    intent_extraction.EncDecIntentModel
+    intent_extraction.Seq2SeqIntentModel
     intent_extraction.MultiTaskIntentModel
     kvmemn2n.KVMemN2N
     matchlstm_ansptr.MatchLSTM_AnswerPointer
@@ -107,4 +106,7 @@ These are currently stored in the various models or related to which DL framewor
     :nosignatures:
 
     ngraph.modified_lookup_table.ModifiedLookupTable
-    keras.callbacks.ConllCallback
+    tensorflow.python.keras.layers.crf.CRF
+    tensorflow.python.keras.utils.layer_utils.save_model
+    tensorflow.python.keras.utils.layer_utils.load_model
+    tensorflow.python.keras.callbacks.ConllCallback

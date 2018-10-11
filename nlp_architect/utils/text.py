@@ -267,8 +267,7 @@ def word_vector_generator(data, lower=False, start=0):
         start (int, optional): vocabulary index start integer
 
     Returns:
-        np.array: a 2D numpy array
-        Vocabulary: constructed vocabulary
+        2D numpy array and Vocabulary of the detected words
     """
     vocab = Vocabulary(start)
     data_vec = []

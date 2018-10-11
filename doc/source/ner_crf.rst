@@ -74,13 +74,9 @@ A high level overview of the model is provided in figure below:
 Feature generation
 ------------------
 
-NER words or phrases can sometimes be easily identified by the shape of the words, by pre-built lexicons, by Part-of-speech analysis or rules combining patterns of the above features. In many other cases, those features are not known or non existant and the context in which the words appear provide the indication whether a word or a phrase is an entity.
+NER words or phrases can sometimes be easily identified by the shape of the words, by pre-built lexicons, by Part-of-speech analysis or rules combining patterns of the above features. In many other cases, those features are not known or non existent and the context in which the words appear provide the indication whether a word or a phrase is an entity.
 
-Character embedding sub-network figure:
-
-.. image:: assets/char_embedding.png
-
-With the help of RNN topologies we can use LSTM layers to extract the character based features of words. In this model we used a two LSTM layers (in forward and backward directions) for extracting a feature vector on the character representation of words. The last state of the layers are concatenated and marked as the feature vector of a word. More info on character embedding can be found in the paper.
+With the help of RNN topologies we can use LSTMs to extract the character based features of words. In this model we use convolutions to extract n-grams features from the characters making up words. A similar approach with RNNs takes the last state of a BiLSTM layer as a representation of the character embeddings. More info on character embedding can be found in the paper.
 
 Prediction layer
 ----------------
@@ -106,32 +102,34 @@ Full training parameters
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 All customizable parameters can be obtained by running: ``python examples/ner/train.py -h``
 
+-h, --help            show this help message and exit
 -b B                  Batch size
 -e E                  Number of epochs
 --train_file TRAIN_FILE
-                      Train file (sequential tagging dataset format)
+                    Train file (sequential tagging dataset format)
 --test_file TEST_FILE
-                      Test file (sequential tagging dataset format)
+                    Test file (sequential tagging dataset format)
 --tag_num TAG_NUM     Entity labels tab number in train/test files
 --sentence_length SENTENCE_LENGTH
-                      Max sentence length
+                    Max sentence length
 --word_length WORD_LENGTH
-                      Max word length in characters
+                    Max word length in characters
 --word_embedding_dims WORD_EMBEDDING_DIMS
-                      Word features embedding dimension size
+                    Word features embedding dimension size
 --character_embedding_dims CHARACTER_EMBEDDING_DIMS
-                      Character features embedding dimension size
+                    Character features embedding dimension size
 --char_features_lstm_dims CHAR_FEATURES_LSTM_DIMS
-                      Character feature extractor LSTM dimension size
+                    Character feature extractor LSTM dimension size
 --entity_tagger_lstm_dims ENTITY_TAGGER_LSTM_DIMS
-                      Entity tagger LSTM dimension size
+                    Entity tagger LSTM dimension size
 --dropout DROPOUT     Dropout rate
 --embedding_model EMBEDDING_MODEL
-                      Path to external word embedding model file
+                    Path to external word embedding model file
 --model_path MODEL_PATH
-                      Path for saving model weights
+                    Path for saving model weights
 --model_info_path MODEL_INFO_PATH
-                      Path for saving model topology
+                    Path for saving model topology
+--use_cudnn           use CUDNN based LSTM cells
 
 The model will automatically save the model weights and topology information after training is complete (user can provide file names as above).
 

@@ -34,20 +34,22 @@ class NPAnnotator(object):
     Args:
         model (SequenceChunker): a chunker model
         word_vocab (Vocabulary): word-id vocabulary of the model
+        char_vocab (Vocabulary): char id vocabulary of words of the model
         chunk_vocab (Vocabulary): chunk tag vocabulary of the model
         batch_size (int, optional): inference batch size
     """
 
-    def __init__(self, model, word_vocab, chunk_vocab, batch_size: int = 32):
+    def __init__(self, model, word_vocab, char_vocab, chunk_vocab, batch_size: int = 32):
         self.model = model
         self.bs = batch_size
         self.word_vocab = word_vocab
+        self.char_vocab = char_vocab
         self.chunk_vocab = chunk_vocab
         Doc.set_extension('noun_phrases', default=[], force=True)
 
     @classmethod
     def load(cls, model_path: str, parameter_path: str, batch_size: int = 32,
-             use_gpu: bool = False):
+             use_cudnn: bool = False):
         """
         Load a NPAnnotator annotator
 
@@ -55,7 +57,7 @@ class NPAnnotator(object):
             model_path (str): path to trained model
             parameter_path (str): path to model parameters
             batch_size (int, optional): inference batch_size
-            use_gpu (bool, optional): use gpu for inference (cudnn cells)
+            use_cudnn (bool, optional): use gpu for inference (cudnn cells)
 
         Returns:
             NPAnnotator class with loaded model
@@ -66,17 +68,17 @@ class NPAnnotator(object):
         _parameter_path = path.join(path.dirname(path.realpath(__file__)), parameter_path)
         validate_existing_filepath(_parameter_path)
 
-        model = SequenceChunker(use_gpu=use_gpu)
+        model = SequenceChunker(use_cudnn=use_cudnn)
         model.load(_model_path)
         with open(_parameter_path, 'rb') as fp:
             model_params = pickle.load(fp)
             word_vocab = model_params['word_vocab']
             chunk_vocab = model_params['chunk_vocab']
-        model.chunk_inference_mode()
-        return cls(model, word_vocab, chunk_vocab, batch_size)
+            char_vocab = model_params.get('char_vocab', None)
+        return cls(model, word_vocab, char_vocab, chunk_vocab, batch_size)
 
-    def _infer_chunks(self, vec, doc_lengths):
-        tagged_sents = self.model.predict(vec, batch_size=self.bs).argmax(2)
+    def _infer_chunks(self, input_vec, doc_lengths):
+        tagged_sents = self.model.predict(input_vec, batch_size=self.bs).argmax(2)
         sentence = []
         for c, l in zip(tagged_sents, doc_lengths):
             sentence.append(c[-l:])
@@ -85,8 +87,19 @@ class NPAnnotator(object):
         return extract_nps(chunk_tags)
 
     def _feature_extractor(self, doc):
-        return np.asarray([self.word_vocab[w] if self.word_vocab[w] is not None else 1
-                           for w in doc])
+        features = np.asarray([self.word_vocab[w] if self.word_vocab[w] is not None else 1
+                               for w in doc])
+        if self.char_vocab:
+            sentence_chars = []
+            for w in doc:
+                word_chars = []
+                for c in w:
+                    _cid = self.char_vocab[c]
+                    word_chars.append(_cid if _cid is not None else 1)
+                sentence_chars.append(word_chars)
+            sentence_chars = pad_sentences(sentence_chars, self.model.max_word_len)
+            features = (features, sentence_chars)
+        return features
 
     def __call__(self, doc: Doc) -> Doc:
         """
@@ -94,15 +107,29 @@ class NPAnnotator(object):
         """
         spans = []
         doc_vecs = []
+        doc_chars = []
         doc_lens = []
         if len(doc) < 1:
             return doc
         for sentence in doc.sents:
-            doc_vec = self._feature_extractor([t.text for t in sentence])
+            features = self._feature_extractor([t.text for t in sentence])
+            if isinstance(features, tuple):
+                doc_vec = features[0]
+                doc_chars.append(features[1])
+            else:
+                doc_vec = features
             doc_vecs.append(doc_vec)
             doc_lens.append(len(doc_vec))
         doc_vectors = pad_sentences(np.asarray(doc_vecs))
-        np_indexes = self._infer_chunks(doc_vectors, doc_lens)
+        inputs = doc_vectors
+        if self.char_vocab:
+            max_len = doc_vectors.shape[1]
+            padded_chars = np.zeros((len(doc_chars), max_len, self.model.max_word_len))
+            for idx, d in enumerate(doc_chars):
+                d = d[:max_len]
+                padded_chars[idx, -d.shape[0]:] = d
+            inputs = [inputs, padded_chars]
+        np_indexes = self._infer_chunks(inputs, doc_lens)
         for s, e in np_indexes:
             np_span = Span(doc, s, e)
             spans.append(np_span)
@@ -295,7 +322,8 @@ class SpacyNPAnnotator(object):
     Simple Spacy pipe with NP extraction annotations
     """
 
-    def __init__(self, model_path, settings_path, spacy_model='en', batch_size=32, use_gpu=False):
+    def __init__(self, model_path, settings_path, spacy_model='en', batch_size=32,
+                 use_cudnn=False):
         _model_path = path.join(path.dirname(path.realpath(__file__)), model_path)
         validate_existing_filepath(_model_path)
         _settings_path = path.join(path.dirname(path.realpath(__file__)), settings_path)
@@ -307,7 +335,7 @@ class SpacyNPAnnotator(object):
                 nlp.remove_pipe(p)
         nlp.add_pipe(nlp.create_pipe('sentencizer'), first=True)
         nlp.add_pipe(NPAnnotator.load(_model_path, settings_path, batch_size=batch_size,
-                                      use_gpu=use_gpu), last=True)
+                                      use_cudnn=use_cudnn), last=True)
         self.nlp = nlp
 
     def __call__(self, text: str) -> [str]:

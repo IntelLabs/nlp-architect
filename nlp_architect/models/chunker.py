@@ -14,41 +14,49 @@
 # limitations under the License.
 # ******************************************************************************
 
-from __future__ import division, print_function, unicode_literals, absolute_import
-
-import pickle
-import tempfile
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import tensorflow as tf
 from tensorflow import keras
+from tensorflow.keras.layers import Bidirectional, Conv1D, CuDNNLSTM, Dense, Dropout, Embedding, \
+    GlobalMaxPooling1D, Input, LSTM, TimeDistributed, concatenate
+
+from nlp_architect.contrib.tensorflow.python.keras.layers.crf import CRF
+from nlp_architect.contrib.tensorflow.python.keras.utils.layer_utils import load_model, save_model
 
 
-class SequenceChunker(object):
+class SequenceTagger(object):
     """
-    A sequence Chunker model written in Tensorflow (and Keras) based on the
+    A sequence tagging model for POS and Chunks written in Tensorflow (and Keras) based on the
     paper 'Deep multi-task learning with low level tasks supervised at lower layers'.
     The model has 3 Bi-LSTM layers and outputs POS and Chunk tags.
 
     Args:
-        use_gpu (bool, optional): use GPU based model (CUDNNA cells)
+        use_cudnn (bool, optional): use GPU based model (CUDNNA cells)
     """
 
-    def __init__(self, use_gpu=False):
+    def __init__(self, use_cudnn=False):
         self.vocabulary_size = None
         self.num_pos_labels = None
         self.num_chunk_labels = None
+        self.char_vocab_size = None
         self.feature_size = None
         self.dropout = None
+        self.max_word_len = None
+        self.classifier = None
         self.optimizer = None
         self.model = None
-        self.use_gpu = use_gpu
+        self.use_cudnn = use_cudnn
 
     def build(self,
               vocabulary_size,
               num_pos_labels,
               num_chunk_labels,
+              char_vocab_size=None,
+              max_word_len=25,
               feature_size=100,
               dropout=0.5,
+              classifier='softmax',
               optimizer=None):
         """
         Build a chunker/POS model
@@ -57,39 +65,76 @@ class SequenceChunker(object):
             vocabulary_size (int): the size of the input vocabulary
             num_pos_labels (int): the size of of POS labels
             num_chunk_labels (int): the sie of chunk labels
+            char_vocab_size (int, optional): character vocabulary size
+            max_word_len (int, optional): max characters in a word
             feature_size (int, optional): feature size - determines the embedding/LSTM layer \
                 hidden state size
             dropout (float, optional): dropout rate
+            classifier (str, optional): classifier layer, 'softmax' for softmax or 'crf' for \
+                conditional random fields classifier. default is 'softmax'.
             optimizer (tensorflow.python.training.optimizer.Optimizer, optional): optimizer, if \
                 None will use default SGD (paper setup)
         """
         self.vocabulary_size = vocabulary_size
+        self.char_vocab_size = char_vocab_size
         self.num_pos_labels = num_pos_labels
         self.num_chunk_labels = num_chunk_labels
+        self.max_word_len = max_word_len
         self.feature_size = feature_size
         self.dropout = dropout
-        embedding_layer = self._embedding_layer()
-        word_input = keras.layers.Input(shape=(None,))
-        word_embedding = embedding_layer(word_input)
-        rnn_layer_1 = keras.layers.Bidirectional(self._rnn_cell())(word_embedding)
-        rnn_layer_2 = keras.layers.Bidirectional(self._rnn_cell())(rnn_layer_1)
-        rnn_layer_3 = keras.layers.Bidirectional(self._rnn_cell())(rnn_layer_2)
-        rnn_layer_3 = keras.layers.Dropout(self.dropout)(rnn_layer_3)
-        pos_out = keras.layers.TimeDistributed(keras.layers.Dense(self.num_pos_labels,
-                                                                  activation='softmax',
-                                                                  name='POS output'))(rnn_layer_1)
-        chunks_out = keras.layers.TimeDistributed(keras.layers.Dense(self.num_chunk_labels,
-                                                                     activation='softmax',
-                                                                     name='Chunk output')
-                                                  )(rnn_layer_3)
-        model = keras.Model(word_input, [pos_out, chunks_out])
+        self.classifier = classifier
+
+        word_emb_layer = Embedding(self.vocabulary_size, self.feature_size,
+                                   name='embedding', mask_zero=False)
+        word_input = Input(shape=(None,))
+        word_embedding = word_emb_layer(word_input)
+        input_src = word_input
+        features = word_embedding
+
+        # add char input if present
+        if self.char_vocab_size is not None:
+            char_input = Input(shape=(None, self.max_word_len))
+            char_emb_layer = Embedding(self.char_vocab_size, 30, name='char_embedding',
+                                       mask_zero=False)
+            char_embedding = char_emb_layer(char_input)
+            char_embedding = TimeDistributed(Conv1D(30, 3, padding='same'))(char_embedding)
+            char_embedding = TimeDistributed(GlobalMaxPooling1D())(char_embedding)
+
+            input_src = [input_src, char_input]
+            features = concatenate([word_embedding, char_embedding])
+
+        rnn_layer_1 = Bidirectional(self._rnn_cell(return_sequences=True))(features)
+        rnn_layer_2 = Bidirectional(self._rnn_cell(return_sequences=True))(rnn_layer_1)
+        rnn_layer_3 = Bidirectional(self._rnn_cell(return_sequences=True))(rnn_layer_2)
+
+        # outputs
+        pos_out = Dense(self.num_pos_labels, activation='softmax', name='pos_output')(rnn_layer_1)
+        losses = {'pos_output': 'categorical_crossentropy'}
+        metrics = {'pos_output': 'categorical_accuracy'}
+
+        if 'crf' in self.classifier:
+            with tf.device('/cpu:0'):
+                chunk_crf = CRF(self.num_chunk_labels, name='chunk_crf')
+                rnn_layer_3_dense = Dense(self.num_chunk_labels)(
+                    Dropout(self.dropout)(rnn_layer_3))
+                chunks_out = chunk_crf(rnn_layer_3_dense)
+                losses['chunk_crf'] = chunk_crf.loss
+                metrics['chunk_crf'] = chunk_crf.viterbi_accuracy
+        else:
+            chunks_out = TimeDistributed(Dense(self.num_chunk_labels,
+                                               activation='softmax'),
+                                         name='chunk_out')(rnn_layer_3)
+            losses['chunk_out'] = 'categorical_crossentropy'
+            metrics['chunk_out'] = 'categorical_accuracy'
+
+        model = keras.Model(input_src, [pos_out, chunks_out])
         if optimizer is None:
-            self.optimizer = tf.train.GradientDescentOptimizer(0.1)
+            self.optimizer = tf.train.AdamOptimizer()
         else:
             self.optimizer = optimizer
         model.compile(optimizer=self.optimizer,
-                      loss='categorical_crossentropy',
-                      metrics=['categorical_accuracy'])
+                      loss=losses,
+                      metrics=metrics)
         self.model = model
 
     def load_embedding_weights(self, weights):
@@ -101,18 +146,16 @@ class SequenceChunker(object):
         """
         assert self.model is not None, 'Cannot assign weights, apply build() before trying to ' \
                                        'loading embedding weights '
-        self.model.get_layer(name='embedding').set_weights([weights])
+        emb_layer = self.model.get_layer(name='embedding')
+        assert emb_layer.output_dim == weights.shape[1], 'embedding vectors shape mismatch'
+        emb_layer.set_weights([weights])
 
-    def _rnn_cell(self):
-        if self.use_gpu:
-            rnn_cell = keras.layers.CuDNNLSTM(self.feature_size, return_sequences=True)
+    def _rnn_cell(self, **kwargs):
+        if self.use_cudnn:
+            rnn_cell = CuDNNLSTM(self.feature_size, **kwargs)
         else:
-            rnn_cell = keras.layers.LSTM(self.feature_size, return_sequences=True)
+            rnn_cell = LSTM(self.feature_size, **kwargs)
         return rnn_cell
-
-    def _embedding_layer(self):
-        return keras.layers.Embedding(self.vocabulary_size, self.feature_size,
-                                      name='embedding', mask_zero=self.use_gpu is False)
 
     def fit(self, x, y, batch_size=1, epochs=1, validation_data=None, callbacks=None):
         """
@@ -142,22 +185,6 @@ class SequenceChunker(object):
         """
         return self.model.predict(x=x, batch_size=batch_size)
 
-    def chunk_inference_mode(self):
-        """
-        Convert model into chunking tagging inference mode.
-        Model can only be used for inference for chunking after calling this method,
-        re-build the model for other use.
-        """
-        self.model = keras.Model(self.model.input, self.model.output[-1])
-
-    def pos_inference_mode(self):
-        """
-        Convert model into POS tagging inference mode.
-        Model can only be used for inference for POS after calling this method,
-        re-build the model for other use.
-        """
-        self.model = keras.Model(self.model.input, self.model.output[0])
-
     def save(self, filepath):
         """
         Save the model to disk
@@ -165,16 +192,11 @@ class SequenceChunker(object):
         Args:
             filepath (str): file name to save model
         """
-        with tempfile.NamedTemporaryFile(suffix='.h5', delete=True) as fd:
-            self.model.save_weights(fd.name)
-            model_weights = fd.read()
         topology = {k: v for k, v in self.__dict__.items()}
         topology.pop('model')
         topology.pop('optimizer')
-        data = {'model_weights': model_weights,
-                'model_topology': topology}
-        with open(filepath, 'wb') as fp:
-            pickle.dump(data, fp)
+        topology.pop('use_cudnn')
+        save_model(self.model, topology, filepath)
 
     def load(self, filepath):
         """
@@ -183,16 +205,46 @@ class SequenceChunker(object):
         Args:
             filepath (str): file name of model
         """
-        with open(filepath, 'rb') as fp:
-            model_data = pickle.load(fp)
-        topology = model_data['model_topology']
-        self.build(topology['vocabulary_size'],
-                   topology['num_pos_labels'],
-                   topology['num_chunk_labels'],
-                   topology['feature_size'],
-                   topology['dropout'],
-                   optimizer=None)
-        with tempfile.NamedTemporaryFile(suffix='.h5', delete=True) as fd:
-            fd.write(model_data['model_weights'])
-            fd.flush()
-            self.model.load_weights(fd.name)
+        load_model(filepath, self)
+
+
+class SequenceChunker(SequenceTagger):
+    """
+    A sequence Chunker model written in Tensorflow (and Keras) based SequenceTagger model.
+    The model uses only the chunking output of the model.
+    """
+
+    def predict(self, x, batch_size=1):
+        """
+        Predict labels given x.
+
+        Args:
+            x: samples for inference
+            batch_size (int, optional): forward pass batch size
+
+        Returns:
+            tuple of numpy arrays of chunk labels
+        """
+        model = keras.Model(self.model.input, self.model.output[-1])
+        return model.predict(x=x, batch_size=batch_size)
+
+
+class SequencePOSTagger(SequenceTagger):
+    """
+        A sequence POS tagger model written in Tensorflow (and Keras) based SequenceTagger model.
+        The model uses only the chunking output of the model.
+        """
+
+    def predict(self, x, batch_size=1):
+        """
+        Predict labels given x.
+
+        Args:
+            x: samples for inference
+            batch_size (int, optional): forward pass batch size
+
+        Returns:
+            tuple of numpy arrays of POS labels
+        """
+        model = keras.Model(self.model.input, self.model.output[0])
+        return model.predict(x=x, batch_size=batch_size)

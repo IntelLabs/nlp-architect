@@ -14,17 +14,16 @@
 # limitations under the License.
 # ******************************************************************************
 
-from __future__ import division, print_function, unicode_literals, absolute_import
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import json
 import os
 import sys
 
 import numpy as np
-from keras.preprocessing.sequence import pad_sequences
-from nlp_architect.utils.embedding import load_word_embeddings, fill_embedding_mat
-from nlp_architect.utils.generic import one_hot_sentence, one_hot
-from nlp_architect.utils.text import Vocabulary, SpacyInstance
+from nlp_architect.utils.generic import pad_sentences
+from nlp_architect.utils.text import SpacyInstance, Vocabulary, character_vector_generator, \
+    word_vector_generator
 
 
 class IntentDataset(object):
@@ -33,80 +32,51 @@ class IntentDataset(object):
 
     Args:
         sentence_length (int): max sentence length
-        embedding_model (str, optional): external embedding model path
-        embedding_size (int): embedding vectors size
     """
 
-    def __init__(self, sentence_length, word_length=12, embedding_model=None,
-                 embedding_size=None):
+    def __init__(self, sentence_length=50, word_length=12):
         self.data_dict = {}
         self.vecs = {}
         self.sentence_len = sentence_length
         self.word_len = word_length
-        self.embedding_model = embedding_model
-        self.embedding_size = embedding_size
 
-        self._tokens_vocab = Vocabulary()
-        self._chars_vocab = Vocabulary()
-        self._tags_vocab = Vocabulary()
+        self._tokens_vocab = Vocabulary(2)
+        self._chars_vocab = Vocabulary(2)
+        self._tags_vocab = Vocabulary(1)
         self._intents_vocab = Vocabulary()
 
-    def _load_embedding(self, files):
-        print('Loading external word embedding model ..')
-        emb_vecs, _ = load_word_embeddings(self.embedding_model)
-        for f in files:
-            self.vecs[f][0] = fill_embedding_mat(self.vecs[f][0],
-                                                 self._tokens_vocab.reverse_vocab(),
-                                                 emb_vecs,
-                                                 self.embedding_size)
-
     def _load_data(self, train_set, test_set):
-        datasets = {'train': train_set, 'test': test_set}
         # vectorize
         # add offset of 2 for PAD and OOV
-        self._tokens_vocab.add_vocab_offset(2)
-        self._chars_vocab.add_vocab_offset(2)
-        self._tags_vocab.add_vocab_offset(1)
-        vec_data = {}
-        for f in sorted(datasets.keys()):
-            vec_data[f] = self._prepare_vectors(datasets[f])
-        for f in sorted(datasets.keys()):
-            tokens, words, intents, tags = vec_data[f]
-            x = pad_sequences(tokens, maxlen=self.sentence_len)
-            _w = []
-            for s in words:
-                _s = pad_sequences(s, maxlen=self.word_len)
-                sentence = np.asarray(_s)[-self.sentence_len:]
-                if sentence.shape[0] < self.sentence_len:
-                    sentence = np.vstack((np.zeros((self.sentence_len - sentence.shape[0],
-                                                    self.word_len)), sentence))
-                _w.append(sentence)
-            w = np.asarray(_w)
-            _y = pad_sequences(tags, maxlen=self.sentence_len)
-            y = one_hot_sentence(_y, self.label_vocab_size)
-            i = one_hot(intents, self.intent_size)
-            self.vecs[f] = [x, w, i, y]
+        train_size = len(train_set)
+        test_size = len(test_set)
+        texts, tags, intents = list(zip(*train_set + test_set))
+        text_vectors, self._tokens_vocab = word_vector_generator(texts, lower=True, start=2)
+        tag_vectors, self._tags_vocab = word_vector_generator(tags, lower=False, start=1)
+        chars_vectors, self._chars_vocab = character_vector_generator(texts, start=2)
+        i, self._intents_vocab = word_vector_generator([intents])
+        i = np.asarray(i[0])
 
-    def _prepare_vectors(self, dataset):
-        tokens = []
-        words = []
-        tags = []
-        intents = []
-        for tok, tag, i in dataset:
-            tokens.append(np.asarray([self._tokens_vocab.add(t) for t in tok]))
-            words.append(np.asarray(self._extract_char_features(tok)))
-            tags.append(np.asarray([self._tags_vocab.add(t) for t in tag]))
-            intents.append(self._intents_vocab.add(i))
-        return tokens, words, np.asarray(intents), tags
+        text_vectors = pad_sentences(text_vectors, max_length=self.sentence_len)
+        tag_vectors = pad_sentences(tag_vectors, max_length=self.sentence_len)
+        chars_vectors = [pad_sentences(d, max_length=self.word_len) for d in chars_vectors]
+        zeros = np.zeros((len(chars_vectors), self.sentence_len, self.word_len))
+        for idx, d in enumerate(chars_vectors):
+            d = d[:self.sentence_len]
+            zeros[idx, :d.shape[0]] = d
+        chars_vectors = zeros.astype(dtype=np.int32)
 
-    def _extract_char_features(self, tokens):
-        words = []
-        for t in tokens:
-            words.append(np.asarray([self._chars_vocab.add(c) for c in t]))
-        return words
+        self.vecs['train'] = [text_vectors[:train_size],
+                              chars_vectors[:train_size],
+                              i[:train_size],
+                              tag_vectors[:train_size]]
+        self.vecs['test'] = [text_vectors[-test_size:],
+                             chars_vectors[-test_size:],
+                             i[-test_size:],
+                             tag_vectors[-test_size:]]
 
     @property
-    def vocab_size(self):
+    def word_vocab_size(self):
         """int: vocabulary size"""
         return len(self._tokens_vocab) + 2
 
@@ -126,19 +96,24 @@ class IntentDataset(object):
         return len(self._intents_vocab)
 
     @property
-    def tokens_vocab(self):
+    def word_vocab(self):
         """dict: tokens vocabulary"""
-        return self._tokens_vocab.vocab
+        return self._tokens_vocab
 
     @property
-    def labels_vocab(self):
+    def char_vocab(self):
+        """dict: word character vocabulary"""
+        return self._chars_vocab
+
+    @property
+    def tags_vocab(self):
         """dict: labels vocabulary"""
-        return self._tags_vocab.vocab
+        return self._tags_vocab
 
     @property
     def intents_vocab(self):
         """dict: intent labels vocabulary"""
-        return self._intents_vocab.vocab
+        return self._intents_vocab
 
     @property
     def train_set(self):
@@ -165,22 +140,15 @@ class TabularIntentDataset(IntentDataset):
         test_file (str): path to test set file
         sentence_length (int): max sentence length
         word_length (int): max word length
-        embedding_model (str): external word embedding model path
-        embedding_size (int): external word embedding vector size
     """
     files = ['train', 'test']
 
-    def __init__(self, train_file, test_file, sentence_length=30, word_length=12,
-                 embedding_model=None, embedding_size=None):
+    def __init__(self, train_file, test_file, sentence_length=30, word_length=12):
         train_set_raw, test_set_raw = self._load_dataset(train_file, test_file)
         super(TabularIntentDataset, self).__init__(sentence_length=sentence_length,
-                                                   word_length=word_length,
-                                                   embedding_model=embedding_model,
-                                                   embedding_size=embedding_size)
+                                                   word_length=word_length)
 
         self._load_data(train_set_raw, test_set_raw)
-        if self.embedding_model is not None:
-            self._load_embedding(self.files)
 
     def _load_dataset(self, train_file, test_file):
         """returns a tuple of train/test with 3-tuple of tokens, tags, intent_type"""
@@ -234,8 +202,6 @@ class SNIPS(IntentDataset):
             path (str): dataset path
             sentence_length (int, optional): max sentence length
             word_length (int, optional): max word length
-            embedding_model (str, optional): external word embedding model path
-            embedding_size (int, optional): external word embedding vector size
     """
     train_files = [
         'AddToPlaylist/train_AddToPlaylist_full.json',
@@ -257,20 +223,15 @@ class SNIPS(IntentDataset):
     ]
     files = ['train', 'test']
 
-    def __init__(self, path, sentence_length=30, embedding_model=None, word_length=12,
-                 embedding_size=None):
+    def __init__(self, path, sentence_length=30, word_length=12):
         if path is None or not os.path.isdir(path):
             print('invalid path for SNIPS dataset loader')
             sys.exit(0)
         self.dataset_root = path
         train_set_raw, test_set_raw = self._load_dataset()
         super(SNIPS, self).__init__(sentence_length=sentence_length,
-                                    word_length=word_length,
-                                    embedding_model=embedding_model,
-                                    embedding_size=embedding_size)
+                                    word_length=word_length)
         self._load_data(train_set_raw, test_set_raw)
-        if self.embedding_model is not None:
-            self._load_embedding(self.files)
 
     def _load_dataset(self):
         """returns a tuple of train/test with 3-tuple of tokens, tags, intent_type"""

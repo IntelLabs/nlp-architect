@@ -20,8 +20,8 @@ import argparse
 import pickle
 
 import numpy as np
-from keras.preprocessing.sequence import pad_sequences
 from nlp_architect.models.ner_crf import NERCRF
+from nlp_architect.utils.generic import pad_sentences
 from nlp_architect.utils.io import validate_existing_filepath
 from nlp_architect.utils.text import SpacyInstance
 
@@ -40,68 +40,30 @@ def read_input_args():
 
 def load_saved_model():
     ner_model = NERCRF()
-    ner_model.build(model_info['sentence_len'],
-                    model_info['word_len'],
-                    model_info['num_of_labels'],
-                    model_info['word_vocab'],
-                    model_info['vocab_size'],
-                    model_info['char_vocab_size'],
-                    word_embedding_dims=model_info['word_embedding_dims'],
-                    char_embedding_dims=model_info['char_embedding_dims'],
-                    word_lstm_dims=model_info['word_lstm_dims'],
-                    tagger_lstm_dims=model_info['tagger_lstm_dims'],
-                    dropout=model_info['dropout'],
-                    external_embedding_model=model_info['external_embedding_model'])
     ner_model.load(args.model_path)
     return ner_model
 
 
-def process_text(text):
-    input_text = ' '.join(text.strip().split())
+def process_text(doc):
+    input_text = ' '.join(doc.strip().split())
     return nlp.tokenize(input_text)
 
 
-def encode_word(word):
-    return model_info['word_vocab'].get(word, 1.0)
-
-
-def encode_word_chars(word):
-    return [model_info['char_vocab'].get(c, 1.0) for c in word]
-
-
-def encode_input(text_arr):
-    sentence = []
+def vectorize(doc, w_vocab, c_vocab):
+    words = np.asarray([w_vocab[w.lower()] if w.lower() in w_vocab else 1 for w in doc])\
+        .reshape(1, -1)
     sentence_chars = []
-    for word in text_arr:
-        sentence.append(encode_word(word))
-        sentence_chars.append(encode_word_chars(word))
-    encoded_sentence = pad_sequences([np.asarray(sentence)], maxlen=model_info['sentence_len'])
-    chars_padded = pad_sequences(sentence_chars, maxlen=model_info['word_len'])
-    if model_info['sentence_len'] - chars_padded.shape[0] > 0:
-        chars_padded = np.concatenate((np.zeros((model_info['sentence_len'] -
-                                                 chars_padded.shape[0], model_info['word_len'])),
-                                       chars_padded))
-    encoded_chars = chars_padded.reshape(1, model_info['sentence_len'], model_info['word_len'])
-    return encoded_sentence, encoded_chars
-
-
-def pretty_print(text, tags):
-    tags_str = [model_info['labels_id_to_word'].get(t, None) for t in tags[0]][-len(text):]
-    print(' '.join(['%-{}s'.format(max(len(t), len(tg)) + 1) % t
-                    for t, tg in zip(text, tags_str)]))
-    print(' '.join(['%-{}s'.format(max(len(t), len(tg)) + 1) % tg
-                    for t, tg in zip(text, tags_str)]))
-
-
-def run_interactive():
-    model = load_saved_model()
-    while True:
-        text = input('Enter sentence >> ')
-        text_arr = process_text(text)
-        words, chars = encode_input(text_arr)
-        tags = model.predict([words, chars])
-        tags = tags.argmax(2)
-        pretty_print(text_arr, tags)
+    for w in doc:
+        word_chars = []
+        for c in w:
+            if c in c_vocab:
+                _cid = c_vocab[c]
+            else:
+                _cid = 1
+            word_chars.append(_cid)
+        sentence_chars.append(word_chars)
+    sentence_chars = np.expand_dims(pad_sentences(sentence_chars, model.word_length), axis=0)
+    return words, sentence_chars
 
 
 if __name__ == '__main__':
@@ -109,4 +71,20 @@ if __name__ == '__main__':
     with open(args.model_info_path, 'rb') as fp:
         model_info = pickle.load(fp)
     assert model_info is not None, 'No model topology information loaded'
-    run_interactive()
+    model = load_saved_model()
+    word_vocab = model_info['word_vocab']
+    y_vocab = {v: k for k, v in model_info['y_vocab'].items()}
+    char_vocab = model_info['char_vocab']
+    while True:
+        text = input('Enter sentence >> ')
+        text_arr = process_text(text)
+        doc_vec = vectorize(text_arr, word_vocab, char_vocab)
+        seq_len = np.array([len(text_arr)]).reshape(-1, 1)
+        inputs = list(doc_vec)
+        if model.crf_mode == 'pad':
+            inputs = list(doc_vec) + [seq_len]
+        doc_ner = model.predict(inputs, batch_size=1).argmax(2).flatten()
+        ners = [y_vocab.get(n, None) for n in doc_ner]
+        for t, n in zip(text_arr, ners):
+            print('{}\t{}\t'.format(t, n))
+        print()
