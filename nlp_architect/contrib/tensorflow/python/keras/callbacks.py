@@ -46,6 +46,6 @@ class ConllCallback(Callback):
 
     def on_epoch_end(self, epoch, logs=None):
         predictions = self.model.predict(self.x, batch_size=self.bsz)
-        f1 = get_conll_scores(predictions, self.y, self.y_vocab)[0][-1]
+        stats = get_conll_scores(predictions, self.y, self.y_vocab)
         print()
-        print('Conll eval F1: {}'.format(f1))
+        print('Conll eval: \n{}'.format(stats))

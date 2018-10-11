@@ -14,14 +14,14 @@
 # limitations under the License.
 # ******************************************************************************
 import pickle
+from os import makedirs, path, sys
 
-from os import path, makedirs, sys
-from keras.preprocessing.sequence import pad_sequences
 import numpy as np
-from nlp_architect.api.abstract_api import AbstractApi
-from nlp_architect.utils.io import download_unlicensed_file
-from nlp_architect.models.ner_crf import NERCRF
 
+from nlp_architect.api.abstract_api import AbstractApi
+from nlp_architect.models.ner_crf import NERCRF
+from nlp_architect.utils.generic import pad_sentences
+from nlp_architect.utils.io import download_unlicensed_file
 from nlp_architect.utils.text import SpacyInstance
 
 nlp = SpacyInstance(disable=['tagger', 'ner', 'parser', 'vectors', 'textcat'])
@@ -29,7 +29,7 @@ nlp = SpacyInstance(disable=['tagger', 'ner', 'parser', 'vectors', 'textcat'])
 
 class NerApi(AbstractApi):
     """
-    Ner model API
+    NER model API
     """
     dir = path.dirname(path.realpath(__file__))
     pretrained_model = path.join(dir, 'ner-pretrained', 'model.h5')
@@ -40,33 +40,13 @@ class NerApi(AbstractApi):
         self.model_info = None
         self.model_path = NerApi.pretrained_model
         self.model_info_path = NerApi.pretrained_model_info
+        self.word_vocab = None
+        self.y_vocab = None
+        self.char_vocab = None
         self._download_pretrained_model(prompt)
 
-    def encode_word(self, word):
-        return self.model_info['word_vocab'].get(word, 1.0)
-
-    def encode_word_chars(self, word):
-        return [self.model_info['char_vocab'].get(c, 1.0) for c in word]
-
-    def encode_input(self, text_arr):
-        sentence = []
-        sentence_chars = []
-        for word in text_arr:
-            sentence.append(self.encode_word(word))
-            sentence_chars.append(self.encode_word_chars(word))
-        encoded_sentence = pad_sequences(
-            [np.asarray(sentence)], maxlen=self.model_info['sentence_len'])
-        chars_padded = pad_sequences(
-            sentence_chars, maxlen=self.model_info['word_len'])
-        if self.model_info['sentence_len'] - chars_padded.shape[0] > 0:
-            chars_padded = np.concatenate((np.zeros(
-                (self.model_info['sentence_len'] - chars_padded.shape[0],
-                    self.model_info['word_len'])), chars_padded))
-        encoded_chars = chars_padded.reshape(1, self.model_info['sentence_len'],
-                                             self.model_info['word_len'])
-        return encoded_sentence, encoded_chars
-
-    def _prompt(self):
+    @staticmethod
+    def _prompt():
         response = input('\nTo download \'{}\', please enter YES: '.
                          format('ner'))
         res = response.lower().strip()
@@ -92,43 +72,30 @@ class NerApi(AbstractApi):
                 agreed = self._prompt()
                 if agreed is False:
                     sys.exit(0)
-            download_unlicensed_file('http://nervana-modelzoo.s3.amazonaws.com/NLP/NER/',
+            download_unlicensed_file('http://nervana-modelzoo.s3.amazonaws.com/NLP/ner/',
                                      'model.h5', self.model_path)
-            download_unlicensed_file('http://nervana-modelzoo.s3.amazonaws.com/NLP/NER/',
+            download_unlicensed_file('http://nervana-modelzoo.s3.amazonaws.com/NLP/ner/',
                                      'model_info.dat', self.model_info_path)
             print('Done.')
 
     def load_model(self):
+        self.model = NERCRF()
+        self.model.load(self.model_path)
         with open(self.model_info_path, 'rb') as fp:
-            self.model_info = pickle.load(fp)
-            self.model = NERCRF()
-            self.model.build(
-                self.model_info['sentence_len'],
-                self.model_info['word_len'],
-                self.model_info['num_of_labels'],
-                self.model_info['word_vocab'],
-                self.model_info['vocab_size'],
-                self.model_info['char_vocab_size'],
-                word_embedding_dims=self.model_info['word_embedding_dims'],
-                char_embedding_dims=self.model_info['char_embedding_dims'],
-                word_lstm_dims=self.model_info['word_lstm_dims'],
-                tagger_lstm_dims=self.model_info['tagger_lstm_dims'],
-                dropout=self.model_info['dropout'],
-                external_embedding_model=self.model_info[
-                    'external_embedding_model'])
-            self.model.load(self.model_path)
+            model_info = pickle.load(fp)
+        self.word_vocab = model_info['word_vocab']
+        self.y_vocab = {v: k for k, v in model_info['y_vocab'].items()}
+        self.char_vocab = model_info['char_vocab']
 
-    def pretty_print(self, text, tags):
-        tags_str = [self.model_info['labels_id_to_word']
-                    .get(t, None) for t in tags[0]][-len(text):]
+    @staticmethod
+    def pretty_print(text, tags):
         mapped = [
-            {'index': idx, 'word': el, 'label': tags_str[idx]} for idx, el in enumerate(text)
+            {'index': idx, 'word': el, 'label': tags[idx]} for idx, el in enumerate(text)
         ]
         counter = 0
-        ents = []
         spans = []
         for obj in mapped:
-            if(obj['label'] != 'O'):
+            if obj['label'] != 'O':
                 spans.append({
                     'start': counter,
                     'end': (counter + len(obj['word'])),
@@ -136,20 +103,41 @@ class NerApi(AbstractApi):
                 })
             counter += len(obj['word']) + 1
         ents = dict((obj['type'].lower(), obj) for obj in spans).keys()
-        ret = {}
-        ret['doc_text'] = ' '.join(text)
-        ret['annotation_set'] = list(ents)
-        ret['spans'] = spans
-        ret['title'] = 'None'
+        ret = {'doc_text': ' '.join(text),
+               'annotation_set': list(ents),
+               'spans': spans,
+               'title': 'None'}
         return {"doc": ret, 'type': 'high_level'}
 
-    def process_text(self, text):
+    @staticmethod
+    def process_text(text):
         input_text = ' '.join(text.strip().split())
         return nlp.tokenize(input_text)
 
+    def vectorize(self, doc, vocab, char_vocab):
+        words = np.asarray([vocab[w.lower()] if w.lower() in vocab else 1 for w in doc]) \
+            .reshape(1, -1)
+        sentence_chars = []
+        for w in doc:
+            word_chars = []
+            for c in w:
+                if c in char_vocab:
+                    _cid = char_vocab[c]
+                else:
+                    _cid = 1
+                word_chars.append(_cid)
+            sentence_chars.append(word_chars)
+        sentence_chars = np.expand_dims(pad_sentences(sentence_chars, self.model.word_length),
+                                        axis=0)
+        return words, sentence_chars
+
     def inference(self, doc):
         text_arr = self.process_text(doc)
-        words, chars = self.encode_input(text_arr)
-        tags = self.model.predict([words, chars])
-        tags = tags.argmax(2)
+        doc_vec = self.vectorize(text_arr, self.word_vocab, self.char_vocab)
+        seq_len = np.array([len(text_arr)]).reshape(-1, 1)
+        inputs = list(doc_vec)
+        if self.model.crf_mode == 'pad':
+            inputs = list(doc_vec) + [seq_len]
+        doc_ner = self.model.predict(inputs, batch_size=1).argmax(2).flatten()
+        tags = [self.y_vocab.get(n, None) for n in doc_ner]
         return self.pretty_print(text_arr, tags)

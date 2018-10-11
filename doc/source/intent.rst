@@ -34,30 +34,6 @@ applies to (to whom?) and the object of the action (what?). In this case, *Siri*
 
 Models
 ======
-Joint Intent classification and Slot tagging
---------------------------------------------
-
-:py:class:`JointSequentialIntentModel <nlp_architect.models.intent_extraction.JointSequentialIntentModel>` model aims to detect the intent type and slot tags (the intent frame participants) jointly.
-The network input consists of sentence ``S`` of length ``n``, and sentence tokens ``S = (x_1, x_2, .., x_n)``.
-The last output of the LSTM layer is used to predict the class of the intent (using softmax).
-The network on the right is used for predicting the tag of each token (slot tagging task) using the
-intent detected in the intent type classifier. The output of the intent network is concatenated
-with each embedded representation of the tokens of sentence ``S``, using a bi-directional LSTM,
-and fed into another bi-directional LSTM layer for predicting the slot tags.
-The slot classification is done using the softmax output in each time stamp.
-This model is a derivative of the models presented in [1]_.
-
-.. image :: assets/joint_model.png
-
-Encoder-Decoder topology for Slot Tagging
------------------------------------------
-
-The Encoder-Decoder LSTM topology is a well known model for sequence-to-sequence classification.
-:py:class:`EncDecIntentModel <nlp_architect.models.intent_extraction.EncDecIntentModel>` is a model that is similar to the *Encoder-Labeler Deep LSTM(W)* model shown in [2]_.
-The :py:class:`model <nlp_architect.models.intent_extraction.EncDecIntentModel>` support arbitrary depths of LSTM layers in both encoder and decoder.
-
-.. image :: assets/enc-dec_model.png
-
 Multi-task Intent and slot tagging model
 ----------------------------------------
 
@@ -67,6 +43,15 @@ Word-character embeddings (denoted as ``C``) are created using a bi-directional 
 The encoding of the word-context, in each time step (word location in the sentence) is concatenated with the word-charcter embeddings and pushed in another bi-directional LSTM which provides the final context encoding that a CRF layer uses for slot tag classification.
 
 .. image :: assets/mtl_model.png
+
+Encoder-Decoder topology for Slot Tagging
+-----------------------------------------
+
+The Encoder-Decoder LSTM topology is a well known model for sequence-to-sequence classification.
+:py:class:`Seq2SeqIntentModel <nlp_architect.models.intent_extraction.Seq2SeqIntentModel>` is a model that is similar to the *Encoder-Labeler Deep LSTM(W)* model shown in [2]_.
+The :py:class:`model <nlp_architect.models.intent_extraction.Seq2SeqIntentModel>` support arbitrary depths of LSTM layers in both encoder and decoder.
+
+.. image :: assets/enc-dec_model.png
 
 Datasets
 ========
@@ -92,8 +77,8 @@ The dataset loader extracts word and character sparse encoding and label/intent 
 Files
 =====
 
-- **examples/intent_extraction/train_enc-dec_model.py**: training script to train a :py:class:`EncDecIntentModel <nlp_architect.models.intent_extraction.EncDecIntentModel>` model.
-- **examples/intent_extraction/train_joint_model.py**: training script to train a :py:class:`JointSequentialIntentModel <nlp_architect.models.intent_extraction.JointSequentialIntentModel>` model.
+- **examples/intent_extraction/train_enc-dec_model.py**: training script to train a :py:class:`Seq2SeqIntentModel <nlp_architect.models.intent_extraction.Seq2SeqIntentModel>` model.
+- **examples/intent_extraction/train_mtl_model.py**: training script to train a :py:class:`MultiTaskIntentModel <nlp_architect.models.intent_extraction.MultiTaskIntentModel>` model.
 - **examples/intent_extraction/interactive.py**: Inference script to run an input sentence using a trained model.
 
 Running Modalities
@@ -102,14 +87,14 @@ Running Modalities
 Training
 --------
 
-An example for training the joint task model (predicts slot tags and intent type) using SNIPS dataset and saving the model weights to `my_model.h5`:
+An example for training a multi-task model (predicts slot tags and intent type) using SNIPS dataset:
 
 .. code:: python
 
-  python examples/intent_extraction/train_joint_model.py --model_path my_model.h5 --dataset_path <path_to_data>
+  python examples/intent_extraction/train_mtl_model.py --dataset_path <dataset path> -b 10 -e 10
 
 
-An example for training an Encoder-Decoder model (predicts slot tags) using SNIPS, GloVe word embedding model of size 100 and saving the model weights to `my_model.h5`:
+An example for training an Encoder-Decoder model (predicts only slot tags) using SNIPS, GloVe word embedding model of size 100 and saving the model weights to `my_model.h5`:
 
 .. code:: python
 

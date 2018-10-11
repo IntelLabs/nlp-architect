@@ -74,23 +74,24 @@ def test_np_annotator_load(model_path, settings_path):
     assert NPAnnotator.load(model_path, settings_path)
 
 
-@pytest.mark.parametrize('text', ['The quick brown fox jumped over the lazy dog.'])
+@pytest.mark.parametrize('text', ['The quick brown fox jumped over the lazy dog. '
+                                  'The quick fox jumped.'])
 @pytest.mark.parametrize('phrases', [['lazy dog']])
 def test_np_annotator_linked(model_path, settings_path, text, phrases):
-    nlp = SpacyInstance(model='en', disable=['textcat', 'ner', 'parser']).parser
-    nlp.add_pipe(nlp.create_pipe('sentencizer'), first=True)
-    nlp.add_pipe(NPAnnotator.load(model_path, settings_path), last=True)
-    doc = nlp(text)
-    noun_phrases = get_noun_phrases(doc)
-    assert len(phrases) == len(noun_phrases)
-    for n in noun_phrases:
-        assert str(n) in phrases
+    annotator = SpacyInstance(model='en', disable=['textcat', 'ner', 'parser']).parser
+    annotator.add_pipe(annotator.create_pipe('sentencizer'), first=True)
+    annotator.add_pipe(NPAnnotator.load(model_path, settings_path), last=True)
+    doc = annotator(text)
+    noun_phrases = [p.text for p in get_noun_phrases(doc)]
+    for p in phrases:
+        assert p in noun_phrases
 
 
-@pytest.mark.parametrize('text', ['The quick brown fox jumped over the lazy dog.'])
+@pytest.mark.parametrize('text', ['The quick brown fox jumped over the lazy dog. '
+                                  'The quick fox jumped.'])
 @pytest.mark.parametrize('phrases', [['lazy dog']])
 def test_spacy_np_annotator(model_path, settings_path, text, phrases):
-    spa = SpacyNPAnnotator(model_path, settings_path, spacy_model='en', batch_size=32)
-    spans = spa(text)
-    for s in spans:
-        assert s in phrases
+    annotator = SpacyNPAnnotator(model_path, settings_path, spacy_model='en', batch_size=32)
+    spans = annotator(text)
+    for p in phrases:
+        assert p in spans

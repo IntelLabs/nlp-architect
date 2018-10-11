@@ -23,7 +23,10 @@ import re
 
 
 # pylint: disable=invalid-unary-operand-type
-def pad_sentences(sequences: np.ndarray, max_length: int=None, padding_value: int=0) -> np.ndarray:
+def pad_sentences(sequences: np.ndarray,
+                  max_length: int=None,
+                  padding_value: int=0,
+                  padding_style='post') -> np.ndarray:
     """
     Pad input sequences up to max_length
     values are aligned to the right
@@ -32,25 +35,34 @@ def pad_sentences(sequences: np.ndarray, max_length: int=None, padding_value: in
         sequences (iter): a 2D matrix (np.array) to pad
         max_length (int, optional): max length of resulting sequences
         padding_value (int, optional): padding value
+        padding_style (str, optional): add padding values as prefix (use with 'pre')
+            or postfix (use with 'post')
 
     Returns:
         input sequences padded to size 'max_length'
     """
+    if isinstance(sequences, list) and len(sequences) > 0:
+        try:
+            sequences = np.asarray(sequences)
+        except ValueError:
+            print('cannot convert sequences into numpy array')
     assert hasattr(sequences, 'shape')
-    assert len(sequences.shape) == 2
     if len(sequences) < 1:
         return sequences
-    max_len = max_length
     if max_length is None:
-        max_len = np.max([len(s) for s in sequences])
+        max_length = np.max([len(s) for s in sequences])
     elif max_length < 1:
         raise ValueError('max sequence length must be > 0')
-    if max_len < 1:
+    if max_length < 1:
         return sequences
-    padded_sequences = (np.ones((len(sequences), max_len)) * padding_value)
+    padded_sequences = (np.ones((len(sequences), max_length), dtype=np.int32) * padding_value)
     for i, sent in enumerate(sequences):
-        trunc = sent[-max_len:]
-        padded_sequences[i, -len(trunc):] = trunc
+        if padding_style == 'post':
+            trunc = sent[-max_length:]
+            padded_sequences[i, :len(trunc)] = trunc
+        elif padding_style == 'pre':
+            trunc = sent[:max_length]
+            padded_sequences[i, -trunc:] = trunc
     return padded_sequences.astype(dtype=np.int32)
 
 
