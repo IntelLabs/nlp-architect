@@ -16,9 +16,11 @@
 
 const api = '/inference';
 const models = [
-    { name: 'ner', description: 'Name Entity Recognition'},
-    { name: 'spacy_ner', description: 'Name Entity Recognition using spacy',},
-    { name: 'bist', description: 'BIST Dependency Parser'}
+    { name: 'ner', description: '实体识别API'},
+    //{ name: 'spacy_ner', description: 'Name Entity Recognition using spacy',},
+    //{ name: 'bist', description: 'BIST Dependency Parser'},
+    { name: 'jieba_pos', description: '词法类API'},
+    { name: 'word_language', description: '文本生成API'}
 ];
 
 let annotateForm = document.getElementById('annotateForm');

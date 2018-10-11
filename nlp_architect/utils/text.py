@@ -13,8 +13,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
+import copy
 import sys
 import re
+import pickle
+import numpy as np
+from collections import defaultdict
+
 
 import spacy
 from spacy.cli.download import download as spacy_download
@@ -124,6 +129,76 @@ class Vocabulary:
         """
         return self._rev_vocab
 
+class Tokenizer(object):
+    def __init__(self, text=None, num_words=5000, vocab_path=None):
+        if vocab_path is not None:
+            with open(vocab_path, 'rb') as f:
+                self.vocab = pickle.load(f)
+            print('Vocabulary is loaded successfully.')
+        else:
+            # calculate word frequency
+            word_count = defaultdict(int)
+            for word in text:
+                word_count[word] += 1
+            vocab = list(word_count.keys())
+            print(len(vocab), 'different characters')
+
+            word_count_list = [(word, word_count[word]) for word in word_count]
+            word_count_list.sort(key=lambda x: x[1], reverse=True)
+
+            if len(word_count_list) > num_words:
+                word_count_list = word_count_list[:num_words]
+
+            vocab = [x[0] for x in word_count_list]
+            self.vocab = vocab
+
+        self.word_to_int_table = {c: i for i, c in enumerate(self.vocab)}
+        self.int_to_word_table = dict(enumerate(self.vocab))
+
+    @property
+    def vocab_size(self):
+        return len(self.vocab) + 1
+
+    def word_to_num(self, word):
+        if word in self.word_to_int_table:
+            return self.word_to_int_table[word]
+        else:
+            return len(self.vocab)
+
+    def num_to_word(self, index):
+        if index == len(self.vocab):
+            return '还'
+            # return '<unk>'
+        elif index < len(self.vocab):
+            return self.int_to_word_table[index]
+        else:
+            raise Exception('Index out of range!')
+
+    def texts_to_sequences(self, text):
+        sequences = [self.word_to_num(word) for word in text]
+        return np.array(sequences)
+
+    def sequences_to_texts(self, sequences):
+        texts = [self.num_to_word(index) for index in sequences]
+        return "".join(texts)
+
+    def save_to_file(self, filename):
+        with open(filename, 'wb') as f:
+            pickle.dump(self.vocab, f)
+
+def batch_generator(arr, n_seqs, n_steps):
+    arr = copy.copy(arr)
+    batch_size = n_seqs * n_steps
+    n_batches = int(len(arr) / batch_size)
+    arr = arr[:batch_size * n_batches]
+    arr = arr.reshape((n_seqs, -1))
+    while True:
+        np.random.shuffle(arr)
+        for n in range(0, arr.shape[1], n_steps):
+            x = arr[:, n:n + n_steps]
+            y = np.zeros_like(x)
+            y[:, :-1], y[:, -1] = x[:, 1:], x[:, 0]
+            yield x, y
 
 def is_spacy_model_installed(model_name):
     try:

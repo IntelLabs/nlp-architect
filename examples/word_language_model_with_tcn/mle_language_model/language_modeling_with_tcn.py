@@ -41,7 +41,6 @@ def main(args):
     Main function
     Args:
         args: output of argparse with all input arguments
-
     Returns:
         None
     """
