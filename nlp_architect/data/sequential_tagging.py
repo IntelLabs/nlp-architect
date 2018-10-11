@@ -14,7 +14,6 @@
 # limitations under the License.
 # ******************************************************************************
 
-from __future__ import division, print_function, unicode_literals, absolute_import
 
 from os import path
 import collections
@@ -26,6 +25,122 @@ from nlp_architect.utils.io import validate_existing_directory, validate_existin
 from nlp_architect.utils.text import Vocabulary, read_sequential_tagging_file, \
     word_vector_generator, character_vector_generator
 
+
+class BosonCN(object):
+    """
+    Sequential tagging dataset loader.
+    Loads train/test files with tabular separation.
+
+    Args:
+        train_file (str): path to train file
+        test_file (str): path to test file
+        max_sentence_length (int, optional): max sentence length
+        max_word_length (int, optional): max word length
+        tag_field_no (int, optional): index of column to use a y-samples
+    """
+
+    def __init__(self,
+                 train_file,
+                 test_file,
+                 max_sentence_length=30,
+                 max_word_length=20,
+                 tag_field_no=2):
+        self.files = {'train': train_file,
+                      'test': test_file}
+        self.max_sent_len = max_sentence_length
+        self.max_word_len = max_word_length
+        self.tf = tag_field_no
+
+        self.vocabs = {'token': Vocabulary(2),  # 0=pad, 1=unk
+                       'tag': Vocabulary(1)}    # 0=pad
+
+        self.data = {}
+        for f in self.files:
+            raw_sentences = self._read_file(self.files[f])
+            word_vecs = []
+            tag_vecs = []
+            for tokens, tags in raw_sentences:
+                print (tokens, tags)
+                word_vecs.append(np.array([self.vocabs['token'].add(t) for t in tokens]))
+                tag_vecs.append(np.array([self.vocabs['tag'].add(t) for t in tags]))
+            word_vecs = pad_sequences(word_vecs, maxlen=self.max_sent_len)
+            tag_vecs = pad_sequences(tag_vecs, maxlen=self.max_sent_len)
+            self.data[f] = word_vecs, tag_vecs
+
+    @property
+    def y_labels(self):
+        """return y labels"""
+        return self.vocabs['tag'].vocab
+
+    @property
+    def word_vocab(self):
+        """words vocabulary"""
+        return self.vocabs['token'].vocab
+
+    @property
+    def char_vocab(self):
+        """characters vocabulary"""
+        return self.vocabs['char'].vocab
+
+    @property
+    def word_vocab_size(self):
+        """word vocabulary size"""
+        return len(self.vocabs['token']) + 2
+
+    @property
+    def char_vocab_size(self):
+        """character vocabulary size"""
+        return len(self.vocabs['char']) + 2
+
+    @property
+    def train(self):
+        """Get the train set"""
+        return self.data['train']
+
+    @property
+    def test(self):
+        """Get the test set"""
+        return self.data['test']
+
+    def _read_file(self, filepath):
+        with open(filepath, encoding='utf-8') as fp:
+            data = fp.readlines()
+            data = [d.strip() for d in data]
+            data = [d for d in data if 'DOCSTART' not in d]
+            sentences = self._split_into_sentences(data)
+            parsed_sentences = [self._parse_sentence(s) for s in sentences if len(s) > 0]
+        return parsed_sentences
+
+    def _parse_sentence(self, sentence):
+        tokens = []
+        tags = []
+        for line in sentence:
+            fields = line.split(' ')
+            for field in fields:
+                field = field.split('/')
+                print (field)
+                print (self.tf)
+                assert len(field) >= self.tf, 'tag field exceeds number of fields'
+                if 'CD' in field[1]:
+                    tokens.append('0')
+                else:
+                    tokens.append(field[0])
+                tags.append(field[self.tf - 1])
+        return tokens, tags
+
+    @staticmethod
+    def _split_into_sentences(file_lines):
+        sents = []
+        s = []
+        for line in file_lines:
+            line = line.strip()
+            if not line:
+                sents.append(s)
+                s = []
+                continue
+            s.append(line)
+        sents.append(s)
+        return sents
 
 class SequentialTaggingDataset(object):
     """

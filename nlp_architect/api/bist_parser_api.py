@@ -29,7 +29,7 @@ class BistParserApi(AbstractApi):
         """
         Load SpacyBISTParser model
         """
-        self.model = SpacyBISTParser()
+        self.model = SpacyBISTParser(spacy_model="en_core_web_sm")
 
     def inference(self, doc):
         """

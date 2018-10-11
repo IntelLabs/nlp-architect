@@ -49,12 +49,14 @@ class NerApi(AbstractApi):
         return [self.model_info['char_vocab'].get(c, 1.0) for c in word]
 
     def encode_input(self, text_arr):
+        print (text_arr)
         sentence = []
         for word in text_arr:
             sentence.append(self.encode_word(word))
         encoded_sentence = pad_sequences(
             [np.asarray(sentence)], maxlen=self.model_info['sentence_len'])
         return encoded_sentence
+
 
     def _prompt(self):
         response = input('\nTo download \'{}\', please enter YES: '.
