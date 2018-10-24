@@ -50,11 +50,19 @@ parser.add_argument('--hidden_size', default=150, type=int,
 parser.add_argument('--model_dir', default='trained_model', type=validate_parent_exists,
                     help='enter path to save model')
 
-parser.add_argument('--restore_training', default=False, type=bool,
+parser.add_argument('--restore_model', default=False, type=bool,
                     help='Choose whether to restore training from a previously saved model')
+
+parser.add_argument('--inference_mode', default=False, type=bool,
+                    help='Choose whether to run inference only')
+
 
 parser.add_argument('--batch_size', default=64, type=int,
                     help='enter the batch size', action=check_size(1, 256))
+
+parser.add_argument('--num_examples', default=50, type=int,
+                    help='enter the number of examples to run inference',
+                    action=check_size(1, 10000))
 
 parser.set_defaults()
 args = parser.parse_args()
@@ -67,6 +75,7 @@ params_dict['batch_size'] = args.batch_size
 params_dict['hidden_size'] = args.hidden_size
 params_dict['max_para'] = args.max_para_req
 params_dict['epoch_no'] = args.epochs
+params_dict['inference_only'] = args.inference_mode
 
 # Validate select_device
 if args.select_device not in ['CPU', 'GPU']:
@@ -114,7 +123,13 @@ model_path = args.model_dir
 # Create lists for train and validation sets
 data_train = create_squad_training(train_para_ids, train_ques_ids, answer_file)
 data_dev = create_squad_training(val_paras_ids, val_ques_ids, val_ans_file)
+vocab_list = [ele for ele in open(vocab_file)]
+vocab_dict = {}
+vocab_rev = {}
 
+for i in range(len(vocab_list)):
+    vocab_dict[i] = vocab_list[i].strip()
+    vocab_rev[vocab_list[i].strip()] = i
 
 if args.train_set_size is None:
     params_dict['train_set_size'] = len(data_train)
@@ -155,7 +170,7 @@ with tf.Session(config=run_config) as sess:
     idx_path = model_ckpt.model_checkpoint_path + ".index" if model_ckpt else ""
 
     # Intitialze with random or pretrained weights
-    if model_ckpt and args.restore_training and (tf.gfile.Exists(
+    if model_ckpt and args.restore_model and (tf.gfile.Exists(
             model_ckpt.model_checkpoint_path) or tf.gfile.Exists(idx_path)):
         model_saver.restore(sess, model_ckpt.model_checkpoint_path)
         print("Loading from previously stored session")
@@ -163,23 +178,31 @@ with tf.Session(config=run_config) as sess:
         sess.run(init)
 
     dev_dict = create_data_dict(dev)
+    if args.inference_mode is False:
+        print("Begin Training")
 
-    print("Begin Training")
+        for epoch in range(params_dict['epoch_no']):
+            print("Epoch Number: ", epoch)
 
-    for epoch in range(params_dict['epoch_no']):
-        print("Epoch Number: ", epoch)
+            # Shuffle Datset and create train data dictionary
+            shuffle(train)
+            train_dict = create_data_dict(train)
 
-        # Shuffle Datset and create train data dictionary
-        shuffle(train)
-        train_dict = create_data_dict(train)
+            # Run training for 1 epoch
+            model.run_loop(sess, train_dict, mode='train', dropout=0.6)
 
-        # Run training for 1 epoch
-        model.run_loop(sess, train_dict, mode='train', dropout=0.6)
+            # Save Weights after 1 epoch
+            print("Saving Weights")
+            model_saver.save(sess, "%s/trained_model.ckpt" % model_path)
 
-        # Save Weights after 1 epoch
-        print("Saving Weights")
-        model_saver.save(sess, "%s/trained_model.ckpt" % model_path)
+            # Start validation phase at end of each epoch
+            print("Begin Validation")
+            model.run_loop(sess, dev_dict, mode='val', dropout=1)
 
-        # Start validation phase at end of each epoch
-        print("Begin Validation")
-        model.run_loop(sess, dev_dict, mode='val', dropout=1)
+    else:
+        print("Begin Inference Mode")
+        # Shuffle Validation Set
+        shuffle(dev)
+        # Run Inference Mode
+        model.inference_mode(sess, dev, [vocab_dict, vocab_rev],
+                             num_examples=args.num_examples, dropout=1.0)

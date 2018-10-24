@@ -53,13 +53,21 @@ The terms and conditions of the data set license apply. Intel does not grant any
 
 Running Modalities
 ==================
-Training
---------
+Training & Inference
+--------------------
 Train the model using the following command:
 
 .. code:: python
 
   python examples/reading_comprehension/train.py --data_path data/
+
+
+To visualize predicted answers for paragraphs and questions in the validation dataset (ie run inference with batch_size=1)  use the following command:
+
+.. code:: python
+
+   python train.py --restore_model=True --inference_mode=True --data_path=data/ --model_dir=/path/to/trained_model/ --batch_size=1 --num_examples=50
+
 
 The command line options available are:
 
@@ -72,8 +80,9 @@ The command line options available are:
 --hidden_size       enter the number of hidden units. Default is 150.
 --model_dir         enter the path to save/load model.
 --select_device     select the device to run training (CPU, GPU etc)
---restore_training  choose whether to restore training from a previously saved model. Default is False.
-
+--restore_model     choose whether to restore training from a previously saved model. Default is False.
+--inference_mode    choose whether to run inference only
+--num_examples      enter the number of examples to run inference. Default is 50.
 Results
 -------
 After training starts, you will see outputs similar to this:

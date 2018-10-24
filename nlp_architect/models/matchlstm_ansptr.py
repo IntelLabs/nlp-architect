@@ -18,7 +18,9 @@ from __future__ import division
 from __future__ import print_function
 import numpy as np
 import tensorflow as tf
+import re
 from collections import Counter
+import nltk
 
 
 class MatchLSTM_AnswerPointer(object):
@@ -44,6 +46,7 @@ class MatchLSTM_AnswerPointer(object):
         self.hidden_size = params_dict['hidden_size']
         self.batch_size = params_dict['batch_size']
         self.embeddings = embeddings
+        self.inference_only = params_dict['inference_only']
 
         # Create Placeholders
         # Question ids
@@ -65,7 +68,8 @@ class MatchLSTM_AnswerPointer(object):
         self.ques_mask = tf.placeholder(tf.float32, shape=[None, self.max_question],
                                         name="ques_mask")
         # Answer spans
-        self.labels = tf.placeholder(tf.int32, shape=[None, 2], name="labels")
+        if self.inference_only is False:
+            self.labels = tf.placeholder(tf.int32, shape=[None, 2], name="labels")
         # Dropout value
         self.dropout = tf.placeholder(tf.float32, shape=[], name="dropout")
         self.global_step = tf.Variable(0, name='global')
@@ -172,22 +176,22 @@ class MatchLSTM_AnswerPointer(object):
 
         # Answer pointer pass
         self.logits = self.answer_pointer_pass()
+        if self.inference_only is False:
+            print('Settting up Loss')
+            # Compute Losses
+            loss_1 = tf.nn.sparse_softmax_cross_entropy_with_logits(logits=self.logits[0],
+                                                                    labels=self.labels[:, 0])
 
-        print('Settting up Loss')
-        # Compute Losses
-        loss_1 = tf.nn.sparse_softmax_cross_entropy_with_logits(logits=self.logits[0],
-                                                                labels=self.labels[:, 0])
+            loss_2 = tf.nn.sparse_softmax_cross_entropy_with_logits(logits=self.logits[1],
+                                                                    labels=self.labels[:, 1])
+            # Total Loss
+            self.loss = tf.reduce_mean(loss_1 + loss_2)
+            self.learning_rate = tf.constant(0.002)
 
-        loss_2 = tf.nn.sparse_softmax_cross_entropy_with_logits(logits=self.logits[1],
-                                                                labels=self.labels[:, 1])
-        # Total Loss
-        self.loss = tf.reduce_mean(loss_1 + loss_2)
-        self.learning_rate = tf.constant(0.002)
-
-        print('Set up optmizer')
-        # Optmizer
-        self.optimizer = tf.train.AdamOptimizer(self.learning_rate). \
-            minimize(self.loss, global_step=self.global_step)
+            print('Set up optmizer')
+            # Optmizer
+            self.optimizer = tf.train.AdamOptimizer(self.learning_rate). \
+                minimize(self.loss, global_step=self.global_step)
 
     def unroll_with_attention(self, reverse=False):
         """
@@ -300,7 +304,7 @@ class MatchLSTM_AnswerPointer(object):
 
             b_k = tf.nn.softmax(b_k_withoutsf + tf.log(mask_multiplier_1))
             lstm_cell_inp = tf.squeeze(tf.matmul(self.stacked_lists,
-                                       tf.transpose(b_k, [0, 2, 1])))
+                                       tf.transpose(b_k, [0, 2, 1])), axis=2)
 
             with tf.variable_scope("lstm_pointer"):
                 if i == 0:
@@ -314,10 +318,10 @@ class MatchLSTM_AnswerPointer(object):
             h_k_old = tf.expand_dims(h_k_old, 2)
             b_k_lists.append(b_k_withoutsf + tf.log(mask_multiplier_1))
 
-        self.logits_withsf = [tf.nn.softmax(tf.squeeze(b_k_lists[0])),
-                              tf.nn.softmax(tf.squeeze(b_k_lists[1]))]
+        self.logits_withsf = [tf.nn.softmax(tf.squeeze(b_k_lists[0], axis=1)),
+                              tf.nn.softmax(tf.squeeze(b_k_lists[1], axis=1))]
 
-        return [tf.squeeze(b_k_lists[0]), tf.squeeze(b_k_lists[1])]
+        return [tf.squeeze(b_k_lists[0], axis=1), tf.squeeze(b_k_lists[1], axis=1)]
 
     def obtain_indices(self, preds_start, preds_end):
         """
@@ -388,6 +392,37 @@ class MatchLSTM_AnswerPointer(object):
 
         return 100 * (f1 / self.batch_size), 100 * (exact_match / self.batch_size)
 
+    def get_dynamic_feed_params(self, question_str, vocab_reverse):
+        """
+        Function to get required feed_dict format for user entered questions.
+        Used mainly in the demo mode.
+
+        Args:
+           question_str: question string
+           vocab_reverse: vocab dictionary with words as keys and indices as values
+
+        Returns:
+           question_idx: list of indicies represnting the question padded to max length
+           question_len: actual length of the question
+           ques_mask: mask for question_idx
+
+        """
+
+        question_words = [word.replace("``", '"').replace("''", '"')
+                          for word in nltk.word_tokenize(question_str)]
+
+        question_ids = [vocab_reverse[ele] for ele in question_words]
+
+        if len(question_ids) < self.max_question:
+            pad_length = self.max_question - len(question_ids)
+            question_idx = question_ids + [0] * pad_length
+            question_len = len(question_ids)
+            ques_mask = np.zeros([1, self.max_question])
+            ques_mask[0, 0:question_len] = 1
+            ques_mask = ques_mask.tolist()[0]
+
+        return question_idx, question_len, ques_mask
+
     def run_loop(self, session, train, mode='train', dropout=0.6):
         """
         Function to run training/validation loop and display training loss, F1 & EM scores
@@ -447,3 +482,67 @@ class MatchLSTM_AnswerPointer(object):
                 "Validation F1 and EM scores are",
                 f1_score / nbatches,
                 em_score / nbatches)
+
+    def inference_mode(self, session, valid, vocab_tuple, num_examples, dropout=1.0,
+                       dynamic_question_mode=False):
+        """
+          Function to run inference_mode for reading comprehension
+
+          Args:
+              session: tensorflow session
+              valid: data dictionary for validation set
+              vocab_tuple: a tuple containing voacab dictionaries in forward and reverse directions
+              num_examples : specify the number of samples to run for inference
+              dropout : Float value which is always 1.0 for inference
+              dynamic_question_mode : boolean to enable whether or not accept
+                                      questions from the user(used in the demo mode)
+
+        """
+        vocab_forward = vocab_tuple[0]
+        vocab_reverse = vocab_tuple[1]
+
+        for idx in range(num_examples):
+            # Print Paragraph
+            print("\n")
+            print("Paragraph Number:", idx)
+            test_paragraph = [vocab_forward[ele] for ele in valid[idx][0] if ele != 0]
+            para_string = " ".join(map(str, test_paragraph))
+            print(re.sub(r'\s([?.!,"](?:\s|$))', r'\1', para_string))
+
+            # Print corresponding Question
+            test_question = [vocab_forward[ele] for ele in valid[idx][1] if ele != 0]
+            ques_string = " ".join(map(str, test_question))
+            print("Question:", re.sub(r'\s([?.!"",])', r'\1', ques_string))
+
+            # Generate question_ids and mask from the text
+            if dynamic_question_mode is True:
+                required_params = self.get_dynamic_feed_params(ques_string, vocab_reverse)
+                question_ids = required_params[0]
+                question_length = required_params[1]
+                ques_mask = required_params[2]
+
+            else:
+                question_ids = valid[idx][1]
+                question_length = valid[idx][3]
+                ques_mask = valid[idx][6]
+
+            # Create a feed dictionary
+            feed_dict_qa = {self.para_ids: np.expand_dims(valid[idx][0], 0),
+                            self.question_ids: np.expand_dims(question_ids, 0),
+                            self.para_length: np.expand_dims(valid[idx][2], 0),
+                            self.question_length: np.expand_dims(question_length, 0),
+                            self.para_mask: np.expand_dims(valid[idx][5], 0),
+                            self.ques_mask: np.expand_dims(ques_mask, 0),
+                            self.dropout: dropout}
+
+            # Run session and obtain indices
+            predictions = session.run([self.logits_withsf], feed_dict=feed_dict_qa)
+
+            # Get the start and end indices of the answer
+            start_idx, end_idx = self.obtain_indices(predictions[0][0], predictions[0][1])
+            answer_ind = valid[idx][0][start_idx[0]:end_idx[0] + 1]
+
+            # Print answer
+            req_ans = [vocab_forward[ele] for ele in answer_ind if ele != 0]
+            ans_string = " ".join(map(str, req_ans))
+            print("Answer:", re.sub(r'\s([?.!",])', r'\1', ans_string))

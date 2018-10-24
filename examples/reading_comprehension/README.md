@@ -18,6 +18,11 @@ For more information about GloVe please visit https://nlp.stanford.edu/projects/
 Train the model using the following command
  `python train.py --data_path data/ --gpu_id 0`
 
+## Inference
+To visualize predicted answers for paragraphs and questions in the validation dataset use the following command
+
+`python train.py --restore_model=True --inference_mode=True --data_path=data/ --model_dir=/path/to/trained_model/ --batch_size=1 --num_examples=50`
+
 ## Results
 After training starts, you will see outputs as shown below:
 ```
