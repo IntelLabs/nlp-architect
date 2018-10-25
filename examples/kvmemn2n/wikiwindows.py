@@ -119,8 +119,8 @@ are no recognized entities. The final ngram in each output line is preceded
 by a tab in the actual output, though it's hard to discern above.
 '''
 parser = argparse.ArgumentParser(
-    description='Generates windowed examples for wikipedia files. By default,' +
-    ' creates pairs of window<TAB>entity when used with entities.'
+    description='Generates windowed examples for wikipedia files. By default,'
+    + ' creates pairs of window<TAB>entity when used with entities.'
 )
 parser.add_argument('data_dir', type=str, help='name of root directory for files')
 parser.add_argument('-n', type=int, help='Max number of examples to process.',
@@ -128,26 +128,26 @@ parser.add_argument('-n', type=int, help='Max number of examples to process.',
 parser.add_argument('-e', '--entities', type=str,
                     help='entities file (each line specifies ngrams to always chunk together)')
 parser.add_argument('-a', '--all_windows', action='store_true',
-                    help='if set, keeps all windows (not just ones entities). defaults to ' +
-                    ' True if entities file not present, False if it is present.')
+                    help='if set, keeps all windows (not just ones entities). defaults to '
+                    + ' True if entities file not present, False if it is present.')
 parser.add_argument('-m', '--movie_in_all', action='store_true',
                     help='if set, prepends movie to every line in example')
 parser.add_argument('-i', '--inverse', action='store_true',
                     help='if set, also write "inversed" version of each fact to the kb')
 parser.add_argument('-r', '--replace_centroids', action='store_true',
-                    help='specifies whether to remove the center words of windows from ' +
-                    'their windows (defaults false, if true replaces word with <NULL>)')
+                    help='specifies whether to remove the center words of windows from '
+                    + 'their windows (defaults false, if true replaces word with <NULL>)')
 parser.add_argument('-dm', '--dontmerge', action='store_true',
-                    help='default behavior merges lines from the same example--set this flag ' +
-                    'to disable and only consider windows from the same line in the file')
+                    help='default behavior merges lines from the same example--set this flag '
+                    + 'to disable and only consider windows from the same line in the file')
 parser.add_argument('-w', '--window_size', type=str, default='0',
-                    help='sizes of windows PER SIDE around words to generate. eg 1 or ' +
-                    '1,2,3. ie "-w 1" for "hey world hey" produces "hey <NULL> hey"')
+                    help='sizes of windows PER SIDE around words to generate. eg 1 or '
+                    + '1,2,3. ie "-w 1" for "hey world hey" produces "hey <NULL> hey"')
 parser.add_argument('-d', '--double_dict', type=str, default='3',
-                    help='specifies whether to use a second dictionary for words within ' +
-                    'specified extended window. ie for "-w 1 -d 2", the ' +
-                    'sentence "hello world how are things" creates a window of "2:hello ' +
-                    '1:world <NULL> 1:are 2:things"')
+                    help='specifies whether to use a second dictionary for words within '
+                    + 'specified extended window. ie for "-w 1 -d 2", the '
+                    + 'sentence "hello world how are things" creates a window of "2:hello '
+                    + '1:world <NULL> 1:are 2:things"')
 parser.add_argument('-t', '--num_threads', type=int, default=4,
                     help='number of threads to use',
                     action=check_size(1, 10))
@@ -162,23 +162,23 @@ beg = time.time()
 
 if args['data_dir']:
     # also set the entities and input file here
-    args['entities'] = os.path.expanduser(args['data_dir'] +
-                                          '/movieqa/knowledge_source/entities.txt')
-    args['input_file'] = [os.path.expanduser(args['data_dir'] +
-                                             '/movieqa/knowledge_source/wiki.txt')]
+    args['entities'] = os.path.expanduser(args['data_dir']
+                                          + '/movieqa/knowledge_source/entities.txt')
+    args['input_file'] = [os.path.expanduser(args['data_dir']
+                                             + '/movieqa/knowledge_source/wiki.txt')]
 else:
     ValueError("No data_dir given.")
 
-with open(os.path.expanduser(args['data_dir'] +
-                             '/movieqa/lower_wiki-w=0-d=3-m-4.txt'), 'w') as out:
+with open(os.path.expanduser(args['data_dir']
+                             + '/movieqa/lower_wiki-w=0-d=3-m-4.txt'), 'w') as out:
     try:
         WS = [int(int(w)) for w in args['window_size'].split(',')]
         DW = None
         if args['double_dict']:
             DW = [int(int(w)) for w in args['double_dict'].split(',')]
             if len(WS) < len(DW):
-                raise RuntimeError('must have at least as many window sizes as ' +
-                                   'double-dict extended window sizes.')
+                raise RuntimeError('must have at least as many window sizes as '
+                                   + 'double-dict extended window sizes.')
     except ValueError:
         raise ValueError('Incorrect format for window size, should be CSV integers')
 
@@ -212,7 +212,7 @@ with open(os.path.expanduser(args['data_dir'] +
     else:
         args['all_windows'] = True
 
-    splitter = re.compile('\\b.*?\S.*?(?:\\b|$)')
+    splitter = re.compile('\\b.*?\\S.*?(?:\\b|$)')
     q_out = Queue()
 
     def process_example(ex):
@@ -249,9 +249,9 @@ with open(os.path.expanduser(args['data_dir'] +
                         # now check for second-dict window
                         # (need an non-nil d value higher than w)
                         use_second_dict = (
-                            DW is not None and
-                            j < len(DW) and
-                            DW[j] > ws
+                            DW is not None
+                            and j < len(DW)
+                            and DW[j] > ws
                         )
                         if use_second_dict:
                             dw = DW[j]

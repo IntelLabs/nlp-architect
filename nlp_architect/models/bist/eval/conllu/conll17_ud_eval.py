@@ -240,8 +240,8 @@ def load_conllu(file):
             if word_id != len(ud.words) - sentence_start + 1:
                 raise UDError("Incorrect word ID '{}' for word '{}', expected"
                               " '{}'".format(columns[ID], columns[FORM],
-                                             len(ud.words) -
-                                             sentence_start + 1))
+                                             len(ud.words)
+                                             - sentence_start + 1))
 
             try:
                 head_id = int(columns[HEAD])
@@ -464,8 +464,8 @@ def evaluate(gold_ud, system_ud, deprel_weights=None):
 
         raise UDError(
             "The concatenation of tokens in gold file and in system file "
-            "differ!\n" +
-            "First 20 differing characters in gold file: '{}' and system file:"
+            "differ!\n"
+            + "First 20 differing characters in gold file: '{}' and system file:"
             " '{}'".format(
                 "".join(gold_ud.characters[index:index + 20]),
                 "".join(system_ud.characters[index:index + 20])

@@ -126,8 +126,8 @@ def test_request(service_name):
 
 @pytest.mark.parametrize('service_name', ['bist', 'spacy_ner', 'ner'])
 def test_gzip_file_request(service_name):
-    file_path = os.path.join(os.path.dirname(__file__), server_data_rel_path + service_name +
-                             "_sentences_examples.json.gz")
+    file_path = os.path.join(os.path.dirname(__file__), server_data_rel_path + service_name
+                             + "_sentences_examples.json.gz")
     with open(file_path, 'rb') as file_data:
         doc = file_data.read()
     expected_result = json.dumps(load_test_data(service_name)["response"])
@@ -143,8 +143,8 @@ def test_gzip_file_request(service_name):
 
 @pytest.mark.parametrize('service_name', ['bist', 'spacy_ner', 'ner'])
 def test_json_file_request(service_name):
-    file_path = os.path.join(os.path.dirname(__file__), server_data_rel_path + service_name +
-                             "_sentences_examples.json")
+    file_path = os.path.join(os.path.dirname(__file__), server_data_rel_path + service_name
+                             + "_sentences_examples.json")
     with open(file_path, 'rb') as file:
         doc = file.read()
     expected_result = json.dumps(load_test_data(service_name)["response"])

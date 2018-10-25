@@ -124,13 +124,13 @@ def print_human_vocab(babi):
 
 def print_help():
     print(
-        "Available Commands: \n" +
-        " >> help: Display this help menu\n" +
-        " >> exit / quit: Exit interactive mode\n" +
-        " >> restart / clear: Restart the conversation and erase the bot's memory\n" +
-        " >> vocab: Display usable vocabulary\n" +
-        " >> allow_oov: Allow out of vocab words to be replaced with <OOV> token\n" +
-        " >> show_memory: Display the current contents of the bot's memory\n")
+        "Available Commands: \n"
+        + " >> help: Display this help menu\n"
+        + " >> exit / quit: Exit interactive mode\n"
+        + " >> restart / clear: Restart the conversation and erase the bot's memory\n"
+        + " >> vocab: Display usable vocabulary\n"
+        + " >> allow_oov: Allow out of vocab words to be replaced with <OOV> token\n"
+        + " >> show_memory: Display the current contents of the bot's memory\n")
 
 
 def build_kb_db(babi):

@@ -24,8 +24,8 @@ import re
 
 # pylint: disable=invalid-unary-operand-type
 def pad_sentences(sequences: np.ndarray,
-                  max_length: int=None,
-                  padding_value: int=0,
+                  max_length: int = None,
+                  padding_value: int = 0,
                   padding_style='post') -> np.ndarray:
     """
     Pad input sequences up to max_length
@@ -101,7 +101,7 @@ def one_hot_sentence(mat: np.ndarray, num_classes: int) -> np.ndarray:
     return np.asarray(new_mat)
 
 
-def add_offset(mat: np.ndarray, offset: int=1) -> np.ndarray:
+def add_offset(mat: np.ndarray, offset: int = 1) -> np.ndarray:
     """
     Add +1 to all values in matrix mat
 
@@ -145,7 +145,7 @@ def license_prompt(model_name, model_website, dataset_dir=None):
 
 
 # character vocab
-zhang_lecun_vocab = list("abcdefghijklmnopqrstuvwxyz0123456789-,;.!?:’/\|_@#$%ˆ&*˜‘+=<>()[]{}")
+zhang_lecun_vocab = list("abcdefghijklmnopqrstuvwxyz0123456789-,;.!?:’/\\|_@#$%ˆ&*˜‘+=<>()[]{}")
 vocab_hash = {b: a for a, b in enumerate(zhang_lecun_vocab)}
 
 

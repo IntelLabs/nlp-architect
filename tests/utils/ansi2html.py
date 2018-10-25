@@ -11,7 +11,7 @@ import re
 
 _ANSI2HTML_STYLES = {}
 # pylint: disable=anomalous-backslash-in-string
-ANSI2HTML_CODES_RE = re.compile('(?:\033\\[(\d+(?:;\d+)*)?([cnRhlABCDfsurgKJipm]))')
+ANSI2HTML_CODES_RE = re.compile('(?:\033\\[(\\d+(?:;\\d+)*)?([cnRhlABCDfsurgKJipm]))')
 ANSI2HTML_PALETTE = {
     # See http://ethanschoonover.com/solarized
     'solarized': ['#073642', '#D30102', '#859900', '#B58900', '#268BD2', '#D33682', '#2AA198',

@@ -58,7 +58,7 @@ def review_to_sentiment(review):
 
 class Amazon_Reviews(object):
     """
-    Take the \*.json file of Amazon reviews as downloaded from
+    Take the *.json file of Amazon reviews as downloaded from
     http://jmcauley.ucsd.edu/data/amazon/
     Then does data cleaning and balancing, as well as transforms the reviews 1-5 to a sentiment
     """

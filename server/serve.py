@@ -40,7 +40,7 @@ def inference(request, body, response):
             original_data = gzip.decompress(request.stream.read())
             input_docs = json.loads(str(original_data, 'utf-8'))["docs"]
             model_name = json.loads(str(original_data, 'utf-8'))["model_name"]
-        except Exception as ex:
+        except Exception:
             response.status = hug.HTTP_500
             return {'status': 'unexpected gzip error'}
     elif(request.headers.get('CONTENT-TYPE') == 'application/json'):
