@@ -209,8 +209,8 @@ class WordTranslator:
         """
         if (iters > 0 and iters % 500 == 0):
             mean_cost = str(sum(disc_cost_acc) / len(disc_cost_acc))
-            print(str(int(n_words_proc / (time.time() - tic))) + " Samples/Sec - Iter " +
-                  str(iters) + " Discriminator Cost: " + mean_cost)
+            print(str(int(n_words_proc / (time.time() - tic))) + " Samples/Sec - Iter "
+                  + str(iters) + " Discriminator Cost: " + mean_cost)
             # Reset instrumentation
             del disc_cost_acc
             disc_cost_acc = []

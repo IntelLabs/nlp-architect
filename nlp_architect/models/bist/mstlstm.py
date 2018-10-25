@@ -160,9 +160,9 @@ class MSTParserLSTM(object):
 
         if self.hidden2_units > 0:
             output = self.rout_layer.expr() * self.activation(
-                self.rhid2_bias.expr() + self.rhid2_layer.expr() *
-                self.activation(sentence[i].rheadfov + sentence[j].rmodfov
-                                + self.rhid_bias.expr())) + self.rout_bias.expr()
+                self.rhid2_bias.expr() + self.rhid2_layer.expr()
+                * self.activation(sentence[i].rheadfov + sentence[j].rmodfov
+                                  + self.rhid_bias.expr())) + self.rout_bias.expr()
         else:
             output = self.rout_layer.expr() * self.activation(
                 sentence[i].rheadfov + sentence[j].rmodfov

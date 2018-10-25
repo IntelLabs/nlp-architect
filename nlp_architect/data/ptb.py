@@ -26,8 +26,8 @@ LICENSE_URL = {'PTB': "http://www.fit.vutbr.cz/~imikolov/rnnlm/",
                                "language-modeling-dataset"}
 
 SOURCE_URL = {'PTB': "http://www.fit.vutbr.cz/~imikolov/rnnlm/simple-examples.tgz",
-              'WikiText-103': "https://s3.amazonaws.com/research.metamind.io/wikitext/" +
-                              "wikitext-103-v1.zip"}
+              'WikiText-103': "https://s3.amazonaws.com/research.metamind.io/wikitext/"
+                              + "wikitext-103-v1.zip"}
 FILENAME = {'PTB': "simple-examples", 'WikiText-103': "wikitext-103"}
 EXTENSION = {'PTB': "tgz", 'WikiText-103': "zip"}
 FILES = {'PTB': lambda x: "data/ptb." + x + ".txt",
@@ -152,8 +152,8 @@ class PTBDictionary:
 
         headers = {'User-Agent': 'Mozilla/5.0'}
 
-        full_filepath = os.path.join(work_directory, FILENAME[self.dataset] + "." +
-                                     EXTENSION[self.dataset])
+        full_filepath = os.path.join(work_directory, FILENAME[self.dataset] + "."
+                                     + EXTENSION[self.dataset])
         req = urllib.request.Request(SOURCE_URL[self.dataset], headers=headers)
         data_handle = urllib.request.urlopen(req)
         with open(full_filepath, "wb") as fp:

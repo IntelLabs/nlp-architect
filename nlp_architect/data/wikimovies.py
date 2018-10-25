@@ -387,8 +387,8 @@ class WIKIMOVIES(object):
                         for subject in subject_entities:
                             knowledge_dict[fact].append((fact + ' ' + a, subject))
                             # Also add reverse here
-                            knowledge_dict[subject].append((subject + ' ' +
-                                                            rev_actions_pre + a, fact))
+                            knowledge_dict[subject].append((subject + ' ' + rev_actions_pre + a,
+                                                            fact))
 
         kb_out_path = ensure_dirs_exist(os.path.join(workdir, kb_file_path))
 
@@ -579,7 +579,7 @@ class WIKIMOVIES(object):
         """
         sentence = sentence.replace('?', '')
         sentence = sentence.replace('.', '')
-        return [x.strip() for x in re.split('(\W+)?', sentence) if x.strip()]
+        return [x.strip() for x in re.split("(\\W+)?", sentence) if x.strip()]
 
     @staticmethod
     def flatten(data):

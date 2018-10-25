@@ -58,8 +58,8 @@ def pad_stories(stories, sentence_length, max_story_length, pad_val=0.):
         np.ones(
             (nsamples,
              max_story_length,
-             sentence_length)) *
-        pad_val).astype(
+             sentence_length))
+        * pad_val).astype(
             dtype=np.int32)
 
     for i, story in enumerate(stories):
@@ -396,8 +396,8 @@ class BABI_Dialog(object):
             m.append([self.words_to_vector(sent) for sent in mem])
             ml.append(len(mem))
             mask_zero_len = self.memory_size - ml[-1]
-            m_mask.append([1.0 for _ in range(ml[-1])] +
-                          [0.0 for _ in range(mask_zero_len)])
+            m_mask.append([1.0 for _ in range(ml[-1])]
+                          + [0.0 for _ in range(mask_zero_len)])
 
             u.append(self.words_to_vector(utt))
             a.append(self.one_hot_vector(answer))
