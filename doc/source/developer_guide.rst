@@ -36,7 +36,7 @@ reStructuredText for documentation).
   the Napoleon_ Sphinx extensions.
 
 .. _PEP8: https://www.python.org/dev/peps/pep-0008/
-.. _Google Style Docstrings: http://google-styleguide.googlecode.com/svn/trunk/pyguide.html#Comments
+.. _Google Style Docstrings: https://github.com/google/styleguide/blob/gh-pages/pyguide.md
 .. _Napoleon: http://sphinxcontrib-napoleon.readthedocs.org/en/latest/index.html
 
 Documentation Conventions
