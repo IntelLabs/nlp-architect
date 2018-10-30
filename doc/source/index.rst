@@ -107,6 +107,7 @@ on this project, please see the :doc:`developer guide <developer_guide>`.
    publications.rst
    tutorials.rst
    REST Server <service.rst>
+   Model Zoo <model_zoo.rst>
 
 .. toctree::
    :hidden:
