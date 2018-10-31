@@ -219,3 +219,14 @@ def load_json_file(file_path):
                 if not block:  # Reached EOF
                     break
             return json.loads(json_string)
+
+
+def load_files_from_path(dir_path, extension='txt'):
+    """load all files from given directory (with given extension)"""
+    files = [os.path.join(dir_path, f) for f in os.listdir(dir_path)
+             if os.path.isfile(os.path.join(dir_path, f)) and f.endswith(extension)]
+    files_data = []
+    for f in files:
+        with open(f) as fp:
+            files_data.append(' '.join(map(str.strip, fp.readlines())))
+    return files_data

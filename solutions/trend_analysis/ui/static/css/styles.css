@@ -1,0 +1,13 @@
+.clear_button button.bk-bs-btn.bk-bs-btn-success {
+	background-color: #d2d4d8;
+	border-color: #d2d4d8;
+	color: white;
+}
+
+.clear_button {
+    padding-left: 10px;
+}
+
+.search_button {
+    padding-left: 3px;
+}

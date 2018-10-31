@@ -140,6 +140,7 @@ on this project, please see the :doc:`developer guide <developer_guide>`.
    :caption: Solutions
 
    Set Expansion <term_set_expansion.rst>
+   Trend Analysis <trend_analysis.rst>
 
 .. toctree::
    :hidden:

@@ -15,6 +15,7 @@
 # ******************************************************************************
 import sys
 import re
+from os import path
 
 import spacy
 from spacy.cli.download import download as spacy_download
@@ -178,6 +179,26 @@ stemmer = EnglishStemmer()
 lemmatizer = WordNetLemmatizer()
 spacy_lemmatizer = Lemmatizer(LEMMA_INDEX, LEMMA_EXC, LEMMA_RULES)
 p = re.compile(r'[ \-,;.@&_]')
+
+
+class Stopwords(object):
+    """
+    Stop words list class.
+    """
+    stop_words = None
+
+    @staticmethod
+    def get_words():
+        if Stopwords.stop_words is None:
+            sw_path = path.join(path.dirname(path.realpath(__file__)),
+                                'resources',
+                                'stopwords.txt')
+            with open(sw_path) as fp:
+                stop_words = []
+                for w in fp:
+                    stop_words.append(w.strip().lower())
+            Stopwords.stop_words = stop_words
+        return Stopwords.stop_words
 
 
 def simple_normalizer(text):

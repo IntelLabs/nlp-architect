@@ -100,7 +100,7 @@ class SetExpand():
             if norm in self.id2rep:
                 return self.id2rep[norm]
             logger.warning("id:#%s#, norm:#%s# is not in id2rep")
-            return None
+            return ""
         return norm
 
     def get_vocab(self):

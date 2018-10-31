@@ -24,7 +24,7 @@ from spacy.tokens import Span
 from nlp_architect.models.chunker import SequenceChunker
 from nlp_architect.utils.generic import pad_sentences
 from nlp_architect.utils.io import validate_existing_filepath
-from nlp_architect.utils.text import extract_nps
+from nlp_architect.utils.text import extract_nps, Stopwords
 
 
 class NPAnnotator(object):
@@ -178,6 +178,7 @@ class _NPPostprocessor:
     def _phrase_process(cls, phrase: Span) -> Span:
         last_phrase = None
         while phrase != last_phrase:
+            last_phrase = phrase
             for func_args in post_processing_rules:
                 pf = func_args[0]
                 args = func_args[1:]
@@ -187,7 +188,6 @@ class _NPPostprocessor:
                     phrase = pf(phrase)
                 if phrase is None:
                     break
-            last_phrase = phrase
         return phrase
 
 
@@ -229,9 +229,11 @@ def _remove_non_alphanum_from_end(phrase):
 
 
 def _remove_stop_words(phrase):
-    while len(phrase) > 0 and phrase[0].is_stop:
+    while len(phrase) > 0 and (phrase[0].is_stop
+                               or str(phrase[0]).strip().lower() in Stopwords.get_words()):
         phrase = phrase[1:]
-    while len(phrase) > 0 and phrase[-1].is_stop:
+    while len(phrase) > 0 and (phrase[-1].is_stop
+                               or str(phrase[-1]).strip().lower() in Stopwords.get_words()):
         phrase = phrase[:-1]
     return phrase
 
@@ -245,7 +247,7 @@ def _remove_char_at_start(phrase):
 
 
 def _remove_char_at_end(phrase):
-    chars = [',', '(', ')', ' ']
+    chars = [',', '(', ')', ' ', '-']
     if phrase:
         while len(phrase) > 0 and phrase[-1].text in chars:
             phrase = phrase[:-1]
@@ -253,7 +255,7 @@ def _remove_char_at_end(phrase):
 
 
 def _remove_pos_from_start(phrase):
-    tag_list = ['WDT', 'PRP$']
+    tag_list = ['WDT', 'PRP$', ':']
     pos_list = ['PUNCT', 'INTJ', 'NUM', 'PART', 'ADV', 'DET', 'PRON', 'VERB']
     if phrase:
         while len(phrase) > 0 and (phrase[0].pos_ in pos_list or phrase[0].tag_ in tag_list):
@@ -262,7 +264,7 @@ def _remove_pos_from_start(phrase):
 
 
 def _remove_pos_from_end(phrase):
-    tag_list = ['WDT']
+    tag_list = ['WDT', ':']
     pos_list = ['DET', 'PUNCT', 'CONJ']
     if phrase:
         while len(phrase) > 0 and (phrase[-1].pos_ in pos_list or phrase[-1].tag_ in tag_list):
@@ -295,7 +297,8 @@ def _filter_single_char(phrase):
 
 
 def _filter_empty(phrase):
-    if phrase is None or len(phrase) == 0 or len(phrase.text) == 0:
+    if phrase is None or len(phrase) == 0 or len(phrase.text) == 0 \
+            or len(str(phrase.text).strip()) == 0:
         return None
     return phrase
 

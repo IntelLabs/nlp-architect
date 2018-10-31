@@ -1,0 +1,11 @@
+Topic Analysis is a Natural Language Processing (NLP) task of extracting salient terms (or topics) from a textual corpus.
+Trend Analysis task measures the change of the most prominent topics between two time points.
+
+Topic Analysis is a Natural Language Processing (NLP) task of extracting salient terms (or topics) from a textual corpus.
+Trend Analysis task measures the change of the most prominent topics between two time points.
+
+Topic Analysis is a Natural Language Processing (NLP) task of extracting salient terms (or topics) from a textual corpus.
+Trend Analysis task measures the change of the most prominent topics between two time points.
+
+Topic Analysis is a Natural Language Processing (NLP) task of extracting salient terms (or topics) from a textual corpus.
+Trend Analysis task measures the change of the most prominent topics between two time points.

@@ -1,0 +1,14 @@
+The analysis is done by running the two corpora through the Topic Extraction pipeline: Normalization Noun Phrase extraction Refinement Scoring.
+In this stage, the algorithm will also train a W2V model on the joint corpora to be used for the clustering report (this step can be skipped).
+
+The analysis is done by running the two corpora through the Topic Extraction pipeline: Normalization Noun Phrase extraction Refinement Scoring.
+In this stage, the algorithm will also train a W2V model on the joint corpora to be used for the clustering report (this step can be skipped).
+
+The analysis is done by running the two corpora through the Topic Extraction pipeline: Normalization Noun Phrase extraction Refinement Scoring.
+In this stage, the algorithm will also train a W2V model on the joint corpora to be used for the clustering report (this step can be skipped).
+
+The analysis is done by running the two corpora through the Topic Extraction pipeline: Normalization Noun Phrase extraction Refinement Scoring.
+In this stage, the algorithm will also train a W2V model on the joint corpora to be used for the clustering report (this step can be skipped).
+
+The analysis is done by running the two corpora through the Topic Extraction pipeline: Normalization Noun Phrase extraction Refinement Scoring.
+In this stage, the algorithm will also train a W2V model on the joint corpora to be used for the clustering report (this step can be skipped).
