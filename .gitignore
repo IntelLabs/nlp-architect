@@ -33,4 +33,4 @@ flake8.txt
 nlp_architect/pipelines/bist-pretrained/*
 venv
 nlp_architect/api/ner-pretrained/*
-tests/fixtures/data/chunker/*
+tests/fixtures/data/chunker/

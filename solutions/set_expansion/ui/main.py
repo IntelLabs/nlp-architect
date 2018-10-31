@@ -18,6 +18,7 @@ import socket
 import pickle
 import logging
 import sys
+import re
 from os.path import dirname, join
 
 from bokeh.layouts import column, layout
@@ -32,13 +33,12 @@ import solutions.set_expansion.ui.settings as settings
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-
 vocab = None
 vocab_dict = {}
 cut_vocab_dict = {}
 max_visible_phrases = 5000
 working_text = 'please wait...'
-fetching_text = 'fetching vocabulary from server (only once). this can take few minutes...'
+fetching_text = 'Fetching vocabulary from server (one time only), this can take few minutes...'
 seed_check_text = ''
 all_selected_phrases = []
 search_flag = False
@@ -49,15 +49,22 @@ expand_columns = [
     TableColumn(field="score", title="Score")
 ]
 empty_table = {'res': 15 * [''], 'score': 15 * ['']}
+checkbox_label = "Show extracted term groups" if settings.grouping else "Show extracted phrases"
 
 # create ui components
 
 seed_input_title = 'Please enter a comma separated seed list of terms:'
 seed_input_box = TextInput(
     title=seed_input_title, value="", width=450, css_classes=["seed-input"])
+annotation_input = TextInput(title="Please enter text to annotate:", value="", width=400,
+                             height=80, css_classes=["annotation-input"])
+annotation_output = Div(text='', height=30, width=500, style={'padding-left': '35px'})
+annotate_button = Button(label="Annotate", button_type="success", width=150,
+                         css_classes=["annotation-button"])
 group_info_box = Div(text='', height=30, css_classes=["group-div"])
 search_input_box = TextInput(title="Search:", value="", width=300)
-expand_button = Button(label="Expand", button_type="success", width=150)
+expand_button = Button(label="Expand", button_type="success", width=150,
+                       css_classes=["expand-button"])
 clear_seed_button = Button(
     label="Clear", button_type="success", css_classes=['clear_button'], width=50)
 export_button = Button(
@@ -68,35 +75,32 @@ expand_table = DataTable(
 phrases_list = MultiSelect(
     title="", value=[], options=[], width=300, size=27, css_classes=['phrases_list'])
 checkbox_group = CheckboxGroup(
-    labels=["Show extracted phrases"], active=[], width=400, css_classes=['checkbox_group'])
-search_box_area = column(children=[Div(width=200)])
-export_working_label = Div(text="", style={'color': 'red'})
-getvocab_working_label = Div(
-    text="", style={'color': 'blue', 'padding-top': '0px', 'font-size': '15px'})
+    labels=["Text annotation", checkbox_label], active=[], width=400,
+    css_classes=['checkbox_group'])
+annotate_checkbox = CheckboxGroup(
+    labels=["Text annotation"], active=[], width=400, css_classes=['annotate_checkbox'])
+search_box_area = column(children=[Div(height=10, width=200)])
+working_label = Div(
+    text="", style={'color': 'blue', 'font-size': '15px'})
 search_working_label = Div(
     text="", style={'color': 'blue', 'padding-bottom': '0px', 'font-size': '15px'})
-expand_working_label = Div(
-    text="", style={
-        'color': 'blue', 'padding-top': '7px', 'padding-left': '10px', 'font-size': '15px'})
-clear_working_label = Div(
-    text="", style={
-        'color': 'blue', 'padding-top': '30px', 'padding-left': '20px', 'font-size': '15px'})
 seed_check_label = Div(
     text='', style={'font-size': '15px'}, height=20, width=500)
-seed_layout = Row(
-    seed_input_box, column(Div(height=0, width=0), clear_seed_button), clear_working_label)
 table_layout = Row(
-    expand_table, Div(width=25), column(Div(height=350), export_button, export_working_label))
+    expand_table)
 table_area = column(children=[table_layout])
+seed_layout = column(Row(seed_input_box, column(Div(height=14, width=0), clear_seed_button)),
+                     expand_button, table_area)
+annotation_layout = column(children=[])
+
 phrases_area = column(children=[search_working_label, Div(width=300)])
-checkbox_layout = column(checkbox_group, getvocab_working_label)
+checkbox_layout = column(children=[checkbox_group, phrases_area])
 grid = layout(
     [
-        [Div(width=500), Div(text="<H1>Set Expansion Demo</H1>")],
-        [checkbox_layout, seed_layout], [search_box_area, Div(width=370),
-                                         expand_button, expand_working_label],
-        [phrases_area, Div(width=100), table_area],
-        [group_info_box]
+        [working_label, Div(width=250), Div(text="<h1>Set Expansion Demo</h1>")],
+        [checkbox_layout, seed_layout, Div(width=50),
+         column(Div(height=0, width=0), annotation_layout)],
+        [group_info_box, Div(width=500), export_button]
     ]
 )
 
@@ -109,7 +113,7 @@ def get_vocab():
     """
     global vocab
     logger.info('sending get_vocab request to server...')
-    received = send_request_to_server('get_vocab')
+    received = send_request_to_server(['get_vocab'])
     vocab = received
     for p in vocab:
         if len(p) < max_phrase_length:
@@ -126,7 +130,9 @@ def send_request_to_server(request):
         # Connect to server and send data
         sock.connect((settings.expand_host, settings.expand_port))
         logger.info('sending request')
-        sock.sendall(bytes(request + "\n", "utf-8"))
+        req_packet = pickle.dumps(request)
+        # sock.sendall(bytes(request + "\n", "utf-8"))
+        sock.sendall(req_packet)
         # Receive data from the server and shut down
         data = b""
         ctr = 0
@@ -169,7 +175,7 @@ def row_selected_callback(indices, old, new):
         for n in new_phrases:
             if n not in old_phrases and \
                     (vocab is not None and vocab_dict[n] in
-                        phrases_list.options and vocab_dict[n] not in phrases_list.value):
+                     phrases_list.options and vocab_dict[n] not in phrases_list.value):
                 phrases_list.value.append(vocab_dict[n])
                 break
         update_all_selected_phrases()
@@ -193,9 +199,8 @@ def update_all_selected_phrases():
     for x in all_selected_phrases:
         logger.info('x= %s', x)
         if (x in expand_table_source.data['res'] and x not in selected_expand) or (
-            vocab is not None and (vocab_dict[x] in phrases_list.options) and (
-                vocab_dict[x] not in selected_vocab
-            )
+                vocab is not None and (vocab_dict[x] in phrases_list.options) and (
+                vocab_dict[x] not in selected_vocab)
         ):
             logger.info('removing %s', x)
             updated_selected_phrases.remove(x)
@@ -212,22 +217,30 @@ def update_all_selected_phrases():
     logger.info('all_selected_phrases list was updated: %s', str(all_selected_phrases))
 
 
-def show_phrases_callback(checked_value):
+def checkbox_callback(checked_value):
     global search_box_area, phrases_area
-    if len(checked_value) == 1:
+    group_info_box.text = ''
+    if 0 in checked_value:
+        annotation_layout.children = [annotation_input, annotate_button,
+                                      annotation_output]
+    else:
+        annotation_layout.children = []
+        annotation_output.text = ""
+    if 1 in checked_value:
         if vocab is None:
-            getvocab_working_label.text = fetching_text
+            working_label.text = fetching_text
             get_vocab()
         if not phrases_list.options:
-            getvocab_working_label.text = working_text
+            working_label.text = working_text
             phrases_list.options = list(
                 cut_vocab_dict.keys())[0:max_visible_phrases]  # show the cut representation
-        search_box_area.children = [search_input_box]
-        phrases_area.children = [search_working_label, phrases_list]
-        getvocab_working_label.text = ''
+        # search_box_area.children = [search_input_box]
+        phrases_area.children = [search_input_box, search_working_label, phrases_list]
+        working_label.text = ''
     else:
-        search_box_area.children = []
+        # search_box_area.children = []
         phrases_area.children = []
+        group_info_box.text = ""
 
 
 def get_expand_results_callback():
@@ -236,7 +249,7 @@ def get_expand_results_callback():
     table.
     """
     logger.info('### new expand request')
-    expand_working_label.text = working_text
+    working_label.text = working_text
     global seed_check_text, table_area
     try:
         seed_check_label.text = ''
@@ -249,7 +262,7 @@ def get_expand_results_callback():
         seed_words = [x.strip() for x in seed.split(',')]
         bad_words = ''
         for w in seed_words:
-            res = send_request_to_server('in_vocab,' + w)
+            res = send_request_to_server(['in_vocab', w])
             if res is False:
                 bad_words += ("'" + w + "',")
         if bad_words != '':
@@ -259,7 +272,7 @@ def get_expand_results_callback():
             logger.info('setting table area')
             table_area.children = [seed_check_label, table_layout]
         logger.info('sending expand request to server with seed= %s', seed)
-        received = send_request_to_server(seed)
+        received = send_request_to_server(['expand', seed])
         if received is not None:
             res = [x[0] for x in received]
             scores = ["{0:.5f}".format(y[1]) for y in received]
@@ -273,14 +286,16 @@ def get_expand_results_callback():
     except Exception as e:
         logger.info('Exception: %s', str(e))
     finally:
-        expand_working_label.text = ''
+        working_label.text = ''
 
 
 def search_callback(value, old, new):
+    group_info_box.text = ''
     search_working_label.text = working_text
     logger.info('search vocab')
     global vocab, phrases_list, all_selected_phrases, search_flag
     search_flag = True
+    phrases_list.value = []
     if new == '':
         new_phrases = list(cut_vocab_dict.keys())
     else:
@@ -300,22 +315,19 @@ def search_callback(value, old, new):
 
 def vocab_phrase_selected_callback(attr, old_selected, new_selected):
     logger.info('vocab selected')
+    if settings.grouping:
+        # show group info
+        if len(new_selected) == 1:
+            res = send_request_to_server(['get_group', new_selected[0]])
+            if res is not None:
+                group_info_box.text = str(res)
     global clear_flag
     if not clear_flag:
         global all_selected_phrases, search_flag
-        if(search_flag):
+        if (search_flag):
             return
         logger.info('selected_vocab was updated: old= %s, new= %s', str(
             old_selected), str(new_selected))
-        if settings.grouping:
-            # show group info
-            if len(new_selected) == 1:
-                res = send_request_to_server('get_group,' + new_selected[0])
-                if res is not None:
-                    group_text = ''
-                    for x in res:
-                        group_text = group_text + x + '<br>'
-                    group_info_box.text = str(res)
         # sync expand table:
         # phrase was de-selected from vocab list:
         expand_selected = [expand_table_source.data['res'][p] for
@@ -347,7 +359,6 @@ def vocab_phrase_selected_callback(attr, old_selected, new_selected):
 
 def clear_seed_callback():
     logger.info('clear')
-    clear_working_label.text = working_text
     global all_selected_phrases, table_area, clear_flag
     # table_area.children = []  # needed for refreshing the selections
     clear_flag = True
@@ -358,7 +369,6 @@ def clear_seed_callback():
     all_selected_phrases = []
     table_area.children = [table_layout]
     clear_flag = False
-    clear_working_label.text = ''
 
 
 def get_selected_phrases_for_seed():
@@ -381,18 +391,46 @@ def expand_data_changed_callback(data, old, new):
         expand_table_source.selected.indices = []
 
 
+def annotate_callback():
+    try:
+        annotation_output.text = working_text
+        user_text = annotation_input.value
+        # if len(user_text) == 0 :
+        #    annotation_output.text = "Please provaide valid text to annotate"
+        if len(seed_input_box.value) == 0:
+            out_text = "No seed to compare to"
+        else:
+            out_text = user_text
+            seed = [x.strip() for x in seed_input_box.value.split(',')]
+            res = send_request_to_server(['annotate', seed, user_text])
+            logger.info("res:%s", str(res))
+            if len(res) == 0:
+                out_text = "No results found"
+            for np in res:
+                pattern = re.compile(r'\b' + np + r'\b')
+                out_text = re.sub(pattern, mark_phrase_tag(np), out_text)
+        annotation_output.text = out_text
+    except Exception as e:
+        annotation_output.text = "An error occured"
+        logger.error("Error: %s", e)
+
+
+def mark_phrase_tag(text):
+    return '<phrase>' + text + '</phrase>'
+
+
 # set callbacks
 
 expand_button.on_click(get_expand_results_callback)
-# save_button.on_click(save_data_callback)
 expand_table_source.selected.on_change('indices', row_selected_callback)
 expand_table_source.on_change('data', expand_data_changed_callback)
-checkbox_group.on_click(show_phrases_callback)
+checkbox_group.on_click(checkbox_callback)
 search_input_box.on_change('value', search_callback)
 phrases_list.on_change('value', vocab_phrase_selected_callback)
 clear_seed_button.on_click(clear_seed_callback)
 export_button.callback = CustomJS(args=dict(source=expand_table_source),
                                   code=open(join(dirname(__file__), "download.js")).read())
+annotate_button.on_click(annotate_callback)
 # table_area.on_change('children', table_area_change_callback)
 
 # arrange components in page

@@ -13,10 +13,8 @@ NP's have to be marked in the corpus by a marking character between the words of
 For example, if the marking character is '\_', the NP "Natural Language Processing" will be marked as "Natural_Language_Processing_".
 
 We use the [CONLL2000](https://www.clips.uantwerpen.be/conll2000/chunking/) shared task dataset 
-in the default parameters of our example for training np2vec model. You can download the dataset 
-from [NLTK](https://www.nltk.org/data.html) using the following command ```nltk.download('conll2000')```. The terms and 
-conditions of the data set license apply. Intel does 
-not grant any rights to the data files.
+in the default parameters of our example for training np2vec model. The terms and conditions 
+of the data set license apply. Intel does not grant any rights to the data files.
 
 ## Training Usage
 

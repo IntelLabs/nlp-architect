@@ -23,7 +23,7 @@ import logging
 import sys
 import json
 from os import path
-from configargparse import ArgumentParser
+from argparse import ArgumentParser
 
 from nlp_architect.pipelines.spacy_np_annotator import NPAnnotator, get_noun_phrases
 from nlp_architect.utils.text import spacy_normalizer, SpacyInstance
@@ -53,25 +53,131 @@ def get_group_norm(spacy_span):
             spacy_span (spacy.tokens.Span)
     """
     np = spacy_span.text
-    if np not in np2count:
-        np2count[np] = 1
-    else:
-        np2count[np] += 1
     norm = spacy_normalizer(np, spacy_span.lemma_)
     if args.mark_char in norm:
         norm = norm.replace(args.mark_char, ' ')
-    np2id[np] = norm
-    if norm not in id2rep:
-        id2rep[norm] = np
-    if norm in id2group:
-        if np not in id2group[norm]:
+    if np not in np2count:  # new np
+        np2count[np] = 1
+        np2id[np] = norm
+        if norm in id2group:  # norm already exist
             id2group[norm].append(np)
-        elif np2count[np] > np2count[id2rep[norm]]:
-            id2rep[norm] = np  # replace rep
-    else:
-        id2group[norm] = [np]
-        id2rep[norm] = np
+        else:
+            id2group[norm] = [np]
+            id2rep[norm] = np
+    else:  # another occurrence of this np. norm must exist and be consistent
+        np2count[np] += 1
+        if np2id[np] != norm:  # new norm to the same np - merge groups.
+            #  no need to update np2id[np]
+            norm = merge_groups(np, np2id[np], norm)  # set to the already exist
+            #  norm so I know this norm is already in id2group/id2rep
+        else:  # update rep
+            if np2count[np] > np2count[id2rep[norm]]:
+                id2rep[norm] = np  # replace rep
+
     return norm
+
+
+def load_parser(chunker):
+    # load spacy parser
+    logger.info('loading spacy. chunker=%s', chunker)
+    if 'nlp_arch' in chunker:
+        parser = SpacyInstance(model='en_core_web_sm',
+                               disable=['textcat', 'ner', 'parser']).parser
+        parser.add_pipe(parser.create_pipe('sentencizer'), first=True)
+        logger.info(
+            'The pre-trained model to be downloaded for NLP Architect'
+            ' word chunker model is licensed under Apache 2.0')
+        _path_to_model = path.join(cur_dir, chunker_model_file)
+        download_unlicensed_file(nlp_chunker_url, chunker_model_file,
+                                 _path_to_model)
+        _path_to_params = path.join(cur_dir, chunker_model_dat_file)
+        download_unlicensed_file(nlp_chunker_url, chunker_model_dat_file,
+                                 _path_to_params)
+        logger.info('Done.')
+        parser.add_pipe(NPAnnotator.load(_path_to_model, _path_to_params),
+                        last=True)
+    else:
+        parser = SpacyInstance(model='en_core_web_sm',
+                               disable=['textcat', 'ner']).parser
+    logger.info('spacy loaded')
+    return parser
+
+
+def extract_noun_phrases(docs, nlp_parser, chunker):
+    logger.info('extract nps from: %s', docs)
+    spans = []
+    for doc in nlp_parser.pipe(docs, n_threads=-1):
+        if 'nlp_arch' in chunker:
+            spans.extend(get_noun_phrases(doc))
+        else:
+            nps = list(doc.noun_chunks)
+            spans.extend(nps)
+    logger.info('nps= %s', str(spans))
+    return spans
+
+
+# pylint: disable-msg=too-many-nested-blocks,too-many-branches
+def mark_noun_phrases(text_file, nlp_parser, lines_count):
+    i = 0
+    with tqdm(total=lines_count) as pbar:
+        for doc in nlp_parser.pipe(text_file, n_threads=-1):
+            if 'nlp_arch' in args.chunker:
+                spans = get_noun_phrases(doc)
+            else:
+                spans = list(doc.noun_chunks)
+            i += 1
+            if len(spans) > 0:
+                span = spans.pop(0)
+            else:
+                span = None
+            span_written = False
+            for token in doc:
+                if span is None:
+                    if len(token.text.strip()) > 0:
+                        marked_corpus_file.write(token.text + ' ')
+                else:
+                    if token.idx < span.start_char or token.idx >= span.end_char:  # outside a
+                        # span
+                        if len(token.text.strip()) > 0:
+                            marked_corpus_file.write(token.text + ' ')
+                    else:
+                        if not span_written:
+                            # mark NP's
+                            if len(span.text) > 1 and span.lemma_ != '-PRON-':
+                                if args.grouping:
+                                    text = get_group_norm(span)
+                                else:
+                                    text = span.text
+                                # mark NP's
+                                text = text.replace(' ',
+                                                    args.mark_char) + args.mark_char
+                                marked_corpus_file.write(text + ' ')
+                            else:
+                                marked_corpus_file.write(span.text + ' ')
+                            span_written = True
+                        if token.idx + len(token.text) == span.end_char:
+                            if len(spans) > 0:
+                                span = spans.pop(0)
+                            else:
+                                span = None
+                            span_written = False
+            marked_corpus_file.write('\n')
+            pbar.update(1)
+
+
+def merge_groups(np, old_id, diff_id):
+    if diff_id in id2group:
+        for term in id2group[diff_id]:  # for each term update dicts
+            np2id[term] = old_id
+            id2group[old_id].append(term)
+            if np2count[term] > np2count[id2rep[old_id]]:
+                id2rep[old_id] = term
+        id2rep.pop(diff_id)
+        id2group.pop(diff_id)
+    else:
+        if np2count[np] > np2count[id2rep[old_id]]:
+            id2rep[old_id] = np
+    return old_id
 
 
 if __name__ == '__main__':
@@ -114,75 +220,11 @@ if __name__ == '__main__':
         corpus_file = open(args.corpus, 'r', encoding='utf8', errors='ignore')
 
     with open(args.marked_corpus, 'w', encoding='utf8') as marked_corpus_file:
-        # load spacy parser
-        logger.info('loading spacy')
-        if 'nlp_arch' in args.chunker:
-            nlp = SpacyInstance(model='en_core_web_sm',
-                                disable=['textcat', 'ner', 'parser']).parser
-            nlp.add_pipe(nlp.create_pipe('sentencizer'), first=True)
-            logger.info(
-                'The pre-trained model to be downloaded for NLP Architect word'
-                ' chunker model is licensed under Apache 2.0')
-            _path_to_model = path.join(cur_dir, chunker_model_file)
-            if not path.exists(_path_to_model):
-                download_unlicensed_file(nlp_chunker_url, chunker_model_file, _path_to_model)
-            _path_to_params = path.join(cur_dir, chunker_model_dat_file)
-            if not path.exists(_path_to_params):
-                download_unlicensed_file(nlp_chunker_url, chunker_model_dat_file, _path_to_params)
-            logger.info('Done.')
-            nlp.add_pipe(NPAnnotator.load(_path_to_model, _path_to_params), last=True)
-        else:
-            nlp = SpacyInstance(model='en_core_web_sm', disable=['textcat', 'ner']).parser
-        logger.info('spacy loaded')
-
+        nlp = load_parser(args.chunker)
         num_lines = sum(1 for line in corpus_file)
         corpus_file.seek(0)
         logger.info('%i lines in corpus', num_lines)
-        i = 0
-
-        with tqdm(total=num_lines) as pbar:
-            for doc in nlp.pipe(corpus_file, n_threads=-1):
-                if 'nlp_arch' in args.chunker:
-                    spans = get_noun_phrases(doc)
-                else:
-                    spans = list(doc.noun_chunks)
-                i += 1
-                if len(spans) > 0:
-                    span = spans.pop(0)
-                else:
-                    span = None
-                spanWritten = False
-                for token in doc:
-                    if span is None:
-                        if len(token.text.strip()) > 0:
-                            marked_corpus_file.write(token.text + ' ')
-                    else:
-                        if token.idx < span.start_char or token.idx >= span.end_char:  # outside a
-                            # span
-                            if len(token.text.strip()) > 0:
-                                marked_corpus_file.write(token.text + ' ')
-                        else:
-                            if not spanWritten:
-                                # mark NP's
-                                if len(span.text) > 1 and span.lemma_ != '-PRON-':
-                                    if args.grouping:
-                                        text = get_group_norm(span)
-                                    else:
-                                        text = span.text
-                                    # mark NP's
-                                    text = text.replace(' ', args.mark_char) + args.mark_char
-                                    marked_corpus_file.write(text + ' ')
-                                else:
-                                    marked_corpus_file.write(span.text + ' ')
-                                spanWritten = True
-                            if token.idx + len(token.text) == span.end_char:
-                                if len(spans) > 0:
-                                    span = spans.pop(0)
-                                else:
-                                    span = None
-                                spanWritten = False
-                marked_corpus_file.write('\n')
-                pbar.update(1)
+        mark_noun_phrases(corpus_file, nlp, num_lines)
 
     # write grouping data :
     if args.grouping:

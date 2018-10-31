@@ -11,12 +11,42 @@
 	color: white;
 }
 
+.expand-button{
+    padding-top: 1px;
+    padding-left: 150px;
+}
+
 .content {
     font-size: 200px;
 }
 
 .seed-input {
     color: black;
+    padding-top: 16px;
+}
+
+.annotation-input {
+    padding-left: 30px;
+    padding-bottom: 1px;
+}
+
+.annotation-div {
+    display: inline;
+}
+
+.annotation-button {
+    padding-left: 150px;
+}
+
+phrase {
+    font-family: Verdana;
+    display: inline;
+    border:1px black solid;
+    border-radius: 5px;
+    padding: 3px;
+    font-size:12px;
+    background:#d0efb8;
+    line-height:40px;
 }
 
 .bad-word {
@@ -24,6 +54,11 @@
 }
 
 .checkbox_group {
+    padding-top: 15px;
+    padding-bottom: 0px;
+}
+
+.annotate_checkbox {
     padding-bottom: 0px;
 }
 

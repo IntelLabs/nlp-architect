@@ -17,7 +17,7 @@ import logging
 import sys
 from os import path
 
-from configargparse import ArgumentParser
+from argparse import ArgumentParser
 
 from nlp_architect.models.np2vec import NP2vec
 from nlp_architect.utils.io import validate_existing_filepath, check_size, load_json_file
@@ -25,15 +25,14 @@ from nlp_architect.utils.io import validate_existing_filepath, check_size, load_
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-cur_dir = path.dirname(path.realpath(__file__))
-
 
 class SetExpand():
     """
         Set expansion module, given a trained np2vec model.
     """
 
-    def __init__(self, np2vec_model_file, binary=False, word_ngrams=False, grouping=False):
+    def __init__(self, np2vec_model_file, binary=False, word_ngrams=False, grouping=False,
+                 light_grouping=False, grouping_map_dir=path.dirname(path.realpath(__file__))):
         """
         Load the np2vec model for set expansion.
 
@@ -42,7 +41,8 @@ class SetExpand():
             binary (bool): boolean indicating whether the np2vec model to load is in binary format
             word_ngrams (int {1,0}): If 1, np2vec model to load uses word vectors with subword (
             ngrams) information.
-
+            light_grouping (bool): boolean indicating whether to load all maps for grouping.
+            grouping_map_dir (str): path to the directory containing maps for grouping.
         Returns:
             np2vec model to load
         """
@@ -50,9 +50,10 @@ class SetExpand():
         if grouping:
             # load grouping info
             logger.info('loading grouping data')
-            self.id2rep = load_json_file(path.join(cur_dir, 'id2rep'))
-            self.np2id = load_json_file(path.join(cur_dir, 'np2id'))
-            self.id2group = load_json_file(path.join(cur_dir, 'id2group'))
+            self.np2id = load_json_file(path.join(grouping_map_dir, 'np2id'))
+            if not light_grouping:
+                self.id2rep = load_json_file(path.join(grouping_map_dir, 'id2rep'))
+                self.id2group = load_json_file(path.join(grouping_map_dir, 'id2group'))
         logger.info('loadind model...')
         self.np2vec_model = NP2vec.load(np2vec_model_file, binary=binary, word_ngrams=word_ngrams)
         # extract the first term of the model in order to get the marking character
@@ -63,7 +64,7 @@ class SetExpand():
         self.np2vec_model.init_sims()
         logger.info('done init')
 
-    def __term2id(self, term):
+    def term2id(self, term, suffix=True):
         """
         Given an term, return its id.
 
@@ -77,7 +78,9 @@ class SetExpand():
             if term not in self.np2id.keys():
                 return None
             term = self.np2id[term]
-        id = term.replace(' ', self.mark_char) + self.mark_char
+        id = term.replace(' ', self.mark_char)
+        if suffix:
+            id += self.mark_char
         if id not in self.np2vec_model.vocab:
             return None
         return id
@@ -96,9 +99,8 @@ class SetExpand():
         if self.grouping:
             if norm in self.id2rep:
                 return self.id2rep[norm]
-            else:
-                logger.warning("id:#%s#, norm:#%s# is not in id2rep")
-                return ""
+            logger.warning("id:#%s#, norm:#%s# is not in id2rep")
+            return None
         return norm
 
     def get_vocab(self):
@@ -108,10 +110,15 @@ class SetExpand():
         Returns:
             the list of terms.
         """
-        return [self.__id2term(id) for id in self.np2vec_model.vocab]
+        vocab = []
+        for id in self.np2vec_model.vocab:
+            term = self.__id2term(id)
+            if term is not None:
+                vocab.append(term)
+        return vocab
 
     def in_vocab(self, term):
-        id = self.__term2id(term)
+        id = self.term2id(term)
         if id is None:
             return False
         return True
@@ -124,6 +131,20 @@ class SetExpand():
             group = self.id2group[id]
         return group
 
+    def similarity(self, terms, seed, threshold):
+
+        similar = []
+        seed_id = self.get_seed_id(seed)
+        for term in terms:
+            term_id = self.term2id(term)
+            if term_id is not None:
+                if self.seed2term_similarity(seed_id, [term_id]) > threshold:
+                    similar.append(term)
+            else:
+                logger.info("term: %s is not in vocab", term)
+        return similar
+
+    # pylint: disable-msg=too-many-branches
     def expand(self, seed, topn=500):
         """
         Given a seed of terms, return the expanded set of terms.
@@ -146,7 +167,7 @@ class SetExpand():
                     upper = False
                 else:
                     lower = False
-            id = self.__term2id(np)
+            id = self.term2id(np)
             if id is not None:
                 seed_ids.append(id)
             else:
@@ -163,11 +184,56 @@ class SetExpand():
                 # pylint: disable=R0916
                 if self.grouping or (not lower and not upper) or (upper and r[0][0].isupper()) or \
                         (lower and r[0][0].islower()):
-                    res.append((self.__id2term(r[0]), r[1]))
+                    term = self.__id2term(r[0])
+                    if term is not None:
+                        res.append((self.__id2term(r[0]), r[1]))
             return res
         else:
             logger.info("All the seed terms are out-of-vocabulary.")
         return None
+
+    def get_seed_id(self, seed):
+        seed_ids = list()
+        for np in seed:
+            np = np.strip()
+            id = self.term2id(np)
+            if id is not None:
+                seed_ids.append(id)
+            else:
+                logger.warning("The term: '%s' is out-of-vocabulary.", np)
+        return seed_ids
+
+    def term2term_similarity(self, term_id_1, term_id_2):
+        """
+        Compute cosine similarity between two term id's.
+        Args:
+            term_id_1: first term id
+            term_id_2: second term id
+
+        Returns:
+            Similarity between the first and second term id's
+
+        """
+        logger.info('calculate similarity for: %s , %s', term_id_1, term_id_2)
+        res = self.np2vec_model.similarity(term_id_1, term_id_2)
+        logger.info("similarity result: %s", str(res))
+        return res
+
+    def seed2term_similarity(self, seed_id, term_id):
+        """
+        Compute cosine similarity between a seed terms and a term.
+        Args:
+            seed_id: seed term id's
+            term_id: the term id
+
+        Returns:
+            Similarity between the seed terms and the term
+
+        """
+        logger.info('calculate similarity for: %s , %s', str(seed_id), term_id)
+        res = self.np2vec_model.n_similarity(seed_id, list(term_id))
+        logger.info("similarity result: %s", str(res))
+        return res
 
 
 if __name__ == "__main__":
