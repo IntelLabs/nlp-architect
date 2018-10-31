@@ -26,16 +26,14 @@ import pickle
 import gensim
 import numpy as np
 from sklearn.model_selection import train_test_split
-from examples.most_common_word_sense.feature_extraction import extract_features_envelope
+from feature_extraction import extract_features_envelope
 
-from nlp_architect.utils.io import validate_existing_filepath, \
-    check_size, validate_parent_exists
+from nlp_architect.utils.io import validate_existing_filepath, check_size, validate_parent_exists
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
 
-# -------------------------------------------------------------------------------------#
 def read_gs_file(gs_file_name):
     """
     reads gold standard file
@@ -76,9 +74,6 @@ def read_gs_file(gs_file_name):
     return target_word_vec1, definition_vec1, hypernym_vec1, label_vec1
 
 
-# -------------------------------------------------------------------------------------#
-
-
 def read_inference_input_examples_file(input_examples_file):
     """
     read inference input examples file
@@ -111,7 +106,6 @@ def read_inference_input_examples_file(input_examples_file):
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
-
     parser.add_argument('--gold_standard_file', default='data/goldStd.csv',
                         type=validate_existing_filepath,
                         help='path to gold standard file')

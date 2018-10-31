@@ -72,11 +72,11 @@ def run_loss(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--file_path', type=str, default='./',
+    parser.add_argument('--file_path', type=validate_existing_filepath, default='./',
                         help='file_path where the files to parse are located')
     parser.add_argument('--data_type', type=str, default='amazon',
                         choices=['amazon'])
-    parser.add_argument('--output_file', type=str, default='./opt_trials.pkl',
+    parser.add_argument('--output_file', type=validate_parent_exists, default='./opt_trials.pkl',
                         help='file_path where the output of the trials will be located')
     parser.add_argument('--new_trials', type=int, default=20, action=check_size(1, 20000))
     args_in = parser.parse_args()

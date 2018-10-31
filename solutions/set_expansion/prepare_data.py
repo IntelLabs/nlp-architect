@@ -28,7 +28,7 @@ from configargparse import ArgumentParser
 from nlp_architect.pipelines.spacy_np_annotator import NPAnnotator, get_noun_phrases
 from nlp_architect.utils.text import spacy_normalizer, SpacyInstance
 from nlp_architect.utils.io import check_size, validate_existing_filepath, \
-    download_unlicensed_file
+    download_unlicensed_file, validate_parent_exists
 from tqdm import tqdm
 
 chunker_model_dat_file = 'model_info.dat.params'
@@ -86,8 +86,7 @@ if __name__ == '__main__':
     arg_parser.add_argument(
         '--marked_corpus',
         default='enwiki-20171201_subset_marked.txt',
-        type=str,
-        action=check_size(min_size=1),
+        type=validate_parent_exists,
         help='path to the marked corpus corpus.')
     arg_parser.add_argument(
         '--mark_char',

@@ -38,8 +38,6 @@ except LookupError:
                         "without downloading punkt")
     nltk.download('punkt')
 
-# -------------------------------------------------------------------------------------#
-
 
 def extract_features_envelope(target_word, definition, hyps_vec, model_w2v):
     """
@@ -79,7 +77,6 @@ def extract_features_envelope(target_word, definition, hyps_vec, model_w2v):
             definition_sentence_emb_cbow]
 
 
-# -------------------------------------------------------------------------------------#
 def extract_meaningful_words_from_sentence(sentence):
     """
     extract meaningful (nouns and verbs) words from sentence
@@ -106,7 +103,6 @@ def extract_meaningful_words_from_sentence(sentence):
     return words_vec
 
 
-# -------------------------------------------------------------------------------------#
 def convert_string_to_list_of_words(string_list_of_words):
     """
     convert string to list of words
@@ -130,7 +126,6 @@ def convert_string_to_list_of_words(string_list_of_words):
     return words_vec
 
 
-# -------------------------------------------------------------------------------------#
 def calc_word_to_sentence_dist_cbow(target_word, sentence, model):
     """
     calculate cosine similaity between word emb. and sentence cbow emb.
@@ -157,8 +152,6 @@ def calc_word_to_sentence_dist_cbow(target_word, sentence, model):
 
     return cbow_sentence_emb, cosine_sim
 
-
-# -------------------------------------------------------------------------------------#
 
 def cosine_similarity(vec1, vec2):
     """
@@ -187,7 +180,6 @@ def cosine_similarity(vec1, vec2):
     return cosine_sim
 
 
-# -------------------------------------------------------------------------------------#
 def calc_cbow_sentence(sentence, model):
     """
     calc cbow embedding of an input sentence
@@ -218,7 +210,6 @@ def calc_cbow_sentence(sentence, model):
     return cbow_sentence
 
 
-# -------------------------------------------------------------------------------------#
 def calc_word_to_sentence_sim_w2v(target_word, string_vec, model, max_items_to_test):
     """
 
@@ -250,7 +241,6 @@ def calc_word_to_sentence_sim_w2v(target_word, string_vec, model, max_items_to_t
     return top_av
 
 
-# -------------------------------------------------------------------------------------#
 def w2v_similarity_envelope(word_a, phrase_b, model):
     """
     calculate cosine similarity between 2 words
@@ -285,8 +275,6 @@ def w2v_similarity_envelope(word_a, phrase_b, model):
         return -1
 
 
-# -------------------------------------------------------------------------------------#
-
 def w2v_similarity(word_a, word_b, model):
     """
 
@@ -309,8 +297,6 @@ def w2v_similarity(word_a, word_b, model):
     except KeyError:
         return -1
 
-
-# -------------------------------------------------------------------------------------#
 
 def return_w2v(word_a, model):
     """
@@ -337,7 +323,6 @@ def return_w2v(word_a, model):
         return False, w2v
 
 
-# -------------------------------------------------------------------------------------#
 def calc_top_av(sim_score_vec):
     """
     calc top average of scores vector
@@ -368,8 +353,6 @@ def calc_top_av(sim_score_vec):
     return av_score
 
 
-# -------------------------------------------------------------------------------------#
-
 def get_inherited_hypernyms_list(synset, hyps_list):
     """
     get inherited hypernyms list of synset
@@ -391,7 +374,6 @@ def get_inherited_hypernyms_list(synset, hyps_list):
     return hyps_list
 
 
-# -------------------------------------------------------------------------------------#
 def get_synonyms(synset):
     """
     get synonyms list of synset
@@ -411,7 +393,6 @@ def get_synonyms(synset):
     return synonym_list
 
 
-# -------------------------------------------------------------------------------------#
 def extract_synset_data(synset):
     """
 

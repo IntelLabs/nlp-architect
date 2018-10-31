@@ -84,7 +84,7 @@ Dataset Preparation
 --------------------
 
 The script prepare_data.py uses the gold standard csv file as described in the requirements section above
-using pretrained Google News Word2vec model. Pretrained Google News Word2vec model can be download here_.
+using pre-trained Google News Word2vec model [1]_ [2]_ [3]_. Pre-trained Google News Word2vec model can be download here_.
 The terms and conditions of the data set license apply. Intel does not grant any rights to the data files.
 
 .. code:: python
@@ -102,7 +102,7 @@ Trains the MLP classifier (:py:class:`model  <nlp_architect.models.most_common_w
 .. code:: python
 
   python examples/most_common_word_sense/train.py --data_set_file data/data_set.pkl
-                 --model_prm data/wsd_classification_model.prm
+                 --model data/wsd_classification_model.h5
 
 Inference
 ---------
@@ -111,7 +111,7 @@ Inference
   python examples/most_common_word_sense/inference.py --max_num_of_senses_to_search 3
        --input_inference_examples_file data/input_inference_examples.csv
        --word_embedding_model_file pretrained_models/GoogleNews-vectors-negative300.bin
-       --model_prm data/wsd_classification_model.prm
+       --model data/wsd_classification_model.h5
 
 Where the ``max_num_of_senses_to_search`` is the maximum number of senses that are checked per target word (default =3)
 and ``input_inference_examples_file`` is a csv file containing the input inference data. This file includes
@@ -121,3 +121,8 @@ a single column wherein each entry in this column is a different target word
   The results are printed to the terminal using different colors therefore using a white terminal background is best to view the results
 
 .. _here: https://drive.google.com/file/d/0B7XkCwpI5KDYNlNUTTlSS21pQmM/edit?usp=sharing
+.. [1] Tomas Mikolov, Kai Chen, Greg Corrado, and Jeffrey Dean. Efficient Estimation of Word Representations in Vector Space. In Proceedings of Workshop at ICLR, 2013.
+
+.. [2] Tomas Mikolov, Ilya Sutskever, Kai Chen, Greg Corrado, and Jeffrey Dean. Distributed Representations of Words and Phrases and their Compositionality. In Proceedings of NIPS, 2013.
+
+.. [3] Tomas Mikolov, Wen-tau Yih, and Geoffrey Zweig. Linguistic Regularities in Continuous Space Word Representations. In Proceedings of NAACL HLT, 2013.

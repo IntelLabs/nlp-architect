@@ -16,18 +16,15 @@
 """
 Most Common Word Sense - Train MLP classifier and evaluate it.
 """
-
+import argparse
 import logging
 import pickle
 
 import numpy as np
-from neon.backends import gen_backend
-from neon.data import ArrayIterator
-from neon.util.argparser import NeonArgparser
 
 from nlp_architect.models.most_common_word_sense import MostCommonWordSense
 from nlp_architect.utils.io import validate_existing_filepath, \
-    validate_parent_exists
+    validate_parent_exists, check_size
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -51,46 +48,46 @@ def most_common_word_train(x_train, y_train, x_valid, y_valid):
     # train set
     x_train = np.array(x_train)
     y_train1 = np.array(y_train)
-    train_set = ArrayIterator(X=x_train, y=y_train1, make_onehot=False)
+    train_set = {'X': x_train, 'y': y_train1}
 
     # validation set
     x_valid = np.array(x_valid)
     y_valid1 = np.array(y_valid)
-    valid_set = ArrayIterator(X=x_valid, y=y_valid1, make_onehot=False)
+    valid_set = {'X': x_valid, 'y': y_valid1}
 
-    mlp_model = MostCommonWordSense(args.rounding, args.callback_args, args.epochs)
+    input_dim = train_set['X'].shape[1]
+    mlp_model = MostCommonWordSense(args.epochs, args.batch_size, None)
     # build model
-    mlp_model.build()
+    mlp_model.build(input_dim)
     # train
-    mlp_model.fit(valid_set, train_set)
+    mlp_model.fit(train_set)
     # save model
-    mlp_model.save(args.model_prm)
+    mlp_model.save(args.model)
 
     # evaluation
     error_rate = mlp_model.eval(valid_set)
     logger.info('Mis-classification error on validation set= %0.1f', error_rate * 100)
 
-    reslts = mlp_model.get_outputs(valid_set)
+    reslts = mlp_model.get_outputs(valid_set['X'])
 
     return reslts
-
-# -------------------------------------------------------------------------------------#
 
 
 if __name__ == "__main__":
     # parse the command line arguments
-    parser = NeonArgparser()
+    parser = argparse.ArgumentParser()
     parser.add_argument('--data_set_file', default='data/data_set.pkl',
                         type=validate_existing_filepath,
                         help='train and validation sets path')
-    parser.add_argument('--model_prm', default='data/mcs_model.prm',
+    parser.add_argument('--model', default='data/mcs_model.h5',
                         type=validate_parent_exists,
                         help='trained model full path')
+    parser.add_argument('--epochs', default=100, type=int, help='number of epochs',
+                        action=check_size(0, 200))
+    parser.add_argument('--batch_size', default=50, type=int, help='batch_size',
+                        action=check_size(0, 256))
 
     args = parser.parse_args()
-
-    # generate backend, it is optional to change to backend='mkl'
-    be = gen_backend(backend='cpu', batch_size=10)
 
     # read training and validation data file
     with open(args.data_set_file, 'rb') as fp:

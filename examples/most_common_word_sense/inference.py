@@ -16,22 +16,19 @@
 """
 Most Common Word Sense Inference module.
 """
-
-
+import argparse
 import logging
 import gensim
 import numpy as np
-from neon.backends import gen_backend
-from neon.data import ArrayIterator
-from neon.util.argparser import NeonArgparser
 from nltk.corpus import wordnet as wn
 from termcolor import colored
-from examples.most_common_word_sense.prepare_data import read_inference_input_examples_file
-from examples.most_common_word_sense.feature_extraction import extract_features_envelope
-from examples.most_common_word_sense.feature_extraction import extract_synset_data
 
 from nlp_architect.models.most_common_word_sense import MostCommonWordSense
 from nlp_architect.utils.io import validate_existing_filepath, check_size
+
+from prepare_data import read_inference_input_examples_file
+from feature_extraction import extract_features_envelope
+from feature_extraction import extract_synset_data
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -52,21 +49,20 @@ def wsd_classify(x_test, y_test=None):
     x_test = np.array(x_test)
     if y_test is not None:
         y_test = np.array(y_test)
-    test_set = ArrayIterator(X=x_test, y=y_test, make_onehot=False)
+    test_set = {'X': x_test, 'y': y_test}
 
-    mlp_clf = MostCommonWordSense(args.rounding, args.callback_args, args.epochs)
+    mlp_clf = MostCommonWordSense(args.epochs, args.batch_size, None)
     # load existing model
-    mlp_clf.load(args.model_prm)
+    mlp_clf.load(args.model)
 
-    results = mlp_clf.get_outputs(test_set)
+    results = mlp_clf.get_outputs(test_set['X'])
 
     return results
 
 
 if __name__ == "__main__":
-
     # parse the command line arguments
-    parser = NeonArgparser()
+    parser = argparse.ArgumentParser()
 
     parser.add_argument('--max_num_of_senses_to_search', default=3, type=int,
                         action=check_size(0, 100),
@@ -75,18 +71,19 @@ if __name__ == "__main__":
                         type=validate_existing_filepath,
                         default='data/input_inference_examples.csv',
                         help='input_data_file')
-    parser.add_argument('--model_prm', default='data/mcs_model.prm',
+    parser.add_argument('--model', default='data/mcs_model.h5',
                         type=validate_existing_filepath,
                         help='path to the file where the trained model has been stored')
     parser.add_argument('--word_embedding_model_file',
                         type=validate_existing_filepath,
                         default='pretrained_models/GoogleNews-vectors-negative300.bin',
                         help='path to the word embedding\'s model')
+    parser.add_argument('--epochs', default=100, type=int, help='number of epochs',
+                        action=check_size(0, 200))
+    parser.add_argument('--batch_size', default=50, type=int, help='batch_size',
+                        action=check_size(0, 256))
 
     args = parser.parse_args()
-
-    # generate backend, it is optional to change to backend='mkl'
-    be = gen_backend(backend='cpu', batch_size=10)
 
     # 1. input data
     target_word_vec = read_inference_input_examples_file(args.input_inference_examples_file)
@@ -116,7 +113,7 @@ if __name__ == "__main__":
             feature_vec = np.concatenate((feature_vec, target_word_emb), 0)
             feature_vec = np.concatenate((feature_vec, definition_sentence_emb_cbow), 0)
             featVecDim = feature_vec.shape[0]
-#           X_featureMatrix dim should be (1,featVecDim) but neon classifier gets a minimum of
+            # X_featureMatrix dim should be (1,featVecDim) but neon classifier gets a minimum of
             # 10 samples not just 1
             X_featureMatrix = np.zeros((10, featVecDim))
             X_featureMatrix[0, :] = feature_vec
@@ -134,8 +131,8 @@ if __name__ == "__main__":
                 break
         example_cntr = example_cntr + 1
 
-#       find sense with max score
-        if sense_data_matrix:
+        # find sense with max score
+        if sense_data_matrix is not None:
             max_val = max(sense_data_matrix,
                           key=lambda sense_data_matrix_entry: sense_data_matrix_entry[0])
             max_val = max_val[0]

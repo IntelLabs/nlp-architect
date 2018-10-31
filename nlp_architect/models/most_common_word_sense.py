@@ -13,53 +13,43 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ****************************************************************************
-
-from neon.callbacks import Callbacks
-from neon.initializers import Gaussian
-from neon.layers import Affine, GeneralizedCost
-from neon.models import Model
-from neon.optimizers import GradientDescentMomentum
-from neon.transforms import SumSquared, Softmax, Rectlin
-from neon.transforms import Misclassification
+from tensorflow.keras.layers import Dense, Dropout
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.models import load_model
+from tensorflow.keras.optimizers import SGD
 
 
-class MostCommonWordSense:
-
-    def __init__(self, rounding, callback_args, epochs):
-        # setup weight initialization function
-        self.init = Gaussian(loc=0.0, scale=0.01)
-        # setup optimizer
-        self.optimizer = GradientDescentMomentum(learning_rate=0.1, momentum_coef=0.9,
-                                                 stochastic_round=rounding)
-        # setup cost function as CrossEntropy
-        self.cost = GeneralizedCost(costfunc=SumSquared())
+class MostCommonWordSense(object):
+    def __init__(self, epochs, batch_size, callback_args=None):
+        self.optimizer = SGD(lr=0.1, decay=1e-6, momentum=0.9, nesterov=True)
+        self.loss = 'mean_squared_error'
         self.epochs = epochs
+        self.batch_size = batch_size
         self.model = None
         self.callback_args = callback_args
 
-    def build(self):
+    def build(self, input_dim):
         # setup model layers
-        layers = [Affine(nout=100, init=self.init, bias=self.init, activation=Rectlin()),
-                  Affine(nout=2, init=self.init, bias=self.init, activation=Softmax())]
+        model = Sequential()
+        model.add(Dense(100, activation='relu', input_dim=input_dim))
+        model.add(Dropout(0.5))
+        model.add(Dense(2, activation='softmax'))
+        model.compile(loss=self.loss, optimizer=self.optimizer)
+        self.model = model
 
-        # initialize model object
-        self.model = Model(layers=layers)
-
-    def fit(self, valid_set, train_set):
-        # configure callbacks
-        callbacks = Callbacks(self.model, eval_set=valid_set, **self.callback_args)
-        self.model.fit(train_set, optimizer=self.optimizer, num_epochs=self.epochs,
-                       cost=self.cost, callbacks=callbacks)
+    def fit(self, train_set):
+        self.model.fit(train_set['X'], train_set['y'], epochs=self.epochs,
+                       batch_size=self.batch_size)
 
     def save(self, save_path):
-        self.model.save_params(save_path)
+        self.model.save(save_path)
 
     def load(self, model_path):
-        self.model = Model(model_path)
+        self.model = load_model(model_path)
 
     def eval(self, valid_set):
-        eval_rate = self.model.eval(valid_set, metric=Misclassification())
+        eval_rate = self.model.evaluate(valid_set['X'], valid_set['y'], batch_size=self.batch_size)
         return eval_rate
 
     def get_outputs(self, valid_set):
-        return self.model.get_outputs(valid_set)
+        return self.model.predict(valid_set)
