@@ -3,7 +3,7 @@ This directory contains an implementation of an end-to-end key-value memory netw
 The idea behind this method is to be able to answer wide range of questions based on a large set of textual information, as opposed to a restricted or sparse knowledge base.
 
 # Dataset
-The dataset used for training and evaluation is under the umbrella of the Facebook WikiMovies Dataset tasks (https://research.fb.com/downloads/babi/). Please download the dataset from that location. The terms and conditions of the data set license apply. Intel does not grant any rights to the data files. Please expand the folder into your desired data directory or `--data_dir`. The dataset can be downloaded from the command line if not found, and the preprocessing all happens at the beginning of training.
+The dataset used for training and evaluation is under the umbrella of the Facebook WikiMovies Dataset tasks (https://research.fb.com/downloads/babi/. License: https://github.com/facebook/bAbI-tasks/blob/master/LICENSE.md). Please download the dataset from that location. The terms and conditions of the data set license apply. Intel does not grant any rights to the data files. Please expand the folder into your desired data directory or `--data_dir`. The dataset can be downloaded from the command line if not found, and the preprocessing all happens at the beginning of training.
 
 # Training
 The base command to train is `python train_kvmemn2n.py`.

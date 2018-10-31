@@ -54,7 +54,7 @@ Files
 Datasets
 ========
 The dataset used for training and evaluation is under the umbrella of the Facebook bAbI dialog tasks
-(https://research.fb.com/downloads/babi/). The terms and conditions of the data set license apply. Intel does not grant any rights to the data files. The dataset is automatically downloaded if not found,
+(https://research.fb.com/downloads/babi/, License: https://github.com/facebook/bAbI-tasks/blob/master/LICENSE.md). The terms and conditions of the data set license apply. Intel does not grant any rights to the data files. The dataset is automatically downloaded if not found,
 and the preprocessing all happens at the beginning of training.
 
 There are six separate tasks, tasks 1 through 5 are from simulated conversations between a customer
