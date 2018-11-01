@@ -14,9 +14,9 @@
 # limitations under the License.
 # ******************************************************************************
 import pickle
+from os import path
 
 import numpy as np
-from os import path
 import spacy
 from spacy.tokens import Doc
 from spacy.tokens import Span

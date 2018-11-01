@@ -22,7 +22,7 @@ Chunker based noun phrase annotator
 
 The noun phrase annotator is a plug-in that can be used with Spacy_ pipeline structure.
 
-The annotator loads a trained :py:class:`SequentialChunker <nlp_architect.models.chunker.SequentialChunker>` model that is able to predict chunk labels, creates Spacy based Span objects and applies a sequence of filtering to produce a set of noun phrases, finally, it attaches it to the document object.
+The annotator loads a trained :py:class:`SequenceChunker <nlp_architect.models.chunker.SequenceChunker>` model that is able to predict chunk labels, creates Spacy based Span objects and applies a sequence of filtering to produce a set of noun phrases, finally, it attaches it to the document object.
 
 The annotator implementation can be found in :py:class:`NPAnnotator <nlp_architect.pipelines.spacy_np_annotator.NPAnnotator>`.
 

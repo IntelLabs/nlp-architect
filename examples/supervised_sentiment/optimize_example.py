@@ -16,11 +16,11 @@
 
 import pickle
 import argparse
-from keras.preprocessing.sequence import pad_sequences
-from keras.preprocessing.text import Tokenizer
-from keras.callbacks import EarlyStopping
 from sklearn.model_selection import train_test_split
 from hyperopt import fmin, tpe, hp, Trials
+from tensorflow.python.keras.callbacks import EarlyStopping
+from tensorflow.python.keras.preprocessing.sequence import pad_sequences
+from tensorflow.python.keras.preprocessing.text import Tokenizer
 
 from nlp_architect.data.amazon_reviews import Amazon_Reviews
 from nlp_architect.models.supervised_sentiment import simple_lstm

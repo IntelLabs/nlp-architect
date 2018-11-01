@@ -20,6 +20,7 @@ import argparse
 import pickle
 
 import numpy as np
+
 from nlp_architect.models.intent_extraction import MultiTaskIntentModel, Seq2SeqIntentModel
 from nlp_architect.utils.generic import pad_sentences
 from nlp_architect.utils.io import validate_existing_filepath

@@ -14,12 +14,12 @@
 # limitations under the License.
 # ******************************************************************************
 """ Service file used to import different features for server """
-from importlib import import_module
-import logging
+import gzip
 import io
 import json
+import logging
 import os.path
-import gzip
+from importlib import import_module
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)

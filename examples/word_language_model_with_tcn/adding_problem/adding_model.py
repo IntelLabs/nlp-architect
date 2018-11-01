@@ -14,7 +14,9 @@
 # limitations under the License.
 # ******************************************************************************
 import os
+
 import tensorflow as tf
+
 from nlp_architect.models.temporal_convolutional_network import TCN
 
 

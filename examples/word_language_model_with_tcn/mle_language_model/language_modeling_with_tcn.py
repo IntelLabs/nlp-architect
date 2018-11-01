@@ -28,12 +28,13 @@ python ./language_modeling_with_tcn.py --batch_size 16 --dropout 0.5 --epochs 10
 --results_dir ./ --dataset WikiText-103
 
 """
-import os
 import argparse
-from nlp_architect.data.ptb import PTBDataLoader, PTBDictionary
-from nlp_architect.utils.io import validate_existing_directory, validate_existing_filepath,\
-    validate_parent_exists, check_size
+import os
+
 from examples.word_language_model_with_tcn.mle_language_model.lm_model import TCNForLM
+from nlp_architect.data.ptb import PTBDataLoader, PTBDictionary
+from nlp_architect.utils.io import validate_existing_directory, validate_existing_filepath, \
+    validate_parent_exists, check_size
 
 
 def main(args):

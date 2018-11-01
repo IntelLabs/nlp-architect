@@ -56,8 +56,14 @@ timestamps {
                     // Build using Makefile
                     sh 'python3 --version'
                     sh 'python3 -V -V'
-                    sh 'make clean'
-                    sh 'make'
+                    sh 'python3 -m venv .nlp_architect_env'
+                    sh """
+                      . .nlp_architect_env/bin/activate
+                      pip3 install -U pip
+                      pip3 install -U h5py
+                      export NLP_ARCHITECT_BE=CPU
+                      pip3 install -e .
+                    """
                 }
 
                 // Wrap this stage in a try/catch to prevent Jenkins from fast failing
@@ -69,7 +75,10 @@ timestamps {
                         // Run tests using Makefile
                         // TODO: Leverage Jenkins J/XUnit plugins to scan test results
                         //      by exporting test results as a known J/XUnit style artifact
-                        sh 'make test'
+                        sh """
+                          . .nlp_architect_env/bin/activate
+                          nlp_architect test
+                        """
                     }
                 } catch (err) {
                     echo "BUILD FAILURE - Caught Exception: ${err}"
@@ -82,23 +91,14 @@ timestamps {
                 //      however with this call wrapped in the below, we ignore the exception but we flag
                 //      the build as a failure.
                 try {
-                    stage('Flake8') {
+                    stage('Style') {
                         // Run style checks using Makefile
                         // TODO: Leverage Jenkins Warnings plugins to scan for style errors
                         //      by exporting style check results as a known artifact
-                        sh 'make flake'
-                    }
-                } catch (err) {
-                    echo "BUILD FAILURE - Caught Exception: ${err}"
-                    // Inform Jenkins this run is now in a FAILURE state
-                    currentBuild.result = 'FAILURE'
-                }
-                try {
-                    stage('Pylint') {
-                        // Run style checks using Makefile
-                        // TODO: Leverage Jenkins Warnings plugins to scan for style errors
-                        //      by exporting style check results as a known artifact
-                        sh 'make pylint'
+                        sh """
+                          . .nlp_architect_env/bin/activate
+                          nlp_architect style
+                        """
                     }
                 } catch (err) {
                     echo "BUILD FAILURE - Caught Exception: ${err}"

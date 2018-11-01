@@ -14,14 +14,17 @@
 # limitations under the License.
 # ******************************************************************************
 """ REST Server to respond to different API requests """
-import os
-import hug
 import gzip
 import json
-from falcon import status_codes
-from server.service import format_response
-from server.service import Service, parse_headers
+import os
+
+import hug
 import nltk
+from falcon import status_codes
+
+from server.service import Service, parse_headers
+from server.service import format_response
+
 nltk.download("punkt")
 services = {}
 

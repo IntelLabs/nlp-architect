@@ -34,3 +34,20 @@ body, h1, h2, .rst-content .toctree-wrapper p.caption, h3, h4, h5, h6, legend {
 .wy-nav-top {
     background: #0071c5;
 }
+
+.installation_table label {
+    display: inline;
+}
+
+.wy-table-responsive table td, .wy-table-responsive table th {
+    white-space: inherit;
+}
+
+.wy-menu-vertical a {
+    padding: .1.618em 1.618em;
+}
+
+.wy-menu-vertical header, .wy-menu-vertical p.caption {
+    font-size: 95%;
+    text-decoration: underline;
+}

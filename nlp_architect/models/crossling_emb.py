@@ -14,12 +14,14 @@
 # limitations under the License.
 # ******************************************************************************
 from __future__ import print_function, division
-import numpy as np
-import tensorflow as tf
-import time
-import os
-import scipy
+
 import io
+import os
+import time
+
+import numpy as np
+import scipy
+import tensorflow as tf
 
 
 class Discriminator:

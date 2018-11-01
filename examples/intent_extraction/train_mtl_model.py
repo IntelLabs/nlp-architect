@@ -20,6 +20,8 @@ import argparse
 import pickle
 from os import path
 
+from tensorflow.python.keras.utils import to_categorical
+
 from nlp_architect.contrib.tensorflow.python.keras.callbacks import ConllCallback
 from nlp_architect.data.intent_datasets import SNIPS
 from nlp_architect.models.intent_extraction import MultiTaskIntentModel
@@ -28,7 +30,6 @@ from nlp_architect.utils.generic import one_hot
 from nlp_architect.utils.io import validate, validate_existing_directory, \
     validate_existing_filepath, validate_parent_exists
 from nlp_architect.utils.metrics import get_conll_scores
-from tensorflow.python.keras.utils import to_categorical
 
 
 def validate_input_args():

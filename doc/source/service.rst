@@ -26,10 +26,10 @@ The server includes a web front-end exposing the model's annotations.
 
 Currently we provide 4 services:
 
- 1. **bist** - :doc:`BIST <spacy_bist>` Dependency parsing
- 2. **ner** - :doc:`NER <ner_crf>` annotations
- 3. **intent_extraction** - intent extraction parsing
- 4. **machine comprehension** - machine comprehension q/a
+ 1. :doc:`BIST <spacy_bist>` Dependency parsing
+ 2. :doc:`NER <ner_crf>`
+ 3. :doc:`Intent Extraction <intent>`
+ 4. :doc:`Machine Reading Comprehension <reading_comprehension>`
 
 The server has two main components:
 
@@ -87,33 +87,31 @@ Request annotations using the :doc:`NER <ner_crf>` model:
 
 .. code:: json
 
-.. image :: assets/home.png
+.. image :: assets/service_cards.png
 
 - BIST parser - Core NLP models annotation structure
 
-The above can be used with `spacy_ner` and `bist` by replacing the ``model_name``.
+
 
 Visualization previews
 ----------------------
 
-- :doc:`BIST <spacy_bist>` parser - Core NLP models annotation structure:
+- :doc:`Named Entity Extraction <ner_crf>`:
+
+  .. image :: assets/ner_service.png
+
+- :doc:`Intent Extraction <intent>`:
+
+  .. image :: assets/intent_service.png
+
+- :doc:`Machine Reading Comprehension <reading_comprehension>`:
+
+  .. image :: assets/mrc_service.png
+
+- :doc:`BIST <spacy_bist>` parser:
 
   .. image :: assets/bist_service.png
 
-- NLP Architect :doc:`NER <ner_crf>`:
-
-  - NER:
-  .. image :: assets/ner_service.png
-
-  - Machine Comprehension:
-
-  .. image :: assets/machine_comprehension.png
-
-  - Intent Extraction:
-
-  .. image :: assets/intent_extraction.png
-
-You can also take a look at the tests (tests/nlp_architect_server) to see more examples.
 
 Annotation Structure Types - Server Responses
 =============================================

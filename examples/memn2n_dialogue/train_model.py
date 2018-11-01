@@ -33,15 +33,18 @@ Usage:
         - Task 4: Providing Extra Information
         - Task 5: Conducting Full Dialogs
 """
+from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
-from __future__ import absolute_import
+
 import os
+
 import numpy as np
-from tqdm import tqdm
 import tensorflow as tf
 from interactive_utils import interactive_loop
+from tqdm import tqdm
+
 from nlp_architect.data.babi_dialog import BABI_Dialog
 from nlp_architect.models.memn2n_dialogue import MemN2N_Dialog
 from nlp_architect.utils.io import validate_parent_exists, validate

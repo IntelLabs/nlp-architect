@@ -14,10 +14,11 @@
 # limitations under the License.
 # ******************************************************************************
 
-from keras.models import Sequential
-from keras.layers import Dense, Embedding, LSTM, Activation, Dropout, Flatten, Bidirectional
-from keras.layers.convolutional import Conv1D, MaxPooling1D
-from keras.optimizers import SGD
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, Embedding, LSTM, Activation, Dropout, Flatten, \
+    Bidirectional
+from tensorflow.keras.optimizers import SGD
+from tensorflow.python.keras.layers import Conv1D, MaxPooling1D
 
 
 def simple_lstm(max_fatures, dense_out, input_length, embed_dim=256, lstm_out=140,

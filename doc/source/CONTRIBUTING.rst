@@ -48,9 +48,8 @@ Contribution Process
 
   .. code-block:: bash
 
-      make test   # ensure all are OK
-      make style  # ensure there are no style related issues
-      make lint   # (optional).  We still have a fair bit to clean up currently!
+      nlp_architect test   # ensure all are OK
+      nlp_architect style  # ensure there are no style related issues
 
 5. If necessary you may want to update and/or rebuild the documentation.
    This all exists under doc/source and is in
@@ -58,9 +57,7 @@ Contribution Process
 
   .. code-block:: bash
 
-      make html  # builds docs locally, starts a webserver so you can view
-      or
-      make doc   # builds the doc and starts a local server directly
+      nlp_architect doc   # builds the doc and starts a local server directly
 
 6. Commit your changes and push your feature branch to your github fork.  Be
    sure to add a descriptive message and reference the github issue associated

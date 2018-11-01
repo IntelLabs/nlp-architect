@@ -41,24 +41,23 @@ to train the model weights, perform inference, and save/load the model.
     :toctree: generated/
     :nosignatures:
 
-    bist_parser.BISTModel
-    chunker.SequenceChunker
-    intent_extraction.Seq2SeqIntentModel
-    intent_extraction.MultiTaskIntentModel
-    kvmemn2n.KVMemN2N
-    matchlstm_ansptr.MatchLSTM_AnswerPointer
-    memn2n_dialogue.MemN2N_Dialog
-    most_common_word_sense.MostCommonWordSense
-    ner_crf.NERCRF
-    np2vec.NP2vec
-    np_semantic_segmentation.NpSemanticSegClassifier
-    temporal_convolutional_network.TCN
-    crossling_emb.WordTranslator
-    cross_doc_sieves
-    cross_doc_coref.cdc_config.EventConfig
-    cross_doc_coref.cdc_config.EntityConfig
-    cross_doc_coref.cdc_resource.CDCResources
-    gnmt_model.GNMTModel
+    nlp_architect.models.bist_parser.BISTModel
+    nlp_architect.models.chunker.SequenceChunker
+    nlp_architect.models.intent_extraction.Seq2SeqIntentModel
+    nlp_architect.models.intent_extraction.MultiTaskIntentModel
+    nlp_architect.models.matchlstm_ansptr.MatchLSTM_AnswerPointer
+    nlp_architect.models.memn2n_dialogue.MemN2N_Dialog
+    nlp_architect.models.most_common_word_sense.MostCommonWordSense
+    nlp_architect.models.ner_crf.NERCRF
+    nlp_architect.models.np2vec.NP2vec
+    nlp_architect.models.np_semantic_segmentation.NpSemanticSegClassifier
+    nlp_architect.models.temporal_convolutional_network.TCN
+    nlp_architect.models.crossling_emb.WordTranslator
+    nlp_architect.models.cross_doc_sieves
+    nlp_architect.models.cross_doc_coref.cdc_config.EventConfig
+    nlp_architect.models.cross_doc_coref.cdc_config.EntityConfig
+    nlp_architect.models.cross_doc_coref.cdc_resource.CDCResources
+    nlp_architect.models.gnmt_model.GNMTModel
 
 
 ``nlp_architect.data``
@@ -71,40 +70,39 @@ Dataset implementations and data loaders (check deep learning framework compatib
     :toctree: generated/
     :nosignatures:
 
-    amazon_reviews.Amazon_Reviews
-    babi_dialog.BABI_Dialog
-    conll.ConllEntry
-    intent_datasets.IntentDataset
-    intent_datasets.TabularIntentDataset
-    intent_datasets.SNIPS
-    ptb.PTBDataLoader
-    sequential_tagging.CONLL2000
-    sequential_tagging.SequentialTaggingDataset
-    wikimovies.WIKIMOVIES
-    fasttext_emb.FastTextEmb
-    cdc_resources.relations.computed_relation_extraction.ComputedRelationExtraction
-    cdc_resources.relations.referent_dict_relation_extraction.ReferentDictRelationExtraction
-    cdc_resources.relations.verbocean_relation_extraction.VerboceanRelationExtraction
-    cdc_resources.relations.wikipedia_relation_extraction.WikipediaRelationExtraction
-    cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref
-    cdc_resources.relations.word_embedding_relation_extraction.WordEmbeddingRelationExtraction
-    cdc_resources.relations.wordnet_relation_extraction.WordnetRelationExtraction
-    cdc_resources.relations.relation_types_enums.RelationType
+    nlp_architect.data.amazon_reviews.Amazon_Reviews
+    nlp_architect.data.babi_dialog.BABI_Dialog
+    nlp_architect.data.conll.ConllEntry
+    nlp_architect.data.intent_datasets.IntentDataset
+    nlp_architect.data.intent_datasets.TabularIntentDataset
+    nlp_architect.data.intent_datasets.SNIPS
+    nlp_architect.data.ptb.PTBDataLoader
+    nlp_architect.data.sequential_tagging.CONLL2000
+    nlp_architect.data.sequential_tagging.SequentialTaggingDataset
+    nlp_architect.data.fasttext_emb.FastTextEmb
+    nlp_architect.data.cdc_resources.relations.computed_relation_extraction.ComputedRelationExtraction
+    nlp_architect.data.cdc_resources.relations.referent_dict_relation_extraction.ReferentDictRelationExtraction
+    nlp_architect.data.cdc_resources.relations.verbocean_relation_extraction.VerboceanRelationExtraction
+    nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction.WikipediaRelationExtraction
+    nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref
+    nlp_architect.data.cdc_resources.relations.word_embedding_relation_extraction.WordEmbeddingRelationExtraction
+    nlp_architect.data.cdc_resources.relations.wordnet_relation_extraction.WordnetRelationExtraction
+    nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType
 
 
 ``nlp_architect.pipelines``
 ---------------------------
 .. currentmodule:: nlp_architect.pipelines
 
-NLP pipelines modules using models implemented from ``nlp_architect.models``.
+NLP pipelines modules using models implemented from ``nlp_architect.models``
 
 .. autosummary::
     :toctree: generated/
     :nosignatures:
 
-    spacy_bist.SpacyBISTParser
-    spacy_np_annotator.NPAnnotator
-    spacy_np_annotator.SpacyNPAnnotator
+    nlp_architect.pipelines.spacy_bist.SpacyBISTParser
+    nlp_architect.pipelines.spacy_np_annotator.NPAnnotator
+    nlp_architect.pipelines.spacy_np_annotator.SpacyNPAnnotator
 
 
 ``nlp_architect.contrib``
@@ -118,11 +116,10 @@ These are currently stored in the various models or related to which DL framewor
     :toctree: generated/
     :nosignatures:
 
-    ngraph.modified_lookup_table.ModifiedLookupTable
-    tensorflow.python.keras.layers.crf.CRF
-    tensorflow.python.keras.utils.layer_utils.save_model
-    tensorflow.python.keras.utils.layer_utils.load_model
-    tensorflow.python.keras.callbacks.ConllCallback
+    nlp_architect.contrib.tensorflow.python.keras.layers.crf.CRF
+    nlp_architect.contrib.tensorflow.python.keras.utils.layer_utils.save_model
+    nlp_architect.contrib.tensorflow.python.keras.utils.layer_utils.load_model
+    nlp_architect.contrib.tensorflow.python.keras.callbacks.ConllCallback
 
 
 ``nlp_architect.common``
@@ -135,5 +132,5 @@ Common types of data structures used by NLP models
     :toctree: generated/
     :nosignatures:
 
-    cdc.mention_data.MentionDataLight
-    cdc.mention_data.MentionData
+    nlp_architect.common.cdc.mention_data.MentionDataLight
+    nlp_architect.common.cdc.mention_data.MentionData

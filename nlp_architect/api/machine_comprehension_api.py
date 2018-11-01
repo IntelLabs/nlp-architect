@@ -52,29 +52,25 @@ class MachineComprehensionApi(AbstractApi):
         self.dev = None
         self.sess = None
         self.prompt = prompt
+        self.params_dict = {'batch_size': 1,
+                            'hidden_size': 150,
+                            'max_para': 300,
+                            'epoch_no': 15,
+                            'inference_only': True}
+        self.file_name_dict = {'train_para_ids': 'train.ids.context',
+                               'train_ques_ids': 'train.ids.question',
+                               'train_answer': 'train.span',
+                               'val_para_ids': 'dev.ids.context',
+                               'val_ques_ids': 'dev.ids.question',
+                               'val_ans': 'dev.span',
+                               'vocab_file': 'vocab.dat',
+                               'embedding': 'glove.trimmed.300.npz'}
 
-    def load_model(self):
-        params_dict = {'batch_size': 1,
-                       'hidden_size': 150,
-                       'max_para': 300,
-                       'epoch_no': 15,
-                       'inference_only': True}
-        select_device = 'GPU'
-        restore_model = True
-        # Create dictionary of filenames
-        file_name_dict = {'train_para_ids': 'train.ids.context',
-                          'train_ques_ids': 'train.ids.question',
-                          'train_answer': 'train.span',
-                          'val_para_ids': 'dev.ids.context',
-                          'val_ques_ids': 'dev.ids.question',
-                          'val_ans': 'dev.span',
-                          'vocab_file': 'vocab.dat',
-                          'embedding': 'glove.trimmed.300.npz'}
-
+    def download_model(self):
         # Validate contents of data_path folder:
         data_path = self.data_path
         download = False
-        for file_name in file_name_dict.values():
+        for file_name in self.file_name_dict.values():
             if not os.path.exists(os.path.join(data_path, file_name)):
                 # prompt
                 download = True
@@ -102,15 +98,23 @@ class MachineComprehensionApi(AbstractApi):
             model_zip_ref = zipfile.ZipFile(model_zipfile, 'r')
             model_zip_ref.extractall(self.model_dir)
             model_zip_ref.close()
+
+    def load_model(self):
+        select_device = 'GPU'
+        restore_model = True
+        # Create dictionary of filenames
+        self.download_model()
+
+        data_path = self.data_path
         # Paths for preprcessed files
         path_gen = data_path  # data is actually in mrc_data/data not, mrc_data
-        train_para_ids = os.path.join(path_gen, file_name_dict['train_para_ids'])
-        train_ques_ids = os.path.join(path_gen, file_name_dict['train_ques_ids'])
-        answer_file = os.path.join(path_gen, file_name_dict['train_answer'])
-        val_paras_ids = os.path.join(path_gen, file_name_dict['val_para_ids'])
-        val_ques_ids = os.path.join(path_gen, file_name_dict['val_ques_ids'])
-        val_ans_file = os.path.join(path_gen, file_name_dict['val_ans'])
-        vocab_file = os.path.join(path_gen, file_name_dict['vocab_file'])
+        train_para_ids = os.path.join(path_gen, self.file_name_dict['train_para_ids'])
+        train_ques_ids = os.path.join(path_gen, self.file_name_dict['train_ques_ids'])
+        answer_file = os.path.join(path_gen, self.file_name_dict['train_answer'])
+        val_paras_ids = os.path.join(path_gen, self.file_name_dict['val_para_ids'])
+        val_ques_ids = os.path.join(path_gen, self.file_name_dict['val_ques_ids'])
+        val_ans_file = os.path.join(path_gen, self.file_name_dict['val_ans'])
+        vocab_file = os.path.join(path_gen, self.file_name_dict['vocab_file'])
 
         model_dir = self.model_path
         # Create model dir if it doesn't exist
@@ -131,27 +135,27 @@ class MachineComprehensionApi(AbstractApi):
             self.vocab_dict[i] = vocab_list[i].strip()
             self.vocab_rev[vocab_list[i].strip()] = i
 
-            params_dict['train_set_size'] = len(data_train)
+            self.params_dict['train_set_size'] = len(data_train)
 
         # Combine train and dev data
         data_total = data_train + data_dev
 
         # obtain maximum length of question
         _, max_question = max_values_squad(data_total)
-        params_dict['max_question'] = max_question
+        self.params_dict['max_question'] = max_question
 
         # Load embeddings for vocab
         print('Loading Embeddings')
-        embeddingz = np.load(os.path.join(path_gen, file_name_dict['embedding']))
+        embeddingz = np.load(os.path.join(path_gen, self.file_name_dict['embedding']))
         embeddings = embeddingz['glove']
 
         # Create train and dev sets
         print("Creating training and development sets")
-        self.dev = get_data_array_squad(params_dict, data_dev, set_val='val')
+        self.dev = get_data_array_squad(self.params_dict, data_dev, set_val='val')
 
         # Define Reading Comprehension model
         with tf.device('/device:' + select_device + ':0'):
-            self.model = MatchLSTM_AnswerPointer(params_dict, embeddings)
+            self.model = MatchLSTM_AnswerPointer(self.params_dict, embeddings)
 
         # Define Configs for training
         run_config = tf.ConfigProto(allow_soft_placement=True, log_device_placement=False)

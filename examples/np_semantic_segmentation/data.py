@@ -22,10 +22,10 @@ import math
 import os
 from multiprocessing import Pool
 
+import feature_extraction as fe
 import numpy
 from tqdm import tqdm
 
-import examples.np_semantic_segmentation.feature_extraction as fe
 from nlp_architect.utils.io import validate_existing_filepath, validate_parent_exists, \
     validate_proxy_path
 

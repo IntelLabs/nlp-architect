@@ -153,16 +153,17 @@ class SpacyInstance:
         model (str, optional): spacy model name (default: english small model)
         disable (list of string, optional): pipeline annotators to disable
             (default: [])
+        display_prompt (bool, optional): flag to display/skip license prompt
     """
 
-    def __init__(self, model='en', disable=None):
+    def __init__(self, model='en', disable=None, display_prompt=True):
         if disable is None:
             disable = []
         try:
             self._parser = spacy.load(model, disable=disable)
         except OSError:
             url = 'https://spacy.io/models'
-            if license_prompt('Spacy {} model'.format(model), url) is False:
+            if display_prompt and license_prompt('Spacy {} model'.format(model), url) is False:
                 sys.exit(0)
             spacy_download(model)
             self._parser = spacy.load(model, disable=disable)

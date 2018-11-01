@@ -30,17 +30,18 @@ A similar pipeline could be utilized to train models on a dataset, predict on a 
 and aquire a list of final predictions
 """
 
-import numpy as np
 import argparse
-from keras.preprocessing.sequence import pad_sequences
-from keras.preprocessing.text import Tokenizer
-from sklearn.model_selection import train_test_split
+
+import numpy as np
 from sklearn.metrics import classification_report
+from sklearn.model_selection import train_test_split
+from tensorflow.python.keras.preprocessing.sequence import pad_sequences
+from tensorflow.python.keras.preprocessing.text import Tokenizer
 
 from nlp_architect.data.amazon_reviews import Amazon_Reviews
-from nlp_architect.utils.generic import to_one_hot
 from nlp_architect.models.supervised_sentiment import simple_lstm, one_hot_cnn
 from nlp_architect.utils.ensembler import simple_ensembler
+from nlp_architect.utils.generic import to_one_hot
 from nlp_architect.utils.io import validate_existing_filepath, check_size
 
 max_fatures = 2000

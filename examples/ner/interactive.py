@@ -20,6 +20,7 @@ import argparse
 import pickle
 
 import numpy as np
+
 from nlp_architect.models.ner_crf import NERCRF
 from nlp_architect.utils.generic import pad_sentences
 from nlp_architect.utils.io import validate_existing_filepath

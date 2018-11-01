@@ -14,13 +14,17 @@
 # limitations under the License.
 # ******************************************************************************
 from __future__ import print_function, division
-import tensorflow as tf
+
 import argparse
+import copy
+
+import evaluate
+import tensorflow as tf
+
 from nlp_architect.data.fasttext_emb import FastTextEmb
 from nlp_architect.models.crossling_emb import WordTranslator
-import copy
-import evaluate
 from nlp_architect.utils.io import validate_existing_directory, validate_parent_exists, check_size
+
 if __name__ == "__main__":
 
     print("\t\t" + 40 * "=")

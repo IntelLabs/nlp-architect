@@ -19,7 +19,6 @@ import pickle
 from os import path
 
 import numpy as np
-
 from tensorflow import keras
 
 from nlp_architect.contrib.tensorflow.python.keras.callbacks import ConllCallback

@@ -16,11 +16,12 @@
 
 import nltk
 import nltk.corpus
-from nltk.corpus import wordnet as wn
-from nltk.stem.snowball import SnowballStemmer
 import numpy as np
 import requests
 from gensim.models.keyedvectors import KeyedVectors
+from nltk.corpus import wordnet as wn
+from nltk.stem.snowball import SnowballStemmer
+
 from nlp_architect.utils.generic import license_prompt
 
 stemmer = SnowballStemmer("english")

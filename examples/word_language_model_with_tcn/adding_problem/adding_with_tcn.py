@@ -28,11 +28,12 @@ python ./adding_with_tcn.py --batch_size 32 --dropout 0.0 --epochs 20 --ksize 7 
 python ./adding_with_tcn.py --batch_size 32 --dropout 0.0 --epochs 20 --ksize 8 --levels 8
 --seq_len 600 --log_interval 100 --nhid 24 --lr 0.002 --results_dir ./
 """
-import os
 import argparse
+import os
+
+from examples.word_language_model_with_tcn.adding_problem.adding_model import TCNForAdding
 from examples.word_language_model_with_tcn.toy_data.adding import Adding
 from nlp_architect.utils.io import validate_parent_exists, check_size
-from examples.word_language_model_with_tcn.adding_problem.adding_model import TCNForAdding
 
 
 def main(args):

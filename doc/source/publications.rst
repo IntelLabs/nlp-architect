@@ -29,6 +29,7 @@ Conference Proceedings
 ======================
 
 - **Term Set Expansion based on Multi-Context Term Embeddings: an End-to-end Workflow**, *Mamou, Jonathan; Pereg, Oren; Wasserblat, Moshe; Dagan, Ido; Goldberg, Yoav; Eirew, Alon; Green, Yael; Guskin, Shira; Izsak, Peter; Korat, Daniel*, COLING 2018 System Demonstration paper. (`paper <https://arxiv.org/abs/1807.10104>`_, `video <https://drive.google.com/open?id=1e545bB87Autsch36DjnJHmq3HWfSd1Rv>`_, models: [:doc:`solution <term_set_expansion>`, :doc:`NP2vec <np2vec>`, :doc:`Chunker <chunker>`])
+- **Term Set Expansion based NLP Architect by Intel AI Lab**, *Jonathan Mamou, Oren Pereg, Moshe Wasserblat, Alon Eirew, Yael Green, Shira Guskin, Peter Izsak, Daniel Korat*, EMNLP 2018 System Demonstration. (`paper <https://arxiv.org/abs/1808.08953>`_)
 
 Tutorials
 =========

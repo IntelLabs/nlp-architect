@@ -14,9 +14,11 @@
 # limitations under the License.
 # ******************************************************************************
 import os
-import tensorflow as tf
+
 import numpy as np
+import tensorflow as tf
 from tqdm import tqdm
+
 from nlp_architect.models.temporal_convolutional_network import TCN, CommonLayers
 
 
