@@ -54,6 +54,10 @@ to train the model weights, perform inference, and save/load the model.
     np_semantic_segmentation.NpSemanticSegClassifier
     temporal_convolutional_network.TCN
     crossling_emb.WordTranslator
+    cross_doc_sieves
+    cross_doc_coref.cdc_config.EventConfig
+    cross_doc_coref.cdc_config.EntityConfig
+    cross_doc_coref.cdc_resource.CDCResources
     gnmt_model.GNMTModel
 
 
@@ -78,6 +82,14 @@ Dataset implementations and data loaders (check deep learning framework compatib
     sequential_tagging.SequentialTaggingDataset
     wikimovies.WIKIMOVIES
     fasttext_emb.FastTextEmb
+    cdc_resources.relations.computed_relation_extraction.ComputedRelationExtraction
+    cdc_resources.relations.referent_dict_relation_extraction.ReferentDictRelationExtraction
+    cdc_resources.relations.verbocean_relation_extraction.VerboceanRelationExtraction
+    cdc_resources.relations.wikipedia_relation_extraction.WikipediaRelationExtraction
+    cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref
+    cdc_resources.relations.word_embedding_relation_extraction.WordEmbeddingRelationExtraction
+    cdc_resources.relations.wordnet_relation_extraction.WordnetRelationExtraction
+    cdc_resources.relations.relation_types_enums.RelationType
 
 
 ``nlp_architect.pipelines``
@@ -111,3 +123,17 @@ These are currently stored in the various models or related to which DL framewor
     tensorflow.python.keras.utils.layer_utils.save_model
     tensorflow.python.keras.utils.layer_utils.load_model
     tensorflow.python.keras.callbacks.ConllCallback
+
+
+``nlp_architect.common``
+------------------------
+.. currentmodule:: nlp_architect.common
+
+Common types of data structures used by NLP models
+
+.. autosummary::
+    :toctree: generated/
+    :nosignatures:
+
+    cdc.mention_data.MentionDataLight
+    cdc.mention_data.MentionData

@@ -228,6 +228,14 @@ def load_json_file(file_path):
             return json.loads(json_string)
 
 
+def json_dumper(obj):
+    """for objects that have members that cant be serialized and implement toJson() method"""
+    try:
+        return obj.toJson()
+    except Exception:
+        return obj.__dict__
+
+
 def load_files_from_path(dir_path, extension='txt'):
     """load all files from given directory (with given extension)"""
     files = [os.path.join(dir_path, f) for f in os.listdir(dir_path)

@@ -28,5 +28,7 @@ nervananeon==2.6.0
 dynet==2.0.2
 -e git+https://github.com/NervanaSystems/ngraph-python.git@a349109f849afbf69b2b544ea4c36b0e7dda3a29#egg=ngraph
 tensorflow==1.10.0
+pywikibot
+num2words
 fastText@git+https://github.com/facebookresearch/fastText.git#egg=fastText
 newspaper3k
