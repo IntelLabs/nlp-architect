@@ -54,6 +54,7 @@ to train the model weights, perform inference, and save/load the model.
     np_semantic_segmentation.NpSemanticSegClassifier
     temporal_convolutional_network.TCN
     crossling_emb.WordTranslator
+    gnmt_model.GNMTModel
 
 
 ``nlp_architect.data``

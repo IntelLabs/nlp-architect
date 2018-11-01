@@ -203,6 +203,13 @@ def validate_proxy_path(arg):
     return arg
 
 
+def validate_boolean(arg):
+    """Validates an input argument of type boolean"""
+    if arg.lower() not in ['true', 'false']:
+        raise argparse.ArgumentTypeError('expected true | false argument')
+    return arg.lower() == "true"
+
+
 def load_json_file(file_path):
     """load a file into a json object"""
     try:

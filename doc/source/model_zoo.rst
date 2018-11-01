@@ -17,4 +17,16 @@
 NLP Architect Model Zoo
 #######################
 
-We're working on polishing our code and will publish several pre-trained models based on NLP Architect.
+`Sparse GNMT Models`_
+=====================
+- `Sparse GNMT`_ - 90% sparse GNMT translating German to English trained on Europarl-v7 [1]_ , Common Crawl and News Commentary 11 datasets
+- `2x2 Block Sparse GNMT`_ - 90% block sparse GNMT with 2x2 block size, translating German to English trained on Europarl-v7 [1]_ , Common Crawl and News Commentary 11 datasets
+
+References
+==========
+.. [1] Europarl-v7: A Parallel Corpus for Statistical Machine Translation, Philipp Koehn, MT Summit 2005
+
+.. Links
+.. _`Sparse GNMT Models`: http://nlp_architect.nervanasys.com/sparse_gnmt.html
+.. _`Sparse GNMT`: http://nervana-modelzoo.s3.amazonaws.com/NLP/gnmt/gnmt_sparse.zip
+.. _`2x2 Block Sparse GNMT`: http://nervana-modelzoo.s3.amazonaws.com/NLP/gnmt/gnmt_blocksparse2x2.zip

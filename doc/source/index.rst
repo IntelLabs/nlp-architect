@@ -124,6 +124,7 @@ on this project, please see the :doc:`developer guide <developer_guide>`.
    supervised_sentiment.rst
    TCN Language Model <tcn.rst>
    Unsupervised Crosslingual Embeddings <crosslingual_emb.rst>
+   Sparse Neural Machine Translation <sparse_gnmt.rst>
 
 .. toctree::
    :hidden:
