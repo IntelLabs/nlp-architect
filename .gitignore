@@ -20,11 +20,11 @@ generated
 *.html
 !solutions/set_expansion/ui/templates/*.html
 .vscode
-!server/web_service/static/*.html
 !tests/fixtures/data/server/*.gz
+!server/angular-ui/src/
+!server/angular-ui/dist/**/*.html
 *.log
 .idea/
-dist
 .nlp_architect_env/
 src/
 pylint.html

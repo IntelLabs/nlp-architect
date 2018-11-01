@@ -18,7 +18,8 @@ from __future__ import print_function
 from random import shuffle
 import os
 import numpy as np
-from utils import create_squad_training, max_values_squad, get_data_array_squad, create_data_dict
+from nlp_architect.utils.mrc_utils import (
+    create_squad_training, max_values_squad, get_data_array_squad, create_data_dict)
 from nlp_architect.models.matchlstm_ansptr import MatchLSTM_AnswerPointer
 import argparse
 import tensorflow as tf

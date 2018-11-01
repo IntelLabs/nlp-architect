@@ -134,6 +134,9 @@ class Service(object):
         self.is_spacy = False
         self.service = self.load_service(service_name)
 
+    def get_paragraphs(self):
+        return self.service.get_paragraphs()
+
     def get_service_inference(self, docs, headers):
         """
         get parser response from service API

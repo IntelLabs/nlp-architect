@@ -35,7 +35,7 @@ class NerApi(AbstractApi):
     pretrained_model = path.join(dir, 'ner-pretrained', 'model.h5')
     pretrained_model_info = path.join(dir, 'ner-pretrained', 'model_info.dat')
 
-    def __init__(self, ner_model=None, prompt=True):
+    def __init__(self, prompt=True):
         self.model = None
         self.model_info = None
         self.model_path = NerApi.pretrained_model
@@ -69,7 +69,7 @@ class NerApi(AbstractApi):
                   'and conditions provided by the license')
             makedirs(dir_path, exist_ok=True)
             if prompt is True:
-                agreed = self._prompt()
+                agreed = NerApi._prompt()
                 if agreed is False:
                     sys.exit(0)
             download_unlicensed_file('http://nervana-modelzoo.s3.amazonaws.com/NLP/ner/',

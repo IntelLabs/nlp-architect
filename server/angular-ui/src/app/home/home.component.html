@@ -1,0 +1,24 @@
+<div class="container">
+  <mat-card>
+      <mat-card-content>
+        <h1 class="text-center center"> NLP Architect Demos </h1>
+        <p class="text-center">NLP Architect is Python library for exploring the state-of-the-art deep learning topologies
+          and techniques for natural language processing and natural language understanding.</p>
+      </mat-card-content>
+  </mat-card>
+</div>
+<div class="container">
+<mat-divider></mat-divider>
+  <div fxLayout fxLayout.lt-md="column" fxLayoutGap="10px" style="margin-top: 10px">
+    <a *ngFor="let model of models" fxFlex="25%" [routerLink]="model.url" class="card-link">
+      <mat-card [style.minHeight]="'100px'">
+        <mat-card-header fxLayout fxLayoutAlign="center">
+          <mat-card-title>{{model.name}}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>{{model.description}}</p>
+        </mat-card-content>
+      </mat-card>
+    </a>
+  </div>
+</div>

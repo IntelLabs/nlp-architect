@@ -171,8 +171,8 @@ class MatchLSTM_AnswerPointer(object):
         # Apply dropout
         self.stacked_lists = tf.concat([tf.nn.dropout(self.stacked_lists_forward,
                                                       tf.maximum(self.dropout, 0.8)),
-                                       tf.nn.dropout(self.stacked_lists_reverse,
-                                                     tf.maximum(self.dropout, 0.8))], 1)
+                                        tf.nn.dropout(self.stacked_lists_reverse,
+                                                      tf.maximum(self.dropout, 0.8))], 1)
 
         # Answer pointer pass
         self.logits = self.answer_pointer_pass()
@@ -237,7 +237,7 @@ class MatchLSTM_AnswerPointer(object):
             z1 = encoded_paraslice
 
             z2 = tf.squeeze(tf.matmul(tf.transpose(self.encoded_question, [0, 2, 1]),
-                            tf.transpose(self.attn, [0, 2, 1])), axis=2)
+                                      tf.transpose(self.attn, [0, 2, 1])), axis=2)
 
             z_i_stacked = tf.concat([z1, z2], 1)
             if i == 0:
@@ -484,7 +484,8 @@ class MatchLSTM_AnswerPointer(object):
                 em_score / nbatches)
 
     def inference_mode(self, session, valid, vocab_tuple, num_examples, dropout=1.0,
-                       dynamic_question_mode=False):
+                       dynamic_question_mode=False, dynamic_usr_question="",
+                       dynamic_question_index=0):
         """
           Function to run inference_mode for reading comprehension
 
@@ -502,26 +503,26 @@ class MatchLSTM_AnswerPointer(object):
         vocab_reverse = vocab_tuple[1]
 
         for idx in range(num_examples):
-            # Print Paragraph
-            print("\n")
-            print("Paragraph Number:", idx)
-            test_paragraph = [vocab_forward[ele] for ele in valid[idx][0] if ele != 0]
-            para_string = " ".join(map(str, test_paragraph))
-            print(re.sub(r'\s([?.!,"](?:\s|$))', r'\1', para_string))
-
-            # Print corresponding Question
-            test_question = [vocab_forward[ele] for ele in valid[idx][1] if ele != 0]
-            ques_string = " ".join(map(str, test_question))
-            print("Question:", re.sub(r'\s([?.!"",])', r'\1', ques_string))
-
-            # Generate question_ids and mask from the text
             if dynamic_question_mode is True:
-                required_params = self.get_dynamic_feed_params(ques_string, vocab_reverse)
+                idx = dynamic_question_index
+                required_params = self.get_dynamic_feed_params(dynamic_usr_question, vocab_reverse)
                 question_ids = required_params[0]
                 question_length = required_params[1]
                 ques_mask = required_params[2]
-
+                test_paragraph = [vocab_forward[ele] for ele in valid[idx][0] if ele != 0]
+                para_string = " ".join(map(str, test_paragraph))
             else:
+                # Print Paragraph
+                print("\n")
+                print("Paragraph Number:", idx)
+                test_paragraph = [vocab_forward[ele] for ele in valid[idx][0] if ele != 0]
+                para_string = " ".join(map(str, test_paragraph))
+                print(re.sub(r'\s([?.!,"](?:\s|$))', r'\1', para_string))
+
+                # Print corresponding Question
+                test_question = [vocab_forward[ele] for ele in valid[idx][1] if ele != 0]
+                ques_string = " ".join(map(str, test_question))
+                print("Question:", re.sub(r'\s([?.!"",])', r'\1', ques_string))
                 question_ids = valid[idx][1]
                 question_length = valid[idx][3]
                 ques_mask = valid[idx][6]
@@ -545,4 +546,7 @@ class MatchLSTM_AnswerPointer(object):
             # Print answer
             req_ans = [vocab_forward[ele] for ele in answer_ind if ele != 0]
             ans_string = " ".join(map(str, req_ans))
-            print("Answer:", re.sub(r'\s([?.!",])', r'\1', ans_string))
+            answer = re.sub(r'\s([?.!",])', r'\1', ans_string)
+            print("Answer:", answer)
+            if dynamic_question_mode is True:
+                return {"answer": answer}

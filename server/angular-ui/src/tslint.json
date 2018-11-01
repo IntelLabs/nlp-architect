@@ -1,0 +1,17 @@
+{
+    "extends": "../tslint.json",
+    "rules": {
+        "directive-selector": [
+            true,
+            "attribute",
+            "nlp-architect",
+            "camelCase"
+        ],
+        "component-selector": [
+            true,
+            "element",
+            "nlp-architect",
+            "kebab-case"
+        ]
+    }
+}

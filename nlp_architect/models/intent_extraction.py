@@ -224,7 +224,7 @@ class MultiTaskIntentModel(IntentExtractionModel):
 
         # feed BiLSTM vectors into CRF
         with tf.device('/cpu:0'):
-            crf = CRF(self.num_labels)
+            crf = CRF(self.num_labels, name='intent_slot_crf')
             labels = crf(bilstm_out)
 
         # compile the model
@@ -233,9 +233,9 @@ class MultiTaskIntentModel(IntentExtractionModel):
 
         # define losses and metrics
         loss_f = {'intent_classifier_output': 'categorical_crossentropy',
-                  'crf': crf.loss}
+                  'intent_slot_crf': crf.loss}
         metrics = {'intent_classifier_output': 'categorical_accuracy',
-                   'crf': crf.viterbi_accuracy}
+                   'intent_slot_crf': crf.viterbi_accuracy}
 
         model.compile(loss=loss_f,
                       optimizer=tf.train.AdamOptimizer(),

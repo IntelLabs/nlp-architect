@@ -24,11 +24,12 @@ NLP Architect server is a `hug <http://www.hug.rest/>`_ REST server that is
 able to run predictions on different models configured using NLP Architect.
 The server includes a web front-end exposing the model's annotations.
 
-Currently we provide 3 services:
+Currently we provide 4 services:
 
  1. **bist** - :doc:`BIST <spacy_bist>` Dependency parsing
  2. **ner** - :doc:`NER <ner_crf>` annotations
- 3. **spacy_ner** - spaCy's NER annotations
+ 3. **intent_extraction** - intent extraction parsing
+ 4. **machine comprehension** - machine comprehension q/a
 
 The server has two main components:
 
@@ -61,7 +62,7 @@ The request content has the following format:
 .. code:: json
 
     {
-        "model_name": "ner" | "spacy_ner" | "bist",
+        "model_name": "ner" | "bist" | "intent_extraction" | "machine_comprehension",
         "docs":
         [
             {"id": 1,
@@ -77,7 +78,7 @@ In the example above, ``model_name`` is the desirted model to run the documents 
 
 Responses
 ---------
-The server supports 2 types of Responses (see `Annotation Structure Types - Server Responses`_ bellow).
+The server supports 3 types of Responses (see `Annotation Structure Types - Server Responses`_ bellow).
 
 Example
 -------
@@ -86,16 +87,9 @@ Request annotations using the :doc:`NER <ner_crf>` model:
 
 .. code:: json
 
-    curl -i \
-      -H "Response-Format:json" \
-      -H "Content-Type:application/json" \
-      -d '{"model_name": "ner", \
-           "docs": [ \
-             {"id": 1, \
-              "doc": "Intel Corporation is an American multinational \
-                      corporation and technology company headquartered in \
-                      Santa Clara, California, in the Silicon Valley."}]}' \
-      http://<server_ip>:8080/inference
+.. image :: assets/home.png
+
+- BIST parser - Core NLP models annotation structure
 
 The above can be used with `spacy_ner` and `bist` by replacing the ``model_name``.
 
@@ -108,11 +102,16 @@ Visualization previews
 
 - NLP Architect :doc:`NER <ner_crf>`:
 
+  - NER:
   .. image :: assets/ner_service.png
 
-  - spaCy NER:
+  - Machine Comprehension:
 
-  .. image :: assets/spacy_ner_service.png
+  .. image :: assets/machine_comprehension.png
+
+  - Intent Extraction:
+
+  .. image :: assets/intent_extraction.png
 
 You can also take a look at the tests (tests/nlp_architect_server) to see more examples.
 
@@ -167,6 +166,16 @@ High-level models annotation structure
                }
    }
 
+Machine Comprehension structure
+-------------------------------
+Only for the MachineComprehensionApi response.
+.. code:: json
+
+ {
+  "id": "<id>",
+  "answer": "<answer_text>"
+ }
+
 Adding new services
 ===================
 Adding a new service to the server
@@ -177,7 +186,6 @@ In order to add a new service to the server you need to go over 3 steps:
 
 1. Detect the type of your service suitable for your model, either Core NLP model or High-level model.
 2. Create an API class for your service in  ``nlp_architect/api/`` folder. Make your class inherit from :py:class:`AbstractApi <nlp_architect.api.abstract_api.AbstractApi>` and implement all relevant methods. Notice that your `inference` ``class_method`` must return either :py:class:`CoreNLPDoc <nlp_architect.common.core_nlp_doc.CoreNLPDoc>` or :py:class:`HighLevelDoc <nlp_architect.common.high_level_doc.HighLevelDoc>`.
-
 3. Add the definition of the new service to ``services.json`` as follows:
 
 .. code:: json

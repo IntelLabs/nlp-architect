@@ -1,0 +1,11 @@
+.center {
+  padding: 10px 0;
+}
+.card-link {
+  text-decoration: none;
+}
+
+.mat-card-title {
+  /* CSS styles go here */
+  font-weight: bold;
+}

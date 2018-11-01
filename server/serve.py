@@ -21,20 +21,31 @@ import json
 from falcon import status_codes
 from server.service import format_response
 from server.service import Service, parse_headers
+import nltk
+nltk.download("punkt")
 services = {}
 
 api = hug.API(__name__)
+api.http.add_middleware(hug.middleware.CORSMiddleware(api, max_age=10))
 
 
 def prefetchModels():
-    models = ['bist', 'spacy_ner', 'ner']
+    models = ['machine_comprehension', 'bist', 'ner', 'intent_extraction']
     for model in models:
         services[model] = Service(model)
+
+
+@hug.get('/comprehension_paragraphs')
+def get_paragraphs():
+    if(not services['machine_comprehension']):
+        services['machine_comprehension'] = Service('machine_comprehension')
+    return services['machine_comprehension'].get_paragraphs()
 
 
 @hug.post()
 def inference(request, body, response):
     """Makes an inference to a certain model"""
+    print(body)
     if(request.headers.get('CONTENT-TYPE') == 'application/gzip'):
         try:
             original_data = gzip.decompress(request.stream.read())
@@ -75,7 +86,14 @@ def inference(request, body, response):
 @hug.static('/')
 def static():
     """Statically serves a directory to client"""
-    return [os.path.realpath(os.path.join('./', 'server/web_service/static'))]
+    return [os.path.realpath(os.path.join('./', 'server/angular-ui/dist/angular-ui'))]
+
+
+@hug.get(['/home', '/visual/{page}', '/annotate/{page}', '/machine_comprehension'],
+         output=hug.output_format.file)
+def get_index():
+    index = os.path.join('./', 'server/angular-ui/dist/angular-ui/index.html')
+    return index
 
 
 prefetchModels()

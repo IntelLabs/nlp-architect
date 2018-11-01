@@ -1,0 +1,25 @@
+<div class="mat-typography">
+  <header class="indigo header white-text" color="primary">
+      <h1 class="mat-display-2 text-center" style="font-weight: 100"> BIST Dependency Parser </h1>
+  </header>
+  <div class="container">
+      <mat-card class="overlap">
+        <h2> This model extracts relations between the sentence words. The model is based on the <a href="http://nlp_architect.nervanasys.com/bist_parser.html">BIST Dependency parser.</a></h2>
+        <div>
+            <form [formGroup]="dependencyForm" (ngSubmit)="annotate()">
+              <div fxLayout>
+                  <div fxFlex="90%">
+                  <mat-form-field style="width: 100%">
+                      <input matInput formControlName="sentence" placeholder="Enter sentence to parse...">
+                  </mat-form-field>
+                  </div>
+                  <div fxFlex>
+                    <button mat-raised-button color="primary" type="submit" [disabled]="dependencyForm.invalid">ANNOTATE!</button>
+                  </div>
+              </div>
+            </form>
+        </div>
+        <div id="displacy_parse" style="overflow: auto; text-align: center;" class="mat-display-1"></div>
+      </mat-card>
+  </div>
+</div>

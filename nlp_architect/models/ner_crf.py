@@ -120,7 +120,7 @@ class NERCRF(object):
         if self.use_cudnn:
             self.crf_mode = 'reg'
         with tf.device('/cpu:0'):
-            crf = CRF(self.target_label_dims, mode=self.crf_mode)
+            crf = CRF(self.target_label_dims, mode=self.crf_mode, name='ner_crf')
             if self.crf_mode == 'pad':
                 sequence_lengths = Input(batch_shape=(None, 1), dtype='int32')
                 predictions = crf([bilstm, sequence_lengths])
@@ -131,7 +131,7 @@ class NERCRF(object):
         # compile the model
         model = tf.keras.Model(inputs=inputs,
                                outputs=predictions)
-        model.compile(loss=crf.loss,
+        model.compile(loss={'ner_crf': crf.loss},
                       optimizer=tf.keras.optimizers.Adam(0.001, clipnorm=5.),
                       metrics=[crf.viterbi_accuracy])
         self.model = model
