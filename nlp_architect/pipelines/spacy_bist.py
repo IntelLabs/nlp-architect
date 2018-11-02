@@ -164,7 +164,7 @@ def _spacy_pos_to_ptb(pos, text):
     """
     validate((pos, str, 0, 30), (text, str, 0, 1000))
     ptb_tag = pos
-    if text == '...':
+    if text in ['...', '—']:
         ptb_tag = ':'
     elif text == '*':
         ptb_tag = 'SYM'
