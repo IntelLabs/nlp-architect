@@ -1,6 +1,6 @@
 <p align="center"><img src="doc/source/assets/nlp_architect_header.png" width="400"/></p>
 <p align="center">
-<a href="https://github.com/NervanaSystems/nlp-architect/blob/master/LICENSE"><img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg"/></a> <a href="http://nlp_architect.nervanasys.com"><img src="https://img.shields.io/readthedocs/pip/stable.svg"/></a> <a href="https://github.com/NervanaSystems/nlp-architect/blob/master/LICENSE"><img src="https://img.shields.io/badge/release-v0.3-blue.svg"/></a>
+<a href="https://github.com/NervanaSystems/nlp-architect/blob/master/LICENSE"><img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg"/></a> <a href="http://nlp_architect.nervanasys.com"><img src="https://img.shields.io/readthedocs/pip/stable.svg"/></a> <a href="https://doi.org/10.5281/zenodo.1477518"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.1477518.svg" alt="DOI"></a> <a href="https://github.com/NervanaSystems/nlp-architect/blob/master/LICENSE"><img src="https://img.shields.io/badge/release-v0.3-blue.svg"/></a>
 </p>
 
 # NLP Architect by Intel® AI LAB
@@ -137,6 +137,38 @@ NLP Architect is an active space of research and development; Throughout future
 releases new models, solutions, topologies and framework additions and changes
 will be made. We aim to make sure all models run with Python 3.5+. We
 encourage researchers and developers to contribute their work into the library.
+
+## Citation
+
+If you use NLP Architect is your research, please use the following citation:
+```
+@misc{izsak_peter_2018_1477518,
+  author       = {Izsak, Peter and
+                  Bethke, Anna and
+                  Korat, Daniel and
+                  Yaccobi, Amit and
+                  Mamou, Jonathan and
+                  Guskin, Shira and
+                  Nittur Sridhar, Sharath and
+                  Keller, Andy and
+                  Pereg, Oren and
+                  Eirew, Alon and
+                  Tsabari, Sapir and
+                  Green, Yael and
+                  Kothapalli, Chinnikrishna and
+                  Eavani, Harini and
+                  Wasserblat, Moshe and
+                  Liu, Yinyin and
+                  Boudoukh, Guy and
+                  Zafrir, Ofir and
+                  Tewani, Maneesh},
+  title        = {NLP Architect by Intel AI Lab},
+  month        = nov,
+  year         = 2018,
+  doi          = {10.5281/zenodo.1477518},
+  url          = {https://doi.org/10.5281/zenodo.1477518}
+}
+```
 
 ## Disclaimer
 The NLP Architect is released as reference code for research purposes. It is
