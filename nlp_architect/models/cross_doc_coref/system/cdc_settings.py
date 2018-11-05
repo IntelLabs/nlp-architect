@@ -61,7 +61,10 @@ class CDCSettings(object):
 
     def load_modules(self):
         self.wiki = WikipediaRelationExtraction(self.cdc_resources.wiki_search_method,
-                                                wiki_file=self.cdc_resources.wiki_folder)
+                                                wiki_file=self.cdc_resources.wiki_folder,
+                                                host=self.cdc_resources.elastic_host,
+                                                port=self.cdc_resources.elastic_port,
+                                                index=self.cdc_resources.elastic_index)
         self.embeds = WordEmbeddingRelationExtraction(self.cdc_resources.embed_search_method,
                                                       glove_file=self.cdc_resources.glove_file)
         self.vo = VerboceanRelationExtraction(self.cdc_resources.vo_search_method,
@@ -73,7 +76,6 @@ class CDCSettings(object):
                                                  self.cdc_resources.wn_folder)
 
     def get_module_from_relation(self, relation_type):
-        ret_model = None
         if RelationType.WITHIN_DOC_COREF == relation_type:
             ret_model = self.within_doc
         elif relation_type in [

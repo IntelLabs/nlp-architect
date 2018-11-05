@@ -24,6 +24,7 @@ from nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_pages import Wik
 from nlp_architect.data.cdc_resources.relations.relation_extraction import RelationExtraction
 from nlp_architect.data.cdc_resources.relations.relation_types_enums import RelationType, \
     WikipediaSearchMethod
+from nlp_architect.data.cdc_resources.wikipedia.wiki_elastic import WikiElastic
 from nlp_architect.data.cdc_resources.wikipedia.wiki_offline import WikiOffline
 from nlp_architect.data.cdc_resources.wikipedia.wiki_online import WikiOnline
 
@@ -34,7 +35,9 @@ FEMALE_PRONOUN = ['she', 'her', 'hers', 'herself']
 
 
 class WikipediaRelationExtraction(RelationExtraction):
-    def __init__(self, method: WikipediaSearchMethod, wiki_file: str = None) -> None:
+    def __init__(self, method: WikipediaSearchMethod, wiki_file: str = None, host: str = None,
+                 port: int = None,
+                 index: str = None) -> None:
         """
         Extract Relation between two mentions according to Wikipedia knowledge
 
@@ -42,6 +45,9 @@ class WikipediaRelationExtraction(RelationExtraction):
             method (required): WikipediaSearchMethod.{ONLINE/OFFLINE/ELASTIC} run against wiki
                 site a sub-set of wiki or on a local elastic database
             wiki_file (required on OFFLINE mode): str Location of Wikipedia file to work with
+            host (required on Elastic mode): str the Elastic search host name
+            port (required on Elastic mode): int the Elastic search port number
+            index (required on Elastic mode): int the Elastic search index name
         """
         logger.info('Loading Wikipedia module')
         connectivity = method
@@ -49,6 +55,8 @@ class WikipediaRelationExtraction(RelationExtraction):
             self.pywiki_impl = WikiOnline()
         elif connectivity == WikipediaSearchMethod.OFFLINE:
             self.pywiki_impl = WikiOffline(wiki_file)
+        elif connectivity == WikipediaSearchMethod.ELASTIC:
+            self.pywiki_impl = WikiElastic(host, port, index)
         logger.info('Wikipedia module lead successfully')
         super(WikipediaRelationExtraction, self).__init__()
 

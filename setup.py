@@ -32,6 +32,8 @@ requirements = [
     "sklearn",
     "scipy",
     "numpy<=1.14.5",
+    "tensorflow_hub",
+    "elasticsearch",
     "fastText@git+https://github.com/facebookresearch/fastText.git#egg=fastText",
     "newspaper3k",
     "wordfreq",

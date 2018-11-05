@@ -19,6 +19,8 @@ from __future__ import unicode_literals
 from __future__ import absolute_import
 
 import numpy as np
+import tensorflow as tf
+import tensorflow_hub as hub
 
 from nlp_architect.utils.text import Vocabulary
 
@@ -91,3 +93,28 @@ def get_embedding_matrix(embeddings: dict, vocab: Vocabulary) -> np.ndarray:
         if vec is not None:
             mat[wid] = vec
     return mat
+
+
+class ELMoEmbedderTFHUB(object):
+    def __init__(self):
+        self.g = tf.Graph()
+
+        with self.g.as_default():
+            text_input = tf.placeholder(dtype=tf.string)
+            text_input_size = tf.placeholder(dtype=tf.int32)
+            self.elmo = hub.Module("https://tfhub.dev/google/elmo/2", trainable=False)
+            self.inputs = {
+                'tokens': text_input,
+                'sequence_len': text_input_size
+            }
+            self.embedding = self.elmo(inputs=self.inputs, signature='tokens', as_dict=True)['elmo']
+
+            sess = tf.Session(graph=self.g)
+            sess.run(tf.global_variables_initializer())
+            sess.run(tf.tables_initializer())
+            self.s = sess
+
+    def get_vector(self, tokens):
+        vec = self.s.run(self.embedding,
+                         feed_dict={self.inputs['tokens']: [tokens], self.inputs['sequence_len']: [len(tokens)]})
+        return np.squeeze(vec, axis=0)

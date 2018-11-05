@@ -30,9 +30,10 @@ logger = logging.getLogger(__name__)
 result_dump = {}
 
 parser = argparse.ArgumentParser(description='Create Wikipedia dataset only dump')
-
 parser.add_argument('--mentions', type=str, help='mentions_file file', required=True)
-
+parser.add_argument('--host', type=str, help='elastic host')
+parser.add_argument('--port', type=int, help='elastic port')
+parser.add_argument('--index', type=str, help='elastic index')
 parser.add_argument('--output', type=str, help='location were to create dump file', required=True)
 
 args = parser.parse_args()
@@ -45,7 +46,10 @@ def wiki_dump_from_gs():
     vocab = load_mentions_vocab(mentions_files)
 
     if args.host and args.port and args.index:
-        wiki_elastic = WikipediaRelationExtraction(WikipediaSearchMethod.ELASTIC)
+        wiki_elastic = WikipediaRelationExtraction(WikipediaSearchMethod.ELASTIC,
+                                                   host=args.host,
+                                                   port=args.port,
+                                                   index=args.index)
     else:
         logger.info(
             'Running without Wikipedia elastic search, Note that this will '
@@ -94,5 +98,11 @@ def add_page(search_page, phrase):
 if __name__ == '__main__':
     io.validate_existing_filepath(args.mentions)
     io.validate_existing_filepath(args.output)
+    if args.host:
+        io.validate((args.host, str, 1, 1000))
+    if args.port:
+        io.validate((args.port, int, 1, 65536))
+    if args.index:
+        io.validate((args.index, str, 1, 10000))
 
     wiki_dump_from_gs()

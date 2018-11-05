@@ -21,6 +21,8 @@ from typing import List, Set
 from scipy.spatial.distance import cosine as cos
 
 from nlp_architect.common.cdc.mention_data import MentionDataLight
+from nlp_architect.data.cdc_resources.embedding.embed_elmo import ElmoEmbedding, \
+    ElmoEmbeddingOffline
 from nlp_architect.data.cdc_resources.embedding.embed_glove import GloveEmbedding, \
     GloveEmbeddingOffline
 from nlp_architect.data.cdc_resources.relations.relation_extraction import RelationExtraction
@@ -32,18 +34,23 @@ logger = logging.getLogger(__name__)
 
 
 class WordEmbeddingRelationExtraction(RelationExtraction):
-    def __init__(self, method: EmbeddingMethod, glove_file: str = None):
+    def __init__(self, method: EmbeddingMethod, glove_file: str = None, elmo_file: str = None):
         """
         Extract Relation between two mentions according to Word Embedding cosine distance
 
         Args:
-            method (required): EmbeddingMethod.{GLOVE/GLOVE_OFFLINE}
+            method (required): EmbeddingMethod.{GLOVE/GLOVE_OFFLINE/ELMO/ELMO_OFFLINE}
             glove_file (required on GLOVE/GLOVE_OFFLINE mode): str Location of Glove file
+            elmo_file (required on ELMO_OFFLINE mode): str Location of Elmo file
         """
         if method == EmbeddingMethod.GLOVE:
             self.embedding = GloveEmbedding(glove_file)
         elif method == EmbeddingMethod.GLOVE_OFFLINE:
             self.embedding = GloveEmbeddingOffline(glove_file)
+        elif method == EmbeddingMethod.ELMO:
+            self.embedding = ElmoEmbedding()
+        elif method == EmbeddingMethod.ELMO_OFFLINE:
+            self.embedding = ElmoEmbeddingOffline(elmo_file)
 
         super(WordEmbeddingRelationExtraction, self).__init__()
 

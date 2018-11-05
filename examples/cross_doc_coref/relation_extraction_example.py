@@ -23,11 +23,13 @@ from nlp_architect.data.cdc_resources.relations.computed_relation_extraction imp
 from nlp_architect.data.cdc_resources.relations.referent_dict_relation_extraction import \
     ReferentDictRelationExtraction
 from nlp_architect.data.cdc_resources.relations.relation_types_enums import \
-    OnlineOROfflineMethod, WikipediaSearchMethod, RelationType
+    OnlineOROfflineMethod, WikipediaSearchMethod, RelationType, EmbeddingMethod
 from nlp_architect.data.cdc_resources.relations.verbocean_relation_extraction import \
     VerboceanRelationExtraction
 from nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction import \
     WikipediaRelationExtraction
+from nlp_architect.data.cdc_resources.relations.word_embedding_relation_extraction import \
+    WordEmbeddingRelationExtraction
 from nlp_architect.data.cdc_resources.relations.wordnet_relation_extraction import \
     WordnetRelationExtraction
 
@@ -55,6 +57,9 @@ def run_example():
     vo_relations = vo.extract_all_relations(mention_x1, mention_y1)
     wiki_relations = wiki.extract_sub_relations(mention_x1, mention_y1,
                                                 RelationType.WIKIPEDIA_REDIRECT_LINK)
+    embed = WordEmbeddingRelationExtraction(
+        EmbeddingMethod.ELMO)
+    embed_relations = embed.extract_all_relations(mention_x1, mention_y1)
     wn_relaions = wn.extract_sub_relations(mention_x1, mention_y1,
                                            RelationType.WORDNET_DERIVATIONALLY)
 
@@ -77,7 +82,10 @@ def run_example():
         logger.info('No Wikipedia relation found')
     else:
         logger.info('Found Wikipedia relations-%s', str(list(wiki_relations)))
-
+    if RelationType.NO_RELATION_FOUND in embed_relations:
+        logger.info('No Embedded relation found')
+    else:
+        logger.info('Found Embedded relations-%s', str(list(embed_relations)))
     if RelationType.NO_RELATION_FOUND in wn_relaions:
         logger.info('No Wordnet relation found')
     else:
