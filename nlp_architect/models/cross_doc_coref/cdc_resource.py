@@ -37,7 +37,7 @@ class CDCResources(object):
 
         self.__wiki_search_method = WikipediaSearchMethod.OFFLINE
         self.__wn_search_method = OnlineOROfflineMethod.OFFLINE
-        self.__embed_search_method = EmbeddingMethod.ELMO_OFFLINE
+        self.__embed_search_method = EmbeddingMethod.ELMO
         self.__referent_dict_method = OnlineOROfflineMethod.OFFLINE
         self.__vo_search_method = OnlineOROfflineMethod.OFFLINE
 
