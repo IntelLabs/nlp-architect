@@ -18,6 +18,7 @@ import logging
 import pickle
 
 import numpy as np
+# from allennlp.commands.elmo import ElmoEmbedder
 
 from nlp_architect.common.cdc.mention_data import MentionDataLight
 from nlp_architect.utils.embedding import ELMoEmbedderTFHUB
@@ -29,7 +30,7 @@ class ElmoEmbedding(object):
     def __init__(self):
         logger.info('Loading Elmo Embedding module')
         self.embeder = ELMoEmbedderTFHUB()
-        # self.embeder = ElmoEmbedder(options_file, weight_file)
+        # self.embeder = ElmoEmbedder(options, weigths)
         logger.info('Elmo Embedding module lead successfully')
 
     def get_feature_vector(self, mention: MentionDataLight):
@@ -46,6 +47,7 @@ class ElmoEmbedding(object):
 
     def get_elmo_avg(self, sentence):
         sentence_embedding = self.embeder.get_vector(sentence)
+        print(sentence_embedding.shape)
         return np.mean(sentence_embedding, axis=0)
         # sentence_embeding = self.embeder.embed_sentence(sentence)
         # embed_avg_layer = np.zeros(sentence_embeding.shape[2], dtype=np.float64)
@@ -56,7 +58,6 @@ class ElmoEmbedding(object):
         #
         #     embed_avg_sent = np.true_divide(embed_avg_sent, sentence_embeding.shape[1])
         #     embed_avg_layer = np.add(embed_avg_layer, embed_avg_sent)
-        #
         # return np.true_divide(embed_avg_layer, sentence_embeding.shape[0])
 
 
