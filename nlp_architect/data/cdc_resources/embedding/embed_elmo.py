@@ -46,7 +46,7 @@ class ElmoEmbedding(object):
 
     def get_elmo_avg(self, sentence):
         sentence_embedding = self.embeder.get_vector(sentence)
-        return np.squeeze(np.mean(sentence_embedding, axis=0), axis=0)
+        return np.mean(sentence_embedding, axis=0)
         # sentence_embeding = self.embeder.embed_sentence(sentence)
         # embed_avg_layer = np.zeros(sentence_embeding.shape[2], dtype=np.float64)
         # for embed_layer in sentence_embeding:
