@@ -60,20 +60,32 @@ class CDCSettings(object):
             raise Exception('No entity or events Gold topics loaded!')
 
     def load_modules(self):
-        self.wiki = WikipediaRelationExtraction(self.cdc_resources.wiki_search_method,
-                                                wiki_file=self.cdc_resources.wiki_folder,
-                                                host=self.cdc_resources.elastic_host,
-                                                port=self.cdc_resources.elastic_port,
-                                                index=self.cdc_resources.elastic_index)
-        self.embeds = WordEmbeddingRelationExtraction(self.cdc_resources.embed_search_method,
-                                                      glove_file=self.cdc_resources.glove_file)
-        self.vo = VerboceanRelationExtraction(self.cdc_resources.vo_search_method,
-                                              self.cdc_resources.vo_dict_file)
-        self.ref_dict = ReferentDictRelationExtraction(self.cdc_resources.referent_dict_method,
-                                                       self.cdc_resources.referent_dict_file)
-        self.within_doc = WithinDocCoref(self.cdc_resources.wd_file)
-        self.wordnet = WordnetRelationExtraction(self.cdc_resources.wn_search_method,
-                                                 self.cdc_resources.wn_folder)
+        relations = set()
+        for sieve in self.event_config.sieves_order:
+            relations.add(sieve[1])
+        for sieve in self.entity_config.sieves_order:
+            relations.add(sieve[1])
+
+        if any('WIKIPEDIA' in relation.name for relation in relations):
+            self.wiki = WikipediaRelationExtraction(self.cdc_resources.wiki_search_method,
+                                                    wiki_file=self.cdc_resources.wiki_folder,
+                                                    host=self.cdc_resources.elastic_host,
+                                                    port=self.cdc_resources.elastic_port,
+                                                    index=self.cdc_resources.elastic_index)
+        if RelationType.WORD_EMBEDDING_MATCH in relations:
+            self.embeds = WordEmbeddingRelationExtraction(self.cdc_resources.embed_search_method,
+                                                          glove_file=self.cdc_resources.glove_file)
+        if RelationType.VERBOCEAN_MATCH in relations:
+            self.vo = VerboceanRelationExtraction(self.cdc_resources.vo_search_method,
+                                                  self.cdc_resources.vo_dict_file)
+        if RelationType.REFERENT_DICT in relations:
+            self.ref_dict = ReferentDictRelationExtraction(self.cdc_resources.referent_dict_method,
+                                                           self.cdc_resources.referent_dict_file)
+        if RelationType.WITHIN_DOC_COREF in relations:
+            self.within_doc = WithinDocCoref(self.cdc_resources.wd_file)
+        if any('WORDNET' in relation.name for relation in relations):
+            self.wordnet = WordnetRelationExtraction(self.cdc_resources.wn_search_method,
+                                                     self.cdc_resources.wn_folder)
 
     def get_module_from_relation(self, relation_type):
         if RelationType.WITHIN_DOC_COREF == relation_type:
