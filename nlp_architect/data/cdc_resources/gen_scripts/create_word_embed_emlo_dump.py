@@ -52,7 +52,8 @@ def elmo_dump():
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Create Elmo Embedding dataset only dump')
     parser.add_argument('--mentions', type=str, help='mentions_file file', required=True)
-    parser.add_argument('--output', type=str, help='location were to create dump file', required=True)
+    parser.add_argument('--output', type=str, help='location were to create dump file',
+                        required=True)
     args = parser.parse_args()
     io.validate_existing_filepath(args.mentions)
     io.validate_existing_filepath(args.output)

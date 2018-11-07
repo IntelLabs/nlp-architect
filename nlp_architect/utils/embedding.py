@@ -102,12 +102,16 @@ class ELMoEmbedderTFHUB(object):
         with self.g.as_default():
             text_input = tf.placeholder(dtype=tf.string)
             text_input_size = tf.placeholder(dtype=tf.int32)
+            print('Loading Tensorflow hub ELMo model, '
+                  'might take a while on first load (downloading from web)')
             self.elmo = hub.Module("https://tfhub.dev/google/elmo/2", trainable=False)
             self.inputs = {
                 'tokens': text_input,
                 'sequence_len': text_input_size
             }
-            self.embedding = self.elmo(inputs=self.inputs, signature='tokens', as_dict=True)['elmo']
+            self.embedding = self.elmo(inputs=self.inputs,
+                                       signature='tokens',
+                                       as_dict=True)['elmo']
 
             sess = tf.Session(graph=self.g)
             sess.run(tf.global_variables_initializer())
@@ -116,5 +120,6 @@ class ELMoEmbedderTFHUB(object):
 
     def get_vector(self, tokens):
         vec = self.s.run(self.embedding,
-                         feed_dict={self.inputs['tokens']: [tokens], self.inputs['sequence_len']: [len(tokens)]})
+                         feed_dict={self.inputs['tokens']: [tokens],
+                                    self.inputs['sequence_len']: [len(tokens)]})
         return np.squeeze(vec, axis=0)
