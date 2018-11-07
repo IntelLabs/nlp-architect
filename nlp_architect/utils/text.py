@@ -13,12 +13,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
-import os
-from os import path
 import re
-import string
 import sys
-from typing import List
+from os import path
 
 import spacy
 from nltk import WordNetLemmatizer
@@ -28,7 +25,6 @@ from spacy.lang.en import LEMMA_INDEX, LEMMA_EXC, LEMMA_RULES
 from spacy.lemmatizer import Lemmatizer
 
 from nlp_architect.utils.generic import license_prompt
-from nlp_architect.utils.io import load_json_file
 
 
 class Vocabulary:
