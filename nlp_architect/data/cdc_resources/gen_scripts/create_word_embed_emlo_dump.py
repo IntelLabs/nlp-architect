@@ -57,6 +57,4 @@ if __name__ == '__main__':
     args = parser.parse_args()
     io.validate_existing_filepath(args.mentions)
     io.validate_existing_filepath(args.output)
-    io.validate_existing_filepath(args.options)
-    io.validate_existing_filepath(args.weights)
     elmo_dump()

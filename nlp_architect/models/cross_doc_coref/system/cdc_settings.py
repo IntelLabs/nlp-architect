@@ -74,7 +74,8 @@ class CDCSettings(object):
                                                     index=self.cdc_resources.elastic_index)
         if RelationType.WORD_EMBEDDING_MATCH in relations:
             self.embeds = WordEmbeddingRelationExtraction(self.cdc_resources.embed_search_method,
-                                                          glove_file=self.cdc_resources.glove_file)
+                                                          glove_file=self.cdc_resources.glove_file,
+                                                          elmo_file=self.cdc_resources.elmo_file)
         if RelationType.VERBOCEAN_MATCH in relations:
             self.vo = VerboceanRelationExtraction(self.cdc_resources.vo_search_method,
                                                   self.cdc_resources.vo_dict_file)

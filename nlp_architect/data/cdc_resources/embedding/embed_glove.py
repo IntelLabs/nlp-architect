@@ -26,7 +26,7 @@ logger = logging.getLogger(__name__)
 
 class GloveEmbedding(object):
     def __init__(self, glove_file):
-        logger.info('Loading Glove Offline Embedding module')
+        logger.info('Loading Glove Online Embedding module, This my take a while...')
         self.word_to_ix, self.word_embeddings = self.load_glove_for_vocab(glove_file)
         logger.info('Glove Offline Embedding module lead successfully')
 

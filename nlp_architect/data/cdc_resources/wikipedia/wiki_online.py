@@ -32,9 +32,13 @@ class WikiOnline(object):
     def __init__(self):
         import pywikibot
         self.pywikibot = pywikibot
+        self.cache = dict()
         self.site = pywikibot.Site('en', 'wikipedia')  # The site we want to run our bot on
 
     def get_pages(self, phrase):
+        if phrase in self.cache:
+            return self.cache[phrase]
+
         ret_pages = set()
         word_clean = phrase.replace('-', ' ')
         word_lower = word_clean.lower()
@@ -50,6 +54,7 @@ class WikiOnline(object):
             except Exception as e:
                 print(e)
 
+        self.cache[phrase] = ret_pages
         return ret_pages
 
     def get_wiki_page_with_items(self, phrase, page):

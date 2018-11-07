@@ -28,7 +28,7 @@ from nlp_architect.data.cdc_resources.embedding.embed_glove import GloveEmbeddin
 from nlp_architect.data.cdc_resources.relations.relation_extraction import RelationExtraction
 from nlp_architect.data.cdc_resources.relations.relation_types_enums import EmbeddingMethod, \
     RelationType
-from nlp_architect.utils.text import StringUtils
+from nlp_architect.utils.string_utils import StringUtils
 
 logger = logging.getLogger(__name__)
 

@@ -30,6 +30,7 @@ class ElmoEmbedding(object):
     def __init__(self):
         logger.info('Loading Elmo Embedding module')
         self.embeder = ELMoEmbedderTFHUB()
+        self.cache = dict()
         # self.embeder = ElmoEmbedder(options, weigths)
         logger.info('Elmo Embedding module lead successfully')
 
@@ -37,17 +38,26 @@ class ElmoEmbedding(object):
         if mention.mention_context:
             sentence = mention.mention_context
         else:
-            sentence = mention.tokens_str.split()
+            sentence = mention.tokens_str
 
-        return self.get_elmo_avg(sentence)
+        return self.apply_get_from_cache(sentence)
+
+    def apply_get_from_cache(self, sentence):
+        if sentence in self.cache:
+            elmo_avg = self.cache[sentence]
+        else:
+            elmo_avg = self.get_elmo_avg(sentence.split())
+            self.cache[sentence] = elmo_avg
+
+        return elmo_avg
 
     def get_avrg_feature_vector(self, tokens_str):
-        sentence = tokens_str.split()
-        return self.get_elmo_avg(sentence)
+        if tokens_str is not None:
+            return self.apply_get_from_cache(tokens_str)
+        return None
 
     def get_elmo_avg(self, sentence):
         sentence_embedding = self.embeder.get_vector(sentence)
-        print(sentence_embedding.shape)
         return np.mean(sentence_embedding, axis=0)
         # sentence_embeding = self.embeder.embed_sentence(sentence)
         # embed_avg_layer = np.zeros(sentence_embeding.shape[2], dtype=np.float64)

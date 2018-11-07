@@ -17,7 +17,7 @@ import sys
 from typing import List
 
 from nlp_architect.utils.io import load_json_file
-from nlp_architect.utils.text import StringUtils
+from nlp_architect.utils.string_utils import StringUtils
 
 ENTITY = ['HUM', 'NON', 'TIM', 'LOC']
 

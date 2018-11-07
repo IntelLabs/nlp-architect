@@ -21,7 +21,7 @@ from typing import List
 from nlp_architect.common.cdc.cluster import Clusters
 from nlp_architect.common.cdc.mention_data import MentionData
 from nlp_architect.common.cdc.topics import Topic
-from nlp_architect.utils.text import StringUtils
+from nlp_architect.utils.string_utils import StringUtils
 
 logger = logging.getLogger(__name__)
 

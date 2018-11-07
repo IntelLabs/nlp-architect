@@ -29,6 +29,7 @@ from nlp_architect.data.cdc_resources.wikipedia.wiki_search_page_result import \
 class WikiElastic(object):
     def __init__(self, host: str, port: int, index: str):
         # connect to our cluster
+        self.cache = dict()
         if self.is_connected(host, port):
             self.es_index = index
             self.es = Elasticsearch([{'host': host, 'port': port}])
@@ -45,6 +46,8 @@ class WikiElastic(object):
         return False
 
     def get_pages(self, phrase):
+        if phrase in self.cache:
+            return self.cache[phrase]
         try:
             phrase_strip = ' '.join(phrase.replace('-', ' ').split())
             pages = set()
@@ -74,6 +77,7 @@ class WikiElastic(object):
                     elastic_page_result = self.get_page_from_result_v1(phrase_strip, result, _id)
                     pages.add(WikipediaSearchPageResult(phrase, elastic_page_result))
 
+            self.cache[phrase] = pages
             return pages
         except Exception:
             traceback.print_exc()

@@ -22,7 +22,7 @@ from nlp_architect.data.cdc_resources.relations.relation_extraction import Relat
 from nlp_architect.data.cdc_resources.relations.relation_types_enums import \
     OnlineOROfflineMethod, RelationType
 from nlp_architect.utils.io import load_json_file
-from nlp_architect.utils.text import StringUtils
+from nlp_architect.utils.string_utils import StringUtils
 
 logger = logging.getLogger(__name__)
 

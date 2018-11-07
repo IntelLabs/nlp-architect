@@ -17,14 +17,17 @@
 from nltk.corpus import wordnet as wn
 
 from nlp_architect.data.cdc_resources.data_types.wn.wordnet_page import WordnetPage
-from nlp_architect.utils.text import StringUtils
+from nlp_architect.utils.string_utils import StringUtils
 
 
 class WordnetOnline(object):
     def __init__(self):
-        pass
+        self.cache = dict()
 
     def get_pages(self, mention):
+        if mention.tokens_str in self.cache:
+            return self.cache[mention.tokens_str]
+
         head_synonyms, head_names_derivationally = self.extract_synonyms_and_derivation(
             mention.mention_head)
         head_lemma_synonyms, head_lemma_derivationally = self.extract_synonyms_and_derivation(
@@ -38,6 +41,8 @@ class WordnetOnline(object):
                                    head_lemma_synonyms, head_names_derivationally,
                                    head_lemma_derivationally,
                                    all_clean_words_synonyms)
+
+        self.cache[mention.tokens_str] = wordnet_page
         return wordnet_page
 
     @staticmethod
