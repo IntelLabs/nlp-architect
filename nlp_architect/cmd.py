@@ -15,9 +15,9 @@
 # ******************************************************************************
 import argparse
 import os
+import subprocess
 from http.server import HTTPServer as BaseHTTPServer, SimpleHTTPRequestHandler
 from os import path
-import subprocess
 
 import pytest
 
@@ -25,18 +25,20 @@ from nlp_architect import LIBRARY_ROOT
 from nlp_architect.version import nlp_architect_version
 
 
-def run_cmd(cmd):
-    p = subprocess.Popen([cmd], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
+def run_shell_cmd(cmd, stdout=subprocess.PIPE):
+    p = subprocess.Popen([cmd], stdout=stdout, stderr=subprocess.STDOUT, shell=True)
     out = p.communicate()[0].decode('UTF-8')
     ret_code = p.returncode
     return out, ret_code
 
 
 class DocsCommand(object):
+    cmd_name = 'doc'
     docs_source = path.join(LIBRARY_ROOT, 'doc')
 
-    def __init__(self, cmd_name, subparsers):
-        parser = subparsers.add_parser(cmd_name, description='Build documentation',
+    def __init__(self, subparsers):
+        parser = subparsers.add_parser(DocsCommand.cmd_name,
+                                       description='Build documentation',
                                        help='Build documentation')
         parser.set_defaults(func=DocsCommand.run_docs)
         self.parser = parser
@@ -44,10 +46,9 @@ class DocsCommand(object):
     @staticmethod
     def run_docs(args):
         base_cmd = 'make -C {}'.format(DocsCommand.docs_source)
-        print('cleaning old documentation')
-        run_cmd(base_cmd + ' clean')
-        print('building new documentation')
-        out, _ = run_cmd(base_cmd + ' html')
+        print('Re-building documentation')
+        run_shell_cmd(base_cmd + ' clean')
+        out, _ = run_shell_cmd(base_cmd + ' html')
         print(out)
         print('Documentation built in: {}'.format(path.join(DocsCommand.docs_source,
                                                             'build', 'html')))
@@ -71,30 +72,41 @@ class DocsCommand(object):
 
 
 class StyleCommand(object):
-    check_dirs = ['examples',
+    cmd_name = 'style'
+    check_dirs = ['examples/',
                   'nlp_architect/',
-                  'server',
-                  'tests',
-                  'solutions'
+                  'server/',
+                  'tests/',
+                  'solutions/'
                   ]
     files_to_check = [path.join(LIBRARY_ROOT, f) for f in check_dirs]
 
-    def __init__(self, cmd_name, subparsers):
-        parser = subparsers.add_parser(cmd_name,
-                                       description='Run style check on NLP Architect code',
-                                       help='Run style check on NLP Architect code')
+    def __init__(self, subparsers):
+        parser = subparsers.add_parser(StyleCommand.cmd_name,
+                                       description='Run style checks on NLP Architect code',
+                                       help='Run style checks on NLP Architect code')
+        parser.add_argument('--only-flake', default=False, action='store_true',
+                            help='Run only Flake8 style check')
+        parser.add_argument('--only-pylint', default=False, action='store_true',
+                            help='Run only Pylint style check')
         parser.set_defaults(func=StyleCommand.run_check)
         self.parser = parser
 
     @staticmethod
     def run_check(args):
-        f_err = StyleCommand.run_flake()
-        if int(f_err) > 0:
-            print('Flake8 errors found. RC={}'.format(f_err))
-        p_err = StyleCommand.run_pylint()
-        if 0 < int(p_err) < 3:
-            print('pylint errors found. RC={}'.format(p_err))
-        if int(f_err) > 0 or (0 < int(p_err) < 3):
+        rc = 0
+        run_all = not args.only_flake and not args.only_pylint
+        if args.only_flake or run_all:
+            f_err = StyleCommand.run_flake()
+            if int(f_err) > 0:
+                print('Flake8 errors found. RC={}'.format(f_err))
+                rc = 1
+        if args.only_pylint or run_all:
+            p_err = StyleCommand.run_pylint()
+            if 0 < int(p_err) < 3:
+                print('pylint errors found. RC={}'.format(p_err))
+                rc = 1
+        if rc > 0:
             exit(1)
 
     @staticmethod
@@ -102,7 +114,7 @@ class StyleCommand(object):
         print('Running flake8 ...\n')
         flake8_config = path.join(LIBRARY_ROOT, 'setup.cfg')
         cmd = 'flake8 {} --config={}'.format(' '.join(StyleCommand.files_to_check), flake8_config)
-        out, ret = run_cmd(cmd)
+        out, ret = run_shell_cmd(cmd)
         print(out)
         return ret
 
@@ -111,16 +123,19 @@ class StyleCommand(object):
         print('Running pylint ...\n')
         pylint_config = path.join(LIBRARY_ROOT, 'pylintrc')
         cmd = 'pylint {} --rcfile {}'.format(' '.join(StyleCommand.files_to_check), pylint_config)
-        out, ret = run_cmd(cmd)
+        out, ret = run_shell_cmd(cmd)
         print(out)
         return ret
 
 
 class TestCommand(object):
-    def __init__(self, cmd_name, subparsers):
-        parser = subparsers.add_parser(cmd_name, description='Run all NLP Architect tests',
-                                       help='Run all NLP Architect tests')
-        parser.add_argument('-f', type=str, help='test filename')
+    cmd_name = 'test'
+
+    def __init__(self, subparsers):
+        parser = subparsers.add_parser(TestCommand.cmd_name,
+                                       description='Run NLP Architect tests',
+                                       help='Run NLP Architect tests')
+        parser.add_argument('-f', type=str, help='test filename (runs test only of this file)')
         parser.set_defaults(func=TestCommand.run_tests)
         self.parser = parser
 
@@ -161,12 +176,32 @@ class TestCommand(object):
         MachineComprehensionApi(prompt=False).download_model()
 
 
+class DemoServerCommand(object):
+    cmd_name = 'demo'
+
+    def __init__(self, subparsers):
+        parser = subparsers.add_parser(DemoServerCommand.cmd_name,
+                                       description='Run NLP Architect server and demo UI',
+                                       help='Run NLP Architect server and demo UI')
+        parser.add_argument('-p', '--port', type=int, default=8080, help='server port')
+        parser.set_defaults(func=DemoServerCommand.run_server)
+        self.parser = parser
+
+    @staticmethod
+    def run_server(args):
+        port = args.port
+        serve_file = path.join(LIBRARY_ROOT, 'server/serve.py')
+        cmd_str = 'hug -p {} -f {}'.format(port, serve_file)
+        run_shell_cmd(cmd_str, stdout=False)
+
+
 # sub commands list
-sub_commands = {
-    'test': TestCommand,
-    'style': StyleCommand,
-    'doc': DocsCommand
-}
+sub_commands = [
+    TestCommand,
+    StyleCommand,
+    DocsCommand,
+    DemoServerCommand,
+]
 
 
 def main():
@@ -176,11 +211,13 @@ def main():
                         version='%(prog)s v{}'.format(nlp_architect_version()))
 
     subparsers = parser.add_subparsers(title='commands', metavar='')
-    for cmd_name, sc in sub_commands.items():
-        sc(cmd_name, subparsers)
-
+    for command in sub_commands:
+        command(subparsers)
     args = parser.parse_args()
-    args.func(args)
+    if hasattr(args, 'func'):
+        args.func(args)
+    else:
+        parser.print_help()
 
 
 if __name__ == '__main__':
