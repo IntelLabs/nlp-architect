@@ -24,7 +24,7 @@ from nlp_architect.data.cdc_resources.relations.relation_types_enums import Rela
     OnlineOROfflineMethod
 from nlp_architect.data.cdc_resources.wordnet.wordnet_offline import WordnetOffline
 from nlp_architect.data.cdc_resources.wordnet.wordnet_online import WordnetOnline
-from nlp_architect.utils.text import StringUtils
+from nlp_architect.utils.string_utils import StringUtils
 
 logger = logging.getLogger(__name__)
 

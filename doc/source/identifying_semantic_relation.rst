@@ -54,11 +54,13 @@ Initialization options
 
 .. code:: python
 
-    # 2 methods for Wikipedia extractor initialization (running against wiki web site, data sub-set)
+    # 3 methods for Wikipedia extractor initialization (running against wiki web site, data sub-set or local elastic DB)
     # Online initialization for full data access against Wikipedia site
     wiki_online = WikipediaRelationExtraction(WikipediaSearchMethod.ONLINE)
     # Or use offline initialization if created a snapshot
     wiki_offline = WikipediaRelationExtraction(WikipediaSearchMethod.OFFLINE, ROOT_DIR + '/mini_wiki.json')
+    # Or use elastic initialization if you created a local database of wikipedia
+    wiki_elastic = WikipediaRelationExtraction(WikipediaSearchMethod.ELASTIC, host='localhost', port=9200, index='enwiki_v2')
 
 Wordnet
 -------
@@ -139,6 +141,7 @@ Word Embedding
 Supported Embeddings types
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+* `Elmo <https://allennlp.org/elmo>`_ - For using pre-trained Elmo embeddings
 * `Glove <https://nlp.stanford.edu/projects/glove>`_ - Using pre-trained Glove embeddings
 
 Initialization options
@@ -146,9 +149,15 @@ Initialization options
 
 .. code:: python
 
-    # Embedding extractor initialization (GloEe)
+    # 4 flavors of Embedding model initialization (running Elmo, Glove or data sub-set of them)
+    # Initialization for Elmo Pre-Trained vectors
+    embed_elmo_online = WordEmbaddingRelationExtraction(EmbeddingMethod.ELMO)
+    embed_elmo_offline = WordEmbaddingRelationExtraction(EmbeddingMethod.ELMO_OFFLINE, glove_file='ROOT_DIR + '/elmo_snippet.pickle')
+    # Embedding extractor initialization (GloVe)
     # Initialization of Glove Pre-Trained vectors
     embed_glove_online = WordEmbeddingRelationExtraction(EmbeddingMethod.GLOVE, glove_file='ROOT_DIR + '/glove.840B.300d.txt')
+    # Or use offline initialization if created a snapshot
+    embed_glove_offline = WordEmbaddingRelationExtraction(EmbeddingMethod.GLOVE_OFFLINE, glove_file='ROOT_DIR + '/glove_mini.pickle')
 
 Computational
 -------------
@@ -202,6 +211,7 @@ See detailed example below and methods documentation for more details on how to 
     vo = VerboceanRelationExtraction(OnlineOROfflineMethod.ONLINE,
                                      '<replace with VerbOcean data location>')
     wiki = WikipediaRelationExtraction(WikipediaSearchMethod.ONLINE)
+    embed = WordEmbaddingRelationExtraction(EmbeddingMethod.ELMO)
     wn = WordnetRelationExtraction(OnlineOROfflineMethod.ONLINE)
 
     mention_x1 = MentionDataLight(
@@ -216,6 +226,7 @@ See detailed example below and methods documentation for more details on how to 
     ref_dict_relations = ref_dict.extract_all_relations(mention_x1, mention_y1)
     vo_relations = vo.extract_all_relations(mention_x1, mention_y1)
     wiki_relations = wiki.extract_sub_relations(mention_x1, mention_y1, RelationType.WIKIPEDIA_REDIRECT_LINK)
+    embed_relations = embed.extract_all_relations(mention_x1, mention_y1)
     wn_relaions = wn.extract_sub_relations(mention_x1, mention_y1, RelationType.WORDNET_DERIVATIONALLY)
 
 You can find the above example in this location: ``examples/cross_doc_coref/relation_extraction_example.py``
@@ -285,3 +296,10 @@ Generate Scripts
 ::
 
     python nlp_architect/data/cdc_resources/gen_scripts/create_wiki_dump.py --mentions=<in_mentions.json> --output=<output.json>``
+
+.. note::
+     **For a fast evaluation using Wikipedia at run time**, on live data, there is an option to generate a local ElasticSearch database of the entire Wiki site using this resource: `Wiki to Elastic <https://github.com/AlonEirew/wikipedia-to-elastic/>`_, It is highly recommended since using online evaluation against Wikipedia site can be very slow.
+    In case you adopt elastic local database, Initiate ``WikipediaRelationExtraction`` relation extraction using ``WikipediaSearchMethod.ELASTIC``
+ **Generate Wikipedia Snapshot using Elastic data instead of from online wikipedia site:**
+ ::
+     python nlp_architect/data/cdc_resources/gen_scripts/create_wiki_dump.py --mentions=<in_mentions.json> --host=<elastic_host eg:localhost> --port=<elastic_port eg:9200> --index=<elastic_index> --output=<output.json>``

@@ -22,7 +22,7 @@ from num2words import num2words
 from nlp_architect.common.cdc.mention_data import MentionDataLight
 from nlp_architect.data.cdc_resources.relations.relation_extraction import RelationExtraction
 from nlp_architect.data.cdc_resources.relations.relation_types_enums import RelationType
-from nlp_architect.utils.text import StringUtils
+from nlp_architect.utils.string_utils import StringUtils
 
 logger = logging.getLogger(__name__)
 

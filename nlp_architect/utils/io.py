@@ -245,3 +245,9 @@ def load_files_from_path(dir_path, extension='txt'):
         with open(f) as fp:
             files_data.append(' '.join(map(str.strip, fp.readlines())))
     return files_data
+
+
+def create_folder(path):
+    if path:
+        if not os.path.exists(path):
+            os.makedirs(path)

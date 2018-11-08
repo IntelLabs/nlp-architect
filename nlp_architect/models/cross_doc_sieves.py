@@ -22,6 +22,7 @@ from nlp_architect.models.cross_doc_coref.system.cdc_utils import write_clusters
     write_event_coref_scorer_results, write_entity_coref_scorer_results
 from nlp_architect.models.cross_doc_coref.system.sieves.run_sieve_system import RunSystemsEvent, \
     RunSystemsEntity
+from nlp_architect.utils import io
 
 logger = logging.getLogger(__name__)
 
@@ -35,16 +36,17 @@ def run_event_coref(resources: CDCSettings) -> Clusters:
     Returns:
         Clusters: List of clusters and mentions with predicted cross doc coref within each topic
     """
+    io.create_folder(resources.cdc_resources.eval_output_dir)
     for topic in resources.events_topics.topics_list:
         sieves_list_event = RunSystemsEvent(topic, resources)
         clusters = sieves_list_event.run_deterministic()
 
         clusters.set_coref_chain_to_mentions()
-        if resources.cdc_resources.eval_output_dir:
-            with open(os.path.join(
-                    resources.cdc_resources.eval_output_dir, 'event_clusters.txt'), 'w') \
-                    as event_clusters_file:
-                write_clusters_to_file(clusters, topic.topic_id, event_clusters_file)
+
+        with open(os.path.join(
+                resources.cdc_resources.eval_output_dir, 'event_clusters.txt'), 'w') \
+                as event_clusters_file:
+            write_clusters_to_file(clusters, topic.topic_id, event_clusters_file)
 
     logger.info('Write event coref results')
     write_event_coref_scorer_results(resources.events_topics.topics_list,
@@ -61,16 +63,17 @@ def run_entity_coref(resources: CDCSettings) -> Clusters:
     Returns:
         Clusters: List of topics and mentions with predicted cross doc coref within each topic
     """
+    io.create_folder(resources.cdc_resources.eval_output_dir)
     for topic in resources.entity_topics.topics_list:
         sieves_list_entity = RunSystemsEntity(topic, resources)
         clusters = sieves_list_entity.run_deterministic()
 
         clusters.set_coref_chain_to_mentions()
-        if resources.cdc_resources.eval_output_dir:
-            with open(os.path.join(
-                    resources.cdc_resources.eval_output_dir, 'entity_clusters.txt'), 'w') \
-                    as entity_clusters_file:
-                write_clusters_to_file(clusters, topic.topic_id, entity_clusters_file)
+
+        with open(os.path.join(
+                resources.cdc_resources.eval_output_dir, 'entity_clusters.txt'), 'w') \
+                as entity_clusters_file:
+            write_clusters_to_file(clusters, topic.topic_id, entity_clusters_file)
 
     logger.info('Write entity coref results')
     write_entity_coref_scorer_results(resources.entity_topics.topics_list,

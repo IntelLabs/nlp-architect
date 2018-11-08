@@ -24,18 +24,22 @@ class CDCResources(object):
 
         self.__eval_output_dir = LIBRARY_ROOT + '/datasets/cdc/test_predict'
 
+        self.__elastic_index = 'enwiki_v2'
+        self.__elastic_host = 'localhost'
+        self.__elastic_port = 9200
         self.__wiki_folder = LIBRARY_ROOT + '/dumps/wikipedia'
         self.__wd_file = LIBRARY_ROOT + '/dumps/within_doc_coref/ecb_wd_coref_proc.json'
         self.__wn_folder = LIBRARY_ROOT + '/dumps/wordnet'
+        self.__elmo_file = LIBRARY_ROOT + '/dumps/embedded/ecb_all_with_stop_elmo.pickle'
         self.__glove_file = LIBRARY_ROOT + '/dumps/embedded/ecb_all_embed_glove.pickle'
-        self.__referent_dict_file = LIBRARY_ROOT + '/dumps/ref_dict/ecb_all_ref_dict.json'
-        self.__vo_dict_file = LIBRARY_ROOT + '/dumps/verbocean/ecb_all_vo.json'
+        self.__referent_dict_file = LIBRARY_ROOT + '/datasets/ref.dict1.tsv'
+        self.__vo_dict_file = LIBRARY_ROOT + '/datasets/verbocean.unrefined.2004-05-20.txt'
 
-        self.__wiki_search_method = WikipediaSearchMethod.OFFLINE
-        self.__wn_search_method = OnlineOROfflineMethod.OFFLINE
-        self.__embed_search_method = EmbeddingMethod.ELMO_OFFLINE
-        self.__referent_dict_method = OnlineOROfflineMethod.OFFLINE
-        self.__vo_search_method = OnlineOROfflineMethod.OFFLINE
+        self.__wiki_search_method = WikipediaSearchMethod.ONLINE
+        self.__wn_search_method = OnlineOROfflineMethod.ONLINE
+        self.__embed_search_method = EmbeddingMethod.ELMO
+        self.__referent_dict_method = OnlineOROfflineMethod.ONLINE
+        self.__vo_search_method = OnlineOROfflineMethod.ONLINE
 
     @property
     def eval_output_dir(self) -> str:
@@ -97,6 +101,18 @@ class CDCResources(object):
         self.__glove_file = glove_file
 
     @property
+    def elmo_file(self):
+        """
+        Location of Elmo mini data set file, #Required mini data set file location for Offline
+        evaluation using GloVe sieve
+        """
+        return self.__elmo_file
+
+    @elmo_file.setter
+    def elmo_file(self, elmo_file: str):
+        self.__elmo_file = elmo_file
+
+    @property
     def referent_dict_file(self):
         """
         Location of Referent dic data set file, #Required mini data set file for Offline
@@ -119,6 +135,39 @@ class CDCResources(object):
     @vo_dict_file.setter
     def vo_dict_file(self, vo_dict_file: str):
         self.__vo_dict_file = vo_dict_file
+
+    @property
+    def elastic_index(self):
+        """
+        Elastic index name, #Required when using Elastic evaluation using Wikipedia sieve
+        """
+        return self.__elastic_index
+
+    @elastic_index.setter
+    def elastic_index(self, elastic_index: str):
+        self.__elastic_index = elastic_index
+
+    @property
+    def elastic_host(self):
+        """
+        Elastic host, #Required when using Elastic evaluation using Wikipedia sieve
+        """
+        return self.__elastic_host
+
+    @elastic_host.setter
+    def elastic_host(self, elastic_host: str):
+        self.__elastic_host = elastic_host
+
+    @property
+    def elastic_port(self):
+        """
+        Elastic port number, #Required when using Elastic evaluation using Wikipedia sieve
+        """
+        return self.__elastic_port
+
+    @elastic_port.setter
+    def elastic_port(self, elastic_port: str):
+        self.__elastic_port = elastic_port
 
     @property
     def wiki_search_method(self):

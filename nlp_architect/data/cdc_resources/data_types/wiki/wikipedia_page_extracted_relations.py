@@ -17,7 +17,7 @@ import re
 import string
 from typing import Set, Dict
 
-from nlp_architect.utils.text import StringUtils
+from nlp_architect.utils.string_utils import StringUtils
 
 PART_NAME_CATEGORIES = ['name', 'given name', 'surname']
 DISAMBIGUATION_TITLE = '(disambiguation)'

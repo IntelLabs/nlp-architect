@@ -18,7 +18,7 @@ from typing import Dict
 
 from nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_page_extracted_relations import \
     WikipediaPageExtractedRelations, DISAMBIGUATION_TITLE
-from nlp_architect.utils.text import StringUtils
+from nlp_architect.utils.string_utils import StringUtils
 
 
 class WikipediaPage(object):
