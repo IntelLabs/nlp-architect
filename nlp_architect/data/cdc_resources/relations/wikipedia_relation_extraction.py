@@ -17,6 +17,7 @@
 from __future__ import division
 
 import logging
+import os
 from typing import Set, List
 
 from nlp_architect.common.cdc.mention_data import MentionDataLight
@@ -50,13 +51,19 @@ class WikipediaRelationExtraction(RelationExtraction):
             index (required on Elastic mode): int the Elastic search index name
         """
         logger.info('Loading Wikipedia module')
+
         connectivity = method
         if connectivity == WikipediaSearchMethod.ONLINE:
             self.pywiki_impl = WikiOnline()
         elif connectivity == WikipediaSearchMethod.OFFLINE:
-            self.pywiki_impl = WikiOffline(wiki_file)
+            if wiki_file is not None and os.path.isdir(wiki_file):
+                self.pywiki_impl = WikiOffline(wiki_file)
+            else:
+                raise FileNotFoundError('Wikipedia resource file not found or not in path, '
+                                        'create it or change the initialization method')
         elif connectivity == WikipediaSearchMethod.ELASTIC:
             self.pywiki_impl = WikiElastic(host, port, index)
+
         logger.info('Wikipedia module lead successfully')
         super(WikipediaRelationExtraction, self).__init__()
 

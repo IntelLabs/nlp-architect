@@ -15,6 +15,7 @@
 # ******************************************************************************
 
 import logging
+import os
 from typing import Set, List
 
 from nlp_architect.common.cdc.mention_data import MentionDataLight
@@ -44,7 +45,11 @@ class WordnetRelationExtraction(RelationExtraction):
         if self.connectivity == OnlineOROfflineMethod.ONLINE:
             self.wordnet_impl = WordnetOnline()
         elif self.connectivity == OnlineOROfflineMethod.OFFLINE:
-            self.wordnet_impl = WordnetOffline(wn_file)
+            if wn_file is not None and os.path.isdir(wn_file):
+                self.wordnet_impl = WordnetOffline(wn_file)
+            else:
+                raise FileNotFoundError('WordNet resource directory not found or not in path')
+
         logger.info('Wordnet module lead successfully')
         super(WordnetRelationExtraction, self).__init__()
 

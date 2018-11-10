@@ -15,6 +15,7 @@
 # ******************************************************************************
 
 import logging
+import os
 from typing import Dict, Set
 
 from nlp_architect.common.cdc.mention_data import MentionDataLight
@@ -38,11 +39,14 @@ class VerboceanRelationExtraction(RelationExtraction):
             vo_file (required): str Location of VerbOcean file to work with
         """
         logger.info('Loading Verb Ocean module')
-        if method == OnlineOROfflineMethod.OFFLINE:
-            self.vo = load_json_file(vo_file)
-        elif method == OnlineOROfflineMethod.ONLINE:
-            self.vo = self.load_verbocean_file(vo_file)
-        logger.info('Verb Ocean module lead successfully')
+        if vo_file is not None and os.path.isfile(vo_file):
+            if method == OnlineOROfflineMethod.OFFLINE:
+                self.vo = load_json_file(vo_file)
+            elif method == OnlineOROfflineMethod.ONLINE:
+                self.vo = self.load_verbocean_file(vo_file)
+            logger.info('Verb Ocean module lead successfully')
+        else:
+            raise FileNotFoundError('VerbOcean file not found or not in path..')
         super(VerboceanRelationExtraction, self).__init__()
 
     def extract_all_relations(self, mention_x: MentionDataLight,

@@ -92,7 +92,7 @@ class EventConfig(CDCConfig):
         ]
 
         self.gold_mentions_file = LIBRARY_ROOT + \
-            '/datasets/cdc/gold_mentions/ecb_test_event_gold_mentions.json'
+            '/datasets/ecb/ecb_all_event_mentions.json'
 
 
 class EntityConfig(CDCConfig):
@@ -120,4 +120,4 @@ class EntityConfig(CDCConfig):
         ]
 
         self.gold_mentions_file = LIBRARY_ROOT + \
-            '/datasets/cdc/gold_mentions/ecb_test_entity_gold_mentions.json'
+            '/datasets/ecb/ecb_all_entity_mentions.json'

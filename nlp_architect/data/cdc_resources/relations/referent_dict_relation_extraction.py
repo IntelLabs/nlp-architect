@@ -15,6 +15,7 @@
 # ******************************************************************************
 
 import logging
+import os
 from typing import Dict, List, Set
 
 from nlp_architect.common.cdc.mention_data import MentionDataLight
@@ -38,11 +39,15 @@ class ReferentDictRelationExtraction(RelationExtraction):
             ref_dict (required): str Location of referent dictionary file to work with
         """
         logger.info('Loading ReferentDict module')
-        if method == OnlineOROfflineMethod.OFFLINE:
-            self.ref_dict = load_json_file(ref_dict)
-        elif method == OnlineOROfflineMethod.ONLINE:
-            self.ref_dict = self.load_reference_dict(ref_dict)
-        logger.info('ReferentDict module lead successfully')
+        if ref_dict is not None and os.path.isfile(ref_dict):
+            if method == OnlineOROfflineMethod.OFFLINE:
+                self.ref_dict = load_json_file(ref_dict)
+            elif method == OnlineOROfflineMethod.ONLINE:
+                self.ref_dict = self.load_reference_dict(ref_dict)
+            logger.info('ReferentDict module lead successfully')
+        else:
+            raise FileNotFoundError('Referent Dict file not found or not in path..')
+
         super(ReferentDictRelationExtraction, self).__init__()
 
     def extract_all_relations(self, mention_x: MentionDataLight,

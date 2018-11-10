@@ -13,12 +13,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
+import logging
+import os
 from typing import List, Set
 
 from nlp_architect.common.cdc.mention_data import MentionData
 from nlp_architect.data.cdc_resources.relations.relation_extraction import RelationExtraction
 from nlp_architect.data.cdc_resources.relations.relation_types_enums import RelationType
 from nlp_architect.utils.io import load_json_file
+
+logger = logging.getLogger(__name__)
 
 
 class WithinDocCoref(RelationExtraction):
@@ -29,8 +33,12 @@ class WithinDocCoref(RelationExtraction):
         Args:
             wd_file (required): str Location of within doc co-reference mentions file
         """
-        wd_mentions_json = load_json_file(wd_file)
-        self.within_doc_coref_chain = self.arrange_resource(wd_mentions_json)
+        logger.info('Loading Within doc resource')
+        if wd_file is not None and os.path.isfile(wd_file):
+            wd_mentions_json = load_json_file(wd_file)
+            self.within_doc_coref_chain = self.arrange_resource(wd_mentions_json)
+        else:
+            raise FileNotFoundError('Within-doc resource file not found or not in path')
         super(WithinDocCoref, self).__init__()
 
     @staticmethod
