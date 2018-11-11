@@ -115,6 +115,8 @@ setup(name='nlp_architect',
       include_package_data=True,
       package_data={
           'server': ['services.json'],
+          'nlp_architect.utils.resources': ['preposition_en.json', 'pronoun_en.json',
+                                            'stop_words_en.json', 'stopwords.txt']
       },
       classifiers=[
           'Development Status :: 3 - Alpha',

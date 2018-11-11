@@ -63,11 +63,6 @@ Requirements
         {
             "topic_id": "2_ecb", #Required (a topic is a set of multiple documents that share the same subject)
             "doc_id": "1_10.xml", #Required (the article or document id this mention belong to)
-            "mention_head": "Josh", #Optional
-            "mention_head_lemma": "josh", #Optional
-            "mention_head_pos": "NOUN", #Optional (part of speech)
-            "mention_ner": null, #Optional (named entity recognition)
-            "mention_type": "HUM", #Optional (for debugging)
             "sent_id": 0, #Optional (mention sentence number in document)
             "tokens_number": [ #Optional (the token number in sentence, will be required when using Within doc entities)
                 13
@@ -77,11 +72,6 @@ Requirements
         {
             "topic_id": "2_ecb", #Required
             "doc_id": "1_11.xml",
-            "mention_head": "Reid",
-            "mention_head_lemma": "reid",
-            "mention_head_pos": "PROPN",
-            "mention_ner": "PERSON",
-            "mention_type": "HUM",
             "sent_id": 0,
             "tokens_number": [
                 3
@@ -165,8 +155,10 @@ Code Example
 
     entity_config.gold_mentions_file = '<Replace with your entity mentions json file>'
 
-    # Set the location of your resources,
-    # Use the default values if can
+    # CDCResources hold default attribute values that might need to be change,
+    # (using the defaults values in this example), use to configure attributes
+    # such as resources files location, output directory, resources init methods and other.
+    # check in class and see if any attributes require change in your set-up
     resource_location = CDCResources()
 
     # create a new cross doc resources, with all needed semantic relation models

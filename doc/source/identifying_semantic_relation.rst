@@ -253,9 +253,8 @@ Each script requires a **mentions** file in JSON format as seen below. This file
 
     [
         { # Mention 1
-            "mention_head": "rep", #Optional
-            "mention_head_lemma": "rep", #Optional
-            "tokens_str": "rep" #Required
+            "tokens_str": "Intel" #Required,
+            "context": "Intel is the world's second largest and second highest valued semiconductor chip maker" #Optional (used in Elmo)
         },
         { # Mention 2
             "tokens_str": "Tara Reid"
