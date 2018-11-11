@@ -50,6 +50,9 @@ def run_example():
     entity_config.gold_mentions_file = LIBRARY_ROOT + \
         '/datasets/ecb/ecb_all_entity_mentions.json'
 
+    # CDCResources hold attribute that might need to be changed (using defaults values here),
+    # attributes such as resources files location, output directory and other.
+    # check and see if any require change in your set-up
     resource_location = CDCResources()
     resources = CDCSettings(resource_location, event_config, entity_config)
 
