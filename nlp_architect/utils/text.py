@@ -16,6 +16,7 @@
 import re
 import sys
 from os import path
+from typing import List, Tuple
 
 import spacy
 from nltk import WordNetLemmatizer
@@ -361,3 +362,32 @@ def extract_nps(annotation_list, text=None):
         assert len(text) == len(annotation_list), 'annotations/text length mismatch'
         return_markers = [' '.join(text[s:e]) for s, e in np_markers]
     return return_markers
+
+
+def bio_to_spans(text: List[str], tags: List[str]) -> List[Tuple[int, int, str]]:
+    """
+    Convert BIO tagged list of strings into span starts and ends
+    Args:
+        text: list of words
+        tags: list of tags
+
+    Returns:
+        tuple: list of start, end and tag of detected spans
+    """
+    pointer = 0
+    starts = []
+    for i, t, in enumerate(tags):
+        if t.startswith('B-'):
+            starts.append((i, pointer))
+        pointer += len(text[i]) + 1
+
+    spans = []
+    for s_i, s_char in starts:
+        label_str = tags[s_i][2:]
+        e = 0
+        e_char = len(text[s_i + e])
+        while len(tags) > s_i + e + 1 and tags[s_i + e + 1].startswith('I-'):
+            e += 1
+            e_char += 1 + len(text[s_i + e])
+        spans.append((s_char, s_char + e_char, label_str))
+    return spans

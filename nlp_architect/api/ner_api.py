@@ -22,7 +22,7 @@ from nlp_architect.api.abstract_api import AbstractApi
 from nlp_architect.models.ner_crf import NERCRF
 from nlp_architect.utils.generic import pad_sentences
 from nlp_architect.utils.io import download_unlicensed_file
-from nlp_architect.utils.text import SpacyInstance
+from nlp_architect.utils.text import SpacyInstance, bio_to_spans
 
 nlp = SpacyInstance(disable=['tagger', 'ner', 'parser', 'vectors', 'textcat'])
 
@@ -89,24 +89,19 @@ class NerApi(AbstractApi):
 
     @staticmethod
     def pretty_print(text, tags):
-        mapped = [
-            {'index': idx, 'word': el, 'label': tags[idx]} for idx, el in enumerate(text)
-        ]
-        counter = 0
         spans = []
-        for obj in mapped:
-            if obj['label'] != 'O':
-                spans.append({
-                    'start': counter,
-                    'end': (counter + len(obj['word'])),
-                    'type': obj['label']
-                })
-            counter += len(obj['word']) + 1
+        for s, e, tag in bio_to_spans(text, tags):
+            spans.append({
+                'start': s,
+                'end': e,
+                'type': tag
+            })
         ents = dict((obj['type'].lower(), obj) for obj in spans).keys()
         ret = {'doc_text': ' '.join(text),
                'annotation_set': list(ents),
                'spans': spans,
                'title': 'None'}
+        print({"doc": ret, 'type': 'high_level'})
         return {"doc": ret, 'type': 'high_level'}
 
     @staticmethod

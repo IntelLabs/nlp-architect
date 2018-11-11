@@ -22,7 +22,7 @@ from nlp_architect.api.abstract_api import AbstractApi
 from nlp_architect.models.intent_extraction import MultiTaskIntentModel, Seq2SeqIntentModel
 from nlp_architect.utils.generic import pad_sentences
 from nlp_architect.utils.io import download_unlicensed_file
-from nlp_architect.utils.text import SpacyInstance
+from nlp_architect.utils.text import SpacyInstance, bio_to_spans
 
 nlp = SpacyInstance(disable=['tagger', 'ner', 'parser', 'vectors', 'textcat'])
 
@@ -85,22 +85,20 @@ class IntentExtractionApi(AbstractApi):
             print('Done.')
 
     def display_results(self, text_str, predictions, intent_type):
-        ret = {'annotation_set': []}
-        ret['doc_text'] = ' '.join([t for t in text_str])
-        counter = 0
+        ret = {'annotation_set': [], 'doc_text': ' '.join([t for t in text_str])}
         spans = []
-        for t, n in zip(text_str, predictions):
-            if n != 'O':
-                ret['annotation_set'].append(n.lower())
-                spans.append({
-                    'start': counter,
-                    'end': counter + len(t),
-                    'type': n.lower()
-                })
-            counter += len(t) + 1
+        available_tags = set()
+        for s, e, tag in bio_to_spans(text_str, predictions):
+            spans.append({
+                'start': s,
+                'end': e,
+                'type': tag
+            })
+            available_tags.add(tag)
+        ret['annotation_set'] = list(available_tags)
         ret['spans'] = spans
         ret['title'] = intent_type
-        return {"doc": ret, 'type': 'high_level'}
+        return {'doc': ret, 'type': 'high_level'}
 
     def vectorize(self, doc, vocab, char_vocab=None):
         words = np.asarray([vocab[w.lower()] if w.lower() in vocab else 1 for w in doc])\
