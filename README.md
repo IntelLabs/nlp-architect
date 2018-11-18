@@ -140,7 +140,7 @@ encourage researchers and developers to contribute their work into the library.
 
 ## Citation
 
-If you use NLP Architect is your research, please use the following citation:
+If you use NLP Architect in your research, please use the following citation:
 ```
 @misc{izsak_peter_2018_1477518,
   author       = {Izsak, Peter and
