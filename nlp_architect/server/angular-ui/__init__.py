@@ -13,18 +13,3 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
-
-MAJOR_V = 0
-MINOR_V = 3
-PATCH_V = 1
-
-
-def nlp_architect_version():
-    if PATCH_V != 0:
-        v = '{}.{}.{}'.format(MAJOR_V, MINOR_V, PATCH_V)
-    else:
-        v = '{}.{}'.format(MAJOR_V, MINOR_V)
-    return v
-
-
-NLP_ARCHITECT_VERSION = nlp_architect_version()

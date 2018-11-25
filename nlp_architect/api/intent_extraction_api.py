@@ -20,36 +20,25 @@ from os import makedirs, path, sys
 
 from nlp_architect.api.abstract_api import AbstractApi
 from nlp_architect.models.intent_extraction import MultiTaskIntentModel, Seq2SeqIntentModel
+from nlp_architect.utils import LIBRARY_STORAGE_PATH
 from nlp_architect.utils.generic import pad_sentences
 from nlp_architect.utils.io import download_unlicensed_file
 from nlp_architect.utils.text import SpacyInstance, bio_to_spans
 
-nlp = SpacyInstance(disable=['tagger', 'ner', 'parser', 'vectors', 'textcat'])
-
 
 class IntentExtractionApi(AbstractApi):
-    dir = path.dirname(path.realpath(__file__))
-    pretrained_model_info = path.join(dir, 'intent-pretrained', 'model_info.dat')
-    pretrained_model = path.join(dir, 'intent-pretrained', 'model.h5')
+    model_dir = path.join(LIBRARY_STORAGE_PATH, 'intent-pretrained')
+    pretrained_model_info = path.join(model_dir, 'model_info.dat')
+    pretrained_model = path.join(model_dir, 'model.h5')
 
     def __init__(self, prompt=True):
         self.model = None
-        self.dir = path.dirname(path.realpath(__file__))
-        self.model_info_path = IntentExtractionApi.pretrained_model_info
-        self.model_path = IntentExtractionApi.pretrained_model
         self._download_pretrained_model(prompt)
-        with open(self.model_info_path, 'rb') as fp:
-            model_info = pickle.load(fp)
-        self.model_type = model_info['type']
-        self.word_vocab = model_info['word_vocab']
-        self.tags_vocab = {v: k for k, v in model_info['tags_vocab'].items()}
-        if self.model_type == 'mtl':
-            self.char_vocab = model_info['char_vocab']
-            self.intent_vocab = {v: k for k, v in model_info['intent_vocab'].items()}
+        self.nlp = SpacyInstance(disable=['tagger', 'ner', 'parser', 'vectors', 'textcat'])
 
     def process_text(self, text):
         input_text = ' '.join(text.strip().split())
-        return nlp.tokenize(input_text)
+        return self.nlp.tokenize(input_text)
 
     @staticmethod
     def _prompt():
@@ -66,22 +55,21 @@ class IntentExtractionApi(AbstractApi):
 
     def _download_pretrained_model(self, prompt=True):
         """Downloads the pre-trained BIST model if non-existent."""
-        dir_path = path.join(self.dir, 'intent-pretrained')
-        model_info_exists = path.isfile(path.join(dir_path, 'model_info.dat'))
-        model_exists = path.isfile(path.join(dir_path, 'model.h5'))
-        if (not model_exists or not model_info_exists):
+        model_info_exists = path.isfile(IntentExtractionApi.pretrained_model_info)
+        model_exists = path.isfile(IntentExtractionApi.pretrained_model)
+        if not model_exists or not model_info_exists:
             print('The pre-trained models to be downloaded for the intent extraction dataset '
                   'are licensed under Apache 2.0. By downloading, you accept the terms '
                   'and conditions provided by the license')
-            makedirs(dir_path, exist_ok=True)
+            makedirs(IntentExtractionApi.model_dir, exist_ok=True)
             if prompt is True:
                 agreed = IntentExtractionApi._prompt()
                 if agreed is False:
                     sys.exit(0)
             download_unlicensed_file('http://nervana-modelzoo.s3.amazonaws.com/NLP/intent/',
-                                     'model_info.dat', self.model_info_path)
+                                     'model_info.dat', IntentExtractionApi.pretrained_model_info)
             download_unlicensed_file('http://nervana-modelzoo.s3.amazonaws.com/NLP/intent/',
-                                     'model.h5', self.model_path)
+                                     'model.h5', IntentExtractionApi.pretrained_model)
             print('Done.')
 
     def display_results(self, text_str, predictions, intent_type):
@@ -139,9 +127,16 @@ class IntentExtractionApi(AbstractApi):
         return self.display_results(text_arr, tag_str, intent_type)
 
     def load_model(self):
-        if self.model_type == 'seq2seq':
-            model = Seq2SeqIntentModel()
-        else:
+        with open(IntentExtractionApi.pretrained_model_info, 'rb') as fp:
+            model_info = pickle.load(fp)
+        self.model_type = model_info['type']
+        self.word_vocab = model_info['word_vocab']
+        self.tags_vocab = {v: k for k, v in model_info['tags_vocab'].items()}
+        if self.model_type == 'mtl':
+            self.char_vocab = model_info['char_vocab']
+            self.intent_vocab = {v: k for k, v in model_info['intent_vocab'].items()}
             model = MultiTaskIntentModel()
+        else:
+            model = Seq2SeqIntentModel()
         model.load(self.pretrained_model)
         self.model = model

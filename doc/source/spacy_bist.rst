@@ -60,7 +60,7 @@ Parsing
 =======
 
 The parser accepts a document as a raw text string encoded in UTF-8 format and outputs a
-:py:class:`CoreNLPDoc nlp_architect.common.core_nlp_doc.CoreNLPDoc` instance which contains the annotations (example output below).
+:py:class:`CoreNLPDoc <nlp_architect.common.core_nlp_doc.CoreNLPDoc>` instance which contains the annotations (example output below).
 
 Example
 -------

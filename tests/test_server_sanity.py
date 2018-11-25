@@ -15,17 +15,20 @@
 # ******************************************************************************
 # pylint: disable=redefined-outer-name
 import gzip
-import json
-import sys
-import hug
-from io import open
 import io
+import json
 import os
+import sys
+from io import open
 from os.path import dirname
+
+import hug
 import pytest
-import server.serve
+
+import nlp_architect.server.serve
+from nlp_architect.server.serve import api
 from nlp_architect.utils.text import try_to_load_spacy
-from server.serve import api
+
 if not try_to_load_spacy('en'):
     pytest.skip("\n\nSkipping test_server_sanity.py. Reason: 'spacy en' model not installed. "
                 "Please see https://spacy.io/models/ for installation instructions.\n"
@@ -151,7 +154,7 @@ def test_json_file_request(service_name):
     myHeaders = headers.copy()
     myHeaders["Content-Type"] = "application/json"
     myHeaders["RESPONSE-FORMAT"] = "json"
-    response = hug.test.post(server.serve, '/inference', body=doc, headers=myHeaders)
+    response = hug.test.post(nlp_architect.server.serve, '/inference', body=doc, headers=myHeaders)
     assert_response_struct(response.data, json.loads(expected_result))
     assert response.status == hug.HTTP_OK
 

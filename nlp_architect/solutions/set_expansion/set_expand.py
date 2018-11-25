@@ -26,13 +26,13 @@ logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-class SetExpand():
+class SetExpand(object):
     """
         Set expansion module, given a trained np2vec model.
     """
 
     def __init__(self, np2vec_model_file, binary=False, word_ngrams=False, grouping=False,
-                 light_grouping=False, grouping_map_dir=path.dirname(path.realpath(__file__))):
+                 light_grouping=False, grouping_map_dir=None):
         """
         Load the np2vec model for set expansion.
 
@@ -50,6 +50,8 @@ class SetExpand():
         if grouping:
             # load grouping info
             logger.info('loading grouping data')
+            if not grouping_map_dir:
+                grouping_map_dir = path.dirname(np2vec_model_file)
             self.np2id = load_json_file(path.join(grouping_map_dir, 'np2id'))
             if not light_grouping:
                 self.id2rep = load_json_file(path.join(grouping_map_dir, 'id2rep'))

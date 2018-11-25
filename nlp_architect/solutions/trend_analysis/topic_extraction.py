@@ -23,18 +23,19 @@ import os
 import logging
 import sys
 from multiprocessing import Pool
+from os import path, makedirs
 
 from fastText import train_unsupervised
 from newspaper import Article
 
+from nlp_architect.solutions.trend_analysis.np_scorer import NPScorer
+from nlp_architect.utils import LIBRARY_STORAGE_PATH
 from nlp_architect.utils.io import validate_existing_directory
-from solutions.trend_analysis.np_scorer import NPScorer
 from nlp_architect.utils.text import SpacyInstance
 
-current_dir = os.path.dirname(os.path.realpath(__file__))
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 logger = logging.getLogger(__name__)
-data_dir = current_dir + '/data'
+data_dir = path.join(LIBRARY_STORAGE_PATH, 'trend-analysis-data')
 
 
 def noun_phrase_extraction(docs, parser):
@@ -147,7 +148,7 @@ def unify_corpora_from_texts(text_list_t, text_list_r):
         The path of the unified corpus
     """
     logger.info('prepare data for w2v training')
-    out_file = data_dir + '/corpus.txt'
+    out_file = str(path.join(data_dir, 'corpus.txt'))
     try:
         with open(out_file, 'w+', encoding='utf-8') as writer:
             write_text_list_to_file(text_list_t, writer)
@@ -168,7 +169,7 @@ def unify_corpora_from_folders(corpus_a, corpus_b):
         The path of the unified corpus
     """
     logger.info('prepare data for w2v training')
-    out_file = data_dir + 'corpus.txt'
+    out_file = str(path.join(data_dir, 'corpus.txt'))
     try:
         with open(out_file, 'w+', encoding='utf-8') as writer:
             write_folder_corpus_to_file(corpus_a, writer)
@@ -188,7 +189,7 @@ def write_folder_corpus_to_file(corpus, writer):
     """
     for filename in os.listdir(corpus):
         try:
-            file_path = corpus + os.sep + filename
+            file_path = str(path.join(corpus, filename))
             with open(file_path, "r", encoding='utf-8') as f:
                 lines = f.readlines()
                 writer.writelines(lines)
@@ -221,7 +222,7 @@ def train_w2v_model(data):
     logger.info('Fasttext embeddings training...')
     try:
         model = train_unsupervised(input=data, model='skipgram', epoch=100, minCount=1, dim=100)
-        model.save_model(data_dir + '/W2V_Models/model.bin')
+        model.save_model(str(path.join(data_dir, 'W2V_Models/model.bin')))
     except Exception as e:
         logger.error('Error: %s', str(e))
 
@@ -261,22 +262,22 @@ def initiate_parser():
 
 def main(corpus_t, corpus_r, single_thread, no_train, url):
     try:
-        if not os.path.exists(data_dir):
-            os.makedirs(data_dir)
-        if not os.path.exists(data_dir + '/W2V_Models'):
-            os.makedirs(data_dir + '/W2V_Models')
+        if not path.exists(data_dir):
+            makedirs(data_dir)
+        if not path.exists(path.join(data_dir, 'W2V_Models')):
+            os.makedirs(path.join(data_dir, 'W2V_Models'))
     except Exception:
         logger.error('failed to create output folder.')
         sys.exit()
     if url:
-        if not os.path.isfile(corpus_t) or not os.path.isfile(corpus_r):
+        if not path.isfile(corpus_t) or not path.isfile(corpus_r):
             logger.error('Please provide a valid csv file with urls')
             sys.exit()
         else:
             text_t = load_url_content(get_urls_from_file(corpus_t))
             text_r = load_url_content(get_urls_from_file(corpus_r))
     else:
-        if not os.path.isdir(corpus_t) or not os.path.isdir(corpus_r):
+        if not path.isdir(corpus_t) or not path.isdir(corpus_r):
             logger.error('Please provide valid directories for target_corpus and'
                          ' for ref_corpus')
             sys.exit()
@@ -302,8 +303,10 @@ def main(corpus_t, corpus_r, single_thread, no_train, url):
 
     # save results to csv
 
-    save_scores(result_t, os.path.splitext(os.path.basename(corpus_t))[0] + '.csv')
-    save_scores(result_r, os.path.splitext(os.path.basename(corpus_r))[0] + '.csv')
+    # save_scores(result_t, os.path.splitext(os.path.basename(corpus_t))[0] + '.csv')
+    # save_scores(result_r, os.path.splitext(os.path.basename(corpus_r))[0] + '.csv')
+    save_scores(result_t, str(path.join(data_dir, os.path.basename(corpus_t))) + '.csv')
+    save_scores(result_r, str(path.join(data_dir, os.path.basename(corpus_r))) + '.csv')
 
     # create w2v model
     if not no_train:

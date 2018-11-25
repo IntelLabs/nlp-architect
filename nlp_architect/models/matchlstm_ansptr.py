@@ -20,7 +20,8 @@ import numpy as np
 import tensorflow as tf
 import re
 from collections import Counter
-import nltk
+
+from nlp_architect.utils.text import SpacyInstance
 
 
 class MatchLSTM_AnswerPointer(object):
@@ -47,6 +48,9 @@ class MatchLSTM_AnswerPointer(object):
         self.batch_size = params_dict['batch_size']
         self.embeddings = embeddings
         self.inference_only = params_dict['inference_only']
+
+        # init tokenizer
+        self.tokenizer = SpacyInstance(disable=['tagger', 'ner', 'parser', 'vectors', 'textcat'])
 
         # Create Placeholders
         # Question ids
@@ -409,7 +413,7 @@ class MatchLSTM_AnswerPointer(object):
         """
 
         question_words = [word.replace("``", '"').replace("''", '"')
-                          for word in nltk.word_tokenize(question_str)]
+                          for word in self.tokenizer.tokenize(question_str)]
 
         question_ids = [vocab_reverse[ele] for ele in question_words]
 

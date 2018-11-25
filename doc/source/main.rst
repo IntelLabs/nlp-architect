@@ -30,17 +30,6 @@ The library includes our past and ongoing NLP research and development efforts a
 
 NLP Architect can be downloaded from Github: https://github.com/NervanaSystems/nlp-architect
 
-How can NLP Architect be used
-=============================
-
-- Train models using provided algorithms, reference datasets and configurations
-- Train models using your own data
-- Create new/extend models based on existing models or topologies
-- Explore how deep learning models tackle various NLP tasks
-- Experiment and optimize state-of-the-art deep learning algorithms
-- integrate modules and utilities from the library to solutions
-
-
 Library Overview
 ================
 
@@ -62,6 +51,18 @@ The library contains state-of-art and novel NLP and NLU models in a variety of t
 - Sparse and quantized neural machine translation
 - Relation Identification and cross document coreference
 
+.. include:: _quick_install.rst
+
+How can NLP Architect be used
+=============================
+
+- Train models using provided algorithms, reference datasets and configurations
+- Train models using your own data
+- Create new/extend models based on existing models or topologies
+- Explore how deep learning models tackle various NLP tasks
+- Experiment and optimize state-of-the-art deep learning algorithms
+- integrate modules and utilities from the library to solutions
+
 Deep Learning frameworks
 ------------------------
 Because of the current research nature of the library, several open source deep learning frameworks are used in this repository including:
@@ -71,12 +72,9 @@ Because of the current research nature of the library, several open source deep 
 
 Overtime the list of models and frameworks included in this space will change, though all generally run with Python 3.5+
 
-.. include:: _quick_install.rst
-
 Using the Models
 ----------------
 Each of the models includes a comprehensive description on algorithms, network topologies, reference dataset descriptions and loader, and evaluation results. Overtime the list of models included in this space will grow.
-
 
 Contributing to the library
 ---------------------------

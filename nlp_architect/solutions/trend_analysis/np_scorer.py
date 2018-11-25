@@ -13,21 +13,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
-from os import path
 import logging
 import sys
+from os import path, makedirs
 
-from nlp_architect.pipelines.spacy_np_annotator import NPAnnotator, get_noun_phrases
-from nlp_architect.utils.io import download_unlicensed_file
-from nlp_architect.utils.text import SpacyInstance
-from solutions.trend_analysis.scoring_utils import TextSpanScoring
 from tqdm import tqdm
 
+from nlp_architect.pipelines.spacy_np_annotator import NPAnnotator, get_noun_phrases
+from nlp_architect.solutions.trend_analysis.scoring_utils import TextSpanScoring
+from nlp_architect.utils import LIBRARY_STORAGE_PATH
+from nlp_architect.utils.io import download_unlicensed_file
+from nlp_architect.utils.text import SpacyInstance
 
-cur_dir = path.dirname(path.realpath(__file__))
 nlp_chunker_url = 'http://nervana-modelzoo.s3.amazonaws.com/NLP/chunker/'
 chunker_model_dat_file = 'model_info.dat.params'
 chunker_model_file = 'model.h5'
+chunker_local_path = path.join(LIBRARY_STORAGE_PATH, 'chunker-pretrained')
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 logger = logging.getLogger(__name__)
 
@@ -41,13 +42,15 @@ class NPScorer(object):
             self.nlp = parser
 
         self.nlp.add_pipe(self.nlp.create_pipe('sentencizer'), first=True)
-        _path_to_model = path.join(cur_dir, chunker_model_file)
+        _path_to_model = path.join(chunker_local_path, chunker_model_file)
+        if not path.exists(chunker_local_path):
+            makedirs(chunker_local_path)
         if not path.exists(_path_to_model):
             logger.info(
                 'The pre-trained model to be downloaded for NLP Architect word'
                 ' chunker model is licensed under Apache 2.0')
             download_unlicensed_file(nlp_chunker_url, chunker_model_file, _path_to_model)
-        _path_to_params = path.join(cur_dir, chunker_model_dat_file)
+        _path_to_params = path.join(chunker_local_path, chunker_model_dat_file)
         if not path.exists(_path_to_params):
             download_unlicensed_file(nlp_chunker_url, chunker_model_dat_file, _path_to_params)
         self.nlp.add_pipe(NPAnnotator.load(_path_to_model, _path_to_params), last=True)

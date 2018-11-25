@@ -23,4 +23,6 @@
 
 .. autoclass:: nlp_architect.api.ner_api.NerApi
 
-.. autoclass:: nlp_architect.api.spacy_ner_api.SpacyNerApi
+.. autoclass:: nlp_architect.api.intent_extraction.IntentExtractionApi
+
+.. autoclass:: nlp_architect.api.machine_comprehension.MachineComprehensionApi

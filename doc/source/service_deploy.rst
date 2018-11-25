@@ -111,27 +111,12 @@ Create a Dockerfile with the following content and save it in your deployment di
     RUN git fetch
     RUN git checkout ${NLP_ARCH_VERSION}
     
-    # reason for listing them here is then we can leverage docker caching for future deployments
-    # NOTE: setuptools req is because tensorflow 1.9.0 requires <=39.1.0
-    RUN pip install -r requirements.txt
-    
     # install nlp-architect project itself
     RUN pip3 install .
-    
-    # load data the way `make test` does it so we don't get prompted
-    RUN spacy download en
-    RUN python -c 'from nlp_architect.api.ner_api import NerApi; NerApi(prompt=False)'
-    
-    # due to bug in nlp-architect ner file is not in same place
-    # /usr/local/lib/python3.6/site-packages/nlp_architect/api/ner-pretrained/model.h5
-    # vs
-    # /src/nlp-architect/nlp_architect/api/ner-pretrained/model.h5
-    # so will move it for now
-    RUN cp -r nlp_architect/api/ner-pretrained /usr/local/lib/python3.6/site-packages/nlp_architect/api/
-    
-    CMD [ "hug", "-p", "8080", "-f", "server/serve.py" ]
 
-
+    # run NLP Architect server
+    CMD [ "nlp_architect", "server", "-p", "8080"]
+    
 Run the following commands to build the docker file
 
 .. code::

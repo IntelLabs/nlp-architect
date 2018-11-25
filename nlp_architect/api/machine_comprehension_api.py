@@ -20,7 +20,7 @@ from __future__ import print_function
 import os
 import re
 import zipfile
-from os import path, makedirs
+from os import makedirs
 from random import shuffle
 
 import numpy as np
@@ -28,6 +28,7 @@ import tensorflow as tf
 
 from nlp_architect.api.abstract_api import AbstractApi
 from nlp_architect.models.matchlstm_ansptr import MatchLSTM_AnswerPointer
+from nlp_architect.utils import LIBRARY_STORAGE_PATH
 from nlp_architect.utils.generic import license_prompt
 from nlp_architect.utils.io import download_unlicensed_file
 from nlp_architect.utils.mrc_utils import (
@@ -38,11 +39,11 @@ class MachineComprehensionApi(AbstractApi):
     """
     Machine Comprehension API
     """
-    dir = os.path.dirname(path.realpath(__file__))
-    data_path = os.path.join(dir, 'mrc_data/data')
+    dir = os.path.join(LIBRARY_STORAGE_PATH, 'mrc-pretrained')
+    data_path = os.path.join(dir, 'mrc_data', 'data')
     data_dir = os.path.join(dir, 'mrc_data')
     model_dir = os.path.join(dir, 'mrc_trained_model')
-    model_path = os.path.join(dir, 'mrc_trained_model/trained_model')
+    model_path = os.path.join(dir, 'mrc_trained_model', 'trained_model')
 
     def __init__(self, prompt=True):
         self.prompt = None
@@ -209,9 +210,8 @@ class MachineComprehensionApi(AbstractApi):
                                          dynamic_question_index=paragraph_id)
 
     def get_paragraphs(self):
-        ret = {}
-        ret['paragraphs'] = self.paragraphs(self.dev, [self.vocab_dict, self.vocab_rev],
-                                            num_examples=5)
-        ret['questions'] = self.questions(self.dev, [self.vocab_dict, self.vocab_rev],
-                                          num_examples=5)
+        ret = {'paragraphs': self.paragraphs(self.dev, [self.vocab_dict, self.vocab_rev],
+                                             num_examples=5),
+               'questions': self.questions(self.dev, [self.vocab_dict, self.vocab_rev],
+                                           num_examples=5)}
         return ret

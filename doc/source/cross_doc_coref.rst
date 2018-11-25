@@ -49,6 +49,7 @@ The system achieved the following:
 * Best in class results achieve on ECB+ Event Cross Document Co-Reference (**79.0% F1**) using the sieves set *[Head Lemma, Exact Match, Wikipedia Redirect, Wikipedia Disambiguation and Fuzzy Head]*
 
 .. [1] ECB+: Agata Cybulska and Piek Vossen. 2014. Using a sledgehammer to crack a nut? Lexical diversity and event coreference resolution.
+
 In Proceedings of the 9th international conference on Language Resources and Evaluation (LREC2014)
 ECB+ annotation is held copyright by Agata Cybulska, Piek Vossen and the VU University of Amsterdam.
 

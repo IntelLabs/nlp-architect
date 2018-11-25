@@ -126,7 +126,7 @@ Running inference on a trained model using an input file (text based, each line 
 
 .. code:: python
 
-	python examples/chunker/inference.py --model_name <model_name> --input <input_file>.txt
+    python examples/chunker/inference.py --model_name <model_name> --input <input_file>.txt
 
 
 .. _CONLL2000: https://www.clips.uantwerpen.be/conll2000/chunking/

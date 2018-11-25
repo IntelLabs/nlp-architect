@@ -14,8 +14,8 @@
 .. limitations under the License.
 .. ---------------------------------------------------------------------------
 
-Quick Installation wizard
--------------------------
+Quick Install
+-------------
 Select the desired configuration of your system:
 
 .. raw:: html
@@ -25,6 +25,18 @@ Select the desired configuration of your system:
         <colgroup><col class="option">
         <col class="description">
         </colgroup><tbody valign="top">
+        <tr><td class="option-group">
+        <kbd><span class="option">
+            <strong>Install from</strong>
+        </span></kbd></td>
+        <td>
+            <label class="radio">
+              <input v-model="form.source" type="radio" value="1">Pip
+            </label>
+            <label class="radio">
+              <input v-model="form.source" type="radio" value="0" checked>GitHub
+            </label>
+        </td></tr>
         <tr><td class="option-group">
         <kbd><span class="option">
             <strong>Create virtualenv?</strong>
@@ -72,9 +84,7 @@ Run the following commands to install NLP Architect:
 .. raw:: html
 
     <div class="code python highlight-default notranslate"><div class="highlight">
-    <pre><span class="n" v-html="get_env()"></span>
-    <span class="n">export NLP_ARCHITECT_BE={{ get_be() }}</span>
-    <span class="n">pip3 install {{ get_mode() }}.</span>
+    <pre v-html="get_commands()">
     </pre></div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>

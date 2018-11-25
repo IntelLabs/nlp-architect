@@ -14,6 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
+import io
 import os
 import platform
 import subprocess
@@ -21,11 +22,13 @@ import sys
 
 from setuptools import setup, find_packages
 
-from nlp_architect.version import nlp_architect_version
+root = os.path.abspath(os.path.dirname(__file__))
 
 # required packages for NLP Architect
 requirements = [
+    # DL frameworks
     "dynet==2.0.2",
+    # NLP/DS apps
     "spacy<2.0.12",
     "nltk",
     "gensim",
@@ -34,7 +37,8 @@ requirements = [
     "numpy<=1.14.5",
     "tensorflow_hub",
     "elasticsearch",
-    "fastText@git+https://github.com/facebookresearch/fastText.git#egg=fastText",
+    "fasttextmirror",  # temp fix
+    # General utils
     "newspaper3k",
     "wordfreq",
     "seqeval",
@@ -50,10 +54,12 @@ requirements = [
     "requests",
     "termcolor",
     "pillow",
-    "setuptools==39.1.0",
+    "setuptools",
+    # Server
     "hug",
     "falcon",
     "falcon_multipart",
+    # Docs
     "sphinx",
     "sphinx_rtd_theme",
 ]
@@ -70,7 +76,7 @@ test_requirements = [
 
 # check if GPU available
 p = subprocess.Popen(['command -v nvidia-smi'], stdout=subprocess.PIPE, shell=True)
-out = p.communicate()[0].decode('UTF-8')
+out = p.communicate()[0].decode('utf8')
 gpu_available = len(out) > 0
 
 # check python version
@@ -93,15 +99,19 @@ if 'linux' in sys.platform:
         chosen_tf = 'tensorflow-gpu=={}'.format(tf_version)
 requirements.append(chosen_tf)
 
-with open('README.md', encoding='UTF-8') as fp:
+with open('README.md', encoding='utf8') as fp:
     long_desc = fp.read()
 
-setup(name='nlp_architect',
-      version=nlp_architect_version(),
-      description='NLP Architect by Intel AI Lab: Python library for exploring the '
-                  'state-of-the-art deep learning topologies and techniques for natural language '
-                  'processing and natural language understanding',
+with io.open(os.path.join(root, 'nlp_architect', 'version.py'), encoding='utf8') as f:
+    version_f = {}
+    exec(f.read(), version_f)
+    version = version_f['NLP_ARCHITECT_VERSION']
+
+setup(name='nlp-architect',
+      version=version,
+      description='Intel AI Lab\'s open-source NLP and NLU research library',
       long_description=long_desc,
+      long_description_content_type='text/markdown',
       keywords='NLP NLU deep learning natural language processing tensorflow keras dynet',
       author='Intel AI Lab',
       author_email='nlp_architect@intel.com',
@@ -115,26 +125,32 @@ setup(name='nlp_architect',
       include_package_data=True,
       package_data={
           'server': ['services.json'],
-          'nlp_architect.utils.resources': ['preposition_en.json', 'pronoun_en.json',
-                                            'stop_words_en.json', 'stopwords.txt']
+          'nlp_architect.utils.resources': ['*.json', '*.txt'],
+          'nlp_architect.solutions.set_expansion': ['ui/download.js',
+                                                    'ui/static/css/styles.css',
+                                                    'ui/templates/index.html'],
+          'nlp_architect.solutions.trend_analysis': ['assets/flow.png',
+                                                     'ui/static/css/styles.css'],
       },
       classifiers=[
           'Development Status :: 3 - Alpha',
-          'Environment :: Console',
-          'Environment :: Web Environment',
           'Intended Audience :: End Users/Desktop',
           'Intended Audience :: Developers',
           'Intended Audience :: Science/Research',
           'License :: OSI Approved :: Apache Software License',
-          'Operating System :: POSIX',
-          'Operating System :: MacOS :: MacOS X',
           'Programming Language :: Python :: 3',
+          'Programming Language :: Python :: 3.5',
+          'Programming Language :: Python :: 3.6',
+          'Topic :: Scientific/Engineering',
           'Topic :: Scientific/Engineering :: ' +
           'Artificial Intelligence',
-          'Topic :: Scientific/Engineering :: ' +
-          'Natural Language Processing',
-          'Topic :: Scientific/Engineering :: ' +
-          'Natural Language Understanding',
+          'Topic :: Software Development :: Libraries',
+          'Topic :: Software Development :: Libraries :: ' +
+          'Python Modules',
           'Topic :: Scientific/Engineering :: Information Analysis',
-          'Topic :: System :: Distributed Computing']
+          'Environment :: Console',
+          'Environment :: Web Environment',
+          'Operating System :: POSIX',
+          'Operating System :: MacOS :: MacOS X',
+      ]
       )

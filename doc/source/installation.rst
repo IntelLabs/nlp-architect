@@ -40,27 +40,66 @@ Before installing the library make sure you has the most recent packages listed 
 
 Installation
 ============
+Prerequisites
+-------------
 
-We recommend installing NLP Architect within a virtual environment to ensure a self-contained environment.
+Make sure ``pip`` and ``setuptools`` and ``venv`` are up to date before installing.
 
-To get started using our library, clone our repository:
+.. code:: bash
 
-.. code:: python
+    pip3 install -U pip setuptools venv
 
-  git clone https://github.com/NervanaSystems/nlp-architect.git
-  cd nlp-architect
+We recommend installing NLP Architect in a virtual environment to self-contain
+the work done using the library.
 
-Installing NLP Architect within a virtual environment to ensure a self-contained
-environment is recommended.
+To create and activate a new virtual environment (or skip this step and use the wizard below):
 
-Make sure ``pip`` and ``setuptools`` are updated:
+.. code:: bash
 
-.. code:: python
-
-  pip3 install -U pip setuptools
+    python3 -m venv .nlp_architect_env
+    source .nlp_architect_env/bin/activate
 
 
 .. include:: _quick_install.rst
+
+Install from source
+-------------------
+
+To get started, clone our repository:
+
+.. code:: bash
+
+    git clone https://github.com/NervanaSystems/nlp-architect.git
+    cd nlp-architect
+
+Selecting a backend
+^^^^^^^^^^^^^^^^^^^
+
+NLP Architect supports CPU, GPU and Intel Optimized Tensorflow (MKL-DNN) backends.
+Users can select the desired backend using a dedicated environment variable (default: CPU). (MKL-DNN and GPU backends are supported only on Linux)
+
+.. code:: bash
+
+    export NLP_ARCHITECT_BE=CPU/MKL/GPU
+
+Installation
+^^^^^^^^^^^^
+
+NLP Architect is installed using `pip` and it is recommended to install in development mode.
+
+Default:
+
+.. code:: bash
+
+    pip3 install .
+
+Development mode:
+
+.. code:: bash
+
+    pip3 install -e .
+
+Once installed, the ``nlp_architect`` command provides additional options to work with the library, issue ``nlp_architect -h`` to see all options.
 
 ======
 

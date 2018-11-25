@@ -13,32 +13,30 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
-
-from __future__ import (absolute_import, division, print_function,
-                        unicode_literals)
-
+import argparse
+import csv
+import logging
+import operator
 import os
 import sys
-import csv
-import numpy
-import operator
-import argparse
-import logging
+from os import path
 from pathlib import Path
 from shutil import copyfile
+
+import numpy
 import pandas as pd
 from fastText import load_model
 from sklearn.manifold import TSNE
 
-from nlp_architect.utils.text import simple_normalizer
+from nlp_architect.utils import LIBRARY_STORAGE_PATH
 from nlp_architect.utils.io import check_size, validate_existing_filepath
+from nlp_architect.utils.text import simple_normalizer
 
-
-dir = os.path.dirname(os.path.realpath(__file__))
+dir = path.join(LIBRARY_STORAGE_PATH, 'trend-analysis-data')
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 logger = logging.getLogger(__name__)
-target_topics_path = dir + '/data/target_topics.csv'
-ref_topics_path = dir + '/data/ref_topics.csv'
+target_topics_path = path.join(dir, 'target_topics.csv')
+ref_topics_path = path.join(dir, 'ref_topics.csv')
 
 
 def analyze(target_data, ref_data, tar_header, ref_header, top_n=10000, top_n_vectors=500,
@@ -67,8 +65,8 @@ def analyze(target_data, ref_data, tar_header, ref_header, top_n=10000, top_n_ve
     create_clusters = False
     try:
         if not re_analysis:  # first analysis, not through ui
-            copyfile(target_data, dir + '/data/target_scores.csv')
-            copyfile(ref_data, dir + '/data/ref_scores.csv')
+            copyfile(target_data, target_topics_path)
+            copyfile(ref_data, ref_topics_path)
         calc_scores(target_data, tfidf_w, cval_w, lm_w, target_topics_path)
         calc_scores(ref_data, tfidf_w, cval_w, lm_w, ref_topics_path)
         # unify all topics:
@@ -81,7 +79,7 @@ def analyze(target_data, ref_data, tar_header, ref_header, top_n=10000, top_n_ve
         logger.info("Total number of evaluated topics: %s", str(len(rep2rank)))
 
         # compute 2D space clusters if model exists:
-        w2v_loc = dir + '/data/W2V_Models/model.bin'
+        w2v_loc = path.join(dir, 'W2V_Models/model.bin')
         if os.path.isfile(w2v_loc):
             all_topics_sorted = sorted(rep2rank, key=rep2rank.get)
             top_n_scatter = len(
@@ -122,8 +120,8 @@ def save_report_data(hash2group, groups_r_sorted, groups_t_sorted,
                      trends_sorted, all_topics_sorted, create_clusters,
                      target_header, ref_header, tfidf_w, cval_w, freq_w,
                      in_model_count, top_n_scatter):
-    filter_output = dir + '/data/filter_phrases.csv'
-    data_output = dir + '/data/graph_data.csv'
+    filter_output = path.join(dir, 'filter_phrases.csv')
+    data_output = path.join(dir, 'graph_data.csv')
     logger.info('writing results to: %s and: %s ', str(data_output), str(filter_output))
 
     reports_column = [
@@ -242,7 +240,7 @@ def compute_scatter_subwords(top_groups, w2v_loc):
     in_ctr = 0
 
     try:
-        if os.path.isfile(w2v_loc):
+        if path.isfile(w2v_loc):
             logger.info("computing scatter on %s groups", str(len(top_groups)))
             model = load_model(w2v_loc)
             for a in top_groups:

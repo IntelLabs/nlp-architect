@@ -20,30 +20,28 @@ import numpy as np
 
 from nlp_architect.api.abstract_api import AbstractApi
 from nlp_architect.models.ner_crf import NERCRF
+from nlp_architect.utils import LIBRARY_STORAGE_PATH
 from nlp_architect.utils.generic import pad_sentences
 from nlp_architect.utils.io import download_unlicensed_file
 from nlp_architect.utils.text import SpacyInstance, bio_to_spans
-
-nlp = SpacyInstance(disable=['tagger', 'ner', 'parser', 'vectors', 'textcat'])
 
 
 class NerApi(AbstractApi):
     """
     NER model API
     """
-    dir = path.dirname(path.realpath(__file__))
-    pretrained_model = path.join(dir, 'ner-pretrained', 'model.h5')
-    pretrained_model_info = path.join(dir, 'ner-pretrained', 'model_info.dat')
+    model_dir = path.join(LIBRARY_STORAGE_PATH, 'ner-pretrained')
+    pretrained_model = path.join(model_dir, 'model.h5')
+    pretrained_model_info = path.join(model_dir, 'model_info.dat')
 
     def __init__(self, prompt=True):
         self.model = None
         self.model_info = None
-        self.model_path = NerApi.pretrained_model
-        self.model_info_path = NerApi.pretrained_model_info
         self.word_vocab = None
         self.y_vocab = None
         self.char_vocab = None
         self._download_pretrained_model(prompt)
+        self.nlp = SpacyInstance(disable=['tagger', 'ner', 'parser', 'vectors', 'textcat'])
 
     @staticmethod
     def _prompt():
@@ -60,28 +58,27 @@ class NerApi(AbstractApi):
 
     def _download_pretrained_model(self, prompt=True):
         """Downloads the pre-trained BIST model if non-existent."""
-        dir_path = path.join(self.dir, 'ner-pretrained')
-        model_exists = path.isfile(path.join(dir_path, 'model.h5'))
-        model_info_exists = path.isfile(path.join(dir_path, 'model_info.dat'))
-        if (not model_exists or not model_info_exists):
+        model_exists = path.isfile(self.pretrained_model)
+        model_info_exists = path.isfile(self.pretrained_model_info)
+        if not model_exists or not model_info_exists:
             print('The pre-trained models to be downloaded for the NER dataset '
                   'are licensed under Apache 2.0. By downloading, you accept the terms '
                   'and conditions provided by the license')
-            makedirs(dir_path, exist_ok=True)
+            makedirs(self.model_dir, exist_ok=True)
             if prompt is True:
                 agreed = NerApi._prompt()
                 if agreed is False:
                     sys.exit(0)
             download_unlicensed_file('http://nervana-modelzoo.s3.amazonaws.com/NLP/ner/',
-                                     'model.h5', self.model_path)
+                                     'model.h5', self.pretrained_model)
             download_unlicensed_file('http://nervana-modelzoo.s3.amazonaws.com/NLP/ner/',
-                                     'model_info.dat', self.model_info_path)
+                                     'model_info.dat', self.pretrained_model_info)
             print('Done.')
 
     def load_model(self):
         self.model = NERCRF()
-        self.model.load(self.model_path)
-        with open(self.model_info_path, 'rb') as fp:
+        self.model.load(self.pretrained_model)
+        with open(self.pretrained_model_info, 'rb') as fp:
             model_info = pickle.load(fp)
         self.word_vocab = model_info['word_vocab']
         self.y_vocab = {v: k for k, v in model_info['y_vocab'].items()}
@@ -104,10 +101,9 @@ class NerApi(AbstractApi):
         print({"doc": ret, 'type': 'high_level'})
         return {"doc": ret, 'type': 'high_level'}
 
-    @staticmethod
-    def process_text(text):
+    def process_text(self, text):
         input_text = ' '.join(text.strip().split())
-        return nlp.tokenize(input_text)
+        return self.nlp.tokenize(input_text)
 
     def vectorize(self, doc, vocab, char_vocab):
         words = np.asarray([vocab[w.lower()] if w.lower() in vocab else 1 for w in doc]) \

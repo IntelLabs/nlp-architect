@@ -94,7 +94,7 @@ Dataset implementations and data loaders (check deep learning framework compatib
 ---------------------------
 .. currentmodule:: nlp_architect.pipelines
 
-NLP pipelines modules using models implemented from ``nlp_architect.models``
+NLP pipelines modules using NLP Architect models
 
 .. autosummary::
     :toctree: generated/
@@ -132,5 +132,7 @@ Common types of data structures used by NLP models
     :toctree: generated/
     :nosignatures:
 
+    nlp_architect.common.core_nlp_doc.CoreNLPDoc
+    nlp_architect.common.high_level_doc.HighLevelDoc
     nlp_architect.common.cdc.mention_data.MentionDataLight
     nlp_architect.common.cdc.mention_data.MentionData
