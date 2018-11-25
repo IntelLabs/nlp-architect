@@ -15,6 +15,7 @@
 # ******************************************************************************
 
 import os
+import logging
 
 from nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_page import WikipediaPage
 from nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_page_extracted_relations import \
@@ -26,6 +27,8 @@ os.environ['PYWIKIBOT_NO_USER_CONFIG'] = '1'
 
 DISAMBIGUATE_PAGE = ['wikimedia disambiguation page', 'wikipedia disambiguation page']
 NAME_DESCRIPTIONS = ['given name', 'first name', 'family name']
+
+logger = logging.getLogger(__name__)
 
 
 class WikiOnline(object):
@@ -52,7 +55,7 @@ class WikiOnline(object):
                     full_page = self.get_wiki_page_with_items(phrase, page_result)
                     ret_pages.add(WikipediaSearchPageResult(appr, full_page))
             except Exception as e:
-                print(e)
+                logger.error(e)
 
         self.cache[phrase] = ret_pages
         return ret_pages
@@ -73,7 +76,7 @@ class WikiOnline(object):
 
         ret_page = WikipediaPage(phrase, None, page_title, None, 0, pageid, description, relations)
 
-        print('Page:' + str(ret_page) + ". Extracted successfully")
+        logger.debug('Page:' + str(ret_page) + ". Extracted successfully")
 
         return ret_page
 

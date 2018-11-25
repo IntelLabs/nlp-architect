@@ -29,7 +29,7 @@ class RunSystemsSuper(object):
         self.results_dict = dict()
         self.results_ordered = []
         logger.info('loading topic %s, total mentions: %d', topic.topic_id, len(topic.mentions))
-        self.clusters = Clusters(topic.mentions)
+        self.clusters = Clusters(topic.topic_id, topic.mentions)
 
     @staticmethod
     def set_sieves_from_config(config, get_rel_extraction):

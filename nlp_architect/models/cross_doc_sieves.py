@@ -15,6 +15,7 @@
 # ******************************************************************************
 import logging
 import os
+from typing import List
 
 from nlp_architect.common.cdc.cluster import Clusters
 from nlp_architect.models.cross_doc_coref.system.cdc_settings import CDCSettings
@@ -27,7 +28,7 @@ from nlp_architect.utils import io
 logger = logging.getLogger(__name__)
 
 
-def run_event_coref(resources: CDCSettings) -> Clusters:
+def run_event_coref(resources: CDCSettings) -> List[Clusters]:
     """
     Running Cross Document Coref on event mentions
     Args:
@@ -37,12 +38,12 @@ def run_event_coref(resources: CDCSettings) -> Clusters:
         Clusters: List of clusters and mentions with predicted cross doc coref within each topic
     """
     io.create_folder(resources.cdc_resources.eval_output_dir)
+    event_clusters_list = list()
     for topic in resources.events_topics.topics_list:
         sieves_list_event = RunSystemsEvent(topic, resources)
         clusters = sieves_list_event.run_deterministic()
-
         clusters.set_coref_chain_to_mentions()
-
+        event_clusters_list.append(clusters)
         with open(os.path.join(
                 resources.cdc_resources.eval_output_dir, 'event_clusters.txt'), 'w') \
                 as event_clusters_file:
@@ -51,10 +52,10 @@ def run_event_coref(resources: CDCSettings) -> Clusters:
     logger.info('Write event coref results')
     write_event_coref_scorer_results(resources.events_topics.topics_list,
                                      resources.cdc_resources.eval_output_dir)
-    return clusters
+    return event_clusters_list
 
 
-def run_entity_coref(resources: CDCSettings) -> Clusters:
+def run_entity_coref(resources: CDCSettings) -> List[Clusters]:
     """
     Running Cross Document Coref on Entity mentions
     Args:
@@ -64,11 +65,12 @@ def run_entity_coref(resources: CDCSettings) -> Clusters:
         Clusters: List of topics and mentions with predicted cross doc coref within each topic
     """
     io.create_folder(resources.cdc_resources.eval_output_dir)
+    entity_clusters_list = list()
     for topic in resources.entity_topics.topics_list:
         sieves_list_entity = RunSystemsEntity(topic, resources)
         clusters = sieves_list_entity.run_deterministic()
-
         clusters.set_coref_chain_to_mentions()
+        entity_clusters_list.append(clusters)
 
         with open(os.path.join(
                 resources.cdc_resources.eval_output_dir, 'entity_clusters.txt'), 'w') \
@@ -79,4 +81,4 @@ def run_entity_coref(resources: CDCSettings) -> Clusters:
     write_entity_coref_scorer_results(resources.entity_topics.topics_list,
                                       resources.cdc_resources.eval_output_dir)
 
-    return clusters
+    return entity_clusters_list

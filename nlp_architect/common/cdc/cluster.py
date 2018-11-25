@@ -65,7 +65,7 @@ class Cluster(object):
 class Clusters(object):
     cluster_coref_chain = 1000
 
-    def __init__(self, mentions: List[MentionData] = None) -> None:
+    def __init__(self, topic_id: str, mentions: List[MentionData] = None) -> None:
         """
 
         Args:
@@ -73,6 +73,7 @@ class Clusters(object):
                 The initial mentions to create the clusters from
         """
         self.clusters_list = []
+        self.topic_id = topic_id
         self.set_initial_clusters(mentions)
 
     def set_initial_clusters(self, mentions: List[MentionData]) -> None:

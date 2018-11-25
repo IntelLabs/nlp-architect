@@ -37,9 +37,9 @@ class Topics(object):
         Args:
             mentions_file_path: this topic mentions json file
         """
-        self.topics_list = self.load_gold_mentions(mentions_file_path)
+        self.topics_list = self.load_gold_mentions_from_file(mentions_file_path)
 
-    def load_gold_mentions(self, mentions_file_path: str) -> List[Topic]:
+    def load_gold_mentions_from_file(self, mentions_file_path: str) -> List[Topic]:
         start_data_load = time.time()
         logger.info('Loading mentions from-%s', mentions_file_path)
         mentions = load_json_file(mentions_file_path)
