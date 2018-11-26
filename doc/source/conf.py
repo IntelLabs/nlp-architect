@@ -20,7 +20,7 @@ import sys
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
-from nlp_architect.version import nlp_architect_version
+from nlp_architect.version import NLP_ARCHITECT_VERSION
 
 sys.path.insert(0, os.path.abspath('../..'))
 
@@ -87,7 +87,7 @@ copyright = u'NLP Architect by Intel® AI Lab is a trademarks of Intel Corporati
 # built documents.
 #
 # The short X.Y.Z version.
-version = nlp_architect_version()
+version = NLP_ARCHITECT_VERSION
 # The full version, including git-hash and alpha/beta/rc tags.
 release = version
 

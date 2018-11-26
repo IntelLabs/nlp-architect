@@ -64,7 +64,7 @@ First stage
 
 .. code:: python
 
-    usage: topic_extraction.py [-h] [--notrain] [--url] [--single_thread]
+    usage: python -m nlp_architect.solutions.trend_analysis.topic_extraction.py [-h] [--notrain] [--url] [--single_thread]
                                target_corpus ref_corpus
 
     positional arguments:
@@ -86,7 +86,7 @@ Second stage
 
 .. code:: python
 
-    usage: trend_analysis.py [-h] [--top_n TOP_N] [--top_vectors TOP_VECTORS]
+    usage: python -m nlp_architect.solutions.trend_analysis.trend_analysis.py [-h] [--top_n TOP_N] [--top_vectors TOP_VECTORS]
                          target_topics ref_topics
 
     positional arguments:
@@ -114,15 +114,14 @@ In order to visualize the analysis results run:
 
 .. code:: python
 
-    bokeh serve --show ui
+    python -m nlp_architect.solutions.start_ui --solution trend_analysis
 
 
-You can also load the ui as a server using bokeh's options --address and --port, for example:
+You can also load the UI as a server using --address and --port, for example:
 
 .. code:: python
 
-    bokeh serve ui --address=12.13.14.15 --port=1010 --allow-websocket-origin=12.13.14.15:1010
-
+    python -m nlp_architect.solutions.start_ui --solution trend_analysis --address=12.13.14.15 --port=1010
 
 and then access it through a browser: http://12.13.14.15:1010/ui
 

@@ -5,7 +5,7 @@
 /out-tsc
 
 # dependencies
-/node_modules
+/nlp_architect/server/angular-ui/node_modules
 
 # IDEs and editors
 /.idea

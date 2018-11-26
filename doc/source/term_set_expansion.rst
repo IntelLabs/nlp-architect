@@ -47,7 +47,7 @@ This is done by running:
 
 .. code:: python
 
-  python solutions/set_expansion/prepare_data.py --corpus TRAINING_CORPUS --marked_corpus MARKED_TRAINING_CORPUS
+  python -m nlp_architect.solutions.set_expansion.prepare_data.py --corpus TRAINING_CORPUS --marked_corpus MARKED_TRAINING_CORPUS
 
   optional arguments:
   --corpus CORPUS       path to the input corpus. Compressed files (gz) are
@@ -103,7 +103,7 @@ It can be done in two ways:
 
     .. code:: python
 
-      python solutions/set_expansion/set_expand.py --np2vec_model_file MODEL_PATH --topn TOPN
+      python -m nlp_architect.solutions.set_expansionset_expand.py --np2vec_model_file MODEL_PATH --topn TOPN
 
 2. Web application
 
@@ -111,7 +111,7 @@ It can be done in two ways:
 
         .. code:: python
 
-          python expand_server.py [--host HOST] [--port PORT] [--similarity SIMILARITY] model_path
+          python -m nlp_architect.solutions.set_expansion.expand_server.py [--host HOST] [--port PORT] [--similarity SIMILARITY] model_path
 
           positional arguments:
           model_path            a path to the w2v model file
@@ -134,23 +134,20 @@ It can be done in two ways:
 
         .. note::
 
-          default server will listen on http://localhost:1234 . If you set the host/port you should also set it in the ``ui/settings.py`` file.
+          default server will listen on http://localhost:1234 . If you set the host/port you should also set it in the ``nlp_architect/solutions/set_expansion/ui/settings.py`` file.
 
     B.  Run the UI application:
 
         .. code:: python
 
-          bokeh serve --show ui
+          python -m nlp_architect.solutions.start_ui --solution set_expansion
 
-        **Note**: If you set the host/port of the expand server you
-        should also set it in the ui/settings.py file.
-
-        You can also load the ui
-        application as a server using the bokeh options --address and --port, for example:
+        You can also load the UI
+        application as a server on different address/port using the following command:
 
         .. code:: python
 
-          bokeh serve ui --address=12.13.14.15 --port=1010 --allow-websocket-origin=12.13.14.15:1010
+          python -m nlp_architect.solutions.start_ui --solution set_expansion --address=12.13.14.15 --port=1010
 
         The UI is a simple web based application for communicating with the server and performing expansion and annotation.
 

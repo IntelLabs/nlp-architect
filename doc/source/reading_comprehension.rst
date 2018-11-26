@@ -47,9 +47,11 @@ The terms and conditions of the data set license apply. Intel does not grant any
 3. Download the GloVe pretrained embeddings from http://nlp.stanford.edu/data/glove.6B.zip and copy ``glove.6B.300d.txt`` file into the ``data`` directory. For more information about GloVe please visit https://nlp.stanford.edu/projects/glove/. The terms and conditions of the data set license apply. Intel does not grant any rights to the data files.
 4. Preprocess the data set using the following command:
 
+
 .. code:: python
 
   python examples/reading_comprehension/prepare_data.py --data_path data/
+
 
 Running Modalities
 ==================
@@ -83,6 +85,7 @@ The command line options available are:
 --restore_model     choose whether to restore training from a previously saved model. Default is False.
 --inference_mode    choose whether to run inference only
 --num_examples      enter the number of examples to run inference. Default is 50.
+
 Results
 -------
 After training starts, you will see outputs similar to this:
@@ -117,6 +120,7 @@ after 15 epochs, you should expect to see a F1 and EM scores on the development 
 
 References
 ==========
+
 .. [1] SQuAD: 100,000+ Questions for Machine Comprehension of Text. Authors: Pranav Rajpurkar, Jian Zhang, Konstantin Lopyrev, Percy Liang.
    Subjects: Computation and Language(cs.CL). arXiv:1606.05250 [cs.CL][https://arxiv.org/abs/1606.05250]. License: https://creativecommons.org/licenses/by-sa/4.0/legalcode
 .. [2] Jeffrey Pennington, Richard Socher, and Christopher D. Manning. 2014 https://nlp.stanford.edu/pubs/glove.pdf. License: http://www.opendatacommons.org/licenses/pddl/1.0/

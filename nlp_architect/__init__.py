@@ -15,5 +15,5 @@
 # ******************************************************************************
 from os import path
 
-
-LIBRARY_ROOT = path.dirname(path.dirname(path.realpath(__file__)))
+LIBRARY_PATH = path.dirname(path.realpath(__file__))
+LIBRARY_ROOT = path.dirname(LIBRARY_PATH)

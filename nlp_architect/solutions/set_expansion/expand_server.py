@@ -19,9 +19,9 @@ import argparse
 import pickle
 import logging
 import sys
-from solutions.set_expansion import set_expand
+from nlp_architect.solutions.set_expansion import set_expand
 from nlp_architect.utils.io import validate_existing_filepath, check_size
-from solutions.set_expansion.prepare_data import load_parser, extract_noun_phrases
+from nlp_architect.solutions.set_expansion.prepare_data import load_parser, extract_noun_phrases
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 logger = logging.getLogger(__name__)

@@ -14,33 +14,16 @@
 # limitations under the License.
 # ******************************************************************************
 """ Service file used to import different features for server """
-import gzip
-import io
 import json
 import logging
 import os.path
 from importlib import import_module
+from os import path
+
+from nlp_architect.utils.io import gzip_str
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
-
-
-# Utility functions, need to move to a util file
-def gzip_str(g_str):
-    """
-    Transform string to GZIP coding
-
-    Args:
-        g_str (str): string of data
-
-    Returns:
-        GZIP bytes data
-    """
-    compressed_str = io.BytesIO()
-    with gzip.GzipFile(fileobj=compressed_str, mode='w') as file_out:
-        file_out.write((json.dumps(g_str).encode()))
-    bytes_obj = compressed_str.getvalue()
-    return bytes_obj
 
 
 def format_response(resp_format, parsed_doc):
@@ -124,7 +107,6 @@ def extract_module_name(model_path):
     """
     class_name = "".join(model_path.split(".")[0].title().split("_"))
     return class_name
-########################################
 
 
 class Service(object):
@@ -176,10 +158,9 @@ class Service(object):
         Returns:
             The loaded service
         """
-        with open(os.path.join(package_home(globals()), "services.json")) as prop_file:
+        with open(path.join(path.dirname(path.realpath(__file__)), "services.json")) as prop_file:
             properties = json.load(prop_file)
         folder_path = properties["api_folders_path"]
-        model_relative_path = None
         service_name_error = "'{0}' is not an existing service - " \
                              "please try using another service.".format(name)
         if name in properties:

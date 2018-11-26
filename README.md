@@ -1,4 +1,4 @@
-<p align="center"><img src="doc/source/assets/nlp_architect_header.png" width="400"/></p>
+<p align="center"><img src="https://raw.githubusercontent.com/NervanaSystems/nlp-architect/master/doc/source/assets/nlp_architect_header.png" width="400"/></p>
 <p align="center">
 <a href="https://github.com/NervanaSystems/nlp-architect/blob/master/LICENSE"><img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg"/></a> <a href="http://nlp_architect.nervanasys.com"><img src="https://img.shields.io/readthedocs/pip/stable.svg"/></a> <a href="https://doi.org/10.5281/zenodo.1477518"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.1477518.svg" alt="DOI"></a> <a href="https://github.com/NervanaSystems/nlp-architect/blob/master/LICENSE"><img src="https://img.shields.io/badge/release-v0.3-blue.svg"/></a>
 </p>
@@ -27,7 +27,7 @@ interesting from both research perspectives and practical applications:
 * Solutions using one or more models: Set Term expansion which
   uses the included word chunker as a noun phrase extractor and NP2Vec, Topics and trend analysis for analyzing temporal corpora.
 
-<center> <img src="doc/source/assets/nlp_architect_diag.png"></center>
+<center> <img src="https://raw.githubusercontent.com/NervanaSystems/nlp-architect/master/doc/source/assets/nlp_architect_diag.png"></center>
 
 The library consists of core modules (topologies), data pipelines, utilities
 and end-to-end model examples with training and inference scripts. We look at
@@ -44,7 +44,7 @@ detailed documentation see this
 [page](http://nlp_architect.nervanasys.com/service.html).
 
 NLP Architect server in action
-<center> <img src="doc/source/assets/service_cards.png"></center>
+<center> <img src="https://raw.githubusercontent.com/NervanaSystems/nlp-architect/master/doc/source/assets/service_cards.png"></center>
 
 NLP Architect utilizes the following open source deep learning frameworks:
 
@@ -58,41 +58,40 @@ on how to contribute can be found at our main [documentation] site.
 
 ## Installation
 ### Prerequisites
-To get started, clone our repository:
-
-    git clone https://github.com/NervanaSystems/nlp-architect.git
-    cd nlp-architect
-
-Installing NLP Architect within a virtual environment to ensure a self-contained
-environment is recommended.
-To create and activate a new virtual environment:
-
-    python3 -m venv .nlp_architect_env
-    source .nlp_architect_env/bin/activate
 
 Make sure `pip` and `setuptools` and `venv` are up to date before installing.
 
     pip3 install -U pip setuptools
 
-### Backend
+We recommend installing NLP Architect in a virtual environment to self-contain
+the work done using the library. 
 
-NLP Architect supports CPU, GPU and Intel Optimized Tensorflow (MKL-DNN).
-Select the desired backend using a dedicated environment variable.
+To create and activate a new virtual environment:
 
-CPU (default):
+    python3 -m venv .nlp_architect_env
+    source .nlp_architect_env/bin/activate
 
-    export NLP_ARCHITECT_BE=CPU
+### Installing using `pip`
 
-MKL-DNN (Linux OS only):
+To install NLP Architect using `pip` package manager:
 
-    export NLP_ARCHITECT_BE=MKL
+    pip install nlp-architect
+    
+### Installing from source
 
-GPU (Linux OS only):
+To get started, clone our repository:
 
-    export NLP_ARCHITECT_BE=GPU
+    git clone https://github.com/NervanaSystems/nlp-architect.git
+    cd nlp-architect
 
+#### Selecting a backend
 
-### Installation
+NLP Architect supports CPU, GPU and Intel Optimized Tensorflow (MKL-DNN) backends.
+Users can select the desired backend using a dedicated environment variable (default: CPU). (MKL-DNN and GPU backends are supported only on Linux)
+
+    export NLP_ARCHITECT_BE=CPU/MKL/GPU
+
+#### Installation
 NLP Architect is installed using `pip` and it is recommended to install in development mode.
 
 Default:
@@ -115,23 +114,11 @@ Once installed, the `nlp_architect` command provides additional options to work 
 | nlp_architect.data      	| Datasets, data loaders and data classes              	|
 | nlp_architect.models    	| NLP, NLU and End-to-End neural models                	|
 | nlp_architect.pipelines 	| End-to-end NLP apps                                  	|
+| nlp_architect.server     	| API Server and demos UI                              	|
+| nlp_architect.solutions 	| Solution applications                                	|
 | nlp_architect.utils     	| Misc. I/O, metric, pre-processing and text utilities 	|
 | examples                	| Example files for each model                         	|
-| solutions               	| Solution applications                                	|
-| server                  	| API Server and demos UI                              	|
 | tutorials               	| Misc. Jupyter tutorials                              	|
-<!--
-Below are examples of NLP Architect server in action
-
-BIST Parser UI
-<center> <img src="doc/source/assets/bist_service.png"></center>
-
-NER Parser UI
-<center> <img src="doc/source/assets/ner_service.png"></center>
-
-Spacy NER Parser UI
-<center> <img src="doc/source/assets/spacy_ner_service.png"></center>-->
-
 
 NLP Architect is an active space of research and development; Throughout future
 releases new models, solutions, topologies and framework additions and changes

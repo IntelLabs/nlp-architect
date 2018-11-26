@@ -15,21 +15,14 @@
 # ******************************************************************************
 import argparse
 import os
-import subprocess
 from http.server import HTTPServer as BaseHTTPServer, SimpleHTTPRequestHandler
 from os import path
+from subprocess import run
 
 import pytest
 
-from nlp_architect import LIBRARY_ROOT
-from nlp_architect.version import nlp_architect_version
-
-
-def run_shell_cmd(cmd, stdout=subprocess.PIPE):
-    p = subprocess.Popen([cmd], stdout=stdout, stderr=subprocess.STDOUT, shell=True)
-    out = p.communicate()[0].decode('UTF-8')
-    ret_code = p.returncode
-    return out, ret_code
+from nlp_architect import LIBRARY_ROOT, LIBRARY_PATH
+from nlp_architect.version import NLP_ARCHITECT_VERSION
 
 
 class DocsCommand(object):
@@ -47,9 +40,8 @@ class DocsCommand(object):
     def run_docs(args):
         base_cmd = 'make -C {}'.format(DocsCommand.docs_source)
         print('Re-building documentation')
-        run_shell_cmd(base_cmd + ' clean')
-        out, _ = run_shell_cmd(base_cmd + ' html')
-        print(out)
+        run(base_cmd + ' clean', shell=True, check=True)
+        run(base_cmd + ' html', shell=True, check=True)
         print('Documentation built in: {}'.format(path.join(DocsCommand.docs_source,
                                                             'build', 'html')))
         print('To view documents open your browser to: http://localhost:8000')
@@ -75,9 +67,7 @@ class StyleCommand(object):
     cmd_name = 'style'
     check_dirs = ['examples/',
                   'nlp_architect/',
-                  'server/',
                   'tests/',
-                  'solutions/'
                   ]
     files_to_check = [path.join(LIBRARY_ROOT, f) for f in check_dirs]
 
@@ -114,18 +104,16 @@ class StyleCommand(object):
         print('Running flake8 ...\n')
         flake8_config = path.join(LIBRARY_ROOT, 'setup.cfg')
         cmd = 'flake8 {} --config={}'.format(' '.join(StyleCommand.files_to_check), flake8_config)
-        out, ret = run_shell_cmd(cmd)
-        print(out)
-        return ret
+        cmd_out = run(cmd, shell=True, check=True)
+        return cmd_out.returncode
 
     @staticmethod
     def run_pylint():
         print('Running pylint ...\n')
         pylint_config = path.join(LIBRARY_ROOT, 'pylintrc')
         cmd = 'pylint {} --rcfile {}'.format(' '.join(StyleCommand.files_to_check), pylint_config)
-        out, ret = run_shell_cmd(cmd)
-        print(out)
-        return ret
+        cmd_out = run(cmd, shell=True, check=False)
+        return cmd_out.returncode
 
 
 class TestCommand(object):
@@ -176,23 +164,23 @@ class TestCommand(object):
         MachineComprehensionApi(prompt=False).download_model()
 
 
-class DemoServerCommand(object):
-    cmd_name = 'demo'
+class ServerCommand(object):
+    cmd_name = 'server'
 
     def __init__(self, subparsers):
-        parser = subparsers.add_parser(DemoServerCommand.cmd_name,
+        parser = subparsers.add_parser(ServerCommand.cmd_name,
                                        description='Run NLP Architect server and demo UI',
                                        help='Run NLP Architect server and demo UI')
         parser.add_argument('-p', '--port', type=int, default=8080, help='server port')
-        parser.set_defaults(func=DemoServerCommand.run_server)
+        parser.set_defaults(func=ServerCommand.run_server)
         self.parser = parser
 
     @staticmethod
     def run_server(args):
         port = args.port
-        serve_file = path.join(LIBRARY_ROOT, 'server/serve.py')
+        serve_file = path.join(LIBRARY_PATH, 'server', 'serve.py')
         cmd_str = 'hug -p {} -f {}'.format(port, serve_file)
-        run_shell_cmd(cmd_str, stdout=False)
+        run(cmd_str, shell=True, check=True)
 
 
 # sub commands list
@@ -200,7 +188,7 @@ sub_commands = [
     TestCommand,
     StyleCommand,
     DocsCommand,
-    DemoServerCommand,
+    ServerCommand,
 ]
 
 
@@ -208,7 +196,7 @@ def main():
     prog = 'nlp_architect'
     parser = argparse.ArgumentParser(description='NLP Architect runner', prog=prog)
     parser.add_argument('-v', '--version', action='version',
-                        version='%(prog)s v{}'.format(nlp_architect_version()))
+                        version='%(prog)s v{}'.format(NLP_ARCHITECT_VERSION))
 
     subparsers = parser.add_subparsers(title='commands', metavar='')
     for command in sub_commands:

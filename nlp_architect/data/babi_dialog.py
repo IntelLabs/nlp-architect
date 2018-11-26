@@ -26,9 +26,8 @@ import os
 import sys
 import numpy as np
 from tqdm import tqdm
-from ngraph.util.persist import valid_path_append
 from nlp_architect.utils.generic import license_prompt
-from nlp_architect.utils.io import download_unlicensed_file
+from nlp_architect.utils.io import download_unlicensed_file, valid_path_append
 
 
 def pad_sentences(sentences, sentence_length=0, pad_val=0.):

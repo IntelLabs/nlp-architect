@@ -19,20 +19,18 @@ Script that prepares the input corpus for np2vec training: it runs NP extractor 
 marks extracted NP's.
 """
 import gzip
+import json
 import logging
 import sys
-import json
-from os import path
 from argparse import ArgumentParser
+from os import path, makedirs
 
-from nlp_architect.pipelines.spacy_np_annotator import NPAnnotator, get_noun_phrases
-from nlp_architect.utils.text import spacy_normalizer, SpacyInstance
-from nlp_architect.utils.io import check_size, validate_existing_filepath, \
-    download_unlicensed_file, validate_parent_exists
 from tqdm import tqdm
 
-chunker_model_dat_file = 'model_info.dat.params'
-chunker_model_file = 'model.h5'
+from nlp_architect.pipelines.spacy_np_annotator import NPAnnotator, get_noun_phrases
+from nlp_architect.utils import LIBRARY_STORAGE_PATH
+from nlp_architect.utils.io import check_size, download_unlicensed_file, validate_parent_exists
+from nlp_architect.utils.text import spacy_normalizer, SpacyInstance
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -41,8 +39,10 @@ np2id = {}
 id2group = {}
 id2rep = {}
 np2count = {}
-cur_dir = path.dirname(path.realpath(__file__))
 nlp_chunker_url = 'http://nervana-modelzoo.s3.amazonaws.com/NLP/chunker/'
+chunker_path = path.join(LIBRARY_STORAGE_PATH, 'chunker-pretrained')
+chunker_model_dat_file = 'model_info.dat.params'
+chunker_model_file = 'model.h5'
 
 
 def get_group_norm(spacy_span):
@@ -84,21 +84,21 @@ def load_parser(chunker):
         parser = SpacyInstance(model='en_core_web_sm',
                                disable=['textcat', 'ner', 'parser']).parser
         parser.add_pipe(parser.create_pipe('sentencizer'), first=True)
-        logger.info(
-            'The pre-trained model to be downloaded for NLP Architect'
-            ' word chunker model is licensed under Apache 2.0')
-        _path_to_model = path.join(cur_dir, chunker_model_file)
-        download_unlicensed_file(nlp_chunker_url, chunker_model_file,
-                                 _path_to_model)
-        _path_to_params = path.join(cur_dir, chunker_model_dat_file)
-        download_unlicensed_file(nlp_chunker_url, chunker_model_dat_file,
-                                 _path_to_params)
-        logger.info('Done.')
+        _path_to_model = path.join(chunker_path, chunker_model_file)
+        _path_to_params = path.join(chunker_path, chunker_model_dat_file)
+        if not path.exists(chunker_path):
+            makedirs(chunker_path)
+        if not path.exists(_path_to_model):
+            logger.info(
+                'The pre-trained model to be downloaded for NLP Architect'
+                ' word chunker model is licensed under Apache 2.0')
+            download_unlicensed_file(nlp_chunker_url, chunker_model_file, _path_to_model)
+        if not path.exists(_path_to_params):
+            download_unlicensed_file(nlp_chunker_url, chunker_model_dat_file, _path_to_params)
         parser.add_pipe(NPAnnotator.load(_path_to_model, _path_to_params),
                         last=True)
     else:
-        parser = SpacyInstance(model='en_core_web_sm',
-                               disable=['textcat', 'ner']).parser
+        parser = SpacyInstance(model='en_core_web_sm', disable=['textcat', 'ner']).parser
     logger.info('spacy loaded')
     return parser
 
@@ -184,11 +184,11 @@ if __name__ == '__main__':
     arg_parser = ArgumentParser(__doc__)
     arg_parser.add_argument(
         '--corpus',
-        default=path.abspath(
-            cur_dir + "../../../datasets/wikipedia/enwiki-20171201_subset.txt.gz"),
-        type=validate_existing_filepath,
         help='path to the input corpus. Compressed files (gz) are also supported. By default, '
-             'it is a subset of English Wikipedia.')
+             'it is a subset of English Wikipedia. '
+             'get subset of English wikipedia from '
+             'https://github.com/NervanaSystems/nlp-architect/raw/'
+             'master/datasets/wikipedia/enwiki-20171201_subset.txt.gz')
     arg_parser.add_argument(
         '--marked_corpus',
         default='enwiki-20171201_subset_marked.txt',
@@ -228,14 +228,14 @@ if __name__ == '__main__':
 
     # write grouping data :
     if args.grouping:
-        corpus_name = path.basename(args.corpus)
-        with open(path.join(cur_dir, 'id2group'), 'w', encoding='utf8') as id2group_file:
+        corpus_dir = path.dirname(args.marked_corpus)
+        with open(path.join(corpus_dir, 'id2group'), 'w', encoding='utf8') as id2group_file:
             id2group_file.write(json.dumps(id2group))
 
-        with open(path.join(cur_dir, 'id2rep'), 'w', encoding='utf8') as id2rep_file:
+        with open(path.join(corpus_dir, 'id2rep'), 'w', encoding='utf8') as id2rep_file:
             id2rep_file.write(json.dumps(id2rep))
 
-        with open(path.join(cur_dir, 'np2id'), 'w', encoding='utf8') as np2id_file:
+        with open(path.join(corpus_dir, 'np2id'), 'w', encoding='utf8') as np2id_file:
             np2id_file.write(json.dumps(np2id))
 
     corpus_file.close()

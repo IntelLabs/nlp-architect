@@ -16,17 +16,18 @@
 
 from __future__ import print_function
 import numpy as np
-import nltk
 import argparse
 import json
 import os
 from tqdm import tqdm
 from nlp_architect.utils.io import validate_existing_directory
+from nlp_architect.utils.text import SpacyInstance
 
 PAD = "<pad>"
 SOS = "<sos>"
 UNK = "<unk>"
 START_VOCAB = [PAD, SOS, UNK]
+tokenizer = SpacyInstance(disable=['tagger', 'ner', 'parser', 'vectors', 'textcat'])
 
 
 def create_vocabulary(data_lists, vocabulary_path=None):
@@ -107,7 +108,7 @@ def tokenize_sentence(line):
     Function to tokenize  sentence
     """
     tokenized_words = [word.replace("``", '"').replace("''", '"')
-                       for word in nltk.word_tokenize(line)]
+                       for word in tokenizer.tokenize(line)]
     return list(map(lambda x: str(x), tokenized_words))
 
 

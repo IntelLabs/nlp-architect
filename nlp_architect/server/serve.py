@@ -16,23 +16,20 @@
 """ REST Server to respond to different API requests """
 import gzip
 import json
-import os
+from os import path
 
 import hug
-import nltk
 from falcon import status_codes
 
-from server.service import Service, parse_headers
-from server.service import format_response
+from nlp_architect.server.service import Service, parse_headers, format_response
 
-nltk.download("punkt")
 services = {}
 
 api = hug.API(__name__)
 api.http.add_middleware(hug.middleware.CORSMiddleware(api, max_age=10))
 
 
-def prefetchModels():
+def prefetch_models():
     models = ['machine_comprehension', 'bist', 'ner', 'intent_extraction']
     for model in models:
         services[model] = Service(model)
@@ -40,7 +37,7 @@ def prefetchModels():
 
 @hug.get('/comprehension_paragraphs')
 def get_paragraphs():
-    if(not services['machine_comprehension']):
+    if not services['machine_comprehension']:
         services['machine_comprehension'] = Service('machine_comprehension')
     return services['machine_comprehension'].get_paragraphs()
 
@@ -49,7 +46,7 @@ def get_paragraphs():
 def inference(request, body, response):
     """Makes an inference to a certain model"""
     print(body)
-    if(request.headers.get('CONTENT-TYPE') == 'application/gzip'):
+    if request.headers.get('CONTENT-TYPE') == 'application/gzip':
         try:
             original_data = gzip.decompress(request.stream.read())
             input_docs = json.loads(str(original_data, 'utf-8'))["docs"]
@@ -57,15 +54,15 @@ def inference(request, body, response):
         except Exception:
             response.status = hug.HTTP_500
             return {'status': 'unexpected gzip error'}
-    elif(request.headers.get('CONTENT-TYPE') == 'application/json'):
-        if(isinstance(body, str)):
+    elif request.headers.get('CONTENT-TYPE') == 'application/json':
+        if isinstance(body, str):
             body = json.loads(body)
         model_name = body.get('model_name')
         input_docs = body.get('docs')
     else:
         response.status = status_codes.HTTP_400
         return {'status': 'Content-Type header must be application/json or application/gzip'}
-    if(not model_name):
+    if not model_name:
         response.status = status_codes.HTTP_400
         return {'status': 'model_name is required'}
     # If we've already initialized it, no use in reinitializing
@@ -78,7 +75,7 @@ def inference(request, body, response):
     parsed_doc = services[model_name].get_service_inference(input_docs, headers)
     resp_format = request.headers["RESPONSE-FORMAT"]
     ret = format_response(resp_format, parsed_doc)
-    if(request.headers.get('CONTENT-TYPE') == 'application/gzip'):
+    if request.headers.get('CONTENT-TYPE') == 'application/gzip':
         response.content_type = resp_format
         response.body = ret
         # no return due to the fact that hug seems to assume json type upon return
@@ -89,14 +86,16 @@ def inference(request, body, response):
 @hug.static('/')
 def static():
     """Statically serves a directory to client"""
-    return [os.path.realpath(os.path.join('./', 'server/angular-ui/dist/angular-ui'))]
+    return [path.join(path.dirname(path.realpath(__file__)), 'angular-ui/dist/angular-ui')]
+    # return [os.path.realpath(os.path.join('./', 'server/angular-ui/dist/angular-ui'))]
 
 
 @hug.get(['/home', '/visual/{page}', '/annotate/{page}', '/machine_comprehension'],
          output=hug.output_format.file)
 def get_index():
-    index = os.path.join('./', 'server/angular-ui/dist/angular-ui/index.html')
+    index = path.join(path.dirname(path.realpath(__file__)),
+                      'angular-ui/dist/angular-ui/index.html')
     return index
 
 
-prefetchModels()
+prefetch_models()

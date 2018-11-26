@@ -163,7 +163,7 @@ class SpacyInstance:
         """return Spacy's instance parser"""
         return self._parser
 
-    def tokenize(self, text):
+    def tokenize(self, text: str) -> List[str]:
         """
         Tokenize a sentence into tokens
         Args:

@@ -16,11 +16,11 @@
 import argparse
 import gzip
 import io
+import json
 import os
 import posixpath
 import re
 import zipfile
-import json
 
 import requests
 from tqdm import tqdm
@@ -60,7 +60,7 @@ def download_unlicensed_file(url, sourcefile, destfile, totalsz=None):
 def uncompress_file(filepath, outpath='.'):
     """
     Unzip a file to the same location of filepath
-    uses uncompressing algorithm by file extension
+    uses decompressing algorithm by file extension
 
     Args:
         filepath (str): path to file
@@ -79,6 +79,23 @@ def uncompress_file(filepath, outpath='.'):
             fp.write(file_content)
     else:
         raise ValueError('Unsupported archive provided. Method supports only .zip/.gz files.')
+
+
+def gzip_str(g_str):
+    """
+    Transform string to GZIP coding
+
+    Args:
+        g_str (str): string of data
+
+    Returns:
+        GZIP bytes data
+    """
+    compressed_str = io.BytesIO()
+    with gzip.GzipFile(fileobj=compressed_str, mode='w') as file_out:
+        file_out.write((json.dumps(g_str).encode()))
+    bytes_obj = compressed_str.getvalue()
+    return bytes_obj
 
 
 def check_directory_and_create(dir_path):
@@ -163,6 +180,38 @@ def validate_parent_exists(arg):
     if validate_existing_directory(dir_arg):
         return arg
     return None
+
+
+def valid_path_append(path, *args):
+    """
+    Helper to validate passed path directory and append any subsequent
+    filename arguments.
+
+    Arguments:
+        path (str): Initial filesystem path.  Should expand to a valid
+                    directory.
+        *args (list, optional): Any filename or path suffices to append to path
+                                for returning.
+        Returns:
+            (list, str): path prepended list of files from args, or path alone if
+                     no args specified.
+    Raises:
+        ValueError: if path is not a valid directory on this filesystem.
+    """
+    full_path = os.path.expanduser(path)
+    res = []
+    if not os.path.exists(full_path):
+        os.makedirs(full_path)
+    if not os.path.isdir(full_path):
+        raise ValueError("path: {0} is not a valid directory".format(path))
+    for suffix_path in args:
+        res.append(os.path.join(full_path, suffix_path))
+    if len(res) == 0:
+        return path
+    elif len(res) == 1:
+        return res[0]
+    else:
+        return res
 
 
 def sanitize_path(path):

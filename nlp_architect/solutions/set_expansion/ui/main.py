@@ -27,7 +27,7 @@ from bokeh.models.widgets import Button, DataTable, TableColumn, CheckboxGroup, 
 from bokeh.models.widgets.inputs import TextInput
 from bokeh.io import curdoc
 
-import solutions.set_expansion.ui.settings as settings
+import nlp_architect.solutions.set_expansion.ui.settings as settings
 
 # pylint: skip-file
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)

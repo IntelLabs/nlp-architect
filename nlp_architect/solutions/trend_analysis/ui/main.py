@@ -13,31 +13,31 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
-
-
+import csv
 import logging
 import sys
-import csv
 import time
-from os.path import dirname, join, abspath, realpath, isfile
+from os import path
+from os.path import isfile
 
-
+import pandas as pd
+from bokeh.io import curdoc
 from bokeh.layouts import column, layout, WidgetBox
 from bokeh.models import ColumnDataSource, Div, Row, ranges, LabelSet, CDSView, IndexFilter
 from bokeh.models.widgets import DataTable, TableColumn, RadioGroup, Dropdown, Tabs, Panel, \
     TextInput, Button, Slider
-from bokeh.io import curdoc
 from bokeh.plotting import figure
-import pandas as pd
-from solutions.trend_analysis.trend_analysis import analyze
+
+from nlp_architect.solutions.trend_analysis.trend_analysis import analyze
+from nlp_architect.utils import LIBRARY_STORAGE_PATH
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 logger = logging.getLogger(__name__)
-dir = dirname(realpath(__file__))
-graph_data_path = abspath(join(dir, "..")) + '/data/graph_data.csv'
-filter_data_path = abspath(join(dir, "..")) + '/data/filter_phrases.csv'
-target_scores_path = abspath(join(dir, "..")) + '/data/target_scores.csv'
-ref_scores_path = abspath(join(dir, "..")) + '/data/ref_scores.csv'
+dir = path.join(LIBRARY_STORAGE_PATH, 'trend-analysis-data')
+graph_data_path = path.join(dir, 'graph_data.csv')
+filter_data_path = path.join(dir, 'filter_phrases.csv')
+target_scores_path = path.join(dir, 'target_scores.csv')
+ref_scores_path = path.join(dir, 'ref_scores.csv')
 max_len = 50
 gd = None
 top_before = None

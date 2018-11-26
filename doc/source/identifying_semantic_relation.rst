@@ -270,35 +270,38 @@ Generate Scripts
 
 ::
 
-    python nlp_architect/data/cdc_resources/gen_scripts/create_reference_dict_dump.py --ref_dict=<ref.dict1.tsv downloaded file> --mentions=<in_mentions.json> --output=<output.json>
+    python -m nlp_architect.data.cdc_resources.gen_scripts.create_reference_dict_dump.py --ref_dict=<ref.dict1.tsv downloaded file> --mentions=<in_mentions.json> --output=<output.json>
 
 **Generate VerbOcean:**
 
 ::
 
-    python nlp_architect/data/cdc_resources/gen_scripts/create_verbocean_dump.py --vo=<verbocean.unrefined.2004-05-20.txt downloaded file> --mentions=<in_mentions.json> --output=<output.json>
+    python -m nlp_architect.data.cdc_resources.gen_scripts.create_verbocean_dump.py --vo=<verbocean.unrefined.2004-05-20.txt downloaded file> --mentions=<in_mentions.json> --output=<output.json>
 
 **Generate WordEmbedding Glove:**
 
 ::
 
-    python nlp_architect/data/cdc_resources/gen_scripts/create_word_embed_glove_dump.py --mentions=<in_mentions.json> --glove=glove.840B.300d.txt --output=<output.pickle>
+    python -m nlp_architect.data.cdc_resources.gen_scripts.create_word_embed_glove_dump.py --mentions=<in_mentions.json> --glove=glove.840B.300d.txt --output=<output.pickle>
 
 **Generate Wordnet:**
 
 ::
 
-    python nlp_architect/data/cdc_resources/gen_scripts/create_wordnet_dump.py --mentions=<in_mentions.json> --output=<output.json>
+    python -m nlp_architect.data.cdc_resources.gen_scripts.create_wordnet_dump.py --mentions=<in_mentions.json> --output=<output.json>
 
 **Generate Wikipedia:**
 
 ::
 
-    python nlp_architect/data/cdc_resources/gen_scripts/create_wiki_dump.py --mentions=<in_mentions.json> --output=<output.json>``
+    python -m nlp_architect.data.cdc_resources.gen_scripts.create_wiki_dump.py --mentions=<in_mentions.json> --output=<output.json>``
 
 .. note::
+
      **For a fast evaluation using Wikipedia at run time**, on live data, there is an option to generate a local ElasticSearch database of the entire Wiki site using this resource: `Wiki to Elastic <https://github.com/AlonEirew/wikipedia-to-elastic/>`_, It is highly recommended since using online evaluation against Wikipedia site can be very slow.
     In case you adopt elastic local database, Initiate ``WikipediaRelationExtraction`` relation extraction using ``WikipediaSearchMethod.ELASTIC``
  **Generate Wikipedia Snapshot using Elastic data instead of from online wikipedia site:**
- ::
-     python nlp_architect/data/cdc_resources/gen_scripts/create_wiki_dump.py --mentions=<in_mentions.json> --host=<elastic_host eg:localhost> --port=<elastic_port eg:9200> --index=<elastic_index> --output=<output.json>``
+
+::
+
+     python -m nlp_architect.data.cdc_resources.gen_scripts.create_wiki_dump.py --mentions=<in_mentions.json> --host=<elastic_host eg:localhost> --port=<elastic_port eg:9200> --index=<elastic_index> --output=<output.json>``
