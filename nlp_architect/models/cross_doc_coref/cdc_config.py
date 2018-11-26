@@ -15,8 +15,6 @@
 # ******************************************************************************
 from typing import List, Tuple
 
-from nlp_architect import LIBRARY_ROOT
-from nlp_architect.common.cdc.topics import Topics
 from nlp_architect.data.cdc_resources.relations.relation_types_enums import RelationType
 from nlp_architect.models.cross_doc_coref.system.sieves.sieves import SieveType
 

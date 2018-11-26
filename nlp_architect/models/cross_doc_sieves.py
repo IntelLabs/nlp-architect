@@ -74,7 +74,7 @@ def _run_coref(topics: Topics, resources: CDCSettings, eval_type: str) -> List[C
         clusters_list.append(clusters)
 
         with open(os.path.join(
-                resources.cdc_resources.eval_output_dir, eval_type+ '_clusters.txt'), 'w') \
+                resources.cdc_resources.eval_output_dir, eval_type + '_clusters.txt'), 'w') \
                 as clusters_file:
             write_clusters_to_file(clusters, topic.topic_id, clusters_file)
 
