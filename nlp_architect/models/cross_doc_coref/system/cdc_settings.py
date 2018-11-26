@@ -16,7 +16,6 @@
 
 import logging
 
-from nlp_architect.common.cdc.topics import Topics
 from nlp_architect.data.cdc_resources.relations.computed_relation_extraction import \
     ComputedRelationExtraction
 from nlp_architect.data.cdc_resources.relations.referent_dict_relation_extraction import \
@@ -44,20 +43,11 @@ class CDCSettings(object):
         self.context2vec_model = None
         self.wordnet = None
         self.within_doc = None
-        self.events_topics = None
-        self.entity_topics = None
         self.event_config = event_coref_config
         self.entity_config = entity_coref_config
         self.cdc_resources = resources
 
         self.load_modules()
-
-        if event_coref_config.run_evaluation:
-            self.events_topics = Topics(event_coref_config.gold_mentions_file)
-        if entity_coref_config.run_evaluation:
-            self.entity_topics = Topics(entity_coref_config.gold_mentions_file)
-        if not self.events_topics and not self.entity_topics:
-            raise Exception('No entity or events Gold topics loaded!')
 
     def load_modules(self):
         relations = set()

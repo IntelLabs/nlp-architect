@@ -18,6 +18,8 @@ import logging
 import time
 
 from nlp_architect.common.cdc.cluster import Clusters
+from nlp_architect.common.cdc.topics import Topic
+from nlp_architect.models.cross_doc_coref.system.cdc_settings import CDCSettings
 from nlp_architect.models.cross_doc_coref.system.sieves.sieves import get_sieve
 
 logger = logging.getLogger(__name__)
@@ -29,7 +31,7 @@ class RunSystemsSuper(object):
         self.results_dict = dict()
         self.results_ordered = []
         logger.info('loading topic %s, total mentions: %d', topic.topic_id, len(topic.mentions))
-        self.clusters = Clusters(topic.mentions)
+        self.clusters = Clusters(topic.topic_id, topic.mentions)
 
     @staticmethod
     def set_sieves_from_config(config, get_rel_extraction):
@@ -90,3 +92,12 @@ class RunSystemsEvent(RunSystemsSuper):
         super(RunSystemsEvent, self).__init__(topic)
         self.sieves = self.set_sieves_from_config(resources.event_config,
                                                   resources.get_module_from_relation)
+
+
+def get_run_system(topic: Topic, resource: CDCSettings, eval_type: str):
+    if eval_type.lower() == 'entity':
+        return RunSystemsEntity(topic, resource)
+    elif eval_type.lower() == 'event':
+        return RunSystemsEvent(topic, resource)
+    else:
+        raise AttributeError(eval_type + ' Not supported!')

@@ -15,7 +15,6 @@
 # ******************************************************************************
 from typing import List, Tuple
 
-from nlp_architect import LIBRARY_ROOT
 from nlp_architect.data.cdc_resources.relations.relation_types_enums import RelationType
 from nlp_architect.models.cross_doc_coref.system.sieves.sieves import SieveType
 
@@ -26,20 +25,19 @@ class CDCConfig(object):
 
         self.__sieves_order = None
         self.__run_evaluation = False
-        self.__gold_mentions_file = None
 
     @property
     def sieves_order(self):
         """
         Sieve definition and Sieve running order
 
-            Tuple[SieveType, RelationType, Threshold(float)] - define sieves to run, were
+        Tuple[SieveType, RelationType, Threshold(float)] - define sieves to run, were
 
-            Strict- Merge clusters only in case all mentions has current relation between them,
-            Relax- Merge clusters in case (matched mentions) / len(cluster_1.mentions)) >= thresh,
-            Very_Relax- Merge clusters in case (matched mentions) / (all possible pairs) >= thresh
+        Strict- Merge clusters only in case all mentions has current relation between them,
+        Relax- Merge clusters in case (matched mentions) / len(cluster_1.mentions)) >= thresh,
+        Very_Relax- Merge clusters in case (matched mentions) / (all possible pairs) >= thresh
 
-            RelationType represent the type of sieve to run.
+        RelationType represent the type of sieve to run.
 
         """
         return self.__sieves_order
@@ -56,15 +54,6 @@ class CDCConfig(object):
     @run_evaluation.setter
     def run_evaluation(self, run_evaluation: bool):
         self.__run_evaluation = run_evaluation
-
-    @property
-    def gold_mentions_file(self):
-        """Mentions file to run against"""
-        return self.__gold_mentions_file
-
-    @gold_mentions_file.setter
-    def gold_mentions_file(self, gold_file):
-        self.__gold_mentions_file = gold_file
 
 
 class EventConfig(CDCConfig):
@@ -91,9 +80,6 @@ class EventConfig(CDCConfig):
             (SieveType.STRICT, RelationType.WORDNET_DERIVATIONALLY, 0.0)
         ]
 
-        self.gold_mentions_file = LIBRARY_ROOT + \
-            '/datasets/ecb/ecb_all_event_mentions.json'
-
 
 class EntityConfig(CDCConfig):
     def __init__(self):
@@ -118,6 +104,3 @@ class EntityConfig(CDCConfig):
             (SieveType.STRICT, RelationType.WORDNET_SAME_SYNSET_ENTITY, 0.0),
             (SieveType.VERY_RELAX, RelationType.REFERENT_DICT, 0.5)
         ]
-
-        self.gold_mentions_file = LIBRARY_ROOT + \
-            '/datasets/ecb/ecb_all_entity_mentions.json'

@@ -33,7 +33,7 @@ DISAMBIGUATION_CATEGORY = ['disambig', 'disambiguation']
 class StringUtils:
     spacy_no_parser = SpacyInstance(disable=['parser'])
     spacy_parser = SpacyInstance()
-    stop_words = None
+    stop_words = list()
     pronouns = None
     preposition = None
 
