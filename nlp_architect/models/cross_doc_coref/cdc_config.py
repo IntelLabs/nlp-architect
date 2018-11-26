@@ -27,7 +27,6 @@ class CDCConfig(object):
 
         self.__sieves_order = None
         self.__run_evaluation = False
-        self.__gold_mentions = None
 
     @property
     def sieves_order(self):
@@ -58,15 +57,6 @@ class CDCConfig(object):
     def run_evaluation(self, run_evaluation: bool):
         self.__run_evaluation = run_evaluation
 
-    @property
-    def gold_mentions(self) -> Topics:
-        """Mentions file to run against"""
-        return self.__gold_mentions
-
-    @gold_mentions.setter
-    def gold_mentions(self, gold_mentions_topics: Topics):
-        self.__gold_mentions = gold_mentions_topics
-
 
 class EventConfig(CDCConfig):
     def __init__(self):
@@ -92,9 +82,6 @@ class EventConfig(CDCConfig):
             (SieveType.STRICT, RelationType.WORDNET_DERIVATIONALLY, 0.0)
         ]
 
-        self.gold_mentions = Topics(LIBRARY_ROOT
-                                    + '/datasets/ecb/ecb_all_event_mentions.json')
-
 
 class EntityConfig(CDCConfig):
     def __init__(self):
@@ -119,6 +106,3 @@ class EntityConfig(CDCConfig):
             (SieveType.STRICT, RelationType.WORDNET_SAME_SYNSET_ENTITY, 0.0),
             (SieveType.VERY_RELAX, RelationType.REFERENT_DICT, 0.5)
         ]
-
-        self.gold_mentions = (LIBRARY_ROOT
-                              + '/datasets/ecb/ecb_all_entity_mentions.json')

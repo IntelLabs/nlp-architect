@@ -18,67 +18,72 @@ import os
 from typing import List
 
 from nlp_architect.common.cdc.cluster import Clusters
+from nlp_architect.common.cdc.topics import Topics
 from nlp_architect.models.cross_doc_coref.system.cdc_settings import CDCSettings
 from nlp_architect.models.cross_doc_coref.system.cdc_utils import write_clusters_to_file, \
     write_event_coref_scorer_results, write_entity_coref_scorer_results
-from nlp_architect.models.cross_doc_coref.system.sieves.run_sieve_system import RunSystemsEvent, \
-    RunSystemsEntity
+from nlp_architect.models.cross_doc_coref.system.sieves.run_sieve_system import get_run_system
 from nlp_architect.utils import io
 
 logger = logging.getLogger(__name__)
 
 
-def run_event_coref(resources: CDCSettings) -> List[Clusters]:
+def run_event_coref(topics: Topics, resources: CDCSettings) -> List[Clusters]:
     """
     Running Cross Document Coref on event mentions
     Args:
+        topics   : The Topics (with mentions) to evaluate
         resources: resources for running the evaluation
 
     Returns:
         Clusters: List of clusters and mentions with predicted cross doc coref within each topic
     """
-    io.create_folder(resources.cdc_resources.eval_output_dir)
-    event_clusters_list = list()
-    for topic in resources.events_topics.topics_list:
-        sieves_list_event = RunSystemsEvent(topic, resources)
-        clusters = sieves_list_event.run_deterministic()
-        clusters.set_coref_chain_to_mentions()
-        event_clusters_list.append(clusters)
-        with open(os.path.join(
-                resources.cdc_resources.eval_output_dir, 'event_clusters.txt'), 'w') \
-                as event_clusters_file:
-            write_clusters_to_file(clusters, topic.topic_id, event_clusters_file)
 
-    logger.info('Write event coref results')
-    write_event_coref_scorer_results(resources.events_topics.topics_list,
-                                     resources.cdc_resources.eval_output_dir)
-    return event_clusters_list
+    return _run_coref(topics, resources, 'event')
 
 
-def run_entity_coref(resources: CDCSettings) -> List[Clusters]:
+def run_entity_coref(topics: Topics, resources: CDCSettings) -> List[Clusters]:
     """
     Running Cross Document Coref on Entity mentions
     Args:
+        topics   : The Topics (with mentions) to evaluate
         resources: (CDCSettings) resources for running the evaluation
 
     Returns:
         Clusters: List of topics and mentions with predicted cross doc coref within each topic
     """
+    return _run_coref(topics, resources, 'entity')
+
+
+def _run_coref(topics: Topics, resources: CDCSettings, eval_type: str) -> List[Clusters]:
+    """
+    Running Cross Document Coref on Entity mentions
+    Args:
+        resources: (CDCSettings) resources for running the evaluation
+        topics   : The Topics (with mentions) to evaluate
+
+    Returns:
+        Clusters: List of topics and mentions with predicted cross doc coref within each topic
+    """
     io.create_folder(resources.cdc_resources.eval_output_dir)
-    entity_clusters_list = list()
-    for topic in resources.entity_topics.topics_list:
-        sieves_list_entity = RunSystemsEntity(topic, resources)
-        clusters = sieves_list_entity.run_deterministic()
+    clusters_list = list()
+    for topic in topics.topics_list:
+        sieves_list = get_run_system(topic, resources, eval_type)
+        clusters = sieves_list.run_deterministic()
         clusters.set_coref_chain_to_mentions()
-        entity_clusters_list.append(clusters)
+        clusters_list.append(clusters)
 
         with open(os.path.join(
-                resources.cdc_resources.eval_output_dir, 'entity_clusters.txt'), 'w') \
-                as entity_clusters_file:
-            write_clusters_to_file(clusters, topic.topic_id, entity_clusters_file)
+                resources.cdc_resources.eval_output_dir, eval_type+ '_clusters.txt'), 'w') \
+                as clusters_file:
+            write_clusters_to_file(clusters, topic.topic_id, clusters_file)
 
-    logger.info('Write entity coref results')
-    write_entity_coref_scorer_results(resources.entity_topics.topics_list,
-                                      resources.cdc_resources.eval_output_dir)
+    logger.info('Write ' + eval_type + ' coref results')
+    if eval_type.lower() == 'entity':
+        write_entity_coref_scorer_results(topics.topics_list,
+                                          resources.cdc_resources.eval_output_dir)
+    else:
+        write_event_coref_scorer_results(topics.topics_list,
+                                         resources.cdc_resources.eval_output_dir)
 
-    return entity_clusters_list
+    return clusters_list

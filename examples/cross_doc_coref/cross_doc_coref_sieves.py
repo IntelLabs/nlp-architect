@@ -28,7 +28,24 @@ from nlp_architect.models.cross_doc_coref.system.sieves.sieves import SieveType
 from nlp_architect.models.cross_doc_sieves import run_event_coref, run_entity_coref
 
 
-def run_example():
+def run_example(cdc_settings):
+    event_mentions = Topics(LIBRARY_ROOT + '/datasets/ecb/ecb_all_event_mentions.json')
+
+    event_clusters = None
+    if cdc_settings.event_config.run_evaluation:
+        logger.info('Running event coreference resolution')
+        event_clusters = run_event_coref(event_mentions, cdc_settings)
+
+    entity_mentions = Topics(LIBRARY_ROOT + '/datasets/ecb/ecb_all_entity_mentions.json')
+    entity_clusters = None
+    if cdc_settings.entity_config.run_evaluation:
+        logger.info('Running entity coreference resolution')
+        entity_clusters = run_entity_coref(entity_mentions, cdc_settings)
+
+    return event_clusters, entity_clusters
+
+
+def create_example_settings():
     event_config = EventConfig()
     event_config.sieves_order = [
         (SieveType.STRICT, RelationType.SAME_HEAD_LEMMA, 0.0),
@@ -37,11 +54,7 @@ def run_example():
         (SieveType.RELAX, RelationType.SAME_HEAD_LEMMA_RELAX, 0.5),
     ]
 
-    event_config.gold_mentions = Topics(LIBRARY_ROOT
-                                        + '/datasets/ecb/ecb_all_event_mentions.json')
-
     entity_config = EntityConfig()
-
     entity_config.sieves_order = [
         (SieveType.STRICT, RelationType.SAME_HEAD_LEMMA, 0.0),
         (SieveType.VERY_RELAX, RelationType.WIKIPEDIA_REDIRECT_LINK, 0.1),
@@ -50,36 +63,18 @@ def run_example():
         (SieveType.VERY_RELAX, RelationType.REFERENT_DICT, 0.5)
     ]
 
-    entity_config.gold_mentions = Topics(LIBRARY_ROOT
-                                         + '/datasets/ecb/ecb_all_entity_mentions.json')
-
     # CDCResources hold default attribute values that might need to be change,
     # (using the defaults values in this example), use to configure attributes
     # such as resources files location, output directory, resources init methods and other.
     # check in class and see if any attributes require change in your set-up
     resource_location = CDCResources()
-    resources = CDCSettings(resource_location, event_config, entity_config)
-
-    event_clusters = None
-    if event_config.run_evaluation:
-        logger.info('Running event coreference resolution')
-        event_clusters = run_event_coref(resources)
-
-    entity_clusters = None
-    if entity_config.run_evaluation:
-        logger.info('Running entity coreference resolution')
-        entity_clusters = run_entity_coref(resources)
-
-    print('-=Cross Document Coref Results=-')
-    print_results(event_clusters, 'Event')
-    print('################################')
-    print_results(entity_clusters, 'Entity')
+    return CDCSettings(resource_location, event_config, entity_config)
 
 
 def print_results(clusters: List[Clusters], type: str):
     print('-=' + type + ' Clusters=-')
     for topic_cluster in clusters:
-        print('\n\tCluster Topic=' + topic_cluster.topic_id)
+        print('\n\tTopic=' + topic_cluster.topic_id)
         for cluster in topic_cluster.clusters_list:
             cluster_mentions = list()
             for mention in cluster.mentions:
@@ -92,8 +87,18 @@ def print_results(clusters: List[Clusters], type: str):
                   + str(cluster_mentions))
 
 
+def run_cdc_pipeline():
+    cdc_settings = create_example_settings()
+    event_clusters, entity_clusters = run_example(cdc_settings)
+
+    print('-=Cross Document Coref Results=-')
+    print_results(event_clusters, 'Event')
+    print('################################')
+    print_results(entity_clusters, 'Entity')
+
+
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger(__name__)
 
-    run_example()
+    run_cdc_pipeline()

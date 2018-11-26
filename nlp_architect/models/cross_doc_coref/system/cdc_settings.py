@@ -43,20 +43,11 @@ class CDCSettings(object):
         self.context2vec_model = None
         self.wordnet = None
         self.within_doc = None
-        self.events_topics = None
-        self.entity_topics = None
         self.event_config = event_coref_config
         self.entity_config = entity_coref_config
         self.cdc_resources = resources
 
         self.load_modules()
-
-        if event_coref_config.run_evaluation:
-            self.events_topics = event_coref_config.gold_mentions
-        if entity_coref_config.run_evaluation:
-            self.entity_topics = entity_coref_config.gold_mentions
-        if not self.events_topics and not self.entity_topics:
-            raise Exception('No entity or events Gold topics loaded!')
 
     def load_modules(self):
         relations = set()
