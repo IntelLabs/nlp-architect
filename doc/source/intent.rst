@@ -131,7 +131,7 @@ Minor differences might occur in final results. Each model was trained for 100 e
   :widths: 20, 40, 40
   :escape: ~
 
-  Slots,93.68,85.96
+  Slots,97,85.96
   Intent,99.14, " "
 
 **ATIS**
