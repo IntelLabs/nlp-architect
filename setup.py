@@ -96,7 +96,8 @@ if 'linux' in sys.platform:
     tf_be = os.getenv('NLP_ARCHITECT_BE', False)
     if tf_be and 'mkl' == tf_be.lower():
         if py3_ver == 5 or py3_ver == 6:
-            chosen_tf = tf_mkl_url.format(tf_version, py3_ver, py3_ver)
+            tf_mkl_url_real = tf_mkl_url.format(tf_version, py3_ver, py3_ver)
+            subprocess.run('pip3 install -U {}'.format(tf_mkl_url_real), shell=True)
     elif tf_be and 'gpu' == tf_be.lower() and gpu_available:
         chosen_tf = 'tensorflow-gpu=={}'.format(tf_version)
 requirements.append(chosen_tf)
