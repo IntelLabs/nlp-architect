@@ -1,0 +1,5 @@
+include nlp_architect/server/services.json
+recursive-include nlp_architect/server/angular-ui/ *.*
+recursive-include nlp_architect/utils/resources/ *.json *.txt
+recursive-include nlp_architect/solutions/set_expansion/ui/ *.html *.png *.js *.css
+recursive-include nlp_architect/solutions/trend_analysis/ *.html *.png *.js *.css

@@ -2,7 +2,7 @@ new Vue({
   el: '#app',
   data: {
     form: {
-      source: '1',
+      source: '0',
       backend: 'CPU',
       with_env: '0',
       inst_type: '1'
