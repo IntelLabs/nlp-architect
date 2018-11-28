@@ -45,7 +45,7 @@ to train the model weights, perform inference, and save/load the model.
     nlp_architect.models.chunker.SequenceChunker
     nlp_architect.models.intent_extraction.Seq2SeqIntentModel
     nlp_architect.models.intent_extraction.MultiTaskIntentModel
-    nlp_architect.models.matchlstm_ansptr.MatchLSTM_AnswerPointer
+    nlp_architect.models.matchlstm_ansptr.MatchLSTMAnswerPointer
     nlp_architect.models.memn2n_dialogue.MemN2N_Dialog
     nlp_architect.models.most_common_word_sense.MostCommonWordSense
     nlp_architect.models.ner_crf.NERCRF

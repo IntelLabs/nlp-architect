@@ -17,6 +17,7 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 
 import tensorflow as tf
+# pylint: disable=no-name-in-module
 from tensorflow.python.keras.layers import CuDNNLSTM
 
 from nlp_architect.contrib.tensorflow.python.keras.layers.crf import CRF
@@ -249,6 +250,7 @@ class MultiTaskIntentModel(IntentExtractionModel):
             rnn_cell = LSTM(units, **kwargs)
         return rnn_cell
 
+    # pylint: disable=arguments-differ
     def save(self, path):
         """
         Save model to path

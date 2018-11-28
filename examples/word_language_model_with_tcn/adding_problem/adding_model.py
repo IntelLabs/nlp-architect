@@ -34,6 +34,7 @@ class TCNForAdding(TCN):
         self.merged_summary_op_val = None
         self.training_update_step = None
 
+    # pylint: disable = arguments-differ
     def run(self, data_loader, num_iterations=1000, log_interval=100, result_dir="./"):
         """
         Runs training
@@ -80,6 +81,7 @@ class TCNForAdding(TCN):
 
                 print("Validation loss: {}".format(val_loss))
 
+    # pylint: disable = arguments-differ
     def build_train_graph(self, lr, max_gradient_norm=None):
         """
         Method that builds the graph for training

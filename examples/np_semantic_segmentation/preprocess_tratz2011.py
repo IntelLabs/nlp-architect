@@ -21,7 +21,7 @@ import argparse
 import csv
 import os
 
-from data import absolute_path
+from .data import absolute_path
 
 from nlp_architect.utils.io import validate_existing_directory
 

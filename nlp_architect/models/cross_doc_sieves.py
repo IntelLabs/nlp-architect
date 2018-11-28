@@ -78,7 +78,7 @@ def _run_coref(topics: Topics, resources: CDCSettings, eval_type: str) -> List[C
                 as clusters_file:
             write_clusters_to_file(clusters, topic.topic_id, clusters_file)
 
-    logger.info('Write ' + eval_type + ' coref results')
+    logger.info('Write {} coref results'.format(eval_type))
     if eval_type.lower() == 'entity':
         write_entity_coref_scorer_results(topics.topics_list,
                                           resources.cdc_resources.eval_output_dir)

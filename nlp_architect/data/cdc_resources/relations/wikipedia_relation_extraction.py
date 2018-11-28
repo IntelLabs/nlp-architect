@@ -375,11 +375,11 @@ class WikipediaRelationExtraction(RelationExtraction):
         """
         phrase1 = phrase1.lower()
         phrase2 = phrase2.lower()
-        phrase1_female = True if [s for s in FEMALE_PRONOUN if s == phrase1] else False
-        phrase2_male = True if [s for s in MALE_PRONOUN if s == phrase2] else False
+        phrase1_female = phrase1 in FEMALE_PRONOUN
+        phrase2_male = phrase2 in MALE_PRONOUN
 
-        phrase1_male = True if [s for s in MALE_PRONOUN if s == phrase1] else False
-        phrase2_female = True if [s for s in FEMALE_PRONOUN if s == phrase2] else False
+        phrase1_male = phrase1 in MALE_PRONOUN
+        phrase2_female = phrase2 in FEMALE_PRONOUN
 
         result = False
         if phrase1_female and phrase2_male:

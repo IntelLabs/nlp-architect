@@ -244,7 +244,7 @@ class NpSemanticSegData:
         # count num of feature vectors
         num_feats = len(reader_list)
         # is_y_labels is for inference - if the inference data is labeled y_labels are extracted
-        self.is_y_labels = True if (len(reader_list[0]) == self.feature_vec_dim + 1) else False
+        self.is_y_labels = len(reader_list[0]) == self.feature_vec_dim + 1
         X_feature_matrix = numpy.zeros((num_feats, self.feature_vec_dim))
         Y_labels_vec = []
         cntr = 0

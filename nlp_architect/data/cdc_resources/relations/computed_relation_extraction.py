@@ -28,12 +28,9 @@ logger = logging.getLogger(__name__)
 
 
 class ComputedRelationExtraction(RelationExtraction):
-    def __init__(self):
-        """
-        Extract Relation between two mentions according to computation and rule based algorithms
-        """
-        super(ComputedRelationExtraction, self).__init__()
-
+    """
+    Extract Relation between two mentions according to computation and rule based algorithms
+    """
     def extract_all_relations(self, mention_x: MentionDataLight,
                               mention_y: MentionDataLight) -> Set[RelationType]:
         """

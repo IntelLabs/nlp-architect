@@ -24,7 +24,7 @@ from collections import Counter
 from nlp_architect.utils.text import SpacyInstance
 
 
-class MatchLSTM_AnswerPointer(object):
+class MatchLSTMAnswerPointer(object):
     """
     Defines end to end MatchLSTM and Answer_Pointer network for Reading Comprehension
     """
@@ -48,6 +48,11 @@ class MatchLSTM_AnswerPointer(object):
         self.batch_size = params_dict['batch_size']
         self.embeddings = embeddings
         self.inference_only = params_dict['inference_only']
+        self.G_i = None
+        self.attn = None
+        self.stacked_lists_forward = None
+        self.stacked_lists_reverse = None
+        self.logits_withsf = None
 
         # init tokenizer
         self.tokenizer = SpacyInstance(disable=['tagger', 'ner', 'parser', 'vectors', 'textcat'])
@@ -327,7 +332,8 @@ class MatchLSTM_AnswerPointer(object):
 
         return [tf.squeeze(b_k_lists[0], axis=1), tf.squeeze(b_k_lists[1], axis=1)]
 
-    def obtain_indices(self, preds_start, preds_end):
+    @staticmethod
+    def obtain_indices(preds_start, preds_end):
         """
         Function to get answer indices given the predictions
 
@@ -461,7 +467,7 @@ class MatchLSTM_AnswerPointer(object):
             }
             # Training Phase
             if mode == 'train':
-                _, train_loss, l_rate, logits, labels = session.run(
+                _, train_loss, _, logits, labels = session.run(
                     [self.optimizer, self.loss, self.learning_rate, self.logits_withsf,
                      self.labels], feed_dict=feed_dict_qa)
 
@@ -487,6 +493,7 @@ class MatchLSTM_AnswerPointer(object):
                 f1_score / nbatches,
                 em_score / nbatches)
 
+    # pylint: disable=inconsistent-return-statements
     def inference_mode(self, session, valid, vocab_tuple, num_examples, dropout=1.0,
                        dynamic_question_mode=False, dynamic_usr_question="",
                        dynamic_question_index=0):

@@ -136,7 +136,6 @@ class PTBDictionary:
                     sys.exit()
             else:
                 self._uncompress_data(work_directory)
-        return
 
     def _download_data(self, work_directory):
         """
@@ -175,8 +174,6 @@ class PTBDictionary:
 
         print('Successfully unzipped data to {}'.format(os.path.join(work_directory,
                                                                      FILENAME[self.dataset])))
-
-        return
 
 
 class PTBDataLoader:

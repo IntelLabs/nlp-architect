@@ -19,6 +19,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 import tensorflow as tf
 from tensorflow.keras.layers import Bidirectional, Dense, Dropout, Embedding, Input, LSTM, \
     TimeDistributed, concatenate, GlobalMaxPooling1D, Conv1D
+# pylint: disable=no-name-in-module
 from tensorflow.python.keras.layers import CuDNNLSTM
 
 from nlp_architect.contrib.tensorflow.python.keras.layers.crf import CRF

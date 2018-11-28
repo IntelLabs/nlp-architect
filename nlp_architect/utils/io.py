@@ -208,10 +208,9 @@ def valid_path_append(path, *args):
         res.append(os.path.join(full_path, suffix_path))
     if len(res) == 0:
         return path
-    elif len(res) == 1:
+    if len(res) == 1:
         return res[0]
-    else:
-        return res
+    return res
 
 
 def sanitize_path(path):

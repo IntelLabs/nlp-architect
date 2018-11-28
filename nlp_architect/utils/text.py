@@ -187,11 +187,11 @@ class Stopwords(object):
     """
     Stop words list class.
     """
-    stop_words = None
+    stop_words = []
 
     @staticmethod
     def get_words():
-        if Stopwords.stop_words is None:
+        if not Stopwords.stop_words:
             sw_path = path.join(path.dirname(path.realpath(__file__)),
                                 'resources',
                                 'stopwords.txt')

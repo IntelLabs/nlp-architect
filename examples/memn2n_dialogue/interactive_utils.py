@@ -46,12 +46,12 @@ def interactive_loop(model, babi):
         line_in = text_input('>>> ').strip().lower()
         if not line_in:
             line_in = "<SILENCE>"
-        if line_in == 'exit' or line_in == 'quit':
+        if line_in in ('exit', 'quit'):
             break
         if line_in == 'help':
             print_help()
             continue
-        if line_in == 'restart' or line_in == 'clear':
+        if line_in in ('restart', 'clear'):
             context = []
             response = None
             time_feat = 1

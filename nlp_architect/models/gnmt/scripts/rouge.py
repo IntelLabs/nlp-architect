@@ -16,6 +16,7 @@
 # Changes Made from original:
 #   no changes
 # ******************************************************************************
+# pylint: skip-file
 """ROUGE metric implementation.
 
 Copy from tf_seq2seq/seq2seq/metrics/rouge.py.
@@ -30,9 +31,6 @@ from __future__ import unicode_literals
 
 import itertools
 import numpy as np
-
-
-# pylint: disable=C0103
 
 
 def _get_ngrams(n, text):

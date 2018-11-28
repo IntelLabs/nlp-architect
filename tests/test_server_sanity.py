@@ -14,6 +14,7 @@
 # limitations under the License.
 # ******************************************************************************
 # pylint: disable=redefined-outer-name
+# pylint: disable=c-extension-no-member
 import gzip
 import io
 import json

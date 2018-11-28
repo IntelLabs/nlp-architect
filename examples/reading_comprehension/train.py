@@ -18,9 +18,10 @@ from __future__ import print_function
 from random import shuffle
 import os
 import numpy as np
+
+from nlp_architect.models.matchlstm_ansptr import MatchLSTMAnswerPointer
 from nlp_architect.utils.mrc_utils import (
     create_squad_training, max_values_squad, get_data_array_squad, create_data_dict)
-from nlp_architect.models.matchlstm_ansptr import MatchLSTM_AnswerPointer
 import argparse
 import tensorflow as tf
 from nlp_architect.utils.io import validate_existing_directory, check_size, validate_parent_exists
@@ -98,8 +99,8 @@ file_name_dict['embedding'] = 'glove.trimmed.300.npz'
 missing_flag = 0
 for file_name in file_name_dict.values():
     if not os.path.exists(os.path.join(args.data_path, file_name)):
-            print("The following required file is missing :", file_name)
-            missing_flag = 1
+        print("The following required file is missing :", file_name)
+        missing_flag = 1
 
 if missing_flag:
     print("Please rereun prepare_data.py to generate missing files")
@@ -156,13 +157,15 @@ dev = get_data_array_squad(params_dict, data_dev, set_val='val')
 
 # Define Reading Comprehension model
 with tf.device('/device:' + args.select_device + ':0'):
-    model = MatchLSTM_AnswerPointer(params_dict, embeddings)
+    model = MatchLSTMAnswerPointer(params_dict, embeddings)
 
 # Define Configs for training
 run_config = tf.ConfigProto(allow_soft_placement=True, log_device_placement=False)
 
 # Create session run training
 with tf.Session(config=run_config) as sess:
+    # pylint: disable=no-member
+
     init = tf.global_variables_initializer()
 
     # Model Saver

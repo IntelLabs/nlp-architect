@@ -37,7 +37,7 @@ def pad_sentences(sentences, sentence_length=0, pad_val=0.):
     lengths = [len(sent) for sent in sentences]
 
     nsamples = len(sentences)
-    if sentence_length is 0:
+    if sentence_length == 0:
         sentence_length = np.max(lengths)
 
     X = (np.ones((nsamples, sentence_length)) * pad_val).astype(dtype=np.int32)

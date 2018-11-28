@@ -44,6 +44,7 @@ class TCNForLM(TCN, CommonLayers):
         self.merged_summary_op_val = None
         self.training_update_step = None
 
+    # pylint: disable=arguments-differ
     def run(self, data_loaders, lr, num_iterations=100, log_interval=100, result_dir="./",
             ckpt=None):
         """
@@ -139,6 +140,7 @@ class TCNForLM(TCN, CommonLayers):
         results = self.sample_sequence(sess, num_samples, sos=sos, eos=eos)
         return results
 
+    # pylint: disable=arguments-differ
     def build_train_graph(self, num_words=20000, word_embeddings=None, max_gradient_norm=None,
                           em_dropout=0.4):
         """

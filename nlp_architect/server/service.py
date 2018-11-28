@@ -18,7 +18,6 @@ import json
 import logging
 import os.path
 from importlib import import_module
-from os import path
 
 from nlp_architect.utils.io import gzip_str
 
@@ -38,12 +37,13 @@ def format_response(resp_format, parsed_doc):
         formatted response
     """
     logger.info('preparing response JSON')
+    ret = None
     if (resp_format == "json") or ('json' in resp_format) or (not resp_format):
         # if not specified resp_format then default is json
-        return parsed_doc
+        ret = parsed_doc
     if resp_format == "gzip" or 'gzip' in resp_format:
         ret = gzip_str(parsed_doc)
-        return ret
+    return ret
 
 
 def parse_headers(req_headers):
@@ -119,6 +119,7 @@ class Service(object):
     def get_paragraphs(self):
         return self.service.get_paragraphs()
 
+    # pylint: disable=eval-used
     def get_service_inference(self, docs, headers):
         """
         get parser response from service API
@@ -158,7 +159,8 @@ class Service(object):
         Returns:
             The loaded service
         """
-        with open(path.join(path.dirname(path.realpath(__file__)), "services.json")) as prop_file:
+        with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), "services.json")) \
+                as prop_file:
             properties = json.load(prop_file)
         folder_path = properties["api_folders_path"]
         service_name_error = "'{0}' is not an existing service - " \

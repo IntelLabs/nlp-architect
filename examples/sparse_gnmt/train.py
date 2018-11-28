@@ -374,7 +374,6 @@ def update_stats(stats, start_time, step_result):
     _, output_tuple = step_result
 
     # Update statistics
-    # TODO(ofir): fix pruning stats
     batch_size = output_tuple.batch_size
     stats["step_time"] += time.time() - start_time
     stats["train_loss"] += output_tuple.train_loss * batch_size
@@ -466,6 +465,7 @@ def get_model_creator(hparams):
     return model_creator
 
 
+# pylint: disable=too-many-statements
 def train(hparams, scope=None, target_session=""):
     """Train a translation model."""
     log_device_placement = hparams.log_device_placement

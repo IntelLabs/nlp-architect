@@ -35,6 +35,7 @@ import argparse
 import numpy as np
 from sklearn.metrics import classification_report
 from sklearn.model_selection import train_test_split
+# pylint: disable=no-name-in-module
 from tensorflow.python.keras.preprocessing.sequence import pad_sequences
 from tensorflow.python.keras.preprocessing.text import Tokenizer
 

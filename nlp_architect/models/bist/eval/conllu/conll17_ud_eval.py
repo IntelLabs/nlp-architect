@@ -84,7 +84,7 @@ import sys
 # For every multi-word span, we align the gold and system words completely
 # inside this span using LCS on their FORMs. The words not intersecting
 # (even partially) any multi-word span are then aligned as tokens.
-# pylint: disable=invalid-name
+# pylint: disable=too-many-statements
 
 # CoNLL-U column names
 ID, FORM, LEMMA, UPOS, XPOS, FEATS, HEAD, DEPREL, DEPS, MISC = list(range(10))

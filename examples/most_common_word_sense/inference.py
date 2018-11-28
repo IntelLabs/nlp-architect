@@ -23,12 +23,11 @@ import numpy as np
 from nltk.corpus import wordnet as wn
 from termcolor import colored
 
+from examples.most_common_word_sense.feature_extraction import extract_synset_data, \
+    extract_features_envelope
+from examples.most_common_word_sense.prepare_data import read_inference_input_examples_file
 from nlp_architect.models.most_common_word_sense import MostCommonWordSense
 from nlp_architect.utils.io import validate_existing_filepath, check_size
-
-from prepare_data import read_inference_input_examples_file
-from feature_extraction import extract_features_envelope
-from feature_extraction import extract_synset_data
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)

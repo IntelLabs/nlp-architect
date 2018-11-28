@@ -30,6 +30,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ==============================================================================
+# pylint: skip-file
 """For loading data into NMT models."""
 from __future__ import print_function
 

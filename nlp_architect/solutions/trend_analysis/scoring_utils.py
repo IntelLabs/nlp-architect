@@ -13,6 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
+# pylint: disable=no-name-in-module
 import itertools
 import math
 
@@ -78,8 +79,7 @@ class TextSpanScoring:
         if len(phrases_and_scores) > 0:
             return self._maybe_group_and_sort(group_similar_spans,
                                               phrases_and_scores)
-        else:
-            return []
+        return []
 
     def get_freq_scores(self, group_similar_spans=True):
         phrases_and_scores = {}
@@ -95,7 +95,7 @@ class TextSpanScoring:
                               'v': (p, s)}
                              for p, s in phrases.items()]
         phrase_groups = []
-        for model, group in itertools.groupby(
+        for _, group in itertools.groupby(
                 sorted(pid_phrase_scores, key=lambda x: x['k']),
                 lambda x: x['k']):
             _group = list(group)
@@ -105,16 +105,14 @@ class TextSpanScoring:
         return phrase_groups
 
     def _maybe_group_and_sort(self, is_group, phrases_dict):
+        phrase_groups = phrases_dict.items()
         if is_group:
             phrase_groups = self.group_spans(phrases_dict)
-            return sorted(phrase_groups, key=lambda x: x[1], reverse=True)
-        else:
-            return sorted(phrases_dict.items(), key=lambda x: x[1],
-                          reverse=True)
+        return sorted(phrase_groups, key=lambda x: x[1], reverse=True)
 
     @staticmethod
     def normalize_minmax(phrases_list, invert=False):
-        phrases, scores = list(zip(*phrases_list))
+        _, scores = list(zip(*phrases_list))
         max_score = max(scores)
         min_score = min(scores)
         norm_list = []
@@ -280,8 +278,7 @@ class CorpusIndex:
         pid = CorpusIndex.get_pid(phrase)
         if self.tf_index.get(pid, None) is not None:
             return self.tf_index.get(pid)
-        else:
-            return 0
+        return 0
 
     def df(self, phrase):
         """
@@ -290,5 +287,4 @@ class CorpusIndex:
         pid = CorpusIndex.get_pid(phrase)
         if self.df_index.get(pid, None) is not None:
             return len(self.df_index[pid])
-        else:
-            return 0
+        return 0

@@ -15,19 +15,20 @@
 # ******************************************************************************
 import argparse
 import os
+import shutil
 from http.server import HTTPServer as BaseHTTPServer, SimpleHTTPRequestHandler
-from os import path
 from subprocess import run
 
 import pytest
 
 from nlp_architect import LIBRARY_ROOT, LIBRARY_PATH
+from nlp_architect.utils import LIBRARY_STORAGE_PATH, ansi2html
 from nlp_architect.version import NLP_ARCHITECT_VERSION
 
 
 class DocsCommand(object):
     cmd_name = 'doc'
-    docs_source = path.join(LIBRARY_ROOT, 'doc')
+    docs_source = os.path.join(LIBRARY_ROOT, 'doc')
 
     def __init__(self, subparsers):
         parser = subparsers.add_parser(DocsCommand.cmd_name,
@@ -37,14 +38,14 @@ class DocsCommand(object):
         self.parser = parser
 
     @staticmethod
-    def run_docs(args):
+    def run_docs(_):
         base_cmd = 'make -C {}'.format(DocsCommand.docs_source)
         print('Re-building documentation')
-        run(base_cmd + ' clean', shell=True, check=True)
-        run(base_cmd + ' html', shell=True, check=True)
-        print('Documentation built in: {}'.format(path.join(DocsCommand.docs_source,
-                                                            'build', 'html')))
-        print('To view documents open your browser to: http://localhost:8000')
+        run(base_cmd + ' clean', shell=True)
+        run(base_cmd + ' html', shell=True)
+        print('Documentation built in: {}'.format(os.path.join(DocsCommand.docs_source,
+                                                               'build', 'html')))
+        print('To view documents point your browser to: http://localhost:8000')
 
         class HTTPHandler(SimpleHTTPRequestHandler):
             def translate_path(self, path):
@@ -54,22 +55,23 @@ class DocsCommand(object):
                 return fullpath
 
         class HTTPServer(BaseHTTPServer):
-            def __init__(self, base_path, server_address, RequestHandlerClass=HTTPHandler):
+            def __init__(self, base_path, server_address, request_handler_class=HTTPHandler):
                 self.base_path = base_path
-                BaseHTTPServer.__init__(self, server_address, RequestHandlerClass)
+                BaseHTTPServer.__init__(self, server_address, request_handler_class)
 
-        web_dir = os.path.join(path.join(DocsCommand.docs_source, 'build', 'html'))
+        web_dir = os.path.join(os.path.join(DocsCommand.docs_source, 'build', 'html'))
         httpd = HTTPServer(web_dir, ("", 8000))
         httpd.serve_forever()
 
 
 class StyleCommand(object):
     cmd_name = 'style'
-    check_dirs = ['examples/',
-                  'nlp_architect/',
-                  'tests/',
-                  ]
-    files_to_check = [path.join(LIBRARY_ROOT, f) for f in check_dirs]
+    check_dirs = [
+        'examples',
+        'nlp_architect',
+        'tests'
+    ]
+    files_to_check = [os.path.join(LIBRARY_ROOT, f) for f in check_dirs]
 
     def __init__(self, subparsers):
         parser = subparsers.add_parser(StyleCommand.cmd_name,
@@ -93,7 +95,7 @@ class StyleCommand(object):
                 rc = 1
         if args.only_pylint or run_all:
             p_err = StyleCommand.run_pylint()
-            if 0 < int(p_err) < 3:
+            if int(p_err) != 0:
                 print('pylint errors found. RC={}'.format(p_err))
                 rc = 1
         if rc > 0:
@@ -102,18 +104,45 @@ class StyleCommand(object):
     @staticmethod
     def run_flake():
         print('Running flake8 ...\n')
-        flake8_config = path.join(LIBRARY_ROOT, 'setup.cfg')
-        cmd = 'flake8 {} --config={}'.format(' '.join(StyleCommand.files_to_check), flake8_config)
-        cmd_out = run(cmd, shell=True, check=True)
+        flake8_config = os.path.join(LIBRARY_ROOT, 'setup.cfg')
+        os.makedirs(LIBRARY_STORAGE_PATH, exist_ok=True)
+        flake8_out = os.path.join(LIBRARY_STORAGE_PATH, 'flake8.txt')
+        flake8_html_out = os.path.join(LIBRARY_STORAGE_PATH, 'flake_html')
+
+        try:
+            os.remove(flake8_out)
+            shutil.rmtree(flake8_html_out, ignore_errors=True)
+        except OSError:
+            pass
+        cmd = 'flake8 {} --config={} --output-file {}' \
+            .format(' '.join(StyleCommand.files_to_check), flake8_config, flake8_out)
+        cmd_out = run(cmd, shell=True)
+
+        cmd_html = 'flake8 {} --config={} --format=html --htmldir={}' \
+            .format(' '.join(StyleCommand.files_to_check), flake8_config, flake8_html_out)
+
+        run(cmd_html, shell=True)
+        print('To view flake8 results in html, point your web browser to: \n{}\n'
+              .format(flake8_html_out + '/index.html'))
+
         return cmd_out.returncode
 
     @staticmethod
     def run_pylint():
         print('Running pylint ...\n')
-        pylint_config = path.join(LIBRARY_ROOT, 'pylintrc')
-        cmd = 'pylint {} --rcfile {}'.format(' '.join(StyleCommand.files_to_check), pylint_config)
-        cmd_out = run(cmd, shell=True, check=False)
-        return cmd_out.returncode
+        pylint_config = os.path.join(LIBRARY_ROOT, 'pylintrc')
+        os.makedirs(LIBRARY_STORAGE_PATH, exist_ok=True)
+        pylint_out = os.path.join(LIBRARY_STORAGE_PATH, 'pylint.txt')
+        html_out = os.path.join(LIBRARY_STORAGE_PATH, 'pylint.html')
+
+        cmd = 'pylint -j 4 {} --rcfile {} --score=n | tee {}'\
+            .format(' '.join(StyleCommand.files_to_check), pylint_config, pylint_out)
+        run(cmd, shell=True)
+        ret_code = 1 if os.stat(pylint_out).st_size else 0
+
+        ansi2html.run(pylint_out, html_out)
+        print('To view pylint results in html, point your web browser to: \n{}\n'.format(html_out))
+        return ret_code
 
 
 class TestCommand(object):
@@ -131,12 +160,12 @@ class TestCommand(object):
     def run_tests(args):
         # run all tests
         print('\nrunning NLP Architect tests ...')
-        tests_dir = path.join(LIBRARY_ROOT, 'tests')
+        tests_dir = os.path.join(LIBRARY_ROOT, 'tests')
         tests = None
         if args.f:
             specific_test_file = args.f
-            test_path = path.join(os.getcwd(), specific_test_file)
-            if path.exists(test_path):
+            test_path = os.path.join(os.getcwd(), specific_test_file)
+            if os.path.exists(test_path):
                 tests = test_path
         else:
             tests = tests_dir
@@ -178,9 +207,9 @@ class ServerCommand(object):
     @staticmethod
     def run_server(args):
         port = args.port
-        serve_file = path.join(LIBRARY_PATH, 'server', 'serve.py')
+        serve_file = os.path.join(LIBRARY_PATH, 'server', 'serve.py')
         cmd_str = 'hug -p {} -f {}'.format(port, serve_file)
-        run(cmd_str, shell=True, check=True)
+        run(cmd_str, shell=True)
 
 
 # sub commands list

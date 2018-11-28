@@ -13,6 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
+# pylint: disable=global-statement
 import csv
 import logging
 import sys
@@ -655,7 +656,7 @@ def draw_ui(top_n_phrases, top_n_clusters, active_area):
 
 
 # define callbacks
-
+# pylint: disable=unused-argument
 def top_n_phrases_changed_callback(value, old, new):
     logger.info("top n changed to: %s", str(new))
     top_n_dropdown.label = "Show Top " + str(new) + " Phrases"
@@ -664,6 +665,7 @@ def top_n_phrases_changed_callback(value, old, new):
     # handle_selected_graph(radio_group_area.active)
 
 
+# pylint: disable=unused-argument
 def top_n_clusters_changed_callback(value, old, new):
     global dont_regenerate
     logger.info("top n clusters changed to: %s", str(new))
@@ -675,6 +677,7 @@ def top_n_clusters_changed_callback(value, old, new):
         dont_regenerate = False
 
 
+# pylint: disable=unused-argument
 def selected_graph_changed_callback(active, old, new):
     global filter_item
     logger.info("selected graph changed to: %s", str(new))
@@ -682,6 +685,7 @@ def selected_graph_changed_callback(active, old, new):
     handle_selected_graph(new)
 
 
+# pylint: disable=unused-argument
 def filter_topic_selected_callback(indices, old, new):
     # update all_topics according to new selected items
     logger.info("filter topic callback")
@@ -705,6 +709,7 @@ def filter_topic_selected_callback(indices, old, new):
     filter_label.text = ""
 
 
+# pylint: disable=unused-argument
 def filter_custom_selected_callback(indices, old, new):
     logger.info("filter custom callback")
     filter_label.text = "Please Wait..."
@@ -748,7 +753,7 @@ def search_topic_callback():
     refresh_filter_area()
 
 
-def tab_changed_callback(active, old, new):
+def tab_changed_callback(_):
     reset_filters()
 
 
@@ -767,6 +772,7 @@ def re_analyze_callback():
 top_n_dropdown.on_change('value', top_n_phrases_changed_callback)
 top_n_clusters_dropdown.on_change('value', top_n_clusters_changed_callback)
 radio_group_area.on_change('active', selected_graph_changed_callback)
+# pylint: disable=no-member
 filter_topics_table_source.selected.on_change('indices', filter_topic_selected_callback)
 filter_custom_table_source.selected.on_change('indices', filter_custom_selected_callback)
 search_button.on_click(search_topic_callback)

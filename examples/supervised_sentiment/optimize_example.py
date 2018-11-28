@@ -18,6 +18,7 @@ import pickle
 import argparse
 from sklearn.model_selection import train_test_split
 from hyperopt import fmin, tpe, hp, Trials
+# pylint: disable=no-name-in-module
 from tensorflow.python.keras.callbacks import EarlyStopping
 from tensorflow.python.keras.preprocessing.sequence import pad_sequences
 from tensorflow.python.keras.preprocessing.text import Tokenizer

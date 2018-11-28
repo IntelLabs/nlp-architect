@@ -17,6 +17,7 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 import tensorflow as tf
+# pylint: disable=no-name-in-module
 from tensorflow.python.framework import tensor_shape
 from tensorflow.python.layers import base
 from tensorflow.python.layers import utils
@@ -33,6 +34,11 @@ class _ConvWeightNorm(keras_layers.Conv1D, base.Layer):
                  **kwargs):
         super(_ConvWeightNorm, self).__init__(*args,
                                               **kwargs)
+        self.kernel_v = None
+        self.kernel_g = None
+        self.kernel = None
+        self.bias = None
+        self._convolution_op = None
 
     def build(self, input_shape):
         input_shape = tensor_shape.TensorShape(input_shape)
@@ -40,9 +46,11 @@ class _ConvWeightNorm(keras_layers.Conv1D, base.Layer):
             channel_axis = 1
         else:
             channel_axis = -1
+        # pylint: disable=no-member
         if input_shape[channel_axis].value is None:
             raise ValueError('The channel dimension of the inputs '
                              'should be defined. Found `None`.')
+        # pylint: disable=no-member
         input_dim = input_shape[channel_axis].value
         kernel_shape = self.kernel_size + (input_dim, self.filters)
 

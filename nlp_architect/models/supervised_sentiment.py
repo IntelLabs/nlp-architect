@@ -18,10 +18,11 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Embedding, LSTM, Activation, Dropout, Flatten, \
     Bidirectional
 from tensorflow.keras.optimizers import SGD
+# pylint: disable=no-name-in-module
 from tensorflow.python.keras.layers import Conv1D, MaxPooling1D
 
 
-def simple_lstm(max_fatures, dense_out, input_length, embed_dim=256, lstm_out=140,
+def simple_lstm(max_features, dense_out, input_length, embed_dim=256, lstm_out=140,
                 dropout=0.5):
     """
     Simple Bi-direction LSTM Model in Keras
@@ -40,7 +41,7 @@ def simple_lstm(max_fatures, dense_out, input_length, embed_dim=256, lstm_out=14
         model (model): LSTM model
     """
     model = Sequential()
-    model.add(Embedding(max_fatures, embed_dim, input_length=input_length))
+    model.add(Embedding(max_features, embed_dim, input_length=input_length))
     model.add(Bidirectional(LSTM(lstm_out, recurrent_dropout=dropout, activation='tanh')))
     model.add(Dense(dense_out, activation='softmax'))
     model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])

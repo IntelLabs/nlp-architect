@@ -4,10 +4,11 @@
 # https://github.com/Kronuz/ansi2html/blob/master/ansi2html.py
 # Copyright © 2013 German M. Bravo (Kronuz)
 # License: https://github.com/Kronuz/ansi2html/blob/master/LICENSE
-# Changes made to original file: removed input arguments. Fixed input to 'pylint.txt' file.
+# Changes made to original file: removed main, added run() function.
 from __future__ import print_function
 
 import re
+import sys
 
 _ANSI2HTML_STYLES = {}
 # pylint: disable=anomalous-backslash-in-string
@@ -151,18 +152,16 @@ def ansi2html(text, palette='solarized'):
     return sub
 
 
-def main():
-    import sys
+def run(file, out):
     try:
         html = ''
         try:
-            html += '<pre>' + ansi2html(open('pylint.txt').read()) + '</pre>'
+            with open(file) as fp:
+                html += '<pre>' + ansi2html(fp.read()) + '</pre>'
         except IOError:
             print("File not found: %r" % 'pylint.txt', file=sys.stderr)
-        sys.stdout.write(html)
+
+        with open(out, 'w') as out_fp:
+            out_fp.write(html)
     except KeyboardInterrupt:
         pass
-
-
-if __name__ == '__main__':
-    main()

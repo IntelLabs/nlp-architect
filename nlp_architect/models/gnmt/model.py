@@ -31,7 +31,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ==============================================================================
-
+# pylint: skip-file
 """Basic sequence-to-sequence model with dynamic RNN support."""
 from __future__ import absolute_import
 from __future__ import division

@@ -61,14 +61,14 @@ INFERENCE_KEYS = ["src_max_len_infer", "tgt_max_len_infer", "subword_option",
                   "num_translations_per_input", "infer_mode"]
 
 
+# pylint: disable=too-many-statements
 def add_arguments(parser):
     """Build ArgumentParser."""
     parser.register("type", "bool", io.validate_boolean)
 
     # network
     parser.add_argument("--num_units", type=int, default=32, help="Network size.")
-    parser.add_argument("--num_layers", type=int, default=2,
-                        help="Network depth.")
+    parser.add_argument("--num_layers", type=int, default=2, help="Network depth.")
     parser.add_argument("--num_encoder_layers", type=int, default=None,
                         help="Encoder depth, equal to num_layers if None.")
     parser.add_argument("--num_decoder_layers", type=int, default=None,
@@ -546,6 +546,7 @@ def _add_argument(hparams, key, value, update=True):
         hparams.add_hparam(key, value)
 
 
+# pylint: disable=too-many-statements
 def extend_hparams(hparams):
     """Add new arguments to hparams."""
     # Sanity checks
@@ -827,7 +828,7 @@ def run_main(flags, default_hparams, train_fn, inference_fn, target_session=""):
         train_fn(hparams, target_session=target_session)
 
 
-def main(unused_argv):
+def main(_):
     default_hparams = create_hparams(FLAGS)
     train_fn = train.train
     inference_fn = inference.inference

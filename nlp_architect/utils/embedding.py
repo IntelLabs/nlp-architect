@@ -95,6 +95,7 @@ def get_embedding_matrix(embeddings: dict, vocab: Vocabulary) -> np.ndarray:
     return mat
 
 
+# pylint: disable=not-context-manager
 class ELMoEmbedderTFHUB(object):
     def __init__(self):
         self.g = tf.Graph()

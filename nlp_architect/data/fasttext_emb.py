@@ -13,7 +13,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
-from __future__ import print_function, division
 import os
 from six.moves import urllib
 import numpy as np
@@ -51,7 +50,7 @@ class FastTextEmb:
             if license_prompt(filepath, link, self.path):
                 print(
                     "Downloading FastText embeddings for " + self.language + " to " + filepath)
-                fp, _ = urllib.request.urlretrieve(self.url, filepath)
+                urllib.request.urlretrieve(self.url, filepath)
                 statinfo = os.stat(filepath)
                 print(
                     "Sucessfully downloaded", filename, statinfo.st_size, "bytes")
@@ -123,7 +122,7 @@ def get_eval_data(eval_path, src_lang, tgt_lang):
         if license_prompt(src_path, link, src_path):
             os.system("mkdir -p " + eval_path)
             print("Downloading cross-lingual dictionaries for " + src_lang)
-            fp, _ = urllib.request.urlretrieve(eval_url + filename, src_path)
+            urllib.request.urlretrieve(eval_url + filename, src_path)
             print("Completed downloading to " + eval_path)
         else:
             exit()

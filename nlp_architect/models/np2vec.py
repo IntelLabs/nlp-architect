@@ -295,8 +295,7 @@ class NP2vec:
             if word2vec_format:
                 return KeyedVectors.load_word2vec_format(np2vec_model_file, binary=binary)
             return KeyedVectors.load(np2vec_model_file, mmap='r')
-        elif word_ngrams == 1:
+        if word_ngrams == 1:
             return FastText.load(np2vec_model_file)
-            # return FastText.load(np2vec_model_file, mmap='r')
         logger.error('invalid value for \'word_ngrams\'')
         return None

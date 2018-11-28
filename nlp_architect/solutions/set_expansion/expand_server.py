@@ -64,7 +64,8 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
         self.request.sendall(packet)
         logger.info('done')
 
-    def annotate(self, text, seed):
+    @staticmethod
+    def annotate(text, seed):
         np_list = []
         docs = [text]
         spans = extract_noun_phrases(docs, nlp, args.chunker)

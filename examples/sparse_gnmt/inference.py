@@ -81,6 +81,7 @@ def _decode_inference_indices(model, sess, output_infer,
                 image_summ = tf.Summary()
                 image_summ.ParseFromString(infer_summary)
                 with tf.gfile.GFile(image_file, mode="w") as img_f:
+                    # pylint: disable=no-member
                     img_f.write(image_summ.value[0].image.encoded_image_string)
 
             trans_f.write("%s\n" % translation)

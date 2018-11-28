@@ -60,6 +60,7 @@ class WikiOnline(object):
         self.cache[phrase] = ret_pages
         return ret_pages
 
+    # pylint: disable=protected-access
     def get_wiki_page_with_items(self, phrase, page):
         item = self.get_wiki_page_item(page)
         pageid = page.pageid
@@ -76,7 +77,7 @@ class WikiOnline(object):
 
         ret_page = WikipediaPage(phrase, None, page_title, None, 0, pageid, description, relations)
 
-        logger.debug('Page:' + str(ret_page) + ". Extracted successfully")
+        logger.debug('Page: {}. Extracted successfully'.format(ret_page))
 
         return ret_page
 
@@ -124,8 +125,7 @@ class WikiOnline(object):
             if dic is not None and 'descriptions' in dic:
                 desc = dic['descriptions']
                 if desc is not None and 'en' in desc:
-                    return True if [s for s in DISAMBIGUATE_PAGE if
-                                    s == desc['en'].lower()] else False
+                    return desc['en'].lower()in DISAMBIGUATE_PAGE
 
         return False
 

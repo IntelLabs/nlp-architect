@@ -34,6 +34,10 @@ class Discriminator:
         self.hid_dim = 2048
         # Build Graph
         self._build_network_graph()
+        self.disc_cost = None
+        self.disc_opt = None
+        self.map_opt = None
+        self.W = None
 
     def _build_network_graph(self):
         """
@@ -86,6 +90,8 @@ class Generator:
         self._build_network_graph()
         ortho_weight = self._build_ortho_graph(self.W)
         self.assign_weight = self._assign_ortho_weight(ortho_weight)
+        self.map_opt = None
+        self.W = None
 
     def _build_network_graph(self):
         """
@@ -205,11 +211,12 @@ class WordTranslator:
         self.generator.build_train_graph(self.discriminator.prediction)
         self.discriminator.build_train_graph(self.discriminator.prediction)
 
-    def report_metrics(self, iters, n_words_proc, disc_cost_acc, tic):
+    @staticmethod
+    def report_metrics(iters, n_words_proc, disc_cost_acc, tic):
         """
         Reports metrics of how training is going
         """
-        if (iters > 0 and iters % 500 == 0):
+        if iters > 0 and iters % 500 == 0:
             mean_cost = str(sum(disc_cost_acc) / len(disc_cost_acc))
             print(str(int(n_words_proc / (time.time() - tic))) + " Samples/Sec - Iter "
                   + str(iters) + " Discriminator Cost: " + mean_cost)
@@ -223,7 +230,7 @@ class WordTranslator:
         """
         Runs generator part of GAN
         Arguments:
-            Sess(tf.session): Tensorflow Session
+            sess(tf.session): Tensorflow Session
             local_lr(float): Learning rate
         Returns:
             Returns number of words processed
@@ -244,7 +251,7 @@ class WordTranslator:
         """
         Runs discriminator part of GAN
         Arguments:
-            Sess(tf.session): Tensorflow Session
+            sess(tf.session): Tensorflow Session
             local_lr(float): Learning rate
         """
         # Generate random ids to look up
@@ -261,7 +268,7 @@ class WordTranslator:
         """
         Runs whole GAN
         Arguments:
-            Sess(tf.session): Tensorflow Session
+            sess(tf.session): Tensorflow Session
             local_lr(float): Learning rate
         """
         disc_cost_acc = []
@@ -277,7 +284,8 @@ class WordTranslator:
             # 3.Report the metrics
             self.report_metrics(iters, n_words_proc, disc_cost_acc, tic)
 
-    def set_lr(self, local_lr, drop_lr):
+    @staticmethod
+    def set_lr(local_lr, drop_lr):
         """
         Drops learning rate based on CSLS criterion
         Arguments:
@@ -297,8 +305,7 @@ class WordTranslator:
         Saves W in mapper as numpy array based on CSLS criterion
         Arguments:
             save_model(bool): Save model if True
-            Sess(tf.session): Tensorflow Session
-            epoch(int): Epoch number
+            sess(tf.session): Tensorflow Session
         """
         if save_model:
             print("Saving model ....")
@@ -310,7 +317,7 @@ class WordTranslator:
         """
         Applies procrustes to W matrix for better mapping
         Arguments:
-            Sess(tf.session): Tensorflow Session
+            sess(tf.session): Tensorflow Session
             final_pairs(ndarray): Array of pairs which are mutual neighbors
         """
         print("Applying solution of Procrustes problem to get better mapping...")
@@ -319,6 +326,7 @@ class WordTranslator:
         A, B = sess.run([self.generator.src_emb,
                          self.generator.tgt_emb],
                         feed_dict=proc_dict)
+        # pylint: disable=no-member
         R = scipy.linalg.orthogonal_procrustes(A, B)
         sess.run(tf.assign(self.generator.W, R[0]))
 

@@ -41,6 +41,7 @@ class RunSystemsSuper(object):
         return sieves
 
     def run_deterministic(self):
+        # pylint: disable=too-many-nested-blocks
         for sieve in self.sieves:
             start = time.time()
             clusters_changed = True
@@ -94,10 +95,11 @@ class RunSystemsEvent(RunSystemsSuper):
                                                   resources.get_module_from_relation)
 
 
+# pylint: disable=no-else-return
 def get_run_system(topic: Topic, resource: CDCSettings, eval_type: str):
     if eval_type.lower() == 'entity':
         return RunSystemsEntity(topic, resource)
-    elif eval_type.lower() == 'event':
+    if eval_type.lower() == 'event':
         return RunSystemsEvent(topic, resource)
     else:
         raise AttributeError(eval_type + ' Not supported!')

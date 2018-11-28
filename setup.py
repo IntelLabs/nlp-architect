@@ -62,6 +62,7 @@ requirements = [
     # Docs
     "sphinx",
     "sphinx_rtd_theme",
+    "flake8-html"
 ]
 
 # required packages for testing

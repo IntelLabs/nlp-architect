@@ -27,7 +27,7 @@ import numpy as np
 import tensorflow as tf
 
 from nlp_architect.api.abstract_api import AbstractApi
-from nlp_architect.models.matchlstm_ansptr import MatchLSTM_AnswerPointer
+from nlp_architect.models.matchlstm_ansptr import MatchLSTMAnswerPointer
 from nlp_architect.utils import LIBRARY_STORAGE_PATH
 from nlp_architect.utils.generic import license_prompt
 from nlp_architect.utils.io import download_unlicensed_file
@@ -156,7 +156,7 @@ class MachineComprehensionApi(AbstractApi):
 
         # Define Reading Comprehension model
         with tf.device('/device:' + select_device + ':0'):
-            self.model = MatchLSTM_AnswerPointer(self.params_dict, embeddings)
+            self.model = MatchLSTMAnswerPointer(self.params_dict, embeddings)
 
         # Define Configs for training
         run_config = tf.ConfigProto(allow_soft_placement=True, log_device_placement=False)
@@ -166,11 +166,13 @@ class MachineComprehensionApi(AbstractApi):
         init = tf.global_variables_initializer()
 
         # Model Saver
+        # pylint: disable=no-member
         model_saver = tf.train.Saver()
         model_ckpt = tf.train.get_checkpoint_state(model_path)
         idx_path = model_ckpt.model_checkpoint_path + ".index" if model_ckpt else ""
 
-        # Intitialze with random or pretrained weights
+        # Initialize with random or pretrained weights
+        # pylint: disable=no-member
         if model_ckpt and restore_model and (tf.gfile.Exists(
                 model_ckpt.model_checkpoint_path) or tf.gfile.Exists(idx_path)):
             model_saver.restore(self.sess, model_ckpt.model_checkpoint_path)
@@ -179,9 +181,9 @@ class MachineComprehensionApi(AbstractApi):
             self.sess.run(init)
 
         shuffle(self.dev)
-        return
 
-    def paragraphs(self, valid, vocab_tuple, num_examples):
+    @staticmethod
+    def paragraphs(valid, vocab_tuple, num_examples):
         paragraphs = []
         vocab_forward = vocab_tuple[0]
         for idx in range(num_examples):
@@ -190,7 +192,8 @@ class MachineComprehensionApi(AbstractApi):
             paragraphs.append(re.sub(r'\s([?.!,"](?:\s|$))', r'\1', para_string))  # (?:\s|$))
         return paragraphs
 
-    def questions(self, valid, vocab_tuple, num_examples):
+    @staticmethod
+    def questions(valid, vocab_tuple, num_examples):
         vocab_forward = vocab_tuple[0]
         questions = []
         for idx in range(num_examples):

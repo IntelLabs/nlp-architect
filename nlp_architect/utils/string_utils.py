@@ -33,9 +33,9 @@ DISAMBIGUATION_CATEGORY = ['disambig', 'disambiguation']
 class StringUtils:
     spacy_no_parser = SpacyInstance(disable=['parser'])
     spacy_parser = SpacyInstance()
-    stop_words = list()
-    pronouns = None
-    preposition = None
+    stop_words = []
+    pronouns = []
+    preposition = []
 
     def __init__(self):
         pass
@@ -56,7 +56,8 @@ class StringUtils:
         if isinstance(str_clean, str):
             str_clean = str(str_clean)
 
-        doc = StringUtils.spacy_no_parser.parser(str_clean)
+        parser = StringUtils.spacy_no_parser.parser
+        doc = parser(str_clean)
         ret_clean = []
         for token in doc:
             lemma = token.lemma_.strip()
@@ -98,15 +99,17 @@ class StringUtils:
 
     @staticmethod
     def find_head_lemma_pos_ner(x: str):
-        '''
+        """"
 
         :param x: mention
         :return: the head word and the head word lemma of the mention
-        '''
+        """
         head = None
         lemma = None
         pos = None
         ner = None
+
+        # pylint: disable=not-callable
         doc = StringUtils.spacy_parser.parser(x)
         for tok in doc:
             if tok.head == tok:

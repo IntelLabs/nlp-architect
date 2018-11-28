@@ -13,7 +13,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
-
 import numpy as np
 import pickle
 from os import makedirs, path, sys
@@ -33,6 +32,11 @@ class IntentExtractionApi(AbstractApi):
 
     def __init__(self, prompt=True):
         self.model = None
+        self.model_type = None
+        self.word_vocab = None
+        self.tags_vocab = None
+        self.char_vocab = None
+        self.intent_vocab = None
         self._download_pretrained_model(prompt)
         self.nlp = SpacyInstance(disable=['tagger', 'ner', 'parser', 'vectors', 'textcat'])
 
@@ -53,7 +57,8 @@ class IntentExtractionApi(AbstractApi):
             responded_yes = False
         return responded_yes
 
-    def _download_pretrained_model(self, prompt=True):
+    @staticmethod
+    def _download_pretrained_model(prompt=True):
         """Downloads the pre-trained BIST model if non-existent."""
         model_info_exists = path.isfile(IntentExtractionApi.pretrained_model_info)
         model_exists = path.isfile(IntentExtractionApi.pretrained_model)
@@ -72,7 +77,8 @@ class IntentExtractionApi(AbstractApi):
                                      'model.h5', IntentExtractionApi.pretrained_model)
             print('Done.')
 
-    def display_results(self, text_str, predictions, intent_type):
+    @staticmethod
+    def display_results(text_str, predictions, intent_type):
         ret = {'annotation_set': [], 'doc_text': ' '.join([t for t in text_str])}
         spans = []
         available_tags = set()
@@ -105,8 +111,7 @@ class IntentExtractionApi(AbstractApi):
             sentence_chars = np.expand_dims(pad_sentences(sentence_chars, self.model.word_length),
                                             axis=0)
             return [words, sentence_chars]
-        else:
-            return words
+        return words
 
     def inference(self, doc):
         text_arr = self.process_text(doc)

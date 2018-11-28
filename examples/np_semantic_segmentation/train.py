@@ -22,12 +22,12 @@ from nlp_architect.models.np_semantic_segmentation import NpSemanticSegClassifie
 from nlp_architect.utils.io import validate_existing_filepath, validate_parent_exists, validate
 
 
-def train_mlp_classifier(dataset, model_file_path, num_epochs, callback_args=None):
+def train_mlp_classifier(dataset, model_file_path, epochs, callback_args=None):
     """
     Train the np_semantic_segmentation mlp classifier
     Args:
         model_file_path (str): model path
-        num_epochs (int): number of epochs
+        epochs (int): number of epochs
         callback_args (dict): callback_arg
         dataset: NpSemanticSegData object containing the dataset
 
@@ -35,7 +35,7 @@ def train_mlp_classifier(dataset, model_file_path, num_epochs, callback_args=Non
         print error_rate, test_accuracy_rate and precision_recall_rate evaluation from the model
 
     """
-    model = NpSemanticSegClassifier(num_epochs, callback_args)
+    model = NpSemanticSegClassifier(epochs, callback_args)
     input_dim = dataset.train_set_x.shape[1]
     model.build(input_dim)
     # run fit

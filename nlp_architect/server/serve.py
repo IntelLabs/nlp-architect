@@ -13,6 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
+# pylint: disable=c-extension-no-member
 """ REST Server to respond to different API requests """
 import gzip
 import json
@@ -42,6 +43,7 @@ def get_paragraphs():
     return services['machine_comprehension'].get_paragraphs()
 
 
+# pylint: disable=inconsistent-return-statements
 @hug.post()
 def inference(request, body, response):
     """Makes an inference to a certain model"""

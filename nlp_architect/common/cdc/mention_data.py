@@ -87,14 +87,14 @@ class MentionData(MentionDataLight):
     @staticmethod
     def read_json_mention_data_line(mention_line: str):
         """
-
         Args:
             mention_line: a Json representation of a single mention
 
         Returns:
             MentionData object
         """
-        mention_data = None
+        # pylint: disable=too-many-branches
+
         try:
             topic_id = None
             coref_chain = None

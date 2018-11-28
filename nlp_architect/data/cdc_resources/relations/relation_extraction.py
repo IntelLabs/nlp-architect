@@ -13,6 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
+from typing import List
 
 from nlp_architect.common.cdc.mention_data import MentionDataLight
 from nlp_architect.data.cdc_resources.relations.relation_types_enums import RelationType
@@ -40,3 +41,11 @@ class RelationExtraction(object):
         if relation in self.get_supported_relations():
             ret_relation = self.extract_sub_relations(mention_x, mention_y, relation)
         return ret_relation
+
+    def extract_sub_relations(self, mention_x: MentionDataLight, mention_y: MentionDataLight,
+                              relation: RelationType) -> RelationType:
+        raise NotImplementedError
+
+    @staticmethod
+    def get_supported_relations() -> List[RelationType]:
+        raise NotImplementedError
