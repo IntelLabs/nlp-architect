@@ -42,11 +42,11 @@ Running NLP Architect Server
 ============================
 Starting the server
 -------------------
-To run the server run the following command::
+To run the server run the following command:
 
 .. code:: bash
 
-    nlp_architect -p 8080
+    nlp_architect server -p 8080
 
 The server will run locally on port 8080 and can be queried on ``/inference`` directive.
 
