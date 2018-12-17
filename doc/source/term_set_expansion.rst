@@ -47,7 +47,7 @@ This is done by running:
 
 .. code:: python
 
-  python -m nlp_architect.solutions.set_expansion.prepare_data.py --corpus TRAINING_CORPUS --marked_corpus MARKED_TRAINING_CORPUS
+  python -m nlp_architect.solutions.set_expansion.prepare_data --corpus TRAINING_CORPUS --marked_corpus MARKED_TRAINING_CORPUS
 
   optional arguments:
   --corpus CORPUS       path to the input corpus. Compressed files (gz) are
@@ -103,7 +103,7 @@ It can be done in two ways:
 
     .. code:: python
 
-      python -m nlp_architect.solutions.set_expansionset_expand.py --np2vec_model_file MODEL_PATH --topn TOPN
+      python -m nlp_architect.solutions.set_expansionset_expand --np2vec_model_file MODEL_PATH --topn TOPN
 
 2. Web application
 
@@ -111,7 +111,7 @@ It can be done in two ways:
 
         .. code:: python
 
-          python -m nlp_architect.solutions.set_expansion.expand_server.py [--host HOST] [--port PORT] [--similarity SIMILARITY] model_path
+          python -m nlp_architect.solutions.set_expansion.expand_server [--host HOST] [--port PORT] [--similarity SIMILARITY] model_path
 
           positional arguments:
           model_path            a path to the w2v model file
@@ -130,7 +130,7 @@ It can be done in two ways:
         The expand server gets requests containing seed terms, and expands them
         based on the given word embedding model. You can use the model you trained
         yourself in the previous step, or to provide a pre-trained model you own.
-        The similarity argument is the threashold to use for the annotation feature, see its description in the UI section below.
+        The similarity argument is the threshold to use for the annotation feature, see its description in the UI section below.
 
         .. note::
 
@@ -162,7 +162,7 @@ It can be done in two ways:
 
         **Text Annotation**
 
-        The annotation feature allows you to annotate free text with similar terms comparing to the seed list (the default similarity threashold is 0.5, and can be set
+        The annotation feature allows you to annotate free text with similar terms comparing to the seed list (the default similarity threshold is 0.5, and can be set
         by the expand server ---similarity argument).
         After selecting the Text Annotation checkbox, a text input is available for the user to type in text to annotate:
 

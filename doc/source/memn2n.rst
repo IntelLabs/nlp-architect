@@ -19,7 +19,7 @@ End-to-End Memory Networks for Goal Oriented Dialogue
 
 Overview
 ========
-This directory contains an implementation of an End-to-End Memory Network for goal oriented dialogue in ngraph.
+This directory contains an implementation of an End-to-End Memory Network for goal oriented dialogue in TensorFlow.
 
 Goal oriented dialogue is a subset of open-domain dialogue where an automated agent has a specific
 goal for the outcome of the interaction. At a high level, the system needs to understand a user

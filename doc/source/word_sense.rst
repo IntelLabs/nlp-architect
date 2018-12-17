@@ -70,8 +70,8 @@ The file should include the following 4 columns:
 where:
 
 1. TARGET_WORD: the word that you want to get the most common sense of.
-2. DEFINITION: the definition of the word (usually a single sentence) extracted from external resource such as wordnet or wikidata
-3. SEMANTIC_BRANCH:  the inherited hypernyms extracted from external resource such as wordnet or wikidata
+2. DEFINITION: the definition of the word (usually a single sentence) extracted from external resource such as Wordnet or Wikidata
+3. SEMANTIC_BRANCH:  the inherited hypernyms extracted from external resource such as Wordnet or Wikidata
 4. CLASS_LABEL: a binary [0,1] Y value that represent whether the sense (Definition and semantic branch) is the most common sense  of the target word
 
 Store the file in the data folder of the project.

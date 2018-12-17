@@ -76,7 +76,7 @@ The request content has the following format:
         ]
     }
 
-In the example above, ``model_name`` is the desirted model to run the documents through and each input document is marked with an id and content.
+In the example above, ``model_name`` is the desired model to run the documents through and each input document is marked with an id and content.
 
 Responses
 ---------

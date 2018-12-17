@@ -29,7 +29,7 @@ requirements = [
     # DL frameworks
     "dynet==2.0.2",
     # NLP/DS apps
-    "spacy<2.0.12",
+    "spacy==2.0.18",
     "nltk",
     "gensim",
     "sklearn",
@@ -38,6 +38,7 @@ requirements = [
     "tensorflow_hub",
     "elasticsearch",
     "fasttextmirror",  # temp fix
+    "msgpack==0.5.6",  # temp fix
     # General utils
     "newspaper3k",
     "wordfreq",

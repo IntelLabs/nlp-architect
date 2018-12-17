@@ -96,8 +96,8 @@ After training starts, you will see outputs similar to this:
   creating training and development sets
   Match LSTM Pass
   Answer Pointer Pass
-  Settting up Loss
-  Set up optmizer
+  Setting up Loss
+  Set up optimizer
   Begin Training
   Epoch Number:  0
   iteration = 1, train loss = 13.156427383422852

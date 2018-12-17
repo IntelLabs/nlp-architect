@@ -171,7 +171,8 @@ class NP2vec:
 
         if word_embedding_type == 'fasttext' and word_ngrams == 1:
             # remove the marking character at the end for subword fasttext model training
-            self._sentences = [[w[:-1] if self.is_marked(w) else w for w in sentence] for sentence in self._sentences]
+            self._sentences = [[w[:-1] if self.is_marked(w) else w for w in sentence]
+                               for sentence in self._sentences]
 
         logger.info('training np2vec model')
         self._train()

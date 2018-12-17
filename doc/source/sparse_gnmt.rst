@@ -19,7 +19,7 @@ Compression of Google Neural Machine Translation Model
 
 Overview
 ========
-Google Neural Machine Translation (GNMT) is a Sequance to sequance (Seq2seq) model which learns a mapping from an input text to an output text. \
+Google Neural Machine Translation (GNMT) is a Sequence to sequence (Seq2seq) model which learns a mapping from an input text to an output text. \
 
 The example below demonstrates how to train a highly sparse GNMT model with minimal loss in accuracy. The model is based on the *GNMT model presented in the paper Google's Neural Machine Translation System: Bridging the Gap between Human and Machine Translation* [1]_ which consists of approximately 210M floating point parameters.
 
@@ -28,7 +28,7 @@ GNMT Model
 The GNMT architecture is an encoder-decoder architecture with attention as presented in the original paper [1]_.
 
 The encoder consists of an embedding layer followed by 1 bi-directional and 3 uni-directional LSTM layers with residual connections between them.
-The decoder consists of an embedding layer followed by 4 uni-directional LSTM layers and a linear softmax layer.
+The decoder consists of an embedding layer followed by 4 uni-directional LSTM layers and a linear Softmax layer.
 The attention mechanism connects between the encoder's bi-directional LSTM layer to all of the decoder's LSTM layers.
 
 The GNMT model was adapted from the model shown in *Neural Machine Translation (seq2seq) Tutorial* [2]_ and from its repository_.
@@ -91,7 +91,7 @@ You can use these models to `Run Inference using our Pre-Trained Models`_ and ev
 
 Running Modalities
 ==================
-Below are simple examples for training 90% sparse :py:class:`GNMTModel <nlp_architect.models.gnmt_model.GNMTModel>` model, running inference using a pre-trained/trained model, quantizing a model to 8bit Integer and running inference using a quantized model. Before inference, the int8 wieghts of the sparse and quantized model are de-quantize back to fp32.
+Below are simple examples for training 90% sparse :py:class:`GNMTModel <nlp_architect.models.gnmt_model.GNMTModel>` model, running inference using a pre-trained/trained model, quantizing a model to 8bit Integer and running inference using a quantized model. Before inference, the int8 weights of the sparse and quantized model are de-quantize back to fp32.
 
 Training
 --------
@@ -175,7 +175,7 @@ Quantized Inference
 ^^^^^^^^^^^^^^^^^^^
 Add the following flags to the `Inference`_ command line in order to quantize the pre-trained models and run inference with the quantized models:
 
-- ``--quantize_ckpt=true``: Produce a quantized checkpoint. Checkpoint will be saved in the output directory. Inference will run using the produced checkpoint. 
+- ``--quantize_ckpt=true``: Produce a quantized checkpoint. Checkpoint will be saved in the output directory. Inference will run using the produced checkpoint.
 - ``--from_quantized_ckpt=true``: Inference using an already quantized checkpoint
 
 Custom Training/Inference Parameters
@@ -191,43 +191,43 @@ All customizable parameters can be obtained by running: ``python -m nlp-architec
                         Encoder depth, equal to num_layers if None.
   --num_decoder_layers NUM_DECODER_LAYERS
                         Decoder depth, equal to num_layers if None.
-  --encoder_type 
+  --encoder_type
                         uni | bi | gnmt. For bi, we build num_encoder_layers/2
                         bi-directional layers. For gnmt, we build 1 bi-
                         directional layer, and (num_encoder_layers - 1) uni-
                         directional layers.
-  --residual 
+  --residual
                         Whether to add residual connections.
-  --time_major 
+  --time_major
                         Whether to use time-major mode for dynamic RNN.
   --num_embeddings_partitions NUM_EMBEDDINGS_PARTITIONS
                         Number of partitions for embedding vars.
-  --attention 
+  --attention
                         luong | scaled_luong | bahdanau | normed_bahdanau or
                         set to "" for no attention
-  --attention_architecture 
+  --attention_architecture
                         standard | gnmt | gnmt_v2. standard: use top layer to
                         compute attention. gnmt: GNMT style of computing
                         attention, use previous bottom layer to compute
                         attention. gnmt_v2: similar to gnmt, but use current
                         bottom layer to compute attention.
-  --output_attention 
+  --output_attention
                         Only used in standard attention_architecture. Whether
                         use attention as the cell output at each timestep. .
-  --pass_hidden_state 
+  --pass_hidden_state
                         Whether to pass encoder's hidden state to decoder when
                         using an attention based model.
-  --optimizer 
+  --optimizer
                         sgd | adam
   --learning_rate LEARNING_RATE
                         Learning rate. Adam: 0.001 | 0.0001
   --warmup_steps WARMUP_STEPS
                         How many steps we inverse-decay learning.
-  --warmup_scheme 
+  --warmup_scheme
                         How to warmup learning rates. Options include: t2t:
                         Tensor2Tensor's way, start with lr 100 times smaller,
                         then exponentiate until the specified lr.
-  --decay_scheme 
+  --decay_scheme
                         How we decay learning rate. Options include: luong234:
                         after 2/3 num train steps, we start halving the
                         learning rate for 4 times before finishing. luong5:
@@ -237,9 +237,9 @@ All customizable parameters can be obtained by running: ``python -m nlp-architec
                         learning rate for 10 times before finishing.
   --num_train_steps NUM_TRAIN_STEPS
                         Num steps to train.
-  --colocate_gradients_with_ops 
+  --colocate_gradients_with_ops
                         Whether try colocating gradients with corresponding op
-  --init_op 
+  --init_op
                         uniform | glorot_normal | glorot_uniform
   --init_weight INIT_WEIGHT
                         for uniform init_op, initialize weights between
@@ -261,7 +261,7 @@ All customizable parameters can be obtained by running: ``python -m nlp-architec
                         txt files.
   --sos SOS             Start-of-sentence symbol.
   --eos EOS             End-of-sentence symbol.
-  --share_vocab 
+  --share_vocab
                         Whether to use the source vocab and embeddings for
                         both source and target.
   --check_special_token CHECK_SPECIAL_TOKEN
@@ -276,11 +276,11 @@ All customizable parameters can be obtained by running: ``python -m nlp-architec
   --tgt_max_len_infer TGT_MAX_LEN_INFER
                         Max length of tgt sequences during inference. Also use
                         to restrict the maximum decoding length.
-  --unit_type 
+  --unit_type
                         lstm | gru | layer_norm_lstm | nas | mlstm
-  --projection_type 
+  --projection_type
                         dense | sparse
-  --embedding_type 
+  --embedding_type
                         dense | sparse
   --forget_bias FORGET_BIAS
                         Forget bias for BasicLSTMCell.
@@ -299,14 +299,14 @@ All customizable parameters can be obtained by running: ``python -m nlp-architec
   --num_sampled_softmax NUM_SAMPLED_SOFTMAX
                         Use sampled_softmax_loss if > 0.Otherwise, use full
                         softmax loss.
-  --subword_option 
+  --subword_option
                         Set to bpe or spm to activate subword desegmentation.
   --use_char_encode USE_CHAR_ENCODE
                         Whether to split each word or bpe into character, and
                         then generate the word-level representation from the
                         character reprentation.
   --num_gpus NUM_GPUS   Number of gpus in each worker.
-  --log_device_placement 
+  --log_device_placement
                         Debug GPU allocation.
   --metrics METRICS     Comma-separated list of evaluations metrics
                         (bleu,rouge,accuracy)
@@ -319,15 +319,15 @@ All customizable parameters can be obtained by running: ``python -m nlp-architec
                         overrideshparams values from FLAGS.
   --random_seed RANDOM_SEED
                         Random seed (>0, set a specific seed).
-  --override_loaded_hparams 
+  --override_loaded_hparams
                         Override loaded hparams with values specified
   --num_keep_ckpts NUM_KEEP_CKPTS
                         Max number of checkpoints to keep.
-  --avg_ckpts 
+  --avg_ckpts
                         Average the last N checkpoints for external
                         evaluation. N can be controlled by setting
                         --num_keep_ckpts.
-  --language_model 
+  --language_model
                         True to train a language model, ignoring encoder
   --ckpt CKPT           Checkpoint file to load a model for inference.
   --quantize_ckpt QUANTIZE_CKPT
@@ -347,7 +347,7 @@ All customizable parameters can be obtained by running: ``python -m nlp-architec
   --inference_ref_file INFERENCE_REF_FILE
                         Reference file to compute evaluation scores (if
                         provided).
-  --infer_mode 
+  --infer_mode
                         Which type of decoder to use during inference.
   --beam_width BEAM_WIDTH
                         beam width when using beam search decoder. If 0

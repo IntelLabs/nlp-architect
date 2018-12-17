@@ -19,10 +19,10 @@ Contribution Process
 
 1. File an issue (to track your contribution):
 
-   * Create an issue on github:
+   * Create an issue on GitHub:
      https://github.com/NervanaSystems/nlp-architect/issues
 
-2. Clone and/or update your checked out copy of nlp-achitect to ensure you have the
+2. Clone and/or update your checked out copy of nlp-architect to ensure you have the
    most recent commits from the master branch:
 
   .. code-block:: bash
@@ -59,8 +59,8 @@ Contribution Process
 
       nlp_architect doc   # builds the doc and starts a local server directly
 
-6. Commit your changes and push your feature branch to your github fork.  Be
-   sure to add a descriptive message and reference the github issue associated
+6. Commit your changes and push your feature branch to your GitHub fork.  Be
+   sure to add a descriptive message and reference the GitHub issue associated
    with your task (ex. #1).  You will also want to rebase your commits down to
    a single sensible commit to make things clean for the merge process:
 

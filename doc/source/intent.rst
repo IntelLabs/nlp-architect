@@ -37,10 +37,10 @@ Models
 Multi-task Intent and slot tagging model
 ----------------------------------------
 
-:py:class:`MultiTaskIntentModel <nlp_architect.models.intent_extraction.MultiTaskIntentModel>` is a Multi-task model that is similar to the joint intent/slot tagging model. The model has 2 sources of input: 1 - words, 2 - characters of words. The model has 3 main features when compared to the other models, character information embedding acting as a feature extractor of the words, a CRF classifier for slot labels, and a cascasing structure of the intent and tag classificaion.
+:py:class:`MultiTaskIntentModel <nlp_architect.models.intent_extraction.MultiTaskIntentModel>` is a Multi-task model that is similar to the joint intent/slot tagging model. The model has 2 sources of input: 1 - words, 2 - characters of words. The model has 3 main features when compared to the other models, character information embedding acting as a feature extractor of the words, a CRF classifier for slot labels, and a cascading structure of the intent and tag classification.
 The intent classification is done by encoding the context of the sentences (words ``x_1, .., x_n``), using word embeddings (denoted as ``W``), by a bi-directional LSTM layer, and training a classifier on the last hidden state of the LSTM layer (using ``softmax``).
 Word-character embeddings (denoted as ``C``) are created using a bi-directional LSTM encoder which concatenates the last hidden states of the layers.
-The encoding of the word-context, in each time step (word location in the sentence) is concatenated with the word-charcter embeddings and pushed in another bi-directional LSTM which provides the final context encoding that a CRF layer uses for slot tag classification.
+The encoding of the word-context, in each time step (word location in the sentence) is concatenated with the word-character embeddings and pushed in another bi-directional LSTM which provides the final context encoding that a CRF layer uses for slot tag classification.
 
 .. image :: assets/mtl_model.png
 
@@ -72,7 +72,7 @@ We provide an additional dataset loader  :py:class:`TabularIntentDataset <nlp_ar
 -  each word encoded in a separate line: ``<token> <token_tag> <intent_type>``
 -  sentences are separated with an empty line
 
-The dataset loader extracts word and character sparse encoding and label/intent tags per sentence. This dataloader is useful for many intent extraction datasets that can be found on the web and used in academic literature (such as ATIS [3]_ [4]_, Conll, etc.).
+The dataset loader extracts word and character sparse encoding and label/intent tags per sentence. This data-loader is useful for many intent extraction datasets that can be found on the web and used in academic literature (such as ATIS [3]_ [4]_, Conll, etc.).
 
 Files
 =====

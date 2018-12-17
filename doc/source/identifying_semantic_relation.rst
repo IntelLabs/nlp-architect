@@ -187,7 +187,7 @@ Examples
 
 * Using Wikipedia Relation identifier for mentions of *'IBM'* and *'International Business Machines'* will result with the following relation types: ```WIKIPEDIA_CATEGORY, WIKIPEDIA_ALIASES, WIKIPEDIA_REDIRECT_LINK```
 
-* Using WordNet Relation idenfieir for mentions of *'lawyer'* and *'attorney'* will result with the following relations types: ```WORDNET_SAME_SYNSET, WORDNET_DERIVATIONALLY```
+* Using WordNet Relation identifier for mentions of *'lawyer'* and *'attorney'* will result with the following relations types: ```WORDNET_SAME_SYNSET, WORDNET_DERIVATIONALLY```
 
 * Using Referent-Dict Relation identifier for mentions of *'company'* and *'apple'* will result with ```REFERENT_DICT``` relation type.
 

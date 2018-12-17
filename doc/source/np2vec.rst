@@ -24,7 +24,7 @@ This code consists in training a word embedding's model for Noun NP's using word
 It assumes that the NP's are already extracted and marked in the input corpus.
 All the terms in the corpus are used as context in order to train the word embedding's model; however,
 at the end of the training, only the word embedding's of the NP's are stored, except for the case of
-fasttext training with word_ngrams=1; in this case, we store all the word embedding's,
+Fasttext training with word_ngrams=1; in this case, we store all the word embedding's,
 including non-NP's in order to be able to estimate word embeddings of out-of-vocabulary NP's
 (NP's that don't appear in the training corpora).
 
@@ -69,7 +69,7 @@ To run inference with a saved model, the following command can be used:
   python examples/np2vec/inference.py --np2vec_model_file sample_np2vec.model --np <noun phrase>
 
 
-More details about the hyperparameters at https://radimrehurek.com/gensim/models/word2vec.html#gensim.models.word2vec.Word2Vec for word2vec and https://radimrehurek.com/gensim/models/fasttext.html#gensim.models.fasttext.FastText for fasttext.
+More details about the hyperparameters at https://radimrehurek.com/gensim/models/word2vec.html#gensim.models.word2vec.Word2Vec for word2vec and https://radimrehurek.com/gensim/models/fasttext.html#gensim.models.fasttext.FastText for Fasttext.
 
 .. _word2vec: https://code.google.com/archive/p/word2vec/
 .. _fasttext: https://github.com/facebookresearch/fastText

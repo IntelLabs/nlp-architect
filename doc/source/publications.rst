@@ -24,6 +24,9 @@ Blog posts
 - `Revolutionizing Personal Assistant Through Understanding Actionable Requests in Human-to-Human Interactions <https://ai.intel.com/revolutionizing-personal-assistant-through-understanding-actionable-requests-in-human-to-human-interactions/>`_
 - `Introducing NLP Architect by Intel AI Lab <https://ai.intel.com/introducing-nlp-architect-by-intel-ai-lab/>`_
 - `Deep Learning Foundations to Enable Natural Language Processing Solutions <https://ai.intel.com/deep-learning-foundations-to-enable-natural-language-processing-solutions/>`_
+- `NLP Architect by Intel AI Lab: Release 0.2 <https://ai.intel.com/nlp-architect-by-intel-ai-lab-release-0-2/>`_
+- `NLP Architect Version 0.3 Release <https://ai.intel.com/nlp-architect-version-0-3-release/>`_
+- `Compressing GNMT Models <https://ai.intel.com/compressing-gnmt-models/>`_
 
 Conference Proceedings
 ======================
@@ -37,7 +40,7 @@ Tutorials
 
   - Natural Language Question/Answer Systems: Hands on Workshop - Andy Keller, Anna Bethke (`video <http://aidc.gallery.video/detail/videos/day-1:-hands-on-labs/video/5789368925001/natural-language-question-answer-systems:-hands-on-workshop?autoStart=false>`_, `slides <https://simplecore.intel.com/nervana/wp-content/uploads/sites/53/2018/06/AI-Devcon-Session-Natural-Language_AnnaBethkeAndyKeller_Interstellar_523_Final.pdf>`_)
   - Using Deep Learning for Entity Detection and Intent Extraction in Natural Language: Hands on Workshop - Peter Izsak (`video <http://aidc.gallery.video/detail/videos/day-2:-hands-on-labs/video/5790623335001/using-deep-learning-for-entity-detection-and-intent-extraction-in-natural-language?autoStart=false>`_, `slides <https://simplecore.intel.com/nervana/wp-content/uploads/sites/53/2018/06/IntelAIDC18_Izsak_Odyessey_524_Final.pdf>`_)
-  
+
 - Classifying NLP with Deep Learning: webinar - Anna Bethke (`video <https://software.intel.com/en-us/videos/deep-learning-and-natural-language-processing>`_)
 
 Demos

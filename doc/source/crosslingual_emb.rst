@@ -10,7 +10,7 @@ This model uses a GAN to learn mapping between two language embeddings without s
 
 Files
 =====
-- **nlp_architect/data/fasttext_emb.py**: Defines fasttext object for loading fasttext embeddings
+- **nlp_architect/data/fasttext_emb.py**: Defines Fasttext object for loading Fasttext embeddings
 - **nlp_architect/models/crossling_emb.py**: Defines GAN for learning crosslingual embeddings
 - **examples/crosslingembs/train.py**: Trains the model and writes final crosslingual embeddings to weight_dir directory.
 - **examples/crosslingembs/evaluate.py**: Defines graph for evaluating the quality of crosslingual embeddings
@@ -19,7 +19,7 @@ Usage
 =====
 Main arguments which need to be passed to train.py are
 
-- **emb_dir**: Directory where fasttext embeddings are present or need to be downloaded
+- **emb_dir**: Directory where Fasttext embeddings are present or need to be downloaded
 - **eval_dir**: Directory where evaluation dictionary is downloaded
 - **weight_dir**: Directory where final crosslingual dictionaries are defined
 

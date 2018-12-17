@@ -112,7 +112,7 @@ Tensorflow has a guide `guide <https://www.tensorflow.org/install/install_source
 
 Alternatively, follow the instructions below to compile and install the latest version of Tensorflow with MKL-DNN:
 
-* Clone Tensorflow repository from github:
+* Clone Tensorflow repository from GitHub:
 
   .. code::
 

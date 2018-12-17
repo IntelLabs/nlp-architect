@@ -22,7 +22,7 @@ Overview
 
 Topic Analysis is a Natural Language Processing (NLP) task of extracting salient terms (or topics) from a textual corpus. Trend Analysis task measures the change of the most prominent topics between two time points.
 
-The solution is based on Noun Phrase (NP) Extraction from the given corpora. Each NP (topic) is assigned a proprietary *importance* score that represents the significance of the noun phrase in the corpora (document appearences, *phraseness* and *completeness*).
+The solution is based on Noun Phrase (NP) Extraction from the given corpora. Each NP (topic) is assigned a proprietary *importance* score that represents the significance of the noun phrase in the corpora (document appearances, *phrase-ness* and *completeness*).
 
 Flow
 ====
@@ -34,7 +34,7 @@ The first stage is to extract the topics from the two textual corpora:
 
 The analysis is done by running the two corpora through the Topic Extraction pipeline: Normalization -> Noun Phrase extraction -> Refinement -> Scoring.
 In this stage, the algorithm will also train a W2V model on the joint corpora to be used for the clustering report (this step can be skipped).
-In the second stage the topic lists are being compared and analysed.
+In the second stage the topic lists are being compared and analyzed.
 Finally the UI reads the analysis data and generates automatic reports for extracted topics, “Hot” and “Cold” trends, and topic clustering in 2D space.
 
 The noun phrase extraction module is using a pre-trained `model <http://nervana-modelzoo.s3.amazonaws.com/NLP/chunker/model.h5>`__ which is available under the Apache 2.0 license.
@@ -64,7 +64,7 @@ First stage
 
 .. code:: python
 
-    usage: python -m nlp_architect.solutions.trend_analysis.topic_extraction.py [-h] [--notrain] [--url] [--single_thread]
+    usage: python -m nlp_architect.solutions.trend_analysis.topic_extraction [-h] [--notrain] [--url] [--single_thread]
                                target_corpus ref_corpus
 
     positional arguments:
@@ -75,7 +75,7 @@ First stage
       -h, --help       show this help message and exit
       --no_train        skip the creation of w2v model
       --url            corpus is provided as csv file with urls
-      --single_thread  analyse corpora sequentially
+      --single_thread  analyze corpora sequentially
 
 The topic lists will be saved to csv files, which are the input of the second stage.
 When using the --url flag, both target_corpus and ref_corpus should be a csv file containing url links to analyze (a single url per row).
@@ -86,7 +86,7 @@ Second stage
 
 .. code:: python
 
-    usage: python -m nlp_architect.solutions.trend_analysis.trend_analysis.py [-h] [--top_n TOP_N] [--top_vectors TOP_VECTORS]
+    usage: python -m nlp_architect.solutions.trend_analysis.trend_analysis [-h] [--top_n TOP_N] [--top_vectors TOP_VECTORS]
                          target_topics ref_topics
 
     positional arguments:
@@ -130,7 +130,7 @@ and then access it through a browser: http://12.13.14.15:1010/ui
 Filter Phrases and Custom Trends
 ================================
 
-By default, all topics will be analysed (according to the top N threshold, if provided), and the Custom Trends graph will be empty.
+By default, all topics will be analyzed (according to the top N threshold, if provided), and the Custom Trends graph will be empty.
 The user can filter phrases he wants to omit from the results (post analysis) by selecting the "Filter" radio button, click on the "Filter Topics" tab, and de-select the unwanted topics (currently de-selection is done by holding the Ctrl button and click on a cell). Similarly, in order to select custom trends to be presented in the Custom Trends graph, click on the "Custom Trends" tab and select the phrases to show.
 
 For a permanent custom/filtering, edit the 'valid'/'custom' column in the file: data/filter_phrases.csv

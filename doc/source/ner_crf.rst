@@ -49,9 +49,9 @@ In the above format each sentence is separated by an empty line. Each line consi
 Data loader
 -----------
 
-Loading data into the model can be done using the :py:class:`SequentialTaggingDataset <nlp_architect.data.sequential_tagging.SequentialTaggingDataset>` data loader which can be used with the preprared train and test data sets described above.
+Loading data into the model can be done using the :py:class:`SequentialTaggingDataset <nlp_architect.data.sequential_tagging.SequentialTaggingDataset>` data loader which can be used with the prepared train and test data sets described above.
 
-The data loader returns 2 numpy matrices:
+The data loader returns 2 Numpy matrices:
 1. sparse word representation of the sentence words
 2. sparse word character representation of sentence words
 
@@ -83,7 +83,7 @@ Prediction layer
 
 The main tagger model consists of a bidirectional LSTM layers. The input of the LSTM layers consists of a concatenation of the word embedding vector and the character embedding vector (provided by the character embedding network).
 
-Finally, the output of the LSTM layers are merged into a fully-connected layer (for each token) and fed into a `Conditional Random Field classifier`_. CRF prediction layers have been empirically proved to provide more accuract models when compared to single token prediction (when using a `softmax` layer).
+Finally, the output of the LSTM layers are merged into a fully-connected layer (for each token) and fed into a `Conditional Random Field classifier`_. Using CRF has been empirically shown to provide more accurate models when compared to single token prediction layers (such as a `softmax` layer).
 
 Running Modalities
 ==================

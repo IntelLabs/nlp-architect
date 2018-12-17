@@ -28,7 +28,7 @@ The annotator implementation can be found in :py:class:`NPAnnotator <nlp_archite
 
 Usage example
 -------------
-Loading a spacy pipeline and adding a sentence breaker (required) and :py:class:`NPAnnotator <nlp_architect.pipelines.spacy_np_annotator.NPAnnotator>` annotator as the last annotator in the pipeline:
+Loading a Spacy pipeline and adding a sentence breaker (required) and :py:class:`NPAnnotator <nlp_architect.pipelines.spacy_np_annotator.NPAnnotator>` annotator as the last annotator in the pipeline:
 
 .. code:: python
 
@@ -47,12 +47,12 @@ Parse documents regularly and get the noun phrase annotations using a dedicated 
 Standalone Spacy-NPAnnotator
 ============================
 
-For usecases in which the user is not interested in specialized Spacy pipelines we have implemented :py:class:`SpacyNPAnnotator <nlp_architect.pipelines.spacy_np_annotator.SpacyNPAnnotator>` which will run a spacy pipeline internally and provide string based noun phrase chunks given documents in string format.
+For use cases in which the user is not interested in specialized Spacy pipelines we have implemented :py:class:`SpacyNPAnnotator <nlp_architect.pipelines.spacy_np_annotator.SpacyNPAnnotator>` which will run a Spacy pipeline internally and provide string based noun phrase chunks given documents in string format.
 
 Usage example
 -------------
 
-Just as in :py:class:`NPAnnotator <nlp_architect.pipelines.spacy_np_annotator.NPAnnotator>`, we need to provide a trained :py:class:`SequenceChunker <nlp_architect.models.chunker.SequenceChunker>` model and its parameters file. It is also possible to provide a specific spacy model to base the pipeline on.
+Just as in :py:class:`NPAnnotator <nlp_architect.pipelines.spacy_np_annotator.NPAnnotator>`, we need to provide a trained :py:class:`SequenceChunker <nlp_architect.models.chunker.SequenceChunker>` model and its parameters file. It is also possible to provide a specific Spacy model to base the pipeline on.
 
 The following example shows how to load a model/parameters using the default Spacy English model (`en`) and how to get the noun phrase annotations.
 
