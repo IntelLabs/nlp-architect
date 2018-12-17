@@ -103,7 +103,7 @@ It can be done in two ways:
 
     .. code:: python
 
-      python -m nlp_architect.solutions.set_expansionset_expand --np2vec_model_file MODEL_PATH --topn TOPN
+      python -m nlp_architect.solutions.set_expansion.set_expand --np2vec_model_file MODEL_PATH --topn TOPN
 
 2. Web application
 
