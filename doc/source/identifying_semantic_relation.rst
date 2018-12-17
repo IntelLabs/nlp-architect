@@ -300,7 +300,8 @@ Generate Scripts
 
      **For a fast evaluation using Wikipedia at run time**, on live data, there is an option to generate a local ElasticSearch database of the entire Wiki site using this resource: `Wiki to Elastic <https://github.com/AlonEirew/wikipedia-to-elastic/>`_, It is highly recommended since using online evaluation against Wikipedia site can be very slow.
     In case you adopt elastic local database, Initiate ``WikipediaRelationExtraction`` relation extraction using ``WikipediaSearchMethod.ELASTIC``
- **Generate Wikipedia Snapshot using Elastic data instead of from online wikipedia site:**
+
+**Generate Wikipedia Snapshot using Elastic data instead of from online wikipedia site:**
 
 ::
 
