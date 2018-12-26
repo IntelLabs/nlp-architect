@@ -270,31 +270,31 @@ Generate Scripts
 
 ::
 
-    python -m nlp_architect.data.cdc_resources.gen_scripts.create_reference_dict_dump.py --ref_dict=<ref.dict1.tsv downloaded file> --mentions=<in_mentions.json> --output=<output.json>
+    python -m nlp_architect.data.cdc_resources.gen_scripts.create_reference_dict_dump --ref_dict=<ref.dict1.tsv downloaded file> --mentions=<in_mentions.json> --output=<output.json>
 
 **Generate VerbOcean:**
 
 ::
 
-    python -m nlp_architect.data.cdc_resources.gen_scripts.create_verbocean_dump.py --vo=<verbocean.unrefined.2004-05-20.txt downloaded file> --mentions=<in_mentions.json> --output=<output.json>
+    python -m nlp_architect.data.cdc_resources.gen_scripts.create_verbocean_dump --vo=<verbocean.unrefined.2004-05-20.txt downloaded file> --mentions=<in_mentions.json> --output=<output.json>
 
 **Generate WordEmbedding Glove:**
 
 ::
 
-    python -m nlp_architect.data.cdc_resources.gen_scripts.create_word_embed_glove_dump.py --mentions=<in_mentions.json> --glove=glove.840B.300d.txt --output=<output.pickle>
+    python -m nlp_architect.data.cdc_resources.gen_scripts.create_word_embed_glove_dump --mentions=<in_mentions.json> --glove=glove.840B.300d.txt --output=<output.pickle>
 
 **Generate Wordnet:**
 
 ::
 
-    python -m nlp_architect.data.cdc_resources.gen_scripts.create_wordnet_dump.py --mentions=<in_mentions.json> --output=<output.json>
+    python -m nlp_architect.data.cdc_resources.gen_scripts.create_wordnet_dump --mentions=<in_mentions.json> --output=<output.json>
 
 **Generate Wikipedia:**
 
 ::
 
-    python -m nlp_architect.data.cdc_resources.gen_scripts.create_wiki_dump.py --mentions=<in_mentions.json> --output=<output.json>``
+    python -m nlp_architect.data.cdc_resources.gen_scripts.create_wiki_dump --mentions=<in_mentions.json> --output=<output.json>``
 
 .. note::
 
@@ -305,4 +305,4 @@ Generate Scripts
 
 ::
 
-     python -m nlp_architect.data.cdc_resources.gen_scripts.create_wiki_dump.py --mentions=<in_mentions.json> --host=<elastic_host eg:localhost> --port=<elastic_port eg:9200> --index=<elastic_index> --output=<output.json>``
+     python -m nlp_architect.data.cdc_resources.gen_scripts.create_wiki_dump --mentions=<in_mentions.json> --host=<elastic_host eg:localhost> --port=<elastic_port eg:9200> --index=<elastic_index> --output=<output.json>``
