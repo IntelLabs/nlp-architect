@@ -18,7 +18,7 @@ NLP Architect by Intel® AI Lab
 ###############################
 
 | **Release:**  |version|
-| **Date:**     |today|
+| **Last updated:**     |today|
 
 """""""""""""""""""""""""""""""
 
