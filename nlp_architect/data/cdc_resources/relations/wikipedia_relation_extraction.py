@@ -36,15 +36,15 @@ FEMALE_PRONOUN = ['she', 'her', 'hers', 'herself']
 
 
 class WikipediaRelationExtraction(RelationExtraction):
-    def __init__(self, method: WikipediaSearchMethod, wiki_file: str = None, host: str = None,
-                 port: int = None,
+    def __init__(self, method: WikipediaSearchMethod = WikipediaSearchMethod.ONLINE,
+                 wiki_file: str = None, host: str = None, port: int = None,
                  index: str = None) -> None:
         """
         Extract Relation between two mentions according to Wikipedia knowledge
 
         Args:
-            method (required): WikipediaSearchMethod.{ONLINE/OFFLINE/ELASTIC} run against wiki
-                site a sub-set of wiki or on a local elastic database
+            method (optional): WikipediaSearchMethod.{ONLINE/OFFLINE/ELASTIC} run against wiki
+                site a sub-set of wiki or on a local elastic database (default = ONLINE)
             wiki_file (required on OFFLINE mode): str Location of Wikipedia file to work with
             host (required on Elastic mode): str the Elastic search host name
             port (required on Elastic mode): int the Elastic search port number

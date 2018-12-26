@@ -19,8 +19,9 @@ import time
 
 from nlp_architect.common.cdc.cluster import Clusters
 from nlp_architect.common.cdc.topics import Topic
-from nlp_architect.models.cross_doc_coref.system.cdc_settings import CDCSettings
-from nlp_architect.models.cross_doc_coref.system.sieves.sieves import get_sieve
+from nlp_architect.models.cross_doc_coref.system.sieves.sieves import SieveClusterMerger
+from nlp_architect.models.cross_doc_coref.system.sieves_container_init import \
+    SievesContainerInitialization
 
 logger = logging.getLogger(__name__)
 
@@ -37,7 +38,7 @@ class RunSystemsSuper(object):
     def set_sieves_from_config(config, get_rel_extraction):
         sieves = []
         for _type_tup in config.sieves_order:
-            sieves.append(get_sieve(_type_tup, get_rel_extraction(_type_tup[1])))
+            sieves.append(SieveClusterMerger(_type_tup, get_rel_extraction(_type_tup[0])))
         return sieves
 
     def run_deterministic(self):
@@ -96,7 +97,7 @@ class RunSystemsEvent(RunSystemsSuper):
 
 
 # pylint: disable=no-else-return
-def get_run_system(topic: Topic, resource: CDCSettings, eval_type: str):
+def get_run_system(topic: Topic, resource: SievesContainerInitialization, eval_type: str):
     if eval_type.lower() == 'entity':
         return RunSystemsEntity(topic, resource)
     if eval_type.lower() == 'event':

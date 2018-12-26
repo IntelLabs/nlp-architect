@@ -23,7 +23,7 @@ from nlp_architect.data.cdc_resources.relations.computed_relation_extraction imp
 from nlp_architect.data.cdc_resources.relations.referent_dict_relation_extraction import \
     ReferentDictRelationExtraction
 from nlp_architect.data.cdc_resources.relations.relation_types_enums import \
-    OnlineOROfflineMethod, WikipediaSearchMethod, RelationType, EmbeddingMethod
+    RelationType, EmbeddingMethod
 from nlp_architect.data.cdc_resources.relations.verbocean_relation_extraction import \
     VerboceanRelationExtraction
 from nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction import \
@@ -37,12 +37,12 @@ from nlp_architect.data.cdc_resources.relations.wordnet_relation_extraction impo
 def run_example():
     logger.info('Running relation extraction example......')
     computed = ComputedRelationExtraction()
-    ref_dict = ReferentDictRelationExtraction(OnlineOROfflineMethod.ONLINE,
-                                              LIBRARY_ROOT + '/datasets/ref.dict1.tsv')
-    vo = VerboceanRelationExtraction(OnlineOROfflineMethod.ONLINE,
-                                     LIBRARY_ROOT + '/datasets/verbocean.unrefined.2004-05-20.txt')
-    wiki = WikipediaRelationExtraction(WikipediaSearchMethod.ONLINE)
-    wn = WordnetRelationExtraction(OnlineOROfflineMethod.ONLINE)
+    ref_dict = ReferentDictRelationExtraction(ref_dict=LIBRARY_ROOT + '/datasets/coref.dict1.tsv')
+    vo = VerboceanRelationExtraction(
+        vo_file=LIBRARY_ROOT + '/datasets/verbocean.unrefined.2004-05-20.txt')
+    wiki = WikipediaRelationExtraction()
+    wn = WordnetRelationExtraction()
+    embed = WordEmbeddingRelationExtraction(method=EmbeddingMethod.ELMO)
 
     mention_x1 = MentionDataLight(
         'IBM',
@@ -55,13 +55,9 @@ def run_example():
     computed_relations = computed.extract_all_relations(mention_x1, mention_y1)
     ref_dict_relations = ref_dict.extract_all_relations(mention_x1, mention_y1)
     vo_relations = vo.extract_all_relations(mention_x1, mention_y1)
-    wiki_relations = wiki.extract_sub_relations(mention_x1, mention_y1,
-                                                RelationType.WIKIPEDIA_REDIRECT_LINK)
-    embed = WordEmbeddingRelationExtraction(
-        EmbeddingMethod.ELMO)
+    wiki_relations = wiki.extract_all_relations(mention_x1, mention_y1)
     embed_relations = embed.extract_all_relations(mention_x1, mention_y1)
-    wn_relaions = wn.extract_sub_relations(mention_x1, mention_y1,
-                                           RelationType.WORDNET_DERIVATIONALLY)
+    wn_relaions = wn.extract_all_relations(mention_x1, mention_y1)
 
     if RelationType.NO_RELATION_FOUND in computed_relations:
         logger.info('No Computed relation found')
@@ -81,7 +77,7 @@ def run_example():
     if RelationType.NO_RELATION_FOUND in wiki_relations:
         logger.info('No Wikipedia relation found')
     else:
-        logger.info('Found Wikipedia relations-%s', str(list(wiki_relations)))
+        logger.info('Found Wikipedia relations-%s', str(wiki_relations))
     if RelationType.NO_RELATION_FOUND in embed_relations:
         logger.info('No Embedded relation found')
     else:
@@ -89,7 +85,7 @@ def run_example():
     if RelationType.NO_RELATION_FOUND in wn_relaions:
         logger.info('No Wordnet relation found')
     else:
-        logger.info('Found Wordnet relations-%s', str(list(wn_relaions)))
+        logger.info('Found Wordnet relations-%s', str(wn_relaions))
 
 
 if __name__ == '__main__':

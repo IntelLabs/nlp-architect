@@ -18,7 +18,7 @@ from nlp_architect.data.cdc_resources.relations.relation_types_enums import \
     WikipediaSearchMethod, OnlineOROfflineMethod, EmbeddingMethod
 
 
-class CDCResources(object):
+class SievesResources(object):
     def __init__(self):
         """Cross Document co-reference sieve system resources configuration class"""
 
@@ -32,7 +32,7 @@ class CDCResources(object):
         self.__wn_folder = LIBRARY_ROOT + '/dumps/wordnet'
         self.__elmo_file = LIBRARY_ROOT + '/dumps/embedded/ecb_all_with_stop_elmo.pickle'
         self.__glove_file = LIBRARY_ROOT + '/dumps/embedded/ecb_all_embed_glove.pickle'
-        self.__referent_dict_file = LIBRARY_ROOT + '/datasets/ref.dict1.tsv'
+        self.__referent_dict_file = LIBRARY_ROOT + '/datasets/coref.dict1.tsv'
         self.__vo_dict_file = LIBRARY_ROOT + '/datasets/verbocean.unrefined.2004-05-20.txt'
 
         self.__wiki_search_method = WikipediaSearchMethod.ONLINE

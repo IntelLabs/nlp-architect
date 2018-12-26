@@ -68,7 +68,6 @@ class WikipediaPageExtractedRelations(object):
         self.disambiguation_links = set()
         self.categories = set()
         self.title_parenthesis = set()
-        self.be_comp = set()
 
         self.disambiguation_links_norm = set()
         self.categories_norm = set()

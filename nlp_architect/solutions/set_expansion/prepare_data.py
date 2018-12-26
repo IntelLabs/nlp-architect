@@ -117,11 +117,11 @@ def extract_noun_phrases(docs, nlp_parser, chunker):
 
 
 # pylint: disable-msg=too-many-nested-blocks,too-many-branches
-def mark_noun_phrases(text_file, nlp_parser, lines_count):
+def mark_noun_phrases(text_file, nlp_parser, lines_count, mark_char, grouping, chunker):
     i = 0
     with tqdm(total=lines_count) as pbar:
         for doc in nlp_parser.pipe(text_file, n_threads=-1):
-            if 'nlp_arch' in args.chunker:
+            if 'nlp_arch' in chunker:
                 spans = get_noun_phrases(doc)
             else:
                 spans = list(doc.noun_chunks)
@@ -144,13 +144,13 @@ def mark_noun_phrases(text_file, nlp_parser, lines_count):
                         if not span_written:
                             # mark NP's
                             if len(span.text) > 1 and span.lemma_ != '-PRON-':
-                                if args.grouping:
+                                if grouping:
                                     text = get_group_norm(span)
                                 else:
                                     text = span.text
                                 # mark NP's
                                 text = text.replace(' ',
-                                                    args.mark_char) + args.mark_char
+                                                    mark_char) + mark_char
                                 marked_corpus_file.write(text + ' ')
                             else:
                                 marked_corpus_file.write(span.text + ' ')
@@ -224,7 +224,8 @@ if __name__ == '__main__':
         num_lines = sum(1 for line in corpus_file)
         corpus_file.seek(0)
         logger.info('%i lines in corpus', num_lines)
-        mark_noun_phrases(corpus_file, nlp, num_lines)
+        mark_noun_phrases(corpus_file, nlp, num_lines, mark_char=args.mark_char,
+                          grouping=args.grouping, chunker=args.chunker)
 
     # write grouping data :
     if args.grouping:

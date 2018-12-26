@@ -31,13 +31,14 @@ logger = logging.getLogger(__name__)
 
 
 class WordnetRelationExtraction(RelationExtraction):
-    def __init__(self, method: OnlineOROfflineMethod, wn_file: str = None):
+    def __init__(self, method: OnlineOROfflineMethod = OnlineOROfflineMethod.ONLINE,
+                 wn_file: str = None):
         """
         Extract Relation between two mentions according to Word Embedding cosine distance
 
         Args:
             method (required): OnlineOROfflineMethod.{ONLINE/OFFLINE} run against full wordnet or
-                a sub-set of it
+                a sub-set of it (default = ONLINE)
             wn_file (required on OFFLINE mode): str Location of wordnet subset file to work with
         """
         logger.info('Loading Wordnet module')

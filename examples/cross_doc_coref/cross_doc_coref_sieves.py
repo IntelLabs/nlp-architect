@@ -21,54 +21,59 @@ from nlp_architect import LIBRARY_ROOT
 from nlp_architect.common.cdc.cluster import Clusters
 from nlp_architect.common.cdc.topics import Topics
 from nlp_architect.data.cdc_resources.relations.relation_types_enums import RelationType
-from nlp_architect.models.cross_doc_coref.cdc_config import EventConfig, EntityConfig
-from nlp_architect.models.cross_doc_coref.cdc_resource import CDCResources
-from nlp_architect.models.cross_doc_coref.system.cdc_settings import CDCSettings
-from nlp_architect.models.cross_doc_coref.system.sieves.sieves import SieveType
+from nlp_architect.models.cross_doc_coref.sieves_config import EventSievesConfiguration, \
+    EntitySievesConfiguration
+from nlp_architect.models.cross_doc_coref.sieves_resource import SievesResources
+from nlp_architect.models.cross_doc_coref.system.sieves_container_init import \
+    SievesContainerInitialization
 from nlp_architect.models.cross_doc_sieves import run_event_coref, run_entity_coref
 
 
 def run_example(cdc_settings):
-    event_mentions = Topics(LIBRARY_ROOT + '/datasets/ecb/ecb_all_event_mentions.json')
+    event_mentions_topics = Topics()
+    event_mentions_topics.create_from_file(LIBRARY_ROOT
+                                           + '/datasets/ecb/ecb_all_event_mentions.json')
 
     event_clusters = None
     if cdc_settings.event_config.run_evaluation:
         logger.info('Running event coreference resolution')
-        event_clusters = run_event_coref(event_mentions, cdc_settings)
+        event_clusters = run_event_coref(event_mentions_topics, cdc_settings)
 
-    entity_mentions = Topics(LIBRARY_ROOT + '/datasets/ecb/ecb_all_entity_mentions.json')
+    entity_mentions_topics = Topics()
+    entity_mentions_topics.create_from_file(LIBRARY_ROOT
+                                            + '/datasets/ecb/ecb_all_entity_mentions.json')
     entity_clusters = None
     if cdc_settings.entity_config.run_evaluation:
         logger.info('Running entity coreference resolution')
-        entity_clusters = run_entity_coref(entity_mentions, cdc_settings)
+        entity_clusters = run_entity_coref(entity_mentions_topics, cdc_settings)
 
     return event_clusters, entity_clusters
 
 
 def create_example_settings():
-    event_config = EventConfig()
+    event_config = EventSievesConfiguration()
     event_config.sieves_order = [
-        (SieveType.STRICT, RelationType.SAME_HEAD_LEMMA, 0.0),
-        (SieveType.VERY_RELAX, RelationType.WIKIPEDIA_DISAMBIGUATION, 0.1),
-        (SieveType.VERY_RELAX, RelationType.WORD_EMBEDDING_MATCH, 0.7),
-        (SieveType.RELAX, RelationType.SAME_HEAD_LEMMA_RELAX, 0.5),
+        (RelationType.SAME_HEAD_LEMMA, 1.0),
+        (RelationType.WIKIPEDIA_DISAMBIGUATION, 0.1),
+        (RelationType.WORD_EMBEDDING_MATCH, 0.7),
+        (RelationType.SAME_HEAD_LEMMA_RELAX, 0.5),
     ]
 
-    entity_config = EntityConfig()
+    entity_config = EntitySievesConfiguration()
     entity_config.sieves_order = [
-        (SieveType.STRICT, RelationType.SAME_HEAD_LEMMA, 0.0),
-        (SieveType.VERY_RELAX, RelationType.WIKIPEDIA_REDIRECT_LINK, 0.1),
-        (SieveType.VERY_RELAX, RelationType.WIKIPEDIA_DISAMBIGUATION, 0.1),
-        (SieveType.VERY_RELAX, RelationType.WORD_EMBEDDING_MATCH, 0.7),
-        (SieveType.VERY_RELAX, RelationType.REFERENT_DICT, 0.5)
+        (RelationType.SAME_HEAD_LEMMA, 1.0),
+        (RelationType.WIKIPEDIA_REDIRECT_LINK, 0.1),
+        (RelationType.WIKIPEDIA_DISAMBIGUATION, 0.1),
+        (RelationType.WORD_EMBEDDING_MATCH, 0.7),
+        (RelationType.REFERENT_DICT, 0.5)
     ]
 
     # CDCResources hold default attribute values that might need to be change,
     # (using the defaults values in this example), use to configure attributes
     # such as resources files location, output directory, resources init methods and other.
     # check in class and see if any attributes require change in your set-up
-    resource_location = CDCResources()
-    return CDCSettings(resource_location, event_config, entity_config)
+    resource_location = SievesResources()
+    return SievesContainerInitialization(resource_location, event_config, entity_config)
 
 
 def print_results(clusters: List[Clusters], type: str):

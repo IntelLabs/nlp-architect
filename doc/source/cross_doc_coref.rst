@@ -97,18 +97,14 @@ For each mode of operation there is a method for extraction defined in :py:class
     - ``run_event_coref()`` - running event coreference resolution
     - ``run_entity_coref()`` - running entity coreference resolution
 
-Each mode of operation requires a configuration. The configurations define which sieve should run, in what order and define constraints and thresholds.
+Each mode of operation requires a configuration. The configurations define which sieve should run, in what order and define constraints and thresholds
 
-    - :py:class:`EventConfig <nlp_architect.models.cross_doc_coref.cdc_config.EventConfig>`
-    - :py:class:`EntityConfig <nlp_architect.models.cross_doc_coref.cdc_config.EntityConfig>`
+    - Use :py:class:`EntitySievesConfiguration <nlp_architect.models.cross_doc_coref.cdc_config.EventSievesConfiguration>` for configuring the needed sieves for computing events mentions
+    - Use :py:class:`EntitySievesConfiguration <nlp_architect.models.cross_doc_coref.cdc_config.EntitySievesConfiguration>` for configuring the needed sieves for computing entities mentions
 
-Configuring ``sieves_order`` enables control on the sieve configurations, ``sieves_order`` is a list of tuples (SieveType, RelationType, threshold), there are 3 types of SievesTypes in order to control cluster merging:
+Configuring ``sieves_order`` enables control on the sieve configurations, ``sieves_order`` is a list of tuples (RelationType, threshold)
 
-        * ``SieveType.STRICT``: will merge two clusters if all mentions in both clusters have the same relation type.
-        * ``SieveType.RELAX``: will merge two clusters if the number of mentions that share the RelationType divided by the number of mentions in clusters is above a defined threshold.
-        * ``SieveType.VERY_RELAX``: will merge two clusters if the number of mentions that share the same relation type divided by all possible mentions pairs between clusters is above a defined threshold.
-
-Use :py:class:`CDCResources <nlp_architect.models.cross_doc_coref.cdc_resource.CDCResources>` to set the correct paths to all files downloaded or created for the different types of sieves.
+Use :py:class:`SievesResources <nlp_architect.models.cross_doc_coref.cdc_resource.SievesResources>` to set the correct paths to all files downloaded or created for the different types of sieves.
 
 
 Sieve-based system flow
