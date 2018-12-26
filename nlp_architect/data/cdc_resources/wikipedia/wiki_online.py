@@ -16,12 +16,14 @@
 
 import os
 import logging
+import re
 
 from nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_page import WikipediaPage
 from nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_page_extracted_relations import \
     WikipediaPageExtractedRelations
 from nlp_architect.data.cdc_resources.wikipedia.wiki_search_page_result import \
     WikipediaSearchPageResult
+from nlp_architect.utils.text import SpacyInstance
 
 os.environ['PYWIKIBOT_NO_USER_CONFIG'] = '1'
 
@@ -34,6 +36,7 @@ logger = logging.getLogger(__name__)
 class WikiOnline(object):
     def __init__(self):
         import pywikibot
+        self.spacy = SpacyInstance()
         self.pywikibot = pywikibot
         self.cache = dict()
         self.site = pywikibot.Site('en', 'wikipedia')  # The site we want to run our bot on
@@ -73,6 +76,7 @@ class WikiOnline(object):
         relations.is_disambiguation = self.is_disambiguation_page(item)
         relations.is_part_name = self.is_name_description(text, item, relations.is_disambiguation)
         relations.aliases = aliases
+        relations.be_comp, relations.be_comp_norm = self.extract_be_comp(text)
         relations.extract_relations_from_text_v0(text)
 
         ret_page = WikipediaPage(phrase, None, page_title, None, 0, pageid, description, relations)
@@ -143,3 +147,89 @@ class WikiOnline(object):
                         if [s for s in NAME_DESCRIPTIONS if s in desc['en'].lower()]:
                             return True
         return False
+
+    # pylint: disable=no-else-return
+    def extract_be_comp(self, text):
+        first_sentence_start_index = text.index("'''")
+        if first_sentence_start_index >= 0:
+            last_temp_index = text.find('\n', first_sentence_start_index)
+        if last_temp_index == -1:
+            last_temp_index = len(text)
+
+        first_paragraph = text[first_sentence_start_index:last_temp_index]
+        if WikiOnline.extract_be_a_index(first_paragraph) == -1 and last_temp_index != len(text):
+            return self.extract_be_comp(text[last_temp_index:])
+        elif last_temp_index == len(text):
+            return None, None
+
+        first_paragraph_clean = re.sub(r'\([^)]*\)', '', first_paragraph)
+        first_paragraph_clean = re.sub(r'<[^>]*>', '', first_paragraph_clean)
+        first_paragraph_clean = re.sub(r'{[^}]*}', '', first_paragraph_clean)
+        first_paragraph_clean = re.sub(r'\[\[[^]]*\]\]', '', first_paragraph_clean)
+        first_paragraph_clean = re.sub(r'[\']', '', first_paragraph_clean)
+        first_paragraph_clean = re.sub(r'&nbsp;', ' ', first_paragraph_clean)
+
+        return self.extract_be_comp_relations(first_paragraph_clean)
+
+    # pylint: disable=not-callable
+    def extract_be_comp_relations(self, first_paragraph):
+        be_comp = set()
+        be_comp_norm = set()
+        if first_paragraph:
+            doc = self.spacy.parser(first_paragraph)
+            for token in doc:
+                target = token.text
+                target_lemma = token.lemma_
+                relation = token.dep_
+                governor = token.head.text
+                governor_lemma = token.head.lemma_
+                if relation == 'acl':
+                    break
+                if relation == 'punct' and target == '.':
+                    break
+                elif relation == 'cop':
+                    be_comp.add(governor)
+                    be_comp_norm.add(governor_lemma)
+                elif relation == 'nsubj':
+                    be_comp.add(target)
+                    be_comp_norm.add(target_lemma)
+                elif relation == 'dep':
+                    be_comp.add(governor)
+                    be_comp_norm.add(governor_lemma)
+                elif relation == 'compound':
+                    be_comp.add(target + ' ' + governor)
+                    be_comp_norm.add(target_lemma + ' ' + governor_lemma)
+                elif relation == 'amod':
+                    be_comp.add(target + ' ' + governor)
+                    be_comp_norm.add(target_lemma + ' ' + governor_lemma)
+                elif relation in ['conj', 'appos']:
+                    be_comp.add(target)
+                    be_comp_norm.add(target_lemma)
+
+        return be_comp, be_comp_norm
+
+    @staticmethod
+    def extract_be_a_index(sentence):
+        result = None
+        if 'is a' in sentence:
+            result = sentence.index("is a")
+        elif 'are a' in sentence:
+            result = sentence.index("are a")
+        elif 'was a' in sentence:
+            result = sentence.index("was a")
+        elif 'were a' in sentence:
+            result = sentence.index("were a")
+        elif 'be a' in sentence:
+            result = sentence.index("be a")
+        elif 'is the' in sentence:
+            result = sentence.index("is the")
+        elif 'are the' in sentence:
+            result = sentence.index("are the")
+        elif 'was the' in sentence:
+            result = sentence.index("was the")
+        elif 'were the' in sentence:
+            result = sentence.index("were the")
+        elif 'be the' in sentence:
+            result = sentence.index("be the")
+
+        return result

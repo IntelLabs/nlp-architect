@@ -29,13 +29,14 @@ logger = logging.getLogger(__name__)
 
 
 class VerboceanRelationExtraction(RelationExtraction):
-    def __init__(self, method: OnlineOROfflineMethod, vo_file: str):
+    def __init__(self, method: OnlineOROfflineMethod = OnlineOROfflineMethod.ONLINE,
+                 vo_file: str = None):
         """
         Extract Relation between two mentions according to VerbOcean knowledge
 
         Args:
-            method (required): OnlineOROfflineMethod.{ONLINE/OFFLINE} run against full VerbOcean or
-                a sub-set of it
+            method (optional): OnlineOROfflineMethod.{ONLINE/OFFLINE} run against full VerbOcean or
+                a sub-set of it (default = ONLINE)
             vo_file (required): str Location of VerbOcean file to work with
         """
         logger.info('Loading Verb Ocean module')

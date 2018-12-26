@@ -31,15 +31,21 @@ class Topic(object):
 
 
 class Topics(object):
-    def __init__(self, mentions_file_path: str) -> None:
+    def __init__(self):
+        self.topics_list = None
+        self.keep_order = False
+
+    def create_from_file(self, mentions_file_path: str, keep_order: bool = False) -> None:
         """
 
         Args:
+            keep_order: whether to keep original mentions order or not (default = False)
             mentions_file_path: this topic mentions json file
         """
-        self.topics_list = self.load_gold_mentions_from_file(mentions_file_path)
+        self.keep_order = keep_order
+        self.topics_list = self.load_mentions_from_file(mentions_file_path)
 
-    def load_gold_mentions_from_file(self, mentions_file_path: str) -> List[Topic]:
+    def load_mentions_from_file(self, mentions_file_path: str) -> List[Topic]:
         start_data_load = time.time()
         logger.info('Loading mentions from-%s', mentions_file_path)
         mentions = load_json_file(mentions_file_path)
@@ -49,8 +55,7 @@ class Topics(object):
         logger.info('Mentions file-%s, took:%.4f sec to load', mentions_file_path, took_load)
         return topics
 
-    @staticmethod
-    def order_mentions_by_topics(mentions: str) -> List[Topic]:
+    def order_mentions_by_topics(self, mentions: str) -> List[Topic]:
         """
         Order mentions to documents topics
         Args:
@@ -59,10 +64,17 @@ class Topics(object):
         Returns:
             List[Topic] of the mentions separated by their documents topics
         """
+        running_index = 0
         topics = []
         current_topic_ref = None
         for mention_line in mentions:
             mention = MentionData.read_json_mention_data_line(mention_line)
+
+            if self.keep_order:
+                if mention.mention_index == -1:
+                    mention.mention_index = running_index
+                    running_index += 1
+
             topic_id = mention.topic_id
 
             if not current_topic_ref or len(topics) > 0 and topic_id != topics[-1].topic_id:

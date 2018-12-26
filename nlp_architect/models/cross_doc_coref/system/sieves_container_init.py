@@ -30,12 +30,16 @@ from nlp_architect.data.cdc_resources.relations.word_embedding_relation_extracti
     WordEmbeddingRelationExtraction
 from nlp_architect.data.cdc_resources.relations.wordnet_relation_extraction import \
     WordnetRelationExtraction
+from nlp_architect.models.cross_doc_coref.sieves_config import \
+    EventSievesConfiguration, EntitySievesConfiguration
+from nlp_architect.models.cross_doc_coref.sieves_resource import SievesResources
 
 logger = logging.getLogger(__name__)
 
 
-class CDCSettings(object):
-    def __init__(self, resources, event_coref_config, entity_coref_config):
+class SievesContainerInitialization(object):
+    def __init__(self, resources: SievesResources, event_coref_config: EventSievesConfiguration,
+                 entity_coref_config: EntitySievesConfiguration):
         self.wiki = None
         self.vo = None
         self.embeds = None
@@ -52,9 +56,9 @@ class CDCSettings(object):
     def load_modules(self):
         relations = set()
         for sieve in self.event_config.sieves_order:
-            relations.add(sieve[1])
+            relations.add(sieve[0])
         for sieve in self.entity_config.sieves_order:
-            relations.add(sieve[1])
+            relations.add(sieve[0])
 
         if any('WIKIPEDIA' in relation.name for relation in relations):
             self.wiki = WikipediaRelationExtraction(self.cdc_resources.wiki_search_method,
@@ -107,6 +111,6 @@ class CDCSettings(object):
         elif RelationType.VERBOCEAN_MATCH == relation_type:
             ret_model = self.vo
         else:
-            raise Exception('Not a Supported RelationType-' + relation_type)
+            raise Exception('Not a Supported RelationType-' + str(relation_type))
 
         return ret_model

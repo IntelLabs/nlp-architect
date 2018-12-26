@@ -225,9 +225,9 @@ See detailed example below and methods documentation for more details on how to 
     computed_relations = computed.extract_all_relations(mention_x1, mention_y1)
     ref_dict_relations = ref_dict.extract_all_relations(mention_x1, mention_y1)
     vo_relations = vo.extract_all_relations(mention_x1, mention_y1)
-    wiki_relations = wiki.extract_sub_relations(mention_x1, mention_y1, RelationType.WIKIPEDIA_REDIRECT_LINK)
+    wiki_relations = wiki.extract_all_relations(mention_x1, mention_y1)
     embed_relations = embed.extract_all_relations(mention_x1, mention_y1)
-    wn_relaions = wn.extract_sub_relations(mention_x1, mention_y1, RelationType.WORDNET_DERIVATIONALLY)
+    wn_relaions = wn.extract_all_relations(mention_x1, mention_y1)
 
 You can find the above example in this location: ``examples/cross_doc_coref/relation_extraction_example.py``
 

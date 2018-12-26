@@ -34,12 +34,14 @@ logger = logging.getLogger(__name__)
 
 
 class WordEmbeddingRelationExtraction(RelationExtraction):
-    def __init__(self, method: EmbeddingMethod, glove_file: str = None, elmo_file: str = None):
+    def __init__(self, method: EmbeddingMethod = EmbeddingMethod.GLOVE,
+                 glove_file: str = None, elmo_file: str = None):
         """
         Extract Relation between two mentions according to Word Embedding cosine distance
 
         Args:
-            method (required): EmbeddingMethod.{GLOVE/GLOVE_OFFLINE/ELMO/ELMO_OFFLINE}
+            method (optional): EmbeddingMethod.{GLOVE/GLOVE_OFFLINE/ELMO/ELMO_OFFLINE}
+                (default = GLOVE)
             glove_file (required on GLOVE/GLOVE_OFFLINE mode): str Location of Glove file
             elmo_file (required on ELMO_OFFLINE mode): str Location of Elmo file
         """

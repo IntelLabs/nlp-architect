@@ -54,9 +54,9 @@ to train the model weights, perform inference, and save/load the model.
     nlp_architect.models.temporal_convolutional_network.TCN
     nlp_architect.models.crossling_emb.WordTranslator
     nlp_architect.models.cross_doc_sieves
-    nlp_architect.models.cross_doc_coref.cdc_config.EventConfig
-    nlp_architect.models.cross_doc_coref.cdc_config.EntityConfig
-    nlp_architect.models.cross_doc_coref.cdc_resource.CDCResources
+    nlp_architect.models.cross_doc_coref.sieves_config.EventSievesConfiguration
+    nlp_architect.models.cross_doc_coref.sieves_config.EntitySievesConfiguration
+    nlp_architect.models.cross_doc_coref.sieves_resource.SievesResources
     nlp_architect.models.gnmt_model.GNMTModel
 
 

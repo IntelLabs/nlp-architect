@@ -29,13 +29,14 @@ logger = logging.getLogger(__name__)
 
 
 class ReferentDictRelationExtraction(RelationExtraction):
-    def __init__(self, method: OnlineOROfflineMethod, ref_dict: str = None):
+    def __init__(self, method: OnlineOROfflineMethod = OnlineOROfflineMethod.ONLINE,
+                 ref_dict: str = None):
         """
         Extract Relation between two mentions according to Referent Dictionary knowledge
 
         Args:
-            method (required): OnlineOROfflineMethod.{ONLINE/OFFLINE} run against full referent
-                dictionary or a sub-set of
+            method (optional): OnlineOROfflineMethod.{ONLINE/OFFLINE} run against full referent
+                dictionary or a sub-set of (default = ONLINE)
             ref_dict (required): str Location of referent dictionary file to work with
         """
         logger.info('Loading ReferentDict module')
@@ -46,7 +47,7 @@ class ReferentDictRelationExtraction(RelationExtraction):
                 self.ref_dict = self.load_reference_dict(ref_dict)
             logger.info('ReferentDict module lead successfully')
         else:
-            raise FileNotFoundError('Referent Dict file not found or not in path..')
+            raise FileNotFoundError('Referent Dict file not found or not in path:' + ref_dict)
 
         super(ReferentDictRelationExtraction, self).__init__()
 
@@ -136,7 +137,7 @@ class ReferentDictRelationExtraction(RelationExtraction):
         """
         word_dict = {}
         first = True
-        for line in open(dict_fname):
+        for line in open(dict_fname, 'r', encoding="utf-8"):
             if first:
                 first = False
                 continue
