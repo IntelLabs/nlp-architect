@@ -55,10 +55,12 @@ class SievesContainerInitialization(object):
 
     def load_modules(self):
         relations = set()
-        for sieve in self.event_config.sieves_order:
-            relations.add(sieve[0])
-        for sieve in self.entity_config.sieves_order:
-            relations.add(sieve[0])
+        if self.event_config.run_evaluation:
+            for sieve in self.event_config.sieves_order:
+                relations.add(sieve[0])
+        if self.entity_config.run_evaluation:
+            for sieve in self.entity_config.sieves_order:
+                relations.add(sieve[0])
 
         if any('WIKIPEDIA' in relation.name for relation in relations):
             self.wiki = WikipediaRelationExtraction(self.cdc_resources.wiki_search_method,

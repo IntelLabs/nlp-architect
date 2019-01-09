@@ -80,9 +80,15 @@ class WordnetRelationExtraction(RelationExtraction):
         page_y = self.wordnet_impl.get_pages(mention_y)
 
         if page_x and page_y:
-            relations.add(self.extract_derivation(page_x, page_y))
-            relations.add(self.extract_partial_synset_match(page_x, page_y))
-            relations.add(self.extract_same_synset_entity(page_x, page_y))
+            deriv_rel = self.extract_derivation(page_x, page_y)
+            part_syn_rel = self.extract_partial_synset_match(page_x, page_y)
+            same_syn_rel = self.extract_same_synset_entity(page_x, page_y)
+            if deriv_rel != RelationType.NO_RELATION_FOUND:
+                relations.add(deriv_rel)
+            if part_syn_rel != RelationType.NO_RELATION_FOUND:
+                relations.add(part_syn_rel)
+            if same_syn_rel != RelationType.NO_RELATION_FOUND:
+                relations.add(same_syn_rel)
 
         if len(relations) == 0:
             relations.add(RelationType.NO_RELATION_FOUND)

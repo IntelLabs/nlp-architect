@@ -54,10 +54,18 @@ class ComputedRelationExtraction(RelationExtraction):
             relations.add(RelationType.NO_RELATION_FOUND)
             return relations
 
-        relations.add(self.extract_exact_string(mention_x, mention_y))
-        relations.add(self.extract_fuzzy_fit(mention_x, mention_y))
-        relations.add(self.extract_fuzzy_head_fit(mention_x, mention_y))
-        relations.add(self.extract_same_head_lemma(mention_x, mention_y))
+        exact_rel = self.extract_exact_string(mention_x, mention_y)
+        fuzzy_rel = self.extract_fuzzy_fit(mention_x, mention_y)
+        fuzzy_head_rel = self.extract_fuzzy_head_fit(mention_x, mention_y)
+        same_head_rel = self.extract_same_head_lemma(mention_x, mention_y)
+        if exact_rel != RelationType.NO_RELATION_FOUND:
+            relations.add(exact_rel)
+        if fuzzy_rel != RelationType.NO_RELATION_FOUND:
+            relations.add(fuzzy_rel)
+        if fuzzy_head_rel != RelationType.NO_RELATION_FOUND:
+            relations.add(fuzzy_head_rel)
+        if same_head_rel != RelationType.NO_RELATION_FOUND:
+            relations.add(same_head_rel)
 
         if len(relations) == 0:
             relations.add(RelationType.NO_RELATION_FOUND)

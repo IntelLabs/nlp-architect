@@ -18,8 +18,6 @@ from typing import List
 
 from nlp_architect.common.cdc.cluster import Clusters
 from nlp_architect.common.cdc.topics import Topics
-from nlp_architect.models.cross_doc_coref.system.cdc_utils import \
-    write_event_coref_scorer_results, write_entity_coref_scorer_results
 from nlp_architect.models.cross_doc_coref.system.sieves.run_sieve_system import get_run_system
 from nlp_architect.models.cross_doc_coref.system.sieves_container_init import \
     SievesContainerInitialization
@@ -73,13 +71,5 @@ def _run_coref(topics: Topics, resources: SievesContainerInitialization,
         clusters = sieves_list.run_deterministic()
         clusters.set_coref_chain_to_mentions()
         clusters_list.append(clusters)
-
-    logger.info('Write {} coref results'.format(eval_type))
-    if eval_type.lower() == 'entity':
-        write_entity_coref_scorer_results(topics.topics_list,
-                                          resources.cdc_resources.eval_output_dir)
-    else:
-        write_event_coref_scorer_results(topics.topics_list,
-                                         resources.cdc_resources.eval_output_dir)
 
     return clusters_list
