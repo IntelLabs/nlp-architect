@@ -107,7 +107,7 @@ python solutions/set_expansion/set_expand.py --np2vec_model_file MODEL_PATH --to
     The expand server gets requests containing seed terms, and expands them
     based on the given word embedding model. You can use the model you trained
     yourself in the previous step, or to provide a pre-trained model you own.
-    The similarity argument is the threashold to use for the annotation feature, see its description in the UI section below.
+    The similarity argument is the threshold to use for the annotation feature, see its description in the UI section below.
 
     **Note**: default server
     will listen on localhost:1234. If you set the host/port you should also
@@ -138,7 +138,7 @@ python solutions/set_expansion/set_expand.py --np2vec_model_file MODEL_PATH --to
 
     ### Text Annotation
 
-    The annotation feature allows you to annotate free text with similar terms comparing to the seed list (the default similarity threashold is 0.5, and can be set
+    The annotation feature allows you to annotate free text with similar terms comparing to the seed list (the default similarity threshold is 0.5, and can be set
     by the expand server --similarity argument). 
     After selecting the Text Annotation checkbox, a text input is available for the user to type in text to annotate:
 
