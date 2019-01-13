@@ -213,7 +213,7 @@ All customizable parameters can be obtained by running: ``python -m nlp-architec
                         bottom layer to compute attention.
   --output_attention
                         Only used in standard attention_architecture. Whether
-                        use attention as the cell output at each timestep. .
+                        use attention as the cell output at each timestep.
   --pass_hidden_state
                         Whether to pass encoder's hidden state to decoder when
                         using an attention based model.
@@ -257,7 +257,7 @@ All customizable parameters can be obtained by running: ``python -m nlp-architec
                         Vocab prefix, expect files with src/tgt suffixes.
   --embed_prefix EMBED_PREFIX
                         Pretrained embedding prefix, expect files with src/tgt
-                        suffixes. The embedding files should be Glove formated
+                        suffixes. The embedding files should be Glove formatted
                         txt files.
   --sos SOS             Start-of-sentence symbol.
   --eos EOS             End-of-sentence symbol.
@@ -274,7 +274,7 @@ All customizable parameters can be obtained by running: ``python -m nlp-architec
   --src_max_len_infer SRC_MAX_LEN_INFER
                         Max length of src sequences during inference.
   --tgt_max_len_infer TGT_MAX_LEN_INFER
-                        Max length of tgt sequences during inference. Also use
+                        Max length of tgt sequences during inference. Also used
                         to restrict the maximum decoding length.
   --unit_type
                         lstm | gru | layer_norm_lstm | nas | mlstm
@@ -304,7 +304,7 @@ All customizable parameters can be obtained by running: ``python -m nlp-architec
   --use_char_encode USE_CHAR_ENCODE
                         Whether to split each word or bpe into character, and
                         then generate the word-level representation from the
-                        character reprentation.
+                        character representation.
   --num_gpus NUM_GPUS   Number of gpus in each worker.
   --log_device_placement
                         Debug GPU allocation.
@@ -316,7 +316,7 @@ All customizable parameters can be obtained by running: ``python -m nlp-architec
   --scope SCOPE         scope to put variables under
   --hparams_path HPARAMS_PATH
                         Path to standard hparams json file that
-                        overrideshparams values from FLAGS.
+                        overrides hparams values from FLAGS.
   --random_seed RANDOM_SEED
                         Random seed (>0, set a specific seed).
   --override_loaded_hparams

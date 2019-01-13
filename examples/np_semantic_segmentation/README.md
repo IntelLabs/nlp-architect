@@ -64,7 +64,7 @@ Quick example:
 
 
 
-### Citatons
+### Citations
 [1] Stephen Tratz and Eduard Hovy. 2011. A Fast, Accurate, Non-Projective, Semantically-Enriched
 Parser. In Proceedings of the 2011 Conference on Empirical Methods in Natural Language Processing.
 Edinburgh, Scotland, UK. Dirk Hovy, Stephen Tratz, and Eduard Hovy. 2010. What’s in a Preposition?

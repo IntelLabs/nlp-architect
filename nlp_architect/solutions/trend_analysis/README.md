@@ -2,7 +2,7 @@
 
 Topic Analysis is a Natural Language Processing (NLP) task of extracting salient terms (or topics) from a textual corpus. Trend Analysis task measures the change of the most prominent topics between two time points.
 
-The solution is based on Noun Phrase (NP) Extraction from the given corpora. Each NP (topic) is assigned a proprietary *importance* score that represents the significance of the noun phrase in the corpora (document appearences, *phraseness* and *completeness*).
+The solution is based on Noun Phrase (NP) Extraction from the given corpora. Each NP (topic) is assigned a proprietary *importance* score that represents the significance of the noun phrase in the corpora (document appearances, *phraseness* and *completeness*).
 
 ## Flow
 
