@@ -58,7 +58,7 @@ Datasets
 SNIPS NLU benchmark
 -------------------
 
-A NLU benchmark containing ~16K sentences with 7 intent types. Each intent has about 2000 sentences
+A NLU benchmark [5]_ containing ~16K sentences with 7 intent types. Each intent has about 2000 sentences
 for training the model and 100 sentences for validation. :py:class:`SNIPS <nlp_architect.data.intent_datasets.SNIPS>` is a class that loads the dataset from the repository and encodes the data into BIO format. The words are encoded with sparse int representation and word characters are extracted for character embeddings.
 
 The dataset can be downloaded from https://github.com/snipsco/nlu-benchmark, and more info on the benchmark can be found here_. The terms and conditions of the data set license apply. Intel does not grant any rights to the data files.
@@ -151,10 +151,15 @@ Minor differences might occur in final results. Each model was trained for 100 e
 References
 ----------
 
-.. [1] Hakkani-Tur, Dilek and Tur, Gokhan and Celikyilmaz, Asli and Chen, Yun-Nung and Gao, Jianfeng and Deng, Li and Wang, Ye-Yi [Multi-Domain Joint Semantic Frame Parsing using Bi-directional RNN-LSTM](https://www.csie.ntu.edu.tw/~yvchen/doc/IS16_MultiJoint.pdf).
-.. [2] Gakuto Kurata, Bing Xiang, Bowen Zhou, Mo Yu. [Leveraging Sentence-level Information with Encoder LSTM for Semantic Slot Filling](https://arxiv.org/abs/1601.01530).
+.. [1] Hakkani-Tur, Dilek and Tur, Gokhan and Celikyilmaz, Asli and Chen, Yun-Nung and Gao, Jianfeng and Deng, Li and Wang, Ye-Yi. `Multi-Domain Joint Semantic Frame Parsing using Bi-directional RNN-LSTM <https://www.csie.ntu.edu.tw/~yvchen/doc/IS16_MultiJoint.pdf>`_.
+
+.. [2] Gakuto Kurata, Bing Xiang, Bowen Zhou, Mo Yu. `Leveraging Sentence-level Information with Encoder LSTM for Semantic Slot Filling <https://arxiv.org/abs/1601.01530>`_.
+
 .. [3] C. Hemphill, J. Godfrey, and G. Doddington, The TabularIntentDataset spoken language systems pilot corpus, in Proc. of the DARPA speech and natural language workshop, 1990.
+
 .. [4] P. Price, Evaluation of spoken language systems: The TabularIntentDataset domain, in Proc. of the Third DARPA Speech and Natural Language Workshop. Morgan Kaufmann, 1990.
+
+.. [5] Alice Coucke and Alaa Saade and Adrien Ball and Théodore Bluche and Alexandre Caulier and David Leroy and Clément Doumouro and Thibault Gisselbrecht and Francesco Caltagirone and Thibaut Lavril and Maël Primet and Joseph Dureau. `Snips Voice Platform: an embedded Spoken Language Understanding system for private-by-design voice interfaces. <https://arxiv.org/abs/1805.10190>`_
 
 .. _https://github.com/snipsco/nlu-benchmark: https://github.com/snipsco/nlu-benchmark
 .. _here: https://medium.com/snips-ai/benchmarking-natural-language-understanding-systems-google-facebook-microsoft-and-snips-2b8ddcf9fb19
