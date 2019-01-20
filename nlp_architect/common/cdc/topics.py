@@ -32,7 +32,7 @@ class Topic(object):
 
 class Topics(object):
     def __init__(self):
-        self.topics_list = None
+        self.topics_list = []
         self.keep_order = False
 
     def create_from_file(self, mentions_file_path: str, keep_order: bool = False) -> None:

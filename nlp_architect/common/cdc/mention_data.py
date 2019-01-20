@@ -19,8 +19,6 @@ from typing import List
 from nlp_architect.utils.io import load_json_file
 from nlp_architect.utils.string_utils import StringUtils
 
-ENTITY = ['HUM', 'NON', 'TIM', 'LOC']
-
 
 class MentionDataLight(object):
     def __init__(self, tokens_str: str, mention_context: str = None, mention_head: str = None,
@@ -47,9 +45,9 @@ class MentionDataLight(object):
 
 class MentionData(MentionDataLight):
     def __init__(self, topic_id: str, doc_id: str, sent_id: int, tokens_numbers: List[int],
-                 tokens_str: str, mention_context: str, mention_head: str, mention_head_lemma: str,
-                 coref_chain: str, mention_type: str = 'NA', is_continuous: bool = True,
-                 is_singleton: bool = False, score: float = float(-1),
+                 tokens_str: str, mention_context: List[str], mention_head: str,
+                 mention_head_lemma: str, coref_chain: str, mention_type: str = 'NA',
+                 is_continuous: bool = True, is_singleton: bool = False, score: float = float(-1),
                  predicted_coref_chain: str = None, mention_pos: str = None,
                  mention_ner: str = None, mention_index: int = -1) -> None:
         """
@@ -60,6 +58,7 @@ class MentionData(MentionDataLight):
             doc_id: str document ID
             sent_id: int sentence number
             tokens_numbers: List[int] - tokens numbers
+            mention_context: List[str] - list of tokens strings
             coref_chain: str
             mention_type: str one of (HUM/NON/TIM/LOC/ACT/NEG)
             is_continuous: bool
@@ -209,11 +208,6 @@ class MentionData(MentionDataLight):
         if not self.mention_id:
             self.mention_id = self.gen_mention_id()
         return self.mention_id
-
-    def is_entity(self) -> bool:
-        if self.mention_type in ENTITY:
-            return True
-        return False
 
     @staticmethod
     def static_gen_token_unique_id(doc_id: int, sent_id: int, token_id: int) -> str:

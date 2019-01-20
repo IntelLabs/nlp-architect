@@ -27,12 +27,11 @@ class SieveClusterMerger(object):
     def __init__(self, excepted_relation: Tuple[RelationType, float],
                  relation_extractor: RelationExtraction):
         """
-
-                Args:
-                    excepted_relation: tuple with relation to run in sieve,
-                    threshold to merge clusters
-                    relation_extractor:
-                """
+        Args:
+            excepted_relation: tuple with relation to run in sieve,
+            threshold to merge clusters
+            relation_extractor:
+        """
         self.excepted_relation = excepted_relation[0]
         self.threshold = excepted_relation[1]
         self.relation_extractor = relation_extractor
@@ -40,15 +39,14 @@ class SieveClusterMerger(object):
         logger.info('init Sieve, for relation-%s with threshold=%.1f',
                     self.excepted_relation.name, self.threshold)
 
-    def run_sieve(self, cluster_i: Cluster, cluster_j: Cluster):
+    def run_sieve(self, cluster_i: Cluster, cluster_j: Cluster) -> bool:
         """
-
         Args:
             cluster_i:
             cluster_j:
 
         Returns:
-
+            bool -> indicating whether to merge clusters (True) or not (False)
         """
         matches = 0
         for mention_i in cluster_i.mentions:

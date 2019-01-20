@@ -15,37 +15,58 @@
 # ******************************************************************************
 import argparse
 import logging
+import os
 import pickle
+from os.path import join
 
+from nlp_architect.common.cdc.mention_data import MentionData
 from nlp_architect.data.cdc_resources.embedding.embed_elmo import ElmoEmbedding
-from nlp_architect.models.cross_doc_coref.system.cdc_utils import load_mentions_vocab
 from nlp_architect.utils import io
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 
-def load_elmo_for_vocab(vocabulary):
-    elmo_embeddings = ElmoEmbedding()
-    elmo_dict = dict()
-    for mention_string in vocabulary:
-        if mention_string not in elmo_dict:
-            mention_embedding = elmo_embeddings.get_avrg_feature_vector(mention_string)
-            elmo_dict[mention_string] = mention_embedding
+def load_elmo_for_vocab(mentions):
+    """
+    Create the embedding using the cache logic in the embedding class
+    Args:
+        mentions:
 
-    return elmo_dict
+    Returns:
+
+    """
+    elmo_embeddings = ElmoEmbedding()
+
+    for mention in mentions:
+        elmo_embeddings.get_head_feature_vector(mention)
+
+    logger.info('Total words/contexts in vocabulary %d', len(elmo_embeddings.cache))
+    return elmo_embeddings.cache
 
 
 def elmo_dump():
-    filter_stop_words = False
     out_file = args.output
     mention_files = list()
-    mention_files.append(args.mentions)
-    vocab = load_mentions_vocab(mention_files, filter_stop_words)
-    elmo_ecb_embeddings = load_elmo_for_vocab(vocab)
-    logger.info('Total words in vocabulary %d', len(vocab))
+    if os.path.isdir(args.mentions):
+        for (dirpath, _, files) in os.walk(args.mentions):
+            for file in files:
+                if file == '.DS_Store':
+                    continue
+
+                mention_files.append(join(dirpath, file))
+    else:
+        mention_files.append(args.mentions)
+
+    mentions = []
+    for _file in mention_files:
+        mentions.extend(MentionData.read_mentions_json_to_mentions_data_list(_file))
+
+    elmo_ecb_embeddings = load_elmo_for_vocab(mentions)
+
     with open(out_file, 'wb') as f:
         pickle.dump(elmo_ecb_embeddings, f)
+
     logger.info('Saving dump to file-%s', out_file)
 
 
@@ -54,7 +75,13 @@ if __name__ == '__main__':
     parser.add_argument('--mentions', type=str, help='mentions_file file', required=True)
     parser.add_argument('--output', type=str, help='location were to create dump file',
                         required=True)
+
     args = parser.parse_args()
-    io.validate_existing_filepath(args.mentions)
-    io.validate_existing_filepath(args.output)
+
+    if os.path.isdir(args.mentions):
+        io.validate_existing_directory(args.mentions)
+    else:
+        io.validate_existing_filepath(args.mentions)
+
     elmo_dump()
+    print('Done!')

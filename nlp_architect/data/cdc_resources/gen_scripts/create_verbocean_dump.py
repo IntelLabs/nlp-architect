@@ -19,7 +19,7 @@ import logging
 
 from nlp_architect.data.cdc_resources.relations.verbocean_relation_extraction import \
     VerboceanRelationExtraction
-from nlp_architect.models.cross_doc_coref.system.cdc_utils import load_mentions_vocab
+from nlp_architect.models.cross_doc_coref.system.cdc_utils import load_mentions_vocab_from_files
 from nlp_architect.utils import io
 
 logging.basicConfig(level=logging.DEBUG)
@@ -40,7 +40,7 @@ def vo_dump():
     vo_file = args.vo
     out_file = args.output
     mentions_event_gold_file = [args.mentions]
-    vocab = load_mentions_vocab(mentions_event_gold_file, True)
+    vocab = load_mentions_vocab_from_files(mentions_event_gold_file, True)
     vo = VerboceanRelationExtraction.load_verbocean_file(vo_file)
     vo_for_vocab = {}
     for word in vocab:

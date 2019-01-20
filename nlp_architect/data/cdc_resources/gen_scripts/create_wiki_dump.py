@@ -20,7 +20,7 @@ import logging
 from nlp_architect.data.cdc_resources.relations.relation_types_enums import WikipediaSearchMethod
 from nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction import \
     WikipediaRelationExtraction
-from nlp_architect.models.cross_doc_coref.system.cdc_utils import load_mentions_vocab
+from nlp_architect.models.cross_doc_coref.system.cdc_utils import load_mentions_vocab_from_files
 from nlp_architect.utils import io
 from nlp_architect.utils.io import json_dumper
 
@@ -43,7 +43,7 @@ def wiki_dump_from_gs():
     logger.info('Starting, process will connect with ElasticSearch and online wikipedia site...')
     mentions_files = [args.mentions]
     dump_file = args.output
-    vocab = load_mentions_vocab(mentions_files)
+    vocab = load_mentions_vocab_from_files(mentions_files)
 
     if args.host and args.port and args.index:
         wiki_elastic = WikipediaRelationExtraction(WikipediaSearchMethod.ELASTIC,

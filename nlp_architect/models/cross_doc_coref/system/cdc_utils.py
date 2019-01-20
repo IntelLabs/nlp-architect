@@ -76,12 +76,16 @@ def extract_vocab(mentions: List[MentionData], filter_stop_words: bool) -> List[
     return vocab_set
 
 
-def load_mentions_vocab(mentions_files, filter_stop_words=False):
+def load_mentions_vocab_from_files(mentions_files, filter_stop_words=False):
     logger.info('Loading mentions files...')
     mentions = []
     for _file in mentions_files:
         mentions.extend(MentionData.read_mentions_json_to_mentions_data_list(_file))
 
+    return load_mentions_vocab(mentions, filter_stop_words)
+
+
+def load_mentions_vocab(mentions, filter_stop_words=False):
     vocab = extract_vocab(mentions, filter_stop_words)
     logger.info('Done loading mentions files...')
     return vocab

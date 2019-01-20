@@ -47,12 +47,16 @@ class WordEmbeddingRelationExtraction(RelationExtraction):
         """
         if method == EmbeddingMethod.GLOVE:
             self.embedding = GloveEmbedding(glove_file)
+            self.contextual = False
         elif method == EmbeddingMethod.GLOVE_OFFLINE:
             self.embedding = GloveEmbeddingOffline(glove_file)
+            self.contextual = False
         elif method == EmbeddingMethod.ELMO:
             self.embedding = ElmoEmbedding()
+            self.contextual = True
         elif method == EmbeddingMethod.ELMO_OFFLINE:
             self.embedding = ElmoEmbeddingOffline(elmo_file)
+            self.contextual = True
 
         super(WordEmbeddingRelationExtraction, self).__init__()
 
@@ -82,9 +86,13 @@ class WordEmbeddingRelationExtraction(RelationExtraction):
 
         mention_x_str = mention_x.tokens_str
         mention_y_str = mention_y.tokens_str
-        if StringUtils.is_pronoun(mention_x_str.lower()) or StringUtils.is_pronoun(
-                mention_y_str.lower()):
-            return RelationType.NO_RELATION_FOUND
+        if StringUtils.is_pronoun(mention_x_str.lower()) or \
+                StringUtils.is_pronoun(mention_y_str.lower()):
+            if not self.contextual:
+                return RelationType.NO_RELATION_FOUND
+
+            if mention_x.mention_context is None or mention_y.mention_context is None:
+                return RelationType.NO_RELATION_FOUND
 
         if self.is_word_embed_match(mention_x, mention_y):
             return RelationType.WORD_EMBEDDING_MATCH
@@ -103,8 +111,8 @@ class WordEmbeddingRelationExtraction(RelationExtraction):
             bool
         """
         match_result = False
-        x_embed = self.embedding.get_feature_vector(mention_x)
-        y_embed = self.embedding.get_feature_vector(mention_y)
+        x_embed = self.embedding.get_head_feature_vector(mention_x)
+        y_embed = self.embedding.get_head_feature_vector(mention_y)
         # make sure words are not 'unk/None/0'
         if x_embed is not None and y_embed is not None:
             dist = cos(x_embed, y_embed)

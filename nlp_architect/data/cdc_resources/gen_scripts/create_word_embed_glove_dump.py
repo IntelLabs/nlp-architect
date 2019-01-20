@@ -19,7 +19,7 @@ import pickle
 
 import numpy as np
 
-from nlp_architect.models.cross_doc_coref.system.cdc_utils import load_mentions_vocab
+from nlp_architect.models.cross_doc_coref.system.cdc_utils import load_mentions_vocab_from_files
 from nlp_architect.utils import io
 
 logging.basicConfig(level=logging.DEBUG)
@@ -62,7 +62,7 @@ def glove_dump():
     glove_file = args.glove
     out_file = args.output
     mention_files = [args.mentions]
-    vocab = load_mentions_vocab(mention_files, filter_stop_words)
+    vocab = load_mentions_vocab_from_files(mention_files, filter_stop_words)
     word_to_ix, embeddings = load_glove_for_vocab(glove_file, vocab)
 
     logger.info('Words in vocabulary %d', len(vocab))
