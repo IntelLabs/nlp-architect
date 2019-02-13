@@ -117,10 +117,11 @@ def extract_noun_phrases(docs, nlp_parser, chunker):
 
 
 # pylint: disable-msg=too-many-nested-blocks,too-many-branches
-def mark_noun_phrases(text_file, nlp_parser, lines_count, mark_char, grouping, chunker):
+def mark_noun_phrases(corpus_file, marked_corpus_file, nlp_parser, lines_count, chunker,
+                      mark_char='_', grouping=False):
     i = 0
     with tqdm(total=lines_count) as pbar:
-        for doc in nlp_parser.pipe(text_file, n_threads=-1):
+        for doc in nlp_parser.pipe(corpus_file, n_threads=-1):
             if 'nlp_arch' in chunker:
                 spans = get_noun_phrases(doc)
             else:
@@ -215,17 +216,17 @@ if __name__ == '__main__':
 
     args = arg_parser.parse_args()
     if args.corpus.endswith('gz'):
-        corpus_file = gzip.open(args.corpus, 'rt', encoding='utf8', errors='ignore')
+        my_corpus_file = gzip.open(args.corpus, 'rt', encoding='utf8', errors='ignore')
     else:
-        corpus_file = open(args.corpus, 'r', encoding='utf8', errors='ignore')
+        my_corpus_file = open(args.corpus, 'r', encoding='utf8', errors='ignore')
 
-    with open(args.marked_corpus, 'w', encoding='utf8') as marked_corpus_file:
+    with open(args.marked_corpus, 'w', encoding='utf8') as my_marked_corpus_file:
         nlp = load_parser(args.chunker)
-        num_lines = sum(1 for line in corpus_file)
-        corpus_file.seek(0)
+        num_lines = sum(1 for line in my_corpus_file)
+        my_corpus_file.seek(0)
         logger.info('%i lines in corpus', num_lines)
-        mark_noun_phrases(corpus_file, nlp, num_lines, mark_char=args.mark_char,
-                          grouping=args.grouping, chunker=args.chunker)
+        mark_noun_phrases(my_corpus_file, my_marked_corpus_file, nlp, num_lines,
+                          mark_char=args.mark_char, grouping=args.grouping, chunker=args.chunker)
 
     # write grouping data :
     if args.grouping:
@@ -239,4 +240,4 @@ if __name__ == '__main__':
         with open(path.join(corpus_dir, 'np2id'), 'w', encoding='utf8') as np2id_file:
             np2id_file.write(json.dumps(np2id))
 
-    corpus_file.close()
+    my_corpus_file.close()
