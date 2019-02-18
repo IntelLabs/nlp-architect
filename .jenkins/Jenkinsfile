@@ -1,10 +1,9 @@
 /*
-* NervanaSystems/private-nlp-architect Jenkinsfile
+* NLP Architect Jenkinsfile
 */
 
+/* 
 // Constant Variables for Build
-static final String nodeLabel       = 'swarm'
-static final String customWorkspace = '/state/ws'
 static final Map slackColorMap      = [
     'FAILURE': 'danger',
     'UNSTABLE': 'warning',
@@ -26,93 +25,105 @@ def slackEndMessage = {
         echo "BUILD WARNING - Failed to send Slack Message: ${err}"
     }
 }
+*/
 
-// Wrap entire build with timestamps to improve Jenkins console log readability
-timestamps {
-    node(nodeLabel) {
-        // Request a custom workspace
-        //      Due to path length restrictions in virtualenv, we must request a custom
-        //      workspace here instead of using the one assigned to us with the call to
-        //      node(). When in a multibranch style job, Jenkins allocates a workspace
-        //      with a large path length (including info like SHA, branch, time). As such
-        //      virtualenv commands will fail, as virtualenv is unable to handle the long
-        //      paths. See the Jenkins Docs for guarantees provided by ws():
-        //      https://jenkins.io/doc/pipeline/steps/workflow-durable-task-step/#ws-allocate-workspace
-        ws(customWorkspace) {
-            // Send Slack start message
-            slackStartMessage()
-
-            try {
-
-                // Clear previous workspace
+pipeline {
+    agent {
+        node {
+                label 'swarm'
+                customWorkspace '/state/ws'
+            }
+    }
+    options {
+        timestamps()
+    }
+    environment { 
+        NLP_ARCHITECT_BE = 'CPU'
+    }
+    stages {
+        stage('Checkout') {
+            steps {
                 deleteDir()
-
-                stage('Checkout') {
-                    // Clone repo at triggered commit
-                    checkout scm
-                }
-
-                stage('Build') {
-                    // Build using Makefile
-                    sh 'python3 --version'
-                    sh 'python3 -V -V'
-                    sh 'python3 -m venv .nlp_architect_env'
-                    sh """
-                      . .nlp_architect_env/bin/activate
-                      pip3 install -U pip
-                      pip3 install -U h5py
-                      export NLP_ARCHITECT_BE=CPU
-                      pip3 install -e .
-                    """
-                }
-
-                // Wrap this stage in a try/catch to prevent Jenkins from fast failing
-                //      By default, if any command fails (i.e.: if an sh call returns a non-zero exit code)
-                //      however with this call wrapped in the below, we ignore the exception but we flag
-                //      the build as a failure.
-                try {
-                    stage('Test') {
-                        // Run tests using Makefile
-                        // TODO: Leverage Jenkins J/XUnit plugins to scan test results
-                        //      by exporting test results as a known J/XUnit style artifact
+                checkout scm
+            }
+        }
+        stage('Build environment') {
+            steps {
+                sh 'python3 -m venv .nlp_architect_env'
+                sh """
+                . .nlp_architect_env/bin/activate
+                pip3 install -U pip setuptools h5py
+                export NLP_ARCHITECT_BE=CPU
+                pip3 install -e .
+                """
+            }
+        }
+        stage('Validation') {
+            parallel {
+                stage('Tests') {
+                    steps {
                         sh """
-                          . .nlp_architect_env/bin/activate
-                          nlp_architect test
+                        . .nlp_architect_env/bin/activate
+                        nlp_architect test
                         """
                     }
-                } catch (err) {
-                    echo "BUILD FAILURE - Caught Exception: ${err}"
-                    // Inform Jenkins this run is now in a FAILURE state
-                    currentBuild.result = 'FAILURE'
+                    post {
+                        always {
+                            junit 'pytest_unit.xml'
+                        }
+                        failure {
+                            script {
+                                currentBuild.result = 'FAILURE'
+                            }
+                        }
+                    }
                 }
-
-                // Wrap this stage in a try/catch to prevent Jenkins from fast failing
-                //      By default, if any command fails (i.e.: if an sh call returns a non-zero exit code)
-                //      however with this call wrapped in the below, we ignore the exception but we flag
-                //      the build as a failure.
-                try {
-                    stage('Style') {
-                        // Run style checks using Makefile
-                        // TODO: Leverage Jenkins Warnings plugins to scan for style errors
-                        //      by exporting style check results as a known artifact
+                stage('flake8') {
+                    steps {
                         sh """
-                          . .nlp_architect_env/bin/activate
-                          nlp_architect style
+                        . .nlp_architect_env/bin/activate
+                        nlp_architect style --only-flake
                         """
                     }
-                } catch (err) {
-                    echo "BUILD FAILURE - Caught Exception: ${err}"
-                    // Inform Jenkins this run is now in a FAILURE state
-                    currentBuild.result = 'FAILURE'
+                    post {
+                        failure {
+                            script {
+                                currentBuild.result = 'FAILURE'
+                            }
+                        }
+                    }
                 }
-            } catch (err) {
-                    echo "BUILD FAILURE - Caught Exception: ${err}"
-                    // Inform Jenkins this run is now in a FAILURE state
-                    currentBuild.result = 'FAILURE'
+                stage('pylint') {
+                    steps {
+                        sh """
+                        . .nlp_architect_env/bin/activate
+                        nlp_architect style --only-pylint
+                        """
+                    }
+                    post {
+                        failure {
+                            script {
+                                currentBuild.result = 'FAILURE'
+                            }
+                        }
+                    }
                 }
-
-            // Send Slack end message
-            slackEndMessage()
+            }
+        }
+    }
+    post {
+        aborted {
+            script {
+                currentBuild.result = 'FAILURE'
+            }
+        }
+        failure {
+            script {
+                currentBuild.result = 'FAILURE'
+            }
+        }
+        cleanup {
+            deleteDir()
         }
     }
 }

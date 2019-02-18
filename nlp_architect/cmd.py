@@ -171,7 +171,11 @@ class TestCommand(object):
             tests = tests_dir
         if tests:
             TestCommand._prepare_tests()
-            exit_code = pytest.main([tests, '-rs', '-vv'])
+            exit_code = pytest.main([tests,
+                                     '-rs',
+                                     '-vv',
+                                     '--cov=nlp_architect',
+                                     '--junit-xml=pytest_unit.xml'])
             print('tests exit code={}'.format(exit_code))
             if int(exit_code) != 0:
                 exit(1)
