@@ -123,9 +123,7 @@ class WordnetRelationExtraction(RelationExtraction):
                 return self.extract_derivation(page_x, page_y)
             if relation == RelationType.WORDNET_PARTIAL_SYNSET_MATCH:
                 return self.extract_partial_synset_match(page_x, page_y)
-            if relation == RelationType.WORDNET_SAME_SYNSET_EVENT:
-                return self.extract_same_synset_event(page_x, page_y)
-            if relation == RelationType.WORDNET_SAME_SYNSET_ENTITY:
+            if relation == RelationType.WORDNET_SAME_SYNSET:
                 return self.extract_same_synset_entity(page_x, page_y)
 
         return RelationType.NO_RELATION_FOUND
@@ -194,25 +192,6 @@ class WordnetRelationExtraction(RelationExtraction):
         return RelationType.NO_RELATION_FOUND
 
     @staticmethod
-    def extract_same_synset_event(page_x: WordnetPage, page_y: WordnetPage) -> RelationType:
-        """
-        Check if input mentions has same synset relation for event mentions
-
-        Args:
-            page_x:WordnetPage
-            page_y:WordnetPage
-
-        Returns:
-            RelationType.WORDNET_SAME_SYNSET_EVENT or RelationType.NO_RELATION_FOUND
-        """
-        match_result = RelationType.NO_RELATION_FOUND
-        th = 1
-        if len([w for w in (page_x.head_synonyms & page_y.head_synonyms)]) > th:
-            match_result = RelationType.WORDNET_SAME_SYNSET_EVENT
-
-        return match_result
-
-    @staticmethod
     def extract_same_synset_entity(page_x: WordnetPage, page_y: WordnetPage) -> RelationType:
         """
         Check if input mentions has same synset relation for entity mentions
@@ -227,7 +206,7 @@ class WordnetRelationExtraction(RelationExtraction):
         match_result = RelationType.NO_RELATION_FOUND
         th = 0
         if len([w for w in (page_x.head_synonyms & page_y.head_synonyms)]) > th:
-            match_result = RelationType.WORDNET_SAME_SYNSET_ENTITY
+            match_result = RelationType.WORDNET_SAME_SYNSET
 
         return match_result
 
@@ -239,5 +218,5 @@ class WordnetRelationExtraction(RelationExtraction):
         Returns:
             List[RelationType]
         """
-        return [RelationType.WORDNET_SAME_SYNSET_ENTITY, RelationType.WORDNET_SAME_SYNSET_EVENT,
+        return [RelationType.WORDNET_SAME_SYNSET,
                 RelationType.WORDNET_PARTIAL_SYNSET_MATCH, RelationType.WORDNET_DERIVATIONALLY]

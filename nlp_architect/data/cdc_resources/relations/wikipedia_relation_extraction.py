@@ -28,17 +28,16 @@ from nlp_architect.data.cdc_resources.relations.relation_types_enums import Rela
 from nlp_architect.data.cdc_resources.wikipedia.wiki_elastic import WikiElastic
 from nlp_architect.data.cdc_resources.wikipedia.wiki_offline import WikiOffline
 from nlp_architect.data.cdc_resources.wikipedia.wiki_online import WikiOnline
+from nlp_architect.utils.string_utils import StringUtils
 
 logger = logging.getLogger(__name__)
-
-MALE_PRONOUN = ['he', 'him', 'his', 'himself']
-FEMALE_PRONOUN = ['she', 'her', 'hers', 'herself']
 
 
 class WikipediaRelationExtraction(RelationExtraction):
     def __init__(self, method: WikipediaSearchMethod = WikipediaSearchMethod.ONLINE,
                  wiki_file: str = None, host: str = None, port: int = None,
-                 index: str = None) -> None:
+                 index: str = None, filter_pronouns: bool = True,
+                 filter_time_data: bool = True) -> None:
         """
         Extract Relation between two mentions according to Wikipedia knowledge
 
@@ -51,7 +50,8 @@ class WikipediaRelationExtraction(RelationExtraction):
             index (required on Elastic mode): int the Elastic search index name
         """
         logger.info('Loading Wikipedia module')
-
+        self.filter_pronouns = filter_pronouns
+        self.filter_time_data = filter_time_data
         connectivity = method
         if connectivity == WikipediaSearchMethod.ONLINE:
             self.pywiki_impl = WikiOnline()
@@ -106,9 +106,15 @@ class WikipediaRelationExtraction(RelationExtraction):
         mention1_str = mention_x.tokens_str.strip()
         mention2_str = mention_y.tokens_str.strip()
 
-        if self.is_both_opposite_personal_pronouns(mention1_str, mention2_str):
-            relations.add(RelationType.NO_RELATION_FOUND)
-            return relations
+        if self.filter_pronouns:
+            if self.is_both_opposite_personal_pronouns(mention1_str, mention2_str):
+                relations.add(RelationType.NO_RELATION_FOUND)
+                return relations
+
+        if self.filter_time_data:
+            if self.is_both_data_or_time(mention_x, mention_y):
+                relations.add(RelationType.NO_RELATION_FOUND)
+                return relations
 
         pages1 = self.get_phrase_related_pages(mention1_str)
         pages2 = self.get_phrase_related_pages(mention2_str)
@@ -167,8 +173,13 @@ class WikipediaRelationExtraction(RelationExtraction):
         mention1_str = mention_x.tokens_str.strip()
         mention2_str = mention_y.tokens_str.strip()
 
-        if self.is_both_opposite_personal_pronouns(mention1_str, mention2_str):
-            return RelationType.NO_RELATION_FOUND
+        if self.filter_pronouns:
+            if self.is_both_opposite_personal_pronouns(mention1_str, mention2_str):
+                return RelationType.NO_RELATION_FOUND
+
+        if self.filter_time_data:
+            if self.is_both_data_or_time(mention_x, mention_y):
+                return RelationType.NO_RELATION_FOUND
 
         pages1 = self.get_phrase_related_pages(mention1_str)
         pages2 = self.get_phrase_related_pages(mention2_str)
@@ -368,22 +379,38 @@ class WikipediaRelationExtraction(RelationExtraction):
     @staticmethod
     def is_both_opposite_personal_pronouns(phrase1: str, phrase2: str) -> bool:
         """
-        check if on phrase refere to female while the other to a male and vise versa
+        check if both phrases refers to pronouns
 
         Returns:
             bool
         """
-        phrase1 = phrase1.lower()
-        phrase2 = phrase2.lower()
-        phrase1_female = phrase1 in FEMALE_PRONOUN
-        phrase2_male = phrase2 in MALE_PRONOUN
+        result = False
+        if StringUtils.is_pronoun(phrase1.lower()) and StringUtils.is_pronoun(phrase2.lower()):
+            result = True
 
-        phrase1_male = phrase1 in MALE_PRONOUN
-        phrase2_female = phrase2 in FEMALE_PRONOUN
+        return result
+
+    @staticmethod
+    def is_both_data_or_time(mention1: MentionDataLight, mention2: MentionDataLight) -> bool:
+        """
+        check if both phrases refers to time or date
+
+        Returns:
+            bool
+        """
+        mention1_ner = mention1.mention_ner
+        mention2_ner = mention2.mention_ner
+
+        if mention1_ner is None:
+            _, _, _, mention1_ner = StringUtils.find_head_lemma_pos_ner(mention1.tokens_str)
+        if mention2_ner is None:
+            _, _, _, mention2_ner = StringUtils.find_head_lemma_pos_ner(mention2.tokens_str)
+
+        is1_time_or_data = 'DATE' in mention1_ner or 'TIME' in mention1_ner
+        is2_time_or_data = 'DATE' in mention2_ner or 'TIME' in mention2_ner
 
         result = False
-        if phrase1_female and phrase2_male:
+        if is1_time_or_data and is2_time_or_data:
             result = True
-        elif phrase1_male and phrase2_female:
-            result = True
+
         return result

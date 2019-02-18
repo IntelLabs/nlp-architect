@@ -69,13 +69,11 @@ class EventSievesConfiguration(SievesConfiguration):
             (RelationType.WIKIPEDIA_REDIRECT_LINK, 0.1),
             (RelationType.FUZZY_HEAD_FIT, 0.5),
             (RelationType.FUZZY_FIT, 1.0),
-            (RelationType.SAME_HEAD_LEMMA_RELAX, 0.5),
             (RelationType.WITHIN_DOC_COREF, 1.0),
             (RelationType.WIKIPEDIA_TITLE_PARENTHESIS, 0.1),
             (RelationType.WIKIPEDIA_BE_COMP, 0.1),
             (RelationType.WIKIPEDIA_CATEGORY, 0.1),
             (RelationType.VERBOCEAN_MATCH, 0.1),
-            (RelationType.WORDNET_SAME_SYNSET_EVENT, 1.0),
             (RelationType.WORDNET_DERIVATIONALLY, 1.0)
         ]
 
@@ -98,8 +96,7 @@ class EntitySievesConfiguration(SievesConfiguration):
             (RelationType.WIKIPEDIA_CATEGORY, 0.1),
             (RelationType.WITHIN_DOC_COREF, 1.0),
             (RelationType.WIKIPEDIA_BE_COMP, 0.1),
-            (RelationType.SAME_HEAD_LEMMA_RELAX, 0.5),
             (RelationType.WIKIPEDIA_TITLE_PARENTHESIS, 0.1),
-            (RelationType.WORDNET_SAME_SYNSET_ENTITY, 1.0),
+            (RelationType.WORDNET_SAME_SYNSET, 1.0),
             (RelationType.REFERENT_DICT, 0.5)
         ]

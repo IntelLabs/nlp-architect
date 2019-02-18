@@ -27,7 +27,7 @@ logger = logging.getLogger(__name__)
 
 
 class RunSystemsSuper(object):
-    def __init__(self, topic):
+    def __init__(self, topic: Topic):
         self.sieves = []
         self.results_dict = dict()
         self.results_ordered = []
@@ -83,7 +83,7 @@ class RunSystemsSuper(object):
 
 
 class RunSystemsEntity(RunSystemsSuper):
-    def __init__(self, topic, resources):
+    def __init__(self, topic: Topic, resources):
         super(RunSystemsEntity, self).__init__(topic)
         self.sieves = self.set_sieves_from_config(resources.entity_config,
                                                   resources.get_module_from_relation)

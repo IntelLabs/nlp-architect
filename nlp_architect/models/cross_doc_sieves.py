@@ -21,7 +21,6 @@ from nlp_architect.common.cdc.topics import Topics
 from nlp_architect.models.cross_doc_coref.system.sieves.run_sieve_system import get_run_system
 from nlp_architect.models.cross_doc_coref.system.sieves_container_init import \
     SievesContainerInitialization
-from nlp_architect.utils import io
 
 logger = logging.getLogger(__name__)
 
@@ -64,7 +63,6 @@ def _run_coref(topics: Topics, resources: SievesContainerInitialization,
     Returns:
         Clusters: List of topics and mentions with predicted cross doc coref within each topic
     """
-    io.create_folder(resources.cdc_resources.eval_output_dir)
     clusters_list = list()
     for topic in topics.topics_list:
         sieves_list = get_run_system(topic, resources, eval_type)

@@ -1,7 +1,7 @@
 from nlp_architect.common.cdc.mention_data import MentionData
 
 
-def get_mentions():
+def get_embedd_mentions():
     mentions_json = [
         {
             "coref_chain": "HUM16236184328979740",
@@ -139,6 +139,84 @@ def get_mentions():
                 4
             ],
             "tokens_str": "Tara Reid",
+            "topic_id": "1ecb"
+        }
+    ]
+
+    mentions = list()
+    for json in mentions_json:
+        mentions.append(MentionData.read_json_mention_data_line(json))
+
+    return mentions
+
+
+def get_wiki_mentions():
+    mentions_json = [
+        {
+            "mention_id": "0",
+            "tokens_str": "Ellen DeGeneres",
+            "topic_id": "1ecb"
+        },
+        {
+            "mention_id": "1",
+            "tokens_str": "television host",
+            "topic_id": "1ecb"
+        },
+        {
+            "mention_id": "2",
+            "tokens_str": "Los Angeles",
+            "topic_id": "1ecb"
+        }
+    ]
+
+    mentions = list()
+    for json in mentions_json:
+        mentions.append(MentionData.read_json_mention_data_line(json))
+
+    return mentions
+
+
+def get_compute_mentions():
+    mentions_json = [
+        {
+            "mention_id": "0",
+            "tokens_str": "Exact String",
+            "topic_id": "1ecb"
+        },
+        {
+            "mention_id": "1",
+            "tokens_str": "Exact Same Head String",
+            "topic_id": "1ecb"
+        },
+        {
+            "mention_id": "2",
+            "tokens_str": "Nothing",
+            "topic_id": "1ecb"
+        }
+    ]
+
+    mentions = list()
+    for json in mentions_json:
+        mentions.append(MentionData.read_json_mention_data_line(json))
+
+    return mentions
+
+
+def get_wordnet_mentions():
+    mentions_json = [
+        {
+            "mention_id": "0",
+            "tokens_str": "play",
+            "topic_id": "1ecb"
+        },
+        {
+            "mention_id": "1",
+            "tokens_str": "game",
+            "topic_id": "1ecb"
+        },
+        {
+            "mention_id": "2",
+            "tokens_str": "Chair",
             "topic_id": "1ecb"
         }
     ]

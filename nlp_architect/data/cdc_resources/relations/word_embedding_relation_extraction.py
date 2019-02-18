@@ -35,7 +35,7 @@ logger = logging.getLogger(__name__)
 
 class WordEmbeddingRelationExtraction(RelationExtraction):
     def __init__(self, method: EmbeddingMethod = EmbeddingMethod.GLOVE,
-                 glove_file: str = None, elmo_file: str = None):
+                 glove_file: str = None, elmo_file: str = None, cos_accepted_dist: float = 0.7):
         """
         Extract Relation between two mentions according to Word Embedding cosine distance
 
@@ -58,6 +58,7 @@ class WordEmbeddingRelationExtraction(RelationExtraction):
             self.embedding = ElmoEmbeddingOffline(elmo_file)
             self.contextual = True
 
+        self.accepted_dist = cos_accepted_dist
         super(WordEmbeddingRelationExtraction, self).__init__()
 
     def extract_all_relations(self, mention_x: MentionDataLight,
@@ -118,7 +119,7 @@ class WordEmbeddingRelationExtraction(RelationExtraction):
             dist = cos(x_embed, y_embed)
             if not math.isnan(dist):
                 sim = 1 - dist
-                if sim > 0.65:
+                if sim >= self.accepted_dist:
                     match_result = True
 
         return match_result

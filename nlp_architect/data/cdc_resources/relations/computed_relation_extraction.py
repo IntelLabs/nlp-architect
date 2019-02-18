@@ -99,7 +99,7 @@ class ComputedRelationExtraction(RelationExtraction):
             return self.extract_fuzzy_fit(mention_x, mention_y)
         if relation == RelationType.FUZZY_HEAD_FIT:
             return self.extract_fuzzy_head_fit(mention_x, mention_y)
-        if relation in [RelationType.SAME_HEAD_LEMMA, RelationType.SAME_HEAD_LEMMA_RELAX]:
+        if relation == RelationType.SAME_HEAD_LEMMA:
             is_same_lemma = self.extract_same_head_lemma(mention_x, mention_y)
             if is_same_lemma != RelationType.NO_RELATION_FOUND:
                 return relation
@@ -119,10 +119,12 @@ class ComputedRelationExtraction(RelationExtraction):
         Returns:
             RelationType.SAME_HEAD_LEMMA or RelationType.NO_RELATION_FOUND
         """
-        if StringUtils.is_preposition(mention_x.mention_head_lemma.lower()) or \
-                StringUtils.is_preposition(mention_y.mention_head_lemma.lower()):
+        if StringUtils.is_preposition(mention_x.mention_head_lemma) or \
+                StringUtils.is_preposition(mention_y.mention_head_lemma) or \
+                StringUtils.is_determiner(mention_x.mention_head_lemma) or \
+                StringUtils.is_determiner(mention_y.mention_head_lemma):
             return RelationType.NO_RELATION_FOUND
-        if mention_x.mention_head_lemma.lower() == mention_y.mention_head_lemma.lower():
+        if mention_x.mention_head_lemma == mention_y.mention_head_lemma:
             return RelationType.SAME_HEAD_LEMMA
         return RelationType.NO_RELATION_FOUND
 
@@ -216,4 +218,4 @@ class ComputedRelationExtraction(RelationExtraction):
             List[RelationType]
         """
         return [RelationType.EXACT_STRING, RelationType.FUZZY_FIT, RelationType.FUZZY_HEAD_FIT,
-                RelationType.SAME_HEAD_LEMMA, RelationType.SAME_HEAD_LEMMA_RELAX]
+                RelationType.SAME_HEAD_LEMMA]

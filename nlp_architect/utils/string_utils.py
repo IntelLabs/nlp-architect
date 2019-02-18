@@ -26,6 +26,7 @@ CURRENT_DIR = os.path.dirname(os.path.realpath(__file__))
 STOP_WORDS_FILE = os.path.join(CURRENT_DIR, 'resources/stop_words_en.json')
 PRONOUN_FILE = os.path.join(CURRENT_DIR, 'resources/pronoun_en.json')
 PREPOSITION_FILE = os.path.join(CURRENT_DIR, 'resources/preposition_en.json')
+DETERMINERS_FILE = os.path.join(CURRENT_DIR, 'resources/determiners_en.json')
 
 DISAMBIGUATION_CATEGORY = ['disambig', 'disambiguation']
 
@@ -36,6 +37,7 @@ class StringUtils:
     stop_words = []
     pronouns = []
     preposition = []
+    determiners = []
 
     def __init__(self):
         pass
@@ -78,6 +80,17 @@ class StringUtils:
         return False
 
     @staticmethod
+    def is_determiner(in_str: str) -> bool:
+        if not StringUtils.determiners:
+            StringUtils.determiners = load_json_file(DETERMINERS_FILE)
+
+        tokens = in_str.split()
+        if len(tokens) == 1:
+            if tokens[0] in StringUtils.determiners:
+                return True
+        return False
+
+    @staticmethod
     def is_preposition(in_str: str) -> bool:
         if not StringUtils.preposition:
             StringUtils.preposition = load_json_file(PREPOSITION_FILE)
@@ -104,10 +117,10 @@ class StringUtils:
         :param x: mention
         :return: the head word and the head word lemma of the mention
         """
-        head = None
-        lemma = None
-        pos = None
-        ner = None
+        head = "UNK"
+        lemma = "UNK"
+        pos = "UNK"
+        ner = "UNK"
 
         # pylint: disable=not-callable
         doc = StringUtils.spacy_parser.parser(x)
@@ -116,6 +129,7 @@ class StringUtils:
                 head = tok.text
                 lemma = tok.lemma_
                 pos = tok.pos_
+
         for ent in doc.ents:
             if ent.root.text == head:
                 ner = ent.label_

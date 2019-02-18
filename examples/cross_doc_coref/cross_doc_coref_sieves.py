@@ -20,7 +20,13 @@ from typing import List
 from nlp_architect import LIBRARY_ROOT
 from nlp_architect.common.cdc.cluster import Clusters
 from nlp_architect.common.cdc.topics import Topics
+from nlp_architect.data.cdc_resources.relations.referent_dict_relation_extraction import \
+    ReferentDictRelationExtraction
 from nlp_architect.data.cdc_resources.relations.relation_types_enums import RelationType
+from nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction import \
+    WikipediaRelationExtraction
+from nlp_architect.data.cdc_resources.relations.word_embedding_relation_extraction import \
+    WordEmbeddingRelationExtraction
 from nlp_architect.models.cross_doc_coref.sieves_config import EventSievesConfiguration, \
     EntitySievesConfiguration
 from nlp_architect.models.cross_doc_coref.sieves_resource import SievesResources
@@ -50,13 +56,28 @@ def run_example(cdc_settings):
     return event_clusters, entity_clusters
 
 
+def load_modules(cdc_resources):
+    models = list()
+    models.append(WikipediaRelationExtraction(cdc_resources.wiki_search_method,
+                                              wiki_file=cdc_resources.wiki_folder,
+                                              host=cdc_resources.elastic_host,
+                                              port=cdc_resources.elastic_port,
+                                              index=cdc_resources.elastic_index))
+    models.append(WordEmbeddingRelationExtraction(cdc_resources.embed_search_method,
+                                                  glove_file=cdc_resources.glove_file,
+                                                  elmo_file=cdc_resources.elmo_file,
+                                                  cos_accepted_dist=0.75))
+    models.append(ReferentDictRelationExtraction(cdc_resources.referent_dict_method,
+                                                 cdc_resources.referent_dict_file))
+    return models
+
+
 def create_example_settings():
     event_config = EventSievesConfiguration()
     event_config.sieves_order = [
         (RelationType.SAME_HEAD_LEMMA, 1.0),
         (RelationType.WIKIPEDIA_DISAMBIGUATION, 0.1),
         (RelationType.WORD_EMBEDDING_MATCH, 0.7),
-        (RelationType.SAME_HEAD_LEMMA_RELAX, 0.5),
     ]
 
     entity_config = EntitySievesConfiguration()
@@ -73,7 +94,8 @@ def create_example_settings():
     # such as resources files location, output directory, resources init methods and other.
     # check in class and see if any attributes require change in your set-up
     resource_location = SievesResources()
-    return SievesContainerInitialization(resource_location, event_config, entity_config)
+    return SievesContainerInitialization(event_config, entity_config,
+                                         load_modules(resource_location))
 
 
 def print_results(clusters: List[Clusters], type: str):

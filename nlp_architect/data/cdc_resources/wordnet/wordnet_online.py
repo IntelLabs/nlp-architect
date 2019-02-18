@@ -14,6 +14,7 @@
 # limitations under the License.
 # ******************************************************************************
 
+import nltk
 from nltk.corpus import wordnet as wn
 
 from nlp_architect.data.cdc_resources.data_types.wn.wordnet_page import WordnetPage
@@ -23,6 +24,7 @@ from nlp_architect.utils.string_utils import StringUtils
 class WordnetOnline(object):
     def __init__(self):
         self.cache = dict()
+        nltk.download('wordnet')
 
     def get_pages(self, mention):
         if mention.tokens_str in self.cache:
