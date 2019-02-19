@@ -1,6 +1,6 @@
 # Noun Phrase (NP) Semantic Segmentation
 
-Noun-Phrase (NP) is a phrase which has a noun (or pronoun) as its head and zero of more dependent modifiers.
+Noun-Phrase (NP) is a phrase which has a noun (or pronoun) as its head and zero or more dependent modifiers.
 Noun-Phrase is the most frequently occurring phrase type and its inner segmentation is critical for understanding the
 semantics of the Noun-Phrase.
 
@@ -43,7 +43,7 @@ A feature vector is extracted from each Noun-Phrase string using the command `py
 
 Quick example:
 
-    python data.py --data input_data_path.csv --output output_prepared_path.csv --w2v_path <path_to_w2v>/GoogleNews-vectors-negative300.bin.gz
+    python data.py --data input_data_path.csv --output prepared_data_path.csv --w2v_path <path_to_w2v>/GoogleNews-vectors-negative300.bin
 
 ## Training
 The command `python train.py` will train the MLP classifier and evaluate it.
@@ -51,7 +51,7 @@ After training is done, the model is saved automatically:
 
 Quick example:
 
-    python train.py --data prepared_data_path.csv --model_path np_semantic_segmentation_path.prm
+    python train.py --data prepared_data_path.csv --model_path np_semantic_segmentation_path.h5
 
 ## Inference
 In order to run inference you need to have pre-trained `<model_name>.h5` file and data CSV file

@@ -19,7 +19,7 @@ Noun Phrase Semantic Segmentation
 
 Overview
 ========
-Noun-Phrase (NP) is a phrase which has a noun (or pronoun) as its head and zero of more dependent modifiers.
+Noun-Phrase (NP) is a phrase which has a noun (or pronoun) as its head and zero or more dependent modifiers.
 Noun-Phrase is the most frequently occurring phrase type and its inner segmentation is critical for understanding the
 semantics of the Noun-Phrase.
 The most basic division of the semantic segmentation is to two classes:
@@ -110,7 +110,7 @@ Quick example:
 
 .. code:: python
 
-  python data.py --data input_data_path.csv --output output_prepared_path.csv --w2v_path <path_to_w2v>/GoogleNews-vectors-negative300.bin.gz
+  python data.py --data input_data_path.csv --output prepared_data_path.csv --w2v_path <path_to_w2v>/GoogleNews-vectors-negative300.bin
 
 Running Modalities
 ==================
@@ -142,7 +142,7 @@ Quick example:
 .. code:: python
 
   python examples/np_semantic_segmentation/inference.py \
-    --model np_semantic_segmentation_path.prm \
+    --model np_semantic_segmentation_path.h5 \
     --data prepared_data_path.csv \
     --output inference_data.csv \
     --print_stats
