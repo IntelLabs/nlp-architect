@@ -142,7 +142,7 @@ Quick example:
 .. code:: python
 
   python examples/np_semantic_segmentation/inference.py \
-    --model np_semantic_segmentation_path.prm \
+    --model np_semantic_segmentation_path.h5 \
     --data prepared_data_path.csv \
     --output inference_data.csv \
     --print_stats

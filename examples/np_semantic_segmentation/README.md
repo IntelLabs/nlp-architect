@@ -51,7 +51,7 @@ After training is done, the model is saved automatically:
 
 Quick example:
 
-    python train.py --data prepared_data_path.csv --model_path np_semantic_segmentation_path.prm
+    python train.py --data prepared_data_path.csv --model_path np_semantic_segmentation_path.h5
 
 ## Inference
 In order to run inference you need to have pre-trained `<model_name>.h5` file and data CSV file
