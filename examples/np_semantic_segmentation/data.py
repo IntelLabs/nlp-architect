@@ -140,7 +140,7 @@ def write_to_csv(output, np_feature_vectors, np_dic, np_list):
             writer.writerow(np_vector)
 
 
-def prepare_data(data_file, output_file, word2vec_file, http_prox=None, https_prox=None):
+def prepare_data(data_file, output_file, word2vec_file, http_proxy=None, https_proxy=None):
     """
     Extract for each noun-phrase a feature vector (W2V, WordNet, Wikidata, NPMI, UCI).
     Write the feature vectors to --output specifies local path
@@ -149,13 +149,13 @@ def prepare_data(data_file, output_file, word2vec_file, http_prox=None, https_pr
         data_file(str): file_path to input data
         output_file(str): file_path to output processed data
         word2vec_file(str): file_path to word2vec model
-        http_prox(str): http_proxy
-        https_prox(str): https_proxy
+        http_proxy(str): http_proxy
+        https_proxy(str): https_proxy
     """
     # init_resources:
     global wordnet, wikidata, word2vec
     wordnet = fe.Wordnet()
-    wikidata = fe.Wikidata(http_prox, https_prox)
+    wikidata = fe.Wikidata(http_proxy, https_proxy)
     print("Start loading Word2Vec model (this might take a while...)")
     word2vec = fe.Word2Vec(word2vec_file)
     print("Finish loading feature extraction services")

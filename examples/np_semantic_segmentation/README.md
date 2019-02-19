@@ -1,6 +1,6 @@
 # Noun Phrase (NP) Semantic Segmentation
 
-Noun-Phrase (NP) is a phrase which has a noun (or pronoun) as its head and zero of more dependent modifiers.
+Noun-Phrase (NP) is a phrase which has a noun (or pronoun) as its head and zero or more dependent modifiers.
 Noun-Phrase is the most frequently occurring phrase type and its inner segmentation is critical for understanding the
 semantics of the Noun-Phrase.
 

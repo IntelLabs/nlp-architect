@@ -71,8 +71,7 @@ class NpSemanticSegClassifier:
         num_epochs(int): number of epochs to train the model
         **callback_args (dict): callback args keyword arguments to init a Callback for the model
         loss: the model's cost function. Default is 'tf.keras.losses.binary_crossentropy' loss
-        optimizer (:obj:`tf.keras.optimizers`): the model's optimizer. Default is
-        'tf.keras.optimizers.SGD(0.07, momentum=0.9)'
+        optimizer (:obj:`tf.keras.optimizers`): the model's optimizer. Default is 'adam'
     """
 
     def __init__(self, num_epochs, callback_args, loss='binary_crossentropy', optimizer='adam',
@@ -162,7 +161,7 @@ class NpSemanticSegClassifier:
             test_set (:obj:`numpy.ndarray`): The test set
 
         Returns:
-            tuple(float): loss, binary_accuracy, precision, recall and f1 messures
+            tuple(float): loss, binary_accuracy, precision, recall and f1 measures
         """
         return self.model.evaluate(test_set['X'], test_set['y'], batch_size=128, verbose=2)
 

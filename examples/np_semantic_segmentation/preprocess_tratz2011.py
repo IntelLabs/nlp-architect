@@ -82,7 +82,7 @@ def read_from_tratz_2011(file_full_path, labeled_dict):
 
     Args:
         file_full_path (str): file path
-        labeled_dict (dict): dictionary with prepered labels
+        labeled_dict (dict): dictionary with prepared labels
     """
     # 1. read the data
     with open(file_full_path, 'r', encoding='utf-8-sig') as input_file:
@@ -105,7 +105,7 @@ def write_csv(data, output):
     Args:
         output (str): output file path
         data (list(str)):
-            the csv formated data
+            the csv formatted data
     """
     output_path = output[:-3] + 'csv'
     with open(output_path, 'w', encoding='utf-8') as out_file:
