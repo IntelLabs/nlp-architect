@@ -110,7 +110,7 @@ Quick example:
 
 .. code:: python
 
-  python data.py --data input_data_path.csv --output prepared_data_path.csv --w2v_path path_to_GoogleNews-vectors-negative300.bin
+  python data.py --data input_data_path.csv --output prepared_data_path.csv --w2v_path <path_to_w2v>/GoogleNews-vectors-negative300.bin
 
 Running Modalities
 ==================

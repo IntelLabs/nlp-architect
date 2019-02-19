@@ -43,7 +43,7 @@ A feature vector is extracted from each Noun-Phrase string using the command `py
 
 Quick example:
 
-    python data.py --data input_data_path.csv --output prepared_data_path.csv --w2v_path path_to_GoogleNews-vectors-negative300.bin
+    python data.py --data input_data_path.csv --output prepared_data_path.csv --w2v_path <path_to_w2v>/GoogleNews-vectors-negative300.bin
 
 ## Training
 The command `python train.py` will train the MLP classifier and evaluate it.

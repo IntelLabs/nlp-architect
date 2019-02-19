@@ -16,7 +16,7 @@
 
 import argparse
 
-from .data import NpSemanticSegData, absolute_path
+from data import NpSemanticSegData, absolute_path
 
 from nlp_architect.models.np_semantic_segmentation import NpSemanticSegClassifier
 from nlp_architect.utils.io import validate_existing_filepath, validate_parent_exists, validate
