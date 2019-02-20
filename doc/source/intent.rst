@@ -111,12 +111,11 @@ Interactive mode
 ----------------
 
 Interactive mode allows to run sentences on a trained model (either of two) and get the results of the models displayed interactively.
-The interactive session requires the dataset that the model was trained with for parsing new sentences.
 Example:
 
 .. code:: python
 
-  python examples/intent_extraction/interactive.py --model_path my_model.h5 --dataset_path <path_to_data>
+  python examples/intent_extraction/interactive.py --model_path model.h5 --model_info_path model_info.dat
 
 Results
 =======
