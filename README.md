@@ -161,9 +161,11 @@ If you use NLP Architect in your research, please use the following citation:
 ## Disclaimer
 The NLP Architect is released as reference code for research purposes. It is
 not an official Intel product, and the level of quality and support may not be
-as expected from an official product. Additional algorithms and environments are
-planned to be added to the framework. Feedback and contributions from the open
-source and NLP research communities are more than welcome.
+as expected from an official product. NLP Architect is intended to be used 
+locally and has not been designed, developed or evaluated for production usage 
+or web-deployment. Additional algorithms and environments are planned to be 
+added to the framework. Feedback and contributions from the open source and
+NLP research communities are more than welcome.
 
 ## Contact
 Contact the NLP Architect development team through Github issues or
