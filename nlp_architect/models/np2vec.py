@@ -211,7 +211,7 @@ class NP2vec:
                 hs=self.hs,
                 negative=self.negative,
                 cbow_mean=self.cbow_mean,
-                iter=iter,
+                iter=self.iter,
                 min_n=self.min_n,
                 max_n=self.max_n,
                 word_ngrams=self.word_ngrams)
