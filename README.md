@@ -1,109 +1,164 @@
-<p align="center"><img src="https://raw.githubusercontent.com/NervanaSystems/nlp-architect/master/doc/source/assets/nlp_architect_header.png" width="400"/></p>
+<h2 align="center">
+    <br>
+    <a href="https://github.com/NervanaSystems/nlp-architect/">
+        <img src="https://raw.githubusercontent.com/NervanaSystems/nlp-architect/master/assets/nlp_architect_header.png" width="400"/>
+    </a>
+    <br>
+</h2>
+<h2 align="center">
+A Deep Learning NLP/NLU library by <a href="https://www.intel.ai/research/">Intel® AI Lab</a>
+</h2>
 <p align="center">
-<a href="https://github.com/NervanaSystems/nlp-architect/blob/master/LICENSE"><img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg"/></a> <a href="http://nlp_architect.nervanasys.com"><img src="https://img.shields.io/readthedocs/pip/stable.svg"/></a> <a href="https://doi.org/10.5281/zenodo.1477518"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.1477518.svg" alt="DOI"></a> 
-  <a href="https://pepy.tech/project/nlp-architect"><img src="https://pepy.tech/badge/nlp-architect"/></a> <a href="https://github.com/NervanaSystems/nlp-architect/blob/master/LICENSE"><img src="https://img.shields.io/badge/release-v0.3.1-blue.svg"/></a>
+    <a href="https://github.com/NervanaSystems/nlp-architect/blob/master/LICENSE">
+        <img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg"/>
+    </a>
+    <a href="http://nlp_architect.nervanasys.com">
+        <img src="https://img.shields.io/readthedocs/pip/stable.svg"/>
+    </a>
+    <a href="https://doi.org/10.5281/zenodo.1477518">
+        <img src="https://zenodo.org/badge/DOI/10.5281/zenodo.1477518.svg" alt="DOI">
+    </a>
+    <a href="https://pepy.tech/project/nlp-architect">
+        <img src="https://pepy.tech/badge/nlp-architect"/>
+    </a>
+    <a href="https://github.com/NervanaSystems/nlp-architect/blob/master/LICENSE">
+        <img src="https://img.shields.io/badge/release-v0.3.1-blue.svg"/>
+    </a>
 </p>
 
-# NLP Architect by Intel® AI LAB
+<h4 align="center">
+  <a href="#overview">Overview</a> |
+  <a href="#models">Models</a> |
+  <a href="#installing-nlp-architect">Installation</a> |
+  <a href="https://github.com/NervanaSystems/nlp-architect/tree/master/examples">Examples</a> <a href="http://nlp_architect.nervanasys.com/">(docs)</a> |
+  <a href="http://nlp_architect.nervanasys.com">Documentation</a> |
+  <a href="https://github.com/NervanaSystems/nlp-architect/tree/master/tutorials">Tutorials</a> |
+  <a href="http://nlp_architect.nervanasys.com/service.html">REST service</a>
+</h4>
 
-NLP Architect is an open-source Python library for exploring state-of-the-art
-deep learning topologies and techniques for natural language processing and
-natural language understanding. It is intended to be a platform for future
-research and collaboration.
+NLP Architect is an open source Python library for exploring state-of-the-art
+deep learning topologies and techniques for Natural Language Processing and
+Natural Language Understanding. NLP Architect's main purpose is to provide easy usage of NLP and NLU models while providing state-of-art and robust implementation.
 
 ## Overview
 
-The current version of NLP Architect includes these features that we found
-interesting from both research perspectives and practical applications:
+NLP Architect is an NLP library designed to be flexible, easy to extend, allow for easy and rapid integration of NLP models in applications and to showcase optimized models.
 
-* NLP core models and NLU modules that provide best in class performance: Intent
-  Extraction (IE), Name Entity Recognition (NER), Word Chunker, Dependency parser (BIST)
-* Modules that address semantic understanding: co-locations, most
-  common word sense, noun phrase embedding representation (NP2Vec), relation identification and cross document coreference.
-* Components instrumental for conversational AI: ChatBot
-  applications (Memory Networks for Dialog, Key-Value Memory Networks), Intent Extraction.
-* End-to-end DL applications using and new topologies: Q&A, Machine
-  Reading Comprehension, Language modeling using Temporal Convolution
-  Networks (TCN), Unsupervised Cross-lingual embeddings, Sparse and quantized GNMT.
-* Solutions using one or more models: Set Term expansion which
-  uses the included word chunker as a noun phrase extractor and NP2Vec, Topics and trend analysis for analyzing temporal corpora.
+Features:
 
-<center> <img src="https://raw.githubusercontent.com/NervanaSystems/nlp-architect/master/doc/source/assets/nlp_architect_diag.png"></center>
+* Core NLP models used in many NLP tasks and useful in many NLP applications
+* Novel NLU models showcasing novel topologies and techniques
+* Simple REST API server ([doc](http://nlp_architect.nervanasys.com/service.html)):
+  * serving trained models (for inference)
+  * plug-in system for adding your own model
+* 4 Demos of models (pre-trained by us) showcasing NLP Architect (Dependency parser, NER, Intent Extraction, Q&A)
+* Based on optimized Deep Learning frameworks:
+  * [TensorFlow]
+  * [Intel-Optimized TensorFlow with MKL-DNN]
+  * [Dynet]
+* Documentation [website](http://nlp_architect.nervanasys.com/) and [tutorials](http://nlp_architect.nervanasys.com/tutorials.html)
+* Essential utilities for working with NLP models - Text/String pre-processing, IO, data-manipulation, metrics, embeddings.
 
-The library consists of core modules (topologies), data pipelines, utilities
-and end-to-end model examples with training and inference scripts. We look at
-these as a set of building blocks that were needed for implementing NLP use
-cases based on our pragmatic research experience. Each of the models includes
-algorithm descriptions and results in the [documentation].
+## Installing NLP Architect
 
-Some of the components, with provided pre-trained models, are exposed as REST
-service APIs through NLP Architect server. NLP Architect server is designed to
-provide predictions across different models in NLP Architect. It also includes
-a web front-end exposing the model annotations for visualizations. The server
-supports extensions via a template for developers to add a new service. For
-detailed documentation see this
-[page](http://nlp_architect.nervanasys.com/service.html).
+We recommend to install NLP Architect in a new python environment, to use python 3.5+ with up-to-date `pip`, `setuptools` and `h5py`.
 
-NLP Architect server in action
-<center> <img src="https://raw.githubusercontent.com/NervanaSystems/nlp-architect/master/doc/source/assets/service_cards.png"></center>
+### Install from source (Github)
 
-NLP Architect utilizes the following open source deep learning frameworks:
+Includes core library and all content (example scripts, datasets, tutorials)
 
-* [TensorFlow]
-* [Intel-Optimized TensorFlow with MKL-DNN]
-* [Dynet]
+Clone repository
+
+```sh
+git clone https://github.com/NervanaSystems/nlp-architect.git
+cd nlp-architect
+```
+
+Install (in develop mode)
+
+```sh
+pip install -e .
+```
+
+### Install from pypi (using `pip install`)
+
+Includes only core library
+
+```sh
+pip install nlp-architect
+```
+
+### Further installation options
+
+Refer to our full [installation instructions](http://nlp_architect.nervanasys.com/installation.html) page on our website for complete details on how to install NLP Architect and other backend installations such as MKL-DNN or GPU backends.
+
+## Models
+
+NLP models that provide best (or near) in class performance:
+
+* [Word chunking](http://nlp_architect.nervanasys.com/chunker.html)
+* [Named Entity Recognition](http://nlp_architect.nervanasys.com/ner_crf.html)
+* [Dependency parsing](http://nlp_architect.nervanasys.com/bist_parser.html)
+* [Intent Extraction](http://nlp_architect.nervanasys.com/intent.html)
+* [Sentiment classification](http://nlp_architect.nervanasys.com/supervised_sentiment.html)
+* [Language models](http://nlp_architect.nervanasys.com/tcn.html)
+
+Natural Language Understanding (NLU) models that address semantic understanding:
+
+* [Noun phrase embedding representation (NP2Vec)](http://nlp_architect.nervanasys.com/np2vec.html)
+* [Most common word sense detection](http://nlp_architect.nervanasys.com/word_sense.html)
+* [Relation identification](http://nlp_architect.nervanasys.com/identifying_semantic_relation.html)
+* [Cross document coreference](http://nlp_architect.nervanasys.com/cross_doc_coref.html)
+* [Noun phrase semantic segmentation](http://nlp_architect.nervanasys.com/np_segmentation.html)
+
+Components instrumental for conversational AI:
+
+* [Joint intent detection and slot tagging](http://nlp_architect.nervanasys.com/intent.html)
+* [Memory Networks for goal oriented dialog](http://nlp_architect.nervanasys.com/memn2n.html)
+
+End-to-end Deep Learning-based NLP models:
+
+* [Reading comprehension](http://nlp_architect.nervanasys.com/reading_comprehension.html)
+* [Sparse and Quantized Neural Machine Translation (GNMT)](http://nlp_architect.nervanasys.com/sparse_gnmt.html)
+* [Language Modeling using Temporal Convolution Network (TCN)](http://nlp_architect.nervanasys.com/tcn.html)
+* [Unsupervised Cross-lingual embeddings](http://nlp_architect.nervanasys.com/crosslingual_emb.html)
+
+Solutions (End-to-end applications) using one or more models:
+
+* [Term Set expansion](http://nlp_architect.nervanasys.com/term_set_expansion.html) - uses the included word chunker as a noun phrase extractor and NP2Vec to create semantic term sets
+* [Topics and trend analysis](http://nlp_architect.nervanasys.com/trend_analysis.html) - analyzing trending phrases in temporal corpora
 
 ## Documentation
-Framework documentation on NLP models, algorithms, and modules, and instructions
-on how to contribute can be found at our main [documentation] site.
 
-## Installation
-### Prerequisites
+Full library [documentation](http://nlp_architect.nervanasys.com/) of NLP models, algorithms, solutions and instructions
+on how to run each model can be found on our [website](http://nlp_architect.nervanasys.com/).
 
-Make sure `pip` and `setuptools` and `venv` are up to date before installing.
+## NLP Architect library design philosophy
 
-    pip3 install -U pip setuptools
+NLP Architect aspires to enable quick development of state-of-art NLP/NLU algorithms and to showcase Intel AI's efforts in deep-learning software optimization (Tensorflow MKL-DNN, etc.)
+The library is designed around the life cycle of model development - pre-process, build model, train, validate, infer, save or deploy.
 
-We recommend installing NLP Architect in a virtual environment to self-contain
-the work done using the library. 
+The main design guidelines are:
 
-To create and activate a new virtual environment:
+* Deep Learning framework agnostic
+* Develop topologies utilized in NLP models
+* NLP/NLU models implementation using included topologies
+* Showcase End-to-End applications (Solutions) utilizing one or more NLP Architect model
+* Generic dataset loaders, textual data processing utilities, and miscellaneous utilities that support NLP model development (loaders, text processors, io, metrics, etc.)
+* Pythonic API for training and inference
+* REST API servers with ability to serve trained models via HTTP
+* Extensive model documentation and tutorials
 
-    python3 -m venv .nlp_architect_env
-    source .nlp_architect_env/bin/activate
+## Demo UI examples
 
-### Installing using `pip`
-
-To install NLP Architect using `pip` package manager:
-
-    pip install nlp-architect
-    
-### Installing from source
-
-To get started, clone our repository:
-
-    git clone https://github.com/NervanaSystems/nlp-architect.git
-    cd nlp-architect
-
-#### Selecting a backend
-
-NLP Architect supports CPU, GPU and Intel Optimized Tensorflow (MKL-DNN) backends.
-Users can select the desired backend using a dedicated environment variable (default: CPU). (MKL-DNN and GPU backends are supported only on Linux)
-
-    export NLP_ARCHITECT_BE=CPU/MKL/GPU
-
-#### Installation
-NLP Architect is installed using `pip` and it is recommended to install in development mode.
-
-Default:
-
-    pip3 install .
-
-Development mode:
-
-    pip3 install -e .
-
-Once installed, the `nlp_architect` command provides additional options to work with the library, issue `nlp_architect -h` to see all options.
+Dependency parser
+<p>
+  <img src="https://raw.githubusercontent.com/NervanaSystems/nlp-architect/master/assets/bist-demo-small.png" height="375"/>
+</p>
+Intent Extraction
+<p>
+  <img src="https://raw.githubusercontent.com/NervanaSystems/nlp-architect/master/assets/ie-demo-small.png" height="375"/>
+<p>
 
 ## Packages
 
@@ -118,15 +173,14 @@ Once installed, the `nlp_architect` command provides additional options to work 
 | nlp_architect.server     	| API Server and demos UI                              	|
 | nlp_architect.solutions 	| Solution applications                                	|
 | nlp_architect.utils     	| Misc. I/O, metric, pre-processing and text utilities 	|
-| examples                	| Example files for each model                         	|
-| tutorials               	| Misc. Jupyter tutorials                              	|
 
+### Note
 NLP Architect is an active space of research and development; Throughout future
 releases new models, solutions, topologies and framework additions and changes
 will be made. We aim to make sure all models run with Python 3.5+. We
 encourage researchers and developers to contribute their work into the library.
 
-## Citation
+## Citing
 
 If you use NLP Architect in your research, please use the following citation:
 ```
@@ -161,11 +215,11 @@ If you use NLP Architect in your research, please use the following citation:
 ## Disclaimer
 The NLP Architect is released as reference code for research purposes. It is
 not an official Intel product, and the level of quality and support may not be
-as expected from an official product. NLP Architect is intended to be used 
-locally and has not been designed, developed or evaluated for production usage 
-or web-deployment. Additional algorithms and environments are planned to be 
-added to the framework. Feedback and contributions from the open source and
-NLP research communities are more than welcome.
+as expected from an official product. NLP Architect is intended to be used
+locally and has not been designed, developed or evaluated for production
+usage or web-deployment. Additional algorithms and environments are planned
+to be added to the framework. Feedback and contributions from the open source
+and NLP research communities are more than welcome.
 
 ## Contact
 Contact the NLP Architect development team through Github issues or
