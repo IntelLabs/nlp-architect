@@ -101,6 +101,27 @@ Development mode:
 
 Once installed, the ``nlp_architect`` command provides additional options to work with the library, issue ``nlp_architect -h`` to see all options.
 
+
+Updating NLP Architect
+----------------------
+
+Depending of how you installed NLP Architect to update the library:
+
+From source
+^^^^^^^^^^^
+
+.. code:: bash
+
+    git pull origin master
+
+
+Using `pip`
+^^^^^^^^^^^
+
+.. code:: bash
+
+    pip install -U nlp-architect
+
 ======
 
 Compiling Intel® optimized Tensorflow with MKL-DNN

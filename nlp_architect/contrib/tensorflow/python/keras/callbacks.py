@@ -19,12 +19,12 @@ from __future__ import print_function
 from __future__ import unicode_literals
 from __future__ import absolute_import
 
-from tensorflow.keras.callbacks import Callback
+import tensorflow as tf
 
 from nlp_architect.utils.metrics import get_conll_scores
 
 
-class ConllCallback(Callback):
+class ConllCallback(tf.keras.callbacks.Callback):
     """
     A Tensorflow(Keras) Conlleval evaluator.
     Runs the conlleval script for given x and y inputs.

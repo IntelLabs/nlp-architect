@@ -14,7 +14,7 @@
 # limitations under the License.
 # ******************************************************************************
 
-# pylint: disable=global-statement
+# pylint: disable=global-statement,redefined-outer-name
 
 import argparse
 import csv

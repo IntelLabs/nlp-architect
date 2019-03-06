@@ -13,10 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Dropout
-from tensorflow.keras.models import model_from_json
-from tensorflow.keras import backend as K
+import tensorflow as tf
 
 
 # taken from keras previous versions: https://github.com/keras-team/keras/issues/5400
@@ -28,6 +25,7 @@ def precision_score(y_true, y_pred):
     Computes the precision, a metric for multi-label classification of
     how many selected items are relevant.
     """
+    K = tf.keras.backend
     true_positives = K.sum(K.round(K.clip(y_true * y_pred, 0, 1)))
     predicted_positives = K.sum(K.round(K.clip(y_pred, 0, 1)))
     precision = true_positives / (predicted_positives + K.epsilon())
@@ -42,6 +40,7 @@ def recall_score(y_true, y_pred):
     Computes the recall, a metric for multi-label classification of
     how many relevant items are selected.
     """
+    K = tf.keras.backend
     true_positives = K.sum(K.round(K.clip(y_true * y_pred, 0, 1)))
     possible_positives = K.sum(K.round(K.clip(y_true, 0, 1)))
     recall = true_positives / (possible_positives + K.epsilon())
@@ -58,6 +57,7 @@ def f1(y_true, y_pred):
     Returns:
 
     """
+    K = tf.keras.backend
     precision = precision_score(y_true, y_pred)
     recall = recall_score(y_true, y_pred)
     return 2 * ((precision * recall) / (precision + recall + K.epsilon()))
@@ -75,7 +75,7 @@ class NpSemanticSegClassifier:
     """
 
     def __init__(self, num_epochs, callback_args, loss='binary_crossentropy', optimizer='adam',
-                 batch_size=128,):
+                 batch_size=128, ):
         """
         Args:
             num_epochs(int): number of epochs to train the model
@@ -100,12 +100,12 @@ class NpSemanticSegClassifier:
         first_layer_dens = 64
         second_layer_dens = 64
         output_layer_dens = 1
-        model = Sequential()
-        model.add(Dense(first_layer_dens, activation='relu', input_dim=input_dim))
-        model.add(Dropout(0.5))
-        model.add(Dense(second_layer_dens, activation='relu'))
-        model.add(Dropout(0.5))
-        model.add(Dense(output_layer_dens, activation='sigmoid'))
+        model = tf.keras.models.Sequential()
+        model.add(tf.keras.layers.Dense(first_layer_dens, activation='relu', input_dim=input_dim))
+        model.add(tf.keras.layers.Dropout(0.5))
+        model.add(tf.keras.layers.Dense(second_layer_dens, activation='relu'))
+        model.add(tf.keras.layers.Dropout(0.5))
+        model.add(tf.keras.layers.Dense(output_layer_dens, activation='sigmoid'))
         metrics = ['binary_accuracy', precision_score, recall_score, f1]
         # Compile model
         model.compile(loss=self.loss, optimizer=self.optimizer, metrics=metrics)
@@ -147,7 +147,7 @@ class NpSemanticSegClassifier:
         # load json and create model
         with open(model_path[:-2] + 'json', 'r') as json_file:
             loaded_model_json = json_file.read()
-        loaded_model = model_from_json(loaded_model_json)
+        loaded_model = tf.keras.models.model_from_json(loaded_model_json)
         # load weights into new model
         loaded_model.load_weights(model_path)
         print("Loaded model from disk")

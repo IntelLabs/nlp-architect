@@ -176,9 +176,10 @@ def _moses_bleu(multi_bleu_script, tgt_test, trans_file, subword_option=None):
         debpe_tgt_test = tgt_test + ".debpe"
         if not os.path.exists(debpe_tgt_test):
             # TODO(thangluong): not use shell=True, can be a security hazard
-            subprocess.call("cp %s %s" % (tgt_test, debpe_tgt_test), shell=True)
-            subprocess.call("sed s/@@ //g %s" % (debpe_tgt_test),
-                            shell=True)
+            cp_cmd = "cp %s %s" % (tgt_test, debpe_tgt_test)
+            subprocess.call(cp_cmd.split(), shell=False)
+            sed_cmd = "sed s/@@ //g %s" % (debpe_tgt_test)
+            subprocess.call(sed_cmd.split(), shell=False)
         tgt_test = debpe_tgt_test
     elif subword_option == "spm":
         despm_tgt_test = tgt_test + ".despm"
@@ -192,7 +193,7 @@ def _moses_bleu(multi_bleu_script, tgt_test, trans_file, subword_option=None):
 
     # subprocess
     # TODO(thangluong): not use shell=True, can be a security hazard
-    bleu_output = subprocess.check_output(cmd, shell=True)
+    bleu_output = subprocess.check_output(cmd.split(), shell=False)
 
     # extract BLEU score
     m = re.search("BLEU = (.+?),", bleu_output)

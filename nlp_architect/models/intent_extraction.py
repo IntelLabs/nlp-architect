@@ -13,18 +13,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
-
 from __future__ import absolute_import, division, print_function, unicode_literals
 
 import tensorflow as tf
-# pylint: disable=no-name-in-module
-from tensorflow.python.keras.layers import CuDNNLSTM
 
 from nlp_architect.contrib.tensorflow.python.keras.layers.crf import CRF
 from nlp_architect.contrib.tensorflow.python.keras.utils.layer_utils import load_model, save_model
-from tensorflow.keras import Model
-from tensorflow.keras.layers import Bidirectional, Dense, Dropout, Embedding, Input, LSTM, \
-    TimeDistributed, concatenate
 
 
 class IntentExtractionModel(object):
@@ -100,14 +94,14 @@ class IntentExtractionModel(object):
     @staticmethod
     def _create_input_embed(sentence_len, is_extern_emb, token_emb_size, vocab_size):
         if is_extern_emb:
-            in_layer = e_layer = Input(shape=(sentence_len, token_emb_size,),
-                                       dtype='float32', name='tokens_input')
+            in_layer = e_layer = tf.keras.layers.Input(shape=(sentence_len, token_emb_size,),
+                                                       dtype='float32', name='tokens_input')
         else:
-            in_layer = Input(shape=(sentence_len,),
-                             dtype='int32', name='tokens_input')
-            e_layer = Embedding(vocab_size, token_emb_size,
-                                input_length=sentence_len,
-                                name='embedding_layer')(in_layer)
+            in_layer = tf.keras.layers.Input(shape=(sentence_len,),
+                                             dtype='int32', name='tokens_input')
+            e_layer = tf.keras.layers.Embedding(vocab_size, token_emb_size,
+                                                input_length=sentence_len,
+                                                name='embedding_layer')(in_layer)
         return in_layer, e_layer
 
     def load_embedding_weights(self, weights):
@@ -184,44 +178,47 @@ class MultiTaskIntentModel(IntentExtractionModel):
         self.tagger_lstm_dims = tagger_lstm_dims
         self.dropout = dropout
 
-        words_input = Input(shape=(None,), name='words_input')
-        embedding_layer = Embedding(self.word_vocab_size,
-                                    self.word_emb_dims, name='word_embedding')
+        words_input = tf.keras.layers.Input(shape=(None,), name='words_input')
+        embedding_layer = tf.keras.layers.Embedding(self.word_vocab_size,
+                                                    self.word_emb_dims, name='word_embedding')
         word_embeddings = embedding_layer(words_input)
-        word_embeddings = Dropout(self.dropout)(word_embeddings)
+        word_embeddings = tf.keras.layers.Dropout(self.dropout)(word_embeddings)
 
         # create word character input and embeddings layer
-        word_chars_input = Input(shape=(None, self.word_length), name='word_chars_input')
-        char_embedding_layer = Embedding(self.char_vocab_size, self.char_emb_dims,
-                                         input_length=self.word_length, name='char_embedding')
+        word_chars_input = tf.keras.layers.Input(shape=(None, self.word_length),
+                                                 name='word_chars_input')
+        char_embedding_layer = tf.keras.layers.Embedding(self.char_vocab_size, self.char_emb_dims,
+                                                         input_length=self.word_length,
+                                                         name='char_embedding')
         # apply embedding to each word
         char_embeddings = char_embedding_layer(word_chars_input)
         # feed dense char vectors into BiLSTM
-        char_embeddings = TimeDistributed(
-            Bidirectional(self._rnn_cell(self.char_lstm_dims)))(char_embeddings)
-        char_embeddings = Dropout(self.dropout)(char_embeddings)
+        char_embeddings = tf.keras.layers.TimeDistributed(
+            tf.keras.layers.Bidirectional(self._rnn_cell(self.char_lstm_dims)))(char_embeddings)
+        char_embeddings = tf.keras.layers.Dropout(self.dropout)(char_embeddings)
 
         # first BiLSTM layer (used for intent classification)
-        first_bilstm_layer = Bidirectional(
+        first_bilstm_layer = tf.keras.layers.Bidirectional(
             self._rnn_cell(self.tagger_lstm_dims, return_sequences=True, return_state=True))
         first_lstm_out = first_bilstm_layer(word_embeddings)
 
         lstm_y_sequence = first_lstm_out[:1][0]  # save y states of the LSTM layer
         states = first_lstm_out[1:]
         hf, _, hb, _ = states  # extract last hidden states
-        h_state = concatenate([hf, hb], axis=-1)
-        intents = Dense(self.num_intent_labels, activation='softmax',
-                        name='intent_classifier_output')(h_state)
+        h_state = tf.keras.layers.concatenate([hf, hb], axis=-1)
+        intents = tf.keras.layers.Dense(self.num_intent_labels, activation='softmax',
+                                        name='intent_classifier_output')(h_state)
 
         # create the 2nd feature vectors
-        combined_features = concatenate([lstm_y_sequence, char_embeddings], axis=-1)
+        combined_features = tf.keras.layers.concatenate([lstm_y_sequence, char_embeddings],
+                                                        axis=-1)
 
         # 2nd BiLSTM layer for label classification
-        second_bilstm_layer = Bidirectional(self._rnn_cell(self.tagger_lstm_dims,
-                                                           return_sequences=True))(
+        second_bilstm_layer = tf.keras.layers.Bidirectional(self._rnn_cell(self.tagger_lstm_dims,
+                                                                           return_sequences=True))(
             combined_features)
-        second_bilstm_layer = Dropout(self.dropout)(second_bilstm_layer)
-        bilstm_out = Dense(self.num_labels)(second_bilstm_layer)
+        second_bilstm_layer = tf.keras.layers.Dropout(self.dropout)(second_bilstm_layer)
+        bilstm_out = tf.keras.layers.Dense(self.num_labels)(second_bilstm_layer)
 
         # feed BiLSTM vectors into CRF
         with tf.device('/cpu:0'):
@@ -229,8 +226,8 @@ class MultiTaskIntentModel(IntentExtractionModel):
             labels = crf(bilstm_out)
 
         # compile the model
-        model = Model(inputs=[words_input, word_chars_input],
-                      outputs=[intents, labels])
+        model = tf.keras.Model(inputs=[words_input, word_chars_input],
+                               outputs=[intents, labels])
 
         # define losses and metrics
         loss_f = {'intent_classifier_output': 'categorical_crossentropy',
@@ -245,9 +242,9 @@ class MultiTaskIntentModel(IntentExtractionModel):
 
     def _rnn_cell(self, units, **kwargs):
         if self.use_cudnn:
-            rnn_cell = CuDNNLSTM(units, **kwargs)
+            rnn_cell = tf.keras.layers.CuDNNLSTM(units, **kwargs)
         else:
-            rnn_cell = LSTM(units, **kwargs)
+            rnn_cell = tf.keras.layers.LSTM(units, **kwargs)
         return rnn_cell
 
     # pylint: disable=arguments-differ
@@ -309,15 +306,17 @@ class Seq2SeqIntentModel(IntentExtractionModel):
         self.encoder_dropout = encoder_dropout
         self.decoder_dropout = decoder_dropout
 
-        words_input = Input(shape=(None,), name='words_input')
-        emb_layer = Embedding(self.vocab_size, self.token_emb_size, name='word_embedding')
+        words_input = tf.keras.layers.Input(shape=(None,), name='words_input')
+        emb_layer = tf.keras.layers.Embedding(self.vocab_size, self.token_emb_size,
+                                              name='word_embedding')
         benc_in = emb_layer(words_input)
 
         assert self.encoder_depth > 0, 'Encoder depth must be > 0'
         for i in range(self.encoder_depth):
-            bencoder = LSTM(self.lstm_hidden_size, return_sequences=True, return_state=True,
-                            go_backwards=True, dropout=self.encoder_dropout,
-                            name='encoder_blstm_{}'.format(i))(benc_in)
+            bencoder = tf.keras.layers.LSTM(self.lstm_hidden_size, return_sequences=True,
+                                            return_state=True,
+                                            go_backwards=True, dropout=self.encoder_dropout,
+                                            name='encoder_blstm_{}'.format(i))(benc_in)
             benc_in = bencoder[0]
         b_states = bencoder[1:]
         benc_h, bene_c = b_states
@@ -325,16 +324,19 @@ class Seq2SeqIntentModel(IntentExtractionModel):
         decoder_inputs = benc_in
         assert self.decoder_depth > 0, 'Decoder depth must be > 0'
         for i in range(self.decoder_depth):
-            decoder = LSTM(self.lstm_hidden_size, return_sequences=True,
-                           name='decoder_lstm_{}'.format(i))(decoder_inputs,
-                                                             initial_state=[benc_h,
-                                                                            bene_c])
+            decoder = \
+                tf.keras.layers.LSTM(
+                    self.lstm_hidden_size,
+                    return_sequences=True,
+                    name='decoder_lstm_{}'.format(i))(decoder_inputs, initial_state=[benc_h,
+                                                                                     bene_c])
             decoder_inputs = decoder
-        decoder_outputs = Dropout(self.decoder_dropout)(decoder)
-        decoder_predictions = TimeDistributed(Dense(self.tag_labels, activation='softmax'),
-                                              name='decoder_classifier')(decoder_outputs)
+        decoder_outputs = tf.keras.layers.Dropout(self.decoder_dropout)(decoder)
+        decoder_predictions = tf.keras.layers.TimeDistributed(
+            tf.keras.layers.Dense(self.tag_labels, activation='softmax'),
+            name='decoder_classifier')(decoder_outputs)
 
-        self.model = Model(words_input, decoder_predictions)
+        self.model = tf.keras.Model(words_input, decoder_predictions)
         self.model.compile(optimizer=tf.train.AdamOptimizer(),
                            loss='categorical_crossentropy',
                            metrics=['categorical_accuracy'])

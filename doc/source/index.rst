@@ -24,9 +24,9 @@
    Home <main.rst>
    installation.rst
    publications.rst
-   tutorials.rst
+   Jupyter Tutorials <tutorials.rst>
+   developer_guide.rst
    REST Server <service.rst>
-   REST Server Deployment <service_deploy.rst>
    Model Zoo <model_zoo.rst>
 
 .. toctree::
@@ -73,11 +73,10 @@
    spacy_np_annotator.rst
 
 .. toctree::
-  :hidden:
-  :maxdepth: 1
-  :caption: For Developers
+   :hidden:
+   :maxdepth: 1
+   :caption: For Developers
 
-  developer_guide.rst
-  api.rst
+   api.rst
 
 .. _https://github.com/NervanaSystems/nlp-architect: https://github.com/NervanaSystems/nlp-architect

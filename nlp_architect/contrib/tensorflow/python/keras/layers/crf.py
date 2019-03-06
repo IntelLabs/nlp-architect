@@ -15,8 +15,6 @@
 # ******************************************************************************
 import tensorflow as tf
 from tensorflow import convert_to_tensor, keras
-from tensorflow.keras.backend import argmax
-from tensorflow.keras.metrics import categorical_accuracy
 
 
 class CRF(keras.layers.Layer):
@@ -111,7 +109,8 @@ class CRF(keras.layers.Layer):
         y_pred = convert_to_tensor(y_pred, dtype=self.dtype)
         log_likelihood, self.transitions = \
             tf.contrib.crf.crf_log_likelihood(y_pred,
-                                              tf.cast(argmax(y_true), dtype=tf.int32),
+                                              tf.cast(tf.keras.backend.argmax(y_true),
+                                                      dtype=tf.int32),
                                               self.sequence_lengths,
                                               transition_params=self.transitions)
         return tf.reduce_mean(-log_likelihood)
@@ -132,6 +131,6 @@ class CRF(keras.layers.Layer):
             viterbi_sequence, _ = tf.contrib.crf.crf_decode(y_pred, self.transitions,
                                                             sequence_lengths)
             output = keras.backend.one_hot(viterbi_sequence, self.output_dim)
-            return categorical_accuracy(y_true, output)
+            return tf.keras.metrics.categorical_accuracy(y_true, output)
         accuracy.func_name = 'viterbi_accuracy'
         return accuracy

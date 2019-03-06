@@ -189,10 +189,11 @@ class SetExpand(object):
                     term = self.__id2term(r[0])
                     if term is not None:
                         res.append((self.__id2term(r[0]), r[1]))
-            return res
+            ret_val = res
         else:
             logger.info("All the seed terms are out-of-vocabulary.")
-        return None
+            ret_val = None
+        return ret_val
 
     def get_seed_id(self, seed):
         seed_ids = list()

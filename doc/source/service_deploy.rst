@@ -14,7 +14,7 @@
 .. limitations under the License.
 .. ---------------------------------------------------------------------------
 NLP Architect Server Deployment Tutorial
-########################################
+========================================
 
 Overview
 --------
@@ -74,7 +74,6 @@ Docker Installation
    sudo usermod -aG docker $USER
    # if the following command doesn't work, re-login again
    exec su -l $USER
-
 
 
 Launch Docker Registry
@@ -223,4 +222,3 @@ To test the server
     Where nodeportvalue is from kubectl get svc
     
 Now you can browse nlp architect at the following url: http://{operating_system_ip}:8080
-    

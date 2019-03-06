@@ -17,9 +17,6 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 
 import tensorflow as tf
-from tensorflow import keras
-from tensorflow.keras.layers import Bidirectional, Conv1D, CuDNNLSTM, Dense, Dropout, Embedding, \
-    GlobalMaxPooling1D, Input, LSTM, TimeDistributed, concatenate
 
 from nlp_architect.contrib.tensorflow.python.keras.layers.crf import CRF
 from nlp_architect.contrib.tensorflow.python.keras.utils.layer_utils import load_model, save_model
@@ -84,50 +81,58 @@ class SequenceTagger(object):
         self.dropout = dropout
         self.classifier = classifier
 
-        word_emb_layer = Embedding(self.vocabulary_size, self.feature_size,
-                                   name='embedding', mask_zero=False)
-        word_input = Input(shape=(None,))
+        word_emb_layer = tf.keras.layers.Embedding(self.vocabulary_size, self.feature_size,
+                                                   name='embedding', mask_zero=False)
+        word_input = tf.keras.layers.Input(shape=(None,))
         word_embedding = word_emb_layer(word_input)
         input_src = word_input
         features = word_embedding
 
         # add char input if present
         if self.char_vocab_size is not None:
-            char_input = Input(shape=(None, self.max_word_len))
-            char_emb_layer = Embedding(self.char_vocab_size, 30, name='char_embedding',
-                                       mask_zero=False)
+            char_input = tf.keras.layers.Input(shape=(None, self.max_word_len))
+            char_emb_layer = tf.keras.layers.Embedding(self.char_vocab_size, 30,
+                                                       name='char_embedding',
+                                                       mask_zero=False)
             char_embedding = char_emb_layer(char_input)
-            char_embedding = TimeDistributed(Conv1D(30, 3, padding='same'))(char_embedding)
-            char_embedding = TimeDistributed(GlobalMaxPooling1D())(char_embedding)
+            char_embedding = tf.keras.layers.TimeDistributed(
+                tf.keras.layers.Conv1D(30, 3, padding='same'))(char_embedding)
+            char_embedding = tf.keras.layers.TimeDistributed(tf.keras.layers.GlobalMaxPooling1D())(
+                char_embedding)
 
             input_src = [input_src, char_input]
-            features = concatenate([word_embedding, char_embedding])
+            features = tf.keras.layers.concatenate([word_embedding, char_embedding])
 
-        rnn_layer_1 = Bidirectional(self._rnn_cell(return_sequences=True))(features)
-        rnn_layer_2 = Bidirectional(self._rnn_cell(return_sequences=True))(rnn_layer_1)
-        rnn_layer_3 = Bidirectional(self._rnn_cell(return_sequences=True))(rnn_layer_2)
+        rnn_layer_1 = tf.keras.layers.Bidirectional(self._rnn_cell(return_sequences=True))(
+            features)
+        rnn_layer_2 = tf.keras.layers.Bidirectional(self._rnn_cell(return_sequences=True))(
+            rnn_layer_1)
+        rnn_layer_3 = tf.keras.layers.Bidirectional(self._rnn_cell(return_sequences=True))(
+            rnn_layer_2)
 
         # outputs
-        pos_out = Dense(self.num_pos_labels, activation='softmax', name='pos_output')(rnn_layer_1)
+        pos_out = tf.keras.layers.Dense(self.num_pos_labels, activation='softmax',
+                                        name='pos_output')(rnn_layer_1)
         losses = {'pos_output': 'categorical_crossentropy'}
         metrics = {'pos_output': 'categorical_accuracy'}
 
         if 'crf' in self.classifier:
             with tf.device('/cpu:0'):
                 chunk_crf = CRF(self.num_chunk_labels, name='chunk_crf')
-                rnn_layer_3_dense = Dense(self.num_chunk_labels)(
-                    Dropout(self.dropout)(rnn_layer_3))
+                rnn_layer_3_dense = tf.keras.layers.Dense(self.num_chunk_labels)(
+                    tf.keras.layers.Dropout(self.dropout)(rnn_layer_3))
                 chunks_out = chunk_crf(rnn_layer_3_dense)
                 losses['chunk_crf'] = chunk_crf.loss
                 metrics['chunk_crf'] = chunk_crf.viterbi_accuracy
         else:
-            chunks_out = TimeDistributed(Dense(self.num_chunk_labels,
-                                               activation='softmax'),
-                                         name='chunk_out')(rnn_layer_3)
+            chunks_out = tf.keras.layers.TimeDistributed(
+                tf.keras.layers.Dense(self.num_chunk_labels,
+                                      activation='softmax'),
+                name='chunk_out')(rnn_layer_3)
             losses['chunk_out'] = 'categorical_crossentropy'
             metrics['chunk_out'] = 'categorical_accuracy'
 
-        model = keras.Model(input_src, [pos_out, chunks_out])
+        model = tf.keras.Model(input_src, [pos_out, chunks_out])
         if optimizer is None:
             self.optimizer = tf.train.AdamOptimizer()
         else:
@@ -152,9 +157,9 @@ class SequenceTagger(object):
 
     def _rnn_cell(self, **kwargs):
         if self.use_cudnn:
-            rnn_cell = CuDNNLSTM(self.feature_size, **kwargs)
+            rnn_cell = tf.keras.layers.CuDNNLSTM(self.feature_size, **kwargs)
         else:
-            rnn_cell = LSTM(self.feature_size, **kwargs)
+            rnn_cell = tf.keras.layers.LSTM(self.feature_size, **kwargs)
         return rnn_cell
 
     def fit(self, x, y, batch_size=1, epochs=1, validation_data=None, callbacks=None):
@@ -225,7 +230,7 @@ class SequenceChunker(SequenceTagger):
         Returns:
             tuple of numpy arrays of chunk labels
         """
-        model = keras.Model(self.model.input, self.model.output[-1])
+        model = tf.keras.Model(self.model.input, self.model.output[-1])
         return model.predict(x=x, batch_size=batch_size)
 
 
@@ -246,5 +251,5 @@ class SequencePOSTagger(SequenceTagger):
         Returns:
             tuple of numpy arrays of POS labels
         """
-        model = keras.Model(self.model.input, self.model.output[0])
+        model = tf.keras.Model(self.model.input, self.model.output[0])
         return model.predict(x=x, batch_size=batch_size)

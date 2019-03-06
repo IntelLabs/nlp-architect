@@ -16,6 +16,7 @@
 import argparse
 import os
 import shutil
+import subprocess
 from http.server import HTTPServer as BaseHTTPServer, SimpleHTTPRequestHandler
 from subprocess import run
 
@@ -24,6 +25,10 @@ import pytest
 from nlp_architect import LIBRARY_ROOT, LIBRARY_PATH
 from nlp_architect.utils import LIBRARY_STORAGE_PATH, ansi2html
 from nlp_architect.version import NLP_ARCHITECT_VERSION
+
+
+def run_cmd(command):
+    return run(command.split(), shell=False)
 
 
 class DocsCommand(object):
@@ -41,8 +46,8 @@ class DocsCommand(object):
     def run_docs(_):
         base_cmd = 'make -C {}'.format(DocsCommand.docs_source)
         print('Re-building documentation')
-        run(base_cmd + ' clean', shell=True)
-        run(base_cmd + ' html', shell=True)
+        run_cmd(base_cmd + ' clean')
+        run_cmd(base_cmd + ' html')
         print('Documentation built in: {}'.format(os.path.join(DocsCommand.docs_source,
                                                                'build', 'html')))
         print('To view documents point your browser to: http://localhost:8000')
@@ -116,12 +121,12 @@ class StyleCommand(object):
             pass
         cmd = 'flake8 {} --config={} --output-file {}' \
             .format(' '.join(StyleCommand.files_to_check), flake8_config, flake8_out)
-        cmd_out = run(cmd, shell=True)
+        cmd_out = run_cmd(cmd)
 
         cmd_html = 'flake8 {} --config={} --format=html --htmldir={}' \
             .format(' '.join(StyleCommand.files_to_check), flake8_config, flake8_html_out)
 
-        run(cmd_html, shell=True)
+        run_cmd(cmd_html)
         print('To view flake8 results in html, point your web browser to: \n{}\n'
               .format(flake8_html_out + '/index.html'))
 
@@ -135,9 +140,11 @@ class StyleCommand(object):
         pylint_out = os.path.join(LIBRARY_STORAGE_PATH, 'pylint.txt')
         html_out = os.path.join(LIBRARY_STORAGE_PATH, 'pylint.html')
 
-        cmd = 'pylint -j 4 {} --rcfile {} --score=n | tee {}'\
-            .format(' '.join(StyleCommand.files_to_check), pylint_config, pylint_out)
-        run(cmd, shell=True)
+        cmd = 'pylint -j 4 {} --rcfile {} --score=n'\
+            .format(' '.join(StyleCommand.files_to_check), pylint_config)
+        cmd_tee = 'tee {}'.format(pylint_out)
+        ps = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE)
+        subprocess.run(cmd_tee.split(), stdin=ps.stdout)
         ret_code = 1 if os.stat(pylint_out).st_size else 0
 
         ansi2html.run(pylint_out, html_out)
@@ -213,7 +220,7 @@ class ServerCommand(object):
         port = args.port
         serve_file = os.path.join(LIBRARY_PATH, 'server', 'serve.py')
         cmd_str = 'hug -p {} -f {}'.format(port, serve_file)
-        run(cmd_str, shell=True)
+        run_cmd(cmd_str)
 
 
 # sub commands list

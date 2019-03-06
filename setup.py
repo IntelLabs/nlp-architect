@@ -24,58 +24,62 @@ from setuptools import setup, find_packages
 
 root = os.path.abspath(os.path.dirname(__file__))
 
+
 # required packages for NLP Architect
-requirements = [
-    # DL frameworks
-    "dynet==2.0.2",
-    # NLP/DS apps
-    "spacy==2.0.18",
-    "nltk",
-    "gensim",
-    "sklearn",
-    "scipy",
-    "numpy<=1.14.5",
-    "tensorflow_hub",
-    "elasticsearch",
-    "fasttextmirror",  # temp fix
-    "msgpack==0.5.6",  # temp fix
-    # General utils
-    "newspaper3k",
-    "wordfreq",
-    "seqeval",
-    "pywikibot",
-    "num2words",
-    "hyperopt",
-    "h5py",
-    "pandas",
-    "tqdm",
-    "ftfy",
-    "bokeh",
-    "six",
-    "future",
-    "requests",
-    "termcolor",
-    "pillow",
-    "setuptools",
-    # Server
-    "hug",
-    "falcon",
-    "falcon_multipart",
-    # Docs
-    "sphinx",
-    "sphinx_rtd_theme",
-    "flake8-html"
-]
+with open('requirements.txt') as fp:
+    install_requirements = fp.readlines()
+
+# requirements = [
+#     # DL frameworks
+#     "dynet==2.0.2",
+#     # NLP/DS apps
+#     "spacy==2.0.18",
+#     "nltk",
+#     "gensim",
+#     "sklearn",
+#     "scipy",
+#     "numpy<=1.14.5",
+#     "tensorflow_hub",
+#     "elasticsearch",
+#     "fasttextmirror",  # temp fix
+#     # "msgpack==0.5.6",  # temp fix
+#     # General utils
+#     "newspaper3k",
+#     "wordfreq",
+#     "seqeval",
+#     "pywikibot",
+#     "num2words",
+#     "hyperopt",
+#     "h5py",
+#     "pandas",
+#     "tqdm",
+#     "ftfy",
+#     "bokeh",
+#     "six",
+#     "future",
+#     "requests",
+#     "termcolor",
+#     "pillow",
+#     "setuptools",
+#     # Server
+#     "hug",
+#     "falcon",
+#     "falcon_multipart",
+#     # Docs
+#     "sphinx",
+#     "sphinx_rtd_theme",
+#     "flake8-html"
+# ]
 
 # required packages for testing
-test_requirements = [
-    'pep8',
-    'flake8',
-    'pytest',
-    'pytest-cov',
-    'pytest-mock',
-    'pylint',
-]
+# test_requirements = [
+#     'pep8',
+#     'flake8',
+#     'pytest',
+#     'pytest-cov',
+#     'pytest-mock',
+#     'pylint',
+# ]
 
 # check if GPU available
 p = subprocess.Popen(['command -v nvidia-smi'], stdout=subprocess.PIPE, shell=True)
@@ -86,7 +90,7 @@ gpu_available = len(out) > 0
 py3_ver = int(platform.python_version().split('.')[1])
 
 # Tensorflow version (make sure CPU/MKL/GPU versions exist before changing)
-tf_version = '1.10.0'
+tf_version = '1.12.0'
 tf_mkl_url = 'https://storage.googleapis.com/intel-optimized-tensorflow/tensorflow-{}-cp3{}-cp3{}m-linux_x86_64.whl'
 
 # default TF is CPU
@@ -98,10 +102,13 @@ if 'linux' in sys.platform:
     if tf_be and 'mkl' == tf_be.lower():
         if py3_ver == 5 or py3_ver == 6:
             tf_mkl_url_real = tf_mkl_url.format(tf_version, py3_ver, py3_ver)
-            subprocess.run('pip3 install -U {}'.format(tf_mkl_url_real), shell=True)
+            subprocess.call([sys.executable, '-m', 'pip', 'install', tf_mkl_url_real])
     elif tf_be and 'gpu' == tf_be.lower() and gpu_available:
         chosen_tf = 'tensorflow-gpu=={}'.format(tf_version)
-requirements.append(chosen_tf)
+
+for r in install_requirements:
+    if r.startswith('tensorflow=='):
+        install_requirements[install_requirements.index(r)] = chosen_tf
 
 with open('README.md', encoding='utf8') as fp:
     long_desc = fp.read()
@@ -124,7 +131,7 @@ setup(name='nlp-architect',
       python_requires='>=3.5.*',
       packages=find_packages(exclude=['tests.*', 'tests', '*.tests', '*.tests.*',
                                       'examples.*', 'examples', '*.examples', '*.examples.*']),
-      install_requires=requirements + test_requirements,
+      install_requires=install_requirements,
       scripts=['nlp_architect/nlp_architect'],
       package_data={
           'nlp_architect.server': ['services.json'],

@@ -13,13 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
-
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Embedding, LSTM, Activation, Dropout, Flatten, \
-    Bidirectional
-from tensorflow.keras.optimizers import SGD
-# pylint: disable=no-name-in-module
-from tensorflow.python.keras.layers import Conv1D, MaxPooling1D
+import tensorflow as tf
 
 
 def simple_lstm(max_features, dense_out, input_length, embed_dim=256, lstm_out=140,
@@ -40,17 +34,17 @@ def simple_lstm(max_features, dense_out, input_length, embed_dim=256, lstm_out=1
     Returns:
         model (model): LSTM model
     """
-    model = Sequential()
-    model.add(Embedding(max_features, embed_dim, input_length=input_length))
-    model.add(Bidirectional(LSTM(lstm_out, recurrent_dropout=dropout, activation='tanh')))
-    model.add(Dense(dense_out, activation='softmax'))
+    model = tf.keras.models.Sequential()
+    model.add(tf.keras.layers.Embedding(max_features, embed_dim, input_length=input_length))
+    model.add(tf.keras.layers.Bidirectional(
+        tf.keras.layers.LSTM(lstm_out, recurrent_dropout=dropout, activation='tanh')))
+    model.add(tf.keras.layers.Dense(dense_out, activation='softmax'))
     model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 
     return model
 
 
 def one_hot_cnn(dense_out, max_len=300, frame='small'):
-
     """
     Temporal CNN Model
 
@@ -76,50 +70,50 @@ def one_hot_cnn(dense_out, max_len=300, frame='small'):
         cnn_size = 256
         fully_connected = [1024, 1024, dense_out]
 
-    model = Sequential()
+    model = tf.keras.models.Sequential()
 
-    model.add(Conv1D(cnn_size, 7, padding='same', input_shape=(68, max_len)))
-    model.add(MaxPooling1D(pool_size=3))
+    model.add(tf.keras.layers.Conv1D(cnn_size, 7, padding='same', input_shape=(68, max_len)))
+    model.add(tf.keras.layers.MaxPooling1D(pool_size=3))
 
     print(model.output_shape)
 
     # Input = 22 x 256
-    model.add(Conv1D(cnn_size, 7, padding='same'))
-    model.add(MaxPooling1D(pool_size=3))
+    model.add(tf.keras.layers.Conv1D(cnn_size, 7, padding='same'))
+    model.add(tf.keras.layers.MaxPooling1D(pool_size=3))
 
     print(model.output_shape)
     # Input = 7 x 256
-    model.add(Conv1D(cnn_size, 3, padding='same'))
+    model.add(tf.keras.layers.Conv1D(cnn_size, 3, padding='same'))
 
     # Input = 7 x 256
-    model.add(Conv1D(cnn_size, 3, padding='same'))
+    model.add(tf.keras.layers.Conv1D(cnn_size, 3, padding='same'))
 
-    model.add(Conv1D(cnn_size, 3, padding='same'))
+    model.add(tf.keras.layers.Conv1D(cnn_size, 3, padding='same'))
 
     # Input = 7 x 256
-    model.add(Conv1D(cnn_size, 3, padding='same'))
-    model.add(MaxPooling1D(pool_size=3))
+    model.add(tf.keras.layers.Conv1D(cnn_size, 3, padding='same'))
+    model.add(tf.keras.layers.MaxPooling1D(pool_size=3))
 
-    model.add(Flatten())
+    model.add(tf.keras.layers.Flatten())
 
     # Fully Connected Layers
 
     # Input is 512 Output is 1024/2048
-    model.add(Dense(fully_connected[0]))
-    model.add(Dropout(0.75))
-    model.add(Activation('relu'))
+    model.add(tf.keras.layers.Dense(fully_connected[0]))
+    model.add(tf.keras.layers.Dropout(0.75))
+    model.add(tf.keras.layers.Activation('relu'))
 
     # Input is 1024/2048 Output is 1024/2048
-    model.add(Dense(fully_connected[1]))
-    model.add(Dropout(0.75))
-    model.add(Activation('relu'))
+    model.add(tf.keras.layers.Dense(fully_connected[1]))
+    model.add(tf.keras.layers.Dropout(0.75))
+    model.add(tf.keras.layers.Activation('relu'))
 
     # Input is 1024/2048 Output is dense_out size (number of classes)
-    model.add(Dense(fully_connected[2]))
-    model.add(Activation('softmax'))
+    model.add(tf.keras.layers.Dense(fully_connected[2]))
+    model.add(tf.keras.layers.Activation('softmax'))
 
     # Stochastic gradient parameters as set by paper
-    sgd = SGD(lr=0.01, decay=1e-5, momentum=0.9, nesterov=True)
+    sgd = tf.keras.optimizers.SGD(lr=0.01, decay=1e-5, momentum=0.9, nesterov=True)
     model.compile(loss='categorical_crossentropy', optimizer=sgd, metrics=['accuracy'])
 
     return model

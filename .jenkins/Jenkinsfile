@@ -54,6 +54,8 @@ pipeline {
                 . .nlp_architect_env/bin/activate
                 pip3 install -U pip setuptools h5py
                 export NLP_ARCHITECT_BE=CPU
+                pip3 install -r requirements.txt
+                pip3 install -r dev-requirements.txt
                 pip3 install -e .
                 """
             }

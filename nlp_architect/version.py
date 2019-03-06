@@ -15,8 +15,9 @@
 # ******************************************************************************
 
 MAJOR_V = 0
-MINOR_V = 3
-PATCH_V = 1
+MINOR_V = 4
+PATCH_V = 0
+STAGE = 'pre'
 
 
 def nlp_architect_version():
@@ -24,6 +25,8 @@ def nlp_architect_version():
         v = '{}.{}.{}'.format(MAJOR_V, MINOR_V, PATCH_V)
     else:
         v = '{}.{}'.format(MAJOR_V, MINOR_V)
+    if len(STAGE) != 0:
+        v += '-{}'.format(STAGE)
     return v
 
 

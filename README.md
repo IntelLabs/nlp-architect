@@ -33,7 +33,7 @@ A Deep Learning NLP/NLU library by <a href="https://www.intel.ai/research/">Inte
   <a href="https://github.com/NervanaSystems/nlp-architect/tree/master/examples">Examples</a> <a href="http://nlp_architect.nervanasys.com/">(docs)</a> |
   <a href="http://nlp_architect.nervanasys.com">Documentation</a> |
   <a href="https://github.com/NervanaSystems/nlp-architect/tree/master/tutorials">Tutorials</a> |
-  <a href="http://nlp_architect.nervanasys.com/service.html">REST service</a>
+  <a href="http://nlp_architect.nervanasys.com/developer_guide.html">Contributing</a>
 </h4>
 
 NLP Architect is an open source Python library for exploring state-of-the-art

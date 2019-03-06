@@ -17,7 +17,6 @@
 Using as a REST service
 #######################
 
-
 Overview
 ========
 NLP Architect server is a `hug <http://www.hug.rest/>`_ REST server that is
@@ -191,3 +190,6 @@ In order to add a new service to the server you need to go over 3 steps:
 .. code:: json
 
     "<service_name>" : {"file_name": "<api_file_name>", "type": <"core"/"high_level>"}
+
+
+.. include:: service_deploy.rst

@@ -17,6 +17,18 @@
 Developer Guide
 ###############
 
+The following sections describe how to set up a development environment, how to contribute your code and what are our contribution standards.
+
+Prepare Environment
+===================
+
+Install NLP Architect from source (Github) and install supplemental development packages:
+
+.. code:: bash
+
+    pip3 install -r dev-requirements.txt
+
+
 .. include:: CONTRIBUTING.rst
 
 Coding Conventions

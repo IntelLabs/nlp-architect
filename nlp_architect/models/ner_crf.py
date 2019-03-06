@@ -17,10 +17,6 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 
 import tensorflow as tf
-from tensorflow.keras.layers import Bidirectional, Dense, Dropout, Embedding, Input, LSTM, \
-    TimeDistributed, concatenate, GlobalMaxPooling1D, Conv1D
-# pylint: disable=no-name-in-module
-from tensorflow.python.keras.layers import CuDNNLSTM
 
 from nlp_architect.contrib.tensorflow.python.keras.layers.crf import CRF
 from nlp_architect.contrib.tensorflow.python.keras.utils.layer_utils import load_model, save_model
@@ -89,32 +85,35 @@ class NERCRF(object):
         assert crf_mode in ('pad', 'reg'), 'crf_mode is invalid'
 
         # build word input
-        words_input = Input(shape=(None,), name='words_input')
-        embedding_layer = Embedding(self.word_vocab_size, self.word_embedding_dims,
-                                    name='word_embedding')
+        words_input = tf.keras.layers.Input(shape=(None,), name='words_input')
+        embedding_layer = tf.keras.layers.Embedding(self.word_vocab_size, self.word_embedding_dims,
+                                                    name='word_embedding')
         word_embeddings = embedding_layer(words_input)
 
         # create word character embeddings
-        word_chars_input = Input(shape=(None, self.word_length), name='word_chars_input')
-        char_embedding_layer = Embedding(self.char_vocab_size,
-                                         self.char_embedding_dims,
-                                         name='char_embedding')(word_chars_input)
-        char_embeddings = TimeDistributed(Conv1D(128, 3,
-                                                 padding='same',
-                                                 activation='relu'))(char_embedding_layer)
-        char_embeddings = TimeDistributed(GlobalMaxPooling1D())(char_embeddings)
+        word_chars_input = tf.keras.layers.Input(shape=(None, self.word_length),
+                                                 name='word_chars_input')
+        char_embedding_layer = tf.keras.layers.Embedding(self.char_vocab_size,
+                                                         self.char_embedding_dims,
+                                                         name='char_embedding')(word_chars_input)
+        char_embeddings = \
+            tf.keras.layers.TimeDistributed(
+                tf.keras.layers.Conv1D(128, 3, padding='same', activation='relu'))(
+                char_embedding_layer)
+        char_embeddings = tf.keras.layers.TimeDistributed(tf.keras.layers.GlobalMaxPooling1D())(
+            char_embeddings)
 
         # create the final feature vectors
-        features = concatenate([word_embeddings, char_embeddings], axis=-1)
+        features = tf.keras.layers.concatenate([word_embeddings, char_embeddings], axis=-1)
 
         # encode using a bi-LSTM
-        features = Dropout(self.dropout)(features)
-        bilstm = Bidirectional(self._rnn_cell(self.tagger_lstm_dims,
-                                              return_sequences=True))(features)
-        bilstm = Bidirectional(self._rnn_cell(self.tagger_lstm_dims,
-                                              return_sequences=True))(bilstm)
-        bilstm = Dropout(self.dropout)(bilstm)
-        bilstm = Dense(self.target_label_dims)(bilstm)
+        features = tf.keras.layers.Dropout(self.dropout)(features)
+        bilstm = tf.keras.layers.Bidirectional(self._rnn_cell(self.tagger_lstm_dims,
+                                                              return_sequences=True))(features)
+        bilstm = tf.keras.layers.Bidirectional(self._rnn_cell(self.tagger_lstm_dims,
+                                                              return_sequences=True))(bilstm)
+        bilstm = tf.keras.layers.Dropout(self.dropout)(bilstm)
+        bilstm = tf.keras.layers.Dense(self.target_label_dims)(bilstm)
 
         inputs = [words_input, word_chars_input]
 
@@ -123,7 +122,7 @@ class NERCRF(object):
         with tf.device('/cpu:0'):
             crf = CRF(self.target_label_dims, mode=self.crf_mode, name='ner_crf')
             if self.crf_mode == 'pad':
-                sequence_lengths = Input(batch_shape=(None, 1), dtype='int32')
+                sequence_lengths = tf.keras.layers.Input(batch_shape=(None, 1), dtype='int32')
                 predictions = crf([bilstm, sequence_lengths])
                 inputs.append(sequence_lengths)
             else:
@@ -139,9 +138,9 @@ class NERCRF(object):
 
     def _rnn_cell(self, units, **kwargs):
         if self.use_cudnn:
-            rnn_cell = CuDNNLSTM(units, **kwargs)
+            rnn_cell = tf.keras.layers.CuDNNLSTM(units, **kwargs)
         else:
-            rnn_cell = LSTM(units, **kwargs)
+            rnn_cell = tf.keras.layers.LSTM(units, **kwargs)
         return rnn_cell
 
     def load_embedding_weights(self, weights):
