@@ -164,15 +164,15 @@ Intent Extraction
 
 | Package                 	| Description                                          	|
 |-------------------------	|------------------------------------------------------	|
-| nlp_architect.api       	| Model server API interfaces                          	|
-| nlp_architect.common    	| Common packages                                      	|
-| nlp_architect.contrib   	| Framework extensions                                 	|
-| nlp_architect.data      	| Datasets, data loaders and data classes              	|
-| nlp_architect.models    	| NLP, NLU and End-to-End neural models                	|
-| nlp_architect.pipelines 	| End-to-end NLP apps                                  	|
-| nlp_architect.server     	| API Server and demos UI                              	|
-| nlp_architect.solutions 	| Solution applications                                	|
-| nlp_architect.utils     	| Misc. I/O, metric, pre-processing and text utilities 	|
+| `nlp_architect.api`      	| Model server API interfaces                          	|
+| `nlp_architect.common`   	| Common packages                                      	|
+| `nlp_architect.contrib`  	| Framework extensions                                 	|
+| `nlp_architect.data`     	| Datasets, data loaders and data classes              	|
+| `nlp_architect.models`   	| NLP, NLU and End-to-End neural models                	|
+| `nlp_architect.pipelines`	| End-to-end NLP apps                                  	|
+| `nlp_architect.server`   	| API Server and demos UI                              	|
+| `nlp_architect.solutions` | Solution applications                                	|
+| `nlp_architect.utils`    	| Misc. I/O, metric, pre-processing and text utilities 	|
 
 ### Note
 NLP Architect is an active space of research and development; Throughout future
