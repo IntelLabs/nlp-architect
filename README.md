@@ -10,10 +10,10 @@ A Deep Learning NLP/NLU library by <a href="https://www.intel.ai/research/">Inte
 </h2>
 <p align="center">
     <a href="https://github.com/NervanaSystems/nlp-architect/blob/master/LICENSE">
-        <img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg"/>
+        <img alt="GitHub" src="https://img.shields.io/github/license/NervanaSystems/nlp-architect.svg?color=blue&style=popout">
     </a>
     <a href="http://nlp_architect.nervanasys.com">
-        <img src="https://img.shields.io/readthedocs/pip/stable.svg"/>
+        <img alt="Website" src="https://img.shields.io/website/http/nlp_architect.nervanasys.com.svg?down_color=red&down_message=offline&style=popout&up_message=online">
     </a>
     <a href="https://doi.org/10.5281/zenodo.1477518">
         <img src="https://zenodo.org/badge/DOI/10.5281/zenodo.1477518.svg" alt="DOI">
@@ -22,7 +22,7 @@ A Deep Learning NLP/NLU library by <a href="https://www.intel.ai/research/">Inte
         <img src="https://pepy.tech/badge/nlp-architect"/>
     </a>
     <a href="https://github.com/NervanaSystems/nlp-architect/blob/master/LICENSE">
-        <img src="https://img.shields.io/badge/release-v0.3.1-blue.svg"/>
+        <img alt="GitHub release" src="https://img.shields.io/github/release/NervanaSystems/nlp-architect.svg?style=popout">
     </a>
 </p>
 
@@ -30,7 +30,7 @@ A Deep Learning NLP/NLU library by <a href="https://www.intel.ai/research/">Inte
   <a href="#overview">Overview</a> |
   <a href="#models">Models</a> |
   <a href="#installing-nlp-architect">Installation</a> |
-  <a href="https://github.com/NervanaSystems/nlp-architect/tree/master/examples">Examples</a> <a href="http://nlp_architect.nervanasys.com/">(docs)</a> |
+  <a href="https://github.com/NervanaSystems/nlp-architect/tree/master/examples">Examples</a> <a href="http://nlp_architect.nervanasys.com/"></a> |
   <a href="http://nlp_architect.nervanasys.com">Documentation</a> |
   <a href="https://github.com/NervanaSystems/nlp-architect/tree/master/tutorials">Tutorials</a> |
   <a href="http://nlp_architect.nervanasys.com/developer_guide.html">Contributing</a>
