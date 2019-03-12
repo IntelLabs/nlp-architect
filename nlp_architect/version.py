@@ -15,9 +15,9 @@
 # ******************************************************************************
 
 MAJOR_V = 0
-MINOR_V = 4
-PATCH_V = 0
-STAGE = 'pre'
+MINOR_V = 3
+PATCH_V = 1
+STAGE = ''
 
 
 def nlp_architect_version():
