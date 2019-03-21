@@ -151,7 +151,7 @@ Run inference using our pre-trained models:
 .. code-block:: bash
 
     # Download pre-trained model zip file, e.g. gnmt_sparse.zip
-    wget http://nervana-modelzoo.s3.amazonaws.com/NLP/gnmt/gnmt_sparse.zip
+    wget https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/sparse_gnmt/gnmt_sparse.zip
 
     # Unzip checkpoint + vocabulary files
     unzip gnmt_sparse.zip -d /tmp/gnmt_sparse_checkpoint
@@ -386,5 +386,5 @@ References
 .. _`Shared Task`: http://www.statmt.org/wmt16/translation-task.html
 .. _`Model Zoo`: http://nlp_architect.nervanasys.com/model_zoo.html
 .. _`TensorFlow API`: https://www.tensorflow.org/api_docs/python/tf/quantize
-.. _`Sparse`: http://nervana-modelzoo.s3.amazonaws.com/NLP/gnmt/gnmt_sparse.zip
-.. _`2x2 Block Sparse`: http://nervana-modelzoo.s3.amazonaws.com/NLP/gnmt/gnmt_blocksparse2x2.zip
+.. _`Sparse`: https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/sparse_gnmt/gnmt_sparse.zip
+.. _`2x2 Block Sparse`: https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/sparse_gnmt/gnmt_blocksparse2x2.zip

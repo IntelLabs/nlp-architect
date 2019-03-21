@@ -80,18 +80,22 @@ class MachineComprehensionApi(AbstractApi):
         if download is True:
             if self.prompt is True:
                 license_prompt('mrc_data',
-                               'http://nervana-modelzoo.s3.amazonaws.com/NLP/mrc/mrc_data.zip',
+                               'https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/mrc'
+                               '/mrc_data.zip',
                                self.data_dir)
                 license_prompt('mrc_model',
-                               'http://nervana-modelzoo.s3.amazonaws.com/NLP/mrc/mrc_model.zip',
+                               'https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/mrc'
+                               '/mrc_model.zip',
                                self.model_dir)
             data_zipfile = os.path.join(self.data_dir, 'mrc_data.zip')
             model_zipfile = os.path.join(self.model_dir, 'mrc_model.zip')
             makedirs(self.data_dir, exist_ok=True)
             makedirs(self.model_dir, exist_ok=True)
-            download_unlicensed_file('http://nervana-modelzoo.s3.amazonaws.com/NLP/mrc/',
+            download_unlicensed_file('https://s3-us-west-2.amazonaws.com/nlp-architect-data'
+                                     '/models/mrc/',
                                      'mrc_data.zip', data_zipfile)
-            download_unlicensed_file('http://nervana-modelzoo.s3.amazonaws.com/NLP/mrc/',
+            download_unlicensed_file('https://s3-us-west-2.amazonaws.com/nlp-architect-data'
+                                     '/models/mrc/',
                                      'mrc_model.zip', model_zipfile)
             data_zip_ref = zipfile.ZipFile(data_zipfile, 'r')
             data_zip_ref.extractall(self.data_dir)

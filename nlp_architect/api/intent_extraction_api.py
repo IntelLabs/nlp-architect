@@ -71,9 +71,11 @@ class IntentExtractionApi(AbstractApi):
                 agreed = IntentExtractionApi._prompt()
                 if agreed is False:
                     sys.exit(0)
-            download_unlicensed_file('http://nervana-modelzoo.s3.amazonaws.com/NLP/intent/',
+            download_unlicensed_file('https://s3-us-west-2.amazonaws.com/nlp-architect-data'
+                                     '/models/intent/',
                                      'model_info.dat', IntentExtractionApi.pretrained_model_info)
-            download_unlicensed_file('http://nervana-modelzoo.s3.amazonaws.com/NLP/intent/',
+            download_unlicensed_file('https://s3-us-west-2.amazonaws.com/nlp-architect-data'
+                                     '/models/intent/',
                                      'model.h5', IntentExtractionApi.pretrained_model)
             print('Done.')
 

@@ -69,9 +69,11 @@ class NerApi(AbstractApi):
                 agreed = NerApi._prompt()
                 if agreed is False:
                     sys.exit(0)
-            download_unlicensed_file('http://nervana-modelzoo.s3.amazonaws.com/NLP/ner/',
+            download_unlicensed_file('https://s3-us-west-2.amazonaws.com/nlp-architect-data'
+                                     '/models/ner/',
                                      'model.h5', self.pretrained_model)
-            download_unlicensed_file('http://nervana-modelzoo.s3.amazonaws.com/NLP/ner/',
+            download_unlicensed_file('https://s3-us-west-2.amazonaws.com/nlp-architect-data'
+                                     '/models/ner/',
                                      'model_info.dat', self.pretrained_model_info)
             print('Done.')
 

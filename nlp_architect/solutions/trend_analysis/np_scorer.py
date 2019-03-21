@@ -25,7 +25,7 @@ from nlp_architect.utils import LIBRARY_STORAGE_PATH
 from nlp_architect.utils.io import download_unlicensed_file
 from nlp_architect.utils.text import SpacyInstance
 
-nlp_chunker_url = 'http://nervana-modelzoo.s3.amazonaws.com/NLP/chunker/'
+nlp_chunker_url = 'https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/chunker/'
 chunker_model_dat_file = 'model_info.dat.params'
 chunker_model_file = 'model.h5'
 chunker_local_path = path.join(LIBRARY_STORAGE_PATH, 'chunker-pretrained')

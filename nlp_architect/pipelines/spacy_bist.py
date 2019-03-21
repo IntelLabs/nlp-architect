@@ -142,8 +142,9 @@ def _download_pretrained_model():
         print('Downloading pre-trained BIST model...')
         zip_path = path.join(SpacyBISTParser.dir, 'bist-pretrained.zip')
         makedirs(SpacyBISTParser.dir, exist_ok=True)
-        download_unlicensed_file('https://s3-us-west-1.amazonaws.com/nervana-modelzoo/parse/',
-                                 'bist-pretrained.zip', zip_path)
+        download_unlicensed_file(
+            'https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/dep_parse/',
+            'bist-pretrained.zip', zip_path)
         print('Unzipping...')
         uncompress_file(zip_path, outpath=SpacyBISTParser.dir)
         remove(zip_path)

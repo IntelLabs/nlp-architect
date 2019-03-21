@@ -1,3 +1,16 @@
+@media screen and (min-width: 767px) {
+
+   .wy-table-responsive table td {
+      /* !important prevents the common CSS stylesheets from overriding
+         this as on RTD they are loaded after this stylesheet */
+      white-space: normal !important;
+   }
+
+   .wy-table-responsive {
+      overflow: visible !important;
+   }
+}
+
 .wy-side-nav-search {
   background-color: #0071c5;
 }
@@ -21,9 +34,7 @@
 .rst-content div[class^='highlight'] pre {
   border: none;
   background: none;
-  margin: 0;
   font-family: "Monaco", "Consolas", "Menlo", "Andale Mono WT", "Andale Mono", "Lucida Console", "monospace";
-  font-size: 13px;
 }
 
 body, h1, h2, .rst-content .toctree-wrapper p.caption, h3, h4, h5, h6, legend {
@@ -41,13 +52,4 @@ body, h1, h2, .rst-content .toctree-wrapper p.caption, h3, h4, h5, h6, legend {
 
 .wy-table-responsive table td, .wy-table-responsive table th {
     white-space: inherit;
-}
-
-.wy-menu-vertical a {
-    padding: .1.618em 1.618em;
-}
-
-.wy-menu-vertical header, .wy-menu-vertical p.caption {
-    font-size: 95%;
-    text-decoration: underline;
 }
