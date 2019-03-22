@@ -18,6 +18,7 @@ import os
 import tensorflow as tf
 
 from nlp_architect.models.temporal_convolutional_network import TCN
+from tqdm import tqdm
 
 
 class TCNForAdding(TCN):
@@ -45,7 +46,7 @@ class TCNForAdding(TCN):
             result_dir: str, path to results directory
 
         Returns:
-            None
+            float, Training loss of last iteration
         """
         summary_writer = tf.summary.FileWriter(os.path.join(result_dir, "tfboard"),
                                                tf.get_default_graph())
@@ -55,7 +56,7 @@ class TCNForAdding(TCN):
         init = tf.group(tf.global_variables_initializer(), tf.local_variables_initializer())
         sess.run(init)
 
-        for i in range(num_iterations):
+        for i in tqdm(range(num_iterations)):
 
             x_data, y_data = next(data_loader)
 
@@ -64,7 +65,6 @@ class TCNForAdding(TCN):
             _, summary_train, total_loss_i = sess.run([self.training_update_step,
                                                        self.merged_summary_op_train,
                                                        self.training_loss], feed_dict=feed_dict)
-
             summary_writer.add_summary(summary_train, i)
 
             if i % log_interval == 0:
@@ -80,6 +80,8 @@ class TCNForAdding(TCN):
                 summary_writer.add_summary(summary_val, i)
 
                 print("Validation loss: {}".format(val_loss))
+
+        return total_loss_i
 
     # pylint: disable = arguments-differ
     def build_train_graph(self, lr, max_gradient_norm=None):
@@ -114,7 +116,8 @@ class TCNForAdding(TCN):
             params = tf.trainable_variables()
             gradients = tf.gradients(self.training_loss, params)
             if max_gradient_norm is not None:
-                clipped_gradients = [tf.clip_by_norm(t, max_gradient_norm) for t in gradients]
+                clipped_gradients = [t if t is None else tf.clip_by_norm(t, max_gradient_norm)
+                                     for t in gradients]
             else:
                 clipped_gradients = gradients
 

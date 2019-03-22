@@ -115,7 +115,7 @@ PARSER.add_argument('--levels', type=int, default=4, action=check_size(0, 10),
                     help='# of levels (default: 4)')
 PARSER.add_argument('--lr', type=float, default=4, action=check_size(0, 100),
                     help='initial learning rate (default: 4)')
-PARSER.add_argument('--nhid', type=int, default=600, action=check_size(0, 1000),
+PARSER.add_argument('--nhid', type=int, default=600, action=check_size(0, 10000),
                     help='number of hidden units per layer (default: 600)')
 PARSER.add_argument('--em_len', type=int, default=600, action=check_size(0, 10000),
                     help='Length of embedding (default: 600)')

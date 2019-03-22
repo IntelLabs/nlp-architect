@@ -105,6 +105,7 @@ def expand_np_candidates(np, stemming):
     candidates.extend(get_all_case_combinations(np))
     if stemming:
         # create all case-combinations of np's stem-> t-shirts to t-shirt etc.
+        # pylint: disable=no-member
         candidates.extend(get_all_case_combinations(fe.stem(np)))
     return candidates
 
@@ -154,9 +155,12 @@ def prepare_data(data_file, output_file, word2vec_file, http_proxy=None, https_p
     """
     # init_resources:
     global wordnet, wikidata, word2vec
+    # pylint: disable=no-member
     wordnet = fe.Wordnet()
+    # pylint: disable=no-member
     wikidata = fe.Wikidata(http_proxy, https_proxy)
     print("Start loading Word2Vec model (this might take a while...)")
+    # pylint: disable=no-member
     word2vec = fe.Word2Vec(word2vec_file)
     print("Finish loading feature extraction services")
     reader_list = read_csv_file_data(data_file)

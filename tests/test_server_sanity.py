@@ -122,6 +122,7 @@ def test_request(service_name):
     myHeaders = headers.copy()
     myHeaders["content-type"] = "application/json"
     myHeaders["Response-Format"] = "json"
+    # pylint: disable=no-member
     response = hug.test.post(api, '/inference', body=doc, headers=myHeaders)
 
     assert_response_struct(response.data, json.loads(expected_result))
@@ -139,6 +140,7 @@ def test_gzip_file_request(service_name):
     myHeaders["content-type"] = "application/gzip"
     myHeaders["Response-Format"] = "gzip"
     myHeaders["content-encoding"] = "gzip"
+    # pylint: disable=no-member
     response = hug.test.post(api, '/inference', body=doc, headers=myHeaders)
     result_doc = get_decompressed_gzip(response.data)
     assert_response_struct(result_doc, json.loads(expected_result))
@@ -155,6 +157,7 @@ def test_json_file_request(service_name):
     myHeaders = headers.copy()
     myHeaders["Content-Type"] = "application/json"
     myHeaders["RESPONSE-FORMAT"] = "json"
+    # pylint: disable=no-member
     response = hug.test.post(nlp_architect.server.serve, '/inference', body=doc, headers=myHeaders)
     assert_response_struct(response.data, json.loads(expected_result))
     assert response.status == hug.HTTP_OK
