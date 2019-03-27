@@ -61,7 +61,7 @@ Features:
 
 ## Installing NLP Architect
 
-We recommend to install NLP Architect in a new python environment, to use python 3.5+ with up-to-date `pip`, `setuptools` and `h5py`.
+We recommend to install NLP Architect in a new python environment, to use python 3.6+ with up-to-date `pip`, `setuptools` and `h5py`.
 
 ### Install from source (Github)
 
@@ -177,7 +177,7 @@ Intent Extraction
 ### Note
 NLP Architect is an active space of research and development; Throughout future
 releases new models, solutions, topologies and framework additions and changes
-will be made. We aim to make sure all models run with Python 3.5+. We
+will be made. We aim to make sure all models run with Python 3.6+. We
 encourage researchers and developers to contribute their work into the library.
 
 ## Citing

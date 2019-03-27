@@ -65,7 +65,7 @@ Because of the current research nature of the library, several open source deep 
 - Tensorflow_ or `Intel-Optimized TensorFlow`_
 - Dynet_
 
-Overtime the list of models and frameworks included in this space will change, though all generally run with Python 3.5+
+Overtime the list of models and frameworks included in this space will change, though all generally run with Python 3.6+
 
 Using the Models
 ----------------
