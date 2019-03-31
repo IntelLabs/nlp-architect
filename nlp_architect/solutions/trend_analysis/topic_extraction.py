@@ -29,13 +29,13 @@ from fastText import train_unsupervised
 from newspaper import Article
 
 from nlp_architect.solutions.trend_analysis.np_scorer import NPScorer
-from nlp_architect.utils import LIBRARY_STORAGE_PATH
+from nlp_architect import LIBRARY_OUT
 from nlp_architect.utils.io import validate_existing_directory
 from nlp_architect.utils.text import SpacyInstance
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 logger = logging.getLogger(__name__)
-data_dir = path.join(LIBRARY_STORAGE_PATH, 'trend-analysis-data')
+data_dir = str(LIBRARY_OUT / 'trend-analysis-data')
 
 
 def noun_phrase_extraction(docs, parser):

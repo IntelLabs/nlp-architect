@@ -37,8 +37,8 @@ from nlp_architect.models.cross_doc_sieves import run_event_coref, run_entity_co
 
 def run_example(cdc_settings):
     event_mentions_topics = Topics()
-    event_mentions_topics.create_from_file(LIBRARY_ROOT
-                                           + '/datasets/ecb/ecb_all_event_mentions.json')
+    event_mentions_topics.create_from_file(str(LIBRARY_ROOT / 'datasets' / 'ecb'
+                                               / 'ecb_all_event_mentions.json'))
 
     event_clusters = None
     if cdc_settings.event_config.run_evaluation:
@@ -46,8 +46,8 @@ def run_example(cdc_settings):
         event_clusters = run_event_coref(event_mentions_topics, cdc_settings)
 
     entity_mentions_topics = Topics()
-    entity_mentions_topics.create_from_file(LIBRARY_ROOT
-                                            + '/datasets/ecb/ecb_all_entity_mentions.json')
+    entity_mentions_topics.create_from_file(str(LIBRARY_ROOT / 'datasets' / 'ecb'
+                                                / 'ecb_all_entity_mentions.json'))
     entity_clusters = None
     if cdc_settings.entity_config.run_evaluation:
         logger.info('Running entity coreference resolution')

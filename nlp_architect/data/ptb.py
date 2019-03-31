@@ -164,9 +164,8 @@ class PTBDictionary:
                                      FILENAME[self.dataset] + "." + EXTENSION[self.dataset])
         if EXTENSION[self.dataset] == "tgz":
             import tarfile
-            tar = tarfile.open(full_filepath, "r:gz")
-            tar.extractall(path=work_directory)
-            tar.close()
+            with tarfile.open(full_filepath, "r:gz") as tar:
+                tar.extractall(path=work_directory)
         if EXTENSION[self.dataset] == "zip":
             import zipfile
             with zipfile.ZipFile(full_filepath, 'r') as zip_handle:

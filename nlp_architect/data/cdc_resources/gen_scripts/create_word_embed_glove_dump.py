@@ -39,21 +39,17 @@ args = parser.parse_args()
 def load_glove_for_vocab(glove_filename, vocabulary):
     vocab = []
     embd = []
-    glove_file = open(glove_filename, 'r')
-    for line in glove_file.readlines():
-        row = line.strip().split(' ')
-        word = row[0]
-        if word in vocabulary:
-            vocab.append(word)
-            embd.append(row[1:])
+    with open(glove_filename) as glove_file:
+        for line in glove_file:
+            row = line.strip().split(' ')
+            word = row[0]
+            if word in vocabulary:
+                vocab.append(word)
+                embd.append(row[1:])
     logger.info('Loaded GloVe!')
-    glove_file.close()
 
     embeddings = np.asarray(embd, dtype=float)
-    word_to_ix = {}
-    for word in vocab:
-        word_to_ix[word] = len(word_to_ix)
-
+    word_to_ix = {word: i for i, word in enumerate(vocab)}
     return word_to_ix, embeddings
 
 

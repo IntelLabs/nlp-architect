@@ -30,11 +30,11 @@ from bokeh.models.widgets import DataTable, TableColumn, RadioGroup, Dropdown, T
 from bokeh.plotting import figure
 
 from nlp_architect.solutions.trend_analysis.trend_analysis import analyze
-from nlp_architect.utils import LIBRARY_STORAGE_PATH
+from nlp_architect import LIBRARY_OUT
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 logger = logging.getLogger(__name__)
-dir = path.join(LIBRARY_STORAGE_PATH, 'trend-analysis-data')
+dir = str(LIBRARY_OUT / 'trend-analysis-data')
 graph_data_path = path.join(dir, 'graph_data.csv')
 filter_data_path = path.join(dir, 'filter_phrases.csv')
 target_scores_path = path.join(dir, 'target_scores.csv')

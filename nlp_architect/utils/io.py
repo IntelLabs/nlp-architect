@@ -57,7 +57,7 @@ def download_unlicensed_file(url, sourcefile, destfile, totalsz=None):
     print("Download Complete")
 
 
-def uncompress_file(filepath, outpath='.'):
+def uncompress_file(filepath: str or os.PathLike, outpath='.'):
     """
     Unzip a file to the same location of filepath
     uses decompressing algorithm by file extension
@@ -66,10 +66,10 @@ def uncompress_file(filepath, outpath='.'):
         filepath (str): path to file
         outpath (str): path to extract to
     """
+    filepath = str(filepath)
     if filepath.endswith('.zip'):
-        z = zipfile.ZipFile(filepath, 'r')
-        z.extractall(outpath)
-        z.close()
+        with zipfile.ZipFile(filepath) as z:
+            z.extractall(outpath)
     elif filepath.endswith('.gz'):
         if os.path.isdir(outpath):
             raise ValueError('output path for gzip must be a file')

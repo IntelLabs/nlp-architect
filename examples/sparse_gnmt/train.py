@@ -645,14 +645,13 @@ def train(hparams, scope=None, target_session=""):
 
         if avg_ckpts:
             best_model_dir = getattr(hparams, "avg_best_" + metric + "_dir")
-            summary_writer = tf.summary.FileWriter(
-                os.path.join(best_model_dir, summary_name), infer_model.graph)
-            result_summary, best_global_step, _ = run_full_eval(
-                best_model_dir, infer_model, infer_sess, eval_model, eval_sess,
-                hparams, summary_writer, sample_src_data, sample_tgt_data)
-            print_step_info("# Averaged Best %s, " % metric, best_global_step, info,
-                            result_summary, log_f)
-            summary_writer.close()
+            with tf.summary.FileWriter(os.path.join(best_model_dir, summary_name),
+                                       infer_model.graph) as summary_writer:
+                result_summary, best_global_step, _ = run_full_eval(
+                    best_model_dir, infer_model, infer_sess, eval_model, eval_sess,
+                    hparams, summary_writer, sample_src_data, sample_tgt_data)
+                print_step_info("# Averaged Best %s, " % metric, best_global_step, info,
+                                result_summary, log_f)
 
     return final_eval_metrics, global_step
 

@@ -28,7 +28,7 @@ from os import path, makedirs
 from tqdm import tqdm
 
 from nlp_architect.pipelines.spacy_np_annotator import NPAnnotator, get_noun_phrases
-from nlp_architect.utils import LIBRARY_STORAGE_PATH
+from nlp_architect import LIBRARY_OUT
 from nlp_architect.utils.io import check_size, download_unlicensed_file, validate_parent_exists
 from nlp_architect.utils.text import spacy_normalizer, SpacyInstance
 
@@ -40,7 +40,7 @@ id2group = {}
 id2rep = {}
 np2count = {}
 nlp_chunker_url = 'http://nervana-modelzoo.s3.amazonaws.com/NLP/chunker/'
-chunker_path = path.join(LIBRARY_STORAGE_PATH, 'chunker-pretrained')
+chunker_path = str(LIBRARY_OUT / 'chunker-pretrained')
 chunker_model_dat_file = 'model_info.dat.params'
 chunker_model_file = 'model.h5'
 
@@ -216,28 +216,30 @@ if __name__ == '__main__':
 
     args = arg_parser.parse_args()
     if args.corpus.endswith('gz'):
-        my_corpus_file = gzip.open(args.corpus, 'rt', encoding='utf8', errors='ignore')
+        open_func = gzip.open
+        mode = 'rt'
     else:
-        my_corpus_file = open(args.corpus, 'r', encoding='utf8', errors='ignore')
+        open_func = open
+        mode = 'r'
 
-    with open(args.marked_corpus, 'w', encoding='utf8') as my_marked_corpus_file:
-        nlp = load_parser(args.chunker)
-        num_lines = sum(1 for line in my_corpus_file)
-        my_corpus_file.seek(0)
-        logger.info('%i lines in corpus', num_lines)
-        mark_noun_phrases(my_corpus_file, my_marked_corpus_file, nlp, num_lines,
-                          mark_char=args.mark_char, grouping=args.grouping, chunker=args.chunker)
+    with open_func(args.corpus, mode, encoding='utf8', errors='ignore') as my_corpus_file:
+        with open(args.marked_corpus, 'w', encoding='utf8') as my_marked_corpus_file:
+            nlp = load_parser(args.chunker)
+            num_lines = sum(1 for line in my_corpus_file)
+            my_corpus_file.seek(0)
+            logger.info('%i lines in corpus', num_lines)
+            mark_noun_phrases(my_corpus_file, my_marked_corpus_file, nlp, num_lines,
+                              mark_char=args.mark_char, grouping=args.grouping,
+                              chunker=args.chunker)
 
-    # write grouping data :
-    if args.grouping:
-        corpus_dir = path.dirname(args.marked_corpus)
-        with open(path.join(corpus_dir, 'id2group'), 'w', encoding='utf8') as id2group_file:
-            id2group_file.write(json.dumps(id2group))
+        # write grouping data :
+        if args.grouping:
+            corpus_dir = path.dirname(args.marked_corpus)
+            with open(path.join(corpus_dir, 'id2group'), 'w', encoding='utf8') as id2group_file:
+                id2group_file.write(json.dumps(id2group))
 
-        with open(path.join(corpus_dir, 'id2rep'), 'w', encoding='utf8') as id2rep_file:
-            id2rep_file.write(json.dumps(id2rep))
+            with open(path.join(corpus_dir, 'id2rep'), 'w', encoding='utf8') as id2rep_file:
+                id2rep_file.write(json.dumps(id2rep))
 
-        with open(path.join(corpus_dir, 'np2id'), 'w', encoding='utf8') as np2id_file:
-            np2id_file.write(json.dumps(np2id))
-
-    my_corpus_file.close()
+            with open(path.join(corpus_dir, 'np2id'), 'w', encoding='utf8') as np2id_file:
+                np2id_file.write(json.dumps(np2id))

@@ -28,11 +28,11 @@ import pandas as pd
 from fastText import load_model
 from sklearn.manifold import TSNE
 
-from nlp_architect.utils import LIBRARY_STORAGE_PATH
+from nlp_architect import LIBRARY_OUT
 from nlp_architect.utils.io import check_size, validate_existing_filepath
 from nlp_architect.utils.text import simple_normalizer
 
-dir = path.join(LIBRARY_STORAGE_PATH, 'trend-analysis-data')
+dir = str(LIBRARY_OUT / 'trend-analysis-data')
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 logger = logging.getLogger(__name__)
 target_topics_path = path.join(dir, 'target_topics.csv')

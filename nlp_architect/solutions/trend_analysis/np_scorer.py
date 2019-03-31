@@ -21,14 +21,14 @@ from tqdm import tqdm
 
 from nlp_architect.pipelines.spacy_np_annotator import NPAnnotator, get_noun_phrases
 from nlp_architect.solutions.trend_analysis.scoring_utils import TextSpanScoring
-from nlp_architect.utils import LIBRARY_STORAGE_PATH
+from nlp_architect import LIBRARY_OUT
 from nlp_architect.utils.io import download_unlicensed_file
 from nlp_architect.utils.text import SpacyInstance
 
 nlp_chunker_url = 'https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/chunker/'
 chunker_model_dat_file = 'model_info.dat.params'
 chunker_model_file = 'model.h5'
-chunker_local_path = path.join(LIBRARY_STORAGE_PATH, 'chunker-pretrained')
+chunker_local_path = str(LIBRARY_OUT / 'chunker-pretrained')
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 logger = logging.getLogger(__name__)
 

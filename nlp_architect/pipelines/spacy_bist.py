@@ -18,7 +18,7 @@ from os import path, remove, makedirs
 from nlp_architect.common.core_nlp_doc import CoreNLPDoc
 from nlp_architect.data.conll import ConllEntry
 from nlp_architect.models.bist_parser import BISTModel
-from nlp_architect.utils import LIBRARY_STORAGE_PATH
+from nlp_architect import LIBRARY_OUT
 from nlp_architect.utils.io import download_unlicensed_file, uncompress_file
 from nlp_architect.utils.io import validate
 from nlp_architect.utils.text import SpacyInstance
@@ -33,8 +33,8 @@ class SpacyBISTParser(object):
         (see https://spacy.io/api/top-level#spacy.load).
         bist_model (str, optional): Path to a .model file to load. Defaults pre-trained model'.
     """
-    dir = path.join(LIBRARY_STORAGE_PATH, 'bist-pretrained')
-    _pretrained = path.join(dir, 'bist.model')
+    dir = LIBRARY_OUT / 'bist-pretrained'
+    _pretrained = dir / 'bist.model'
 
     def __init__(self, verbose=False, spacy_model='en', bist_model=None):
         validate((verbose, bool), (spacy_model, str, 0, 1000),
@@ -138,15 +138,15 @@ class SpacyBISTParser(object):
 
 def _download_pretrained_model():
     """Downloads the pre-trained BIST model if non-existent."""
-    if not path.isfile(path.join(SpacyBISTParser.dir, 'bist.model')):
+    if not path.isfile(SpacyBISTParser.dir / 'bist.model'):
         print('Downloading pre-trained BIST model...')
-        zip_path = path.join(SpacyBISTParser.dir, 'bist-pretrained.zip')
+        zip_path = SpacyBISTParser.dir / 'bist-pretrained.zip'
         makedirs(SpacyBISTParser.dir, exist_ok=True)
         download_unlicensed_file(
             'https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/dep_parse/',
             'bist-pretrained.zip', zip_path)
         print('Unzipping...')
-        uncompress_file(zip_path, outpath=SpacyBISTParser.dir)
+        uncompress_file(zip_path, outpath=str(SpacyBISTParser.dir))
         remove(zip_path)
         print('Done.')
 

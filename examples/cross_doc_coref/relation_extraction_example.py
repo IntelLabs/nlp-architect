@@ -37,9 +37,10 @@ from nlp_architect.data.cdc_resources.relations.wordnet_relation_extraction impo
 def run_example():
     logger.info('Running relation extraction example......')
     computed = ComputedRelationExtraction()
-    ref_dict = ReferentDictRelationExtraction(ref_dict=LIBRARY_ROOT + '/datasets/coref.dict1.tsv')
+    ref_dict = ReferentDictRelationExtraction(ref_dict=str(LIBRARY_ROOT / 'datasets'
+                                                           / 'coref.dict1.tsv'))
     vo = VerboceanRelationExtraction(
-        vo_file=LIBRARY_ROOT + '/datasets/verbocean.unrefined.2004-05-20.txt')
+        vo_file=str(LIBRARY_ROOT / 'datasets' / 'verbocean.unrefined.2004-05-20.txt'))
     wiki = WikipediaRelationExtraction()
     wn = WordnetRelationExtraction()
     embed = WordEmbeddingRelationExtraction(method=EmbeddingMethod.ELMO)

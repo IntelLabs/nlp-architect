@@ -19,7 +19,7 @@ from os import path
 import pytest
 import os
 from nlp_architect.solutions.trend_analysis import topic_extraction, trend_analysis
-from nlp_architect.utils import LIBRARY_STORAGE_PATH
+from nlp_architect import LIBRARY_OUT
 from nlp_architect.utils.text import try_to_load_spacy
 
 if not try_to_load_spacy('en'):
@@ -30,7 +30,7 @@ if not try_to_load_spacy('en'):
                 allow_module_level=True)
 
 current_dir = os.path.dirname(os.path.realpath(__file__))
-ta_path = path.join(LIBRARY_STORAGE_PATH, 'trend-analysis-data')
+ta_path = str(LIBRARY_OUT / 'trend-analysis-data')
 target_corpus_path = path.join(ta_path, 'target_corpus.csv')
 reference_corpus_path = path.join(ta_path, 'reference_corpus.csv')
 

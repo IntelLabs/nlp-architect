@@ -19,14 +19,14 @@ from os import makedirs, path, sys
 
 from nlp_architect.api.abstract_api import AbstractApi
 from nlp_architect.models.intent_extraction import MultiTaskIntentModel, Seq2SeqIntentModel
-from nlp_architect.utils import LIBRARY_STORAGE_PATH
+from nlp_architect import LIBRARY_OUT
 from nlp_architect.utils.generic import pad_sentences
 from nlp_architect.utils.io import download_unlicensed_file
 from nlp_architect.utils.text import SpacyInstance, bio_to_spans
 
 
 class IntentExtractionApi(AbstractApi):
-    model_dir = path.join(LIBRARY_STORAGE_PATH, 'intent-pretrained')
+    model_dir = str(LIBRARY_OUT / 'intent-pretrained')
     pretrained_model_info = path.join(model_dir, 'model_info.dat')
     pretrained_model = path.join(model_dir, 'model.h5')
 

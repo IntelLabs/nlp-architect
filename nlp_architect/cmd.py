@@ -22,8 +22,8 @@ from subprocess import run
 
 import pytest
 
-from nlp_architect import LIBRARY_ROOT, LIBRARY_PATH
-from nlp_architect.utils import LIBRARY_STORAGE_PATH, ansi2html
+from nlp_architect import LIBRARY_ROOT, LIBRARY_PATH, LIBRARY_OUT
+from nlp_architect.utils import ansi2html
 from nlp_architect.version import NLP_ARCHITECT_VERSION
 
 
@@ -33,7 +33,7 @@ def run_cmd(command):
 
 class DocsCommand(object):
     cmd_name = 'doc'
-    docs_source = os.path.join(LIBRARY_ROOT, 'doc')
+    docs_source = LIBRARY_ROOT / 'doc'
 
     def __init__(self, subparsers):
         parser = subparsers.add_parser(DocsCommand.cmd_name,
@@ -48,8 +48,7 @@ class DocsCommand(object):
         print('Re-building documentation')
         run_cmd(base_cmd + ' clean')
         run_cmd(base_cmd + ' html')
-        print('Documentation built in: {}'.format(os.path.join(DocsCommand.docs_source,
-                                                               'build', 'html')))
+        print('Documentation built in: {}'.format(DocsCommand.docs_source / 'build' / 'html'))
         print('To view documents point your browser to: http://localhost:8000')
 
         class HTTPHandler(SimpleHTTPRequestHandler):
@@ -64,7 +63,7 @@ class DocsCommand(object):
                 self.base_path = base_path
                 BaseHTTPServer.__init__(self, server_address, request_handler_class)
 
-        web_dir = os.path.join(os.path.join(DocsCommand.docs_source, 'build', 'html'))
+        web_dir = DocsCommand.docs_source / 'build' / 'html'
         httpd = HTTPServer(web_dir, ("", 8000))
         httpd.serve_forever()
 
@@ -76,7 +75,7 @@ class StyleCommand(object):
         'nlp_architect',
         'tests'
     ]
-    files_to_check = [os.path.join(LIBRARY_ROOT, f) for f in check_dirs]
+    files_to_check = [str(LIBRARY_ROOT / f) for f in check_dirs]
 
     def __init__(self, subparsers):
         parser = subparsers.add_parser(StyleCommand.cmd_name,
@@ -109,11 +108,11 @@ class StyleCommand(object):
     @staticmethod
     def run_flake():
         print('Running flake8 ...\n')
-        flake8_config = os.path.join(LIBRARY_ROOT, 'setup.cfg')
-        os.makedirs(LIBRARY_STORAGE_PATH, exist_ok=True)
-        flake8_out = os.path.join(LIBRARY_STORAGE_PATH, 'flake8.txt')
-        flake8_html_out = os.path.join(LIBRARY_STORAGE_PATH, 'flake_html')
-
+        flake8_config = str(LIBRARY_ROOT / 'setup.cfg')
+        os.makedirs(LIBRARY_OUT, exist_ok=True)
+        flake8_out = str(LIBRARY_OUT / 'flake8.txt')
+        flake8_html_out = str(LIBRARY_OUT / 'flake_html')
+        print('HHH:' + flake8_html_out)
         try:
             os.remove(flake8_out)
             shutil.rmtree(flake8_html_out, ignore_errors=True)
@@ -135,10 +134,10 @@ class StyleCommand(object):
     @staticmethod
     def run_pylint():
         print('Running pylint ...\n')
-        pylint_config = os.path.join(LIBRARY_ROOT, 'pylintrc')
-        os.makedirs(LIBRARY_STORAGE_PATH, exist_ok=True)
-        pylint_out = os.path.join(LIBRARY_STORAGE_PATH, 'pylint.txt')
-        html_out = os.path.join(LIBRARY_STORAGE_PATH, 'pylint.html')
+        pylint_config = LIBRARY_ROOT / 'pylintrc'
+        os.makedirs(LIBRARY_OUT, exist_ok=True)
+        pylint_out = str(LIBRARY_OUT / 'pylint.txt')
+        html_out = str(LIBRARY_OUT / 'pylint.html')
 
         cmd = 'pylint -j 4 {} --rcfile {} --score=n'\
             .format(' '.join(StyleCommand.files_to_check), pylint_config)
@@ -167,7 +166,7 @@ class TestCommand(object):
     def run_tests(args):
         # run all tests
         print('\nrunning NLP Architect tests ...')
-        tests_dir = os.path.join(LIBRARY_ROOT, 'tests')
+        tests_dir = str(LIBRARY_ROOT / 'tests')
         tests = None
         if args.f:
             specific_test_file = args.f
@@ -218,7 +217,7 @@ class ServerCommand(object):
     @staticmethod
     def run_server(args):
         port = args.port
-        serve_file = os.path.join(LIBRARY_PATH, 'server', 'serve.py')
+        serve_file = LIBRARY_PATH / 'server' / 'serve.py'
         cmd_str = 'hug -p {} -f {}'.format(port, serve_file)
         run_cmd(cmd_str)
 

@@ -132,37 +132,35 @@ def inference(ckpt_path,
     if hparams.quantize_ckpt or hparams.from_quantized_ckpt:
         model_helper.add_quatization_variables(infer_model)
 
-    sess = tf.Session(
-        graph=infer_model.graph, config=utils.get_config_proto())
-    with infer_model.graph.as_default():
-        load_fn = model_helper.load_model if not hparams.from_quantized_ckpt \
-            else model_helper.load_quantized_model
-        if hparams.quantize_ckpt:
-            load_fn(infer_model.model, ckpt_path, sess, 'infer')
-            load_fn = model_helper.load_quantized_model
-            ckpt_path = os.path.join(hparams.out_dir, 'quant_' + os.path.basename(ckpt_path))
-            model_helper.quantize_checkpoint(sess, ckpt_path)
-        loaded_infer_model = load_fn(infer_model.model, ckpt_path, sess, 'infer')
+    with tf.Session(graph=infer_model.graph, config=utils.get_config_proto()) as sess:
+        with infer_model.graph.as_default():
+            load_fn = model_helper.load_model if not hparams.from_quantized_ckpt \
+                else model_helper.load_quantized_model
+            if hparams.quantize_ckpt:
+                load_fn(infer_model.model, ckpt_path, sess, 'infer')
+                load_fn = model_helper.load_quantized_model
+                ckpt_path = os.path.join(hparams.out_dir, 'quant_' + os.path.basename(ckpt_path))
+                model_helper.quantize_checkpoint(sess, ckpt_path)
+            loaded_infer_model = load_fn(infer_model.model, ckpt_path, sess, 'infer')
 
-    if num_workers == 1:
-        single_worker_inference(
-            sess,
-            infer_model,
-            loaded_infer_model,
-            inference_input_file,
-            inference_output_file,
-            hparams)
-    else:
-        multi_worker_inference(
-            sess,
-            infer_model,
-            loaded_infer_model,
-            inference_input_file,
-            inference_output_file,
-            hparams,
-            num_workers=num_workers,
-            jobid=jobid)
-    sess.close()
+        if num_workers == 1:
+            single_worker_inference(
+                sess,
+                infer_model,
+                loaded_infer_model,
+                inference_input_file,
+                inference_output_file,
+                hparams)
+        else:
+            multi_worker_inference(
+                sess,
+                infer_model,
+                loaded_infer_model,
+                inference_input_file,
+                inference_output_file,
+                hparams,
+                num_workers=num_workers,
+                jobid=jobid)
 
 
 def single_worker_inference(sess,

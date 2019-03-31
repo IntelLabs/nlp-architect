@@ -14,6 +14,9 @@
 # limitations under the License.
 # ******************************************************************************
 from os import path
+from pathlib import Path
 
-LIBRARY_PATH = path.dirname(path.realpath(__file__))
-LIBRARY_ROOT = path.dirname(LIBRARY_PATH)
+LIBRARY_PATH = Path(path.realpath(__file__)).parent
+LIBRARY_ROOT = LIBRARY_PATH.parent
+LIBRARY_OUT = Path(Path.home()) / 'nlp-architect' / 'cache'
+LIBRARY_DATASETS = LIBRARY_ROOT / 'datasets'

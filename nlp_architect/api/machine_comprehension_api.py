@@ -28,7 +28,7 @@ import tensorflow as tf
 
 from nlp_architect.api.abstract_api import AbstractApi
 from nlp_architect.models.matchlstm_ansptr import MatchLSTMAnswerPointer
-from nlp_architect.utils import LIBRARY_STORAGE_PATH
+from nlp_architect import LIBRARY_OUT
 from nlp_architect.utils.generic import license_prompt
 from nlp_architect.utils.io import download_unlicensed_file
 from nlp_architect.utils.mrc_utils import (
@@ -39,7 +39,7 @@ class MachineComprehensionApi(AbstractApi):
     """
     Machine Comprehension API
     """
-    dir = os.path.join(LIBRARY_STORAGE_PATH, 'mrc-pretrained')
+    dir = str(LIBRARY_OUT / 'mrc-pretrained')
     data_path = os.path.join(dir, 'mrc_data', 'data')
     data_dir = os.path.join(dir, 'mrc_data')
     model_dir = os.path.join(dir, 'mrc_trained_model')
@@ -97,12 +97,10 @@ class MachineComprehensionApi(AbstractApi):
             download_unlicensed_file('https://s3-us-west-2.amazonaws.com/nlp-architect-data'
                                      '/models/mrc/',
                                      'mrc_model.zip', model_zipfile)
-            data_zip_ref = zipfile.ZipFile(data_zipfile, 'r')
-            data_zip_ref.extractall(self.data_dir)
-            data_zip_ref.close()
-            model_zip_ref = zipfile.ZipFile(model_zipfile, 'r')
-            model_zip_ref.extractall(self.model_dir)
-            model_zip_ref.close()
+            with zipfile.ZipFile(data_zipfile) as data_zip_ref:
+                data_zip_ref.extractall(self.data_dir)
+            with zipfile.ZipFile(model_zipfile) as model_zip_ref:
+                model_zip_ref.extractall(self.model_dir)
 
     def load_model(self):
         select_device = 'GPU'

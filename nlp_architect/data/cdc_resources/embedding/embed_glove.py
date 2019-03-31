@@ -34,18 +34,15 @@ class GloveEmbedding(object):
     def load_glove_for_vocab(glove_filename):
         vocab = []
         embd = []
-        with open(glove_filename, 'r') as glove_file:
-            for line in glove_file.readlines():
+        with open(glove_filename) as glove_file:
+            for line in glove_file:
                 row = line.strip().split(' ')
                 word = row[0]
                 vocab.append(word)
                 embd.append(row[1:])
 
         embeddings = np.asarray(embd, dtype=float)
-        word_to_ix = {}
-        for word in vocab:
-            word_to_ix[word] = len(word_to_ix)
-
+        word_to_ix = {word: i for i, word in enumerate(vocab)}
         return word_to_ix, embeddings
 
 
