@@ -132,9 +132,10 @@ class VerboceanRelationExtraction(RelationExtraction):
             List[RelationType]
         """
         word_dict = {}
-        for line in open(fname):
-            word1, rel, word2, _, _ = line.strip().split()
-            if word1 not in word_dict:
-                word_dict[word1] = {}
-            word_dict[word1][word2] = rel
+        with open(fname) as f:
+            for line in f:
+                word1, rel, word2, _, _ = line.strip().split()
+                if word1 not in word_dict:
+                    word_dict[word1] = {}
+                word_dict[word1][word2] = rel
         return word_dict

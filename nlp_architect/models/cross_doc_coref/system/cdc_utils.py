@@ -92,13 +92,13 @@ def load_mentions_vocab(mentions, filter_stop_words=False):
 
 
 def write_event_coref_scorer_results(topics_list: List[Topic], output_file: str) -> None:
-    output = open(os.path.join(output_file, 'cd_event_pred_clusters_spans.txt'), 'w')
-    write_topics(topics_list, output)
+    with open(os.path.join(output_file, 'cd_event_pred_clusters_spans.txt'), 'w') as output:
+        write_topics(topics_list, output)
 
 
 def write_entity_coref_scorer_results(topics_list: List[Topic], output_file: str) -> None:
-    output = open(os.path.join(output_file, 'cd_entity_pred_clusters_spans.txt'), 'w')
-    write_topics(topics_list, output)
+    with open(os.path.join(output_file, 'cd_entity_pred_clusters_spans.txt'), 'w') as output:
+        write_topics(topics_list, output)
 
 
 def write_topics(topics_list: List[Topic], output) -> None:

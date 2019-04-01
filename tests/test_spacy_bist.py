@@ -127,7 +127,7 @@ def test_pos_tag(parser, text, method_name, ptb_pos_tags):
     assert all([token['pos'] in ptb_pos_tags for sent in parsed_doc for token in sent])
 
 
-@pytest.fixture
+@pytest.fixture(scope="session")
 def parser():
     return Fixtures.default_parser
 

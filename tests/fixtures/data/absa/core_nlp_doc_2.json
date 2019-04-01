@@ -1,0 +1,219 @@
+{
+    "_doc_text": "The food was wonderful and fresh, I really enjoyed it and will definitely go back. Staff were friendly.",
+    "_sentences": [
+        [
+            {
+                "start": 0,
+                "len": 3,
+                "pos": "DT",
+                "ner": "",
+                "lemma": "the",
+                "gov": 1,
+                "rel": "det",
+                "text": "The"
+            },
+            {
+                "start": 4,
+                "len": 4,
+                "pos": "NN",
+                "ner": "",
+                "lemma": "food",
+                "gov": 3,
+                "rel": "nsubj",
+                "text": "food"
+            },
+            {
+                "start": 9,
+                "len": 3,
+                "pos": "VBD",
+                "ner": "",
+                "lemma": "be",
+                "gov": 3,
+                "rel": "cop",
+                "text": "was"
+            },
+            {
+                "start": 13,
+                "len": 9,
+                "pos": "JJ",
+                "ner": "",
+                "lemma": "wonderful",
+                "gov": -1,
+                "rel": "root",
+                "text": "wonderful"
+            },
+            {
+                "start": 23,
+                "len": 3,
+                "pos": "CC",
+                "ner": "",
+                "lemma": "and",
+                "gov": 3,
+                "rel": "cc",
+                "text": "and"
+            },
+            {
+                "start": 27,
+                "len": 5,
+                "pos": "JJ",
+                "ner": "",
+                "lemma": "fresh",
+                "gov": 3,
+                "rel": "conj_and",
+                "text": "fresh"
+            },
+            {
+                "start": 32,
+                "len": 1,
+                "pos": ",",
+                "ner": "",
+                "lemma": ",",
+                "gov": 3,
+                "rel": "punct",
+                "text": ","
+            },
+            {
+                "start": 34,
+                "len": 1,
+                "pos": "PRP",
+                "ner": "",
+                "lemma": "-PRON-",
+                "gov": 9,
+                "rel": "nsubj",
+                "text": "I"
+            },
+            {
+                "start": 36,
+                "len": 6,
+                "pos": "RB",
+                "ner": "",
+                "lemma": "really",
+                "gov": 9,
+                "rel": "advmod",
+                "text": "really"
+            },
+            {
+                "start": 43,
+                "len": 7,
+                "pos": "VBD",
+                "ner": "",
+                "lemma": "enjoy",
+                "gov": 3,
+                "rel": "conj_and",
+                "text": "enjoyed"
+            },
+            {
+                "start": 51,
+                "len": 2,
+                "pos": "PRP",
+                "ner": "",
+                "lemma": "-PRON-",
+                "gov": 9,
+                "rel": "dobj",
+                "text": "it"
+            },
+            {
+                "start": 54,
+                "len": 3,
+                "pos": "CC",
+                "ner": "",
+                "lemma": "and",
+                "gov": 9,
+                "rel": "cc",
+                "text": "and"
+            },
+            {
+                "start": 58,
+                "len": 4,
+                "pos": "MD",
+                "ner": "",
+                "lemma": "will",
+                "gov": 14,
+                "rel": "aux",
+                "text": "will"
+            },
+            {
+                "start": 63,
+                "len": 10,
+                "pos": "RB",
+                "ner": "",
+                "lemma": "definitely",
+                "gov": 14,
+                "rel": "advmod",
+                "text": "definitely"
+            },
+            {
+                "start": 74,
+                "len": 2,
+                "pos": "VB",
+                "ner": "",
+                "lemma": "go",
+                "gov": 9,
+                "rel": "conj_and",
+                "text": "go"
+            },
+            {
+                "start": 77,
+                "len": 4,
+                "pos": "RB",
+                "ner": "",
+                "lemma": "back",
+                "gov": 14,
+                "rel": "advmod",
+                "text": "back"
+            },
+            {
+                "start": 81,
+                "len": 1,
+                "pos": ".",
+                "ner": "",
+                "lemma": ".",
+                "gov": 3,
+                "rel": "punct",
+                "text": "."
+            }
+        ],
+        [
+            {
+                "start": 83,
+                "len": 5,
+                "pos": "NN",
+                "ner": "",
+                "lemma": "staff",
+                "gov": 2,
+                "rel": "nsubj",
+                "text": "Staff"
+            },
+            {
+                "start": 89,
+                "len": 4,
+                "pos": "VBD",
+                "ner": "",
+                "lemma": "be",
+                "gov": 2,
+                "rel": "cop",
+                "text": "were"
+            },
+            {
+                "start": 94,
+                "len": 8,
+                "pos": "JJ",
+                "ner": "",
+                "lemma": "friendly",
+                "gov": -1,
+                "rel": "root",
+                "text": "friendly"
+            },
+            {
+                "start": 102,
+                "len": 1,
+                "pos": ".",
+                "ner": "",
+                "lemma": ".",
+                "gov": 2,
+                "rel": "punct",
+                "text": "."
+            }
+        ]
+    ]
+}

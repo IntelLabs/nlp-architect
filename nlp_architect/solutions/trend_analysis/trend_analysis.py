@@ -70,8 +70,10 @@ def analyze(target_data, ref_data, tar_header, ref_header, top_n=10000, top_n_ve
         calc_scores(target_data, tfidf_w, cval_w, lm_w, target_topics_path)
         calc_scores(ref_data, tfidf_w, cval_w, lm_w, ref_topics_path)
         # unify all topics:
-        topics1 = sum(1 for x in open(ref_data))
-        topics2 = sum(1 for x in open(target_data))
+        with open(ref_data) as f:
+            topics1 = sum(1 for _ in f)
+        with open(target_data) as f:
+            topics2 = sum(1 for _ in f)
         sum_topics = topics1 + topics2
         logger.info("sum of all topics= %s", str(sum_topics))
         merge_phrases(ref_topics_path, True, hash2group, rep2rank, top_n, sum_topics)

@@ -34,6 +34,7 @@
    :maxdepth: 1
    :caption: NLP/NLU Components
 
+   Aspect Based Sentiment Analysis <absa.rst>
    chunker.rst
    ner_crf.rst
    intent.rst
@@ -61,6 +62,7 @@
    :maxdepth: 1
    :caption: Solutions
 
+   Aspect Based Sentiment Analysis <absa_solution.rst>
    Set Expansion <term_set_expansion.rst>
    Trend Analysis <trend_analysis.rst>
 

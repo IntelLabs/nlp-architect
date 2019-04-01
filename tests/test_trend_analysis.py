@@ -37,7 +37,7 @@ reference_corpus_path = path.join(ta_path, 'reference_corpus.csv')
 
 @pytest.fixture
 def input_data_path():
-    return os.path.join(current_dir, 'fixtures/data/trend_analysis_test_data')
+    return os.path.join(current_dir, 'fixtures/data/trend_analysis')
 
 
 @pytest.fixture

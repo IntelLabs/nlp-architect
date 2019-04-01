@@ -1,0 +1,249 @@
+{
+    "_doc_text": "The food was very fresh and flavoursome the service was very attentive. Would go back to this restaurant if visiting London again.",
+    "_sentences": [
+        [
+            {
+                "start": 0,
+                "len": 3,
+                "pos": "DT",
+                "ner": "",
+                "lemma": "the",
+                "gov": 1,
+                "rel": "det",
+                "text": "The"
+            },
+            {
+                "start": 4,
+                "len": 4,
+                "pos": "NN",
+                "ner": "",
+                "lemma": "food",
+                "gov": 4,
+                "rel": "nsubj",
+                "text": "food"
+            },
+            {
+                "start": 9,
+                "len": 3,
+                "pos": "VBD",
+                "ner": "",
+                "lemma": "be",
+                "gov": 4,
+                "rel": "cop",
+                "text": "was"
+            },
+            {
+                "start": 13,
+                "len": 4,
+                "pos": "RB",
+                "ner": "",
+                "lemma": "very",
+                "gov": 4,
+                "rel": "advmod",
+                "text": "very"
+            },
+            {
+                "start": 18,
+                "len": 5,
+                "pos": "JJ",
+                "ner": "",
+                "lemma": "fresh",
+                "gov": -1,
+                "rel": "root",
+                "text": "fresh"
+            },
+            {
+                "start": 24,
+                "len": 3,
+                "pos": "CC",
+                "ner": "",
+                "lemma": "and",
+                "gov": 4,
+                "rel": "cc",
+                "text": "and"
+            },
+            {
+                "start": 28,
+                "len": 11,
+                "pos": "JJ",
+                "ner": "",
+                "lemma": "flavoursome",
+                "gov": 4,
+                "rel": "conj_and",
+                "text": "flavoursome"
+            },
+            {
+                "start": 40,
+                "len": 3,
+                "pos": "DT",
+                "ner": "",
+                "lemma": "the",
+                "gov": 8,
+                "rel": "det",
+                "text": "the"
+            },
+            {
+                "start": 44,
+                "len": 7,
+                "pos": "NN",
+                "ner": "",
+                "lemma": "service",
+                "gov": 11,
+                "rel": "nsubj",
+                "text": "service"
+            },
+            {
+                "start": 52,
+                "len": 3,
+                "pos": "VBD",
+                "ner": "",
+                "lemma": "be",
+                "gov": 11,
+                "rel": "cop",
+                "text": "was"
+            },
+            {
+                "start": 56,
+                "len": 4,
+                "pos": "RB",
+                "ner": "",
+                "lemma": "very",
+                "gov": 11,
+                "rel": "advmod",
+                "text": "very"
+            },
+            {
+                "start": 61,
+                "len": 9,
+                "pos": "JJ",
+                "ner": "",
+                "lemma": "attentive",
+                "gov": 6,
+                "rel": "ccomp",
+                "text": "attentive"
+            },
+            {
+                "start": 70,
+                "len": 1,
+                "pos": ".",
+                "ner": "",
+                "lemma": ".",
+                "gov": 4,
+                "rel": "punct",
+                "text": "."
+            }
+        ],
+        [
+            {
+                "start": 72,
+                "len": 5,
+                "pos": "MD",
+                "ner": "",
+                "lemma": "would",
+                "gov": 1,
+                "rel": "aux",
+                "text": "Would"
+            },
+            {
+                "start": 78,
+                "len": 2,
+                "pos": "VB",
+                "ner": "",
+                "lemma": "go",
+                "gov": -1,
+                "rel": "root",
+                "text": "go"
+            },
+            {
+                "start": 81,
+                "len": 4,
+                "pos": "RB",
+                "ner": "",
+                "lemma": "back",
+                "gov": 1,
+                "rel": "advmod",
+                "text": "back"
+            },
+            {
+                "start": 86,
+                "len": 2,
+                "pos": "IN",
+                "ner": "",
+                "lemma": "to",
+                "gov": 5,
+                "rel": "case",
+                "text": "to"
+            },
+            {
+                "start": 89,
+                "len": 4,
+                "pos": "DT",
+                "ner": "",
+                "lemma": "this",
+                "gov": 5,
+                "rel": "det",
+                "text": "this"
+            },
+            {
+                "start": 94,
+                "len": 10,
+                "pos": "NN",
+                "ner": "",
+                "lemma": "restaurant",
+                "gov": 1,
+                "rel": "nmod",
+                "text": "restaurant"
+            },
+            {
+                "start": 105,
+                "len": 2,
+                "pos": "IN",
+                "ner": "",
+                "lemma": "if",
+                "gov": 7,
+                "rel": "mark",
+                "text": "if"
+            },
+            {
+                "start": 108,
+                "len": 8,
+                "pos": "VBG",
+                "ner": "",
+                "lemma": "visit",
+                "gov": 1,
+                "rel": "advcl",
+                "text": "visiting"
+            },
+            {
+                "start": 117,
+                "len": 6,
+                "pos": "NNP",
+                "ner": "",
+                "lemma": "london",
+                "gov": 7,
+                "rel": "dobj",
+                "text": "London"
+            },
+            {
+                "start": 124,
+                "len": 5,
+                "pos": "RB",
+                "ner": "",
+                "lemma": "again",
+                "gov": 7,
+                "rel": "advmod",
+                "text": "again"
+            },
+            {
+                "start": 129,
+                "len": 1,
+                "pos": ".",
+                "ner": "",
+                "lemma": ".",
+                "gov": 1,
+                "rel": "punct",
+                "text": "."
+            }
+        ]
+    ]
+}

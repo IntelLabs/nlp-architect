@@ -105,6 +105,7 @@ NLP models that provide best (or near) in class performance:
 
 Natural Language Understanding (NLU) models that address semantic understanding:
 
+* [Aspect Based Sentiment Analysis (ABSA)](http://nlp_architect.nervanasys.com/absa.html)
 * [Noun phrase embedding representation (NP2Vec)](http://nlp_architect.nervanasys.com/np2vec.html)
 * [Most common word sense detection](http://nlp_architect.nervanasys.com/word_sense.html)
 * [Relation identification](http://nlp_architect.nervanasys.com/identifying_semantic_relation.html)
@@ -127,6 +128,7 @@ Solutions (End-to-end applications) using one or more models:
 
 * [Term Set expansion](http://nlp_architect.nervanasys.com/term_set_expansion.html) - uses the included word chunker as a noun phrase extractor and NP2Vec to create semantic term sets
 * [Topics and trend analysis](http://nlp_architect.nervanasys.com/trend_analysis.html) - analyzing trending phrases in temporal corpora
+* [Aspect Based Sentiment Analysis (ABSA)](http://nlp_architect.nervanasys.com/absa_solution.html)
 
 ## Documentation
 

@@ -29,58 +29,6 @@ root = os.path.abspath(os.path.dirname(__file__))
 with open('requirements.txt') as fp:
     install_requirements = fp.readlines()
 
-# requirements = [
-#     # DL frameworks
-#     "dynet==2.0.2",
-#     # NLP/DS apps
-#     "spacy==2.0.18",
-#     "nltk",
-#     "gensim",
-#     "sklearn",
-#     "scipy",
-#     "numpy<=1.14.5",
-#     "tensorflow_hub",
-#     "elasticsearch",
-#     "fasttextmirror",  # temp fix
-#     # "msgpack==0.5.6",  # temp fix
-#     # General utils
-#     "newspaper3k",
-#     "wordfreq",
-#     "seqeval",
-#     "pywikibot",
-#     "num2words",
-#     "hyperopt",
-#     "h5py",
-#     "pandas",
-#     "tqdm",
-#     "ftfy",
-#     "bokeh",
-#     "six",
-#     "future",
-#     "requests",
-#     "termcolor",
-#     "pillow",
-#     "setuptools",
-#     # Server
-#     "hug",
-#     "falcon",
-#     "falcon_multipart",
-#     # Docs
-#     "sphinx",
-#     "sphinx_rtd_theme",
-#     "flake8-html"
-# ]
-
-# required packages for testing
-# test_requirements = [
-#     'pep8',
-#     'flake8',
-#     'pytest',
-#     'pytest-cov',
-#     'pytest-mock',
-#     'pylint',
-# ]
-
 # check if GPU available
 p = subprocess.Popen(['command -v nvidia-smi'], stdout=subprocess.PIPE, shell=True)
 out = p.communicate()[0].decode('utf8')

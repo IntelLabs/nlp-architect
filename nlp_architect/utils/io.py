@@ -20,10 +20,16 @@ import json
 import os
 import posixpath
 import re
+import sys
 import zipfile
+from os import PathLike, makedirs, remove
+from pathlib import Path
+from urllib.parse import urlparse
 
 import requests
 from tqdm import tqdm
+
+from nlp_architect.utils.generic import license_prompt
 
 
 def download_unlicensed_file(url, sourcefile, destfile, totalsz=None):
@@ -52,7 +58,7 @@ def download_unlicensed_file(url, sourcefile, destfile, totalsz=None):
 
     print("Downloading file to: {}".format(destfile))
     with open(destfile, 'wb') as f:
-        for data in tqdm(req.iter_content(chunksz), total=nchunks, unit="MB"):
+        for data in tqdm(req.iter_content(chunksz), total=nchunks, unit="MB", file=sys.stdout):
             f.write(data)
     print("Download Complete")
 
@@ -109,14 +115,15 @@ def check_directory_and_create(dir_path):
         os.makedirs(dir_path)
 
 
-def walk_directory(directory):
+def walk_directory(directory, verbose=False):
     """Iterates a directory's text files and their contents."""
     for dir_path, _, filenames in os.walk(directory):
         for filename in filenames:
             file_path = os.path.join(dir_path, filename)
             if os.path.isfile(file_path) and not filename.startswith('.'):
                 with io.open(file_path, 'r', encoding='utf-8') as file:
-                    print('Reading ' + filename)
+                    if verbose:
+                        print('Reading {}'.format(filename))
                     doc_text = file.read()
                     yield filename, doc_text
 
@@ -169,6 +176,15 @@ def validate_existing_directory(arg):
     arg = os.path.abspath(arg)
     validate((arg, str, 0, 255))
     if not os.path.isdir(arg):
+        raise ValueError("{0} does not exist".format(arg))
+    return arg
+
+
+def validate_existing_path(arg):
+    """Validates an input argument is a path string to an existing file or directory."""
+    arg = os.path.abspath(arg)
+    validate((arg, str, 0, 255))
+    if not os.path.exists(arg):
         raise ValueError("{0} does not exist".format(arg))
     return arg
 
@@ -299,3 +315,20 @@ def create_folder(path):
     if path:
         if not os.path.exists(path):
             os.makedirs(path)
+
+
+def download_unzip(url: str, sourcefile: str, unzipped_path: str or PathLike,
+                   license_msg: str = None):
+    """Downloads a zip file, extracts it to destination, deletes the zip file. If license_msg is
+    supplied, user is prompted for download confirmation."""
+    dest_parent = Path(unzipped_path).parent
+
+    if not os.path.exists(unzipped_path):
+        if license_msg is None or license_prompt(license_msg, urlparse(url).netloc):
+            zip_path = dest_parent / sourcefile
+            makedirs(dest_parent, exist_ok=True)
+            download_unlicensed_file(url, sourcefile, zip_path)
+            print('Unzipping...')
+            uncompress_file(zip_path, dest_parent)
+            remove(zip_path)
+    return unzipped_path

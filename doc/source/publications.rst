@@ -29,6 +29,8 @@ Blog posts
 - `Compressing GNMT Models <https://www.intel.ai/compressing-gnmt-models/>`_
 - `Exploring Term Set Expansion with NLP Architect <https://www.intel.ai/exploring-term-set-expansion-with-nlp-architect/>`_
 - `Extracting Semantic Relations using External Knowledge Resources with NLP Architect <https://www.intel.ai/extracting-semantic-relations-using-external-knowledge-resources-with-nlp-architect/>`_
+- `Future Directions for NLP in Commercial Environments <https://www.intel.ai/future-directions-nlp/#gs.3chaej/>`_
+
 
 Conference Proceedings
 ----------------------

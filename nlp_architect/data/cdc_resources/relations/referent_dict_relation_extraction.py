@@ -137,14 +137,15 @@ class ReferentDictRelationExtraction(RelationExtraction):
         """
         word_dict = {}
         first = True
-        for line in open(dict_fname, 'r', encoding="utf-8"):
-            if first:
-                first = False
-                continue
-            word1, word2, _, npmi = line.strip().split('\t')
-            npmi = float(npmi)
-            if npmi >= 0.2:
-                if word1 not in word_dict:
-                    word_dict[word1] = []
-                word_dict[word1].append(word2)
+        with open(dict_fname, 'r', encoding="utf-8") as f:
+            for line in f:
+                if first:
+                    first = False
+                    continue
+                word1, word2, _, npmi = line.strip().split('\t')
+                npmi = float(npmi)
+                if npmi >= 0.2:
+                    if word1 not in word_dict:
+                        word_dict[word1] = []
+                    word_dict[word1].append(word2)
         return word_dict

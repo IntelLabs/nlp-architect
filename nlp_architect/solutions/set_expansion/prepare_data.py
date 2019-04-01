@@ -27,8 +27,8 @@ from os import path, makedirs
 
 from tqdm import tqdm
 
-from nlp_architect.pipelines.spacy_np_annotator import NPAnnotator, get_noun_phrases
 from nlp_architect import LIBRARY_OUT
+from nlp_architect.pipelines.spacy_np_annotator import NPAnnotator, get_noun_phrases
 from nlp_architect.utils.io import check_size, download_unlicensed_file, validate_parent_exists
 from nlp_architect.utils.text import spacy_normalizer, SpacyInstance
 

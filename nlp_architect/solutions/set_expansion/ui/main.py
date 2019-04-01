@@ -428,8 +428,10 @@ checkbox_group.on_click(checkbox_callback)
 search_input_box.on_change('value', search_callback)
 phrases_list.on_change('value', vocab_phrase_selected_callback)
 clear_seed_button.on_click(clear_seed_callback)
+with open(join(dirname(__file__), "download.js")) as f:
+    code = f.read()
 export_button.callback = CustomJS(args=dict(source=expand_table_source),
-                                  code=open(join(dirname(__file__), "download.js")).read())
+                                  code=code)
 annotate_button.on_click(annotate_callback)
 # table_area.on_change('children', table_area_change_callback)
 

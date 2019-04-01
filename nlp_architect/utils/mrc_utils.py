@@ -59,7 +59,6 @@ def get_qids(args, q_id_path, data_dev):
     --------
     list of question ids
     """
-    q_ids = open(q_id_path)
     qids_list = []
     with open(q_id_path) as q_ids:
         for ele in q_ids:

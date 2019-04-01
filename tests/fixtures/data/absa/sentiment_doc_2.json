@@ -1,0 +1,1 @@
+{"_doc_text": "The food was wonderful and fresh, I really enjoyed it and will definitely go back. Staff were friendly.", "_sentences": [{"_start": 0, "_end": 81, "_events": [[{"_text": "food", "_type": "ASPECT", "_polarity": "POS", "_score": 0.95, "_start": 4, "_len": 4}, {"_text": "wonderful", "_type": "OPINION", "_polarity": "POS", "_score": 0.95, "_start": 13, "_len": 9}]]}]}

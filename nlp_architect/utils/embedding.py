@@ -25,13 +25,13 @@ import tensorflow_hub as hub
 from nlp_architect.utils.text import Vocabulary
 
 
-def load_word_embeddings(file_path):
+def load_word_embeddings(file_path, vocab=None):
     """
     Loads a word embedding model text file into a word(str) to numpy vector dictionary
 
     Args:
         file_path (str): path to model file
-        emb_size (int): embedding vectors size
+        vocab (list of str): optional - vocabulary
 
     Returns:
         list: a dictionary of numpy.ndarray vectors
@@ -47,7 +47,7 @@ def load_word_embeddings(file_path):
             else:
                 if line[0] == ' ':
                     word_vectors[' '] = np.asarray(line_fields, dtype='float32')
-                else:
+                elif vocab is None or line_fields[0] in vocab:
                     word_vectors[line_fields[0]] = np.asarray(line_fields[1:], dtype='float32')
                     if size is None:
                         size = len(line_fields[1:])

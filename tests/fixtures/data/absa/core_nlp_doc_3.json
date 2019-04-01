@@ -1,0 +1,351 @@
+{
+    "_doc_text": "The ambiance is charming. Uncharacteristically, the service was DREADFUL. When we wanted to pay our bill at the end of the evening, our waitress was nowhere to be found...",
+    "_sentences": [
+        [
+            {
+                "start": 0,
+                "len": 3,
+                "pos": "DT",
+                "ner": "",
+                "lemma": "the",
+                "gov": 1,
+                "rel": "det",
+                "text": "The"
+            },
+            {
+                "start": 4,
+                "len": 8,
+                "pos": "NN",
+                "ner": "",
+                "lemma": "ambiance",
+                "gov": 3,
+                "rel": "nsubj",
+                "text": "ambiance"
+            },
+            {
+                "start": 13,
+                "len": 2,
+                "pos": "VBZ",
+                "ner": "",
+                "lemma": "be",
+                "gov": 3,
+                "rel": "cop",
+                "text": "is"
+            },
+            {
+                "start": 16,
+                "len": 8,
+                "pos": "JJ",
+                "ner": "",
+                "lemma": "charming",
+                "gov": -1,
+                "rel": "root",
+                "text": "charming"
+            },
+            {
+                "start": 24,
+                "len": 1,
+                "pos": ".",
+                "ner": "",
+                "lemma": ".",
+                "gov": 3,
+                "rel": "punct",
+                "text": "."
+            }
+        ],
+        [
+            {
+                "start": 26,
+                "len": 20,
+                "pos": "RB",
+                "ner": "",
+                "lemma": "uncharacteristically",
+                "gov": 5,
+                "rel": "advmod",
+                "text": "Uncharacteristically"
+            },
+            {
+                "start": 46,
+                "len": 1,
+                "pos": ",",
+                "ner": "",
+                "lemma": ",",
+                "gov": 5,
+                "rel": "punct",
+                "text": ","
+            },
+            {
+                "start": 48,
+                "len": 3,
+                "pos": "DT",
+                "ner": "",
+                "lemma": "the",
+                "gov": 3,
+                "rel": "det",
+                "text": "the"
+            },
+            {
+                "start": 52,
+                "len": 7,
+                "pos": "NN",
+                "ner": "",
+                "lemma": "service",
+                "gov": 5,
+                "rel": "nsubj",
+                "text": "service"
+            },
+            {
+                "start": 60,
+                "len": 3,
+                "pos": "VBD",
+                "ner": "",
+                "lemma": "be",
+                "gov": 5,
+                "rel": "cop",
+                "text": "was"
+            },
+            {
+                "start": 64,
+                "len": 8,
+                "pos": "JJ",
+                "ner": "",
+                "lemma": "dreadful",
+                "gov": -1,
+                "rel": "root",
+                "text": "DREADFUL"
+            },
+            {
+                "start": 72,
+                "len": 1,
+                "pos": ".",
+                "ner": "",
+                "lemma": ".",
+                "gov": 5,
+                "rel": "punct",
+                "text": "."
+            }
+        ],
+        [
+            {
+                "start": 74,
+                "len": 4,
+                "pos": "WRB",
+                "ner": "",
+                "lemma": "when",
+                "gov": 2,
+                "rel": "advmod",
+                "text": "When"
+            },
+            {
+                "start": 79,
+                "len": 2,
+                "pos": "PRP",
+                "ner": "",
+                "lemma": "-PRON-",
+                "gov": 2,
+                "rel": "nsubj",
+                "text": "we"
+            },
+            {
+                "start": 82,
+                "len": 6,
+                "pos": "VBD",
+                "ner": "",
+                "lemma": "want",
+                "gov": 16,
+                "rel": "advcl",
+                "text": "wanted"
+            },
+            {
+                "start": 89,
+                "len": 2,
+                "pos": "TO",
+                "ner": "",
+                "lemma": "to",
+                "gov": 4,
+                "rel": "mark",
+                "text": "to"
+            },
+            {
+                "start": 92,
+                "len": 3,
+                "pos": "VB",
+                "ner": "",
+                "lemma": "pay",
+                "gov": 2,
+                "rel": "xcomp",
+                "text": "pay"
+            },
+            {
+                "start": 96,
+                "len": 3,
+                "pos": "PRP$",
+                "ner": "",
+                "lemma": "-PRON-",
+                "gov": 6,
+                "rel": "nmod:poss",
+                "text": "our"
+            },
+            {
+                "start": 100,
+                "len": 4,
+                "pos": "NN",
+                "ner": "",
+                "lemma": "bill",
+                "gov": 4,
+                "rel": "dobj",
+                "text": "bill"
+            },
+            {
+                "start": 105,
+                "len": 2,
+                "pos": "IN",
+                "ner": "",
+                "lemma": "at",
+                "gov": 9,
+                "rel": "case",
+                "text": "at"
+            },
+            {
+                "start": 108,
+                "len": 3,
+                "pos": "DT",
+                "ner": "",
+                "lemma": "the",
+                "gov": 9,
+                "rel": "det",
+                "text": "the"
+            },
+            {
+                "start": 112,
+                "len": 3,
+                "pos": "NN",
+                "ner": "",
+                "lemma": "end",
+                "gov": 4,
+                "rel": "nmod",
+                "text": "end"
+            },
+            {
+                "start": 116,
+                "len": 2,
+                "pos": "IN",
+                "ner": "",
+                "lemma": "of",
+                "gov": 12,
+                "rel": "case",
+                "text": "of"
+            },
+            {
+                "start": 119,
+                "len": 3,
+                "pos": "DT",
+                "ner": "",
+                "lemma": "the",
+                "gov": 12,
+                "rel": "det",
+                "text": "the"
+            },
+            {
+                "start": 123,
+                "len": 7,
+                "pos": "NN",
+                "ner": "",
+                "lemma": "evening",
+                "gov": 9,
+                "rel": "nmod",
+                "text": "evening"
+            },
+            {
+                "start": 130,
+                "len": 1,
+                "pos": ",",
+                "ner": "",
+                "lemma": ",",
+                "gov": 16,
+                "rel": "punct",
+                "text": ","
+            },
+            {
+                "start": 132,
+                "len": 3,
+                "pos": "PRP$",
+                "ner": "",
+                "lemma": "-PRON-",
+                "gov": 15,
+                "rel": "nmod:poss",
+                "text": "our"
+            },
+            {
+                "start": 136,
+                "len": 8,
+                "pos": "NN",
+                "ner": "",
+                "lemma": "waitress",
+                "gov": 16,
+                "rel": "nsubj",
+                "text": "waitress"
+            },
+            {
+                "start": 145,
+                "len": 3,
+                "pos": "VBD",
+                "ner": "",
+                "lemma": "be",
+                "gov": -1,
+                "rel": "root",
+                "text": "was"
+            },
+            {
+                "start": 149,
+                "len": 7,
+                "pos": "RB",
+                "ner": "",
+                "lemma": "nowhere",
+                "gov": 16,
+                "rel": "advmod",
+                "text": "nowhere"
+            },
+            {
+                "start": 157,
+                "len": 2,
+                "pos": "TO",
+                "ner": "",
+                "lemma": "to",
+                "gov": 20,
+                "rel": "mark",
+                "text": "to"
+            },
+            {
+                "start": 160,
+                "len": 2,
+                "pos": "VB",
+                "ner": "",
+                "lemma": "be",
+                "gov": 20,
+                "rel": "auxpass",
+                "text": "be"
+            },
+            {
+                "start": 163,
+                "len": 5,
+                "pos": "VBN",
+                "ner": "",
+                "lemma": "find",
+                "gov": 17,
+                "rel": "xcomp",
+                "text": "found"
+            },
+            {
+                "start": 168,
+                "len": 3,
+                "pos": ":",
+                "ner": "",
+                "lemma": "...",
+                "gov": 16,
+                "rel": "punct",
+                "text": "..."
+            }
+        ]
+    ]
+}

@@ -125,7 +125,10 @@ model_path = args.model_dir
 # Create lists for train and validation sets
 data_train = create_squad_training(train_para_ids, train_ques_ids, answer_file)
 data_dev = create_squad_training(val_paras_ids, val_ques_ids, val_ans_file)
-vocab_list = [ele for ele in open(vocab_file)]
+vocab_list = []
+with open(vocab_file) as f:
+    for ele in f:
+        vocab_list.append(ele)
 vocab_dict = {}
 vocab_rev = {}
 

@@ -21,7 +21,7 @@ Spacy-BIST Parser
 Raw text parser based on Spacy and BIST parsers
 ===============================================
 
-The parser uses Spacy's english model for sentence breaking,
+The parser uses Spacy_'s english model for sentence breaking,
 tokenization and token annotations (part-of-speech, lemma, NER).
 Dependency relations between tokens are extracted using BIST parser.
 The BIST parser is described `here <https://www.transacl.org/ojs/index.php/tacl/article/viewFile/885/198>`__,
@@ -142,3 +142,4 @@ References
 .. [1] Kiperwasser, E., & Goldberg, Y. (2016). Simple and Accurate Dependency Parsing Using Bidirectional LSTM Feature Representations. Transactions Of The Association For Computational Linguistics, 4, 313-327. https://transacl.org/ojs/index.php/tacl/article/view/885/198
 
 .. _models: https://spacy.io/usage/models
+.. _Spacy: https://spacy.io
