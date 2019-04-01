@@ -153,8 +153,8 @@ Arguments:
 References
 ==========
 
-.. [1] `Simple and Accurate Dependency Parsing Using Bidirectional LSTM Feature Representations <https://transacl.org/ojs/index.php/tacl/article/view/885/198>`__, Kiperwasser, E., & Goldberg, Y, Transactions Of The Association For Computational Linguistics (2106), 4, 313-327.
-.. [2] `Opinion word expansion and target extraction through double propagation <https://dl.acm.org/citation.cfm?id=1970422>`__, Guang  Qiu,  Bing  Liu,  Jiajun  Bu,  and  Chun  Chen, In Computational Linguistics, volume 37(1).
-.. [3] `Mining and Summarizing Customer Reviews <http://dx.doi.org/10.1145/1014052.1014073>`__, Minqing Hu and Bing Liu, Proceedings of the tenth ACM SIGKDD International Conference on Knowledge Discovery and Data Mining (KDD-2004), pp. 168-177, 2004.
+.. [1] `Simple and Accurate Dependency Parsing Using Bidirectional LSTM Feature Representations <https://transacl.org/ojs/index.php/tacl/article/view/885/198>`__, Eliyahu Kiperwasser and Yoav Goldberg. 2016. Transactions of the Association of Computational Linguistics, 4:313–327.
+.. [2] `Opinion Word Expansion and Target Extraction through Double Propagation <https://dl.acm.org/citation.cfm?id=1970422>`__, Guang Qiu, Bing Liu, Jiajun Bu, and Chun Chen. 2011. Computational Linguistics, 37(1): 9–27.
+.. [3] `Mining and Summarizing Customer Reviews <http://dx.doi.org/10.1145/1014052.1014073>`__, Minqing Hu and Bing Liu. 2004. In Proceedings of the Tenth ACM SIGKDD International Conference on Knowledge Discovery and Data Mining, KDD ’04, pages 168–177.
 
 .. _Spacy: https://spacy.io

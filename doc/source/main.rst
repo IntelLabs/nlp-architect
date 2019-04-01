@@ -42,6 +42,7 @@ The library contains state-of-art and novel NLP and NLU models in a variety of t
 - Reading comprehension
 - Language modeling using Temporal Convolution Network
 - Unsupervised Crosslingual Word Embedding
+- Aspect Based Sentiment Analysis
 - Supervised sentiment analysis
 - Sparse and quantized neural machine translation
 - Relation Identification and cross document coreference
