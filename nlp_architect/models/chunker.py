@@ -134,7 +134,7 @@ class SequenceTagger(object):
 
         model = tf.keras.Model(input_src, [pos_out, chunks_out])
         if optimizer is None:
-            self.optimizer = tf.train.AdamOptimizer()
+            self.optimizer = tf.keras.optimizers.Adam(0.001, clipnorm=5.)
         else:
             self.optimizer = optimizer
         model.compile(optimizer=self.optimizer,

@@ -31,8 +31,8 @@ class NerApi(AbstractApi):
     NER model API
     """
     model_dir = str(LIBRARY_OUT / 'ner-pretrained')
-    pretrained_model = path.join(model_dir, 'model.h5')
-    pretrained_model_info = path.join(model_dir, 'model_info.dat')
+    pretrained_model = path.join(model_dir, 'model_v4.h5')
+    pretrained_model_info = path.join(model_dir, 'model_info_v4.dat')
 
     def __init__(self, prompt=True):
         self.model = None
@@ -71,10 +71,10 @@ class NerApi(AbstractApi):
                     sys.exit(0)
             download_unlicensed_file('https://s3-us-west-2.amazonaws.com/nlp-architect-data'
                                      '/models/ner/',
-                                     'model.h5', self.pretrained_model)
+                                     'model_v4.h5', self.pretrained_model)
             download_unlicensed_file('https://s3-us-west-2.amazonaws.com/nlp-architect-data'
                                      '/models/ner/',
-                                     'model_info.dat', self.pretrained_model_info)
+                                     'model_info_v4.dat', self.pretrained_model_info)
             print('Done.')
 
     def load_model(self):
@@ -129,8 +129,8 @@ class NerApi(AbstractApi):
         doc_vec = self.vectorize(text_arr, self.word_vocab, self.char_vocab)
         seq_len = np.array([len(text_arr)]).reshape(-1, 1)
         inputs = list(doc_vec)
-        if self.model.crf_mode == 'pad':
-            inputs = list(doc_vec) + [seq_len]
+        # pylint: disable=no-member
+        inputs = list(doc_vec) + [seq_len]
         doc_ner = self.model.predict(inputs, batch_size=1).argmax(2).flatten()
         tags = [self.y_vocab.get(n, None) for n in doc_ner]
         return self.pretty_print(text_arr, tags)

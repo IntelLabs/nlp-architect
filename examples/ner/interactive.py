@@ -82,6 +82,7 @@ if __name__ == '__main__':
         doc_vec = vectorize(text_arr, word_vocab, char_vocab)
         seq_len = np.array([len(text_arr)]).reshape(-1, 1)
         inputs = list(doc_vec)
+        # pylint: disable=no-member
         if model.crf_mode == 'pad':
             inputs = list(doc_vec) + [seq_len]
         doc_ner = model.predict(inputs, batch_size=1).argmax(2).flatten()

@@ -32,7 +32,7 @@
 .. toctree::
    :hidden:
    :maxdepth: 1
-   :caption: NLP/NLU Components
+   :caption: NLP/NLU Models
 
    Aspect Based Sentiment Analysis <absa.rst>
    chunker.rst
@@ -43,19 +43,13 @@
    word_sense.rst
    np2vec.rst
    supervised_sentiment.rst
+   reading_comprehension.rst
+   memn2n.rst
    TCN Language Model <tcn.rst>
    Unsupervised Crosslingual Embeddings <crosslingual_emb.rst>
    Cross Document Co-Reference <cross_doc_coref.rst>
    Semantic Relation Identification  <identifying_semantic_relation.rst>
    Sparse Neural Machine Translation <sparse_gnmt.rst>
-
-.. toctree::
-   :hidden:
-   :maxdepth: 1
-   :caption: End to End Models
-
-   reading_comprehension.rst
-   memn2n.rst
 
 .. toctree::
    :hidden:
