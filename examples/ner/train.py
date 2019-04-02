@@ -108,13 +108,13 @@ if __name__ == '__main__':
     y_train = keras.utils.to_categorical(y_train, num_y_labels)
 
     ner_model = NERCRF(use_cudnn=args.use_cudnn)
+    # pylint: disable=unexpected-keyword-arg
     ner_model.build(args.word_length,
                     num_y_labels,
                     vocabulary_size,
                     char_vocabulary_size,
                     word_embedding_dims=args.word_embedding_dims,
                     char_embedding_dims=args.character_embedding_dims,
-                    word_lstm_dims=args.char_features_lstm_dims,
                     tagger_lstm_dims=args.entity_tagger_lstm_dims,
                     dropout=args.dropout)
 
@@ -126,9 +126,9 @@ if __name__ == '__main__':
 
     train_inputs = [x_train, x_char_train]
     test_inputs = [x_test, x_char_test]
-    if not args.use_cudnn:
-        train_inputs.append(np.sum(np.not_equal(x_train, 0), axis=-1).reshape((-1, 1)))
-        test_inputs.append(np.sum(np.not_equal(x_test, 0), axis=-1).reshape((-1, 1)))
+
+    train_inputs.append(np.sum(np.not_equal(x_train, 0), axis=-1).reshape((-1, 1)))
+    test_inputs.append(np.sum(np.not_equal(x_test, 0), axis=-1).reshape((-1, 1)))
 
     conll_cb = ConllCallback(test_inputs, y_test, dataset.y_labels.vocab,
                              batch_size=args.b)

@@ -38,10 +38,8 @@ class NERCRF(object):
         self.char_vocab_size = None
         self.word_embedding_dims = None
         self.char_embedding_dims = None
-        self.word_lstm_dims = None
         self.tagger_lstm_dims = None
         self.dropout = None
-        self.crf_mode = None
         self.use_cudnn = use_cudnn
 
     def build(self,
@@ -51,10 +49,8 @@ class NERCRF(object):
               char_vocab_size,
               word_embedding_dims=100,
               char_embedding_dims=16,
-              word_lstm_dims=20,
               tagger_lstm_dims=200,
-              dropout=0.5,
-              crf_mode='pad'):
+              dropout=0.5):
         """
         Build a NERCRF model
 
@@ -65,11 +61,8 @@ class NERCRF(object):
             char_vocab_size (int): character vocabulary size
             word_embedding_dims (int): word embedding dimensions
             char_embedding_dims (int): character embedding dimensions
-            word_lstm_dims (int): character LSTM feature extractor output dimensions
             tagger_lstm_dims (int): word tagger LSTM output dimensions
             dropout (float): dropout rate
-            crf_mode (string): CRF operation mode, select 'pad'/'reg' for supplied sequences in
-                input or full sequence tagging. ('reg' is forced when use_cudnn=True)
         """
         self.word_length = word_length
         self.target_label_dims = target_label_dims
@@ -77,12 +70,8 @@ class NERCRF(object):
         self.char_vocab_size = char_vocab_size
         self.word_embedding_dims = word_embedding_dims
         self.char_embedding_dims = char_embedding_dims
-        self.word_lstm_dims = word_lstm_dims
         self.tagger_lstm_dims = tagger_lstm_dims
         self.dropout = dropout
-        self.crf_mode = crf_mode
-
-        assert crf_mode in ('pad', 'reg'), 'crf_mode is invalid'
 
         # build word input
         words_input = tf.keras.layers.Input(shape=(None,), name='words_input')
@@ -117,23 +106,17 @@ class NERCRF(object):
 
         inputs = [words_input, word_chars_input]
 
-        if self.use_cudnn:
-            self.crf_mode = 'reg'
-        with tf.device('/cpu:0'):
-            crf = CRF(self.target_label_dims, mode=self.crf_mode, name='ner_crf')
-            if self.crf_mode == 'pad':
-                sequence_lengths = tf.keras.layers.Input(batch_shape=(None, 1), dtype='int32')
-                predictions = crf([bilstm, sequence_lengths])
-                inputs.append(sequence_lengths)
-            else:
-                predictions = crf(bilstm)
+        sequence_lengths = tf.keras.layers.Input(shape=(1,), dtype='int32', name='seq_lens')
+        inputs.append(sequence_lengths)
+        crf = CRF(self.target_label_dims, name='ner_crf')
+        predictions = crf(inputs=bilstm, sequence_lengths=sequence_lengths)
 
         # compile the model
         model = tf.keras.Model(inputs=inputs,
                                outputs=predictions)
         model.compile(loss={'ner_crf': crf.loss},
-                      optimizer=tf.keras.optimizers.Adam(0.001, clipnorm=5.),
-                      metrics=[crf.viterbi_accuracy])
+                      optimizer=tf.keras.optimizers.Adam(0.001, clipnorm=5.))
+
         self.model = model
 
     def _rnn_cell(self, units, **kwargs):

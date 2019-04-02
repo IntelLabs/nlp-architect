@@ -119,7 +119,6 @@ class SequentialTaggingDataset(object):
         with open(filepath, encoding='utf-8') as fp:
             data = fp.readlines()
             data = [d.strip() for d in data]
-            data = [d for d in data if 'DOCSTART' not in d]
             sentences = self._split_into_sentences(data)
             parsed_sentences = [self._parse_sentence(s) for s in sentences if len(s) > 0]
         return parsed_sentences
