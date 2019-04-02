@@ -31,7 +31,7 @@ a statistical analysis of sentiment towards specific aspects in the inference da
 
 The solution uses the opinion and aspect lexicons that are generated using NLP Architect's ABSA
 training model (see blue blocks in 'flow' diagram below). For more details regarding the training step
-see :doc:`ABSA <absa>`
+see :doc:`ABSA <absa>`.
 
 The solution encapsulates the ABSA inference model (green blocks) and adds on top of it a
 statistical analysis module (grey block) for calculating the amount of positive and negative sentiment
@@ -61,23 +61,24 @@ blue and opinion terms are colored in green/red:
 Solution execution
 ==================
 
-The solution execution is divided to two parts - training A and inference:
+The solution execution is divided to two parts - training and inference:
 
 Training
 ========
 
-See training under :doc:`ABSA <absa>`
+See training under :doc:`ABSA <absa>`.
 
 
 Inference
 =========
 
+
 Full code example is available at ``examples/absa/solution/absa_solution.py``.
 There are two training modes:
 
-1. Providing solution data in a raw text format. In this case the solution flow will
-apply the dependency parser to the data:
 
+**1.** Providing solution data in a raw text format. In this case the solution flow will
+apply the dependency parser to the data:
 
 .. code:: python
 
@@ -86,7 +87,7 @@ apply the dependency parser to the data:
             data='/path/to/text/file/or/directory')
 
 
-Arguments:
+**Arguments:**
 
 ``aspect_lex'=/path/to/aspects.csv'``  - path to aspect lexicon (csv file) that was produced by the training phase.
 aspect.csv may be manually edited for grouping alias aspect names (e.g. 'drinks' and 'beverages')
@@ -98,7 +99,7 @@ together. Simply copy all alias names to the same line in the csv file.
 separated by newlines or a single csv file containing one doc per line or a directory containing one raw
 text file per document.
 
-Notes:
+**Notes:**
 
 a. For demonstration purposes we provide a sample of tripadvisor.co.uk
 restaurants reviews under the `Creative Commons Attribution-Share-Alike 3.0 License <https://creativecommons.org/licenses/by-sa/3.0/>`__ (Copyright 2018 Wikimedia Foundation).
@@ -107,8 +108,8 @@ The dataset can is located at ``datasets/absa/tripadvisor_co_uk-travel_restauran
 b. By default, when the execution terminates, a browser window is opened, displaying the
 visualization UI.
 
-
-2. Providing parsed training data. In this case the solution flow skips the parsing step:
+|
+| **2.** Providing parsed training data. In this case the solution flow skips the parsing step:
 
 .. code:: python
 
@@ -117,7 +118,7 @@ visualization UI.
                             parsed_data='/path/to/parsed/directory',
                             ui=False)
 
-Note:
+**Note:**
 
 Setting ``ui=False`` disables the UI and enables to get the sentiment statistics as dataframe. This
 enables the user to use those statistics as input to his own custom built visualization.
