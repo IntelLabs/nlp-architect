@@ -28,3 +28,4 @@ pillow
 hug
 falcon
 falcon_multipart
+matplotlib
