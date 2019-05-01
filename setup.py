@@ -16,7 +16,6 @@
 # ******************************************************************************
 import io
 import os
-import platform
 import subprocess
 import sys
 
@@ -34,12 +33,10 @@ p = subprocess.Popen(['command -v nvidia-smi'], stdout=subprocess.PIPE, shell=Tr
 out = p.communicate()[0].decode('utf8')
 gpu_available = len(out) > 0
 
-# check python version
-py3_ver = int(platform.python_version().split('.')[1])
-
 # Tensorflow version (make sure CPU/MKL/GPU versions exist before changing)
-tf_version = '1.12.0'
-tf_mkl_url = 'https://storage.googleapis.com/intel-optimized-tensorflow/tensorflow-{}-cp3{}-cp3{}m-linux_x86_64.whl'
+for r in install_requirements:
+    if r.startswith('tensorflow=='):
+        tf_version = r.split('==')[1]
 
 # default TF is CPU
 chosen_tf = 'tensorflow=={}'.format(tf_version)
@@ -48,9 +45,7 @@ if 'linux' in sys.platform:
     system_type = 'linux'
     tf_be = os.getenv('NLP_ARCHITECT_BE', False)
     if tf_be and 'mkl' == tf_be.lower():
-        if py3_ver == 5 or py3_ver == 6:
-            tf_mkl_url_real = tf_mkl_url.format(tf_version, py3_ver, py3_ver)
-            subprocess.call([sys.executable, '-m', 'pip', 'install', tf_mkl_url_real])
+        chosen_tf = 'intel-tensorflow=={}'.format(tf_version)
     elif tf_be and 'gpu' == tf_be.lower() and gpu_available:
         chosen_tf = 'tensorflow-gpu=={}'.format(tf_version)
 
