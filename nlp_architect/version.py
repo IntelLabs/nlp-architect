@@ -17,7 +17,7 @@
 MAJOR_V = 0
 MINOR_V = 4
 PATCH_V = 0
-STAGE = ''
+STAGE = 'post1'
 
 
 def nlp_architect_version():
@@ -26,7 +26,7 @@ def nlp_architect_version():
     else:
         v = '{}.{}'.format(MAJOR_V, MINOR_V)
     if len(STAGE) != 0:
-        v += '-{}'.format(STAGE)
+        v += '.{}'.format(STAGE)
     return v
 
 
