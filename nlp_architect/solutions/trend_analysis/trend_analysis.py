@@ -37,7 +37,8 @@ logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 logger = logging.getLogger(__name__)
 target_topics_path = path.join(dir, 'target_topics.csv')
 ref_topics_path = path.join(dir, 'ref_topics.csv')
-
+target_scores_path = path.join(dir, 'target_scores.csv')
+ref_scores_path = path.join(dir, 'ref_scores.csv')
 
 def analyze(target_data, ref_data, tar_header, ref_header, top_n=10000, top_n_vectors=500,
             re_analysis=False, tfidf_w=0.5, cval_w=0.5, lm_w=0):
@@ -65,7 +66,9 @@ def analyze(target_data, ref_data, tar_header, ref_header, top_n=10000, top_n_ve
     create_clusters = False
     try:
         if not re_analysis:  # first analysis, not through ui
-            copyfile(target_data, target_topics_path)
+            copyfile(target_data, target_topics_path) # copying the initial
+            # scores file to have a const filename for the ui to recognize
+            #  when reanalyzing
             copyfile(ref_data, ref_topics_path)
         calc_scores(target_data, tfidf_w, cval_w, lm_w, target_topics_path)
         calc_scores(ref_data, tfidf_w, cval_w, lm_w, ref_topics_path)
