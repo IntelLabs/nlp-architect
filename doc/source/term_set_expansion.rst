@@ -75,20 +75,19 @@ size, min_count, window and hs hyperparameters. Please refer to the np2vec modul
     --corpus_format txt
 
 
-A `pretrained model <http://nervana-modelzoo.s3.amazonaws.com/NLP/SetExp/enwiki-20171201_pretrained_set_expansion.txt>`__
+A `pretrained model <https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/term_set/enwiki-20171201_pretrained_set_expansion.txt.tar.gz>`__
 on English Wikipedia dump (``enwiki-20171201-pages-articles-multistream.xml.bz2``) is available under
 Apache 2.0 license. It has been trained with hyperparameters values
-recommended above. Full English Wikipedia `raw corpus <http://nervana-modelzoo.s3.amazonaws.com/NLP/SetExp/enwiki-20171201.txt>`_ and
-`marked corpus <http://nervana-modelzoo.s3.amazonaws.com/NLP/SetExp/enwiki-20171201_spacy_marked.txt>`_
+recommended above. Full English Wikipedia `raw corpus <https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/term_set/enwiki-20171201.txt.gz>`_ and
+`marked corpus <https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/term_set/enwiki-20171201_spacy_marked.txt.tar.gz>`_
 are also available under the
 `Creative Commons Attribution-Share-Alike 3.0 License <https://creativecommons.org/licenses/by-sa/3.0/>`__.
 
-A `pretrained model with grouping <http://nervana-modelzoo.s3.amazonaws
-.com/NLP/SetExp/enwiki-20171201_grouping_pretrained_set_expansion/>`__
+A `pretrained model with grouping <https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/term_set/enwiki-20171201_grouping_pretrained_set_expansion.tar.gz>`__
 on the same English Wikipedia dump is also
 available under
 Apache 2.0 license. It has been trained with hyperparameters values
-recommended above. `Marked corpus <http://nervana-modelzoo.s3.amazonaws.com/NLP/SetExp/enwiki-20171201_grouping_marked.txt>`_
+recommended above. `Marked corpus <https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/term_set/enwiki-20171201_grouping_marked.txt.tar.gz>`_
 is also available under the
 `Creative Commons Attribution-Share-Alike 3.0 License <https://creativecommons.org/licenses/by-sa/3.0/>`__.
 
