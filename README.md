@@ -1,7 +1,7 @@
 <p align="center">
     <br>
     <a href="https://github.com/NervanaSystems/nlp-architect/">
-        <img src="https://raw.githubusercontent.com/NervanaSystems/nlp-architect/master/assets/nlp_architect_header.png" width="400"/>
+        <img src="https://raw.githubusercontent.com/NervanaSystems/nlp-architect/master/assets/nlp_architect_logo.png" width="400"/>
     </a>
     <br>
 <p>
