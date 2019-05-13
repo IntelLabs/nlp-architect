@@ -28,7 +28,7 @@ provide a subset of English Wikipedia at datasets/wikipedia as a sample corpus u
 [Creative Commons Attribution-Share-Alike 3.0 License](https://creativecommons.org/licenses/by-sa/3.0/)- Copyright 2018 Wikimedia Foundation.
 
 The output of this step is the marked corpus where noun phrases are marked with the marking character (default: "\_") as described in the [NLP Architect np2vec module documentation](http://nlp_architect.nervanasys.com/np2vec.html).
-The Noun phrase extraction module is using a pre-trained [model](http://nervana-modelzoo.s3.amazonaws.com/NLP/chunker/model.h5) which is available under the Apache 2.0 license. 
+The Noun phrase extraction module is using a pre-trained [model](https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/chunker/model.h5) which is available under the Apache 2.0 license. 
 
 This is done by running:
 ```
@@ -58,19 +58,19 @@ size, min_count, window and hs hyperparameters. Please refer to the np2vec modul
 python examples/np2vec/train.py --size 100 --min_count 10 --window 10 --hs 0 --corpus MARKED_TRAINING_CORPUS --np2vec_model_file MODEL_PATH --corpus_format txt
 ```
 
-A [pretrained model](http://nervana-modelzoo.s3.amazonaws.com/NLP/SetExp/enwiki-20171201_pretrained_set_expansion.txt) 
+A [pretrained model](https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/term_set/enwiki-20171201_pretrained_set_expansion.txt.tar.gz) 
 on English Wikipedia dump (enwiki-20171201-pages-articles-multistream.xml.bz2) is available under the
 Apache 2.0 license. It has been trained with hyperparameters values
-recommended above. Full English Wikipedia [raw corpus](http://nervana-modelzoo.s3.amazonaws.com/NLP/SetExp/enwiki-20171201.txt) and 
-[marked corpus](http://nervana-modelzoo.s3.amazonaws.com/NLP/SetExp/enwiki-20171201_spacy_marked.txt) 
+recommended above. Full English Wikipedia [raw corpus](https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/term_set/enwiki-20171201.txt.gz) and 
+[marked corpus](https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/term_set/enwiki-20171201_spacy_marked.txt.tar.gz) 
 are also available under the  
 [Creative Commons Attribution-Share-Alike 3.0 License](https://creativecommons.org/licenses/by-sa/3.0/).
 
-A [pretrained model with grouping](http://nervana-modelzoo.s3.amazonaws.com/NLP/SetExp/enwiki-20171201_grouping_pretrained_set_expansion/)
+A [pretrained model with grouping](https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/term_set/enwiki-20171201_grouping_pretrained_set_expansion.tar.gz)
 on the same English Wikipedia dump is also
 available under
 Apache 2.0 license. It has been trained with hyperparameters values
-recommended above. [Marked corpus](http://nervana-modelzoo.s3.amazonaws.com/NLP/SetExp/enwiki-20171201_grouping_marked.txt)
+recommended above. [Marked corpus](https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/term_set/enwiki-20171201_grouping_marked.txt.tar.gz)
 is also available under the
 [Creative Commons Attribution-Share-Alike 3.0 License](https://creativecommons.org/licenses/by-sa/3.0/).
 

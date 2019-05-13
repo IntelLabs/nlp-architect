@@ -30,12 +30,12 @@ NLP Architect Model Zoo
         | `2x2 block sparse model <https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/sparse_gnmt/gnmt_blocksparse2x2.zip>`_
    * - :doc:`Intent Extraction <intent>`
      - A :py:class:`MultiTaskIntentModel <nlp_architect.models.intent_extraction.MultiTaskIntentModel>` intent extraction and slot tagging model, trained on SNIPS NLU dataset
-     - | `model <https://s3-us-west-2.amazonaws.com/models/intent/model.h5>`_
-       | `params <https://s3-us-west-2.amazonaws.com/models/intent/model_info.dat>`_
+     - | `model <https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/intent/model.h5>`_
+       | `params <https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/intent/model_info.dat>`_
    * - :doc:`Named Entity Recognition <ner_crf>`
      - A :py:class:`NERCRF <nlp_architect.models.ner_crf.NERCRF>` model trained on CoNLL 2003 dataset
-     - | `model <https://s3-us-west-2.amazonaws.com/models/ner/model.h5>`_
-       | `params <https://s3-us-west-2.amazonaws.com/models/ner/model_info.dat>`_
+     - | `model <https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/ner/model.h5>`_
+       | `params <https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/ner/model_info.dat>`_
    * - :doc:`Dependency parser <bist_parser>`
      - Graph-based dependency parser using BiLSTM feature extractors
      - `model <https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/dep_parse/bist-pretrained.zip>`_
