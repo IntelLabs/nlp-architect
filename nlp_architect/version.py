@@ -17,7 +17,7 @@
 MAJOR_V = 0
 MINOR_V = 4
 PATCH_V = 0
-STAGE = 'post1'
+STAGE = 'post2'
 
 
 def nlp_architect_version():

@@ -24,23 +24,27 @@ The dataset can be downloaded from [https://github.com/snipsco/nlu-benchmark](ht
 Once the dataset is downloaded, point `<SNIPS folder/2017-06-custom-intent-engines` as the dataset path to `nlp_architect.data.intent_datasets.SNIPS`.
 
 ## Training
-A quick example for training the joint task model (predicts slot tags and intent type) using SNIPS dataset and saving the model weights to `my_model.h5`:
+A quick example for training the multi-task model (predicts slot tags and intent type) using SNIPS dataset and saving the model weights to local file:
 
 ```
-python train_joint_model.py --model_path my_model.h5 --dataset_path <path_to_data>
+python examples/intent_extraction/train_mtl_model.py --dataset_path <dataset path> -b 10 -e 10
 ```
 
 An example for training an Encoder-Decoder model (predicts slot tags) using SNIPS, GloVe word embedding model of size 100 and saving the model weights to `my_model.h5`:
 
 ```
-python train_enc-dec_model.py --embedding_model <path_to_glove_100_file> --token_emb_size 100 --dataset_path <path_to_data> --model_path my_model.h5
+python examples/intent_extraction/train_enc-dec_model.py \
+    --embedding_model <path_to_glove_100_file> \
+    --token_emb_size 100 \
+    --dataset_path <path_to_data> \
+    --model_path my_model.h5
 ```
 
-to list all possible parameters: `python train_joint_model.py/train_enc-dec_model.py -h`
+to list all possible parameters using `-h` keyword.
 
 ## Interactive mode
 Interactive mode allows to run sentences on a trained model (either of two) and get the results of the models displayed interactively.
 Example:
 ```
-python interactive.py --model_path model.h5 --model_info_path model_info.dat
+python examples/intent_extraction/interactive.py --model_path model.h5 --model_info_path model_info.dat
 ```
