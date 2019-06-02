@@ -1,5 +1,5 @@
 tensorflow==1.13.1
-dynet==2.0.2
+dynet==2.1
 spacy
 nltk
 gensim
