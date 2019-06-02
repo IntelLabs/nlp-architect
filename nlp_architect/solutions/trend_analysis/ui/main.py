@@ -76,7 +76,7 @@ filter_custom_table = DataTable(
     css_classes=['filter_custom_table'])
 radio_group_area = RadioGroup(
     labels=["All", "Top Topics", "Trends", "Trend Clustering", "Custom Trends", "Topic Clustering",
-            "Filter"], active=0, inline=True, width=400)
+            "Filter"], active=0, orientation="vertical", height=150)
 n_menu = [("5", "5"), ("10", "10"), ("20", "20"), ("30", "30")]
 n_clusters_menu = [("20", "20"), ("50", "50"), ("100", "100"), ("300", "300"), ("500", "500")]
 scores = [("0", "0"), ("0.1", "0.1"), ("0.25", "0.25"), ("0.5", "0.5"), ("1", "1")]
@@ -119,7 +119,7 @@ grid = layout(
     [
         [Div(width=500), Div(text="<H1>AIPG Trend Analysis</H1>")],
         [label],
-        [config_area, Div(width=50), graphs_area]
+        [config_area, graphs_area]
     ]
 )
 
@@ -753,7 +753,7 @@ def search_topic_callback():
     refresh_filter_area()
 
 
-def tab_changed_callback(_):
+def tab_changed_callback(active, old, new):
     reset_filters()
 
 
