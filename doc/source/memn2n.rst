@@ -92,7 +92,7 @@ To begin interactive evaluation with a trained model, the following command can 
 
 .. code:: python
 
-  python examples/memn2n_dialog/interactive.py --model_file memn2n_weights.npz
+  python examples/memn2n_dialog/interactive.py --weights_save_path memn2n_weights.npz
 
 Interactive evaluation begins at the end of training and works as an interactive shell.
 Commands available for the shell are as follows:
