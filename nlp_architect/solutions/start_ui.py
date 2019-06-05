@@ -43,7 +43,7 @@ if __name__ == '__main__':
     parser.add_argument('--port', type=int, default=1010,
                         help='Port number')
     parser.add_argument('--no_shell', action='store_true',
-                           help="not running through shell interface")
+                        help="not running through shell interface")
     args = parser.parse_args()
     if args.address and not check_if_ip(args.address):
         print('given address is not in a valid ip address format')
@@ -54,5 +54,5 @@ if __name__ == '__main__':
         cmd_str += ' --address={} ' \
                    '--allow-websocket-origin={}:{}'.\
             format(args.address, args.address, args.port)
-        
+
     run(cmd_str, shell=not args.no_shell)
