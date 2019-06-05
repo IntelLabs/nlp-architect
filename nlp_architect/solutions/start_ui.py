@@ -53,6 +53,6 @@ if __name__ == '__main__':
     if args.address:
         cmd_str += ' --address={} ' \
                    '--allow-websocket-origin={}:{}'.\
-            format(args.port, args.address, args.port)
+            format(args.address, args.address, args.port)
         
     run(cmd_str, shell=not args.no_shell)
