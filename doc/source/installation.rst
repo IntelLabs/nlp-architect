@@ -56,7 +56,7 @@ To create and activate a new virtual environment (or skip this step and use the 
 
 .. code:: bash
 
-    python3 -m venv .nlp_architect_env
+    python3.6 -m venv .nlp_architect_env
     source .nlp_architect_env/bin/activate
 
 
