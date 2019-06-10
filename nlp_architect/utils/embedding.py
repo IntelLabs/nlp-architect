@@ -13,14 +13,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
-from __future__ import division
-from __future__ import print_function
-from __future__ import unicode_literals
-from __future__ import absolute_import
+from __future__ import (absolute_import, division, print_function,
+                        unicode_literals)
+
+from typing import List
 
 import numpy as np
 import tensorflow as tf
 import tensorflow_hub as hub
+from gensim.models import FastText
 
 from nlp_architect.utils.text import Vocabulary
 
@@ -124,3 +125,46 @@ class ELMoEmbedderTFHUB(object):
                          feed_dict={self.inputs['tokens']: [tokens],
                                     self.inputs['sequence_len']: [len(tokens)]})
         return np.squeeze(vec, axis=0)
+
+
+class FasttextEmbeddingsModel(object):
+    """Fasttext embedding trainer class
+
+    Args:
+        texts (List[List[str]]): list of tokenized sentences
+        size (int): embedding size
+        epochs (int, optional): number of epochs to train
+        window (int, optional): The maximum distance between
+        the current and predicted word within a sentence
+
+    """
+
+    def __init__(self, size: int = 5, window: int = 3, min_count: int = 1, skipgram: bool = True):
+        model = FastText(size=size, window=window, min_count=min_count, sg=skipgram)
+        self.model = model
+
+    def train(self, texts: List[List[str]], epochs: int = 100):
+        self.model.build_vocab(texts)
+        self.model.train(sentences=texts, total_examples=len(texts), epochs=epochs)
+
+    def vec(self, word: str) -> np.ndarray:
+        """return vector corresponding given word
+        """
+        return self.model.wv[word]
+
+    def __getitem__(self, item):
+        return self.vec(item)
+
+    def save(self, path) -> None:
+        """save model to path
+        """
+        self.model.save(path)
+
+    @classmethod
+    def load(cls, path):
+        """load model from path
+        """
+        loaded_model = FastText.load(path)
+        new_model = cls()
+        new_model.model = loaded_model
+        return new_model
