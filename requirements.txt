@@ -8,7 +8,6 @@ scipy
 numpy
 tensorflow_hub
 elasticsearch
-fasttextmirror
 newspaper3k
 wordfreq
 seqeval

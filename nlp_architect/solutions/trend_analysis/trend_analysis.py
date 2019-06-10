@@ -25,10 +25,10 @@ from shutil import copyfile
 
 import numpy
 import pandas as pd
-from fastText import load_model
 from sklearn.manifold import TSNE
 
 from nlp_architect import LIBRARY_OUT
+from nlp_architect.utils.embedding import FasttextEmbeddingsModel
 from nlp_architect.utils.io import check_size, validate_existing_filepath
 from nlp_architect.utils.text import simple_normalizer
 
@@ -248,9 +248,9 @@ def compute_scatter_subwords(top_groups, w2v_loc):
     try:
         if path.isfile(w2v_loc):
             logger.info("computing scatter on %s groups", str(len(top_groups)))
-            model = load_model(w2v_loc)
+            model = FasttextEmbeddingsModel.load(w2v_loc)
             for a in top_groups:
-                x_feature.append(numpy.array(model.get_word_vector(a)))
+                x_feature.append(model[a])
                 np_indices.append(a)
                 in_ctr += 1
             logger.info("topics found in model out of %s: %s.", str(len(top_groups)), str(in_ctr))

@@ -1,4 +1,3 @@
-
 # ******************************************************************************
 # Copyright 2017-2019 Intel Corporation
 #
@@ -14,24 +13,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
-from nlp_architect.utils.string_utils import StringUtils
+
+import os
+import pathlib
+import shutil
+import tempfile
+from unittest import TestCase
+
+TEST_DIR = tempfile.mkdtemp(prefix="nlp_architect_tests")
 
 
-def test_is_determiner():
-    assert StringUtils.is_determiner('the')
-    assert StringUtils.is_determiner('on') is False
+class NLPArchitectTestCase(TestCase):
+    def setUp(self):
+        self.TEST_DIR = pathlib.Path(TEST_DIR)
+        os.makedirs(self.TEST_DIR, exist_ok=True)
 
-
-def test_is_preposition():
-    assert StringUtils.is_preposition('the') is False
-    assert StringUtils.is_preposition('on')
-
-
-def test_is_pronoun():
-    assert StringUtils.is_pronoun('anybody')
-    assert StringUtils.is_pronoun('the') is False
-
-
-def test_is_stopword():
-    assert StringUtils.is_stop('always')
-    assert StringUtils.is_stop('sunday') is False
+    def tearDown(self):
+        shutil.rmtree(self.TEST_DIR)

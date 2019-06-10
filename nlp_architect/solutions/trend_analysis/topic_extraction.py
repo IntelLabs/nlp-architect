@@ -19,17 +19,17 @@ from __future__ import (absolute_import, division, print_function,
 
 import argparse
 import csv
-import os
 import logging
+import os
 import sys
 from multiprocessing import Pool
-from os import path, makedirs
+from os import makedirs, path
 
-from fastText import train_unsupervised
 from newspaper import Article
 
-from nlp_architect.solutions.trend_analysis.np_scorer import NPScorer
 from nlp_architect import LIBRARY_OUT
+from nlp_architect.solutions.trend_analysis.np_scorer import NPScorer
+from nlp_architect.utils.embedding import FasttextEmbeddingsModel
 from nlp_architect.utils.io import validate_existing_directory
 from nlp_architect.utils.text import SpacyInstance
 
@@ -219,10 +219,13 @@ def train_w2v_model(data):
     Args:
         data: A path to the training data (String)
     """
+    with open(data) as fp:
+        texts = [l.split() for l in fp.readlines()]
     logger.info('Fasttext embeddings training...')
     try:
-        model = train_unsupervised(input=data, model='skipgram', epoch=100, minCount=1, dim=100)
-        model.save_model(str(path.join(data_dir, 'W2V_Models/model.bin')))
+        model = FasttextEmbeddingsModel(size=100, min_count=1, skipgram=True)
+        model.train(texts, epochs=100)
+        model.save(str(path.join(data_dir, 'W2V_Models/model.bin')))
     except Exception as e:
         logger.error('Error: %s', str(e))
 
