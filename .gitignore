@@ -24,3 +24,4 @@ doc/build/**
 .nlp_architect_env/
 src/
 tests/fixtures/data/chunker/
+pytest_unit.xml

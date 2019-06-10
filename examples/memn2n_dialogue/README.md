@@ -16,5 +16,5 @@ The flag `--use_match_type` can also be used to enable match type features (for 
 
 ## Interactive 
 To begin interactive evaluation with a trained model, the following command can be used:
-`python interactive.py --task 5 --weight_save_path saved_tf/`
+`python interactive.py --task 5 --weights_save_path saved_tf/`
 
