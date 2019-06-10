@@ -219,7 +219,7 @@ def train_w2v_model(data):
     Args:
         data: A path to the training data (String)
     """
-    with open(data) as fp:
+    with open(data, encoding='utf-8') as fp:
         texts = [l.split() for l in fp.readlines()]
     logger.info('Fasttext embeddings training...')
     try:
