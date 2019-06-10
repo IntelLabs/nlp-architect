@@ -71,8 +71,8 @@ def analyze(target_data, ref_data, tar_header, ref_header, top_n=10000, top_n_ve
             # scores file to have a const filename for the ui to recognize
             #  when reanalyzing
             copyfile(ref_data, ref_topics_path)
-        calc_scores(target_data, tfidf_w, cval_w, lm_w, target_topics_path)
-        calc_scores(ref_data, tfidf_w, cval_w, lm_w, ref_topics_path)
+        calc_scores(target_data, tfidf_w, cval_w, lm_w, target_scores_path)
+        calc_scores(ref_data, tfidf_w, cval_w, lm_w, ref_scores_path)
         # unify all topics:
         with open(ref_data) as f:
             topics1 = sum(1 for _ in f)
@@ -80,8 +80,8 @@ def analyze(target_data, ref_data, tar_header, ref_header, top_n=10000, top_n_ve
             topics2 = sum(1 for _ in f)
         sum_topics = topics1 + topics2
         logger.info("sum of all topics= %s", str(sum_topics))
-        merge_phrases(ref_topics_path, True, hash2group, rep2rank, top_n, sum_topics)
-        merge_phrases(target_topics_path, False, hash2group, rep2rank, top_n, sum_topics)
+        merge_phrases(ref_scores_path, True, hash2group, rep2rank, top_n, sum_topics)
+        merge_phrases(target_scores_path, False, hash2group, rep2rank, top_n, sum_topics)
         logger.info("Total number of evaluated topics: %s", str(len(rep2rank)))
 
         # compute 2D space clusters if model exists:
