@@ -19,6 +19,7 @@ import argparse
 import pickle
 import logging
 import sys
+import re
 from nlp_architect.solutions.set_expansion import set_expand
 from nlp_architect.utils.io import validate_existing_filepath, check_size
 from nlp_architect.solutions.set_expansion.prepare_data import load_parser, extract_noun_phrases
@@ -66,6 +67,8 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
 
     @staticmethod
     def annotate(text, seed):
+        # remove extra spaces from text
+        text = re.sub("\s\s+", " ", text)
         np_list = []
         docs = [text]
         spans = extract_noun_phrases(docs, nlp, args.chunker)
