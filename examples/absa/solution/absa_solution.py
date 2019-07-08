@@ -13,17 +13,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
+from os import path
 from pathlib import Path
 
-from nlp_architect import LIBRARY_ROOT, LIBRARY_DATASETS
 from nlp_architect.solutions.absa_solution.sentiment_analysis import \
     SentimentSolution
 
 
 def main():
-    tripadvisor_data = LIBRARY_DATASETS / 'absa' / \
+    lib_root = Path(path.realpath(__file__)).parent.parent.parent.parent
+    tripadvisor_data = lib_root / 'datasets' / 'absa' / \
         'tripadvisor_co_uk-travel_restaurant_reviews_sample_2000_test.csv'
-    lexicons_dir = Path(LIBRARY_ROOT) / 'examples' / 'absa' / 'inference'
+    lexicons_dir = lib_root / 'examples' / 'absa' / 'inference'
     solution = SentimentSolution()
     solution.run(data=tripadvisor_data,
                  aspect_lex=lexicons_dir / 'aspects.csv',

@@ -44,13 +44,14 @@ class AspectTerm(object):
         pos (list): list of pos
     """
 
-    def __init__(self, terms, pos):
+    def __init__(self, terms, pos, lemmas):
         """
         Args:
             terms (list): list of terms
             pos (list): list of pos
         """
         self.terms = terms
+        self.lemmas = lemmas
         self.pos = pos
 
     def __str__(self):
@@ -64,7 +65,7 @@ class AspectTerm(object):
 
     @staticmethod
     def from_token(token):
-        return AspectTerm([token.text], [token.norm_pos])
+        return AspectTerm([token.text], [token.norm_pos], [token.lemma])
 
 
 class CandidateTerm(object):
@@ -88,6 +89,7 @@ class CandidateTerm(object):
         """
         self.term = [term_a.text]
         self.pos = [term_a.norm_pos]
+        self.lemma = [term_a.lemma]
         self.source_term = [term_b.text]
         self.sentence = sent_text
         self.term_polarity = candidate_term_polarity
@@ -157,10 +159,6 @@ class DepRelationTerm(object):
         return normalize_pos(self.text, self.pos)
 
 
-def string_list_headers():
-    return ["CandidateTerm", "Frequency", "Polarity"]
-
-
 class QualifiedTerm(object):
     """Qualified term - term that is accepted to generated lexicon.
 
@@ -172,8 +170,9 @@ class QualifiedTerm(object):
 
     """
 
-    def __init__(self, term, pos, frequency, term_polarity):
+    def __init__(self, term, lemma, pos, frequency, term_polarity):
         self.term = term
+        self.lemma = lemma
         self.pos = pos
         self.frequency = frequency
         self.term_polarity = term_polarity
@@ -181,6 +180,12 @@ class QualifiedTerm(object):
     def as_string_list(self):
         return [' '.join(self.term), str(self.frequency),
                 self.term_polarity.name]
+
+    def as_string_list_aspect(self):
+        return [' '.join(self.term)]
+
+    def as_string_list_aspect_debug(self):
+        return [str(self.frequency), ' '.join(self.term), ' '.join(self.lemma)]
 
 
 def load_lex_as_dict_from_csv(file_name: str or PathLike):
@@ -190,7 +195,7 @@ def load_lex_as_dict_from_csv(file_name: str or PathLike):
         file_name: the csv file name
     """
     lexicon_map = {}
-    with open(file_name) as f:
+    with open(file_name, encoding='utf-8') as f:
         reader = csv.DictReader(f, skipinitialspace=True)
         if reader is None:
             print("file name is None")

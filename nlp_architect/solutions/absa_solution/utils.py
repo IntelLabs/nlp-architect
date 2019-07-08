@@ -33,7 +33,7 @@ class TweetAnonymiser(Anonymiser):
     @staticmethod
     def _init_entity_dict(lexicon_path):
         ret = {}
-        with open(lexicon_path) as f:
+        with open(lexicon_path, encoding='utf-8') as f:
             for row in csv.reader(f):
                 ret[row[0]] = [_ for _ in row[1:] if _]
         return ret

@@ -26,7 +26,7 @@ from nlp_architect.solutions.absa_solution.sentiment_analysis import \
 from nlp_architect.utils.io import download_unzip
 
 
-def test_solution():
+def test_solution(generate_new=False):
     lexicons_dir = Path(LIBRARY_ROOT) / 'examples' / 'absa' / 'inference'
     expected_dir = Path(LIBRARY_ROOT) / 'tests' / 'fixtures' / 'data' / 'absa_solution'
     data_url = 'https://s3-us-west-2.amazonaws.com/nlp-architect-data/tests/'
@@ -42,5 +42,11 @@ def test_solution():
     predicted_trimmed.loc[:, 'Score'] = np.around(predicted_trimmed.loc[:, 'Score'], 2)
     os.remove('predicted.csv')
 
-    with open(expected_dir / 'expected.csv', encoding='utf-8') as expected_fp:
-        assert predicted_trimmed.to_csv() == expected_fp.read()
+    if generate_new:
+        with open('expected.csv', 'w', encoding='utf-8', newline='') as f:
+            predicted_trimmed.to_csv(f)
+        assert False
+
+    else:
+        with open(expected_dir / 'expected.csv', encoding='utf-8') as expected_fp:
+            assert predicted_trimmed.to_csv() == expected_fp.read()
