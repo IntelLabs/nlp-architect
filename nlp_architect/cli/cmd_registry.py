@@ -1,5 +1,5 @@
 # ******************************************************************************
-# Copyright 2017-2018 Intel Corporation
+# Copyright 2017-2019 Intel Corporation
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,18 +13,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
-
-MAJOR_V, MINOR_V, PATCH_V, STAGE = 0, 4, 0, 'post2'
-
-
-def nlp_architect_version():
-    if PATCH_V != 0:
-        v = '{}.{}.{}'.format(MAJOR_V, MINOR_V, PATCH_V)
-    else:
-        v = '{}.{}'.format(MAJOR_V, MINOR_V)
-    if len(STAGE) != 0:
-        v += '.{}'.format(STAGE)
-    return v
-
-
-NLP_ARCHITECT_VERSION = nlp_architect_version()
+CMD_REGISTRY = {
+    'train': [],
+    'run': [],
+    'process': [],
+    'solution': [],
+    'serve': [],
+}
