@@ -24,6 +24,7 @@ from gensim import utils
 import nltk
 from nltk.corpus import conll2000
 from six import iteritems
+from smart_open import open as smart_open
 
 logger = logging.getLogger(__name__)
 
@@ -249,7 +250,7 @@ class NP2vec:
                 logger.info(
                     "storing %sx%s projection weights for NP's into %s",
                     total_vec, vector_size, np2vec_model_file)
-                with utils.smart_open(np2vec_model_file, 'wb') as fout:
+                with smart_open(np2vec_model_file, 'wb') as fout:
                     fout.write(utils.to_utf8("%s %s\n" % (total_vec, vector_size)))
                     # store NP vectors in sorted order: most frequent NP's at the top
                     for word, vocab in sorted(
