@@ -68,7 +68,7 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
     @staticmethod
     def annotate(text, seed):
         # remove extra spaces from text
-        text = re.sub("\s\s+", " ", text)
+        text = re.sub(r'\s\s+', " ", text)
         np_list = []
         docs = [text]
         spans = extract_noun_phrases(docs, nlp, args.chunker)
