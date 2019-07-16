@@ -68,8 +68,6 @@ pipeline {
                         . .nlp_architect_env/bin/activate
                         export LC_ALL=en_US.UTF-8
                         export LANG=en_US.UTF-8
-                        export http_proxy=http://proxy-chain.intel.com:911
-                        export https_proxy=https://proxy-chain.intel.com:912
                         nlp_architect test
                         """
                     }
