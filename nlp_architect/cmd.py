@@ -112,7 +112,7 @@ class StyleCommand(object):
         os.makedirs(LIBRARY_OUT, exist_ok=True)
         flake8_out = str(LIBRARY_OUT / 'flake8.txt')
         flake8_html_out = str(LIBRARY_OUT / 'flake_html')
-        print('HHH:' + flake8_html_out)
+
         try:
             os.remove(flake8_out)
             shutil.rmtree(flake8_html_out, ignore_errors=True)
