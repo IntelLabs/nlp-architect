@@ -1,8 +1,8 @@
-tensorflow==1.13.1
+tensorflow==1.14.0
 dynet==2.1
 torch
 torchvision
-pytorch-pretrained-bert
+pytorch-transformers
 spacy
 nltk
 gensim
