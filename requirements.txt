@@ -15,7 +15,7 @@ pywikibot
 num2words
 hyperopt
 h5py
-pandas
+pandas==0.24.2
 tqdm
 ftfy
 bokeh

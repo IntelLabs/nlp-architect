@@ -21,7 +21,7 @@ from pathlib import Path
 
 from nlp_architect import LIBRARY_ROOT
 from nlp_architect.solutions.absa_solution import SENTIMENT_OUT
-from nlp_architect.solutions.absa_solution.sentiment_analysis import \
+from nlp_architect.solutions.absa_solution.sentiment_solution import \
     SentimentSolution
 from nlp_architect.utils.io import download_unzip
 
@@ -35,7 +35,7 @@ def test_solution(generate_new=False):
 
     predicted_stats = SentimentSolution().run(parsed_data=parsed_data,
                                               aspect_lex=lexicons_dir / 'aspects.csv',
-                                              opinion_lex=lexicons_dir / 'opinions.csv', ui=False)
+                                              opinion_lex=lexicons_dir / 'opinions.csv')
 
     predicted_stats.to_csv('predicted.csv', encoding='utf-8')
     predicted_trimmed = pd.read_csv('predicted.csv', encoding='utf-8').loc[:, 'Aspect': 'Score']

@@ -1,5 +1,5 @@
 # ******************************************************************************
-# Copyright 2017-2018 Intel Corporation
+# Copyright 2017-2019 Intel Corporation
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -30,8 +30,7 @@ from nlp_architect.models.absa.inference.inference \
     import SentimentInference
 from nlp_architect.models.absa.utils import load_opinion_lex
 from nlp_architect.solutions.absa_solution import SENTIMENT_OUT
-from nlp_architect.solutions.absa_solution.ui import serve_ui, _ui_format
-from nlp_architect.solutions.absa_solution.utils import Anonymiser
+from nlp_architect.solutions.absa_solution.utils import Anonymiser, _ui_format
 from nlp_architect.utils.io import walk_directory, validate_existing_filepath, \
     validate_existing_directory, validate_existing_path
 
@@ -51,7 +50,7 @@ class SentimentSolution(object):
 
     def run(self, aspect_lex: PathLike = None, opinion_lex: PathLike = None,
             data: PathLike = None, parsed_data: PathLike = None,
-            inference_results: PathLike = None, ui=True) -> Optional[pd.DataFrame]:
+            inference_results: PathLike = None) -> Optional[pd.DataFrame]:
 
         opinions = load_opinion_lex(opinion_lex)
         if not opinions:
@@ -88,8 +87,6 @@ class SentimentSolution(object):
         print("\nComputing statistics...")
         stats = self._compute_stats(results, aspects, opinions)
         print("Done.")
-        if ui:
-            serve_ui(stats, aspects)
         return stats
 
     @staticmethod

@@ -16,7 +16,7 @@
 from os import path
 from pathlib import Path
 
-from nlp_architect.solutions.absa_solution.sentiment_analysis import \
+from nlp_architect.solutions.absa_solution.sentiment_solution import \
     SentimentSolution
 
 
