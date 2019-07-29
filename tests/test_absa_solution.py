@@ -27,7 +27,7 @@ from nlp_architect.utils.io import download_unzip
 
 
 def test_solution(generate_new=False):
-    lexicons_dir = Path(LIBRARY_ROOT) / 'examples' / 'absa' / 'inference'
+    lexicons_dir = Path(LIBRARY_ROOT) / 'examples' / 'absa'
     expected_dir = Path(LIBRARY_ROOT) / 'tests' / 'fixtures' / 'data' / 'absa_solution'
     data_url = 'https://s3-us-west-2.amazonaws.com/nlp-architect-data/tests/'
     parsed_data = download_unzip(data_url, 'tripadvisor_test_parsed.zip',

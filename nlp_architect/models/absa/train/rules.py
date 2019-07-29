@@ -137,4 +137,8 @@ def expand_aspect(in_aspect_token, relation_list):
             if diff_negative == 0:
                 aspect.text = aspect.text + ' ' + rel.dep.text
                 aspect.lemma = aspect.lemma + ' ' + rel.dep.lemma
+
+    aspect.text = aspect.text.lower()
+    aspect.lemma = aspect.lemma.lower()
+
     return aspect

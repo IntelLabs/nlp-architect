@@ -337,7 +337,7 @@ class LoadAspectStopLists(object):
     def __init__(self, generic_opinion_lex, determiners_lex, general_adjectives_lex,
                  generic_quantifiers_lex, geographical_adjectives_lex, intensifiers_lex,
                  time_adjective_lex, ordinal_numbers_lex, prepositions_lex, pronouns_lex,
-                 colors_lex, negation_lex):
+                 colors_lex, negation_lex, auxiliaries_lex):
         self.generic_opinion_lex = generic_opinion_lex
         self.determiners_lex = determiners_lex
         self.general_adjectives_lex = general_adjectives_lex
@@ -350,6 +350,7 @@ class LoadAspectStopLists(object):
         self.pronouns_lex = pronouns_lex
         self.colors_lex = colors_lex
         self.negation_lex = negation_lex
+        self.auxiliaries_lex = auxiliaries_lex
 
     def is_in_stop_list(self, term):
         return any(term in lexicon for lexicon in self.__dict__.values())

@@ -46,7 +46,7 @@ POLARITIES = ('POS', 'NEG')
 
 
 # pylint: disable=global-variable-undefined
-def serve_ui() -> None:
+def serve_absa_ui() -> None:
     """Main function for serving UI application.
     """
 
@@ -470,4 +470,4 @@ def _create_examples_table() -> DataTable:
 
 
 if __name__ == '__main__':
-    serve_ui()
+    serve_absa_ui()

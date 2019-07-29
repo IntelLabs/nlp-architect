@@ -72,6 +72,7 @@ class AcquireTerms(object):
     COLORS_LEX = _load_lex_as_list_from_csv(TRAIN_LEXICONS / 'ColorsLex.csv')
     DETERMINERS_LEX = _load_lex_as_list_from_csv(TRAIN_LEXICONS / 'DeterminersLex.csv')
     NEGATION_LEX = _load_lex_as_list_from_csv(TRAIN_LEXICONS / 'NegationLex.csv')
+    AUXILIARIES_LEX = _load_lex_as_list_from_csv(TRAIN_LEXICONS / 'AuxiliariesLex.csv')
 
     OPINION_STOP_LIST = LoadOpinionStopLists(DETERMINERS_LEX,
                                              GENERAL_ADJECTIVES_LEX,
@@ -89,7 +90,7 @@ class AcquireTerms(object):
                                            INTENSIFIERS_LEX, TIME_ADJECTIVE_LEX,
                                            ORDINAL_NUMBERS_LEX,
                                            PREPOSITIONS_LEX, PRONOUNS_LEX, COLORS_LEX,
-                                           NEGATION_LEX)
+                                           NEGATION_LEX, AUXILIARIES_LEX)
 
     FILTER_PATTERNS = [re.compile(r'.*\d+.*')]
     FLOAT_FORMAT = '{0:.3g}'
@@ -243,7 +244,7 @@ class AcquireTerms(object):
         self.aspect_candidate_list = \
             self.aspect_candidate_list + self.aspects_candidate_list_prev_iter
 
-    def _write_output(self):
+    def _write_candidate_opinion_lex(self):
         """
         write generated lexicons to csv files
         """
@@ -291,16 +292,33 @@ class AcquireTerms(object):
                 self.aspect_candidates_list_final,
                 self.min_freq_aspect_candidate)
 
-        self._write_output()
+        self._write_candidate_opinion_lex()
 
-        aspect_dict = {}
-        for cand_term in self.aspect_candidates_list_final:
-            lemma = ''
-            if cand_term.term[0] != cand_term.lemma[0]:
-                lemma = cand_term.lemma[0]
-            aspect_dict[cand_term.term[0]] = lemma
+        aspect_dict = _add_lemmas_aspect_lex(self.aspect_candidates_list_final)
 
         return aspect_dict
+
+
+def _add_lemmas_aspect_lex(aspect_candidates_list_final):
+
+    aspect_dict = {}
+    for cand_term in aspect_candidates_list_final:
+        lemma = ''
+        if cand_term.term[0] != cand_term.lemma[0]:
+            lemma = cand_term.lemma[0]
+        aspect_dict[cand_term.term[0]] = lemma
+
+    # unify aspect with aspect lemmas
+    lemma_to_erase = []
+    for _, lemma in aspect_dict.items():
+        if lemma != '' and lemma in aspect_dict:
+            lemma_to_erase.append(lemma)
+
+    # delete all duplicates (aspects that are lemmas of other aspects)
+    for lemma in lemma_to_erase:
+        if lemma in aspect_dict:
+            del aspect_dict[lemma]
+    return aspect_dict
 
 
 def _get_rel_list(parsed_sentence):

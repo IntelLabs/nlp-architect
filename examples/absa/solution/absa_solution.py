@@ -13,22 +13,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
-from os import path
-from pathlib import Path
-
-from nlp_architect.solutions.absa_solution.sentiment_solution import \
-    SentimentSolution
+from nlp_architect.solutions.absa_solution.ui import serve_absa_ui
 
 
 def main():
-    lib_root = Path(path.realpath(__file__)).parent.parent.parent.parent
-    tripadvisor_data = lib_root / 'datasets' / 'absa' / \
-        'tripadvisor_co_uk-travel_restaurant_reviews_sample_2000_test.csv'
-    lexicons_dir = lib_root / 'examples' / 'absa' / 'inference'
-    solution = SentimentSolution()
-    solution.run(data=tripadvisor_data,
-                 aspect_lex=lexicons_dir / 'aspects.csv',
-                 opinion_lex=lexicons_dir / 'opinions.csv')
+    # To load our pre-trained aspect and opinion lexicons in the UI, select "Open" -> "Load" in the
+    #  appropriate lexicon tabs.
+    serve_absa_ui()
 
 
 if __name__ == '__main__':
