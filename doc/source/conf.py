@@ -14,6 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
+# flake8: noqa
 import os
 import sys
 
@@ -131,7 +132,7 @@ pygments_style = 'tango'
 
 
 # -- Options for HTML output ----------------------------------------------
-import sphinx_rtd_theme
+import sphinx_rtd_theme  # noqa: E402
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.

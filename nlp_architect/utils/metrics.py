@@ -14,12 +14,16 @@
 # limitations under the License.
 # ******************************************************************************
 
-from __future__ import division, print_function, unicode_literals, absolute_import
+from __future__ import (absolute_import, division, print_function,
+                        unicode_literals)
 
-from seqeval.metrics import classification_report
+from scipy.stats import pearsonr, spearmanr
+from seqeval.metrics import classification_report, precision_score, recall_score, f1_score
 
 
 def get_conll_scores(predictions, y, y_lex, unk='O'):
+    """Get Conll style scores (precision, recall, f1)
+    """
     if isinstance(predictions, list):
         predictions = predictions[-1]
     test_p = predictions
@@ -46,3 +50,40 @@ def get_conll_scores(predictions, y, y_lex, unk='O'):
         prediction_data.append((test_yval, test_pval))
     y_true, y_pred = list(zip(*prediction_data))
     return classification_report(y_true, y_pred, digits=3)
+
+
+def simple_accuracy(preds, labels):
+    """return simple accuracy
+    """
+    return (preds == labels).mean()
+
+
+def acc_and_f1(preds, labels):
+    """return accuracy and f1 score
+    """
+    acc = simple_accuracy(preds, labels)
+    f1 = f1_score(y_true=labels, y_pred=preds)
+    return {
+        "acc": acc,
+        "f1": f1,
+        "acc_and_f1": (acc + f1) / 2,
+    }
+
+
+def pearson_and_spearman(preds, labels):
+    """get pearson and spearman correlation
+    """
+    pearson_corr = pearsonr(preds, labels)[0]
+    spearman_corr = spearmanr(preds, labels)[0]
+    return {
+        "pearson": pearson_corr,
+        "spearmanr": spearman_corr,
+        "corr": (pearson_corr + spearman_corr) / 2,
+    }
+
+
+def tagging(preds, labels):
+    p = precision_score(labels, preds)
+    r = recall_score(labels, preds)
+    f1 = f1_score(labels, preds)
+    return p, r, f1

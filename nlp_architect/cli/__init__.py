@@ -16,7 +16,7 @@
 import argparse
 
 # register all procedures by importing
-import nlp_architect.procedures
+import nlp_architect.procedures  # noqa: F401
 from nlp_architect.cli.cli_commands import (cli_process_cmd, cli_run_cmd,
                                             cli_serve_cmd, cli_solution_cmd,
                                             cli_train_cmd)
