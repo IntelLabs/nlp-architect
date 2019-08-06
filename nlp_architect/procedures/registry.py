@@ -18,7 +18,7 @@ from nlp_architect.procedures.procedure import Procedure
 
 
 """
-cli command register functions
+Register procedures to be used by CLI
 """
 
 
