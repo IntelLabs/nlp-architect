@@ -19,6 +19,7 @@ from __future__ import (absolute_import, division, print_function,
 
 from scipy.stats import pearsonr, spearmanr
 from seqeval.metrics import classification_report, precision_score, recall_score, f1_score
+from sklearn.metrics import f1_score as classification_f1_score
 
 
 def get_conll_scores(predictions, y, y_lex, unk='O'):
@@ -62,7 +63,7 @@ def acc_and_f1(preds, labels):
     """return accuracy and f1 score
     """
     acc = simple_accuracy(preds, labels)
-    f1 = f1_score(y_true=labels, y_pred=preds)
+    f1 = classification_f1_score(y_true=labels, y_pred=preds)
     return {
         "acc": acc,
         "f1": f1,
