@@ -1,0 +1,59 @@
+{
+  "attention_probs_dropout_prob": 0.1,
+  "finetuning_task": "mrpc",
+  "hidden_act": "gelu",
+  "hidden_dropout_prob": 0.1,
+  "hidden_size": 768,
+  "initializer_range": 0.02,
+  "intermediate_size": 3072,
+  "layer_norm_eps": 1e-12,
+  "max_position_embeddings": 512,
+  "num_attention_heads": 12,
+  "num_hidden_layers": 12,
+  "num_labels": 2,
+  "output_attentions": false,
+  "output_hidden_states": false,
+  "torchscript": false,
+  "type_vocab_size": 2,
+  "vocab_size": 30522,
+  "attention_query": {
+    "mode": "ema"
+  },
+  "attention_key": {
+    "mode": "ema"
+  },
+  "attention_value": {
+    "mode": "ema",
+    "requantize_output": false
+  },
+  "attention_output": {
+    "mode": "ema",
+    "requantize_output": false
+  },
+  "ffn_intermediate": {
+    "mode": "ema",
+    "requantize_output": false
+  },
+  "ffn_output": {
+    "mode": "ema",
+    "requantize_output": false
+  },
+  "pooler": {
+    "mode": "ema",
+    "requantize_output": false
+  },
+  "head":{
+    "mode": "ema",
+    "requantize_output": false,
+    "start_step": 200
+  },
+  "word_embeddings": {
+    "mode": "ema"
+  },
+  "position_embeddings": {
+    "mode": "ema"
+  },
+  "token_type_embeddings": {
+    "mode": "none"
+  }
+}
