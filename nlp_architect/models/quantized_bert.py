@@ -23,8 +23,7 @@ from os import path
 
 import torch
 from torch import nn
-from pytorch_transformers.tokenization_bert import BertTokenizer, PRETRAINED_VOCAB_FILES_MAP, PRETRAINED_POSITIONAL_EMBEDDINGS_SIZES
-from pytorch_transformers.modeling_bert import BertEmbeddings, BertLayerNorm, BertSelfAttention, BertSelfOutput, BertAttention, BertIntermediate, BertOutput, BertLayer, BertEncoder, BertPooler, BertModel, BertForQuestionAnswering, BertForSequenceClassification, ACT2FN, BertPreTrainedModel, BertConfig, BERT_PRETRAINED_MODEL_ARCHIVE_MAP, BERT_PRETRAINED_CONFIG_ARCHIVE_MAP
+from pytorch_transformers.modeling_bert import BertEmbeddings, BertLayerNorm, BertSelfAttention, BertSelfOutput, BertAttention, BertIntermediate, BertOutput, BertLayer, BertEncoder, BertPooler, BertModel, BertForQuestionAnswering, BertForSequenceClassification, BertForTokenClassification, ACT2FN, BertPreTrainedModel, BertConfig
 
 from nlp_architect.nn.torch.quantization import QuantizationConfig, QuantizedEmbedding, QuantizedLinear
 
@@ -202,5 +201,18 @@ class QuantizedBertForQuestionAnswering(QuantizedBertPreTrainedModel, BertForQue
 
         self.bert = QuantizedBertModel(config)
         self.qa_outputs = quantized_linear_setup(config, "head", config.hidden_size, config.num_labels)
+
+        self.apply(self.init_weights)
+
+
+class QuantizedBertForTokenClassification(QuantizedBertPreTrainedModel, BertForTokenClassification):
+    def __init__(self, config):
+        super(BertForTokenClassification, self).__init__(config)
+        self.num_labels = config.num_labels
+
+        self.bert = QuantizedBertModel(config)
+        self.dropout = nn.Dropout(config.hidden_dropout_prob)
+        self.classifier = quantized_linear_setup(
+            config, "head", config.hidden_size, config.num_labels)
 
         self.apply(self.init_weights)
