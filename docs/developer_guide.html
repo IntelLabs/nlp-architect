@@ -1,0 +1,411 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Developer Guide &mdash; NLP Architect by Intel® AI Lab 0.4.post2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" type="text/css" />
+  <link rel="stylesheet" href="_static/theme.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Using as a REST service" href="service.html" />
+    <link rel="prev" title="Jupyter Tutorials" href="tutorials.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html">
+          
+
+          
+            
+            <img src="_static/nlp_architect_logo_white.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="main.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="publications.html">Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Jupyter Tutorials</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Developer Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#prepare-environment">Prepare Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#contribution-process">Contribution Process</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#coding-conventions">Coding Conventions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#documentation-conventions">Documentation Conventions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tests-conventions">Tests Conventions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#test-types">Test Types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#running-tests">Running Tests</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model_zoo.html">Model Zoo</a></li>
+</ul>
+<p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="absa.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chunker.html">Sequence Chunker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ner_crf.html">Named Entity Recognition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intent.html">Intent Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="np_segmentation.html">Noun Phrase Semantic Segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bist_parser.html">BIST Dependency Parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="word_sense.html">Most Common Word Sense</a></li>
+<li class="toctree-l1"><a class="reference internal" href="np2vec.html">Noun Phrase to Vec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="supervised_sentiment.html">Supervised Sentiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reading_comprehension.html">Reading Comprehension</a></li>
+<li class="toctree-l1"><a class="reference internal" href="memn2n.html">End-to-End Memory Networks for Goal Oriented Dialogue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tcn.html">TCN Language Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="crosslingual_emb.html">Unsupervised Crosslingual Embeddings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cross_doc_coref.html">Cross Document Co-Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="identifying_semantic_relation.html">Semantic Relation Identification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solutions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="absa_solution.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="term_set_expansion.html">Set Expansion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="trend_analysis.html">Trend Analysis</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Pipelines</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="spacy_bist.html">Spacy-BIST Parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spacy_np_annotator.html">Spacy-NP Annotator</a></li>
+</ul>
+<p class="caption"><span class="caption-text">For Developers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">NLP Architect by Intel® AI Lab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Developer Guide</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="developer-guide">
+<h1>Developer Guide<a class="headerlink" href="#developer-guide" title="Permalink to this headline">¶</a></h1>
+<p>The following sections describe how to set up a development environment, how to contribute your code and what are our contribution standards.</p>
+<div class="section" id="prepare-environment">
+<h2>Prepare Environment<a class="headerlink" href="#prepare-environment" title="Permalink to this headline">¶</a></h2>
+<p>Install NLP Architect from source (Github) and install supplemental development packages:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip3 install -r dev-requirements.txt
+</pre></div>
+</div>
+</div>
+<div class="section" id="contribution-process">
+<h2>Contribution Process<a class="headerlink" href="#contribution-process" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p>File an issue (to track your contribution):</p>
+<ul class="simple">
+<li><p>Create an issue on GitHub:
+<a class="reference external" href="https://github.com/NervanaSystems/nlp-architect/issues">https://github.com/NervanaSystems/nlp-architect/issues</a></p></li>
+</ul>
+</li>
+<li><p>Clone and/or update your checked out copy of nlp-architect to ensure you have the
+most recent commits from the master branch:</p></li>
+</ol>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/NervanaSystems/nlp-architect.git
+<span class="nb">cd</span> nlp-architect
+git fetch origin
+git checkout master
+git pull
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="arabic simple" start="3">
+<li><p>Create a new feature branch for your work and switch to it.  Give it a
+meaningful name related to the task(s) at hand:</p></li>
+</ol>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git checkout -b my_new_feature_branch
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="arabic simple" start="4">
+<li><p>Ideally you’d start by creating one or more unit tests with the
+functionality you expect your new feature to perform.  These should reside
+under the appropriate tests subdirectory of whatever you are changing.
+Then hack away at the code until you feel your feature is complete.  Once
+satisfied, run the code through the following checks:</p></li>
+</ol>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nlp_architect <span class="nb">test</span>   <span class="c1"># ensure all are OK</span>
+nlp_architect style  <span class="c1"># ensure there are no style related issues</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="arabic simple" start="5">
+<li><p>If necessary you may want to update and/or rebuild the documentation.
+This all exists under docs-source/source and is in
+<a class="reference external" href="http://sphinx-doc.org/rest.html">Sphinx reStructuredText format</a>:</p></li>
+</ol>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> scripts/
+sh create_docs.sh   <span class="c1"># builds the doc and starts a local server directly</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="arabic simple" start="6">
+<li><p>Commit your changes and push your feature branch to your GitHub fork.  Be
+sure to add a descriptive message and reference the GitHub issue associated
+with your task (ex. #1).  You will also want to rebase your commits down to
+a single sensible commit to make things clean for the merge process:</p></li>
+</ol>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git add my_updated_files
+git commit -m <span class="s2">&quot;Added new awesome functionality.  Closes issue #1&quot;</span>
+git push origin my_new_feature_branch
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="arabic simple" start="7">
+<li><p>Create a new pull request to get your feature branch merged into master for
+others to use.  You’ll first need to ensure your feature branch contains the
+latest changes from master.  Furthermore, internal devs will need to assign
+the request to someone else for a code review.  You must also ensure there
+are no errors when run through the items defined in step 4.</p></li>
+</ol>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># (external contribs): make a new pull request:</span>
+https://github.com/NervanaSystems/nlp-architect/pulls
+
+<span class="c1"># merge latest master changes into your feature branch</span>
+git fetch origin
+git checkout master
+git pull origin master
+git checkout my_new_feature_branch
+git merge master  <span class="c1"># you may need to manually resolve any merge conflicts</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="arabic simple" start="8">
+<li><p>If there are issues you can continue to push commits to your feature branch
+by following step 6.  They will automatically be added to this same merge
+request.</p></li>
+<li><p>Once your change has been successfully merged, you can remove the source
+branch and ensure your local copy is up to date:</p></li>
+</ol>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git fetch origin
+git checkout master
+git pull
+git branch -d my_new_feature_branch
+git branch -d -r origin/my_new_feature_branch
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="arabic simple" start="10">
+<li><p>Give yourself a high five for a job well done!</p></li>
+</ol>
+</div>
+<div class="section" id="coding-conventions">
+<h2>Coding Conventions<a class="headerlink" href="#coding-conventions" title="Permalink to this headline">¶</a></h2>
+<p>To ensure consistency across developers, we enforce the following conventions
+on all of the code in neon (which is primarily python plus some
+reStructuredText for documentation).</p>
+<ul class="simple">
+<li><p>By and large we conform to <a class="reference external" href="https://www.python.org/dev/peps/pep-0008/">PEP8</a> with the following exceptions:</p>
+<ul>
+<li><p>Maximum line length is 99 characters</p></li>
+</ul>
+</li>
+<li><p>All public class and function names must have docstrings, and these
+docstrings must conform to <a class="reference external" href="https://github.com/google/styleguide/blob/gh-pages/pyguide.md">Google Style Docstrings</a> as our API
+documentation is auto-generated from these.  To do this we utilize
+the <a class="reference external" href="http://sphinxcontrib-napoleon.readthedocs.org/en/latest/index.html">Napoleon</a> Sphinx extensions.</p></li>
+</ul>
+</div>
+<div class="section" id="documentation-conventions">
+<h2>Documentation Conventions<a class="headerlink" href="#documentation-conventions" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Documents are created using <a class="reference external" href="http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html">reStructuredText</a>.</p></li>
+<li><p>Limit your docs to 2-3 levels of headings.</p></li>
+<li><p>New .rst files will show up in the sidebar, and any first and second level headings will also show up in the menu. Keep the sidebar short and only add essentials items there. Otherwise, add your documentation to the pre-existing files. You can add to the toctree manually, but please don’t add or create pages unless absolutely necessary!</p></li>
+<li><p>If you created a new class, add it to the API by creating a new section in api.rst and create an <a class="reference external" href="http://sphinx-doc.org/latest/ext/autosummary.html">autosummary</a>. Anytime you add an autosummary, please remember to add :nosignatures: to keep things consistent with the rest of our docs.</p></li>
+<li><p>Every time you make a significant contribution, add a short description of it in the relevant document.</p></li>
+</ul>
+</div>
+<div class="section" id="tests-conventions">
+<h2>Tests Conventions<a class="headerlink" href="#tests-conventions" title="Permalink to this headline">¶</a></h2>
+<p>To ensure code stability, developers are required to write tests for contributed modules,
+according to these guidelines:</p>
+<ul class="simple">
+<li><p>Tests are written using <a class="reference external" href="https://docs.pytest.org/en/latest/">pytest</a></p></li>
+<li><p>All test functions must have docstrings</p></li>
+<li><p>Tests modules should be placed in the ./tests directory</p></li>
+</ul>
+<div class="section" id="test-types">
+<h3>Test Types<a class="headerlink" href="#test-types" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Regression tests</strong> – check that claimed model/pipeline end-to-end functionality is preserved after changes. Test sub-components where appropriate.</p></li>
+<li><p><strong>Util tests</strong> – test functionality of utility modules.</p></li>
+<li><p><strong>Framework tests</strong> – test http service input/output</p></li>
+</ul>
+</div>
+<div class="section" id="running-tests">
+<h3>Running Tests<a class="headerlink" href="#running-tests" title="Permalink to this headline">¶</a></h3>
+<p>Before creating a pull request, ensure that your test pass.
+To a test module, issue the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>py.test tests/test_module.py
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

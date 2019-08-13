@@ -1,0 +1,358 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Cross Document Co-Reference &mdash; NLP Architect by Intel® AI Lab 0.4.post2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" type="text/css" />
+  <link rel="stylesheet" href="_static/theme.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Identifying Semantic Relations" href="identifying_semantic_relation.html" />
+    <link rel="prev" title="Unsupervised Crosslingual Embeddings" href="crosslingual_emb.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html">
+          
+
+          
+            
+            <img src="_static/nlp_architect_logo_white.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="main.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="publications.html">Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Jupyter Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer_guide.html">Developer Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model_zoo.html">Model Zoo</a></li>
+</ul>
+<p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="absa.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chunker.html">Sequence Chunker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ner_crf.html">Named Entity Recognition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intent.html">Intent Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="np_segmentation.html">Noun Phrase Semantic Segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bist_parser.html">BIST Dependency Parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="word_sense.html">Most Common Word Sense</a></li>
+<li class="toctree-l1"><a class="reference internal" href="np2vec.html">Noun Phrase to Vec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="supervised_sentiment.html">Supervised Sentiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reading_comprehension.html">Reading Comprehension</a></li>
+<li class="toctree-l1"><a class="reference internal" href="memn2n.html">End-to-End Memory Networks for Goal Oriented Dialogue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tcn.html">TCN Language Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="crosslingual_emb.html">Unsupervised Crosslingual Embeddings</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Cross Document Co-Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sieve-based-system">Sieve-based System</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#results">Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sieve-based-system-flow">Sieve-based system flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#code-example">Code Example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="identifying_semantic_relation.html">Semantic Relation Identification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solutions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="absa_solution.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="term_set_expansion.html">Set Expansion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="trend_analysis.html">Trend Analysis</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Pipelines</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="spacy_bist.html">Spacy-BIST Parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spacy_np_annotator.html">Spacy-NP Annotator</a></li>
+</ul>
+<p class="caption"><span class="caption-text">For Developers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">NLP Architect by Intel® AI Lab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Cross Document Co-Reference</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="cross-document-co-reference">
+<h1>Cross Document Co-Reference<a class="headerlink" href="#cross-document-co-reference" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Cross Document Coreference resolution is the task of determining which event or entity mentions expressed in language refer to a similar real-world event or entity across different documents in the same topic.</p>
+<p>Definitions:</p>
+<ul class="simple">
+<li><p><strong>Event mention</strong> refers to verb and action phrases in a document text.</p></li>
+<li><p><strong>Entity mentions</strong> refers to object, location, person, time and so on phrases in a document text.</p></li>
+<li><p><strong>Document</strong> refers to a text article (with one or more sentences) on a single subject and which contains entity and event mentions.</p></li>
+<li><p><strong>Topic</strong> refers to a set of documents the are on the same subject or topic.</p></li>
+</ul>
+</div>
+<div class="section" id="sieve-based-system">
+<h2>Sieve-based System<a class="headerlink" href="#sieve-based-system" title="Permalink to this headline">¶</a></h2>
+<p>The cross document coreference system provided is a sieve-based system. A sieve is a logical layer that uses a single semantic relation identifier that extracts a certain relation type. See details descriptions of relation identifiers and types of relations in <a class="reference internal" href="identifying_semantic_relation.html#identifying-semantic-relation"><span class="std std-ref">Identifying Semantic Relation</span></a>.</p>
+<p>The sieve-based system consists of a set of configurable sieves. Each sieve uses a computational rule based logic or an external knowledge resource in order to extract semantic relations between event or entity mentions pairs, with the purpose of clustering same or semantically similar relation mentions across multiple documents.</p>
+<p>Refer to <a class="reference internal" href="#configuration">Configuration</a> section below to see how-to configure a sieved-based system.</p>
+</div>
+<div class="section" id="results">
+<h2>Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
+<p>The sieve-based system was tested on ECB+ <a class="footnote-reference brackets" href="#id2" id="id1">1</a> corpus and evaluated using CoNLL F1 (Pradhan et al., 2014) metric.</p>
+<p>The <a class="reference external" href="http://www.newsreader-project.eu/results/data/the-ecb-corpus/">ECB+</a> corpus component consists of 502 documents that belong to 43 topics, annotated with mentions of events and their times, locations, human and non-human participants as well as with within- and cross-document event and entity coreference information.</p>
+<p>The system achieved the following:</p>
+<ul class="simple">
+<li><p>Best in class results achieve on ECB+ Entity Cross Document Co-Reference (<strong>69.8% F1</strong>) using the sieves set <em>[Head Lemma, Exact Match, Wikipedia Redirect, Wikipedia Disambiguation and Elmo]</em></p></li>
+<li><p>Best in class results achieve on ECB+ Event Cross Document Co-Reference (<strong>79.0% F1</strong>) using the sieves set <em>[Head Lemma, Exact Match, Wikipedia Redirect, Wikipedia Disambiguation and Fuzzy Head]</em></p></li>
+</ul>
+<dl class="footnote brackets">
+<dt class="label" id="id2"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p>ECB+: Agata Cybulska and Piek Vossen. 2014. Using a sledgehammer to crack a nut? Lexical diversity and event coreference resolution.</p>
+</dd>
+</dl>
+<p>In Proceedings of the 9th international conference on Language Resources and Evaluation (LREC2014)
+ECB+ annotation is held copyright by Agata Cybulska, Piek Vossen and the VU University of Amsterdam.</p>
+</div>
+<div class="section" id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p>Make sure all intended relation identifier resources are available and configured properly. Refer to <a class="reference internal" href="identifying_semantic_relation.html#identifying-semantic-relation"><span class="std std-ref">Identifying Semantic Relation</span></a> to see how to use and configure the identifiers.</p></li>
+<li><p>Prepare a JSON file with mentions to be used as input for the sieve-based cross document coreference system:</p></li>
+</ol>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span>[
+    {
+        &quot;topic_id&quot;: &quot;2_ecb&quot;, #Required (a topic is a set of multiple documents that share the same subject)
+        &quot;doc_id&quot;: &quot;1_10.xml&quot;, #Required (the article or document id this mention belong to)
+        &quot;sent_id&quot;: 0, #Optional (mention sentence number in document)
+        &quot;tokens_number&quot;: [ #Optional (the token number in sentence, will be required when using Within doc entities)
+            13
+        ],
+        &quot;tokens_str&quot;: &quot;Josh&quot;, #Required (the mention text)
+    },
+    {
+        &quot;topic_id&quot;: &quot;2_ecb&quot;, #Required
+        &quot;doc_id&quot;: &quot;1_11.xml&quot;,
+        &quot;sent_id&quot;: 0,
+        &quot;tokens_number&quot;: [
+            3
+        ],
+        &quot;tokens_str&quot;: &quot;Reid&quot;,
+    },
+        ...
+]
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>An example for an ECB+ entity mentions json file can be found here: <code class="docutils literal notranslate"><span class="pre">&lt;nlp</span> <span class="pre">architect</span> <span class="pre">root&gt;/datasets/ecb/ecb_all_entity_mentions.json</span></code></p></li>
+<li><p>An example for an ECB+ event mentions json file can be found here: <code class="docutils literal notranslate"><span class="pre">&lt;nlp</span> <span class="pre">architect</span> <span class="pre">root&gt;/datasets/ecb/ecb_all_event_mentions.json</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
+<p>There are two modes of operation:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Entity mentions cross document coreference - for clustering entity mentions across multiple documents</p></li>
+<li><p>Event mentions cross document coreference - for clustering event mentions across multiple document</p></li>
+</ol>
+</div></blockquote>
+<dl class="simple">
+<dt>For each mode of operation there is a method for extraction defined in <a class="reference internal" href="generated/nlp_architect.models.cross_doc_sieves.html#module-nlp_architect.models.cross_doc_sieves" title="nlp_architect.models.cross_doc_sieves"><code class="xref py py-class docutils literal notranslate"><span class="pre">cross_doc_sieves</span></code></a>:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">run_event_coref()</span></code> - running event coreference resolution</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">run_entity_coref()</span></code> - running entity coreference resolution</p></li>
+</ul>
+</dd>
+</dl>
+<p>Each mode of operation requires a configuration. The configurations define which sieve should run, in what order and define constraints and thresholds</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Use <code class="xref py py-class docutils literal notranslate"><span class="pre">EntitySievesConfiguration</span></code> for configuring the needed sieves for computing events mentions</p></li>
+<li><p>Use <code class="xref py py-class docutils literal notranslate"><span class="pre">EntitySievesConfiguration</span></code> for configuring the needed sieves for computing entities mentions</p></li>
+</ul>
+</div></blockquote>
+<p>Configuring <code class="docutils literal notranslate"><span class="pre">sieves_order</span></code> enables control on the sieve configurations, <code class="docutils literal notranslate"><span class="pre">sieves_order</span></code> is a list of tuples (RelationType, threshold)</p>
+<p>Use <code class="xref py py-class docutils literal notranslate"><span class="pre">SievesResources</span></code> to set the correct paths to all files downloaded or created for the different types of sieves.</p>
+</div>
+<div class="section" id="sieve-based-system-flow">
+<h2>Sieve-based system flow<a class="headerlink" href="#sieve-based-system-flow" title="Permalink to this headline">¶</a></h2>
+<p>The flow of the sieve-based system is identical to both event and entity resolutions:</p>
+<ol class="arabic">
+<li><p>Load all mentions from input file (mentions json file).</p></li>
+<li><p>Separate each mention to a <em>singleton</em> cluster (a cluster initiated with only one mention) and group the clusters by topic (so each topic has a set of clusters that belong to it) according to the input values.</p></li>
+<li><p>Run the configured sieves system iteratively in the order determine in the <code class="docutils literal notranslate"><span class="pre">sieves_order</span></code> configuration parameter, For each sieve:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Go over all clusters in a topic and try to merge 2 clusters at a time with current sieve RelationType</p></li>
+<li><p>Continue until no mergers are available using this RelationType</p></li>
+</ol>
+</div></blockquote>
+</li>
+<li><p>Continue to next sieve and repeat (3.1) on current state of clusters until no more sieves are left to run.</p></li>
+<li><p>Return the clusters results.</p></li>
+</ol>
+<p>See code example below for running a full cross document coreference evaluation or refer to the documentation for further details.</p>
+</div>
+<div class="section" id="code-example">
+<h2>Code Example<a class="headerlink" href="#code-example" title="Permalink to this headline">¶</a></h2>
+<p>You can find code example for running the system at: <code class="docutils literal notranslate"><span class="pre">examples/cross_doc_coref/cross_doc_coref_sieves.py</span></code></p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

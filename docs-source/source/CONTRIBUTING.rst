@@ -52,12 +52,13 @@ Contribution Process
       nlp_architect style  # ensure there are no style related issues
 
 5. If necessary you may want to update and/or rebuild the documentation.
-   This all exists under doc/source and is in
+   This all exists under docs-source/source and is in
    `Sphinx reStructuredText format <http://sphinx-doc.org/rest.html>`_:
 
   .. code-block:: bash
 
-      nlp_architect doc   # builds the doc and starts a local server directly
+      cd scripts/
+      sh create_docs.sh   # builds the doc and starts a local server directly
 
 6. Commit your changes and push your feature branch to your GitHub fork.  Be
    sure to add a descriptive message and reference the GitHub issue associated

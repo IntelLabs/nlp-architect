@@ -1,0 +1,302 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>NLP Architect Model Zoo &mdash; NLP Architect by Intel® AI Lab 0.4.post2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" type="text/css" />
+  <link rel="stylesheet" href="_static/theme.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Aspect Based Sentiment Analysis (ABSA)" href="absa.html" />
+    <link rel="prev" title="Using as a REST service" href="service.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html">
+          
+
+          
+            
+            <img src="_static/nlp_architect_logo_white.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="main.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="publications.html">Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Jupyter Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer_guide.html">Developer Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="service.html">REST Server</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Model Zoo</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="absa.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chunker.html">Sequence Chunker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ner_crf.html">Named Entity Recognition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intent.html">Intent Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="np_segmentation.html">Noun Phrase Semantic Segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bist_parser.html">BIST Dependency Parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="word_sense.html">Most Common Word Sense</a></li>
+<li class="toctree-l1"><a class="reference internal" href="np2vec.html">Noun Phrase to Vec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="supervised_sentiment.html">Supervised Sentiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reading_comprehension.html">Reading Comprehension</a></li>
+<li class="toctree-l1"><a class="reference internal" href="memn2n.html">End-to-End Memory Networks for Goal Oriented Dialogue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tcn.html">TCN Language Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="crosslingual_emb.html">Unsupervised Crosslingual Embeddings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cross_doc_coref.html">Cross Document Co-Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="identifying_semantic_relation.html">Semantic Relation Identification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solutions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="absa_solution.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="term_set_expansion.html">Set Expansion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="trend_analysis.html">Trend Analysis</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Pipelines</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="spacy_bist.html">Spacy-BIST Parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spacy_np_annotator.html">Spacy-NP Annotator</a></li>
+</ul>
+<p class="caption"><span class="caption-text">For Developers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">NLP Architect by Intel® AI Lab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>NLP Architect Model Zoo</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="nlp-architect-model-zoo">
+<h1>NLP Architect Model Zoo<a class="headerlink" href="#nlp-architect-model-zoo" title="Permalink to this headline">¶</a></h1>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 60%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Model</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Links</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="sparse_gnmt.html"><span class="doc">Sparse GNMT</span></a></p></td>
+<td><p>90% sparse GNMT model and a 2x2 block sparse translating German to English trained on Europarl-v7 <a class="footnote-reference brackets" href="#id9" id="id1">1</a> , Common Crawl and News Commentary 11 datasets</p></td>
+<td><div class="line-block">
+<div class="line"><a class="reference external" href="https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/sparse_gnmt/gnmt_sparse.zip">model</a></div>
+<div class="line"><a class="reference external" href="https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/sparse_gnmt/gnmt_blocksparse2x2.zip">2x2 block sparse model</a></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="intent.html"><span class="doc">Intent Extraction</span></a></p></td>
+<td><p>A <a class="reference internal" href="generated/nlp_architect.models.intent_extraction.MultiTaskIntentModel.html#nlp_architect.models.intent_extraction.MultiTaskIntentModel" title="nlp_architect.models.intent_extraction.MultiTaskIntentModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultiTaskIntentModel</span></code></a> intent extraction and slot tagging model, trained on SNIPS NLU dataset</p></td>
+<td><div class="line-block">
+<div class="line"><a class="reference external" href="https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/intent/model.h5">model</a></div>
+<div class="line"><a class="reference external" href="https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/intent/model_info.dat">params</a></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ner_crf.html"><span class="doc">Named Entity Recognition</span></a></p></td>
+<td><p>A <a class="reference internal" href="generated/nlp_architect.models.ner_crf.NERCRF.html#nlp_architect.models.ner_crf.NERCRF" title="nlp_architect.models.ner_crf.NERCRF"><code class="xref py py-class docutils literal notranslate"><span class="pre">NERCRF</span></code></a> model trained on CoNLL 2003 dataset</p></td>
+<td><div class="line-block">
+<div class="line"><a class="reference external" href="https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/ner/model.h5">model</a></div>
+<div class="line"><a class="reference external" href="https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/ner/model_info.dat">params</a></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="bist_parser.html"><span class="doc">Dependency parser</span></a></p></td>
+<td><p>Graph-based dependency parser using BiLSTM feature extractors</p></td>
+<td><p><a class="reference external" href="https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/dep_parse/bist-pretrained.zip">model</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reading_comprehension.html"><span class="doc">Machine comprehension</span></a></p></td>
+<td><p>Match LSTM model trained on SQuAD dataset</p></td>
+<td><div class="line-block">
+<div class="line"><a class="reference external" href="https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/mrc/mrc_model.zip">model</a></div>
+<div class="line"><a class="reference external" href="https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/mrc/mrc_data.zip">data</a></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="chunker.html"><span class="doc">Word chunker</span></a></p></td>
+<td><p>A word chunker model trained on CoNLL 2000 dataset</p></td>
+<td><div class="line-block">
+<div class="line"><a class="reference external" href="https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/chunker/model.h5">model</a></div>
+<div class="line"><a class="reference external" href="https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/chunker/model_info.dat.params">params</a></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<dl class="footnote brackets">
+<dt class="label" id="id9"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p>Europarl-v7: A Parallel Corpus for Statistical Machine Translation, Philipp Koehn, MT Summit 2005</p>
+</dd>
+</dl>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
