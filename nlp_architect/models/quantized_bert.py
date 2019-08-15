@@ -25,10 +25,9 @@ from pytorch_transformers.modeling_bert import BertEmbeddings, BertLayerNorm, Be
 
 from nlp_architect.nn.torch.quantization import QuantizationConfig, QuantizedEmbedding, QuantizedLinear
 
-# TODO(ofir) upload config files and change to urls once uploaded
 QUANT_BERT_PRETRAINED_CONFIG_ARCHIVE_MAP = {
-    'bert-base-uncased': path.join(path.dirname(path.realpath(__file__)), '../procedures/transformers/config/bert-base-uncased.json'),
-    'bert-large-uncased': path.join(path.dirname(path.realpath(__file__)), '../procedures/transformers/config/bert-large-uncased.json'),
+    'bert-base-uncased': "https://nlp-architect-data.s3-us-west-2.amazonaws.com/models/transformers/bert-base-uncased.json",
+    'bert-large-uncased': "https://nlp-architect-data.s3-us-west-2.amazonaws.com/models/transformers/bert-large-uncased.json",
 }
 
 
