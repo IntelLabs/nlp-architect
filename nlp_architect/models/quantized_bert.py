@@ -17,17 +17,15 @@
 Quantized BERT layers and model
 """
 
-import copy
 import sys
 from os import path
 
-import torch
 from torch import nn
 from pytorch_transformers.modeling_bert import BertEmbeddings, BertLayerNorm, BertSelfAttention, BertSelfOutput, BertAttention, BertIntermediate, BertOutput, BertLayer, BertEncoder, BertPooler, BertModel, BertForQuestionAnswering, BertForSequenceClassification, BertForTokenClassification, ACT2FN, BertPreTrainedModel, BertConfig
 
 from nlp_architect.nn.torch.quantization import QuantizationConfig, QuantizedEmbedding, QuantizedLinear
 
-
+# TODO(ofir) upload config files and change to urls once uploaded
 QUANT_BERT_PRETRAINED_CONFIG_ARCHIVE_MAP = {
     'bert-base-uncased': path.join(path.dirname(path.realpath(__file__)), '../procedures/transformers/config/bert-base-uncased.json'),
     'bert-large-uncased': path.join(path.dirname(path.realpath(__file__)), '../procedures/transformers/config/bert-large-uncased.json'),
@@ -65,9 +63,12 @@ class QuantizedBertConfig(BertConfig):
 class QuantizedBertEmbeddings(BertEmbeddings):
     def __init__(self, config):
         super(BertEmbeddings, self).__init__()
-        self.word_embeddings = quantized_embedding_setup(config, 'word_embeddings', config.vocab_size, config.hidden_size, padding_idx=0)
-        self.position_embeddings = quantized_embedding_setup(config, 'position_embeddings', config.max_position_embeddings, config.hidden_size)
-        self.token_type_embeddings = quantized_embedding_setup(config, 'token_type_embeddings', config.type_vocab_size, config.hidden_size)
+        self.word_embeddings = quantized_embedding_setup(
+            config, 'word_embeddings', config.vocab_size, config.hidden_size, padding_idx=0)
+        self.position_embeddings = quantized_embedding_setup(
+            config, 'position_embeddings', config.max_position_embeddings, config.hidden_size)
+        self.token_type_embeddings = quantized_embedding_setup(
+            config, 'token_type_embeddings', config.type_vocab_size, config.hidden_size)
 
         self.LayerNorm = BertLayerNorm(config.hidden_size, eps=config.layer_norm_eps)
         self.dropout = nn.Dropout(config.hidden_dropout_prob)
@@ -86,9 +87,12 @@ class QuantizedBertSelfAttention(BertSelfAttention):
         self.attention_head_size = int(config.hidden_size / config.num_attention_heads)
         self.all_head_size = self.num_attention_heads * self.attention_head_size
 
-        self.query = quantized_linear_setup(config, 'attention_query', config.hidden_size, self.all_head_size)
-        self.key = quantized_linear_setup(config, 'attention_key', config.hidden_size, self.all_head_size)
-        self.value = quantized_linear_setup(config, 'attention_value', config.hidden_size, self.all_head_size)
+        self.query = quantized_linear_setup(
+            config, 'attention_query', config.hidden_size, self.all_head_size)
+        self.key = quantized_linear_setup(
+            config, 'attention_key', config.hidden_size, self.all_head_size)
+        self.value = quantized_linear_setup(
+            config, 'attention_value', config.hidden_size, self.all_head_size)
 
         self.dropout = nn.Dropout(config.attention_probs_dropout_prob)
 
@@ -96,7 +100,8 @@ class QuantizedBertSelfAttention(BertSelfAttention):
 class QuantizedBertSelfOutput(BertSelfOutput):
     def __init__(self, config):
         super(BertSelfOutput, self).__init__()
-        self.dense = quantized_linear_setup(config, 'attention_output', config.hidden_size, config.hidden_size)
+        self.dense = quantized_linear_setup(
+            config, 'attention_output', config.hidden_size, config.hidden_size)
         self.LayerNorm = BertLayerNorm(config.hidden_size, eps=config.layer_norm_eps)
         self.dropout = nn.Dropout(config.hidden_dropout_prob)
 
@@ -106,7 +111,7 @@ class QuantizedBertAttention(BertAttention):
         super(BertAttention, self).__init__()
         self.self = QuantizedBertSelfAttention(config)
         self.output = QuantizedBertSelfOutput(config)
-    
+
     def prune_heads(self, heads):
         raise NotImplementedError("pruning heads is not implemented for Quantized BERT")
 
@@ -114,7 +119,8 @@ class QuantizedBertAttention(BertAttention):
 class QuantizedBertIntermediate(BertIntermediate):
     def __init__(self, config):
         super(BertIntermediate, self).__init__()
-        self.dense = quantized_linear_setup(config, "ffn_intermediate", config.hidden_size, config.intermediate_size)
+        self.dense = quantized_linear_setup(
+            config, "ffn_intermediate", config.hidden_size, config.intermediate_size)
         if isinstance(config.hidden_act, str) or (sys.version_info[0] == 2 and isinstance(config.hidden_act, unicode)):
             self.intermediate_act_fn = ACT2FN[config.hidden_act]
         else:
@@ -124,7 +130,8 @@ class QuantizedBertIntermediate(BertIntermediate):
 class QuantizedBertOutput(BertOutput):
     def __init__(self, config):
         super(BertOutput, self).__init__()
-        self.dense = quantized_linear_setup(config, "ffn_output", config.intermediate_size, config.hidden_size)
+        self.dense = quantized_linear_setup(
+            config, "ffn_output", config.intermediate_size, config.hidden_size)
         self.LayerNorm = BertLayerNorm(config.hidden_size, eps=config.layer_norm_eps)
         self.dropout = nn.Dropout(config.hidden_dropout_prob)
 
@@ -142,13 +149,15 @@ class QuantizedBertEncoder(BertEncoder):
         super(BertEncoder, self).__init__()
         self.output_attentions = config.output_attentions
         self.output_hidden_states = config.output_hidden_states
-        self.layer = nn.ModuleList([QuantizedBertLayer(config) for _ in range(config.num_hidden_layers)])
+        self.layer = nn.ModuleList([QuantizedBertLayer(config)
+                                    for _ in range(config.num_hidden_layers)])
 
 
 class QuantizedBertPooler(BertPooler):
     def __init__(self, config):
         super(BertPooler, self).__init__()
-        self.dense = quantized_linear_setup(config, "pooler", config.hidden_size, config.hidden_size)
+        self.dense = quantized_linear_setup(
+            config, "pooler", config.hidden_size, config.hidden_size)
         self.activation = nn.Tanh()
 
 
@@ -170,7 +179,8 @@ class QuantizedBertPreTrainedModel(BertPreTrainedModel):
 
 class QuantizedBertModel(QuantizedBertPreTrainedModel, BertModel):
     def __init__(self, config):
-        # we only want BertForQuestionAnswering init to run to avoid unnecessary initializations
+        # we only want BertForQuestionAnswering init to run to avoid unnecessary
+        # initializations
         super(BertModel, self).__init__(config)
 
         self.embeddings = QuantizedBertEmbeddings(config)
@@ -182,25 +192,29 @@ class QuantizedBertModel(QuantizedBertPreTrainedModel, BertModel):
 
 class QuantizedBertForSequenceClassification(QuantizedBertPreTrainedModel, BertForSequenceClassification):
     def __init__(self, config):
-        # we only want BertForQuestionAnswering init to run to avoid unnecessary initializations
+        # we only want BertForQuestionAnswering init to run to avoid unnecessary
+        # initializations
         super(BertForSequenceClassification, self).__init__(config)
         self.num_labels = config.num_labels
 
         self.bert = QuantizedBertModel(config)
         self.dropout = nn.Dropout(config.hidden_dropout_prob)
-        self.classifier = quantized_linear_setup(config, "head", config.hidden_size, self.config.num_labels)
+        self.classifier = quantized_linear_setup(
+            config, "head", config.hidden_size, self.config.num_labels)
 
         self.apply(self.init_weights)
 
 
 class QuantizedBertForQuestionAnswering(QuantizedBertPreTrainedModel, BertForQuestionAnswering):
     def __init__(self, config):
-        # we only want BertForQuestionAnswering init to run to avoid unnecessary initializations
+        # we only want BertForQuestionAnswering init to run to avoid unnecessary
+        # initializations
         super(BertForQuestionAnswering, self).__init__(config)
         self.num_labels = config.num_labels
 
         self.bert = QuantizedBertModel(config)
-        self.qa_outputs = quantized_linear_setup(config, "head", config.hidden_size, config.num_labels)
+        self.qa_outputs = quantized_linear_setup(
+            config, "head", config.hidden_size, config.num_labels)
 
         self.apply(self.init_weights)
 
