@@ -18,16 +18,33 @@ Quantized BERT layers and model
 """
 
 import sys
-from os import path
 
 from torch import nn
-from pytorch_transformers.modeling_bert import BertEmbeddings, BertLayerNorm, BertSelfAttention, BertSelfOutput, BertAttention, BertIntermediate, BertOutput, BertLayer, BertEncoder, BertPooler, BertModel, BertForQuestionAnswering, BertForSequenceClassification, BertForTokenClassification, ACT2FN, BertPreTrainedModel, BertConfig
+from pytorch_transformers.modeling_bert import (BertEmbeddings,
+                                                BertLayerNorm,
+                                                BertSelfAttention,
+                                                BertSelfOutput,
+                                                BertAttention,
+                                                BertIntermediate,
+                                                BertOutput,
+                                                BertLayer,
+                                                BertEncoder,
+                                                BertPooler,
+                                                BertModel,
+                                                BertForQuestionAnswering,
+                                                BertForSequenceClassification,
+                                                BertForTokenClassification,
+                                                ACT2FN,
+                                                BertPreTrainedModel,
+                                                BertConfig)
 
-from nlp_architect.nn.torch.quantization import QuantizationConfig, QuantizedEmbedding, QuantizedLinear
+from nlp_architect.nn.torch.quantization import (QuantizationConfig,
+                                                 QuantizedEmbedding,
+                                                 QuantizedLinear)
 
 QUANT_BERT_PRETRAINED_CONFIG_ARCHIVE_MAP = {
-    'bert-base-uncased': "https://nlp-architect-data.s3-us-west-2.amazonaws.com/models/transformers/bert-base-uncased.json",
-    'bert-large-uncased': "https://nlp-architect-data.s3-us-west-2.amazonaws.com/models/transformers/bert-large-uncased.json",
+    'bert-base-uncased': "https://nlp-architect-data.s3-us-west-2.amazonaws.com/models/transformers/bert-base-uncased.json",  # noqa: E501
+    'bert-large-uncased': "https://nlp-architect-data.s3-us-west-2.amazonaws.com/models/transformers/bert-large-uncased.json",  # noqa: E501
 }
 
 
@@ -120,7 +137,9 @@ class QuantizedBertIntermediate(BertIntermediate):
         super(BertIntermediate, self).__init__()
         self.dense = quantized_linear_setup(
             config, "ffn_intermediate", config.hidden_size, config.intermediate_size)
-        if isinstance(config.hidden_act, str) or (sys.version_info[0] == 2 and isinstance(config.hidden_act, unicode)):
+        if (isinstance(config.hidden_act, str)
+                or (sys.version_info[0] == 2 and isinstance(config.hidden_act,
+                unicode))):  # noqa: F821
             self.intermediate_act_fn = ACT2FN[config.hidden_act]
         else:
             self.intermediate_act_fn = config.hidden_act
@@ -189,7 +208,8 @@ class QuantizedBertModel(QuantizedBertPreTrainedModel, BertModel):
         self.apply(self.init_weights)
 
 
-class QuantizedBertForSequenceClassification(QuantizedBertPreTrainedModel, BertForSequenceClassification):
+class QuantizedBertForSequenceClassification(QuantizedBertPreTrainedModel,
+                                             BertForSequenceClassification):
     def __init__(self, config):
         # we only want BertForQuestionAnswering init to run to avoid unnecessary
         # initializations
@@ -218,7 +238,8 @@ class QuantizedBertForQuestionAnswering(QuantizedBertPreTrainedModel, BertForQue
         self.apply(self.init_weights)
 
 
-class QuantizedBertForTokenClassification(QuantizedBertPreTrainedModel, BertForTokenClassification):
+class QuantizedBertForTokenClassification(QuantizedBertPreTrainedModel,
+                                          BertForTokenClassification):
     def __init__(self, config):
         super(BertForTokenClassification, self).__init__(config)
         self.num_labels = config.num_labels

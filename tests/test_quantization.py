@@ -34,7 +34,7 @@ def quantize_np(x, scale, bits):
 class FakeLinearQuantizationWithSTETester(unittest.TestCase):
     def test_quantization_forward(self):
         fake_quantize = FakeLinearQuantizationWithSTE().apply
-        x = torch.randn(1,100)
+        x = torch.randn(1, 100)
         scale = (2**(8 - 1) - 1) / np.abs(x).max()
         self.assertTrue((fake_quantize(x, scale, 8)
                          == fake_quantize_np(x, scale, 8)).all())
@@ -51,9 +51,9 @@ class FakeLinearQuantizationWithSTETester(unittest.TestCase):
 
 class QuantizedLinearTest(unittest.TestCase):
     def test_dynamic_quantized_linear_forward(self):
-        """Test QuantizedLinear forward method by giving in the input and 
-        weight values that are already quantized, therefore the quantization 
-        step should have no effect on the values and we know what values 
+        """Test QuantizedLinear forward method by giving in the input and
+        weight values that are already quantized, therefore the quantization
+        step should have no effect on the values and we know what values
         are expected"""
         x = torch.randn(1, 100).mul(127.).round().clamp(-127., 127.)
         qlinear = QuantizedLinear(100, 1, bias=False, requantize_output=False, mode="dynamic")
@@ -93,7 +93,8 @@ class QuantizedLinearTest(unittest.TestCase):
         output_int = x_int @ weight_int.t() + bias_int
         output_int = torch.clamp(
             output_int, -(2**(32 - 1) - 1), 2**(32 - 1) - 1)
-        output = torch.round(output_int / bias_scale * output_scale).clamp(-127, 127) / output_scale
+        output = torch.round(output_int / bias_scale
+                             * output_scale).clamp(-127, 127) / output_scale
         qlinear.eval()
         qlinear_output = qlinear(x)
         self.assertTrue((qlinear_output - output).norm() < 10**-6)
@@ -108,24 +109,26 @@ class QuantizedLinearTest(unittest.TestCase):
                 input_ema = tmp_input_thresh
             else:
                 input_ema -= (1 - ema_decay) * (input_ema - tmp_input_thresh)
-            y = (fake_quantize_np(x, get_scale(8, input_ema), 8) @ qlinear.fake_quantized_weight.t()).detach()
+            y = (fake_quantize_np(x, get_scale(8, input_ema), 8)
+                 @ qlinear.fake_quantized_weight.t()).detach()
             tmp_output_thresh = y.abs().max()
             if i == 0:
                 output_ema = tmp_output_thresh
             else:
                 output_ema -= (1 - ema_decay) * (output_ema - tmp_output_thresh)
             y = fake_quantize_np(y, get_scale(8, output_ema), 8)
-            y_hat=qlinear(x)
+            y_hat = qlinear(x)
             self.assertTrue((y == y_hat).all())
         self.assertEqual(qlinear.input_thresh, input_ema)
         self.assertEqual(qlinear.output_thresh, output_ema)
-    
+
     def test_ema_quantization_data_parallel(self):
         if not torch.cuda.is_available():
             return
         ema_decay = 0.9
         fake_quantize = FakeLinearQuantizationWithSTE().apply
-        qlinear = nn.DataParallel(QuantizedLinear(10, 5, bias=False, ema_decay=ema_decay, mode="EMA")).cuda()
+        qlinear = nn.DataParallel(QuantizedLinear(
+            10, 5, bias=False, ema_decay=ema_decay, mode="EMA")).cuda()
         for i in range(5):
             x = torch.randn(3, 10).cuda()
             tmp_input_thresh = x[0].abs().max()
@@ -168,8 +171,8 @@ class QuantizedLinearTest(unittest.TestCase):
         linear = nn.Linear(10, 5)
         linear.weight.data = qlinear.weight
         linear.bias.data = qlinear.bias
-        qmodel = nn.DataParallel(qlinear).cuda()
-        model = nn.DataParallel(linear).cuda()
+        qlinear = nn.DataParallel(qlinear).cuda()
+        linear = nn.DataParallel(linear).cuda()
         for _ in range(quantization_delay):
             x = torch.randn(3, 10).cuda()
             qy = qlinear(x)
@@ -203,10 +206,10 @@ class QuantizedLinearTest(unittest.TestCase):
         qlinear.eval()
         y_hat = qlinear(x)
         self.assertTrue((y - y_hat).norm() < 1e-6)
-        
+
     def test_none_quantized_linear(self):
         qlinear = QuantizedLinear(10, 5, mode="NONE")
-        linear = nn.Linear(10,5)
+        linear = nn.Linear(10, 5)
         linear.weight.data = qlinear.weight
         linear.bias.data = qlinear.bias
         x = torch.randn(3, 10)
@@ -220,14 +223,15 @@ class QuantizedEmbeddingTest(unittest.TestCase):
         embedding = QuantizedEmbedding(10, 3, mode="ema")
         with torch.no_grad():
             scale = 127. / embedding.weight.abs().max()
-        self.assertTrue((embedding.fake_quantized_weight == fake_quantize_np(embedding.weight.detach(), scale, 8)).all())
+        self.assertTrue((embedding.fake_quantized_weight == fake_quantize_np(
+            embedding.weight.detach(), scale, 8)).all())
         embedding.weight.data = torch.randn_like(embedding.weight).mul(
             127.).round().clamp(-127., 127.)
         indices = torch.tensor(np.arange(10))
         ground = F.embedding(indices, embedding.weight)
         quantized = embedding(indices)
         self.assertTrue((ground == quantized).all())
-    
+
     def test_quantized_embedding_backward(self):
         embedding = QuantizedEmbedding(10, 3, mode="ema")
         linear = nn.Linear(3, 1)
@@ -242,7 +246,7 @@ class QuantizedEmbeddingTest(unittest.TestCase):
 
     def test_delay_quantization_start(self):
         qembedding = QuantizedEmbedding(10, 3, mode="ema", start_step=1)
-        embedding = nn.Embedding(10,3)
+        embedding = nn.Embedding(10, 3)
         embedding.weight.data = qembedding.weight
         indices = torch.tensor(np.arange(10))
         self.assertTrue((embedding(indices) == qembedding(indices)).all())
@@ -255,6 +259,7 @@ class QuantizedEmbeddingTest(unittest.TestCase):
         indices = torch.tensor(np.arange(10))
         self.assertTrue((embedding(indices) == qembedding(indices)).all())
         self.assertTrue((embedding(indices) == qembedding(indices)).all())
-            
+
+
 if __name__ == '__main__':
     unittest.main()
