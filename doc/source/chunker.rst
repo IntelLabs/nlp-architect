@@ -66,7 +66,7 @@ The described model in the paper consists of multiple sequential Bi-directional 
 
 The model has additional improvements to the model presented in the paper:
 
-- Choose between Conditional Random Fields (:py:class:`CRF <nlp_architect.contrib.tensorflow.python.keras.layers.crf.CRF>`) classifier instead of 'softmax' as the prediction layers. (models using CRF have been empirically shown to produce more accurate predictions)
+- Choose between Conditional Random Fields (:py:class:`CRF <nlp_architect.nn.tensorflow.python.keras.layers.crf.CRF>`) classifier instead of 'softmax' as the prediction layers. (models using CRF have been empirically shown to produce more accurate predictions)
 - Character embeddings using CNNs extracting 3-grams - extracting character information out of words was shown to help syntactic tasks such as tagging and chunking.
 
 The model's embedding vector size and LSTM layer hidden state have equal sizes, the default training optimizer is Adam with default parameters.
