@@ -1,9 +1,9 @@
 tensorflow==1.14.0
 dynet==2.1
-torch
+torch==1.2.0
 torchvision
-pytorch-transformers
-spacy
+pytorch-transformers==1.0.0
+spacy==2.1.8
 nltk
 gensim
 sklearn
