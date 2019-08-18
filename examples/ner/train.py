@@ -21,7 +21,7 @@ from os import path
 import numpy as np
 from tensorflow import keras
 
-from nlp_architect.contrib.tensorflow.python.keras.callbacks import ConllCallback
+from nlp_architect.nn.tensorflow import ConllCallback
 from nlp_architect.data.sequential_tagging import SequentialTaggingDataset
 from nlp_architect.models.ner_crf import NERCRF
 from nlp_architect.utils.embedding import get_embedding_matrix, load_word_embeddings
