@@ -304,7 +304,7 @@ class TransformerBase(TrainableModel):
         mapping = {'input_ids': batch[0],
                    'attention_mask': batch[1],
                    # XLM don't use segment_ids
-                   'token_type_ids': batch[2] if self.model_type in ['bert', 'quant_bert' 'xlnet']
+                   'token_type_ids': batch[2] if self.model_type in ['bert', 'quant_bert', 'xlnet']
                    else None}
         if len(batch) == 4:
             mapping.update({'labels': batch[3]})
