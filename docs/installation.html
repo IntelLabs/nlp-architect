@@ -1,0 +1,454 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Installation &mdash; NLP Architect by Intel® AI Lab 0.4.post2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" type="text/css" />
+  <link rel="stylesheet" href="_static/theme.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Publications" href="publications.html" />
+    <link rel="prev" title="NLP Architect by Intel® AI Lab" href="main.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html">
+          
+
+          
+            
+            <img src="_static/nlp_architect_logo_white.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="main.html">Home</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">Installation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#quick-install">Quick Install</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#install-from-source">Install from source</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#selecting-a-backend">Selecting a backend</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#updating-nlp-architect">Updating NLP Architect</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#from-source">From source</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#using-pip">Using <cite>pip</cite></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#compiling-intel-optimized-tensorflow-with-mkl-dnn">Compiling Intel® optimized Tensorflow with MKL-DNN</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="publications.html">Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Jupyter Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer_guide.html">Developer Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model_zoo.html">Model Zoo</a></li>
+</ul>
+<p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="absa.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chunker.html">Sequence Chunker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ner_crf.html">Named Entity Recognition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intent.html">Intent Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="np_segmentation.html">Noun Phrase Semantic Segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bist_parser.html">BIST Dependency Parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="word_sense.html">Most Common Word Sense</a></li>
+<li class="toctree-l1"><a class="reference internal" href="np2vec.html">Noun Phrase to Vec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="supervised_sentiment.html">Supervised Sentiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reading_comprehension.html">Reading Comprehension</a></li>
+<li class="toctree-l1"><a class="reference internal" href="memn2n.html">End-to-End Memory Networks for Goal Oriented Dialogue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tcn.html">TCN Language Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="crosslingual_emb.html">Unsupervised Crosslingual Embeddings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cross_doc_coref.html">Cross Document Co-Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="identifying_semantic_relation.html">Semantic Relation Identification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solutions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="absa_solution.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="term_set_expansion.html">Set Expansion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="trend_analysis.html">Trend Analysis</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Pipelines</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="spacy_bist.html">Spacy-BIST Parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spacy_np_annotator.html">Spacy-NP Annotator</a></li>
+</ul>
+<p class="caption"><span class="caption-text">For Developers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">NLP Architect by Intel® AI Lab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Installation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<p>The NLP Architect requires <strong>Python 3.6+</strong> running on a
+Linux* or UNIX-based OS (like Mac OS). We recommend using the library with Ubuntu 16.04+.</p>
+<p>Before installing the library make sure you has the most recent packages listed below:</p>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 24%" />
+<col style="width: 51%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Ubuntu* 16.04+ or CentOS* 7.4+</p></th>
+<th class="head"><p>Mac OS X*</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>python-pip</p></td>
+<td><p>pip</p></td>
+<td><p>Tool to install Python dependencies</p></td>
+</tr>
+<tr class="row-odd"><td><p>libhdf5-dev</p></td>
+<td><p>h5py</p></td>
+<td><p>Enables loading of hdf5 formats</p></td>
+</tr>
+<tr class="row-even"><td><p>pkg-config</p></td>
+<td><p>pkg-config</p></td>
+<td><p>Retrieves information about installed libraries</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The default installation of NLP Architect use CPU-based binaries of all deep learning frameworks. Intel Optimized MKL-DNN binaries will be installed if a Linux is detected. GPU backed is supported online on Linux and if a GPU is present. See details below for instructions on how to install each backend.</p>
+</div>
+</div>
+<div class="section" id="id1">
+<h2>Installation<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="prerequisites">
+<h3>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h3>
+<p>Make sure <code class="docutils literal notranslate"><span class="pre">pip</span></code> and <code class="docutils literal notranslate"><span class="pre">setuptools</span></code> and <code class="docutils literal notranslate"><span class="pre">venv</span></code> are up to date before installing.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip3 install -U pip setuptools venv
+</pre></div>
+</div>
+<p>We recommend installing NLP Architect in a virtual environment to self-contain
+the work done using the library.</p>
+<p>To create and activate a new virtual environment (or skip this step and use the wizard below):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3.6 -m venv .nlp_architect_env
+<span class="nb">source</span> .nlp_architect_env/bin/activate
+</pre></div>
+</div>
+</div>
+<div class="section" id="quick-install">
+<h3>Quick Install<a class="headerlink" href="#quick-install" title="Permalink to this headline">¶</a></h3>
+<p>Select the desired configuration of your system:</p>
+<div id="app" class="wy-table-responsive">
+<table class="docutils option-list installation_table" frame="void" rules="none">
+    <colgroup><col class="option">
+    <col class="description">
+    </colgroup><tbody valign="top">
+    <tr><td class="option-group">
+    <kbd><span class="option">
+        <strong>Install from</strong>
+    </span></kbd></td>
+    <td>
+        <label class="radio">
+          <input v-model="form.source" type="radio" value="1">Pip
+        </label>
+        <label class="radio">
+          <input v-model="form.source" type="radio" value="0" checked>GitHub
+        </label>
+    </td></tr>
+    <tr><td class="option-group">
+    <kbd><span class="option">
+        <strong>Create virtualenv?</strong>
+    </span></kbd></td>
+    <td>
+        <label class="radio">
+          <input v-model="form.with_env" type="radio" value="1">Yes
+        </label>
+        <label class="radio">
+          <input v-model="form.with_env" type="radio" value="0" checked>No
+        </label>
+    </td></tr>
+    <tr><td class="option-group">
+    <kbd><span class="option">
+        <strong>Backend</strong>
+    </span></kbd></td>
+    <td>
+        <label class="radio">
+          <input v-model="form.backend" type="radio" value="CPU">CPU
+        </label>
+        <label class="radio">
+          <input v-model="form.backend" type="radio" value="MKL" checked>MKL
+        </label>
+        <label class="radio">
+          <input v-model="form.backend" type="radio" value="GPU" checked>GPU
+        </label>
+    </td></tr>
+    <tr><td class="option-group">
+    <kbd><span class="option">
+        <strong>Install in developer mode?</strong>
+    </span></kbd></td>
+    <td>
+    <label class="radio">
+          <input v-model="form.inst_type" type="radio" value="0">Yes
+        </label>
+        <label class="radio">
+          <input v-model="form.inst_type" type="radio" value="1" checked>No
+        </label>
+    </td></tr>
+    </tbody>
+</table><p>Run the following commands to install NLP Architect:</p>
+<div class="code python highlight-default notranslate"><div class="highlight">
+<pre v-html="get_commands()">
+</pre></div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="_static/install.js"></script><p>It is recommended to install NLP Architect in development mode to utilize all its features, examples and solutions.</p>
+</div>
+<div class="section" id="install-from-source">
+<h3>Install from source<a class="headerlink" href="#install-from-source" title="Permalink to this headline">¶</a></h3>
+<p>To get started, clone our repository:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/NervanaSystems/nlp-architect.git
+<span class="nb">cd</span> nlp-architect
+</pre></div>
+</div>
+<div class="section" id="selecting-a-backend">
+<h4>Selecting a backend<a class="headerlink" href="#selecting-a-backend" title="Permalink to this headline">¶</a></h4>
+<p>NLP Architect supports CPU, GPU and Intel Optimized Tensorflow (MKL-DNN) backends.
+Users can select the desired backend using a dedicated environment variable (default: CPU). (MKL-DNN and GPU backends are supported only on Linux)</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">NLP_ARCHITECT_BE</span><span class="o">=</span>CPU/MKL/GPU
+</pre></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h4>Installation<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
+<p>NLP Architect is installed using <cite>pip</cite> and it is recommended to install in development mode.</p>
+<p>Default:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip3 install .
+</pre></div>
+</div>
+<p>Development mode:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip3 install -e .
+</pre></div>
+</div>
+<p>Once installed, the <code class="docutils literal notranslate"><span class="pre">nlp_architect</span></code> command provides additional options to work with the library, issue <code class="docutils literal notranslate"><span class="pre">nlp_architect</span> <span class="pre">-h</span></code> to see all options.</p>
+</div>
+</div>
+<div class="section" id="updating-nlp-architect">
+<h3>Updating NLP Architect<a class="headerlink" href="#updating-nlp-architect" title="Permalink to this headline">¶</a></h3>
+<p>Depending of how you installed NLP Architect to update the library:</p>
+<div class="section" id="from-source">
+<h4>From source<a class="headerlink" href="#from-source" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git pull origin master
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-pip">
+<h4>Using <cite>pip</cite><a class="headerlink" href="#using-pip" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install -U nlp-architect
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="compiling-intel-optimized-tensorflow-with-mkl-dnn">
+<h2>Compiling Intel® optimized Tensorflow with MKL-DNN<a class="headerlink" href="#compiling-intel-optimized-tensorflow-with-mkl-dnn" title="Permalink to this headline">¶</a></h2>
+<p>NLP Architect supports MKL-DNN flavor of Tensorflow out of the box, however, if the user wishes to compile Tensorflow we provide instructions below.</p>
+<p>Tensorflow has a guide <a class="reference external" href="https://www.tensorflow.org/install/install_sources">guide</a> for compiling and installing Tensorflow with with MKL-DNN optimization. Make sure to install all required tools: bazel and python development dependencies.</p>
+<p>Alternatively, follow the instructions below to compile and install the latest version of Tensorflow with MKL-DNN:</p>
+<ul>
+<li><p>Clone Tensorflow repository from GitHub:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">tensorflow</span><span class="o">/</span><span class="n">tensorflow</span>
+<span class="n">cd</span> <span class="n">tensorflow</span>
+</pre></div>
+</div>
+</li>
+<li><p>Configure Tensorflow for compilation:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">configure</span>
+</pre></div>
+</div>
+</li>
+<li><p>Compile Tensorflow with MKL-DNN:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bazel</span> <span class="n">build</span> <span class="o">--</span><span class="n">config</span><span class="o">=</span><span class="n">mkl</span> <span class="o">--</span><span class="n">config</span><span class="o">=</span><span class="n">opt</span> <span class="o">//</span><span class="n">tensorflow</span><span class="o">/</span><span class="n">tools</span><span class="o">/</span><span class="n">pip_package</span><span class="p">:</span><span class="n">build_pip_package</span>
+</pre></div>
+</div>
+</li>
+<li><p>Create pip package in <code class="docutils literal notranslate"><span class="pre">/tmp/tensorflow_pkg</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bazel</span><span class="o">-</span><span class="nb">bin</span><span class="o">/</span><span class="n">tensorflow</span><span class="o">/</span><span class="n">tools</span><span class="o">/</span><span class="n">pip_package</span><span class="o">/</span><span class="n">build_pip_package</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">tensorflow_pkg</span>
+</pre></div>
+</div>
+</li>
+<li><p>Install Tensorflow pip package:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">&lt;</span><span class="n">tensorflow</span> <span class="n">package</span> <span class="n">name</span><span class="o">&gt;.</span><span class="n">whl</span>
+</pre></div>
+</div>
+</li>
+<li><p>Refer to <a class="reference external" href="https://www.tensorflow.org/performance/performance_guide#tensorflow_with_intel_mkl_dnn">this</a> guide for specific configuration to get optimal performance when running your model.</p></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

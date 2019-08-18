@@ -17,12 +17,11 @@ import argparse
 import os
 import shutil
 import subprocess
-from http.server import HTTPServer as BaseHTTPServer, SimpleHTTPRequestHandler
+from http.server import HTTPServer as BaseHTTPServer
+from http.server import SimpleHTTPRequestHandler
 from subprocess import run
 
-import pytest
-
-from nlp_architect import LIBRARY_ROOT, LIBRARY_PATH, LIBRARY_OUT
+from nlp_architect import LIBRARY_OUT, LIBRARY_PATH, LIBRARY_ROOT
 from nlp_architect.utils import ansi2html
 from nlp_architect.version import NLP_ARCHITECT_VERSION
 
@@ -164,6 +163,7 @@ class TestCommand(object):
 
     @staticmethod
     def run_tests(args):
+        import pytest
         # run all tests
         print('\nrunning NLP Architect tests ...')
         tests_dir = str(LIBRARY_ROOT / 'tests')
@@ -231,7 +231,19 @@ sub_commands = [
 ]
 
 
+def check_reqs():
+    try:
+        import pytest  # pylint: disable=unused-import # noqa: F401
+        import pep8  # pylint: disable=unused-import # noqa: F401
+        import flake8  # pylint: disable=unused-import # noqa: F401
+    except ModuleNotFoundError:
+        print('NLP Architect development packages are not installed, \n'
+              'please install packages using:   pip install -r dev-requirements.txt \n')
+        quit()
+
+
 def main():
+    check_reqs()
     prog = 'nlp_architect'
     parser = argparse.ArgumentParser(description='NLP Architect runner', prog=prog)
     parser.add_argument('-v', '--version', action='version',

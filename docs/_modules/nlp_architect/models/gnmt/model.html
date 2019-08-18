@@ -1,0 +1,1158 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>nlp_architect.models.gnmt.model &mdash; NLP Architect by Intel® AI Lab 0.4.post2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/theme.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html">
+          
+
+          
+            
+            <img src="../../../../_static/nlp_architect_logo_white.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../main.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../publications.html">Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials.html">Jupyter Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../developer_guide.html">Developer Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../model_zoo.html">Model Zoo</a></li>
+</ul>
+<p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../absa.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../chunker.html">Sequence Chunker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../ner_crf.html">Named Entity Recognition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../intent.html">Intent Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../np_segmentation.html">Noun Phrase Semantic Segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../bist_parser.html">BIST Dependency Parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../word_sense.html">Most Common Word Sense</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../np2vec.html">Noun Phrase to Vec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../supervised_sentiment.html">Supervised Sentiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../reading_comprehension.html">Reading Comprehension</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../memn2n.html">End-to-End Memory Networks for Goal Oriented Dialogue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tcn.html">TCN Language Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../crosslingual_emb.html">Unsupervised Crosslingual Embeddings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../cross_doc_coref.html">Cross Document Co-Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../identifying_semantic_relation.html">Semantic Relation Identification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solutions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../absa_solution.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../term_set_expansion.html">Set Expansion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../trend_analysis.html">Trend Analysis</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Pipelines</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../spacy_bist.html">Spacy-BIST Parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../spacy_np_annotator.html">Spacy-NP Annotator</a></li>
+</ul>
+<p class="caption"><span class="caption-text">For Developers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">NLP Architect by Intel® AI Lab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>nlp_architect.models.gnmt.model</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for nlp_architect.models.gnmt.model</h1><div class="highlight"><pre>
+<span></span><span class="c1"># ******************************************************************************</span>
+<span class="c1"># Copyright 2017-2018 Intel Corporation</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ******************************************************************************</span>
+<span class="c1"># Changes Made from original:</span>
+<span class="c1">#   import paths</span>
+<span class="c1">#   pruning operations</span>
+<span class="c1"># ******************************************************************************</span>
+<span class="c1"># Copyright 2017 Google Inc. All Rights Reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ==============================================================================</span>
+<span class="c1"># pylint: skip-file</span>
+<span class="sd">&quot;&quot;&quot;Basic sequence-to-sequence model with dynamic RNN support.&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+
+<span class="kn">import</span> <span class="nn">abc</span>
+<span class="kn">import</span> <span class="nn">collections</span>
+
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">from</span> <span class="nn">tensorflow.contrib.model_pruning</span> <span class="k">import</span> <span class="n">get_masks</span><span class="p">,</span> <span class="n">get_thresholds</span>
+
+<span class="kn">from</span> <span class="nn">tensorflow.contrib.model_pruning.python.layers</span> <span class="k">import</span> <span class="n">core_layers</span>
+<span class="kn">from</span> <span class="nn">tensorflow.contrib.model_pruning.python</span> <span class="k">import</span> <span class="n">pruning</span>
+
+<span class="kn">from</span> <span class="nn">nlp_architect.models.gnmt</span> <span class="k">import</span> <span class="n">model_helper</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.models.gnmt.utils</span> <span class="k">import</span> <span class="n">iterator_utils</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.models.gnmt.utils</span> <span class="k">import</span> <span class="n">misc_utils</span> <span class="k">as</span> <span class="n">utils</span>
+
+<span class="n">utils</span><span class="o">.</span><span class="n">check_tensorflow_version</span><span class="p">()</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;BaseModel&quot;</span><span class="p">,</span> <span class="s2">&quot;Model&quot;</span><span class="p">]</span>
+
+
+<span class="k">class</span> <span class="nc">TrainOutputTuple</span><span class="p">(</span><span class="n">collections</span><span class="o">.</span><span class="n">namedtuple</span><span class="p">(</span>
+    <span class="s2">&quot;TrainOutputTuple&quot;</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;train_summary&quot;</span><span class="p">,</span> <span class="s2">&quot;train_loss&quot;</span><span class="p">,</span> <span class="s2">&quot;predict_count&quot;</span><span class="p">,</span>
+                         <span class="s2">&quot;global_step&quot;</span><span class="p">,</span> <span class="s2">&quot;word_count&quot;</span><span class="p">,</span> <span class="s2">&quot;batch_size&quot;</span><span class="p">,</span> <span class="s2">&quot;grad_norm&quot;</span><span class="p">,</span>
+                         <span class="s2">&quot;learning_rate&quot;</span><span class="p">,</span> <span class="s2">&quot;mask_update_op&quot;</span><span class="p">,</span> <span class="s2">&quot;pruning_summary&quot;</span><span class="p">))):</span>
+    <span class="sd">&quot;&quot;&quot;To allow for flexibily in returing different outputs.&quot;&quot;&quot;</span>
+    <span class="k">pass</span>
+
+
+<span class="k">class</span> <span class="nc">EvalOutputTuple</span><span class="p">(</span><span class="n">collections</span><span class="o">.</span><span class="n">namedtuple</span><span class="p">(</span>
+    <span class="s2">&quot;EvalOutputTuple&quot;</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;eval_loss&quot;</span><span class="p">,</span> <span class="s2">&quot;predict_count&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;batch_size&quot;</span><span class="p">))):</span>
+    <span class="sd">&quot;&quot;&quot;To allow for flexibily in returing different outputs.&quot;&quot;&quot;</span>
+    <span class="k">pass</span>
+
+
+<span class="k">class</span> <span class="nc">InferOutputTuple</span><span class="p">(</span><span class="n">collections</span><span class="o">.</span><span class="n">namedtuple</span><span class="p">(</span>
+    <span class="s2">&quot;InferOutputTuple&quot;</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;infer_logits&quot;</span><span class="p">,</span> <span class="s2">&quot;infer_summary&quot;</span><span class="p">,</span> <span class="s2">&quot;sample_id&quot;</span><span class="p">,</span>
+                         <span class="s2">&quot;sample_words&quot;</span><span class="p">))):</span>
+    <span class="sd">&quot;&quot;&quot;To allow for flexibily in returing different outputs.&quot;&quot;&quot;</span>
+    <span class="k">pass</span>
+
+
+<span class="k">class</span> <span class="nc">BaseModel</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Sequence-to-sequence base class.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">hparams</span><span class="p">,</span>
+                 <span class="n">mode</span><span class="p">,</span>
+                 <span class="n">iterator</span><span class="p">,</span>
+                 <span class="n">source_vocab_table</span><span class="p">,</span>
+                 <span class="n">target_vocab_table</span><span class="p">,</span>
+                 <span class="n">reverse_target_vocab_table</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">scope</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">extra_args</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create the model.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">          hparams: Hyperparameter configurations.</span>
+<span class="sd">          mode: TRAIN | EVAL | INFER</span>
+<span class="sd">          iterator: Dataset Iterator that feeds data.</span>
+<span class="sd">          source_vocab_table: Lookup table mapping source words to ids.</span>
+<span class="sd">          target_vocab_table: Lookup table mapping target words to ids.</span>
+<span class="sd">          reverse_target_vocab_table: Lookup table mapping ids to target words. Only</span>
+<span class="sd">            required in INFER mode. Defaults to None.</span>
+<span class="sd">          scope: scope of the model.</span>
+<span class="sd">          extra_args: model_helper.ExtraArgs, for passing customizable functions.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Set params</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_params_initializer</span><span class="p">(</span><span class="n">hparams</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">iterator</span><span class="p">,</span>
+                                     <span class="n">source_vocab_table</span><span class="p">,</span> <span class="n">target_vocab_table</span><span class="p">,</span>
+                                     <span class="n">scope</span><span class="p">,</span> <span class="n">extra_args</span><span class="p">)</span>
+
+        <span class="c1"># Not used in general seq2seq models; when True, ignore decoder &amp; training</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">extract_encoder_layers</span> <span class="o">=</span> <span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">hparams</span><span class="p">,</span> <span class="s2">&quot;extract_encoder_layers&quot;</span><span class="p">)</span>
+                                       <span class="ow">and</span> <span class="n">hparams</span><span class="o">.</span><span class="n">extract_encoder_layers</span><span class="p">)</span>
+
+        <span class="c1"># Train graph</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_graph</span><span class="p">(</span><span class="n">hparams</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="n">scope</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">extract_encoder_layers</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_set_train_or_infer</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">reverse_target_vocab_table</span><span class="p">,</span> <span class="n">hparams</span><span class="p">)</span>
+
+        <span class="c1"># Saver</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">saver</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">Saver</span><span class="p">(</span>
+            <span class="n">tf</span><span class="o">.</span><span class="n">global_variables</span><span class="p">(),</span> <span class="n">max_to_keep</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">num_keep_ckpts</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_set_params_initializer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                                <span class="n">hparams</span><span class="p">,</span>
+                                <span class="n">mode</span><span class="p">,</span>
+                                <span class="n">iterator</span><span class="p">,</span>
+                                <span class="n">source_vocab_table</span><span class="p">,</span>
+                                <span class="n">target_vocab_table</span><span class="p">,</span>
+                                <span class="n">scope</span><span class="p">,</span>
+                                <span class="n">extra_args</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set various params for self and initialize.&quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">iterator</span><span class="p">,</span> <span class="n">iterator_utils</span><span class="o">.</span><span class="n">BatchedInput</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">iterator</span> <span class="o">=</span> <span class="n">iterator</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="n">mode</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">src_vocab_table</span> <span class="o">=</span> <span class="n">source_vocab_table</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tgt_vocab_table</span> <span class="o">=</span> <span class="n">target_vocab_table</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">src_vocab_size</span> <span class="o">=</span> <span class="n">hparams</span><span class="o">.</span><span class="n">src_vocab_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tgt_vocab_size</span> <span class="o">=</span> <span class="n">hparams</span><span class="o">.</span><span class="n">tgt_vocab_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_gpus</span> <span class="o">=</span> <span class="n">hparams</span><span class="o">.</span><span class="n">num_gpus</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">time_major</span> <span class="o">=</span> <span class="n">hparams</span><span class="o">.</span><span class="n">time_major</span>
+
+        <span class="k">if</span> <span class="n">hparams</span><span class="o">.</span><span class="n">use_char_encode</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_major</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;Can&#39;t use time major for&quot;</span>
+                                           <span class="s2">&quot; char-level inputs.&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">float32</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_sampled_softmax</span> <span class="o">=</span> <span class="n">hparams</span><span class="o">.</span><span class="n">num_sampled_softmax</span>
+
+        <span class="c1"># extra_args: to make it flexible for adding external customizable code</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">single_cell_fn</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">extra_args</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">single_cell_fn</span> <span class="o">=</span> <span class="n">extra_args</span><span class="o">.</span><span class="n">single_cell_fn</span>
+
+        <span class="c1"># Set num units</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_units</span> <span class="o">=</span> <span class="n">hparams</span><span class="o">.</span><span class="n">num_units</span>
+
+        <span class="c1"># Set num layers</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_encoder_layers</span> <span class="o">=</span> <span class="n">hparams</span><span class="o">.</span><span class="n">num_encoder_layers</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_decoder_layers</span> <span class="o">=</span> <span class="n">hparams</span><span class="o">.</span><span class="n">num_decoder_layers</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_encoder_layers</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_decoder_layers</span>
+
+        <span class="c1"># Set num residual layers</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">hparams</span><span class="p">,</span> <span class="s2">&quot;num_residual_layers&quot;</span><span class="p">):</span>  <span class="c1"># compatible common_test_utils</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">num_encoder_residual_layers</span> <span class="o">=</span> <span class="n">hparams</span><span class="o">.</span><span class="n">num_residual_layers</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">num_decoder_residual_layers</span> <span class="o">=</span> <span class="n">hparams</span><span class="o">.</span><span class="n">num_residual_layers</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">num_encoder_residual_layers</span> <span class="o">=</span> <span class="n">hparams</span><span class="o">.</span><span class="n">num_encoder_residual_layers</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">num_decoder_residual_layers</span> <span class="o">=</span> <span class="n">hparams</span><span class="o">.</span><span class="n">num_decoder_residual_layers</span>
+
+        <span class="c1"># Batch size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">iterator</span><span class="o">.</span><span class="n">source_sequence_length</span><span class="p">)</span>
+
+        <span class="c1"># Global step</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">global_step</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">trainable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="c1"># Initializer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">random_seed</span> <span class="o">=</span> <span class="n">hparams</span><span class="o">.</span><span class="n">random_seed</span>
+        <span class="n">initializer</span> <span class="o">=</span> <span class="n">model_helper</span><span class="o">.</span><span class="n">get_initializer</span><span class="p">(</span>
+            <span class="n">hparams</span><span class="o">.</span><span class="n">init_op</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">random_seed</span><span class="p">,</span> <span class="n">hparams</span><span class="o">.</span><span class="n">init_weight</span><span class="p">)</span>
+        <span class="n">tf</span><span class="o">.</span><span class="n">get_variable_scope</span><span class="p">()</span><span class="o">.</span><span class="n">set_initializer</span><span class="p">(</span><span class="n">initializer</span><span class="p">)</span>
+
+        <span class="c1"># Embeddings</span>
+        <span class="k">if</span> <span class="n">extra_args</span> <span class="ow">and</span> <span class="n">extra_args</span><span class="o">.</span><span class="n">encoder_emb_lookup_fn</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">encoder_emb_lookup_fn</span> <span class="o">=</span> <span class="n">extra_args</span><span class="o">.</span><span class="n">encoder_emb_lookup_fn</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">encoder_emb_lookup_fn</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">embedding_lookup</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">init_embeddings</span><span class="p">(</span><span class="n">hparams</span><span class="p">,</span> <span class="n">scope</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_set_train_or_infer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">res</span><span class="p">,</span> <span class="n">reverse_target_vocab_table</span><span class="p">,</span> <span class="n">hparams</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set up training and inference.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="n">tf</span><span class="o">.</span><span class="n">contrib</span><span class="o">.</span><span class="n">learn</span><span class="o">.</span><span class="n">ModeKeys</span><span class="o">.</span><span class="n">TRAIN</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">train_loss</span> <span class="o">=</span> <span class="n">res</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">word_count</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">iterator</span><span class="o">.</span><span class="n">source_sequence_length</span><span class="p">)</span> <span class="o">+</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">iterator</span><span class="o">.</span><span class="n">target_sequence_length</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="n">tf</span><span class="o">.</span><span class="n">contrib</span><span class="o">.</span><span class="n">learn</span><span class="o">.</span><span class="n">ModeKeys</span><span class="o">.</span><span class="n">EVAL</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">eval_loss</span> <span class="o">=</span> <span class="n">res</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="n">tf</span><span class="o">.</span><span class="n">contrib</span><span class="o">.</span><span class="n">learn</span><span class="o">.</span><span class="n">ModeKeys</span><span class="o">.</span><span class="n">INFER</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">infer_logits</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">final_context_state</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sample_id</span> <span class="o">=</span> <span class="n">res</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sample_words</span> <span class="o">=</span> <span class="n">reverse_target_vocab_table</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span>
+                <span class="n">tf</span><span class="o">.</span><span class="n">to_int64</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sample_id</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">!=</span> <span class="n">tf</span><span class="o">.</span><span class="n">contrib</span><span class="o">.</span><span class="n">learn</span><span class="o">.</span><span class="n">ModeKeys</span><span class="o">.</span><span class="n">INFER</span><span class="p">:</span>
+            <span class="c1"># Count the number of predicted words for compute ppl.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">predict_count</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">iterator</span><span class="o">.</span><span class="n">target_sequence_length</span><span class="p">)</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">trainable_variables</span><span class="p">()</span>
+
+        <span class="c1"># Gradients and SGD update operation for training the model.</span>
+        <span class="c1"># Arrange for the embedding vars to appear at the beginning.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="n">tf</span><span class="o">.</span><span class="n">contrib</span><span class="o">.</span><span class="n">learn</span><span class="o">.</span><span class="n">ModeKeys</span><span class="o">.</span><span class="n">TRAIN</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="n">hparams</span><span class="o">.</span><span class="n">learning_rate</span><span class="p">)</span>
+            <span class="c1"># warm-up</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_learning_rate_warmup</span><span class="p">(</span><span class="n">hparams</span><span class="p">)</span>
+            <span class="c1"># decay</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_learning_rate_decay</span><span class="p">(</span><span class="n">hparams</span><span class="p">)</span>
+
+            <span class="c1"># Optimizer</span>
+            <span class="k">if</span> <span class="n">hparams</span><span class="o">.</span><span class="n">optimizer</span> <span class="o">==</span> <span class="s2">&quot;sgd&quot;</span><span class="p">:</span>
+                <span class="n">opt</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">GradientDescentOptimizer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">hparams</span><span class="o">.</span><span class="n">optimizer</span> <span class="o">==</span> <span class="s2">&quot;adam&quot;</span><span class="p">:</span>
+                <span class="n">opt</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">AdamOptimizer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unknown optimizer type </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">hparams</span><span class="o">.</span><span class="n">optimizer</span><span class="p">)</span>
+
+            <span class="c1"># Gradients</span>
+            <span class="n">gradients</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">gradients</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">train_loss</span><span class="p">,</span>
+                <span class="n">params</span><span class="p">,</span>
+                <span class="n">colocate_gradients_with_ops</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">colocate_gradients_with_ops</span><span class="p">)</span>
+
+            <span class="n">clipped_grads</span><span class="p">,</span> <span class="n">grad_norm_summary</span><span class="p">,</span> <span class="n">grad_norm</span> <span class="o">=</span> <span class="n">model_helper</span><span class="o">.</span><span class="n">gradient_clip</span><span class="p">(</span>
+                <span class="n">gradients</span><span class="p">,</span> <span class="n">max_gradient_norm</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">max_gradient_norm</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">grad_norm_summary</span> <span class="o">=</span> <span class="n">grad_norm_summary</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">grad_norm</span> <span class="o">=</span> <span class="n">grad_norm</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">update</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">apply_gradients</span><span class="p">(</span>
+                <span class="nb">zip</span><span class="p">(</span><span class="n">clipped_grads</span><span class="p">,</span> <span class="n">params</span><span class="p">),</span> <span class="n">global_step</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">global_step</span><span class="p">)</span>
+
+            <span class="c1"># Summary</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">train_summary</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_train_summary</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="n">tf</span><span class="o">.</span><span class="n">contrib</span><span class="o">.</span><span class="n">learn</span><span class="o">.</span><span class="n">ModeKeys</span><span class="o">.</span><span class="n">INFER</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">infer_summary</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_infer_summary</span><span class="p">(</span><span class="n">hparams</span><span class="p">)</span>
+
+        <span class="c1"># Print trainable variables</span>
+        <span class="n">utils</span><span class="o">.</span><span class="n">print_out</span><span class="p">(</span><span class="s2">&quot;# Trainable variables&quot;</span><span class="p">)</span>
+        <span class="n">utils</span><span class="o">.</span><span class="n">print_out</span><span class="p">(</span><span class="s2">&quot;Format: &lt;name&gt;, &lt;shape&gt;, &lt;(soft) device placement&gt;&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
+            <span class="n">utils</span><span class="o">.</span><span class="n">print_out</span><span class="p">(</span><span class="s2">&quot;  </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">get_shape</span><span class="p">()),</span>
+                                              <span class="n">param</span><span class="o">.</span><span class="n">op</span><span class="o">.</span><span class="n">device</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_get_learning_rate_warmup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hparams</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get learning rate warmup.&quot;&quot;&quot;</span>
+        <span class="n">warmup_steps</span> <span class="o">=</span> <span class="n">hparams</span><span class="o">.</span><span class="n">warmup_steps</span>
+        <span class="n">warmup_scheme</span> <span class="o">=</span> <span class="n">hparams</span><span class="o">.</span><span class="n">warmup_scheme</span>
+        <span class="n">utils</span><span class="o">.</span><span class="n">print_out</span><span class="p">(</span><span class="s2">&quot;  learning_rate=</span><span class="si">%g</span><span class="s2">, warmup_steps=</span><span class="si">%d</span><span class="s2">, warmup_scheme=</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span>
+                        <span class="p">(</span><span class="n">hparams</span><span class="o">.</span><span class="n">learning_rate</span><span class="p">,</span> <span class="n">warmup_steps</span><span class="p">,</span> <span class="n">warmup_scheme</span><span class="p">))</span>
+
+        <span class="c1"># Apply inverse decay if global steps less than warmup steps.</span>
+        <span class="c1"># Inspired by https://arxiv.org/pdf/1706.03762.pdf (Section 5.3)</span>
+        <span class="c1"># When step &lt; warmup_steps,</span>
+        <span class="c1">#   learing_rate *= warmup_factor ** (warmup_steps - step)</span>
+        <span class="k">if</span> <span class="n">warmup_scheme</span> <span class="o">==</span> <span class="s2">&quot;t2t&quot;</span><span class="p">:</span>
+            <span class="c1"># 0.01^(1/warmup_steps): we start with a lr, 100 times smaller</span>
+            <span class="n">warmup_factor</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span> <span class="o">/</span> <span class="n">warmup_steps</span><span class="p">)</span>
+            <span class="n">inv_decay</span> <span class="o">=</span> <span class="n">warmup_factor</span> <span class="o">**</span> <span class="p">(</span>
+                <span class="n">tf</span><span class="o">.</span><span class="n">to_float</span><span class="p">(</span><span class="n">warmup_steps</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">global_step</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unknown warmup scheme </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">warmup_scheme</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">cond</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">global_step</span> <span class="o">&lt;</span> <span class="n">hparams</span><span class="o">.</span><span class="n">warmup_steps</span><span class="p">,</span>
+            <span class="k">lambda</span><span class="p">:</span> <span class="n">inv_decay</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span><span class="p">,</span>
+            <span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;learning_rate_warump_cond&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_decay_info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hparams</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return decay info based on decay_scheme.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">hparams</span><span class="o">.</span><span class="n">decay_scheme</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;luong5&quot;</span><span class="p">,</span> <span class="s2">&quot;luong10&quot;</span><span class="p">,</span> <span class="s2">&quot;luong234&quot;</span><span class="p">]:</span>
+            <span class="n">decay_factor</span> <span class="o">=</span> <span class="mf">0.5</span>
+            <span class="k">if</span> <span class="n">hparams</span><span class="o">.</span><span class="n">decay_scheme</span> <span class="o">==</span> <span class="s2">&quot;luong5&quot;</span><span class="p">:</span>
+                <span class="n">start_decay_step</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">hparams</span><span class="o">.</span><span class="n">num_train_steps</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+                <span class="n">decay_times</span> <span class="o">=</span> <span class="mi">5</span>
+            <span class="k">elif</span> <span class="n">hparams</span><span class="o">.</span><span class="n">decay_scheme</span> <span class="o">==</span> <span class="s2">&quot;luong10&quot;</span><span class="p">:</span>
+                <span class="n">start_decay_step</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">hparams</span><span class="o">.</span><span class="n">num_train_steps</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+                <span class="n">decay_times</span> <span class="o">=</span> <span class="mi">10</span>
+            <span class="k">elif</span> <span class="n">hparams</span><span class="o">.</span><span class="n">decay_scheme</span> <span class="o">==</span> <span class="s2">&quot;luong234&quot;</span><span class="p">:</span>
+                <span class="n">start_decay_step</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">hparams</span><span class="o">.</span><span class="n">num_train_steps</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">/</span> <span class="mi">3</span><span class="p">)</span>
+                <span class="n">decay_times</span> <span class="o">=</span> <span class="mi">4</span>
+            <span class="n">remain_steps</span> <span class="o">=</span> <span class="n">hparams</span><span class="o">.</span><span class="n">num_train_steps</span> <span class="o">-</span> <span class="n">start_decay_step</span>
+            <span class="n">decay_steps</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">remain_steps</span> <span class="o">/</span> <span class="n">decay_times</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="n">hparams</span><span class="o">.</span><span class="n">decay_scheme</span><span class="p">:</span>  <span class="c1"># no decay</span>
+            <span class="n">start_decay_step</span> <span class="o">=</span> <span class="n">hparams</span><span class="o">.</span><span class="n">num_train_steps</span>
+            <span class="n">decay_steps</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">decay_factor</span> <span class="o">=</span> <span class="mf">1.0</span>
+        <span class="k">elif</span> <span class="n">hparams</span><span class="o">.</span><span class="n">decay_scheme</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unknown decay scheme </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">hparams</span><span class="o">.</span><span class="n">decay_scheme</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">start_decay_step</span><span class="p">,</span> <span class="n">decay_steps</span><span class="p">,</span> <span class="n">decay_factor</span>
+
+    <span class="k">def</span> <span class="nf">_get_learning_rate_decay</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hparams</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get learning rate decay.&quot;&quot;&quot;</span>
+        <span class="n">start_decay_step</span><span class="p">,</span> <span class="n">decay_steps</span><span class="p">,</span> <span class="n">decay_factor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_decay_info</span><span class="p">(</span><span class="n">hparams</span><span class="p">)</span>
+        <span class="n">utils</span><span class="o">.</span><span class="n">print_out</span><span class="p">(</span><span class="s2">&quot;  decay_scheme=</span><span class="si">%s</span><span class="s2">, start_decay_step=</span><span class="si">%d</span><span class="s2">, decay_steps </span><span class="si">%d</span><span class="s2">, &quot;</span>
+                        <span class="s2">&quot;decay_factor </span><span class="si">%g</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">hparams</span><span class="o">.</span><span class="n">decay_scheme</span><span class="p">,</span>
+                                             <span class="n">start_decay_step</span><span class="p">,</span>
+                                             <span class="n">decay_steps</span><span class="p">,</span>
+                                             <span class="n">decay_factor</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">cond</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">global_step</span> <span class="o">&lt;</span> <span class="n">start_decay_step</span><span class="p">,</span>
+            <span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span><span class="p">,</span>
+            <span class="k">lambda</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">exponential_decay</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span><span class="p">,</span>
+                <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">global_step</span> <span class="o">-</span> <span class="n">start_decay_step</span><span class="p">),</span>
+                <span class="n">decay_steps</span><span class="p">,</span> <span class="n">decay_factor</span><span class="p">,</span> <span class="n">staircase</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;learning_rate_decay_cond&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">init_embeddings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hparams</span><span class="p">,</span> <span class="n">scope</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Init embeddings.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">embedding_encoder</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">embedding_decoder</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">model_helper</span><span class="o">.</span><span class="n">create_emb_for_encoder_and_decoder</span><span class="p">(</span>
+                <span class="n">share_vocab</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">share_vocab</span><span class="p">,</span>
+                <span class="n">src_vocab_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">src_vocab_size</span><span class="p">,</span>
+                <span class="n">tgt_vocab_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tgt_vocab_size</span><span class="p">,</span>
+                <span class="n">src_embed_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_units</span><span class="p">,</span>
+                <span class="n">tgt_embed_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_units</span><span class="p">,</span>
+                <span class="n">num_enc_partitions</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">num_enc_emb_partitions</span><span class="p">,</span>
+                <span class="n">num_dec_partitions</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">num_dec_emb_partitions</span><span class="p">,</span>
+                <span class="n">src_vocab_file</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">src_vocab_file</span><span class="p">,</span>
+                <span class="n">tgt_vocab_file</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">tgt_vocab_file</span><span class="p">,</span>
+                <span class="n">src_embed_file</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">src_embed_file</span><span class="p">,</span>
+                <span class="n">tgt_embed_file</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">tgt_embed_file</span><span class="p">,</span>
+                <span class="n">use_char_encode</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">use_char_encode</span><span class="p">,</span>
+                <span class="n">scope</span><span class="o">=</span><span class="n">scope</span><span class="p">,</span>
+                <span class="n">embed_type</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">embedding_type</span><span class="p">,</span> <span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_get_train_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get train summary.&quot;&quot;&quot;</span>
+        <span class="n">train_summary</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">scalar</span><span class="p">(</span><span class="s2">&quot;lr&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span><span class="p">),</span>
+             <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">scalar</span><span class="p">(</span><span class="s2">&quot;train_loss&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_loss</span><span class="p">)]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">grad_norm_summary</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">train_summary</span>
+
+    <span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sess</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Execute train graph.&quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="n">tf</span><span class="o">.</span><span class="n">contrib</span><span class="o">.</span><span class="n">learn</span><span class="o">.</span><span class="n">ModeKeys</span><span class="o">.</span><span class="n">TRAIN</span>
+        <span class="n">output_tuple</span> <span class="o">=</span> <span class="n">TrainOutputTuple</span><span class="p">(</span><span class="n">train_summary</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">train_summary</span><span class="p">,</span>
+                                        <span class="n">train_loss</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">train_loss</span><span class="p">,</span>
+                                        <span class="n">predict_count</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">predict_count</span><span class="p">,</span>
+                                        <span class="n">global_step</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">global_step</span><span class="p">,</span>
+                                        <span class="n">word_count</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">word_count</span><span class="p">,</span>
+                                        <span class="n">batch_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span><span class="p">,</span>
+                                        <span class="n">grad_norm</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">grad_norm</span><span class="p">,</span>
+                                        <span class="n">learning_rate</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span><span class="p">,</span>
+                                        <span class="n">mask_update_op</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">mask_update_op</span><span class="p">,</span>
+                                        <span class="n">pruning_summary</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pruning_summary</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">,</span> <span class="n">output_tuple</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">eval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sess</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Execute eval graph.&quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="n">tf</span><span class="o">.</span><span class="n">contrib</span><span class="o">.</span><span class="n">learn</span><span class="o">.</span><span class="n">ModeKeys</span><span class="o">.</span><span class="n">EVAL</span>
+        <span class="n">output_tuple</span> <span class="o">=</span> <span class="n">EvalOutputTuple</span><span class="p">(</span><span class="n">eval_loss</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">eval_loss</span><span class="p">,</span>
+                                       <span class="n">predict_count</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">predict_count</span><span class="p">,</span>
+                                       <span class="n">batch_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">output_tuple</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">build_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hparams</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Subclass must implement this method.</span>
+
+<span class="sd">        Creates a sequence-to-sequence model with dynamic RNN decoder API.</span>
+<span class="sd">        Args:</span>
+<span class="sd">          hparams: Hyperparameter configurations.</span>
+<span class="sd">          scope: VariableScope for the created subgraph; default &quot;dynamic_seq2seq&quot;.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">          A tuple of the form (logits, loss_tuple, final_context_state, sample_id),</span>
+<span class="sd">          where:</span>
+<span class="sd">            logits: float32 Tensor [batch_size x num_decoder_symbols].</span>
+<span class="sd">            loss: loss = the total loss / batch_size.</span>
+<span class="sd">            final_context_state: the final state of decoder RNN.</span>
+<span class="sd">            sample_id: sampling indices.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">          ValueError: if encoder_type differs from mono and bi, or</span>
+<span class="sd">            attention_option is not (luong | scaled_luong |</span>
+<span class="sd">            bahdanau | normed_bahdanau).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">utils</span><span class="o">.</span><span class="n">print_out</span><span class="p">(</span><span class="s2">&quot;# Creating </span><span class="si">%s</span><span class="s2"> graph ...&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span><span class="p">)</span>
+
+        <span class="c1"># Projection</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">extract_encoder_layers</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="n">scope</span> <span class="ow">or</span> <span class="s2">&quot;build_network&quot;</span><span class="p">):</span>
+                <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="s2">&quot;decoder/output_projection&quot;</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">hparams</span><span class="o">.</span><span class="n">projection_type</span> <span class="o">==</span> <span class="s1">&#39;sparse&#39;</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">output_layer</span> <span class="o">=</span> <span class="n">core_layers</span><span class="o">.</span><span class="n">MaskedFullyConnected</span><span class="p">(</span>
+                            <span class="n">hparams</span><span class="o">.</span><span class="n">tgt_vocab_size</span><span class="p">,</span> <span class="n">use_bias</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;output_projection&quot;</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">hparams</span><span class="o">.</span><span class="n">projection_type</span> <span class="o">==</span> <span class="s1">&#39;dense&#39;</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">output_layer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span>
+                            <span class="n">hparams</span><span class="o">.</span><span class="n">tgt_vocab_size</span><span class="p">,</span> <span class="n">use_bias</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;output_projection&quot;</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unknown projection type </span><span class="si">%s</span><span class="s2">!&quot;</span> <span class="o">%</span> <span class="n">hparams</span><span class="o">.</span><span class="n">projection_type</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="n">scope</span> <span class="ow">or</span> <span class="s2">&quot;dynamic_seq2seq&quot;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">):</span>
+            <span class="c1"># Encoder</span>
+            <span class="k">if</span> <span class="n">hparams</span><span class="o">.</span><span class="n">language_model</span><span class="p">:</span>  <span class="c1"># no encoder for language modeling</span>
+                <span class="n">utils</span><span class="o">.</span><span class="n">print_out</span><span class="p">(</span><span class="s2">&quot;  language modeling: no encoder&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">encoder_outputs</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="n">encoder_state</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">encoder_outputs</span><span class="p">,</span> <span class="n">encoder_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_encoder</span><span class="p">(</span><span class="n">hparams</span><span class="p">)</span>
+
+            <span class="c1"># Skip decoder if extracting only encoder layers</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">extract_encoder_layers</span><span class="p">:</span>
+                <span class="k">return</span>
+
+            <span class="c1"># Decoder</span>
+            <span class="n">logits</span><span class="p">,</span> <span class="n">decoder_cell_outputs</span><span class="p">,</span> <span class="n">sample_id</span><span class="p">,</span> <span class="n">final_context_state</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_build_decoder</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">encoder_outputs</span><span class="p">,</span> <span class="n">encoder_state</span><span class="p">,</span> <span class="n">hparams</span><span class="p">))</span>
+
+            <span class="c1"># Loss</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">!=</span> <span class="n">tf</span><span class="o">.</span><span class="n">contrib</span><span class="o">.</span><span class="n">learn</span><span class="o">.</span><span class="n">ModeKeys</span><span class="o">.</span><span class="n">INFER</span><span class="p">:</span>
+                <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="n">model_helper</span><span class="o">.</span><span class="n">get_device_str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_encoder_layers</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
+                                                           <span class="bp">self</span><span class="o">.</span><span class="n">num_gpus</span><span class="p">)):</span>
+                    <span class="n">loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_loss</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">decoder_cell_outputs</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">loss</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
+
+            <span class="c1"># model pruning</span>
+            <span class="k">if</span> <span class="n">hparams</span><span class="o">.</span><span class="n">pruning_hparams</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">pruning_hparams</span> <span class="o">=</span> <span class="n">pruning</span><span class="o">.</span><span class="n">get_pruning_hparams</span><span class="p">()</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span>
+                    <span class="n">hparams</span><span class="o">.</span><span class="n">pruning_hparams</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">p</span> <span class="o">=</span> <span class="n">pruning</span><span class="o">.</span><span class="n">Pruning</span><span class="p">(</span><span class="n">pruning_hparams</span><span class="p">,</span> <span class="n">global_step</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">global_step</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">mask_update_op</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">conditional_mask_update_op</span><span class="p">()</span>
+                <span class="n">masks</span> <span class="o">=</span> <span class="n">get_masks</span><span class="p">()</span>
+                <span class="n">thresholds</span> <span class="o">=</span> <span class="n">get_thresholds</span><span class="p">()</span>
+                <span class="n">masks_s</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">mask</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">masks</span><span class="p">):</span>
+                    <span class="n">masks_s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">scalar</span><span class="p">(</span><span class="n">mask</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;/sparsity&#39;</span><span class="p">,</span>
+                                                     <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">zero_fraction</span><span class="p">(</span><span class="n">mask</span><span class="p">)))</span>
+                    <span class="n">masks_s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">scalar</span><span class="p">(</span><span class="n">thresholds</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">op</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;/threshold&#39;</span><span class="p">,</span>
+                                                     <span class="n">thresholds</span><span class="p">[</span><span class="n">index</span><span class="p">]))</span>
+                    <span class="n">masks_s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">mask</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;/mask_tensor&#39;</span><span class="p">,</span> <span class="n">mask</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">pruning_summary</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
+                    <span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">scalar</span><span class="p">(</span><span class="s1">&#39;sparsity&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">_sparsity</span><span class="p">),</span>
+                     <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">scalar</span><span class="p">(</span><span class="s1">&#39;last_mask_update_step&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">_last_update_step</span><span class="p">)]</span>
+                    <span class="o">+</span> <span class="n">masks_s</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">mask_update_op</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">no_op</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">pruning_summary</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">no_op</span><span class="p">()</span>
+
+            <span class="k">return</span> <span class="n">logits</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="n">final_context_state</span><span class="p">,</span> <span class="n">sample_id</span>
+
+    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+    <span class="k">def</span> <span class="nf">_build_encoder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hparams</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Subclass must implement this.</span>
+
+<span class="sd">        Build and run an RNN encoder.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">          hparams: Hyperparameters configurations.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">          A tuple of encoder_outputs and encoder_state.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">_build_encoder_cell</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hparams</span><span class="p">,</span> <span class="n">num_layers</span><span class="p">,</span> <span class="n">num_residual_layers</span><span class="p">,</span>
+                            <span class="n">base_gpu</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Build a multi-layer RNN cell that can be used by encoder.&quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">model_helper</span><span class="o">.</span><span class="n">create_rnn_cell</span><span class="p">(</span>
+            <span class="n">unit_type</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">unit_type</span><span class="p">,</span>
+            <span class="n">num_units</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_units</span><span class="p">,</span>
+            <span class="n">num_layers</span><span class="o">=</span><span class="n">num_layers</span><span class="p">,</span>
+            <span class="n">num_residual_layers</span><span class="o">=</span><span class="n">num_residual_layers</span><span class="p">,</span>
+            <span class="n">forget_bias</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">forget_bias</span><span class="p">,</span>
+            <span class="n">dropout</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">dropout</span><span class="p">,</span>
+            <span class="n">num_gpus</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">num_gpus</span><span class="p">,</span>
+            <span class="n">mode</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">mode</span><span class="p">,</span>
+            <span class="n">base_gpu</span><span class="o">=</span><span class="n">base_gpu</span><span class="p">,</span>
+            <span class="n">single_cell_fn</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">single_cell_fn</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_infer_maximum_iterations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hparams</span><span class="p">,</span> <span class="n">source_sequence_length</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Maximum decoding steps at inference time.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">hparams</span><span class="o">.</span><span class="n">tgt_max_len_infer</span><span class="p">:</span>
+            <span class="n">maximum_iterations</span> <span class="o">=</span> <span class="n">hparams</span><span class="o">.</span><span class="n">tgt_max_len_infer</span>
+            <span class="n">utils</span><span class="o">.</span><span class="n">print_out</span><span class="p">(</span><span class="s2">&quot;  decoding maximum_iterations </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">maximum_iterations</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># TODO(thangluong): add decoding_length_factor flag</span>
+            <span class="n">decoding_length_factor</span> <span class="o">=</span> <span class="mf">2.0</span>
+            <span class="n">max_encoder_length</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_max</span><span class="p">(</span><span class="n">source_sequence_length</span><span class="p">)</span>
+            <span class="n">maximum_iterations</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">to_int32</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">round</span><span class="p">(</span>
+                <span class="n">tf</span><span class="o">.</span><span class="n">to_float</span><span class="p">(</span><span class="n">max_encoder_length</span><span class="p">)</span> <span class="o">*</span> <span class="n">decoding_length_factor</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">maximum_iterations</span>
+
+    <span class="k">def</span> <span class="nf">_build_decoder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">encoder_outputs</span><span class="p">,</span> <span class="n">encoder_state</span><span class="p">,</span> <span class="n">hparams</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Build and run a RNN decoder with a final projection layer.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">          encoder_outputs: The outputs of encoder for every time step.</span>
+<span class="sd">          encoder_state: The final state of the encoder.</span>
+<span class="sd">          hparams: The Hyperparameters configurations.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">          A tuple of final logits and final decoder state:</span>
+<span class="sd">            logits: size [time, batch_size, vocab_size] when time_major=True.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">tgt_sos_id</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tgt_vocab_table</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="n">hparams</span><span class="o">.</span><span class="n">sos</span><span class="p">)),</span>
+                             <span class="n">tf</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+        <span class="n">tgt_eos_id</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tgt_vocab_table</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="n">hparams</span><span class="o">.</span><span class="n">eos</span><span class="p">)),</span>
+                             <span class="n">tf</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+        <span class="n">iterator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">iterator</span>
+
+        <span class="c1"># maximum_iteration: The maximum decoding steps.</span>
+        <span class="n">maximum_iterations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_infer_maximum_iterations</span><span class="p">(</span>
+            <span class="n">hparams</span><span class="p">,</span> <span class="n">iterator</span><span class="o">.</span><span class="n">source_sequence_length</span><span class="p">)</span>
+
+        <span class="c1"># Decoder.</span>
+        <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="s2">&quot;decoder&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">decoder_scope</span><span class="p">:</span>
+            <span class="n">cell</span><span class="p">,</span> <span class="n">decoder_initial_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_decoder_cell</span><span class="p">(</span>
+                <span class="n">hparams</span><span class="p">,</span> <span class="n">encoder_outputs</span><span class="p">,</span> <span class="n">encoder_state</span><span class="p">,</span>
+                <span class="n">iterator</span><span class="o">.</span><span class="n">source_sequence_length</span><span class="p">)</span>
+
+            <span class="c1"># Optional ops depends on which mode we are in and which loss function we</span>
+            <span class="c1"># are using.</span>
+            <span class="n">logits</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">no_op</span><span class="p">()</span>
+            <span class="n">decoder_cell_outputs</span> <span class="o">=</span> <span class="kc">None</span>
+
+            <span class="c1"># Train or eval</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">!=</span> <span class="n">tf</span><span class="o">.</span><span class="n">contrib</span><span class="o">.</span><span class="n">learn</span><span class="o">.</span><span class="n">ModeKeys</span><span class="o">.</span><span class="n">INFER</span><span class="p">:</span>
+                <span class="c1"># decoder_emp_inp: [max_time, batch_size, num_units]</span>
+                <span class="n">target_input</span> <span class="o">=</span> <span class="n">iterator</span><span class="o">.</span><span class="n">target_input</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_major</span><span class="p">:</span>
+                    <span class="n">target_input</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">target_input</span><span class="p">)</span>
+                <span class="n">decoder_emb_inp</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">embedding_lookup</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">embedding_decoder</span><span class="p">,</span> <span class="n">target_input</span><span class="p">)</span>
+
+                <span class="c1"># Helper</span>
+                <span class="n">helper</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">contrib</span><span class="o">.</span><span class="n">seq2seq</span><span class="o">.</span><span class="n">TrainingHelper</span><span class="p">(</span>
+                    <span class="n">decoder_emb_inp</span><span class="p">,</span> <span class="n">iterator</span><span class="o">.</span><span class="n">target_sequence_length</span><span class="p">,</span>
+                    <span class="n">time_major</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">time_major</span><span class="p">)</span>
+
+                <span class="c1"># Decoder</span>
+                <span class="n">my_decoder</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">contrib</span><span class="o">.</span><span class="n">seq2seq</span><span class="o">.</span><span class="n">BasicDecoder</span><span class="p">(</span>
+                    <span class="n">cell</span><span class="p">,</span>
+                    <span class="n">helper</span><span class="p">,</span>
+                    <span class="n">decoder_initial_state</span><span class="p">,</span> <span class="p">)</span>
+
+                <span class="c1"># Dynamic decoding</span>
+                <span class="n">outputs</span><span class="p">,</span> <span class="n">final_context_state</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">contrib</span><span class="o">.</span><span class="n">seq2seq</span><span class="o">.</span><span class="n">dynamic_decode</span><span class="p">(</span>
+                    <span class="n">my_decoder</span><span class="p">,</span>
+                    <span class="n">output_time_major</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">time_major</span><span class="p">,</span>
+                    <span class="n">swap_memory</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="n">scope</span><span class="o">=</span><span class="n">decoder_scope</span><span class="p">)</span>
+
+                <span class="n">sample_id</span> <span class="o">=</span> <span class="n">outputs</span><span class="o">.</span><span class="n">sample_id</span>
+
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_sampled_softmax</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="c1"># Note: this is required when using sampled_softmax_loss.</span>
+                    <span class="n">decoder_cell_outputs</span> <span class="o">=</span> <span class="n">outputs</span><span class="o">.</span><span class="n">rnn_output</span>
+
+                <span class="c1"># Note: there&#39;s a subtle difference here between train and inference.</span>
+                <span class="c1"># We could have set output_layer when create my_decoder</span>
+                <span class="c1">#   and shared more code between train and inference.</span>
+                <span class="c1"># We chose to apply the output_layer to all timesteps for speed:</span>
+                <span class="c1">#   10% improvements for small models &amp; 20% for larger ones.</span>
+                <span class="c1"># If memory is a concern, we should apply output_layer per timestep.</span>
+                <span class="n">num_layers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_decoder_layers</span>
+                <span class="n">num_gpus</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_gpus</span>
+                <span class="n">device_id</span> <span class="o">=</span> <span class="n">num_layers</span> <span class="k">if</span> <span class="n">num_layers</span> <span class="o">&lt;</span> <span class="n">num_gpus</span> <span class="k">else</span> <span class="p">(</span><span class="n">num_layers</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="c1"># Colocate output layer with the last RNN cell if there is no extra GPU</span>
+                <span class="c1"># available. Otherwise, put last layer on a separate GPU.</span>
+                <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="n">model_helper</span><span class="o">.</span><span class="n">get_device_str</span><span class="p">(</span><span class="n">device_id</span><span class="p">,</span> <span class="n">num_gpus</span><span class="p">)):</span>
+                    <span class="n">logits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_layer</span><span class="p">(</span><span class="n">outputs</span><span class="o">.</span><span class="n">rnn_output</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_sampled_softmax</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">logits</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">no_op</span><span class="p">()</span>  <span class="c1"># unused when using sampled softmax loss.</span>
+
+            <span class="c1"># Inference</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">infer_mode</span> <span class="o">=</span> <span class="n">hparams</span><span class="o">.</span><span class="n">infer_mode</span>
+                <span class="n">start_tokens</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">fill</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span><span class="p">],</span> <span class="n">tgt_sos_id</span><span class="p">)</span>
+                <span class="n">end_token</span> <span class="o">=</span> <span class="n">tgt_eos_id</span>
+                <span class="n">utils</span><span class="o">.</span><span class="n">print_out</span><span class="p">(</span>
+                    <span class="s2">&quot;  decoder: infer_mode=</span><span class="si">%s</span><span class="s2">beam_width=</span><span class="si">%d</span><span class="s2">, length_penalty=</span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span>
+                        <span class="n">infer_mode</span><span class="p">,</span> <span class="n">hparams</span><span class="o">.</span><span class="n">beam_width</span><span class="p">,</span> <span class="n">hparams</span><span class="o">.</span><span class="n">length_penalty_weight</span><span class="p">))</span>
+
+                <span class="k">if</span> <span class="n">infer_mode</span> <span class="o">==</span> <span class="s2">&quot;beam_search&quot;</span><span class="p">:</span>
+                    <span class="n">beam_width</span> <span class="o">=</span> <span class="n">hparams</span><span class="o">.</span><span class="n">beam_width</span>
+                    <span class="n">length_penalty_weight</span> <span class="o">=</span> <span class="n">hparams</span><span class="o">.</span><span class="n">length_penalty_weight</span>
+
+                    <span class="n">my_decoder</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">contrib</span><span class="o">.</span><span class="n">seq2seq</span><span class="o">.</span><span class="n">BeamSearchDecoder</span><span class="p">(</span>
+                        <span class="n">cell</span><span class="o">=</span><span class="n">cell</span><span class="p">,</span>
+                        <span class="n">embedding</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">embedding_decoder</span><span class="p">,</span>
+                        <span class="n">start_tokens</span><span class="o">=</span><span class="n">start_tokens</span><span class="p">,</span>
+                        <span class="n">end_token</span><span class="o">=</span><span class="n">end_token</span><span class="p">,</span>
+                        <span class="n">initial_state</span><span class="o">=</span><span class="n">decoder_initial_state</span><span class="p">,</span>
+                        <span class="n">beam_width</span><span class="o">=</span><span class="n">beam_width</span><span class="p">,</span>
+                        <span class="n">output_layer</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">output_layer</span><span class="p">,</span>
+                        <span class="n">length_penalty_weight</span><span class="o">=</span><span class="n">length_penalty_weight</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">infer_mode</span> <span class="o">==</span> <span class="s2">&quot;sample&quot;</span><span class="p">:</span>
+                    <span class="c1"># Helper</span>
+                    <span class="n">sampling_temperature</span> <span class="o">=</span> <span class="n">hparams</span><span class="o">.</span><span class="n">sampling_temperature</span>
+                    <span class="k">assert</span> <span class="n">sampling_temperature</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">,</span> <span class="p">(</span>
+                        <span class="s2">&quot;sampling_temperature must greater than 0.0 when using sample&quot;</span>
+                        <span class="s2">&quot; decoder.&quot;</span><span class="p">)</span>
+                    <span class="n">helper</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">contrib</span><span class="o">.</span><span class="n">seq2seq</span><span class="o">.</span><span class="n">SampleEmbeddingHelper</span><span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">embedding_decoder</span><span class="p">,</span> <span class="n">start_tokens</span><span class="p">,</span> <span class="n">end_token</span><span class="p">,</span>
+                        <span class="n">softmax_temperature</span><span class="o">=</span><span class="n">sampling_temperature</span><span class="p">,</span>
+                        <span class="n">seed</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">random_seed</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">infer_mode</span> <span class="o">==</span> <span class="s2">&quot;greedy&quot;</span><span class="p">:</span>
+                    <span class="n">helper</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">contrib</span><span class="o">.</span><span class="n">seq2seq</span><span class="o">.</span><span class="n">GreedyEmbeddingHelper</span><span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">embedding_decoder</span><span class="p">,</span> <span class="n">start_tokens</span><span class="p">,</span> <span class="n">end_token</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unknown infer_mode &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span><span class="p">,</span> <span class="n">infer_mode</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">infer_mode</span> <span class="o">!=</span> <span class="s2">&quot;beam_search&quot;</span><span class="p">:</span>
+                    <span class="n">my_decoder</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">contrib</span><span class="o">.</span><span class="n">seq2seq</span><span class="o">.</span><span class="n">BasicDecoder</span><span class="p">(</span>
+                        <span class="n">cell</span><span class="p">,</span>
+                        <span class="n">helper</span><span class="p">,</span>
+                        <span class="n">decoder_initial_state</span><span class="p">,</span>
+                        <span class="n">output_layer</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">output_layer</span>  <span class="c1"># applied per timestep</span>
+                    <span class="p">)</span>
+
+                <span class="c1"># Dynamic decoding</span>
+                <span class="n">outputs</span><span class="p">,</span> <span class="n">final_context_state</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">contrib</span><span class="o">.</span><span class="n">seq2seq</span><span class="o">.</span><span class="n">dynamic_decode</span><span class="p">(</span>
+                    <span class="n">my_decoder</span><span class="p">,</span>
+                    <span class="n">maximum_iterations</span><span class="o">=</span><span class="n">maximum_iterations</span><span class="p">,</span>
+                    <span class="n">output_time_major</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">time_major</span><span class="p">,</span>
+                    <span class="n">swap_memory</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="n">scope</span><span class="o">=</span><span class="n">decoder_scope</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">infer_mode</span> <span class="o">==</span> <span class="s2">&quot;beam_search&quot;</span><span class="p">:</span>
+                    <span class="n">sample_id</span> <span class="o">=</span> <span class="n">outputs</span><span class="o">.</span><span class="n">predicted_ids</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">logits</span> <span class="o">=</span> <span class="n">outputs</span><span class="o">.</span><span class="n">rnn_output</span>
+                    <span class="n">sample_id</span> <span class="o">=</span> <span class="n">outputs</span><span class="o">.</span><span class="n">sample_id</span>
+
+        <span class="k">return</span> <span class="n">logits</span><span class="p">,</span> <span class="n">decoder_cell_outputs</span><span class="p">,</span> <span class="n">sample_id</span><span class="p">,</span> <span class="n">final_context_state</span>
+
+    <span class="k">def</span> <span class="nf">get_max_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tensor</span><span class="p">):</span>
+        <span class="n">time_axis</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_major</span> <span class="k">else</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="n">time_axis</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="ow">or</span> <span class="n">tf</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">tensor</span><span class="p">)[</span><span class="n">time_axis</span><span class="p">]</span>
+
+    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+    <span class="k">def</span> <span class="nf">_build_decoder_cell</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hparams</span><span class="p">,</span> <span class="n">encoder_outputs</span><span class="p">,</span> <span class="n">encoder_state</span><span class="p">,</span>
+                            <span class="n">source_sequence_length</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Subclass must implement this.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">          hparams: Hyperparameters configurations.</span>
+<span class="sd">          encoder_outputs: The outputs of encoder for every time step.</span>
+<span class="sd">          encoder_state: The final state of the encoder.</span>
+<span class="sd">          source_sequence_length: sequence length of encoder_outputs.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">          A tuple of a multi-layer RNN cell used by decoder and the intial state of</span>
+<span class="sd">          the decoder RNN.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">_softmax_cross_entropy_loss</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">logits</span><span class="p">,</span> <span class="n">decoder_cell_outputs</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Compute softmax loss or sampled softmax loss.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_sampled_softmax</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+
+            <span class="n">is_sequence</span> <span class="o">=</span> <span class="p">(</span><span class="n">decoder_cell_outputs</span><span class="o">.</span><span class="n">shape</span><span class="o">.</span><span class="n">ndims</span> <span class="o">==</span> <span class="mi">3</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">is_sequence</span><span class="p">:</span>
+                <span class="n">labels</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+                <span class="n">inputs</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">decoder_cell_outputs</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_units</span><span class="p">])</span>
+
+            <span class="n">crossent</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">sampled_softmax_loss</span><span class="p">(</span>
+                <span class="n">weights</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output_layer</span><span class="o">.</span><span class="n">kernel</span><span class="p">),</span>
+                <span class="n">biases</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">output_layer</span><span class="o">.</span><span class="n">bias</span> <span class="ow">or</span> <span class="n">tf</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">tgt_vocab_size</span><span class="p">]),</span>
+                <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span>
+                <span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">,</span>
+                <span class="n">num_sampled</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_sampled_softmax</span><span class="p">,</span>
+                <span class="n">num_classes</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tgt_vocab_size</span><span class="p">,</span>
+                <span class="n">partition_strategy</span><span class="o">=</span><span class="s2">&quot;div&quot;</span><span class="p">,</span>
+                <span class="n">seed</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">random_seed</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">is_sequence</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_major</span><span class="p">:</span>
+                    <span class="n">crossent</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">crossent</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span><span class="p">])</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">crossent</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">crossent</span><span class="p">,</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">crossent</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">sparse_softmax_cross_entropy_with_logits</span><span class="p">(</span>
+                <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span> <span class="n">logits</span><span class="o">=</span><span class="n">logits</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">crossent</span>
+
+    <span class="k">def</span> <span class="nf">_compute_loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">logits</span><span class="p">,</span> <span class="n">decoder_cell_outputs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Compute optimization loss.&quot;&quot;&quot;</span>
+        <span class="n">target_output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">iterator</span><span class="o">.</span><span class="n">target_output</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_major</span><span class="p">:</span>
+            <span class="n">target_output</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">target_output</span><span class="p">)</span>
+        <span class="n">max_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_max_time</span><span class="p">(</span><span class="n">target_output</span><span class="p">)</span>
+
+        <span class="n">crossent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_softmax_cross_entropy_loss</span><span class="p">(</span>
+            <span class="n">logits</span><span class="p">,</span> <span class="n">decoder_cell_outputs</span><span class="p">,</span> <span class="n">target_output</span><span class="p">)</span>
+
+        <span class="n">target_weights</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">sequence_mask</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">iterator</span><span class="o">.</span><span class="n">target_sequence_length</span><span class="p">,</span> <span class="n">max_time</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_major</span><span class="p">:</span>
+            <span class="n">target_weights</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">target_weights</span><span class="p">)</span>
+
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span>
+            <span class="n">crossent</span> <span class="o">*</span> <span class="n">target_weights</span><span class="p">)</span> <span class="o">/</span> <span class="n">tf</span><span class="o">.</span><span class="n">to_float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">loss</span>
+
+    <span class="k">def</span> <span class="nf">_get_infer_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hparams</span><span class="p">):</span>
+        <span class="k">del</span> <span class="n">hparams</span>
+        <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">no_op</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">infer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sess</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="n">tf</span><span class="o">.</span><span class="n">contrib</span><span class="o">.</span><span class="n">learn</span><span class="o">.</span><span class="n">ModeKeys</span><span class="o">.</span><span class="n">INFER</span>
+        <span class="n">output_tuple</span> <span class="o">=</span> <span class="n">InferOutputTuple</span><span class="p">(</span><span class="n">infer_logits</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">infer_logits</span><span class="p">,</span>
+                                        <span class="n">infer_summary</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">infer_summary</span><span class="p">,</span>
+                                        <span class="n">sample_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sample_id</span><span class="p">,</span>
+                                        <span class="n">sample_words</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sample_words</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">output_tuple</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">decode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sess</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Decode a batch.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">          sess: tensorflow session to use.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">          A tuple consiting of outputs, infer_summary.</span>
+<span class="sd">            outputs: of size [batch_size, time]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">output_tuple</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">infer</span><span class="p">(</span><span class="n">sess</span><span class="p">)</span>
+        <span class="n">sample_words</span> <span class="o">=</span> <span class="n">output_tuple</span><span class="o">.</span><span class="n">sample_words</span>
+        <span class="n">infer_summary</span> <span class="o">=</span> <span class="n">output_tuple</span><span class="o">.</span><span class="n">infer_summary</span>
+
+        <span class="c1"># make sure outputs is of shape [batch_size, time] or [beam_width,</span>
+        <span class="c1"># batch_size, time] when using beam search.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_major</span><span class="p">:</span>
+            <span class="n">sample_words</span> <span class="o">=</span> <span class="n">sample_words</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">sample_words</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="c1"># beam search output in [batch_size, time, beam_width] shape.</span>
+            <span class="n">sample_words</span> <span class="o">=</span> <span class="n">sample_words</span><span class="o">.</span><span class="n">transpose</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">sample_words</span><span class="p">,</span> <span class="n">infer_summary</span>
+
+    <span class="k">def</span> <span class="nf">build_encoder_states</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">include_embeddings</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Stack encoder states and return tensor [batch, length, layer, size].&quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="n">tf</span><span class="o">.</span><span class="n">contrib</span><span class="o">.</span><span class="n">learn</span><span class="o">.</span><span class="n">ModeKeys</span><span class="o">.</span><span class="n">INFER</span>
+        <span class="k">if</span> <span class="n">include_embeddings</span><span class="p">:</span>
+            <span class="n">stack_state_list</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span>
+                <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">encoder_emb_inp</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoder_state_list</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">stack_state_list</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">encoder_state_list</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+        <span class="c1"># transform from [length, batch, ...] -&gt; [batch, length, ...]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_major</span><span class="p">:</span>
+            <span class="n">stack_state_list</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">stack_state_list</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="n">stack_state_list</span>
+
+
+<span class="k">class</span> <span class="nc">Model</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Sequence-to-sequence dynamic model.</span>
+
+<span class="sd">    This class implements a multi-layer recurrent neural network as encoder,</span>
+<span class="sd">    and a multi-layer recurrent neural network decoder.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_build_encoder_from_sequence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hparams</span><span class="p">,</span> <span class="n">sequence</span><span class="p">,</span> <span class="n">sequence_length</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Build an encoder from a sequence.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">          hparams: hyperparameters.</span>
+<span class="sd">          sequence: tensor with input sequence data.</span>
+<span class="sd">          sequence_length: tensor with length of the input sequence.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">          encoder_outputs: RNN encoder outputs.</span>
+<span class="sd">          encoder_state: RNN encoder state.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">          ValueError: if encoder_type is neither &quot;uni&quot; nor &quot;bi&quot;.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">num_layers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_encoder_layers</span>
+        <span class="n">num_residual_layers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_encoder_residual_layers</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_major</span><span class="p">:</span>
+            <span class="n">sequence</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">sequence</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="s2">&quot;encoder&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">scope</span><span class="p">:</span>
+            <span class="n">dtype</span> <span class="o">=</span> <span class="n">scope</span><span class="o">.</span><span class="n">dtype</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">encoder_emb_inp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoder_emb_lookup_fn</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">embedding_encoder</span><span class="p">,</span> <span class="n">sequence</span><span class="p">)</span>
+
+            <span class="c1"># Encoder_outputs: [max_time, batch_size, num_units]</span>
+            <span class="k">if</span> <span class="n">hparams</span><span class="o">.</span><span class="n">encoder_type</span> <span class="o">==</span> <span class="s2">&quot;uni&quot;</span><span class="p">:</span>
+                <span class="n">utils</span><span class="o">.</span><span class="n">print_out</span><span class="p">(</span><span class="s2">&quot;  num_layers = </span><span class="si">%d</span><span class="s2">, num_residual_layers=</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span>
+                                <span class="p">(</span><span class="n">num_layers</span><span class="p">,</span> <span class="n">num_residual_layers</span><span class="p">))</span>
+                <span class="n">cell</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_encoder_cell</span><span class="p">(</span><span class="n">hparams</span><span class="p">,</span> <span class="n">num_layers</span><span class="p">,</span>
+                                                <span class="n">num_residual_layers</span><span class="p">)</span>
+
+                <span class="n">encoder_outputs</span><span class="p">,</span> <span class="n">encoder_state</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">dynamic_rnn</span><span class="p">(</span>
+                    <span class="n">cell</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">encoder_emb_inp</span><span class="p">,</span>
+                    <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span>
+                    <span class="n">sequence_length</span><span class="o">=</span><span class="n">sequence_length</span><span class="p">,</span>
+                    <span class="n">time_major</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">time_major</span><span class="p">,</span>
+                    <span class="n">swap_memory</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">hparams</span><span class="o">.</span><span class="n">encoder_type</span> <span class="o">==</span> <span class="s2">&quot;bi&quot;</span><span class="p">:</span>
+                <span class="n">num_bi_layers</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">num_layers</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+                <span class="n">num_bi_residual_layers</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">num_residual_layers</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+                <span class="n">utils</span><span class="o">.</span><span class="n">print_out</span><span class="p">(</span><span class="s2">&quot;  num_bi_layers = </span><span class="si">%d</span><span class="s2">, num_bi_residual_layers=</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span>
+                                <span class="p">(</span><span class="n">num_bi_layers</span><span class="p">,</span> <span class="n">num_bi_residual_layers</span><span class="p">))</span>
+
+                <span class="n">encoder_outputs</span><span class="p">,</span> <span class="n">bi_encoder_state</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_build_bidirectional_rnn</span><span class="p">(</span>
+                        <span class="n">inputs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">encoder_emb_inp</span><span class="p">,</span>
+                        <span class="n">sequence_length</span><span class="o">=</span><span class="n">sequence_length</span><span class="p">,</span>
+                        <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span>
+                        <span class="n">hparams</span><span class="o">=</span><span class="n">hparams</span><span class="p">,</span>
+                        <span class="n">num_bi_layers</span><span class="o">=</span><span class="n">num_bi_layers</span><span class="p">,</span>
+                        <span class="n">num_bi_residual_layers</span><span class="o">=</span><span class="n">num_bi_residual_layers</span><span class="p">))</span>
+
+                <span class="k">if</span> <span class="n">num_bi_layers</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">encoder_state</span> <span class="o">=</span> <span class="n">bi_encoder_state</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># alternatively concat forward and backward states</span>
+                    <span class="n">encoder_state</span> <span class="o">=</span> <span class="p">[]</span>
+                    <span class="k">for</span> <span class="n">layer_id</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_bi_layers</span><span class="p">):</span>
+                        <span class="n">encoder_state</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">bi_encoder_state</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">layer_id</span><span class="p">])</span>  <span class="c1"># forward</span>
+                        <span class="n">encoder_state</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">bi_encoder_state</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">layer_id</span><span class="p">])</span>  <span class="c1"># backward</span>
+                    <span class="n">encoder_state</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">encoder_state</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unknown encoder_type </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">hparams</span><span class="o">.</span><span class="n">encoder_type</span><span class="p">)</span>
+
+        <span class="c1"># Use the top layer for now</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">encoder_state_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">encoder_outputs</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">encoder_outputs</span><span class="p">,</span> <span class="n">encoder_state</span>
+
+    <span class="k">def</span> <span class="nf">_build_encoder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hparams</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Build encoder from source.&quot;&quot;&quot;</span>
+        <span class="n">utils</span><span class="o">.</span><span class="n">print_out</span><span class="p">(</span><span class="s2">&quot;# Build a basic encoder&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_encoder_from_sequence</span><span class="p">(</span>
+            <span class="n">hparams</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">iterator</span><span class="o">.</span><span class="n">source</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">iterator</span><span class="o">.</span><span class="n">source_sequence_length</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_build_bidirectional_rnn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">sequence_length</span><span class="p">,</span>
+                                 <span class="n">dtype</span><span class="p">,</span> <span class="n">hparams</span><span class="p">,</span>
+                                 <span class="n">num_bi_layers</span><span class="p">,</span>
+                                 <span class="n">num_bi_residual_layers</span><span class="p">,</span>
+                                 <span class="n">base_gpu</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create and call biddirectional RNN cells.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">          num_residual_layers: Number of residual layers from top to bottom. For</span>
+<span class="sd">            example, if `num_bi_layers=4` and `num_residual_layers=2`, the last 2 RNN</span>
+<span class="sd">            layers in each RNN cell will be wrapped with `ResidualWrapper`.</span>
+<span class="sd">          base_gpu: The gpu device id to use for the first forward RNN layer. The</span>
+<span class="sd">            i-th forward RNN layer will use `(base_gpu + i) % num_gpus` as its</span>
+<span class="sd">            device id. The `base_gpu` for backward RNN cell is `(base_gpu +</span>
+<span class="sd">            num_bi_layers)`.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">          The concatenated bidirectional output and the bidirectional RNN cell&quot;s</span>
+<span class="sd">          state.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Construct forward and backward cells</span>
+        <span class="n">fw_cell</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_encoder_cell</span><span class="p">(</span><span class="n">hparams</span><span class="p">,</span>
+                                           <span class="n">num_bi_layers</span><span class="p">,</span>
+                                           <span class="n">num_bi_residual_layers</span><span class="p">,</span>
+                                           <span class="n">base_gpu</span><span class="o">=</span><span class="n">base_gpu</span><span class="p">)</span>
+        <span class="n">bw_cell</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_encoder_cell</span><span class="p">(</span><span class="n">hparams</span><span class="p">,</span>
+                                           <span class="n">num_bi_layers</span><span class="p">,</span>
+                                           <span class="n">num_bi_residual_layers</span><span class="p">,</span>
+                                           <span class="n">base_gpu</span><span class="o">=</span><span class="p">(</span><span class="n">base_gpu</span> <span class="o">+</span> <span class="n">num_bi_layers</span><span class="p">))</span>
+
+        <span class="n">bi_outputs</span><span class="p">,</span> <span class="n">bi_state</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">bidirectional_dynamic_rnn</span><span class="p">(</span>
+            <span class="n">fw_cell</span><span class="p">,</span>
+            <span class="n">bw_cell</span><span class="p">,</span>
+            <span class="n">inputs</span><span class="p">,</span>
+            <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span>
+            <span class="n">sequence_length</span><span class="o">=</span><span class="n">sequence_length</span><span class="p">,</span>
+            <span class="n">time_major</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">time_major</span><span class="p">,</span>
+            <span class="n">swap_memory</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">bi_outputs</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">bi_state</span>
+
+    <span class="k">def</span> <span class="nf">_build_decoder_cell</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hparams</span><span class="p">,</span> <span class="n">encoder_outputs</span><span class="p">,</span> <span class="n">encoder_state</span><span class="p">,</span>
+                            <span class="n">source_sequence_length</span><span class="p">,</span> <span class="n">base_gpu</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Build an RNN cell that can be used by decoder.&quot;&quot;&quot;</span>
+        <span class="c1"># We only make use of encoder_outputs in attention-based models</span>
+        <span class="k">if</span> <span class="n">hparams</span><span class="o">.</span><span class="n">attention</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;BasicModel doesn&#39;t support attention.&quot;</span><span class="p">)</span>
+
+        <span class="n">cell</span> <span class="o">=</span> <span class="n">model_helper</span><span class="o">.</span><span class="n">create_rnn_cell</span><span class="p">(</span>
+            <span class="n">unit_type</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">unit_type</span><span class="p">,</span>
+            <span class="n">num_units</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_units</span><span class="p">,</span>
+            <span class="n">num_layers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_decoder_layers</span><span class="p">,</span>
+            <span class="n">num_residual_layers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_decoder_residual_layers</span><span class="p">,</span>
+            <span class="n">forget_bias</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">forget_bias</span><span class="p">,</span>
+            <span class="n">dropout</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">dropout</span><span class="p">,</span>
+            <span class="n">num_gpus</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_gpus</span><span class="p">,</span>
+            <span class="n">mode</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">mode</span><span class="p">,</span>
+            <span class="n">single_cell_fn</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">single_cell_fn</span><span class="p">,</span>
+            <span class="n">base_gpu</span><span class="o">=</span><span class="n">base_gpu</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">hparams</span><span class="o">.</span><span class="n">language_model</span><span class="p">:</span>
+            <span class="n">encoder_state</span> <span class="o">=</span> <span class="n">cell</span><span class="o">.</span><span class="n">zero_state</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="n">hparams</span><span class="o">.</span><span class="n">pass_hidden_state</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;For non-attentional model, &quot;</span>
+                             <span class="s2">&quot;pass_hidden_state needs to be set to True&quot;</span><span class="p">)</span>
+
+        <span class="c1"># For beam search, we need to replicate encoder infos beam_width times</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="n">tf</span><span class="o">.</span><span class="n">contrib</span><span class="o">.</span><span class="n">learn</span><span class="o">.</span><span class="n">ModeKeys</span><span class="o">.</span><span class="n">INFER</span> <span class="ow">and</span> <span class="n">hparams</span><span class="o">.</span><span class="n">infer_mode</span> <span class="o">==</span> <span class="s2">&quot;beam_search&quot;</span><span class="p">:</span>
+            <span class="n">decoder_initial_state</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">contrib</span><span class="o">.</span><span class="n">seq2seq</span><span class="o">.</span><span class="n">tile_batch</span><span class="p">(</span>
+                <span class="n">encoder_state</span><span class="p">,</span> <span class="n">multiplier</span><span class="o">=</span><span class="n">hparams</span><span class="o">.</span><span class="n">beam_width</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">decoder_initial_state</span> <span class="o">=</span> <span class="n">encoder_state</span>
+
+        <span class="k">return</span> <span class="n">cell</span><span class="p">,</span> <span class="n">decoder_initial_state</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

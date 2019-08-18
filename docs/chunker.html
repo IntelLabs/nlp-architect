@@ -1,0 +1,363 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Sequence Chunker &mdash; NLP Architect by Intel® AI Lab 0.4.post2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" type="text/css" />
+  <link rel="stylesheet" href="_static/theme.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Named Entity Recognition" href="ner_crf.html" />
+    <link rel="prev" title="Aspect Based Sentiment Analysis (ABSA)" href="absa.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html">
+          
+
+          
+            
+            <img src="_static/nlp_architect_logo_white.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="main.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="publications.html">Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Jupyter Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer_guide.html">Developer Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model_zoo.html">Model Zoo</a></li>
+</ul>
+<p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="absa.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Sequence Chunker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dataset">Dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#model">Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running-modalities">Running Modalities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#training">Training</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#quick-train">Quick train</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#custom-training-parameters">Custom training parameters</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#inference">Inference</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ner_crf.html">Named Entity Recognition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intent.html">Intent Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="np_segmentation.html">Noun Phrase Semantic Segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bist_parser.html">BIST Dependency Parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="word_sense.html">Most Common Word Sense</a></li>
+<li class="toctree-l1"><a class="reference internal" href="np2vec.html">Noun Phrase to Vec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="supervised_sentiment.html">Supervised Sentiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reading_comprehension.html">Reading Comprehension</a></li>
+<li class="toctree-l1"><a class="reference internal" href="memn2n.html">End-to-End Memory Networks for Goal Oriented Dialogue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tcn.html">TCN Language Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="crosslingual_emb.html">Unsupervised Crosslingual Embeddings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cross_doc_coref.html">Cross Document Co-Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="identifying_semantic_relation.html">Semantic Relation Identification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solutions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="absa_solution.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="term_set_expansion.html">Set Expansion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="trend_analysis.html">Trend Analysis</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Pipelines</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="spacy_bist.html">Spacy-BIST Parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spacy_np_annotator.html">Spacy-NP Annotator</a></li>
+</ul>
+<p class="caption"><span class="caption-text">For Developers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">NLP Architect by Intel® AI Lab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Sequence Chunker</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="sequence-chunker">
+<h1>Sequence Chunker<a class="headerlink" href="#sequence-chunker" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Phrase chunking is a basic NLP task that consists of tagging parts of a sentence (1 or more tokens)
+syntactically, i.e. POS tagging.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>The quick brown fox jumped over the fence
+<span class="p">|</span>                   <span class="p">|</span>      <span class="p">|</span>    <span class="p">|</span>
+Noun                Verb   Prep Noun
+</pre></div>
+</div>
+<p>In this example the sentence can be divided into 4 phrases, <code class="docutils literal notranslate"><span class="pre">The</span> <span class="pre">quick</span> <span class="pre">brown</span> <span class="pre">fox</span></code> and <code class="docutils literal notranslate"><span class="pre">the</span> <span class="pre">fence</span></code>
+are noun phrases, <code class="docutils literal notranslate"><span class="pre">jumped</span></code> is a verb phrase and <code class="docutils literal notranslate"><span class="pre">over</span></code> is a prepositional phrase.</p>
+</div>
+<div class="section" id="dataset">
+<h2>Dataset<a class="headerlink" href="#dataset" title="Permalink to this headline">¶</a></h2>
+<p>We used the <a class="reference external" href="https://www.clips.uantwerpen.be/conll2000/chunking/">CONLL2000</a> shared task dataset in our example for training a phrase chunker. More info about the <a class="reference external" href="https://www.clips.uantwerpen.be/conll2000/chunking/">CONLL2000</a> shared task can be found here: <a class="reference external" href="https://www.clips.uantwerpen.be/conll2000/chunking/">https://www.clips.uantwerpen.be/conll2000/chunking/</a>. The terms and conditions of the data set license apply. Intel does not grant any rights to the data files. The annotation of the data has been derived from the WSJ corpus by a program written by Sabine Buchholz from Tilburg University, The Netherlands.</p>
+<p>The <a class="reference external" href="https://www.clips.uantwerpen.be/conll2000/chunking/">CONLL2000</a> dataset has a <code class="docutils literal notranslate"><span class="pre">train_set</span></code> and <code class="docutils literal notranslate"><span class="pre">test_set</span></code> sets consisting of 8926 and 2009 sentences annotated with Part-of-speech and chunking information.
+We implemented a dataset loader, <a class="reference internal" href="generated/nlp_architect.data.sequential_tagging.CONLL2000.html#nlp_architect.data.sequential_tagging.CONLL2000" title="nlp_architect.data.sequential_tagging.CONLL2000"><code class="xref py py-class docutils literal notranslate"><span class="pre">CONLL2000</span></code></a>, for loading and parsing <a class="reference internal" href="generated/nlp_architect.data.sequential_tagging.CONLL2000.html#nlp_architect.data.sequential_tagging.CONLL2000" title="nlp_architect.data.sequential_tagging.CONLL2000"><code class="xref py py-class docutils literal notranslate"><span class="pre">CONLL2000</span></code></a> data into numpy arrays ready to be used sequential tagging models. For full set of options please see <a class="reference internal" href="generated/nlp_architect.data.sequential_tagging.CONLL2000.html#nlp_architect.data.sequential_tagging.CONLL2000" title="nlp_architect.data.sequential_tagging.CONLL2000"><code class="xref py py-class docutils literal notranslate"><span class="pre">CONLL2000</span></code></a>.</p>
+<p>NLP Architect has a data loader to easily load CONLL2000 which can be found in <a class="reference internal" href="generated/nlp_architect.data.sequential_tagging.CONLL2000.html#nlp_architect.data.sequential_tagging.CONLL2000" title="nlp_architect.data.sequential_tagging.CONLL2000"><code class="xref py py-class docutils literal notranslate"><span class="pre">CONLL2000</span></code></a>. The loader supports the following feature generation when loading the dataset:</p>
+<ol class="arabic simple">
+<li><p>Sentence words in sparse int representation</p></li>
+<li><p>Part-of-speech tags of words</p></li>
+<li><p>Chunk tag of words (IOB format)</p></li>
+<li><p>Characters of sentence words in sparse int representation (optional)</p></li>
+</ol>
+<p>To get the dataset follow these steps:</p>
+<ol class="arabic simple">
+<li><p>download train and test files from dataset website.</p></li>
+<li><p>unzip files: <code class="docutils literal notranslate"><span class="pre">gunzip</span> <span class="pre">*.gz</span></code></p></li>
+<li><p>provide <code class="docutils literal notranslate"><span class="pre">CONLL2000</span></code> data loader or <code class="docutils literal notranslate"><span class="pre">train.py</span></code> sample below the directory containing the files.</p></li>
+</ol>
+</div>
+<div class="section" id="model">
+<h2>Model<a class="headerlink" href="#model" title="Permalink to this headline">¶</a></h2>
+<p>The sequence chunker is a Tensorflow-keras based model and it is implemented in <a class="reference internal" href="generated/nlp_architect.models.chunker.SequenceChunker.html#nlp_architect.models.chunker.SequenceChunker" title="nlp_architect.models.chunker.SequenceChunker"><code class="xref py py-class docutils literal notranslate"><span class="pre">SequenceChunker</span></code></a> and comes with several options for creating the topology depending on what input is given (tokens, external word embedding model, topology parameters).</p>
+<p>The model is based on the paper: <a class="reference external" href="http://anthology.aclweb.org/P16-2038">Deep multi-task learning with low level tasks supervised at lower layers</a> by Søgaard and Goldberg (2016), but with minor alterations.</p>
+<p>The described model in the paper consists of multiple sequential Bi-directional LSTM layers which are set to predict different tags. the Part-of-speech tags are projected onto a fully connected layer and label tagging is done after the first LSTM layer. The chunk labels are predicted similarly after the 3rd LSTM layer.</p>
+<p>The model has additional improvements to the model presented in the paper:</p>
+<ul class="simple">
+<li><p>Choose between Conditional Random Fields (<a class="reference internal" href="generated/nlp_architect.contrib.tensorflow.python.keras.layers.crf.CRF.html#nlp_architect.contrib.tensorflow.python.keras.layers.crf.CRF" title="nlp_architect.contrib.tensorflow.python.keras.layers.crf.CRF"><code class="xref py py-class docutils literal notranslate"><span class="pre">CRF</span></code></a>) classifier instead of ‘softmax’ as the prediction layers. (models using CRF have been empirically shown to produce more accurate predictions)</p></li>
+<li><p>Character embeddings using CNNs extracting 3-grams - extracting character information out of words was shown to help syntactic tasks such as tagging and chunking.</p></li>
+</ul>
+<p>The model’s embedding vector size and LSTM layer hidden state have equal sizes, the default training optimizer is Adam with default parameters.</p>
+</div>
+<div class="section" id="running-modalities">
+<h2>Running Modalities<a class="headerlink" href="#running-modalities" title="Permalink to this headline">¶</a></h2>
+<p>We provide a simple example for training and running inference using the <a class="reference internal" href="generated/nlp_architect.models.chunker.SequenceChunker.html#nlp_architect.models.chunker.SequenceChunker" title="nlp_architect.models.chunker.SequenceChunker"><code class="xref py py-class docutils literal notranslate"><span class="pre">SequenceChunker</span></code></a> model.</p>
+<p><code class="docutils literal notranslate"><span class="pre">examples/chunker/train.py</span></code> will load CONLL2000 dataset and train a model using given training parameters (batch size, epochs, external word embedding, etc.), save the model once done training and print the performance of the model on the test set. The example supports loading GloVe/Fasttext word embedding models to be used when training a model. The training method used in this example trains on both POS and Chunk labels concurrently with equal target loss weights, this is different than what is described in the <a class="reference external" href="http://anthology.aclweb.org/P16-2038">paper</a>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">examples/chunker/inference.py</span></code> will load a saved model and a given text file with sentences and print the chunks found on the stdout.</p>
+<div class="section" id="training">
+<h3>Training<a class="headerlink" href="#training" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="quick-train">
+<h4>Quick train<a class="headerlink" href="#quick-train" title="Permalink to this headline">¶</a></h4>
+<p>Train a model with default parameters (use sentence words and default network settings):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">examples</span><span class="o">/</span><span class="n">chunker</span><span class="o">/</span><span class="n">train</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">data_dir</span> <span class="o">&lt;</span><span class="n">path</span> <span class="n">to</span> <span class="n">CONLL2000</span> <span class="n">files</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="custom-training-parameters">
+<h4>Custom training parameters<a class="headerlink" href="#custom-training-parameters" title="Permalink to this headline">¶</a></h4>
+<p>All customizable parameters can be obtained by running: <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">train.py</span> <span class="pre">-h</span></code></p>
+<dl class="option-list">
+<dt><kbd><span class="option">-h</span>, <span class="option">--help</span></kbd></dt>
+<dd><p>show this help message and exit</p>
+</dd>
+<dt><kbd><span class="option">--data_dir <var>DATA_DIR</var></span></kbd></dt>
+<dd><p>Path to directory containing CONLL2000 files</p>
+</dd>
+<dt><kbd><span class="option">--embedding_model <var>EMBEDDING_MODEL</var></span></kbd></dt>
+<dd><p>Word embedding model path (GloVe/Fasttext/textual)</p>
+</dd>
+<dt><kbd><span class="option">--sentence_length <var>SENTENCE_LENGTH</var></span></kbd></dt>
+<dd><p>Maximum sentence length</p>
+</dd>
+<dt><kbd><span class="option">--char_features</span></kbd></dt>
+<dd><p>use word character features in addition to words</p>
+</dd>
+<dt><kbd><span class="option">--max_word_length <var>MAX_WORD_LENGTH</var></span></kbd></dt>
+<dd><p>maximum number of character in one word (if
+–char_features is enabled)</p>
+</dd>
+<dt><kbd><span class="option">--feature_size <var>FEATURE_SIZE</var></span></kbd></dt>
+<dd><p>Feature vector size (in embedding and LSTM layers)</p>
+</dd>
+<dt><kbd><span class="option">--use_cudnn</span></kbd></dt>
+<dd><p>use CUDNN based LSTM cells</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>–classifier {crf,softmax}</dt><dd><p>classifier to use in last layer</p>
+</dd>
+</dl>
+<dl class="option-list">
+<dt><kbd><span class="option">-b <var>B</var></span></kbd></dt>
+<dd><p>batch size</p>
+</dd>
+<dt><kbd><span class="option">-e <var>E</var></span></kbd></dt>
+<dd><p>number of epochs run fit model</p>
+</dd>
+<dt><kbd><span class="option">--model_name <var>MODEL_NAME</var></span></kbd></dt>
+<dd><p>Model name (used for saving the model)</p>
+</dd>
+</dl>
+<p>Saving the model after training is done automatically by specifying a model name with the keyword <cite>–model_name</cite>, the following files will be created:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">chunker_model.h5</span></code> - model file</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">chunker_model.params</span></code> - model parameter files (topology parameters, vocabs)</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="inference">
+<h3>Inference<a class="headerlink" href="#inference" title="Permalink to this headline">¶</a></h3>
+<p>Running inference on a trained model using an input file (text based, each line is a document):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">examples</span><span class="o">/</span><span class="n">chunker</span><span class="o">/</span><span class="n">inference</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">model_name</span> <span class="o">&lt;</span><span class="n">model_name</span><span class="o">&gt;</span> <span class="o">--</span><span class="nb">input</span> <span class="o">&lt;</span><span class="n">input_file</span><span class="o">&gt;.</span><span class="n">txt</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

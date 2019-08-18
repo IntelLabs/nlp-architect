@@ -1,0 +1,506 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>nlp_architect.data.intent_datasets &mdash; NLP Architect by Intel® AI Lab 0.4.post2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/theme.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html">
+          
+
+          
+            
+            <img src="../../../_static/nlp_architect_logo_white.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../main.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../publications.html">Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials.html">Jupyter Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer_guide.html">Developer Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../model_zoo.html">Model Zoo</a></li>
+</ul>
+<p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../absa.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../chunker.html">Sequence Chunker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ner_crf.html">Named Entity Recognition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../intent.html">Intent Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../np_segmentation.html">Noun Phrase Semantic Segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../bist_parser.html">BIST Dependency Parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../word_sense.html">Most Common Word Sense</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../np2vec.html">Noun Phrase to Vec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../supervised_sentiment.html">Supervised Sentiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reading_comprehension.html">Reading Comprehension</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../memn2n.html">End-to-End Memory Networks for Goal Oriented Dialogue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tcn.html">TCN Language Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../crosslingual_emb.html">Unsupervised Crosslingual Embeddings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../cross_doc_coref.html">Cross Document Co-Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../identifying_semantic_relation.html">Semantic Relation Identification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solutions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../absa_solution.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../term_set_expansion.html">Set Expansion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../trend_analysis.html">Trend Analysis</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Pipelines</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../spacy_bist.html">Spacy-BIST Parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../spacy_np_annotator.html">Spacy-NP Annotator</a></li>
+</ul>
+<p class="caption"><span class="caption-text">For Developers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">NLP Architect by Intel® AI Lab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>nlp_architect.data.intent_datasets</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for nlp_architect.data.intent_datasets</h1><div class="highlight"><pre>
+<span></span><span class="c1"># ******************************************************************************</span>
+<span class="c1"># Copyright 2017-2018 Intel Corporation</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ******************************************************************************</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">unicode_literals</span>
+
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.utils.generic</span> <span class="k">import</span> <span class="n">pad_sentences</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.utils.text</span> <span class="k">import</span> <span class="n">SpacyInstance</span><span class="p">,</span> <span class="n">Vocabulary</span><span class="p">,</span> <span class="n">character_vector_generator</span><span class="p">,</span> \
+    <span class="n">word_vector_generator</span>
+
+
+<div class="viewcode-block" id="IntentDataset"><a class="viewcode-back" href="../../../generated/nlp_architect.data.intent_datasets.IntentDataset.html#nlp_architect.data.intent_datasets.IntentDataset">[docs]</a><span class="k">class</span> <span class="nc">IntentDataset</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Intent extraction dataset base class</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        sentence_length (int): max sentence length</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="IntentDataset.__init__"><a class="viewcode-back" href="../../../generated/nlp_architect.data.intent_datasets.IntentDataset.html#nlp_architect.data.intent_datasets.IntentDataset.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sentence_length</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">word_length</span><span class="o">=</span><span class="mi">12</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vecs</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sentence_len</span> <span class="o">=</span> <span class="n">sentence_length</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">word_len</span> <span class="o">=</span> <span class="n">word_length</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tokens_vocab</span> <span class="o">=</span> <span class="n">Vocabulary</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_chars_vocab</span> <span class="o">=</span> <span class="n">Vocabulary</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tags_vocab</span> <span class="o">=</span> <span class="n">Vocabulary</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_intents_vocab</span> <span class="o">=</span> <span class="n">Vocabulary</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">_load_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">train_set</span><span class="p">,</span> <span class="n">test_set</span><span class="p">):</span>
+        <span class="c1"># vectorize</span>
+        <span class="c1"># add offset of 2 for PAD and OOV</span>
+        <span class="n">train_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_set</span><span class="p">)</span>
+        <span class="n">test_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_set</span><span class="p">)</span>
+        <span class="n">texts</span><span class="p">,</span> <span class="n">tags</span><span class="p">,</span> <span class="n">intents</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">train_set</span> <span class="o">+</span> <span class="n">test_set</span><span class="p">))</span>
+        <span class="n">text_vectors</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tokens_vocab</span> <span class="o">=</span> <span class="n">word_vector_generator</span><span class="p">(</span><span class="n">texts</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">tag_vectors</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tags_vocab</span> <span class="o">=</span> <span class="n">word_vector_generator</span><span class="p">(</span><span class="n">tags</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">chars_vectors</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_chars_vocab</span> <span class="o">=</span> <span class="n">character_vector_generator</span><span class="p">(</span><span class="n">texts</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">i</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_intents_vocab</span> <span class="o">=</span> <span class="n">word_vector_generator</span><span class="p">([</span><span class="n">intents</span><span class="p">])</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+        <span class="n">text_vectors</span> <span class="o">=</span> <span class="n">pad_sentences</span><span class="p">(</span><span class="n">text_vectors</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sentence_len</span><span class="p">)</span>
+        <span class="n">tag_vectors</span> <span class="o">=</span> <span class="n">pad_sentences</span><span class="p">(</span><span class="n">tag_vectors</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sentence_len</span><span class="p">)</span>
+        <span class="n">chars_vectors</span> <span class="o">=</span> <span class="p">[</span><span class="n">pad_sentences</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">word_len</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">chars_vectors</span><span class="p">]</span>
+        <span class="n">zeros</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">chars_vectors</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">sentence_len</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">word_len</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">chars_vectors</span><span class="p">):</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="n">d</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">sentence_len</span><span class="p">]</span>
+            <span class="n">zeros</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="p">:</span><span class="n">d</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">d</span>
+        <span class="n">chars_vectors</span> <span class="o">=</span> <span class="n">zeros</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">vecs</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">text_vectors</span><span class="p">[:</span><span class="n">train_size</span><span class="p">],</span>
+                              <span class="n">chars_vectors</span><span class="p">[:</span><span class="n">train_size</span><span class="p">],</span>
+                              <span class="n">i</span><span class="p">[:</span><span class="n">train_size</span><span class="p">],</span>
+                              <span class="n">tag_vectors</span><span class="p">[:</span><span class="n">train_size</span><span class="p">]]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vecs</span><span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">text_vectors</span><span class="p">[</span><span class="o">-</span><span class="n">test_size</span><span class="p">:],</span>
+                             <span class="n">chars_vectors</span><span class="p">[</span><span class="o">-</span><span class="n">test_size</span><span class="p">:],</span>
+                             <span class="n">i</span><span class="p">[</span><span class="o">-</span><span class="n">test_size</span><span class="p">:],</span>
+                             <span class="n">tag_vectors</span><span class="p">[</span><span class="o">-</span><span class="n">test_size</span><span class="p">:]]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">word_vocab_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;int: vocabulary size&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tokens_vocab</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">char_vocab_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;int: char vocabulary size&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_chars_vocab</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">label_vocab_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;int: label vocabulary size&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tags_vocab</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">intent_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;int: intent label vocabulary size&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_intents_vocab</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">word_vocab</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;dict: tokens vocabulary&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tokens_vocab</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">char_vocab</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;dict: word character vocabulary&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_chars_vocab</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">tags_vocab</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;dict: labels vocabulary&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tags_vocab</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">intents_vocab</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;dict: intent labels vocabulary&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_intents_vocab</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">train_set</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;:obj:`tuple` of :obj:`numpy.ndarray`: train set&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">vecs</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">test_set</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;:obj:`tuple` of :obj:`numpy.ndarray`: test set&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">vecs</span><span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="TabularIntentDataset"><a class="viewcode-back" href="../../../generated/nlp_architect.data.intent_datasets.TabularIntentDataset.html#nlp_architect.data.intent_datasets.TabularIntentDataset">[docs]</a><span class="k">class</span> <span class="nc">TabularIntentDataset</span><span class="p">(</span><span class="n">IntentDataset</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Tabular Intent/Slot tags dataset loader.</span>
+<span class="sd">    Compatible with many sequence tagging datasets (ATIS, CoNLL, etc..)</span>
+<span class="sd">    data format must be int tabular format where:</span>
+<span class="sd">    - one word per line with tag annotation and intent type separated</span>
+<span class="sd">    by tabs &lt;token&gt;\t&lt;tag_label&gt;\t&lt;intent&gt;\n</span>
+<span class="sd">    - sentences are separated by an empty line</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        train_file (str): path to train set file</span>
+<span class="sd">        test_file (str): path to test set file</span>
+<span class="sd">        sentence_length (int): max sentence length</span>
+<span class="sd">        word_length (int): max word length</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">files</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="s1">&#39;test&#39;</span><span class="p">]</span>
+
+<div class="viewcode-block" id="TabularIntentDataset.__init__"><a class="viewcode-back" href="../../../generated/nlp_architect.data.intent_datasets.TabularIntentDataset.html#nlp_architect.data.intent_datasets.TabularIntentDataset.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">train_file</span><span class="p">,</span> <span class="n">test_file</span><span class="p">,</span> <span class="n">sentence_length</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">word_length</span><span class="o">=</span><span class="mi">12</span><span class="p">):</span>
+        <span class="n">train_set_raw</span><span class="p">,</span> <span class="n">test_set_raw</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_dataset</span><span class="p">(</span><span class="n">train_file</span><span class="p">,</span> <span class="n">test_file</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">TabularIntentDataset</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">sentence_length</span><span class="o">=</span><span class="n">sentence_length</span><span class="p">,</span>
+                                                   <span class="n">word_length</span><span class="o">=</span><span class="n">word_length</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_load_data</span><span class="p">(</span><span class="n">train_set_raw</span><span class="p">,</span> <span class="n">test_set_raw</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_load_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">train_file</span><span class="p">,</span> <span class="n">test_file</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;returns a tuple of train/test with 3-tuple of tokens, tags, intent_type&quot;&quot;&quot;</span>
+        <span class="n">train</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_sentences</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_read_file</span><span class="p">(</span><span class="n">train_file</span><span class="p">))</span>
+        <span class="n">test</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_sentences</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_read_file</span><span class="p">(</span><span class="n">test_file</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">train</span><span class="p">,</span> <span class="n">test</span>
+
+    <span class="k">def</span> <span class="nf">_read_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">fp</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_split_into_sentences</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_split_into_sentences</span><span class="p">(</span><span class="n">file_lines</span><span class="p">):</span>
+        <span class="n">sents</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">file_lines</span><span class="p">:</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">line</span><span class="p">:</span>
+                <span class="n">sents</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+                <span class="n">s</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">continue</span>
+            <span class="n">s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">s</span><span class="p">:</span>
+            <span class="n">sents</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">sents</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_parse_sentences</span><span class="p">(</span><span class="n">sentences</span><span class="p">):</span>
+        <span class="n">encoded_sentences</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">sen</span> <span class="ow">in</span> <span class="n">sentences</span><span class="p">:</span>
+            <span class="n">tokens</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">tags</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">intent</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">sen</span><span class="p">:</span>
+                <span class="n">t</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">i</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+                <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+                <span class="n">tags</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+                <span class="n">intent</span> <span class="o">=</span> <span class="n">i</span>
+                <span class="k">if</span> <span class="n">intent</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">intent</span> <span class="o">=</span> <span class="n">i</span>
+            <span class="n">encoded_sentences</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">tokens</span><span class="p">,</span> <span class="n">tags</span><span class="p">,</span> <span class="n">intent</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">encoded_sentences</span></div>
+
+
+<div class="viewcode-block" id="SNIPS"><a class="viewcode-back" href="../../../generated/nlp_architect.data.intent_datasets.SNIPS.html#nlp_architect.data.intent_datasets.SNIPS">[docs]</a><span class="k">class</span> <span class="nc">SNIPS</span><span class="p">(</span><span class="n">IntentDataset</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    SNIPS dataset class</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">            path (str): dataset path</span>
+<span class="sd">            sentence_length (int, optional): max sentence length</span>
+<span class="sd">            word_length (int, optional): max word length</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">train_files</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;AddToPlaylist/train_AddToPlaylist_full.json&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;BookRestaurant/train_BookRestaurant_full.json&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;GetWeather/train_GetWeather_full.json&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;PlayMusic/train_PlayMusic_full.json&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;RateBook/train_RateBook_full.json&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;SearchCreativeWork/train_SearchCreativeWork_full.json&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;SearchScreeningEvent/train_SearchScreeningEvent_full.json&#39;</span>
+    <span class="p">]</span>
+    <span class="n">test_files</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;AddToPlaylist/validate_AddToPlaylist.json&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;BookRestaurant/validate_BookRestaurant.json&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;GetWeather/validate_GetWeather.json&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;PlayMusic/validate_PlayMusic.json&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;RateBook/validate_RateBook.json&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;SearchCreativeWork/validate_SearchCreativeWork.json&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;SearchScreeningEvent/validate_SearchScreeningEvent.json&#39;</span>
+    <span class="p">]</span>
+    <span class="n">files</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="s1">&#39;test&#39;</span><span class="p">]</span>
+
+<div class="viewcode-block" id="SNIPS.__init__"><a class="viewcode-back" href="../../../generated/nlp_architect.data.intent_datasets.SNIPS.html#nlp_architect.data.intent_datasets.SNIPS.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">sentence_length</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">word_length</span><span class="o">=</span><span class="mi">12</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">path</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;invalid path for SNIPS dataset loader&#39;</span><span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataset_root</span> <span class="o">=</span> <span class="n">path</span>
+        <span class="n">train_set_raw</span><span class="p">,</span> <span class="n">test_set_raw</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_dataset</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SNIPS</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">sentence_length</span><span class="o">=</span><span class="n">sentence_length</span><span class="p">,</span>
+                                    <span class="n">word_length</span><span class="o">=</span><span class="n">word_length</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_load_data</span><span class="p">(</span><span class="n">train_set_raw</span><span class="p">,</span> <span class="n">test_set_raw</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_load_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;returns a tuple of train/test with 3-tuple of tokens, tags, intent_type&quot;&quot;&quot;</span>
+        <span class="n">train_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_intents</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_files</span><span class="p">)</span>
+        <span class="n">test_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_intents</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">test_files</span><span class="p">)</span>
+        <span class="n">train</span> <span class="o">=</span> <span class="p">[(</span><span class="n">t</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">train_data</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span><span class="p">,</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">train_data</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+        <span class="n">test</span> <span class="o">=</span> <span class="p">[(</span><span class="n">t</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">test_data</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span><span class="p">,</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">test_data</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+        <span class="k">return</span> <span class="n">train</span><span class="p">,</span> <span class="n">test</span>
+
+    <span class="k">def</span> <span class="nf">_load_intents</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">files</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">files</span><span class="p">):</span>
+            <span class="n">fname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_root</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+            <span class="n">intent</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+                <span class="n">fdata</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fp</span><span class="p">)</span>
+            <span class="n">entries</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_json</span><span class="p">([</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">fdata</span><span class="p">[</span><span class="n">intent</span><span class="p">]])</span>
+            <span class="n">data</span><span class="p">[</span><span class="n">intent</span><span class="p">]</span> <span class="o">=</span> <span class="n">entries</span>
+        <span class="k">return</span> <span class="n">data</span>
+
+    <span class="k">def</span> <span class="nf">_parse_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="n">tok</span> <span class="o">=</span> <span class="n">SpacyInstance</span><span class="p">(</span><span class="n">disable</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;tagger&#39;</span><span class="p">,</span> <span class="s1">&#39;ner&#39;</span><span class="p">,</span> <span class="s1">&#39;parser&#39;</span><span class="p">,</span> <span class="s1">&#39;vectors&#39;</span><span class="p">,</span> <span class="s1">&#39;textcat&#39;</span><span class="p">])</span>
+        <span class="n">sentences</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+            <span class="n">tokens</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">tags</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+                <span class="n">new_tokens</span> <span class="o">=</span> <span class="n">tok</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+                <span class="n">tokens</span> <span class="o">+=</span> <span class="n">new_tokens</span>
+                <span class="n">ent</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;entity&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">ent</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">tags</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_tags</span><span class="p">(</span><span class="n">ent</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_tokens</span><span class="p">))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">tags</span> <span class="o">+=</span> <span class="p">[</span><span class="s1">&#39;O&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_tokens</span><span class="p">)</span>
+            <span class="n">sentences</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">tokens</span><span class="p">,</span> <span class="n">tags</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">sentences</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_create_tags</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">length</span><span class="p">):</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;B-&#39;</span> <span class="o">+</span> <span class="n">tag</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">length</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="n">labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;I-&#39;</span> <span class="o">+</span> <span class="n">tag</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">labels</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

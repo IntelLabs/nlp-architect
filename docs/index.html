@@ -1,0 +1,366 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>NLP Architect by Intel® AI Lab &mdash; NLP Architect by Intel® AI Lab 0.4.post2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" type="text/css" />
+  <link rel="stylesheet" href="_static/theme.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="NLP Architect by Intel® AI Lab" href="main.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="#">
+          
+
+          
+            
+            <img src="_static/nlp_architect_logo_white.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="main.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="publications.html">Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Jupyter Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer_guide.html">Developer Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model_zoo.html">Model Zoo</a></li>
+</ul>
+<p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="absa.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chunker.html">Sequence Chunker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ner_crf.html">Named Entity Recognition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intent.html">Intent Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="np_segmentation.html">Noun Phrase Semantic Segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bist_parser.html">BIST Dependency Parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="word_sense.html">Most Common Word Sense</a></li>
+<li class="toctree-l1"><a class="reference internal" href="np2vec.html">Noun Phrase to Vec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="supervised_sentiment.html">Supervised Sentiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reading_comprehension.html">Reading Comprehension</a></li>
+<li class="toctree-l1"><a class="reference internal" href="memn2n.html">End-to-End Memory Networks for Goal Oriented Dialogue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tcn.html">TCN Language Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="crosslingual_emb.html">Unsupervised Crosslingual Embeddings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cross_doc_coref.html">Cross Document Co-Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="identifying_semantic_relation.html">Semantic Relation Identification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solutions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="absa_solution.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="term_set_expansion.html">Set Expansion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="trend_analysis.html">Trend Analysis</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Pipelines</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="spacy_bist.html">Spacy-BIST Parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spacy_np_annotator.html">Spacy-NP Annotator</a></li>
+</ul>
+<p class="caption"><span class="caption-text">For Developers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">NLP Architect by Intel® AI Lab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="#">Docs</a> &raquo;</li>
+        
+      <li>NLP Architect by Intel® AI Lab</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="nlp-architect-by-intel-ai-lab">
+<h1>NLP Architect by Intel® AI Lab<a class="headerlink" href="#nlp-architect-by-intel-ai-lab" title="Permalink to this headline">¶</a></h1>
+<p>NLP Architect is an open-source Python library for exploring the state-of-the-art deep learning topologies and techniques for natural language processing and natural
+language understanding. It is intended to be a platform for future research and
+collaboration.</p>
+<p>The library includes our past and ongoing NLP research and development efforts as part of Intel AI Lab.</p>
+<p>NLP Architect can be downloaded from Github: <a class="reference external" href="https://github.com/NervanaSystems/nlp-architect">https://github.com/NervanaSystems/nlp-architect</a></p>
+<div class="section" id="library-overview">
+<h2>Library Overview<a class="headerlink" href="#library-overview" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="research-driven-nlp-nlu-models">
+<h3>Research driven NLP/NLU models<a class="headerlink" href="#research-driven-nlp-nlu-models" title="Permalink to this headline">¶</a></h3>
+<p>The library contains state-of-art and novel NLP and NLU models in a variety of topics:</p>
+<ul class="simple">
+<li><p>Dependency parsing</p></li>
+<li><p>Intent detection and Slot tagging model for Intent based applications</p></li>
+<li><p>Memory Networks for goal-oriented dialog</p></li>
+<li><p>Noun phrase embedding vectors model</p></li>
+<li><p>Noun phrase semantic segmentation</p></li>
+<li><p>Named Entity Recognition</p></li>
+<li><p>Word Chunking</p></li>
+<li><p>Reading comprehension</p></li>
+<li><p>Language modeling using Temporal Convolution Network</p></li>
+<li><p>Unsupervised Crosslingual Word Embedding</p></li>
+<li><p>Aspect Based Sentiment Analysis</p></li>
+<li><p>Supervised sentiment analysis</p></li>
+<li><p>Sparse and quantized neural machine translation</p></li>
+<li><p>Relation Identification and cross document coreference</p></li>
+</ul>
+</div>
+<div class="section" id="quick-install">
+<h3>Quick Install<a class="headerlink" href="#quick-install" title="Permalink to this headline">¶</a></h3>
+<p>Select the desired configuration of your system:</p>
+<div id="app" class="wy-table-responsive">
+<table class="docutils option-list installation_table" frame="void" rules="none">
+    <colgroup><col class="option">
+    <col class="description">
+    </colgroup><tbody valign="top">
+    <tr><td class="option-group">
+    <kbd><span class="option">
+        <strong>Install from</strong>
+    </span></kbd></td>
+    <td>
+        <label class="radio">
+          <input v-model="form.source" type="radio" value="1">Pip
+        </label>
+        <label class="radio">
+          <input v-model="form.source" type="radio" value="0" checked>GitHub
+        </label>
+    </td></tr>
+    <tr><td class="option-group">
+    <kbd><span class="option">
+        <strong>Create virtualenv?</strong>
+    </span></kbd></td>
+    <td>
+        <label class="radio">
+          <input v-model="form.with_env" type="radio" value="1">Yes
+        </label>
+        <label class="radio">
+          <input v-model="form.with_env" type="radio" value="0" checked>No
+        </label>
+    </td></tr>
+    <tr><td class="option-group">
+    <kbd><span class="option">
+        <strong>Backend</strong>
+    </span></kbd></td>
+    <td>
+        <label class="radio">
+          <input v-model="form.backend" type="radio" value="CPU">CPU
+        </label>
+        <label class="radio">
+          <input v-model="form.backend" type="radio" value="MKL" checked>MKL
+        </label>
+        <label class="radio">
+          <input v-model="form.backend" type="radio" value="GPU" checked>GPU
+        </label>
+    </td></tr>
+    <tr><td class="option-group">
+    <kbd><span class="option">
+        <strong>Install in developer mode?</strong>
+    </span></kbd></td>
+    <td>
+    <label class="radio">
+          <input v-model="form.inst_type" type="radio" value="0">Yes
+        </label>
+        <label class="radio">
+          <input v-model="form.inst_type" type="radio" value="1" checked>No
+        </label>
+    </td></tr>
+    </tbody>
+</table><p>Run the following commands to install NLP Architect:</p>
+<div class="code python highlight-default notranslate"><div class="highlight">
+<pre v-html="get_commands()">
+</pre></div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="_static/install.js"></script><p>It is recommended to install NLP Architect in development mode to utilize all its features, examples and solutions.</p>
+</div>
+</div>
+<div class="section" id="how-can-nlp-architect-be-used">
+<h2>How can NLP Architect be used<a class="headerlink" href="#how-can-nlp-architect-be-used" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Train models using provided algorithms, reference datasets and configurations</p></li>
+<li><p>Train models using your own data</p></li>
+<li><p>Create new/extend models based on existing models or topologies</p></li>
+<li><p>Explore how deep learning models tackle various NLP tasks</p></li>
+<li><p>Experiment and optimize state-of-the-art deep learning algorithms</p></li>
+<li><p>integrate modules and utilities from the library to solutions</p></li>
+</ul>
+<div class="section" id="deep-learning-frameworks">
+<h3>Deep Learning frameworks<a class="headerlink" href="#deep-learning-frameworks" title="Permalink to this headline">¶</a></h3>
+<p>Because of the current research nature of the library, several open source deep learning frameworks are used in this repository including:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.tensorflow.org/">Tensorflow</a> or <a class="reference external" href="https://software.intel.com/en-us/articles/intel-optimized-tensorflow-wheel-now-available">Intel-Optimized TensorFlow</a></p></li>
+<li><p><a class="reference external" href="https://dynet.readthedocs.io/en/latest/">Dynet</a></p></li>
+</ul>
+<p>Overtime the list of models and frameworks included in this space will change, though all generally run with Python 3.6+</p>
+</div>
+<div class="section" id="using-the-models">
+<h3>Using the Models<a class="headerlink" href="#using-the-models" title="Permalink to this headline">¶</a></h3>
+<p>Each of the models includes a comprehensive description on algorithms, network topologies, reference dataset descriptions and loader, and evaluation results. Overtime the list of models included in this space will grow.</p>
+</div>
+<div class="section" id="contributing-to-the-library">
+<h3>Contributing to the library<a class="headerlink" href="#contributing-to-the-library" title="Permalink to this headline">¶</a></h3>
+<p>We welcome collaboration, suggestions, and critiques. For information on how to become a developer
+on this project, please see the <a class="reference internal" href="developer_guide.html"><span class="doc">developer guide</span></a>.</p>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

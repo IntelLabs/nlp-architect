@@ -1,0 +1,420 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>nlp_architect.data.fasttext_emb &mdash; NLP Architect by Intel® AI Lab 0.4.post2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/theme.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html">
+          
+
+          
+            
+            <img src="../../../_static/nlp_architect_logo_white.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../main.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../publications.html">Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials.html">Jupyter Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer_guide.html">Developer Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../model_zoo.html">Model Zoo</a></li>
+</ul>
+<p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../absa.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../chunker.html">Sequence Chunker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ner_crf.html">Named Entity Recognition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../intent.html">Intent Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../np_segmentation.html">Noun Phrase Semantic Segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../bist_parser.html">BIST Dependency Parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../word_sense.html">Most Common Word Sense</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../np2vec.html">Noun Phrase to Vec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../supervised_sentiment.html">Supervised Sentiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reading_comprehension.html">Reading Comprehension</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../memn2n.html">End-to-End Memory Networks for Goal Oriented Dialogue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tcn.html">TCN Language Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../crosslingual_emb.html">Unsupervised Crosslingual Embeddings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../cross_doc_coref.html">Cross Document Co-Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../identifying_semantic_relation.html">Semantic Relation Identification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solutions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../absa_solution.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../term_set_expansion.html">Set Expansion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../trend_analysis.html">Trend Analysis</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Pipelines</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../spacy_bist.html">Spacy-BIST Parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../spacy_np_annotator.html">Spacy-NP Annotator</a></li>
+</ul>
+<p class="caption"><span class="caption-text">For Developers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">NLP Architect by Intel® AI Lab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>nlp_architect.data.fasttext_emb</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for nlp_architect.data.fasttext_emb</h1><div class="highlight"><pre>
+<span></span><span class="c1"># ******************************************************************************</span>
+<span class="c1"># Copyright 2017-2018 Intel Corporation</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ******************************************************************************</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">six.moves</span> <span class="k">import</span> <span class="n">urllib</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.utils.generic</span> <span class="k">import</span> <span class="n">license_prompt</span>
+
+
+<div class="viewcode-block" id="FastTextEmb"><a class="viewcode-back" href="../../../generated/nlp_architect.data.fasttext_emb.FastTextEmb.html#nlp_architect.data.fasttext_emb.FastTextEmb">[docs]</a><span class="k">class</span> <span class="nc">FastTextEmb</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Downloads FastText Embeddings for a given language to the given path.</span>
+<span class="sd">    Arguments:</span>
+<span class="sd">        path(str): Local path to copy embeddings</span>
+<span class="sd">        language(str): Embeddings language</span>
+<span class="sd">        vocab_size(int): Size of vocabulary</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        Returns a dictionary and reverse dictionary</span>
+<span class="sd">        Returns a numpy array with embeddings in emb_sizexvocab_size shape</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="FastTextEmb.__init__"><a class="viewcode-back" href="../../../generated/nlp_architect.data.fasttext_emb.FastTextEmb.html#nlp_architect.data.fasttext_emb.FastTextEmb.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">language</span><span class="p">,</span> <span class="n">vocab_size</span><span class="p">,</span> <span class="n">emb_dim</span><span class="o">=</span><span class="mi">300</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">path</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">language</span> <span class="o">=</span> <span class="n">language</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vocab_size</span> <span class="o">=</span> <span class="n">vocab_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">emb_dim</span> <span class="o">=</span> <span class="n">emb_dim</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://s3-us-west-1.amazonaws.com/fasttext-vectors/wiki.&quot;</span> <span class="o">+</span> <span class="n">language</span> <span class="o">+</span> <span class="s2">&quot;.vec&quot;</span></div>
+
+    <span class="k">def</span> <span class="nf">_maybe_download</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Download filename from url unless it&#39;s already in directory</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># 1. Check if the file doesnt exist. Download and extract if it doesnt</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="s2">&quot;wiki.&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">language</span> <span class="o">+</span> <span class="s2">&quot;.vec&quot;</span>
+        <span class="n">filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="n">link</span> <span class="o">=</span> <span class="s2">&quot;https://github.com/facebookresearch/fastText/blob/master/pretrained-vectors.md&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">license_prompt</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">link</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">):</span>
+                <span class="nb">print</span><span class="p">(</span>
+                    <span class="s2">&quot;Downloading FastText embeddings for &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">language</span> <span class="o">+</span> <span class="s2">&quot; to &quot;</span> <span class="o">+</span> <span class="n">filepath</span><span class="p">)</span>
+                <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlretrieve</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">filepath</span><span class="p">)</span>
+                <span class="n">statinfo</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">stat</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span>
+                    <span class="s2">&quot;Sucessfully downloaded&quot;</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">statinfo</span><span class="o">.</span><span class="n">st_size</span><span class="p">,</span> <span class="s2">&quot;bytes&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">exit</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="s2">&quot;Found FastText embeddings for &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">language</span> <span class="o">+</span> <span class="s2">&quot; at &quot;</span> <span class="o">+</span> <span class="n">filepath</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">filepath</span>
+
+<div class="viewcode-block" id="FastTextEmb.read_embeddings"><a class="viewcode-back" href="../../../generated/nlp_architect.data.fasttext_emb.FastTextEmb.html#nlp_architect.data.fasttext_emb.FastTextEmb.read_embeddings">[docs]</a>    <span class="k">def</span> <span class="nf">read_embeddings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">):</span>
+        <span class="n">word2id</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">word_vec</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span> <span class="k">as</span> <span class="n">emb_file</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">emb_file</span><span class="p">):</span>
+                <span class="c1"># Line zero has total words, emb dimensions</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">split_line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+                    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">split_line</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+                    <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">emb_dim</span> <span class="o">==</span> <span class="nb">int</span><span class="p">(</span><span class="n">split_line</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                <span class="c1"># Rest of line are word, word_vec format</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">word</span><span class="p">,</span> <span class="n">vector</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+                    <span class="n">vector</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">vector</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+                    <span class="c1"># If norm is zero fill with 0.01</span>
+                    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">vector</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="n">vector</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.01</span>
+                    <span class="k">assert</span> <span class="n">vector</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">emb_dim</span><span class="p">,</span> <span class="p">),</span> <span class="n">i</span>
+                    <span class="c1"># Assign a token</span>
+                    <span class="n">word2id</span><span class="p">[</span><span class="n">word</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">word2id</span><span class="p">)</span>
+                    <span class="n">word_vec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">vector</span><span class="p">[</span><span class="kc">None</span><span class="p">])</span>
+                <span class="c1"># Check if your reached goal of vocab_size</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vocab_size</span><span class="p">:</span>
+                    <span class="k">break</span>
+        <span class="c1"># Reverse dictionary</span>
+        <span class="n">id2word</span> <span class="o">=</span> <span class="p">{</span><span class="n">v</span><span class="p">:</span> <span class="n">k</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">word2id</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+        <span class="c1"># Dictionary just combines both id2word and word2id into one dict</span>
+        <span class="n">dico</span> <span class="o">=</span> <span class="n">Dictionary</span><span class="p">(</span><span class="n">id2word</span><span class="p">,</span> <span class="n">word2id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">language</span><span class="p">)</span>
+        <span class="c1"># All word_vectors</span>
+        <span class="n">word_vec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">word_vec</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="c1"># Normalize the embeddings</span>
+        <span class="k">return</span> <span class="n">dico</span><span class="p">,</span> <span class="n">word_vec</span></div>
+
+<div class="viewcode-block" id="FastTextEmb.load_embeddings"><a class="viewcode-back" href="../../../generated/nlp_architect.data.fasttext_emb.FastTextEmb.html#nlp_architect.data.fasttext_emb.FastTextEmb.load_embeddings">[docs]</a>    <span class="k">def</span> <span class="nf">load_embeddings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Check if embeddings exist else download</span>
+        <span class="n">filepath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_maybe_download</span><span class="p">()</span>
+        <span class="c1"># Read embeddings</span>
+        <span class="n">dico</span><span class="p">,</span> <span class="n">word_vec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_embeddings</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Completed loading embeddings for &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">language</span><span class="p">)</span>
+        <span class="n">word_vec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="n">word_vec</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">dico</span><span class="p">,</span> <span class="n">word_vec</span></div></div>
+
+
+<span class="k">def</span> <span class="nf">get_eval_data</span><span class="p">(</span><span class="n">eval_path</span><span class="p">,</span> <span class="n">src_lang</span><span class="p">,</span> <span class="n">tgt_lang</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Downloads evaluation cross lingual dictionaries to the eval_path</span>
+<span class="sd">    Arguments:</span>
+<span class="sd">        eval_path: Path where cross-lingual dictionaries are downloaded</span>
+<span class="sd">        src_lang : Source Language</span>
+<span class="sd">        tgt_lang : Target Language</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        Path to where cross lingual dictionaries are downloaded</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">eval_url</span> <span class="o">=</span> <span class="s1">&#39;https://s3.amazonaws.com/arrival/dictionaries/&#39;</span>
+    <span class="n">link</span> <span class="o">=</span> <span class="s2">&quot;https://github.com/facebookresearch/MUSE#ground-truth-bilingual-dictionaries&quot;</span>
+    <span class="n">src_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">eval_path</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">-</span><span class="si">%s</span><span class="s1">.5000-6500.txt&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">src_lang</span><span class="p">,</span> <span class="n">tgt_lang</span><span class="p">))</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">src_lang</span> <span class="o">+</span> <span class="s1">&#39;-&#39;</span> <span class="o">+</span> <span class="n">tgt_lang</span> <span class="o">+</span> <span class="s1">&#39;.5000-6500.txt&#39;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">src_path</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">license_prompt</span><span class="p">(</span><span class="n">src_path</span><span class="p">,</span> <span class="n">link</span><span class="p">,</span> <span class="n">src_path</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;mkdir -p &quot;</span> <span class="o">+</span> <span class="n">eval_path</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Downloading cross-lingual dictionaries for &quot;</span> <span class="o">+</span> <span class="n">src_lang</span><span class="p">)</span>
+            <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlretrieve</span><span class="p">(</span><span class="n">eval_url</span> <span class="o">+</span> <span class="n">filename</span><span class="p">,</span> <span class="n">src_path</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Completed downloading to &quot;</span> <span class="o">+</span> <span class="n">eval_path</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">exit</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">src_path</span>
+
+
+<span class="k">class</span> <span class="nc">Dictionary</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Merges word2idx and idx2word dictionaries</span>
+<span class="sd">    Arguments:</span>
+<span class="sd">        id2word dictionary</span>
+<span class="sd">        word2id dictionary</span>
+<span class="sd">        language of the dictionary</span>
+<span class="sd">    Usage:</span>
+<span class="sd">        dico.index(word) - returns an index</span>
+<span class="sd">        dico[index] - returns the word</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id2word</span><span class="p">,</span> <span class="n">word2id</span><span class="p">,</span> <span class="n">lang</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">id2word</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">word2id</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id2word</span> <span class="o">=</span> <span class="n">id2word</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">word2id</span> <span class="o">=</span> <span class="n">word2id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lang</span> <span class="o">=</span> <span class="n">lang</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_valid</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the number of words in the dictionary.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id2word</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the word of the specified index.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">id2word</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">w</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns whether a word is in the dictionary.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">w</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">word2id</span>
+
+    <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compare the dictionary with another one.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_valid</span><span class="p">()</span>
+        <span class="n">y</span><span class="o">.</span><span class="n">check_valid</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id2word</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">lang</span> <span class="o">==</span> <span class="n">y</span><span class="o">.</span><span class="n">lang</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">id2word</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)))</span>
+
+    <span class="k">def</span> <span class="nf">check_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check that the dictionary is valid.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id2word</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">word2id</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id2word</span><span class="p">)):</span>
+            <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">word2id</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">id2word</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">==</span> <span class="n">i</span>
+
+    <span class="k">def</span> <span class="nf">index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the index of the specified word.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">word2id</span><span class="p">[</span><span class="n">word</span><span class="p">]</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
