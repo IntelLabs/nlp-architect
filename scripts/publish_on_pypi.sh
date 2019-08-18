@@ -1,4 +1,4 @@
-#!/bin/bash
+#! /usr/bin/env bash
 
 # Publishing NLP Architect on pypi script
 # =======================================

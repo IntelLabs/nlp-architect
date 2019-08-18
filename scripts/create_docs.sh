@@ -1,4 +1,4 @@
-#!/bin/bash
+#! /usr/bin/env bash
 
 echo "Cleaning old docs"
 make -C ../docs-source clean
