@@ -13,29 +13,4 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
-import logging
-from abc import ABC
-
-from nlp_architect.models.tagging import NeuralTagger
-
-logger = logging.getLogger(__name__)
-
-
-class TrainableModel(ABC):
-    def convert_to_tensors(self, *args, **kwargs):
-        pass
-
-    def get_logits(self, *args, **kwargs):
-        pass
-
-    def train(self, *args, **kwargs):
-        pass
-
-    def inference(self, *args, **kwargs):
-        pass
-
-    def save_model(self, *args, **kwargs):
-        pass
-
-    def load_model(self, *args, **kwargs):
-        pass
+from nlp_architect.nn.pytorch.layers.crf import CRF

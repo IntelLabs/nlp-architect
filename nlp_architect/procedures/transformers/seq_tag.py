@@ -24,13 +24,12 @@ from nlp_architect.data.sequential_tagging import (TokenClsInputExample,
                                                    TokenClsProcessor)
 from nlp_architect.data.utils import write_column_tagged_file
 from nlp_architect.models.transformers import TransformerTokenClassifier
+from nlp_architect.nn.pytorch import set_seed, setup_backend
 from nlp_architect.procedures.procedure import Procedure
 from nlp_architect.procedures.registry import (register_run_cmd,
                                                register_train_cmd)
 from nlp_architect.procedures.transformers.base import (create_base_args,
                                                         inference_args,
-                                                        set_seed,
-                                                        setup_backend,
                                                         train_args)
 from nlp_architect.utils.io import prepare_output_path
 from nlp_architect.utils.text import SpacyInstance

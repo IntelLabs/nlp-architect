@@ -107,26 +107,3 @@ def train_args(parser: argparse.ArgumentParser, models_family=None):
                         + "model_name ending and ending with step number")
     parser.add_argument('--seed', type=int, default=42,
                         help="random seed for initialization")
-
-
-def setup_backend(no_cuda):
-    """Setup backend according to selected backend and detected configuration
-    """
-    device = torch.device("cuda" if torch.cuda.is_available() and not no_cuda else "cpu")
-    if torch.cuda.is_available() and not no_cuda:
-        device = torch.device("cuda")
-        n_gpu = torch.cuda.device_count()
-    else:
-        device = torch.device("cpu")
-        n_gpu = 0
-    return device, n_gpu
-
-
-def set_seed(seed, n_gpus=None):
-    """set seed
-    """
-    random.seed(seed)
-    np.random.seed(seed)
-    torch.manual_seed(seed)
-    if n_gpus is not None and n_gpus > 0:
-        torch.cuda.manual_seed_all(seed)

@@ -16,14 +16,20 @@
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
+import logging
+import os
 from typing import List
 
 import numpy as np
+import pandas as pd
 import tensorflow as tf
 import tensorflow_hub as hub
 from gensim.models import FastText
 
 from nlp_architect.utils.text import Vocabulary
+
+logger = logging.getLogger(__name__)
+
 
 
 def load_word_embeddings(file_path, vocab=None):
@@ -94,6 +100,21 @@ def get_embedding_matrix(embeddings: dict, vocab: Vocabulary) -> np.ndarray:
         if vec is not None:
             mat[wid] = vec
     return mat
+
+
+def load_embedding_file(filename: str) -> dict:
+    """Load a word embedding file
+    
+    Args:
+        filename (str): path to embedding file
+    
+    Returns:
+        dict: dictionary with embedding vectors
+    """
+    if filename is not None and os.path.exists(filename):
+        logger.info("Loading external word embeddings from {}".format(filename))
+    df = pd.read_csv(filename, sep=" ", quoting=3, header=None, index_col=0)
+    return {key: val.values for key, val in df.T.items()}
 
 
 # pylint: disable=not-context-manager
