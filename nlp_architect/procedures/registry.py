@@ -13,13 +13,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
+# Register procedures to be used by CLI
 from nlp_architect.cli.cmd_registry import CMD_REGISTRY
 from nlp_architect.procedures.procedure import Procedure
-
-
-"""
-Register procedures to be used by CLI
-"""
 
 
 def register_cmd(registry: dict, name: str, description: str):

@@ -24,7 +24,7 @@ from nlp_architect.data.sequential_tagging import (TokenClsInputExample,
                                                    TokenClsProcessor)
 from nlp_architect.data.utils import write_column_tagged_file
 from nlp_architect.models.transformers import TransformerTokenClassifier
-from nlp_architect.nn.pytorch import set_seed, setup_backend
+from nlp_architect.nn.torch import setup_backend, set_seed
 from nlp_architect.procedures.procedure import Procedure
 from nlp_architect.procedures.registry import (register_run_cmd,
                                                register_train_cmd)
@@ -129,7 +129,7 @@ def do_training(args):
                                        adam_epsilon=args.adam_epsilon,
                                        warmup_steps=args.warmup_steps,
                                        total_steps=total_steps)
-    classifier.train(train_dl, dev_dl, test_dl, 
+    classifier.train(train_dl, dev_dl, test_dl,
                      gradient_accumulation_steps=args.gradient_accumulation_steps,
                      per_gpu_train_batch_size=args.per_gpu_train_batch_size,
                      max_steps=args.max_steps,

@@ -31,7 +31,6 @@ from nlp_architect.utils.text import Vocabulary
 logger = logging.getLogger(__name__)
 
 
-
 def load_word_embeddings(file_path, vocab=None):
     """
     Loads a word embedding model text file into a word(str) to numpy vector dictionary
@@ -104,10 +103,10 @@ def get_embedding_matrix(embeddings: dict, vocab: Vocabulary) -> np.ndarray:
 
 def load_embedding_file(filename: str) -> dict:
     """Load a word embedding file
-    
+
     Args:
         filename (str): path to embedding file
-    
+
     Returns:
         dict: dictionary with embedding vectors
     """

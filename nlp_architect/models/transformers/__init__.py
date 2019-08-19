@@ -13,5 +13,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
+# flake8: noqa
 from nlp_architect.models.transformers.sequence_classification import TransformerSequenceClassifier
 from nlp_architect.models.transformers.token_classification import TransformerTokenClassifier

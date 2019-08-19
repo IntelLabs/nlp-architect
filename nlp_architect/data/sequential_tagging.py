@@ -326,13 +326,13 @@ class TokenClsProcessor(DataProcessor):
         return self._create_examples(read_column_tagged_file(os.path.join(data_dir, file_name),
                                                              tag_col=self.tag_col), set_name)
 
-    def get_train_examples(self, **kwargs):
+    def get_train_examples(self):
         return self._read_examples(self.data_dir, "train.txt", "train")
 
-    def get_dev_examples(self, **kwargs):
+    def get_dev_examples(self):
         return self._read_examples(self.data_dir, "dev.txt", "dev")
 
-    def get_test_examples(self, **kwargs):
+    def get_test_examples(self):
         return self._read_examples(self.data_dir, "test.txt", "test")
 
     # pylint: disable=arguments-differ

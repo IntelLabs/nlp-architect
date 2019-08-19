@@ -13,30 +13,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
-import random
-
-import numpy as np
 import torch
 
 
-def setup_backend(no_cuda):
-    """Setup backend according to selected backend and detected configuration
-    """
-    device = torch.device("cuda" if torch.cuda.is_available() and not no_cuda else "cpu")
-    if torch.cuda.is_available() and not no_cuda:
-        device = torch.device("cuda")
-        n_gpu = torch.cuda.device_count()
-    else:
-        device = torch.device("cpu")
-        n_gpu = 0
-    return device, n_gpu
+class ParallelDataset(torch.utils.data.Dataset):
+    def __init__(self, *datasets):
+        self.datasets = datasets
 
+    def __getitem__(self, i):
+        return tuple(d[i] for d in self.datasets)
 
-def set_seed(seed, n_gpus=None):
-    """set seed
-    """
-    random.seed(seed)
-    np.random.seed(seed)
-    torch.manual_seed(seed)
-    if n_gpus is not None and n_gpus > 0:
-        torch.cuda.manual_seed_all(seed)
+    def __len__(self):
+        return min(len(d) for d in self.datasets)

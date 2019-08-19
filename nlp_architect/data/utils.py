@@ -92,12 +92,12 @@ def read_tsv(input_file, quotechar=None):
         lines = []
         for line in reader:
             if sys.version_info[0] == 2:
-                line = list(unicode(cell, 'utf-8') for cell in line)  # noqa: F821
+                line = list(str(cell, 'utf-8') for cell in line)  # noqa: F821
             lines.append(line)
         return lines
 
 
-def read_column_tagged_file(filename: str, tag_col: int=-1):
+def read_column_tagged_file(filename: str, tag_col: int = -1):
     """Reads column tagged (CONLL) style file (tab separated and token per line)
     tag_col is the column number to use as tag of the token (defualts to the last in line)
     return format :

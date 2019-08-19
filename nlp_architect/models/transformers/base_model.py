@@ -56,7 +56,7 @@ class TransformerBase(TrainableModel):
                  device='cpu', n_gpus=0):
         """
         Transformers base model (for working with pytorch-transformers models)
-        
+
         Args:
             model_type (str): transformer model type
             model_name_or_path (str): model name or path to model
@@ -68,7 +68,7 @@ class TransformerBase(TrainableModel):
             output_path ([type], optional): model output path. Defaults to None.
             device (str, optional): backend device. Defaults to 'cpu'.
             n_gpus (int, optional): num of gpus. Defaults to 0.
-        
+
         Raises:
             FileNotFoundError: [description]
         """
@@ -156,7 +156,7 @@ class TransformerBase(TrainableModel):
     def save_model(self, output_dir: str, save_checkpoint: bool = False, args=None):
         """
         Save model/tokenizer/arguments to given output directory
-        
+
         Args:
             output_dir (str): path to output directory
             save_checkpoint (bool, optional): save as checkpoint. Defaults to False.
@@ -182,11 +182,11 @@ class TransformerBase(TrainableModel):
     def load_model(cls, model_path: str, model_type: str):
         """
         Create a TranformerBase deom from given path
-        
+
         Args:
             model_path (str): path to model
             model_type (str): model type
-        
+
         Returns:
             TransformerBase: model
         """
@@ -204,13 +204,13 @@ class TransformerBase(TrainableModel):
                                num_samples: int):
         """
         get train steps and epochs
-        
+
         Args:
             max_steps (int): max steps
             num_train_epochs (int): num epochs
             gradient_accumulation_steps (int): gradient accumulation steps
             num_samples (int): number of samples
-        
+
         Returns:
             Tuple: total steps, number of epochs
         """
@@ -371,7 +371,7 @@ class TransformerBase(TrainableModel):
     def save_model_checkpoint(self, output_path: str, name: str):
         """
         save model checkpoint
-        
+
         Args:
             output_path (str): output path
             name (str): name of checkpoint

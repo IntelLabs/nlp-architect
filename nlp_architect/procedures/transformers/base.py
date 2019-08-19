@@ -15,10 +15,6 @@
 # ******************************************************************************
 import argparse
 import logging
-import random
-
-import numpy as np
-import torch
 
 from nlp_architect.models.transformers.base_model import get_models
 

@@ -13,6 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
+# pylint: bad-super-call
 """
 Quantized BERT layers and model
 """
@@ -139,7 +140,7 @@ class QuantizedBertIntermediate(BertIntermediate):
             config, "ffn_intermediate", config.hidden_size, config.intermediate_size)
         if (isinstance(config.hidden_act, str)
                 or (sys.version_info[0] == 2 and isinstance(config.hidden_act,
-                unicode))):  # noqa: F821
+                str))):  # noqa: F821
             self.intermediate_act_fn = ACT2FN[config.hidden_act]
         else:
             self.intermediate_act_fn = config.hidden_act

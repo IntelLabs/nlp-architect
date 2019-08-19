@@ -198,8 +198,7 @@ class IDCNN(nn.Module):
         for i in range(len(self.dilation)):
             self.cnv_layers.append(nn.Conv1d(in_channels=cnn_num_filters,
                                              out_channels=cnn_num_filters, kernel_size=3,
-                                             padding=self.padding[i], dilation=self.dilation[
-                    i]))
+                                             padding=self.padding[i], dilation=self.dilation[i]))
         self.cnv_layers = nn.ModuleList(self.cnv_layers)
         self.dense = nn.Linear(
             in_features=(cnn_num_filters * self.num_blocks) + char_cnn_filters,

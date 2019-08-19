@@ -15,12 +15,13 @@
 # ******************************************************************************
 import unittest
 
+import numpy as np
 import torch
 from torch import nn
 from torch.nn import functional as F
-import numpy as np
 
-from nlp_architect.nn.torch.quantization import *
+from nlp_architect.nn.torch.quantization import FakeLinearQuantizationWithSTE, QuantizedLinear, \
+    get_dynamic_scale, get_scale, QuantizedEmbedding
 
 
 def fake_quantize_np(x, scale, bits):
@@ -28,14 +29,14 @@ def fake_quantize_np(x, scale, bits):
 
 
 def quantize_np(x, scale, bits):
-    return np.clip(np.round(x * scale), -(2**(bits - 1) - 1), 2**(bits - 1) - 1)
+    return np.clip(np.round(x * scale), -(2 ** (bits - 1) - 1), 2 ** (bits - 1) - 1)
 
 
 class FakeLinearQuantizationWithSTETester(unittest.TestCase):
     def test_quantization_forward(self):
         fake_quantize = FakeLinearQuantizationWithSTE().apply
         x = torch.randn(1, 100)
-        scale = (2**(8 - 1) - 1) / np.abs(x).max()
+        scale = (2 ** (8 - 1) - 1) / np.abs(x).max()
         self.assertTrue((fake_quantize(x, scale, 8)
                          == fake_quantize_np(x, scale, 8)).all())
 
@@ -43,7 +44,7 @@ class FakeLinearQuantizationWithSTETester(unittest.TestCase):
         fake_quantize = FakeLinearQuantizationWithSTE().apply
         x = torch.randn(1, 100, requires_grad=True)
         with torch.no_grad():
-            scale = (2**(8 - 1) - 1) / x.abs().max()
+            scale = (2 ** (8 - 1) - 1) / x.abs().max()
         y = torch.sum(fake_quantize(x, scale, 8))
         y.backward()
         self.assertTrue((x.grad == torch.ones_like(x)).all())
@@ -75,7 +76,7 @@ class QuantizedLinearTest(unittest.TestCase):
         weight_int = quantize_np(weight, weight_scale, 8)
         self.assertTrue((weight_int == torch.round(weight_int)).all())
         self.assertTrue(weight_int.abs().max() <= 127)
-        x = torch.randn(3, 10) * 2**0.5 - 0.36
+        x = torch.randn(3, 10) * 2 ** 0.5 - 0.36
         x_thresh = 3.
         output_thresh = 2.3
         output_scale = 127. / output_thresh
@@ -89,15 +90,15 @@ class QuantizedLinearTest(unittest.TestCase):
         bias_scale = x_scale * weight_scale
         bias_int = quantize_np(bias, bias_scale, 32)
         self.assertTrue((bias_int == torch.round(bias_int)).all())
-        self.assertTrue(bias_int.abs().max() <= 2**(32 - 1) - 1)
+        self.assertTrue(bias_int.abs().max() <= 2 ** (32 - 1) - 1)
         output_int = x_int @ weight_int.t() + bias_int
         output_int = torch.clamp(
-            output_int, -(2**(32 - 1) - 1), 2**(32 - 1) - 1)
+            output_int, -(2 ** (32 - 1) - 1), 2 ** (32 - 1) - 1)
         output = torch.round(output_int / bias_scale
                              * output_scale).clamp(-127, 127) / output_scale
         qlinear.eval()
         qlinear_output = qlinear(x)
-        self.assertTrue((qlinear_output - output).norm() < 10**-6)
+        self.assertTrue((qlinear_output - output).norm() < 10 ** -6)
 
     def test_ema_quantization(self):
         ema_decay = 0.9
@@ -143,7 +144,7 @@ class QuantizedLinearTest(unittest.TestCase):
                 output_ema = tmp_output_thresh
             else:
                 output_ema -= (1 - ema_decay) * \
-                    (output_ema - tmp_output_thresh)
+                              (output_ema - tmp_output_thresh)
             qlinear(x)
         self.assertEqual(qlinear.module.input_thresh, input_ema)
         self.assertEqual(qlinear.module.output_thresh, output_ema)
@@ -188,7 +189,7 @@ class QuantizedLinearTest(unittest.TestCase):
         y.backward()
         self.assertTrue((x.grad == linear.fake_quantized_weight).all())
         with torch.no_grad():
-            scale = (2**(8 - 1) - 1) / x.abs().max()
+            scale = (2 ** (8 - 1) - 1) / x.abs().max()
         self.assertTrue((fake_quantize_np(x.detach(), scale, 8) == linear.weight.grad).all())
 
     def test_training_and_inference_differences_ema(self):
@@ -259,7 +260,3 @@ class QuantizedEmbeddingTest(unittest.TestCase):
         indices = torch.tensor(np.arange(10))
         self.assertTrue((embedding(indices) == qembedding(indices)).all())
         self.assertTrue((embedding(indices) == qembedding(indices)).all())
-
-
-if __name__ == '__main__':
-    unittest.main()

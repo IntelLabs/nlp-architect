@@ -28,7 +28,7 @@ class TeacherStudentDistill:
         """
         Teacher-Student knowledge distillation helper.
         Use this object when training a model with KD and a teacher model.
-        
+
         Args:
             teacher_model (TrainableModel): teacher model
             temperature (float, optional): KD temperature. Defaults to 1.0.
@@ -43,10 +43,10 @@ class TeacherStudentDistill:
     def get_teacher_logits(self, inputs):
         """
         Get teacher logits
-        
+
         Args:
             inputs: input
-        
+
         Returns:
             teachr logits
         """
@@ -56,7 +56,7 @@ class TeacherStudentDistill:
     def add_args(parser: argparse.ArgumentParser):
         """
         Add KD arguments to parser
-        
+
         Args:
             parser (argparse.ArgumentParser): parser
         """
@@ -70,12 +70,12 @@ class TeacherStudentDistill:
     def distill_loss(self, loss, student_logits, teacher_logits):
         """
         Add KD loss
-        
+
         Args:
             loss: student loss
             student_logits: student model logits
             teacher_logits: teacher model logits
-        
+
         Returns:
             KD loss
         """
@@ -85,5 +85,5 @@ class TeacherStudentDistill:
         # distill_loss = F.kl_div(student_log_sm,
         #                         teacher_log_sm.detach(),
         #                         size_average=False) / teacher_log_sm.shape[0]
-        # normalize losses ?!? 
+        # normalize losses ?!?
         return loss * self.loss_w + distill_loss * self.kd_w

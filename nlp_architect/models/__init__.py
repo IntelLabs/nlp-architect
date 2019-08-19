@@ -16,26 +16,32 @@
 import logging
 from abc import ABC
 
-from nlp_architect.models.tagging import NeuralTagger
-
 logger = logging.getLogger(__name__)
 
 
 class TrainableModel(ABC):
+    """Base class for a trainable model
+    """
     def convert_to_tensors(self, *args, **kwargs):
-        pass
+        """convert any chosen input to valid model format of tensors
+        """
 
     def get_logits(self, *args, **kwargs):
-        pass
+        """get model logits from given input
+        """
 
     def train(self, *args, **kwargs):
-        pass
+        """train the model
+        """
 
     def inference(self, *args, **kwargs):
-        pass
+        """run inference
+        """
 
     def save_model(self, *args, **kwargs):
-        pass
+        """save the model
+        """
 
     def load_model(self, *args, **kwargs):
-        pass
+        """load a model
+        """

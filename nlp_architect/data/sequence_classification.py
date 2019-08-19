@@ -21,7 +21,7 @@ from nlp_architect.data.utils import InputExample
 class SequenceClsInputExample(InputExample):
     """A single training/test example for simple sequence classification."""
 
-    def __init__(self, guid: str, text: str, text_b: str=None, label: str=None):
+    def __init__(self, guid: str, text: str, text_b: str = None, label: str = None):
         """Constructs a SequenceClassInputExample.
         Args:
             guid: Unique id for the example.

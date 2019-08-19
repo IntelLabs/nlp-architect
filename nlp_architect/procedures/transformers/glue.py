@@ -23,7 +23,7 @@ from torch.utils.data import DataLoader, RandomSampler, SequentialSampler
 
 from nlp_architect.data.glue_tasks import get_glue_task, processors
 from nlp_architect.models.transformers import TransformerSequenceClassifier
-from nlp_architect.nn.pytorch import set_seed, setup_backend
+from nlp_architect.nn.torch import setup_backend, set_seed
 from nlp_architect.procedures.procedure import Procedure
 from nlp_architect.procedures.registry import (register_run_cmd,
                                                register_train_cmd)

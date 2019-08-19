@@ -48,7 +48,8 @@ class MrpcProcessor(DataProcessor):
     def get_labels(self):
         return ["0", "1"]
 
-    def _create_examples(self, lines, set_type):
+    @staticmethod
+    def _create_examples(lines, set_type):
         examples = []
         for (i, line) in enumerate(lines):
             if i == 0:
@@ -74,7 +75,7 @@ class MnliProcessor(DataProcessor):
     def get_dev_examples(self, data_dir):
         return self._create_examples(read_tsv(os.path.join(data_dir, "dev_matched.tsv")),
                                      "dev_matched")
-    
+
     def get_test_examples(self, data_dir):
         return self._create_examples(read_tsv(os.path.join(data_dir, "test_matched.tsv")),
                                      "test_matched")
@@ -82,7 +83,8 @@ class MnliProcessor(DataProcessor):
     def get_labels(self):
         return ["contradiction", "entailment", "neutral"]
 
-    def _create_examples(self, lines, set_type):
+    @staticmethod
+    def _create_examples(lines, set_type):
         examples = []
         for (i, line) in enumerate(lines):
             if i == 0:
@@ -105,9 +107,11 @@ class MnliMismatchedProcessor(MnliProcessor):
     def get_dev_examples(self, data_dir):
         return self._create_examples(read_tsv(os.path.join(data_dir, "dev_mismatched.tsv")),
                                      "dev_matched")
+
     def get_test_examples(self, data_dir):
         return self._create_examples(read_tsv(os.path.join(data_dir, "test_mismatched.tsv")),
                                      "test_mismatched")
+
 
 class ColaProcessor(DataProcessor):
     """Processor for the CoLA data set (GLUE version)."""
@@ -124,10 +128,11 @@ class ColaProcessor(DataProcessor):
     def get_labels(self):
         return ["0", "1"]
 
-    def _create_examples(self, lines, set_type):
+    @staticmethod
+    def _create_examples(lines, set_type):
         examples = []
         for (i, line) in enumerate(lines):
-            if i == 0 and not set_type in ["train", "dev"]:
+            if i == 0 and set_type not in ["train", "dev"]:
                 continue
             guid = "%s-%s" % (set_type, i)
             if set_type in ["train", "dev"]:
@@ -140,6 +145,7 @@ class ColaProcessor(DataProcessor):
                 examples.append(SequenceClsInputExample(guid=guid, text=text_a))
         return examples
 
+
 class Sst2Processor(DataProcessor):
     """Processor for the SST-2 data set (GLUE version)."""
 
@@ -148,14 +154,15 @@ class Sst2Processor(DataProcessor):
 
     def get_dev_examples(self, data_dir):
         return self._create_examples(read_tsv(os.path.join(data_dir, "dev.tsv")), "dev")
-    
+
     def get_test_examples(self, data_dir):
         return self._create_examples(read_tsv(os.path.join(data_dir, "test.tsv")), "test")
 
     def get_labels(self):
         return ["0", "1"]
 
-    def _create_examples(self, lines, set_type):
+    @staticmethod
+    def _create_examples(lines, set_type):
         examples = []
         for (i, line) in enumerate(lines):
             if i == 0:
@@ -187,7 +194,8 @@ class StsbProcessor(DataProcessor):
     def get_labels(self):
         return [None]
 
-    def _create_examples(self, lines, set_type):
+    @staticmethod
+    def _create_examples(lines, set_type):
         examples = []
         for (i, line) in enumerate(lines):
             if i == 0:
@@ -219,7 +227,8 @@ class QqpProcessor(DataProcessor):
     def get_labels(self):
         return ["0", "1"]
 
-    def _create_examples(self, lines, set_type):
+    @staticmethod
+    def _create_examples(lines, set_type):
         examples = []
         for (i, line) in enumerate(lines):
             if i == 0:
@@ -259,7 +268,8 @@ class QnliProcessor(DataProcessor):
     def get_labels(self):
         return ["entailment", "not_entailment"]
 
-    def _create_examples(self, lines, set_type):
+    @staticmethod
+    def _create_examples(lines, set_type):
         examples = []
         for (i, line) in enumerate(lines):
             if i == 0:
@@ -284,14 +294,15 @@ class RteProcessor(DataProcessor):
 
     def get_dev_examples(self, data_dir):
         return self._create_examples(read_tsv(os.path.join(data_dir, "dev.tsv")), "dev")
-    
+
     def get_test_examples(self, data_dir):
         return self._create_examples(read_tsv(os.path.join(data_dir, "test.tsv")), "test")
 
     def get_labels(self):
         return ["entailment", "not_entailment"]
 
-    def _create_examples(self, lines, set_type):
+    @staticmethod
+    def _create_examples(lines, set_type):
         examples = []
         for (i, line) in enumerate(lines):
             if i == 0:
@@ -323,7 +334,8 @@ class WnliProcessor(DataProcessor):
     def get_labels(self):
         return ["0", "1"]
 
-    def _create_examples(self, lines, set_type):
+    @staticmethod
+    def _create_examples(lines, set_type):
         examples = []
         for (i, line) in enumerate(lines):
             if i == 0:
@@ -360,7 +372,7 @@ def convert_examples_to_features(examples, label_list, max_seq_length,
     features = []
     for (ex_index, example) in enumerate(examples):
         if ex_index % 10000 == 0:
-            logger.info("Writing example %d of %d" % (ex_index, len(examples)))
+            logger.info("Writing example {} of {}".format(ex_index, len(examples)))
 
         tokens_a = tokenizer.tokenize(example.text_a)
 

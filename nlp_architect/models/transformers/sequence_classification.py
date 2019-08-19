@@ -50,7 +50,7 @@ class TransformerSequenceClassifier(TransformerBase):
                  *args, **kwargs):
         """
         Transformer sequence classifier
-        
+
         Args:
             model_type (str): transformer base model stype
             labels (List[str], optional): list of labels. Defaults to None.
@@ -86,7 +86,7 @@ class TransformerSequenceClassifier(TransformerBase):
               save_steps: int = 100):
         """
         Train a model
-        
+
         Args:
             train_data_set (DataLoader): training data set
             dev_data_set (Union[DataLoader, List[DataLoader]], optional): development set.
@@ -116,7 +116,7 @@ class TransformerSequenceClassifier(TransformerBase):
     def evaluate_predictions(self, logits, label_ids):
         """
         Run evaluation of given logist and truth labels
-        
+
         Args:
             logits: model logits
             label_ids: truth label ids
@@ -142,14 +142,14 @@ class TransformerSequenceClassifier(TransformerBase):
                            include_labels: bool = True) -> TensorDataset:
         """
         Convert examples to tensor dataset
-        
+
         Args:
             examples (List[SequenceClsInputExample]): examples
             max_seq_length (int, optional): max sequence length. Defaults to 128.
             include_labels (bool, optional): include labels. Defaults to True.
-        
+
         Returns:
-            TensorDataset: 
+            TensorDataset:
         """
         features = self._convert_examples_to_features(examples,
                                                       max_seq_length,
@@ -183,11 +183,11 @@ class TransformerSequenceClassifier(TransformerBase):
     def inference(self, examples: List[SequenceClsInputExample], batch_size: int = 64):
         """
         Run inference on given examples
-        
+
         Args:
             examples (List[SequenceClsInputExample]): examples
             batch_size (int, optional): batch size. Defaults to 64.
-        
+
         Returns:
             logits
         """

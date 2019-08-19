@@ -16,7 +16,6 @@
 import re
 import string
 import sys
-import unicodedata
 from os import path
 from typing import List, Tuple
 
@@ -47,7 +46,6 @@ class Vocabulary:
             self.next = start + 1
         else:
             self.next = start
-        
 
     def add(self, word):
         """
@@ -143,13 +141,14 @@ class Vocabulary:
 all_letters = string.ascii_letters + " .,;'"
 n_letters = len(all_letters)
 
+
 def char_to_id(c):
     """return int id of given character
         OOV char = len(all_letter) + 1
-    
+
     Args:
         c (str): string character
-    
+
     Returns:
         int: int value of given char
     """
@@ -157,6 +156,7 @@ def char_to_id(c):
     if char_idx == -1:
         char_idx = n_letters
     return char_idx
+
 
 def id_to_char(c_id):
     """return character of given char id

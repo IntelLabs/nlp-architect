@@ -23,16 +23,16 @@ from nlp_architect.data.sequential_tagging import (TokenClsInputExample,
                                                    TokenClsProcessor)
 from nlp_architect.data.utils import write_column_tagged_file
 from nlp_architect.models.tagging import NeuralTagger
-from nlp_architect.nn.pytorch.modules.embedders import IDCNN, CNNLSTM
-from nlp_architect.nn.pytorch import set_seed, setup_backend
-from nlp_architect.optimization.pytorch.distillation import TeacherStudentDistill
+from nlp_architect.nn.torch.modules.embedders import IDCNN, CNNLSTM
+from nlp_architect.nn.torch import setup_backend, set_seed
+from nlp_architect.nn.torch.distillation import TeacherStudentDistill
 from nlp_architect.procedures.procedure import Procedure
 from nlp_architect.procedures.registry import register_train_cmd, register_run_cmd
 from nlp_architect.utils.embedding import (get_embedding_matrix,
                                            load_embedding_file)
 from nlp_architect.utils.io import prepare_output_path
 from nlp_architect.utils.text import SpacyInstance
-from nlp_architect.nn.pytorch.data.dataset import ParallelDataset
+from nlp_architect.nn.torch.data.dataset import ParallelDataset
 from nlp_architect.models.transformers import TransformerTokenClassifier
 
 
@@ -49,7 +49,7 @@ class TrainTagger(Procedure):
 
 
 @register_train_cmd(name='tagger_kd',
-                    description='Train a neural tagger using Knowledge Distillation' +
+                    description='Train a neural tagger using Knowledge Distillation'
                                 ' and a Transformer teacher model')
 class TrainTaggerKD(Procedure):
     @staticmethod

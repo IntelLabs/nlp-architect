@@ -343,5 +343,5 @@ def prepare_output_path(output_dir: str, overwrite_output_dir: str):
         raise ValueError(
             "Output directory ({}) already exists and is not empty. Use --overwrite_output_dir "
             "to overcome.".format(output_dir))
-    elif not os.path.exists(output_dir):
+    if not os.path.exists(output_dir):
         os.makedirs(output_dir)

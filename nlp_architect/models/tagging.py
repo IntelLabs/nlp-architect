@@ -20,7 +20,6 @@ import pickle
 from typing import List
 
 import torch
-import torch.nn as nn
 import torch.optim as optim
 from torch.nn import CrossEntropyLoss
 from torch.nn import functional as F
@@ -29,8 +28,8 @@ from tqdm import tqdm, trange
 
 from nlp_architect.data.sequential_tagging import TokenClsInputExample
 from nlp_architect.models import TrainableModel
-from nlp_architect.nn.pytorch.layers import CRF
-from nlp_architect.optimization.pytorch.distillation import TeacherStudentDistill
+from nlp_architect.nn.torch.layers import CRF
+from nlp_architect.nn.torch.distillation import TeacherStudentDistill
 from nlp_architect.utils.metrics import tagging
 from nlp_architect.utils.text import Vocabulary, char_to_id
 
@@ -41,7 +40,7 @@ class NeuralTagger(TrainableModel):
     """
     Simple neural tagging model
     Supports pytorch embedder models, multi-gpu training, KD from teacher models
-    
+
     Args:
         embedder_model: pytorch embedder model (valid nn.Module model)
         word_vocab (Vocabulary): word vocabulary
@@ -186,7 +185,7 @@ class NeuralTagger(TrainableModel):
               distiller: TeacherStudentDistill = None):
         """
         Train a tagging model
-        
+
         Args:
             train_data_set (DataLoader): train examples dataloader. If distiller object is
             provided train examples should contain a tuple of student/teacher data examples.
@@ -225,7 +224,7 @@ class NeuralTagger(TrainableModel):
                 inputs = self.batch_mapper(batch)
                 logits = self.model(**inputs)
                 if self.use_crf:
-                    loss = -self.crf(logits, inputs['labels'], mask=inputs['mask'] != 0.0)
+                    loss = -1.0 * self.crf(logits, inputs['labels'], mask=inputs['mask'] != 0.0)
                 else:
                     loss_fn = CrossEntropyLoss(ignore_index=0)
                     loss = loss_fn(logits.view(-1, self.num_labels), inputs['labels'].view(-1))
@@ -259,7 +258,7 @@ class NeuralTagger(TrainableModel):
     def to(self, device='cpu', n_gpus=0):
         """
         Put model on given device
-        
+
         Args:
             device (str, optional): device backend. Defaults to 'cpu'.
             n_gpus (int, optional): number of gpus. Defaults to 0.
@@ -278,10 +277,10 @@ class NeuralTagger(TrainableModel):
     def evaluate(self, data_set: DataLoader):
         """
         Run evaluation on given dataloader
-        
+
         Args:
             data_set (DataLoader): a data loader to run evaluation on
-        
+
         Returns:
             logits, labels (if labels are given)
         """
@@ -298,7 +297,7 @@ class NeuralTagger(TrainableModel):
                 logits = self.model(**inputs)
                 if 'labels' in inputs:
                     if self.use_crf:
-                        loss = -self.crf(logits, inputs['labels'], mask=inputs['mask'] != 0.0)
+                        loss = -1.0 * self.crf(logits, inputs['labels'], mask=inputs['mask'] != 0.0)
                     else:
                         loss_fn = CrossEntropyLoss(ignore_index=0)
                         loss = loss_fn(logits.view(-1, self.num_labels), inputs['labels'].view(-1))
@@ -321,11 +320,11 @@ class NeuralTagger(TrainableModel):
     def evaluate_predictions(self, logits, label_ids):
         """
         Evaluate given logits on truth labels
-        
+
         Args:
             logits: logits of model
             label_ids: truth label ids
-        
+
         Returns:
             dict: dictionary containing P/R/F1 metrics
         """
@@ -363,11 +362,11 @@ class NeuralTagger(TrainableModel):
     def inference(self, examples: List[TokenClsInputExample], batch_size: int = 64):
         """
         Do inference on given examples
-        
+
         Args:
             examples (List[TokenClsInputExample]): examples
             batch_size (int, optional): batch size. Defaults to 64.
-        
+
         Returns:
             List(tuple): a list of tuples of tokens, tags predicted by model
         """
@@ -391,7 +390,7 @@ class NeuralTagger(TrainableModel):
     def save_model(self, output_dir: str):
         """
         Save model to path
-        
+
         Args:
             output_dir (str): output directory
         """
@@ -409,10 +408,10 @@ class NeuralTagger(TrainableModel):
     def load_model(cls, model_path: str):
         """
         Load a tagger model from given path
-        
+
         Args:
             model_path (str): model path
-        
+
             NeuralTagger: tagger model loaded from path
         """
         # Load a trained model and vocabulary from given path
