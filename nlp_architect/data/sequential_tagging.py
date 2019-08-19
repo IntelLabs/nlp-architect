@@ -32,6 +32,7 @@ from nlp_architect.utils.io import (validate_existing_directory,
 from nlp_architect.utils.text import (character_vector_generator,
                                       read_sequential_tagging_file,
                                       word_vector_generator)
+from nlp_architect.utils.text import Vocabulary
 
 logger = logging.getLogger(__name__)
 
@@ -291,7 +292,7 @@ class CONLL2000(object):
 class TokenClsInputExample(InputExample):
     """A single training/test example for simple sequence token classification."""
 
-    def __init__(self, guid: str, text: str, tokens: List[str], label: List[str]=None):
+    def __init__(self, guid: str, text: str, tokens: List[str], label: List[str] = None):
         """Constructs a SequenceClassInputExample.
         Args:
             guid: Unique id for the example.
@@ -309,11 +310,12 @@ class TokenClsProcessor(DataProcessor):
     format (one token per line - conll style).
     Label dictionary is given in labels.txt file.
     """
-    
-    def __init__(self, data_dir):
+
+    def __init__(self, data_dir, tag_col: int = -1):
         if not os.path.exists(data_dir):
             raise FileNotFoundError
         self.data_dir = data_dir
+        self.tag_col = tag_col
         self.labels = None
 
     def _read_examples(self, data_dir, file_name, set_name):
@@ -321,11 +323,12 @@ class TokenClsProcessor(DataProcessor):
             logger.error("Requested file {} in path {} for TokenClsProcess not found".format(
                 file_name, data_dir))
             return None
-        return self._create_examples(read_column_tagged_file(os.path.join(data_dir, file_name)), set_name)
+        return self._create_examples(read_column_tagged_file(os.path.join(data_dir, file_name),
+                                                             tag_col=self.tag_col), set_name)
 
     def get_train_examples(self, **kwargs):
         return self._read_examples(self.data_dir, "train.txt", "train")
-    
+
     def get_dev_examples(self, **kwargs):
         return self._read_examples(self.data_dir, "dev.txt", "dev")
 
@@ -336,12 +339,12 @@ class TokenClsProcessor(DataProcessor):
     def get_labels(self):
         if self.labels is not None:
             return self.labels
-        
+
         f_path = self.data_dir + os.sep + "labels.txt"
         if not os.path.exists(f_path):
             logger.error("Labels file (labels.txt) not found in {}".format(self.data_dir))
             raise FileNotFoundError
-        
+
         self.labels = []
         with open(f_path, encoding="utf-8") as fp:
             self.labels = [l.strip() for l in fp.readlines()]
@@ -354,11 +357,19 @@ class TokenClsProcessor(DataProcessor):
 
     @staticmethod
     def _create_examples(lines, set_type):
-        """See base class.""" 
+        """See base class."""
         examples = []
         for i, (sentence, labels) in enumerate(lines):
             guid = "%s-%s" % (set_type, i)
             text = ' '.join(sentence)
-            examples.append(TokenClsInputExample(guid=guid, text=text, 
-                tokens=sentence, label=labels))
+            examples.append(TokenClsInputExample(guid=guid, text=text,
+                                                 tokens=sentence, label=labels))
         return examples
+
+    def get_vocabulary(self):
+        examples = self.get_train_examples() + self.get_dev_examples() + self.get_test_examples()
+        vocab = Vocabulary(start=1)
+        for e in examples:
+            for t in e.tokens:
+                vocab.add(t)
+        return vocab

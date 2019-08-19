@@ -13,29 +13,30 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
-import logging
-from abc import ABC
+import random
 
-from nlp_architect.models.tagging import NeuralTagger
-
-logger = logging.getLogger(__name__)
+import numpy as np
+import torch
 
 
-class TrainableModel(ABC):
-    def convert_to_tensors(self, *args, **kwargs):
-        pass
+def setup_backend(no_cuda):
+    """Setup backend according to selected backend and detected configuration
+    """
+    device = torch.device("cuda" if torch.cuda.is_available() and not no_cuda else "cpu")
+    if torch.cuda.is_available() and not no_cuda:
+        device = torch.device("cuda")
+        n_gpu = torch.cuda.device_count()
+    else:
+        device = torch.device("cpu")
+        n_gpu = 0
+    return device, n_gpu
 
-    def get_logits(self, *args, **kwargs):
-        pass
 
-    def train(self, *args, **kwargs):
-        pass
-
-    def inference(self, *args, **kwargs):
-        pass
-
-    def save_model(self, *args, **kwargs):
-        pass
-
-    def load_model(self, *args, **kwargs):
-        pass
+def set_seed(seed, n_gpus=None):
+    """set seed
+    """
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    if n_gpus is not None and n_gpus > 0:
+        torch.cuda.manual_seed_all(seed)

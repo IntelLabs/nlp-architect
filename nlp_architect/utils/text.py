@@ -14,7 +14,9 @@
 # limitations under the License.
 # ******************************************************************************
 import re
+import string
 import sys
+import unicodedata
 from os import path
 from typing import List, Tuple
 
@@ -22,7 +24,7 @@ import spacy
 from nltk import WordNetLemmatizer
 from nltk.stem.snowball import EnglishStemmer
 from spacy.cli.download import download as spacy_download
-from spacy.lang.en import LEMMA_INDEX, LEMMA_EXC, LEMMA_RULES
+from spacy.lang.en import LEMMA_EXC, LEMMA_INDEX, LEMMA_RULES
 from spacy.lemmatizer import Lemmatizer
 
 from nlp_architect.utils.generic import license_prompt
@@ -33,11 +35,19 @@ class Vocabulary:
     A vocabulary that maps words to ints (storing a vocabulary)
     """
 
-    def __init__(self, start=0):
+    def __init__(self, start=0, include_oov=True):
 
         self._vocab = {}
         self._rev_vocab = {}
-        self.next = start
+        self.include_oov = include_oov
+        self.oov_id = start
+        if include_oov:
+            self._vocab["<UNK>"] = start
+            self._rev_vocab[start] = "<UNK>"
+            self.next = start + 1
+        else:
+            self.next = start
+        
 
     def add(self, word):
         """
@@ -65,7 +75,7 @@ class Vocabulary:
         Returns:
             int: int id of word
         """
-        return self._vocab.get(word, None)
+        return self._vocab.get(word, self.oov_id)
 
     def __getitem__(self, item):
         """
@@ -74,7 +84,10 @@ class Vocabulary:
         return self.word_id(item)
 
     def __len__(self):
-        return len(self._vocab)
+        vocab_size = len(self._vocab)
+        if self.include_oov:
+            vocab_size += 1
+        return vocab_size
 
     def __iter__(self):
         for word in self.vocab.keys():
@@ -125,6 +138,32 @@ class Vocabulary:
             dict: reversed vocabulary object
         """
         return self._rev_vocab
+
+
+all_letters = string.ascii_letters + " .,;'"
+n_letters = len(all_letters)
+
+def char_to_id(c):
+    """return int id of given character
+        OOV char = len(all_letter) + 1
+    
+    Args:
+        c (str): string character
+    
+    Returns:
+        int: int value of given char
+    """
+    char_idx = all_letters.find(c)
+    if char_idx == -1:
+        char_idx = n_letters
+    return char_idx
+
+def id_to_char(c_id):
+    """return character of given char id
+    """
+    if c_id < n_letters:
+        return all_letters[c_id]
+    return None
 
 
 def try_to_load_spacy(model_name):

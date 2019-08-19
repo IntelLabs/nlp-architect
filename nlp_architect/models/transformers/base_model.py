@@ -40,6 +40,9 @@ def get_models(models: List[str]):
 
 
 class TransformerBase(TrainableModel):
+    """
+    Transformers base model (for working with pytorch-transformers models)
+    """
     MODEL_CONFIGURATIONS = {
         'bert': (BertConfig, BertTokenizer),
         'quant_bert': (QuantizedBertConfig, BertTokenizer),
@@ -47,10 +50,28 @@ class TransformerBase(TrainableModel):
         'xlm': (XLMConfig, XLMTokenizer),
     }
 
-    def __init__(self, model_type, model_name_or_path, labels: List[str] = None,
+    def __init__(self, model_type: str, model_name_or_path: str, labels: List[str] = None,
                  num_labels: int = None, config_name=None,
                  tokenizer_name=None, do_lower_case=False, output_path=None,
                  device='cpu', n_gpus=0):
+        """
+        Transformers base model (for working with pytorch-transformers models)
+        
+        Args:
+            model_type (str): transformer model type
+            model_name_or_path (str): model name or path to model
+            labels (List[str], optional): list of labels. Defaults to None.
+            num_labels (int, optional): number of labels. Defaults to None.
+            config_name ([type], optional): configuration name. Defaults to None.
+            tokenizer_name ([type], optional): tokenizer name. Defaults to None.
+            do_lower_case (bool, optional): lower case input words. Defaults to False.
+            output_path ([type], optional): model output path. Defaults to None.
+            device (str, optional): backend device. Defaults to 'cpu'.
+            n_gpus (int, optional): num of gpus. Defaults to 0.
+        
+        Raises:
+            FileNotFoundError: [description]
+        """
         assert model_type in self.MODEL_CONFIGURATIONS.keys(), "unsupported model_type"
         self.model_type = model_type
         self.model_name_or_path = model_name_or_path
@@ -132,8 +153,14 @@ class TransformerBase(TrainableModel):
             else self.model_name_or_path, do_lower_case=self.do_lower_case)
         return tokenizer
 
-    def save_model(self, output_dir, save_checkpoint=False, args=None):
-        """Save model/tokenizer/arguments to given output directory
+    def save_model(self, output_dir: str, save_checkpoint: bool = False, args=None):
+        """
+        Save model/tokenizer/arguments to given output directory
+        
+        Args:
+            output_dir (str): path to output directory
+            save_checkpoint (bool, optional): save as checkpoint. Defaults to False.
+            args ([type], optional): arguments object to save. Defaults to None.
         """
         # Create output directory if needed
         if not os.path.exists(output_dir):
@@ -145,14 +172,24 @@ class TransformerBase(TrainableModel):
         if not save_checkpoint:
             if self.tokenizer is not None:
                 self.tokenizer.save_pretrained(output_dir)
-            with io.open(output_dir + os.sep + 'labels.txt','w', encoding='utf-8') as fw:
+            with io.open(output_dir + os.sep + 'labels.txt', 'w', encoding='utf-8') as fw:
                 for l in self.labels:
                     fw.write('{}\n'.format(l))
             if args is not None:
                 torch.save(args, os.path.join(output_dir, 'training_args.bin'))
 
     @classmethod
-    def load_model(cls, model_path, model_type):
+    def load_model(cls, model_path: str, model_type: str):
+        """
+        Create a TranformerBase deom from given path
+        
+        Args:
+            model_path (str): path to model
+            model_type (str): model type
+        
+        Returns:
+            TransformerBase: model
+        """
         # Load a trained model and vocabulary from given path
         if not os.path.exists(model_path):
             raise FileNotFoundError
@@ -160,18 +197,35 @@ class TransformerBase(TrainableModel):
             labels = [l.strip() for l in fp.readlines()]
         return cls(model_type=model_type, model_name_or_path=model_path, labels=labels)
 
-    def get_train_steps_epochs(self,
-                               max_steps,
-                               num_train_epochs,
-                               gradient_accumulation_steps,
-                               num_samples):
+    @staticmethod
+    def get_train_steps_epochs(max_steps: int,
+                               num_train_epochs: int,
+                               gradient_accumulation_steps: int,
+                               num_samples: int):
+        """
+        get train steps and epochs
+        
+        Args:
+            max_steps (int): max steps
+            num_train_epochs (int): num epochs
+            gradient_accumulation_steps (int): gradient accumulation steps
+            num_samples (int): number of samples
+        
+        Returns:
+            Tuple: total steps, number of epochs
+        """
         if max_steps > 0:
             t_total = max_steps
-            num_train_epochs = max_steps // (
-                    num_samples // gradient_accumulation_steps) + 1
+            num_train_epochs = max_steps // (num_samples // gradient_accumulation_steps) + 1
         else:
             t_total = num_samples // gradient_accumulation_steps * num_train_epochs
         return t_total, num_train_epochs
+
+    def get_logits(self, batch):
+        self.model.eval()
+        inputs = self._batch_mapper(batch)
+        outputs = self.model(**inputs)
+        return outputs[-1]
 
     def _train(self,
                data_set: DataLoader,
@@ -199,17 +253,17 @@ class TransformerBase(TrainableModel):
         if self.optimizer is None and self.scheduler is None:
             logger.info("Loading default optimizer and scheduler")
             self.setup_default_optimizer(total_steps=t_total)
-        
+
         train_batch_size = per_gpu_train_batch_size * max(1, self.n_gpus)
         logger.info("***** Running training *****")
         logger.info("  Num examples = %d", len(data_set.dataset))
         logger.info("  Num Epochs = %d", num_train_epochs)
-        logger.info("  Instantaneous batch size per GPU = %d", per_gpu_train_batch_size)
+        logger.info("  Instantaneous batch size per GPU/CPU = %d", per_gpu_train_batch_size)
         logger.info("  Total train batch size (w. parallel, distributed & accumulation) = %d",
                     train_batch_size * gradient_accumulation_steps)
         logger.info("  Gradient Accumulation steps = %d", gradient_accumulation_steps)
         logger.info("  Total optimization steps = %d", t_total)
-        
+
         global_step = 0
         tr_loss, logging_loss = 0.0, 0.0
         self.model.zero_grad()
@@ -220,8 +274,8 @@ class TransformerBase(TrainableModel):
                 self.model.train()
                 batch = tuple(t.to(self.device) for t in batch)
                 inputs = self._batch_mapper(batch)
-                ouputs = self.model(**inputs)
-                loss = ouputs[0]  # get loss
+                outputs = self.model(**inputs)
+                loss = outputs[0]  # get loss
 
                 if self.n_gpus > 1:
                     loss = loss.mean()  # mean() to average on multi-gpu parallel training
@@ -233,8 +287,8 @@ class TransformerBase(TrainableModel):
 
                 tr_loss += loss.item()
                 if (step + 1) % gradient_accumulation_steps == 0:
-                    self.scheduler.step()  # Update learning rate schedule
                     self.optimizer.step()
+                    self.scheduler.step()
                     self.model.zero_grad()
                     global_step += 1
 
@@ -314,7 +368,14 @@ class TransformerBase(TrainableModel):
         raise Exception('evaluate_predictions method must be implemented in order to be used for '
                         'dev/test set evaluation')
 
-    def save_model_checkpoint(self, output_path, name):
+    def save_model_checkpoint(self, output_path: str, name: str):
+        """
+        save model checkpoint
+        
+        Args:
+            output_path (str): output path
+            name (str): name of checkpoint
+        """
         output_dir_path = os.path.join(output_path, name)
         self.save_model(output_dir_path, save_checkpoint=True)
 

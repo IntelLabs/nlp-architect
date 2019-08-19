@@ -16,9 +16,8 @@
 from typing import Union, List
 
 import torch
-from torch.nn import CrossEntropyLoss, functional as F
-
 from pytorch_transformers import BertForTokenClassification, XLNetPreTrainedModel
+from torch.nn import CrossEntropyLoss, functional as F
 from torch.utils.data import DataLoader, TensorDataset, SequentialSampler
 
 from nlp_architect.data.sequential_tagging import TokenClsInputExample
@@ -43,11 +42,11 @@ def bert_for_ner_linear_forward(bert, input_ids, token_type_ids=None, attention_
             active_labels = labels.view(-1)[active_positions]
             active_logits = logits.view(-1, bert.num_labels)[active_positions]
             loss = loss_fct(active_logits, active_labels)
-            return (loss, logits, labels)
+            return (loss, logits,)
         return (logits,)
 
 
-class BertForNERLinear(BertForTokenClassification):
+class BertForTagging(BertForTokenClassification):
     """BERT token classification head with linear classifier.
 
        The forward requires an additional 'valid_ids' map that maps the tensors
@@ -83,20 +82,32 @@ class XLNetForTokenClassification(XLNetPreTrainedModel):
 
 
 class TransformerTokenClassifier(TransformerBase):
+    """
+    Transformer word tagging classifier
+    """
     MODEL_CLASS = {
-        'bert': BertForNERLinear,
+        'bert': BertForTagging,
         'quant_bert': QuantizedBertForNERLinear,
         'xlnet': XLNetForTokenClassification,
     }
 
-    def __init__(self, model_type, labels: List[str] = None, *args, **kwargs):
+    def __init__(self, model_type: str, labels: List[str] = None, *args, **kwargs):
+        """
+        Transformer word tagging classifier
+        
+        Args:
+            model_type (str): model type (bert/xlnet)
+            labels (List[str], optional): list of labels. Defaults to None.
+        """
         assert model_type in self.MODEL_CLASS.keys(), "unsupported model type"
         self.labels = labels
         self.num_labels = len(labels) + 1  # +1 for padding label
         self.labels_id_map = {k: v for k, v in enumerate(self.labels, 1)}
 
         super(TransformerTokenClassifier, self).__init__(model_type,
-                                                         labels=self.labels, num_labels=self.num_labels, *args, **kwargs)
+                                                         labels=self.labels,
+                                                         num_labels=self.num_labels, *args,
+                                                         **kwargs)
 
         self.model_class = self.MODEL_CLASS[model_type]
         self.model = self.model_class.from_pretrained(self.model_name_or_path, from_tf=bool(
@@ -114,6 +125,25 @@ class TransformerTokenClassifier(TransformerBase):
               max_grad_norm: float = 1.0,
               logging_steps: int = 50,
               save_steps: int = 100):
+        """
+        Run model training
+        
+        Args:
+            train_data_set (DataLoader): training dataset
+            dev_data_set (Union[DataLoader, List[DataLoader]], optional): development data set
+            (can be list). Defaults to None.
+            test_data_set (Union[DataLoader, List[DataLoader]], optional): test data set
+            (can be list). Defaults to None.
+            gradient_accumulation_steps (int, optional): gradient accumulation steps.
+            Defaults to 1.
+            per_gpu_train_batch_size (int, optional): per GPU train batch size (or GPU).
+            Defaults to 8.
+            max_steps (int, optional): max steps for training. Defaults to -1.
+            num_train_epochs (int, optional): number of training epochs. Defaults to 3.
+            max_grad_norm (float, optional): max gradient norm. Defaults to 1.0.
+            logging_steps (int, optional): number of steps between logging. Defaults to 50.
+            save_steps (int, optional): number of steps between model save. Defaults to 100.
+        """
         self._train(train_data_set,
                     dev_data_set,
                     test_data_set,
@@ -136,6 +166,13 @@ class TransformerTokenClassifier(TransformerBase):
         return mapping
 
     def evaluate_predictions(self, logits, label_ids):
+        """
+        Run evaluation of given logist and truth labels
+        
+        Args:
+            logits: model logits
+            label_ids: truth label ids
+        """
         active_positions = label_ids.view(-1) != 0.0
         active_labels = label_ids.view(-1)[active_positions]
         active_logits = logits.view(-1, len(self.labels_id_map) + 1)[active_positions]
@@ -159,6 +196,17 @@ class TransformerTokenClassifier(TransformerBase):
                            examples: List[TokenClsInputExample],
                            max_seq_length: int = 128,
                            include_labels: bool = True) -> TensorDataset:
+        """
+        Convert examples to tensor dataset
+        
+        Args:
+            examples (List[SequenceClsInputExample]): examples
+            max_seq_length (int, optional): max sequence length. Defaults to 128.
+            include_labels (bool, optional): include labels. Defaults to True.
+        
+        Returns:
+            TensorDataset: 
+        """
         features = self._convert_examples_to_features(examples,
                                                       max_seq_length,
                                                       self.tokenizer,
@@ -314,6 +362,16 @@ class TransformerTokenClassifier(TransformerBase):
         return features
 
     def inference(self, examples: List[TokenClsInputExample], batch_size: int = 64):
+        """
+        Run inference on given examples
+        
+        Args:
+            examples (List[SequenceClsInputExample]): examples
+            batch_size (int, optional): batch size. Defaults to 64.
+        
+        Returns:
+            logits
+        """
         data_set = self.convert_to_tensors(examples, include_labels=False)
         inf_sampler = SequentialSampler(data_set)
         inf_dataloader = DataLoader(data_set, sampler=inf_sampler, batch_size=batch_size)

@@ -13,29 +13,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
-import logging
-from abc import ABC
+import torch
 
-from nlp_architect.models.tagging import NeuralTagger
+class ParallelDataset(torch.utils.data.Dataset):
+    def __init__(self, *datasets):
+        self.datasets = datasets
 
-logger = logging.getLogger(__name__)
+    def __getitem__(self, i):
+        return tuple(d[i] for d in self.datasets)
 
-
-class TrainableModel(ABC):
-    def convert_to_tensors(self, *args, **kwargs):
-        pass
-
-    def get_logits(self, *args, **kwargs):
-        pass
-
-    def train(self, *args, **kwargs):
-        pass
-
-    def inference(self, *args, **kwargs):
-        pass
-
-    def save_model(self, *args, **kwargs):
-        pass
-
-    def load_model(self, *args, **kwargs):
-        pass
+    def __len__(self):
+        return min(len(d) for d in self.datasets)

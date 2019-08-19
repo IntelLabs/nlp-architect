@@ -35,6 +35,9 @@ logger = logging.getLogger(__name__)
 
 
 class TransformerSequenceClassifier(TransformerBase):
+    """
+    Transformer sequence classifier
+    """
     MODEL_CLASS = {
         'bert': BertForSequenceClassification,
         'quant_bert': QuantizedBertForSequenceClassification,
@@ -42,14 +45,27 @@ class TransformerSequenceClassifier(TransformerBase):
         'xlm': XLMForSequenceClassification
     }
 
-    def __init__(self, model_type, labels: List[str] = None,
+    def __init__(self, model_type: str, labels: List[str] = None,
                  task_type="classification", metric_fn=simple_accuracy,
                  *args, **kwargs):
+        """
+        Transformer sequence classifier
+        
+        Args:
+            model_type (str): transformer base model stype
+            labels (List[str], optional): list of labels. Defaults to None.
+            task_type (str, optional): task type (classification/regression). Defaults to
+            classification.
+            metric_fn ([type], optional): metric to use for evaluation. Defaults to
+            simple_accuracy.
+        """
         assert model_type in self.MODEL_CLASS.keys(), "unsupported model type"
         self.labels = labels
         self.num_labels = len(labels)
         super(TransformerSequenceClassifier, self).__init__(model_type,
-                                                            labels=labels, num_labels=self.num_labels, *args, **kwargs)
+                                                            labels=labels,
+                                                            num_labels=self.num_labels, *args,
+                                                            **kwargs)
         self.model_class = self.MODEL_CLASS[model_type]
         self.model = self.model_class.from_pretrained(self.model_name_or_path, from_tf=bool(
             '.ckpt' in self.model_name_or_path), config=self.config)
@@ -68,6 +84,24 @@ class TransformerSequenceClassifier(TransformerBase):
               max_grad_norm: float = 1.0,
               logging_steps: int = 50,
               save_steps: int = 100):
+        """
+        Train a model
+        
+        Args:
+            train_data_set (DataLoader): training data set
+            dev_data_set (Union[DataLoader, List[DataLoader]], optional): development set.
+            Defaults to None.
+            test_data_set (Union[DataLoader, List[DataLoader]], optional): test set.
+            Defaults to None.
+            gradient_accumulation_steps (int, optional): num of gradient accumulation steps.
+            Defaults to 1.
+            per_gpu_train_batch_size (int, optional): per GPU train batch size. Defaults to 8.
+            max_steps (int, optional): max steps. Defaults to -1.
+            num_train_epochs (int, optional): number of train epochs. Defaults to 3.
+            max_grad_norm (float, optional): max gradient normalization. Defaults to 1.0.
+            logging_steps (int, optional): number of steps between logging. Defaults to 50.
+            save_steps (int, optional): number of steps between model save. Defaults to 100.
+        """
         self._train(train_data_set,
                     dev_data_set,
                     test_data_set,
@@ -80,6 +114,13 @@ class TransformerSequenceClassifier(TransformerBase):
                     save_steps=save_steps)
 
     def evaluate_predictions(self, logits, label_ids):
+        """
+        Run evaluation of given logist and truth labels
+        
+        Args:
+            logits: model logits
+            label_ids: truth label ids
+        """
         preds = logits.numpy()
         label_ids = label_ids.numpy()
         if self.task_type == "classification":
@@ -99,6 +140,17 @@ class TransformerSequenceClassifier(TransformerBase):
                            examples: List[SequenceClsInputExample],
                            max_seq_length: int = 128,
                            include_labels: bool = True) -> TensorDataset:
+        """
+        Convert examples to tensor dataset
+        
+        Args:
+            examples (List[SequenceClsInputExample]): examples
+            max_seq_length (int, optional): max sequence length. Defaults to 128.
+            include_labels (bool, optional): include labels. Defaults to True.
+        
+        Returns:
+            TensorDataset: 
+        """
         features = self._convert_examples_to_features(examples,
                                                       max_seq_length,
                                                       self.tokenizer,
@@ -108,8 +160,8 @@ class TransformerSequenceClassifier(TransformerBase):
                                                           self.model_type in ['xlnet']),
                                                       cls_token=self.tokenizer.cls_token,
                                                       sep_token=self.tokenizer.sep_token,
-                                                      cls_token_segment_id=2 if self.model_type in [
-                                                          'xlnet'] else 1,
+                                                      cls_token_segment_id=2 if
+                                                      self.model_type in ['xlnet'] else 1,
                                                       # pad on the left for xlnet
                                                       pad_on_left=bool(
                                                           self.model_type in ['xlnet']),
@@ -129,6 +181,16 @@ class TransformerSequenceClassifier(TransformerBase):
             return TensorDataset(all_input_ids, all_input_mask, all_segment_ids)
 
     def inference(self, examples: List[SequenceClsInputExample], batch_size: int = 64):
+        """
+        Run inference on given examples
+        
+        Args:
+            examples (List[SequenceClsInputExample]): examples
+            batch_size (int, optional): batch size. Defaults to 64.
+        
+        Returns:
+            logits
+        """
         data_set = self.convert_to_tensors(examples, include_labels=False)
         inf_sampler = SequentialSampler(data_set)
         inf_dataloader = DataLoader(data_set, sampler=inf_sampler, batch_size=batch_size)
