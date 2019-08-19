@@ -50,6 +50,7 @@
    Cross Document Co-Reference <cross_doc_coref.rst>
    Semantic Relation Identification  <identifying_semantic_relation.rst>
    Sparse Neural Machine Translation <sparse_gnmt.rst>
+   Quantized BERT <quantized_bert.rst>
 
 .. toctree::
    :hidden:

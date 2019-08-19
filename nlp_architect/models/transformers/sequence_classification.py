@@ -28,6 +28,7 @@ from torch.utils.data import DataLoader, SequentialSampler, TensorDataset
 from nlp_architect.data.sequence_classification import SequenceClsInputExample
 from nlp_architect.models.transformers.base_model import (InputFeatures,
                                                           TransformerBase)
+from nlp_architect.models.quantized_bert import QuantizedBertForSequenceClassification
 from nlp_architect.utils.metrics import simple_accuracy
 
 logger = logging.getLogger(__name__)
@@ -36,6 +37,7 @@ logger = logging.getLogger(__name__)
 class TransformerSequenceClassifier(TransformerBase):
     MODEL_CLASS = {
         'bert': BertForSequenceClassification,
+        'quant_bert': QuantizedBertForSequenceClassification,
         'xlnet': XLNetForSequenceClassification,
         'xlm': XLMForSequenceClassification
     }
