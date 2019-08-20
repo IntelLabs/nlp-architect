@@ -1,11 +1,14 @@
 tensorflow==1.13.1
 dynet==2.1
-spacy
+torch==1.2.0
+torchvision
+pytorch-transformers==1.0.0
+spacy==2.1.8
 nltk
 gensim
 sklearn
 scipy
-numpy
+numpy<1.17
 tensorflow_hub
 elasticsearch
 newspaper3k
@@ -25,5 +28,5 @@ requests
 termcolor
 pillow
 hug
-falcon==1.4.1
+falcon==2.0.0
 falcon_multipart

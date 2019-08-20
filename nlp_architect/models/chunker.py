@@ -18,8 +18,8 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 import tensorflow as tf
 
-from nlp_architect.contrib.tensorflow.python.keras.layers.crf import CRF
-from nlp_architect.contrib.tensorflow.python.keras.utils.layer_utils import load_model, save_model
+from nlp_architect.nn.tensorflow.python.keras.layers.crf import CRF
+from nlp_architect.nn.tensorflow.python.keras.utils import load_model, save_model
 
 
 class SequenceTagger(object):

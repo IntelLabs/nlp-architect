@@ -35,8 +35,8 @@ A Deep Learning NLP/NLU library by <a href="https://www.intel.ai/research/">Inte
 </h4>
 
 NLP Architect is an open source Python library for exploring state-of-the-art
-deep learning topologies and techniques for Natural Language Processing and
-Natural Language Understanding. NLP Architect's main purpose is to provide easy usage of NLP and NLU models while providing state-of-art and robust implementation.
+deep learning topologies and techniques for optimizing Natural Language Processing and
+Natural Language Understanding neural network.
 
 ## Overview
 
@@ -46,14 +46,18 @@ Features:
 
 * Core NLP models used in many NLP tasks and useful in many NLP applications
 * Novel NLU models showcasing novel topologies and techniques
+* Optimized NLP/NLU models showcasing different optimization algorithms on neural NLP/NLU models
 * Simple REST API server ([doc](http://nlp_architect.nervanasys.com/service.html)):
   * serving trained models (for inference)
   * plug-in system for adding your own model
 * 4 Demos of models (pre-trained by us) showcasing NLP Architect (Dependency parser, NER, Intent Extraction, Q&A)
 * Based on optimized Deep Learning frameworks:
+
   * [TensorFlow]
+  * [PyTorch]
   * [Intel-Optimized TensorFlow with MKL-DNN]
   * [Dynet]
+
 * Documentation [website](http://nlp_architect.nervanasys.com/) and [tutorials](http://nlp_architect.nervanasys.com/tutorials.html)
 * Essential utilities for working with NLP models - Text/String pre-processing, IO, data-manipulation, metrics, embeddings.
 
@@ -89,6 +93,7 @@ pip install nlp-architect
 ### Further installation options
 
 Refer to our full [installation instructions](http://nlp_architect.nervanasys.com/installation.html) page on our website for complete details on how to install NLP Architect and other backend installations such as MKL-DNN or GPU backends.
+Users can install any deep learning backends manually before/after they install NLP Architect.
 
 ## Models
 
@@ -100,6 +105,7 @@ NLP models that provide best (or near) in class performance:
 * [Intent Extraction](http://nlp_architect.nervanasys.com/intent.html)
 * [Sentiment classification](http://nlp_architect.nervanasys.com/supervised_sentiment.html)
 * [Language models](http://nlp_architect.nervanasys.com/tcn.html)
+* [Transformers](http://nlp_architect.nervanasys.com/) (for most NLP tasks)
 
 Natural Language Understanding (NLU) models that address semantic understanding:
 
@@ -115,10 +121,15 @@ Components instrumental for conversational AI:
 * [Joint intent detection and slot tagging](http://nlp_architect.nervanasys.com/intent.html)
 * [Memory Networks for goal oriented dialog](http://nlp_architect.nervanasys.com/memn2n.html)
 
+Optimizing NLP/NLU models and misc. optimization techniques:
+
+* [Quantized BERT (8bit)](http://nlp_architect.nervanasys.com/)
+* [Knowledge Distillation using BERT](http://nlp_architect.nervanasys.com/)
+* [Sparse and Quantized Neural Machine Translation (GNMT)](http://nlp_architect.nervanasys.com/sparse_gnmt.html)
+
 End-to-end Deep Learning-based NLP models:
 
 * [Reading comprehension](http://nlp_architect.nervanasys.com/reading_comprehension.html)
-* [Sparse and Quantized Neural Machine Translation (GNMT)](http://nlp_architect.nervanasys.com/sparse_gnmt.html)
 * [Language Modeling using Temporal Convolution Network (TCN)](http://nlp_architect.nervanasys.com/tcn.html)
 * [Unsupervised Cross-lingual embeddings](http://nlp_architect.nervanasys.com/crosslingual_emb.html)
 
@@ -135,17 +146,18 @@ on how to run each model can be found on our [website](http://nlp_architect.nerv
 
 ## NLP Architect library design philosophy
 
-NLP Architect aspires to enable quick development of state-of-art NLP/NLU algorithms and to showcase Intel AI's efforts in deep-learning software optimization (Tensorflow MKL-DNN, etc.)
-The library is designed around the life cycle of model development - pre-process, build model, train, validate, infer, save or deploy.
+NLP Architect is a _model-oriented_ library designed to showcase novel and different neural network optimizations. The library contains NLP/NLU related models per task, different neural network topologies (which are used in models), procedures for simplifying workflows in the library, pre-defined data processors and dataset loaders and misc utilities.
+The library is designed to be a tool for model development: data pre-process, build model, train, validate, infer, save or load a model.
 
 The main design guidelines are:
 
 * Deep Learning framework agnostic
-* Develop topologies utilized in NLP models
-* NLP/NLU models implementation using included topologies
+* NLP/NLU models per task
+* Different topologies used in models
 * Showcase End-to-End applications (Solutions) utilizing one or more NLP Architect model
 * Generic dataset loaders, textual data processing utilities, and miscellaneous utilities that support NLP model development (loaders, text processors, io, metrics, etc.)
-* Pythonic API for training and inference
+* Procedures for defining processes for training, inference, optimization or any kind of elaborate script.
+* Pythonic API for using models for inference
 * REST API servers with ability to serve trained models via HTTP
 * Extensive model documentation and tutorials
 
@@ -164,12 +176,14 @@ Intent Extraction
 
 | Package                 	| Description                                          	|
 |-------------------------	|------------------------------------------------------	|
-| `nlp_architect.api`      	| Model server API interfaces                          	|
+| `nlp_architect.api`      	| Model API interfaces                                 	|
 | `nlp_architect.common`   	| Common packages                                      	|
-| `nlp_architect.contrib`  	| Framework extensions                                 	|
-| `nlp_architect.data`     	| Datasets, data loaders and data classes              	|
-| `nlp_architect.models`   	| NLP, NLU and End-to-End neural models                	|
+| `nlp_architect.cli`      	| Command line module                                  	|
+| `nlp_architect.data`     	| Datasets, loaders and data processors                	|
+| `nlp_architect.models`   	| NLP, NLU and End-to-End models                       	|
+| `nlp_architect.nn`      	| Topology related models and additions (per framework)	|
 | `nlp_architect.pipelines`	| End-to-end NLP apps                                  	|
+| `nlp_architect.procedures`| Procedure scripts                                    	|
 | `nlp_architect.server`   	| API Server and demos UI                              	|
 | `nlp_architect.solutions` | Solution applications                                	|
 | `nlp_architect.utils`    	| Misc. I/O, metric, pre-processing and text utilities 	|
@@ -185,25 +199,6 @@ encourage researchers and developers to contribute their work into the library.
 If you use NLP Architect in your research, please use the following citation:
 ```
 @misc{izsak_peter_2018_1477518,
-  author       = {Izsak, Peter and
-                  Bethke, Anna and
-                  Korat, Daniel and
-                  Yaccobi, Amit and
-                  Mamou, Jonathan and
-                  Guskin, Shira and
-                  Nittur Sridhar, Sharath and
-                  Keller, Andy and
-                  Pereg, Oren and
-                  Eirew, Alon and
-                  Tsabari, Sapir and
-                  Green, Yael and
-                  Kothapalli, Chinnikrishna and
-                  Eavani, Harini and
-                  Wasserblat, Moshe and
-                  Liu, Yinyin and
-                  Boudoukh, Guy and
-                  Zafrir, Ofir and
-                  Tewani, Maneesh},
   title        = {NLP Architect by Intel AI Lab},
   month        = nov,
   year         = 2018,
@@ -228,4 +223,5 @@ email: nlp_architect@intel.com
 [documentation]:http://nlp_architect.nervanasys.com
 [Intel-Optimized TensorFlow with MKL-DNN]:https://software.intel.com/en-us/articles/intel-optimized-tensorflow-wheel-now-available
 [TensorFlow]:https://www.tensorflow.org/
+[PyTorch]:https://pytorch.org/
 [Dynet]:https://dynet.readthedocs.io/en/latest/

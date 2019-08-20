@@ -22,7 +22,7 @@ from os import path
 
 from tensorflow.python.keras.utils import to_categorical
 
-from nlp_architect.contrib.tensorflow.python.keras.callbacks import ConllCallback
+from nlp_architect.nn.tensorflow import ConllCallback
 from nlp_architect.data.intent_datasets import SNIPS
 from nlp_architect.models.intent_extraction import MultiTaskIntentModel
 from nlp_architect.utils.embedding import get_embedding_matrix, load_word_embeddings

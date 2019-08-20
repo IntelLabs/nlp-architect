@@ -248,13 +248,15 @@ def _create_ui_components() -> (Figure, ColumnDataSource):  # pylint: disable=to
 
         text_status.value = "Lexicon extraction completed"
 
-        aspect_data_csv = open(AcquireTerms.acquired_aspect_terms_path, "r").read()
+        with io.open(AcquireTerms.acquired_aspect_terms_path, "r") as fp:
+            aspect_data_csv = fp.read()
         file_data = base64.b64encode(str.encode(aspect_data_csv))
         file_data = file_data.decode("utf-8")
         asp_src.data = {'file_contents': [file_data], 'file_name': ['nameFile.csv']}
 
         out_path = RerankTerms.out_dir / 'generated_opinion_lex_reranked.csv'
-        opinion_data_csv = open(out_path, "r").read()
+        with io.open(out_path, "r") as fp:
+            opinion_data_csv = fp.read()
         file_data = base64.b64encode(str.encode(opinion_data_csv))
         file_data = file_data.decode("utf-8")
         op_src.data = {'file_contents': [file_data], 'file_name': ['nameFile.csv']}

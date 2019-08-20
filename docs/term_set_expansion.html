@@ -1,0 +1,391 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Set Expansion Solution &mdash; NLP Architect by Intel® AI Lab 0.4.post2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" type="text/css" />
+  <link rel="stylesheet" href="_static/theme.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Topic and Trend Analysis Solution" href="trend_analysis.html" />
+    <link rel="prev" title="Aspect Based Sentiment Analysis (ABSA) Solution" href="absa_solution.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html">
+          
+
+          
+            
+            <img src="_static/nlp_architect_logo_white.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="main.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="publications.html">Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Jupyter Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer_guide.html">Developer Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model_zoo.html">Model Zoo</a></li>
+</ul>
+<p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="absa.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chunker.html">Sequence Chunker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ner_crf.html">Named Entity Recognition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intent.html">Intent Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="np_segmentation.html">Noun Phrase Semantic Segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bist_parser.html">BIST Dependency Parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="word_sense.html">Most Common Word Sense</a></li>
+<li class="toctree-l1"><a class="reference internal" href="np2vec.html">Noun Phrase to Vec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="supervised_sentiment.html">Supervised Sentiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reading_comprehension.html">Reading Comprehension</a></li>
+<li class="toctree-l1"><a class="reference internal" href="memn2n.html">End-to-End Memory Networks for Goal Oriented Dialogue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tcn.html">TCN Language Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="crosslingual_emb.html">Unsupervised Crosslingual Embeddings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cross_doc_coref.html">Cross Document Co-Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="identifying_semantic_relation.html">Semantic Relation Identification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solutions</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="absa_solution.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Set Expansion</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#algorithm-overview">Algorithm Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#flow">Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#training">Training</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#inference">Inference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="trend_analysis.html">Trend Analysis</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Pipelines</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="spacy_bist.html">Spacy-BIST Parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spacy_np_annotator.html">Spacy-NP Annotator</a></li>
+</ul>
+<p class="caption"><span class="caption-text">For Developers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">NLP Architect by Intel® AI Lab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Set Expansion Solution</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="set-expansion-solution">
+<h1>Set Expansion Solution<a class="headerlink" href="#set-expansion-solution" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Term set expansion is the task of expanding a given partial set of terms into
+a more complete set of terms that belong to the same semantic class. This
+solution demonstrates the capability of a corpus-based set expansion system
+in a simple web application.</p>
+<img alt="_images/expansion_demo.png" src="_images/expansion_demo.png" />
+</div>
+<div class="section" id="algorithm-overview">
+<h2>Algorithm Overview<a class="headerlink" href="#algorithm-overview" title="Permalink to this headline">¶</a></h2>
+<p>Our approach is described by (Mamou et al, 2018) <a class="footnote-reference brackets" href="#id3" id="id1">1</a>. It is based on representing any term of a
+training corpus using word embeddings in order to estimate the similarity between the seed terms and any candidate term. Noun phrases provide good approximation for candidate terms and are extracted in our system using a noun phrase chunker. At expansion time, given a seed of terms, the most similar terms are returned.</p>
+</div>
+<div class="section" id="flow">
+<h2>Flow<a class="headerlink" href="#flow" title="Permalink to this headline">¶</a></h2>
+<img alt="_images/expansion_flow.png" src="_images/expansion_flow.png" />
+</div>
+<div class="section" id="training">
+<h2>Training<a class="headerlink" href="#training" title="Permalink to this headline">¶</a></h2>
+<p>The first step in training is to prepare the data for generating a word embedding model. We
+provide a subset of English Wikipedia at datasets/wikipedia as a sample corpus under the
+<a class="reference external" href="https://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-Share-Alike 3.0 License</a> (Copyright 2018 Wikimedia Foundation).
+The output of this step is the marked corpus where noun phrases are marked with the marking character (default: “_”) as described in the NLP Architect <a class="reference internal" href="np2vec.html"><span class="doc">Noun Phrase to Vec</span></a> module documentation. The pre-process script supports using NLP Architect <a class="reference internal" href="spacy_np_annotator.html"><span class="doc">noun phrase extractor</span></a> which uses an LSTM <a class="reference internal" href="chunker.html"><span class="doc">Sequence Chunker</span></a> model or using spaCy’s own noun phrases matcher.
+This is done by running:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">nlp_architect</span><span class="o">.</span><span class="n">solutions</span><span class="o">.</span><span class="n">set_expansion</span><span class="o">.</span><span class="n">prepare_data</span> <span class="o">--</span><span class="n">corpus</span> <span class="n">TRAINING_CORPUS</span> <span class="o">--</span><span class="n">marked_corpus</span> <span class="n">MARKED_TRAINING_CORPUS</span>
+
+<span class="n">optional</span> <span class="n">arguments</span><span class="p">:</span>
+<span class="o">--</span><span class="n">corpus</span> <span class="n">CORPUS</span>       <span class="n">path</span> <span class="n">to</span> <span class="n">the</span> <span class="nb">input</span> <span class="n">corpus</span><span class="o">.</span> <span class="n">Compressed</span> <span class="n">files</span> <span class="p">(</span><span class="n">gz</span><span class="p">)</span> <span class="n">are</span>
+                      <span class="n">also</span> <span class="n">supported</span><span class="o">.</span> <span class="n">By</span> <span class="n">default</span><span class="p">,</span> <span class="n">it</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">subset</span> <span class="n">of</span> <span class="n">English</span>
+                      <span class="n">Wikipedia</span><span class="o">.</span>
+<span class="o">--</span><span class="n">marked_corpus</span> <span class="n">MARKED_CORPUS</span>
+                      <span class="n">path</span> <span class="n">to</span> <span class="n">the</span> <span class="n">marked</span> <span class="n">corpus</span><span class="o">.</span>
+<span class="o">--</span><span class="n">mark_char</span> <span class="n">MARK_CHAR</span>
+                      <span class="n">special</span> <span class="n">character</span> <span class="n">that</span> <span class="n">marks</span> <span class="n">NPs</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">corpus</span> <span class="p">(</span><span class="n">word</span>
+                      <span class="n">separator</span> <span class="ow">and</span> <span class="n">NP</span> <span class="n">suffix</span><span class="p">)</span><span class="o">.</span> <span class="n">Default</span> <span class="n">value</span> <span class="ow">is</span> <span class="n">_</span><span class="o">.</span>
+<span class="o">--</span><span class="n">grouping</span>            <span class="n">perform</span> <span class="n">noun</span><span class="o">-</span><span class="n">phrase</span> <span class="n">grouping</span>
+<span class="o">--</span><span class="n">chunker</span> <span class="p">{</span><span class="n">spacy</span><span class="p">,</span><span class="n">nlp_arch</span><span class="p">}</span>
+                      <span class="n">chunker</span> <span class="n">to</span> <span class="n">use</span> <span class="k">for</span> <span class="n">detecting</span> <span class="n">noun</span> <span class="n">phrases</span><span class="o">.</span> <span class="s1">&#39;spacy&#39;</span> <span class="k">for</span>
+                      <span class="n">using</span> <span class="n">spacy</span> <span class="n">built</span><span class="o">-</span><span class="ow">in</span> <span class="n">chunker</span> <span class="ow">or</span> <span class="s1">&#39;nlp_arch&#39;</span> <span class="k">for</span> <span class="n">NLP</span>
+                      <span class="n">Architect</span> <span class="n">NP</span> <span class="n">Extractor</span>
+</pre></div>
+</div>
+<p>The next step is to train the model using NLP Architect <a class="reference internal" href="np2vec.html"><span class="doc">Noun Phrase to Vec</span></a> module.
+For set expansion, we recommend the following values 100, 10, 10, 0 for respectively,
+size, min_count, window and hs hyperparameters. Please refer to the np2vec module documentation for more details about these parameters.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">examples</span><span class="o">/</span><span class="n">np2vec</span><span class="o">/</span><span class="n">train</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">size</span> <span class="mi">100</span> <span class="o">--</span><span class="n">min_count</span> <span class="mi">10</span> <span class="o">--</span><span class="n">window</span> <span class="mi">10</span> \
+  <span class="o">--</span><span class="n">hs</span> <span class="mi">0</span> <span class="o">--</span><span class="n">corpus</span> <span class="n">MARKED_TRAINING_CORPUS</span> <span class="o">--</span><span class="n">np2vec_model_file</span> <span class="n">MODEL_PATH</span> \
+  <span class="o">--</span><span class="n">corpus_format</span> <span class="n">txt</span>
+</pre></div>
+</div>
+<p>A <a class="reference external" href="https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/term_set/enwiki-20171201_pretrained_set_expansion.txt.tar.gz">pretrained model</a>
+on English Wikipedia dump (<code class="docutils literal notranslate"><span class="pre">enwiki-20171201-pages-articles-multistream.xml.bz2</span></code>) is available under
+Apache 2.0 license. It has been trained with hyperparameters values
+recommended above. Full English Wikipedia <a class="reference external" href="https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/term_set/enwiki-20171201.txt.gz">raw corpus</a> and
+<a class="reference external" href="https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/term_set/enwiki-20171201_spacy_marked.txt.tar.gz">marked corpus</a>
+are also available under the
+<a class="reference external" href="https://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-Share-Alike 3.0 License</a>.</p>
+<p>A <a class="reference external" href="https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/term_set/enwiki-20171201_grouping_pretrained_set_expansion.tar.gz">pretrained model with grouping</a>
+on the same English Wikipedia dump is also
+available under
+Apache 2.0 license. It has been trained with hyperparameters values
+recommended above. <a class="reference external" href="https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/term_set/enwiki-20171201_grouping_marked.txt.tar.gz">Marked corpus</a>
+is also available under the
+<a class="reference external" href="https://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-Share-Alike 3.0 License</a>.</p>
+</div>
+<div class="section" id="inference">
+<h2>Inference<a class="headerlink" href="#inference" title="Permalink to this headline">¶</a></h2>
+<p>The inference step consists of expanding given seed terms into a set of terms that belong to the same semantic class.
+It can be done in two ways:</p>
+<ol class="arabic">
+<li><p>Running a python script:</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">nlp_architect</span><span class="o">.</span><span class="n">solutions</span><span class="o">.</span><span class="n">set_expansion</span><span class="o">.</span><span class="n">set_expand</span> <span class="o">--</span><span class="n">np2vec_model_file</span> <span class="n">MODEL_PATH</span> <span class="o">--</span><span class="n">topn</span> <span class="n">TOPN</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>Web application</p>
+<blockquote>
+<div><ol class="upperalpha">
+<li><p>Loading the expand server with the trained model:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">nlp_architect</span><span class="o">.</span><span class="n">solutions</span><span class="o">.</span><span class="n">set_expansion</span><span class="o">.</span><span class="n">expand_server</span> <span class="p">[</span><span class="o">--</span><span class="n">host</span> <span class="n">HOST</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">port</span> <span class="n">PORT</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">similarity</span> <span class="n">SIMILARITY</span><span class="p">]</span> <span class="n">model_path</span>
+
+<span class="n">positional</span> <span class="n">arguments</span><span class="p">:</span>
+<span class="n">model_path</span>            <span class="n">a</span> <span class="n">path</span> <span class="n">to</span> <span class="n">the</span> <span class="n">w2v</span> <span class="n">model</span> <span class="nb">file</span>
+
+<span class="n">optional</span> <span class="n">arguments</span><span class="p">:</span>
+<span class="o">-</span><span class="n">h</span><span class="p">,</span> <span class="o">--</span><span class="n">help</span>            <span class="n">show</span> <span class="n">this</span> <span class="n">help</span> <span class="n">message</span> <span class="ow">and</span> <span class="nb">exit</span>
+<span class="o">--</span><span class="n">host</span> <span class="n">HOST</span>           <span class="nb">set</span> <span class="n">port</span> <span class="k">for</span> <span class="n">the</span> <span class="n">server</span>
+<span class="o">--</span><span class="n">port</span> <span class="n">PORT</span>           <span class="nb">set</span> <span class="n">port</span> <span class="k">for</span> <span class="n">the</span> <span class="n">server</span>
+<span class="o">--</span><span class="n">grouping</span>            <span class="n">grouping</span> <span class="n">mode</span>
+<span class="o">--</span><span class="n">similarity</span> <span class="n">SIMILARITY</span>
+                      <span class="n">similarity</span> <span class="n">threshold</span>
+<span class="o">--</span><span class="n">chunker</span> <span class="p">{</span><span class="n">spacy</span><span class="p">,</span><span class="n">nlp_arch</span><span class="p">}</span>
+                      <span class="n">spacy</span> <span class="n">chunker</span> <span class="ow">or</span> <span class="s1">&#39;nlp_arch&#39;</span> <span class="k">for</span> <span class="n">NLP</span> <span class="n">Architect</span> <span class="n">NP</span>
+                      <span class="n">Extractor</span>
+</pre></div>
+</div>
+<p>The expand server gets requests containing seed terms, and expands them
+based on the given word embedding model. You can use the model you trained
+yourself in the previous step, or to provide a pre-trained model you own.
+The similarity argument is the threshold to use for the annotation feature, see its description in the UI section below.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>default server will listen on <a class="reference external" href="http://localhost:1234">http://localhost:1234</a> . If you set the host/port you should also set it in the <code class="docutils literal notranslate"><span class="pre">nlp_architect/solutions/set_expansion/ui/settings.py</span></code> file.</p>
+</div>
+</li>
+<li><p>Run the UI application:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">nlp_architect</span><span class="o">.</span><span class="n">solutions</span><span class="o">.</span><span class="n">start_ui</span> <span class="o">--</span><span class="n">solution</span> <span class="n">set_expansion</span>
+</pre></div>
+</div>
+<p>You can also load the UI
+application as a server on different address/port using the following command:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">nlp_architect</span><span class="o">.</span><span class="n">solutions</span><span class="o">.</span><span class="n">start_ui</span> <span class="o">--</span><span class="n">solution</span> <span class="n">set_expansion</span> <span class="o">--</span><span class="n">address</span><span class="o">=</span><span class="mf">12.13</span><span class="o">.</span><span class="mf">14.15</span> <span class="o">--</span><span class="n">port</span><span class="o">=</span><span class="mi">1010</span>
+</pre></div>
+</div>
+<p>The UI is a simple web based application for communicating with the server and performing expansion and annotation.</p>
+<p><strong>Expansion</strong></p>
+<p>The UI communicates with the server by sending it seed terms to expand, and
+presenting the results in a simple table. An export option is available for downloading the results as a csv
+file. Selecting seed terms to expand is done by either directly type in the terms to expand or by
+selecting terms from the model vocabulary list. After expand results are available,
+the user can select terms from the results list (hold the Ctrl key for
+multiple selection) and perform re-expansion.</p>
+<p><strong>Text Annotation</strong></p>
+<p>The annotation feature allows you to annotate free text with similar terms comparing to the seed list (the default similarity threshold is 0.5, and can be set
+by the expand server —similarity argument).
+After selecting the Text Annotation checkbox, a text input is available for the user to type in text to annotate:</p>
+<img alt="_images/annotation.png" src="_images/annotation.png" />
+<p><strong>Grouping</strong></p>
+<p>In order to set the UI to work in grouping mode the user should set grouping=True in the ui/settings.py file.
+This mode is available just in case the model was trained with the grouping flag and in addition the server
+(expand_server.py) was loaded with the grouping flag.
+Click on a phrase in the vocabulary list in order to observe its group.</p>
+</li>
+</ol>
+</div></blockquote>
+</li>
+</ol>
+</div>
+<div class="section" id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<dl class="footnote brackets">
+<dt class="label" id="id3"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p><a class="reference external" href="http://arxiv.org/abs/1807.10104">Term Set Expansion based on Multi-Context Term Embeddings: an End-to-end Workflow</a>, Jonathan Mamou, Oren Pereg, Moshe Wasserblat, Ido Dagan, Yoav Goldberg, Alon Eirew, Yael Green, Shira Guskin, Peter Izsak, Daniel Korat, COLING 2018 System Demonstration paper.</p>
+</dd>
+<dt class="label" id="id4"><span class="brackets">2</span></dt>
+<dd><p><a class="reference external" href="https://arxiv.org/abs/1808.08953">Term Set Expansion based NLP Architect by Intel AI Lab</a>, Jonathan Mamou, Oren Pereg, Moshe Wasserblat, Alon Eirew, Yael Green, Shira Guskin, Peter Izsak, Daniel Korat, EMNLP 2018 System Demonstration paper.</p>
+</dd>
+</dl>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

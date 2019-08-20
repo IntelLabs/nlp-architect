@@ -1,0 +1,582 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>nlp_architect.pipelines.spacy_np_annotator &mdash; NLP Architect by Intel® AI Lab 0.4.post2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/theme.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html">
+          
+
+          
+            
+            <img src="../../../_static/nlp_architect_logo_white.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../main.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../publications.html">Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials.html">Jupyter Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer_guide.html">Developer Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../model_zoo.html">Model Zoo</a></li>
+</ul>
+<p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../absa.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../chunker.html">Sequence Chunker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ner_crf.html">Named Entity Recognition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../intent.html">Intent Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../np_segmentation.html">Noun Phrase Semantic Segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../bist_parser.html">BIST Dependency Parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../word_sense.html">Most Common Word Sense</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../np2vec.html">Noun Phrase to Vec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../supervised_sentiment.html">Supervised Sentiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reading_comprehension.html">Reading Comprehension</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../memn2n.html">End-to-End Memory Networks for Goal Oriented Dialogue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tcn.html">TCN Language Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../crosslingual_emb.html">Unsupervised Crosslingual Embeddings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../cross_doc_coref.html">Cross Document Co-Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../identifying_semantic_relation.html">Semantic Relation Identification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solutions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../absa_solution.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../term_set_expansion.html">Set Expansion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../trend_analysis.html">Trend Analysis</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Pipelines</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../spacy_bist.html">Spacy-BIST Parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../spacy_np_annotator.html">Spacy-NP Annotator</a></li>
+</ul>
+<p class="caption"><span class="caption-text">For Developers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">NLP Architect by Intel® AI Lab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>nlp_architect.pipelines.spacy_np_annotator</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for nlp_architect.pipelines.spacy_np_annotator</h1><div class="highlight"><pre>
+<span></span><span class="c1"># ******************************************************************************</span>
+<span class="c1"># Copyright 2017-2018 Intel Corporation</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ******************************************************************************</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="k">import</span> <span class="n">path</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">spacy</span>
+<span class="kn">from</span> <span class="nn">spacy.tokens</span> <span class="k">import</span> <span class="n">Doc</span>
+<span class="kn">from</span> <span class="nn">spacy.tokens</span> <span class="k">import</span> <span class="n">Span</span>
+
+<span class="kn">from</span> <span class="nn">nlp_architect.models.chunker</span> <span class="k">import</span> <span class="n">SequenceChunker</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.utils.generic</span> <span class="k">import</span> <span class="n">pad_sentences</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.utils.io</span> <span class="k">import</span> <span class="n">validate_existing_filepath</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.utils.text</span> <span class="k">import</span> <span class="n">extract_nps</span><span class="p">,</span> <span class="n">Stopwords</span>
+
+
+<div class="viewcode-block" id="NPAnnotator"><a class="viewcode-back" href="../../../generated/nlp_architect.pipelines.spacy_np_annotator.NPAnnotator.html#nlp_architect.pipelines.spacy_np_annotator.NPAnnotator">[docs]</a><span class="k">class</span> <span class="nc">NPAnnotator</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Spacy based NP annotator - uses models.SequenceChunker model for annotation</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        model (SequenceChunker): a chunker model</span>
+<span class="sd">        word_vocab (Vocabulary): word-id vocabulary of the model</span>
+<span class="sd">        char_vocab (Vocabulary): char id vocabulary of words of the model</span>
+<span class="sd">        chunk_vocab (Vocabulary): chunk tag vocabulary of the model</span>
+<span class="sd">        batch_size (int, optional): inference batch size</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="NPAnnotator.__init__"><a class="viewcode-back" href="../../../generated/nlp_architect.pipelines.spacy_np_annotator.NPAnnotator.html#nlp_architect.pipelines.spacy_np_annotator.NPAnnotator.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">word_vocab</span><span class="p">,</span> <span class="n">char_vocab</span><span class="p">,</span> <span class="n">chunk_vocab</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">32</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bs</span> <span class="o">=</span> <span class="n">batch_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">word_vocab</span> <span class="o">=</span> <span class="n">word_vocab</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">char_vocab</span> <span class="o">=</span> <span class="n">char_vocab</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">chunk_vocab</span> <span class="o">=</span> <span class="n">chunk_vocab</span>
+        <span class="n">Doc</span><span class="o">.</span><span class="n">set_extension</span><span class="p">(</span><span class="s1">&#39;noun_phrases&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="p">[],</span> <span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="NPAnnotator.load"><a class="viewcode-back" href="../../../generated/nlp_architect.pipelines.spacy_np_annotator.NPAnnotator.html#nlp_architect.pipelines.spacy_np_annotator.NPAnnotator.load">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">model_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">parameter_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">32</span><span class="p">,</span>
+             <span class="n">use_cudnn</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load a NPAnnotator annotator</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            model_path (str): path to trained model</span>
+<span class="sd">            parameter_path (str): path to model parameters</span>
+<span class="sd">            batch_size (int, optional): inference batch_size</span>
+<span class="sd">            use_cudnn (bool, optional): use gpu for inference (cudnn cells)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            NPAnnotator class with loaded model</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">_model_path</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)),</span> <span class="n">model_path</span><span class="p">)</span>
+        <span class="n">validate_existing_filepath</span><span class="p">(</span><span class="n">_model_path</span><span class="p">)</span>
+        <span class="n">_parameter_path</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)),</span> <span class="n">parameter_path</span><span class="p">)</span>
+        <span class="n">validate_existing_filepath</span><span class="p">(</span><span class="n">_parameter_path</span><span class="p">)</span>
+
+        <span class="n">model</span> <span class="o">=</span> <span class="n">SequenceChunker</span><span class="p">(</span><span class="n">use_cudnn</span><span class="o">=</span><span class="n">use_cudnn</span><span class="p">)</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">_model_path</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">_parameter_path</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+            <span class="n">model_params</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fp</span><span class="p">)</span>
+            <span class="n">word_vocab</span> <span class="o">=</span> <span class="n">model_params</span><span class="p">[</span><span class="s1">&#39;word_vocab&#39;</span><span class="p">]</span>
+            <span class="n">chunk_vocab</span> <span class="o">=</span> <span class="n">model_params</span><span class="p">[</span><span class="s1">&#39;chunk_vocab&#39;</span><span class="p">]</span>
+            <span class="n">char_vocab</span> <span class="o">=</span> <span class="n">model_params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;char_vocab&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">word_vocab</span><span class="p">,</span> <span class="n">char_vocab</span><span class="p">,</span> <span class="n">chunk_vocab</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_infer_chunks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_vec</span><span class="p">,</span> <span class="n">doc_lengths</span><span class="p">):</span>
+        <span class="n">tagged_sents</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">input_vec</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bs</span><span class="p">)</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">sentence</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">tagged_sents</span><span class="p">,</span> <span class="n">doc_lengths</span><span class="p">):</span>
+            <span class="n">sentence</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="o">-</span><span class="n">l</span><span class="p">:])</span>
+        <span class="n">doc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">sentence</span><span class="p">)</span>
+        <span class="n">chunk_tags</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">chunk_vocab</span><span class="o">.</span><span class="n">id_to_word</span><span class="p">(</span><span class="n">w</span><span class="p">)</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">doc</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">extract_nps</span><span class="p">(</span><span class="n">chunk_tags</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_feature_extractor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doc</span><span class="p">):</span>
+        <span class="n">features</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">word_vocab</span><span class="p">[</span><span class="n">w</span><span class="p">]</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">word_vocab</span><span class="p">[</span><span class="n">w</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="mi">1</span>
+                               <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">doc</span><span class="p">])</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">char_vocab</span><span class="p">:</span>
+            <span class="n">sentence_chars</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">doc</span><span class="p">:</span>
+                <span class="n">word_chars</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">w</span><span class="p">:</span>
+                    <span class="n">_cid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">char_vocab</span><span class="p">[</span><span class="n">c</span><span class="p">]</span>
+                    <span class="n">word_chars</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_cid</span> <span class="k">if</span> <span class="n">_cid</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="n">sentence_chars</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">word_chars</span><span class="p">)</span>
+            <span class="n">sentence_chars</span> <span class="o">=</span> <span class="n">pad_sentences</span><span class="p">(</span><span class="n">sentence_chars</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">max_word_len</span><span class="p">)</span>
+            <span class="n">features</span> <span class="o">=</span> <span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">sentence_chars</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">features</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doc</span><span class="p">:</span> <span class="n">Doc</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Doc</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Annotate the document with noun phrase spans</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">spans</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">doc_vecs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">doc_chars</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">doc_lens</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">doc</span>
+        <span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="n">doc</span><span class="o">.</span><span class="n">sents</span><span class="p">:</span>
+            <span class="n">features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_feature_extractor</span><span class="p">([</span><span class="n">t</span><span class="o">.</span><span class="n">text</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">sentence</span><span class="p">])</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+                <span class="n">doc_vec</span> <span class="o">=</span> <span class="n">features</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">doc_chars</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">features</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">doc_vec</span> <span class="o">=</span> <span class="n">features</span>
+            <span class="n">doc_vecs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">doc_vec</span><span class="p">)</span>
+            <span class="n">doc_lens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">doc_vec</span><span class="p">))</span>
+        <span class="n">doc_vectors</span> <span class="o">=</span> <span class="n">pad_sentences</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">doc_vecs</span><span class="p">))</span>
+        <span class="n">inputs</span> <span class="o">=</span> <span class="n">doc_vectors</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">char_vocab</span><span class="p">:</span>
+            <span class="n">max_len</span> <span class="o">=</span> <span class="n">doc_vectors</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">padded_chars</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">doc_chars</span><span class="p">),</span> <span class="n">max_len</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">max_word_len</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">doc_chars</span><span class="p">):</span>
+                <span class="n">d</span> <span class="o">=</span> <span class="n">d</span><span class="p">[:</span><span class="n">max_len</span><span class="p">]</span>
+                <span class="n">padded_chars</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="o">-</span><span class="n">d</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:]</span> <span class="o">=</span> <span class="n">d</span>
+            <span class="n">inputs</span> <span class="o">=</span> <span class="p">[</span><span class="n">inputs</span><span class="p">,</span> <span class="n">padded_chars</span><span class="p">]</span>
+        <span class="n">np_indexes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_infer_chunks</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">doc_lens</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">np_indexes</span><span class="p">:</span>
+            <span class="n">np_span</span> <span class="o">=</span> <span class="n">Span</span><span class="p">(</span><span class="n">doc</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+            <span class="n">spans</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np_span</span><span class="p">)</span>
+        <span class="n">spans</span> <span class="o">=</span> <span class="n">_NPPostprocessor</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">spans</span><span class="p">)</span>
+        <span class="n">set_noun_phrases</span><span class="p">(</span><span class="n">doc</span><span class="p">,</span> <span class="n">spans</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">doc</span></div>
+
+
+<span class="k">def</span> <span class="nf">get_noun_phrases</span><span class="p">(</span><span class="n">doc</span><span class="p">:</span> <span class="n">Doc</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="n">Span</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get noun phrase tags from a spacy annotated document.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        doc (Doc): a spacy type document</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        a list of noun phrase Span objects</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">doc</span><span class="o">.</span><span class="n">_</span><span class="p">,</span> <span class="s1">&#39;noun_phrases&#39;</span><span class="p">),</span> <span class="s1">&#39;no noun_phrase attributes in document&#39;</span>
+    <span class="k">return</span> <span class="n">doc</span><span class="o">.</span><span class="n">_</span><span class="o">.</span><span class="n">noun_phrases</span>
+
+
+<span class="k">def</span> <span class="nf">set_noun_phrases</span><span class="p">(</span><span class="n">doc</span><span class="p">:</span> <span class="n">Doc</span><span class="p">,</span> <span class="n">nps</span><span class="p">:</span> <span class="p">[</span><span class="n">Span</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Set noun phrase tags</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        doc (Doc): a spacy type document</span>
+<span class="sd">        nps ([Span]): a list of Spans</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">doc</span><span class="o">.</span><span class="n">_</span><span class="p">,</span> <span class="s1">&#39;noun_phrases&#39;</span><span class="p">),</span> <span class="s1">&#39;no noun_phrase attributes in document&#39;</span>
+    <span class="n">doc</span><span class="o">.</span><span class="n">_</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;noun_phrases&#39;</span><span class="p">,</span> <span class="n">nps</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">_NPPostprocessor</span><span class="p">:</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">noun_phrases</span><span class="p">:</span> <span class="p">[</span><span class="n">Span</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="n">Span</span><span class="p">]:</span>
+        <span class="n">new_phrases</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">phrase</span> <span class="ow">in</span> <span class="n">noun_phrases</span><span class="p">:</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="n">_NPPostprocessor</span><span class="o">.</span><span class="n">_phrase_process</span><span class="p">(</span><span class="n">phrase</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">p</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">new_phrases</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">new_phrases</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_phrase_process</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">phrase</span><span class="p">:</span> <span class="n">Span</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Span</span><span class="p">:</span>
+        <span class="n">last_phrase</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">while</span> <span class="n">phrase</span> <span class="o">!=</span> <span class="n">last_phrase</span><span class="p">:</span>
+            <span class="n">last_phrase</span> <span class="o">=</span> <span class="n">phrase</span>
+            <span class="k">for</span> <span class="n">func_args</span> <span class="ow">in</span> <span class="n">post_processing_rules</span><span class="p">:</span>
+                <span class="n">pf</span> <span class="o">=</span> <span class="n">func_args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">args</span> <span class="o">=</span> <span class="n">func_args</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">phrase</span> <span class="o">=</span> <span class="n">pf</span><span class="p">(</span><span class="n">phrase</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">phrase</span> <span class="o">=</span> <span class="n">pf</span><span class="p">(</span><span class="n">phrase</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">phrase</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">break</span>
+        <span class="k">return</span> <span class="n">phrase</span>
+
+
+<span class="k">def</span> <span class="nf">_filter_repeating_nonalnum</span><span class="p">(</span><span class="n">phrase</span><span class="p">,</span> <span class="n">length</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check if a given phrase has non repeating alphanumeric chars</span>
+<span class="sd">    of given length.</span>
+<span class="sd">    Example: &#39;phrase $$$&#39; with length=3 will return False</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">phrase</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">alnum_len</span> <span class="o">=</span> <span class="n">length</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">phrase</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">t</span><span class="o">.</span><span class="n">is_alpha</span><span class="p">:</span>
+                <span class="n">alnum_len</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">alnum_len</span> <span class="o">=</span> <span class="n">length</span>
+            <span class="k">if</span> <span class="n">alnum_len</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">return</span> <span class="n">phrase</span>
+
+
+<span class="k">def</span> <span class="nf">_filter_long_phrases</span><span class="p">(</span><span class="n">phrase</span><span class="p">,</span> <span class="n">word_length</span><span class="p">,</span> <span class="n">phrase_length</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">phrase</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="nb">max</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">phrase</span><span class="p">])</span> <span class="o">&gt;</span> <span class="n">word_length</span> \
+            <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">phrase</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">phrase_length</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">return</span> <span class="n">phrase</span>
+
+
+<span class="k">def</span> <span class="nf">_remove_non_alphanum_from_start</span><span class="p">(</span><span class="n">phrase</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">phrase</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">phrase</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">is_alpha</span><span class="p">:</span>
+        <span class="n">phrase</span> <span class="o">=</span> <span class="n">phrase</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="k">return</span> <span class="n">phrase</span>
+
+
+<span class="k">def</span> <span class="nf">_remove_non_alphanum_from_end</span><span class="p">(</span><span class="n">phrase</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">phrase</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">phrase</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">is_alpha</span><span class="p">:</span>
+        <span class="n">phrase</span> <span class="o">=</span> <span class="n">phrase</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">phrase</span>
+
+
+<span class="k">def</span> <span class="nf">_remove_stop_words</span><span class="p">(</span><span class="n">phrase</span><span class="p">):</span>
+    <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">phrase</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="p">(</span><span class="n">phrase</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">is_stop</span>
+                               <span class="ow">or</span> <span class="nb">str</span><span class="p">(</span><span class="n">phrase</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="n">Stopwords</span><span class="o">.</span><span class="n">get_words</span><span class="p">()):</span>
+        <span class="n">phrase</span> <span class="o">=</span> <span class="n">phrase</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">phrase</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="p">(</span><span class="n">phrase</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">is_stop</span>
+                               <span class="ow">or</span> <span class="nb">str</span><span class="p">(</span><span class="n">phrase</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="n">Stopwords</span><span class="o">.</span><span class="n">get_words</span><span class="p">()):</span>
+        <span class="n">phrase</span> <span class="o">=</span> <span class="n">phrase</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">phrase</span>
+
+
+<span class="k">def</span> <span class="nf">_remove_char_at_start</span><span class="p">(</span><span class="n">phrase</span><span class="p">):</span>
+    <span class="n">chars</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;@&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;=&#39;</span><span class="p">,</span> <span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="s1">&#39;+&#39;</span><span class="p">,</span> <span class="s1">&#39;?&#39;</span><span class="p">,</span> <span class="s1">&#39;nt&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\&quot;</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\&#39;</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\&#39;</span><span class="s1">S&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\&#39;</span><span class="s1">s&#39;</span><span class="p">,</span> <span class="s1">&#39;,&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">phrase</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">phrase</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">phrase</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">phrase</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span> <span class="ow">in</span> <span class="n">chars</span><span class="p">:</span>
+            <span class="n">phrase</span> <span class="o">=</span> <span class="n">phrase</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="k">return</span> <span class="n">phrase</span>
+
+
+<span class="k">def</span> <span class="nf">_remove_char_at_end</span><span class="p">(</span><span class="n">phrase</span><span class="p">):</span>
+    <span class="n">chars</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="s1">&#39;(&#39;</span><span class="p">,</span> <span class="s1">&#39;)&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">phrase</span><span class="p">:</span>
+        <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">phrase</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">phrase</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">text</span> <span class="ow">in</span> <span class="n">chars</span><span class="p">:</span>
+            <span class="n">phrase</span> <span class="o">=</span> <span class="n">phrase</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">phrase</span>
+
+
+<span class="k">def</span> <span class="nf">_remove_pos_from_start</span><span class="p">(</span><span class="n">phrase</span><span class="p">):</span>
+    <span class="n">tag_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;WDT&#39;</span><span class="p">,</span> <span class="s1">&#39;PRP$&#39;</span><span class="p">,</span> <span class="s1">&#39;:&#39;</span><span class="p">]</span>
+    <span class="n">pos_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;PUNCT&#39;</span><span class="p">,</span> <span class="s1">&#39;INTJ&#39;</span><span class="p">,</span> <span class="s1">&#39;NUM&#39;</span><span class="p">,</span> <span class="s1">&#39;PART&#39;</span><span class="p">,</span> <span class="s1">&#39;ADV&#39;</span><span class="p">,</span> <span class="s1">&#39;DET&#39;</span><span class="p">,</span> <span class="s1">&#39;PRON&#39;</span><span class="p">,</span> <span class="s1">&#39;VERB&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">phrase</span><span class="p">:</span>
+        <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">phrase</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="p">(</span><span class="n">phrase</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">pos_</span> <span class="ow">in</span> <span class="n">pos_list</span> <span class="ow">or</span> <span class="n">phrase</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tag_</span> <span class="ow">in</span> <span class="n">tag_list</span><span class="p">):</span>
+            <span class="n">phrase</span> <span class="o">=</span> <span class="n">phrase</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="k">return</span> <span class="n">phrase</span>
+
+
+<span class="k">def</span> <span class="nf">_remove_pos_from_end</span><span class="p">(</span><span class="n">phrase</span><span class="p">):</span>
+    <span class="n">tag_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;WDT&#39;</span><span class="p">,</span> <span class="s1">&#39;:&#39;</span><span class="p">]</span>
+    <span class="n">pos_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;DET&#39;</span><span class="p">,</span> <span class="s1">&#39;PUNCT&#39;</span><span class="p">,</span> <span class="s1">&#39;CONJ&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">phrase</span><span class="p">:</span>
+        <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">phrase</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="p">(</span><span class="n">phrase</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">pos_</span> <span class="ow">in</span> <span class="n">pos_list</span> <span class="ow">or</span> <span class="n">phrase</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">tag_</span> <span class="ow">in</span> <span class="n">tag_list</span><span class="p">):</span>
+            <span class="n">phrase</span> <span class="o">=</span> <span class="n">phrase</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">phrase</span>
+
+
+<span class="k">def</span> <span class="nf">_filter_single_pos</span><span class="p">(</span><span class="n">phrase</span><span class="p">):</span>
+    <span class="n">pos_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;VERB&#39;</span><span class="p">,</span> <span class="s1">&#39;ADJ&#39;</span><span class="p">,</span> <span class="s1">&#39;ADV&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">phrase</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">phrase</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">phrase</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">pos_</span> <span class="ow">in</span> <span class="n">pos_list</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">return</span> <span class="n">phrase</span>
+
+
+<span class="k">def</span> <span class="nf">_filter_fp_nums</span><span class="p">(</span><span class="n">phrase</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">phrase</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># check for float number</span>
+            <span class="nb">float</span><span class="p">(</span><span class="n">phrase</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">phrase</span>
+    <span class="k">return</span> <span class="n">phrase</span>
+
+
+<span class="k">def</span> <span class="nf">_filter_single_char</span><span class="p">(</span><span class="n">phrase</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">phrase</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">phrase</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">phrase</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">return</span> <span class="n">phrase</span>
+
+
+<span class="k">def</span> <span class="nf">_filter_empty</span><span class="p">(</span><span class="n">phrase</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">phrase</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">phrase</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">phrase</span><span class="o">.</span><span class="n">text</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> \
+            <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">phrase</span><span class="o">.</span><span class="n">text</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">return</span> <span class="n">phrase</span>
+
+
+<span class="n">post_processing_rules</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="n">_filter_single_char</span><span class="p">,),</span>
+    <span class="p">(</span><span class="n">_filter_single_pos</span><span class="p">,),</span>
+    <span class="p">(</span><span class="n">_remove_pos_from_start</span><span class="p">,),</span>
+    <span class="p">(</span><span class="n">_remove_pos_from_end</span><span class="p">,),</span>
+    <span class="p">(</span><span class="n">_remove_stop_words</span><span class="p">,),</span>
+    <span class="p">(</span><span class="n">_remove_non_alphanum_from_start</span><span class="p">,),</span>
+    <span class="p">(</span><span class="n">_remove_non_alphanum_from_end</span><span class="p">,),</span>
+    <span class="p">(</span><span class="n">_filter_repeating_nonalnum</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+    <span class="p">(</span><span class="n">_filter_long_phrases</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">75</span><span class="p">),</span>
+    <span class="p">(</span><span class="n">_remove_char_at_start</span><span class="p">,),</span>
+    <span class="p">(</span><span class="n">_remove_char_at_end</span><span class="p">,),</span>
+    <span class="p">(</span><span class="n">_filter_fp_nums</span><span class="p">,),</span>
+    <span class="p">(</span><span class="n">_filter_empty</span><span class="p">,),</span>
+<span class="p">]</span>
+
+
+<div class="viewcode-block" id="SpacyNPAnnotator"><a class="viewcode-back" href="../../../generated/nlp_architect.pipelines.spacy_np_annotator.SpacyNPAnnotator.html#nlp_architect.pipelines.spacy_np_annotator.SpacyNPAnnotator">[docs]</a><span class="k">class</span> <span class="nc">SpacyNPAnnotator</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Simple Spacy pipe with NP extraction annotations</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="SpacyNPAnnotator.__init__"><a class="viewcode-back" href="../../../generated/nlp_architect.pipelines.spacy_np_annotator.SpacyNPAnnotator.html#nlp_architect.pipelines.spacy_np_annotator.SpacyNPAnnotator.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_path</span><span class="p">,</span> <span class="n">settings_path</span><span class="p">,</span> <span class="n">spacy_model</span><span class="o">=</span><span class="s1">&#39;en&#39;</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>
+                 <span class="n">use_cudnn</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">_model_path</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)),</span> <span class="n">model_path</span><span class="p">)</span>
+        <span class="n">validate_existing_filepath</span><span class="p">(</span><span class="n">_model_path</span><span class="p">)</span>
+        <span class="n">_settings_path</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)),</span> <span class="n">settings_path</span><span class="p">)</span>
+        <span class="n">validate_existing_filepath</span><span class="p">(</span><span class="n">_settings_path</span><span class="p">)</span>
+
+        <span class="n">nlp</span> <span class="o">=</span> <span class="n">spacy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">spacy_model</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">nlp</span><span class="o">.</span><span class="n">pipe_names</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">p</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;tagger&#39;</span><span class="p">]:</span>
+                <span class="n">nlp</span><span class="o">.</span><span class="n">remove_pipe</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+        <span class="n">nlp</span><span class="o">.</span><span class="n">add_pipe</span><span class="p">(</span><span class="n">nlp</span><span class="o">.</span><span class="n">create_pipe</span><span class="p">(</span><span class="s1">&#39;sentencizer&#39;</span><span class="p">),</span> <span class="n">first</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">nlp</span><span class="o">.</span><span class="n">add_pipe</span><span class="p">(</span><span class="n">NPAnnotator</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">_model_path</span><span class="p">,</span> <span class="n">settings_path</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span>
+                                      <span class="n">use_cudnn</span><span class="o">=</span><span class="n">use_cudnn</span><span class="p">),</span> <span class="n">last</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nlp</span> <span class="o">=</span> <span class="n">nlp</span></div>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parse a given text and return a list of noun phrases found</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            text (str): a text string</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list of noun phrases as strings</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">text</span> <span class="k">for</span> <span class="n">np</span> <span class="ow">in</span> <span class="n">get_noun_phrases</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nlp</span><span class="p">(</span><span class="n">text</span><span class="p">))]</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,2 +1,5 @@
-#!/bin/sh
-python -m nlp_architect.cmd "$@"
+#!/usr/bin/env python
+from nlp_architect.cli import run_cli
+
+if __name__ == "__main__":
+    run_cli()

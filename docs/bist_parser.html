@@ -1,0 +1,364 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>BIST Dependency Parser &mdash; NLP Architect by Intel® AI Lab 0.4.post2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" type="text/css" />
+  <link rel="stylesheet" href="_static/theme.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Most Common Word Sense" href="word_sense.html" />
+    <link rel="prev" title="Noun Phrase Semantic Segmentation" href="np_segmentation.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html">
+          
+
+          
+            
+            <img src="_static/nlp_architect_logo_white.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="main.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="publications.html">Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Jupyter Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer_guide.html">Developer Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model_zoo.html">Model Zoo</a></li>
+</ul>
+<p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="absa.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chunker.html">Sequence Chunker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ner_crf.html">Named Entity Recognition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intent.html">Intent Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="np_segmentation.html">Noun Phrase Semantic Segmentation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">BIST Dependency Parser</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#graph-based-dependency-parser-using-bilstm-feature-extractors">Graph-based dependency parser using BiLSTM feature extractors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#training">Training</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#basic-example">Basic Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exhaustive-example">Exhaustive Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#conducting-intermediate-evaluations">Conducting Intermediate Evaluations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#inference">Inference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#file-input-mode">File Input Mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#conllentry-input-mode">ConllEntry Input Mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#evaluating-predictions">Evaluating Predictions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#saving-and-loading-a-model">Saving and Loading a Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="word_sense.html">Most Common Word Sense</a></li>
+<li class="toctree-l1"><a class="reference internal" href="np2vec.html">Noun Phrase to Vec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="supervised_sentiment.html">Supervised Sentiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reading_comprehension.html">Reading Comprehension</a></li>
+<li class="toctree-l1"><a class="reference internal" href="memn2n.html">End-to-End Memory Networks for Goal Oriented Dialogue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tcn.html">TCN Language Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="crosslingual_emb.html">Unsupervised Crosslingual Embeddings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cross_doc_coref.html">Cross Document Co-Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="identifying_semantic_relation.html">Semantic Relation Identification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solutions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="absa_solution.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="term_set_expansion.html">Set Expansion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="trend_analysis.html">Trend Analysis</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Pipelines</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="spacy_bist.html">Spacy-BIST Parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spacy_np_annotator.html">Spacy-NP Annotator</a></li>
+</ul>
+<p class="caption"><span class="caption-text">For Developers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">NLP Architect by Intel® AI Lab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>BIST Dependency Parser</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="bist-dependency-parser">
+<h1>BIST Dependency Parser<a class="headerlink" href="#bist-dependency-parser" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="graph-based-dependency-parser-using-bilstm-feature-extractors">
+<h2>Graph-based dependency parser using BiLSTM feature extractors<a class="headerlink" href="#graph-based-dependency-parser-using-bilstm-feature-extractors" title="Permalink to this headline">¶</a></h2>
+<p>The techniques behind the parser are described in the <a class="reference external" href="https://www.transacl.org/ojs/index.php/tacl/article/viewFile/885/198">Simple and
+Accurate Dependency Parsing Using Bidirectional LSTM Feature
+Representations</a> <a class="footnote-reference brackets" href="#id2" id="id1">1</a>.</p>
+</div>
+<div class="section" id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>To use the module, import it like so:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">nlp_architect.models.bist_parser</span> <span class="kn">import</span> <span class="n">BISTModel</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="training">
+<h2>Training<a class="headerlink" href="#training" title="Permalink to this headline">¶</a></h2>
+<p>Training the parser requires having a <code class="docutils literal notranslate"><span class="pre">train.conllu</span></code> file
+formatted according to the <a class="reference external" href="http://universaldependencies.org/format.html">CoNLL-U</a> data format,
+annotated with part-of-speech tags and dependencies.
+The benchmark was performed on a Mac book pro with i7 processor. The parser achieves
+an accuracy of 93.8 UAS on the standard Penn Treebank dataset (Universal Dependencies).</p>
+<div class="section" id="basic-example">
+<h3>Basic Example<a class="headerlink" href="#basic-example" title="Permalink to this headline">¶</a></h3>
+<p>To train a parsing model with default parameters, type the following:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">parser</span> <span class="o">=</span> <span class="n">BISTModel</span><span class="p">()</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="s1">&#39;/path/to/train.conllu&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="exhaustive-example">
+<h3>Exhaustive Example<a class="headerlink" href="#exhaustive-example" title="Permalink to this headline">¶</a></h3>
+<p>Optionally, the following model/training parameters can be supplied (overriding their default
+values listed below):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">parser</span> <span class="o">=</span> <span class="n">BISTModel</span><span class="p">(</span><span class="n">activation</span><span class="o">=</span><span class="s1">&#39;tanh&#39;</span><span class="p">,</span> <span class="n">lstm_layers</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">lstm_dims</span><span class="o">=</span><span class="mi">125</span><span class="p">,</span> <span class="n">pos_dims</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="s1">&#39;/path/to/train.conllu&#39;</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="conducting-intermediate-evaluations">
+<h3>Conducting Intermediate Evaluations<a class="headerlink" href="#conducting-intermediate-evaluations" title="Permalink to this headline">¶</a></h3>
+<p>If a path to a development dataset file (annotated with POS tags and dependencies) is supplied,
+intermediate model evaluations are conducted:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">parser</span> <span class="o">=</span> <span class="n">BISTModel</span><span class="p">()</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="s1">&#39;/path/to/train.conllu&#39;</span><span class="p">,</span> <span class="n">dev</span><span class="o">=</span><span class="s1">&#39;/path/to/dev.conllu&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For each completed epoch, denoted by <strong>n</strong>, the following files will be created in the dataset’s
+directory:</p>
+<ul class="simple">
+<li><p><em>dev_epoch_n_pred.conllu</em> - prediction results on dev file after <strong>n</strong> iterations.</p></li>
+<li><p><em>dev_epoch_n_pred_eval.txt</em> - accuracy results of the above predictions.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="inference">
+<h2>Inference<a class="headerlink" href="#inference" title="Permalink to this headline">¶</a></h2>
+<p>Once you have a trained <a class="reference internal" href="generated/nlp_architect.models.bist_parser.BISTModel.html#nlp_architect.models.bist_parser.BISTModel" title="nlp_architect.models.bist_parser.BISTModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">BISTModel</span></code></a>, there are two acceptable input modes for running inference
+with it. For both modes, the input must be annotated with part-of-speech tags.</p>
+<div class="section" id="file-input-mode">
+<h3>File Input Mode<a class="headerlink" href="#file-input-mode" title="Permalink to this headline">¶</a></h3>
+<p>Supply a path to a dataset file in the <a class="reference external" href="http://universaldependencies.org/format.html">CoNLL-U</a> data format.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">predictions</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="s1">&#39;/path/to/test.conllu&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>After running the above example, <code class="docutils literal notranslate"><span class="pre">predictions</span></code> will hold the input sentences with annotated
+dependencies, as a collection of <a class="reference internal" href="generated/nlp_architect.data.conll.ConllEntry.html#nlp_architect.data.conll.ConllEntry" title="nlp_architect.data.conll.ConllEntry"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConllEntry</span></code></a> objects, where each <a class="reference internal" href="generated/nlp_architect.data.conll.ConllEntry.html#nlp_architect.data.conll.ConllEntry" title="nlp_architect.data.conll.ConllEntry"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConllEntry</span></code></a> represents an
+annotated token.</p>
+</div>
+<div class="section" id="conllentry-input-mode">
+<h3>ConllEntry Input Mode<a class="headerlink" href="#conllentry-input-mode" title="Permalink to this headline">¶</a></h3>
+<p>Supply a list of sentences, where each sentence is a list of annotated tokens, represented by
+<a class="reference internal" href="generated/nlp_architect.data.conll.ConllEntry.html#nlp_architect.data.conll.ConllEntry" title="nlp_architect.data.conll.ConllEntry"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConllEntry</span></code></a> instances.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">predictions</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">conll</span><span class="o">=</span><span class="s1">&#39;/path/to/test.conllu&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The output format is the same as in file input mode.</p>
+</div>
+<div class="section" id="evaluating-predictions">
+<h3>Evaluating Predictions<a class="headerlink" href="#evaluating-predictions" title="Permalink to this headline">¶</a></h3>
+<p>Running an evaluation requires the following:
+- Inference must be run in file input mode
+- The input file must be annotated with dependencies as well</p>
+<p>To evaluate predictions immediately after they’re generated, type the following:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">predictions</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="s1">&#39;/path/to/test.conllu&#39;</span><span class="p">,</span> <span class="n">evaluate</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This will produce 2 files in your input dataset’s directory:</p>
+<ul class="simple">
+<li><p><em>test_pred.conllu</em> - predictions file in CoNLL-U format</p></li>
+<li><p><em>test_pred_eval.txt</em> - evaluation report text file</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="saving-and-loading-a-model">
+<h2>Saving and Loading a Model<a class="headerlink" href="#saving-and-loading-a-model" title="Permalink to this headline">¶</a></h2>
+<p>To save a <a class="reference internal" href="generated/nlp_architect.models.bist_parser.BISTModel.html#nlp_architect.models.bist_parser.BISTModel" title="nlp_architect.models.bist_parser.BISTModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">BISTModel</span></code></a> to some path, type:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">parser</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;/path/to/bist.model&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This operation will also produce a model parameters file named <em>params.json</em>, in the same directory.
+This file is required for loading the model afterwards.</p>
+<p>To load a <a class="reference internal" href="generated/nlp_architect.models.bist_parser.BISTModel.html#nlp_architect.models.bist_parser.BISTModel" title="nlp_architect.models.bist_parser.BISTModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">BISTModel</span></code></a> from some path, type:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">parser</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;/path/to/bist.model&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note that this operation will also look for the <em>params.json</em> in the same directory.</p>
+</div>
+<div class="section" id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<dl class="footnote brackets">
+<dt class="label" id="id2"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p>Kiperwasser, E., &amp; Goldberg, Y. (2016). Simple and Accurate Dependency Parsing Using Bidirectional LSTM Feature Representations. Transactions Of The Association For Computational Linguistics, 4, 313-327. <a class="reference external" href="https://transacl.org/ojs/index.php/tacl/article/view/885/198">https://transacl.org/ojs/index.php/tacl/article/view/885/198</a></p>
+</dd>
+</dl>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,540 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Identifying Semantic Relations &mdash; NLP Architect by Intel® AI Lab 0.4.post2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" type="text/css" />
+  <link rel="stylesheet" href="_static/theme.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Compression of Google Neural Machine Translation Model" href="sparse_gnmt.html" />
+    <link rel="prev" title="Cross Document Co-Reference" href="cross_doc_coref.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html">
+          
+
+          
+            
+            <img src="_static/nlp_architect_logo_white.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="main.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="publications.html">Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Jupyter Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer_guide.html">Developer Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model_zoo.html">Model Zoo</a></li>
+</ul>
+<p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="absa.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chunker.html">Sequence Chunker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ner_crf.html">Named Entity Recognition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intent.html">Intent Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="np_segmentation.html">Noun Phrase Semantic Segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bist_parser.html">BIST Dependency Parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="word_sense.html">Most Common Word Sense</a></li>
+<li class="toctree-l1"><a class="reference internal" href="np2vec.html">Noun Phrase to Vec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="supervised_sentiment.html">Supervised Sentiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reading_comprehension.html">Reading Comprehension</a></li>
+<li class="toctree-l1"><a class="reference internal" href="memn2n.html">End-to-End Memory Networks for Goal Oriented Dialogue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tcn.html">TCN Language Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="crosslingual_emb.html">Unsupervised Crosslingual Embeddings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cross_doc_coref.html">Cross Document Co-Reference</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Semantic Relation Identification</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#wikipedia">Wikipedia</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#relation-types">Relation types</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#initialization-options">Initialization options</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#wordnet">Wordnet</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id2">Relation types</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">Initialization options</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#verb-ocean">Verb-Ocean</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id5">Initialization options</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#referent-dictionary">Referent-Dictionary</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id6">Initialization options</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#word-embedding">Word Embedding</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#supported-embeddings-types">Supported Embeddings types</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7">Initialization options</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#computational">Computational</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id8">Relation types</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#initialization">Initialization</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#examples">Examples</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#code-example">Code Example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#downloading-and-generating-external-resources-data">Downloading and generating external resources data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#full-external-resources">Full External Resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#generating-resource-snapshots">Generating resource snapshots</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#generate-scripts">Generate Scripts</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solutions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="absa_solution.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="term_set_expansion.html">Set Expansion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="trend_analysis.html">Trend Analysis</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Pipelines</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="spacy_bist.html">Spacy-BIST Parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spacy_np_annotator.html">Spacy-NP Annotator</a></li>
+</ul>
+<p class="caption"><span class="caption-text">For Developers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">NLP Architect by Intel® AI Lab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Identifying Semantic Relations</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <span class="target" id="identifying-semantic-relation"></span><div class="section" id="identifying-semantic-relations">
+<h1>Identifying Semantic Relations<a class="headerlink" href="#identifying-semantic-relations" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Semantic relation identification is the task of determining whether there is a relation between two entities. Those entities could be event mentions (referring to verbs and actions phrases) or entity mentions (referring to objects, locations, persons, time, etc.).
+Described below are 6 different methods for extraction relations using external data resources: Wikipedia, Wordnet, Word embeddings, Computational, Referent-Dictionary and VerbOcean.</p>
+<p>Each semantic relation identifier below is capable of identifying a set of pre-defined relation types between two events or two entity mentions.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Each relation identifier extractor can be configured to initialize and run in different modes as described below in the <em>Initialization options</em> code example sections, this refers to working online directly against the dataset website, a locally stored resource dataset, or a snapshot of the resource containing only relevant data (created according to some input dataset defined by the user).</p>
+<p>In order to prepare a resource snapshot refer to <a class="reference internal" href="#downloading-and-generating-external-resources-data">Downloading and generating external resources Data</a>.</p>
+</div>
+<div class="section" id="wikipedia">
+<h3>Wikipedia<a class="headerlink" href="#wikipedia" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Use <a class="reference internal" href="generated/nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction.WikipediaRelationExtraction.html#nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction.WikipediaRelationExtraction" title="nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction.WikipediaRelationExtraction"><code class="xref py py-class docutils literal notranslate"><span class="pre">WikipediaRelationExtraction</span></code></a> model to extract relations based on Wikipedia page information.</p></li>
+<li><p>Supports: Event and Entity mentions.</p></li>
+</ul>
+<div class="section" id="relation-types">
+<h4>Relation types<a class="headerlink" href="#relation-types" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p>Redirect Links: the two mentions have the same Wikipedia redirect link (see: <a class="reference external" href="https://en.wikipedia.org/wiki/Wikipedia:Redirect">Wiki-Redirect</a> for more details)</p></li>
+<li><p>Aliases: one mention is a Wikipedia alias of the other input mention (see: <a class="reference external" href="https://www.wikidata.org/wiki/Help:Aliases">Wiki-Aliases</a> for more details)</p></li>
+<li><p>Disambiguation: one input mention is a Wikipedia disambiguation of the other input mention (see: <a class="reference external" href="https://en.wikipedia.org/wiki/Category:Disambiguation_pages">Wiki-Disambiguation</a> for more details)</p></li>
+<li><p>Category: one input mention is a Wikipedia category of the other input mention (see: <a class="reference external" href="https://en.wikipedia.org/wiki/Help:Category">Wiki-Category</a> for more details)</p></li>
+<li><p>Title Parenthesis: one input mention is a Wikipedia title parenthesis of the other input mention (see: <a class="reference external" href="http://u.cs.biu.ac.il/~dagan/publications/ACL09%20camera%20ready.pdf">Extracting Lexical Reference Rules from Wikipedia</a> for more details)</p></li>
+<li><p>Be-Comp / Is-A: one input mention has a ‘is-a’ relation which contains the other input mention (see: <a class="reference external" href="http://u.cs.biu.ac.il/~dagan/publications/ACL09%20camera%20ready.pdf">Extracting Lexical Reference Rules from Wikipedia</a> for more details)</p></li>
+</ul>
+</div>
+<div class="section" id="initialization-options">
+<h4>Initialization options<a class="headerlink" href="#initialization-options" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 3 methods for Wikipedia extractor initialization (running against wiki web site, data sub-set or local elastic DB)</span>
+<span class="c1"># Online initialization for full data access against Wikipedia site</span>
+<span class="n">wiki_online</span> <span class="o">=</span> <span class="n">WikipediaRelationExtraction</span><span class="p">(</span><span class="n">WikipediaSearchMethod</span><span class="o">.</span><span class="n">ONLINE</span><span class="p">)</span>
+<span class="c1"># Or use offline initialization if created a snapshot</span>
+<span class="n">wiki_offline</span> <span class="o">=</span> <span class="n">WikipediaRelationExtraction</span><span class="p">(</span><span class="n">WikipediaSearchMethod</span><span class="o">.</span><span class="n">OFFLINE</span><span class="p">,</span> <span class="n">ROOT_DIR</span> <span class="o">+</span> <span class="s1">&#39;/mini_wiki.json&#39;</span><span class="p">)</span>
+<span class="c1"># Or use elastic initialization if you created a local database of wikipedia</span>
+<span class="n">wiki_elastic</span> <span class="o">=</span> <span class="n">WikipediaRelationExtraction</span><span class="p">(</span><span class="n">WikipediaSearchMethod</span><span class="o">.</span><span class="n">ELASTIC</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">9200</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="s1">&#39;enwiki_v2&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="wordnet">
+<h3>Wordnet<a class="headerlink" href="#wordnet" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Use <a class="reference internal" href="generated/nlp_architect.data.cdc_resources.relations.wordnet_relation_extraction.WordnetRelationExtraction.html#nlp_architect.data.cdc_resources.relations.wordnet_relation_extraction.WordnetRelationExtraction" title="nlp_architect.data.cdc_resources.relations.wordnet_relation_extraction.WordnetRelationExtraction"><code class="xref py py-class docutils literal notranslate"><span class="pre">WordnetRelationExtraction</span></code></a> to extract relations based on WordNet.</p></li>
+<li><p>Support: Event and Entity mentions.</p></li>
+</ul>
+<div class="section" id="id2">
+<h4>Relation types<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p>Derivationally - Terms in different syntactic categories that have the same root form and are semantically related</p></li>
+<li><p>Synset - A synonym set; a set of words that are interchangeable in some context without changing the truth value of the preposition in which they are embedded</p></li>
+</ul>
+<p>See: <a class="reference external" href="https://wordnet.princeton.edu/documentation/wngloss7wn">WordNet Glossary</a> for more details.</p>
+</div>
+<div class="section" id="id3">
+<h4>Initialization options<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 2 methods for Wordnet extractor initialization (Running on original data or on a sub-set)</span>
+<span class="c1"># Initialization for full data access</span>
+<span class="n">wn_online</span> <span class="o">=</span> <span class="n">WordnetRelationExtraction</span><span class="p">(</span><span class="n">OnlineOROfflineMethod</span><span class="o">.</span><span class="n">ONLINE</span><span class="p">)</span>
+<span class="c1"># Or use offline initialization if created a snapshot</span>
+<span class="n">wn_offline</span> <span class="o">=</span> <span class="n">WordnetRelationExtraction</span><span class="p">(</span><span class="n">OnlineOROfflineMethod</span><span class="o">.</span><span class="n">OFFLINE</span><span class="p">,</span> <span class="n">wn_file</span><span class="o">=</span><span class="n">ROOT_DIR</span> <span class="o">+</span> <span class="s1">&#39;/mini_wn.json&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="verb-ocean">
+<h3>Verb-Ocean<a class="headerlink" href="#verb-ocean" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Use <a class="reference internal" href="generated/nlp_architect.data.cdc_resources.relations.verbocean_relation_extraction.VerboceanRelationExtraction.html#nlp_architect.data.cdc_resources.relations.verbocean_relation_extraction.VerboceanRelationExtraction" title="nlp_architect.data.cdc_resources.relations.verbocean_relation_extraction.VerboceanRelationExtraction"><code class="xref py py-class docutils literal notranslate"><span class="pre">VerboceanRelationExtraction</span></code></a> to extract relations based on <a class="reference external" href="http://demo.patrickpantel.com/demos/verbocean/">Verb-Ocean</a>.</p></li>
+<li><p>Support: Event mentions only.</p></li>
+</ul>
+<div class="section" id="id5">
+<h4>Initialization options<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 2 method for VerbOcean extractor initialization (with original data or a sub-set)</span>
+<span class="c1"># Initialization for full data access</span>
+<span class="n">vo_online</span> <span class="o">=</span> <span class="n">VerboceanRelationExtraction</span><span class="p">(</span><span class="n">OnlineOROfflineMethod</span><span class="o">.</span><span class="n">ONLINE</span><span class="p">,</span> <span class="n">ROOT_DIR</span> <span class="o">+</span> <span class="s1">&#39;/verbocean.unrefined.2004-05-20.txt&#39;</span><span class="p">)</span>
+<span class="c1"># Or use offline initialization if created a snapshot</span>
+<span class="n">vo_offline</span> <span class="o">=</span> <span class="n">VerboceanRelationExtraction</span><span class="p">(</span><span class="n">OnlineOROfflineMethod</span><span class="o">.</span><span class="n">OFFLINE</span><span class="p">,</span> <span class="n">ROOT_DIR</span> <span class="o">+</span> <span class="s1">&#39;/mini_vo.json&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>© Timothy Chklovski and Patrick Pantel 2004-2016; All Rights Reserved. With any questions, contact Timothy Chklovski or Patrick Pantel.</p>
+</div>
+</div>
+<div class="section" id="referent-dictionary">
+<h3>Referent-Dictionary<a class="headerlink" href="#referent-dictionary" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Use <a class="reference internal" href="generated/nlp_architect.data.cdc_resources.relations.referent_dict_relation_extraction.ReferentDictRelationExtraction.html#nlp_architect.data.cdc_resources.relations.referent_dict_relation_extraction.ReferentDictRelationExtraction" title="nlp_architect.data.cdc_resources.relations.referent_dict_relation_extraction.ReferentDictRelationExtraction"><code class="xref py py-class docutils literal notranslate"><span class="pre">ReferentDictRelationExtraction</span></code></a> to extract relations based on <a class="reference external" href="http://www.aclweb.org/anthology/N13-1110">Referent-Dict</a>.</p></li>
+<li><p>Support: Entity mentions only.</p></li>
+</ul>
+<div class="section" id="id6">
+<h4>Initialization options<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 2 methods for ReferentDict extractor initialization (with original data or a sub-set)</span>
+<span class="c1"># Initialization for full data access</span>
+<span class="n">ref_dict_onine</span> <span class="o">=</span> <span class="n">ReferentDictRelationExtraction</span><span class="p">(</span><span class="n">OnlineOROfflineMethod</span><span class="o">.</span><span class="n">ONLINE</span><span class="p">,</span> <span class="n">ROOT_DIR</span>   <span class="s1">&#39;/ref.dict1.tsv&#39;</span><span class="p">)</span>
+<span class="c1"># Or use offline initialization if created a snapshot</span>
+<span class="n">ref_dict_offline</span> <span class="o">=</span> <span class="n">ReferentDictRelationExtraction</span><span class="p">(</span><span class="n">OnlineOROfflineMethod</span><span class="o">.</span><span class="n">OFFLINE</span><span class="p">,</span> <span class="n">ROOT_DIR</span> <span class="o">+</span> <span class="s1">&#39;/mini_dict.json&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>© Marta Recasens, Matthew Can, and Dan Jurafsky. 2013. Same Referent,
+Different Words: Unsupervised Mining of Opaque Coreferent
+Mentions. Proceedings of NAACL 2013.</p>
+</div>
+</div>
+<div class="section" id="word-embedding">
+<h3>Word Embedding<a class="headerlink" href="#word-embedding" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Use <a class="reference internal" href="generated/nlp_architect.data.cdc_resources.relations.word_embedding_relation_extraction.WordEmbeddingRelationExtraction.html#nlp_architect.data.cdc_resources.relations.word_embedding_relation_extraction.WordEmbeddingRelationExtraction" title="nlp_architect.data.cdc_resources.relations.word_embedding_relation_extraction.WordEmbeddingRelationExtraction"><code class="xref py py-class docutils literal notranslate"><span class="pre">WordEmbeddingRelationExtraction</span></code></a> to extract relations based on w2v distance.</p></li>
+<li><p>Support: Event and Entity mentions.</p></li>
+</ul>
+<div class="section" id="supported-embeddings-types">
+<h4>Supported Embeddings types<a class="headerlink" href="#supported-embeddings-types" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p><a class="reference external" href="https://allennlp.org/elmo">Elmo</a> - For using pre-trained Elmo embeddings</p></li>
+<li><p><a class="reference external" href="https://nlp.stanford.edu/projects/glove">Glove</a> - Using pre-trained Glove embeddings</p></li>
+</ul>
+</div>
+<div class="section" id="id7">
+<h4>Initialization options<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 4 flavors of Embedding model initialization (running Elmo, Glove or data sub-set of them)</span>
+<span class="c1"># Initialization for Elmo Pre-Trained vectors</span>
+<span class="n">embed_elmo_online</span> <span class="o">=</span> <span class="n">WordEmbaddingRelationExtraction</span><span class="p">(</span><span class="n">EmbeddingMethod</span><span class="o">.</span><span class="n">ELMO</span><span class="p">)</span>
+<span class="n">embed_elmo_offline</span> <span class="o">=</span> <span class="n">WordEmbaddingRelationExtraction</span><span class="p">(</span><span class="n">EmbeddingMethod</span><span class="o">.</span><span class="n">ELMO_OFFLINE</span><span class="p">,</span> <span class="n">glove_file</span><span class="o">=</span><span class="s1">&#39;ROOT_DIR + &#39;</span><span class="o">/</span><span class="n">elmo_snippet</span><span class="o">.</span><span class="n">pickle</span><span class="s1">&#39;)</span>
+<span class="c1"># Embedding extractor initialization (GloVe)</span>
+<span class="c1"># Initialization of Glove Pre-Trained vectors</span>
+<span class="n">embed_glove_online</span> <span class="o">=</span> <span class="n">WordEmbeddingRelationExtraction</span><span class="p">(</span><span class="n">EmbeddingMethod</span><span class="o">.</span><span class="n">GLOVE</span><span class="p">,</span> <span class="n">glove_file</span><span class="o">=</span><span class="s1">&#39;ROOT_DIR + &#39;</span><span class="o">/</span><span class="n">glove</span><span class="o">.</span><span class="mi">840</span><span class="n">B</span><span class="o">.</span><span class="mi">300</span><span class="n">d</span><span class="o">.</span><span class="n">txt</span><span class="s1">&#39;)</span>
+<span class="c1"># Or use offline initialization if created a snapshot</span>
+<span class="n">embed_glove_offline</span> <span class="o">=</span> <span class="n">WordEmbaddingRelationExtraction</span><span class="p">(</span><span class="n">EmbeddingMethod</span><span class="o">.</span><span class="n">GLOVE_OFFLINE</span><span class="p">,</span> <span class="n">glove_file</span><span class="o">=</span><span class="s1">&#39;ROOT_DIR + &#39;</span><span class="o">/</span><span class="n">glove_mini</span><span class="o">.</span><span class="n">pickle</span><span class="s1">&#39;)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="computational">
+<h3>Computational<a class="headerlink" href="#computational" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Use <a class="reference internal" href="generated/nlp_architect.data.cdc_resources.relations.computed_relation_extraction.ComputedRelationExtraction.html#nlp_architect.data.cdc_resources.relations.computed_relation_extraction.ComputedRelationExtraction" title="nlp_architect.data.cdc_resources.relations.computed_relation_extraction.ComputedRelationExtraction"><code class="xref py py-class docutils literal notranslate"><span class="pre">ComputedRelationExtraction</span></code></a> to extract relations based on rules such as Head match and Fuzzy Fit.</p></li>
+<li><p>Support: Event and Entity mentions.</p></li>
+</ul>
+<div class="section" id="id8">
+<h4>Relation types<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p>Exact Match: Mentions are identical</p></li>
+<li><p>Fuzzy Match: Mentions are fuzzy similar</p></li>
+<li><p>Fuzzy Head: Mentions heads are fuzzy similar (in cases mentions are more then a single token)</p></li>
+<li><p>Head Lemma: Mentions have the same head lemma (in cases mentions are more then a single token)</p></li>
+</ul>
+</div>
+<div class="section" id="initialization">
+<h4>Initialization<a class="headerlink" href="#initialization" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1 method fpr Computed extractor initialization</span>
+<span class="n">computed</span> <span class="o">=</span> <span class="n">ComputedRelationExtraction</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="examples">
+<h3>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Using Wikipedia Relation identifier for mentions of <em>‘IBM’</em> and <em>‘International Business Machines’</em> will result with the following relation types: <code class="docutils literal notranslate"><span class="pre">`WIKIPEDIA_CATEGORY,</span> <span class="pre">WIKIPEDIA_ALIASES,</span> <span class="pre">WIKIPEDIA_REDIRECT_LINK`</span></code></p></li>
+<li><p>Using WordNet Relation identifier for mentions of <em>‘lawyer’</em> and <em>‘attorney’</em> will result with the following relations types: <code class="docutils literal notranslate"><span class="pre">`WORDNET_SAME_SYNSET,</span> <span class="pre">WORDNET_DERIVATIONALLY`</span></code></p></li>
+<li><p>Using Referent-Dict Relation identifier for mentions of <em>‘company’</em> and <em>‘apple’</em> will result with <code class="docutils literal notranslate"><span class="pre">`REFERENT_DICT`</span></code> relation type.</p></li>
+<li><p>Using VerbOcean Relation identifier for mentions of <em>‘expedite’</em> and <em>‘accelerate’</em> will result with <code class="docutils literal notranslate"><span class="pre">`VERBOCEAN_MATCH`</span></code> relation type.</p></li>
+</ul>
+<div class="section" id="code-example">
+<h4>Code Example<a class="headerlink" href="#code-example" title="Permalink to this headline">¶</a></h4>
+<p>Each relation identifier implements two main methods to identify the relations types:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">extract_all_relations()</span></code> - Extract all supported relations types from this relation model</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">extract_sub_relations()</span></code> - Extract particular relation type, from this relation model</p></li>
+</ol>
+<p>See detailed example below and methods documentation for more details on how to use the identifiers.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">computed</span> <span class="o">=</span> <span class="n">ComputedRelationExtraction</span><span class="p">()</span>
+<span class="n">ref_dict</span> <span class="o">=</span> <span class="n">ReferentDictRelationExtraction</span><span class="p">(</span><span class="n">OnlineOROfflineMethod</span><span class="o">.</span><span class="n">ONLINE</span><span class="p">,</span>
+                                          <span class="s1">&#39;&lt;replace with Ref-Dict data location&gt;&#39;</span><span class="p">)</span>
+<span class="n">vo</span> <span class="o">=</span> <span class="n">VerboceanRelationExtraction</span><span class="p">(</span><span class="n">OnlineOROfflineMethod</span><span class="o">.</span><span class="n">ONLINE</span><span class="p">,</span>
+                                 <span class="s1">&#39;&lt;replace with VerbOcean data location&gt;&#39;</span><span class="p">)</span>
+<span class="n">wiki</span> <span class="o">=</span> <span class="n">WikipediaRelationExtraction</span><span class="p">(</span><span class="n">WikipediaSearchMethod</span><span class="o">.</span><span class="n">ONLINE</span><span class="p">)</span>
+<span class="n">embed</span> <span class="o">=</span> <span class="n">WordEmbaddingRelationExtraction</span><span class="p">(</span><span class="n">EmbeddingMethod</span><span class="o">.</span><span class="n">ELMO</span><span class="p">)</span>
+<span class="n">wn</span> <span class="o">=</span> <span class="n">WordnetRelationExtraction</span><span class="p">(</span><span class="n">OnlineOROfflineMethod</span><span class="o">.</span><span class="n">ONLINE</span><span class="p">)</span>
+
+<span class="n">mention_x1</span> <span class="o">=</span> <span class="n">MentionDataLight</span><span class="p">(</span>
+    <span class="s1">&#39;IBM&#39;</span><span class="p">,</span>
+    <span class="n">mention_context</span><span class="o">=</span><span class="s1">&#39;IBM manufactures and markets computer hardware, middleware and software&#39;</span><span class="p">)</span>
+<span class="n">mention_y1</span> <span class="o">=</span> <span class="n">MentionDataLight</span><span class="p">(</span>
+    <span class="s1">&#39;International Business Machines&#39;</span><span class="p">,</span>
+    <span class="n">mention_context</span><span class="o">=</span><span class="s1">&#39;International Business Machines Corporation is an &#39;</span>
+                    <span class="s1">&#39;American multinational information technology company&#39;</span><span class="p">)</span>
+
+<span class="n">computed_relations</span> <span class="o">=</span> <span class="n">computed</span><span class="o">.</span><span class="n">extract_all_relations</span><span class="p">(</span><span class="n">mention_x1</span><span class="p">,</span> <span class="n">mention_y1</span><span class="p">)</span>
+<span class="n">ref_dict_relations</span> <span class="o">=</span> <span class="n">ref_dict</span><span class="o">.</span><span class="n">extract_all_relations</span><span class="p">(</span><span class="n">mention_x1</span><span class="p">,</span> <span class="n">mention_y1</span><span class="p">)</span>
+<span class="n">vo_relations</span> <span class="o">=</span> <span class="n">vo</span><span class="o">.</span><span class="n">extract_all_relations</span><span class="p">(</span><span class="n">mention_x1</span><span class="p">,</span> <span class="n">mention_y1</span><span class="p">)</span>
+<span class="n">wiki_relations</span> <span class="o">=</span> <span class="n">wiki</span><span class="o">.</span><span class="n">extract_all_relations</span><span class="p">(</span><span class="n">mention_x1</span><span class="p">,</span> <span class="n">mention_y1</span><span class="p">)</span>
+<span class="n">embed_relations</span> <span class="o">=</span> <span class="n">embed</span><span class="o">.</span><span class="n">extract_all_relations</span><span class="p">(</span><span class="n">mention_x1</span><span class="p">,</span> <span class="n">mention_y1</span><span class="p">)</span>
+<span class="n">wn_relaions</span> <span class="o">=</span> <span class="n">wn</span><span class="o">.</span><span class="n">extract_all_relations</span><span class="p">(</span><span class="n">mention_x1</span><span class="p">,</span> <span class="n">mention_y1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can find the above example in this location: <code class="docutils literal notranslate"><span class="pre">examples/cross_doc_coref/relation_extraction_example.py</span></code></p>
+</div>
+</div>
+</div>
+<div class="section" id="downloading-and-generating-external-resources-data">
+<h2>Downloading and generating external resources data<a class="headerlink" href="#downloading-and-generating-external-resources-data" title="Permalink to this headline">¶</a></h2>
+<p>This section describes how to download resources required for relation identifiers and how to prepare resources for working locally or with a snapshot of a resource.</p>
+<div class="section" id="full-external-resources">
+<h3>Full External Resources<a class="headerlink" href="#full-external-resources" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="http://nlp.stanford.edu/pubs/coref-dictionary.zip">Referent-Dict</a>, used in <code class="docutils literal notranslate"><span class="pre">ReferentDictRelationExtraction</span></code></p></li>
+<li><p><a class="reference external" href="http://www.patrickpantel.com/cgi-bin/web/tools/getfile.pl?type=data&amp;id=verbocean/verbocean-verbs.2004-05-20.txt">Verb-Ocean</a> used in <code class="docutils literal notranslate"><span class="pre">VerboceanRelationExtraction</span></code></p></li>
+<li><p><a class="reference external" href="https://nlp.stanford.edu/projects/glove/">Glove</a> used in <code class="docutils literal notranslate"><span class="pre">WordEmbeddingRelationExtraction</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="generating-resource-snapshots">
+<h3>Generating resource snapshots<a class="headerlink" href="#generating-resource-snapshots" title="Permalink to this headline">¶</a></h3>
+<p>Using a large dataset with relation identifiers that work by querying an online resource might take a lot of time due to network latency and overhead. In addition, capturing an online dataset is useful for many train/test tasks that the user might do. For this purpose we included scripts to capture a snapshot (or a subset) of an online resource.
+The downloaded snapshot can be loaded using the relation identifiers as data input.</p>
+<p>Each script requires a <strong>mentions</strong> file in JSON format as seen below. This file must contain the event or entity mentions that the user is interested it (or the subset of data needed to be captured):</p>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span>[
+    { # Mention 1
+        &quot;tokens_str&quot;: &quot;Intel&quot; #Required,
+        &quot;context&quot;: &quot;Intel is the world&#39;s second largest and second highest valued semiconductor chip maker&quot; #Optional (used in Elmo)
+    },
+    { # Mention 2
+        &quot;tokens_str&quot;: &quot;Tara Reid&quot;
+    },
+    ...
+]
+</pre></div>
+</div>
+<div class="section" id="generate-scripts">
+<h4>Generate Scripts<a class="headerlink" href="#generate-scripts" title="Permalink to this headline">¶</a></h4>
+<p><strong>Generate ReferentDict:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">nlp_architect</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">cdc_resources</span><span class="o">.</span><span class="n">gen_scripts</span><span class="o">.</span><span class="n">create_reference_dict_dump</span> <span class="o">--</span><span class="n">ref_dict</span><span class="o">=&lt;</span><span class="n">ref</span><span class="o">.</span><span class="n">dict1</span><span class="o">.</span><span class="n">tsv</span> <span class="n">downloaded</span> <span class="n">file</span><span class="o">&gt;</span> <span class="o">--</span><span class="n">mentions</span><span class="o">=&lt;</span><span class="n">in_mentions</span><span class="o">.</span><span class="n">json</span><span class="o">&gt;</span> <span class="o">--</span><span class="n">output</span><span class="o">=&lt;</span><span class="n">output</span><span class="o">.</span><span class="n">json</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p><strong>Generate VerbOcean:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">nlp_architect</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">cdc_resources</span><span class="o">.</span><span class="n">gen_scripts</span><span class="o">.</span><span class="n">create_verbocean_dump</span> <span class="o">--</span><span class="n">vo</span><span class="o">=&lt;</span><span class="n">verbocean</span><span class="o">.</span><span class="n">unrefined</span><span class="o">.</span><span class="mi">2004</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mf">20.</span><span class="n">txt</span> <span class="n">downloaded</span> <span class="n">file</span><span class="o">&gt;</span> <span class="o">--</span><span class="n">mentions</span><span class="o">=&lt;</span><span class="n">in_mentions</span><span class="o">.</span><span class="n">json</span><span class="o">&gt;</span> <span class="o">--</span><span class="n">output</span><span class="o">=&lt;</span><span class="n">output</span><span class="o">.</span><span class="n">json</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p><strong>Generate WordEmbedding Glove:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">nlp_architect</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">cdc_resources</span><span class="o">.</span><span class="n">gen_scripts</span><span class="o">.</span><span class="n">create_word_embed_glove_dump</span> <span class="o">--</span><span class="n">mentions</span><span class="o">=&lt;</span><span class="n">in_mentions</span><span class="o">.</span><span class="n">json</span><span class="o">&gt;</span> <span class="o">--</span><span class="n">glove</span><span class="o">=</span><span class="n">glove</span><span class="o">.</span><span class="mi">840</span><span class="n">B</span><span class="o">.</span><span class="mi">300</span><span class="n">d</span><span class="o">.</span><span class="n">txt</span> <span class="o">--</span><span class="n">output</span><span class="o">=&lt;</span><span class="n">output</span><span class="o">.</span><span class="n">pickle</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p><strong>Generate Wordnet:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">nlp_architect</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">cdc_resources</span><span class="o">.</span><span class="n">gen_scripts</span><span class="o">.</span><span class="n">create_wordnet_dump</span> <span class="o">--</span><span class="n">mentions</span><span class="o">=&lt;</span><span class="n">in_mentions</span><span class="o">.</span><span class="n">json</span><span class="o">&gt;</span> <span class="o">--</span><span class="n">output</span><span class="o">=&lt;</span><span class="n">output</span><span class="o">.</span><span class="n">json</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p><strong>Generate Wikipedia:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>python -m nlp_architect.data.cdc_resources.gen_scripts.create_wiki_dump --mentions=&lt;in_mentions.json&gt; --output=&lt;output.json&gt;``
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<blockquote>
+<div><p><strong>For a fast evaluation using Wikipedia at run time</strong>, on live data, there is an option to generate a local ElasticSearch database of the entire Wiki site using this resource: <a class="reference external" href="https://github.com/AlonEirew/wikipedia-to-elastic/">Wiki to Elastic</a>, It is highly recommended since using online evaluation against Wikipedia site can be very slow.</p>
+</div></blockquote>
+<p>In case you adopt elastic local database, Initiate <code class="docutils literal notranslate"><span class="pre">WikipediaRelationExtraction</span></code> relation extraction using <code class="docutils literal notranslate"><span class="pre">WikipediaSearchMethod.ELASTIC</span></code></p>
+</div>
+<p><strong>Generate Wikipedia Snapshot using Elastic data instead of from online wikipedia site:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>python -m nlp_architect.data.cdc_resources.gen_scripts.create_wiki_dump --mentions=&lt;in_mentions.json&gt; --host=&lt;elastic_host eg:localhost&gt; --port=&lt;elastic_port eg:9200&gt; --index=&lt;elastic_index&gt; --output=&lt;output.json&gt;``
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

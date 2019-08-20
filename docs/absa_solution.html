@@ -1,0 +1,321 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Aspect Based Sentiment Analysis (ABSA) Solution &mdash; NLP Architect by Intel® AI Lab 0.4.post2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" type="text/css" />
+  <link rel="stylesheet" href="_static/theme.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Set Expansion Solution" href="term_set_expansion.html" />
+    <link rel="prev" title="Compression of Google Neural Machine Translation Model" href="sparse_gnmt.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html">
+          
+
+          
+            
+            <img src="_static/nlp_architect_logo_white.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="main.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="publications.html">Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Jupyter Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer_guide.html">Developer Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model_zoo.html">Model Zoo</a></li>
+</ul>
+<p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="absa.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chunker.html">Sequence Chunker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ner_crf.html">Named Entity Recognition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intent.html">Intent Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="np_segmentation.html">Noun Phrase Semantic Segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bist_parser.html">BIST Dependency Parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="word_sense.html">Most Common Word Sense</a></li>
+<li class="toctree-l1"><a class="reference internal" href="np2vec.html">Noun Phrase to Vec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="supervised_sentiment.html">Supervised Sentiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reading_comprehension.html">Reading Comprehension</a></li>
+<li class="toctree-l1"><a class="reference internal" href="memn2n.html">End-to-End Memory Networks for Goal Oriented Dialogue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tcn.html">TCN Language Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="crosslingual_emb.html">Unsupervised Crosslingual Embeddings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cross_doc_coref.html">Cross Document Co-Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="identifying_semantic_relation.html">Semantic Relation Identification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solutions</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Aspect Based Sentiment Analysis</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#solution-overview">Solution Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#flow">Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#visualization">Visualization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#solution-execution">Solution execution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#training">Training</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#inference">Inference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="term_set_expansion.html">Set Expansion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="trend_analysis.html">Trend Analysis</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Pipelines</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="spacy_bist.html">Spacy-BIST Parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spacy_np_annotator.html">Spacy-NP Annotator</a></li>
+</ul>
+<p class="caption"><span class="caption-text">For Developers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">NLP Architect by Intel® AI Lab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Aspect Based Sentiment Analysis (ABSA) Solution</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="aspect-based-sentiment-analysis-absa-solution">
+<h1>Aspect Based Sentiment Analysis (ABSA) Solution<a class="headerlink" href="#aspect-based-sentiment-analysis-absa-solution" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Aspect Based Sentiment Analysis is the task of co-extracting opinion terms and aspect terms
+(opinion targets) and the relations between them in a given corpus.</p>
+</div>
+<div class="section" id="solution-overview">
+<h2>Solution Overview<a class="headerlink" href="#solution-overview" title="Permalink to this headline">¶</a></h2>
+<p>The input to the solution is an inference dataset along with an opinion and aspect
+lexicons. The output of the solution is a visulalization of
+a statistical analysis of sentiment towards specific aspects in the inference dataset.</p>
+<p>The solution uses the opinion and aspect lexicons that are generated using NLP Architect’s ABSA
+training model (see blue blocks in ‘flow’ diagram below). For more details regarding the training step
+see <a class="reference internal" href="absa.html"><span class="doc">ABSA</span></a>.</p>
+<p>The solution encapsulates the ABSA inference model (green blocks) and adds on top of it a
+statistical analysis module (grey block) for calculating the amount of positive and negative sentiment
+instances per aspect and a visualization module (grey block).</p>
+</div>
+<div class="section" id="flow">
+<h2>Flow<a class="headerlink" href="#flow" title="Permalink to this headline">¶</a></h2>
+<img alt="_images/absa_solution_flow.png" src="_images/absa_solution_flow.png" />
+</div>
+<div class="section" id="visualization">
+<h2>Visualization<a class="headerlink" href="#visualization" title="Permalink to this headline">¶</a></h2>
+<p>The visualization includes two sections:</p>
+<ol class="arabic simple">
+<li><p>Bar-chart that displays the amount of positive and negative sentiment towards each aspect:</p></li>
+</ol>
+<img alt="_images/absa_solution_ui_1.png" src="_images/absa_solution_ui_1.png" />
+<p>2. Textual table that displays (upon clicking a specific aspect on the bar chart) sentences that
+include positive/negative sentiment towards that specific aspect. Aspect terms are colored in
+blue and opinion terms are colored in green/red:</p>
+<img alt="_images/absa_solution_ui_2.png" src="_images/absa_solution_ui_2.png" />
+</div>
+<div class="section" id="solution-execution">
+<h2>Solution execution<a class="headerlink" href="#solution-execution" title="Permalink to this headline">¶</a></h2>
+<p>The solution execution is divided to two parts - training and inference:</p>
+</div>
+<div class="section" id="training">
+<h2>Training<a class="headerlink" href="#training" title="Permalink to this headline">¶</a></h2>
+<p>See training under <a class="reference internal" href="absa.html"><span class="doc">ABSA</span></a>.</p>
+</div>
+<div class="section" id="inference">
+<h2>Inference<a class="headerlink" href="#inference" title="Permalink to this headline">¶</a></h2>
+<p>Full code example is available at <code class="docutils literal notranslate"><span class="pre">examples/absa/solution/absa_solution.py</span></code>.
+There are two training modes:</p>
+<p><strong>1.</strong> Providing solution data in a raw text format. In this case the solution flow will
+apply the dependency parser to the data:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">SentimentSolution</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">aspect_lex</span><span class="o">=</span><span class="s1">&#39;/path/to/aspects.csv&#39;</span><span class="p">,</span>
+       <span class="n">opinion_lex</span><span class="o">=</span><span class="s1">&#39;path/to/opinions.csv&#39;</span><span class="p">,</span>
+       <span class="n">data</span><span class="o">=</span><span class="s1">&#39;/path/to/text/file/or/directory&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Arguments:</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">aspect_lex'=/path/to/aspects.csv'</span></code>  - path to aspect lexicon (csv file) that was produced by the training phase.
+aspect.csv may be manually edited for grouping alias aspect names (e.g. ‘drinks’ and ‘beverages’)
+together. Simply copy all alias names to the same line in the csv file.</p>
+<p><code class="docutils literal notranslate"><span class="pre">opinion_lex='path/to/opinions.csv'</span></code> - path to opinion lexicon (csv file) that was produced by the training phase.</p>
+<p><code class="docutils literal notranslate"><span class="pre">data=/path/to/text/file/or/directory</span></code> - path to a single raw text file with documents
+separated by newlines or a single csv file containing one doc per line or a directory containing one raw
+text file per document.</p>
+<p><strong>Notes:</strong></p>
+<p>a. For demonstration purposes we provide a sample of tripadvisor.co.uk
+restaurants reviews under the <a class="reference external" href="https://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-Share-Alike 3.0 License</a> (Copyright 2018 Wikimedia Foundation).
+The dataset can is located at <code class="docutils literal notranslate"><span class="pre">datasets/absa/tripadvisor_co_uk-travel_restaurant_reviews_sample_2000_test.csv</span></code>.</p>
+<p>b. By default, when the execution terminates, a browser window is opened, displaying the
+visualization UI.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><strong>2.</strong> Providing parsed training data. In this case the solution flow skips the parsing step:</div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">stats_dataframe</span> <span class="o">=</span> <span class="n">SentimentSolution</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">aspect_lex</span><span class="o">=</span><span class="s1">&#39;/path/to/aspects.csv&#39;</span><span class="p">,</span>
+                        <span class="n">opinion_lex</span><span class="o">=</span><span class="s1">&#39;path/to/opinions.csv&#39;</span><span class="p">,</span>
+                        <span class="n">parsed_data</span><span class="o">=</span><span class="s1">&#39;/path/to/parsed/directory&#39;</span><span class="p">,</span>
+                        <span class="n">ui</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Note:</strong></p>
+<p>Setting <code class="docutils literal notranslate"><span class="pre">ui=False</span></code> disables the UI and enables to get the sentiment statistics as dataframe. This
+enables the user to use those statistics as input to his own custom built visualization.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
