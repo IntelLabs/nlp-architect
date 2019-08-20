@@ -332,3 +332,12 @@ def download_unzip(url: str, sourcefile: str, unzipped_path: str or PathLike,
             uncompress_file(zip_path, dest_parent)
             remove(zip_path)
     return unzipped_path
+
+
+def line_count(file):
+    """Utility function for getting number of lines in a text file."""
+    count = 0
+    with open(file, encoding='utf-8') as f:
+        for _ in f:
+            count += 1
+    return count

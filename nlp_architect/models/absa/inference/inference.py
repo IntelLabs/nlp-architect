@@ -15,6 +15,8 @@
 # ******************************************************************************
 import math
 from os import PathLike
+from pathlib import Path
+from typing import Union
 
 from nlp_architect.common.core_nlp_doc import CoreNLPDoc
 from nlp_architect.models.absa import INFERENCE_OUT
@@ -37,18 +39,19 @@ class SentimentInference(object):
         negation_lex (dict): Pre-defined negation lexicon.
     """
 
-    def __init__(self, aspect_lex: PathLike, opinion_lex: PathLike or dict, parse: bool = True):
+    def __init__(self, aspect_lex: Union[str, PathLike], opinion_lex: Union[str, PathLike, dict],
+                 parse: bool = True):
         """Inits SentimentInference with given aspect and opinion lexicons."""
         INFERENCE_OUT.mkdir(parents=True, exist_ok=True)
         self.opinion_lex = \
-            opinion_lex if type(opinion_lex) is dict else load_opinion_lex(opinion_lex)
-        self.aspect_lex = _load_aspect_lexicon(aspect_lex)
+            opinion_lex if type(opinion_lex) is dict else load_opinion_lex(Path(opinion_lex))
+        self.aspect_lex = _load_aspect_lexicon(Path(aspect_lex))
         self.intensifier_lex = _read_lexicon_from_csv('IntensifiersLex.csv')
         self.negation_lex = _read_lexicon_from_csv('NegationSentLex.csv')
 
         if parse:
             from nlp_architect.pipelines.spacy_bist import SpacyBISTParser
-            self.parser = SpacyBISTParser(spacy_model='en_core_web_lg')
+            self.parser = SpacyBISTParser(spacy_model='en')
         else:
             self.parser = None
 
