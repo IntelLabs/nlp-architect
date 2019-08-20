@@ -17,7 +17,6 @@ import json
 import os
 
 from nlp_architect.models.bist import utils
-from nlp_architect.models.bist.mstlstm import MSTParserLSTM
 from nlp_architect.models.bist.utils import get_options_dict
 from nlp_architect.utils.io import validate, validate_existing_filepath
 
@@ -65,6 +64,8 @@ class BISTModel(object):
         print('\nRunning fit on ' + dataset + '...\n')
         words, w2i, pos, rels = utils.vocab(dataset)
         self.params = words, w2i, pos, rels, self.options
+
+        from nlp_architect.models.bist.mstlstm import MSTParserLSTM
         self.model = MSTParserLSTM(*self.params)
 
         for epoch in range(epochs):
@@ -118,6 +119,8 @@ class BISTModel(object):
         """Loads and initializes a BIST model from file."""
         with open(path.parent / 'params.json') as file:
             self.params = json.load(file)
+
+        from nlp_architect.models.bist.mstlstm import MSTParserLSTM
         self.model = MSTParserLSTM(*self.params)
         self.model.model.populate(str(path))
 

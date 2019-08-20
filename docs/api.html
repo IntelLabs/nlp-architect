@@ -1,0 +1,498 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>API &mdash; NLP Architect by Intel® AI Lab 0.4.post2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" type="text/css" />
+  <link rel="stylesheet" href="_static/theme.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="nlp_architect.models.bist_parser.BISTModel" href="generated/nlp_architect.models.bist_parser.BISTModel.html" />
+    <link rel="prev" title="Spacy-NP Annotator" href="spacy_np_annotator.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html">
+          
+
+          
+            
+            <img src="_static/nlp_architect_logo_white.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="main.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="publications.html">Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Jupyter Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer_guide.html">Developer Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model_zoo.html">Model Zoo</a></li>
+</ul>
+<p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="absa.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chunker.html">Sequence Chunker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ner_crf.html">Named Entity Recognition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intent.html">Intent Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="np_segmentation.html">Noun Phrase Semantic Segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bist_parser.html">BIST Dependency Parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="word_sense.html">Most Common Word Sense</a></li>
+<li class="toctree-l1"><a class="reference internal" href="np2vec.html">Noun Phrase to Vec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="supervised_sentiment.html">Supervised Sentiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reading_comprehension.html">Reading Comprehension</a></li>
+<li class="toctree-l1"><a class="reference internal" href="memn2n.html">End-to-End Memory Networks for Goal Oriented Dialogue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tcn.html">TCN Language Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="crosslingual_emb.html">Unsupervised Crosslingual Embeddings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cross_doc_coref.html">Cross Document Co-Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="identifying_semantic_relation.html">Semantic Relation Identification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solutions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="absa_solution.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="term_set_expansion.html">Set Expansion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="trend_analysis.html">Trend Analysis</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Pipelines</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="spacy_bist.html">Spacy-BIST Parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spacy_np_annotator.html">Spacy-NP Annotator</a></li>
+</ul>
+<p class="caption"><span class="caption-text">For Developers</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#nlp-architect-models"><code class="docutils literal notranslate"><span class="pre">nlp_architect.models</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/nlp_architect.models.bist_parser.BISTModel.html">nlp_architect.models.bist_parser.BISTModel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nlp_architect.models.chunker.SequenceChunker.html">nlp_architect.models.chunker.SequenceChunker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nlp_architect.models.intent_extraction.Seq2SeqIntentModel.html">nlp_architect.models.intent_extraction.Seq2SeqIntentModel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nlp_architect.models.intent_extraction.MultiTaskIntentModel.html">nlp_architect.models.intent_extraction.MultiTaskIntentModel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nlp_architect.models.matchlstm_ansptr.MatchLSTMAnswerPointer.html">nlp_architect.models.matchlstm_ansptr.MatchLSTMAnswerPointer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nlp_architect.models.memn2n_dialogue.MemN2N_Dialog.html">nlp_architect.models.memn2n_dialogue.MemN2N_Dialog</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nlp_architect.models.most_common_word_sense.MostCommonWordSense.html">nlp_architect.models.most_common_word_sense.MostCommonWordSense</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nlp_architect.models.ner_crf.NERCRF.html">nlp_architect.models.ner_crf.NERCRF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nlp_architect.models.np2vec.NP2vec.html">nlp_architect.models.np2vec.NP2vec</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nlp_architect.models.np_semantic_segmentation.NpSemanticSegClassifier.html">nlp_architect.models.np_semantic_segmentation.NpSemanticSegClassifier</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nlp_architect.models.temporal_convolutional_network.TCN.html">nlp_architect.models.temporal_convolutional_network.TCN</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nlp_architect.models.crossling_emb.WordTranslator.html">nlp_architect.models.crossling_emb.WordTranslator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nlp_architect.models.cross_doc_sieves.html">nlp_architect.models.cross_doc_sieves</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nlp_architect.models.cross_doc_coref.sieves_config.EventSievesConfiguration.html">nlp_architect.models.cross_doc_coref.sieves_config.EventSievesConfiguration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nlp_architect.models.cross_doc_coref.sieves_config.EntitySievesConfiguration.html">nlp_architect.models.cross_doc_coref.sieves_config.EntitySievesConfiguration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nlp_architect.models.cross_doc_coref.sieves_resource.SievesResources.html">nlp_architect.models.cross_doc_coref.sieves_resource.SievesResources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nlp_architect.models.gnmt_model.GNMTModel.html">nlp_architect.models.gnmt_model.GNMTModel</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#nlp-architect-data"><code class="docutils literal notranslate"><span class="pre">nlp_architect.data</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/nlp_architect.data.amazon_reviews.Amazon_Reviews.html">nlp_architect.data.amazon_reviews.Amazon_Reviews</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nlp_architect.data.babi_dialog.BABI_Dialog.html">nlp_architect.data.babi_dialog.BABI_Dialog</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nlp_architect.data.conll.ConllEntry.html">nlp_architect.data.conll.ConllEntry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nlp_architect.data.intent_datasets.IntentDataset.html">nlp_architect.data.intent_datasets.IntentDataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nlp_architect.data.intent_datasets.TabularIntentDataset.html">nlp_architect.data.intent_datasets.TabularIntentDataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nlp_architect.data.intent_datasets.SNIPS.html">nlp_architect.data.intent_datasets.SNIPS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nlp_architect.data.ptb.PTBDataLoader.html">nlp_architect.data.ptb.PTBDataLoader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nlp_architect.data.sequential_tagging.CONLL2000.html">nlp_architect.data.sequential_tagging.CONLL2000</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nlp_architect.data.sequential_tagging.SequentialTaggingDataset.html">nlp_architect.data.sequential_tagging.SequentialTaggingDataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nlp_architect.data.fasttext_emb.FastTextEmb.html">nlp_architect.data.fasttext_emb.FastTextEmb</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nlp_architect.data.cdc_resources.relations.computed_relation_extraction.ComputedRelationExtraction.html">nlp_architect.data.cdc_resources.relations.computed_relation_extraction.ComputedRelationExtraction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nlp_architect.data.cdc_resources.relations.referent_dict_relation_extraction.ReferentDictRelationExtraction.html">nlp_architect.data.cdc_resources.relations.referent_dict_relation_extraction.ReferentDictRelationExtraction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nlp_architect.data.cdc_resources.relations.verbocean_relation_extraction.VerboceanRelationExtraction.html">nlp_architect.data.cdc_resources.relations.verbocean_relation_extraction.VerboceanRelationExtraction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction.WikipediaRelationExtraction.html">nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction.WikipediaRelationExtraction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref.html">nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nlp_architect.data.cdc_resources.relations.word_embedding_relation_extraction.WordEmbeddingRelationExtraction.html">nlp_architect.data.cdc_resources.relations.word_embedding_relation_extraction.WordEmbeddingRelationExtraction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nlp_architect.data.cdc_resources.relations.wordnet_relation_extraction.WordnetRelationExtraction.html">nlp_architect.data.cdc_resources.relations.wordnet_relation_extraction.WordnetRelationExtraction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType.html">nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#nlp-architect-pipelines"><code class="docutils literal notranslate"><span class="pre">nlp_architect.pipelines</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/nlp_architect.pipelines.spacy_bist.SpacyBISTParser.html">nlp_architect.pipelines.spacy_bist.SpacyBISTParser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nlp_architect.pipelines.spacy_np_annotator.NPAnnotator.html">nlp_architect.pipelines.spacy_np_annotator.NPAnnotator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nlp_architect.pipelines.spacy_np_annotator.SpacyNPAnnotator.html">nlp_architect.pipelines.spacy_np_annotator.SpacyNPAnnotator</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#nlp-architect-contrib"><code class="docutils literal notranslate"><span class="pre">nlp_architect.contrib</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/nlp_architect.contrib.tensorflow.python.keras.layers.crf.CRF.html">nlp_architect.contrib.tensorflow.python.keras.layers.crf.CRF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nlp_architect.contrib.tensorflow.python.keras.utils.layer_utils.save_model.html">nlp_architect.contrib.tensorflow.python.keras.utils.layer_utils.save_model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nlp_architect.contrib.tensorflow.python.keras.utils.layer_utils.load_model.html">nlp_architect.contrib.tensorflow.python.keras.utils.layer_utils.load_model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nlp_architect.contrib.tensorflow.python.keras.callbacks.ConllCallback.html">nlp_architect.contrib.tensorflow.python.keras.callbacks.ConllCallback</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#nlp-architect-common"><code class="docutils literal notranslate"><span class="pre">nlp_architect.common</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/nlp_architect.common.core_nlp_doc.CoreNLPDoc.html">nlp_architect.common.core_nlp_doc.CoreNLPDoc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nlp_architect.common.high_level_doc.HighLevelDoc.html">nlp_architect.common.high_level_doc.HighLevelDoc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nlp_architect.common.cdc.mention_data.MentionDataLight.html">nlp_architect.common.cdc.mention_data.MentionDataLight</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nlp_architect.common.cdc.mention_data.MentionData.html">nlp_architect.common.cdc.mention_data.MentionData</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">NLP Architect by Intel® AI Lab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>API</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="api">
+<h1>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h1>
+<p>This API documentation covers each model within NLP Architect. Most modules have a
+corresponding user guide section that introduces the main concepts. See this
+API for specific function definitions.</p>
+<div class="section" id="nlp-architect-models">
+<h2><code class="docutils literal notranslate"><span class="pre">nlp_architect.models</span></code><a class="headerlink" href="#nlp-architect-models" title="Permalink to this headline">¶</a></h2>
+<p>Model classes stores a list of layers describing the model. Methods are provided
+to train the model weights, perform inference, and save/load the model.</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/nlp_architect.models.bist_parser.BISTModel.html#nlp_architect.models.bist_parser.BISTModel" title="nlp_architect.models.bist_parser.BISTModel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlp_architect.models.bist_parser.BISTModel</span></code></a></p></td>
+<td><p>BIST parser model class.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/nlp_architect.models.chunker.SequenceChunker.html#nlp_architect.models.chunker.SequenceChunker" title="nlp_architect.models.chunker.SequenceChunker"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlp_architect.models.chunker.SequenceChunker</span></code></a></p></td>
+<td><p>A sequence Chunker model written in Tensorflow (and Keras) based SequenceTagger model.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/nlp_architect.models.intent_extraction.Seq2SeqIntentModel.html#nlp_architect.models.intent_extraction.Seq2SeqIntentModel" title="nlp_architect.models.intent_extraction.Seq2SeqIntentModel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlp_architect.models.intent_extraction.Seq2SeqIntentModel</span></code></a></p></td>
+<td><p>Encoder Decoder Deep LSTM Tagger Model (using tf.keras)</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/nlp_architect.models.intent_extraction.MultiTaskIntentModel.html#nlp_architect.models.intent_extraction.MultiTaskIntentModel" title="nlp_architect.models.intent_extraction.MultiTaskIntentModel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlp_architect.models.intent_extraction.MultiTaskIntentModel</span></code></a></p></td>
+<td><p>Multi-Task Intent and Slot tagging model (using tf.keras)</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/nlp_architect.models.matchlstm_ansptr.MatchLSTMAnswerPointer.html#nlp_architect.models.matchlstm_ansptr.MatchLSTMAnswerPointer" title="nlp_architect.models.matchlstm_ansptr.MatchLSTMAnswerPointer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlp_architect.models.matchlstm_ansptr.MatchLSTMAnswerPointer</span></code></a></p></td>
+<td><p>Defines end to end MatchLSTM and Answer_Pointer network for Reading Comprehension</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/nlp_architect.models.memn2n_dialogue.MemN2N_Dialog.html#nlp_architect.models.memn2n_dialogue.MemN2N_Dialog" title="nlp_architect.models.memn2n_dialogue.MemN2N_Dialog"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlp_architect.models.memn2n_dialogue.MemN2N_Dialog</span></code></a></p></td>
+<td><p>End-To-End Memory Network.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/nlp_architect.models.most_common_word_sense.MostCommonWordSense.html#nlp_architect.models.most_common_word_sense.MostCommonWordSense" title="nlp_architect.models.most_common_word_sense.MostCommonWordSense"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlp_architect.models.most_common_word_sense.MostCommonWordSense</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/nlp_architect.models.ner_crf.NERCRF.html#nlp_architect.models.ner_crf.NERCRF" title="nlp_architect.models.ner_crf.NERCRF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlp_architect.models.ner_crf.NERCRF</span></code></a></p></td>
+<td><p>Bi-LSTM NER model with CRF classification layer (tf.keras model)</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/nlp_architect.models.np2vec.NP2vec.html#nlp_architect.models.np2vec.NP2vec" title="nlp_architect.models.np2vec.NP2vec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlp_architect.models.np2vec.NP2vec</span></code></a></p></td>
+<td><p>Initialize the np2vec model, train it, save it and load it.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/nlp_architect.models.np_semantic_segmentation.NpSemanticSegClassifier.html#nlp_architect.models.np_semantic_segmentation.NpSemanticSegClassifier" title="nlp_architect.models.np_semantic_segmentation.NpSemanticSegClassifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlp_architect.models.np_semantic_segmentation.NpSemanticSegClassifier</span></code></a></p></td>
+<td><p>NP Semantic Segmentation classifier model (based on tf.Keras framework).</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/nlp_architect.models.temporal_convolutional_network.TCN.html#nlp_architect.models.temporal_convolutional_network.TCN" title="nlp_architect.models.temporal_convolutional_network.TCN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlp_architect.models.temporal_convolutional_network.TCN</span></code></a></p></td>
+<td><p>This class defines core TCN architecture.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/nlp_architect.models.crossling_emb.WordTranslator.html#nlp_architect.models.crossling_emb.WordTranslator" title="nlp_architect.models.crossling_emb.WordTranslator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlp_architect.models.crossling_emb.WordTranslator</span></code></a></p></td>
+<td><p>Main network which does cross-lingual embeddings training</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/nlp_architect.models.cross_doc_sieves.html#module-nlp_architect.models.cross_doc_sieves" title="nlp_architect.models.cross_doc_sieves"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlp_architect.models.cross_doc_sieves</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/nlp_architect.models.cross_doc_coref.sieves_config.EventSievesConfiguration.html#nlp_architect.models.cross_doc_coref.sieves_config.EventSievesConfiguration" title="nlp_architect.models.cross_doc_coref.sieves_config.EventSievesConfiguration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlp_architect.models.cross_doc_coref.sieves_config.EventSievesConfiguration</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/nlp_architect.models.cross_doc_coref.sieves_config.EntitySievesConfiguration.html#nlp_architect.models.cross_doc_coref.sieves_config.EntitySievesConfiguration" title="nlp_architect.models.cross_doc_coref.sieves_config.EntitySievesConfiguration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlp_architect.models.cross_doc_coref.sieves_config.EntitySievesConfiguration</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/nlp_architect.models.cross_doc_coref.sieves_resource.SievesResources.html#nlp_architect.models.cross_doc_coref.sieves_resource.SievesResources" title="nlp_architect.models.cross_doc_coref.sieves_resource.SievesResources"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlp_architect.models.cross_doc_coref.sieves_resource.SievesResources</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/nlp_architect.models.gnmt_model.GNMTModel.html#nlp_architect.models.gnmt_model.GNMTModel" title="nlp_architect.models.gnmt_model.GNMTModel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlp_architect.models.gnmt_model.GNMTModel</span></code></a></p></td>
+<td><p>Sequence-to-sequence dynamic model with GNMT attention architecture with sparsity policy support.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="nlp-architect-data">
+<h2><code class="docutils literal notranslate"><span class="pre">nlp_architect.data</span></code><a class="headerlink" href="#nlp-architect-data" title="Permalink to this headline">¶</a></h2>
+<p>Dataset implementations and data loaders (check deep learning framework compatibility of dataset/loader in documentation)</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/nlp_architect.data.amazon_reviews.Amazon_Reviews.html#nlp_architect.data.amazon_reviews.Amazon_Reviews" title="nlp_architect.data.amazon_reviews.Amazon_Reviews"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlp_architect.data.amazon_reviews.Amazon_Reviews</span></code></a></p></td>
+<td><p>Take the <a href="#id1"><span class="problematic" id="id2">*</span></a>.json file of Amazon reviews as downloaded from <a class="reference external" href="http://jmcauley.ucsd.edu/data/amazon/">http://jmcauley.ucsd.edu/data/amazon/</a> Then does data cleaning and balancing, as well as transforms the reviews 1-5 to a sentiment</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/nlp_architect.data.babi_dialog.BABI_Dialog.html#nlp_architect.data.babi_dialog.BABI_Dialog" title="nlp_architect.data.babi_dialog.BABI_Dialog"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlp_architect.data.babi_dialog.BABI_Dialog</span></code></a></p></td>
+<td><p>This class loads in the Facebook bAbI goal oriented dialog dataset and vectorizes them into user utterances, bot utterances, and answers.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/nlp_architect.data.conll.ConllEntry.html#nlp_architect.data.conll.ConllEntry" title="nlp_architect.data.conll.ConllEntry"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlp_architect.data.conll.ConllEntry</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/nlp_architect.data.intent_datasets.IntentDataset.html#nlp_architect.data.intent_datasets.IntentDataset" title="nlp_architect.data.intent_datasets.IntentDataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlp_architect.data.intent_datasets.IntentDataset</span></code></a></p></td>
+<td><p>Intent extraction dataset base class</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/nlp_architect.data.intent_datasets.TabularIntentDataset.html#nlp_architect.data.intent_datasets.TabularIntentDataset" title="nlp_architect.data.intent_datasets.TabularIntentDataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlp_architect.data.intent_datasets.TabularIntentDataset</span></code></a></p></td>
+<td><p>Tabular Intent/Slot tags dataset loader.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/nlp_architect.data.intent_datasets.SNIPS.html#nlp_architect.data.intent_datasets.SNIPS" title="nlp_architect.data.intent_datasets.SNIPS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlp_architect.data.intent_datasets.SNIPS</span></code></a></p></td>
+<td><p>SNIPS dataset class</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/nlp_architect.data.ptb.PTBDataLoader.html#nlp_architect.data.ptb.PTBDataLoader" title="nlp_architect.data.ptb.PTBDataLoader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlp_architect.data.ptb.PTBDataLoader</span></code></a></p></td>
+<td><p>Class that defines data loader</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/nlp_architect.data.sequential_tagging.CONLL2000.html#nlp_architect.data.sequential_tagging.CONLL2000" title="nlp_architect.data.sequential_tagging.CONLL2000"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlp_architect.data.sequential_tagging.CONLL2000</span></code></a></p></td>
+<td><p>CONLL 2000 POS/chunking task data set (numpy)</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/nlp_architect.data.sequential_tagging.SequentialTaggingDataset.html#nlp_architect.data.sequential_tagging.SequentialTaggingDataset" title="nlp_architect.data.sequential_tagging.SequentialTaggingDataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlp_architect.data.sequential_tagging.SequentialTaggingDataset</span></code></a></p></td>
+<td><p>Sequential tagging dataset loader.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/nlp_architect.data.fasttext_emb.FastTextEmb.html#nlp_architect.data.fasttext_emb.FastTextEmb" title="nlp_architect.data.fasttext_emb.FastTextEmb"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlp_architect.data.fasttext_emb.FastTextEmb</span></code></a></p></td>
+<td><p>Downloads FastText Embeddings for a given language to the given path.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/nlp_architect.data.cdc_resources.relations.computed_relation_extraction.ComputedRelationExtraction.html#nlp_architect.data.cdc_resources.relations.computed_relation_extraction.ComputedRelationExtraction" title="nlp_architect.data.cdc_resources.relations.computed_relation_extraction.ComputedRelationExtraction"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlp_architect.data.cdc_resources.relations.computed_relation_extraction.ComputedRelationExtraction</span></code></a></p></td>
+<td><p>Extract Relation between two mentions according to computation and rule based algorithms</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/nlp_architect.data.cdc_resources.relations.referent_dict_relation_extraction.ReferentDictRelationExtraction.html#nlp_architect.data.cdc_resources.relations.referent_dict_relation_extraction.ReferentDictRelationExtraction" title="nlp_architect.data.cdc_resources.relations.referent_dict_relation_extraction.ReferentDictRelationExtraction"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlp_architect.data.cdc_resources.relations.referent_dict_relation_extraction.ReferentDictRelationExtraction</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/nlp_architect.data.cdc_resources.relations.verbocean_relation_extraction.VerboceanRelationExtraction.html#nlp_architect.data.cdc_resources.relations.verbocean_relation_extraction.VerboceanRelationExtraction" title="nlp_architect.data.cdc_resources.relations.verbocean_relation_extraction.VerboceanRelationExtraction"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlp_architect.data.cdc_resources.relations.verbocean_relation_extraction.VerboceanRelationExtraction</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction.WikipediaRelationExtraction.html#nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction.WikipediaRelationExtraction" title="nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction.WikipediaRelationExtraction"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction.WikipediaRelationExtraction</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref.html#nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref" title="nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/nlp_architect.data.cdc_resources.relations.word_embedding_relation_extraction.WordEmbeddingRelationExtraction.html#nlp_architect.data.cdc_resources.relations.word_embedding_relation_extraction.WordEmbeddingRelationExtraction" title="nlp_architect.data.cdc_resources.relations.word_embedding_relation_extraction.WordEmbeddingRelationExtraction"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlp_architect.data.cdc_resources.relations.word_embedding_relation_extraction.WordEmbeddingRelationExtraction</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/nlp_architect.data.cdc_resources.relations.wordnet_relation_extraction.WordnetRelationExtraction.html#nlp_architect.data.cdc_resources.relations.wordnet_relation_extraction.WordnetRelationExtraction" title="nlp_architect.data.cdc_resources.relations.wordnet_relation_extraction.WordnetRelationExtraction"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlp_architect.data.cdc_resources.relations.wordnet_relation_extraction.WordnetRelationExtraction</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType.html#nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType" title="nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType</span></code></a></p></td>
+<td><p>An enumeration.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="nlp-architect-pipelines">
+<h2><code class="docutils literal notranslate"><span class="pre">nlp_architect.pipelines</span></code><a class="headerlink" href="#nlp-architect-pipelines" title="Permalink to this headline">¶</a></h2>
+<p>NLP pipelines modules using NLP Architect models</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/nlp_architect.pipelines.spacy_bist.SpacyBISTParser.html#nlp_architect.pipelines.spacy_bist.SpacyBISTParser" title="nlp_architect.pipelines.spacy_bist.SpacyBISTParser"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlp_architect.pipelines.spacy_bist.SpacyBISTParser</span></code></a></p></td>
+<td><p>Main class which handles parsing with Spacy-BIST parser.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/nlp_architect.pipelines.spacy_np_annotator.NPAnnotator.html#nlp_architect.pipelines.spacy_np_annotator.NPAnnotator" title="nlp_architect.pipelines.spacy_np_annotator.NPAnnotator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlp_architect.pipelines.spacy_np_annotator.NPAnnotator</span></code></a></p></td>
+<td><p>Spacy based NP annotator - uses models.SequenceChunker model for annotation</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/nlp_architect.pipelines.spacy_np_annotator.SpacyNPAnnotator.html#nlp_architect.pipelines.spacy_np_annotator.SpacyNPAnnotator" title="nlp_architect.pipelines.spacy_np_annotator.SpacyNPAnnotator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlp_architect.pipelines.spacy_np_annotator.SpacyNPAnnotator</span></code></a></p></td>
+<td><p>Simple Spacy pipe with NP extraction annotations</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="nlp-architect-contrib">
+<h2><code class="docutils literal notranslate"><span class="pre">nlp_architect.contrib</span></code><a class="headerlink" href="#nlp-architect-contrib" title="Permalink to this headline">¶</a></h2>
+<p>In addition to imported layers, the library also contains its own set of network layers and additions.
+These are currently stored in the various models or related to which DL frameworks it was based on.</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/nlp_architect.contrib.tensorflow.python.keras.layers.crf.CRF.html#nlp_architect.contrib.tensorflow.python.keras.layers.crf.CRF" title="nlp_architect.contrib.tensorflow.python.keras.layers.crf.CRF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlp_architect.contrib.tensorflow.python.keras.layers.crf.CRF</span></code></a></p></td>
+<td><p>Conditional Random Field layer (tf.keras) <cite>CRF</cite> can be used as the last layer in a network (as a classifier).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/nlp_architect.contrib.tensorflow.python.keras.utils.layer_utils.save_model.html#nlp_architect.contrib.tensorflow.python.keras.utils.layer_utils.save_model" title="nlp_architect.contrib.tensorflow.python.keras.utils.layer_utils.save_model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlp_architect.contrib.tensorflow.python.keras.utils.layer_utils.save_model</span></code></a></p></td>
+<td><p>Save a model to a file (tf.keras models only) The method save the model topology, as given as a :param model: model object :param topology: a dictionary of topology elements and their values :type topology: dict :param filepath: path to save model :type filepath: str</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/nlp_architect.contrib.tensorflow.python.keras.utils.layer_utils.load_model.html#nlp_architect.contrib.tensorflow.python.keras.utils.layer_utils.load_model" title="nlp_architect.contrib.tensorflow.python.keras.utils.layer_utils.load_model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlp_architect.contrib.tensorflow.python.keras.utils.layer_utils.load_model</span></code></a></p></td>
+<td><p>Load a model (tf.keras) from disk, create topology from loaded values and load weights.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/nlp_architect.contrib.tensorflow.python.keras.callbacks.ConllCallback.html#nlp_architect.contrib.tensorflow.python.keras.callbacks.ConllCallback" title="nlp_architect.contrib.tensorflow.python.keras.callbacks.ConllCallback"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlp_architect.contrib.tensorflow.python.keras.callbacks.ConllCallback</span></code></a></p></td>
+<td><p>A Tensorflow(Keras) Conlleval evaluator.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="nlp-architect-common">
+<h2><code class="docutils literal notranslate"><span class="pre">nlp_architect.common</span></code><a class="headerlink" href="#nlp-architect-common" title="Permalink to this headline">¶</a></h2>
+<p>Common types of data structures used by NLP models</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/nlp_architect.common.core_nlp_doc.CoreNLPDoc.html#nlp_architect.common.core_nlp_doc.CoreNLPDoc" title="nlp_architect.common.core_nlp_doc.CoreNLPDoc"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlp_architect.common.core_nlp_doc.CoreNLPDoc</span></code></a></p></td>
+<td><p>Object for core-components (POS, Dependency Relations, etc).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/nlp_architect.common.high_level_doc.HighLevelDoc.html#nlp_architect.common.high_level_doc.HighLevelDoc" title="nlp_architect.common.high_level_doc.HighLevelDoc"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlp_architect.common.high_level_doc.HighLevelDoc</span></code></a></p></td>
+<td><p>object for annotation documents</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/nlp_architect.common.cdc.mention_data.MentionDataLight.html#nlp_architect.common.cdc.mention_data.MentionDataLight" title="nlp_architect.common.cdc.mention_data.MentionDataLight"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlp_architect.common.cdc.mention_data.MentionDataLight</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/nlp_architect.common.cdc.mention_data.MentionData.html#nlp_architect.common.cdc.mention_data.MentionData" title="nlp_architect.common.cdc.mention_data.MentionData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlp_architect.common.cdc.mention_data.MentionData</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

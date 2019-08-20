@@ -48,7 +48,7 @@ class SentimentInference(object):
 
         if parse:
             from nlp_architect.pipelines.spacy_bist import SpacyBISTParser
-            self.parser = SpacyBISTParser()
+            self.parser = SpacyBISTParser(spacy_model='en_core_web_lg')
         else:
             self.parser = None
 
@@ -169,27 +169,40 @@ class SentimentInference(object):
         all_pairs, events = [], []
         sentence_text_list = [x["text"] for x in parsed_sent]
         sentence_text = ' '.join(sentence_text_list)
-        cur_aspect = parsed_sent[aspect_index]["text"]
-        for tok in parsed_sent:
+        for tok_i, tok in enumerate(parsed_sent):
             aspect_op_pair = []
             terms = []
-            pos = tok['pos']
             gov_i = tok['gov']
             gov = parsed_sent[gov_i]
             gov_text = gov['text']
             tok_text = tok['text']
 
-            # is cur_tkn an aspect and gov a opinion?
-            if tok_text.lower() == cur_aspect.lower() and parsed_sent.index(tok) == aspect_index \
-                    and gov_text.lower() in self.opinion_lex and \
-                    gov['pos'] not in VERB_POS:
-                aspect_op_pair.append(
-                    (self._modify_for_multiple_word(tok, parsed_sent, index_range), gov))
-            #  is gov an aspect and cur_tkn a opinion?
-            if gov_text.lower() == cur_aspect.lower() and gov_i == aspect_index \
-                    and tok_text.lower() in self.opinion_lex and pos not in VERB_POS:
+            # 1st order rules
+            # Is cur_tkn an aspect and gov an opinion?
+            if tok_i == aspect_index:
+                if gov_text.lower() in self.opinion_lex:
+                    aspect_op_pair.append(
+                        (self._modify_for_multiple_word(tok, parsed_sent, index_range), gov))
+
+            # Is gov an aspect and cur_tkn an opinion?
+            if gov_i == aspect_index and tok_text.lower() in self.opinion_lex:
                 aspect_op_pair.append(
                     (self._modify_for_multiple_word(gov, parsed_sent, index_range), tok))
+
+            # If not found, try 2nd order rules
+            if not aspect_op_pair and tok_i == aspect_index:
+                # 2nd order rule #1
+                for op_t in parsed_sent:
+                    if op_t['gov'] == gov_i and op_t['text'].lower() in self.opinion_lex:
+                        aspect_op_pair.append(
+                            (self._modify_for_multiple_word(tok, parsed_sent, index_range), op_t))
+
+                # 2nd order rule #2
+                gov_gov = parsed_sent[parsed_sent[gov_i]['gov']]
+                if gov_gov['text'].lower() in self.opinion_lex:
+                    aspect_op_pair.append(
+                        (self._modify_for_multiple_word(tok, parsed_sent, index_range), gov_gov))
+
             # if aspect_tok found
             for aspect, opinion in aspect_op_pair:
                 op_tok_i = parsed_sent.index(opinion)
@@ -217,8 +230,8 @@ class SentimentInference(object):
 def _sentence_contains_after(sentence, index, phrase):
     """Returns sentence contains phrase after given index."""
     for i in range(len(phrase)):
-        if len(sentence) <= index + i or len(phrase) <= i or \
-                sentence[index + i]['text'].lower() != phrase[i].lower():
+        if len(sentence) <= index + i or phrase[i].lower() not in \
+                {sentence[index + i][field].lower() for field in ('text', 'lemma')}:
             return False
     return True
 

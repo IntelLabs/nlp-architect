@@ -1,0 +1,391 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Service class documentation &mdash; NLP Architect by Intel® AI Lab 0.4.post2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html">
+          
+
+          
+            
+            <img src="../_static/nlp_architect_logo_white.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../main.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../publications.html">Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials.html">Jupyter Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer_guide.html">Developer Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model_zoo.html">Model Zoo</a></li>
+</ul>
+<p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../absa.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chunker.html">Sequence Chunker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ner_crf.html">Named Entity Recognition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intent.html">Intent Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../np_segmentation.html">Noun Phrase Semantic Segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bist_parser.html">BIST Dependency Parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../word_sense.html">Most Common Word Sense</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../np2vec.html">Noun Phrase to Vec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../supervised_sentiment.html">Supervised Sentiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reading_comprehension.html">Reading Comprehension</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../memn2n.html">End-to-End Memory Networks for Goal Oriented Dialogue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tcn.html">TCN Language Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../crosslingual_emb.html">Unsupervised Crosslingual Embeddings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cross_doc_coref.html">Cross Document Co-Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../identifying_semantic_relation.html">Semantic Relation Identification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solutions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../absa_solution.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../term_set_expansion.html">Set Expansion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trend_analysis.html">Trend Analysis</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Pipelines</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../spacy_bist.html">Spacy-BIST Parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../spacy_np_annotator.html">Spacy-NP Annotator</a></li>
+</ul>
+<p class="caption"><span class="caption-text">For Developers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">NLP Architect by Intel® AI Lab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Service class documentation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="service-class-documentation">
+<h1>Service class documentation<a class="headerlink" href="#service-class-documentation" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="nlp_architect.server.service.Service">
+<em class="property">class </em><code class="sig-prename descclassname">nlp_architect.server.service.</code><code class="sig-name descname">Service</code><span class="sig-paren">(</span><em class="sig-param">service_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/server/service.html#Service"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.server.service.Service" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles loading and inference using specific models</p>
+<dl class="method">
+<dt id="nlp_architect.server.service.Service.get_paragraphs">
+<code class="sig-name descname">get_paragraphs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/server/service.html#Service.get_paragraphs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.server.service.Service.get_paragraphs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.server.service.Service.get_service_inference">
+<code class="sig-name descname">get_service_inference</code><span class="sig-paren">(</span><em class="sig-param">docs</em>, <em class="sig-param">headers</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/server/service.html#Service.get_service_inference"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.server.service.Service.get_service_inference" title="Permalink to this definition">¶</a></dt>
+<dd><p>get parser response from service API</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>headers</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a><em>(</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a><em>)</em>) – the headers of the request</p></li>
+<li><p><strong>docs</strong> – input received from the request</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the service API output</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.server.service.Service.load_service">
+<code class="sig-name descname">load_service</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/server/service.html#Service.load_service"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.server.service.Service.load_service" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize and load service from input given name, using “services.json” properties file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – The name of service to upload using server</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The loaded service</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nlp_architect.common.core_nlp_doc.CoreNLPDoc">
+<em class="property">class </em><code class="sig-prename descclassname">nlp_architect.common.core_nlp_doc.</code><code class="sig-name descname">CoreNLPDoc</code><span class="sig-paren">(</span><em class="sig-param">doc_text: str = ''</em>, <em class="sig-param">sentences: list = None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/common/core_nlp_doc.html#CoreNLPDoc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.core_nlp_doc.CoreNLPDoc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Object for core-components (POS, Dependency Relations, etc).</p>
+<dl class="attribute">
+<dt id="nlp_architect.common.core_nlp_doc.CoreNLPDoc._doc_text">
+<code class="sig-name descname">_doc_text</code><a class="headerlink" href="#nlp_architect.common.core_nlp_doc.CoreNLPDoc._doc_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>the doc text</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.common.core_nlp_doc.CoreNLPDoc._sentences">
+<code class="sig-name descname">_sentences</code><a class="headerlink" href="#nlp_architect.common.core_nlp_doc.CoreNLPDoc._sentences" title="Permalink to this definition">¶</a></dt>
+<dd><p>list of sentences, each word in a sentence is
+represented by a dictionary, structured as follows: {‘start’: (int), ‘len’: (int),
+‘pos’: (str), ‘ner’: (str), ‘lemma’: (str), ‘gov’: (int), ‘rel’: (str)}</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.common.core_nlp_doc.CoreNLPDoc.brat_doc">
+<code class="sig-name descname">brat_doc</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/common/core_nlp_doc.html#CoreNLPDoc.brat_doc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.core_nlp_doc.CoreNLPDoc.brat_doc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns doc adapted to BRAT expected input.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.common.core_nlp_doc.CoreNLPDoc.decoder">
+<em class="property">static </em><code class="sig-name descname">decoder</code><span class="sig-paren">(</span><em class="sig-param">obj</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/common/core_nlp_doc.html#CoreNLPDoc.decoder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.core_nlp_doc.CoreNLPDoc.decoder" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.common.core_nlp_doc.CoreNLPDoc.displacy_doc">
+<code class="sig-name descname">displacy_doc</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/common/core_nlp_doc.html#CoreNLPDoc.displacy_doc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.core_nlp_doc.CoreNLPDoc.displacy_doc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return doc adapted to displacyENT expected input.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.common.core_nlp_doc.CoreNLPDoc.doc_text">
+<em class="property">property </em><code class="sig-name descname">doc_text</code><a class="headerlink" href="#nlp_architect.common.core_nlp_doc.CoreNLPDoc.doc_text" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.common.core_nlp_doc.CoreNLPDoc.json">
+<code class="sig-name descname">json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/common/core_nlp_doc.html#CoreNLPDoc.json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.core_nlp_doc.CoreNLPDoc.json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns json representations of the object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.common.core_nlp_doc.CoreNLPDoc.pretty_json">
+<code class="sig-name descname">pretty_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/common/core_nlp_doc.html#CoreNLPDoc.pretty_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.core_nlp_doc.CoreNLPDoc.pretty_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns pretty json representations of the object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.common.core_nlp_doc.CoreNLPDoc.sent_iter">
+<code class="sig-name descname">sent_iter</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/common/core_nlp_doc.html#CoreNLPDoc.sent_iter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.core_nlp_doc.CoreNLPDoc.sent_iter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.common.core_nlp_doc.CoreNLPDoc.sent_text">
+<code class="sig-name descname">sent_text</code><span class="sig-paren">(</span><em class="sig-param">i</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/common/core_nlp_doc.html#CoreNLPDoc.sent_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.core_nlp_doc.CoreNLPDoc.sent_text" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.common.core_nlp_doc.CoreNLPDoc.sentences">
+<em class="property">property </em><code class="sig-name descname">sentences</code><a class="headerlink" href="#nlp_architect.common.core_nlp_doc.CoreNLPDoc.sentences" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nlp_architect.common.high_level_doc.HighLevelDoc">
+<em class="property">class </em><code class="sig-prename descclassname">nlp_architect.common.high_level_doc.</code><code class="sig-name descname">HighLevelDoc</code><a class="reference internal" href="../_modules/nlp_architect/common/high_level_doc.html#HighLevelDoc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.high_level_doc.HighLevelDoc" title="Permalink to this definition">¶</a></dt>
+<dd><p>object for annotation documents</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self.doc_text</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – document text</p></li>
+<li><p><strong>self.annotation_set</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a><em>(</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a><em>)</em>) – list of all annotations in doc</p></li>
+<li><p><strong>self.spans</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a><em>(</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><em>dict</em></a><em>)</em>) – list of span dict, each span_dict is structured as follows:
+{ ‘end’: (int), ‘start’: (int), ‘type’: (str) string of annotation }</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="nlp_architect.common.high_level_doc.HighLevelDoc.displacy_doc">
+<code class="sig-name descname">displacy_doc</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/common/high_level_doc.html#HighLevelDoc.displacy_doc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.high_level_doc.HighLevelDoc.displacy_doc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return doc adapted to displacyENT expected input</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.common.high_level_doc.HighLevelDoc.json">
+<code class="sig-name descname">json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/common/high_level_doc.html#HighLevelDoc.json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.high_level_doc.HighLevelDoc.json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return json representations of the object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>json representations of the object</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="../generated/nlp_architect.common.high_level_doc.HighLevelDoc.html#nlp_architect.common.high_level_doc.HighLevelDoc.json" title="nlp_architect.common.high_level_doc.HighLevelDoc.json"><code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.common.high_level_doc.HighLevelDoc.pretty_json">
+<code class="sig-name descname">pretty_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/common/high_level_doc.html#HighLevelDoc.pretty_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.high_level_doc.HighLevelDoc.pretty_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return pretty json representations of the object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>pretty json representations of the object</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="../generated/nlp_architect.common.high_level_doc.HighLevelDoc.html#nlp_architect.common.high_level_doc.HighLevelDoc.json" title="nlp_architect.common.high_level_doc.HighLevelDoc.json"><code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

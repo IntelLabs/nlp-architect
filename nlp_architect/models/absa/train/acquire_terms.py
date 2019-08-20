@@ -20,15 +20,15 @@ from os import PathLike
 
 from tqdm import tqdm
 
-from nlp_architect.models.absa import TRAIN_OUT
+from nlp_architect.models.absa import TRAIN_LEXICONS
+from nlp_architect.models.absa import TRAIN_OUT, GENERIC_OP_LEX
 from nlp_architect.models.absa.inference.data_types import Polarity
 from nlp_architect.models.absa.train.data_types import AspectTerm, \
     DepRelation, DepRelationTerm, LoadOpinionStopLists, LoadAspectStopLists, OpinionTerm, \
     QualifiedTerm
-from nlp_architect.models.absa import TRAIN_LEXICONS
-from nlp_architect.models.absa.utils import _load_parsed_docs_from_dir, _write_final_lex, \
-    _load_lex_as_list_from_csv, read_generic_lex_from_file
 from nlp_architect.models.absa.train.rules import rule_1, rule_2, rule_3, rule_4, rule_5, rule_6
+from nlp_architect.models.absa.utils import _load_parsed_docs_from_dir, _write_final_opinion_lex, \
+    _load_lex_as_list_from_csv, read_generic_lex_from_file
 
 
 class AcquireTerms(object):
@@ -53,22 +53,26 @@ class AcquireTerms(object):
 
     out_dir = TRAIN_OUT / 'output'
     feature_table_path = out_dir / 'feature_table.csv'
-    generic_opinion_lex_path = TRAIN_LEXICONS / 'GenericOpinionLex.csv'
+    generic_opinion_lex_path = GENERIC_OP_LEX
     acquired_opinion_terms_path = out_dir / 'generated_opinion_lex.csv'
     acquired_aspect_terms_path = out_dir / 'generated_aspect_lex.csv'
 
-    GENERIC_OPINION_LEX = _load_lex_as_list_from_csv('GenericOpinionLex.csv')
-    GENERAL_ADJECTIVES_LEX = _load_lex_as_list_from_csv('GeneralAdjectivesLex.csv')
-    GENERIC_QUANTIFIERS_LEX = _load_lex_as_list_from_csv('GenericQuantifiersLex.csv')
-    GEOGRAPHICAL_ADJECTIVES_LEX = _load_lex_as_list_from_csv('GeographicalAdjectivesLex.csv')
-    INTENSIFIERS_LEX = _load_lex_as_list_from_csv('IntensifiersLex.csv')
-    TIME_ADJECTIVE_LEX = _load_lex_as_list_from_csv('TimeAdjectiveLex.csv')
-    ORDINAL_NUMBERS_LEX = _load_lex_as_list_from_csv('OrdinalNumbersLex.csv')
-    PREPOSITIONS_LEX = _load_lex_as_list_from_csv('PrepositionsLex.csv')
-    PRONOUNS_LEX = _load_lex_as_list_from_csv('PronounsLex.csv')
-    COLORS_LEX = _load_lex_as_list_from_csv('ColorsLex.csv')
-    DETERMINERS_LEX = _load_lex_as_list_from_csv('DeterminersLex.csv')
-    NEGATION_LEX = _load_lex_as_list_from_csv('NegationLex.csv')
+    GENERIC_OPINION_LEX = _load_lex_as_list_from_csv(GENERIC_OP_LEX)
+    GENERAL_ADJECTIVES_LEX = _load_lex_as_list_from_csv(
+        TRAIN_LEXICONS / 'GeneralAdjectivesLex.csv')
+    GENERIC_QUANTIFIERS_LEX = _load_lex_as_list_from_csv(
+        TRAIN_LEXICONS / 'GenericQuantifiersLex.csv')
+    GEOGRAPHICAL_ADJECTIVES_LEX = _load_lex_as_list_from_csv(
+        TRAIN_LEXICONS / 'GeographicalAdjectivesLex.csv')
+    INTENSIFIERS_LEX = _load_lex_as_list_from_csv(TRAIN_LEXICONS / 'IntensifiersLex.csv')
+    TIME_ADJECTIVE_LEX = _load_lex_as_list_from_csv(TRAIN_LEXICONS / 'TimeAdjectiveLex.csv')
+    ORDINAL_NUMBERS_LEX = _load_lex_as_list_from_csv(TRAIN_LEXICONS / 'OrdinalNumbersLex.csv')
+    PREPOSITIONS_LEX = _load_lex_as_list_from_csv(TRAIN_LEXICONS / 'PrepositionsLex.csv')
+    PRONOUNS_LEX = _load_lex_as_list_from_csv(TRAIN_LEXICONS / 'PronounsLex.csv')
+    COLORS_LEX = _load_lex_as_list_from_csv(TRAIN_LEXICONS / 'ColorsLex.csv')
+    DETERMINERS_LEX = _load_lex_as_list_from_csv(TRAIN_LEXICONS / 'DeterminersLex.csv')
+    NEGATION_LEX = _load_lex_as_list_from_csv(TRAIN_LEXICONS / 'NegationLex.csv')
+    AUXILIARIES_LEX = _load_lex_as_list_from_csv(TRAIN_LEXICONS / 'AuxiliariesLex.csv')
 
     OPINION_STOP_LIST = LoadOpinionStopLists(DETERMINERS_LEX,
                                              GENERAL_ADJECTIVES_LEX,
@@ -86,7 +90,7 @@ class AcquireTerms(object):
                                            INTENSIFIERS_LEX, TIME_ADJECTIVE_LEX,
                                            ORDINAL_NUMBERS_LEX,
                                            PREPOSITIONS_LEX, PRONOUNS_LEX, COLORS_LEX,
-                                           NEGATION_LEX)
+                                           NEGATION_LEX, AUXILIARIES_LEX)
 
     FILTER_PATTERNS = [re.compile(r'.*\d+.*')]
     FLOAT_FORMAT = '{0:.3g}'
@@ -142,7 +146,6 @@ class AcquireTerms(object):
                             in self.aspects_candidate_list_prev_iter and \
                             AspectTerm.from_token(rel_entry.dep) \
                             not in self.aspects_candidate_list_prev_iter:
-
                         opinions.append(rule_5(rel_entry, text))
                         aspects.append(rule_6(rel_entry, relations, text))
 
@@ -184,10 +187,11 @@ class AcquireTerms(object):
         """
         for term in terms:
             if term:
-                term_entry = AspectTerm(term.term, term.pos)
+                term_entry = AspectTerm(term.term, term.pos, term.lemma)
                 if term_entry not in self.init_aspect_dict and \
-                        term_entry not in self.aspect_candidate_list and not\
-                        self.ASPECT_STOP_LIST.is_in_stop_list(term.term[0]):
+                        term_entry not in self.aspect_candidate_list and not \
+                        self.ASPECT_STOP_LIST.is_in_stop_list(term.term[0]) and \
+                        len(term.term[0]) > 1:
                     _insert_new_term_to_table(term, self.aspect_candidate_list_curr_iter)
 
         return True
@@ -202,7 +206,10 @@ class AcquireTerms(object):
             if term and self._is_valid_term(term):
                 if str(term.term[0]) not in self.generic_sent_dict.keys():
                     if str(term.term[0]) not in self.opinion_candidate_list:
-                        _insert_new_term_to_table(term, self.opinion_candidate_list_curr_iter)
+                        if len(str(term.term[0])) > 1:
+                            if any(c.isalnum() for c in str(term.term[0])):
+                                _insert_new_term_to_table(term,
+                                                          self.opinion_candidate_list_curr_iter)
 
     def _insert_new_terms_to_tables(self):
         """
@@ -230,22 +237,22 @@ class AcquireTerms(object):
             if len(extracted_aspect_list) >= \
                     self.min_freq_aspect_candidate:
                 first = extracted_aspect_list[0]
-                new_aspect_entry = AspectTerm(first.term, first.pos)
+                new_aspect_entry = AspectTerm(first.term, first.pos, first.lemma)
                 if new_aspect_entry not in self.aspects_candidate_list_prev_iter:
                     self.aspects_candidate_list_prev_iter.append(new_aspect_entry)
         self.aspect_candidate_list_curr_iter = {}
         self.aspect_candidate_list = \
             self.aspect_candidate_list + self.aspects_candidate_list_prev_iter
 
-    def _write_output(self):
+    def _write_candidate_opinion_lex(self):
         """
         write generated lexicons to csv files
         """
         out = AcquireTerms.out_dir
         out.mkdir(parents=True, exist_ok=True)
 
-        _write_final_lex(self.opinion_candidates_list_final, self.acquired_opinion_terms_path)
-        _write_final_lex(self.aspect_candidates_list_final, self.acquired_aspect_terms_path)
+        _write_final_opinion_lex(self.opinion_candidates_list_final,
+                                 self.acquired_opinion_terms_path)
 
     def acquire_lexicons(self, parsed_dir: str or PathLike):
         """Acquire new opinion and aspect lexicons.
@@ -285,13 +292,33 @@ class AcquireTerms(object):
                 self.aspect_candidates_list_final,
                 self.min_freq_aspect_candidate)
 
-        self._write_output()
+        self._write_candidate_opinion_lex()
 
-        aspect_dict = {}
-        for cand_term in self.aspect_candidates_list_final:
-            aspect_dict[cand_term.term[0]] = cand_term.frequency
+        aspect_dict = _add_lemmas_aspect_lex(self.aspect_candidates_list_final)
 
         return aspect_dict
+
+
+def _add_lemmas_aspect_lex(aspect_candidates_list_final):
+
+    aspect_dict = {}
+    for cand_term in aspect_candidates_list_final:
+        lemma = ''
+        if cand_term.term[0] != cand_term.lemma[0]:
+            lemma = cand_term.lemma[0]
+        aspect_dict[cand_term.term[0]] = lemma
+
+    # unify aspect with aspect lemmas
+    lemma_to_erase = []
+    for _, lemma in aspect_dict.items():
+        if lemma != '' and lemma in aspect_dict:
+            lemma_to_erase.append(lemma)
+
+    # delete all duplicates (aspects that are lemmas of other aspects)
+    for lemma in lemma_to_erase:
+        if lemma in aspect_dict:
+            del aspect_dict[lemma]
+    return aspect_dict
 
 
 def _get_rel_list(parsed_sentence):
@@ -386,7 +413,7 @@ def _generate_final_aspect_candidates_list(aspect_candidate_list_raw,
     for extracted_term_list in aspect_candidate_list_raw.values():
         if len(extracted_term_list) >= frequency_threshold:
             term = extracted_term_list[0]
-            qualified_term = QualifiedTerm(term.term, term.pos,
+            qualified_term = QualifiedTerm(term.term, term.lemma, term.pos,
                                            len(extracted_term_list),
                                            term_polarity)
             final_aspect_candidates_list.append(qualified_term)
@@ -425,7 +452,7 @@ def generate_final_opinion_candidates_list(opinion_candidate_list_raw,
 
             term = candidate_list[0]
 
-            qualified_term = QualifiedTerm(term.term, term.pos,
+            qualified_term = QualifiedTerm(term.term, term.term, term.pos,
                                            len(candidate_list), term_polarity)
             final_opinion_candidates_list.append(qualified_term)
 

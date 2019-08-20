@@ -23,7 +23,7 @@ from nlp_architect.models.absa.inference.inference import SentimentInference
 
 
 def test_inference():
-    lexicons_dir = Path(LIBRARY_ROOT) / 'examples' / 'absa' / 'inference'
+    lexicons_dir = Path(LIBRARY_ROOT) / 'examples' / 'absa'
     inference = SentimentInference(lexicons_dir / 'aspects.csv', lexicons_dir / 'opinions.csv',
                                    parse=False)
     data_dir = Path(LIBRARY_ROOT) / 'tests' / 'fixtures' / 'data' / 'absa'

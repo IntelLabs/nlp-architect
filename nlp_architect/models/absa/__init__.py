@@ -29,3 +29,5 @@ TRAIN_OUT = LIBRARY_OUT / 'absa' / 'train'
 INFERENCE_LEXICONS = ABSA_ROOT / 'inference' / 'lexicons'
 
 INFERENCE_OUT = LIBRARY_OUT / 'absa' / 'inference'
+
+GENERIC_OP_LEX = ABSA_ROOT / 'train' / 'lexicons' / 'GenericOpinionLex.csv'

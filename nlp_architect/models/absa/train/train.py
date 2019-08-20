@@ -14,17 +14,20 @@
 # limitations under the License.
 # ******************************************************************************
 import time
-from pathlib import Path
+from pathlib import Path, PosixPath
 from os import PathLike
 from nlp_architect.models.absa import TRAIN_OUT
 from nlp_architect.models.absa.train.acquire_terms import AcquireTerms
 from nlp_architect.models.absa.train.rerank_terms import RerankTerms
-from nlp_architect.models.absa.utils import parse_docs, _download_pretrained_rerank_model
+from nlp_architect.models.absa.utils import parse_docs, _download_pretrained_rerank_model, \
+    _write_aspect_lex, _write_opinion_lex
 from nlp_architect.utils.io import download_unzip
 
 EMBEDDING_URL = 'http://nlp.stanford.edu/data', 'glove.840B.300d.zip'
 EMBEDDING_PATH = TRAIN_OUT / 'word_emb_unzipped' / 'glove.840B.300d.txt'
 RERANK_MODEL_DEFAULT_PATH = rerank_model_dir = TRAIN_OUT / 'reranking_model' / 'rerank_model.h5'
+GENERATED_OPINION_FILE_PATH = TRAIN_OUT / 'output' / 'generated_opinion_lex_reranked.csv'
+GENERATED_ASPECT_FILE_PATH = TRAIN_OUT / 'output' / 'generated_aspect_lex.csv'
 
 
 class TrainSentiment(object):
@@ -54,12 +57,18 @@ class TrainSentiment(object):
             parsed_data = parsed_dir
 
         generated_aspect_lex = self.acquire_lexicon.acquire_lexicons(parsed_data)
+        _write_aspect_lex(parsed_data, generated_aspect_lex, GENERATED_ASPECT_FILE_PATH)
+
         generated_opinion_lex_reranked = \
             self.rerank.predict(AcquireTerms.acquired_opinion_terms_path,
                                 AcquireTerms.generic_opinion_lex_path)
+
+        _write_opinion_lex(parsed_data, generated_opinion_lex_reranked,
+                           GENERATED_OPINION_FILE_PATH)
+
         return generated_opinion_lex_reranked, generated_aspect_lex
 
-    def parse_data(self, data: PathLike, parsed_dir: PathLike):
+    def parse_data(self, data: PathLike or PosixPath, parsed_dir: PathLike or PosixPath):
         _, data_size = parse_docs(self.parser, data, out_dir=parsed_dir)
         if data_size < 1000:
             raise ValueError('The data contains only {0} sentences. A minimum of 1000 '

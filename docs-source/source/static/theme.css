@@ -1,0 +1,55 @@
+@media screen and (min-width: 767px) {
+
+   .wy-table-responsive table td {
+      /* !important prevents the common CSS stylesheets from overriding
+         this as on RTD they are loaded after this stylesheet */
+      white-space: normal !important;
+   }
+
+   .wy-table-responsive {
+      overflow: visible !important;
+   }
+}
+
+.wy-side-nav-search {
+  background-color: #0071c5;
+}
+
+.wy-nav-content-wrap {
+    background: #ffffff;
+}
+
+.wy-nav-content {
+    padding: 1.618em 3.236em;
+    height: 100%;
+    max-width: 1000px !important;
+    margin: 0;
+    background: #ffffff;
+}
+
+.wy-nav-side {
+    background: #343131;
+}
+
+.rst-content div[class^='highlight'] pre {
+  border: none;
+  background: none;
+  font-family: "Monaco", "Consolas", "Menlo", "Andale Mono WT", "Andale Mono", "Lucida Console", "monospace";
+}
+
+body, h1, h2, .rst-content .toctree-wrapper p.caption, h3, h4, h5, h6, legend {
+    font-family: "Lato", "Menlo", "Andale Mono WT", "Andale Mono", "Lucida Console", "monospace";
+    background: #ffffff;
+}
+
+.wy-nav-top {
+    background: #0071c5;
+}
+
+.installation_table label {
+    display: inline;
+}
+
+.wy-table-responsive table td, .wy-table-responsive table th {
+    white-space: inherit;
+}
