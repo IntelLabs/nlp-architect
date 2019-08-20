@@ -334,6 +334,14 @@ def download_unzip(url: str, sourcefile: str, unzipped_path: str or PathLike,
     return unzipped_path
 
 
+def line_count(file):
+    """Utility function for getting number of lines in a text file."""
+    count = 0
+    with open(file, encoding='utf-8') as f:
+        for _ in f:
+            count += 1
+    return count
+
 def prepare_output_path(output_dir: str, overwrite_output_dir: str):
     """Create output directory or throw error if exists and overwrite_output_dir is false
     """

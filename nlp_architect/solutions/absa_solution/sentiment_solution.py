@@ -32,7 +32,7 @@ from nlp_architect.models.absa.utils import load_opinion_lex
 from nlp_architect.solutions.absa_solution import SENTIMENT_OUT
 from nlp_architect.solutions.absa_solution.utils import Anonymiser, _ui_format
 from nlp_architect.utils.io import walk_directory, validate_existing_filepath, \
-    validate_existing_directory, validate_existing_path
+    validate_existing_directory, validate_existing_path, line_count
 
 
 class SentimentSolution(object):
@@ -96,7 +96,7 @@ class SentimentSolution(object):
                 yield file, doc_text
         else:
             with open(data, encoding='utf-8') as f:
-                for i, doc_text in tqdm(enumerate(f), total=_line_count(data)):
+                for i, doc_text in tqdm(enumerate(f), total=line_count(data)):
                     yield str(i + 1), doc_text
 
     def _compute_stats(self, results: dict, aspects: list, opinion_lex: dict) -> pd.DataFrame:
@@ -147,12 +147,6 @@ class SentimentSolution(object):
         df.loc[key, 'Quantity'] = count
         df.loc[key, 'Score'] += score
         return count
-
-
-def _line_count(file):
-    """Utility function for getting number of lines in a text file."""
-    with open(file, encoding='utf-8') as f:
-        return len(list(f))
 
 
 def main() -> None:

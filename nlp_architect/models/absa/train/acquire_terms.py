@@ -95,23 +95,25 @@ class AcquireTerms(object):
     FILTER_PATTERNS = [re.compile(r'.*\d+.*')]
     FLOAT_FORMAT = '{0:.3g}'
     # maximum number of iterations
-    MAX_NUM_OF_ITERATIONS = 3
     NUM_OF_SENTENCES_PER_OPINION_AND_ASPECT_TERM_INC = 35000
 
-    opinion_candidate_list_prev_iter = read_generic_lex_from_file(generic_opinion_lex_path)
-    generic_sent_dict = copy.deepcopy(opinion_candidate_list_prev_iter)
-    opinion_candidate_list = {}
-    opinion_candidate_list_raw = {}
-    opinion_candidate_list_curr_iter = {}
-    opinion_candidates_list_final = []
-    aspect_candidate_list_raw = {}
-    aspect_candidate_list = list()
-    aspect_candidate_list_curr_iter = {}
-    aspect_candidates_list_final = []
-    init_aspect_dict = list()
-    aspects_candidate_list_prev_iter = list()
-    min_freq_opinion_candidate = 2
-    min_freq_aspect_candidate = 3
+    def __init__(self, asp_thresh=3, op_thresh=2, max_iter=3):
+        self.opinion_candidate_list_prev_iter = \
+            read_generic_lex_from_file(AcquireTerms.generic_opinion_lex_path)
+        self.generic_sent_dict = copy.deepcopy(self.opinion_candidate_list_prev_iter)
+        self.opinion_candidate_list = {}
+        self.opinion_candidate_list_raw = {}
+        self.opinion_candidate_list_curr_iter = {}
+        self.opinion_candidates_list_final = []
+        self.aspect_candidate_list_raw = {}
+        self.aspect_candidate_list = list()
+        self.aspect_candidate_list_curr_iter = {}
+        self.aspect_candidates_list_final = []
+        self.init_aspect_dict = list()
+        self.aspects_candidate_list_prev_iter = list()
+        self.min_freq_aspect_candidate = asp_thresh
+        self.min_freq_opinion_candidate = op_thresh
+        self.max_num_of_iterations = max_iter
 
     def extract_terms_from_doc(self, parsed_doc):
         """Extract candidate terms for sentences in parsed document.
@@ -248,8 +250,7 @@ class AcquireTerms(object):
         """
         write generated lexicons to csv files
         """
-        out = AcquireTerms.out_dir
-        out.mkdir(parents=True, exist_ok=True)
+        AcquireTerms.out_dir.mkdir(parents=True, exist_ok=True)
 
         _write_final_opinion_lex(self.opinion_candidates_list_final,
                                  self.acquired_opinion_terms_path)
@@ -270,7 +271,7 @@ class AcquireTerms(object):
         self.min_freq_opinion_candidate += add_to_thresholds
         self.min_freq_aspect_candidate += add_to_thresholds
 
-        for iteration_num in range(self.MAX_NUM_OF_ITERATIONS):
+        for iteration_num in range(self.max_num_of_iterations):
             if len(self.opinion_candidate_list_prev_iter) == 0 \
                     and len(self.aspects_candidate_list_prev_iter) == 0:
                 break

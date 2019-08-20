@@ -15,11 +15,12 @@
 # ******************************************************************************
 import csv
 import json
+import sys
 from os import walk, path, makedirs, PathLike, listdir
 from os.path import join, isfile, isdir
 from pathlib import Path
 from typing import Union
-
+from tqdm import tqdm
 import numpy as np
 
 from nlp_architect.common.core_nlp_doc import CoreNLPDoc
@@ -27,7 +28,7 @@ from nlp_architect.models.absa import INFERENCE_LEXICONS
 from nlp_architect.models.absa.inference.data_types import LexiconElement, Polarity
 from nlp_architect.models.absa.train.data_types import OpinionTerm
 from nlp_architect.pipelines.spacy_bist import SpacyBISTParser
-from nlp_architect.utils.io import download_unlicensed_file
+from nlp_architect.utils.io import download_unlicensed_file, line_count
 
 
 def _download_pretrained_rerank_model(rerank_model_full_path):
@@ -46,8 +47,7 @@ def _walk_directory(directory: Union[str, PathLike]):
         for filename in filenames:
             file_path = join(dir_path, filename)
             if isfile(file_path) and not filename.startswith('.'):
-                with open(file_path, 'r', encoding='utf-8') as file:
-                    print('Reading ' + filename)
+                with open(file_path, encoding='utf-8') as file:
                     doc_text = file.read()
                     yield filename, doc_text
 
@@ -91,13 +91,13 @@ def parse_txt(parser: SpacyBISTParser, txt_path: Union[str, PathLike],
         CoreNLPDoc: the annotated document.
     """
     with open(txt_path, encoding='utf-8') as f:
-        for i, doc_text in enumerate(f):
-            print('Parsing document no. {}'.format(i + 1))
+        if out_dir:
+            print('Writing parsed documents to {}'.format(out_dir))
+        for i, doc_text in enumerate(tqdm(f, total=line_count(txt_path), file=sys.stdout)):
             parsed_doc = parser.parse(doc_text.rstrip('\n'), show_tok, show_doc)
 
             if out_dir:
                 out_path = Path(out_dir) / (str(i + 1) + '.json')
-                print('Dumping parsed document to {}'.format(out_path))
                 with open(out_path, 'w', encoding='utf-8') as doc_file:
                     doc_file.write(parsed_doc.pretty_json())
             yield parsed_doc
@@ -117,13 +117,13 @@ def parse_dir(parser, input_dir: Union[str, PathLike], out_dir: Union[str, PathL
     Yields:
         CoreNLPDoc: the annotated document.
     """
-    for i, (filename, file_contents) in enumerate(_walk_directory(input_dir)):
-        print('Parsing document No. {}: {}'.format(str(i), filename))
+    if out_dir:
+        print('Writing parsed documents to {}'.format(out_dir))
+    for filename, file_contents in tqdm(list(_walk_directory(input_dir)), file=sys.stdout):
         parsed_doc = parser.parse(file_contents, show_tok, show_doc)
 
         if out_dir:
             out_path = Path(out_dir) / (filename + '.json')
-            print('Dumping parsed document to {}'.format(out_path))
             with open(out_path, 'w', encoding='utf-8') as file:
                 file.write(parsed_doc.pretty_json())
         yield parsed_doc
@@ -314,7 +314,7 @@ def _read_generic_lex_for_similarity(file_name: Union[str, PathLike]):
 
 
 def _write_aspect_lex(parsed_data: Union[str, PathLike], generated_aspect_lex: dict,
-                      out_file_path: str):
+                      out_dir: Path):
     parsed_docs = _load_parsed_docs_from_dir(parsed_data)
     aspect_dict = {}
     max_examples = 20
@@ -341,7 +341,10 @@ def _write_aspect_lex(parsed_data: Union[str, PathLike], generated_aspect_lex: d
         for sent in sentences:
             term_row.append(sent)
         aspect_table.append(term_row)
-        _write_table(aspect_table, out_file_path)
+
+    out_dir.mkdir(parents=True, exist_ok=True)
+    out_file_path = out_dir / 'generated_aspect_lex.csv'
+    _write_table(aspect_table, out_file_path)
     print('Aspect lexicon written to {}'.format(out_file_path))
 
 
@@ -367,7 +370,7 @@ def _find_aspect_in_sentence(term, lemma, sent_text, aspect_dict, label, max_exa
             aspect_dict[term, lemma] = [sent_text_html]
 
 
-def _write_opinion_lex(parsed_data, generated_opinion_lex_reranked, out_file_path):
+def _write_opinion_lex(parsed_data, generated_opinion_lex_reranked, out_dir):
 
     parsed_docs = _load_parsed_docs_from_dir(parsed_data)
     opinion_dict = {}
@@ -396,7 +399,10 @@ def _write_opinion_lex(parsed_data, generated_opinion_lex_reranked, out_file_pat
         for k in range(3, len(value)):
             term_row.append(value[k])
         opinion_table.append(term_row)
-        _write_table(opinion_table, out_file_path)
+
+    out_dir.mkdir(parents=True, exist_ok=True)
+    out_file_path = out_dir / 'generated_opinion_lex_reranked.csv'
+    _write_table(opinion_table, out_file_path)
     print('Reranked opinion lexicon written to {}'.format(out_file_path))
 
 

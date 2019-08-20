@@ -18,7 +18,7 @@ import pickle
 import numpy as np
 import tensorflow
 from os import PathLike
-
+from pathlib import Path
 
 from nlp_architect.models.absa.utils import _read_generic_lex_for_similarity
 from nlp_architect.models.absa import TRAIN_OUT, TRAIN_LEXICONS, GENERIC_OP_LEX
@@ -521,10 +521,10 @@ class RerankTerms(object):
         return concat_opinion_dict
 
     @staticmethod
-    def _write_prediction_results(concat_opinion_dict):
-
-        out_path = RerankTerms.out_dir / 'generated_opinion_lex_reranked.csv'
-        with open(out_path, 'w', encoding='utf-8') as csv_file:
+    def _write_prediction_results(concat_opinion_dict, out_override):
+        out_dir = Path(out_override) if out_override else RerankTerms.out_dir
+        out_path = out_dir / 'generated_opinion_lex_reranked.csv'
+        with open(out_path, 'w') as csv_file:
             writer = csv.writer(csv_file)
             writer.writerow(['Term', 'Score', 'Polarity', 'isAcquired'])
             for key, value in concat_opinion_dict.items():
