@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
-# pylint: no-member
+# pylint: disable=no-member
 """
 Quantization ops
 """

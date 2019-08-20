@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
-# pylint: bad-super-call
+# pylint: disable=bad-super-call
 """
 Quantized BERT layers and model
 """

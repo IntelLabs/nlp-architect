@@ -73,7 +73,10 @@ class Vocabulary:
         Returns:
             int: int id of word
         """
-        return self._vocab.get(word, self.oov_id)
+        if hasattr(self, "oov_id"):
+            return self._vocab.get(word, self.oov_id)
+        else:
+            return self._vocab.get(word, None)
 
     def __getitem__(self, item):
         """
@@ -83,7 +86,7 @@ class Vocabulary:
 
     def __len__(self):
         vocab_size = len(self._vocab)
-        if self.include_oov:
+        if hasattr(self, "include_oov") and self.include_oov:
             vocab_size += 1
         return vocab_size
 
