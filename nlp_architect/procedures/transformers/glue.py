@@ -35,10 +35,6 @@ from nlp_architect.utils.metrics import (acc_and_f1, pearson_and_spearman,
                                          simple_accuracy)
 
 logger = logging.getLogger(__name__)
-# Setup logging
-logging.basicConfig(format='%(asctime)s - %(levelname)s - %(name)s -   %(message)s',
-                    datefmt='%m/%d/%Y %H:%M:%S',
-                    level=logging.INFO)
 
 
 @register_train_cmd(name='transformer_glue',
