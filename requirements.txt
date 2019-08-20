@@ -8,7 +8,7 @@ nltk
 gensim
 sklearn
 scipy
-numpy
+numpy<1.17
 tensorflow_hub
 elasticsearch
 newspaper3k
