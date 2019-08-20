@@ -14,10 +14,7 @@
 # limitations under the License.
 # ******************************************************************************
 
-MAJOR_V = 0
-MINOR_V = 4
-PATCH_V = 0
-STAGE = 'post2'
+MAJOR_V, MINOR_V, PATCH_V, STAGE = 0, 5, 0, ''
 
 
 def nlp_architect_version():

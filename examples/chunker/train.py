@@ -22,7 +22,7 @@ from os import path
 
 from tensorflow import keras
 
-from nlp_architect.contrib.tensorflow.python.keras.callbacks import ConllCallback
+from nlp_architect.nn.tensorflow.python.keras.callbacks import ConllCallback
 from nlp_architect.data.sequential_tagging import CONLL2000
 from nlp_architect.models.chunker import SequenceChunker
 from nlp_architect.utils.embedding import load_word_embeddings, get_embedding_matrix
