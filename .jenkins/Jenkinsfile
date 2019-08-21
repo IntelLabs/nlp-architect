@@ -122,7 +122,7 @@ pipeline {
         dockerfile {
             filename 'Dockerfile'
             dir 'docker'
-            label 'nlp_architect_docker'
+            // label 'nlp_architect_docker'
             additionalBuildArgs  '--build-arg version=0.5'
             args '-v /tmp:/tmp'
         }
