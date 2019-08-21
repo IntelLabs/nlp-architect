@@ -9,22 +9,6 @@ static final Map slackColorMap      = [
     'UNSTABLE': 'warning',
     'SUCCESS': 'good'
 ]
-
-// Common Closures for Build
-def slackStartMessage = {
-    try {
-        slackSend message: "Build ${env.JOB_NAME} started (<${env.BUILD_URL}|LINK>)"
-    } catch (err) {
-        echo "BUILD WARNING - Failed to send Slack Message: ${err}"
-    }
-}
-def slackEndMessage = {
-    try {
-        slackSend color: slackColorMap[currentBuild.currentResult], message: "Build ${env.JOB_NAME} finished with result: ${currentBuild.currentResult} (<${env.BUILD_URL}|LINK>)"
-    } catch (err) {
-        echo "BUILD WARNING - Failed to send Slack Message: ${err}"
-    }
-}
 */
 
 pipeline {
@@ -68,7 +52,7 @@ pipeline {
                         . .nlp_architect_env/bin/activate
                         export LC_ALL=en_US.UTF-8
                         export LANG=en_US.UTF-8
-                        nlp_architect test
+                        pytest ./tests -rs -vv --cov=nlp_architect --junit-xml=pytest_unit.xml
                         """
                     }
                     post {
@@ -86,7 +70,7 @@ pipeline {
                     steps {
                         sh """
                         . .nlp_architect_env/bin/activate
-                        nlp_architect style --only-flake
+                        flake8 examples nlp_architect tests --config setup.cfg --output-file /tmp/nlp_architect_flake_out.txt
                         """
                     }
                     post {
@@ -101,7 +85,7 @@ pipeline {
                     steps {
                         sh """
                         . .nlp_architect_env/bin/activate
-                        nlp_architect style --only-pylint
+                        pylint -j 4 examples tests nlp_architect --rcfile=pylintrc --score=n
                         """
                     }
                     post {
@@ -126,7 +110,7 @@ pipeline {
                 currentBuild.result = 'FAILURE'
             }
         }
-        cleanup {
+        always {
             deleteDir()
         }
     }
