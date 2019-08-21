@@ -220,8 +220,5 @@ pipeline {
                 currentBuild.result = 'FAILURE'
             }
         }
-        always {
-            // deleteDir()
-        }
     }
 }
