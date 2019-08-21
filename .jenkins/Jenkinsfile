@@ -11,12 +11,121 @@ static final Map slackColorMap      = [
 ]
 */
 
+// pipeline {
+//     agent {
+//         node {
+//                 label 'swarm'
+//                 customWorkspace '/state/ws'
+//             }
+//     }
+//     options {
+//         timestamps()
+//     }
+//     environment { 
+//         NLP_ARCHITECT_BE = 'CPU'
+//     }
+//     stages {
+//         stage('Checkout') {
+//             steps {
+//                 deleteDir()
+//                 checkout scm
+//             }
+//         }
+//         stage('Build environment') {
+//             steps {
+//                 sh 'python3 -m venv .nlp_architect_env'
+//                 sh """
+//                 . .nlp_architect_env/bin/activate
+//                 pip3 install -U pip setuptools h5py
+//                 export NLP_ARCHITECT_BE=CPU
+//                 pip3 install -r requirements.txt
+//                 pip3 install -r dev-requirements.txt
+//                 pip3 install -e .
+//                 """
+//             }
+//         }
+//         stage('Validation') {
+//             parallel {
+//                 stage('Tests') {
+//                     steps {
+//                         sh """
+//                         . .nlp_architect_env/bin/activate
+//                         export LC_ALL=en_US.UTF-8
+//                         export LANG=en_US.UTF-8
+//                         pytest ./tests -rs -vv --cov=nlp_architect --junit-xml=pytest_unit.xml
+//                         """
+//                     }
+//                     post {
+//                         always {
+//                             junit 'pytest_unit.xml'
+//                         }
+//                         failure {
+//                             script {
+//                                 currentBuild.result = 'FAILURE'
+//                             }
+//                         }
+//                     }
+//                 }
+//                 stage('flake8') {
+//                     steps {
+//                         sh """
+//                         . .nlp_architect_env/bin/activate
+//                         flake8 examples nlp_architect tests --config setup.cfg --output-file /tmp/nlp_architect_flake_out.txt
+//                         """
+//                     }
+//                     post {
+//                         failure {
+//                             script {
+//                                 currentBuild.result = 'FAILURE'
+//                             }
+//                         }
+//                     }
+//                 }
+//                 stage('pylint') {
+//                     steps {
+//                         sh """
+//                         . .nlp_architect_env/bin/activate
+//                         pylint -j 4 examples tests nlp_architect --rcfile=pylintrc --score=n
+//                         """
+//                     }
+//                     post {
+//                         failure {
+//                             script {
+//                                 currentBuild.result = 'FAILURE'
+//                             }
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+//     }
+//     post {
+//         aborted {
+//             script {
+//                 currentBuild.result = 'FAILURE'
+//             }
+//         }
+//         failure {
+//             script {
+//                 currentBuild.result = 'FAILURE'
+//             }
+//         }
+//         always {
+//             deleteDir()
+//         }
+//     }
+// }
+
+
 pipeline {
     agent {
-        node {
-                label 'swarm'
-                customWorkspace '/state/ws'
-            }
+        dockerfile {
+            filename 'Dockerfile'
+            dir 'docker'
+            label 'nlp_architect_docker'
+            additionalBuildArgs  '--build-arg version=0.5'
+            args '-v /tmp:/tmp'
+        }
     }
     options {
         timestamps()
@@ -25,35 +134,36 @@ pipeline {
         NLP_ARCHITECT_BE = 'CPU'
     }
     stages {
-        stage('Checkout') {
-            steps {
-                deleteDir()
-                checkout scm
-            }
-        }
-        stage('Build environment') {
-            steps {
-                sh 'python3 -m venv .nlp_architect_env'
-                sh """
-                . .nlp_architect_env/bin/activate
-                pip3 install -U pip setuptools h5py
-                export NLP_ARCHITECT_BE=CPU
-                pip3 install -r requirements.txt
-                pip3 install -r dev-requirements.txt
-                pip3 install -e .
-                """
-            }
-        }
+        // stage('Checkout') {
+        //     steps {
+        //         deleteDir()
+        //         checkout scm
+        //     }
+        // }
+        // stage('Build environment') {
+        //     steps {
+        //         sh 'python3 -m venv .nlp_architect_env'
+        //         sh """
+        //         . .nlp_architect_env/bin/activate
+        //         pip3 install -U pip setuptools h5py
+        //         export NLP_ARCHITECT_BE=CPU
+        //         pip3 install -r requirements.txt
+        //         pip3 install -r dev-requirements.txt
+        //         pip3 install -e .
+        //         """
+        //     }
+        // }
         stage('Validation') {
             parallel {
                 stage('Tests') {
                     steps {
-                        sh """
-                        . .nlp_architect_env/bin/activate
-                        export LC_ALL=en_US.UTF-8
-                        export LANG=en_US.UTF-8
-                        pytest ./tests -rs -vv --cov=nlp_architect --junit-xml=pytest_unit.xml
-                        """
+                        sh "echo hello world"
+                        // sh """
+                        // . .nlp_architect_env/bin/activate
+                        // export LC_ALL=en_US.UTF-8
+                        // export LANG=en_US.UTF-8
+                        // pytest ./tests -rs -vv --cov=nlp_architect --junit-xml=pytest_unit.xml
+                        // """
                     }
                     post {
                         always {
@@ -66,36 +176,36 @@ pipeline {
                         }
                     }
                 }
-                stage('flake8') {
-                    steps {
-                        sh """
-                        . .nlp_architect_env/bin/activate
-                        flake8 examples nlp_architect tests --config setup.cfg --output-file /tmp/nlp_architect_flake_out.txt
-                        """
-                    }
-                    post {
-                        failure {
-                            script {
-                                currentBuild.result = 'FAILURE'
-                            }
-                        }
-                    }
-                }
-                stage('pylint') {
-                    steps {
-                        sh """
-                        . .nlp_architect_env/bin/activate
-                        pylint -j 4 examples tests nlp_architect --rcfile=pylintrc --score=n
-                        """
-                    }
-                    post {
-                        failure {
-                            script {
-                                currentBuild.result = 'FAILURE'
-                            }
-                        }
-                    }
-                }
+                // stage('flake8') {
+                //     steps {
+                //         sh """
+                //         . .nlp_architect_env/bin/activate
+                //         flake8 examples nlp_architect tests --config setup.cfg --output-file /tmp/nlp_architect_flake_out.txt
+                //         """
+                //     }
+                //     post {
+                //         failure {
+                //             script {
+                //                 currentBuild.result = 'FAILURE'
+                //             }
+                //         }
+                //     }
+                // }
+                // stage('pylint') {
+                //     steps {
+                //         sh """
+                //         . .nlp_architect_env/bin/activate
+                //         pylint -j 4 examples tests nlp_architect --rcfile=pylintrc --score=n
+                //         """
+                //     }
+                //     post {
+                //         failure {
+                //             script {
+                //                 currentBuild.result = 'FAILURE'
+                //             }
+                //         }
+                //     }
+                // }
             }
         }
     }
@@ -111,7 +221,7 @@ pipeline {
             }
         }
         always {
-            deleteDir()
+            // deleteDir()
         }
     }
 }
