@@ -365,8 +365,8 @@ class TransformerBase(TrainableModel):
         return mapping
 
     def evaluate_predictions(self, logits, label_ids):
-        raise Exception('evaluate_predictions method must be implemented in order to be used for '
-                        'dev/test set evaluation')
+        raise NotImplementedError('evaluate_predictions method must be implemented in order to'
+                                  'be used for dev/test set evaluation')
 
     def save_model_checkpoint(self, output_path: str, name: str):
         """

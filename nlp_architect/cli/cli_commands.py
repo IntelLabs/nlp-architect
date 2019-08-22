@@ -13,6 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
+# CLI definition
 from argparse import _SubParsersAction
 
 from nlp_architect.cli.cmd_registry import CMD_REGISTRY
@@ -32,11 +33,6 @@ def generic_cmd(cmd_name: str, subtitle: str, description: str, subparsers: _Sub
         model['arg_adder'](sp)
         sp.set_defaults(func=model['fn'])
     parser.set_defaults(func=lambda _: parser.print_help())
-
-
-"""
-cli commands definition
-"""
 
 
 def cli_train_cmd(subparsers: _SubParsersAction):

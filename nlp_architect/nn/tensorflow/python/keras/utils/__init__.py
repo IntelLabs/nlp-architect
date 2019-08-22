@@ -13,4 +13,5 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
+# flake8: noqa
 from nlp_architect.nn.tensorflow.python.keras.utils.layer_utils import save_model, load_model
