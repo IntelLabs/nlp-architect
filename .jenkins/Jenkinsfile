@@ -32,7 +32,7 @@ pipeline {
                 pip3 install -r requirements.txt
                 pip3 install -r dev-requirements.txt
                 pip3 install -e .
-                python -m spacy download en_core_web_sm
+                python -m spacy download en
                 """
             }
         }
