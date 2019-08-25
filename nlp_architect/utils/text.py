@@ -75,8 +75,7 @@ class Vocabulary:
         """
         if hasattr(self, "oov_id"):
             return self._vocab.get(word, self.oov_id)
-        else:
-            return self._vocab.get(word, None)
+        return self._vocab.get(word, None)
 
     def __getitem__(self, item):
         """
