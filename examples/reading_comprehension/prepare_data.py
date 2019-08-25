@@ -77,7 +77,7 @@ def get_glove_matrix(vocabulary_list, download_path):
     save_file_name = download_path + sep + "glove.trimmed.300"
     if not os.path.exists(save_file_name + ".npz"):
         vocab_len = len(vocabulary_list)
-        glove_path = os.path.join(download_path + sep "glove.6B.300d.txt")
+        glove_path = os.path.join(download_path + sep + "glove.6B.300d.txt")
         glove_matrix = np.zeros((vocab_len, 300))
         count = 0
         with open(glove_path) as f:
