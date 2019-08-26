@@ -23,6 +23,7 @@ from tqdm import tqdm
 from nlp_architect.utils.io import validate_existing_directory
 from nlp_architect.utils.text import SpacyInstance
 
+sep = os.sep
 PAD = "<pad>"
 SOS = "<sos>"
 UNK = "<unk>"
@@ -72,10 +73,10 @@ def get_glove_matrix(vocabulary_list, download_path):
     """
     Function to obtain preprocessed glove embeddings matrix
     """
-    save_file_name = download_path + "glove.trimmed.300"
+    save_file_name = download_path + sep + "glove.trimmed.300"
     if not os.path.exists(save_file_name + ".npz"):
         vocab_len = len(vocabulary_list)
-        glove_path = os.path.join(download_path + "glove.6B.300d.txt")
+        glove_path = os.path.join(download_path + sep + "glove.6B.300d.txt")
         glove_matrix = np.zeros((vocab_len, 300))
         count = 0
         with open(glove_path) as f:
@@ -253,13 +254,13 @@ if __name__ == '__main__':
     dev_para_ids = get_ids_list(dev_para, vocab_dict)
     dev_question_ids = get_ids_list(dev_question, vocab_dict)
 
-    final_data_dict = {"train.ids.context": train_para_ids,
-                       "train.ids.question": train_question_ids,
-                       "dev.ids.context": dev_para_ids,
-                       "dev.ids.question": dev_question_ids,
-                       "vocab.dat": vocab_list,
-                       "train.span": train_ans,
-                       "dev.span": dev_ans}
+    final_data_dict = {sep + "train.ids.context": train_para_ids,
+                       sep + "train.ids.question": train_question_ids,
+                       sep + "dev.ids.context": dev_para_ids,
+                       sep + "dev.ids.question": dev_question_ids,
+                       sep + "vocab.dat": vocab_list,
+                       sep + "train.span": train_ans,
+                       sep + "dev.span": dev_ans}
 
     print("writing data to files")
     write_to_file(final_data_dict, data_path)

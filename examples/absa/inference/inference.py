@@ -20,8 +20,9 @@ from nlp_architect.models.absa.inference.inference import SentimentInference
 
 
 def main() -> list:
-    current_dir = Path(path.dirname(path.realpath(__file__)))
-    inference = SentimentInference(current_dir / 'aspects.csv', current_dir / 'opinions.csv')
+    parent_dir = Path(path.realpath(__file__)).parent.parent
+    inference = SentimentInference(parent_dir / 'aspects.csv', parent_dir / 'opinions.csv')
+
     print('\n' + '=' * 40 + '\n' + 'Running inference on examples from sample test set:\n')
 
     docs = ["The food was very fresh and flavoursome the service was very attentive. Would go back"

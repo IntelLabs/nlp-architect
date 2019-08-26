@@ -15,7 +15,7 @@ generated
 *.h5
 #!nlp_architect/server/angular-ui/dist/angular-ui/*.html
 #*.html
-doc/build/**
+docs-sources/build/**
 !nlp_architect/solutions/set_expansion/ui/templates/*.html
 .vscode
 !tests/fixtures/data/server/*.gz

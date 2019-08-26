@@ -18,10 +18,10 @@ import pickle
 import numpy as np
 import tensorflow
 from os import PathLike
-
+from pathlib import Path
 
 from nlp_architect.models.absa.utils import _read_generic_lex_for_similarity
-from nlp_architect.models.absa import TRAIN_OUT, TRAIN_LEXICONS
+from nlp_architect.models.absa import TRAIN_OUT, TRAIN_LEXICONS, GENERIC_OP_LEX
 
 from scipy.spatial.distance import cosine
 from sklearn.model_selection import StratifiedKFold
@@ -53,7 +53,7 @@ class RerankTerms(object):
         self.threshold = 0.5
 
         self.sim_lexicon = TRAIN_LEXICONS / 'RerankSentSimLex.csv'
-        self.generic_lexicon = TRAIN_LEXICONS / 'GenericOpinionLex.csv'
+        self.generic_lexicon = GENERIC_OP_LEX
 
         self.vector_cache = vector_cache
         self.word_vectors_dict = {}
@@ -396,7 +396,6 @@ class RerankTerms(object):
 
         final_concat_opinion_lex = \
             self._generate_concat_reranked_lex(reranked_lex, generic_opinion_terms)
-        self._write_prediction_results(final_concat_opinion_lex)
         return final_concat_opinion_lex
 
     def rerank_train(self):
@@ -522,9 +521,9 @@ class RerankTerms(object):
         return concat_opinion_dict
 
     @staticmethod
-    def _write_prediction_results(concat_opinion_dict):
-
-        out_path = RerankTerms.out_dir / 'generated_opinion_lex_reranked.csv'
+    def _write_prediction_results(concat_opinion_dict, out_override):
+        out_dir = Path(out_override) if out_override else RerankTerms.out_dir
+        out_path = out_dir / 'generated_opinion_lex_reranked.csv'
         with open(out_path, 'w') as csv_file:
             writer = csv.writer(csv_file)
             writer.writerow(['Term', 'Score', 'Polarity', 'isAcquired'])
@@ -536,7 +535,7 @@ class RerankTerms(object):
     def write_evaluation_report(report_dic):
         RerankTerms.model_dir.mkdir(parents=True, exist_ok=True)
         out_path = RerankTerms.model_dir / 'rerank_classifier_results.csv'
-        with open(out_path, 'w') as csv_file:
+        with open(out_path, 'w', encoding='utf-8') as csv_file:
             writer = csv.writer(csv_file)
             writer.writerow(['term', 'score', 'y_pred', 'y_true'])
             for key, value in report_dic.items():

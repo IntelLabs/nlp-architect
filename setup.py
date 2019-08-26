@@ -86,11 +86,11 @@ setup(name='nlp-architect',
           'Programming Language :: Python :: 3',
           'Programming Language :: Python :: 3.6',
           'Topic :: Scientific/Engineering',
-          'Topic :: Scientific/Engineering :: ' +
-          'Artificial Intelligence',
+          'Topic :: Scientific/Engineering :: '
+          + 'Artificial Intelligence',
           'Topic :: Software Development :: Libraries',
-          'Topic :: Software Development :: Libraries :: ' +
-          'Python Modules',
+          'Topic :: Software Development :: Libraries :: '
+          + 'Python Modules',
           'Topic :: Scientific/Engineering :: Information Analysis',
           'Environment :: Console',
           'Environment :: Web Environment',

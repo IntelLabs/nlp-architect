@@ -105,9 +105,9 @@ NLP pipelines modules using NLP Architect models
     nlp_architect.pipelines.spacy_np_annotator.SpacyNPAnnotator
 
 
-``nlp_architect.contrib``
+``nlp_architect.nn``
 -------------------------
-.. currentmodule:: nlp_architect.contrib
+.. currentmodule:: nlp_architect.nn
 
 In addition to imported layers, the library also contains its own set of network layers and additions.
 These are currently stored in the various models or related to which DL frameworks it was based on.
@@ -116,10 +116,10 @@ These are currently stored in the various models or related to which DL framewor
     :toctree: generated/
     :nosignatures:
 
-    nlp_architect.contrib.tensorflow.python.keras.layers.crf.CRF
-    nlp_architect.contrib.tensorflow.python.keras.utils.layer_utils.save_model
-    nlp_architect.contrib.tensorflow.python.keras.utils.layer_utils.load_model
-    nlp_architect.contrib.tensorflow.python.keras.callbacks.ConllCallback
+    nlp_architect.nn.tensorflow.python.keras.layers.crf.CRF
+    nlp_architect.nn.tensorflow.python.keras.utils.layer_utils.save_model
+    nlp_architect.nn.tensorflow.python.keras.utils.layer_utils.load_model
+    nlp_architect.nn.tensorflow.python.keras.callbacks.ConllCallback
 
 
 ``nlp_architect.common``

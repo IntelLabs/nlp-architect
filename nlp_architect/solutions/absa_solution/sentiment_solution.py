@@ -1,5 +1,5 @@
 # ******************************************************************************
-# Copyright 2017-2018 Intel Corporation
+# Copyright 2017-2019 Intel Corporation
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -30,10 +30,9 @@ from nlp_architect.models.absa.inference.inference \
     import SentimentInference
 from nlp_architect.models.absa.utils import load_opinion_lex
 from nlp_architect.solutions.absa_solution import SENTIMENT_OUT
-from nlp_architect.solutions.absa_solution.ui import serve_ui, _ui_format
-from nlp_architect.solutions.absa_solution.utils import Anonymiser
+from nlp_architect.solutions.absa_solution.utils import Anonymiser, _ui_format
 from nlp_architect.utils.io import walk_directory, validate_existing_filepath, \
-    validate_existing_directory
+    validate_existing_directory, validate_existing_path, line_count
 
 
 class SentimentSolution(object):
@@ -51,7 +50,7 @@ class SentimentSolution(object):
 
     def run(self, aspect_lex: PathLike = None, opinion_lex: PathLike = None,
             data: PathLike = None, parsed_data: PathLike = None,
-            inference_results: PathLike = None, ui=True) -> Optional[pd.DataFrame]:
+            inference_results: PathLike = None) -> Optional[pd.DataFrame]:
 
         opinions = load_opinion_lex(opinion_lex)
         if not opinions:
@@ -60,7 +59,7 @@ class SentimentSolution(object):
         if aspects.empty:
             raise ValueError('Empty aspect lexicon!')
         if inference_results:
-            with open(inference_results) as f:
+            with open(inference_results, encoding='utf-8') as f:
                 results = json.loads(f.read(), object_hook=SentimentDoc.decoder)
         elif data or parsed_data:
             inference = SentimentInference(aspect_lex, opinions, parse=False)
@@ -78,7 +77,7 @@ class SentimentSolution(object):
                 sentiment_doc = inference.run(parsed_doc=parsed_doc)
                 if sentiment_doc:
                     results[file] = sentiment_doc
-            with open(SENTIMENT_OUT / 'inference_results.json', 'w') as f:
+            with open(SENTIMENT_OUT / 'inference_results.json', 'w', encoding='utf-8') as f:
                 json.dump(results, f, cls=SentimentDocEncoder, indent=4, sort_keys=True)
         else:
             print('No input given. Please supply one of: '
@@ -88,8 +87,6 @@ class SentimentSolution(object):
         print("\nComputing statistics...")
         stats = self._compute_stats(results, aspects, opinions)
         print("Done.")
-        if ui:
-            serve_ui(stats, aspects)
         return stats
 
     @staticmethod
@@ -99,7 +96,7 @@ class SentimentSolution(object):
                 yield file, doc_text
         else:
             with open(data, encoding='utf-8') as f:
-                for i, doc_text in tqdm(enumerate(f), total=_line_count(data)):
+                for i, doc_text in tqdm(enumerate(f), total=line_count(data)):
                     yield str(i + 1), doc_text
 
     def _compute_stats(self, results: dict, aspects: list, opinion_lex: dict) -> pd.DataFrame:
@@ -152,15 +149,9 @@ class SentimentSolution(object):
         return count
 
 
-def _line_count(file):
-    """Utility function for getting number of lines in a text file."""
-    with open(file) as f:
-        return len(list(f))
-
-
 def main() -> None:
     parser = argparse.ArgumentParser(description='Aspect-Based Sentiment Analysis')
-    parser.add_argument('--data', type=validate_existing_directory,
+    parser.add_argument('--data', type=validate_existing_path,
                         help='Path to data')
     parser.add_argument('--aspects', type=validate_existing_filepath,
                         help='Path to aspect lexicon', required=True)

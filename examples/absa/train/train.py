@@ -14,15 +14,17 @@
 # limitations under the License.
 # ******************************************************************************
 import argparse
+from os import path
+from pathlib import Path
 
-from nlp_architect import LIBRARY_DATASETS
 from nlp_architect.models.absa.train.train import TrainSentiment
 from nlp_architect.utils.io import validate_existing_filepath, validate_existing_path, \
     validate_existing_directory
 
 
 def main() -> None:
-    tripadvisor_train = LIBRARY_DATASETS / 'absa' / \
+    lib_root = Path(path.realpath(__file__)).parent.parent.parent.parent
+    tripadvisor_train = lib_root / 'datasets' / 'absa' / \
         'tripadvisor_co_uk-travel_restaurant_reviews_sample_2000_train.csv'
 
     parser = argparse.ArgumentParser(description='ABSA Train')
