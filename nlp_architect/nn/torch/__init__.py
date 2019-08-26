@@ -14,6 +14,7 @@
 # limitations under the License.
 # ******************************************************************************
 import random
+import time
 
 import numpy as np
 import torch
@@ -35,6 +36,8 @@ def setup_backend(no_cuda):
 def set_seed(seed, n_gpus=None):
     """set seed
     """
+    if seed == -1:
+        seed = int(time.time())
     random.seed(seed)
     np.random.seed(seed)
     torch.manual_seed(seed)
