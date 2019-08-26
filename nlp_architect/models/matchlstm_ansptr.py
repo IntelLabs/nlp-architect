@@ -525,15 +525,15 @@ class MatchLSTMAnswerPointer(object):
             else:
                 # Print Paragraph
                 print("\n")
-                print("Paragraph Number:", idx)
-                test_paragraph = [vocab_forward[ele] for ele in valid[idx][0] if ele != 0]
+                print("Paragraph Number AA:", idx)
+                test_paragraph = [vocab_forward[ele].replace(" ", "") for ele in valid[idx][0] if ele != 0]
                 para_string = " ".join(map(str, test_paragraph))
-                print(re.sub(r'\s([?.!,"](?:\s|$))', r'\1', para_string))
+                print(para_string)
 
                 # Print corresponding Question
-                test_question = [vocab_forward[ele] for ele in valid[idx][1] if ele != 0]
+                test_question = [vocab_forward[ele].replace(" ", "") for ele in valid[idx][1] if ele != 0]
                 ques_string = " ".join(map(str, test_question))
-                print("Question:", re.sub(r'\s([?.!"",])', r'\1', ques_string))
+                print("Question:", ques_string)
                 question_ids = valid[idx][1]
                 question_length = valid[idx][3]
                 ques_mask = valid[idx][6]
@@ -555,7 +555,7 @@ class MatchLSTMAnswerPointer(object):
             answer_ind = valid[idx][0][start_idx[0]:end_idx[0] + 1]
 
             # Print answer
-            req_ans = [vocab_forward[ele] for ele in answer_ind if ele != 0]
+            req_ans = [vocab_forward[ele].replace(" ", "") for ele in answer_ind if ele != 0]
             ans_string = " ".join(map(str, req_ans))
             answer = re.sub(r'\s([?.!",])', r'\1', ans_string)
             print("Answer:", answer)
