@@ -20,7 +20,6 @@ import argparse
 import json
 import os
 from tqdm import tqdm
-import os
 from nlp_architect.utils.io import validate_existing_directory
 from nlp_architect.utils.text import SpacyInstance
 
