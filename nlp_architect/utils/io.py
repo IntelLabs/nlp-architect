@@ -73,18 +73,33 @@ def uncompress_file(filepath: str or os.PathLike, outpath='.'):
         outpath (str): path to extract to
     """
     filepath = str(filepath)
-    if filepath.endswith('.zip'):
-        with zipfile.ZipFile(filepath) as z:
-            z.extractall(outpath)
-    elif filepath.endswith('.gz'):
+    if filepath.endswith('.gz'):
         if os.path.isdir(outpath):
             raise ValueError('output path for gzip must be a file')
         with gzip.open(filepath, 'rb') as fp:
             file_content = fp.read()
         with open(outpath, 'wb') as fp:
             fp.write(file_content)
-    else:
-        raise ValueError('Unsupported archive provided. Method supports only .zip/.gz files.')
+        return None
+    # To unzip zipped model files having SHA-encoded etag and url as filename
+    # raise ValueError('Unsupported archive provided. Method supports only .zip/.gz files.')
+    with zipfile.ZipFile(filepath) as z:
+        z.extractall(outpath)
+        return [x for x in z.namelist() if not (x.startswith('__MACOSX') or x.endswith('/'))]
+
+
+def zipfile_list(filepath: str or os.PathLike):
+    """
+    List the files inside a given zip file
+
+    Args:
+        filepath (str): path to file
+
+    Returns:
+        String list of filenames
+    """
+    with zipfile.ZipFile(filepath) as z:
+        return [x for x in z.namelist() if not (x.startswith('__MACOSX') or x.endswith('/'))]
 
 
 def gzip_str(g_str):
