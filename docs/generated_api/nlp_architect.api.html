@@ -1,0 +1,513 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>nlp_architect.api package &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/install.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/nlp_arch_theme.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="nlp_architect.cli package" href="nlp_architect.cli.html" />
+    <link rel="prev" title="nlp\_architect package" href="nlp_architect_api_index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html">
+          
+
+          
+            
+            <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../publications.html">Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials.html">Jupyter Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model_zoo.html">Model Zoo</a></li>
+</ul>
+<p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tagging/sequence_tagging.html">Sequence Tagging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sentiment.html">Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bist_parser.html">Dependency Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intent.html">Intent Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lm.html">Language Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../information_extraction.html">Information Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transformers.html">Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../archived/additional.html">Additional Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Optimized Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../quantized_bert.html">Quantized BERT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transformers_distillation.html">Transformers Distillation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solutions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../absa_solution.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../term_set_expansion.html">Set Expansion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trend_analysis.html">Trend Analysis</a></li>
+</ul>
+<p class="caption"><span class="caption-text">For Developers</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="nlp_architect_api_index.html">nlp_architect API</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">nlp_architect.api package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.api.abstract_api">nlp_architect.api.abstract_api module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.api.base">nlp_architect.api.base module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.api.bist_parser_api">nlp_architect.api.bist_parser_api module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.api.intent_extraction_api">nlp_architect.api.intent_extraction_api module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.api.machine_comprehension_api">nlp_architect.api.machine_comprehension_api module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.api.ner_api">nlp_architect.api.ner_api module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.api">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.cli.html">nlp_architect.cli package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.common.html">nlp_architect.common package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.data.html">nlp_architect.data package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.models.html">nlp_architect.models package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.nlp.html">nlp_architect.nlp package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.nn.html">nlp_architect.nn package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.pipelines.html">nlp_architect.pipelines package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.procedures.html">nlp_architect.procedures package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.server.html">nlp_architect.server package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.solutions.html">nlp_architect.solutions package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.utils.html">nlp_architect.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer_guide.html">Developer Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">NLP Architect by Intel® AI Lab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="nlp_architect_api_index.html"><code class="docutils literal notranslate"><span class="pre">nlp\_architect</span></code> package</a> &raquo;</li>
+        
+      <li>nlp_architect.api package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="nlp-architect-api-package">
+<h1>nlp_architect.api package<a class="headerlink" href="#nlp-architect-api-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-nlp_architect.api.abstract_api">
+<span id="nlp-architect-api-abstract-api-module"></span><h2>nlp_architect.api.abstract_api module<a class="headerlink" href="#module-nlp_architect.api.abstract_api" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nlp_architect.api.abstract_api.AbstractApi">
+<em class="property">class </em><code class="descclassname">nlp_architect.api.abstract_api.</code><code class="descname">AbstractApi</code><a class="reference internal" href="../_modules/nlp_architect/api/abstract_api.html#AbstractApi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.api.abstract_api.AbstractApi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Abstract class for API’s to the server</p>
+<dl class="method">
+<dt id="nlp_architect.api.abstract_api.AbstractApi.inference">
+<code class="descname">inference</code><span class="sig-paren">(</span><em>doc</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/api/abstract_api.html#AbstractApi.inference"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.api.abstract_api.AbstractApi.inference" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.api.abstract_api.AbstractApi.load_model">
+<code class="descname">load_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/api/abstract_api.html#AbstractApi.load_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.api.abstract_api.AbstractApi.load_model" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-nlp_architect.api.base">
+<span id="nlp-architect-api-base-module"></span><h2>nlp_architect.api.base module<a class="headerlink" href="#module-nlp_architect.api.base" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nlp_architect.api.base.ModelAPI">
+<em class="property">class </em><code class="descclassname">nlp_architect.api.base.</code><code class="descname">ModelAPI</code><span class="sig-paren">(</span><em>model_path: str = None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/api/base.html#ModelAPI"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.api.base.ModelAPI" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Base class for a model API implementation
+Implementing classes must provide a default model and/or a path to a model</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>model_path</strong> (<em>str</em>) – path to a trained model</td>
+</tr>
+</tbody>
+</table>
+<p>run method must return</p>
+<dl class="attribute">
+<dt id="nlp_architect.api.base.ModelAPI.default_model">
+<code class="descname">default_model</code><em class="property"> = None</em><a class="headerlink" href="#nlp_architect.api.base.ModelAPI.default_model" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.api.base.ModelAPI.load_model">
+<code class="descname">load_model</code><span class="sig-paren">(</span><em>model_path: str</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/api/base.html#ModelAPI.load_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.api.base.ModelAPI.load_model" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.api.base.ModelAPI.run">
+<code class="descname">run</code><span class="sig-paren">(</span><em>inputs: Union[str, List[str]]</em><span class="sig-paren">)</span> &#x2192; Dict<a class="reference internal" href="../_modules/nlp_architect/api/base.html#ModelAPI.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.api.base.ModelAPI.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-nlp_architect.api.bist_parser_api">
+<span id="nlp-architect-api-bist-parser-api-module"></span><h2>nlp_architect.api.bist_parser_api module<a class="headerlink" href="#module-nlp_architect.api.bist_parser_api" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nlp_architect.api.bist_parser_api.BistParserApi">
+<em class="property">class </em><code class="descclassname">nlp_architect.api.bist_parser_api.</code><code class="descname">BistParserApi</code><a class="reference internal" href="../_modules/nlp_architect/api/bist_parser_api.html#BistParserApi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.api.bist_parser_api.BistParserApi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nlp_architect.api.abstract_api.AbstractApi" title="nlp_architect.api.abstract_api.AbstractApi"><code class="xref py py-class docutils literal notranslate"><span class="pre">nlp_architect.api.abstract_api.AbstractApi</span></code></a></p>
+<p>Bist Parser API</p>
+<dl class="method">
+<dt id="nlp_architect.api.bist_parser_api.BistParserApi.inference">
+<code class="descname">inference</code><span class="sig-paren">(</span><em>doc</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/api/bist_parser_api.html#BistParserApi.inference"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.api.bist_parser_api.BistParserApi.inference" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse according to SpacyBISTParser’s model</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>doc</strong> (<em>str</em>) – the doc str</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the parser’s response hosted in CoreNLPDoc object</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="nlp_architect.common.html#nlp_architect.common.core_nlp_doc.CoreNLPDoc" title="nlp_architect.common.core_nlp_doc.CoreNLPDoc">CoreNLPDoc</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.api.bist_parser_api.BistParserApi.load_model">
+<code class="descname">load_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/api/bist_parser_api.html#BistParserApi.load_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.api.bist_parser_api.BistParserApi.load_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load SpacyBISTParser model</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-nlp_architect.api.intent_extraction_api">
+<span id="nlp-architect-api-intent-extraction-api-module"></span><h2>nlp_architect.api.intent_extraction_api module<a class="headerlink" href="#module-nlp_architect.api.intent_extraction_api" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nlp_architect.api.intent_extraction_api.IntentExtractionApi">
+<em class="property">class </em><code class="descclassname">nlp_architect.api.intent_extraction_api.</code><code class="descname">IntentExtractionApi</code><span class="sig-paren">(</span><em>prompt=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/api/intent_extraction_api.html#IntentExtractionApi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.api.intent_extraction_api.IntentExtractionApi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nlp_architect.api.abstract_api.AbstractApi" title="nlp_architect.api.abstract_api.AbstractApi"><code class="xref py py-class docutils literal notranslate"><span class="pre">nlp_architect.api.abstract_api.AbstractApi</span></code></a></p>
+<dl class="staticmethod">
+<dt id="nlp_architect.api.intent_extraction_api.IntentExtractionApi.display_results">
+<em class="property">static </em><code class="descname">display_results</code><span class="sig-paren">(</span><em>text_str</em>, <em>predictions</em>, <em>intent_type</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/api/intent_extraction_api.html#IntentExtractionApi.display_results"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.api.intent_extraction_api.IntentExtractionApi.display_results" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.api.intent_extraction_api.IntentExtractionApi.inference">
+<code class="descname">inference</code><span class="sig-paren">(</span><em>doc</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/api/intent_extraction_api.html#IntentExtractionApi.inference"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.api.intent_extraction_api.IntentExtractionApi.inference" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.api.intent_extraction_api.IntentExtractionApi.load_model">
+<code class="descname">load_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/api/intent_extraction_api.html#IntentExtractionApi.load_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.api.intent_extraction_api.IntentExtractionApi.load_model" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.api.intent_extraction_api.IntentExtractionApi.model_dir">
+<code class="descname">model_dir</code><em class="property"> = '/Users/pizsak/nlp-architect/cache/intent-pretrained'</em><a class="headerlink" href="#nlp_architect.api.intent_extraction_api.IntentExtractionApi.model_dir" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.api.intent_extraction_api.IntentExtractionApi.pretrained_model">
+<code class="descname">pretrained_model</code><em class="property"> = '/Users/pizsak/nlp-architect/cache/intent-pretrained/model.h5'</em><a class="headerlink" href="#nlp_architect.api.intent_extraction_api.IntentExtractionApi.pretrained_model" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.api.intent_extraction_api.IntentExtractionApi.pretrained_model_info">
+<code class="descname">pretrained_model_info</code><em class="property"> = '/Users/pizsak/nlp-architect/cache/intent-pretrained/model_info.dat'</em><a class="headerlink" href="#nlp_architect.api.intent_extraction_api.IntentExtractionApi.pretrained_model_info" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.api.intent_extraction_api.IntentExtractionApi.process_text">
+<code class="descname">process_text</code><span class="sig-paren">(</span><em>text</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/api/intent_extraction_api.html#IntentExtractionApi.process_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.api.intent_extraction_api.IntentExtractionApi.process_text" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.api.intent_extraction_api.IntentExtractionApi.vectorize">
+<code class="descname">vectorize</code><span class="sig-paren">(</span><em>doc</em>, <em>vocab</em>, <em>char_vocab=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/api/intent_extraction_api.html#IntentExtractionApi.vectorize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.api.intent_extraction_api.IntentExtractionApi.vectorize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-nlp_architect.api.machine_comprehension_api">
+<span id="nlp-architect-api-machine-comprehension-api-module"></span><h2>nlp_architect.api.machine_comprehension_api module<a class="headerlink" href="#module-nlp_architect.api.machine_comprehension_api" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nlp_architect.api.machine_comprehension_api.MachineComprehensionApi">
+<em class="property">class </em><code class="descclassname">nlp_architect.api.machine_comprehension_api.</code><code class="descname">MachineComprehensionApi</code><span class="sig-paren">(</span><em>prompt=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/api/machine_comprehension_api.html#MachineComprehensionApi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.api.machine_comprehension_api.MachineComprehensionApi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nlp_architect.api.abstract_api.AbstractApi" title="nlp_architect.api.abstract_api.AbstractApi"><code class="xref py py-class docutils literal notranslate"><span class="pre">nlp_architect.api.abstract_api.AbstractApi</span></code></a></p>
+<p>Machine Comprehension API</p>
+<dl class="attribute">
+<dt id="nlp_architect.api.machine_comprehension_api.MachineComprehensionApi.data_dir">
+<code class="descname">data_dir</code><em class="property"> = '/Users/pizsak/nlp-architect/cache/mrc-pretrained/mrc_data'</em><a class="headerlink" href="#nlp_architect.api.machine_comprehension_api.MachineComprehensionApi.data_dir" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.api.machine_comprehension_api.MachineComprehensionApi.data_path">
+<code class="descname">data_path</code><em class="property"> = '/Users/pizsak/nlp-architect/cache/mrc-pretrained/mrc_data/data'</em><a class="headerlink" href="#nlp_architect.api.machine_comprehension_api.MachineComprehensionApi.data_path" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.api.machine_comprehension_api.MachineComprehensionApi.dir">
+<code class="descname">dir</code><em class="property"> = '/Users/pizsak/nlp-architect/cache/mrc-pretrained'</em><a class="headerlink" href="#nlp_architect.api.machine_comprehension_api.MachineComprehensionApi.dir" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.api.machine_comprehension_api.MachineComprehensionApi.download_model">
+<code class="descname">download_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/api/machine_comprehension_api.html#MachineComprehensionApi.download_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.api.machine_comprehension_api.MachineComprehensionApi.download_model" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.api.machine_comprehension_api.MachineComprehensionApi.get_paragraphs">
+<code class="descname">get_paragraphs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/api/machine_comprehension_api.html#MachineComprehensionApi.get_paragraphs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.api.machine_comprehension_api.MachineComprehensionApi.get_paragraphs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.api.machine_comprehension_api.MachineComprehensionApi.inference">
+<code class="descname">inference</code><span class="sig-paren">(</span><em>doc</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/api/machine_comprehension_api.html#MachineComprehensionApi.inference"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.api.machine_comprehension_api.MachineComprehensionApi.inference" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.api.machine_comprehension_api.MachineComprehensionApi.load_model">
+<code class="descname">load_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/api/machine_comprehension_api.html#MachineComprehensionApi.load_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.api.machine_comprehension_api.MachineComprehensionApi.load_model" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.api.machine_comprehension_api.MachineComprehensionApi.model_dir">
+<code class="descname">model_dir</code><em class="property"> = '/Users/pizsak/nlp-architect/cache/mrc-pretrained/mrc_trained_model'</em><a class="headerlink" href="#nlp_architect.api.machine_comprehension_api.MachineComprehensionApi.model_dir" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.api.machine_comprehension_api.MachineComprehensionApi.model_path">
+<code class="descname">model_path</code><em class="property"> = '/Users/pizsak/nlp-architect/cache/mrc-pretrained/mrc_trained_model/trained_model'</em><a class="headerlink" href="#nlp_architect.api.machine_comprehension_api.MachineComprehensionApi.model_path" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="nlp_architect.api.machine_comprehension_api.MachineComprehensionApi.paragraphs">
+<em class="property">static </em><code class="descname">paragraphs</code><span class="sig-paren">(</span><em>valid</em>, <em>vocab_tuple</em>, <em>num_examples</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/api/machine_comprehension_api.html#MachineComprehensionApi.paragraphs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.api.machine_comprehension_api.MachineComprehensionApi.paragraphs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="nlp_architect.api.machine_comprehension_api.MachineComprehensionApi.questions">
+<em class="property">static </em><code class="descname">questions</code><span class="sig-paren">(</span><em>valid</em>, <em>vocab_tuple</em>, <em>num_examples</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/api/machine_comprehension_api.html#MachineComprehensionApi.questions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.api.machine_comprehension_api.MachineComprehensionApi.questions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-nlp_architect.api.ner_api">
+<span id="nlp-architect-api-ner-api-module"></span><h2>nlp_architect.api.ner_api module<a class="headerlink" href="#module-nlp_architect.api.ner_api" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nlp_architect.api.ner_api.NerApi">
+<em class="property">class </em><code class="descclassname">nlp_architect.api.ner_api.</code><code class="descname">NerApi</code><span class="sig-paren">(</span><em>prompt=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/api/ner_api.html#NerApi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.api.ner_api.NerApi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nlp_architect.api.abstract_api.AbstractApi" title="nlp_architect.api.abstract_api.AbstractApi"><code class="xref py py-class docutils literal notranslate"><span class="pre">nlp_architect.api.abstract_api.AbstractApi</span></code></a></p>
+<p>NER model API</p>
+<dl class="method">
+<dt id="nlp_architect.api.ner_api.NerApi.inference">
+<code class="descname">inference</code><span class="sig-paren">(</span><em>doc</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/api/ner_api.html#NerApi.inference"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.api.ner_api.NerApi.inference" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.api.ner_api.NerApi.load_model">
+<code class="descname">load_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/api/ner_api.html#NerApi.load_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.api.ner_api.NerApi.load_model" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.api.ner_api.NerApi.model_dir">
+<code class="descname">model_dir</code><em class="property"> = '/Users/pizsak/nlp-architect/cache/ner-pretrained'</em><a class="headerlink" href="#nlp_architect.api.ner_api.NerApi.model_dir" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.api.ner_api.NerApi.pretrained_model">
+<code class="descname">pretrained_model</code><em class="property"> = '/Users/pizsak/nlp-architect/cache/ner-pretrained/model_v4.h5'</em><a class="headerlink" href="#nlp_architect.api.ner_api.NerApi.pretrained_model" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.api.ner_api.NerApi.pretrained_model_info">
+<code class="descname">pretrained_model_info</code><em class="property"> = '/Users/pizsak/nlp-architect/cache/ner-pretrained/model_info_v4.dat'</em><a class="headerlink" href="#nlp_architect.api.ner_api.NerApi.pretrained_model_info" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="nlp_architect.api.ner_api.NerApi.pretty_print">
+<em class="property">static </em><code class="descname">pretty_print</code><span class="sig-paren">(</span><em>text</em>, <em>tags</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/api/ner_api.html#NerApi.pretty_print"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.api.ner_api.NerApi.pretty_print" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.api.ner_api.NerApi.process_text">
+<code class="descname">process_text</code><span class="sig-paren">(</span><em>text</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/api/ner_api.html#NerApi.process_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.api.ner_api.NerApi.process_text" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.api.ner_api.NerApi.vectorize">
+<code class="descname">vectorize</code><span class="sig-paren">(</span><em>doc</em>, <em>vocab</em>, <em>char_vocab</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/api/ner_api.html#NerApi.vectorize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.api.ner_api.NerApi.vectorize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-nlp_architect.api">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-nlp_architect.api" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,558 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>nlp_architect.solutions.trend_analysis.topic_extraction &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+        <script type="text/javascript" src="../../../../_static/install.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/nlp_arch_theme.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html">
+          
+
+          
+            
+            <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../quick_start.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../publications.html">Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials.html">Jupyter Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../model_zoo.html">Model Zoo</a></li>
+</ul>
+<p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tagging/sequence_tagging.html">Sequence Tagging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../sentiment.html">Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../bist_parser.html">Dependency Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../intent.html">Intent Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../lm.html">Language Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../information_extraction.html">Information Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../transformers.html">Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../archived/additional.html">Additional Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Optimized Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../quantized_bert.html">Quantized BERT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../transformers_distillation.html">Transformers Distillation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solutions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../absa_solution.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../term_set_expansion.html">Set Expansion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../trend_analysis.html">Trend Analysis</a></li>
+</ul>
+<p class="caption"><span class="caption-text">For Developers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../developer_guide.html">Developer Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">NLP Architect by Intel® AI Lab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>nlp_architect.solutions.trend_analysis.topic_extraction</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for nlp_architect.solutions.trend_analysis.topic_extraction</h1><div class="highlight"><pre>
+<span></span><span class="c1"># ******************************************************************************</span>
+<span class="c1"># Copyright 2017-2018 Intel Corporation</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ******************************************************************************</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="p">(</span><span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span>
+                        <span class="n">unicode_literals</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">csv</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="k">import</span> <span class="n">Pool</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="k">import</span> <span class="n">makedirs</span><span class="p">,</span> <span class="n">path</span>
+
+<span class="kn">from</span> <span class="nn">newspaper</span> <span class="k">import</span> <span class="n">Article</span>
+
+<span class="kn">from</span> <span class="nn">nlp_architect</span> <span class="k">import</span> <span class="n">LIBRARY_OUT</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.solutions.trend_analysis.np_scorer</span> <span class="k">import</span> <span class="n">NPScorer</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.utils.embedding</span> <span class="k">import</span> <span class="n">FasttextEmbeddingsModel</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.utils.io</span> <span class="k">import</span> <span class="n">validate_existing_directory</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.utils.text</span> <span class="k">import</span> <span class="n">SpacyInstance</span>
+
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">stream</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="n">data_dir</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">LIBRARY_OUT</span> <span class="o">/</span> <span class="s1">&#39;trend-analysis-data&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="noun_phrase_extraction"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.solutions.trend_analysis.html#nlp_architect.solutions.trend_analysis.topic_extraction.noun_phrase_extraction">[docs]</a><span class="k">def</span> <span class="nf">noun_phrase_extraction</span><span class="p">(</span><span class="n">docs</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Extract noun-phrases from a textual corpus</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        docs (List[String]): A list of documents</span>
+<span class="sd">        parser (SpacyInstance): Spacy NLP parser</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        List of topics with their tf_idf, c_value, language-model scores</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;extracting NPs&#39;</span><span class="p">)</span>
+    <span class="n">np_app</span> <span class="o">=</span> <span class="n">NPScorer</span><span class="p">(</span><span class="n">parser</span><span class="o">=</span><span class="n">parser</span><span class="p">)</span>
+    <span class="n">np_result</span> <span class="o">=</span> <span class="n">np_app</span><span class="o">.</span><span class="n">score_documents</span><span class="p">(</span><span class="n">docs</span><span class="p">,</span> <span class="n">return_all</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;got NP extractor result. </span><span class="si">%s</span><span class="s1"> phrases were extracted&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">np_result</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">np_result</span></div>
+
+
+<div class="viewcode-block" id="load_text_from_folder"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.solutions.trend_analysis.html#nlp_architect.solutions.trend_analysis.topic_extraction.load_text_from_folder">[docs]</a><span class="k">def</span> <span class="nf">load_text_from_folder</span><span class="p">(</span><span class="n">folder</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Load files content into a list of docs (texts)</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        folder: A path to a folder containing text files</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A list of documents (List[String])</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">files_content</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">folder</span><span class="p">):</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">folder</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="o">+</span> <span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">files_content</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                        <span class="p">((</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">())</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;UTF-8&#39;</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;replace&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
+                            <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\r</span><span class="s1">&#39;</span><span class="p">,</span>
+                                               <span class="s1">&#39; &#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
+                            <span class="s1">&#39;</span><span class="se">\b</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">))</span>
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Error in load_text: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">files_content</span></div>
+
+
+<div class="viewcode-block" id="load_url_content"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.solutions.trend_analysis.html#nlp_architect.solutions.trend_analysis.topic_extraction.load_url_content">[docs]</a><span class="k">def</span> <span class="nf">load_url_content</span><span class="p">(</span><span class="n">url_list</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Load articles content into a list of docs (texts)</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        url_list (List[String]): A list of urls</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A list of documents (List[String])</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">files_content</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">url_list</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">url</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;loading </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
+                <span class="n">article</span> <span class="o">=</span> <span class="n">Article</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+                <span class="n">article</span><span class="o">.</span><span class="n">download</span><span class="p">()</span>
+                <span class="n">article</span><span class="o">.</span><span class="n">parse</span><span class="p">()</span>
+                <span class="n">files_content</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">article</span><span class="o">.</span><span class="n">title</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">article</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Error in load_text: </span><span class="si">%s</span><span class="s2">, for url: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">url</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">files_content</span></div>
+
+
+<div class="viewcode-block" id="save_scores"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.solutions.trend_analysis.html#nlp_architect.solutions.trend_analysis.topic_extraction.save_scores">[docs]</a><span class="k">def</span> <span class="nf">save_scores</span><span class="p">(</span><span class="n">np_result</span><span class="p">,</span> <span class="n">file_path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Save the result of a topic extraction into a file</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        np_result: A list of topics with different score types (tfidf, cvalue, freq)</span>
+<span class="sd">        file_path: The output file path</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;saving multi-scores np extraction results to: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">file_path</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s1">&#39;wt&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">csv_file</span><span class="p">:</span>
+        <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">csv_file</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+        <span class="n">ctr</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">group</span><span class="p">,</span> <span class="n">tfidf</span><span class="p">,</span> <span class="n">cvalue</span><span class="p">,</span> <span class="n">freq</span> <span class="ow">in</span> <span class="n">np_result</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">group_str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+                <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">group</span><span class="p">:</span>
+                    <span class="n">group_str</span> <span class="o">+=</span> <span class="n">p</span> <span class="o">+</span> <span class="s1">&#39;;&#39;</span>
+                <span class="n">row</span> <span class="o">=</span> <span class="p">(</span><span class="n">group_str</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="nb">str</span><span class="p">(</span><span class="n">tfidf</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">cvalue</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">freq</span><span class="p">))</span>
+                <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+                <span class="n">ctr</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Error while writing np results. iteration #: </span><span class="si">%s</span><span class="s2">. Error: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span>
+                    <span class="n">ctr</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="unify_corpora_from_texts"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.solutions.trend_analysis.html#nlp_architect.solutions.trend_analysis.topic_extraction.unify_corpora_from_texts">[docs]</a><span class="k">def</span> <span class="nf">unify_corpora_from_texts</span><span class="p">(</span><span class="n">text_list_t</span><span class="p">,</span> <span class="n">text_list_r</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Merge two corpora into a single text file</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        text_list_t: A list of documents - target corpus (List[String])</span>
+<span class="sd">        text_list_r: A list of documents - reference corpus (List[String])</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        The path of the unified corpus</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;prepare data for w2v training&#39;</span><span class="p">)</span>
+    <span class="n">out_file</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s1">&#39;corpus.txt&#39;</span><span class="p">))</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">out_file</span><span class="p">,</span> <span class="s1">&#39;w+&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">writer</span><span class="p">:</span>
+            <span class="n">write_text_list_to_file</span><span class="p">(</span><span class="n">text_list_t</span><span class="p">,</span> <span class="n">writer</span><span class="p">)</span>
+            <span class="n">write_text_list_to_file</span><span class="p">(</span><span class="n">text_list_r</span><span class="p">,</span> <span class="n">writer</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Error: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">out_file</span></div>
+
+
+<div class="viewcode-block" id="unify_corpora_from_folders"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.solutions.trend_analysis.html#nlp_architect.solutions.trend_analysis.topic_extraction.unify_corpora_from_folders">[docs]</a><span class="k">def</span> <span class="nf">unify_corpora_from_folders</span><span class="p">(</span><span class="n">corpus_a</span><span class="p">,</span> <span class="n">corpus_b</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Merge two corpora into a single text file</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        corpus_a: A folder containing text files (String)</span>
+<span class="sd">        corpus_b: A folder containing text files (String)</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        The path of the unified corpus</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;prepare data for w2v training&#39;</span><span class="p">)</span>
+    <span class="n">out_file</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s1">&#39;corpus.txt&#39;</span><span class="p">))</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">out_file</span><span class="p">,</span> <span class="s1">&#39;w+&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">writer</span><span class="p">:</span>
+            <span class="n">write_folder_corpus_to_file</span><span class="p">(</span><span class="n">corpus_a</span><span class="p">,</span> <span class="n">writer</span><span class="p">)</span>
+            <span class="n">write_folder_corpus_to_file</span><span class="p">(</span><span class="n">corpus_b</span><span class="p">,</span> <span class="n">writer</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Error: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">out_file</span></div>
+
+
+<div class="viewcode-block" id="write_folder_corpus_to_file"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.solutions.trend_analysis.html#nlp_architect.solutions.trend_analysis.topic_extraction.write_folder_corpus_to_file">[docs]</a><span class="k">def</span> <span class="nf">write_folder_corpus_to_file</span><span class="p">(</span><span class="n">corpus</span><span class="p">,</span> <span class="n">writer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Merge content of a folder into a single text file</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        corpus: A folder containing text files (String)</span>
+<span class="sd">        writer: A file writer</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">corpus</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">file_path</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">corpus</span><span class="p">,</span> <span class="n">filename</span><span class="p">))</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">lines</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+                <span class="n">writer</span><span class="o">.</span><span class="n">writelines</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Error: </span><span class="si">%s</span><span class="s1">. skipping file: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="write_text_list_to_file"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.solutions.trend_analysis.html#nlp_architect.solutions.trend_analysis.topic_extraction.write_text_list_to_file">[docs]</a><span class="k">def</span> <span class="nf">write_text_list_to_file</span><span class="p">(</span><span class="n">text_list</span><span class="p">,</span> <span class="n">writer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Merge a list of texts into a single text file</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        text_list: A list of texts (List[String])</span>
+<span class="sd">        writer: A file writer</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">text</span> <span class="ow">in</span> <span class="n">text_list</span><span class="p">:</span>
+            <span class="n">writer</span><span class="o">.</span><span class="n">writelines</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Error: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="train_w2v_model"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.solutions.trend_analysis.html#nlp_architect.solutions.trend_analysis.topic_extraction.train_w2v_model">[docs]</a><span class="k">def</span> <span class="nf">train_w2v_model</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Train a w2v (skipgram) model using fasttext package</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data: A path to the training data (String)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+        <span class="n">texts</span> <span class="o">=</span> <span class="p">[</span><span class="n">l</span><span class="o">.</span><span class="n">split</span><span class="p">()</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">fp</span><span class="o">.</span><span class="n">readlines</span><span class="p">()]</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Fasttext embeddings training...&#39;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">FasttextEmbeddingsModel</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">min_count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">skipgram</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">texts</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s1">&#39;W2V_Models/model.bin&#39;</span><span class="p">)))</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Error: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="create_w2v_model"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.solutions.trend_analysis.html#nlp_architect.solutions.trend_analysis.topic_extraction.create_w2v_model">[docs]</a><span class="k">def</span> <span class="nf">create_w2v_model</span><span class="p">(</span><span class="n">text_list_t</span><span class="p">,</span> <span class="n">text_list_r</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">     Create a w2v model on the given corpora</span>
+
+<span class="sd">     Args:</span>
+<span class="sd">         text_list_t: A list of documents - target corpus (List[String])</span>
+<span class="sd">         text_list_r: A list of documents - reference corpus (List[String])</span>
+<span class="sd">     &quot;&quot;&quot;</span>
+    <span class="n">unified_data</span> <span class="o">=</span> <span class="n">unify_corpora_from_texts</span><span class="p">(</span><span class="n">text_list_t</span><span class="p">,</span> <span class="n">text_list_r</span><span class="p">)</span>
+    <span class="n">train_w2v_model</span><span class="p">(</span><span class="n">unified_data</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_urls_from_file"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.solutions.trend_analysis.html#nlp_architect.solutions.trend_analysis.topic_extraction.get_urls_from_file">[docs]</a><span class="k">def</span> <span class="nf">get_urls_from_file</span><span class="p">(</span><span class="n">file</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">     Merge two corpora into a single text file</span>
+
+<span class="sd">     Args:</span>
+<span class="sd">         corpus_a: A folder containing text files (String)</span>
+<span class="sd">         corpus_b: A folder containing text files (String)</span>
+<span class="sd">     Returns:</span>
+<span class="sd">         The path of the unified corpus</span>
+<span class="sd">     &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">)</span> <span class="k">as</span> <span class="n">url_file</span><span class="p">:</span>
+        <span class="n">url_list</span> <span class="o">=</span> <span class="n">url_file</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+        <span class="n">url_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">url_list</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">url_list</span></div>
+
+
+<div class="viewcode-block" id="initiate_parser"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.solutions.trend_analysis.html#nlp_architect.solutions.trend_analysis.topic_extraction.initiate_parser">[docs]</a><span class="k">def</span> <span class="nf">initiate_parser</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">SpacyInstance</span><span class="p">(</span>
+        <span class="n">disable</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;tagger&#39;</span><span class="p">,</span> <span class="s1">&#39;ner&#39;</span><span class="p">,</span> <span class="s1">&#39;parser&#39;</span><span class="p">,</span> <span class="s1">&#39;vectors&#39;</span><span class="p">,</span> <span class="s1">&#39;textcat&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">parser</span></div>
+
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.solutions.trend_analysis.html#nlp_architect.solutions.trend_analysis.topic_extraction.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">corpus_t</span><span class="p">,</span> <span class="n">corpus_r</span><span class="p">,</span> <span class="n">single_thread</span><span class="p">,</span> <span class="n">no_train</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">data_dir</span><span class="p">):</span>
+            <span class="n">makedirs</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s1">&#39;W2V_Models&#39;</span><span class="p">)):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s1">&#39;W2V_Models&#39;</span><span class="p">))</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;failed to create output folder.&#39;</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">url</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">corpus_t</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">corpus_r</span><span class="p">):</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Please provide a valid csv file with urls&#39;</span><span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">text_t</span> <span class="o">=</span> <span class="n">load_url_content</span><span class="p">(</span><span class="n">get_urls_from_file</span><span class="p">(</span><span class="n">corpus_t</span><span class="p">))</span>
+            <span class="n">text_r</span> <span class="o">=</span> <span class="n">load_url_content</span><span class="p">(</span><span class="n">get_urls_from_file</span><span class="p">(</span><span class="n">corpus_r</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">corpus_t</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">corpus_r</span><span class="p">):</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Please provide valid directories for target_corpus and&#39;</span>
+                         <span class="s1">&#39; for ref_corpus&#39;</span><span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">text_t</span> <span class="o">=</span> <span class="n">load_text_from_folder</span><span class="p">(</span><span class="n">corpus_t</span><span class="p">)</span>
+            <span class="n">text_r</span> <span class="o">=</span> <span class="n">load_text_from_folder</span><span class="p">(</span><span class="n">corpus_r</span><span class="p">)</span>
+
+    <span class="c1"># extract noun phrases</span>
+    <span class="n">nlp_parser_t</span> <span class="o">=</span> <span class="n">initiate_parser</span><span class="p">()</span>
+    <span class="n">nlp_parser_r</span> <span class="o">=</span> <span class="n">initiate_parser</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">single_thread</span><span class="p">:</span>
+        <span class="n">result_t</span> <span class="o">=</span> <span class="n">noun_phrase_extraction</span><span class="p">(</span><span class="n">text_t</span><span class="p">,</span> <span class="n">nlp_parser_t</span><span class="p">)</span>
+        <span class="n">result_r</span> <span class="o">=</span> <span class="n">noun_phrase_extraction</span><span class="p">(</span><span class="n">text_r</span><span class="p">,</span> <span class="n">nlp_parser_r</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">Pool</span><span class="p">(</span><span class="n">processes</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="k">as</span> <span class="n">pool</span><span class="p">:</span>
+            <span class="n">run_np_t</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">apply_async</span><span class="p">(</span><span class="n">noun_phrase_extraction</span><span class="p">,</span>
+                                        <span class="p">[</span><span class="n">text_t</span><span class="p">,</span> <span class="n">nlp_parser_t</span><span class="p">])</span>
+            <span class="n">run_np_r</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">apply_async</span><span class="p">(</span><span class="n">noun_phrase_extraction</span><span class="p">,</span>
+                                        <span class="p">[</span><span class="n">text_r</span><span class="p">,</span> <span class="n">nlp_parser_r</span><span class="p">])</span>
+            <span class="n">result_t</span> <span class="o">=</span> <span class="n">run_np_t</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+            <span class="n">result_r</span> <span class="o">=</span> <span class="n">run_np_r</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+
+    <span class="c1"># save results to csv</span>
+
+    <span class="c1"># save_scores(result_t, os.path.splitext(os.path.basename(corpus_t))[0] + &#39;.csv&#39;)</span>
+    <span class="c1"># save_scores(result_r, os.path.splitext(os.path.basename(corpus_r))[0] + &#39;.csv&#39;)</span>
+    <span class="n">save_scores</span><span class="p">(</span><span class="n">result_t</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">corpus_t</span><span class="p">)))</span> <span class="o">+</span> <span class="s1">&#39;.csv&#39;</span><span class="p">)</span>
+    <span class="n">save_scores</span><span class="p">(</span><span class="n">result_r</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">corpus_r</span><span class="p">)))</span> <span class="o">+</span> <span class="s1">&#39;.csv&#39;</span><span class="p">)</span>
+
+    <span class="c1"># create w2v model</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">no_train</span><span class="p">:</span>
+        <span class="n">create_w2v_model</span><span class="p">(</span><span class="n">text_t</span><span class="p">,</span> <span class="n">text_r</span><span class="p">)</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">argparser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">prog</span><span class="o">=</span><span class="s1">&#39;topic_extraction.py&#39;</span><span class="p">)</span>
+    <span class="n">argparser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;target_corpus&#39;</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;target_corpus&#39;</span><span class="p">,</span>
+                           <span class="nb">type</span><span class="o">=</span><span class="n">validate_existing_directory</span><span class="p">,</span>
+                           <span class="n">help</span><span class="o">=</span><span class="s1">&#39;a path to a folder containing text files&#39;</span><span class="p">)</span>
+    <span class="n">argparser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;ref_corpus&#39;</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;ref_corpus&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">validate_existing_directory</span><span class="p">,</span>
+                           <span class="n">help</span><span class="o">=</span><span class="s1">&#39;a path to a folder containing text files&#39;</span><span class="p">)</span>
+    <span class="n">argparser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--no_train&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
+                           <span class="n">help</span><span class="o">=</span><span class="s1">&#39;skip the creation of w2v model&#39;</span><span class="p">)</span>
+    <span class="n">argparser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--url&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
+                           <span class="n">help</span><span class="o">=</span><span class="s1">&#39;corpus provided as csv file with urls&#39;</span><span class="p">)</span>
+    <span class="n">argparser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--single_thread&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
+                           <span class="n">help</span><span class="o">=</span><span class="s1">&#39;analyse corpora sequentially&#39;</span><span class="p">)</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">argparser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+    <span class="n">main</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">target_corpus</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">ref_corpus</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">single_thread</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">no_train</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

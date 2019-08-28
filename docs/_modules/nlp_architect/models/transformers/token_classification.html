@@ -1,0 +1,621 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>nlp_architect.models.transformers.token_classification &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+        <script type="text/javascript" src="../../../../_static/install.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/nlp_arch_theme.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html">
+          
+
+          
+            
+            <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../quick_start.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../publications.html">Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials.html">Jupyter Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../model_zoo.html">Model Zoo</a></li>
+</ul>
+<p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tagging/sequence_tagging.html">Sequence Tagging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../sentiment.html">Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../bist_parser.html">Dependency Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../intent.html">Intent Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../lm.html">Language Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../information_extraction.html">Information Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../transformers.html">Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../archived/additional.html">Additional Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Optimized Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../quantized_bert.html">Quantized BERT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../transformers_distillation.html">Transformers Distillation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solutions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../absa_solution.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../term_set_expansion.html">Set Expansion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../trend_analysis.html">Trend Analysis</a></li>
+</ul>
+<p class="caption"><span class="caption-text">For Developers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../developer_guide.html">Developer Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">NLP Architect by Intel® AI Lab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../models.html">nlp_architect.models</a> &raquo;</li>
+        
+      <li>nlp_architect.models.transformers.token_classification</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for nlp_architect.models.transformers.token_classification</h1><div class="highlight"><pre>
+<span></span><span class="c1"># ******************************************************************************</span>
+<span class="c1"># Copyright 2017-2019 Intel Corporation</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ******************************************************************************</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">List</span>
+
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">pytorch_transformers</span> <span class="k">import</span> <span class="n">BertForTokenClassification</span><span class="p">,</span> <span class="n">XLNetPreTrainedModel</span>
+<span class="kn">from</span> <span class="nn">torch.nn</span> <span class="k">import</span> <span class="n">CrossEntropyLoss</span><span class="p">,</span> <span class="n">functional</span> <span class="k">as</span> <span class="n">F</span>
+<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="k">import</span> <span class="n">DataLoader</span><span class="p">,</span> <span class="n">TensorDataset</span><span class="p">,</span> <span class="n">SequentialSampler</span>
+
+<span class="kn">from</span> <span class="nn">nlp_architect.data.sequential_tagging</span> <span class="k">import</span> <span class="n">TokenClsInputExample</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.models.transformers.base_model</span> <span class="k">import</span> <span class="n">TransformerBase</span><span class="p">,</span> <span class="n">logger</span><span class="p">,</span> <span class="n">InputFeatures</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.models.transformers.quantized_bert</span> <span class="k">import</span> <span class="n">QuantizedBertForTokenClassification</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.utils.metrics</span> <span class="k">import</span> <span class="n">tagging</span>
+
+
+<div class="viewcode-block" id="bert_for_ner_linear_forward"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.transformers.html#nlp_architect.models.transformers.token_classification.bert_for_ner_linear_forward">[docs]</a><span class="k">def</span> <span class="nf">bert_for_ner_linear_forward</span><span class="p">(</span><span class="n">bert</span><span class="p">,</span> <span class="n">input_ids</span><span class="p">,</span> <span class="n">token_type_ids</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">attention_mask</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                <span class="n">labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">position_ids</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">head_mask</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">valid_ids</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">outputs</span> <span class="o">=</span> <span class="n">bert</span><span class="o">.</span><span class="n">bert</span><span class="p">(</span>
+        <span class="n">input_ids</span><span class="p">,</span>
+        <span class="n">token_type_ids</span><span class="o">=</span><span class="n">token_type_ids</span><span class="p">,</span>
+        <span class="n">attention_mask</span><span class="o">=</span><span class="n">attention_mask</span><span class="p">,</span>
+        <span class="n">head_mask</span><span class="o">=</span><span class="n">head_mask</span><span class="p">)</span>
+    <span class="n">sequence_output</span> <span class="o">=</span> <span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">sequence_output</span> <span class="o">=</span> <span class="n">bert</span><span class="o">.</span><span class="n">dropout</span><span class="p">(</span><span class="n">sequence_output</span><span class="p">)</span>
+    <span class="n">logits</span> <span class="o">=</span> <span class="n">bert</span><span class="o">.</span><span class="n">classifier</span><span class="p">(</span><span class="n">sequence_output</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">labels</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">loss_fct</span> <span class="o">=</span> <span class="n">CrossEntropyLoss</span><span class="p">(</span><span class="n">ignore_index</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">active_positions</span> <span class="o">=</span> <span class="n">valid_ids</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">!=</span> <span class="mf">0.0</span>
+        <span class="n">active_labels</span> <span class="o">=</span> <span class="n">labels</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)[</span><span class="n">active_positions</span><span class="p">]</span>
+        <span class="n">active_logits</span> <span class="o">=</span> <span class="n">logits</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">bert</span><span class="o">.</span><span class="n">num_labels</span><span class="p">)[</span><span class="n">active_positions</span><span class="p">]</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">loss_fct</span><span class="p">(</span><span class="n">active_logits</span><span class="p">,</span> <span class="n">active_labels</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">logits</span><span class="p">,)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">logits</span><span class="p">,)</span></div>
+
+
+<div class="viewcode-block" id="BertForTagging"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.transformers.html#nlp_architect.models.transformers.token_classification.BertForTagging">[docs]</a><span class="k">class</span> <span class="nc">BertForTagging</span><span class="p">(</span><span class="n">BertForTokenClassification</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;BERT token classification head with linear classifier.</span>
+
+<span class="sd">       The forward requires an additional &#39;valid_ids&#39; map that maps the tensors</span>
+<span class="sd">       for valid tokens (e.g., ignores additional word piece tokens generated by</span>
+<span class="sd">       the tokenizer, as in NER task the &#39;X&#39; label).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="BertForTagging.forward"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.transformers.html#nlp_architect.models.transformers.token_classification.BertForTagging.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_ids</span><span class="p">,</span> <span class="n">token_type_ids</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">attention_mask</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                <span class="n">position_ids</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">head_mask</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">valid_ids</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">bert_for_ner_linear_forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_ids</span><span class="p">,</span> <span class="n">token_type_ids</span><span class="o">=</span><span class="n">token_type_ids</span><span class="p">,</span>
+                                           <span class="n">attention_mask</span><span class="o">=</span><span class="n">attention_mask</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span>
+                                           <span class="n">position_ids</span><span class="o">=</span><span class="n">position_ids</span><span class="p">,</span> <span class="n">head_mask</span><span class="o">=</span><span class="n">head_mask</span><span class="p">,</span>
+                                           <span class="n">valid_ids</span><span class="o">=</span><span class="n">valid_ids</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="QuantizedBertForNERLinear"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.transformers.html#nlp_architect.models.transformers.token_classification.QuantizedBertForNERLinear">[docs]</a><span class="k">class</span> <span class="nc">QuantizedBertForNERLinear</span><span class="p">(</span><span class="n">QuantizedBertForTokenClassification</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Quantized BERT token classification head with linear classifier.</span>
+
+<span class="sd">       The forward requires an additional &#39;valid_ids&#39; map that maps the tensors</span>
+<span class="sd">       for valid tokens (e.g., ignores additional word piece tokens generated by</span>
+<span class="sd">       the tokenizer, as in NER task the &#39;X&#39; label).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="QuantizedBertForNERLinear.forward"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.transformers.html#nlp_architect.models.transformers.token_classification.QuantizedBertForNERLinear.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_ids</span><span class="p">,</span> <span class="n">token_type_ids</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">attention_mask</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                <span class="n">position_ids</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">head_mask</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">valid_ids</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">bert_for_ner_linear_forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_ids</span><span class="p">,</span> <span class="n">token_type_ids</span><span class="o">=</span><span class="n">token_type_ids</span><span class="p">,</span>
+                                           <span class="n">attention_mask</span><span class="o">=</span><span class="n">attention_mask</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span>
+                                           <span class="n">position_ids</span><span class="o">=</span><span class="n">position_ids</span><span class="p">,</span> <span class="n">head_mask</span><span class="o">=</span><span class="n">head_mask</span><span class="p">,</span>
+                                           <span class="n">valid_ids</span><span class="o">=</span><span class="n">valid_ids</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="XLNetForTokenClassification"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.transformers.html#nlp_architect.models.transformers.token_classification.XLNetForTokenClassification">[docs]</a><span class="k">class</span> <span class="nc">XLNetForTokenClassification</span><span class="p">(</span><span class="n">XLNetPreTrainedModel</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">XLNetForTokenClassification</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+<div class="viewcode-block" id="XLNetForTokenClassification.forward"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.transformers.html#nlp_architect.models.transformers.token_classification.XLNetForTokenClassification.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_ids</span><span class="p">,</span> <span class="n">token_type_ids</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">input_mask</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">attention_mask</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                <span class="n">mems</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">perm_mask</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">target_mapping</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                <span class="n">labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">head_mask</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div></div>
+
+
+<div class="viewcode-block" id="TransformerTokenClassifier"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.transformers.html#nlp_architect.models.transformers.token_classification.TransformerTokenClassifier">[docs]</a><span class="k">class</span> <span class="nc">TransformerTokenClassifier</span><span class="p">(</span><span class="n">TransformerBase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Transformer word tagging classifier</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        model_type(str): model family (classifier head), choose between bert/quant_bert/xlnet</span>
+<span class="sd">        labels (List[str], optional): list of tag labels</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">MODEL_CLASS</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;bert&#39;</span><span class="p">:</span> <span class="n">BertForTagging</span><span class="p">,</span>
+        <span class="s1">&#39;quant_bert&#39;</span><span class="p">:</span> <span class="n">QuantizedBertForNERLinear</span><span class="p">,</span>
+        <span class="s1">&#39;xlnet&#39;</span><span class="p">:</span> <span class="n">XLNetForTokenClassification</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">labels</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">model_type</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">MODEL_CLASS</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="s2">&quot;unsupported model type&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">labels</span> <span class="o">=</span> <span class="n">labels</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_labels</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>  <span class="c1"># +1 for padding label</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">labels_id_map</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">,</span> <span class="mi">1</span><span class="p">)}</span>
+
+        <span class="nb">super</span><span class="p">(</span><span class="n">TransformerTokenClassifier</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">model_type</span><span class="p">,</span>
+                                                         <span class="n">labels</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">,</span>
+                                                         <span class="n">num_labels</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_labels</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+                                                         <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_class</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">MODEL_CLASS</span><span class="p">[</span><span class="n">model_type</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_class</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_name_or_path</span><span class="p">,</span> <span class="n">from_tf</span><span class="o">=</span><span class="nb">bool</span><span class="p">(</span>
+            <span class="s1">&#39;.ckpt&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_name_or_path</span><span class="p">),</span> <span class="n">config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_gpus</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TransformerTokenClassifier.train"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.transformers.html#nlp_architect.models.transformers.token_classification.TransformerTokenClassifier.train">[docs]</a>    <span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+              <span class="n">train_data_set</span><span class="p">:</span> <span class="n">DataLoader</span><span class="p">,</span>
+              <span class="n">dev_data_set</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">DataLoader</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">DataLoader</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+              <span class="n">test_data_set</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">DataLoader</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">DataLoader</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+              <span class="n">gradient_accumulation_steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+              <span class="n">per_gpu_train_batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">8</span><span class="p">,</span>
+              <span class="n">max_steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+              <span class="n">num_train_epochs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+              <span class="n">max_grad_norm</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+              <span class="n">logging_steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
+              <span class="n">save_steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Run model training</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            train_data_set (DataLoader): training dataset</span>
+<span class="sd">            dev_data_set (Union[DataLoader, List[DataLoader]], optional): development data set</span>
+<span class="sd">            (can be list). Defaults to None.</span>
+<span class="sd">            test_data_set (Union[DataLoader, List[DataLoader]], optional): test data set</span>
+<span class="sd">            (can be list). Defaults to None.</span>
+<span class="sd">            gradient_accumulation_steps (int, optional): gradient accumulation steps.</span>
+<span class="sd">            Defaults to 1.</span>
+<span class="sd">            per_gpu_train_batch_size (int, optional): per GPU train batch size (or GPU).</span>
+<span class="sd">            Defaults to 8.</span>
+<span class="sd">            max_steps (int, optional): max steps for training. Defaults to -1.</span>
+<span class="sd">            num_train_epochs (int, optional): number of training epochs. Defaults to 3.</span>
+<span class="sd">            max_grad_norm (float, optional): max gradient norm. Defaults to 1.0.</span>
+<span class="sd">            logging_steps (int, optional): number of steps between logging. Defaults to 50.</span>
+<span class="sd">            save_steps (int, optional): number of steps between model save. Defaults to 100.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_train</span><span class="p">(</span><span class="n">train_data_set</span><span class="p">,</span>
+                    <span class="n">dev_data_set</span><span class="p">,</span>
+                    <span class="n">test_data_set</span><span class="p">,</span>
+                    <span class="n">gradient_accumulation_steps</span><span class="p">,</span>
+                    <span class="n">per_gpu_train_batch_size</span><span class="p">,</span>
+                    <span class="n">max_steps</span><span class="p">,</span>
+                    <span class="n">num_train_epochs</span><span class="p">,</span>
+                    <span class="n">max_grad_norm</span><span class="p">,</span>
+                    <span class="n">logging_steps</span><span class="o">=</span><span class="n">logging_steps</span><span class="p">,</span>
+                    <span class="n">save_steps</span><span class="o">=</span><span class="n">save_steps</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_batch_mapper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">):</span>
+        <span class="n">mapping</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;input_ids&#39;</span><span class="p">:</span> <span class="n">batch</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                   <span class="s1">&#39;attention_mask&#39;</span><span class="p">:</span> <span class="n">batch</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                   <span class="c1"># XLM don&#39;t use segment_ids</span>
+                   <span class="s1">&#39;token_type_ids&#39;</span><span class="p">:</span> <span class="n">batch</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+                   <span class="s1">&#39;valid_ids&#39;</span><span class="p">:</span> <span class="n">batch</span><span class="p">[</span><span class="mi">3</span><span class="p">]}</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">4</span><span class="p">:</span>
+            <span class="n">mapping</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;labels&#39;</span><span class="p">:</span> <span class="n">batch</span><span class="p">[</span><span class="mi">4</span><span class="p">]})</span>
+        <span class="k">return</span> <span class="n">mapping</span>
+
+<div class="viewcode-block" id="TransformerTokenClassifier.evaluate_predictions"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.transformers.html#nlp_architect.models.transformers.token_classification.TransformerTokenClassifier.evaluate_predictions">[docs]</a>    <span class="k">def</span> <span class="nf">evaluate_predictions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">logits</span><span class="p">,</span> <span class="n">label_ids</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Run evaluation of given logist and truth labels</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            logits: model logits</span>
+<span class="sd">            label_ids: truth label ids</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">active_positions</span> <span class="o">=</span> <span class="n">label_ids</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">!=</span> <span class="mf">0.0</span>
+        <span class="n">active_labels</span> <span class="o">=</span> <span class="n">label_ids</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)[</span><span class="n">active_positions</span><span class="p">]</span>
+        <span class="n">active_logits</span> <span class="o">=</span> <span class="n">logits</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">labels_id_map</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)[</span><span class="n">active_positions</span><span class="p">]</span>
+        <span class="n">logits</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">log_softmax</span><span class="p">(</span><span class="n">active_logits</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">logits</span> <span class="o">=</span> <span class="n">logits</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+        <span class="n">out_label_ids</span> <span class="o">=</span> <span class="n">active_labels</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">f1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">extract_labels</span><span class="p">(</span><span class="n">out_label_ids</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">labels_id_map</span><span class="p">,</span> <span class="n">logits</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Evaluation on set = F1: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">f1</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="TransformerTokenClassifier.extract_labels"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.transformers.html#nlp_architect.models.transformers.token_classification.TransformerTokenClassifier.extract_labels">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">extract_labels</span><span class="p">(</span><span class="n">label_ids</span><span class="p">,</span> <span class="n">label_map</span><span class="p">,</span> <span class="n">logits</span><span class="p">):</span>
+        <span class="n">y_true</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">y_pred</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">p</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">label_ids</span><span class="p">):</span>
+            <span class="n">y_pred</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">label_map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s1">&#39;O&#39;</span><span class="p">))</span>
+            <span class="n">y_true</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">label_map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="s1">&#39;O&#39;</span><span class="p">))</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_true</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_pred</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">tagging</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">y_true</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TransformerTokenClassifier.convert_to_tensors"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.transformers.html#nlp_architect.models.transformers.token_classification.TransformerTokenClassifier.convert_to_tensors">[docs]</a>    <span class="k">def</span> <span class="nf">convert_to_tensors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                           <span class="n">examples</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">TokenClsInputExample</span><span class="p">],</span>
+                           <span class="n">max_seq_length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">128</span><span class="p">,</span>
+                           <span class="n">include_labels</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TensorDataset</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convert examples to tensor dataset</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            examples (List[SequenceClsInputExample]): examples</span>
+<span class="sd">            max_seq_length (int, optional): max sequence length. Defaults to 128.</span>
+<span class="sd">            include_labels (bool, optional): include labels. Defaults to True.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            TensorDataset:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_convert_examples_to_features</span><span class="p">(</span><span class="n">examples</span><span class="p">,</span>
+                                                      <span class="n">max_seq_length</span><span class="p">,</span>
+                                                      <span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span><span class="p">,</span>
+                                                      <span class="n">include_labels</span><span class="p">,</span>
+                                                      <span class="c1"># xlnet has a cls token at the end</span>
+                                                      <span class="n">cls_token_at_end</span><span class="o">=</span><span class="nb">bool</span><span class="p">(</span>
+                                                          <span class="bp">self</span><span class="o">.</span><span class="n">model_type</span> <span class="ow">in</span> <span class="p">[</span>
+                                                              <span class="s1">&#39;xlnet&#39;</span><span class="p">]),</span>
+                                                      <span class="n">cls_token</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">cls_token</span><span class="p">,</span>
+                                                      <span class="n">sep_token</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">sep_token</span><span class="p">,</span>
+                                                      <span class="n">cls_token_segment_id</span><span class="o">=</span><span class="mi">2</span>
+                                                      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_type</span> <span class="ow">in</span><span class="p">[</span><span class="s1">&#39;xlnet&#39;</span><span class="p">]</span> <span class="k">else</span> <span class="mi">1</span><span class="p">,</span>
+                                                      <span class="c1"># pad on the left for xlnet</span>
+                                                      <span class="n">pad_on_left</span><span class="o">=</span><span class="nb">bool</span><span class="p">(</span>
+                                                          <span class="bp">self</span><span class="o">.</span><span class="n">model_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;xlnet&#39;</span><span class="p">]),</span>
+                                                      <span class="n">pad_token_segment_id</span><span class="o">=</span><span class="mi">4</span>
+                                                      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_type</span> <span class="ow">in</span> <span class="p">[</span>
+                                                          <span class="s1">&#39;xlnet&#39;</span><span class="p">]</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="c1"># Convert to Tensors and build dataset</span>
+        <span class="n">all_input_ids</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="n">f</span><span class="o">.</span><span class="n">input_ids</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">features</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">)</span>
+        <span class="n">all_input_mask</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="n">f</span><span class="o">.</span><span class="n">input_mask</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">features</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">)</span>
+        <span class="n">all_segment_ids</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="n">f</span><span class="o">.</span><span class="n">segment_ids</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">features</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">)</span>
+        <span class="n">all_valid_ids</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="n">f</span><span class="o">.</span><span class="n">valid_ids</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">features</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">include_labels</span><span class="p">:</span>
+            <span class="n">all_label_ids</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="n">f</span><span class="o">.</span><span class="n">label_id</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">features</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">)</span>
+            <span class="n">dataset</span> <span class="o">=</span> <span class="n">TensorDataset</span><span class="p">(</span><span class="n">all_input_ids</span><span class="p">,</span> <span class="n">all_input_mask</span><span class="p">,</span> <span class="n">all_segment_ids</span><span class="p">,</span>
+                                    <span class="n">all_valid_ids</span><span class="p">,</span> <span class="n">all_label_ids</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">dataset</span> <span class="o">=</span> <span class="n">TensorDataset</span><span class="p">(</span><span class="n">all_input_ids</span><span class="p">,</span> <span class="n">all_input_mask</span><span class="p">,</span> <span class="n">all_segment_ids</span><span class="p">,</span>
+                                    <span class="n">all_valid_ids</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">dataset</span></div>
+
+    <span class="k">def</span> <span class="nf">_convert_examples_to_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                                      <span class="n">examples</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">TokenClsInputExample</span><span class="p">],</span>
+                                      <span class="n">max_seq_length</span><span class="p">,</span>
+                                      <span class="n">tokenizer</span><span class="p">,</span>
+                                      <span class="n">include_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                      <span class="n">cls_token_at_end</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">pad_on_left</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                      <span class="n">cls_token</span><span class="o">=</span><span class="s1">&#39;[CLS]&#39;</span><span class="p">,</span> <span class="n">sep_token</span><span class="o">=</span><span class="s1">&#39;[SEP]&#39;</span><span class="p">,</span> <span class="n">pad_token</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                                      <span class="n">sequence_segment_id</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                                      <span class="n">cls_token_segment_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">pad_token_segment_id</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                                      <span class="n">mask_padding_with_zero</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Loads a data file into a list of `InputBatch`s</span>
+<span class="sd">            `cls_token_at_end` define the location of the CLS token:</span>
+<span class="sd">                - False (Default, BERT/XLM pattern): [CLS] + A + [SEP] + B + [SEP]</span>
+<span class="sd">                - True (XLNet/GPT pattern): A + [SEP] + B + [SEP] + [CLS]</span>
+<span class="sd">            `cls_token_segment_id` define the segment id associated to the CLS token</span>
+<span class="sd">            (0 for BERT, 2 for XLNet)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">include_labels</span><span class="p">:</span>
+            <span class="n">label_map</span> <span class="o">=</span> <span class="p">{</span><span class="n">v</span><span class="p">:</span> <span class="n">k</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">labels_id_map</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+            <span class="n">label_pad</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="n">features</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">ex_index</span><span class="p">,</span> <span class="n">example</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">examples</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">ex_index</span> <span class="o">%</span> <span class="mi">10000</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Processing example </span><span class="si">%d</span><span class="s2"> of </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">ex_index</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">examples</span><span class="p">)))</span>
+
+            <span class="n">tokens</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">labels</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">valid_tokens</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">token</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">example</span><span class="o">.</span><span class="n">tokens</span><span class="p">):</span>
+                <span class="n">new_tokens</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+                <span class="n">tokens</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">new_tokens</span><span class="p">)</span>
+                <span class="n">v_tok</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">new_tokens</span><span class="p">))</span>
+                <span class="n">v_tok</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="n">valid_tokens</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">v_tok</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">include_labels</span><span class="p">:</span>
+                    <span class="n">v_lbl</span> <span class="o">=</span> <span class="p">[</span><span class="n">label_pad</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">new_tokens</span><span class="p">))</span>
+                    <span class="n">v_lbl</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">label_map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">example</span><span class="o">.</span><span class="n">label</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+                    <span class="n">labels</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">v_lbl</span><span class="p">)</span>
+
+            <span class="c1"># truncate by max_seq_length</span>
+            <span class="n">tokens</span> <span class="o">=</span> <span class="n">tokens</span><span class="p">[:(</span><span class="n">max_seq_length</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)]</span>
+            <span class="k">if</span> <span class="n">include_labels</span><span class="p">:</span>
+                <span class="n">labels</span> <span class="o">=</span> <span class="n">labels</span><span class="p">[:(</span><span class="n">max_seq_length</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)]</span>
+            <span class="n">valid_tokens</span> <span class="o">=</span> <span class="n">valid_tokens</span><span class="p">[:(</span><span class="n">max_seq_length</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)]</span>
+
+            <span class="c1"># The convention in BERT is:</span>
+            <span class="c1"># (a) For sequence pairs:</span>
+            <span class="c1">#  tokens:   [CLS] is this jack ##son ##ville ? [SEP] no it is not . [SEP]</span>
+            <span class="c1">#  type_ids:   0   0  0    0    0     0       0   0   1  1  1  1   1   1</span>
+            <span class="c1"># (b) For single sequences:</span>
+            <span class="c1">#  tokens:   [CLS] the dog is hairy . [SEP]</span>
+            <span class="c1">#  type_ids:   0   0   0   0  0     0   0</span>
+            <span class="c1">#</span>
+            <span class="c1"># Where &quot;type_ids&quot; are used to indicate whether this is the first</span>
+            <span class="c1"># sequence or the second sequence. The embedding vectors for `type=0` and</span>
+            <span class="c1"># `type=1` were learned during pre-training and are added to the wordpiece</span>
+            <span class="c1"># embedding vector (and position vector). This is not *strictly* necessary</span>
+            <span class="c1"># since the [SEP] token unambiguously separates the sequences, but it makes</span>
+            <span class="c1"># it easier for the model to learn the concept of sequences.</span>
+            <span class="c1">#</span>
+            <span class="c1"># For classification tasks, the first vector (corresponding to [CLS]) is</span>
+            <span class="c1"># used as as the &quot;sentence vector&quot;. Note that this only makes sense because</span>
+            <span class="c1"># the entire model is fine-tuned.</span>
+            <span class="n">tokens</span> <span class="o">=</span> <span class="n">tokens</span> <span class="o">+</span> <span class="p">[</span><span class="n">sep_token</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">include_labels</span><span class="p">:</span>
+                <span class="n">labels</span> <span class="o">=</span> <span class="n">labels</span> <span class="o">+</span> <span class="p">[</span><span class="n">label_pad</span><span class="p">]</span>
+            <span class="n">valid_tokens</span> <span class="o">=</span> <span class="n">valid_tokens</span> <span class="o">+</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">segment_ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">sequence_segment_id</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">cls_token_at_end</span><span class="p">:</span>
+                <span class="n">tokens</span> <span class="o">=</span> <span class="n">tokens</span> <span class="o">+</span> <span class="p">[</span><span class="n">cls_token</span><span class="p">]</span>
+                <span class="n">segment_ids</span> <span class="o">=</span> <span class="n">segment_ids</span> <span class="o">+</span> <span class="p">[</span><span class="n">cls_token_segment_id</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">include_labels</span><span class="p">:</span>
+                    <span class="n">labels</span> <span class="o">=</span> <span class="n">labels</span> <span class="o">+</span> <span class="p">[</span><span class="n">label_pad</span><span class="p">]</span>
+                <span class="n">valid_tokens</span> <span class="o">=</span> <span class="n">valid_tokens</span> <span class="o">+</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">tokens</span> <span class="o">=</span> <span class="p">[</span><span class="n">cls_token</span><span class="p">]</span> <span class="o">+</span> <span class="n">tokens</span>
+                <span class="n">segment_ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">cls_token_segment_id</span><span class="p">]</span> <span class="o">+</span> <span class="n">segment_ids</span>
+                <span class="k">if</span> <span class="n">include_labels</span><span class="p">:</span>
+                    <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">label_pad</span><span class="p">]</span> <span class="o">+</span> <span class="n">labels</span>
+                <span class="n">valid_tokens</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">valid_tokens</span>
+
+            <span class="n">input_ids</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">convert_tokens_to_ids</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+
+            <span class="c1"># The mask has 1 for real tokens and 0 for padding tokens. Only real</span>
+            <span class="c1"># tokens are attended to.</span>
+            <span class="n">input_mask</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span> <span class="k">if</span> <span class="n">mask_padding_with_zero</span> <span class="k">else</span> <span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">input_ids</span><span class="p">)</span>
+
+            <span class="c1"># Zero-pad up to the sequence length.</span>
+            <span class="n">padding_length</span> <span class="o">=</span> <span class="n">max_seq_length</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">input_ids</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">pad_on_left</span><span class="p">:</span>
+                <span class="n">input_ids</span> <span class="o">=</span> <span class="p">([</span><span class="n">pad_token</span><span class="p">]</span> <span class="o">*</span> <span class="n">padding_length</span><span class="p">)</span> <span class="o">+</span> <span class="n">input_ids</span>
+                <span class="n">input_mask</span> <span class="o">=</span> <span class="p">([</span><span class="mi">0</span> <span class="k">if</span> <span class="n">mask_padding_with_zero</span> <span class="k">else</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">padding_length</span><span class="p">)</span> <span class="o">+</span> <span class="n">input_mask</span>
+                <span class="n">segment_ids</span> <span class="o">=</span> <span class="p">([</span><span class="n">pad_token_segment_id</span><span class="p">]</span> <span class="o">*</span> <span class="n">padding_length</span><span class="p">)</span> <span class="o">+</span> <span class="n">segment_ids</span>
+                <span class="k">if</span> <span class="n">include_labels</span><span class="p">:</span>
+                    <span class="n">labels</span> <span class="o">=</span> <span class="p">([</span><span class="n">label_pad</span><span class="p">]</span> <span class="o">*</span> <span class="n">padding_length</span><span class="p">)</span> <span class="o">+</span> <span class="n">labels</span>
+                <span class="n">valid_tokens</span> <span class="o">=</span> <span class="p">([</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">padding_length</span><span class="p">)</span> <span class="o">+</span> <span class="n">valid_tokens</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">input_ids</span> <span class="o">=</span> <span class="n">input_ids</span> <span class="o">+</span> <span class="p">([</span><span class="n">pad_token</span><span class="p">]</span> <span class="o">*</span> <span class="n">padding_length</span><span class="p">)</span>
+                <span class="n">input_mask</span> <span class="o">=</span> <span class="n">input_mask</span> <span class="o">+</span> <span class="p">([</span><span class="mi">0</span> <span class="k">if</span> <span class="n">mask_padding_with_zero</span> <span class="k">else</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">padding_length</span><span class="p">)</span>
+                <span class="n">segment_ids</span> <span class="o">=</span> <span class="n">segment_ids</span> <span class="o">+</span> <span class="p">([</span><span class="n">pad_token_segment_id</span><span class="p">]</span> <span class="o">*</span> <span class="n">padding_length</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">include_labels</span><span class="p">:</span>
+                    <span class="n">labels</span> <span class="o">=</span> <span class="n">labels</span> <span class="o">+</span> <span class="p">([</span><span class="n">label_pad</span><span class="p">]</span> <span class="o">*</span> <span class="n">padding_length</span><span class="p">)</span>
+                <span class="n">valid_tokens</span> <span class="o">=</span> <span class="n">valid_tokens</span> <span class="o">+</span> <span class="p">([</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">padding_length</span><span class="p">)</span>
+
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">input_ids</span><span class="p">)</span> <span class="o">==</span> <span class="n">max_seq_length</span>
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">input_mask</span><span class="p">)</span> <span class="o">==</span> <span class="n">max_seq_length</span>
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">segment_ids</span><span class="p">)</span> <span class="o">==</span> <span class="n">max_seq_length</span>
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">valid_tokens</span><span class="p">)</span> <span class="o">==</span> <span class="n">max_seq_length</span>
+            <span class="k">if</span> <span class="n">include_labels</span><span class="p">:</span>
+                <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span> <span class="o">==</span> <span class="n">max_seq_length</span>
+
+            <span class="n">features</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">InputFeatures</span><span class="p">(</span><span class="n">input_ids</span><span class="o">=</span><span class="n">input_ids</span><span class="p">,</span>
+                                          <span class="n">input_mask</span><span class="o">=</span><span class="n">input_mask</span><span class="p">,</span>
+                                          <span class="n">segment_ids</span><span class="o">=</span><span class="n">segment_ids</span><span class="p">,</span>
+                                          <span class="n">label_id</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span>
+                                          <span class="n">valid_ids</span><span class="o">=</span><span class="n">valid_tokens</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">features</span>
+
+<div class="viewcode-block" id="TransformerTokenClassifier.inference"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.transformers.html#nlp_architect.models.transformers.token_classification.TransformerTokenClassifier.inference">[docs]</a>    <span class="k">def</span> <span class="nf">inference</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">examples</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">TokenClsInputExample</span><span class="p">],</span> <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">64</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Run inference on given examples</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            examples (List[SequenceClsInputExample]): examples</span>
+<span class="sd">            batch_size (int, optional): batch size. Defaults to 64.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            logits</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data_set</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">convert_to_tensors</span><span class="p">(</span><span class="n">examples</span><span class="p">,</span> <span class="n">include_labels</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">inf_sampler</span> <span class="o">=</span> <span class="n">SequentialSampler</span><span class="p">(</span><span class="n">data_set</span><span class="p">)</span>
+        <span class="n">inf_dataloader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">data_set</span><span class="p">,</span> <span class="n">sampler</span><span class="o">=</span><span class="n">inf_sampler</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">)</span>
+        <span class="n">logits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_evaluate</span><span class="p">(</span><span class="n">inf_dataloader</span><span class="p">)</span>
+        <span class="n">active_positions</span> <span class="o">=</span> <span class="n">data_set</span><span class="o">.</span><span class="n">tensors</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data_set</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">!=</span> <span class="mf">0.0</span>
+        <span class="n">logits</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">log_softmax</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">dim</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">res_ids</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">logits</span><span class="o">.</span><span class="n">size</span><span class="p">()[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="n">res_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">logits</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">active_positions</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">tag_ids</span><span class="p">,</span> <span class="n">ex</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">res_ids</span><span class="p">,</span> <span class="n">examples</span><span class="p">):</span>
+            <span class="n">tokens</span> <span class="o">=</span> <span class="n">ex</span><span class="o">.</span><span class="n">tokens</span>
+            <span class="n">tags</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">labels_id_map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="s1">&#39;O&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tag_ids</span><span class="p">]</span>
+            <span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">tokens</span><span class="p">,</span> <span class="n">tags</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">output</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Noun Phrase Semantic Segmentation &mdash; NLP Architect by Intel® AI Lab 0.4.post2 documentation</title>
+  <title>Noun Phrase Semantic Segmentation &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
   
 
   
@@ -25,6 +25,8 @@
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
         <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/install.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -33,12 +35,11 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" type="text/css" />
-  <link rel="stylesheet" href="_static/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/nlp_arch_theme.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="BIST Dependency Parser" href="bist_parser.html" />
-    <link rel="prev" title="Intent Extraction" href="intent.html" /> 
+    <link rel="search" title="Search" href="search.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -57,7 +58,7 @@
 
           
             
-            <img src="_static/nlp_architect_logo_white.png" class="logo" alt="Logo"/>
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
           
           </a>
 
@@ -83,46 +84,27 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="main.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick start</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="publications.html">Publications</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Jupyter Tutorials</a></li>
-<li class="toctree-l1"><a class="reference internal" href="developer_guide.html">Developer Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model_zoo.html">Model Zoo</a></li>
 </ul>
 <p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="absa.html">Aspect Based Sentiment Analysis</a></li>
-<li class="toctree-l1"><a class="reference internal" href="chunker.html">Sequence Chunker</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ner_crf.html">Named Entity Recognition</a></li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tagging/sequence_tagging.html">Sequence Tagging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sentiment.html">Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bist_parser.html">Dependency Parsing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="intent.html">Intent Extraction</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Noun Phrase Semantic Segmentation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#model">Model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#files">Files</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#dataset">Dataset</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#pre-processing-the-data">Pre-processing the data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lm.html">Language Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="information_extraction.html">Information Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transformers.html">Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="archived/additional.html">Additional Models</a></li>
 </ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#running-modalities">Running Modalities</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#training">Training</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#inference">Inference</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="bist_parser.html">BIST Dependency Parser</a></li>
-<li class="toctree-l1"><a class="reference internal" href="word_sense.html">Most Common Word Sense</a></li>
-<li class="toctree-l1"><a class="reference internal" href="np2vec.html">Noun Phrase to Vec</a></li>
-<li class="toctree-l1"><a class="reference internal" href="supervised_sentiment.html">Supervised Sentiment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="reading_comprehension.html">Reading Comprehension</a></li>
-<li class="toctree-l1"><a class="reference internal" href="memn2n.html">End-to-End Memory Networks for Goal Oriented Dialogue</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tcn.html">TCN Language Model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="crosslingual_emb.html">Unsupervised Crosslingual Embeddings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cross_doc_coref.html">Cross Document Co-Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="identifying_semantic_relation.html">Semantic Relation Identification</a></li>
+<p class="caption"><span class="caption-text">Optimized Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quantized_bert.html">Quantized BERT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transformers_distillation.html">Transformers Distillation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Solutions</span></p>
@@ -131,14 +113,11 @@
 <li class="toctree-l1"><a class="reference internal" href="term_set_expansion.html">Set Expansion</a></li>
 <li class="toctree-l1"><a class="reference internal" href="trend_analysis.html">Trend Analysis</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Pipelines</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="spacy_bist.html">Spacy-BIST Parser</a></li>
-<li class="toctree-l1"><a class="reference internal" href="spacy_np_annotator.html">Spacy-NP Annotator</a></li>
-</ul>
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer_guide.html">Developer Guide</a></li>
 </ul>
 
             
@@ -210,18 +189,18 @@ Noun-Phrase is the most frequently occurring phrase type and its inner segmentat
 semantics of the Noun-Phrase.
 The most basic division of the semantic segmentation is to two classes:</p>
 <ol class="arabic simple">
-<li><p>Descriptive Structure - a structure where all dependent modifiers are not changing the semantic meaning of the Head.</p></li>
-<li><p>Collocation Structure - a sequence of words or term that co-occur and change the semantic meaning of the Head.</p></li>
+<li>Descriptive Structure - a structure where all dependent modifiers are not changing the semantic meaning of the Head.</li>
+<li>Collocation Structure - a sequence of words or term that co-occur and change the semantic meaning of the Head.</li>
 </ol>
 <p>For example:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">fresh</span> <span class="pre">hot</span> <span class="pre">dog</span></code> - hot dog is a collocation, and changes the head (<code class="docutils literal notranslate"><span class="pre">dog</span></code>) semantic meaning.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">fresh</span> <span class="pre">hot</span> <span class="pre">pizza</span></code> - fresh and hot are descriptions for the pizza.</p></li>
+<li><code class="docutils literal notranslate"><span class="pre">fresh</span> <span class="pre">hot</span> <span class="pre">dog</span></code> - hot dog is a collocation, and changes the head (<code class="docutils literal notranslate"><span class="pre">dog</span></code>) semantic meaning.</li>
+<li><code class="docutils literal notranslate"><span class="pre">fresh</span> <span class="pre">hot</span> <span class="pre">pizza</span></code> - fresh and hot are descriptions for the pizza.</li>
 </ul>
 </div>
 <div class="section" id="model">
 <h2>Model<a class="headerlink" href="#model" title="Permalink to this headline">¶</a></h2>
-<p>The <a class="reference internal" href="generated/nlp_architect.models.np_semantic_segmentation.NpSemanticSegClassifier.html#nlp_architect.models.np_semantic_segmentation.NpSemanticSegClassifier" title="nlp_architect.models.np_semantic_segmentation.NpSemanticSegClassifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">NpSemanticSegClassifier</span></code></a> model is the first step in the Semantic Segmentation algorithm - the MLP classifier.
+<p>The <a class="reference internal" href="generated_api/nlp_architect.models.html#nlp_architect.models.np_semantic_segmentation.NpSemanticSegClassifier" title="nlp_architect.models.np_semantic_segmentation.NpSemanticSegClassifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">NpSemanticSegClassifier</span></code></a> model is the first step in the Semantic Segmentation algorithm - the MLP classifier.
 The Semantic Segmentation algorithm takes the dependency relations between the Noun-Phrase words, and the MLP classifier inference as the
 input - and build a semantic hierarchy that represents the semantic meaning.
 The Semantic Segmentation algorithm eventually create a tree where each tier represent a semantic meaning -&gt; if a sequence of words is a
@@ -235,11 +214,11 @@ for <code class="docutils literal notranslate"><span class="pre">hot</span> <spa
 <div class="section" id="files">
 <h2>Files<a class="headerlink" href="#files" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><p><a class="reference internal" href="generated/nlp_architect.models.np_semantic_segmentation.NpSemanticSegClassifier.html#nlp_architect.models.np_semantic_segmentation.NpSemanticSegClassifier" title="nlp_architect.models.np_semantic_segmentation.NpSemanticSegClassifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">NpSemanticSegClassifier</span></code></a>: is the MLP classifier model.</p></li>
-<li><p><strong>examples/np_semantic_segmentation/data.py</strong>: Prepare string data for both <code class="docutils literal notranslate"><span class="pre">train.py</span></code> and <code class="docutils literal notranslate"><span class="pre">inference.py</span></code> using pre-trained word embedding, NLTKCollocations score, Wordnet and wikidata.</p></li>
-<li><p><strong>examples/np_semantic_segmentation/feature_extraction.py</strong>: contains the feature extraction services</p></li>
-<li><p><strong>examples/np_semantic_segmentation/train.py</strong>: train the MLP classifier.</p></li>
-<li><p><strong>examples/np_semantic_segmentation/inference.py</strong>: load the trained model and inference the input data by the model.</p></li>
+<li><a class="reference internal" href="generated_api/nlp_architect.models.html#nlp_architect.models.np_semantic_segmentation.NpSemanticSegClassifier" title="nlp_architect.models.np_semantic_segmentation.NpSemanticSegClassifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">NpSemanticSegClassifier</span></code></a>: is the MLP classifier model.</li>
+<li><strong>examples/np_semantic_segmentation/data.py</strong>: Prepare string data for both <code class="docutils literal notranslate"><span class="pre">train.py</span></code> and <code class="docutils literal notranslate"><span class="pre">inference.py</span></code> using pre-trained word embedding, NLTKCollocations score, Wordnet and wikidata.</li>
+<li><strong>examples/np_semantic_segmentation/feature_extraction.py</strong>: contains the feature extraction services</li>
+<li><strong>examples/np_semantic_segmentation/train.py</strong>: train the MLP classifier.</li>
+<li><strong>examples/np_semantic_segmentation/inference.py</strong>: load the trained model and inference the input data by the model.</li>
 </ul>
 </div>
 <div class="section" id="dataset">
@@ -249,7 +228,7 @@ contains the Noun-Phrase string (a Noun-Phrase containing 2 words), and
 the second column contains the correct label (if the 2 word Noun-Phrase
 is a collocation - the label is 1, else 0)</p>
 <p>If you wish to use an existing dataset for training the model, you can
-download Tratz 2011 et al. dataset <a class="footnote-reference brackets" href="#id5" id="id1">1</a> <a class="footnote-reference brackets" href="#id6" id="id2">2</a> <a class="footnote-reference brackets" href="#id7" id="id3">3</a> <a class="footnote-reference brackets" href="#id8" id="id4">4</a> from the following link: <a class="reference external" href="https://vered1986.github.io/papers/Tratz2011_Dataset.tar.gz">Tratz
+download Tratz 2011 et al. dataset <a class="footnote-reference" href="#id5" id="id1">[1]</a> <a class="footnote-reference" href="#id6" id="id2">[2]</a> <a class="footnote-reference" href="#id7" id="id3">[3]</a> <a class="footnote-reference" href="#id8" id="id4">[4]</a> from the following link: <a class="reference external" href="https://vered1986.github.io/papers/Tratz2011_Dataset.tar.gz">Tratz
 2011
 Dataset</a>.
 Is also available in
@@ -271,24 +250,23 @@ accordingly to the same location.</p>
 <p>A feature vector is extracted from each Noun-Phrase string using the
 command <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">data.py</span></code></p>
 <ul class="simple">
-<li><p>Word2Vec word embedding (300 size vector for each word in the
-Noun-Phrase) .</p>
-<ul>
-<li><p>Pre-trained Google News Word2vec model can download
-<a class="reference external" href="https://drive.google.com/file/d/0B7XkCwpI5KDYNlNUTTlSS21pQmM/edit?usp=sharing">here</a></p></li>
-<li><p>The terms and conditions of the data set license apply. Intel does
-not grant any rights to the data files or database.</p></li>
+<li>Word2Vec word embedding (300 size vector for each word in the
+Noun-Phrase) .<ul>
+<li>Pre-trained Google News Word2vec model can download
+<a class="reference external" href="https://drive.google.com/file/d/0B7XkCwpI5KDYNlNUTTlSS21pQmM/edit?usp=sharing">here</a></li>
+<li>The terms and conditions of the data set license apply. Intel does
+not grant any rights to the data files or database.</li>
 </ul>
 </li>
-<li><p>Cosine distance between 2 words in the Noun-Phrase.</p></li>
-<li><p>NLTKCollocations score (PMI score (from Manning and Schutze 5.4) and Chi-square score (Manning and Schutze 5.3.3)).</p></li>
-<li><p>A binary features whether the Noun-Phrase has existing entity in
-Wikidata.</p></li>
-<li><p>A binary features whether the Noun-Phrase has existing entity in
-WordNet.</p></li>
+<li>Cosine distance between 2 words in the Noun-Phrase.</li>
+<li>NLTKCollocations score (PMI score (from Manning and Schutze 5.4) and Chi-square score (Manning and Schutze 5.3.3)).</li>
+<li>A binary features whether the Noun-Phrase has existing entity in
+Wikidata.</li>
+<li>A binary features whether the Noun-Phrase has existing entity in
+WordNet.</li>
 </ul>
 <p>Quick example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">data</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">data</span> <span class="n">input_data_path</span><span class="o">.</span><span class="n">csv</span> <span class="o">--</span><span class="n">output</span> <span class="n">prepared_data_path</span><span class="o">.</span><span class="n">csv</span> <span class="o">--</span><span class="n">w2v_path</span> <span class="o">&lt;</span><span class="n">path_to_w2v</span><span class="o">&gt;/</span><span class="n">GoogleNews</span><span class="o">-</span><span class="n">vectors</span><span class="o">-</span><span class="n">negative300</span><span class="o">.</span><span class="n">bin</span>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">data</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">data</span> <span class="n">input_data_path</span><span class="o">.</span><span class="n">csv</span> <span class="o">--</span><span class="n">output</span> <span class="n">prepared_data_path</span><span class="o">.</span><span class="n">csv</span> <span class="o">--</span><span class="n">w2v_path</span> <span class="o">&lt;</span><span class="n">path_to_w2v</span><span class="o">&gt;/</span><span class="n">GoogleNews</span><span class="o">-</span><span class="n">vectors</span><span class="o">-</span><span class="n">negative300</span><span class="o">.</span><span class="n">bin</span>
 </pre></div>
 </div>
 </div>
@@ -300,7 +278,7 @@ WordNet.</p></li>
 <p>The command <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">examples/np_semantic_segmentation/train.py</span></code> will train the MLP classifier and
 evaluate it. After training is done, the model is saved automatically:</p>
 <p>Quick example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">examples</span><span class="o">/</span><span class="n">np_semantic_segmentation</span><span class="o">/</span><span class="n">train</span><span class="o">.</span><span class="n">py</span> \
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">examples</span><span class="o">/</span><span class="n">np_semantic_segmentation</span><span class="o">/</span><span class="n">train</span><span class="o">.</span><span class="n">py</span> \
   <span class="o">--</span><span class="n">data</span> <span class="n">prepared_data_path</span><span class="o">.</span><span class="n">csv</span> \
   <span class="o">--</span><span class="n">model_path</span> <span class="n">np_semantic_segmentation_path</span><span class="o">.</span><span class="n">h5</span>
 </pre></div>
@@ -314,7 +292,7 @@ evaluate it. After training is done, the model is saved automatically:</p>
 file, each row contains the model’s inference in respect to the input
 data.</p>
 <p>Quick example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">examples</span><span class="o">/</span><span class="n">np_semantic_segmentation</span><span class="o">/</span><span class="n">inference</span><span class="o">.</span><span class="n">py</span> \
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">examples</span><span class="o">/</span><span class="n">np_semantic_segmentation</span><span class="o">/</span><span class="n">inference</span><span class="o">.</span><span class="n">py</span> \
   <span class="o">--</span><span class="n">model</span> <span class="n">np_semantic_segmentation_path</span><span class="o">.</span><span class="n">h5</span> \
   <span class="o">--</span><span class="n">data</span> <span class="n">prepared_data_path</span><span class="o">.</span><span class="n">csv</span> \
   <span class="o">--</span><span class="n">output</span> <span class="n">inference_data</span><span class="o">.</span><span class="n">csv</span> \
@@ -325,20 +303,30 @@ data.</p>
 </div>
 <div class="section" id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
-<dl class="footnote brackets">
-<dt class="label" id="id5"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
-<dd><p>Stephen Tratz and Eduard Hovy. 2011. A Fast, Accurate, Non-Projective, Semantically-Enriched Parser. In Proceedings of the 2011 Conference on Empirical Methods in Natural Language Processing. Edinburgh, Scotland, UK.</p>
-</dd>
-<dt class="label" id="id6"><span class="brackets"><a class="fn-backref" href="#id2">2</a></span></dt>
-<dd><p>Dirk Hovy, Stephen Tratz, and Eduard Hovy. 2010. What’s in a Preposition? Dimensions of Sense Disambiguation for an Interesting Word Class. In Proceedings of COLING 2010: Poster Volume. Beijing, China.</p>
-</dd>
-<dt class="label" id="id7"><span class="brackets"><a class="fn-backref" href="#id3">3</a></span></dt>
-<dd><p>Stephen Tratz and Dirk Hovy. 2009. Disambiguation of Preposition Sense using Linguistically Motivated Features. In Proceedings of Human Language Technologies: The 2009 Annual Conference of the North American Chapter of the Association for Computational Linguistics, Companion Volume: Student Research Workshop and Doctoral Consortium. Boulder, Colorado.</p>
-</dd>
-<dt class="label" id="id8"><span class="brackets"><a class="fn-backref" href="#id4">4</a></span></dt>
-<dd><p>Stephen Tratz and Eduard Hovy. 2010. A Taxonomy, Dataset, and Classifier for Automatic Noun Compound Interpretation. In Proceedings of the 48th Annual Meeting of the Association for Computational Linguistics. Uppsala, Sweden</p>
-</dd>
-</dl>
+<table class="docutils footnote" frame="void" id="id5" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>Stephen Tratz and Eduard Hovy. 2011. A Fast, Accurate, Non-Projective, Semantically-Enriched Parser. In Proceedings of the 2011 Conference on Empirical Methods in Natural Language Processing. Edinburgh, Scotland, UK.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id6" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>Dirk Hovy, Stephen Tratz, and Eduard Hovy. 2010. What’s in a Preposition? Dimensions of Sense Disambiguation for an Interesting Word Class. In Proceedings of COLING 2010: Poster Volume. Beijing, China.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id7" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[3]</a></td><td>Stephen Tratz and Dirk Hovy. 2009. Disambiguation of Preposition Sense using Linguistically Motivated Features. In Proceedings of Human Language Technologies: The 2009 Annual Conference of the North American Chapter of the Association for Computational Linguistics, Companion Volume: Student Research Workshop and Doctoral Consortium. Boulder, Colorado.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id8" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id4">[4]</a></td><td>Stephen Tratz and Eduard Hovy. 2010. A Taxonomy, Dataset, and Classifier for Automatic Noun Compound Interpretation. In Proceedings of the 48th Annual Meeting of the Association for Computational Linguistics. Uppsala, Sweden</td></tr>
+</tbody>
+</table>
 </div>
 </div>
 

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.common.cdc.mention_data &mdash; NLP Architect by Intel® AI Lab 0.4.post2 documentation</title>
+  <title>nlp_architect.common.cdc.mention_data &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
   
 
   
@@ -25,6 +25,8 @@
         <script type="text/javascript" src="../../../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../../../_static/doctools.js"></script>
         <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+        <script type="text/javascript" src="../../../../_static/install.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
 
@@ -33,8 +35,9 @@
   
   <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" type="text/css" />
-  <link rel="stylesheet" href="../../../../_static/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/nlp_arch_theme.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
 </head>
@@ -55,7 +58,7 @@
 
           
             
-            <img src="../../../../_static/nlp_architect_logo_white.png" class="logo" alt="Logo"/>
+            <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
           
           </a>
 
@@ -81,31 +84,27 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../main.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../quick_start.html">Quick start</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../publications.html">Publications</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../tutorials.html">Jupyter Tutorials</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../developer_guide.html">Developer Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../model_zoo.html">Model Zoo</a></li>
 </ul>
 <p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../absa.html">Aspect Based Sentiment Analysis</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../chunker.html">Sequence Chunker</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../ner_crf.html">Named Entity Recognition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tagging/sequence_tagging.html">Sequence Tagging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../sentiment.html">Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../bist_parser.html">Dependency Parsing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../intent.html">Intent Extraction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../np_segmentation.html">Noun Phrase Semantic Segmentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../bist_parser.html">BIST Dependency Parser</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../word_sense.html">Most Common Word Sense</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../np2vec.html">Noun Phrase to Vec</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../supervised_sentiment.html">Supervised Sentiment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../reading_comprehension.html">Reading Comprehension</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../memn2n.html">End-to-End Memory Networks for Goal Oriented Dialogue</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../tcn.html">TCN Language Model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../crosslingual_emb.html">Unsupervised Crosslingual Embeddings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../cross_doc_coref.html">Cross Document Co-Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../identifying_semantic_relation.html">Semantic Relation Identification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../lm.html">Language Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../information_extraction.html">Information Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../transformers.html">Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../archived/additional.html">Additional Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Optimized Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../quantized_bert.html">Quantized BERT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../transformers_distillation.html">Transformers Distillation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Solutions</span></p>
@@ -114,14 +113,11 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../../term_set_expansion.html">Set Expansion</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../trend_analysis.html">Trend Analysis</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Pipelines</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../spacy_bist.html">Spacy-BIST Parser</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../spacy_np_annotator.html">Spacy-NP Annotator</a></li>
-</ul>
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../developer_guide.html">Developer Guide</a></li>
 </ul>
 
             
@@ -207,8 +203,8 @@
 <span class="kn">from</span> <span class="nn">nlp_architect.utils.string_utils</span> <span class="k">import</span> <span class="n">StringUtils</span>
 
 
-<div class="viewcode-block" id="MentionDataLight"><a class="viewcode-back" href="../../../../generated/nlp_architect.common.cdc.mention_data.MentionDataLight.html#nlp_architect.common.cdc.mention_data.MentionDataLight">[docs]</a><span class="k">class</span> <span class="nc">MentionDataLight</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-<div class="viewcode-block" id="MentionDataLight.__init__"><a class="viewcode-back" href="../../../../generated/nlp_architect.common.cdc.mention_data.MentionDataLight.html#nlp_architect.common.cdc.mention_data.MentionDataLight.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tokens_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">mention_context</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">mention_head</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<div class="viewcode-block" id="MentionDataLight"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.common.cdc.html#nlp_architect.common.cdc.mention_data.MentionDataLight">[docs]</a><span class="k">class</span> <span class="nc">MentionDataLight</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tokens_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">mention_context</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">mention_head</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                  <span class="n">mention_head_lemma</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">mention_pos</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                  <span class="n">mention_ner</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -227,11 +223,11 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">mention_head</span> <span class="o">=</span> <span class="n">mention_head</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mention_head_lemma</span> <span class="o">=</span> <span class="n">mention_head_lemma</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mention_head_pos</span> <span class="o">=</span> <span class="n">mention_pos</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mention_ner</span> <span class="o">=</span> <span class="n">mention_ner</span></div></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mention_ner</span> <span class="o">=</span> <span class="n">mention_ner</span></div>
 
 
-<div class="viewcode-block" id="MentionData"><a class="viewcode-back" href="../../../../generated/nlp_architect.common.cdc.mention_data.MentionData.html#nlp_architect.common.cdc.mention_data.MentionData">[docs]</a><span class="k">class</span> <span class="nc">MentionData</span><span class="p">(</span><span class="n">MentionDataLight</span><span class="p">):</span>
-<div class="viewcode-block" id="MentionData.__init__"><a class="viewcode-back" href="../../../../generated/nlp_architect.common.cdc.mention_data.MentionData.html#nlp_architect.common.cdc.mention_data.MentionData.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">topic_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">doc_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">sent_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">tokens_numbers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+<div class="viewcode-block" id="MentionData"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.common.cdc.html#nlp_architect.common.cdc.mention_data.MentionData">[docs]</a><span class="k">class</span> <span class="nc">MentionData</span><span class="p">(</span><span class="n">MentionDataLight</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">topic_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">doc_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">sent_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">tokens_numbers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
                  <span class="n">tokens_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">mention_context</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">mention_head</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
                  <span class="n">mention_head_lemma</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">coref_chain</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">mention_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;NA&#39;</span><span class="p">,</span>
                  <span class="n">is_continuous</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">is_singleton</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">score</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span>
@@ -270,9 +266,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">score</span> <span class="o">=</span> <span class="n">score</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">predicted_coref_chain</span> <span class="o">=</span> <span class="n">predicted_coref_chain</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mention_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gen_mention_id</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">mention_index</span> <span class="o">=</span> <span class="n">mention_index</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mention_index</span> <span class="o">=</span> <span class="n">mention_index</span>
 
-<div class="viewcode-block" id="MentionData.read_json_mention_data_line"><a class="viewcode-back" href="../../../../generated/nlp_architect.common.cdc.mention_data.MentionData.html#nlp_architect.common.cdc.mention_data.MentionData.read_json_mention_data_line">[docs]</a>    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="MentionData.read_json_mention_data_line"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.common.cdc.html#nlp_architect.common.cdc.mention_data.MentionData.read_json_mention_data_line">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">read_json_mention_data_line</span><span class="p">(</span><span class="n">mention_line</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Args:</span>
@@ -361,7 +357,7 @@
 
         <span class="k">return</span> <span class="n">mention_data</span></div>
 
-<div class="viewcode-block" id="MentionData.read_mentions_json_to_mentions_data_list"><a class="viewcode-back" href="../../../../generated/nlp_architect.common.cdc.mention_data.MentionData.html#nlp_architect.common.cdc.mention_data.MentionData.read_mentions_json_to_mentions_data_list">[docs]</a>    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="MentionData.read_mentions_json_to_mentions_data_list"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.common.cdc.html#nlp_architect.common.cdc.mention_data.MentionData.read_mentions_json_to_mentions_data_list">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">read_mentions_json_to_mentions_data_list</span><span class="p">(</span><span class="n">mentions_json_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 
@@ -380,10 +376,10 @@
 
         <span class="k">return</span> <span class="n">mentions</span></div>
 
-<div class="viewcode-block" id="MentionData.get_tokens"><a class="viewcode-back" href="../../../../generated/nlp_architect.common.cdc.mention_data.MentionData.html#nlp_architect.common.cdc.mention_data.MentionData.get_tokens">[docs]</a>    <span class="k">def</span> <span class="nf">get_tokens</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MentionData.get_tokens"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.common.cdc.html#nlp_architect.common.cdc.mention_data.MentionData.get_tokens">[docs]</a>    <span class="k">def</span> <span class="nf">get_tokens</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokens_number</span></div>
 
-<div class="viewcode-block" id="MentionData.gen_mention_id"><a class="viewcode-back" href="../../../../generated/nlp_architect.common.cdc.mention_data.MentionData.html#nlp_architect.common.cdc.mention_data.MentionData.gen_mention_id">[docs]</a>    <span class="k">def</span> <span class="nf">gen_mention_id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<div class="viewcode-block" id="MentionData.gen_mention_id"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.common.cdc.html#nlp_architect.common.cdc.mention_data.MentionData.gen_mention_id">[docs]</a>    <span class="k">def</span> <span class="nf">gen_mention_id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">doc_id</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">sent_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokens_number</span><span class="p">:</span>
             <span class="n">tokens_ids</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">doc_id</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sent_id</span><span class="p">)]</span>
             <span class="n">tokens_ids</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">token_id</span><span class="p">)</span> <span class="k">for</span> <span class="n">token_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokens_number</span><span class="p">])</span>
@@ -391,12 +387,12 @@
 
         <span class="k">return</span> <span class="s1">&#39;_&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tokens_str</span><span class="o">.</span><span class="n">split</span><span class="p">())</span></div>
 
-<div class="viewcode-block" id="MentionData.get_mention_id"><a class="viewcode-back" href="../../../../generated/nlp_architect.common.cdc.mention_data.MentionData.html#nlp_architect.common.cdc.mention_data.MentionData.get_mention_id">[docs]</a>    <span class="k">def</span> <span class="nf">get_mention_id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<div class="viewcode-block" id="MentionData.get_mention_id"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.common.cdc.html#nlp_architect.common.cdc.mention_data.MentionData.get_mention_id">[docs]</a>    <span class="k">def</span> <span class="nf">get_mention_id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">mention_id</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mention_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gen_mention_id</span><span class="p">()</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">mention_id</span></div>
 
-<div class="viewcode-block" id="MentionData.static_gen_token_unique_id"><a class="viewcode-back" href="../../../../generated/nlp_architect.common.cdc.mention_data.MentionData.html#nlp_architect.common.cdc.mention_data.MentionData.static_gen_token_unique_id">[docs]</a>    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="MentionData.static_gen_token_unique_id"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.common.cdc.html#nlp_architect.common.cdc.mention_data.MentionData.static_gen_token_unique_id">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">static_gen_token_unique_id</span><span class="p">(</span><span class="n">doc_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">sent_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">token_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="s1">&#39;_&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">doc_id</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">sent_id</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">token_id</span><span class="p">)])</span></div></div>
 </pre></div>

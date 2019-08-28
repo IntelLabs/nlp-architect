@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Installation &mdash; NLP Architect by Intel® AI Lab 0.4.post2 documentation</title>
+  <title>Installation &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
   
 
   
@@ -25,6 +25,8 @@
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
         <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/install.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -33,12 +35,13 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" type="text/css" />
-  <link rel="stylesheet" href="_static/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/nlp_arch_theme.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Publications" href="publications.html" />
-    <link rel="prev" title="NLP Architect by Intel® AI Lab" href="main.html" /> 
+    <link rel="prev" title="Quick start" href="quick_start.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -57,7 +60,7 @@
 
           
             
-            <img src="_static/nlp_architect_logo_white.png" class="logo" alt="Logo"/>
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
           
           </a>
 
@@ -83,7 +86,7 @@
             
             
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="main.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick start</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id1">Installation</a><ul>
@@ -101,32 +104,27 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#compiling-intel-optimized-tensorflow-with-mkl-dnn">Compiling Intel® optimized Tensorflow with MKL-DNN</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="publications.html">Publications</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Jupyter Tutorials</a></li>
-<li class="toctree-l1"><a class="reference internal" href="developer_guide.html">Developer Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model_zoo.html">Model Zoo</a></li>
 </ul>
 <p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="absa.html">Aspect Based Sentiment Analysis</a></li>
-<li class="toctree-l1"><a class="reference internal" href="chunker.html">Sequence Chunker</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ner_crf.html">Named Entity Recognition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tagging/sequence_tagging.html">Sequence Tagging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sentiment.html">Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bist_parser.html">Dependency Parsing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="intent.html">Intent Extraction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="np_segmentation.html">Noun Phrase Semantic Segmentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bist_parser.html">BIST Dependency Parser</a></li>
-<li class="toctree-l1"><a class="reference internal" href="word_sense.html">Most Common Word Sense</a></li>
-<li class="toctree-l1"><a class="reference internal" href="np2vec.html">Noun Phrase to Vec</a></li>
-<li class="toctree-l1"><a class="reference internal" href="supervised_sentiment.html">Supervised Sentiment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="reading_comprehension.html">Reading Comprehension</a></li>
-<li class="toctree-l1"><a class="reference internal" href="memn2n.html">End-to-End Memory Networks for Goal Oriented Dialogue</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tcn.html">TCN Language Model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="crosslingual_emb.html">Unsupervised Crosslingual Embeddings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cross_doc_coref.html">Cross Document Co-Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="identifying_semantic_relation.html">Semantic Relation Identification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lm.html">Language Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="information_extraction.html">Information Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transformers.html">Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="archived/additional.html">Additional Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Optimized Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quantized_bert.html">Quantized BERT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transformers_distillation.html">Transformers Distillation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Solutions</span></p>
@@ -135,14 +133,11 @@
 <li class="toctree-l1"><a class="reference internal" href="term_set_expansion.html">Set Expansion</a></li>
 <li class="toctree-l1"><a class="reference internal" href="trend_analysis.html">Trend Analysis</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Pipelines</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="spacy_bist.html">Spacy-BIST Parser</a></li>
-<li class="toctree-l1"><a class="reference internal" href="spacy_np_annotator.html">Spacy-NP Annotator</a></li>
-</ul>
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer_guide.html">Developer Guide</a></li>
 </ul>
 
             
@@ -212,36 +207,40 @@
 <p>The NLP Architect requires <strong>Python 3.6+</strong> running on a
 Linux* or UNIX-based OS (like Mac OS). We recommend using the library with Ubuntu 16.04+.</p>
 <p>Before installing the library make sure you has the most recent packages listed below:</p>
-<table class="colwidths-given docutils align-default">
+<table border="1" class="colwidths-given docutils">
 <colgroup>
-<col style="width: 24%" />
-<col style="width: 24%" />
-<col style="width: 51%" />
+<col width="24%" />
+<col width="24%" />
+<col width="51%" />
 </colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Ubuntu* 16.04+ or CentOS* 7.4+</p></th>
-<th class="head"><p>Mac OS X*</p></th>
-<th class="head"><p>Description</p></th>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Ubuntu* 16.04+ or CentOS* 7.4+</th>
+<th class="head">Mac OS X*</th>
+<th class="head">Description</th>
 </tr>
 </thead>
-<tbody>
-<tr class="row-even"><td><p>python-pip</p></td>
-<td><p>pip</p></td>
-<td><p>Tool to install Python dependencies</p></td>
+<tbody valign="top">
+<tr class="row-even"><td>python-pip</td>
+<td>pip</td>
+<td>Tool to install Python dependencies</td>
 </tr>
-<tr class="row-odd"><td><p>libhdf5-dev</p></td>
-<td><p>h5py</p></td>
-<td><p>Enables loading of hdf5 formats</p></td>
+<tr class="row-odd"><td>libhdf5-dev</td>
+<td>h5py</td>
+<td>Enables loading of hdf5 formats</td>
 </tr>
-<tr class="row-even"><td><p>pkg-config</p></td>
-<td><p>pkg-config</p></td>
-<td><p>Retrieves information about installed libraries</p></td>
+<tr class="row-even"><td>pkg-config</td>
+<td>pkg-config</td>
+<td>Retrieves information about installed libraries</td>
 </tr>
 </tbody>
 </table>
 <div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The default installation of NLP Architect use CPU-based binaries of all deep learning frameworks. Intel Optimized MKL-DNN binaries will be installed if a Linux is detected. GPU backed is supported online on Linux and if a GPU is present. See details below for instructions on how to install each backend.</p>
+<p class="first admonition-title">Note</p>
+<p class="last">The default installation of NLP Architect use CPU-based binaries of all deep learning frameworks. Intel Optimized MKL-DNN binaries will be installed if a Linux is detected. GPU backend on Linux will install Tensorflow with MKL-DNN and if a GPU is present. See details below for instructions on how to install each backend.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For specific installation of backends of Tensorflow or PyTorch (CPU/MKL/GPU) we recommend installing NLP Architect and then installing the desired package of framework.</p>
 </div>
 </div>
 <div class="section" id="id1">
@@ -249,14 +248,14 @@ Linux* or UNIX-based OS (like Mac OS). We recommend using the library with Ubunt
 <div class="section" id="prerequisites">
 <h3>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h3>
 <p>Make sure <code class="docutils literal notranslate"><span class="pre">pip</span></code> and <code class="docutils literal notranslate"><span class="pre">setuptools</span></code> and <code class="docutils literal notranslate"><span class="pre">venv</span></code> are up to date before installing.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip3 install -U pip setuptools venv
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip3</span> <span class="n">install</span> <span class="o">-</span><span class="n">U</span> <span class="n">pip</span> <span class="n">setuptools</span> <span class="n">venv</span>
 </pre></div>
 </div>
 <p>We recommend installing NLP Architect in a virtual environment to self-contain
 the work done using the library.</p>
 <p>To create and activate a new virtual environment (or skip this step and use the wizard below):</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3.6 -m venv .nlp_architect_env
-<span class="nb">source</span> .nlp_architect_env/bin/activate
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span><span class="o">.</span><span class="mi">6</span> <span class="o">-</span><span class="n">m</span> <span class="n">venv</span> <span class="o">.</span><span class="n">nlp_architect_env</span>
+<span class="n">source</span> <span class="o">.</span><span class="n">nlp_architect_env</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
 </pre></div>
 </div>
 </div>
@@ -331,15 +330,15 @@ the work done using the library.</p>
 <div class="section" id="install-from-source">
 <h3>Install from source<a class="headerlink" href="#install-from-source" title="Permalink to this headline">¶</a></h3>
 <p>To get started, clone our repository:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/NervanaSystems/nlp-architect.git
-<span class="nb">cd</span> nlp-architect
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">NervanaSystems</span><span class="o">/</span><span class="n">nlp</span><span class="o">-</span><span class="n">architect</span><span class="o">.</span><span class="n">git</span>
+<span class="n">cd</span> <span class="n">nlp</span><span class="o">-</span><span class="n">architect</span>
 </pre></div>
 </div>
 <div class="section" id="selecting-a-backend">
 <h4>Selecting a backend<a class="headerlink" href="#selecting-a-backend" title="Permalink to this headline">¶</a></h4>
 <p>NLP Architect supports CPU, GPU and Intel Optimized Tensorflow (MKL-DNN) backends.
 Users can select the desired backend using a dedicated environment variable (default: CPU). (MKL-DNN and GPU backends are supported only on Linux)</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">NLP_ARCHITECT_BE</span><span class="o">=</span>CPU/MKL/GPU
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">NLP_ARCHITECT_BE</span><span class="o">=</span><span class="n">CPU</span><span class="o">/</span><span class="n">MKL</span><span class="o">/</span><span class="n">GPU</span>
 </pre></div>
 </div>
 </div>
@@ -347,11 +346,11 @@ Users can select the desired backend using a dedicated environment variable (def
 <h4>Installation<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
 <p>NLP Architect is installed using <cite>pip</cite> and it is recommended to install in development mode.</p>
 <p>Default:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip3 install .
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip3</span> <span class="n">install</span> <span class="o">.</span>
 </pre></div>
 </div>
 <p>Development mode:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip3 install -e .
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip3</span> <span class="n">install</span> <span class="o">-</span><span class="n">e</span> <span class="o">.</span>
 </pre></div>
 </div>
 <p>Once installed, the <code class="docutils literal notranslate"><span class="pre">nlp_architect</span></code> command provides additional options to work with the library, issue <code class="docutils literal notranslate"><span class="pre">nlp_architect</span> <span class="pre">-h</span></code> to see all options.</p>
@@ -362,53 +361,17 @@ Users can select the desired backend using a dedicated environment variable (def
 <p>Depending of how you installed NLP Architect to update the library:</p>
 <div class="section" id="from-source">
 <h4>From source<a class="headerlink" href="#from-source" title="Permalink to this headline">¶</a></h4>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git pull origin master
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">pull</span> <span class="n">origin</span> <span class="n">master</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="using-pip">
 <h4>Using <cite>pip</cite><a class="headerlink" href="#using-pip" title="Permalink to this headline">¶</a></h4>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install -U nlp-architect
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">U</span> <span class="n">nlp</span><span class="o">-</span><span class="n">architect</span>
 </pre></div>
 </div>
 </div>
 </div>
-</div>
-<hr class="docutils" />
-<div class="section" id="compiling-intel-optimized-tensorflow-with-mkl-dnn">
-<h2>Compiling Intel® optimized Tensorflow with MKL-DNN<a class="headerlink" href="#compiling-intel-optimized-tensorflow-with-mkl-dnn" title="Permalink to this headline">¶</a></h2>
-<p>NLP Architect supports MKL-DNN flavor of Tensorflow out of the box, however, if the user wishes to compile Tensorflow we provide instructions below.</p>
-<p>Tensorflow has a guide <a class="reference external" href="https://www.tensorflow.org/install/install_sources">guide</a> for compiling and installing Tensorflow with with MKL-DNN optimization. Make sure to install all required tools: bazel and python development dependencies.</p>
-<p>Alternatively, follow the instructions below to compile and install the latest version of Tensorflow with MKL-DNN:</p>
-<ul>
-<li><p>Clone Tensorflow repository from GitHub:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">tensorflow</span><span class="o">/</span><span class="n">tensorflow</span>
-<span class="n">cd</span> <span class="n">tensorflow</span>
-</pre></div>
-</div>
-</li>
-<li><p>Configure Tensorflow for compilation:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">configure</span>
-</pre></div>
-</div>
-</li>
-<li><p>Compile Tensorflow with MKL-DNN:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bazel</span> <span class="n">build</span> <span class="o">--</span><span class="n">config</span><span class="o">=</span><span class="n">mkl</span> <span class="o">--</span><span class="n">config</span><span class="o">=</span><span class="n">opt</span> <span class="o">//</span><span class="n">tensorflow</span><span class="o">/</span><span class="n">tools</span><span class="o">/</span><span class="n">pip_package</span><span class="p">:</span><span class="n">build_pip_package</span>
-</pre></div>
-</div>
-</li>
-<li><p>Create pip package in <code class="docutils literal notranslate"><span class="pre">/tmp/tensorflow_pkg</span></code>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bazel</span><span class="o">-</span><span class="nb">bin</span><span class="o">/</span><span class="n">tensorflow</span><span class="o">/</span><span class="n">tools</span><span class="o">/</span><span class="n">pip_package</span><span class="o">/</span><span class="n">build_pip_package</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">tensorflow_pkg</span>
-</pre></div>
-</div>
-</li>
-<li><p>Install Tensorflow pip package:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">&lt;</span><span class="n">tensorflow</span> <span class="n">package</span> <span class="n">name</span><span class="o">&gt;.</span><span class="n">whl</span>
-</pre></div>
-</div>
-</li>
-<li><p>Refer to <a class="reference external" href="https://www.tensorflow.org/performance/performance_guide#tensorflow_with_intel_mkl_dnn">this</a> guide for specific configuration to get optimal performance when running your model.</p></li>
-</ul>
 </div>
 </div>
 

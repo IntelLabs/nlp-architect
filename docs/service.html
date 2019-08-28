@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Using as a REST service &mdash; NLP Architect by Intel® AI Lab 0.4.post2 documentation</title>
+  <title>Using as a REST service &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
   
 
   
@@ -25,6 +25,8 @@
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
         <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/install.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -33,12 +35,13 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" type="text/css" />
-  <link rel="stylesheet" href="_static/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/nlp_arch_theme.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="NLP Architect Model Zoo" href="model_zoo.html" />
-    <link rel="prev" title="Developer Guide" href="developer_guide.html" /> 
+    <link rel="next" title="Developer Guide" href="developer_guide.html" />
+    <link rel="prev" title="nlp_architect.utils.resources package" href="generated_api/nlp_architect.utils.resources.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -57,7 +60,7 @@
 
           
             
-            <img src="_static/nlp_architect_logo_white.png" class="logo" alt="Logo"/>
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
           
           </a>
 
@@ -82,12 +85,39 @@
               
             
             
-              <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="main.html">Home</a></li>
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick start</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="publications.html">Publications</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Jupyter Tutorials</a></li>
-<li class="toctree-l1"><a class="reference internal" href="developer_guide.html">Developer Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model_zoo.html">Model Zoo</a></li>
+</ul>
+<p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tagging/sequence_tagging.html">Sequence Tagging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sentiment.html">Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bist_parser.html">Dependency Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intent.html">Intent Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lm.html">Language Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="information_extraction.html">Information Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transformers.html">Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="archived/additional.html">Additional Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Optimized Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quantized_bert.html">Quantized BERT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transformers_distillation.html">Transformers Distillation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solutions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="absa_solution.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="term_set_expansion.html">Set Expansion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="trend_analysis.html">Trend Analysis</a></li>
+</ul>
+<p class="caption"><span class="caption-text">For Developers</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">REST Server</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#running-nlp-architect-server">Running NLP Architect Server</a><ul>
@@ -108,55 +138,9 @@
 <li class="toctree-l3"><a class="reference internal" href="#adding-a-new-service-to-the-server">Adding a new service to the server</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#nlp-architect-server-deployment-tutorial">NLP Architect Server Deployment Tutorial</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id2">Overview</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#sw-stack">SW Stack</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#kubectl-installation">Kubectl Installation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#minikube-installation">Minikube Installation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#docker-installation">Docker Installation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#launch-docker-registry">Launch Docker Registry</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#build-dockerfile">Build DockerFile</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#deploy-kubernetes">Deploy Kubernetes</a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="model_zoo.html">Model Zoo</a></li>
-</ul>
-<p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="absa.html">Aspect Based Sentiment Analysis</a></li>
-<li class="toctree-l1"><a class="reference internal" href="chunker.html">Sequence Chunker</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ner_crf.html">Named Entity Recognition</a></li>
-<li class="toctree-l1"><a class="reference internal" href="intent.html">Intent Extraction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="np_segmentation.html">Noun Phrase Semantic Segmentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bist_parser.html">BIST Dependency Parser</a></li>
-<li class="toctree-l1"><a class="reference internal" href="word_sense.html">Most Common Word Sense</a></li>
-<li class="toctree-l1"><a class="reference internal" href="np2vec.html">Noun Phrase to Vec</a></li>
-<li class="toctree-l1"><a class="reference internal" href="supervised_sentiment.html">Supervised Sentiment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="reading_comprehension.html">Reading Comprehension</a></li>
-<li class="toctree-l1"><a class="reference internal" href="memn2n.html">End-to-End Memory Networks for Goal Oriented Dialogue</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tcn.html">TCN Language Model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="crosslingual_emb.html">Unsupervised Crosslingual Embeddings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cross_doc_coref.html">Cross Document Co-Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="identifying_semantic_relation.html">Semantic Relation Identification</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Solutions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="absa_solution.html">Aspect Based Sentiment Analysis</a></li>
-<li class="toctree-l1"><a class="reference internal" href="term_set_expansion.html">Set Expansion</a></li>
-<li class="toctree-l1"><a class="reference internal" href="trend_analysis.html">Trend Analysis</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Pipelines</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="spacy_bist.html">Spacy-BIST Parser</a></li>
-<li class="toctree-l1"><a class="reference internal" href="spacy_np_annotator.html">Spacy-NP Annotator</a></li>
-</ul>
-<p class="caption"><span class="caption-text">For Developers</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer_guide.html">Developer Guide</a></li>
 </ul>
 
             
@@ -229,16 +213,16 @@ The server includes a web front-end exposing the model’s annotations.</p>
 <p>Currently we provide 4 services:</p>
 <blockquote>
 <div><ol class="arabic simple">
-<li><p><a class="reference internal" href="spacy_bist.html"><span class="doc">BIST</span></a> Dependency parsing</p></li>
-<li><p><a class="reference internal" href="ner_crf.html"><span class="doc">NER</span></a></p></li>
-<li><p><a class="reference internal" href="intent.html"><span class="doc">Intent Extraction</span></a></p></li>
-<li><p><a class="reference internal" href="reading_comprehension.html"><span class="doc">Machine Reading Comprehension</span></a></p></li>
+<li><a class="reference internal" href="spacy_bist.html"><span class="doc">BIST</span></a> Dependency parsing</li>
+<li><span class="xref std std-doc">NER</span></li>
+<li><a class="reference internal" href="intent.html"><span class="doc">Intent Extraction</span></a></li>
+<li><span class="xref std std-doc">Machine Reading Comprehension</span></li>
 </ol>
 </div></blockquote>
 <p>The server has two main components:</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="code_docs/service.html#nlp_architect.server.service.Service" title="nlp_architect.server.service.Service"><code class="xref py py-class docutils literal notranslate"><span class="pre">Service</span></code></a> which is a representation of each model’s API.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">nlp_architect.server.serve</span></code> module which is a <a class="reference external" href="http://www.hug.rest/">hug</a> application which handles processing of HTTP requests and initiating calls to the desired model.</p></li>
+<li><a class="reference internal" href="generated_api/nlp_architect.server.html#nlp_architect.server.service.Service" title="nlp_architect.server.service.Service"><code class="xref py py-class docutils literal notranslate"><span class="pre">Service</span></code></a> which is a representation of each model’s API.</li>
+<li><code class="docutils literal notranslate"><span class="pre">nlp_architect.server.serve</span></code> module which is a <a class="reference external" href="http://www.hug.rest/">hug</a> application which handles processing of HTTP requests and initiating calls to the desired model.</li>
 </ul>
 <p>The server supports extending with new services using provided API classes, see <a class="reference internal" href="#annotation-structure-types-server-responses">Annotation Structure Types - Server Responses</a> for more details.</p>
 </div>
@@ -247,7 +231,7 @@ The server includes a web front-end exposing the model’s annotations.</p>
 <div class="section" id="starting-the-server">
 <h3>Starting the server<a class="headerlink" href="#starting-the-server" title="Permalink to this headline">¶</a></h3>
 <p>To run the server run the following command:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nlp_architect server -p <span class="m">8080</span>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nlp_architect</span> <span class="n">server</span> <span class="o">-</span><span class="n">p</span> <span class="mi">8080</span>
 </pre></div>
 </div>
 <p>The server will run locally on port 8080 and can be queried on <code class="docutils literal notranslate"><span class="pre">/inference</span></code> directive.</p>
@@ -257,22 +241,22 @@ The server includes a web front-end exposing the model’s annotations.</p>
 <h3>Requests<a class="headerlink" href="#requests" title="Permalink to this headline">¶</a></h3>
 <p>The following headers are required when communicating with the server:</p>
 <ul class="simple">
-<li><p>Content-Type: “application/json” or “application/gzip”</p></li>
-<li><p>Response-Format: The response format, “json” or “gzip”. The default response format is json.</p></li>
+<li>Content-Type: “application/json” or “application/gzip”</li>
+<li>Response-Format: The response format, “json” or “gzip”. The default response format is json.</li>
 </ul>
 <p>The request content has the following format:</p>
-<div class="highlight-json notranslate"><div class="highlight"><pre><span></span>{
-    &quot;model_name&quot;: &quot;ner&quot; | &quot;bist&quot; | &quot;intent_extraction&quot; | &quot;machine_comprehension&quot;,
-    &quot;docs&quot;:
-    [
-        {&quot;id&quot;: 1,
-        &quot;doc&quot;: &quot;Time flies like an arrow. fruit flies like a banana.&quot;},
-        {&quot;id&quot;: 2,
-        &quot;doc&quot;: &quot;the horse passed the barn fell&quot;},
-        {&quot;id&quot;: 3,
-        &quot;doc&quot;: &quot;the old man the boat&quot;}
-    ]
-}
+<div class="code json highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;model_name&quot;</span><span class="p">:</span> <span class="s2">&quot;ner&quot;</span> <span class="o">|</span> <span class="s2">&quot;bist&quot;</span> <span class="o">|</span> <span class="s2">&quot;intent_extraction&quot;</span> <span class="o">|</span> <span class="s2">&quot;machine_comprehension&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;docs&quot;</span><span class="p">:</span>
+    <span class="p">[</span>
+        <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s2">&quot;doc&quot;</span><span class="p">:</span> <span class="s2">&quot;Time flies like an arrow. fruit flies like a banana.&quot;</span><span class="p">},</span>
+        <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="s2">&quot;doc&quot;</span><span class="p">:</span> <span class="s2">&quot;the horse passed the barn fell&quot;</span><span class="p">},</span>
+        <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="s2">&quot;doc&quot;</span><span class="p">:</span> <span class="s2">&quot;the old man the boat&quot;</span><span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>In the example above, <code class="docutils literal notranslate"><span class="pre">model_name</span></code> is the desired model to run the documents through and each input document is marked with an id and content.</p>
@@ -283,25 +267,25 @@ The server includes a web front-end exposing the model’s annotations.</p>
 </div>
 <div class="section" id="example">
 <h3>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
-<p>Request annotations using the <a class="reference internal" href="ner_crf.html"><span class="doc">NER</span></a> model:</p>
+<p>Request annotations using the <span class="xref std std-doc">NER</span> model:</p>
 <img alt="_images/service_cards.png" src="_images/service_cards.png" />
 <ul class="simple">
-<li><p>BIST parser - Core NLP models annotation structure</p></li>
+<li>BIST parser - Core NLP models annotation structure</li>
 </ul>
 </div>
 <div class="section" id="visualization-previews">
 <h3>Visualization previews<a class="headerlink" href="#visualization-previews" title="Permalink to this headline">¶</a></h3>
 <ul>
-<li><p><a class="reference internal" href="ner_crf.html"><span class="doc">Named Entity Extraction</span></a>:</p>
+<li><p class="first"><span class="xref std std-doc">Named Entity Extraction</span>:</p>
 <img alt="_images/ner_service.png" src="_images/ner_service.png" />
 </li>
-<li><p><a class="reference internal" href="intent.html"><span class="doc">Intent Extraction</span></a>:</p>
+<li><p class="first"><a class="reference internal" href="intent.html"><span class="doc">Intent Extraction</span></a>:</p>
 <img alt="_images/intent_service.png" src="_images/intent_service.png" />
 </li>
-<li><p><a class="reference internal" href="reading_comprehension.html"><span class="doc">Machine Reading Comprehension</span></a>:</p>
+<li><p class="first"><span class="xref std std-doc">Machine Reading Comprehension</span>:</p>
 <img alt="_images/mrc_service.png" src="_images/mrc_service.png" />
 </li>
-<li><p><a class="reference internal" href="spacy_bist.html"><span class="doc">BIST</span></a> parser:</p>
+<li><p class="first"><a class="reference internal" href="spacy_bist.html"><span class="doc">BIST</span></a> parser:</p>
 <img alt="_images/bist_service.png" src="_images/bist_service.png" />
 </li>
 </ul>
@@ -311,52 +295,50 @@ The server includes a web front-end exposing the model’s annotations.</p>
 <h2>Annotation Structure Types - Server Responses<a class="headerlink" href="#annotation-structure-types-server-responses" title="Permalink to this headline">¶</a></h2>
 <p>The server supports 2 types of annotation structure (responses from the server):</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="#core-nlp-models-annotation-structure">Core NLP models annotation structure</a>:</p></li>
+<li><a class="reference internal" href="#core-nlp-models-annotation-structure">Core NLP models annotation structure</a>:</li>
 </ul>
 <blockquote>
-<div><p>A annotation of a Core NLP model (Part-of-speech (POS), lemma, dependency relations etc.), usually a word-to-label annotation.</p>
-</div></blockquote>
+<div>A annotation of a Core NLP model (Part-of-speech (POS), lemma, dependency relations etc.), usually a word-to-label annotation.</div></blockquote>
 <ul class="simple">
-<li><p><a class="reference internal" href="#high-level-models-annotation-structure">High-level models annotation structure</a>:</p></li>
+<li><a class="reference internal" href="#high-level-models-annotation-structure">High-level models annotation structure</a>:</li>
 </ul>
 <blockquote>
-<div><p>An annotation of a more high-level model (Intent Extraction, NER, Chunking, etc.). usually a span-to-label annotation used for higher level of nlp tasks and applications.</p>
-</div></blockquote>
+<div>An annotation of a more high-level model (Intent Extraction, NER, Chunking, etc.). usually a span-to-label annotation used for higher level of nlp tasks and applications.</div></blockquote>
 <div class="section" id="core-nlp-models-annotation-structure">
 <h3>Core NLP models annotation structure<a class="headerlink" href="#core-nlp-models-annotation-structure" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference internal" href="generated/nlp_architect.common.core_nlp_doc.CoreNLPDoc.html#nlp_architect.common.core_nlp_doc.CoreNLPDoc" title="nlp_architect.common.core_nlp_doc.CoreNLPDoc"><code class="xref py py-class docutils literal notranslate"><span class="pre">CoreNLPDoc</span></code></a> class is hosting the Core NLP models annotation structure.
+<p><a class="reference internal" href="generated_api/nlp_architect.common.html#nlp_architect.common.core_nlp_doc.CoreNLPDoc" title="nlp_architect.common.core_nlp_doc.CoreNLPDoc"><code class="xref py py-class docutils literal notranslate"><span class="pre">CoreNLPDoc</span></code></a> class is hosting the Core NLP models annotation structure.
 (can be imported using: <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">nlp_architect.common.core_nlp_doc</span> <span class="pre">import</span> <span class="pre">CoreNLPDoc</span></code>).</p>
-<div class="highlight-json notranslate"><div class="highlight"><pre><span></span>{
-  &quot;doc_text&quot;: &quot;&lt;the_document_text&gt;&quot;,
-  &quot;sentences&quot;: list of sentences, each word in a sentence is represented in \
-    a dict (list(list(dict))). the dict is structured as follows:
-            {
-              &quot;start&quot;: &lt;start_index&gt; (int),
-              &quot;len&quot;: &lt;word_length&gt; (int),
-              &quot;pos&quot;: &lt;POS_label&gt; (string),
-              &quot;ner&quot;: &lt;NER_label&gt; (string),
-              &quot;lemma&quot;: &lt;Lemma_string&gt; (string),
-              &quot;gov&quot;: &lt;GOV_index&gt; (int),
-              &quot;rel&quot;: &lt;Dependency_Relation_label&gt; (string)
-             }
- }
+<div class="code json highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;doc_text&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;the_document_text&gt;&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;sentences&quot;</span><span class="p">:</span> <span class="nb">list</span> <span class="n">of</span> <span class="n">sentences</span><span class="p">,</span> <span class="n">each</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">a</span> <span class="n">sentence</span> <span class="ow">is</span> <span class="n">represented</span> <span class="ow">in</span> \
+    <span class="n">a</span> <span class="nb">dict</span> <span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">dict</span><span class="p">)))</span><span class="o">.</span> <span class="n">the</span> <span class="nb">dict</span> <span class="ow">is</span> <span class="n">structured</span> <span class="k">as</span> <span class="n">follows</span><span class="p">:</span>
+            <span class="p">{</span>
+              <span class="s2">&quot;start&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">start_index</span><span class="o">&gt;</span> <span class="p">(</span><span class="nb">int</span><span class="p">),</span>
+              <span class="s2">&quot;len&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">word_length</span><span class="o">&gt;</span> <span class="p">(</span><span class="nb">int</span><span class="p">),</span>
+              <span class="s2">&quot;pos&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">POS_label</span><span class="o">&gt;</span> <span class="p">(</span><span class="n">string</span><span class="p">),</span>
+              <span class="s2">&quot;ner&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">NER_label</span><span class="o">&gt;</span> <span class="p">(</span><span class="n">string</span><span class="p">),</span>
+              <span class="s2">&quot;lemma&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">Lemma_string</span><span class="o">&gt;</span> <span class="p">(</span><span class="n">string</span><span class="p">),</span>
+              <span class="s2">&quot;gov&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">GOV_index</span><span class="o">&gt;</span> <span class="p">(</span><span class="nb">int</span><span class="p">),</span>
+              <span class="s2">&quot;rel&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">Dependency_Relation_label</span><span class="o">&gt;</span> <span class="p">(</span><span class="n">string</span><span class="p">)</span>
+             <span class="p">}</span>
+ <span class="p">}</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="high-level-models-annotation-structure">
 <h3>High-level models annotation structure<a class="headerlink" href="#high-level-models-annotation-structure" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference internal" href="generated/nlp_architect.common.high_level_doc.HighLevelDoc.html#nlp_architect.common.high_level_doc.HighLevelDoc" title="nlp_architect.common.high_level_doc.HighLevelDoc"><code class="xref py py-class docutils literal notranslate"><span class="pre">HighLevelDoc</span></code></a> class is hosting the High-level models annotation structure.
+<p><a class="reference internal" href="generated_api/nlp_architect.common.html#nlp_architect.common.high_level_doc.HighLevelDoc" title="nlp_architect.common.high_level_doc.HighLevelDoc"><code class="xref py py-class docutils literal notranslate"><span class="pre">HighLevelDoc</span></code></a> class is hosting the High-level models annotation structure.
 (can be imported using: <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">nlp_architect.common.high_level_doc</span> <span class="pre">import</span> <span class="pre">HighLevelDoc</span></code>).</p>
-<div class="highlight-json notranslate"><div class="highlight"><pre><span></span>{
-    &quot;doc_text&quot; : &quot;&lt;the_document_text&gt;&quot;,
-    &quot;annotation_set&quot; : list of all annotations in document (list(string)),
-    &quot;spans&quot; : list of span dict (list(dict)), each span_dict is structured as follows:
-            {
-              &quot;end&quot;: &lt;end_index&gt; (int),
-              &quot;start&quot;: &lt;start_index&gt; (int),
-              &quot;type&quot;: &lt;annotation_string&gt; (string)
-             }
- }
+<div class="code json highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;doc_text&quot;</span> <span class="p">:</span> <span class="s2">&quot;&lt;the_document_text&gt;&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;annotation_set&quot;</span> <span class="p">:</span> <span class="nb">list</span> <span class="n">of</span> <span class="nb">all</span> <span class="n">annotations</span> <span class="ow">in</span> <span class="n">document</span> <span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">string</span><span class="p">)),</span>
+    <span class="s2">&quot;spans&quot;</span> <span class="p">:</span> <span class="nb">list</span> <span class="n">of</span> <span class="n">span</span> <span class="nb">dict</span> <span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">dict</span><span class="p">)),</span> <span class="n">each</span> <span class="n">span_dict</span> <span class="ow">is</span> <span class="n">structured</span> <span class="k">as</span> <span class="n">follows</span><span class="p">:</span>
+            <span class="p">{</span>
+              <span class="s2">&quot;end&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">end_index</span><span class="o">&gt;</span> <span class="p">(</span><span class="nb">int</span><span class="p">),</span>
+              <span class="s2">&quot;start&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">start_index</span><span class="o">&gt;</span> <span class="p">(</span><span class="nb">int</span><span class="p">),</span>
+              <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">annotation_string</span><span class="o">&gt;</span> <span class="p">(</span><span class="n">string</span><span class="p">)</span>
+             <span class="p">}</span>
+ <span class="p">}</span>
 </pre></div>
 </div>
 </div>
@@ -365,10 +347,10 @@ The server includes a web front-end exposing the model’s annotations.</p>
 <p>Only for the MachineComprehensionApi response.
 .. code:: json</p>
 <blockquote>
-<div><dl class="simple">
-<dt>{</dt><dd><p>“id”: “&lt;id&gt;”,
-“answer”: “&lt;answer_text&gt;”</p>
-</dd>
+<div><dl class="docutils">
+<dt>{</dt>
+<dd>“id”: “&lt;id&gt;”,
+“answer”: “&lt;answer_text&gt;”</dd>
 </dl>
 <p>}</p>
 </div></blockquote>
@@ -381,207 +363,13 @@ The server includes a web front-end exposing the model’s annotations.</p>
 <p>All the services are declared in a <code class="docutils literal notranslate"><span class="pre">JSON</span></code> file found at <code class="docutils literal notranslate"><span class="pre">nlp_architect/server/services.json</span></code>.</p>
 <p>In order to add a new service to the server you need to go over 3 steps:</p>
 <ol class="arabic simple">
-<li><p>Detect the type of your service suitable for your model, either Core NLP model or High-level model.</p></li>
-<li><p>Create an API class for your service in  <code class="docutils literal notranslate"><span class="pre">nlp_architect/api/</span></code> folder. Make your class inherit from <a class="reference internal" href="code_docs/nlp_architect.api.html#nlp_architect.api.abstract_api.AbstractApi" title="nlp_architect.api.abstract_api.AbstractApi"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractApi</span></code></a> and implement all relevant methods. Notice that your <cite>inference</cite> <code class="docutils literal notranslate"><span class="pre">class_method</span></code> must return either <a class="reference internal" href="generated/nlp_architect.common.core_nlp_doc.CoreNLPDoc.html#nlp_architect.common.core_nlp_doc.CoreNLPDoc" title="nlp_architect.common.core_nlp_doc.CoreNLPDoc"><code class="xref py py-class docutils literal notranslate"><span class="pre">CoreNLPDoc</span></code></a> or <a class="reference internal" href="generated/nlp_architect.common.high_level_doc.HighLevelDoc.html#nlp_architect.common.high_level_doc.HighLevelDoc" title="nlp_architect.common.high_level_doc.HighLevelDoc"><code class="xref py py-class docutils literal notranslate"><span class="pre">HighLevelDoc</span></code></a>.</p></li>
-<li><p>Add the definition of the new service to <code class="docutils literal notranslate"><span class="pre">services.json</span></code> as follows:</p></li>
+<li>Detect the type of your service suitable for your model, either Core NLP model or High-level model.</li>
+<li>Create an API class for your service in  <code class="docutils literal notranslate"><span class="pre">nlp_architect/api/</span></code> folder. Make your class inherit from <a class="reference internal" href="generated_api/nlp_architect.api.html#nlp_architect.api.abstract_api.AbstractApi" title="nlp_architect.api.abstract_api.AbstractApi"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractApi</span></code></a> and implement all relevant methods. Notice that your <cite>inference</cite> <code class="docutils literal notranslate"><span class="pre">class_method</span></code> must return either <a class="reference internal" href="generated_api/nlp_architect.common.html#nlp_architect.common.core_nlp_doc.CoreNLPDoc" title="nlp_architect.common.core_nlp_doc.CoreNLPDoc"><code class="xref py py-class docutils literal notranslate"><span class="pre">CoreNLPDoc</span></code></a> or <a class="reference internal" href="generated_api/nlp_architect.common.html#nlp_architect.common.high_level_doc.HighLevelDoc" title="nlp_architect.common.high_level_doc.HighLevelDoc"><code class="xref py py-class docutils literal notranslate"><span class="pre">HighLevelDoc</span></code></a>.</li>
+<li>Add the definition of the new service to <code class="docutils literal notranslate"><span class="pre">services.json</span></code> as follows:</li>
 </ol>
-<div class="highlight-json notranslate"><div class="highlight"><pre><span></span>&quot;&lt;service_name&gt;&quot; : {&quot;file_name&quot;: &quot;&lt;api_file_name&gt;&quot;, &quot;type&quot;: &lt;&quot;core&quot;/&quot;high_level&gt;&quot;}
+<div class="code json highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;&lt;service_name&gt;&quot;</span> <span class="p">:</span> <span class="p">{</span><span class="s2">&quot;file_name&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;api_file_name&gt;&quot;</span><span class="p">,</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="s2">&quot;core&quot;</span><span class="o">/</span><span class="s2">&quot;high_level&gt;&quot;</span><span class="p">}</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="nlp-architect-server-deployment-tutorial">
-<h2>NLP Architect Server Deployment Tutorial<a class="headerlink" href="#nlp-architect-server-deployment-tutorial" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id2">
-<h3>Overview<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
-<p>This tutorial walks you through the multiple steps for deploying NLP Architect server locally.
-Deployment allows the server to scale well based on user requests.</p>
-</div>
-<div class="section" id="sw-stack">
-<h3>SW Stack<a class="headerlink" href="#sw-stack" title="Permalink to this headline">¶</a></h3>
-<p>Various layers of the software stack are as follows</p>
-<img alt="_images/service_deploy.png" src="_images/service_deploy.png" />
-</div>
-<div class="section" id="prerequisites">
-<h3>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h3>
-<ol class="arabic simple">
-<li><p>Ubuntu 16.04</p></li>
-<li><p>Must have root privileges</p></li>
-<li><p>Virtualization must be enabled in your computer BIOS</p></li>
-</ol>
-</div>
-<div class="section" id="kubectl-installation">
-<h3>Kubectl Installation<a class="headerlink" href="#kubectl-installation" title="Permalink to this headline">¶</a></h3>
-<p>kubectl is a command line interface for running commands against Kubernetes clusters.
-Following are the installation instructions</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span> <span class="o">&amp;&amp;</span> <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">apt</span><span class="o">-</span><span class="n">transport</span><span class="o">-</span><span class="n">https</span>
-<span class="n">curl</span> <span class="o">-</span><span class="n">s</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">packages</span><span class="o">.</span><span class="n">cloud</span><span class="o">.</span><span class="n">google</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">apt</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">apt</span><span class="o">-</span><span class="n">key</span><span class="o">.</span><span class="n">gpg</span> <span class="o">|</span> <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">key</span> <span class="n">add</span> <span class="o">-</span>
-<span class="n">sudo</span> <span class="n">touch</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">apt</span><span class="o">/</span><span class="n">sources</span><span class="o">.</span><span class="n">list</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">kubernetes</span><span class="o">.</span><span class="n">list</span>
-<span class="n">echo</span> <span class="s2">&quot;deb http://apt.kubernetes.io/ kubernetes-xenial main&quot;</span> <span class="o">|</span> <span class="n">sudo</span> <span class="n">tee</span> <span class="o">-</span><span class="n">a</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">apt</span><span class="o">/</span><span class="n">sources</span><span class="o">.</span><span class="n">list</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">kubernetes</span><span class="o">.</span><span class="n">list</span>
-<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span>
-<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">kubectl</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="minikube-installation">
-<h3>Minikube Installation<a class="headerlink" href="#minikube-installation" title="Permalink to this headline">¶</a></h3>
-<p>Minikube provides a simple way of running Kubernetes on your local machine.
-Following are the installation instructions</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">curl</span> <span class="o">-</span><span class="n">Lo</span> <span class="n">minikube</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">storage</span><span class="o">.</span><span class="n">googleapis</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">minikube</span><span class="o">/</span><span class="n">releases</span><span class="o">/</span><span class="n">v0</span><span class="o">.</span><span class="mf">25.0</span><span class="o">/</span><span class="n">minikube</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">amd64</span> <span class="o">&amp;&amp;</span> <span class="n">chmod</span> <span class="o">+</span><span class="n">x</span> <span class="n">minikube</span> <span class="o">&amp;&amp;</span> <span class="n">sudo</span> <span class="n">mv</span> <span class="n">minikube</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span>
-<span class="n">sudo</span> <span class="n">minikube</span> <span class="n">start</span> <span class="o">--</span><span class="n">vm</span><span class="o">-</span><span class="n">driver</span><span class="o">=</span><span class="n">none</span>
-<span class="n">Follow</span> <span class="n">instructions</span> <span class="n">posted</span> <span class="n">by</span> <span class="n">minikube</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="docker-installation">
-<h3>Docker Installation<a class="headerlink" href="#docker-installation" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>sudo apt-get install ca-certificates curl gnupg2 software-properties-common
-sudo add-apt-repository \
-&quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu \
-$(lsb_release -cs) stable&quot;
-sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 7EA0A9C3F273FCD8
-sudo apt-get update &amp;&amp; sudo apt-get install docker-ce
-sudo usermod -aG docker $USER
-# if the following command doesn&#39;t work, re-login again
-exec su -l $USER
-</pre></div>
-</div>
-</div>
-<div class="section" id="launch-docker-registry">
-<h3>Launch Docker Registry<a class="headerlink" href="#launch-docker-registry" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Follow</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">docs</span><span class="o">.</span><span class="n">docker</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">config</span><span class="o">/</span><span class="n">daemon</span><span class="o">/</span><span class="n">systemd</span><span class="o">/</span><span class="c1">#httphttps-proxy to fix proxy things if need be</span>
-<span class="n">docker</span> <span class="n">run</span> <span class="o">-</span><span class="n">d</span> <span class="o">-</span><span class="n">p</span> <span class="mi">5000</span><span class="p">:</span><span class="mi">5000</span> <span class="o">--</span><span class="n">restart</span><span class="o">=</span><span class="n">always</span> <span class="o">--</span><span class="n">name</span> <span class="n">registry</span> <span class="n">registry</span><span class="p">:</span><span class="mi">2</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="build-dockerfile">
-<h3>Build DockerFile<a class="headerlink" href="#build-dockerfile" title="Permalink to this headline">¶</a></h3>
-<p>Create a Dockerfile with the following content and save it in your deployment directory.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>FROM python:3.6 AS builder
-
-RUN apt-get update
-RUN apt-get install -y git
-
-ARG GITHUB_ACCESS_TOKEN
-# check out project at current location, hopefully this is a tag eventually
-# right now this is latest commit from https://github.com/NervanaSystems/nlp-architect/pull/243/commits/ at 12:21pm 8/6/18
-RUN git clone https://x-access-token:&quot;${GITHUB_ACCESS_TOKEN}&quot;@github.com/NervanaSystems/nlp-architect.git
-
-# prevent keeping token in final image
-FROM python:3.6
-
-COPY --from=builder /nlp-architect /src/nlp-architect
-
-ARG NLP_ARCH_VERSION=v0.3
-
-WORKDIR /src/nlp-architect
-RUN git fetch
-RUN git checkout ${NLP_ARCH_VERSION}
-
-# install nlp-architect project itself
-RUN pip3 install .
-
-# run NLP Architect server
-CMD [ &quot;nlp_architect&quot;, &quot;server&quot;, &quot;-p&quot;, &quot;8080&quot;]
-</pre></div>
-</div>
-<p>Run the following commands to build the docker file</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>docker build --build-arg GITHUB_ACCESS_TOKEN=${GITHUB_ACCESS_TOKEN} --build-arg HTTP_PROXY=${HTTP_PROXY} --build-arg HTTPS_PROXY=${HTTPS_PROXY} --build-arg http_proxy=${http_proxy} --build-arg https_proxy=${https_proxy} -t nlp_architect .
-docker tag nlp_architect localhost:5000/nlp_architect
-docker push localhost:5000/nlp_architect
-docker run --rm -it -p 8080:8080 localhost:5000/nlp_architect
-</pre></div>
-</div>
-</div>
-<div class="section" id="deploy-kubernetes">
-<h3>Deploy Kubernetes<a class="headerlink" href="#deploy-kubernetes" title="Permalink to this headline">¶</a></h3>
-<p>Create a depolyment.yaml file in the same directory as your deployment. Fill the deployment.yaml file with the following contents</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">apiVersion</span><span class="p">:</span> <span class="n">extensions</span><span class="o">/</span><span class="n">v1beta1</span>
-<span class="n">kind</span><span class="p">:</span> <span class="n">Deployment</span>
-<span class="n">metadata</span><span class="p">:</span>
-  <span class="n">name</span><span class="p">:</span> <span class="n">nlp</span><span class="o">-</span><span class="n">server</span>
-<span class="n">spec</span><span class="p">:</span>
-  <span class="n">replicas</span><span class="p">:</span> <span class="mi">1</span>
-  <span class="n">template</span><span class="p">:</span>
-    <span class="n">metadata</span><span class="p">:</span>
-      <span class="n">labels</span><span class="p">:</span>
-        <span class="n">run</span><span class="p">:</span> <span class="n">nlp</span><span class="o">-</span><span class="n">server</span>
-        <span class="nb">id</span><span class="p">:</span> <span class="s2">&quot;0&quot;</span>
-        <span class="n">app</span><span class="p">:</span> <span class="n">nlp</span><span class="o">-</span><span class="n">server</span>
-    <span class="n">spec</span><span class="p">:</span>
-      <span class="n">containers</span><span class="p">:</span>
-      <span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">nlp</span><span class="o">-</span><span class="n">server</span>
-        <span class="n">image</span><span class="p">:</span> <span class="n">localhost</span><span class="p">:</span><span class="mi">5000</span><span class="o">/</span><span class="n">nlp_architect</span>
-        <span class="n">imagePullPolicy</span><span class="p">:</span> <span class="n">Always</span>
-        <span class="n">resources</span><span class="p">:</span>
-          <span class="n">limits</span><span class="p">:</span>
-            <span class="n">cpu</span><span class="p">:</span> <span class="mi">1300</span><span class="n">m</span>
-            <span class="n">memory</span><span class="p">:</span> <span class="mi">1600</span><span class="n">Mi</span>
-          <span class="n">requests</span><span class="p">:</span>
-            <span class="n">cpu</span><span class="p">:</span> <span class="mi">1100</span><span class="n">m</span>
-            <span class="n">memory</span><span class="p">:</span> <span class="mi">1300</span><span class="n">Mi</span>
-        <span class="n">ports</span><span class="p">:</span>
-        <span class="o">-</span> <span class="n">containerPort</span><span class="p">:</span> <span class="mi">8080</span>
-
-<span class="o">---</span>
-
-<span class="n">apiVersion</span><span class="p">:</span> <span class="n">v1</span>
-<span class="n">kind</span><span class="p">:</span> <span class="n">Service</span>
-<span class="n">metadata</span><span class="p">:</span>
-  <span class="n">name</span><span class="p">:</span> <span class="n">nlp</span><span class="o">-</span><span class="n">server</span>
-<span class="n">spec</span><span class="p">:</span>
-  <span class="nb">type</span><span class="p">:</span> <span class="n">NodePort</span>
-  <span class="n">selector</span><span class="p">:</span>
-    <span class="n">app</span><span class="p">:</span> <span class="n">nlp</span><span class="o">-</span><span class="n">server</span>
-  <span class="n">ports</span><span class="p">:</span>
-  <span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">http</span>
-    <span class="n">port</span><span class="p">:</span> <span class="mi">8080</span>
-    <span class="n">targetPort</span><span class="p">:</span> <span class="mi">8080</span>
-
-<span class="o">---</span>
-
-<span class="n">apiVersion</span><span class="p">:</span> <span class="n">autoscaling</span><span class="o">/</span><span class="n">v2beta1</span>
-<span class="n">kind</span><span class="p">:</span> <span class="n">HorizontalPodAutoscaler</span>
-<span class="n">metadata</span><span class="p">:</span>
-  <span class="n">name</span><span class="p">:</span> <span class="n">nlp</span><span class="o">-</span><span class="n">server</span>
-<span class="n">spec</span><span class="p">:</span>
-  <span class="n">scaleTargetRef</span><span class="p">:</span>
-    <span class="n">apiVersion</span><span class="p">:</span> <span class="n">apps</span><span class="o">/</span><span class="n">v1</span>
-    <span class="n">kind</span><span class="p">:</span> <span class="n">Deployment</span>
-    <span class="n">name</span><span class="p">:</span> <span class="n">nlp</span><span class="o">-</span><span class="n">server</span>
-  <span class="n">minReplicas</span><span class="p">:</span> <span class="mi">3</span>
-  <span class="n">maxReplicas</span><span class="p">:</span> <span class="mi">10</span>
-  <span class="n">metrics</span><span class="p">:</span>
-  <span class="o">-</span> <span class="nb">type</span><span class="p">:</span> <span class="n">Resource</span>
-    <span class="n">resource</span><span class="p">:</span>
-      <span class="n">name</span><span class="p">:</span> <span class="n">cpu</span>
-      <span class="n">targetAverageUtilization</span><span class="p">:</span> <span class="mi">50</span>
-</pre></div>
-</div>
-<p>Run the following commands to create a deployment on the kubernetes cluster</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kubectl</span> <span class="n">create</span> <span class="o">-</span><span class="n">f</span> <span class="n">deployment</span><span class="o">.</span><span class="n">yaml</span>
-<span class="c1"># run the following command to see your pods spin up; there will be 3 of them if your machine has enough resources</span>
-<span class="n">watch</span> <span class="o">-</span><span class="n">n1</span> <span class="n">kubectl</span> <span class="n">get</span> <span class="n">pods</span>
-<span class="c1"># this next command gives you the {nodeportvalue} below, it&#39;ll be in the format `8080:{nodeportvalue}`</span>
-<span class="n">kubectl</span> <span class="n">get</span> <span class="n">svc</span>
-<span class="c1"># this next command will show you the hpa created with this deployment</span>
-<span class="n">kubectl</span> <span class="n">get</span> <span class="n">hpa</span>
-<span class="c1"># if you ever want to see everything at once, run this:</span>
-<span class="n">kubectl</span> <span class="n">get</span> <span class="nb">all</span>
-<span class="c1"># if there is a problem, run this:</span>
-<span class="n">kubectl</span> <span class="n">logs</span> <span class="p">{</span><span class="n">podname</span><span class="p">}</span>
-<span class="c1"># if there is a problem with the deployment itself, run this:</span>
-<span class="n">kubectl</span> <span class="n">describe</span> <span class="n">pod</span> <span class="p">{</span><span class="n">podname</span><span class="p">}</span>
-<span class="c1"># to redeploy, run this, and then rerun the `kubectl create -f deployment.yaml` command</span>
-<span class="n">kubectl</span> <span class="n">delete</span> <span class="o">-</span><span class="n">f</span> <span class="n">deployment</span><span class="o">.</span><span class="n">yaml</span>
-</pre></div>
-</div>
-<p>To test the server</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>curl --noproxy &quot;*&quot; $(sudo minikube ip):{nodeportvalue}
-Where nodeportvalue is from kubectl get svc
-</pre></div>
-</div>
-<p>Now you can browse nlp architect at the following url: <a class="reference external" href="http:/">http:/</a>/{operating_system_ip}:8080</p>
 </div>
 </div>
 </div>

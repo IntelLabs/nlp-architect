@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Aspect Based Sentiment Analysis (ABSA) &mdash; NLP Architect by Intel® AI Lab 0.4.post2 documentation</title>
+  <title>Aspect Based Sentiment Analysis (ABSA) &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
   
 
   
@@ -25,6 +25,8 @@
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
         <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/install.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -33,12 +35,11 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" type="text/css" />
-  <link rel="stylesheet" href="_static/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/nlp_arch_theme.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Sequence Chunker" href="chunker.html" />
-    <link rel="prev" title="NLP Architect Model Zoo" href="model_zoo.html" /> 
+    <link rel="search" title="Search" href="search.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -57,7 +58,7 @@
 
           
             
-            <img src="_static/nlp_architect_logo_white.png" class="logo" alt="Logo"/>
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
           
           </a>
 
@@ -83,40 +84,27 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="main.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick start</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="publications.html">Publications</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Jupyter Tutorials</a></li>
-<li class="toctree-l1"><a class="reference internal" href="developer_guide.html">Developer Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model_zoo.html">Model Zoo</a></li>
 </ul>
 <p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
-<ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Aspect Based Sentiment Analysis</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#algorithm-overview">Algorithm Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#flow">Flow</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#training">Training</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#inference">Inference</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#inference-interactive-mode">Inference - interactive mode</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="chunker.html">Sequence Chunker</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ner_crf.html">Named Entity Recognition</a></li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tagging/sequence_tagging.html">Sequence Tagging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sentiment.html">Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bist_parser.html">Dependency Parsing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="intent.html">Intent Extraction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="np_segmentation.html">Noun Phrase Semantic Segmentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bist_parser.html">BIST Dependency Parser</a></li>
-<li class="toctree-l1"><a class="reference internal" href="word_sense.html">Most Common Word Sense</a></li>
-<li class="toctree-l1"><a class="reference internal" href="np2vec.html">Noun Phrase to Vec</a></li>
-<li class="toctree-l1"><a class="reference internal" href="supervised_sentiment.html">Supervised Sentiment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="reading_comprehension.html">Reading Comprehension</a></li>
-<li class="toctree-l1"><a class="reference internal" href="memn2n.html">End-to-End Memory Networks for Goal Oriented Dialogue</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tcn.html">TCN Language Model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="crosslingual_emb.html">Unsupervised Crosslingual Embeddings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cross_doc_coref.html">Cross Document Co-Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="identifying_semantic_relation.html">Semantic Relation Identification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lm.html">Language Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="information_extraction.html">Information Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transformers.html">Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="archived/additional.html">Additional Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Optimized Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quantized_bert.html">Quantized BERT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transformers_distillation.html">Transformers Distillation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Solutions</span></p>
@@ -125,14 +113,11 @@
 <li class="toctree-l1"><a class="reference internal" href="term_set_expansion.html">Set Expansion</a></li>
 <li class="toctree-l1"><a class="reference internal" href="trend_analysis.html">Trend Analysis</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Pipelines</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="spacy_bist.html">Spacy-BIST Parser</a></li>
-<li class="toctree-l1"><a class="reference internal" href="spacy_np_annotator.html">Spacy-NP Annotator</a></li>
-</ul>
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer_guide.html">Developer Guide</a></li>
 </ul>
 
             
@@ -209,10 +194,10 @@ the training flow consists the following three main steps:</p>
 <p>1. The first training step is text pre-processing that is performed by <a class="reference external" href="https://spacy.io">Spacy</a>. This step includes
 tokenization, part-of-speech tagging and sentence breaking.</p>
 <p>2. The second training step is to apply a dependency parser to the training
-data. for this purpose we used the parser described in <a class="footnote-reference brackets" href="#id4" id="id1">1</a>.
+data. for this purpose we used the parser described in <a class="footnote-reference" href="#id4" id="id1">[1]</a>.
 For more details regarding steps 1 &amp; 2 see <a class="reference internal" href="spacy_bist.html"><span class="doc">BIST</span></a> dependency parser.</p>
-<p>3. The third step is based on applying a bootstrap lexicon acquisition algorithm described in <a class="footnote-reference brackets" href="#id5" id="id2">2</a>,
-the algorithm uses a generic lexicon introduced by <a class="footnote-reference brackets" href="#id6" id="id3">3</a> as initial step for the bootstrap process.</p>
+<p>3. The third step is based on applying a bootstrap lexicon acquisition algorithm described in <a class="footnote-reference" href="#id5" id="id2">[2]</a>,
+the algorithm uses a generic lexicon introduced by <a class="footnote-reference" href="#id6" id="id3">[3]</a> as initial step for the bootstrap process.</p>
 <p>4. The last step includes applying an MLP based opinion term re-ranking and polarity estimation
 algorithm. This step is based on using the word embbedding similarities between each acquired term
 and a set of generic opinion terms as features. A pre-trained model is re-ranking provided.</p>
@@ -229,61 +214,49 @@ The inference approach is based on detecting syntactically related aspect-opinio
 <h2>Training<a class="headerlink" href="#training" title="Permalink to this headline">¶</a></h2>
 <p>Full code example is available at <code class="docutils literal notranslate"><span class="pre">examples/absa/train.py</span></code>.
 There are two training modes:</p>
-<p>1. Providing training data in a raw text format. In this case the training flow will
+<p><strong>1.</strong> Providing training data in a raw text format. In this case the training flow will
 apply the dependency parser to the data:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3 examples/absa/train.py --data<span class="o">=</span>TRAINING_DATASET
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span> <span class="n">examples</span><span class="o">/</span><span class="n">absa</span><span class="o">/</span><span class="n">train</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">data</span><span class="o">=</span><span class="n">TRAINING_DATASET</span>
 </pre></div>
 </div>
-<p>Arguments:</p>
+<p><strong>Arguments:</strong></p>
 <p><code class="docutils literal notranslate"><span class="pre">--data=TRAINING_DATASET</span></code> - path to the input training dataset. Should point to a single raw text file with documents
 separated by newlines or a single csv file containing one doc per line or a directory containing one raw
 text file per document.</p>
-<p>Optional arguments:</p>
+<p><strong>Optional arguments:</strong></p>
 <p><code class="docutils literal notranslate"><span class="pre">--rerank-model=RERANK_MODEL</span></code> - path to re-rank model. By default when running the training
 for the first time this model will be downloaded to <code class="docutils literal notranslate"><span class="pre">~/nlp-architect/cache/absa/train/reranking_model</span></code></p>
-<p>Notes:</p>
-<p>a. The generated opinion and aspect lexicons are written as csv files to:
-<code class="docutils literal notranslate"><span class="pre">~/nlp-architect/cache/absa/train/output/generated_opinion_lex_reranked.csv</span></code> and to <code class="docutils literal notranslate"><span class="pre">~/nlp-architect/cache/absa/train/output/generated_aspect_lex.csv</span></code></p>
-<ol class="loweralpha simple" start="2">
-<li><p>In this mode the parsed data (jsons of ParsedDocument objects) is written to (<code class="docutils literal notranslate"><span class="pre">~/nlp-architect/cache/absa/train/parsed</span></code>)</p></li>
-</ol>
-<p>c. When running the training for the first time the system will download
-glove word embbedding model (the user will be prompt for authorization) to
-<code class="docutils literal notranslate"><span class="pre">~/nlp-architect/cache/absa/train/word_emb_unzipped</span></code> (this may take a while)</p>
-<p>d. For demonstration purposes we provide a sample of tripadvisor.co.uk restaurants reviews under the
-<a class="reference external" href="https://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-Share-Alike 3.0 License</a> (Copyright 2018 Wikimedia Foundation).
-The dataset can be found at <code class="docutils literal notranslate"><span class="pre">datasets/absa/datasets/absa/tripadvisor_co_uk-travel_restaurant_reviews_sample_2000_train.csv</span></code>.
-<code class="docutils literal notranslate"><span class="pre">~/nlp-architect/cache/absa/train/reranking_model</span></code></p>
-<ol class="arabic simple" start="2">
-<li><p>Providing parsed training data. In this case the training flow skips the parsing step:</p></li>
-</ol>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3 examples/absa/train.py --parsed-data<span class="o">=</span>PARSED_TRAINING_DATASET
+<p><strong>Notes:</strong></p>
+<ul class="simple">
+<li>The generated opinion and aspect lexicons are written as csv files to: <code class="docutils literal notranslate"><span class="pre">~/nlp-architect/cache/absa/train/output/generated_opinion_lex_reranked.csv</span></code> and to <code class="docutils literal notranslate"><span class="pre">~/nlp-architect/cache/absa/train/output/generated_aspect_lex.csv</span></code></li>
+<li>In this mode the parsed data (jsons of ParsedDocument objects) is written to: <code class="docutils literal notranslate"><span class="pre">~/nlp-architect/cache/absa/train/parsed</span></code></li>
+<li>When running the training for the first time the system will download glove word embbedding model (the user will be prompted for authorization) to: <code class="docutils literal notranslate"><span class="pre">~/nlp-architect/cache/absa/train/word_emb_unzipped</span></code> (this may take a while)</li>
+<li>For demonstration purposes we provide a sample of tripadvisor.co.uk restaurants reviews under the <a class="reference external" href="https://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-Share-Alike 3.0 License</a> (Copyright 2018 Wikimedia Foundation). The dataset can be found at: <code class="docutils literal notranslate"><span class="pre">datasets/absa/datasets/absa/tripadvisor_co_uk-travel_restaurant_reviews_sample_2000_train.csv</span></code>.</li>
+</ul>
+<p><strong>2.</strong> Providing parsed training data. In this case the training flow skips the parsing step:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span> <span class="n">examples</span><span class="o">/</span><span class="n">absa</span><span class="o">/</span><span class="n">train</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">parsed</span><span class="o">-</span><span class="n">data</span><span class="o">=</span><span class="n">PARSED_TRAINING_DATASET</span>
 </pre></div>
 </div>
-<p>Arguments:</p>
+<p><strong>Arguments:</strong></p>
 <p><code class="docutils literal notranslate"><span class="pre">--parsed-data=PARSED_TRAINING_DATASET</span></code>   - path to the parsed format (jsons of ParsedDocument objects) of the training dataset.</p>
 </div>
 <div class="section" id="inference">
 <h2>Inference<a class="headerlink" href="#inference" title="Permalink to this headline">¶</a></h2>
 <p>Full code example is available at <code class="docutils literal notranslate"><span class="pre">examples/absa/inference/inference.py</span></code>.
 There are two inference modes:</p>
-<ol class="arabic simple">
-<li><p>Providing inference data in a raw text format.</p></li>
-</ol>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">inference</span> <span class="o">=</span> <span class="n">SentimentInference</span><span class="p">(</span><span class="n">ASPECT_LEX</span><span class="p">,</span> <span class="n">OPINION_LEX</span><span class="p">)</span>
+<p><strong>1.</strong> Providing inference data in a raw text format.</p>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">inference</span> <span class="o">=</span> <span class="n">SentimentInference</span><span class="p">(</span><span class="n">ASPECT_LEX</span><span class="p">,</span> <span class="n">OPINION_LEX</span><span class="p">)</span>
 <span class="n">sentiment_doc</span> <span class="o">=</span> <span class="n">inference</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">doc</span><span class="o">=</span><span class="s2">&quot;The food was wonderful and fresh. Staff were friendly.&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Arguments:</p>
+<p><strong>Arguments:</strong></p>
 <p><code class="docutils literal notranslate"><span class="pre">ASPECT_LEX</span></code>  - path to aspect lexicon (csv file) that was produced by the training phase.
 aspect.csv may be manually edited for grouping alias aspect names (e.g. ‘drinks’ and ‘beverages’)
 together. Simply copy all alias names to the same line in the csv file.</p>
 <p><code class="docutils literal notranslate"><span class="pre">OPINION_LEX</span></code> - path to opinion lexicon (csv file) that was produced by the training phase.</p>
 <p><code class="docutils literal notranslate"><span class="pre">doc</span></code> - input sentence.</p>
-<ol class="arabic simple" start="2">
-<li><p>Providing parsed inference data (ParsedDocument format). In this case the parsing step is skipped:</p></li>
-</ol>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">inference</span> <span class="o">=</span> <span class="n">SentimentInference</span><span class="p">(</span><span class="n">ASPECT_LEX</span><span class="p">,</span> <span class="n">OPINION_LEX</span><span class="p">,</span> <span class="n">parse</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<p><strong>2.</strong> Providing parsed inference data (ParsedDocument format). In this case the parsing step is skipped:</p>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">inference</span> <span class="o">=</span> <span class="n">SentimentInference</span><span class="p">(</span><span class="n">ASPECT_LEX</span><span class="p">,</span> <span class="n">OPINION_LEX</span><span class="p">,</span> <span class="n">parse</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">doc_parsed</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s1">&#39;/path/to/parsed_doc.json&#39;</span><span class="p">),</span> <span class="n">object_hook</span><span class="o">=</span><span class="n">CoreNLPDoc</span><span class="o">.</span><span class="n">decoder</span><span class="p">)</span>
 <span class="n">sentiment_doc</span> <span class="o">=</span> <span class="n">inference</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">parsed_doc</span><span class="o">=</span><span class="n">doc_parsed</span><span class="p">)</span>
 </pre></div>
@@ -292,26 +265,33 @@ together. Simply copy all alias names to the same line in the csv file.</p>
 <div class="section" id="inference-interactive-mode">
 <h2>Inference - interactive mode<a class="headerlink" href="#inference-interactive-mode" title="Permalink to this headline">¶</a></h2>
 <p>The provided file <code class="docutils literal notranslate"><span class="pre">examples/absa/inference/interactive.py</span></code> enables using generated lexicons in interactive mode:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3 interactive.py --aspects<span class="o">=</span>ASPECT_LEX --opinions<span class="o">=</span>OPINION_LEX
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span> <span class="n">interactive</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">aspects</span><span class="o">=</span><span class="n">ASPECT_LEX</span> <span class="o">--</span><span class="n">opinions</span><span class="o">=</span><span class="n">OPINION_LEX</span>
 </pre></div>
 </div>
-<p>Arguments:</p>
+<p><strong>Arguments:</strong></p>
 <p><code class="docutils literal notranslate"><span class="pre">--aspects=ASPECT_LEX</span></code>    - path to aspect lexicon (csv file format)</p>
 <p><code class="docutils literal notranslate"><span class="pre">--opinions=OPINION_LEX</span></code>  - path to opinion lexicon (csv file format)</p>
 </div>
 <div class="section" id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
-<dl class="footnote brackets">
-<dt class="label" id="id4"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
-<dd><p><a class="reference external" href="https://transacl.org/ojs/index.php/tacl/article/view/885/198">Simple and Accurate Dependency Parsing Using Bidirectional LSTM Feature Representations</a>, Eliyahu Kiperwasser and Yoav Goldberg. 2016. Transactions of the Association of Computational Linguistics, 4:313–327.</p>
-</dd>
-<dt class="label" id="id5"><span class="brackets"><a class="fn-backref" href="#id2">2</a></span></dt>
-<dd><p><a class="reference external" href="https://dl.acm.org/citation.cfm?id=1970422">Opinion Word Expansion and Target Extraction through Double Propagation</a>, Guang Qiu, Bing Liu, Jiajun Bu, and Chun Chen. 2011. Computational Linguistics, 37(1): 9–27.</p>
-</dd>
-<dt class="label" id="id6"><span class="brackets"><a class="fn-backref" href="#id3">3</a></span></dt>
-<dd><p><a class="reference external" href="http://dx.doi.org/10.1145/1014052.1014073">Mining and Summarizing Customer Reviews</a>, Minqing Hu and Bing Liu. 2004. In Proceedings of the Tenth ACM SIGKDD International Conference on Knowledge Discovery and Data Mining, KDD ’04, pages 168–177.</p>
-</dd>
-</dl>
+<table class="docutils footnote" frame="void" id="id4" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td><a class="reference external" href="https://transacl.org/ojs/index.php/tacl/article/view/885/198">Simple and Accurate Dependency Parsing Using Bidirectional LSTM Feature Representations</a>, Eliyahu Kiperwasser and Yoav Goldberg. 2016. Transactions of the Association of Computational Linguistics, 4:313–327.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id5" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td><a class="reference external" href="https://dl.acm.org/citation.cfm?id=1970422">Opinion Word Expansion and Target Extraction through Double Propagation</a>, Guang Qiu, Bing Liu, Jiajun Bu, and Chun Chen. 2011. Computational Linguistics, 37(1): 9–27.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id6" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[3]</a></td><td><a class="reference external" href="http://dx.doi.org/10.1145/1014052.1014073">Mining and Summarizing Customer Reviews</a>, Minqing Hu and Bing Liu. 2004. In Proceedings of the Tenth ACM SIGKDD International Conference on Knowledge Discovery and Data Mining, KDD ’04, pages 168–177.</td></tr>
+</tbody>
+</table>
 </div>
 </div>
 

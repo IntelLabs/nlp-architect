@@ -1,0 +1,618 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>nlp_architect.models.absa.train.data_types &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../../../_static/language_data.js"></script>
+        <script type="text/javascript" src="../../../../../_static/install.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/nlp_arch_theme.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../../index.html">
+          
+
+          
+            
+            <img src="../../../../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../quick_start.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../publications.html">Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../tutorials.html">Jupyter Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../model_zoo.html">Model Zoo</a></li>
+</ul>
+<p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../tagging/sequence_tagging.html">Sequence Tagging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../sentiment.html">Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../bist_parser.html">Dependency Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../intent.html">Intent Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../lm.html">Language Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../information_extraction.html">Information Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../transformers.html">Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../archived/additional.html">Additional Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Optimized Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../quantized_bert.html">Quantized BERT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../transformers_distillation.html">Transformers Distillation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solutions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../absa_solution.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../term_set_expansion.html">Set Expansion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../trend_analysis.html">Trend Analysis</a></li>
+</ul>
+<p class="caption"><span class="caption-text">For Developers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../developer_guide.html">Developer Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">NLP Architect by Intel® AI Lab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../../models.html">nlp_architect.models</a> &raquo;</li>
+        
+      <li>nlp_architect.models.absa.train.data_types</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for nlp_architect.models.absa.train.data_types</h1><div class="highlight"><pre>
+<span></span><span class="c1"># ******************************************************************************</span>
+<span class="c1"># Copyright 2017-2018 Intel Corporation</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ******************************************************************************</span>
+<span class="kn">import</span> <span class="nn">csv</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="k">import</span> <span class="n">Enum</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="k">import</span> <span class="n">PathLike</span>
+
+<span class="kn">from</span> <span class="nn">nlp_architect.models.absa</span> <span class="k">import</span> <span class="n">TRAIN_LEXICONS</span>
+
+
+<div class="viewcode-block" id="OpinionTerm"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.models.absa.train.html#nlp_architect.models.absa.train.acquire_terms.OpinionTerm">[docs]</a><span class="k">class</span> <span class="nc">OpinionTerm</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Opinion term.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">       terms (list): list of opinion term</span>
+<span class="sd">        polarity (Polarity): polarity of the sentiment</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">terms</span><span class="p">,</span> <span class="n">polarity</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">terms</span> <span class="o">=</span> <span class="n">terms</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">polarity</span> <span class="o">=</span> <span class="n">polarity</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">terms</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="AspectTerm"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.models.absa.train.html#nlp_architect.models.absa.train.acquire_terms.AspectTerm">[docs]</a><span class="k">class</span> <span class="nc">AspectTerm</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Aspect term.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        terms (list): list of terms</span>
+<span class="sd">        pos (list): list of pos</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">terms</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">lemmas</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            terms (list): list of terms</span>
+<span class="sd">            pos (list): list of pos</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">terms</span> <span class="o">=</span> <span class="n">terms</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lemmas</span> <span class="o">=</span> <span class="n">lemmas</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pos</span> <span class="o">=</span> <span class="n">pos</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">terms</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Override the default equals behavior.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">terms</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">terms</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">pos</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">pos</span>
+
+<div class="viewcode-block" id="AspectTerm.from_token"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.models.absa.train.html#nlp_architect.models.absa.train.acquire_terms.AspectTerm.from_token">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">from_token</span><span class="p">(</span><span class="n">token</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">AspectTerm</span><span class="p">([</span><span class="n">token</span><span class="o">.</span><span class="n">text</span><span class="p">],</span> <span class="p">[</span><span class="n">token</span><span class="o">.</span><span class="n">norm_pos</span><span class="p">],</span> <span class="p">[</span><span class="n">token</span><span class="o">.</span><span class="n">lemma</span><span class="p">])</span></div></div>
+
+
+<div class="viewcode-block" id="CandidateTerm"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.models.absa.train.html#nlp_architect.models.absa.train.acquire_terms.CandidateTerm">[docs]</a><span class="k">class</span> <span class="nc">CandidateTerm</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Candidate opinion term or aspect term.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        term (list): list of terms</span>
+<span class="sd">        pos (list): list of pos</span>
+<span class="sd">        source_term (list): list of related anchor terms</span>
+<span class="sd">        sentence (str): sentence text this term</span>
+<span class="sd">        term_polarity (int): term polarity</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">term_a</span><span class="p">,</span> <span class="n">term_b</span><span class="p">,</span> <span class="n">sent_text</span><span class="p">,</span> <span class="n">candidate_term_polarity</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            term_a (DepRelationTerm): first term</span>
+<span class="sd">            term_b (DepRelationTerm): second term</span>
+<span class="sd">            sent_text (str): sentence text</span>
+<span class="sd">            candidate_term_polarity (Polarity): term polarity</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">term</span> <span class="o">=</span> <span class="p">[</span><span class="n">term_a</span><span class="o">.</span><span class="n">text</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pos</span> <span class="o">=</span> <span class="p">[</span><span class="n">term_a</span><span class="o">.</span><span class="n">norm_pos</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lemma</span> <span class="o">=</span> <span class="p">[</span><span class="n">term_a</span><span class="o">.</span><span class="n">lemma</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">source_term</span> <span class="o">=</span> <span class="p">[</span><span class="n">term_b</span><span class="o">.</span><span class="n">text</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sentence</span> <span class="o">=</span> <span class="n">sent_text</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">term_polarity</span> <span class="o">=</span> <span class="n">candidate_term_polarity</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">term</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">other</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="vm">__class__</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">term</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="n">term</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">term</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">other</span><span class="o">.</span><span class="n">term</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">source_term</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="n">source_term</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">source_term</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> \
+                <span class="n">other</span><span class="o">.</span><span class="n">source_term</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sentence</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">sentence</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sentence</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> \
+            <span class="n">other</span><span class="o">.</span><span class="n">sentence</span> <span class="ow">is</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span> <span class="o">==</span> <span class="n">other</span></div>
+
+
+<div class="viewcode-block" id="DepRelation"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.models.absa.train.html#nlp_architect.models.absa.train.acquire_terms.DepRelation">[docs]</a><span class="k">class</span> <span class="nc">DepRelation</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Generic Relation Entry contains the governor, it&#39;s dependent and the relation between them.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        gov (DepRelationTerm): governor</span>
+<span class="sd">        dep (DepRelationTerm): dependent</span>
+<span class="sd">        rel (str): relation type between governor and dependent</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gov</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dep</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rel</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gov</span> <span class="o">=</span> <span class="n">gov</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dep</span> <span class="o">=</span> <span class="n">dep</span>
+        <span class="n">rel_split</span> <span class="o">=</span> <span class="n">rel</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rel</span> <span class="o">=</span> <span class="n">rel_split</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">subtype</span> <span class="o">=</span> <span class="n">rel_split</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">rel_split</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="RelCategory"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.models.absa.train.html#nlp_architect.models.absa.train.acquire_terms.RelCategory">[docs]</a><span class="k">class</span> <span class="nc">RelCategory</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">SUBJ</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;nsubj&#39;</span><span class="p">,</span> <span class="s1">&#39;nsubjpass&#39;</span><span class="p">,</span> <span class="s1">&#39;csubj&#39;</span><span class="p">,</span> <span class="s1">&#39;csubjpass&#39;</span><span class="p">}</span>
+    <span class="n">MOD</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;amod&#39;</span><span class="p">,</span> <span class="s1">&#39;acl&#39;</span><span class="p">,</span> <span class="s1">&#39;advcl&#39;</span><span class="p">,</span> <span class="s1">&#39;appos&#39;</span><span class="p">,</span> <span class="s1">&#39;neg&#39;</span><span class="p">,</span> <span class="s1">&#39;nmod&#39;</span><span class="p">}</span>
+    <span class="n">OBJ</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;dobj&#39;</span><span class="p">,</span> <span class="s1">&#39;iobj&#39;</span><span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="DepRelationTerm"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.models.absa.train.html#nlp_architect.models.absa.train.acquire_terms.DepRelationTerm">[docs]</a><span class="k">class</span> <span class="nc">DepRelationTerm</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Attributes:</span>
+<span class="sd">        text (str, optional): token text</span>
+<span class="sd">        lemma (str, optional): token lemma</span>
+<span class="sd">        pos (str, optional): token pos</span>
+<span class="sd">        ner (str, optional): token ner</span>
+<span class="sd">        idx (int, optional): token start index (within the sentence)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lemma</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ner</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">idx</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">text</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lemma</span> <span class="o">=</span> <span class="n">lemma</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pos</span> <span class="o">=</span> <span class="n">pos</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ner</span> <span class="o">=</span> <span class="n">ner</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">idx</span> <span class="o">=</span> <span class="n">idx</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dep_rel_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gov</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">norm_pos</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">normalize_pos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pos</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="QualifiedTerm"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.models.absa.train.html#nlp_architect.models.absa.train.acquire_terms.QualifiedTerm">[docs]</a><span class="k">class</span> <span class="nc">QualifiedTerm</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Qualified term - term that is accepted to generated lexicon.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        term (list): list of terms</span>
+<span class="sd">        pos (list): list of pos.</span>
+<span class="sd">        frequency (int): frequency of filtered term in corpus.</span>
+<span class="sd">        term_polarity (Polarity): term polarity.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">term</span><span class="p">,</span> <span class="n">lemma</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">frequency</span><span class="p">,</span> <span class="n">term_polarity</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">term</span> <span class="o">=</span> <span class="n">term</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lemma</span> <span class="o">=</span> <span class="n">lemma</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pos</span> <span class="o">=</span> <span class="n">pos</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">frequency</span> <span class="o">=</span> <span class="n">frequency</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">term_polarity</span> <span class="o">=</span> <span class="n">term_polarity</span>
+
+<div class="viewcode-block" id="QualifiedTerm.as_string_list"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.models.absa.train.html#nlp_architect.models.absa.train.acquire_terms.QualifiedTerm.as_string_list">[docs]</a>    <span class="k">def</span> <span class="nf">as_string_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">term</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frequency</span><span class="p">),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">term_polarity</span><span class="o">.</span><span class="n">name</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="QualifiedTerm.as_string_list_aspect"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.models.absa.train.html#nlp_architect.models.absa.train.acquire_terms.QualifiedTerm.as_string_list_aspect">[docs]</a>    <span class="k">def</span> <span class="nf">as_string_list_aspect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">term</span><span class="p">)]</span></div>
+
+<div class="viewcode-block" id="QualifiedTerm.as_string_list_aspect_debug"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.models.absa.train.html#nlp_architect.models.absa.train.acquire_terms.QualifiedTerm.as_string_list_aspect_debug">[docs]</a>    <span class="k">def</span> <span class="nf">as_string_list_aspect_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frequency</span><span class="p">),</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">term</span><span class="p">),</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lemma</span><span class="p">)]</span></div></div>
+
+
+<div class="viewcode-block" id="load_lex_as_dict_from_csv"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.models.absa.train.html#nlp_architect.models.absa.train.acquire_terms.load_lex_as_dict_from_csv">[docs]</a><span class="k">def</span> <span class="nf">load_lex_as_dict_from_csv</span><span class="p">(</span><span class="n">file_name</span><span class="p">:</span> <span class="nb">str</span> <span class="ow">or</span> <span class="n">PathLike</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Read lexicon as dictionary, key = term, value = pos.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        file_name: the csv file name</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">lexicon_map</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">DictReader</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">skipinitialspace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">reader</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;file name is None&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">lexicon_map</span>
+        <span class="nb">next</span><span class="p">(</span><span class="n">reader</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
+            <span class="n">term</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Term&#39;</span><span class="p">]</span>
+            <span class="n">pos</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;POS subtype&#39;</span><span class="p">]</span>
+
+            <span class="n">lexicon_map</span><span class="p">[</span><span class="n">term</span><span class="p">]</span> <span class="o">=</span> <span class="n">pos</span>
+    <span class="k">return</span> <span class="n">lexicon_map</span></div>
+
+
+<div class="viewcode-block" id="POS"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.models.absa.train.html#nlp_architect.models.absa.train.acquire_terms.POS">[docs]</a><span class="k">class</span> <span class="nc">POS</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Part-of-speech labels.&quot;&quot;&quot;</span>
+    <span class="n">ADJ</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">ADV</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">AUX</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">AUX_PAST</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">CONJ</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">NUM</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="n">DET</span> <span class="o">=</span> <span class="mi">6</span>
+    <span class="n">EX</span> <span class="o">=</span> <span class="mi">7</span>
+    <span class="n">FW</span> <span class="o">=</span> <span class="mi">8</span>
+    <span class="n">IN</span> <span class="o">=</span> <span class="mi">9</span>
+    <span class="n">PREP</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">LS</span> <span class="o">=</span> <span class="mi">11</span>
+    <span class="n">MD</span> <span class="o">=</span> <span class="mi">12</span>
+    <span class="n">MD_CERTAIN</span> <span class="o">=</span> <span class="mi">13</span>
+    <span class="n">NN</span> <span class="o">=</span> <span class="mi">14</span>
+    <span class="n">PROPER_NAME</span> <span class="o">=</span> <span class="mi">15</span>
+    <span class="n">POS</span> <span class="o">=</span> <span class="mi">16</span>
+    <span class="n">PRON</span> <span class="o">=</span> <span class="mi">17</span>
+    <span class="n">PRON_1_S</span> <span class="o">=</span> <span class="mi">18</span>
+    <span class="n">PRON_1_P</span> <span class="o">=</span> <span class="mi">19</span>
+    <span class="n">PRON_2_S</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">PRON_3_S</span> <span class="o">=</span> <span class="mi">21</span>
+    <span class="n">PRON_3_P</span> <span class="o">=</span> <span class="mi">22</span>
+    <span class="n">PRON_4_S</span> <span class="o">=</span> <span class="mi">23</span>
+    <span class="n">POSSPRON_1_S</span> <span class="o">=</span> <span class="mi">24</span>
+    <span class="n">POSSPRON_1_P</span> <span class="o">=</span> <span class="mi">25</span>
+    <span class="n">POSSPRON_2_S</span> <span class="o">=</span> <span class="mi">26</span>
+    <span class="n">POSSPRON_2_P</span> <span class="o">=</span> <span class="mi">27</span>
+    <span class="n">POSSPRON_3_S</span> <span class="o">=</span> <span class="mi">28</span>
+    <span class="n">POSSPRON_3_P</span> <span class="o">=</span> <span class="mi">29</span>
+    <span class="n">POSSPRON_4_S</span> <span class="o">=</span> <span class="mi">30</span>
+    <span class="n">POSSPRON_4_P</span> <span class="o">=</span> <span class="mi">31</span>
+    <span class="n">RP</span> <span class="o">=</span> <span class="mi">32</span>
+    <span class="n">SYM</span> <span class="o">=</span> <span class="mi">33</span>
+    <span class="n">TO</span> <span class="o">=</span> <span class="mi">34</span>
+    <span class="n">INTERJ</span> <span class="o">=</span> <span class="mi">35</span>
+    <span class="n">VB</span> <span class="o">=</span> <span class="mi">36</span>
+    <span class="n">VB_PAST</span> <span class="o">=</span> <span class="mi">37</span>
+    <span class="n">VB_PRESENT</span> <span class="o">=</span> <span class="mi">38</span>
+    <span class="n">VBG</span> <span class="o">=</span> <span class="mi">39</span>
+    <span class="n">VBN</span> <span class="o">=</span> <span class="mi">40</span>
+    <span class="n">WH_DET</span> <span class="o">=</span> <span class="mi">41</span>
+    <span class="n">WH_PROP</span> <span class="o">=</span> <span class="mi">42</span>
+    <span class="n">WH_ADV</span> <span class="o">=</span> <span class="mi">43</span>
+    <span class="n">PUNCT</span> <span class="o">=</span> <span class="mi">44</span>
+    <span class="n">OTHER</span> <span class="o">=</span> <span class="mi">45</span></div>
+
+
+<span class="n">PRONOUNS_LIST</span> <span class="o">=</span> <span class="n">load_lex_as_dict_from_csv</span><span class="p">(</span><span class="n">TRAIN_LEXICONS</span> <span class="o">/</span> <span class="s1">&#39;PronounsLex.csv&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="normalize_pos"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.models.absa.train.html#nlp_architect.models.absa.train.acquire_terms.normalize_pos">[docs]</a><span class="k">def</span> <span class="nf">normalize_pos</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">in_pos</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">in_pos</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">POS</span><span class="o">.</span><span class="n">OTHER</span>
+    <span class="k">if</span> <span class="n">word</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="n">PRONOUNS_LIST</span> <span class="ow">and</span> <span class="n">in_pos</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;PR&quot;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">POS</span><span class="p">[</span><span class="n">PRONOUNS_LIST</span><span class="p">[</span><span class="n">word</span><span class="o">.</span><span class="n">lower</span><span class="p">()]]</span>
+    <span class="k">if</span> <span class="n">in_pos</span> <span class="o">==</span> <span class="s2">&quot;CC&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">POS</span><span class="o">.</span><span class="n">CONJ</span>
+    <span class="k">if</span> <span class="n">in_pos</span> <span class="o">==</span> <span class="s2">&quot;CD&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">POS</span><span class="o">.</span><span class="n">NUM</span>
+    <span class="k">if</span> <span class="n">in_pos</span> <span class="o">==</span> <span class="s2">&quot;DT&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">POS</span><span class="o">.</span><span class="n">DET</span>
+    <span class="k">if</span> <span class="n">in_pos</span> <span class="o">==</span> <span class="s2">&quot;EX&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">POS</span><span class="o">.</span><span class="n">EX</span>
+    <span class="k">if</span> <span class="n">in_pos</span> <span class="o">==</span> <span class="s2">&quot;FW&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">POS</span><span class="o">.</span><span class="n">FW</span>
+    <span class="k">if</span> <span class="n">in_pos</span> <span class="o">==</span> <span class="s2">&quot;IN&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">POS</span><span class="o">.</span><span class="n">PREP</span>
+    <span class="k">if</span> <span class="n">in_pos</span> <span class="o">==</span> <span class="s2">&quot;TO&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">POS</span><span class="o">.</span><span class="n">PREP</span>
+    <span class="k">if</span> <span class="n">in_pos</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;JJ&quot;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">POS</span><span class="o">.</span><span class="n">ADJ</span>
+    <span class="k">if</span> <span class="n">in_pos</span> <span class="o">==</span> <span class="s2">&quot;LS&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">POS</span><span class="o">.</span><span class="n">LS</span>
+    <span class="k">if</span> <span class="n">in_pos</span> <span class="o">==</span> <span class="s2">&quot;MD&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">POS</span><span class="o">.</span><span class="n">MD</span>
+    <span class="k">if</span> <span class="n">in_pos</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;NN&quot;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">POS</span><span class="o">.</span><span class="n">NN</span>
+    <span class="k">if</span> <span class="n">in_pos</span> <span class="o">==</span> <span class="s2">&quot;PDT&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">POS</span><span class="o">.</span><span class="n">DET</span>
+    <span class="k">if</span> <span class="n">in_pos</span> <span class="o">==</span> <span class="s2">&quot;POS&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">POS</span><span class="o">.</span><span class="n">POS</span>
+    <span class="k">if</span> <span class="n">in_pos</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;PR&quot;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">POS</span><span class="o">.</span><span class="n">PRON</span>
+    <span class="k">if</span> <span class="n">in_pos</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;RB&quot;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">POS</span><span class="o">.</span><span class="n">ADV</span>
+    <span class="k">if</span> <span class="n">in_pos</span> <span class="o">==</span> <span class="s2">&quot;RP&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">POS</span><span class="o">.</span><span class="n">RP</span>
+    <span class="k">if</span> <span class="n">in_pos</span> <span class="o">==</span> <span class="s2">&quot;SYM&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">POS</span><span class="o">.</span><span class="n">SYM</span>
+    <span class="k">if</span> <span class="n">in_pos</span> <span class="o">==</span> <span class="s2">&quot;UH&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">POS</span><span class="o">.</span><span class="n">INTERJ</span>
+    <span class="k">if</span> <span class="n">in_pos</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;VB&quot;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">POS</span><span class="o">.</span><span class="n">VB</span>
+    <span class="k">if</span> <span class="n">in_pos</span> <span class="o">==</span> <span class="s2">&quot;WDT&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">POS</span><span class="o">.</span><span class="n">WH_DET</span>
+    <span class="k">if</span> <span class="n">in_pos</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;WP&quot;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">POS</span><span class="o">.</span><span class="n">WH_PROP</span>
+    <span class="k">if</span> <span class="n">in_pos</span> <span class="o">==</span> <span class="s2">&quot;WRB&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">POS</span><span class="o">.</span><span class="n">WH_ADV</span>
+    <span class="k">return</span> <span class="n">POS</span><span class="o">.</span><span class="n">OTHER</span></div>
+
+
+<div class="viewcode-block" id="LoadAspectStopLists"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.models.absa.train.html#nlp_architect.models.absa.train.acquire_terms.LoadAspectStopLists">[docs]</a><span class="k">class</span> <span class="nc">LoadAspectStopLists</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A Filter holding all generic and general lexicons, can verify if a given term is contained</span>
+<span class="sd">     in one of the lexicons - hence belongs to one of the generic / general lexicons or is a valid</span>
+<span class="sd">     term.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        generic_opinion_lex (dict): generic opinion lexicon</span>
+<span class="sd">        determiners_lex (dict): determiners lexicon</span>
+<span class="sd">        general_adjectives_lex (dict): general adjectives lexicon</span>
+<span class="sd">        generic_quantifiers_lex (dict): generic quantifiers lexicon</span>
+<span class="sd">        geographical_adjectives_lex (dict): geographical adjectives lexicon</span>
+<span class="sd">        intensifiers_lex (dict): intensifiers lexicon</span>
+<span class="sd">        time_adjective_lex (dict): time adjective lexicon</span>
+<span class="sd">        ordinal_numbers_lex (dict): ordinal numbers lexicon</span>
+<span class="sd">        prepositions_lex (dict): prepositions lexicon</span>
+<span class="sd">        pronouns_lex (dict): pronouns lexicon</span>
+<span class="sd">        colors_lex (dict): colors lexicon</span>
+<span class="sd">        negation_lex (dict): negation terms lexicon</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">generic_opinion_lex</span><span class="p">,</span> <span class="n">determiners_lex</span><span class="p">,</span> <span class="n">general_adjectives_lex</span><span class="p">,</span>
+                 <span class="n">generic_quantifiers_lex</span><span class="p">,</span> <span class="n">geographical_adjectives_lex</span><span class="p">,</span> <span class="n">intensifiers_lex</span><span class="p">,</span>
+                 <span class="n">time_adjective_lex</span><span class="p">,</span> <span class="n">ordinal_numbers_lex</span><span class="p">,</span> <span class="n">prepositions_lex</span><span class="p">,</span> <span class="n">pronouns_lex</span><span class="p">,</span>
+                 <span class="n">colors_lex</span><span class="p">,</span> <span class="n">negation_lex</span><span class="p">,</span> <span class="n">auxiliaries_lex</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">generic_opinion_lex</span> <span class="o">=</span> <span class="n">generic_opinion_lex</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">determiners_lex</span> <span class="o">=</span> <span class="n">determiners_lex</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">general_adjectives_lex</span> <span class="o">=</span> <span class="n">general_adjectives_lex</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">generic_quantifiers_lex</span> <span class="o">=</span> <span class="n">generic_quantifiers_lex</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">geographical_adjectives_lex</span> <span class="o">=</span> <span class="n">geographical_adjectives_lex</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">intensifiers_lex</span> <span class="o">=</span> <span class="n">intensifiers_lex</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">time_adjective_lex</span> <span class="o">=</span> <span class="n">time_adjective_lex</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ordinal_numbers_lex</span> <span class="o">=</span> <span class="n">ordinal_numbers_lex</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">prepositions_lex</span> <span class="o">=</span> <span class="n">prepositions_lex</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pronouns_lex</span> <span class="o">=</span> <span class="n">pronouns_lex</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">colors_lex</span> <span class="o">=</span> <span class="n">colors_lex</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">negation_lex</span> <span class="o">=</span> <span class="n">negation_lex</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">auxiliaries_lex</span> <span class="o">=</span> <span class="n">auxiliaries_lex</span>
+
+<div class="viewcode-block" id="LoadAspectStopLists.is_in_stop_list"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.models.absa.train.html#nlp_architect.models.absa.train.acquire_terms.LoadAspectStopLists.is_in_stop_list">[docs]</a>    <span class="k">def</span> <span class="nf">is_in_stop_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">term</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">any</span><span class="p">(</span><span class="n">term</span> <span class="ow">in</span> <span class="n">lexicon</span> <span class="k">for</span> <span class="n">lexicon</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">values</span><span class="p">())</span></div></div>
+
+
+<div class="viewcode-block" id="LoadOpinionStopLists"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.models.absa.train.html#nlp_architect.models.absa.train.acquire_terms.LoadOpinionStopLists">[docs]</a><span class="k">class</span> <span class="nc">LoadOpinionStopLists</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A Filter holding all generic and general lexicons, can verify if a given term is contained</span>
+<span class="sd">     in one of the lexicons - hence belongs to one of the generic / general lexicons or is a valid</span>
+<span class="sd">     term.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        determiners_lex (dict): determiners lexicon</span>
+<span class="sd">        general_adjectives_lex (dict): general adjectives lexicon</span>
+<span class="sd">        generic_quantifiers_lex (dict): generic quantifiers lexicon</span>
+<span class="sd">        geographical_adjectives_lex (dict): geographical adjectives lexicon</span>
+<span class="sd">        intensifiers_lex (dict): intensifiers lexicon</span>
+<span class="sd">        time_adjective_lex (dict): time adjective lexicon</span>
+<span class="sd">        ordinal_numbers_lex (dict): ordinal numbers lexicon</span>
+<span class="sd">        prepositions_lex (dict): prepositions lexicon</span>
+<span class="sd">        colors_lex (dict): colors lexicon</span>
+<span class="sd">        negation_lex (dict): negation terms lexicon</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">determiners_lex</span><span class="p">,</span> <span class="n">general_adjectives_lex</span><span class="p">,</span> <span class="n">generic_quantifiers_lex</span><span class="p">,</span>
+                 <span class="n">geographical_adjectives_lex</span><span class="p">,</span> <span class="n">intensifiers_lex</span><span class="p">,</span> <span class="n">time_adjective_lex</span><span class="p">,</span>
+                 <span class="n">ordinal_numbers_lex</span><span class="p">,</span> <span class="n">prepositions_lex</span><span class="p">,</span> <span class="n">colors_lex</span><span class="p">,</span> <span class="n">negation_lex</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">determiners_lex</span> <span class="o">=</span> <span class="n">determiners_lex</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">general_adjectives_lex</span> <span class="o">=</span> <span class="n">general_adjectives_lex</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">generic_quantifiers_lex</span> <span class="o">=</span> <span class="n">generic_quantifiers_lex</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">geographical_adjectives_lex</span> <span class="o">=</span> <span class="n">geographical_adjectives_lex</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">intensifiers_lex</span> <span class="o">=</span> <span class="n">intensifiers_lex</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">time_adjective_lex</span> <span class="o">=</span> <span class="n">time_adjective_lex</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ordinal_numbers_lex</span> <span class="o">=</span> <span class="n">ordinal_numbers_lex</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">prepositions_lex</span> <span class="o">=</span> <span class="n">prepositions_lex</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">colors_lex</span> <span class="o">=</span> <span class="n">colors_lex</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">negation_lex</span> <span class="o">=</span> <span class="n">negation_lex</span>
+
+<div class="viewcode-block" id="LoadOpinionStopLists.is_in_stop_list"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.models.absa.train.html#nlp_architect.models.absa.train.acquire_terms.LoadOpinionStopLists.is_in_stop_list">[docs]</a>    <span class="k">def</span> <span class="nf">is_in_stop_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">term</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">any</span><span class="p">(</span><span class="n">term</span> <span class="ow">in</span> <span class="n">lexicon</span> <span class="k">for</span> <span class="n">lexicon</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">values</span><span class="p">())</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

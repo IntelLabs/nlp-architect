@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Spacy-BIST Parser &mdash; NLP Architect by Intel® AI Lab 0.4.post2 documentation</title>
+  <title>Spacy-BIST Parser &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
   
 
   
@@ -25,6 +25,8 @@
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
         <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/install.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -33,12 +35,11 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" type="text/css" />
-  <link rel="stylesheet" href="_static/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/nlp_arch_theme.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Spacy-NP Annotator" href="spacy_np_annotator.html" />
-    <link rel="prev" title="Topic and Trend Analysis Solution" href="trend_analysis.html" /> 
+    <link rel="search" title="Search" href="search.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -57,7 +58,7 @@
 
           
             
-            <img src="_static/nlp_architect_logo_white.png" class="logo" alt="Logo"/>
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
           
           </a>
 
@@ -83,31 +84,27 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="main.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick start</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="publications.html">Publications</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Jupyter Tutorials</a></li>
-<li class="toctree-l1"><a class="reference internal" href="developer_guide.html">Developer Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model_zoo.html">Model Zoo</a></li>
 </ul>
 <p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="absa.html">Aspect Based Sentiment Analysis</a></li>
-<li class="toctree-l1"><a class="reference internal" href="chunker.html">Sequence Chunker</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ner_crf.html">Named Entity Recognition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tagging/sequence_tagging.html">Sequence Tagging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sentiment.html">Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bist_parser.html">Dependency Parsing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="intent.html">Intent Extraction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="np_segmentation.html">Noun Phrase Semantic Segmentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bist_parser.html">BIST Dependency Parser</a></li>
-<li class="toctree-l1"><a class="reference internal" href="word_sense.html">Most Common Word Sense</a></li>
-<li class="toctree-l1"><a class="reference internal" href="np2vec.html">Noun Phrase to Vec</a></li>
-<li class="toctree-l1"><a class="reference internal" href="supervised_sentiment.html">Supervised Sentiment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="reading_comprehension.html">Reading Comprehension</a></li>
-<li class="toctree-l1"><a class="reference internal" href="memn2n.html">End-to-End Memory Networks for Goal Oriented Dialogue</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tcn.html">TCN Language Model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="crosslingual_emb.html">Unsupervised Crosslingual Embeddings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cross_doc_coref.html">Cross Document Co-Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="identifying_semantic_relation.html">Semantic Relation Identification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lm.html">Language Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="information_extraction.html">Information Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transformers.html">Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="archived/additional.html">Additional Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Optimized Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quantized_bert.html">Quantized BERT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transformers_distillation.html">Transformers Distillation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Solutions</span></p>
@@ -116,28 +113,11 @@
 <li class="toctree-l1"><a class="reference internal" href="term_set_expansion.html">Set Expansion</a></li>
 <li class="toctree-l1"><a class="reference internal" href="trend_analysis.html">Trend Analysis</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Pipelines</span></p>
-<ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Spacy-BIST Parser</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#raw-text-parser-based-on-spacy-and-bist-parsers">Raw text parser based on Spacy and BIST parsers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#training">Training</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#example">Example</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#parsing">Parsing</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id1">Example</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#output">Output</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="spacy_np_annotator.html">Spacy-NP Annotator</a></li>
-</ul>
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer_guide.html">Developer Guide</a></li>
 </ul>
 
             
@@ -213,7 +193,7 @@ and its code is documented <a class="reference internal" href="bist_parser.html"
 <div class="section" id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
 <p>To use the module, import it like so:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">nlp_architect.pipelines.spacy_bist</span> <span class="kn">import</span> <span class="n">SpacyBISTParser</span>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">nlp_architect.pipelines.spacy_bist</span> <span class="k">import</span> <span class="n">SpacyBISTParser</span>
 </pre></div>
 </div>
 </div>
@@ -228,7 +208,7 @@ model at initialization (see example below).</p>
 For instructions on how to get spaCy <a class="reference external" href="https://spacy.io/usage/models">models</a> or how to train a model see <a class="reference external" href="https://spacy.io/usage/training">spaCy training instructions</a></p>
 <div class="section" id="example">
 <h3>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">parser</span> <span class="o">=</span> <span class="n">SpacyBISTParser</span><span class="p">(</span><span class="n">spacy_model</span><span class="o">=</span><span class="s1">&#39;/path/or/link/to/spacy/model&#39;</span><span class="p">,</span> <span class="n">bist_model</span><span class="o">=</span><span class="s1">&#39;/path/to/bist/model&#39;</span><span class="p">)</span>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">parser</span> <span class="o">=</span> <span class="n">SpacyBISTParser</span><span class="p">(</span><span class="n">spacy_model</span><span class="o">=</span><span class="s1">&#39;/path/or/link/to/spacy/model&#39;</span><span class="p">,</span> <span class="n">bist_model</span><span class="o">=</span><span class="s1">&#39;/path/to/bist/model&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -236,72 +216,72 @@ For instructions on how to get spaCy <a class="reference external" href="https:/
 <div class="section" id="parsing">
 <h2>Parsing<a class="headerlink" href="#parsing" title="Permalink to this headline">¶</a></h2>
 <p>The parser accepts a document as a raw text string encoded in UTF-8 format and outputs a
-<a class="reference internal" href="generated/nlp_architect.common.core_nlp_doc.CoreNLPDoc.html#nlp_architect.common.core_nlp_doc.CoreNLPDoc" title="nlp_architect.common.core_nlp_doc.CoreNLPDoc"><code class="xref py py-class docutils literal notranslate"><span class="pre">CoreNLPDoc</span></code></a> instance which contains the annotations (example output below).</p>
+<a class="reference internal" href="generated_api/nlp_architect.common.html#nlp_architect.common.core_nlp_doc.CoreNLPDoc" title="nlp_architect.common.core_nlp_doc.CoreNLPDoc"><code class="xref py py-class docutils literal notranslate"><span class="pre">CoreNLPDoc</span></code></a> instance which contains the annotations (example output below).</p>
 <div class="section" id="id1">
 <h3>Example<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">parser</span> <span class="o">=</span> <span class="n">SpacyBISTParser</span><span class="p">()</span>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">parser</span> <span class="o">=</span> <span class="n">SpacyBISTParser</span><span class="p">()</span>
 <span class="n">parsed_doc</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">doc_text</span><span class="o">=</span><span class="s1">&#39;First sentence. Second sentence&#39;</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">parsed_doc</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">parsed_doc</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="output">
 <h3>Output<a class="headerlink" href="#output" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-    <span class="nt">&quot;doc_text&quot;</span><span class="p">:</span> <span class="s2">&quot;First sentence. Second sentence&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;sentences&quot;</span><span class="p">:</span> <span class="p">[</span>
+<div class="code json highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;doc_text&quot;</span><span class="p">:</span> <span class="s2">&quot;First sentence. Second sentence&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;sentences&quot;</span><span class="p">:</span> <span class="p">[</span>
         <span class="p">[</span>
             <span class="p">{</span>
-                <span class="nt">&quot;start&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-                <span class="nt">&quot;len&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
-                <span class="nt">&quot;pos&quot;</span><span class="p">:</span> <span class="s2">&quot;JJ&quot;</span><span class="p">,</span>
-                <span class="nt">&quot;ner&quot;</span><span class="p">:</span> <span class="s2">&quot;ORDINAL&quot;</span><span class="p">,</span>
-                <span class="nt">&quot;lemma&quot;</span><span class="p">:</span> <span class="s2">&quot;first&quot;</span><span class="p">,</span>
-                <span class="nt">&quot;gov&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-                <span class="nt">&quot;rel&quot;</span><span class="p">:</span> <span class="s2">&quot;amod&quot;</span><span class="p">,</span>
-                <span class="nt">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;First&quot;</span>
+                <span class="s2">&quot;start&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s2">&quot;len&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+                <span class="s2">&quot;pos&quot;</span><span class="p">:</span> <span class="s2">&quot;JJ&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ner&quot;</span><span class="p">:</span> <span class="s2">&quot;ORDINAL&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;lemma&quot;</span><span class="p">:</span> <span class="s2">&quot;first&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;gov&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="s2">&quot;rel&quot;</span><span class="p">:</span> <span class="s2">&quot;amod&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;First&quot;</span>
             <span class="p">},</span>
             <span class="p">{</span>
-                <span class="nt">&quot;start&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
-                <span class="nt">&quot;len&quot;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>
-                <span class="nt">&quot;pos&quot;</span><span class="p">:</span> <span class="s2">&quot;NN&quot;</span><span class="p">,</span>
-                <span class="nt">&quot;ner&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
-                <span class="nt">&quot;lemma&quot;</span><span class="p">:</span> <span class="s2">&quot;sentence&quot;</span><span class="p">,</span>
-                <span class="nt">&quot;gov&quot;</span><span class="p">:</span> <span class="mi">-1</span><span class="p">,</span>
-                <span class="nt">&quot;rel&quot;</span><span class="p">:</span> <span class="s2">&quot;root&quot;</span><span class="p">,</span>
-                <span class="nt">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;sentence&quot;</span>
+                <span class="s2">&quot;start&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+                <span class="s2">&quot;len&quot;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>
+                <span class="s2">&quot;pos&quot;</span><span class="p">:</span> <span class="s2">&quot;NN&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ner&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;lemma&quot;</span><span class="p">:</span> <span class="s2">&quot;sentence&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;gov&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+                <span class="s2">&quot;rel&quot;</span><span class="p">:</span> <span class="s2">&quot;root&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;sentence&quot;</span>
             <span class="p">},</span>
             <span class="p">{</span>
-                <span class="nt">&quot;start&quot;</span><span class="p">:</span> <span class="mi">14</span><span class="p">,</span>
-                <span class="nt">&quot;len&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-                <span class="nt">&quot;pos&quot;</span><span class="p">:</span> <span class="s2">&quot;.&quot;</span><span class="p">,</span>
-                <span class="nt">&quot;ner&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
-                <span class="nt">&quot;lemma&quot;</span><span class="p">:</span> <span class="s2">&quot;.&quot;</span><span class="p">,</span>
-                <span class="nt">&quot;gov&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-                <span class="nt">&quot;rel&quot;</span><span class="p">:</span> <span class="s2">&quot;punct&quot;</span><span class="p">,</span>
-                <span class="nt">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;.&quot;</span>
+                <span class="s2">&quot;start&quot;</span><span class="p">:</span> <span class="mi">14</span><span class="p">,</span>
+                <span class="s2">&quot;len&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="s2">&quot;pos&quot;</span><span class="p">:</span> <span class="s2">&quot;.&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ner&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;lemma&quot;</span><span class="p">:</span> <span class="s2">&quot;.&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;gov&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="s2">&quot;rel&quot;</span><span class="p">:</span> <span class="s2">&quot;punct&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;.&quot;</span>
             <span class="p">}</span>
         <span class="p">],</span>
         <span class="p">[</span>
             <span class="p">{</span>
-                <span class="nt">&quot;start&quot;</span><span class="p">:</span> <span class="mi">16</span><span class="p">,</span>
-                <span class="nt">&quot;len&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
-                <span class="nt">&quot;pos&quot;</span><span class="p">:</span> <span class="s2">&quot;JJ&quot;</span><span class="p">,</span>
-                <span class="nt">&quot;ner&quot;</span><span class="p">:</span> <span class="s2">&quot;ORDINAL&quot;</span><span class="p">,</span>
-                <span class="nt">&quot;lemma&quot;</span><span class="p">:</span> <span class="s2">&quot;second&quot;</span><span class="p">,</span>
-                <span class="nt">&quot;gov&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-                <span class="nt">&quot;rel&quot;</span><span class="p">:</span> <span class="s2">&quot;amod&quot;</span><span class="p">,</span>
-                <span class="nt">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;Second&quot;</span>
+                <span class="s2">&quot;start&quot;</span><span class="p">:</span> <span class="mi">16</span><span class="p">,</span>
+                <span class="s2">&quot;len&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+                <span class="s2">&quot;pos&quot;</span><span class="p">:</span> <span class="s2">&quot;JJ&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ner&quot;</span><span class="p">:</span> <span class="s2">&quot;ORDINAL&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;lemma&quot;</span><span class="p">:</span> <span class="s2">&quot;second&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;gov&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="s2">&quot;rel&quot;</span><span class="p">:</span> <span class="s2">&quot;amod&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;Second&quot;</span>
             <span class="p">},</span>
             <span class="p">{</span>
-                <span class="nt">&quot;start&quot;</span><span class="p">:</span> <span class="mi">23</span><span class="p">,</span>
-                <span class="nt">&quot;len&quot;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>
-                <span class="nt">&quot;pos&quot;</span><span class="p">:</span> <span class="s2">&quot;NN&quot;</span><span class="p">,</span>
-                <span class="nt">&quot;ner&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
-                <span class="nt">&quot;lemma&quot;</span><span class="p">:</span> <span class="s2">&quot;sentence&quot;</span><span class="p">,</span>
-                <span class="nt">&quot;gov&quot;</span><span class="p">:</span> <span class="mi">-1</span><span class="p">,</span>
-                <span class="nt">&quot;rel&quot;</span><span class="p">:</span> <span class="s2">&quot;root&quot;</span><span class="p">,</span>
-                <span class="nt">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;sentence&quot;</span>
+                <span class="s2">&quot;start&quot;</span><span class="p">:</span> <span class="mi">23</span><span class="p">,</span>
+                <span class="s2">&quot;len&quot;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>
+                <span class="s2">&quot;pos&quot;</span><span class="p">:</span> <span class="s2">&quot;NN&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ner&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;lemma&quot;</span><span class="p">:</span> <span class="s2">&quot;sentence&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;gov&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+                <span class="s2">&quot;rel&quot;</span><span class="p">:</span> <span class="s2">&quot;root&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;sentence&quot;</span>
             <span class="p">}</span>
         <span class="p">]</span>
     <span class="p">]</span>
@@ -312,11 +292,12 @@ For instructions on how to get spaCy <a class="reference external" href="https:/
 </div>
 <div class="section" id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
-<dl class="footnote brackets">
-<dt class="label" id="id2"><span class="brackets">1</span></dt>
-<dd><p>Kiperwasser, E., &amp; Goldberg, Y. (2016). Simple and Accurate Dependency Parsing Using Bidirectional LSTM Feature Representations. Transactions Of The Association For Computational Linguistics, 4, 313-327. <a class="reference external" href="https://transacl.org/ojs/index.php/tacl/article/view/885/198">https://transacl.org/ojs/index.php/tacl/article/view/885/198</a></p>
-</dd>
-</dl>
+<table class="docutils footnote" frame="void" id="id2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td>Kiperwasser, E., &amp; Goldberg, Y. (2016). Simple and Accurate Dependency Parsing Using Bidirectional LSTM Feature Representations. Transactions Of The Association For Computational Linguistics, 4, 313-327. <a class="reference external" href="https://transacl.org/ojs/index.php/tacl/article/view/885/198">https://transacl.org/ojs/index.php/tacl/article/view/885/198</a></td></tr>
+</tbody>
+</table>
 </div>
 </div>
 

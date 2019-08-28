@@ -1,0 +1,435 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Sentiment Analysis &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/install.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/nlp_arch_theme.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="BIST Dependency Parser" href="bist_parser.html" />
+    <link rel="prev" title="Neural Models for Sequence Tagging" href="tagging/sequence_tagging.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html">
+          
+
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="publications.html">Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Jupyter Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model_zoo.html">Model Zoo</a></li>
+</ul>
+<p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="tagging/sequence_tagging.html">Sequence Tagging</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Sentiment Analysis</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#supervised-sentiment">Supervised Sentiment</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#files">Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#models">Models</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#bi-directional-lstm">Bi-directional LSTM</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#temporal-cnn">Temporal CNN</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#datasets">Datasets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#running-modalities">Running Modalities</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ensemble-train-test">Ensemble Train/Test</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hyperparameter-optimization">Hyperparameter optimization</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#aspect-based-sentiment-analysis-absa">Aspect Based Sentiment Analysis (ABSA)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#algorithm-overview">Algorithm Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#flow">Flow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#training">Training</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#inference">Inference</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#inference-interactive-mode">Inference - interactive mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="bist_parser.html">Dependency Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intent.html">Intent Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lm.html">Language Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="information_extraction.html">Information Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transformers.html">Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="archived/additional.html">Additional Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Optimized Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quantized_bert.html">Quantized BERT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transformers_distillation.html">Transformers Distillation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solutions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="absa_solution.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="term_set_expansion.html">Set Expansion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="trend_analysis.html">Trend Analysis</a></li>
+</ul>
+<p class="caption"><span class="caption-text">For Developers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer_guide.html">Developer Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">NLP Architect by Intel® AI Lab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Sentiment Analysis</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="sentiment-analysis">
+<h1>Sentiment Analysis<a class="headerlink" href="#sentiment-analysis" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="supervised-sentiment">
+<h2>Supervised Sentiment<a class="headerlink" href="#supervised-sentiment" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="overview">
+<h3>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h3>
+<p>This is a set of models which are examples of supervised implementations for sentiment analysis.
+The larger idea behind these models is to allow ensemble learning with other supervised or unsupervised models.</p>
+</div>
+<div class="section" id="files">
+<h3>Files<a class="headerlink" href="#files" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><strong>nlp_architect/models/supervised_sentiment.py</strong>: Sentiment analysis models - currently an LSTM and a one-hot CNN</li>
+<li><strong>nlp_architect/data/amazon_reviews.py</strong>: Code which will download and process the Amazon datasets described below</li>
+<li><strong>nlp_architect/utils/ensembler.py</strong>: Contains the ensemble learning algorithm(s)</li>
+<li><strong>examples/supervised_sentiment/example_ensemble.py</strong>: An example of how the sentiment models can be trained and ensembled.</li>
+<li><strong>examples/supervised_sentiment/optimize_example.py</strong>: An example of using an hyperparameter optimizer with the simple LSTM model.</li>
+</ul>
+</div>
+<div class="section" id="models">
+<h3>Models<a class="headerlink" href="#models" title="Permalink to this headline">¶</a></h3>
+<p>Two models are shown as classification examples. Additional models can be added as desired.</p>
+<div class="section" id="bi-directional-lstm">
+<h4>Bi-directional LSTM<a class="headerlink" href="#bi-directional-lstm" title="Permalink to this headline">¶</a></h4>
+<p>A simple bidirectional LSTM with one fully connected layer. The number of vocab features, dense output size, and document input length, should be determined in the data preprocessing steps. The user can then change the size of the LSTM hidden layer, and the recurrent dropout rate.</p>
+</div>
+<div class="section" id="temporal-cnn">
+<h4>Temporal CNN<a class="headerlink" href="#temporal-cnn" title="Permalink to this headline">¶</a></h4>
+<p>As defined in “Text Understanding from Scratch” by Zhang, LeCun 2015 <a class="reference external" href="https://arxiv.org/pdf/1502.01710v4.pdf">https://arxiv.org/pdf/1502.01710v4.pdf</a> this model is a series of 1D CNNs, with a max pooling and fully connected layers. The frame sizes may either be large or small.</p>
+</div>
+</div>
+<div class="section" id="datasets">
+<h3>Datasets<a class="headerlink" href="#datasets" title="Permalink to this headline">¶</a></h3>
+<p>The dataset in this example is the Amazon Reviews dataset, though other datasets can be easily substituted.
+The Amazon review dataset(s) should be downloaded from <a class="reference external" href="http://jmcauley.ucsd.edu/data/amazon/">http://jmcauley.ucsd.edu/data/amazon/</a>. These are <code class="docutils literal notranslate"><span class="pre">*.json.gzip</span></code> files which should be unzipped. The terms and conditions of the data set license apply. Intel does not grant any rights to the data files.
+For best results, a medium sized dataset should be chosen though the algorithms will work on larger and smaller datasets as well. For experimentation I chose the Movie and TV reviews.
+Only the “overall”, “reviewText”, and “summary” columns of the review dataset will be retained. The “overall” is the overall rating in terms of stars - this is transformed into a rating where currently 4-5 stars is a positive review, 3 is neutral, and 1-2 stars is a negative review.
+The “summary” or title of the review is concatenated with the review text and subsequently cleaned.</p>
+<p>The Amazon Review Dataset was published in the following papers:</p>
+<ul class="simple">
+<li>Ups and downs: Modeling the visual evolution of fashion trends with one-class collaborative filtering. R. He, J. McAuley. WWW, 2016. <a class="reference external" href="http://cseweb.ucsd.edu/~jmcauley/pdfs/www16a.pdf">http://cseweb.ucsd.edu/~jmcauley/pdfs/www16a.pdf</a></li>
+<li>Image-based recommendations on styles and substitutes. J. McAuley, C. Targett, J. Shi, A. van den Hengel. SIGIR, 2015. <a class="reference external" href="http://cseweb.ucsd.edu/~jmcauley/pdfs/sigir15.pdf">http://cseweb.ucsd.edu/~jmcauley/pdfs/sigir15.pdf</a></li>
+</ul>
+</div>
+<div class="section" id="running-modalities">
+<h3>Running Modalities<a class="headerlink" href="#running-modalities" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="ensemble-train-test">
+<h4>Ensemble Train/Test<a class="headerlink" href="#ensemble-train-test" title="Permalink to this headline">¶</a></h4>
+<p>Currently, the pipeline shows a full train/test/ensemble cycle. The main pipeline can be run with the following command:</p>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">examples</span><span class="o">/</span><span class="n">supervised_sentiment</span><span class="o">/</span><span class="n">example_ensemble</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">file_path</span> <span class="o">./</span><span class="n">reviews_Movies_and_TV</span><span class="o">.</span><span class="n">json</span><span class="o">/</span>
+</pre></div>
+</div>
+<p>At the conclusion of training a final confusion matrix will be displayed.</p>
+</div>
+<div class="section" id="hyperparameter-optimization">
+<h4>Hyperparameter optimization<a class="headerlink" href="#hyperparameter-optimization" title="Permalink to this headline">¶</a></h4>
+<p>An example of hyperparameter optimization is given using the python package hyperopt which uses a Tree of Parzen estimator to optimize the simple bi-LSTM algorithm. To run this example the following command can be utilized:</p>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">examples</span><span class="o">/</span><span class="n">supervised_sentiment</span><span class="o">/</span><span class="n">optimize_example</span><span class="o">.</span><span class="n">py</span> \
+  <span class="o">--</span><span class="n">file_path</span> <span class="o">./</span><span class="n">reviews_Movies_and_TV</span><span class="o">.</span><span class="n">json</span><span class="o">/</span> \
+  <span class="o">--</span><span class="n">new_trials</span> <span class="mi">50</span> <span class="o">--</span><span class="n">output_file</span> <span class="o">./</span><span class="n">data</span><span class="o">/</span><span class="n">optimize_output</span><span class="o">.</span><span class="n">pkl</span>
+</pre></div>
+</div>
+<p>The file will output a result of each of the trial attempts to the specified pickle file.</p>
+<hr class="docutils" />
+</div>
+</div>
+</div>
+<div class="section" id="aspect-based-sentiment-analysis-absa">
+<h2>Aspect Based Sentiment Analysis (ABSA)<a class="headerlink" href="#aspect-based-sentiment-analysis-absa" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id1">
+<h3>Overview<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>Aspect Based Sentiment Analysis is the task of co-extracting opinion terms and aspect terms
+(opinion targets) and the relations between them in a given corpus.</p>
+</div>
+<div class="section" id="algorithm-overview">
+<h3>Algorithm Overview<a class="headerlink" href="#algorithm-overview" title="Permalink to this headline">¶</a></h3>
+<p>Training: the training phase inputs training data and outputs an opinion lexicon and an aspect lexicon.
+the training flow consists the following three main steps:</p>
+<p>1. The first training step is text pre-processing that is performed by <a class="reference external" href="https://spacy.io">Spacy</a>. This step includes
+tokenization, part-of-speech tagging and sentence breaking.</p>
+<p>2. The second training step is to apply a dependency parser to the training
+data. for this purpose we used the parser described in <a class="footnote-reference" href="#id5" id="id2">[1]</a>.
+For more details regarding steps 1 &amp; 2 see <a class="reference internal" href="spacy_bist.html"><span class="doc">BIST</span></a> dependency parser.</p>
+<p>3. The third step is based on applying a bootstrap lexicon acquisition algorithm described in <a class="footnote-reference" href="#id6" id="id3">[2]</a>,
+the algorithm uses a generic lexicon introduced by <a class="footnote-reference" href="#id7" id="id4">[3]</a> as initial step for the bootstrap process.</p>
+<p>4. The last step includes applying an MLP based opinion term re-ranking and polarity estimation
+algorithm. This step is based on using the word embbedding similarities between each acquired term
+and a set of generic opinion terms as features. A pre-trained model is re-ranking provided.</p>
+<p>Inference: the inference phase inputs an inference data along with the opinion lexicon and aspect
+lexicon generated by the training phase. The output of the inference phase is a list aspect-opinion
+pairs (along with their polarity and score) extracted from the inference data.
+The inference approach is based on detecting syntactically related aspect-opinion pairs.</p>
+</div>
+<div class="section" id="flow">
+<h3>Flow<a class="headerlink" href="#flow" title="Permalink to this headline">¶</a></h3>
+<img alt="_images/absa_flow.png" src="_images/absa_flow.png" />
+</div>
+<div class="section" id="training">
+<h3>Training<a class="headerlink" href="#training" title="Permalink to this headline">¶</a></h3>
+<p>Full code example is available at <code class="docutils literal notranslate"><span class="pre">examples/absa/train.py</span></code>.
+There are two training modes:</p>
+<p><strong>1.</strong> Providing training data in a raw text format. In this case the training flow will
+apply the dependency parser to the data:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span> <span class="n">examples</span><span class="o">/</span><span class="n">absa</span><span class="o">/</span><span class="n">train</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">data</span><span class="o">=</span><span class="n">TRAINING_DATASET</span>
+</pre></div>
+</div>
+<p><strong>Arguments:</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">--data=TRAINING_DATASET</span></code> - path to the input training dataset. Should point to a single raw text file with documents
+separated by newlines or a single csv file containing one doc per line or a directory containing one raw
+text file per document.</p>
+<p><strong>Optional arguments:</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">--rerank-model=RERANK_MODEL</span></code> - path to re-rank model. By default when running the training
+for the first time this model will be downloaded to <code class="docutils literal notranslate"><span class="pre">~/nlp-architect/cache/absa/train/reranking_model</span></code></p>
+<p><strong>Notes:</strong></p>
+<ul class="simple">
+<li>The generated opinion and aspect lexicons are written as csv files to: <code class="docutils literal notranslate"><span class="pre">~/nlp-architect/cache/absa/train/output/generated_opinion_lex_reranked.csv</span></code> and to <code class="docutils literal notranslate"><span class="pre">~/nlp-architect/cache/absa/train/output/generated_aspect_lex.csv</span></code></li>
+<li>In this mode the parsed data (jsons of ParsedDocument objects) is written to: <code class="docutils literal notranslate"><span class="pre">~/nlp-architect/cache/absa/train/parsed</span></code></li>
+<li>When running the training for the first time the system will download glove word embbedding model (the user will be prompted for authorization) to: <code class="docutils literal notranslate"><span class="pre">~/nlp-architect/cache/absa/train/word_emb_unzipped</span></code> (this may take a while)</li>
+<li>For demonstration purposes we provide a sample of tripadvisor.co.uk restaurants reviews under the <a class="reference external" href="https://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-Share-Alike 3.0 License</a> (Copyright 2018 Wikimedia Foundation). The dataset can be found at: <code class="docutils literal notranslate"><span class="pre">datasets/absa/datasets/absa/tripadvisor_co_uk-travel_restaurant_reviews_sample_2000_train.csv</span></code>.</li>
+</ul>
+<p><strong>2.</strong> Providing parsed training data. In this case the training flow skips the parsing step:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span> <span class="n">examples</span><span class="o">/</span><span class="n">absa</span><span class="o">/</span><span class="n">train</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">parsed</span><span class="o">-</span><span class="n">data</span><span class="o">=</span><span class="n">PARSED_TRAINING_DATASET</span>
+</pre></div>
+</div>
+<p><strong>Arguments:</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">--parsed-data=PARSED_TRAINING_DATASET</span></code>   - path to the parsed format (jsons of ParsedDocument objects) of the training dataset.</p>
+</div>
+<div class="section" id="inference">
+<h3>Inference<a class="headerlink" href="#inference" title="Permalink to this headline">¶</a></h3>
+<p>Full code example is available at <code class="docutils literal notranslate"><span class="pre">examples/absa/inference/inference.py</span></code>.
+There are two inference modes:</p>
+<p><strong>1.</strong> Providing inference data in a raw text format.</p>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">inference</span> <span class="o">=</span> <span class="n">SentimentInference</span><span class="p">(</span><span class="n">ASPECT_LEX</span><span class="p">,</span> <span class="n">OPINION_LEX</span><span class="p">)</span>
+<span class="n">sentiment_doc</span> <span class="o">=</span> <span class="n">inference</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">doc</span><span class="o">=</span><span class="s2">&quot;The food was wonderful and fresh. Staff were friendly.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Arguments:</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">ASPECT_LEX</span></code>  - path to aspect lexicon (csv file) that was produced by the training phase.
+aspect.csv may be manually edited for grouping alias aspect names (e.g. ‘drinks’ and ‘beverages’)
+together. Simply copy all alias names to the same line in the csv file.</p>
+<p><code class="docutils literal notranslate"><span class="pre">OPINION_LEX</span></code> - path to opinion lexicon (csv file) that was produced by the training phase.</p>
+<p><code class="docutils literal notranslate"><span class="pre">doc</span></code> - input sentence.</p>
+<p><strong>2.</strong> Providing parsed inference data (ParsedDocument format). In this case the parsing step is skipped:</p>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">inference</span> <span class="o">=</span> <span class="n">SentimentInference</span><span class="p">(</span><span class="n">ASPECT_LEX</span><span class="p">,</span> <span class="n">OPINION_LEX</span><span class="p">,</span> <span class="n">parse</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">doc_parsed</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s1">&#39;/path/to/parsed_doc.json&#39;</span><span class="p">),</span> <span class="n">object_hook</span><span class="o">=</span><span class="n">CoreNLPDoc</span><span class="o">.</span><span class="n">decoder</span><span class="p">)</span>
+<span class="n">sentiment_doc</span> <span class="o">=</span> <span class="n">inference</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">parsed_doc</span><span class="o">=</span><span class="n">doc_parsed</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="inference-interactive-mode">
+<h3>Inference - interactive mode<a class="headerlink" href="#inference-interactive-mode" title="Permalink to this headline">¶</a></h3>
+<p>The provided file <code class="docutils literal notranslate"><span class="pre">examples/absa/inference/interactive.py</span></code> enables using generated lexicons in interactive mode:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span> <span class="n">interactive</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">aspects</span><span class="o">=</span><span class="n">ASPECT_LEX</span> <span class="o">--</span><span class="n">opinions</span><span class="o">=</span><span class="n">OPINION_LEX</span>
+</pre></div>
+</div>
+<p><strong>Arguments:</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">--aspects=ASPECT_LEX</span></code>    - path to aspect lexicon (csv file format)</p>
+<p><code class="docutils literal notranslate"><span class="pre">--opinions=OPINION_LEX</span></code>  - path to opinion lexicon (csv file format)</p>
+</div>
+<div class="section" id="references">
+<h3>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h3>
+<table class="docutils footnote" frame="void" id="id5" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[1]</a></td><td><a class="reference external" href="https://transacl.org/ojs/index.php/tacl/article/view/885/198">Simple and Accurate Dependency Parsing Using Bidirectional LSTM Feature Representations</a>, Eliyahu Kiperwasser and Yoav Goldberg. 2016. Transactions of the Association of Computational Linguistics, 4:313–327.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id6" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[2]</a></td><td><a class="reference external" href="https://dl.acm.org/citation.cfm?id=1970422">Opinion Word Expansion and Target Extraction through Double Propagation</a>, Guang Qiu, Bing Liu, Jiajun Bu, and Chun Chen. 2011. Computational Linguistics, 37(1): 9–27.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id7" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id4">[3]</a></td><td><a class="reference external" href="http://dx.doi.org/10.1145/1014052.1014073">Mining and Summarizing Customer Reviews</a>, Minqing Hu and Bing Liu. 2004. In Proceedings of the Tenth ACM SIGKDD International Conference on Knowledge Discovery and Data Mining, KDD ’04, pages 168–177.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

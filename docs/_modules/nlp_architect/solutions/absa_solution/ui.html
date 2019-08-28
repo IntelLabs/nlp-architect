@@ -1,0 +1,699 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>nlp_architect.solutions.absa_solution.ui &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+        <script type="text/javascript" src="../../../../_static/install.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/nlp_arch_theme.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html">
+          
+
+          
+            
+            <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../quick_start.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../publications.html">Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials.html">Jupyter Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../model_zoo.html">Model Zoo</a></li>
+</ul>
+<p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tagging/sequence_tagging.html">Sequence Tagging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../sentiment.html">Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../bist_parser.html">Dependency Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../intent.html">Intent Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../lm.html">Language Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../information_extraction.html">Information Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../transformers.html">Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../archived/additional.html">Additional Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Optimized Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../quantized_bert.html">Quantized BERT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../transformers_distillation.html">Transformers Distillation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solutions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../absa_solution.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../term_set_expansion.html">Set Expansion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../trend_analysis.html">Trend Analysis</a></li>
+</ul>
+<p class="caption"><span class="caption-text">For Developers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../developer_guide.html">Developer Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">NLP Architect by Intel® AI Lab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>nlp_architect.solutions.absa_solution.ui</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for nlp_architect.solutions.absa_solution.ui</h1><div class="highlight"><pre>
+<span></span><span class="c1"># ******************************************************************************</span>
+<span class="c1"># Copyright 2017-2019 Intel Corporation</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ******************************************************************************</span>
+<span class="kn">import</span> <span class="nn">base64</span>
+<span class="kn">import</span> <span class="nn">io</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="k">import</span> <span class="n">dirname</span><span class="p">,</span> <span class="n">join</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">bokeh</span> <span class="k">import</span> <span class="n">layouts</span>
+<span class="kn">from</span> <span class="nn">bokeh.document</span> <span class="k">import</span> <span class="n">Document</span>
+<span class="kn">from</span> <span class="nn">bokeh.layouts</span> <span class="k">import</span> <span class="n">widgetbox</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">layout</span>
+<span class="kn">from</span> <span class="nn">bokeh.models</span> <span class="k">import</span> <span class="n">Div</span><span class="p">,</span> <span class="n">CustomJS</span><span class="p">,</span> <span class="n">HoverTool</span><span class="p">,</span> <span class="n">Title</span><span class="p">,</span> <span class="n">ColumnDataSource</span>
+<span class="kn">from</span> <span class="nn">bokeh.models.widgets</span> <span class="k">import</span> <span class="n">DataTable</span><span class="p">,</span> <span class="n">TableColumn</span><span class="p">,</span> <span class="n">TextInput</span>
+<span class="kn">from</span> <span class="nn">bokeh.models.widgets</span> <span class="k">import</span> <span class="n">HTMLTemplateFormatter</span><span class="p">,</span> <span class="n">RadioButtonGroup</span>
+<span class="kn">from</span> <span class="nn">bokeh.models.widgets</span> <span class="k">import</span> <span class="n">Dropdown</span>
+<span class="kn">from</span> <span class="nn">bokeh.models.widgets</span> <span class="k">import</span> <span class="n">Tabs</span><span class="p">,</span> <span class="n">Panel</span>
+<span class="kn">from</span> <span class="nn">bokeh.plotting</span> <span class="k">import</span> <span class="n">Figure</span><span class="p">,</span> <span class="n">figure</span>
+<span class="kn">from</span> <span class="nn">bokeh.server.server</span> <span class="k">import</span> <span class="n">Server</span>
+<span class="kn">from</span> <span class="nn">bokeh.transform</span> <span class="k">import</span> <span class="n">dodge</span>
+<span class="kn">from</span> <span class="nn">bokeh.core.properties</span> <span class="k">import</span> <span class="n">value</span>
+<span class="kn">from</span> <span class="nn">tornado.web</span> <span class="k">import</span> <span class="n">StaticFileHandler</span>
+
+<span class="kn">from</span> <span class="nn">nlp_architect.models.absa.train.acquire_terms</span> <span class="k">import</span> <span class="n">AcquireTerms</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.models.absa.train.rerank_terms</span> <span class="k">import</span> <span class="n">RerankTerms</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.models.absa.train.train</span> <span class="k">import</span> <span class="n">TrainSentiment</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.solutions.absa_solution</span> <span class="k">import</span> <span class="n">SENTIMENT_OUT</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.solutions.absa_solution.sentiment_solution</span> <span class="k">import</span> <span class="n">SentimentSolution</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.models.absa.inference.data_types</span> <span class="k">import</span> <span class="n">SentimentDoc</span><span class="p">,</span> <span class="n">SentimentSentence</span>
+
+<span class="n">POLARITIES</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;POS&#39;</span><span class="p">,</span> <span class="s1">&#39;NEG&#39;</span><span class="p">)</span>
+
+
+<span class="c1"># pylint: disable=global-variable-undefined</span>
+<div class="viewcode-block" id="serve_absa_ui"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.solutions.absa_solution.html#nlp_architect.solutions.absa_solution.ui.serve_absa_ui">[docs]</a><span class="k">def</span> <span class="nf">serve_absa_ui</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Main function for serving UI application.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_doc_modifier</span><span class="p">(</span><span class="n">doc</span><span class="p">:</span> <span class="n">Document</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">grid</span> <span class="o">=</span> <span class="n">_create_ui_components</span><span class="p">()</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">add_root</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Opening Bokeh application on http://localhost:5006/&#39;</span><span class="p">)</span>
+    <span class="n">server</span> <span class="o">=</span> <span class="n">Server</span><span class="p">({</span><span class="s1">&#39;/&#39;</span><span class="p">:</span> <span class="n">_doc_modifier</span><span class="p">},</span> <span class="n">websocket_max_message_size</span><span class="o">=</span><span class="mi">5000</span> <span class="o">*</span> <span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">,</span>
+                    <span class="n">extra_patterns</span><span class="o">=</span><span class="p">[(</span><span class="s1">&#39;/style/(.*)&#39;</span><span class="p">,</span> <span class="n">StaticFileHandler</span><span class="p">,</span>
+                                     <span class="p">{</span><span class="s1">&#39;path&#39;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
+                                                               <span class="o">+</span> <span class="s1">&#39;/style&#39;</span><span class="p">)})])</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">io_loop</span><span class="o">.</span><span class="n">add_callback</span><span class="p">(</span><span class="n">server</span><span class="o">.</span><span class="n">show</span><span class="p">,</span> <span class="s2">&quot;/&quot;</span><span class="p">)</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">io_loop</span><span class="o">.</span><span class="n">start</span><span class="p">()</span></div>
+
+
+<span class="k">def</span> <span class="nf">_create_header</span><span class="p">(</span><span class="n">train_dropdown</span><span class="p">,</span>
+                   <span class="n">inference_dropdown</span><span class="p">,</span> <span class="n">text_status</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">layouts</span><span class="o">.</span><span class="n">Row</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Utility function for creating and styling the header row in the UI layout.&quot;&quot;&quot;</span>
+
+    <span class="n">architect_logo</span> <span class="o">=</span> <span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;&lt;a href=&quot;http://nlp_architect.nervanasys.com&quot;&gt; &lt;img border=&quot;0&quot; &#39;</span>
+                              <span class="s1">&#39;src=&quot;style/nlp_architect.jpg&quot; width=&quot;200&quot;&gt;&lt;/a&gt; by Intel® AI Lab&#39;</span><span class="p">,</span>
+                         <span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;margin-left&#39;</span><span class="p">:</span> <span class="s1">&#39;500px&#39;</span><span class="p">,</span> <span class="s1">&#39;margin-top&#39;</span><span class="p">:</span> <span class="s1">&#39;20px&#39;</span><span class="p">,</span> <span class="s1">&#39;font-size&#39;</span><span class="p">:</span> <span class="s1">&#39;110%&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;text-align&#39;</span><span class="p">:</span> <span class="s1">&#39;center&#39;</span><span class="p">})</span>
+    <span class="n">css_link</span> <span class="o">=</span> <span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;&lt;link rel=&#39;stylesheet&#39; type=&#39;text/css&#39; href=&#39;style/lexicon_manager.css&#39;&gt;&quot;</span><span class="p">,</span>
+                   <span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;font-size&#39;</span><span class="p">:</span> <span class="s1">&#39;0%&#39;</span><span class="p">})</span>
+
+    <span class="n">js_script</span> <span class="o">=</span> <span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;&lt;input type=&#39;file&#39; id=&#39;inputOS&#39; hidden=&#39;true&#39;&gt;&quot;</span><span class="p">)</span>
+
+    <span class="n">title</span> <span class="o">=</span> <span class="n">Div</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;ABSApp&quot;</span><span class="p">,</span>
+                <span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;font-size&#39;</span><span class="p">:</span> <span class="s1">&#39;300%&#39;</span><span class="p">,</span> <span class="s1">&#39;color&#39;</span><span class="p">:</span> <span class="s1">&#39;royalblue&#39;</span><span class="p">,</span> <span class="s1">&#39;font-weight&#39;</span><span class="p">:</span> <span class="s1">&#39;bold&#39;</span><span class="p">,</span>
+                       <span class="s1">&#39;margin-left&#39;</span><span class="p">:</span> <span class="s1">&#39;500px&#39;</span><span class="p">})</span>
+
+    <span class="k">return</span> <span class="n">row</span><span class="p">(</span><span class="n">column</span><span class="p">(</span><span class="n">row</span><span class="p">(</span><span class="n">children</span><span class="o">=</span><span class="p">[</span><span class="n">train_dropdown</span><span class="p">,</span> <span class="n">lexicons_dropdown</span><span class="p">,</span> <span class="n">inference_dropdown</span><span class="p">],</span>
+                          <span class="n">width</span><span class="o">=</span><span class="mi">500</span><span class="p">),</span> <span class="n">row</span><span class="p">(</span><span class="n">text_status</span><span class="p">)),</span> <span class="n">css_link</span><span class="p">,</span> <span class="n">js_script</span><span class="p">,</span>
+               <span class="n">widgetbox</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">900</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">84</span><span class="p">),</span>
+               <span class="n">widgetbox</span><span class="p">(</span><span class="n">architect_logo</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">84</span><span class="p">))</span>
+
+
+<div class="viewcode-block" id="empty_table"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.solutions.absa_solution.html#nlp_architect.solutions.absa_solution.ui.empty_table">[docs]</a><span class="k">def</span> <span class="nf">empty_table</span><span class="p">(</span><span class="o">*</span><span class="n">headers</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">ColumnDataSource</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="n">header</span><span class="p">:</span> <span class="mi">19</span> <span class="o">*</span> <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">header</span> <span class="ow">in</span> <span class="n">headers</span><span class="p">})</span></div>
+
+
+<span class="k">def</span> <span class="nf">_create_ui_components</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">Figure</span><span class="p">,</span> <span class="n">ColumnDataSource</span><span class="p">):</span>  <span class="c1"># pylint: disable=too-many-statements</span>
+    <span class="k">global</span> <span class="n">asp_table_source</span><span class="p">,</span> <span class="n">asp_filter_src</span><span class="p">,</span> <span class="n">op_table_source</span><span class="p">,</span> <span class="n">op_filter_src</span>
+    <span class="k">global</span> <span class="n">stats</span><span class="p">,</span> <span class="n">aspects</span><span class="p">,</span> <span class="n">tabs</span><span class="p">,</span> <span class="n">lexicons_dropdown</span>
+    <span class="n">stats</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Quantity&#39;</span><span class="p">,</span> <span class="s1">&#39;Score&#39;</span><span class="p">])</span>
+    <span class="n">aspects</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([])</span>
+
+    <span class="k">def</span> <span class="nf">new_col_data_src</span><span class="p">():</span>
+        <span class="k">return</span> <span class="n">ColumnDataSource</span><span class="p">({</span><span class="s1">&#39;file_contents&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;file_name&#39;</span><span class="p">:</span> <span class="p">[]})</span>
+
+    <span class="n">large_text</span> <span class="o">=</span> <span class="n">HTMLTemplateFormatter</span><span class="p">(</span><span class="n">template</span><span class="o">=</span><span class="s1">&#39;&#39;&#39;&lt;div&gt;&lt;%= value %&gt;&lt;/div&gt;&#39;&#39;&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">data_column</span><span class="p">(</span><span class="n">title</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">TableColumn</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;&lt;span class=&quot;header&quot;&gt;&#39;</span>
+                           <span class="o">+</span> <span class="n">title</span> <span class="o">+</span> <span class="s1">&#39;&lt;/span&gt;&#39;</span><span class="p">,</span> <span class="n">formatter</span><span class="o">=</span><span class="n">large_text</span><span class="p">)</span>
+
+    <span class="n">asp_table_columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">data_column</span><span class="p">(</span><span class="s1">&#39;Term&#39;</span><span class="p">),</span> <span class="n">data_column</span><span class="p">(</span>
+        <span class="s1">&#39;Alias1&#39;</span><span class="p">),</span> <span class="n">data_column</span><span class="p">(</span><span class="s1">&#39;Alias2&#39;</span><span class="p">),</span> <span class="n">data_column</span><span class="p">(</span><span class="s1">&#39;Alias3&#39;</span><span class="p">)]</span>
+    <span class="n">op_table_columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">data_column</span><span class="p">(</span><span class="s1">&#39;Term&#39;</span><span class="p">),</span> <span class="n">data_column</span><span class="p">(</span><span class="s1">&#39;Score&#39;</span><span class="p">),</span> <span class="n">data_column</span><span class="p">(</span><span class="s1">&#39;Polarity&#39;</span><span class="p">)]</span>
+
+    <span class="n">asp_table_source</span> <span class="o">=</span> <span class="n">empty_table</span><span class="p">(</span><span class="s1">&#39;Term&#39;</span><span class="p">,</span> <span class="s1">&#39;Alias1&#39;</span><span class="p">,</span> <span class="s1">&#39;Alias2&#39;</span><span class="p">,</span> <span class="s1">&#39;Alias3&#39;</span><span class="p">)</span>
+    <span class="n">asp_filter_src</span> <span class="o">=</span> <span class="n">empty_table</span><span class="p">(</span><span class="s1">&#39;Term&#39;</span><span class="p">,</span> <span class="s1">&#39;Alias1&#39;</span><span class="p">,</span> <span class="s1">&#39;Alias2&#39;</span><span class="p">,</span> <span class="s1">&#39;Alias3&#39;</span><span class="p">)</span>
+    <span class="n">asp_src</span> <span class="o">=</span> <span class="n">new_col_data_src</span><span class="p">()</span>
+
+    <span class="n">op_table_source</span> <span class="o">=</span> <span class="n">empty_table</span><span class="p">(</span><span class="s1">&#39;Term&#39;</span><span class="p">,</span> <span class="s1">&#39;Score&#39;</span><span class="p">,</span> <span class="s1">&#39;Polarity&#39;</span><span class="p">,</span> <span class="s1">&#39;Polarity&#39;</span><span class="p">)</span>
+    <span class="n">op_filter_src</span> <span class="o">=</span> <span class="n">empty_table</span><span class="p">(</span><span class="s1">&#39;Term&#39;</span><span class="p">,</span> <span class="s1">&#39;Score&#39;</span><span class="p">,</span> <span class="s1">&#39;Polarity&#39;</span><span class="p">,</span> <span class="s1">&#39;Polarity&#39;</span><span class="p">)</span>
+    <span class="n">op_src</span> <span class="o">=</span> <span class="n">new_col_data_src</span><span class="p">()</span>
+
+    <span class="n">asp_table</span> <span class="o">=</span> <span class="n">DataTable</span><span class="p">(</span>
+        <span class="n">source</span><span class="o">=</span><span class="n">asp_table_source</span><span class="p">,</span> <span class="n">selectable</span><span class="o">=</span><span class="s1">&#39;checkbox&#39;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">asp_table_columns</span><span class="p">,</span>
+        <span class="n">editable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+    <span class="n">op_table</span> <span class="o">=</span> <span class="n">DataTable</span><span class="p">(</span>
+        <span class="n">source</span><span class="o">=</span><span class="n">op_table_source</span><span class="p">,</span> <span class="n">selectable</span><span class="o">=</span><span class="s1">&#39;checkbox&#39;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">op_table_columns</span><span class="p">,</span>
+        <span class="n">editable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+
+    <span class="n">asp_examples_box</span> <span class="o">=</span> <span class="n">_create_examples_table</span><span class="p">()</span>
+    <span class="n">op_examples_box</span> <span class="o">=</span> <span class="n">_create_examples_table</span><span class="p">()</span>
+    <span class="n">asp_layout</span> <span class="o">=</span> <span class="n">layout</span><span class="p">([[</span><span class="n">asp_table</span><span class="p">,</span> <span class="n">asp_examples_box</span><span class="p">]])</span>
+    <span class="n">op_layout</span> <span class="o">=</span> <span class="n">layout</span><span class="p">([[</span><span class="n">op_table</span><span class="p">,</span> <span class="n">op_examples_box</span><span class="p">]])</span>
+    <span class="n">asp_tab</span> <span class="o">=</span> <span class="n">Panel</span><span class="p">(</span><span class="n">child</span><span class="o">=</span><span class="n">asp_layout</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Aspect Lexicon&quot;</span><span class="p">)</span>
+    <span class="n">op_tab</span> <span class="o">=</span> <span class="n">Panel</span><span class="p">(</span><span class="n">child</span><span class="o">=</span><span class="n">op_layout</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Opinion Lexicon&quot;</span><span class="p">)</span>
+    <span class="n">tabs</span> <span class="o">=</span> <span class="n">Tabs</span><span class="p">(</span><span class="n">tabs</span><span class="o">=</span><span class="p">[</span><span class="n">asp_tab</span><span class="p">,</span> <span class="n">op_tab</span><span class="p">],</span> <span class="n">width</span><span class="o">=</span><span class="mi">700</span><span class="p">,</span> <span class="n">css_classes</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;mytab&#39;</span><span class="p">])</span>
+
+    <span class="n">lexicons_menu</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;Open&quot;</span><span class="p">,</span> <span class="s2">&quot;open&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;Save&quot;</span><span class="p">,</span> <span class="s2">&quot;save&quot;</span><span class="p">)]</span>
+    <span class="n">lexicons_dropdown</span> <span class="o">=</span> <span class="n">Dropdown</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Edit Lexicons&quot;</span><span class="p">,</span> <span class="n">button_type</span><span class="o">=</span><span class="s2">&quot;success&quot;</span><span class="p">,</span> <span class="n">menu</span><span class="o">=</span><span class="n">lexicons_menu</span><span class="p">,</span>
+                                 <span class="n">width</span><span class="o">=</span><span class="mi">140</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">31</span><span class="p">,</span> <span class="n">css_classes</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;mybutton&#39;</span><span class="p">])</span>
+
+    <span class="n">train_menu</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;Parsed Data&quot;</span><span class="p">,</span> <span class="s2">&quot;parsed&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;Raw Data&quot;</span><span class="p">,</span> <span class="s2">&quot;raw&quot;</span><span class="p">)]</span>
+    <span class="n">train_dropdown</span> <span class="o">=</span> <span class="n">Dropdown</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Extract Lexicons&quot;</span><span class="p">,</span> <span class="n">button_type</span><span class="o">=</span><span class="s2">&quot;success&quot;</span><span class="p">,</span> <span class="n">menu</span><span class="o">=</span><span class="n">train_menu</span><span class="p">,</span>
+                              <span class="n">width</span><span class="o">=</span><span class="mi">162</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">31</span><span class="p">,</span> <span class="n">css_classes</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;mybutton&#39;</span><span class="p">])</span>
+
+    <span class="n">inference_menu</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;Parsed Data&quot;</span><span class="p">,</span> <span class="s2">&quot;parsed&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;Raw Data&quot;</span><span class="p">,</span> <span class="s2">&quot;raw&quot;</span><span class="p">)]</span>
+    <span class="n">inference_dropdown</span> <span class="o">=</span> <span class="n">Dropdown</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Classify&quot;</span><span class="p">,</span> <span class="n">button_type</span><span class="o">=</span><span class="s2">&quot;success&quot;</span><span class="p">,</span> <span class="n">menu</span><span class="o">=</span><span class="n">inference_menu</span><span class="p">,</span>
+                                  <span class="n">width</span><span class="o">=</span><span class="mi">140</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">31</span><span class="p">,</span> <span class="n">css_classes</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;mybutton&#39;</span><span class="p">])</span>
+
+    <span class="n">text_status</span> <span class="o">=</span> <span class="n">TextInput</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="s2">&quot;Select training data&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Train Run Status:&quot;</span><span class="p">,</span>
+                            <span class="n">css_classes</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;statusText&#39;</span><span class="p">])</span>
+    <span class="n">text_status</span><span class="o">.</span><span class="n">visible</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="n">train_src</span> <span class="o">=</span> <span class="n">new_col_data_src</span><span class="p">()</span>
+    <span class="n">infer_src</span> <span class="o">=</span> <span class="n">new_col_data_src</span><span class="p">()</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s2">&quot;dropdown.js&quot;</span><span class="p">))</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">clicked</span><span class="o">=</span><span class="n">lexicons_dropdown</span><span class="p">,</span> <span class="n">asp_filter</span><span class="o">=</span><span class="n">asp_filter_src</span><span class="p">,</span> <span class="n">op_filter</span><span class="o">=</span><span class="n">op_filter_src</span><span class="p">,</span>
+                    <span class="n">asp_src</span><span class="o">=</span><span class="n">asp_src</span><span class="p">,</span> <span class="n">op_src</span><span class="o">=</span><span class="n">op_src</span><span class="p">,</span> <span class="n">tabs</span><span class="o">=</span><span class="n">tabs</span><span class="p">,</span>
+                    <span class="n">text_status</span><span class="o">=</span><span class="n">text_status</span><span class="p">,</span>
+                    <span class="n">train_src</span><span class="o">=</span><span class="n">train_src</span><span class="p">,</span> <span class="n">infer_src</span><span class="o">=</span><span class="n">infer_src</span><span class="p">,</span> <span class="n">train_clicked</span><span class="o">=</span><span class="n">train_dropdown</span><span class="p">,</span>
+                    <span class="n">infer_clicked</span><span class="o">=</span><span class="n">inference_dropdown</span><span class="p">,</span> <span class="n">opinion_lex_generic</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="n">code</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+    <span class="n">args</span><span class="p">[</span><span class="s1">&#39;train_clicked&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">train_dropdown</span>
+    <span class="n">train_dropdown</span><span class="o">.</span><span class="n">js_on_change</span><span class="p">(</span><span class="s1">&#39;value&#39;</span><span class="p">,</span> <span class="n">CustomJS</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="n">code</span><span class="o">=</span><span class="n">code</span><span class="p">))</span>
+
+    <span class="n">args</span><span class="p">[</span><span class="s1">&#39;train_clicked&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">inference_dropdown</span>
+    <span class="n">inference_dropdown</span><span class="o">.</span><span class="n">js_on_change</span><span class="p">(</span><span class="s1">&#39;value&#39;</span><span class="p">,</span> <span class="n">CustomJS</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="n">code</span><span class="o">=</span><span class="n">code</span><span class="p">))</span>
+
+    <span class="n">args</span><span class="p">[</span><span class="s1">&#39;clicked&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">lexicons_dropdown</span>
+    <span class="n">lexicons_dropdown</span><span class="o">.</span><span class="n">js_on_change</span><span class="p">(</span><span class="s1">&#39;value&#39;</span><span class="p">,</span> <span class="n">CustomJS</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="n">code</span><span class="o">=</span><span class="n">code</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">update_filter_source</span><span class="p">(</span><span class="n">table_source</span><span class="p">,</span> <span class="n">filter_source</span><span class="p">):</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">table_source</span><span class="o">.</span><span class="n">to_df</span><span class="p">()</span>
+        <span class="n">sel_inx</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">table_source</span><span class="o">.</span><span class="n">selected</span><span class="o">.</span><span class="n">indices</span><span class="p">)</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">sel_inx</span><span class="p">,</span> <span class="mi">1</span><span class="p">:]</span>
+        <span class="n">new_source</span> <span class="o">=</span> <span class="n">ColumnDataSource</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+        <span class="n">filter_source</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">new_source</span><span class="o">.</span><span class="n">data</span>
+
+    <span class="k">def</span> <span class="nf">update_examples_box</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">examples_box</span><span class="p">,</span> <span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
+        <span class="n">examples_box</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Examples&#39;</span><span class="p">:</span> <span class="p">[]}</span>
+        <span class="n">unselected</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">old</span><span class="p">)</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">new</span><span class="p">))</span>
+        <span class="n">selected</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">new</span><span class="p">)</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">old</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">selected</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">unselected</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">examples_box</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+                <span class="p">{</span><span class="s1">&#39;Examples&#39;</span><span class="p">:</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">unselected</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">24</span><span class="p">)]</span>
+                 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">unselected</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="k">else</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">selected</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span>
+                                               <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">24</span><span class="p">)]})</span>
+
+    <span class="k">def</span> <span class="nf">asp_selected_change</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
+        <span class="k">global</span> <span class="n">asp_filter_src</span><span class="p">,</span> <span class="n">asp_table_source</span><span class="p">,</span> <span class="n">aspects_data</span>
+        <span class="n">update_filter_source</span><span class="p">(</span><span class="n">asp_table_source</span><span class="p">,</span> <span class="n">asp_filter_src</span><span class="p">)</span>
+        <span class="n">update_examples_box</span><span class="p">(</span><span class="n">aspects_data</span><span class="p">,</span> <span class="n">asp_examples_box</span><span class="p">,</span> <span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">op_selected_change</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
+        <span class="k">global</span> <span class="n">op_filter_src</span><span class="p">,</span> <span class="n">op_table_source</span><span class="p">,</span> <span class="n">opinions_data</span>
+        <span class="n">update_filter_source</span><span class="p">(</span><span class="n">op_table_source</span><span class="p">,</span> <span class="n">op_filter_src</span><span class="p">)</span>
+        <span class="n">update_examples_box</span><span class="p">(</span><span class="n">opinions_data</span><span class="p">,</span> <span class="n">op_examples_box</span><span class="p">,</span> <span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">read_csv</span><span class="p">(</span><span class="n">file_src</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">index_cols</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">readCSV</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">readCSV</span><span class="p">:</span>
+            <span class="n">raw_contents</span> <span class="o">=</span> <span class="n">file_src</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;file_contents&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">raw_contents</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">))</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">b64_contents</span> <span class="o">=</span> <span class="n">raw_contents</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># remove the prefix that JS adds</span>
+                <span class="n">b64_contents</span> <span class="o">=</span> <span class="n">raw_contents</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">file_contents</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">b64_contents</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">file_contents</span><span class="p">),</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;ISO-8859-1&quot;</span><span class="p">,</span>
+                               <span class="n">keep_default_na</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">na_values</span><span class="o">=</span><span class="p">{</span><span class="kc">None</span><span class="p">},</span>
+                               <span class="n">engine</span><span class="o">=</span><span class="s1">&#39;python&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="n">index_cols</span><span class="p">,</span>
+                               <span class="n">header</span><span class="o">=</span><span class="mi">0</span> <span class="k">if</span> <span class="n">headers</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">file_src</span>
+
+    <span class="k">def</span> <span class="nf">read_parsed_files</span><span class="p">(</span><span class="n">file_content</span><span class="p">,</span> <span class="n">file_name</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># remove the prefix that JS adds</span>
+            <span class="n">b64_contents</span> <span class="o">=</span> <span class="n">file_content</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">file_content</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">b64_contents</span><span class="p">)</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">SENTIMENT_OUT</span> <span class="o">/</span> <span class="n">file_name</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">json_file</span><span class="p">:</span>
+                <span class="n">data_dict</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">file_content</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">))</span>
+                <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data_dict</span><span class="p">,</span> <span class="n">json_file</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+
+    <span class="c1"># pylint: disable=unused-argument</span>
+    <span class="k">def</span> <span class="nf">train_file_callback</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
+        <span class="k">global</span> <span class="n">train_data</span>
+        <span class="n">SENTIMENT_OUT</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">train</span> <span class="o">=</span> <span class="n">TrainSentiment</span><span class="p">(</span><span class="n">parse</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">rerank_model</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_src</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;file_contents&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">train_data</span> <span class="o">=</span> <span class="n">read_csv</span><span class="p">(</span><span class="n">train_src</span><span class="p">,</span> <span class="n">index_cols</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">file_name</span> <span class="o">=</span> <span class="n">train_src</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;file_name&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">raw_data_path</span> <span class="o">=</span> <span class="n">SENTIMENT_OUT</span> <span class="o">/</span> <span class="n">file_name</span>
+            <span class="n">train_data</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">raw_data_path</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Running_SentimentTraining on data...&#39;</span><span class="p">)</span>
+            <span class="n">train</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">raw_data_path</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">f_contents</span> <span class="o">=</span> <span class="n">train_src</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;file_contents&#39;</span><span class="p">]</span>
+            <span class="n">f_names</span> <span class="o">=</span> <span class="n">train_src</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;file_name&#39;</span><span class="p">]</span>
+            <span class="n">raw_data_path</span> <span class="o">=</span> <span class="n">SENTIMENT_OUT</span> <span class="o">/</span> <span class="n">train_src</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;file_name&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">raw_data_path</span><span class="p">):</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">raw_data_path</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">f_content</span><span class="p">,</span> <span class="n">f_name</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">f_contents</span><span class="p">,</span> <span class="n">f_names</span><span class="p">):</span>
+                <span class="n">read_parsed_files</span><span class="p">(</span><span class="n">f_content</span><span class="p">,</span> <span class="n">f_name</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Running_SentimentTraining on data...&#39;</span><span class="p">)</span>
+            <span class="n">train</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">parsed_data</span><span class="o">=</span><span class="n">raw_data_path</span><span class="p">)</span>
+
+        <span class="n">text_status</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="s2">&quot;Lexicon extraction completed&quot;</span>
+
+        <span class="k">with</span> <span class="n">io</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">AcquireTerms</span><span class="o">.</span><span class="n">acquired_aspect_terms_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+            <span class="n">aspect_data_csv</span> <span class="o">=</span> <span class="n">fp</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="n">file_data</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="nb">str</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">aspect_data_csv</span><span class="p">))</span>
+        <span class="n">file_data</span> <span class="o">=</span> <span class="n">file_data</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+        <span class="n">asp_src</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;file_contents&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">file_data</span><span class="p">],</span> <span class="s1">&#39;file_name&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;nameFile.csv&#39;</span><span class="p">]}</span>
+
+        <span class="n">out_path</span> <span class="o">=</span> <span class="n">RerankTerms</span><span class="o">.</span><span class="n">out_dir</span> <span class="o">/</span> <span class="s1">&#39;generated_opinion_lex_reranked.csv&#39;</span>
+        <span class="k">with</span> <span class="n">io</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">out_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+            <span class="n">opinion_data_csv</span> <span class="o">=</span> <span class="n">fp</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="n">file_data</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="nb">str</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">opinion_data_csv</span><span class="p">))</span>
+        <span class="n">file_data</span> <span class="o">=</span> <span class="n">file_data</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+        <span class="n">op_src</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;file_contents&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">file_data</span><span class="p">],</span> <span class="s1">&#39;file_name&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;nameFile.csv&#39;</span><span class="p">]}</span>
+
+    <span class="k">def</span> <span class="nf">show_analysis</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">global</span> <span class="n">stats</span><span class="p">,</span> <span class="n">aspects</span><span class="p">,</span> <span class="n">plot</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">tabs</span>
+        <span class="n">plot</span><span class="p">,</span> <span class="n">source</span> <span class="o">=</span> <span class="n">_create_plot</span><span class="p">()</span>
+        <span class="n">events_table</span> <span class="o">=</span> <span class="n">_create_events_table</span><span class="p">()</span>
+
+        <span class="c1"># pylint: disable=unused-argument</span>
+        <span class="k">def</span> <span class="nf">_events_handler</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
+            <span class="n">_update_events</span><span class="p">(</span><span class="n">events_table</span><span class="p">,</span> <span class="n">events_type</span><span class="o">.</span><span class="n">active</span><span class="p">)</span>
+
+        <span class="c1"># Toggle display of in-domain / All aspect mentions</span>
+        <span class="n">events_type</span> <span class="o">=</span> <span class="n">RadioButtonGroup</span><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;All Events&#39;</span><span class="p">,</span> <span class="s1">&#39;In-Domain Events&#39;</span><span class="p">],</span> <span class="n">active</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="n">analysis_layout</span> <span class="o">=</span> <span class="n">layout</span><span class="p">([[</span><span class="n">plot</span><span class="p">],</span> <span class="p">[</span><span class="n">events_table</span><span class="p">]])</span>
+
+        <span class="c1"># events_type display toggle disabled</span>
+        <span class="c1"># analysis_layout = layout([[plot],[events_type],[events_table]])</span>
+
+        <span class="n">analysis_tab</span> <span class="o">=</span> <span class="n">Panel</span><span class="p">(</span><span class="n">child</span><span class="o">=</span><span class="n">analysis_layout</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Analysis&quot;</span><span class="p">)</span>
+        <span class="n">tabs</span><span class="o">.</span><span class="n">tabs</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">analysis_tab</span><span class="p">)</span>
+        <span class="n">tabs</span><span class="o">.</span><span class="n">active</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="n">events_type</span><span class="o">.</span><span class="n">on_change</span><span class="p">(</span><span class="s1">&#39;active&#39;</span><span class="p">,</span> <span class="n">_events_handler</span><span class="p">)</span>
+        <span class="n">source</span><span class="o">.</span><span class="n">selected</span><span class="o">.</span><span class="n">on_change</span><span class="p">(</span><span class="s1">&#39;indices&#39;</span><span class="p">,</span> <span class="n">_events_handler</span><span class="p">)</span>  <span class="c1"># pylint: disable=no-member</span>
+
+    <span class="c1"># pylint: disable=unused-argument</span>
+    <span class="k">def</span> <span class="nf">infer_file_callback</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
+
+        <span class="c1"># run inference on input data and current aspect/opinion lexicons in view</span>
+        <span class="k">global</span> <span class="n">infer_data</span><span class="p">,</span> <span class="n">stats</span><span class="p">,</span> <span class="n">aspects</span>
+
+        <span class="n">SENTIMENT_OUT</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">df_aspect</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">asp_filter_src</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">aspect_col_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Term&#39;</span><span class="p">,</span> <span class="s1">&#39;Alias1&#39;</span><span class="p">,</span> <span class="s1">&#39;Alias2&#39;</span><span class="p">,</span> <span class="s1">&#39;Alias3&#39;</span><span class="p">]</span>
+        <span class="n">df_aspect</span> <span class="o">=</span> <span class="n">df_aspect</span><span class="p">[</span><span class="n">aspect_col_list</span><span class="p">]</span>
+        <span class="n">df_aspect</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">SENTIMENT_OUT</span> <span class="o">/</span> <span class="s1">&#39;aspects.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">na_rep</span><span class="o">=</span><span class="s2">&quot;NaN&quot;</span><span class="p">)</span>
+
+        <span class="n">df_opinion</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">op_filter_src</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">opinion_col_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Term&#39;</span><span class="p">,</span> <span class="s1">&#39;Score&#39;</span><span class="p">,</span> <span class="s1">&#39;Polarity&#39;</span><span class="p">,</span> <span class="s1">&#39;isAcquired&#39;</span><span class="p">]</span>
+        <span class="n">df_opinion</span> <span class="o">=</span> <span class="n">df_opinion</span><span class="p">[</span><span class="n">opinion_col_list</span><span class="p">]</span>
+        <span class="n">df_opinion</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">SENTIMENT_OUT</span> <span class="o">/</span> <span class="s1">&#39;opinions.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">na_rep</span><span class="o">=</span><span class="s2">&quot;NaN&quot;</span><span class="p">)</span>
+
+        <span class="n">solution</span> <span class="o">=</span> <span class="n">SentimentSolution</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">infer_src</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;file_contents&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">infer_data</span> <span class="o">=</span> <span class="n">read_csv</span><span class="p">(</span><span class="n">infer_src</span><span class="p">,</span> <span class="n">index_cols</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">file_name</span> <span class="o">=</span> <span class="n">infer_src</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;file_name&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">raw_data_path</span> <span class="o">=</span> <span class="n">SENTIMENT_OUT</span> <span class="o">/</span> <span class="n">file_name</span>
+            <span class="n">infer_data</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">raw_data_path</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Running_SentimentInference on data...&#39;</span><span class="p">)</span>
+            <span class="n">text_status</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="s2">&quot;Running classification on data...&quot;</span>
+            <span class="n">stats</span> <span class="o">=</span> <span class="n">solution</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">raw_data_path</span><span class="p">,</span>
+                                 <span class="n">aspect_lex</span><span class="o">=</span><span class="n">SENTIMENT_OUT</span> <span class="o">/</span> <span class="s1">&#39;aspects.csv&#39;</span><span class="p">,</span>
+                                 <span class="n">opinion_lex</span><span class="o">=</span><span class="n">SENTIMENT_OUT</span> <span class="o">/</span> <span class="s1">&#39;opinions.csv&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">f_contents</span> <span class="o">=</span> <span class="n">infer_src</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;file_contents&#39;</span><span class="p">]</span>
+            <span class="n">f_names</span> <span class="o">=</span> <span class="n">infer_src</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;file_name&#39;</span><span class="p">]</span>
+            <span class="n">raw_data_path</span> <span class="o">=</span> <span class="n">SENTIMENT_OUT</span> <span class="o">/</span> <span class="n">infer_src</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;file_name&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">raw_data_path</span><span class="p">):</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">raw_data_path</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">f_content</span><span class="p">,</span> <span class="n">f_name</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">f_contents</span><span class="p">,</span> <span class="n">f_names</span><span class="p">):</span>
+                <span class="n">read_parsed_files</span><span class="p">(</span><span class="n">f_content</span><span class="p">,</span> <span class="n">f_name</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Running_SentimentInference on data...&#39;</span><span class="p">)</span>
+            <span class="n">text_status</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="s2">&quot;Running classification on data...&quot;</span>
+            <span class="n">stats</span> <span class="o">=</span> <span class="n">solution</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">parsed_data</span><span class="o">=</span><span class="n">raw_data_path</span><span class="p">,</span>
+                                 <span class="n">aspect_lex</span><span class="o">=</span><span class="n">SENTIMENT_OUT</span> <span class="o">/</span> <span class="s1">&#39;aspects.csv&#39;</span><span class="p">,</span>
+                                 <span class="n">opinion_lex</span><span class="o">=</span><span class="n">SENTIMENT_OUT</span> <span class="o">/</span> <span class="s1">&#39;opinions.csv&#39;</span><span class="p">)</span>
+
+        <span class="n">aspects</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">SENTIMENT_OUT</span> <span class="o">/</span> <span class="s1">&#39;aspects.csv&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)[</span><span class="s1">&#39;Term&#39;</span><span class="p">]</span>
+        <span class="n">text_status</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="s2">&quot;Classification completed&quot;</span>
+        <span class="n">show_analysis</span><span class="p">()</span>
+
+    <span class="c1"># pylint: disable=unused-argument</span>
+    <span class="k">def</span> <span class="nf">asp_file_callback</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
+        <span class="k">global</span> <span class="n">aspects_data</span><span class="p">,</span> <span class="n">asp_table_source</span>
+        <span class="n">aspects_data</span> <span class="o">=</span> <span class="n">read_csv</span><span class="p">(</span><span class="n">asp_src</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="c1"># Replaces None values by empty string</span>
+        <span class="n">aspects_data</span> <span class="o">=</span> <span class="n">aspects_data</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">new_source</span> <span class="o">=</span> <span class="n">ColumnDataSource</span><span class="p">(</span><span class="n">aspects_data</span><span class="p">)</span>
+        <span class="n">asp_table_source</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">new_source</span><span class="o">.</span><span class="n">data</span>
+        <span class="n">asp_table_source</span><span class="o">.</span><span class="n">selected</span><span class="o">.</span><span class="n">indices</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">aspects_data</span><span class="p">)))</span>
+
+    <span class="c1"># pylint: disable=unused-argument</span>
+    <span class="k">def</span> <span class="nf">op_file_callback</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
+        <span class="k">global</span> <span class="n">opinions_data</span><span class="p">,</span> <span class="n">op_table_source</span><span class="p">,</span> <span class="n">lexicons_dropdown</span><span class="p">,</span> <span class="n">df_opinion_generic</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">read_csv</span><span class="p">(</span><span class="n">op_src</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="c1"># Replaces None values by empty string</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="c1"># Placeholder for generic opinion lexicons from the given csv file</span>
+        <span class="n">df_opinion_generic</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;isAcquired&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;N&#39;</span><span class="p">]</span>
+        <span class="c1"># Update the argument value for the callback customJS</span>
+        <span class="n">lexicons_dropdown</span><span class="o">.</span><span class="n">js_property_callbacks</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="s1">&#39;change:value&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;opinion_lex_generic&#39;</span><span class="p">]</span> \
+            <span class="o">=</span> <span class="n">df_opinion_generic</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s1">&#39;list&#39;</span><span class="p">)</span>
+        <span class="n">opinions_data</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;isAcquired&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Y&#39;</span><span class="p">]</span>
+        <span class="n">new_source</span> <span class="o">=</span> <span class="n">ColumnDataSource</span><span class="p">(</span><span class="n">opinions_data</span><span class="p">)</span>
+        <span class="n">op_table_source</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">new_source</span><span class="o">.</span><span class="n">data</span>
+        <span class="n">op_table_source</span><span class="o">.</span><span class="n">selected</span><span class="o">.</span><span class="n">indices</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">opinions_data</span><span class="p">)))</span>
+
+    <span class="c1"># pylint: disable=unused-argument</span>
+    <span class="k">def</span> <span class="nf">txt_status_callback</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Previous label: &quot;</span> <span class="o">+</span> <span class="n">old</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Updated label: &quot;</span> <span class="o">+</span> <span class="n">new</span><span class="p">)</span>
+
+    <span class="n">text_status</span><span class="o">.</span><span class="n">on_change</span><span class="p">(</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">txt_status_callback</span><span class="p">)</span>
+
+    <span class="n">asp_src</span><span class="o">.</span><span class="n">on_change</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="n">asp_file_callback</span><span class="p">)</span>
+    <span class="c1"># pylint: disable=no-member</span>
+    <span class="n">asp_table_source</span><span class="o">.</span><span class="n">selected</span><span class="o">.</span><span class="n">on_change</span><span class="p">(</span>
+        <span class="s1">&#39;indices&#39;</span><span class="p">,</span> <span class="n">asp_selected_change</span><span class="p">)</span>
+
+    <span class="n">op_src</span><span class="o">.</span><span class="n">on_change</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="n">op_file_callback</span><span class="p">)</span>
+    <span class="n">op_table_source</span><span class="o">.</span><span class="n">selected</span><span class="o">.</span><span class="n">on_change</span><span class="p">(</span><span class="s1">&#39;indices&#39;</span><span class="p">,</span> <span class="n">op_selected_change</span><span class="p">)</span>  <span class="c1"># pylint: disable=no-member</span>
+
+    <span class="n">train_src</span><span class="o">.</span><span class="n">on_change</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="n">train_file_callback</span><span class="p">)</span>
+    <span class="n">infer_src</span><span class="o">.</span><span class="n">on_change</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="n">infer_file_callback</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">layout</span><span class="p">([</span>
+        <span class="p">[</span><span class="n">_create_header</span><span class="p">(</span><span class="n">train_dropdown</span><span class="p">,</span> <span class="n">inference_dropdown</span><span class="p">,</span> <span class="n">text_status</span><span class="p">)],</span>
+        <span class="p">[</span><span class="n">tabs</span><span class="p">]])</span>
+
+
+<span class="k">def</span> <span class="nf">_create_events_table</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">DataTable</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Utility function for creating and styling the events table.&quot;&quot;&quot;</span>
+    <span class="n">formatter</span> <span class="o">=</span> <span class="n">HTMLTemplateFormatter</span><span class="p">(</span><span class="n">template</span><span class="o">=</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">    &lt;style&gt;</span>
+<span class="s1">        .AS_POS {color: #0000FF; font-weight: bold;}</span>
+<span class="s1">        .AS_NEG {color: #0000FF; font-weight: bold;}</span>
+<span class="s1">        .OP_POS {color: #1aaa0d; font-style: bold;}</span>
+<span class="s1">        .OP_NEG {color: #f40000;font-style: bold;}</span>
+<span class="s1">        .NEG_POS {font-style: italic;}</span>
+<span class="s1">        .NEG_NEG {color: #f40000; font-style: italic;}</span>
+<span class="s1">        .INT_POS {color: #1aaa0d; font-style: italic;}</span>
+<span class="s1">        .INT_NEG {color: #f40000; font-style: italic;}</span>
+<span class="s1">    &lt;/style&gt;</span>
+<span class="s1">    &lt;%= value %&gt;&#39;&#39;&#39;</span><span class="p">)</span>
+    <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">TableColumn</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s1">&#39;POS_events&#39;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Positive Examples&#39;</span><span class="p">,</span> <span class="n">formatter</span><span class="o">=</span><span class="n">formatter</span><span class="p">),</span>
+               <span class="n">TableColumn</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s1">&#39;NEG_events&#39;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Negative Examples&#39;</span><span class="p">,</span> <span class="n">formatter</span><span class="o">=</span><span class="n">formatter</span><span class="p">)]</span>
+    <span class="k">return</span> <span class="n">DataTable</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="n">ColumnDataSource</span><span class="p">(),</span> <span class="n">columns</span><span class="o">=</span><span class="n">columns</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span> <span class="n">index_position</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                     <span class="n">width</span><span class="o">=</span><span class="mi">2110</span><span class="p">,</span> <span class="n">sortable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">editable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">reorderable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_create_plot</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">Figure</span><span class="p">,</span> <span class="n">ColumnDataSource</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Utility function for creating and styling the bar plot.&quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">source</span><span class="p">,</span> <span class="n">aspects</span><span class="p">,</span> <span class="n">stats</span>
+    <span class="n">pos_counts</span><span class="p">,</span> <span class="n">neg_counts</span> <span class="o">=</span> \
+        <span class="p">([</span><span class="n">stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">asp</span><span class="p">,</span> <span class="n">pol</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span> <span class="s1">&#39;Quantity&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">asp</span> <span class="ow">in</span> <span class="n">aspects</span><span class="p">]</span> <span class="k">for</span> <span class="n">pol</span> <span class="ow">in</span> <span class="n">POLARITIES</span><span class="p">)</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">seterr</span><span class="p">(</span><span class="n">divide</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+    <span class="n">source</span> <span class="o">=</span> <span class="n">ColumnDataSource</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;aspects&#39;</span><span class="p">:</span> <span class="n">aspects</span><span class="p">,</span> <span class="s1">&#39;POS&#39;</span><span class="p">:</span> <span class="n">pos_counts</span><span class="p">,</span> <span class="s1">&#39;NEG&#39;</span><span class="p">:</span> <span class="n">neg_counts</span><span class="p">,</span>
+                                    <span class="s1">&#39;log-POS&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">pos_counts</span><span class="p">),</span>
+                                    <span class="s1">&#39;log-NEG&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">neg_counts</span><span class="p">)})</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">seterr</span><span class="p">(</span><span class="n">divide</span><span class="o">=</span><span class="s1">&#39;warn&#39;</span><span class="p">)</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">figure</span><span class="p">(</span><span class="n">plot_height</span><span class="o">=</span><span class="mi">145</span><span class="p">,</span> <span class="n">sizing_mode</span><span class="o">=</span><span class="s2">&quot;scale_width&quot;</span><span class="p">,</span>
+               <span class="n">x_range</span><span class="o">=</span><span class="n">aspects</span><span class="p">,</span> <span class="n">toolbar_location</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="n">tools</span><span class="o">=</span><span class="s1">&#39;save, tap&#39;</span><span class="p">)</span>
+    <span class="n">rs</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">vbar</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">dodge</span><span class="p">(</span><span class="s1">&#39;aspects&#39;</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.207</span><span class="p">,</span> <span class="nb">range</span><span class="o">=</span><span class="n">p</span><span class="o">.</span><span class="n">x_range</span><span class="p">),</span> <span class="n">top</span><span class="o">=</span><span class="s1">&#39;log-POS&#39;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span>
+                 <span class="n">source</span><span class="o">=</span><span class="n">source</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;limegreen&quot;</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="n">value</span><span class="p">(</span><span class="s1">&#39;POS&#39;</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;POS&#39;</span><span class="p">),</span>
+          <span class="n">p</span><span class="o">.</span><span class="n">vbar</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">dodge</span><span class="p">(</span><span class="s1">&#39;aspects&#39;</span><span class="p">,</span> <span class="mf">0.207</span><span class="p">,</span> <span class="nb">range</span><span class="o">=</span><span class="n">p</span><span class="o">.</span><span class="n">x_range</span><span class="p">),</span> <span class="n">top</span><span class="o">=</span><span class="s1">&#39;log-NEG&#39;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span>
+                 <span class="n">source</span><span class="o">=</span><span class="n">source</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;orangered&quot;</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="n">value</span><span class="p">(</span><span class="s1">&#39;NEG&#39;</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;NEG&#39;</span><span class="p">)]</span>
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">rs</span><span class="p">:</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">add_tools</span><span class="p">(</span><span class="n">HoverTool</span><span class="p">(</span><span class="n">tooltips</span><span class="o">=</span><span class="p">[(</span><span class="s1">&#39;Aspect&#39;</span><span class="p">,</span> <span class="s1">&#39;@aspects&#39;</span><span class="p">),</span> <span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;@&#39;</span> <span class="o">+</span> <span class="n">r</span><span class="o">.</span><span class="n">name</span><span class="p">)],</span>
+                              <span class="n">renderers</span><span class="o">=</span><span class="p">[</span><span class="n">r</span><span class="p">]))</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">add_layout</span><span class="p">(</span><span class="n">Title</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39; &#39;</span> <span class="o">*</span> <span class="mi">7</span> <span class="o">+</span> <span class="s1">&#39;Sentiment Count (log scale)&#39;</span><span class="p">,</span> <span class="n">align</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span>
+                       <span class="n">text_font_size</span><span class="o">=</span><span class="s1">&#39;23px&#39;</span><span class="p">),</span> <span class="s1">&#39;left&#39;</span><span class="p">)</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">ticker</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">y_range</span><span class="o">.</span><span class="n">start</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">xgrid</span><span class="o">.</span><span class="n">grid_line_color</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">major_label_text_font_size</span> <span class="o">=</span> <span class="s2">&quot;20pt&quot;</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">legend</span><span class="o">.</span><span class="n">label_text_font_size</span> <span class="o">=</span> <span class="s1">&#39;20pt&#39;</span>
+    <span class="k">return</span> <span class="n">p</span><span class="p">,</span> <span class="n">source</span>
+
+
+<span class="k">def</span> <span class="nf">_update_events</span><span class="p">(</span><span class="n">events</span><span class="p">:</span> <span class="n">DataTable</span><span class="p">,</span> <span class="n">in_domain</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Utility function for updating the content of the events table.&quot;&quot;&quot;</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">selected</span><span class="o">.</span><span class="n">indices</span>
+    <span class="n">events</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">pol</span> <span class="o">+</span> <span class="s1">&#39;_events&#39;</span><span class="p">:</span> <span class="n">stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">aspects</span><span class="p">[</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="n">pol</span><span class="p">,</span> <span class="n">in_domain</span><span class="p">]</span>
+                               <span class="p">[</span><span class="s1">&#39;Sent_1&#39;</span><span class="p">:]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">i</span> <span class="k">else</span> <span class="p">[]</span> <span class="k">for</span> <span class="n">pol</span> <span class="ow">in</span> <span class="n">POLARITIES</span><span class="p">})</span>
+
+
+<span class="k">def</span> <span class="nf">_ui_format</span><span class="p">(</span><span class="n">sent</span><span class="p">:</span> <span class="n">SentimentSentence</span><span class="p">,</span> <span class="n">doc</span><span class="p">:</span> <span class="n">SentimentDoc</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Get sentence as HTML with 4 classes: aspects, opinions, negations and intensifiers.&quot;&quot;&quot;</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">doc_text</span><span class="p">[</span><span class="n">sent</span><span class="o">.</span><span class="n">start</span><span class="p">:</span> <span class="n">sent</span><span class="o">.</span><span class="n">end</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">seen</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">([</span><span class="n">t</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">sent</span><span class="o">.</span><span class="n">events</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">e</span><span class="p">],</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">term</span><span class="o">.</span><span class="n">start</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">seen</span><span class="p">:</span>
+            <span class="n">seen</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">term</span><span class="o">.</span><span class="n">start</span><span class="p">)</span>
+            <span class="n">start</span> <span class="o">=</span> <span class="n">term</span><span class="o">.</span><span class="n">start</span> <span class="o">-</span> <span class="n">sent</span><span class="o">.</span><span class="n">start</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="n">start</span> <span class="o">+</span> <span class="n">term</span><span class="o">.</span><span class="n">len</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="n">term</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">value</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="n">term</span><span class="o">.</span><span class="n">polarity</span><span class="o">.</span><span class="n">value</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">text</span><span class="p">[:</span><span class="n">start</span><span class="p">],</span> <span class="s1">&#39;&lt;span class=&quot;&#39;</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="s1">&#39;&quot;&gt;&#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">[</span><span class="n">start</span><span class="p">:</span> <span class="n">end</span><span class="p">],</span>
+                            <span class="s1">&#39;&lt;/span&gt;&#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">[</span><span class="n">end</span><span class="p">:]))</span>
+    <span class="k">return</span> <span class="n">text</span>
+
+
+<span class="k">def</span> <span class="nf">_create_examples_table</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">DataTable</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Utility function for creating and styling the events table.&quot;&quot;&quot;</span>
+
+    <span class="n">formatter</span> <span class="o">=</span> <span class="n">HTMLTemplateFormatter</span><span class="p">(</span><span class="n">template</span><span class="o">=</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">    &lt;style&gt;</span>
+<span class="s1">        .AS {color: #0000FF; font-weight: bold;}</span>
+<span class="s1">        .OP {color: #0000FF; font-weight: bold;}</span>
+<span class="s1">    &lt;/style&gt;</span>
+<span class="s1">    &lt;div&gt;&lt;%= value %&gt;&lt;/div&gt;&#39;&#39;&#39;</span><span class="p">)</span>
+    <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">TableColumn</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s1">&#39;Examples&#39;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;&lt;span class=&quot;header&quot;&gt;Examples&lt;/span&gt;&#39;</span><span class="p">,</span>
+                           <span class="n">formatter</span><span class="o">=</span><span class="n">formatter</span><span class="p">)]</span>
+    <span class="n">empty_source</span> <span class="o">=</span> <span class="n">ColumnDataSource</span><span class="p">()</span>
+    <span class="n">empty_source</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Examples&#39;</span><span class="p">:</span> <span class="p">[]}</span>
+    <span class="k">return</span> <span class="n">DataTable</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="n">empty_source</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">columns</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">index_position</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                     <span class="n">width</span><span class="o">=</span><span class="mi">1500</span><span class="p">,</span> <span class="n">sortable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">editable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">reorderable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                     <span class="n">header_row</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">serve_absa_ui</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,352 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>nlp_architect.data.cdc_resources.embedding package &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/install.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/nlp_arch_theme.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="nlp_architect.data.cdc_resources.gen_scripts package" href="nlp_architect.data.cdc_resources.gen_scripts.html" />
+    <link rel="prev" title="nlp_architect.data.cdc_resources.data_types.wn package" href="nlp_architect.data.cdc_resources.data_types.wn.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html">
+          
+
+          
+            
+            <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../publications.html">Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials.html">Jupyter Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model_zoo.html">Model Zoo</a></li>
+</ul>
+<p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tagging/sequence_tagging.html">Sequence Tagging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sentiment.html">Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bist_parser.html">Dependency Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intent.html">Intent Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lm.html">Language Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../information_extraction.html">Information Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transformers.html">Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../archived/additional.html">Additional Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Optimized Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../quantized_bert.html">Quantized BERT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transformers_distillation.html">Transformers Distillation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solutions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../absa_solution.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../term_set_expansion.html">Set Expansion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trend_analysis.html">Trend Analysis</a></li>
+</ul>
+<p class="caption"><span class="caption-text">For Developers</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="nlp_architect_api_index.html">nlp_architect API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.api.html">nlp_architect.api package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.cli.html">nlp_architect.cli package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.common.html">nlp_architect.common package</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="nlp_architect.data.html">nlp_architect.data package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="nlp_architect.data.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="nlp_architect.data.cdc_resources.html">nlp_architect.data.cdc_resources package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.data.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.data.html#module-nlp_architect.data.amazon_reviews">nlp_architect.data.amazon_reviews module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.data.html#module-nlp_architect.data.babi_dialog">nlp_architect.data.babi_dialog module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.data.html#module-nlp_architect.data.conll">nlp_architect.data.conll module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.data.html#module-nlp_architect.data.fasttext_emb">nlp_architect.data.fasttext_emb module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.data.html#module-nlp_architect.data.glue_tasks">nlp_architect.data.glue_tasks module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.data.html#module-nlp_architect.data.intent_datasets">nlp_architect.data.intent_datasets module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.data.html#module-nlp_architect.data.ptb">nlp_architect.data.ptb module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.data.html#module-nlp_architect.data.sequence_classification">nlp_architect.data.sequence_classification module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.data.html#module-nlp_architect.data.sequential_tagging">nlp_architect.data.sequential_tagging module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.data.html#module-nlp_architect.data.utils">nlp_architect.data.utils module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.data.html#module-nlp_architect.data">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.models.html">nlp_architect.models package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.nlp.html">nlp_architect.nlp package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.nn.html">nlp_architect.nn package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.pipelines.html">nlp_architect.pipelines package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.procedures.html">nlp_architect.procedures package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.server.html">nlp_architect.server package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.solutions.html">nlp_architect.solutions package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.utils.html">nlp_architect.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer_guide.html">Developer Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">NLP Architect by Intel® AI Lab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="nlp_architect_api_index.html"><code class="docutils literal notranslate"><span class="pre">nlp\_architect</span></code> package</a> &raquo;</li>
+        
+          <li><a href="nlp_architect.data.html">nlp_architect.data package</a> &raquo;</li>
+        
+          <li><a href="nlp_architect.data.cdc_resources.html">nlp_architect.data.cdc_resources package</a> &raquo;</li>
+        
+      <li>nlp_architect.data.cdc_resources.embedding package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="nlp-architect-data-cdc-resources-embedding-package">
+<h1>nlp_architect.data.cdc_resources.embedding package<a class="headerlink" href="#nlp-architect-data-cdc-resources-embedding-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-nlp_architect.data.cdc_resources.embedding.embed_elmo">
+<span id="nlp-architect-data-cdc-resources-embedding-embed-elmo-module"></span><h2>nlp_architect.data.cdc_resources.embedding.embed_elmo module<a class="headerlink" href="#module-nlp_architect.data.cdc_resources.embedding.embed_elmo" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nlp_architect.data.cdc_resources.embedding.embed_elmo.ElmoEmbedding">
+<em class="property">class </em><code class="descclassname">nlp_architect.data.cdc_resources.embedding.embed_elmo.</code><code class="descname">ElmoEmbedding</code><a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/embedding/embed_elmo.html#ElmoEmbedding"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.embedding.embed_elmo.ElmoEmbedding" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="nlp_architect.data.cdc_resources.embedding.embed_elmo.ElmoEmbedding.apply_get_from_cache">
+<code class="descname">apply_get_from_cache</code><span class="sig-paren">(</span><em>sentence: str</em>, <em>context: bool = False</em>, <em>indexs: List[int] = None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/embedding/embed_elmo.html#ElmoEmbedding.apply_get_from_cache"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.embedding.embed_elmo.ElmoEmbedding.apply_get_from_cache" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.cdc_resources.embedding.embed_elmo.ElmoEmbedding.get_avrg_feature_vector">
+<code class="descname">get_avrg_feature_vector</code><span class="sig-paren">(</span><em>tokens_str</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/embedding/embed_elmo.html#ElmoEmbedding.get_avrg_feature_vector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.embedding.embed_elmo.ElmoEmbedding.get_avrg_feature_vector" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.cdc_resources.embedding.embed_elmo.ElmoEmbedding.get_elmo_avg">
+<code class="descname">get_elmo_avg</code><span class="sig-paren">(</span><em>sentence</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/embedding/embed_elmo.html#ElmoEmbedding.get_elmo_avg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.embedding.embed_elmo.ElmoEmbedding.get_elmo_avg" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.cdc_resources.embedding.embed_elmo.ElmoEmbedding.get_head_feature_vector">
+<code class="descname">get_head_feature_vector</code><span class="sig-paren">(</span><em>mention: nlp_architect.common.cdc.mention_data.MentionDataLight</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/embedding/embed_elmo.html#ElmoEmbedding.get_head_feature_vector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.embedding.embed_elmo.ElmoEmbedding.get_head_feature_vector" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="nlp_architect.data.cdc_resources.embedding.embed_elmo.ElmoEmbedding.get_mention_vec_from_sent">
+<em class="property">static </em><code class="descname">get_mention_vec_from_sent</code><span class="sig-paren">(</span><em>sent_vec</em>, <em>indexs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/embedding/embed_elmo.html#ElmoEmbedding.get_mention_vec_from_sent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.embedding.embed_elmo.ElmoEmbedding.get_mention_vec_from_sent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nlp_architect.data.cdc_resources.embedding.embed_elmo.ElmoEmbeddingOffline">
+<em class="property">class </em><code class="descclassname">nlp_architect.data.cdc_resources.embedding.embed_elmo.</code><code class="descname">ElmoEmbeddingOffline</code><span class="sig-paren">(</span><em>dump_file</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/embedding/embed_elmo.html#ElmoEmbeddingOffline"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.embedding.embed_elmo.ElmoEmbeddingOffline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="nlp_architect.data.cdc_resources.embedding.embed_elmo.ElmoEmbeddingOffline.get_avrg_feature_vector">
+<code class="descname">get_avrg_feature_vector</code><span class="sig-paren">(</span><em>tokens_str</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/embedding/embed_elmo.html#ElmoEmbeddingOffline.get_avrg_feature_vector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.embedding.embed_elmo.ElmoEmbeddingOffline.get_avrg_feature_vector" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.cdc_resources.embedding.embed_elmo.ElmoEmbeddingOffline.get_head_feature_vector">
+<code class="descname">get_head_feature_vector</code><span class="sig-paren">(</span><em>mention: nlp_architect.common.cdc.mention_data.MentionDataLight</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/embedding/embed_elmo.html#ElmoEmbeddingOffline.get_head_feature_vector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.embedding.embed_elmo.ElmoEmbeddingOffline.get_head_feature_vector" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-nlp_architect.data.cdc_resources.embedding.embed_glove">
+<span id="nlp-architect-data-cdc-resources-embedding-embed-glove-module"></span><h2>nlp_architect.data.cdc_resources.embedding.embed_glove module<a class="headerlink" href="#module-nlp_architect.data.cdc_resources.embedding.embed_glove" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nlp_architect.data.cdc_resources.embedding.embed_glove.GloveEmbedding">
+<em class="property">class </em><code class="descclassname">nlp_architect.data.cdc_resources.embedding.embed_glove.</code><code class="descname">GloveEmbedding</code><span class="sig-paren">(</span><em>glove_file</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/embedding/embed_glove.html#GloveEmbedding"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.embedding.embed_glove.GloveEmbedding" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="staticmethod">
+<dt id="nlp_architect.data.cdc_resources.embedding.embed_glove.GloveEmbedding.load_glove_for_vocab">
+<em class="property">static </em><code class="descname">load_glove_for_vocab</code><span class="sig-paren">(</span><em>glove_filename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/embedding/embed_glove.html#GloveEmbedding.load_glove_for_vocab"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.embedding.embed_glove.GloveEmbedding.load_glove_for_vocab" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nlp_architect.data.cdc_resources.embedding.embed_glove.GloveEmbeddingOffline">
+<em class="property">class </em><code class="descclassname">nlp_architect.data.cdc_resources.embedding.embed_glove.</code><code class="descname">GloveEmbeddingOffline</code><span class="sig-paren">(</span><em>embed_resources</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/embedding/embed_glove.html#GloveEmbeddingOffline"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.embedding.embed_glove.GloveEmbeddingOffline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="nlp_architect.data.cdc_resources.embedding.embed_glove.GloveEmbeddingOffline.get_avrg_feature_vector">
+<code class="descname">get_avrg_feature_vector</code><span class="sig-paren">(</span><em>tokens_str</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/embedding/embed_glove.html#GloveEmbeddingOffline.get_avrg_feature_vector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.embedding.embed_glove.GloveEmbeddingOffline.get_avrg_feature_vector" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.cdc_resources.embedding.embed_glove.GloveEmbeddingOffline.get_feature_vector">
+<code class="descname">get_feature_vector</code><span class="sig-paren">(</span><em>mention: nlp_architect.common.cdc.mention_data.MentionDataLight</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/embedding/embed_glove.html#GloveEmbeddingOffline.get_feature_vector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.embedding.embed_glove.GloveEmbeddingOffline.get_feature_vector" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-nlp_architect.data.cdc_resources.embedding">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-nlp_architect.data.cdc_resources.embedding" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,601 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>nlp_architect.nn.torch package &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/install.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/nlp_arch_theme.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="nlp_architect.nn.torch.data package" href="nlp_architect.nn.torch.data.html" />
+    <link rel="prev" title="nlp_architect.nn.tensorflow.python.keras.utils package" href="nlp_architect.nn.tensorflow.python.keras.utils.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html">
+          
+
+          
+            
+            <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../publications.html">Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials.html">Jupyter Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model_zoo.html">Model Zoo</a></li>
+</ul>
+<p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tagging/sequence_tagging.html">Sequence Tagging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sentiment.html">Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bist_parser.html">Dependency Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intent.html">Intent Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lm.html">Language Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../information_extraction.html">Information Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transformers.html">Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../archived/additional.html">Additional Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Optimized Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../quantized_bert.html">Quantized BERT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transformers_distillation.html">Transformers Distillation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solutions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../absa_solution.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../term_set_expansion.html">Set Expansion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trend_analysis.html">Trend Analysis</a></li>
+</ul>
+<p class="caption"><span class="caption-text">For Developers</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="nlp_architect_api_index.html">nlp_architect API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.api.html">nlp_architect.api package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.cli.html">nlp_architect.cli package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.common.html">nlp_architect.common package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.data.html">nlp_architect.data package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.models.html">nlp_architect.models package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.nlp.html">nlp_architect.nlp package</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="nlp_architect.nn.html">nlp_architect.nn package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="nlp_architect.nn.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.nn.tensorflow.html">nlp_architect.nn.tensorflow package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">nlp_architect.nn.torch package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.nn.html#module-nlp_architect.nn">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.pipelines.html">nlp_architect.pipelines package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.procedures.html">nlp_architect.procedures package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.server.html">nlp_architect.server package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.solutions.html">nlp_architect.solutions package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.utils.html">nlp_architect.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer_guide.html">Developer Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">NLP Architect by Intel® AI Lab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="nlp_architect_api_index.html"><code class="docutils literal notranslate"><span class="pre">nlp\_architect</span></code> package</a> &raquo;</li>
+        
+          <li><a href="nlp_architect.nn.html">nlp_architect.nn package</a> &raquo;</li>
+        
+      <li>nlp_architect.nn.torch package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="nlp-architect-nn-torch-package">
+<h1>nlp_architect.nn.torch package<a class="headerlink" href="#nlp-architect-nn-torch-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="nlp_architect.nn.torch.data.html">nlp_architect.nn.torch.data package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.nn.torch.data.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.nn.torch.data.html#module-nlp_architect.nn.torch.data.dataset">nlp_architect.nn.torch.data.dataset module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.nn.torch.data.html#module-nlp_architect.nn.torch.data">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="nlp_architect.nn.torch.layers.html">nlp_architect.nn.torch.layers package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.nn.torch.layers.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.nn.torch.layers.html#module-nlp_architect.nn.torch.layers.crf">nlp_architect.nn.torch.layers.crf module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.nn.torch.layers.html#module-nlp_architect.nn.torch.layers">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="nlp_architect.nn.torch.modules.html">nlp_architect.nn.torch.modules package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.nn.torch.modules.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.nn.torch.modules.html#module-nlp_architect.nn.torch.modules.embedders">nlp_architect.nn.torch.modules.embedders module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.nn.torch.modules.html#module-nlp_architect.nn.torch.modules">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-nlp_architect.nn.torch.distillation">
+<span id="nlp-architect-nn-torch-distillation-module"></span><h2>nlp_architect.nn.torch.distillation module<a class="headerlink" href="#module-nlp_architect.nn.torch.distillation" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nlp_architect.nn.torch.distillation.TeacherStudentDistill">
+<em class="property">class </em><code class="descclassname">nlp_architect.nn.torch.distillation.</code><code class="descname">TeacherStudentDistill</code><span class="sig-paren">(</span><em>teacher_model: nlp_architect.models.TrainableModel</em>, <em>temperature: float = 1.0</em>, <em>kd_w: float = 0.5</em>, <em>loss_w: float = 0.5</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/distillation.html#TeacherStudentDistill"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.distillation.TeacherStudentDistill" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Teacher-Student knowledge distillation helper.
+Use this object when training a model with KD and a teacher model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>teacher_model</strong> (<a class="reference internal" href="nlp_architect.models.html#nlp_architect.models.TrainableModel" title="nlp_architect.models.TrainableModel"><em>TrainableModel</em></a>) – teacher model</li>
+<li><strong>temperature</strong> (<em>float</em><em>, </em><em>optional</em>) – KD temperature. Defaults to 1.0.</li>
+<li><strong>kd_w</strong> (<em>float</em><em>, </em><em>optional</em>) – teacher loss weight. Defaults to 0.5.</li>
+<li><strong>loss_w</strong> (<em>float</em><em>, </em><em>optional</em>) – student loss weight. Defaults to 0.5.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="staticmethod">
+<dt id="nlp_architect.nn.torch.distillation.TeacherStudentDistill.add_args">
+<em class="property">static </em><code class="descname">add_args</code><span class="sig-paren">(</span><em>parser: argparse.ArgumentParser</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/distillation.html#TeacherStudentDistill.add_args"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.distillation.TeacherStudentDistill.add_args" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add KD arguments to parser</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parser</strong> (<em>argparse.ArgumentParser</em>) – parser</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.nn.torch.distillation.TeacherStudentDistill.distill_loss">
+<code class="descname">distill_loss</code><span class="sig-paren">(</span><em>loss</em>, <em>student_logits</em>, <em>teacher_logits</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/distillation.html#TeacherStudentDistill.distill_loss"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.distillation.TeacherStudentDistill.distill_loss" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add KD loss</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>loss</strong> – student loss</li>
+<li><strong>student_logits</strong> – student model logits</li>
+<li><strong>teacher_logits</strong> – teacher model logits</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">KD loss</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.nn.torch.distillation.TeacherStudentDistill.get_teacher_logits">
+<code class="descname">get_teacher_logits</code><span class="sig-paren">(</span><em>inputs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/distillation.html#TeacherStudentDistill.get_teacher_logits"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.distillation.TeacherStudentDistill.get_teacher_logits" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get teacher logits</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>inputs</strong> – input</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">teachr logits</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-nlp_architect.nn.torch.quantization">
+<span id="nlp-architect-nn-torch-quantization-module"></span><h2>nlp_architect.nn.torch.quantization module<a class="headerlink" href="#module-nlp_architect.nn.torch.quantization" title="Permalink to this headline">¶</a></h2>
+<p>Quantization ops</p>
+<dl class="class">
+<dt id="nlp_architect.nn.torch.quantization.FakeLinearQuantizationWithSTE">
+<em class="property">class </em><code class="descclassname">nlp_architect.nn.torch.quantization.</code><code class="descname">FakeLinearQuantizationWithSTE</code><a class="reference internal" href="../_modules/nlp_architect/nn/torch/quantization.html#FakeLinearQuantizationWithSTE"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.quantization.FakeLinearQuantizationWithSTE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.autograd.function.Function</span></code></p>
+<p>Simulates error caused by quantization. Uses Straight-Through Estimator for Back prop</p>
+<dl class="staticmethod">
+<dt id="nlp_architect.nn.torch.quantization.FakeLinearQuantizationWithSTE.backward">
+<em class="property">static </em><code class="descname">backward</code><span class="sig-paren">(</span><em>ctx</em>, <em>grad_output</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/quantization.html#FakeLinearQuantizationWithSTE.backward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.quantization.FakeLinearQuantizationWithSTE.backward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate estimated gradients for fake quantization using
+Straigh-Through Estimator (STE) according to:
+<a class="reference external" href="https://openreview.net/pdf?id=B1ae1lZRb">https://openreview.net/pdf?id=B1ae1lZRb</a></p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="nlp_architect.nn.torch.quantization.FakeLinearQuantizationWithSTE.forward">
+<em class="property">static </em><code class="descname">forward</code><span class="sig-paren">(</span><em>ctx</em>, <em>input</em>, <em>scale</em>, <em>bits=8</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/quantization.html#FakeLinearQuantizationWithSTE.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.quantization.FakeLinearQuantizationWithSTE.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>fake quantize input according to scale and number of bits, dequantize
+quantize(input))</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nlp_architect.nn.torch.quantization.QuantizationConfig">
+<em class="property">class </em><code class="descclassname">nlp_architect.nn.torch.quantization.</code><code class="descname">QuantizationConfig</code><span class="sig-paren">(</span><em>activation_bits=8</em>, <em>weight_bits=8</em>, <em>mode='none'</em>, <em>start_step=0</em>, <em>ema_decay=0.9999</em>, <em>requantize_output=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/quantization.html#QuantizationConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizationConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Quantization Configuration Object</p>
+<dl class="classmethod">
+<dt id="nlp_architect.nn.torch.quantization.QuantizationConfig.from_dict">
+<em class="property">classmethod </em><code class="descname">from_dict</code><span class="sig-paren">(</span><em>json_object</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/quantization.html#QuantizationConfig.from_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizationConfig.from_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructs a <cite>QuantizationConfig</cite> from a Python dictionary of parameters.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.nn.torch.quantization.QuantizationConfig.to_dict">
+<code class="descname">to_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/quantization.html#QuantizationConfig.to_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizationConfig.to_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Serializes this instance to a Python dictionary.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.nn.torch.quantization.QuantizationConfig.to_json_string">
+<code class="descname">to_json_string</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/quantization.html#QuantizationConfig.to_json_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizationConfig.to_json_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Serializes this instance to a JSON string.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nlp_architect.nn.torch.quantization.QuantizationMode">
+<em class="property">class </em><code class="descclassname">nlp_architect.nn.torch.quantization.</code><code class="descname">QuantizationMode</code><a class="reference internal" href="../_modules/nlp_architect/nn/torch/quantization.html#QuantizationMode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizationMode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>An enumeration.</p>
+<dl class="attribute">
+<dt id="nlp_architect.nn.torch.quantization.QuantizationMode.DYNAMIC">
+<code class="descname">DYNAMIC</code><em class="property"> = 2</em><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizationMode.DYNAMIC" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.nn.torch.quantization.QuantizationMode.EMA">
+<code class="descname">EMA</code><em class="property"> = 3</em><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizationMode.EMA" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.nn.torch.quantization.QuantizationMode.NONE">
+<code class="descname">NONE</code><em class="property"> = 1</em><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizationMode.NONE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nlp_architect.nn.torch.quantization.QuantizedEmbedding">
+<em class="property">class </em><code class="descclassname">nlp_architect.nn.torch.quantization.</code><code class="descname">QuantizedEmbedding</code><span class="sig-paren">(</span><em>*args</em>, <em>weight_bits=8</em>, <em>start_step=0</em>, <em>mode='none'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/quantization.html#QuantizedEmbedding"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizedEmbedding" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.sparse.Embedding</span></code></p>
+<p>Embedding layer with quantization aware training capability</p>
+<dl class="method">
+<dt id="nlp_architect.nn.torch.quantization.QuantizedEmbedding.extra_repr">
+<code class="descname">extra_repr</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/quantization.html#QuantizedEmbedding.extra_repr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizedEmbedding.extra_repr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the extra representation of the module</p>
+<p>To print customized extra information, you should reimplement
+this method in your own modules. Both single-line and multi-line
+strings are acceptable.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.nn.torch.quantization.QuantizedEmbedding.fake_quantized_weight">
+<code class="descname">fake_quantized_weight</code><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizedEmbedding.fake_quantized_weight" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.nn.torch.quantization.QuantizedEmbedding.forward">
+<code class="descname">forward</code><span class="sig-paren">(</span><em>input</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/quantization.html#QuantizedEmbedding.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizedEmbedding.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Defines the computation performed at every call.</p>
+<p>Should be overridden by all subclasses.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Although the recipe for forward pass needs to be defined within
+this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
+instead of this since the former takes care of running the
+registered hooks while the latter silently ignores them.</p>
+</div>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="nlp_architect.nn.torch.quantization.QuantizedEmbedding.from_config">
+<em class="property">classmethod </em><code class="descname">from_config</code><span class="sig-paren">(</span><em>*args</em>, <em>config=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/quantization.html#QuantizedEmbedding.from_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizedEmbedding.from_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize quantized layer from config</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.nn.torch.quantization.QuantizedEmbedding.quantized_forward">
+<code class="descname">quantized_forward</code><span class="sig-paren">(</span><em>input</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/quantization.html#QuantizedEmbedding.quantized_forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizedEmbedding.quantized_forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return quantized embeddings</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.nn.torch.quantization.QuantizedEmbedding.weight_scale">
+<code class="descname">weight_scale</code><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizedEmbedding.weight_scale" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nlp_architect.nn.torch.quantization.QuantizedLinear">
+<em class="property">class </em><code class="descclassname">nlp_architect.nn.torch.quantization.</code><code class="descname">QuantizedLinear</code><span class="sig-paren">(</span><em>*args</em>, <em>activation_bits=8</em>, <em>weight_bits=8</em>, <em>requantize_output=True</em>, <em>ema_decay=0.9999</em>, <em>start_step=0</em>, <em>mode='none'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/quantization.html#QuantizedLinear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizedLinear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.linear.Linear</span></code></p>
+<p>Linear layer with quantization aware training capability</p>
+<dl class="method">
+<dt id="nlp_architect.nn.torch.quantization.QuantizedLinear.extra_repr">
+<code class="descname">extra_repr</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/quantization.html#QuantizedLinear.extra_repr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizedLinear.extra_repr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the extra representation of the module</p>
+<p>To print customized extra information, you should reimplement
+this method in your own modules. Both single-line and multi-line
+strings are acceptable.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.nn.torch.quantization.QuantizedLinear.fake_quantized_weight">
+<code class="descname">fake_quantized_weight</code><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizedLinear.fake_quantized_weight" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.nn.torch.quantization.QuantizedLinear.forward">
+<code class="descname">forward</code><span class="sig-paren">(</span><em>input</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/quantization.html#QuantizedLinear.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizedLinear.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Defines the computation performed at every call.</p>
+<p>Should be overridden by all subclasses.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Although the recipe for forward pass needs to be defined within
+this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
+instead of this since the former takes care of running the
+registered hooks while the latter silently ignores them.</p>
+</div>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="nlp_architect.nn.torch.quantization.QuantizedLinear.from_config">
+<em class="property">classmethod </em><code class="descname">from_config</code><span class="sig-paren">(</span><em>*args</em>, <em>config=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/quantization.html#QuantizedLinear.from_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizedLinear.from_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize quantized layer from config</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.nn.torch.quantization.QuantizedLinear.get_quantized_bias">
+<code class="descname">get_quantized_bias</code><span class="sig-paren">(</span><em>scale</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/quantization.html#QuantizedLinear.get_quantized_bias"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizedLinear.get_quantized_bias" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.nn.torch.quantization.QuantizedLinear.inference_quantized_forward">
+<code class="descname">inference_quantized_forward</code><span class="sig-paren">(</span><em>input</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/quantization.html#QuantizedLinear.inference_quantized_forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizedLinear.inference_quantized_forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simulate quantized inference. quantize input and perform calculation with only integer numbers.
+This function should only be used while doing inference</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.nn.torch.quantization.QuantizedLinear.quantized_weight">
+<code class="descname">quantized_weight</code><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizedLinear.quantized_weight" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.nn.torch.quantization.QuantizedLinear.training_quantized_forward">
+<code class="descname">training_quantized_forward</code><span class="sig-paren">(</span><em>input</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/quantization.html#QuantizedLinear.training_quantized_forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizedLinear.training_quantized_forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>fake quantized forward, fake quantizes weights and activations,
+learn quantization ranges if quantization mode is EMA.
+This function should only be used while training</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.nn.torch.quantization.QuantizedLinear.weight_scale">
+<code class="descname">weight_scale</code><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizedLinear.weight_scale" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.nn.torch.quantization.calc_max_quant_value">
+<code class="descclassname">nlp_architect.nn.torch.quantization.</code><code class="descname">calc_max_quant_value</code><span class="sig-paren">(</span><em>bits</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/quantization.html#calc_max_quant_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.quantization.calc_max_quant_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the maximum symmetric quantized value according to number of bits</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.nn.torch.quantization.dequantize">
+<code class="descclassname">nlp_architect.nn.torch.quantization.</code><code class="descname">dequantize</code><span class="sig-paren">(</span><em>input</em>, <em>scale</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/quantization.html#dequantize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.quantization.dequantize" title="Permalink to this definition">¶</a></dt>
+<dd><p>linear dequantization according to some scale</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.nn.torch.quantization.get_dynamic_scale">
+<code class="descclassname">nlp_architect.nn.torch.quantization.</code><code class="descname">get_dynamic_scale</code><span class="sig-paren">(</span><em>x</em>, <em>bits</em>, <em>with_grad=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/quantization.html#get_dynamic_scale"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.quantization.get_dynamic_scale" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate dynamic scale for quantization from input by taking the
+maximum absoulute value from x and number of bits</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.nn.torch.quantization.get_scale">
+<code class="descclassname">nlp_architect.nn.torch.quantization.</code><code class="descname">get_scale</code><span class="sig-paren">(</span><em>bits</em>, <em>threshold</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/quantization.html#get_scale"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.quantization.get_scale" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate scale for quantization according to some constant and number of bits</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.nn.torch.quantization.quantize">
+<code class="descclassname">nlp_architect.nn.torch.quantization.</code><code class="descname">quantize</code><span class="sig-paren">(</span><em>input</em>, <em>scale</em>, <em>bits</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/quantization.html#quantize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.quantization.quantize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Do linear quantization to input according to a scale and number of bits</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-nlp_architect.nn.torch">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-nlp_architect.nn.torch" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="nlp_architect.nn.torch.set_seed">
+<code class="descclassname">nlp_architect.nn.torch.</code><code class="descname">set_seed</code><span class="sig-paren">(</span><em>seed</em>, <em>n_gpus=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch.html#set_seed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.set_seed" title="Permalink to this definition">¶</a></dt>
+<dd><p>set seed</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.nn.torch.setup_backend">
+<code class="descclassname">nlp_architect.nn.torch.</code><code class="descname">setup_backend</code><span class="sig-paren">(</span><em>no_cuda</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch.html#setup_backend"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.setup_backend" title="Permalink to this definition">¶</a></dt>
+<dd><p>Setup backend according to selected backend and detected configuration</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

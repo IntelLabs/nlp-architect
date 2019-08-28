@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Most Common Word Sense &mdash; NLP Architect by Intel® AI Lab 0.4.post2 documentation</title>
+  <title>Most Common Word Sense &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
   
 
   
@@ -25,6 +25,8 @@
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
         <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/install.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -33,12 +35,11 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" type="text/css" />
-  <link rel="stylesheet" href="_static/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/nlp_arch_theme.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Noun Phrase to Vec" href="np2vec.html" />
-    <link rel="prev" title="BIST Dependency Parser" href="bist_parser.html" /> 
+    <link rel="search" title="Search" href="search.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -57,7 +58,7 @@
 
           
             
-            <img src="_static/nlp_architect_logo_white.png" class="logo" alt="Logo"/>
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
           
           </a>
 
@@ -83,41 +84,27 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="main.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick start</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="publications.html">Publications</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Jupyter Tutorials</a></li>
-<li class="toctree-l1"><a class="reference internal" href="developer_guide.html">Developer Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model_zoo.html">Model Zoo</a></li>
 </ul>
 <p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="absa.html">Aspect Based Sentiment Analysis</a></li>
-<li class="toctree-l1"><a class="reference internal" href="chunker.html">Sequence Chunker</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ner_crf.html">Named Entity Recognition</a></li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tagging/sequence_tagging.html">Sequence Tagging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sentiment.html">Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bist_parser.html">Dependency Parsing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="intent.html">Intent Extraction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="np_segmentation.html">Noun Phrase Semantic Segmentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bist_parser.html">BIST Dependency Parser</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Most Common Word Sense</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#dataset">Dataset</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#running-modalities">Running Modalities</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#dataset-preparation">Dataset Preparation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#training">Training</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#inference">Inference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lm.html">Language Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="information_extraction.html">Information Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transformers.html">Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="archived/additional.html">Additional Models</a></li>
 </ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="np2vec.html">Noun Phrase to Vec</a></li>
-<li class="toctree-l1"><a class="reference internal" href="supervised_sentiment.html">Supervised Sentiment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="reading_comprehension.html">Reading Comprehension</a></li>
-<li class="toctree-l1"><a class="reference internal" href="memn2n.html">End-to-End Memory Networks for Goal Oriented Dialogue</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tcn.html">TCN Language Model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="crosslingual_emb.html">Unsupervised Crosslingual Embeddings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cross_doc_coref.html">Cross Document Co-Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="identifying_semantic_relation.html">Semantic Relation Identification</a></li>
+<p class="caption"><span class="caption-text">Optimized Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quantized_bert.html">Quantized BERT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transformers_distillation.html">Transformers Distillation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Solutions</span></p>
@@ -126,14 +113,11 @@
 <li class="toctree-l1"><a class="reference internal" href="term_set_expansion.html">Set Expansion</a></li>
 <li class="toctree-l1"><a class="reference internal" href="trend_analysis.html">Trend Analysis</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Pipelines</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="spacy_bist.html">Spacy-BIST Parser</a></li>
-<li class="toctree-l1"><a class="reference internal" href="spacy_np_annotator.html">Spacy-NP Annotator</a></li>
-</ul>
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer_guide.html">Developer Guide</a></li>
 </ul>
 
             
@@ -206,12 +190,12 @@ each sense is scored according to the most commonly used sense in the language.
 note that most of the words in the language have many senses. The sense of a word a consists of the
 definition of the word and the inherited hypernyms of the word.</p>
 <p>For example: the most common sense of the target_word <strong>burger</strong> is:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">definition</span><span class="p">:</span> <span class="s2">&quot;a sandwich consisting of a fried cake of minced beef served on a bun, often with other ingredients&quot;</span>
+<div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">definition</span><span class="p">:</span> <span class="s2">&quot;a sandwich consisting of a fried cake of minced beef served on a bun, often with other ingredients&quot;</span>
 <span class="n">inherited</span> <span class="n">hypernyms</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;sandwich&#39;</span><span class="p">,</span> <span class="s1">&#39;snack_food&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 <p>whereas the least common sense is:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">definition</span><span class="p">:</span> <span class="s2">&quot;United States jurist appointed chief justice of the United States Supreme Court by Richard Nixon (1907-1995)&quot;</span>
+<div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">definition</span><span class="p">:</span> <span class="s2">&quot;United States jurist appointed chief justice of the United States Supreme Court by Richard Nixon (1907-1995)&quot;</span>
 </pre></div>
 </div>
 <p>Our approach:</p>
@@ -223,12 +207,12 @@ to the most common sense of the target_word. the higher the score the higher the
 <p>In both training and inference a feature vector is constructed as input to the neural network.
 The feature vector consists of:</p>
 <ul class="simple">
-<li><p>the word embedding distance between the target_word and the inherited hypernyms</p></li>
-<li><p>2 variations of the word embedding distance between the target_word and the definition</p></li>
-<li><p>the word embedding of the target_word</p></li>
-<li><p>the CBOW word embedding of the definition</p></li>
+<li>the word embedding distance between the target_word and the inherited hypernyms</li>
+<li>2 variations of the word embedding distance between the target_word and the definition</li>
+<li>the word embedding of the target_word</li>
+<li>the CBOW word embedding of the definition</li>
 </ul>
-<p>The model above is implemented in the <a class="reference internal" href="generated/nlp_architect.models.most_common_word_sense.MostCommonWordSense.html#nlp_architect.models.most_common_word_sense.MostCommonWordSense" title="nlp_architect.models.most_common_word_sense.MostCommonWordSense"><code class="xref py py-class docutils literal notranslate"><span class="pre">MostCommonWordSense</span></code></a> class.</p>
+<p>The model above is implemented in the <a class="reference internal" href="generated_api/nlp_architect.models.html#nlp_architect.models.most_common_word_sense.MostCommonWordSense" title="nlp_architect.models.most_common_word_sense.MostCommonWordSense"><code class="xref py py-class docutils literal notranslate"><span class="pre">MostCommonWordSense</span></code></a> class.</p>
 </div>
 <div class="section" id="dataset">
 <h2>Dataset<a class="headerlink" href="#dataset" title="Permalink to this headline">¶</a></h2>
@@ -240,10 +224,10 @@ The file should include the following 4 columns:</p>
 <p><a href="#id1"><span class="problematic" id="id2">|</span></a>TARGET_WORD|DEFINITION|SEMANTIC_BRANCH|CLASS_LABEL</p>
 <p>where:</p>
 <ol class="arabic simple">
-<li><p>TARGET_WORD: the word that you want to get the most common sense of.</p></li>
-<li><p>DEFINITION: the definition of the word (usually a single sentence) extracted from external resource such as Wordnet or Wikidata</p></li>
-<li><p>SEMANTIC_BRANCH:  the inherited hypernyms extracted from external resource such as Wordnet or Wikidata</p></li>
-<li><p>CLASS_LABEL: a binary [0,1] Y value that represent whether the sense (Definition and semantic branch) is the most common sense  of the target word</p></li>
+<li>TARGET_WORD: the word that you want to get the most common sense of.</li>
+<li>DEFINITION: the definition of the word (usually a single sentence) extracted from external resource such as Wordnet or Wikidata</li>
+<li>SEMANTIC_BRANCH:  the inherited hypernyms extracted from external resource such as Wordnet or Wikidata</li>
+<li>CLASS_LABEL: a binary [0,1] Y value that represent whether the sense (Definition and semantic branch) is the most common sense  of the target word</li>
 </ol>
 <p>Store the file in the data folder of the project.</p>
 </div>
@@ -252,9 +236,9 @@ The file should include the following 4 columns:</p>
 <div class="section" id="dataset-preparation">
 <h3>Dataset Preparation<a class="headerlink" href="#dataset-preparation" title="Permalink to this headline">¶</a></h3>
 <p>The script prepare_data.py uses the gold standard csv file as described in the requirements section above
-using pre-trained Google News Word2vec model <a class="footnote-reference brackets" href="#id6" id="id3">1</a> <a class="footnote-reference brackets" href="#id7" id="id4">2</a> <a class="footnote-reference brackets" href="#id8" id="id5">3</a>. Pre-trained Google News Word2vec model can be download <a class="reference external" href="https://drive.google.com/file/d/0B7XkCwpI5KDYNlNUTTlSS21pQmM/edit?usp=sharing">here</a>.
+using pre-trained Google News Word2vec model <a class="footnote-reference" href="#id6" id="id3">[1]</a> <a class="footnote-reference" href="#id7" id="id4">[2]</a> <a class="footnote-reference" href="#id8" id="id5">[3]</a>. Pre-trained Google News Word2vec model can be download <a class="reference external" href="https://drive.google.com/file/d/0B7XkCwpI5KDYNlNUTTlSS21pQmM/edit?usp=sharing">here</a>.
 The terms and conditions of the data set license apply. Intel does not grant any rights to the data files.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">examples</span><span class="o">/</span><span class="n">most_common_word_sense</span><span class="o">/</span><span class="n">prepare_data</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">gold_standard_file</span> <span class="n">data</span><span class="o">/</span><span class="n">gold_standard</span><span class="o">.</span><span class="n">csv</span>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">examples</span><span class="o">/</span><span class="n">most_common_word_sense</span><span class="o">/</span><span class="n">prepare_data</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">gold_standard_file</span> <span class="n">data</span><span class="o">/</span><span class="n">gold_standard</span><span class="o">.</span><span class="n">csv</span>
      <span class="o">--</span><span class="n">word_embedding_model_file</span> <span class="n">pretrained_models</span><span class="o">/</span><span class="n">GoogleNews</span><span class="o">-</span><span class="n">vectors</span><span class="o">-</span><span class="n">negative300</span><span class="o">.</span><span class="n">bin</span>
      <span class="o">--</span><span class="n">training_to_validation_size_ratio</span> <span class="mf">0.8</span>
      <span class="o">--</span><span class="n">data_set_file</span> <span class="n">data</span><span class="o">/</span><span class="n">data_set</span><span class="o">.</span><span class="n">pkl</span>
@@ -263,15 +247,15 @@ The terms and conditions of the data set license apply. Intel does not grant any
 </div>
 <div class="section" id="training">
 <h3>Training<a class="headerlink" href="#training" title="Permalink to this headline">¶</a></h3>
-<p>Trains the MLP classifier (<a class="reference internal" href="generated/nlp_architect.models.most_common_word_sense.MostCommonWordSense.html#nlp_architect.models.most_common_word_sense.MostCommonWordSense" title="nlp_architect.models.most_common_word_sense.MostCommonWordSense"><code class="xref py py-class docutils literal notranslate"><span class="pre">model</span></code></a>) and evaluate it.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">examples</span><span class="o">/</span><span class="n">most_common_word_sense</span><span class="o">/</span><span class="n">train</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">data_set_file</span> <span class="n">data</span><span class="o">/</span><span class="n">data_set</span><span class="o">.</span><span class="n">pkl</span>
+<p>Trains the MLP classifier (<a class="reference internal" href="generated_api/nlp_architect.models.html#nlp_architect.models.most_common_word_sense.MostCommonWordSense" title="nlp_architect.models.most_common_word_sense.MostCommonWordSense"><code class="xref py py-class docutils literal notranslate"><span class="pre">model</span></code></a>) and evaluate it.</p>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">examples</span><span class="o">/</span><span class="n">most_common_word_sense</span><span class="o">/</span><span class="n">train</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">data_set_file</span> <span class="n">data</span><span class="o">/</span><span class="n">data_set</span><span class="o">.</span><span class="n">pkl</span>
                <span class="o">--</span><span class="n">model</span> <span class="n">data</span><span class="o">/</span><span class="n">wsd_classification_model</span><span class="o">.</span><span class="n">h5</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="inference">
 <h3>Inference<a class="headerlink" href="#inference" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">examples</span><span class="o">/</span><span class="n">most_common_word_sense</span><span class="o">/</span><span class="n">inference</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">max_num_of_senses_to_search</span> <span class="mi">3</span>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">examples</span><span class="o">/</span><span class="n">most_common_word_sense</span><span class="o">/</span><span class="n">inference</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">max_num_of_senses_to_search</span> <span class="mi">3</span>
      <span class="o">--</span><span class="n">input_inference_examples_file</span> <span class="n">data</span><span class="o">/</span><span class="n">input_inference_examples</span><span class="o">.</span><span class="n">csv</span>
      <span class="o">--</span><span class="n">word_embedding_model_file</span> <span class="n">pretrained_models</span><span class="o">/</span><span class="n">GoogleNews</span><span class="o">-</span><span class="n">vectors</span><span class="o">-</span><span class="n">negative300</span><span class="o">.</span><span class="n">bin</span>
      <span class="o">--</span><span class="n">model</span> <span class="n">data</span><span class="o">/</span><span class="n">wsd_classification_model</span><span class="o">.</span><span class="n">h5</span>
@@ -281,20 +265,27 @@ The terms and conditions of the data set license apply. Intel does not grant any
 and <code class="docutils literal notranslate"><span class="pre">input_inference_examples_file</span></code> is a csv file containing the input inference data. This file includes
 a single column wherein each entry in this column is a different target word</p>
 <div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The results are printed to the terminal using different colors therefore using a white terminal background is best to view the results</p>
+<p class="first admonition-title">Note</p>
+<p class="last">The results are printed to the terminal using different colors therefore using a white terminal background is best to view the results</p>
 </div>
-<dl class="footnote brackets">
-<dt class="label" id="id6"><span class="brackets"><a class="fn-backref" href="#id3">1</a></span></dt>
-<dd><p>Tomas Mikolov, Kai Chen, Greg Corrado, and Jeffrey Dean. Efficient Estimation of Word Representations in Vector Space. In Proceedings of Workshop at ICLR, 2013.</p>
-</dd>
-<dt class="label" id="id7"><span class="brackets"><a class="fn-backref" href="#id4">2</a></span></dt>
-<dd><p>Tomas Mikolov, Ilya Sutskever, Kai Chen, Greg Corrado, and Jeffrey Dean. Distributed Representations of Words and Phrases and their Compositionality. In Proceedings of NIPS, 2013.</p>
-</dd>
-<dt class="label" id="id8"><span class="brackets"><a class="fn-backref" href="#id5">3</a></span></dt>
-<dd><p>Tomas Mikolov, Wen-tau Yih, and Geoffrey Zweig. Linguistic Regularities in Continuous Space Word Representations. In Proceedings of NAACL HLT, 2013.</p>
-</dd>
-</dl>
+<table class="docutils footnote" frame="void" id="id6" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[1]</a></td><td>Tomas Mikolov, Kai Chen, Greg Corrado, and Jeffrey Dean. Efficient Estimation of Word Representations in Vector Space. In Proceedings of Workshop at ICLR, 2013.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id7" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id4">[2]</a></td><td>Tomas Mikolov, Ilya Sutskever, Kai Chen, Greg Corrado, and Jeffrey Dean. Distributed Representations of Words and Phrases and their Compositionality. In Proceedings of NIPS, 2013.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id8" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id5">[3]</a></td><td>Tomas Mikolov, Wen-tau Yih, and Geoffrey Zweig. Linguistic Regularities in Continuous Space Word Representations. In Proceedings of NAACL HLT, 2013.</td></tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>

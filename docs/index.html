@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>NLP Architect by Intel® AI Lab &mdash; NLP Architect by Intel® AI Lab 0.4.post2 documentation</title>
+  <title>NLP Architect by Intel® AI Lab &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
   
 
   
@@ -25,6 +25,8 @@
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
         <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/install.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -33,11 +35,12 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" type="text/css" />
-  <link rel="stylesheet" href="_static/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/nlp_arch_theme.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="NLP Architect by Intel® AI Lab" href="main.html" /> 
+    <link rel="next" title="Quick start" href="quick_start.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -56,7 +59,7 @@
 
           
             
-            <img src="_static/nlp_architect_logo_white.png" class="logo" alt="Logo"/>
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
           
           </a>
 
@@ -82,31 +85,27 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="main.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick start</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="publications.html">Publications</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Jupyter Tutorials</a></li>
-<li class="toctree-l1"><a class="reference internal" href="developer_guide.html">Developer Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model_zoo.html">Model Zoo</a></li>
 </ul>
 <p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="absa.html">Aspect Based Sentiment Analysis</a></li>
-<li class="toctree-l1"><a class="reference internal" href="chunker.html">Sequence Chunker</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ner_crf.html">Named Entity Recognition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tagging/sequence_tagging.html">Sequence Tagging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sentiment.html">Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bist_parser.html">Dependency Parsing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="intent.html">Intent Extraction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="np_segmentation.html">Noun Phrase Semantic Segmentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bist_parser.html">BIST Dependency Parser</a></li>
-<li class="toctree-l1"><a class="reference internal" href="word_sense.html">Most Common Word Sense</a></li>
-<li class="toctree-l1"><a class="reference internal" href="np2vec.html">Noun Phrase to Vec</a></li>
-<li class="toctree-l1"><a class="reference internal" href="supervised_sentiment.html">Supervised Sentiment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="reading_comprehension.html">Reading Comprehension</a></li>
-<li class="toctree-l1"><a class="reference internal" href="memn2n.html">End-to-End Memory Networks for Goal Oriented Dialogue</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tcn.html">TCN Language Model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="crosslingual_emb.html">Unsupervised Crosslingual Embeddings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cross_doc_coref.html">Cross Document Co-Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="identifying_semantic_relation.html">Semantic Relation Identification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lm.html">Language Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="information_extraction.html">Information Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transformers.html">Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="archived/additional.html">Additional Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Optimized Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quantized_bert.html">Quantized BERT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transformers_distillation.html">Transformers Distillation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Solutions</span></p>
@@ -115,14 +114,11 @@
 <li class="toctree-l1"><a class="reference internal" href="term_set_expansion.html">Set Expansion</a></li>
 <li class="toctree-l1"><a class="reference internal" href="trend_analysis.html">Trend Analysis</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Pipelines</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="spacy_bist.html">Spacy-BIST Parser</a></li>
-<li class="toctree-l1"><a class="reference internal" href="spacy_np_annotator.html">Spacy-NP Annotator</a></li>
-</ul>
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer_guide.html">Developer Guide</a></li>
 </ul>
 
             
@@ -187,129 +183,54 @@
             
   <div class="section" id="nlp-architect-by-intel-ai-lab">
 <h1>NLP Architect by Intel® AI Lab<a class="headerlink" href="#nlp-architect-by-intel-ai-lab" title="Permalink to this headline">¶</a></h1>
-<p>NLP Architect is an open-source Python library for exploring the state-of-the-art deep learning topologies and techniques for natural language processing and natural
-language understanding. It is intended to be a platform for future research and
-collaboration.</p>
+<p>NLP Architect is an open source Python library for exploring state-of-the-art deep learning topologies and techniques for optimizing Natural Language Processing and Natural Language Understanding neural network.</p>
 <p>The library includes our past and ongoing NLP research and development efforts as part of Intel AI Lab.</p>
 <p>NLP Architect can be downloaded from Github: <a class="reference external" href="https://github.com/NervanaSystems/nlp-architect">https://github.com/NervanaSystems/nlp-architect</a></p>
-<div class="section" id="library-overview">
-<h2>Library Overview<a class="headerlink" href="#library-overview" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="research-driven-nlp-nlu-models">
-<h3>Research driven NLP/NLU models<a class="headerlink" href="#research-driven-nlp-nlu-models" title="Permalink to this headline">¶</a></h3>
-<p>The library contains state-of-art and novel NLP and NLU models in a variety of topics:</p>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>NLP Architect is designed to be flexible for adding new models, neural network components, data handling methods and for easy training and running models.</p>
+<p>Features:</p>
 <ul class="simple">
-<li><p>Dependency parsing</p></li>
-<li><p>Intent detection and Slot tagging model for Intent based applications</p></li>
-<li><p>Memory Networks for goal-oriented dialog</p></li>
-<li><p>Noun phrase embedding vectors model</p></li>
-<li><p>Noun phrase semantic segmentation</p></li>
-<li><p>Named Entity Recognition</p></li>
-<li><p>Word Chunking</p></li>
-<li><p>Reading comprehension</p></li>
-<li><p>Language modeling using Temporal Convolution Network</p></li>
-<li><p>Unsupervised Crosslingual Word Embedding</p></li>
-<li><p>Aspect Based Sentiment Analysis</p></li>
-<li><p>Supervised sentiment analysis</p></li>
-<li><p>Sparse and quantized neural machine translation</p></li>
-<li><p>Relation Identification and cross document coreference</p></li>
+<li>Core NLP models used in many NLP tasks and useful in many NLP applications</li>
+<li>Novel NLU models showcasing novel <em>topologies</em> and <em>techniques</em></li>
+<li><strong>Optimized NLP/NLU models</strong> showcasing different optimization algorithms on neural NLP/NLU models</li>
+<li>Model-oriented design:<ul>
+<li>Train and run models from command-line.</li>
+<li>API for using models for inference in python.</li>
+<li>Procedures to define custom processes for training, inference or anything related to processing.</li>
+<li>CLI sub-system for running procedures</li>
+</ul>
+</li>
+<li>Based on the following Deep Learning frameworks:<ul>
+<li>TensorFlow</li>
+<li>PyTorch</li>
+<li>Intel-Optimized TensorFlow with MKL-DNN</li>
+<li>Dynet</li>
+</ul>
+</li>
+<li>Essential utilities for working with NLP models - Text/String pre-processing, IO, data-manipulation, metrics, embeddings.</li>
+<li>Plug-able REST API server to serve models via REST API</li>
 </ul>
 </div>
-<div class="section" id="quick-install">
-<h3>Quick Install<a class="headerlink" href="#quick-install" title="Permalink to this headline">¶</a></h3>
-<p>Select the desired configuration of your system:</p>
-<div id="app" class="wy-table-responsive">
-<table class="docutils option-list installation_table" frame="void" rules="none">
-    <colgroup><col class="option">
-    <col class="description">
-    </colgroup><tbody valign="top">
-    <tr><td class="option-group">
-    <kbd><span class="option">
-        <strong>Install from</strong>
-    </span></kbd></td>
-    <td>
-        <label class="radio">
-          <input v-model="form.source" type="radio" value="1">Pip
-        </label>
-        <label class="radio">
-          <input v-model="form.source" type="radio" value="0" checked>GitHub
-        </label>
-    </td></tr>
-    <tr><td class="option-group">
-    <kbd><span class="option">
-        <strong>Create virtualenv?</strong>
-    </span></kbd></td>
-    <td>
-        <label class="radio">
-          <input v-model="form.with_env" type="radio" value="1">Yes
-        </label>
-        <label class="radio">
-          <input v-model="form.with_env" type="radio" value="0" checked>No
-        </label>
-    </td></tr>
-    <tr><td class="option-group">
-    <kbd><span class="option">
-        <strong>Backend</strong>
-    </span></kbd></td>
-    <td>
-        <label class="radio">
-          <input v-model="form.backend" type="radio" value="CPU">CPU
-        </label>
-        <label class="radio">
-          <input v-model="form.backend" type="radio" value="MKL" checked>MKL
-        </label>
-        <label class="radio">
-          <input v-model="form.backend" type="radio" value="GPU" checked>GPU
-        </label>
-    </td></tr>
-    <tr><td class="option-group">
-    <kbd><span class="option">
-        <strong>Install in developer mode?</strong>
-    </span></kbd></td>
-    <td>
-    <label class="radio">
-          <input v-model="form.inst_type" type="radio" value="0">Yes
-        </label>
-        <label class="radio">
-          <input v-model="form.inst_type" type="radio" value="1" checked>No
-        </label>
-    </td></tr>
-    </tbody>
-</table><p>Run the following commands to install NLP Architect:</p>
-<div class="code python highlight-default notranslate"><div class="highlight">
-<pre v-html="get_commands()">
-</pre></div>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/vue"></script>
-<script src="_static/install.js"></script><p>It is recommended to install NLP Architect in development mode to utilize all its features, examples and solutions.</p>
-</div>
-</div>
-<div class="section" id="how-can-nlp-architect-be-used">
-<h2>How can NLP Architect be used<a class="headerlink" href="#how-can-nlp-architect-be-used" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="library-design-philosophy">
+<h2>Library design philosophy<a class="headerlink" href="#library-design-philosophy" title="Permalink to this headline">¶</a></h2>
+<p>NLP Architect is a model-oriented library designed to showcase novel and different neural network optimizations. The library contains NLP/NLU related models per task, different neural network topologies (which are used in models), procedures for simplifying workflows in the library, pre-defined data processors and dataset loaders and misc utilities. The library is designed to be a tool for model development: data pre-process, build model, train, validate, infer, save or load a model.</p>
+<p>The main design guidelines are:</p>
 <ul class="simple">
-<li><p>Train models using provided algorithms, reference datasets and configurations</p></li>
-<li><p>Train models using your own data</p></li>
-<li><p>Create new/extend models based on existing models or topologies</p></li>
-<li><p>Explore how deep learning models tackle various NLP tasks</p></li>
-<li><p>Experiment and optimize state-of-the-art deep learning algorithms</p></li>
-<li><p>integrate modules and utilities from the library to solutions</p></li>
+<li>Deep Learning framework agnostic</li>
+<li>NLP/NLU models per task</li>
+<li>Different topologies (moduels) implementations that can be used with models</li>
+<li>Showcase End-to-End applications (Solutions) utilizing one or more NLP Architect model</li>
+<li>Generic dataset loaders, textual data processing utilities, and miscellaneous utilities that support NLP model development (loaders, text processors, io, metrics, etc.)</li>
+<li><code class="docutils literal notranslate"><span class="pre">Procedures</span></code> for defining processes for training, inference, optimization or any kind of elaborate script.</li>
+<li>Pythonic API for using models for inference</li>
+<li>REST API servers with ability to serve trained models via HTTP</li>
+<li>Extensive model documentation and tutorials</li>
 </ul>
-<div class="section" id="deep-learning-frameworks">
-<h3>Deep Learning frameworks<a class="headerlink" href="#deep-learning-frameworks" title="Permalink to this headline">¶</a></h3>
-<p>Because of the current research nature of the library, several open source deep learning frameworks are used in this repository including:</p>
-<ul class="simple">
-<li><p><a class="reference external" href="https://www.tensorflow.org/">Tensorflow</a> or <a class="reference external" href="https://software.intel.com/en-us/articles/intel-optimized-tensorflow-wheel-now-available">Intel-Optimized TensorFlow</a></p></li>
-<li><p><a class="reference external" href="https://dynet.readthedocs.io/en/latest/">Dynet</a></p></li>
-</ul>
-<p>Overtime the list of models and frameworks included in this space will change, though all generally run with Python 3.6+</p>
 </div>
-<div class="section" id="using-the-models">
-<h3>Using the Models<a class="headerlink" href="#using-the-models" title="Permalink to this headline">¶</a></h3>
-<p>Each of the models includes a comprehensive description on algorithms, network topologies, reference dataset descriptions and loader, and evaluation results. Overtime the list of models included in this space will grow.</p>
-</div>
-<div class="section" id="contributing-to-the-library">
-<h3>Contributing to the library<a class="headerlink" href="#contributing-to-the-library" title="Permalink to this headline">¶</a></h3>
-<p>We welcome collaboration, suggestions, and critiques. For information on how to become a developer
-on this project, please see the <a class="reference internal" href="developer_guide.html"><span class="doc">developer guide</span></a>.</p>
+<div class="section" id="disclaimer">
+<h2>Disclaimer<a class="headerlink" href="#disclaimer" title="Permalink to this headline">¶</a></h2>
+<p>NLP Architect is an active space of research and development; Throughout future releases new models, solutions, topologies and framework additions and changes will be made. We aim to make sure all models run with Python 3.6+. We encourage researchers and developers to contribute their work into the library.</p>
 <div class="toctree-wrapper compound">
 </div>
 <div class="toctree-wrapper compound">
@@ -319,7 +240,6 @@ on this project, please see the <a class="reference internal" href="developer_gu
 <div class="toctree-wrapper compound">
 </div>
 <div class="toctree-wrapper compound">
-</div>
 </div>
 </div>
 </div>

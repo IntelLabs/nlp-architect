@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Noun Phrase to Vec &mdash; NLP Architect by Intel® AI Lab 0.4.post2 documentation</title>
+  <title>Noun Phrase to Vec &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
   
 
   
@@ -25,6 +25,8 @@
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
         <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/install.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -33,12 +35,11 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" type="text/css" />
-  <link rel="stylesheet" href="_static/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/nlp_arch_theme.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Supervised Sentiment" href="supervised_sentiment.html" />
-    <link rel="prev" title="Most Common Word Sense" href="word_sense.html" /> 
+    <link rel="search" title="Search" href="search.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -57,7 +58,7 @@
 
           
             
-            <img src="_static/nlp_architect_logo_white.png" class="logo" alt="Logo"/>
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
           
           </a>
 
@@ -83,40 +84,27 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="main.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick start</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="publications.html">Publications</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Jupyter Tutorials</a></li>
-<li class="toctree-l1"><a class="reference internal" href="developer_guide.html">Developer Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model_zoo.html">Model Zoo</a></li>
 </ul>
 <p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="absa.html">Aspect Based Sentiment Analysis</a></li>
-<li class="toctree-l1"><a class="reference internal" href="chunker.html">Sequence Chunker</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ner_crf.html">Named Entity Recognition</a></li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tagging/sequence_tagging.html">Sequence Tagging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sentiment.html">Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bist_parser.html">Dependency Parsing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="intent.html">Intent Extraction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="np_segmentation.html">Noun Phrase Semantic Segmentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bist_parser.html">BIST Dependency Parser</a></li>
-<li class="toctree-l1"><a class="reference internal" href="word_sense.html">Most Common Word Sense</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Noun Phrase to Vec</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#files">Files</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#running-modalities">Running Modalities</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#training">Training</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#inference">Inference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lm.html">Language Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="information_extraction.html">Information Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transformers.html">Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="archived/additional.html">Additional Models</a></li>
 </ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="supervised_sentiment.html">Supervised Sentiment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="reading_comprehension.html">Reading Comprehension</a></li>
-<li class="toctree-l1"><a class="reference internal" href="memn2n.html">End-to-End Memory Networks for Goal Oriented Dialogue</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tcn.html">TCN Language Model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="crosslingual_emb.html">Unsupervised Crosslingual Embeddings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cross_doc_coref.html">Cross Document Co-Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="identifying_semantic_relation.html">Semantic Relation Identification</a></li>
+<p class="caption"><span class="caption-text">Optimized Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quantized_bert.html">Quantized BERT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transformers_distillation.html">Transformers Distillation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Solutions</span></p>
@@ -125,14 +113,11 @@
 <li class="toctree-l1"><a class="reference internal" href="term_set_expansion.html">Set Expansion</a></li>
 <li class="toctree-l1"><a class="reference internal" href="trend_analysis.html">Trend Analysis</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Pipelines</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="spacy_bist.html">Spacy-BIST Parser</a></li>
-<li class="toctree-l1"><a class="reference internal" href="spacy_np_annotator.html">Spacy-NP Annotator</a></li>
-</ul>
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer_guide.html">Developer Guide</a></li>
 </ul>
 
             
@@ -208,21 +193,21 @@ Fasttext training with word_ngrams=1; in this case, we store all the word embedd
 including non-NP’s in order to be able to estimate word embeddings of out-of-vocabulary NP’s
 (NP’s that don’t appear in the training corpora).</p>
 <div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>This code can be also used to train a word embedding’s model on any marked corpus.
+<p class="first admonition-title">Note</p>
+<p class="last">This code can be also used to train a word embedding’s model on any marked corpus.
 For example, if you mark verbs in your corpus, you can train a verb2vec model.</p>
 </div>
 <p>NP’s have to be marked in the corpus by a marking character between the words of the NP and as a suffix of the NP.
 For example, if the marking character is “_”, the NP “Natural Language Processing” will be marked as “Natural_Language_Processing”.</p>
 <p>We use the <a class="reference external" href="https://www.clips.uantwerpen.be/conll2000/chunking/">CONLL2000</a> shared task dataset in the default parameters of our example for training
-<a class="reference internal" href="generated/nlp_architect.models.np2vec.NP2vec.html#nlp_architect.models.np2vec.NP2vec" title="nlp_architect.models.np2vec.NP2vec"><code class="xref py py-class docutils literal notranslate"><span class="pre">NP2vec</span></code></a> model. The terms and conditions of the data set license apply. Intel does not grant any rights to the data files.</p>
+<a class="reference internal" href="generated_api/nlp_architect.models.html#nlp_architect.models.np2vec.NP2vec" title="nlp_architect.models.np2vec.NP2vec"><code class="xref py py-class docutils literal notranslate"><span class="pre">NP2vec</span></code></a> model. The terms and conditions of the data set license apply. Intel does not grant any rights to the data files.</p>
 </div>
 <div class="section" id="files">
 <h2>Files<a class="headerlink" href="#files" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><p><a class="reference internal" href="generated/nlp_architect.models.np2vec.NP2vec.html#nlp_architect.models.np2vec.NP2vec" title="nlp_architect.models.np2vec.NP2vec"><code class="xref py py-class docutils literal notranslate"><span class="pre">NP2vec</span></code></a> model training, store and load code.</p></li>
-<li><p><strong>examples/np2vec/train.py</strong>: illustrates how to call <a class="reference internal" href="generated/nlp_architect.models.np2vec.NP2vec.html#nlp_architect.models.np2vec.NP2vec" title="nlp_architect.models.np2vec.NP2vec"><code class="xref py py-class docutils literal notranslate"><span class="pre">NP2vec</span></code></a> training and store code.</p></li>
-<li><p><strong>examples/np2vec/inference.py</strong>: illustrates how to call <a class="reference internal" href="generated/nlp_architect.models.np2vec.NP2vec.html#nlp_architect.models.np2vec.NP2vec" title="nlp_architect.models.np2vec.NP2vec"><code class="xref py py-class docutils literal notranslate"><span class="pre">NP2vec</span></code></a> load code.</p></li>
+<li><a class="reference internal" href="generated_api/nlp_architect.models.html#nlp_architect.models.np2vec.NP2vec" title="nlp_architect.models.np2vec.NP2vec"><code class="xref py py-class docutils literal notranslate"><span class="pre">NP2vec</span></code></a> model training, store and load code.</li>
+<li><strong>examples/np2vec/train.py</strong>: illustrates how to call <a class="reference internal" href="generated_api/nlp_architect.models.html#nlp_architect.models.np2vec.NP2vec" title="nlp_architect.models.np2vec.NP2vec"><code class="xref py py-class docutils literal notranslate"><span class="pre">NP2vec</span></code></a> training and store code.</li>
+<li><strong>examples/np2vec/inference.py</strong>: illustrates how to call <a class="reference internal" href="generated_api/nlp_architect.models.html#nlp_architect.models.np2vec.NP2vec" title="nlp_architect.models.np2vec.NP2vec"><code class="xref py py-class docutils literal notranslate"><span class="pre">NP2vec</span></code></a> load code.</li>
 </ul>
 </div>
 <div class="section" id="running-modalities">
@@ -230,7 +215,7 @@ For example, if the marking character is “_”, the NP “Natural Language Pro
 <div class="section" id="training">
 <h3>Training<a class="headerlink" href="#training" title="Permalink to this headline">¶</a></h3>
 <p>To train the model with default parameters, the following command can be used:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">examples</span><span class="o">/</span><span class="n">np2vec</span><span class="o">/</span><span class="n">train</span><span class="o">.</span><span class="n">py</span> \
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">examples</span><span class="o">/</span><span class="n">np2vec</span><span class="o">/</span><span class="n">train</span><span class="o">.</span><span class="n">py</span> \
   <span class="o">--</span><span class="n">corpus</span> <span class="n">sample_corpus</span><span class="o">.</span><span class="n">json</span> \
   <span class="o">--</span><span class="n">corpus_format</span> <span class="n">json</span> \
   <span class="o">--</span><span class="n">np2vec_model_file</span> <span class="n">sample_np2vec</span><span class="o">.</span><span class="n">model</span>
@@ -240,7 +225,7 @@ For example, if the marking character is “_”, the NP “Natural Language Pro
 <div class="section" id="inference">
 <h3>Inference<a class="headerlink" href="#inference" title="Permalink to this headline">¶</a></h3>
 <p>To run inference with a saved model, the following command can be used:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">examples</span><span class="o">/</span><span class="n">np2vec</span><span class="o">/</span><span class="n">inference</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">np2vec_model_file</span> <span class="n">sample_np2vec</span><span class="o">.</span><span class="n">model</span> <span class="o">--</span><span class="n">np</span> <span class="o">&lt;</span><span class="n">noun</span> <span class="n">phrase</span><span class="o">&gt;</span>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">examples</span><span class="o">/</span><span class="n">np2vec</span><span class="o">/</span><span class="n">inference</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">np2vec_model_file</span> <span class="n">sample_np2vec</span><span class="o">.</span><span class="n">model</span> <span class="o">--</span><span class="n">np</span> <span class="o">&lt;</span><span class="n">noun</span> <span class="n">phrase</span><span class="o">&gt;</span>
 </pre></div>
 </div>
 <p>More details about the hyperparameters at <a class="reference external" href="https://radimrehurek.com/gensim/models/word2vec.html#gensim.models.word2vec.Word2Vec">https://radimrehurek.com/gensim/models/word2vec.html#gensim.models.word2vec.Word2Vec</a> for word2vec and <a class="reference external" href="https://radimrehurek.com/gensim/models/fasttext.html#gensim.models.fasttext.FastText">https://radimrehurek.com/gensim/models/fasttext.html#gensim.models.fasttext.FastText</a> for Fasttext.</p>

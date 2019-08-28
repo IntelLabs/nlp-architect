@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.models.np2vec &mdash; NLP Architect by Intel® AI Lab 0.4.post2 documentation</title>
+  <title>nlp_architect.models.np2vec &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
   
 
   
@@ -25,6 +25,8 @@
         <script type="text/javascript" src="../../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../../_static/doctools.js"></script>
         <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script type="text/javascript" src="../../../_static/install.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
@@ -33,8 +35,9 @@
   
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/nlp_arch_theme.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
@@ -55,7 +58,7 @@
 
           
             
-            <img src="../../../_static/nlp_architect_logo_white.png" class="logo" alt="Logo"/>
+            <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
           
           </a>
 
@@ -81,31 +84,27 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../main.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick_start.html">Quick start</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../publications.html">Publications</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorials.html">Jupyter Tutorials</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../developer_guide.html">Developer Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../model_zoo.html">Model Zoo</a></li>
 </ul>
 <p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../absa.html">Aspect Based Sentiment Analysis</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../chunker.html">Sequence Chunker</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../ner_crf.html">Named Entity Recognition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tagging/sequence_tagging.html">Sequence Tagging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../sentiment.html">Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../bist_parser.html">Dependency Parsing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../intent.html">Intent Extraction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../np_segmentation.html">Noun Phrase Semantic Segmentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../bist_parser.html">BIST Dependency Parser</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../word_sense.html">Most Common Word Sense</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../np2vec.html">Noun Phrase to Vec</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../supervised_sentiment.html">Supervised Sentiment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../reading_comprehension.html">Reading Comprehension</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../memn2n.html">End-to-End Memory Networks for Goal Oriented Dialogue</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../tcn.html">TCN Language Model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../crosslingual_emb.html">Unsupervised Crosslingual Embeddings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../cross_doc_coref.html">Cross Document Co-Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../identifying_semantic_relation.html">Semantic Relation Identification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lm.html">Language Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../information_extraction.html">Information Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../transformers.html">Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../archived/additional.html">Additional Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Optimized Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quantized_bert.html">Quantized BERT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../transformers_distillation.html">Transformers Distillation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Solutions</span></p>
@@ -114,14 +113,11 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../term_set_expansion.html">Set Expansion</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../trend_analysis.html">Trend Analysis</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Pipelines</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../spacy_bist.html">Spacy-BIST Parser</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../spacy_np_annotator.html">Spacy-NP Annotator</a></li>
-</ul>
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer_guide.html">Developer Guide</a></li>
 </ul>
 
             
@@ -169,6 +165,8 @@
         
           <li><a href="../../index.html">Module code</a> &raquo;</li>
         
+          <li><a href="../models.html">nlp_architect.models</a> &raquo;</li>
+        
       <li>nlp_architect.models.np2vec</li>
     
     
@@ -211,17 +209,18 @@
 <span class="kn">import</span> <span class="nn">nltk</span>
 <span class="kn">from</span> <span class="nn">nltk.corpus</span> <span class="k">import</span> <span class="n">conll2000</span>
 <span class="kn">from</span> <span class="nn">six</span> <span class="k">import</span> <span class="n">iteritems</span>
+<span class="kn">from</span> <span class="nn">smart_open</span> <span class="k">import</span> <span class="nb">open</span> <span class="k">as</span> <span class="n">smart_open</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
 <span class="c1"># pylint: disable-msg=too-many-instance-attributes</span>
-<div class="viewcode-block" id="NP2vec"><a class="viewcode-back" href="../../../generated/nlp_architect.models.np2vec.NP2vec.html#nlp_architect.models.np2vec.NP2vec">[docs]</a><span class="k">class</span> <span class="nc">NP2vec</span><span class="p">:</span>
+<div class="viewcode-block" id="NP2vec"><a class="viewcode-back" href="../../../generated_api/nlp_architect.models.html#nlp_architect.models.np2vec.NP2vec">[docs]</a><span class="k">class</span> <span class="nc">NP2vec</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Initialize the np2vec model, train it, save it and load it.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="NP2vec.is_marked"><a class="viewcode-back" href="../../../generated/nlp_architect.models.np2vec.NP2vec.html#nlp_architect.models.np2vec.NP2vec.is_marked">[docs]</a>    <span class="k">def</span> <span class="nf">is_marked</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+<div class="viewcode-block" id="NP2vec.is_marked"><a class="viewcode-back" href="../../../generated_api/nlp_architect.models.html#nlp_architect.models.np2vec.NP2vec.is_marked">[docs]</a>    <span class="k">def</span> <span class="nf">is_marked</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check if a string is marked.</span>
 
@@ -233,7 +232,7 @@
     <span class="c1"># pylint: disable-msg=too-many-arguments</span>
     <span class="c1"># pylint: disable-msg=too-many-locals</span>
     <span class="c1"># pylint: disable-msg=too-many-branches</span>
-<div class="viewcode-block" id="NP2vec.__init__"><a class="viewcode-back" href="../../../generated/nlp_architect.models.np2vec.NP2vec.html#nlp_architect.models.np2vec.NP2vec.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span>  <span class="c1"># noqa: C901</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span>  <span class="c1"># noqa: C901</span>
             <span class="bp">self</span><span class="p">,</span>
             <span class="n">corpus</span><span class="p">,</span>
             <span class="n">corpus_format</span><span class="o">=</span><span class="s1">&#39;txt&#39;</span><span class="p">,</span>
@@ -362,7 +361,7 @@
                                <span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sentences</span><span class="p">]</span>
 
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;training np2vec model&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_train</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_train</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">_train</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -406,7 +405,7 @@
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;invalid word embedding type: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">word_embedding_type</span><span class="p">)</span>
             <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
-<div class="viewcode-block" id="NP2vec.save"><a class="viewcode-back" href="../../../generated/nlp_architect.models.np2vec.NP2vec.html#nlp_architect.models.np2vec.NP2vec.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">np2vec_model_file</span><span class="o">=</span><span class="s1">&#39;np2vec.model&#39;</span><span class="p">,</span> <span class="n">binary</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">word2vec_format</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="NP2vec.save"><a class="viewcode-back" href="../../../generated_api/nlp_architect.models.html#nlp_architect.models.np2vec.NP2vec.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">np2vec_model_file</span><span class="o">=</span><span class="s1">&#39;np2vec.model&#39;</span><span class="p">,</span> <span class="n">binary</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">word2vec_format</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Save the np2vec model.</span>
 
@@ -436,7 +435,7 @@
                 <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
                     <span class="s2">&quot;storing </span><span class="si">%s</span><span class="s2">x</span><span class="si">%s</span><span class="s2"> projection weights for NP&#39;s into </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
                     <span class="n">total_vec</span><span class="p">,</span> <span class="n">vector_size</span><span class="p">,</span> <span class="n">np2vec_model_file</span><span class="p">)</span>
-                <span class="k">with</span> <span class="n">utils</span><span class="o">.</span><span class="n">smart_open</span><span class="p">(</span><span class="n">np2vec_model_file</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fout</span><span class="p">:</span>
+                <span class="k">with</span> <span class="n">smart_open</span><span class="p">(</span><span class="n">np2vec_model_file</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fout</span><span class="p">:</span>
                     <span class="n">fout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">to_utf8</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">total_vec</span><span class="p">,</span> <span class="n">vector_size</span><span class="p">)))</span>
                     <span class="c1"># store NP vectors in sorted order: most frequent NP&#39;s at the top</span>
                     <span class="k">for</span> <span class="n">word</span><span class="p">,</span> <span class="n">vocab</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span>
@@ -461,7 +460,7 @@
             <span class="k">if</span> <span class="ow">not</span> <span class="n">word2vec_format</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">np2vec_model_file</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="NP2vec.load"><a class="viewcode-back" href="../../../generated/nlp_architect.models.np2vec.NP2vec.html#nlp_architect.models.np2vec.NP2vec.load">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="NP2vec.load"><a class="viewcode-back" href="../../../generated_api/nlp_architect.models.html#nlp_architect.models.np2vec.NP2vec.load">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">np2vec_model_file</span><span class="p">,</span> <span class="n">binary</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">word_ngrams</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">word2vec_format</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Load the np2vec model.</span>

@@ -1,0 +1,459 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>nlp_architect.data.cdc_resources.wikipedia.wiki_online &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../../../_static/language_data.js"></script>
+        <script type="text/javascript" src="../../../../../_static/install.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/nlp_arch_theme.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../../index.html">
+          
+
+          
+            
+            <img src="../../../../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../quick_start.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../publications.html">Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../tutorials.html">Jupyter Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../model_zoo.html">Model Zoo</a></li>
+</ul>
+<p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../tagging/sequence_tagging.html">Sequence Tagging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../sentiment.html">Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../bist_parser.html">Dependency Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../intent.html">Intent Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../lm.html">Language Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../information_extraction.html">Information Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../transformers.html">Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../archived/additional.html">Additional Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Optimized Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../quantized_bert.html">Quantized BERT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../transformers_distillation.html">Transformers Distillation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solutions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../absa_solution.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../term_set_expansion.html">Set Expansion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../trend_analysis.html">Trend Analysis</a></li>
+</ul>
+<p class="caption"><span class="caption-text">For Developers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../developer_guide.html">Developer Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">NLP Architect by Intel® AI Lab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>nlp_architect.data.cdc_resources.wikipedia.wiki_online</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for nlp_architect.data.cdc_resources.wikipedia.wiki_online</h1><div class="highlight"><pre>
+<span></span><span class="c1"># ******************************************************************************</span>
+<span class="c1"># Copyright 2017-2018 Intel Corporation</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ******************************************************************************</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="kn">from</span> <span class="nn">nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_page</span> <span class="k">import</span> <span class="n">WikipediaPage</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_page_extracted_relations</span> <span class="k">import</span> \
+    <span class="n">WikipediaPageExtractedRelations</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.data.cdc_resources.wikipedia.wiki_search_page_result</span> <span class="k">import</span> \
+    <span class="n">WikipediaSearchPageResult</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.utils.text</span> <span class="k">import</span> <span class="n">SpacyInstance</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;PYWIKIBOT_NO_USER_CONFIG&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;1&#39;</span>
+
+<span class="n">DISAMBIGUATE_PAGE</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;wikimedia disambiguation page&#39;</span><span class="p">,</span> <span class="s1">&#39;wikipedia disambiguation page&#39;</span><span class="p">]</span>
+<span class="n">NAME_DESCRIPTIONS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;given name&#39;</span><span class="p">,</span> <span class="s1">&#39;first name&#39;</span><span class="p">,</span> <span class="s1">&#39;family name&#39;</span><span class="p">]</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="WikiOnline"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.wikipedia.html#nlp_architect.data.cdc_resources.wikipedia.wiki_online.WikiOnline">[docs]</a><span class="k">class</span> <span class="nc">WikiOnline</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="kn">import</span> <span class="nn">pywikibot</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">spacy</span> <span class="o">=</span> <span class="n">SpacyInstance</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pywikibot</span> <span class="o">=</span> <span class="n">pywikibot</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cache</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">site</span> <span class="o">=</span> <span class="n">pywikibot</span><span class="o">.</span><span class="n">Site</span><span class="p">(</span><span class="s1">&#39;en&#39;</span><span class="p">,</span> <span class="s1">&#39;wikipedia&#39;</span><span class="p">)</span>  <span class="c1"># The site we want to run our bot on</span>
+
+<div class="viewcode-block" id="WikiOnline.get_pages"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.wikipedia.html#nlp_architect.data.cdc_resources.wikipedia.wiki_online.WikiOnline.get_pages">[docs]</a>    <span class="k">def</span> <span class="nf">get_pages</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">phrase</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">phrase</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="p">[</span><span class="n">phrase</span><span class="p">]</span>
+
+        <span class="n">ret_pages</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="n">word_clean</span> <span class="o">=</span> <span class="n">phrase</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">)</span>
+        <span class="n">word_lower</span> <span class="o">=</span> <span class="n">word_clean</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="n">word_upper</span> <span class="o">=</span> <span class="n">word_clean</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+        <span class="n">word_title</span> <span class="o">=</span> <span class="n">word_clean</span><span class="o">.</span><span class="n">title</span><span class="p">()</span>
+        <span class="n">words_set</span> <span class="o">=</span> <span class="p">{</span><span class="n">phrase</span><span class="p">,</span> <span class="n">word_clean</span><span class="p">,</span> <span class="n">word_lower</span><span class="p">,</span> <span class="n">word_upper</span><span class="p">,</span> <span class="n">word_title</span><span class="p">}</span>
+        <span class="k">for</span> <span class="n">appr</span> <span class="ow">in</span> <span class="n">words_set</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">page_result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_page_redirect</span><span class="p">(</span><span class="n">appr</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">page_result</span><span class="o">.</span><span class="n">pageid</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">full_page</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_wiki_page_with_items</span><span class="p">(</span><span class="n">phrase</span><span class="p">,</span> <span class="n">page_result</span><span class="p">)</span>
+                    <span class="n">ret_pages</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">WikipediaSearchPageResult</span><span class="p">(</span><span class="n">appr</span><span class="p">,</span> <span class="n">full_page</span><span class="p">))</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="p">[</span><span class="n">phrase</span><span class="p">]</span> <span class="o">=</span> <span class="n">ret_pages</span>
+        <span class="k">return</span> <span class="n">ret_pages</span></div>
+
+    <span class="c1"># pylint: disable=protected-access</span>
+<div class="viewcode-block" id="WikiOnline.get_wiki_page_with_items"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.wikipedia.html#nlp_architect.data.cdc_resources.wikipedia.wiki_online.WikiOnline.get_wiki_page_with_items">[docs]</a>    <span class="k">def</span> <span class="nf">get_wiki_page_with_items</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">phrase</span><span class="p">,</span> <span class="n">page</span><span class="p">):</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_wiki_page_item</span><span class="p">(</span><span class="n">page</span><span class="p">)</span>
+        <span class="n">pageid</span> <span class="o">=</span> <span class="n">page</span><span class="o">.</span><span class="n">pageid</span>
+        <span class="n">aliases</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_aliases</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="n">description</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_description</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="n">page</span><span class="o">.</span><span class="n">text</span>
+        <span class="n">page_title</span> <span class="o">=</span> <span class="n">page</span><span class="o">.</span><span class="n">_link</span><span class="o">.</span><span class="n">_title</span>
+
+        <span class="n">relations</span> <span class="o">=</span> <span class="n">WikipediaPageExtractedRelations</span><span class="p">()</span>
+        <span class="n">relations</span><span class="o">.</span><span class="n">is_disambiguation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_disambiguation_page</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="n">relations</span><span class="o">.</span><span class="n">is_part_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_name_description</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">relations</span><span class="o">.</span><span class="n">is_disambiguation</span><span class="p">)</span>
+        <span class="n">relations</span><span class="o">.</span><span class="n">aliases</span> <span class="o">=</span> <span class="n">aliases</span>
+        <span class="n">relations</span><span class="o">.</span><span class="n">be_comp</span><span class="p">,</span> <span class="n">relations</span><span class="o">.</span><span class="n">be_comp_norm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">extract_be_comp</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+        <span class="n">relations</span><span class="o">.</span><span class="n">extract_relations_from_text_v0</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+
+        <span class="n">ret_page</span> <span class="o">=</span> <span class="n">WikipediaPage</span><span class="p">(</span><span class="n">phrase</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">page_title</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">pageid</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">relations</span><span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Page: </span><span class="si">{}</span><span class="s1">. Extracted successfully&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ret_page</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">ret_page</span></div>
+
+<div class="viewcode-block" id="WikiOnline.get_wiki_page_item"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.wikipedia.html#nlp_architect.data.cdc_resources.wikipedia.wiki_online.WikiOnline.get_wiki_page_item">[docs]</a>    <span class="k">def</span> <span class="nf">get_wiki_page_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">page</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">page</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pywikibot</span><span class="o">.</span><span class="n">ItemPage</span><span class="o">.</span><span class="n">fromPage</span><span class="p">(</span>
+                    <span class="n">page</span><span class="p">)</span>  <span class="c1"># this can be used for any page object</span>
+                <span class="n">item</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>  <span class="c1"># need to call it to access any data.</span>
+                <span class="k">return</span> <span class="n">item</span>
+            <span class="k">except</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pywikibot</span><span class="o">.</span><span class="n">NoPage</span><span class="p">,</span> <span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">,</span> <span class="ne">NameError</span><span class="p">):</span>
+                <span class="k">pass</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="WikiOnline.get_page_redirect"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.wikipedia.html#nlp_architect.data.cdc_resources.wikipedia.wiki_online.WikiOnline.get_page_redirect">[docs]</a>    <span class="k">def</span> <span class="nf">get_page_redirect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">):</span>
+        <span class="n">page</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pywikibot</span><span class="o">.</span><span class="n">Page</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">site</span><span class="p">,</span> <span class="n">word</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">page</span><span class="o">.</span><span class="n">pageid</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">page</span><span class="o">.</span><span class="n">isRedirectPage</span><span class="p">():</span>
+            <span class="k">return</span> <span class="n">page</span><span class="o">.</span><span class="n">getRedirectTarget</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">page</span></div>
+
+<div class="viewcode-block" id="WikiOnline.get_aliases"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.wikipedia.html#nlp_architect.data.cdc_resources.wikipedia.wiki_online.WikiOnline.get_aliases">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_aliases</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">item</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">item</span><span class="o">.</span><span class="n">aliases</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">&#39;en&#39;</span> <span class="ow">in</span> <span class="n">item</span><span class="o">.</span><span class="n">aliases</span><span class="p">:</span>
+                <span class="n">aliases</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">aliases</span><span class="p">[</span><span class="s1">&#39;en&#39;</span><span class="p">]</span>
+                <span class="k">return</span> <span class="n">aliases</span>
+
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="WikiOnline.get_description"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.wikipedia.html#nlp_architect.data.cdc_resources.wikipedia.wiki_online.WikiOnline.get_description">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_description</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
+        <span class="n">description</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="n">item</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">item_desc</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+            <span class="k">if</span> <span class="s1">&#39;desctiptions&#39;</span> <span class="ow">in</span> <span class="n">item_desc</span> <span class="ow">and</span> <span class="s1">&#39;en&#39;</span> <span class="ow">in</span> <span class="n">item_desc</span><span class="p">[</span><span class="s1">&#39;descriptions&#39;</span><span class="p">]:</span>
+                <span class="nb">dict</span><span class="p">([(</span><span class="s2">&quot;age&quot;</span><span class="p">,</span> <span class="mi">25</span><span class="p">)])</span>
+                <span class="n">description</span><span class="p">[</span><span class="s1">&#39;descriptions&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">([(</span><span class="s1">&#39;en&#39;</span><span class="p">,</span> <span class="n">item_desc</span><span class="p">[</span><span class="s1">&#39;descriptions&#39;</span><span class="p">][</span><span class="s1">&#39;en&#39;</span><span class="p">])])</span>
+
+        <span class="k">return</span> <span class="n">description</span></div>
+
+<div class="viewcode-block" id="WikiOnline.is_disambiguation_page"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.wikipedia.html#nlp_architect.data.cdc_resources.wikipedia.wiki_online.WikiOnline.is_disambiguation_page">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">is_disambiguation_page</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">item</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">dic</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">dic</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="s1">&#39;descriptions&#39;</span> <span class="ow">in</span> <span class="n">dic</span><span class="p">:</span>
+                <span class="n">desc</span> <span class="o">=</span> <span class="n">dic</span><span class="p">[</span><span class="s1">&#39;descriptions&#39;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">desc</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="s1">&#39;en&#39;</span> <span class="ow">in</span> <span class="n">desc</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">desc</span><span class="p">[</span><span class="s1">&#39;en&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="ow">in</span> <span class="n">DISAMBIGUATE_PAGE</span>
+
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="WikiOnline.is_name_description"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.wikipedia.html#nlp_architect.data.cdc_resources.wikipedia.wiki_online.WikiOnline.is_name_description">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">is_name_description</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">is_disambiguation</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">item</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">is_disambiguation</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">WikipediaPageExtractedRelations</span><span class="o">.</span><span class="n">is_name_part</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="kc">True</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">dic</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">dic</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="s1">&#39;descriptions&#39;</span> <span class="ow">in</span> <span class="n">dic</span><span class="p">:</span>
+                    <span class="n">desc</span> <span class="o">=</span> <span class="n">dic</span><span class="p">[</span><span class="s1">&#39;descriptions&#39;</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="n">desc</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="s1">&#39;en&#39;</span> <span class="ow">in</span> <span class="n">desc</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">NAME_DESCRIPTIONS</span> <span class="k">if</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">desc</span><span class="p">[</span><span class="s1">&#39;en&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()]:</span>
+                            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+    <span class="c1"># pylint: disable=no-else-return</span>
+<div class="viewcode-block" id="WikiOnline.extract_be_comp"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.wikipedia.html#nlp_architect.data.cdc_resources.wikipedia.wiki_online.WikiOnline.extract_be_comp">[docs]</a>    <span class="k">def</span> <span class="nf">extract_be_comp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="n">first_sentence_start_index</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;&#39;&#39;&#39;&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">first_sentence_start_index</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">last_temp_index</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">first_sentence_start_index</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">last_temp_index</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">last_temp_index</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+
+        <span class="n">first_paragraph</span> <span class="o">=</span> <span class="n">text</span><span class="p">[</span><span class="n">first_sentence_start_index</span><span class="p">:</span><span class="n">last_temp_index</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">WikiOnline</span><span class="o">.</span><span class="n">extract_be_a_index</span><span class="p">(</span><span class="n">first_paragraph</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">last_temp_index</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">extract_be_comp</span><span class="p">(</span><span class="n">text</span><span class="p">[</span><span class="n">last_temp_index</span><span class="p">:])</span>
+        <span class="k">elif</span> <span class="n">last_temp_index</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+
+        <span class="n">first_paragraph_clean</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\([^)]*\)&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">first_paragraph</span><span class="p">)</span>
+        <span class="n">first_paragraph_clean</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;&lt;[^&gt;]*&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">first_paragraph_clean</span><span class="p">)</span>
+        <span class="n">first_paragraph_clean</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;{[^}]*}&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">first_paragraph_clean</span><span class="p">)</span>
+        <span class="n">first_paragraph_clean</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\[\[[^]]*\]\]&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">first_paragraph_clean</span><span class="p">)</span>
+        <span class="n">first_paragraph_clean</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[</span><span class="se">\&#39;</span><span class="s1">]&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">first_paragraph_clean</span><span class="p">)</span>
+        <span class="n">first_paragraph_clean</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;&amp;nbsp;&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">first_paragraph_clean</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">extract_be_comp_relations</span><span class="p">(</span><span class="n">first_paragraph_clean</span><span class="p">)</span></div>
+
+    <span class="c1"># pylint: disable=not-callable</span>
+<div class="viewcode-block" id="WikiOnline.extract_be_comp_relations"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.wikipedia.html#nlp_architect.data.cdc_resources.wikipedia.wiki_online.WikiOnline.extract_be_comp_relations">[docs]</a>    <span class="k">def</span> <span class="nf">extract_be_comp_relations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">first_paragraph</span><span class="p">):</span>
+        <span class="n">be_comp</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="n">be_comp_norm</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">first_paragraph</span><span class="p">:</span>
+            <span class="n">doc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spacy</span><span class="o">.</span><span class="n">parser</span><span class="p">(</span><span class="n">first_paragraph</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">doc</span><span class="p">:</span>
+                <span class="n">target</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">text</span>
+                <span class="n">target_lemma</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">lemma_</span>
+                <span class="n">relation</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">dep_</span>
+                <span class="n">governor</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">text</span>
+                <span class="n">governor_lemma</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">lemma_</span>
+                <span class="k">if</span> <span class="n">relation</span> <span class="o">==</span> <span class="s1">&#39;acl&#39;</span><span class="p">:</span>
+                    <span class="k">break</span>
+                <span class="k">if</span> <span class="n">relation</span> <span class="o">==</span> <span class="s1">&#39;punct&#39;</span> <span class="ow">and</span> <span class="n">target</span> <span class="o">==</span> <span class="s1">&#39;.&#39;</span><span class="p">:</span>
+                    <span class="k">break</span>
+                <span class="k">elif</span> <span class="n">relation</span> <span class="o">==</span> <span class="s1">&#39;cop&#39;</span><span class="p">:</span>
+                    <span class="n">be_comp</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">governor</span><span class="p">)</span>
+                    <span class="n">be_comp_norm</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">governor_lemma</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">relation</span> <span class="o">==</span> <span class="s1">&#39;nsubj&#39;</span><span class="p">:</span>
+                    <span class="n">be_comp</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
+                    <span class="n">be_comp_norm</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">target_lemma</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">relation</span> <span class="o">==</span> <span class="s1">&#39;dep&#39;</span><span class="p">:</span>
+                    <span class="n">be_comp</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">governor</span><span class="p">)</span>
+                    <span class="n">be_comp_norm</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">governor_lemma</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">relation</span> <span class="o">==</span> <span class="s1">&#39;compound&#39;</span><span class="p">:</span>
+                    <span class="n">be_comp</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">target</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">governor</span><span class="p">)</span>
+                    <span class="n">be_comp_norm</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">target_lemma</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">governor_lemma</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">relation</span> <span class="o">==</span> <span class="s1">&#39;amod&#39;</span><span class="p">:</span>
+                    <span class="n">be_comp</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">target</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">governor</span><span class="p">)</span>
+                    <span class="n">be_comp_norm</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">target_lemma</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">governor_lemma</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">relation</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;conj&#39;</span><span class="p">,</span> <span class="s1">&#39;appos&#39;</span><span class="p">]:</span>
+                    <span class="n">be_comp</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
+                    <span class="n">be_comp_norm</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">target_lemma</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">be_comp</span><span class="p">,</span> <span class="n">be_comp_norm</span></div>
+
+<div class="viewcode-block" id="WikiOnline.extract_be_a_index"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.wikipedia.html#nlp_architect.data.cdc_resources.wikipedia.wiki_online.WikiOnline.extract_be_a_index">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">extract_be_a_index</span><span class="p">(</span><span class="n">sentence</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="s1">&#39;is a&#39;</span> <span class="ow">in</span> <span class="n">sentence</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">sentence</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;is a&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="s1">&#39;are a&#39;</span> <span class="ow">in</span> <span class="n">sentence</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">sentence</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;are a&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="s1">&#39;was a&#39;</span> <span class="ow">in</span> <span class="n">sentence</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">sentence</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;was a&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="s1">&#39;were a&#39;</span> <span class="ow">in</span> <span class="n">sentence</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">sentence</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;were a&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="s1">&#39;be a&#39;</span> <span class="ow">in</span> <span class="n">sentence</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">sentence</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;be a&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="s1">&#39;is the&#39;</span> <span class="ow">in</span> <span class="n">sentence</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">sentence</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;is the&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="s1">&#39;are the&#39;</span> <span class="ow">in</span> <span class="n">sentence</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">sentence</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;are the&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="s1">&#39;was the&#39;</span> <span class="ow">in</span> <span class="n">sentence</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">sentence</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;was the&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="s1">&#39;were the&#39;</span> <span class="ow">in</span> <span class="n">sentence</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">sentence</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;were the&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="s1">&#39;be the&#39;</span> <span class="ow">in</span> <span class="n">sentence</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">sentence</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;be the&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">result</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,387 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Named Entity Recognition &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/install.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/nlp_arch_theme.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html">
+          
+
+          
+            
+            <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../publications.html">Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials.html">Jupyter Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model_zoo.html">Model Zoo</a></li>
+</ul>
+<p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sequence_tagging.html">Sequence Tagging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sentiment.html">Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bist_parser.html">Dependency Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intent.html">Intent Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lm.html">Language Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../information_extraction.html">Information Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transformers.html">Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../archived/additional.html">Additional Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Optimized Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../quantized_bert.html">Quantized BERT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transformers_distillation.html">Transformers Distillation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solutions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../absa_solution.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../term_set_expansion.html">Set Expansion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trend_analysis.html">Trend Analysis</a></li>
+</ul>
+<p class="caption"><span class="caption-text">For Developers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer_guide.html">Developer Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">NLP Architect by Intel® AI Lab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Named Entity Recognition</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="named-entity-recognition">
+<h1>Named Entity Recognition<a class="headerlink" href="#named-entity-recognition" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="neuraltagger">
+<h2><code class="docutils literal notranslate"><span class="pre">NeuralTagger</span></code><a class="headerlink" href="#neuraltagger" title="Permalink to this headline">¶</a></h2>
+<p>A model for training token tagging tasks, such as NER or POS. <code class="docutils literal notranslate"><span class="pre">NeuralTagger</span></code> requires an <strong>embedder</strong> for
+extracting the contextual features of the data, see embedders below.
+The model uses either a <em>Softmax</em> or a <em>Conditional Random Field</em> classifier to classify the words into
+correct labels. Implemented in PyTorch and support only PyTorch based embedders.</p>
+<p>See <a class="reference internal" href="sequence_tagging.html#nlp_architect.models.tagging.NeuralTagger" title="nlp_architect.models.tagging.NeuralTagger"><code class="xref py py-class docutils literal notranslate"><span class="pre">NeuralTagger</span></code></a> for complete documentation of model methods.</p>
+<dl class="class">
+<dt id="nlp_architect.models.tagging.NeuralTagger">
+<em class="property">class </em><code class="descclassname">nlp_architect.models.tagging.</code><code class="descname">NeuralTagger</code><span class="sig-paren">(</span><em>embedder_model</em>, <em>word_vocab: nlp_architect.utils.text.Vocabulary</em>, <em>labels: List[str] = None</em>, <em>use_crf: bool = False</em>, <em>device: str = 'cpu'</em>, <em>n_gpus=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/tagging.html#NeuralTagger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.tagging.NeuralTagger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simple neural tagging model
+Supports pytorch embedder models, multi-gpu training, KD from teacher models</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>embedder_model</strong> – pytorch embedder model (valid nn.Module model)</li>
+<li><strong>word_vocab</strong> (<a class="reference internal" href="../generated_api/nlp_architect.utils.html#nlp_architect.utils.text.Vocabulary" title="nlp_architect.utils.text.Vocabulary"><em>Vocabulary</em></a>) – word vocabulary</li>
+<li><strong>labels</strong> (<em>List</em><em>, </em><em>optional</em>) – list of labels. Defaults to None</li>
+<li><strong>use_crf</strong> (<em>bool</em><em>, </em><em>optional</em>) – use CRF a the classifier (instead of Softmax). Defaults to False.</li>
+<li><strong>device</strong> (<em>str</em><em>, </em><em>optional</em>) – device backend. Defatuls to ‘cpu’.</li>
+<li><strong>n_gpus</strong> (<em>int</em><em>, </em><em>optional</em>) – number of gpus. Default to 0.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="cnnlstm">
+<h2><code class="docutils literal notranslate"><span class="pre">CNNLSTM</span></code><a class="headerlink" href="#cnnlstm" title="Permalink to this headline">¶</a></h2>
+<p>This module is a embedder based on <a class="reference external" href="https://arxiv.org/abs/1603.01354">End-to-end Sequence Labeling via Bi-directional LSTM-CNNs-CRF</a> by Ma and Hovy (2016).
+The model uses CNNs to embed character representation of words in a sentence and stacked bi-direction LSTM layers to embed the context of words and characters.</p>
+<div class="figure" id="id1">
+<img alt="../_images/cnn-lstm-fig.png" src="../_images/cnn-lstm-fig.png" />
+<p class="caption"><span class="caption-text">CNN-LSTM topology (taken from original paper)</span></p>
+</div>
+<p><strong>Usage</strong></p>
+<p>Use <a class="reference internal" href="../generated_api/nlp_architect.data.html#nlp_architect.data.sequential_tagging.TokenClsProcessor" title="nlp_architect.data.sequential_tagging.TokenClsProcessor"><code class="xref py py-class docutils literal notranslate"><span class="pre">TokenClsProcessor</span></code></a> for parsing input files for the model. <a class="reference internal" href="sequence_tagging.html#nlp_architect.models.tagging.NeuralTagger" title="nlp_architect.models.tagging.NeuralTagger"><code class="xref py py-class docutils literal notranslate"><span class="pre">NeuralTagger</span></code></a> for training/loading a trained model.</p>
+<p>Training a model:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nlp_architect</span> <span class="n">train</span> <span class="n">tagger</span> <span class="o">--</span><span class="n">model_type</span> <span class="n">cnn</span><span class="o">-</span><span class="n">lstm</span> <span class="o">--</span><span class="n">data_dir</span> <span class="o">&lt;</span><span class="n">path</span> <span class="n">to</span> <span class="n">data</span> <span class="nb">dir</span><span class="o">&gt;</span> <span class="o">--</span><span class="n">output_dir</span> <span class="o">&lt;</span><span class="n">model</span> <span class="n">output</span> <span class="nb">dir</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>See <code class="docutils literal notranslate"><span class="pre">`nlp_architect</span> <span class="pre">train</span> <span class="pre">tagger</span> <span class="pre">-h`</span></code> for full list of options for training.</p>
+<p>Running inference on trained model:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nlp_architect</span> <span class="n">run</span> <span class="n">tagger</span> <span class="o">--</span><span class="n">data_file</span> <span class="o">&lt;</span><span class="nb">input</span> <span class="n">data</span> <span class="n">file</span><span class="o">&gt;</span> <span class="o">--</span><span class="n">model_dir</span> <span class="o">&lt;</span><span class="n">model</span> <span class="nb">dir</span><span class="o">&gt;</span> <span class="o">--</span><span class="n">output_dir</span> <span class="o">&lt;</span><span class="n">output</span> <span class="nb">dir</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>See <code class="docutils literal notranslate"><span class="pre">`nlp_architect</span> <span class="pre">run</span> <span class="pre">tagger</span> <span class="pre">-h`</span></code> for full list of options for running a trained model.</p>
+<dl class="class">
+<dt id="nlp_architect.nn.torch.modules.embedders.CNNLSTM">
+<em class="property">class </em><code class="descclassname">nlp_architect.nn.torch.modules.embedders.</code><code class="descname">CNNLSTM</code><span class="sig-paren">(</span><em>word_vocab_size: int</em>, <em>num_labels: int</em>, <em>word_embedding_dims: int = 50</em>, <em>char_embedding_dims: int = 16</em>, <em>cnn_kernel_size: int = 3</em>, <em>cnn_num_filters: int = 128</em>, <em>lstm_hidden_size: int = 100</em>, <em>lstm_layers: int = 2</em>, <em>bidir: bool = True</em>, <em>dropout: float = 0.5</em>, <em>padding_idx: int = 0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/modules/embedders.html#CNNLSTM"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.modules.embedders.CNNLSTM" title="Permalink to this definition">¶</a></dt>
+<dd><p>CNN-LSTM embedder (based on Ma and Hovy. 2016)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>word_vocab_size</strong> (<em>int</em>) – word vocabulary size</li>
+<li><strong>num_labels</strong> (<em>int</em>) – number of labels (classifier)</li>
+<li><strong>word_embedding_dims</strong> (<em>int</em><em>, </em><em>optional</em>) – word embedding dims</li>
+<li><strong>char_embedding_dims</strong> (<em>int</em><em>, </em><em>optional</em>) – character embedding dims</li>
+<li><strong>cnn_kernel_size</strong> (<em>int</em><em>, </em><em>optional</em>) – character CNN kernel size</li>
+<li><strong>cnn_num_filters</strong> (<em>int</em><em>, </em><em>optional</em>) – character CNN number of filters</li>
+<li><strong>lstm_hidden_size</strong> (<em>int</em><em>, </em><em>optional</em>) – LSTM embedder hidden size</li>
+<li><strong>lstm_layers</strong> (<em>int</em><em>, </em><em>optional</em>) – num of LSTM layers</li>
+<li><strong>bidir</strong> (<em>bool</em><em>, </em><em>optional</em>) – apply bi-directional LSTM</li>
+<li><strong>dropout</strong> (<em>float</em><em>, </em><em>optional</em>) – dropout rate</li>
+<li><strong>padding_idx</strong> (<em>int</em><em>, </em><em>optinal</em>) – padding number for embedding layers</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="idcnn">
+<h2><code class="docutils literal notranslate"><span class="pre">IDCNN</span></code><a class="headerlink" href="#idcnn" title="Permalink to this headline">¶</a></h2>
+<p>The module is an embedder based on <a class="reference external" href="https://arxiv.org/abs/1702.02098">Fast and Accurate Entity Recognition with Iterated Dilated Convolutions</a> by Strubell et at (2017).
+The model uses Iterated-Dilated convolusions for sequence labelling. An dilated CNN block utilizes CNN and dilations to catpure the context of a whole sentence and relation ships between words.
+In the figure below you can see an example for a dilated CNN block with maximum dilation of 4 and filter width of 3.
+This model is a fast alternative to LSTM-based models with ~10x speedup compared to LSTM-based models.</p>
+<div class="figure" id="id2">
+<img alt="../_images/idcnn-fig.png" src="../_images/idcnn-fig.png" />
+<p class="caption"><span class="caption-text">A dilated CNN block (taken from original paper)</span></p>
+</div>
+<p>We added a word character convolution feature extractor which is concatenated to the embedded word representations.</p>
+<p><strong>Usage</strong></p>
+<p>Use <a class="reference internal" href="../generated_api/nlp_architect.data.html#nlp_architect.data.sequential_tagging.TokenClsProcessor" title="nlp_architect.data.sequential_tagging.TokenClsProcessor"><code class="xref py py-class docutils literal notranslate"><span class="pre">TokenClsProcessor</span></code></a> for parsing input files for the model. <a class="reference internal" href="sequence_tagging.html#nlp_architect.models.tagging.NeuralTagger" title="nlp_architect.models.tagging.NeuralTagger"><code class="xref py py-class docutils literal notranslate"><span class="pre">NeuralTagger</span></code></a> for training/loading a trained model.</p>
+<p>Training a model:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nlp_architect</span> <span class="n">train</span> <span class="n">tagger</span> <span class="o">--</span><span class="n">model_type</span> <span class="nb">id</span><span class="o">-</span><span class="n">cnn</span> <span class="o">--</span><span class="n">data_dir</span> <span class="o">&lt;</span><span class="n">path</span> <span class="n">to</span> <span class="n">data</span> <span class="nb">dir</span><span class="o">&gt;</span> <span class="o">--</span><span class="n">output_dir</span> <span class="o">&lt;</span><span class="n">model</span> <span class="n">output</span> <span class="nb">dir</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>See <code class="docutils literal notranslate"><span class="pre">`nlp_architect</span> <span class="pre">train</span> <span class="pre">tagger</span> <span class="pre">-h`</span></code> for full list of options for training.</p>
+<p>Running inference on trained model:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nlp_architect</span> <span class="n">run</span> <span class="n">tagger</span> <span class="o">--</span><span class="n">data_file</span> <span class="o">&lt;</span><span class="nb">input</span> <span class="n">data</span> <span class="n">file</span><span class="o">&gt;</span> <span class="o">--</span><span class="n">model_dir</span> <span class="o">&lt;</span><span class="n">model</span> <span class="nb">dir</span><span class="o">&gt;</span> <span class="o">--</span><span class="n">output_dir</span> <span class="o">&lt;</span><span class="n">output</span> <span class="nb">dir</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>See <code class="docutils literal notranslate"><span class="pre">`nlp_architect</span> <span class="pre">run</span> <span class="pre">tagger</span> <span class="pre">-h`</span></code> for full list of options for running a trained model.</p>
+<dl class="class">
+<dt id="nlp_architect.nn.torch.modules.embedders.IDCNN">
+<em class="property">class </em><code class="descclassname">nlp_architect.nn.torch.modules.embedders.</code><code class="descname">IDCNN</code><span class="sig-paren">(</span><em>word_vocab_size: int</em>, <em>num_labels: int</em>, <em>word_embedding_dims: int = 100</em>, <em>char_embedding_dims: int = 16</em>, <em>char_cnn_filters: int = 128</em>, <em>char_cnn_kernel_size: int = 3</em>, <em>cnn_kernel_size: int = 3</em>, <em>cnn_num_filters: int = 128</em>, <em>input_dropout: float = 0.5</em>, <em>word_dropout: float = 0.5</em>, <em>hidden_dropout: float = 0.5</em>, <em>blocks: int = 1</em>, <em>dilations: List = None</em>, <em>padding_idx: int = 0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/modules/embedders.html#IDCNN"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.modules.embedders.IDCNN" title="Permalink to this definition">¶</a></dt>
+<dd><p>ID-CNN (iterated dilated) tagging model (based on Strubell et al 2017) with word character
+embedding (using CNN feature extractors)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>word_vocab_size</strong> (<em>int</em>) – word vocabulary size</li>
+<li><strong>num_labels</strong> (<em>int</em>) – number of labels (classifier)</li>
+<li><strong>word_embedding_dims</strong> (<em>int</em><em>, </em><em>optional</em>) – word embedding dims</li>
+<li><strong>char_embedding_dims</strong> (<em>int</em><em>, </em><em>optional</em>) – character embedding dims</li>
+<li><strong>char_cnn_filters</strong> (<em>int</em><em>, </em><em>optional</em>) – character CNN kernel size</li>
+<li><strong>char_cnn_kernel_size</strong> (<em>int</em><em>, </em><em>optional</em>) – character CNN number of filters</li>
+<li><strong>cnn_kernel_size</strong> (<em>int</em><em>, </em><em>optional</em>) – CNN embedder kernel size</li>
+<li><strong>cnn_num_filters</strong> (<em>int</em><em>, </em><em>optional</em>) – CNN embedder number of filters</li>
+<li><strong>input_dropout</strong> (<em>float</em><em>, </em><em>optional</em>) – input dropout rate</li>
+<li><strong>word_dropout</strong> (<em>float</em><em>, </em><em>optional</em>) – pre embedder dropout rate</li>
+<li><strong>hidden_dropout</strong> (<em>float</em><em>, </em><em>optional</em>) – pre classifier dropout rate</li>
+<li><strong>blocks</strong> (<em>int</em><em>, </em><em>optinal</em>) – number of blocks</li>
+<li><strong>dilations</strong> (<em>List</em><em>, </em><em>optinal</em>) – List of dilations per CNN layer</li>
+<li><strong>padding_idx</strong> (<em>int</em><em>, </em><em>optinal</em>) – padding number for embedding layers</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="transformertokenclassifier">
+<span id="transformer-cls"></span><h2><code class="docutils literal notranslate"><span class="pre">TransformerTokenClassifier</span></code><a class="headerlink" href="#transformertokenclassifier" title="Permalink to this headline">¶</a></h2>
+<p>A tagger using a Transformer-based topology and a pre-trained model on a large collection of data (usually wikipedia and such).</p>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">TransformerTokenClassifier</span></code> We provide token tagging classifier head module for Transformer-based pre-trained models.
+Currently we support BERT/XLNet and quantized BERT base models which utilize a fully-connected layer with <em>Softmax</em> classifier. Tokens which were broken into multiple sub-tokens (using Wordpiece algorithm or such) are ignored. For a complete list of transformer base models run <code class="docutils literal notranslate"><span class="pre">`nlp_architect</span> <span class="pre">train</span> <span class="pre">transformer_token</span> <span class="pre">-h`</span></code> to see a list of models that can be fine-tuned to your task.</p>
+<p><strong>Usage</strong></p>
+<p>Use <a class="reference internal" href="../generated_api/nlp_architect.data.html#nlp_architect.data.sequential_tagging.TokenClsProcessor" title="nlp_architect.data.sequential_tagging.TokenClsProcessor"><code class="xref py py-class docutils literal notranslate"><span class="pre">TokenClsProcessor</span></code></a> for parsing input files for the model. Depending on which model you choose, the padding and sentence formatting is adjusted to fit the base model you chose.</p>
+<p>See model class <code class="xref py py-class docutils literal notranslate"><span class="pre">TransformerTokenClassifier</span></code> for usage documentation.</p>
+<p>Training a model:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nlp_architect</span> <span class="n">train</span> <span class="n">transformer_token</span> \
+    <span class="o">--</span><span class="n">data_dir</span> <span class="o">&lt;</span><span class="n">path</span> <span class="n">to</span> <span class="n">data</span><span class="o">&gt;</span> \
+    <span class="o">--</span><span class="n">model_name_or_path</span> <span class="o">&lt;</span><span class="n">name</span> <span class="n">of</span> <span class="n">pre</span><span class="o">-</span><span class="n">trained</span> <span class="n">model</span> <span class="ow">or</span> <span class="n">path</span><span class="o">&gt;</span> \
+    <span class="o">--</span><span class="n">model_type</span> <span class="p">[</span><span class="n">bert</span><span class="p">,</span> <span class="n">quant_bert</span><span class="p">,</span> <span class="n">xlnet</span><span class="p">]</span> \
+    <span class="o">--</span><span class="n">output_dir</span> <span class="o">&lt;</span><span class="n">path</span> <span class="n">to</span> <span class="n">output</span> <span class="nb">dir</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>See <code class="docutils literal notranslate"><span class="pre">`nlp_architect</span> <span class="pre">train</span> <span class="pre">transformer_token</span> <span class="pre">-h`</span></code> for full list of options for training.</p>
+<p>Running inference on a trained model:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nlp_architect</span> <span class="n">run</span> <span class="n">transformer_token</span> \
+    <span class="o">--</span><span class="n">data_file</span> <span class="o">&lt;</span><span class="n">path</span> <span class="n">to</span> <span class="nb">input</span> <span class="n">file</span><span class="o">&gt;</span> \
+    <span class="o">--</span><span class="n">model_path</span> <span class="o">&lt;</span><span class="n">path</span> <span class="n">to</span> <span class="n">trained</span> <span class="n">model</span><span class="o">&gt;</span> \
+    <span class="o">--</span><span class="n">model_type</span> <span class="p">[</span><span class="n">bert</span><span class="p">,</span> <span class="n">quant_bert</span><span class="p">,</span> <span class="n">xlnet</span><span class="p">]</span> \
+    <span class="o">--</span><span class="n">output_dir</span> <span class="o">&lt;</span><span class="n">output</span> <span class="n">path</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>See <code class="docutils literal notranslate"><span class="pre">nlp_architect</span> <span class="pre">run</span> <span class="pre">tagger</span> <span class="pre">-h</span></code> for full list of options for running a trained model.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

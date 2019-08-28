@@ -1,0 +1,383 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>End-to-End Memory Networks for Goal Oriented Dialogue &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/install.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/nlp_arch_theme.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html">
+          
+
+          
+            
+            <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../publications.html">Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials.html">Jupyter Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model_zoo.html">Model Zoo</a></li>
+</ul>
+<p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tagging/sequence_tagging.html">Sequence Tagging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sentiment.html">Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bist_parser.html">Dependency Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intent.html">Intent Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lm.html">Language Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../information_extraction.html">Information Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transformers.html">Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="additional.html">Additional Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Optimized Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../quantized_bert.html">Quantized BERT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transformers_distillation.html">Transformers Distillation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solutions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../absa_solution.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../term_set_expansion.html">Set Expansion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trend_analysis.html">Trend Analysis</a></li>
+</ul>
+<p class="caption"><span class="caption-text">For Developers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer_guide.html">Developer Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">NLP Architect by Intel® AI Lab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>End-to-End Memory Networks for Goal Oriented Dialogue</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="end-to-end-memory-networks-for-goal-oriented-dialogue">
+<h1>End-to-End Memory Networks for Goal Oriented Dialogue<a class="headerlink" href="#end-to-end-memory-networks-for-goal-oriented-dialogue" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>This directory contains an implementation of an End-to-End Memory Network for goal oriented dialogue in TensorFlow.</p>
+<p>Goal oriented dialogue is a subset of open-domain dialogue where an automated agent has a specific
+goal for the outcome of the interaction. At a high level, the system needs to understand a user
+request and complete a related task with a clear goal within a limited number of dialog turns.
+This task could be making a restaurant reservation, placing an order, setting a timer, or many of the digital personal assistant tasks.</p>
+<p>End-to-End Memory Networks are generic semi-recurrent neural networks which allow for a bank of
+external memories to be read from and used during execution. They can be used in place of traditional
+slot-filling algorithms to accomplish goal oriented dialogue tasks without the need for expensive
+hand-labeled dialogue data. End-to-End Memory Networks have also been shown to be useful for
+Question-Answering and information retrieval tasks.</p>
+<p><strong>End-to-End Memory Network</strong></p>
+<img alt="n2n_memory_networks" src="https://camo.githubusercontent.com/ba1c7dbbccc5dd51d4a76cc6ef849bca65a9bf4d/687474703a2f2f692e696d6775722e636f6d2f6e7638394a4c632e706e67" />
+<p><strong>Goal Oriented Dialog</strong></p>
+<img alt="goal_oriented_dialog" src="https://i.imgur.com/5pQJqjM.png" />
+</div>
+<div class="section" id="files">
+<h2>Files<a class="headerlink" href="#files" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><strong>nlp_architect/data/babi_dialog.py</strong>: Data loader <a class="reference internal" href="../generated_api/nlp_architect.data.html#nlp_architect.data.babi_dialog.BABI_Dialog" title="nlp_architect.data.babi_dialog.BABI_Dialog"><code class="xref py py-class docutils literal notranslate"><span class="pre">class</span></code></a> to download data if not present and perform preprocessing.</li>
+<li><strong>nlp_architect/models/memn2n_dialogue.py</strong>: Implementation of <a class="reference internal" href="../generated_api/nlp_architect.models.html#nlp_architect.models.memn2n_dialogue.MemN2N_Dialog" title="nlp_architect.models.memn2n_dialogue.MemN2N_Dialog"><code class="xref py py-class docutils literal notranslate"><span class="pre">MemN2N_Dialog</span></code></a> class for dialogue tasks.</li>
+<li><strong>examples/memn2n_dialog/train_model.py</strong>: Training script to load dataset and train memory network.</li>
+<li><strong>examples/memn2n_dialog/interactive.py</strong>: Inference script to run interactive session with a trained goal oriented dialog agent.</li>
+<li><strong>examples/memn2n_dialog/interactive_utils.py</strong>: Utilities to support interactive mode and simulate backend database.</li>
+</ul>
+</div>
+<div class="section" id="datasets">
+<h2>Datasets<a class="headerlink" href="#datasets" title="Permalink to this headline">¶</a></h2>
+<p>The dataset used for training and evaluation is under the umbrella of the Facebook bAbI dialog tasks
+(<a class="reference external" href="https://research.fb.com/downloads/babi/">https://research.fb.com/downloads/babi/</a>, License: <a class="reference external" href="https://github.com/facebook/bAbI-tasks/blob/master/LICENSE.md">https://github.com/facebook/bAbI-tasks/blob/master/LICENSE.md</a>). The terms and conditions of the data set license apply. Intel does not grant any rights to the data files. The dataset is automatically downloaded if not found,
+and the preprocessing all happens at the beginning of training.</p>
+<p>There are six separate tasks, tasks 1 through 5 are from simulated conversations between a customer
+and a restaurant booking bot (created by Facebook), and task 6 is more realistic natural language
+restaurant booking conversations as part of the <a class="reference external" href="https://www.microsoft.com/en-us/research/event/dialog-state-tracking-challenge/">dialog state tracking challenge</a>.</p>
+<p>The descriptions of the six tasks are as follow:</p>
+<ul class="simple">
+<li><dl class="first docutils">
+<dt>bAbI dialog dataset:</dt>
+<dd><ul class="first last">
+<li>Task 1: Issuing API Calls</li>
+<li>Task 2: Updating API Calls</li>
+<li>Task 3: Displaying Options</li>
+<li>Task 4: Providing Extra Information</li>
+<li>Task 5: Conducting Full Dialogs</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Dialog State Tracking Challenge 2 Dataset:</dt>
+<dd><ul class="first last">
+<li>Task 6: DSTC2 Full Dialogs</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="running-modalities">
+<h2>Running Modalities<a class="headerlink" href="#running-modalities" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="training">
+<h3>Training<a class="headerlink" href="#training" title="Permalink to this headline">¶</a></h3>
+<p>To train the model without match type on full dialog tasks, the following command can be used:</p>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">examples</span><span class="o">/</span><span class="n">memn2n_dialog</span><span class="o">/</span><span class="n">train_model</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">task</span> <span class="mi">5</span> <span class="o">--</span><span class="n">weights_save_path</span> <span class="n">memn2n_weights</span><span class="o">.</span><span class="n">npz</span>
+</pre></div>
+</div>
+<p>The flag <code class="docutils literal notranslate"><span class="pre">--use_match_type</span></code> can also be used to enable match type features (for improved out-of-vocab performance but slower training).</p>
+</div>
+<div class="section" id="interactive-mode">
+<h3>Interactive Mode<a class="headerlink" href="#interactive-mode" title="Permalink to this headline">¶</a></h3>
+<p>To begin interactive evaluation with a trained model, the following command can be used:</p>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">examples</span><span class="o">/</span><span class="n">memn2n_dialog</span><span class="o">/</span><span class="n">interactive</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">weights_save_path</span> <span class="n">memn2n_weights</span><span class="o">.</span><span class="n">npz</span>
+</pre></div>
+</div>
+<p>Interactive evaluation begins at the end of training and works as an interactive shell.
+Commands available for the shell are as follows:</p>
+<ul class="simple">
+<li>help: Display this help menu</li>
+<li>exit / quit: Exit interactive mode</li>
+<li>restart / clear: Restart the conversation and erase the bot’s memory</li>
+<li>vocab: Display usable vocabulary</li>
+<li>allow_oov: Allow out of vocab words to be replaced with &lt;OOV&gt; token</li>
+<li>show_memory: Display the current contents of the bot’s memory</li>
+<li>show_attention: Show the bot’s memory &amp; associated computed attention for the last memory hop</li>
+</ul>
+<p>Otherwise, the interactive mode operates as a chat bot, responding to dialog to assist with
+restaurant booking. Vocabulary of the model is limited, please use the vocab command to see what the
+model actually understands.</p>
+</div>
+</div>
+<div class="section" id="results">
+<h2>Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
+<p>The model was trained and evaluated on the 6 bAbI Dialog tasks with the following results.</p>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Task</th>
+<th class="head">This</th>
+<th class="head">Published</th>
+<th class="head">This (w/ match-type)</th>
+<th class="head">Published (w/ match-type)</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>1</td>
+<td>99.8</td>
+<td>99.9</td>
+<td>100.0</td>
+<td>100.0</td>
+</tr>
+<tr class="row-odd"><td>2</td>
+<td>100.0</td>
+<td>100.0</td>
+<td>100.0</td>
+<td>98.3</td>
+</tr>
+<tr class="row-even"><td>3</td>
+<td>74.8</td>
+<td>74.9</td>
+<td>74.6</td>
+<td>74.9</td>
+</tr>
+<tr class="row-odd"><td>4</td>
+<td>57.2</td>
+<td>59.5</td>
+<td>100.0</td>
+<td>100.0</td>
+</tr>
+<tr class="row-even"><td>5</td>
+<td>96.4</td>
+<td>96.1</td>
+<td>95.6</td>
+<td>93.4</td>
+</tr>
+<tr class="row-odd"><td>6</td>
+<td>48.1</td>
+<td>41.1</td>
+<td>45.4</td>
+<td>41.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><strong>Paper</strong>: A. Bordes, Y. Boureau, J. Weston. <a class="reference external" href="https://arxiv.org/abs/1605.07683">Learning End-to-End Goal-Oriented Dialog</a> 2016</li>
+<li><strong>Reference TF Implementation</strong>: <a class="reference external" href="https://github.com/vyraun/chatbot-MemN2N-tensorflow">chatbot-MemN2N-tensorflow</a> (no match-type or interactive mode)</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

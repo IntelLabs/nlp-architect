@@ -1,0 +1,704 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>nlp\_architect package &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/install.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/nlp_arch_theme.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="nlp_architect.api package" href="nlp_architect.api.html" />
+    <link rel="prev" title="Topic and Trend Analysis Solution" href="../trend_analysis.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html">
+          
+
+          
+            
+            <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../publications.html">Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials.html">Jupyter Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model_zoo.html">Model Zoo</a></li>
+</ul>
+<p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tagging/sequence_tagging.html">Sequence Tagging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sentiment.html">Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bist_parser.html">Dependency Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intent.html">Intent Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lm.html">Language Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../information_extraction.html">Information Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transformers.html">Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../archived/additional.html">Additional Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Optimized Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../quantized_bert.html">Quantized BERT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transformers_distillation.html">Transformers Distillation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solutions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../absa_solution.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../term_set_expansion.html">Set Expansion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trend_analysis.html">Trend Analysis</a></li>
+</ul>
+<p class="caption"><span class="caption-text">For Developers</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">nlp_architect API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.api.html">nlp_architect.api package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.cli.html">nlp_architect.cli package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.common.html">nlp_architect.common package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.data.html">nlp_architect.data package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.models.html">nlp_architect.models package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.nlp.html">nlp_architect.nlp package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.nn.html">nlp_architect.nn package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.pipelines.html">nlp_architect.pipelines package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.procedures.html">nlp_architect.procedures package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.server.html">nlp_architect.server package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.solutions.html">nlp_architect.solutions package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.utils.html">nlp_architect.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer_guide.html">Developer Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">NLP Architect by Intel® AI Lab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li><code class="docutils literal notranslate"><span class="pre">nlp\_architect</span></code> package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="nlp-architect-package">
+<h1><code class="docutils literal notranslate"><span class="pre">nlp\_architect</span></code> package<a class="headerlink" href="#nlp-architect-package" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="nlp_architect.api.html">nlp_architect.api package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.api.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.api.html#module-nlp_architect.api.abstract_api">nlp_architect.api.abstract_api module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.api.html#module-nlp_architect.api.base">nlp_architect.api.base module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.api.html#module-nlp_architect.api.bist_parser_api">nlp_architect.api.bist_parser_api module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.api.html#module-nlp_architect.api.intent_extraction_api">nlp_architect.api.intent_extraction_api module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.api.html#module-nlp_architect.api.machine_comprehension_api">nlp_architect.api.machine_comprehension_api module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.api.html#module-nlp_architect.api.ner_api">nlp_architect.api.ner_api module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.api.html#module-nlp_architect.api">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="nlp_architect.cli.html">nlp_architect.cli package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.cli.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.cli.html#module-nlp_architect.cli.cli_commands">nlp_architect.cli.cli_commands module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.cli.html#module-nlp_architect.cli.cmd_registry">nlp_architect.cli.cmd_registry module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.cli.html#module-nlp_architect.cli">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="nlp_architect.common.html">nlp_architect.common package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.common.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.common.cdc.html">nlp_architect.common.cdc package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.common.cdc.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.common.cdc.html#module-nlp_architect.common.cdc.cluster">nlp_architect.common.cdc.cluster module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.common.cdc.html#module-nlp_architect.common.cdc.mention_data">nlp_architect.common.cdc.mention_data module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.common.cdc.html#module-nlp_architect.common.cdc.topics">nlp_architect.common.cdc.topics module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.common.cdc.html#module-nlp_architect.common.cdc">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.common.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.common.html#module-nlp_architect.common.core_nlp_doc">nlp_architect.common.core_nlp_doc module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.common.html#module-nlp_architect.common.high_level_doc">nlp_architect.common.high_level_doc module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.common.html#module-nlp_architect.common">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="nlp_architect.data.html">nlp_architect.data package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.data.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.data.cdc_resources.html">nlp_architect.data.cdc_resources package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.data.cdc_resources.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="nlp_architect.data.cdc_resources.data_types.html">nlp_architect.data.cdc_resources.data_types package</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.data.cdc_resources.data_types.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="nlp_architect.data.cdc_resources.data_types.wiki.html">nlp_architect.data.cdc_resources.data_types.wiki package</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="nlp_architect.data.cdc_resources.data_types.wiki.html#submodules">Submodules</a></li>
+<li class="toctree-l8"><a class="reference internal" href="nlp_architect.data.cdc_resources.data_types.wiki.html#module-nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_page">nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_page module</a></li>
+<li class="toctree-l8"><a class="reference internal" href="nlp_architect.data.cdc_resources.data_types.wiki.html#module-nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_page_extracted_relations">nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_page_extracted_relations module</a></li>
+<li class="toctree-l8"><a class="reference internal" href="nlp_architect.data.cdc_resources.data_types.wiki.html#module-nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_pages">nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_pages module</a></li>
+<li class="toctree-l8"><a class="reference internal" href="nlp_architect.data.cdc_resources.data_types.wiki.html#module-nlp_architect.data.cdc_resources.data_types.wiki">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="nlp_architect.data.cdc_resources.data_types.wn.html">nlp_architect.data.cdc_resources.data_types.wn package</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="nlp_architect.data.cdc_resources.data_types.wn.html#submodules">Submodules</a></li>
+<li class="toctree-l8"><a class="reference internal" href="nlp_architect.data.cdc_resources.data_types.wn.html#module-nlp_architect.data.cdc_resources.data_types.wn.wordnet_page">nlp_architect.data.cdc_resources.data_types.wn.wordnet_page module</a></li>
+<li class="toctree-l8"><a class="reference internal" href="nlp_architect.data.cdc_resources.data_types.wn.html#module-nlp_architect.data.cdc_resources.data_types.wn">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.data.cdc_resources.data_types.html#module-nlp_architect.data.cdc_resources.data_types">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="nlp_architect.data.cdc_resources.embedding.html">nlp_architect.data.cdc_resources.embedding package</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.data.cdc_resources.embedding.html#submodules">Submodules</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.data.cdc_resources.embedding.html#module-nlp_architect.data.cdc_resources.embedding.embed_elmo">nlp_architect.data.cdc_resources.embedding.embed_elmo module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.data.cdc_resources.embedding.html#module-nlp_architect.data.cdc_resources.embedding.embed_glove">nlp_architect.data.cdc_resources.embedding.embed_glove module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.data.cdc_resources.embedding.html#module-nlp_architect.data.cdc_resources.embedding">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="nlp_architect.data.cdc_resources.gen_scripts.html">nlp_architect.data.cdc_resources.gen_scripts package</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.data.cdc_resources.gen_scripts.html#submodules">Submodules</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.data.cdc_resources.gen_scripts.html#nlp-architect-data-cdc-resources-gen-scripts-create-reference-dict-dump-module">nlp_architect.data.cdc_resources.gen_scripts.create_reference_dict_dump module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.data.cdc_resources.gen_scripts.html#nlp-architect-data-cdc-resources-gen-scripts-create-verbocean-dump-module">nlp_architect.data.cdc_resources.gen_scripts.create_verbocean_dump module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.data.cdc_resources.gen_scripts.html#nlp-architect-data-cdc-resources-gen-scripts-create-wiki-dump-module">nlp_architect.data.cdc_resources.gen_scripts.create_wiki_dump module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.data.cdc_resources.gen_scripts.html#module-nlp_architect.data.cdc_resources.gen_scripts.create_word_embed_elmo_dump">nlp_architect.data.cdc_resources.gen_scripts.create_word_embed_elmo_dump module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.data.cdc_resources.gen_scripts.html#nlp-architect-data-cdc-resources-gen-scripts-create-word-embed-glove-dump-module">nlp_architect.data.cdc_resources.gen_scripts.create_word_embed_glove_dump module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.data.cdc_resources.gen_scripts.html#nlp-architect-data-cdc-resources-gen-scripts-create-wordnet-dump-module">nlp_architect.data.cdc_resources.gen_scripts.create_wordnet_dump module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.data.cdc_resources.gen_scripts.html#module-nlp_architect.data.cdc_resources.gen_scripts">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="nlp_architect.data.cdc_resources.relations.html">nlp_architect.data.cdc_resources.relations package</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.data.cdc_resources.relations.html#submodules">Submodules</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.data.cdc_resources.relations.html#module-nlp_architect.data.cdc_resources.relations.computed_relation_extraction">nlp_architect.data.cdc_resources.relations.computed_relation_extraction module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.data.cdc_resources.relations.html#module-nlp_architect.data.cdc_resources.relations.referent_dict_relation_extraction">nlp_architect.data.cdc_resources.relations.referent_dict_relation_extraction module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.data.cdc_resources.relations.html#module-nlp_architect.data.cdc_resources.relations.relation_extraction">nlp_architect.data.cdc_resources.relations.relation_extraction module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.data.cdc_resources.relations.html#module-nlp_architect.data.cdc_resources.relations.relation_types_enums">nlp_architect.data.cdc_resources.relations.relation_types_enums module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.data.cdc_resources.relations.html#module-nlp_architect.data.cdc_resources.relations.verbocean_relation_extraction">nlp_architect.data.cdc_resources.relations.verbocean_relation_extraction module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.data.cdc_resources.relations.html#module-nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction">nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.data.cdc_resources.relations.html#module-nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction">nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.data.cdc_resources.relations.html#module-nlp_architect.data.cdc_resources.relations.word_embedding_relation_extraction">nlp_architect.data.cdc_resources.relations.word_embedding_relation_extraction module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.data.cdc_resources.relations.html#module-nlp_architect.data.cdc_resources.relations.wordnet_relation_extraction">nlp_architect.data.cdc_resources.relations.wordnet_relation_extraction module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.data.cdc_resources.relations.html#module-nlp_architect.data.cdc_resources.relations">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="nlp_architect.data.cdc_resources.wikipedia.html">nlp_architect.data.cdc_resources.wikipedia package</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.data.cdc_resources.wikipedia.html#submodules">Submodules</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.data.cdc_resources.wikipedia.html#module-nlp_architect.data.cdc_resources.wikipedia.wiki_elastic">nlp_architect.data.cdc_resources.wikipedia.wiki_elastic module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.data.cdc_resources.wikipedia.html#module-nlp_architect.data.cdc_resources.wikipedia.wiki_offline">nlp_architect.data.cdc_resources.wikipedia.wiki_offline module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.data.cdc_resources.wikipedia.html#module-nlp_architect.data.cdc_resources.wikipedia.wiki_online">nlp_architect.data.cdc_resources.wikipedia.wiki_online module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.data.cdc_resources.wikipedia.html#module-nlp_architect.data.cdc_resources.wikipedia.wiki_search_page_result">nlp_architect.data.cdc_resources.wikipedia.wiki_search_page_result module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.data.cdc_resources.wikipedia.html#module-nlp_architect.data.cdc_resources.wikipedia">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="nlp_architect.data.cdc_resources.wordnet.html">nlp_architect.data.cdc_resources.wordnet package</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.data.cdc_resources.wordnet.html#submodules">Submodules</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.data.cdc_resources.wordnet.html#module-nlp_architect.data.cdc_resources.wordnet.wordnet_offline">nlp_architect.data.cdc_resources.wordnet.wordnet_offline module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.data.cdc_resources.wordnet.html#module-nlp_architect.data.cdc_resources.wordnet.wordnet_online">nlp_architect.data.cdc_resources.wordnet.wordnet_online module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.data.cdc_resources.wordnet.html#module-nlp_architect.data.cdc_resources.wordnet">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.data.cdc_resources.html#module-nlp_architect.data.cdc_resources">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.data.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.data.html#module-nlp_architect.data.amazon_reviews">nlp_architect.data.amazon_reviews module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.data.html#module-nlp_architect.data.babi_dialog">nlp_architect.data.babi_dialog module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.data.html#module-nlp_architect.data.conll">nlp_architect.data.conll module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.data.html#module-nlp_architect.data.fasttext_emb">nlp_architect.data.fasttext_emb module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.data.html#module-nlp_architect.data.glue_tasks">nlp_architect.data.glue_tasks module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.data.html#module-nlp_architect.data.intent_datasets">nlp_architect.data.intent_datasets module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.data.html#module-nlp_architect.data.ptb">nlp_architect.data.ptb module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.data.html#module-nlp_architect.data.sequence_classification">nlp_architect.data.sequence_classification module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.data.html#module-nlp_architect.data.sequential_tagging">nlp_architect.data.sequential_tagging module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.data.html#module-nlp_architect.data.utils">nlp_architect.data.utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.data.html#module-nlp_architect.data">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="nlp_architect.models.html">nlp_architect.models package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.models.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.absa.html">nlp_architect.models.absa package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.models.absa.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="nlp_architect.models.absa.inference.html">nlp_architect.models.absa.inference package</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.models.absa.inference.html#submodules">Submodules</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.models.absa.inference.html#module-nlp_architect.models.absa.inference.data_types">nlp_architect.models.absa.inference.data_types module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.models.absa.inference.html#module-nlp_architect.models.absa.inference.inference">nlp_architect.models.absa.inference.inference module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.models.absa.inference.html#module-nlp_architect.models.absa.inference">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="nlp_architect.models.absa.train.html">nlp_architect.models.absa.train package</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.models.absa.train.html#submodules">Submodules</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.models.absa.train.html#module-nlp_architect.models.absa.train.acquire_terms">nlp_architect.models.absa.train.acquire_terms module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.models.absa.train.html#module-nlp_architect.models.absa.train.data_types">nlp_architect.models.absa.train.data_types module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.models.absa.train.html#module-nlp_architect.models.absa.train.generate_lexicons">nlp_architect.models.absa.train.generate_lexicons module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.models.absa.train.html#module-nlp_architect.models.absa.train.rerank_terms">nlp_architect.models.absa.train.rerank_terms module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.models.absa.train.html#module-nlp_architect.models.absa.train.rules">nlp_architect.models.absa.train.rules module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.models.absa.train.html#module-nlp_architect.models.absa.train.train">nlp_architect.models.absa.train.train module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.models.absa.train.html#module-nlp_architect.models.absa.train">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.models.absa.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.models.absa.html#module-nlp_architect.models.absa.utils">nlp_architect.models.absa.utils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.models.absa.html#module-nlp_architect.models.absa">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.bist.html">nlp_architect.models.bist package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.models.bist.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="nlp_architect.models.bist.eval.html">nlp_architect.models.bist.eval package</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.models.bist.eval.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="nlp_architect.models.bist.eval.conllu.html">nlp_architect.models.bist.eval.conllu package</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="nlp_architect.models.bist.eval.conllu.html#submodules">Submodules</a></li>
+<li class="toctree-l8"><a class="reference internal" href="nlp_architect.models.bist.eval.conllu.html#module-nlp_architect.models.bist.eval.conllu.conll17_ud_eval">nlp_architect.models.bist.eval.conllu.conll17_ud_eval module</a></li>
+<li class="toctree-l8"><a class="reference internal" href="nlp_architect.models.bist.eval.conllu.html#module-nlp_architect.models.bist.eval.conllu">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.models.bist.eval.html#module-nlp_architect.models.bist.eval">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.models.bist.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.models.bist.html#module-nlp_architect.models.bist.decoder">nlp_architect.models.bist.decoder module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.models.bist.html#module-nlp_architect.models.bist.mstlstm">nlp_architect.models.bist.mstlstm module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.models.bist.html#module-nlp_architect.models.bist.utils">nlp_architect.models.bist.utils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.models.bist.html#module-nlp_architect.models.bist">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.cross_doc_coref.html">nlp_architect.models.cross_doc_coref package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.models.cross_doc_coref.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="nlp_architect.models.cross_doc_coref.system.html">nlp_architect.models.cross_doc_coref.system package</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.models.cross_doc_coref.system.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="nlp_architect.models.cross_doc_coref.system.sieves.html">nlp_architect.models.cross_doc_coref.system.sieves package</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="nlp_architect.models.cross_doc_coref.system.sieves.html#submodules">Submodules</a></li>
+<li class="toctree-l8"><a class="reference internal" href="nlp_architect.models.cross_doc_coref.system.sieves.html#module-nlp_architect.models.cross_doc_coref.system.sieves.run_sieve_system">nlp_architect.models.cross_doc_coref.system.sieves.run_sieve_system module</a></li>
+<li class="toctree-l8"><a class="reference internal" href="nlp_architect.models.cross_doc_coref.system.sieves.html#module-nlp_architect.models.cross_doc_coref.system.sieves.sieves">nlp_architect.models.cross_doc_coref.system.sieves.sieves module</a></li>
+<li class="toctree-l8"><a class="reference internal" href="nlp_architect.models.cross_doc_coref.system.sieves.html#module-nlp_architect.models.cross_doc_coref.system.sieves">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.models.cross_doc_coref.system.html#submodules">Submodules</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.models.cross_doc_coref.system.html#module-nlp_architect.models.cross_doc_coref.system.cdc_utils">nlp_architect.models.cross_doc_coref.system.cdc_utils module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.models.cross_doc_coref.system.html#module-nlp_architect.models.cross_doc_coref.system.sieves_container_init">nlp_architect.models.cross_doc_coref.system.sieves_container_init module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.models.cross_doc_coref.system.html#module-nlp_architect.models.cross_doc_coref.system">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.models.cross_doc_coref.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.models.cross_doc_coref.html#module-nlp_architect.models.cross_doc_coref.sieves_config">nlp_architect.models.cross_doc_coref.sieves_config module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.models.cross_doc_coref.html#module-nlp_architect.models.cross_doc_coref.sieves_resource">nlp_architect.models.cross_doc_coref.sieves_resource module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.models.cross_doc_coref.html#module-nlp_architect.models.cross_doc_coref">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.gnmt.html">nlp_architect.models.gnmt package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.models.gnmt.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="nlp_architect.models.gnmt.scripts.html">nlp_architect.models.gnmt.scripts package</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.models.gnmt.scripts.html#submodules">Submodules</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.models.gnmt.scripts.html#module-nlp_architect.models.gnmt.scripts.bleu">nlp_architect.models.gnmt.scripts.bleu module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.models.gnmt.scripts.html#module-nlp_architect.models.gnmt.scripts.rouge">nlp_architect.models.gnmt.scripts.rouge module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.models.gnmt.scripts.html#module-nlp_architect.models.gnmt.scripts">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="nlp_architect.models.gnmt.utils.html">nlp_architect.models.gnmt.utils package</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.models.gnmt.utils.html#submodules">Submodules</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.models.gnmt.utils.html#module-nlp_architect.models.gnmt.utils.evaluation_utils">nlp_architect.models.gnmt.utils.evaluation_utils module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.models.gnmt.utils.html#module-nlp_architect.models.gnmt.utils.iterator_utils">nlp_architect.models.gnmt.utils.iterator_utils module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.models.gnmt.utils.html#module-nlp_architect.models.gnmt.utils.misc_utils">nlp_architect.models.gnmt.utils.misc_utils module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.models.gnmt.utils.html#module-nlp_architect.models.gnmt.utils.nmt_utils">nlp_architect.models.gnmt.utils.nmt_utils module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.models.gnmt.utils.html#module-nlp_architect.models.gnmt.utils.standard_hparams_utils">nlp_architect.models.gnmt.utils.standard_hparams_utils module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.models.gnmt.utils.html#module-nlp_architect.models.gnmt.utils.vocab_utils">nlp_architect.models.gnmt.utils.vocab_utils module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.models.gnmt.utils.html#module-nlp_architect.models.gnmt.utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.models.gnmt.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.models.gnmt.html#module-nlp_architect.models.gnmt.attention_model">nlp_architect.models.gnmt.attention_model module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.models.gnmt.html#module-nlp_architect.models.gnmt.model">nlp_architect.models.gnmt.model module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.models.gnmt.html#module-nlp_architect.models.gnmt.model_helper">nlp_architect.models.gnmt.model_helper module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.models.gnmt.html#module-nlp_architect.models.gnmt">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.transformers.html">nlp_architect.models.transformers package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.models.transformers.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.models.transformers.html#module-nlp_architect.models.transformers.base_model">nlp_architect.models.transformers.base_model module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.models.transformers.html#module-nlp_architect.models.transformers.quantized_bert">nlp_architect.models.transformers.quantized_bert module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.models.transformers.html#module-nlp_architect.models.transformers.sequence_classification">nlp_architect.models.transformers.sequence_classification module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.models.transformers.html#module-nlp_architect.models.transformers.token_classification">nlp_architect.models.transformers.token_classification module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.models.transformers.html#module-nlp_architect.models.transformers">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.models.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.bist_parser">nlp_architect.models.bist_parser module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.chunker">nlp_architect.models.chunker module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.cross_doc_sieves">nlp_architect.models.cross_doc_sieves module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.crossling_emb">nlp_architect.models.crossling_emb module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.gnmt_model">nlp_architect.models.gnmt_model module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.intent_extraction">nlp_architect.models.intent_extraction module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.matchlstm_ansptr">nlp_architect.models.matchlstm_ansptr module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.memn2n_dialogue">nlp_architect.models.memn2n_dialogue module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.most_common_word_sense">nlp_architect.models.most_common_word_sense module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.ner_crf">nlp_architect.models.ner_crf module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.np2vec">nlp_architect.models.np2vec module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.np_semantic_segmentation">nlp_architect.models.np_semantic_segmentation module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.supervised_sentiment">nlp_architect.models.supervised_sentiment module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.tagging">nlp_architect.models.tagging module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.temporal_convolutional_network">nlp_architect.models.temporal_convolutional_network module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="nlp_architect.nlp.html">nlp_architect.nlp package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.nlp.html#module-nlp_architect.nlp">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="nlp_architect.nn.html">nlp_architect.nn package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.nn.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.nn.tensorflow.html">nlp_architect.nn.tensorflow package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.nn.tensorflow.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="nlp_architect.nn.tensorflow.python.html">nlp_architect.nn.tensorflow.python package</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.nn.tensorflow.python.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="nlp_architect.nn.tensorflow.python.keras.html">nlp_architect.nn.tensorflow.python.keras package</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="nlp_architect.nn.tensorflow.python.keras.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l9"><a class="reference internal" href="nlp_architect.nn.tensorflow.python.keras.layers.html">nlp_architect.nn.tensorflow.python.keras.layers package</a><ul>
+<li class="toctree-l10"><a class="reference internal" href="nlp_architect.nn.tensorflow.python.keras.layers.html#submodules">Submodules</a></li>
+<li class="toctree-l10"><a class="reference internal" href="nlp_architect.nn.tensorflow.python.keras.layers.html#module-nlp_architect.nn.tensorflow.python.keras.layers.crf">nlp_architect.nn.tensorflow.python.keras.layers.crf module</a></li>
+<li class="toctree-l10"><a class="reference internal" href="nlp_architect.nn.tensorflow.python.keras.layers.html#module-nlp_architect.nn.tensorflow.python.keras.layers">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l9"><a class="reference internal" href="nlp_architect.nn.tensorflow.python.keras.utils.html">nlp_architect.nn.tensorflow.python.keras.utils package</a><ul>
+<li class="toctree-l10"><a class="reference internal" href="nlp_architect.nn.tensorflow.python.keras.utils.html#submodules">Submodules</a></li>
+<li class="toctree-l10"><a class="reference internal" href="nlp_architect.nn.tensorflow.python.keras.utils.html#module-nlp_architect.nn.tensorflow.python.keras.utils.layer_utils">nlp_architect.nn.tensorflow.python.keras.utils.layer_utils module</a></li>
+<li class="toctree-l10"><a class="reference internal" href="nlp_architect.nn.tensorflow.python.keras.utils.html#module-nlp_architect.nn.tensorflow.python.keras.utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l8"><a class="reference internal" href="nlp_architect.nn.tensorflow.python.keras.html#submodules">Submodules</a></li>
+<li class="toctree-l8"><a class="reference internal" href="nlp_architect.nn.tensorflow.python.keras.html#module-nlp_architect.nn.tensorflow.python.keras.callbacks">nlp_architect.nn.tensorflow.python.keras.callbacks module</a></li>
+<li class="toctree-l8"><a class="reference internal" href="nlp_architect.nn.tensorflow.python.keras.html#module-nlp_architect.nn.tensorflow.python.keras">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.nn.tensorflow.python.html#module-nlp_architect.nn.tensorflow.python">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.nn.tensorflow.html#module-nlp_architect.nn.tensorflow">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.nn.torch.html">nlp_architect.nn.torch package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.nn.torch.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="nlp_architect.nn.torch.data.html">nlp_architect.nn.torch.data package</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.nn.torch.data.html#submodules">Submodules</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.nn.torch.data.html#module-nlp_architect.nn.torch.data.dataset">nlp_architect.nn.torch.data.dataset module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.nn.torch.data.html#module-nlp_architect.nn.torch.data">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="nlp_architect.nn.torch.layers.html">nlp_architect.nn.torch.layers package</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.nn.torch.layers.html#submodules">Submodules</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.nn.torch.layers.html#module-nlp_architect.nn.torch.layers.crf">nlp_architect.nn.torch.layers.crf module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.nn.torch.layers.html#module-nlp_architect.nn.torch.layers">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="nlp_architect.nn.torch.modules.html">nlp_architect.nn.torch.modules package</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.nn.torch.modules.html#submodules">Submodules</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.nn.torch.modules.html#module-nlp_architect.nn.torch.modules.embedders">nlp_architect.nn.torch.modules.embedders module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.nn.torch.modules.html#module-nlp_architect.nn.torch.modules">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.nn.torch.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.nn.torch.html#module-nlp_architect.nn.torch.distillation">nlp_architect.nn.torch.distillation module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.nn.torch.html#module-nlp_architect.nn.torch.quantization">nlp_architect.nn.torch.quantization module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.nn.torch.html#module-nlp_architect.nn.torch">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.nn.html#module-nlp_architect.nn">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="nlp_architect.pipelines.html">nlp_architect.pipelines package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.pipelines.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.pipelines.html#module-nlp_architect.pipelines.spacy_bist">nlp_architect.pipelines.spacy_bist module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.pipelines.html#module-nlp_architect.pipelines.spacy_np_annotator">nlp_architect.pipelines.spacy_np_annotator module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.pipelines.html#module-nlp_architect.pipelines">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="nlp_architect.procedures.html">nlp_architect.procedures package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.procedures.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.procedures.transformers.html">nlp_architect.procedures.transformers package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.procedures.transformers.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.procedures.transformers.html#module-nlp_architect.procedures.transformers.base">nlp_architect.procedures.transformers.base module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.procedures.transformers.html#module-nlp_architect.procedures.transformers.glue">nlp_architect.procedures.transformers.glue module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.procedures.transformers.html#module-nlp_architect.procedures.transformers.seq_tag">nlp_architect.procedures.transformers.seq_tag module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.procedures.transformers.html#module-nlp_architect.procedures.transformers">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.procedures.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.procedures.html#module-nlp_architect.procedures.procedure">nlp_architect.procedures.procedure module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.procedures.html#module-nlp_architect.procedures.registry">nlp_architect.procedures.registry module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.procedures.html#module-nlp_architect.procedures.token_tagging">nlp_architect.procedures.token_tagging module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.procedures.html#module-nlp_architect.procedures">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="nlp_architect.server.html">nlp_architect.server package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.server.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.server.angular-ui.html">nlp_architect.server.angular-ui package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.server.angular-ui.html#module-contents">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.server.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.server.html#module-nlp_architect.server.serve">nlp_architect.server.serve module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.server.html#module-nlp_architect.server.service">nlp_architect.server.service module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.server.html#module-nlp_architect.server">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="nlp_architect.solutions.html">nlp_architect.solutions package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.solutions.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.solutions.absa_solution.html">nlp_architect.solutions.absa_solution package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.solutions.absa_solution.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.solutions.absa_solution.html#module-nlp_architect.solutions.absa_solution.sentiment_solution">nlp_architect.solutions.absa_solution.sentiment_solution module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.solutions.absa_solution.html#module-nlp_architect.solutions.absa_solution.ui">nlp_architect.solutions.absa_solution.ui module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.solutions.absa_solution.html#module-nlp_architect.solutions.absa_solution.utils">nlp_architect.solutions.absa_solution.utils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.solutions.absa_solution.html#module-nlp_architect.solutions.absa_solution">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.solutions.set_expansion.html">nlp_architect.solutions.set_expansion package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.solutions.set_expansion.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="nlp_architect.solutions.set_expansion.ui.html">nlp_architect.solutions.set_expansion.ui package</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.solutions.set_expansion.ui.html#submodules">Submodules</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.solutions.set_expansion.ui.html#module-nlp_architect.solutions.set_expansion.ui.main">nlp_architect.solutions.set_expansion.ui.main module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.solutions.set_expansion.ui.html#module-nlp_architect.solutions.set_expansion.ui.settings">nlp_architect.solutions.set_expansion.ui.settings module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.solutions.set_expansion.ui.html#module-nlp_architect.solutions.set_expansion.ui">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.solutions.set_expansion.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.solutions.set_expansion.html#module-nlp_architect.solutions.set_expansion.expand_server">nlp_architect.solutions.set_expansion.expand_server module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.solutions.set_expansion.html#module-nlp_architect.solutions.set_expansion.prepare_data">nlp_architect.solutions.set_expansion.prepare_data module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.solutions.set_expansion.html#module-nlp_architect.solutions.set_expansion.set_expand">nlp_architect.solutions.set_expansion.set_expand module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.solutions.set_expansion.html#module-nlp_architect.solutions.set_expansion">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.solutions.trend_analysis.html">nlp_architect.solutions.trend_analysis package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.solutions.trend_analysis.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="nlp_architect.solutions.trend_analysis.ui.html">nlp_architect.solutions.trend_analysis.ui package</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.solutions.trend_analysis.ui.html#submodules">Submodules</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.solutions.trend_analysis.ui.html#module-nlp_architect.solutions.trend_analysis.ui.main">nlp_architect.solutions.trend_analysis.ui.main module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.solutions.trend_analysis.ui.html#module-nlp_architect.solutions.trend_analysis.ui">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.solutions.trend_analysis.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.solutions.trend_analysis.html#module-nlp_architect.solutions.trend_analysis.np_scorer">nlp_architect.solutions.trend_analysis.np_scorer module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.solutions.trend_analysis.html#module-nlp_architect.solutions.trend_analysis.scoring_utils">nlp_architect.solutions.trend_analysis.scoring_utils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.solutions.trend_analysis.html#module-nlp_architect.solutions.trend_analysis.topic_extraction">nlp_architect.solutions.trend_analysis.topic_extraction module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.solutions.trend_analysis.html#module-nlp_architect.solutions.trend_analysis.trend_analysis">nlp_architect.solutions.trend_analysis.trend_analysis module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.solutions.trend_analysis.html#module-nlp_architect.solutions.trend_analysis">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.solutions.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.solutions.html#module-nlp_architect.solutions.start_ui">nlp_architect.solutions.start_ui module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.solutions.html#module-nlp_architect.solutions">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="nlp_architect.utils.html">nlp_architect.utils package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.utils.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.utils.resources.html">nlp_architect.utils.resources package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.utils.resources.html#module-nlp_architect.utils.resources">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.utils.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.utils.html#module-nlp_architect.utils.ansi2html">nlp_architect.utils.ansi2html module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.utils.html#module-nlp_architect.utils.embedding">nlp_architect.utils.embedding module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.utils.html#module-nlp_architect.utils.ensembler">nlp_architect.utils.ensembler module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.utils.html#module-nlp_architect.utils.generic">nlp_architect.utils.generic module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.utils.html#module-nlp_architect.utils.io">nlp_architect.utils.io module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.utils.html#module-nlp_architect.utils.metrics">nlp_architect.utils.metrics module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.utils.html#module-nlp_architect.utils.mrc_utils">nlp_architect.utils.mrc_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.utils.html#module-nlp_architect.utils.string_utils">nlp_architect.utils.string_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.utils.html#module-nlp_architect.utils.testing">nlp_architect.utils.testing module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.utils.html#module-nlp_architect.utils.text">nlp_architect.utils.text module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.utils.html#module-nlp_architect.utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

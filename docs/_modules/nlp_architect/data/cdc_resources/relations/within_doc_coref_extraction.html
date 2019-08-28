@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction &mdash; NLP Architect by Intel® AI Lab 0.4.post2 documentation</title>
+  <title>nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
   
 
   
@@ -25,6 +25,8 @@
         <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
         <script type="text/javascript" src="../../../../../_static/language_data.js"></script>
+        <script type="text/javascript" src="../../../../../_static/install.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
 
@@ -33,8 +35,9 @@
   
   <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" type="text/css" />
-  <link rel="stylesheet" href="../../../../../_static/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/nlp_arch_theme.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
     <link rel="index" title="Index" href="../../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../../search.html" /> 
 </head>
@@ -55,7 +58,7 @@
 
           
             
-            <img src="../../../../../_static/nlp_architect_logo_white.png" class="logo" alt="Logo"/>
+            <img src="../../../../../_static/logo.png" class="logo" alt="Logo"/>
           
           </a>
 
@@ -81,31 +84,27 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../main.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../quick_start.html">Quick start</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../publications.html">Publications</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../tutorials.html">Jupyter Tutorials</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../developer_guide.html">Developer Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../model_zoo.html">Model Zoo</a></li>
 </ul>
 <p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../absa.html">Aspect Based Sentiment Analysis</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../chunker.html">Sequence Chunker</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../ner_crf.html">Named Entity Recognition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../tagging/sequence_tagging.html">Sequence Tagging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../sentiment.html">Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../bist_parser.html">Dependency Parsing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../intent.html">Intent Extraction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../np_segmentation.html">Noun Phrase Semantic Segmentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../bist_parser.html">BIST Dependency Parser</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../word_sense.html">Most Common Word Sense</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../np2vec.html">Noun Phrase to Vec</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../supervised_sentiment.html">Supervised Sentiment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../reading_comprehension.html">Reading Comprehension</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../memn2n.html">End-to-End Memory Networks for Goal Oriented Dialogue</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../tcn.html">TCN Language Model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../crosslingual_emb.html">Unsupervised Crosslingual Embeddings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../cross_doc_coref.html">Cross Document Co-Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../identifying_semantic_relation.html">Semantic Relation Identification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../lm.html">Language Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../information_extraction.html">Information Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../transformers.html">Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../archived/additional.html">Additional Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Optimized Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../quantized_bert.html">Quantized BERT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../transformers_distillation.html">Transformers Distillation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Solutions</span></p>
@@ -114,14 +113,11 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../../../term_set_expansion.html">Set Expansion</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../trend_analysis.html">Trend Analysis</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Pipelines</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../spacy_bist.html">Spacy-BIST Parser</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../spacy_np_annotator.html">Spacy-NP Annotator</a></li>
-</ul>
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../developer_guide.html">Developer Guide</a></li>
 </ul>
 
             
@@ -212,8 +208,8 @@
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="WithinDocCoref"><a class="viewcode-back" href="../../../../../generated/nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref.html#nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref">[docs]</a><span class="k">class</span> <span class="nc">WithinDocCoref</span><span class="p">(</span><span class="n">RelationExtraction</span><span class="p">):</span>
-<div class="viewcode-block" id="WithinDocCoref.__init__"><a class="viewcode-back" href="../../../../../generated/nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref.html#nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wd_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<div class="viewcode-block" id="WithinDocCoref"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.relations.html#nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref">[docs]</a><span class="k">class</span> <span class="nc">WithinDocCoref</span><span class="p">(</span><span class="n">RelationExtraction</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wd_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Extract Relation between two mentions according to Within document co-reference</span>
 
@@ -226,9 +222,9 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">within_doc_coref_chain</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">arrange_resource</span><span class="p">(</span><span class="n">wd_mentions_json</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="s1">&#39;Within-doc resource file not found or not in path&#39;</span><span class="p">)</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">WithinDocCoref</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span></div>
+        <span class="nb">super</span><span class="p">(</span><span class="n">WithinDocCoref</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
-<div class="viewcode-block" id="WithinDocCoref.arrange_resource"><a class="viewcode-back" href="../../../../../generated/nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref.html#nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref.arrange_resource">[docs]</a>    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="WithinDocCoref.arrange_resource"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.relations.html#nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref.arrange_resource">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">arrange_resource</span><span class="p">(</span><span class="n">wd_mentions_json</span><span class="p">):</span>
         <span class="n">document_tokens_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">mention_json</span> <span class="ow">in</span> <span class="n">wd_mentions_json</span><span class="p">:</span>
@@ -242,13 +238,13 @@
                 <span class="n">document_tokens_dict</span><span class="p">[</span><span class="n">token_map_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">mention_data</span><span class="o">.</span><span class="n">coref_chain</span>
         <span class="k">return</span> <span class="n">document_tokens_dict</span></div>
 
-<div class="viewcode-block" id="WithinDocCoref.extract_all_relations"><a class="viewcode-back" href="../../../../../generated/nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref.html#nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref.extract_all_relations">[docs]</a>    <span class="k">def</span> <span class="nf">extract_all_relations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mention_x</span><span class="p">:</span> <span class="n">MentionData</span><span class="p">,</span>
+<div class="viewcode-block" id="WithinDocCoref.extract_all_relations"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.relations.html#nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref.extract_all_relations">[docs]</a>    <span class="k">def</span> <span class="nf">extract_all_relations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mention_x</span><span class="p">:</span> <span class="n">MentionData</span><span class="p">,</span>
                               <span class="n">mention_y</span><span class="p">:</span> <span class="n">MentionData</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="n">RelationType</span><span class="p">]:</span>
         <span class="n">ret_</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
         <span class="n">ret_</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">extract_sub_relations</span><span class="p">(</span><span class="n">mention_x</span><span class="p">,</span> <span class="n">mention_y</span><span class="p">,</span> <span class="n">RelationType</span><span class="o">.</span><span class="n">WITHIN_DOC_COREF</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">ret_</span></div>
 
-<div class="viewcode-block" id="WithinDocCoref.extract_sub_relations"><a class="viewcode-back" href="../../../../../generated/nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref.html#nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref.extract_sub_relations">[docs]</a>    <span class="k">def</span> <span class="nf">extract_sub_relations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mention_x</span><span class="p">:</span> <span class="n">MentionData</span><span class="p">,</span> <span class="n">mention_y</span><span class="p">:</span> <span class="n">MentionData</span><span class="p">,</span>
+<div class="viewcode-block" id="WithinDocCoref.extract_sub_relations"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.relations.html#nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref.extract_sub_relations">[docs]</a>    <span class="k">def</span> <span class="nf">extract_sub_relations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mention_x</span><span class="p">:</span> <span class="n">MentionData</span><span class="p">,</span> <span class="n">mention_y</span><span class="p">:</span> <span class="n">MentionData</span><span class="p">,</span>
                               <span class="n">relation</span><span class="p">:</span> <span class="n">RelationType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RelationType</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check if input mentions has the given relation between them</span>
@@ -280,7 +276,7 @@
 
         <span class="k">return</span> <span class="n">RelationType</span><span class="o">.</span><span class="n">NO_RELATION_FOUND</span></div>
 
-<div class="viewcode-block" id="WithinDocCoref.extract_within_coref"><a class="viewcode-back" href="../../../../../generated/nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref.html#nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref.extract_within_coref">[docs]</a>    <span class="k">def</span> <span class="nf">extract_within_coref</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mention</span><span class="p">:</span> <span class="n">MentionData</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<div class="viewcode-block" id="WithinDocCoref.extract_within_coref"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.relations.html#nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref.extract_within_coref">[docs]</a>    <span class="k">def</span> <span class="nf">extract_within_coref</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mention</span><span class="p">:</span> <span class="n">MentionData</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
         <span class="n">tokens</span> <span class="o">=</span> <span class="n">mention</span><span class="o">.</span><span class="n">tokens_number</span>
         <span class="n">within_coref_token</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">token_id</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
@@ -297,14 +293,14 @@
 
         <span class="k">return</span> <span class="n">within_coref_token</span></div>
 
-<div class="viewcode-block" id="WithinDocCoref.get_within_doc_coref_chain"><a class="viewcode-back" href="../../../../../generated/nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref.html#nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref.get_within_doc_coref_chain">[docs]</a>    <span class="k">def</span> <span class="nf">get_within_doc_coref_chain</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="WithinDocCoref.get_within_doc_coref_chain"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.relations.html#nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref.get_within_doc_coref_chain">[docs]</a>    <span class="k">def</span> <span class="nf">get_within_doc_coref_chain</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">within_doc_coref_chain</span></div>
 
-<div class="viewcode-block" id="WithinDocCoref.create_ment_id"><a class="viewcode-back" href="../../../../../generated/nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref.html#nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref.create_ment_id">[docs]</a>    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="WithinDocCoref.create_ment_id"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.relations.html#nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref.create_ment_id">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">create_ment_id</span><span class="p">(</span><span class="n">mention_x</span><span class="p">:</span> <span class="n">MentionData</span><span class="p">,</span> <span class="n">mention_y</span><span class="p">:</span> <span class="n">MentionData</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="s1">&#39;_&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">mention_x</span><span class="o">.</span><span class="n">get_mention_id</span><span class="p">(),</span> <span class="n">mention_y</span><span class="o">.</span><span class="n">get_mention_id</span><span class="p">()])</span></div>
 
-<div class="viewcode-block" id="WithinDocCoref.get_supported_relations"><a class="viewcode-back" href="../../../../../generated/nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref.html#nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref.get_supported_relations">[docs]</a>    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="WithinDocCoref.get_supported_relations"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.relations.html#nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref.get_supported_relations">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">get_supported_relations</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">RelationType</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return all supported relations by this class</span>

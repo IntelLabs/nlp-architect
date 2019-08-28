@@ -56,7 +56,7 @@ Training
 Full code example is available at ``examples/absa/train.py``.
 There are two training modes:
 
-1. Providing training data in a raw text format. In this case the training flow will
+**1.** Providing training data in a raw text format. In this case the training flow will
 apply the dependency parser to the data:
 
 .. code:: bash
@@ -64,40 +64,34 @@ apply the dependency parser to the data:
     python3 examples/absa/train.py --data=TRAINING_DATASET
 
 
-Arguments:
+**Arguments:**
 
 ``--data=TRAINING_DATASET`` - path to the input training dataset. Should point to a single raw text file with documents
 separated by newlines or a single csv file containing one doc per line or a directory containing one raw
 text file per document.
 
-Optional arguments:
+**Optional arguments:**
 
 ``--rerank-model=RERANK_MODEL`` - path to re-rank model. By default when running the training
 for the first time this model will be downloaded to ``~/nlp-architect/cache/absa/train/reranking_model``
 
-Notes:
+**Notes:**
 
-a. The generated opinion and aspect lexicons are written as csv files to:
-``~/nlp-architect/cache/absa/train/output/generated_opinion_lex_reranked.csv`` and to ``~/nlp-architect/cache/absa/train/output/generated_aspect_lex.csv``
+- The generated opinion and aspect lexicons are written as csv files to: ``~/nlp-architect/cache/absa/train/output/generated_opinion_lex_reranked.csv`` and to ``~/nlp-architect/cache/absa/train/output/generated_aspect_lex.csv``
 
-b. In this mode the parsed data (jsons of ParsedDocument objects) is written to (``~/nlp-architect/cache/absa/train/parsed``)
+- In this mode the parsed data (jsons of ParsedDocument objects) is written to: ``~/nlp-architect/cache/absa/train/parsed``
 
-c. When running the training for the first time the system will download
-glove word embbedding model (the user will be prompt for authorization) to
-``~/nlp-architect/cache/absa/train/word_emb_unzipped`` (this may take a while)
+- When running the training for the first time the system will download glove word embbedding model (the user will be prompted for authorization) to: ``~/nlp-architect/cache/absa/train/word_emb_unzipped`` (this may take a while)
 
-d. For demonstration purposes we provide a sample of tripadvisor.co.uk restaurants reviews under the
-`Creative Commons Attribution-Share-Alike 3.0 License <https://creativecommons.org/licenses/by-sa/3.0/>`__ (Copyright 2018 Wikimedia Foundation).
-The dataset can be found at ``datasets/absa/datasets/absa/tripadvisor_co_uk-travel_restaurant_reviews_sample_2000_train.csv``.
-``~/nlp-architect/cache/absa/train/reranking_model``
+- For demonstration purposes we provide a sample of tripadvisor.co.uk restaurants reviews under the `Creative Commons Attribution-Share-Alike 3.0 License <https://creativecommons.org/licenses/by-sa/3.0/>`__ (Copyright 2018 Wikimedia Foundation). The dataset can be found at: ``datasets/absa/datasets/absa/tripadvisor_co_uk-travel_restaurant_reviews_sample_2000_train.csv``.
 
-2. Providing parsed training data. In this case the training flow skips the parsing step:
+**2.** Providing parsed training data. In this case the training flow skips the parsing step:
 
 .. code:: bash
 
     python3 examples/absa/train.py --parsed-data=PARSED_TRAINING_DATASET
 
-Arguments:
+**Arguments:**
 
 ``--parsed-data=PARSED_TRAINING_DATASET``   - path to the parsed format (jsons of ParsedDocument objects) of the training dataset.
 
@@ -106,14 +100,14 @@ Inference
 Full code example is available at ``examples/absa/inference/inference.py``.
 There are two inference modes:
 
-1. Providing inference data in a raw text format.
+**1.** Providing inference data in a raw text format.
 
 .. code:: python
 
     inference = SentimentInference(ASPECT_LEX, OPINION_LEX)
     sentiment_doc = inference.run(doc="The food was wonderful and fresh. Staff were friendly.")
 
-Arguments:
+**Arguments:**
 
 ``ASPECT_LEX``  - path to aspect lexicon (csv file) that was produced by the training phase.
 aspect.csv may be manually edited for grouping alias aspect names (e.g. 'drinks' and 'beverages')
@@ -123,7 +117,7 @@ together. Simply copy all alias names to the same line in the csv file.
 
 ``doc`` - input sentence.
 
-2. Providing parsed inference data (ParsedDocument format). In this case the parsing step is skipped:
+**2.** Providing parsed inference data (ParsedDocument format). In this case the parsing step is skipped:
 
 .. code:: python
 
@@ -143,7 +137,7 @@ The provided file ``examples/absa/inference/interactive.py`` enables using gener
     python3 interactive.py --aspects=ASPECT_LEX --opinions=OPINION_LEX
 
 
-Arguments:
+**Arguments:**
 
 ``--aspects=ASPECT_LEX``    - path to aspect lexicon (csv file format)
 

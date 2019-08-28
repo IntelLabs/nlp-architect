@@ -1,0 +1,522 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>nlp_architect.nn.torch.quantization &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+        <script type="text/javascript" src="../../../../_static/install.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/nlp_arch_theme.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html">
+          
+
+          
+            
+            <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../quick_start.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../publications.html">Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials.html">Jupyter Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../model_zoo.html">Model Zoo</a></li>
+</ul>
+<p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tagging/sequence_tagging.html">Sequence Tagging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../sentiment.html">Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../bist_parser.html">Dependency Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../intent.html">Intent Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../lm.html">Language Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../information_extraction.html">Information Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../transformers.html">Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../archived/additional.html">Additional Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Optimized Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../quantized_bert.html">Quantized BERT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../transformers_distillation.html">Transformers Distillation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solutions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../absa_solution.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../term_set_expansion.html">Set Expansion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../trend_analysis.html">Trend Analysis</a></li>
+</ul>
+<p class="caption"><span class="caption-text">For Developers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../developer_guide.html">Developer Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">NLP Architect by Intel® AI Lab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../torch.html">nlp_architect.nn.torch</a> &raquo;</li>
+        
+      <li>nlp_architect.nn.torch.quantization</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for nlp_architect.nn.torch.quantization</h1><div class="highlight"><pre>
+<span></span><span class="c1"># ******************************************************************************</span>
+<span class="c1"># Copyright 2017-2019 Intel Corporation</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ******************************************************************************</span>
+<span class="c1"># pylint: disable=no-member</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Quantization ops</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">unicode_literals</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="k">import</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">auto</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">copy</span>
+
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">torch</span> <span class="k">import</span> <span class="n">nn</span>
+<span class="kn">from</span> <span class="nn">torch.nn</span> <span class="k">import</span> <span class="n">functional</span> <span class="k">as</span> <span class="n">F</span>
+
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="get_dynamic_scale"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.nn.torch.html#nlp_architect.nn.torch.quantization.get_dynamic_scale">[docs]</a><span class="k">def</span> <span class="nf">get_dynamic_scale</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">bits</span><span class="p">,</span> <span class="n">with_grad</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculate dynamic scale for quantization from input by taking the</span>
+<span class="sd">    maximum absoulute value from x and number of bits&quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">set_grad_enabled</span><span class="p">(</span><span class="n">with_grad</span><span class="p">):</span>
+        <span class="n">threshold</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">get_scale</span><span class="p">(</span><span class="n">bits</span><span class="p">,</span> <span class="n">threshold</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_scale"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.nn.torch.html#nlp_architect.nn.torch.quantization.get_scale">[docs]</a><span class="k">def</span> <span class="nf">get_scale</span><span class="p">(</span><span class="n">bits</span><span class="p">,</span> <span class="n">threshold</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculate scale for quantization according to some constant and number of bits&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">calc_max_quant_value</span><span class="p">(</span><span class="n">bits</span><span class="p">)</span> <span class="o">/</span> <span class="n">threshold</span></div>
+
+
+<div class="viewcode-block" id="calc_max_quant_value"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.nn.torch.html#nlp_architect.nn.torch.quantization.calc_max_quant_value">[docs]</a><span class="k">def</span> <span class="nf">calc_max_quant_value</span><span class="p">(</span><span class="n">bits</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculate the maximum symmetric quantized value according to number of bits&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="mi">2</span><span class="o">**</span><span class="p">(</span><span class="n">bits</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span></div>
+
+
+<div class="viewcode-block" id="quantize"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.nn.torch.html#nlp_architect.nn.torch.quantization.quantize">[docs]</a><span class="k">def</span> <span class="nf">quantize</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">bits</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Do linear quantization to input according to a scale and number of bits&quot;&quot;&quot;</span>
+    <span class="n">thresh</span> <span class="o">=</span> <span class="n">calc_max_quant_value</span><span class="p">(</span><span class="n">bits</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">input</span><span class="o">.</span><span class="n">mul</span><span class="p">(</span><span class="n">scale</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">()</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="o">-</span><span class="n">thresh</span><span class="p">,</span> <span class="n">thresh</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="dequantize"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.nn.torch.html#nlp_architect.nn.torch.quantization.dequantize">[docs]</a><span class="k">def</span> <span class="nf">dequantize</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">scale</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;linear dequantization according to some scale&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">input</span><span class="o">.</span><span class="n">div</span><span class="p">(</span><span class="n">scale</span><span class="p">)</span></div>
+
+
+<span class="c1"># TODO(ofir) future work, implement a layer that uses this function that gives a more comfortable</span>
+<div class="viewcode-block" id="FakeLinearQuantizationWithSTE"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.nn.torch.html#nlp_architect.nn.torch.quantization.FakeLinearQuantizationWithSTE">[docs]</a><span class="k">class</span> <span class="nc">FakeLinearQuantizationWithSTE</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">autograd</span><span class="o">.</span><span class="n">Function</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Simulates error caused by quantization. Uses Straight-Through Estimator for Back prop&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="FakeLinearQuantizationWithSTE.forward"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.nn.torch.html#nlp_architect.nn.torch.quantization.FakeLinearQuantizationWithSTE.forward">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">bits</span><span class="o">=</span><span class="mi">8</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;fake quantize input according to scale and number of bits, dequantize</span>
+<span class="sd">        quantize(input))&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">dequantize</span><span class="p">(</span><span class="n">quantize</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">bits</span><span class="p">),</span> <span class="n">scale</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="FakeLinearQuantizationWithSTE.backward"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.nn.torch.html#nlp_architect.nn.torch.quantization.FakeLinearQuantizationWithSTE.backward">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">backward</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">grad_output</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Calculate estimated gradients for fake quantization using</span>
+<span class="sd">        Straigh-Through Estimator (STE) according to:</span>
+<span class="sd">        https://openreview.net/pdf?id=B1ae1lZRb&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">grad_output</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span></div></div>
+
+
+<div class="viewcode-block" id="QuantizationMode"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.nn.torch.html#nlp_architect.nn.torch.quantization.QuantizationMode">[docs]</a><span class="k">class</span> <span class="nc">QuantizationMode</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">NONE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">DYNAMIC</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">EMA</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+<span class="n">_fake_quantize</span> <span class="o">=</span> <span class="n">FakeLinearQuantizationWithSTE</span><span class="o">.</span><span class="n">apply</span>
+
+
+<div class="viewcode-block" id="QuantizedLinear"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.nn.torch.html#nlp_architect.nn.torch.quantization.QuantizedLinear">[docs]</a><span class="k">class</span> <span class="nc">QuantizedLinear</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Linear layer with quantization aware training capability&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">activation_bits</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">weight_bits</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+                 <span class="n">requantize_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ema_decay</span><span class="o">=</span><span class="mf">0.9999</span><span class="p">,</span> <span class="n">start_step</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span>
+                 <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">activation_bits</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="ow">or</span> <span class="n">weight_bits</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="n">f</span><span class="s2">&quot;activation_bits=</span><span class="si">{activation_bits}</span><span class="s2"> and weight_bits=&quot;</span>
+                <span class="n">f</span><span class="s2">&quot;</span><span class="si">{weight_bits}</span><span class="s2"> must be higher than 1 &quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">activation_bits</span> <span class="o">=</span> <span class="n">activation_bits</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">weight_bits</span> <span class="o">=</span> <span class="n">weight_bits</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">accumulation_bits</span> <span class="o">=</span> <span class="mi">32</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ema_decay</span> <span class="o">=</span> <span class="n">ema_decay</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">requantize_output</span> <span class="o">=</span> <span class="n">requantize_output</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start_step</span> <span class="o">=</span> <span class="n">start_step</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="n">QuantizationMode</span><span class="p">[</span><span class="n">mode</span><span class="o">.</span><span class="n">upper</span><span class="p">()]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">register_buffer</span><span class="p">(</span><span class="s1">&#39;_step&#39;</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">register_buffer</span><span class="p">(</span><span class="s1">&#39;input_thresh&#39;</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">register_buffer</span><span class="p">(</span><span class="s1">&#39;output_thresh&#39;</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+
+<div class="viewcode-block" id="QuantizedLinear.training_quantized_forward"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.nn.torch.html#nlp_architect.nn.torch.quantization.QuantizedLinear.training_quantized_forward">[docs]</a>    <span class="k">def</span> <span class="nf">training_quantized_forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;fake quantized forward, fake quantizes weights and activations,</span>
+<span class="sd">        learn quantization ranges if quantization mode is EMA.</span>
+<span class="sd">        This function should only be used while training&quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">training</span><span class="p">,</span> <span class="s2">&quot;should only be called when training&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="n">QuantizationMode</span><span class="o">.</span><span class="n">EMA</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_update_ema</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input_thresh</span><span class="p">,</span> <span class="nb">input</span><span class="o">.</span><span class="n">detach</span><span class="p">())</span>
+        <span class="n">input_scale</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_input_scale</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">linear</span><span class="p">(</span><span class="n">_fake_quantize</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">input_scale</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">activation_bits</span><span class="p">),</span>
+                       <span class="bp">self</span><span class="o">.</span><span class="n">fake_quantized_weight</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bias</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">requantize_output</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="n">QuantizationMode</span><span class="o">.</span><span class="n">EMA</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_update_ema</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output_thresh</span><span class="p">,</span> <span class="n">out</span><span class="o">.</span><span class="n">detach</span><span class="p">())</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="n">_fake_quantize</span><span class="p">(</span>
+                <span class="n">out</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_output_scale</span><span class="p">(</span><span class="n">out</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">activation_bits</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">out</span></div>
+
+<div class="viewcode-block" id="QuantizedLinear.from_config"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.nn.torch.html#nlp_architect.nn.torch.quantization.QuantizedLinear.from_config">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_config</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initialize quantized layer from config&quot;&quot;&quot;</span>
+        <span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;weight_bits&#39;</span><span class="p">,</span> <span class="s1">&#39;start_step&#39;</span><span class="p">,</span> <span class="s1">&#39;mode&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;activation_bits&#39;</span><span class="p">,</span> <span class="s1">&#39;requantize_output&#39;</span><span class="p">,</span> <span class="s1">&#39;ema_decay&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span> <span class="o">**</span><span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">})</span></div>
+
+<div class="viewcode-block" id="QuantizedLinear.inference_quantized_forward"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.nn.torch.html#nlp_architect.nn.torch.quantization.QuantizedLinear.inference_quantized_forward">[docs]</a>    <span class="k">def</span> <span class="nf">inference_quantized_forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Simulate quantized inference. quantize input and perform calculation with only integer numbers.</span>
+<span class="sd">        This function should only be used while doing inference&quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">training</span><span class="p">,</span> <span class="s2">&quot;should only be called when not training&quot;</span>
+        <span class="n">input_scale</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_input_scale</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+        <span class="n">dequantize_scale</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">weight_scale</span> <span class="o">*</span> <span class="n">input_scale</span>
+        <span class="n">quantized_input</span> <span class="o">=</span> <span class="n">quantize</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">input_scale</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">activation_bits</span><span class="p">)</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">linear</span><span class="p">(</span><span class="n">quantized_input</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">quantized_weight</span><span class="p">,</span>
+                       <span class="bp">self</span><span class="o">.</span><span class="n">get_quantized_bias</span><span class="p">(</span><span class="n">dequantize_scale</span><span class="p">))</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">dequantize</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">dequantize_scale</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">requantize_output</span><span class="p">:</span>
+            <span class="n">output_scale</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_output_scale</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="n">dequantize</span><span class="p">(</span><span class="n">quantize</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">output_scale</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">activation_bits</span><span class="p">),</span> <span class="n">output_scale</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">out</span></div>
+
+<div class="viewcode-block" id="QuantizedLinear.forward"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.nn.torch.html#nlp_architect.nn.torch.quantization.QuantizedLinear.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="n">QuantizationMode</span><span class="o">.</span><span class="n">NONE</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">training</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_step</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_step</span><span class="p">:</span>
+                <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">training_quantized_forward</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">out</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_step</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inference_quantized_forward</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">out</span></div>
+
+<div class="viewcode-block" id="QuantizedLinear.get_quantized_bias"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.nn.torch.html#nlp_architect.nn.torch.quantization.QuantizedLinear.get_quantized_bias">[docs]</a>    <span class="k">def</span> <span class="nf">get_quantized_bias</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">bias</span> <span class="o">=</span> <span class="n">quantize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bias</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">accumulation_bits</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="n">bias</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">bias</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">fake_quantized_weight</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">_fake_quantize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">weight</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">weight_scale</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">weight_bits</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">quantized_weight</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">quantize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">weight</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">weight_scale</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">weight_bits</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">weight_scale</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">get_dynamic_scale</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">weight</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">weight_bits</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_input_scale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_activation_scale</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_thresh</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_output_scale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_activation_scale</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_thresh</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_activation_scale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">activation</span><span class="p">,</span> <span class="n">threshold</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="n">QuantizationMode</span><span class="o">.</span><span class="n">DYNAMIC</span><span class="p">:</span>
+            <span class="n">scale</span> <span class="o">=</span> <span class="n">get_dynamic_scale</span><span class="p">(</span><span class="n">activation</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">activation_bits</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="n">QuantizationMode</span><span class="o">.</span><span class="n">EMA</span><span class="p">:</span>
+            <span class="n">scale</span> <span class="o">=</span> <span class="n">get_scale</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">activation_bits</span><span class="p">,</span> <span class="n">threshold</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">scale</span>
+
+    <span class="k">def</span> <span class="nf">_update_ema</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ema</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">reduce_fn</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span><span class="o">.</span><span class="n">max</span><span class="p">()):</span>
+        <span class="sd">&quot;&quot;&quot;Update exponential moving average (EMA) of activations thresholds.</span>
+<span class="sd">        the reduce_fn calculates the current threshold from the input tensor&quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">_step</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_step</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_step</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_step</span><span class="p">:</span>
+            <span class="n">ema</span><span class="o">.</span><span class="n">fill_</span><span class="p">(</span><span class="n">reduce_fn</span><span class="p">(</span><span class="nb">input</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ema</span><span class="o">.</span><span class="n">sub_</span><span class="p">((</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">ema_decay</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">ema</span> <span class="o">-</span> <span class="n">reduce_fn</span><span class="p">(</span><span class="nb">input</span><span class="p">)))</span>
+
+<div class="viewcode-block" id="QuantizedLinear.extra_repr"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.nn.torch.html#nlp_architect.nn.torch.quantization.QuantizedLinear.extra_repr">[docs]</a>    <span class="k">def</span> <span class="nf">extra_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">extra_repr</span><span class="p">()</span> <span class="o">+</span> <span class="n">f</span><span class="s1">&#39;, mode=</span><span class="si">{self.mode}</span><span class="s1">, activation_bits=&#39;</span> \
+            <span class="n">f</span><span class="s1">&#39;</span><span class="si">{self.activation_bits}</span><span class="s1">, weight_bits=</span><span class="si">{self.weight_bits}</span><span class="s1">, ema_decay=&#39;</span> \
+            <span class="n">f</span><span class="s1">&#39;{self.ema_decay if self.mode == QuantizationMode.EMA else None}&#39;</span></div></div>
+
+
+<div class="viewcode-block" id="QuantizedEmbedding"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.nn.torch.html#nlp_architect.nn.torch.quantization.QuantizedEmbedding">[docs]</a><span class="k">class</span> <span class="nc">QuantizedEmbedding</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Embedding</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Embedding layer with quantization aware training capability&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">weight_bits</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">start_step</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">weight_bits</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="n">f</span><span class="s2">&quot;weight_bits=</span><span class="si">{weight_bits}</span><span class="s2"> must be higher than 1 &quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">weight_bits</span> <span class="o">=</span> <span class="n">weight_bits</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="n">QuantizationMode</span><span class="p">[</span><span class="n">mode</span><span class="o">.</span><span class="n">upper</span><span class="p">()]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start_step</span> <span class="o">=</span> <span class="n">start_step</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">register_buffer</span><span class="p">(</span><span class="s1">&#39;_step&#39;</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+
+<div class="viewcode-block" id="QuantizedEmbedding.forward"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.nn.torch.html#nlp_architect.nn.torch.quantization.QuantizedEmbedding.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="n">QuantizationMode</span><span class="o">.</span><span class="n">NONE</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_step</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_step</span><span class="p">:</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">quantized_forward</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">training</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_step</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">out</span></div>
+
+<div class="viewcode-block" id="QuantizedEmbedding.from_config"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.nn.torch.html#nlp_architect.nn.torch.quantization.QuantizedEmbedding.from_config">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_config</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initialize quantized layer from config&quot;&quot;&quot;</span>
+        <span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;weight_bits&#39;</span><span class="p">,</span> <span class="s1">&#39;start_step&#39;</span><span class="p">,</span> <span class="s1">&#39;mode&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span> <span class="o">**</span><span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">})</span></div>
+
+<div class="viewcode-block" id="QuantizedEmbedding.quantized_forward"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.nn.torch.html#nlp_architect.nn.torch.quantization.QuantizedEmbedding.quantized_forward">[docs]</a>    <span class="k">def</span> <span class="nf">quantized_forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return quantized embeddings&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">F</span><span class="o">.</span><span class="n">embedding</span><span class="p">(</span>
+            <span class="nb">input</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fake_quantized_weight</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding_idx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_norm</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">norm_type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale_grad_by_freq</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sparse</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">fake_quantized_weight</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">_fake_quantize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">weight</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">weight_scale</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">weight_bits</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">weight_scale</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">get_dynamic_scale</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">weight</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">weight_bits</span><span class="p">)</span>
+
+<div class="viewcode-block" id="QuantizedEmbedding.extra_repr"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.nn.torch.html#nlp_architect.nn.torch.quantization.QuantizedEmbedding.extra_repr">[docs]</a>    <span class="k">def</span> <span class="nf">extra_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">extra_repr</span><span class="p">()</span> <span class="o">+</span> <span class="n">f</span><span class="s2">&quot;, mode=</span><span class="si">{self.mode}</span><span class="s2">, weight_bits=</span><span class="si">{self.weight_bits}</span><span class="s2">&quot;</span></div></div>
+
+
+<div class="viewcode-block" id="QuantizationConfig"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.nn.torch.html#nlp_architect.nn.torch.quantization.QuantizationConfig">[docs]</a><span class="k">class</span> <span class="nc">QuantizationConfig</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Quantization Configuration Object&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">activation_bits</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+                 <span class="n">weight_bits</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+                 <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span>
+                 <span class="n">start_step</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                 <span class="n">ema_decay</span><span class="o">=</span><span class="mf">0.9999</span><span class="p">,</span>
+                 <span class="n">requantize_output</span><span class="o">=</span><span class="kc">True</span>
+                 <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">activation_bits</span> <span class="o">=</span> <span class="n">activation_bits</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">weight_bits</span> <span class="o">=</span> <span class="n">weight_bits</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="n">mode</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start_step</span> <span class="o">=</span> <span class="n">start_step</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ema_decay</span> <span class="o">=</span> <span class="n">ema_decay</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">requantize_output</span> <span class="o">=</span> <span class="n">requantize_output</span>
+
+<div class="viewcode-block" id="QuantizationConfig.from_dict"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.nn.torch.html#nlp_architect.nn.torch.quantization.QuantizationConfig.from_dict">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">json_object</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Constructs a `QuantizationConfig` from a Python dictionary of parameters.&quot;&quot;&quot;</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="n">QuantizationConfig</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">json_object</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">config</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="k">return</span> <span class="n">config</span></div>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">to_json_string</span><span class="p">())</span>
+
+<div class="viewcode-block" id="QuantizationConfig.to_json_string"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.nn.torch.html#nlp_architect.nn.torch.quantization.QuantizationConfig.to_json_string">[docs]</a>    <span class="k">def</span> <span class="nf">to_json_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Serializes this instance to a JSON string.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span></div>
+
+<div class="viewcode-block" id="QuantizationConfig.to_dict"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.nn.torch.html#nlp_architect.nn.torch.quantization.QuantizationConfig.to_dict">[docs]</a>    <span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Serializes this instance to a Python dictionary.&quot;&quot;&quot;</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">output</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
