@@ -2,31 +2,6 @@
 * NLP Architect Jenkinsfile
 */
 
-/* 
-// Constant Variables for Build
-static final Map slackColorMap      = [
-    'FAILURE': 'danger',
-    'UNSTABLE': 'warning',
-    'SUCCESS': 'good'
-]
-
-// Common Closures for Build
-def slackStartMessage = {
-    try {
-        slackSend message: "Build ${env.JOB_NAME} started (<${env.BUILD_URL}|LINK>)"
-    } catch (err) {
-        echo "BUILD WARNING - Failed to send Slack Message: ${err}"
-    }
-}
-def slackEndMessage = {
-    try {
-        slackSend color: slackColorMap[currentBuild.currentResult], message: "Build ${env.JOB_NAME} finished with result: ${currentBuild.currentResult} (<${env.BUILD_URL}|LINK>)"
-    } catch (err) {
-        echo "BUILD WARNING - Failed to send Slack Message: ${err}"
-    }
-}
-*/
-
 pipeline {
     agent {
         node {
@@ -57,6 +32,7 @@ pipeline {
                 pip3 install -r requirements.txt
                 pip3 install -r dev-requirements.txt
                 pip3 install -e .
+                python -m spacy download en
                 """
             }
         }
@@ -68,7 +44,7 @@ pipeline {
                         . .nlp_architect_env/bin/activate
                         export LC_ALL=en_US.UTF-8
                         export LANG=en_US.UTF-8
-                        nlp_architect test
+                        pytest ./tests -rs -vv --cov=nlp_architect --junit-xml=pytest_unit.xml
                         """
                     }
                     post {
@@ -86,7 +62,7 @@ pipeline {
                     steps {
                         sh """
                         . .nlp_architect_env/bin/activate
-                        nlp_architect style --only-flake
+                        ./scripts/check_flake.sh
                         """
                     }
                     post {
@@ -101,7 +77,7 @@ pipeline {
                     steps {
                         sh """
                         . .nlp_architect_env/bin/activate
-                        nlp_architect style --only-pylint
+                        ./scripts/check_pylint.sh
                         """
                     }
                     post {
@@ -126,7 +102,7 @@ pipeline {
                 currentBuild.result = 'FAILURE'
             }
         }
-        cleanup {
+        always {
             deleteDir()
         }
     }

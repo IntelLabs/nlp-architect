@@ -14,7 +14,7 @@
 # limitations under the License.
 # ******************************************************************************
 import argparse
-import logging 
+import logging
 
 # register all procedures by importing
 import nlp_architect.procedures  # noqa: F401
@@ -27,6 +27,7 @@ from nlp_architect.version import NLP_ARCHITECT_VERSION
 logging.basicConfig(format='%(asctime)s - %(levelname)s - %(name)s - %(message)s',
                     datefmt='%m/%d/%Y %H:%M:%S',
                     level=logging.INFO)
+
 
 def run_cli():
     """ Run nlp_architect command line application

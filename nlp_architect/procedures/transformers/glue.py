@@ -146,23 +146,22 @@ def do_inference(args):
 def get_metric_fn(task_name):
     if task_name == "cola":
         return lambda p, l: {"mcc": matthews_corrcoef(p, l)}
-    elif task_name == "sst-2":
+    if task_name == "sst-2":
         return lambda p, l: {"acc": simple_accuracy(p, l)}
-    elif task_name == "mrpc":
+    if task_name == "mrpc":
         return acc_and_f1
-    elif task_name == "sts-b":
+    if task_name == "sts-b":
         return pearson_and_spearman
-    elif task_name == "qqp":
+    if task_name == "qqp":
         return acc_and_f1
-    elif task_name == "mnli":
+    if task_name == "mnli":
         return lambda p, l: {"acc": simple_accuracy(p, l)}
-    elif task_name == "mnli-mm":
+    if task_name == "mnli-mm":
         return lambda p, l: {"acc": simple_accuracy(p, l)}
-    elif task_name == "qnli":
+    if task_name == "qnli":
         return lambda p, l: {"acc": simple_accuracy(p, l)}
-    elif task_name == "rte":
+    if task_name == "rte":
         return lambda p, l: {"acc": simple_accuracy(p, l)}
-    elif task_name == "wnli":
+    if task_name == "wnli":
         return lambda p, l: {"acc": simple_accuracy(p, l)}
-    else:
-        raise KeyError(task_name)
+    raise KeyError(task_name)

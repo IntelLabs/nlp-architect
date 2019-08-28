@@ -174,8 +174,7 @@ class TransformerSequenceClassifier(TransformerBase):
             elif self.task_type == "regression":
                 all_label_ids = torch.tensor([f.label_id for f in features], dtype=torch.float)
             return TensorDataset(all_input_ids, all_input_mask, all_segment_ids, all_label_ids)
-        else:
-            return TensorDataset(all_input_ids, all_input_mask, all_segment_ids)
+        return TensorDataset(all_input_ids, all_input_mask, all_segment_ids)
 
     def inference(self, examples: List[SequenceClsInputExample], batch_size: int = 64):
         """

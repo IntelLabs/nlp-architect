@@ -297,7 +297,8 @@ class NeuralTagger(TrainableModel):
                 logits = self.model(**inputs)
                 if 'labels' in inputs:
                     if self.use_crf:
-                        loss = -1.0 * self.crf(logits, inputs['labels'], mask=inputs['mask'] != 0.0)
+                        loss = -1.0 * self.crf(logits, inputs['labels'],
+                                               mask=inputs['mask'] != 0.0)
                     else:
                         loss_fn = CrossEntropyLoss(ignore_index=0)
                         loss = loss_fn(logits.view(-1, self.num_labels), inputs['labels'].view(-1))

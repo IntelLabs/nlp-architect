@@ -342,6 +342,7 @@ def line_count(file):
             count += 1
     return count
 
+
 def prepare_output_path(output_dir: str, overwrite_output_dir: str):
     """Create output directory or throw error if exists and overwrite_output_dir is false
     """
