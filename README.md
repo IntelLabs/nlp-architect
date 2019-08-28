@@ -8,19 +8,13 @@ A Deep Learning NLP/NLU library by <a href="https://www.intel.ai/research/">Inte
 </h2>
 <p align="center">
     <a href="https://github.com/NervanaSystems/nlp-architect/blob/master/LICENSE">
-        <img alt="GitHub" src="https://img.shields.io/github/license/NervanaSystems/nlp-architect.svg?color=blue&style=popout">
+        <img alt="GitHub" src="https://img.shields.io/github/license/NervanaSystems/nlp-architect.svg?color=blue&style=flat-square">
     </a>
     <a href="http://nlp_architect.nervanasys.com">
-        <img alt="Website" src="https://img.shields.io/website/http/nlp_architect.nervanasys.com.svg?down_color=red&down_message=offline&style=popout&up_message=online">
-    </a>
-    <a href="https://doi.org/10.5281/zenodo.1477518">
-        <img src="https://zenodo.org/badge/DOI/10.5281/zenodo.1477518.svg" alt="DOI">
-    </a>
-    <a href="https://pepy.tech/project/nlp-architect">
-        <img src="https://pepy.tech/badge/nlp-architect"/>
+        <img alt="Website" src="https://img.shields.io/website/http/nlp_architect.nervanasys.com.svg?down_color=red&down_message=offline&style=flat-square&up_message=online">
     </a>
     <a href="https://github.com/NervanaSystems/nlp-architect/blob/master/LICENSE">
-        <img alt="GitHub release" src="https://img.shields.io/github/release/NervanaSystems/nlp-architect.svg?style=popout">
+        <img alt="GitHub release" src="https://img.shields.io/github/release/NervanaSystems/nlp-architect.svg?style=flat-square">
     </a>
 </p>
 
