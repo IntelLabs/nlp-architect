@@ -1,0 +1,391 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>nlp_architect.utils.ansi2html &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script type="text/javascript" src="../../../_static/install.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/nlp_arch_theme.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html">
+          
+
+          
+            
+            <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick_start.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../publications.html">Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials.html">Jupyter Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../model_zoo.html">Model Zoo</a></li>
+</ul>
+<p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tagging/sequence_tagging.html">Sequence Tagging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../sentiment.html">Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../bist_parser.html">Dependency Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../intent.html">Intent Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lm.html">Language Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../information_extraction.html">Information Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../transformers.html">Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../archived/additional.html">Additional Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Optimized Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quantized_bert.html">Quantized BERT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../transformers_distillation.html">Transformers Distillation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solutions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../absa_solution.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../term_set_expansion.html">Set Expansion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../trend_analysis.html">Trend Analysis</a></li>
+</ul>
+<p class="caption"><span class="caption-text">For Developers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer_guide.html">Developer Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">NLP Architect by Intel® AI Lab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>nlp_architect.utils.ansi2html</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for nlp_architect.utils.ansi2html</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1"># This file was taken from:</span>
+<span class="c1"># https://github.com/Kronuz/ansi2html/blob/master/ansi2html.py</span>
+<span class="c1"># Copyright © 2013 German M. Bravo (Kronuz)</span>
+<span class="c1"># License: https://github.com/Kronuz/ansi2html/blob/master/LICENSE</span>
+<span class="c1"># Changes made to original file: removed main, added run() function.</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">_ANSI2HTML_STYLES</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="c1"># pylint: disable=anomalous-backslash-in-string</span>
+<span class="n">ANSI2HTML_CODES_RE</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;(?:</span><span class="se">\033\\</span><span class="s1">[(</span><span class="se">\\</span><span class="s1">d+(?:;</span><span class="se">\\</span><span class="s1">d+)*)?([cnRhlABCDfsurgKJipm]))&#39;</span><span class="p">)</span>
+<span class="n">ANSI2HTML_PALETTE</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1"># See http://ethanschoonover.com/solarized</span>
+    <span class="s1">&#39;solarized&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;#073642&#39;</span><span class="p">,</span> <span class="s1">&#39;#D30102&#39;</span><span class="p">,</span> <span class="s1">&#39;#859900&#39;</span><span class="p">,</span> <span class="s1">&#39;#B58900&#39;</span><span class="p">,</span> <span class="s1">&#39;#268BD2&#39;</span><span class="p">,</span> <span class="s1">&#39;#D33682&#39;</span><span class="p">,</span> <span class="s1">&#39;#2AA198&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;#EEE8D5&#39;</span><span class="p">,</span> <span class="s1">&#39;#002B36&#39;</span><span class="p">,</span> <span class="s1">&#39;#CB4B16&#39;</span><span class="p">,</span> <span class="s1">&#39;#586E75&#39;</span><span class="p">,</span> <span class="s1">&#39;#657B83&#39;</span><span class="p">,</span> <span class="s1">&#39;#839496&#39;</span><span class="p">,</span> <span class="s1">&#39;#6C71C4&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;#93A1A1&#39;</span><span class="p">,</span> <span class="s1">&#39;#FDF6E3&#39;</span><span class="p">],</span>
+    <span class="c1"># Above mapped onto the xterm 256 color palette</span>
+    <span class="s1">&#39;solarized-xterm&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;#262626&#39;</span><span class="p">,</span> <span class="s1">&#39;#AF0000&#39;</span><span class="p">,</span> <span class="s1">&#39;#5F8700&#39;</span><span class="p">,</span> <span class="s1">&#39;#AF8700&#39;</span><span class="p">,</span> <span class="s1">&#39;#0087FF&#39;</span><span class="p">,</span> <span class="s1">&#39;#AF005F&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;#00AFAF&#39;</span><span class="p">,</span> <span class="s1">&#39;#E4E4E4&#39;</span><span class="p">,</span> <span class="s1">&#39;#1C1C1C&#39;</span><span class="p">,</span> <span class="s1">&#39;#D75F00&#39;</span><span class="p">,</span> <span class="s1">&#39;#585858&#39;</span><span class="p">,</span> <span class="s1">&#39;#626262&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;#808080&#39;</span><span class="p">,</span> <span class="s1">&#39;#5F5FAF&#39;</span><span class="p">,</span> <span class="s1">&#39;#8A8A8A&#39;</span><span class="p">,</span> <span class="s1">&#39;#FFFFD7&#39;</span><span class="p">],</span>
+    <span class="c1"># Gnome default:</span>
+    <span class="s1">&#39;tango&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;#000000&#39;</span><span class="p">,</span> <span class="s1">&#39;#CC0000&#39;</span><span class="p">,</span> <span class="s1">&#39;#4E9A06&#39;</span><span class="p">,</span> <span class="s1">&#39;#C4A000&#39;</span><span class="p">,</span> <span class="s1">&#39;#3465A4&#39;</span><span class="p">,</span> <span class="s1">&#39;#75507B&#39;</span><span class="p">,</span> <span class="s1">&#39;#06989A&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;#D3D7CF&#39;</span><span class="p">,</span> <span class="s1">&#39;#555753&#39;</span><span class="p">,</span> <span class="s1">&#39;#EF2929&#39;</span><span class="p">,</span> <span class="s1">&#39;#8AE234&#39;</span><span class="p">,</span> <span class="s1">&#39;#FCE94F&#39;</span><span class="p">,</span> <span class="s1">&#39;#729FCF&#39;</span><span class="p">,</span> <span class="s1">&#39;#AD7FA8&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;#34E2E2&#39;</span><span class="p">,</span> <span class="s1">&#39;#EEEEEC&#39;</span><span class="p">],</span>
+    <span class="c1"># xterm:</span>
+    <span class="s1">&#39;xterm&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;#000000&#39;</span><span class="p">,</span> <span class="s1">&#39;#CD0000&#39;</span><span class="p">,</span> <span class="s1">&#39;#00CD00&#39;</span><span class="p">,</span> <span class="s1">&#39;#CDCD00&#39;</span><span class="p">,</span> <span class="s1">&#39;#0000EE&#39;</span><span class="p">,</span> <span class="s1">&#39;#CD00CD&#39;</span><span class="p">,</span> <span class="s1">&#39;#00CDCD&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;#E5E5E5&#39;</span><span class="p">,</span> <span class="s1">&#39;#7F7F7F&#39;</span><span class="p">,</span> <span class="s1">&#39;#FF0000&#39;</span><span class="p">,</span> <span class="s1">&#39;#00FF00&#39;</span><span class="p">,</span> <span class="s1">&#39;#FFFF00&#39;</span><span class="p">,</span> <span class="s1">&#39;#5C5CFF&#39;</span><span class="p">,</span> <span class="s1">&#39;#FF00FF&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;#00FFFF&#39;</span><span class="p">,</span> <span class="s1">&#39;#FFFFFF&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;console&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;#000000&#39;</span><span class="p">,</span> <span class="s1">&#39;#AA0000&#39;</span><span class="p">,</span> <span class="s1">&#39;#00AA00&#39;</span><span class="p">,</span> <span class="s1">&#39;#AA5500&#39;</span><span class="p">,</span> <span class="s1">&#39;#0000AA&#39;</span><span class="p">,</span> <span class="s1">&#39;#AA00AA&#39;</span><span class="p">,</span> <span class="s1">&#39;#00AAAA&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;#AAAAAA&#39;</span><span class="p">,</span> <span class="s1">&#39;#555555&#39;</span><span class="p">,</span> <span class="s1">&#39;#FF5555&#39;</span><span class="p">,</span> <span class="s1">&#39;#55FF55&#39;</span><span class="p">,</span> <span class="s1">&#39;#FFFF55&#39;</span><span class="p">,</span> <span class="s1">&#39;#5555FF&#39;</span><span class="p">,</span> <span class="s1">&#39;#FF55FF&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;#55FFFF&#39;</span><span class="p">,</span> <span class="s1">&#39;#FFFFFF&#39;</span><span class="p">],</span>
+<span class="p">}</span>
+
+
+<span class="k">def</span> <span class="nf">_ansi2html_get_styles</span><span class="p">(</span><span class="n">palette</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">palette</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_ANSI2HTML_STYLES</span><span class="p">:</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">ANSI2HTML_PALETTE</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">palette</span><span class="p">,</span> <span class="n">ANSI2HTML_PALETTE</span><span class="p">[</span><span class="s1">&#39;console&#39;</span><span class="p">])</span>
+
+        <span class="n">regular_style</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;1&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>  <span class="c1"># bold</span>
+            <span class="s1">&#39;2&#39;</span><span class="p">:</span> <span class="s1">&#39;opacity:0.5&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;4&#39;</span><span class="p">:</span> <span class="s1">&#39;text-decoration:underline&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;5&#39;</span><span class="p">:</span> <span class="s1">&#39;font-weight:bold&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;7&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;8&#39;</span><span class="p">:</span> <span class="s1">&#39;display:none&#39;</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="n">bold_style</span> <span class="o">=</span> <span class="n">regular_style</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">8</span><span class="p">):</span>
+            <span class="n">regular_style</span><span class="p">[</span><span class="s1">&#39;3</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;color:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">regular_style</span><span class="p">[</span><span class="s1">&#39;4</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;background-color:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+            <span class="n">bold_style</span><span class="p">[</span><span class="s1">&#39;3</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;color:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">p</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">8</span><span class="p">]</span>
+            <span class="n">bold_style</span><span class="p">[</span><span class="s1">&#39;4</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;background-color:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">p</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">8</span><span class="p">]</span>
+
+        <span class="c1"># The default xterm 256 colour p:</span>
+        <span class="n">indexed_style</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">16</span><span class="p">):</span>
+            <span class="n">indexed_style</span><span class="p">[</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">rr</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">gg</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">bb</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">):</span>
+                    <span class="n">i</span> <span class="o">=</span> <span class="mi">16</span> <span class="o">+</span> <span class="n">rr</span> <span class="o">*</span> <span class="mi">36</span> <span class="o">+</span> <span class="n">gg</span> <span class="o">*</span> <span class="mi">6</span> <span class="o">+</span> <span class="n">bb</span>
+                    <span class="n">r</span> <span class="o">=</span> <span class="p">(</span><span class="n">rr</span> <span class="o">*</span> <span class="mi">40</span> <span class="o">+</span> <span class="mi">55</span><span class="p">)</span> <span class="k">if</span> <span class="n">rr</span> <span class="k">else</span> <span class="mi">0</span>
+                    <span class="n">g</span> <span class="o">=</span> <span class="p">(</span><span class="n">gg</span> <span class="o">*</span> <span class="mi">40</span> <span class="o">+</span> <span class="mi">55</span><span class="p">)</span> <span class="k">if</span> <span class="n">gg</span> <span class="k">else</span> <span class="mi">0</span>
+                    <span class="n">b</span> <span class="o">=</span> <span class="p">(</span><span class="n">bb</span> <span class="o">*</span> <span class="mi">40</span> <span class="o">+</span> <span class="mi">55</span><span class="p">)</span> <span class="k">if</span> <span class="n">bb</span> <span class="k">else</span> <span class="mi">0</span>
+                    <span class="n">indexed_style</span><span class="p">[</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                        <span class="s1">&#39;</span><span class="si">%02X</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">c</span> <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">c</span> <span class="o">&lt;=</span> <span class="mi">255</span> <span class="k">else</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>
+
+        <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">24</span><span class="p">):</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="n">g</span> <span class="o">+</span> <span class="mi">232</span>
+            <span class="n">j</span> <span class="o">=</span> <span class="n">g</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">+</span> <span class="mi">8</span>
+            <span class="n">indexed_style</span><span class="p">[</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                <span class="s1">&#39;</span><span class="si">%02X</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">c</span> <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">c</span> <span class="o">&lt;=</span> <span class="mi">255</span> <span class="k">else</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">j</span><span class="p">))</span>
+
+        <span class="n">_ANSI2HTML_STYLES</span><span class="p">[</span><span class="n">palette</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">regular_style</span><span class="p">,</span> <span class="n">bold_style</span><span class="p">,</span> <span class="n">indexed_style</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_ANSI2HTML_STYLES</span><span class="p">[</span><span class="n">palette</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="ansi2html"><a class="viewcode-back" href="../../../generated_api/nlp_architect.utils.html#nlp_architect.utils.ansi2html.ansi2html">[docs]</a><span class="k">def</span> <span class="nf">ansi2html</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;solarized&#39;</span><span class="p">):</span>
+    <span class="c1"># pylint: disable=too-many-branches, too-many-statements</span>
+    <span class="k">def</span> <span class="nf">_ansi2html</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">!=</span> <span class="s1">&#39;m&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">sub</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="n">cs</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">cs</span> <span class="o">=</span> <span class="n">cs</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">if</span> <span class="n">cs</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cs</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;;&#39;</span><span class="p">):</span>
+            <span class="n">c</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s1">&#39;0&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="s1">&#39;0&#39;</span>
+            <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="s1">&#39;0&#39;</span><span class="p">:</span>
+                <span class="k">while</span> <span class="n">stack</span><span class="p">:</span>
+                    <span class="n">sub</span> <span class="o">+=</span> <span class="s1">&#39;&lt;/span&gt;&#39;</span>
+                    <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+            <span class="k">elif</span> <span class="n">c</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;38&#39;</span><span class="p">,</span> <span class="s1">&#39;48&#39;</span><span class="p">):</span>
+                <span class="n">extra</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span><span class="p">]</span>
+                <span class="n">state</span> <span class="o">=</span> <span class="s1">&#39;extra&#39;</span>
+            <span class="k">elif</span> <span class="n">state</span> <span class="o">==</span> <span class="s1">&#39;extra&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="s1">&#39;5&#39;</span><span class="p">:</span>
+                    <span class="n">state</span> <span class="o">=</span> <span class="s1">&#39;idx&#39;</span>
+                <span class="k">elif</span> <span class="n">c</span> <span class="o">==</span> <span class="s1">&#39;2&#39;</span><span class="p">:</span>
+                    <span class="n">state</span> <span class="o">=</span> <span class="s1">&#39;r&#39;</span>
+            <span class="k">elif</span> <span class="n">state</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">state</span> <span class="o">==</span> <span class="s1">&#39;idx&#39;</span><span class="p">:</span>
+                    <span class="n">extra</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+                    <span class="n">state</span> <span class="o">=</span> <span class="kc">None</span>
+                    <span class="n">color</span> <span class="o">=</span> <span class="n">indexed_style</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>  <span class="c1"># 256 colors</span>
+                    <span class="k">if</span> <span class="n">color</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">sub</span> <span class="o">+=</span> \
+                            <span class="s1">&#39;&lt;span style=&quot;</span><span class="si">%s</span><span class="s1">:</span><span class="si">%s</span><span class="s1">&quot;&gt;&#39;</span> <span class="o">%</span> \
+                            <span class="p">(</span><span class="s1">&#39;color&#39;</span> <span class="k">if</span> <span class="n">extra</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;38&#39;</span> <span class="k">else</span> <span class="s1">&#39;background-color&#39;</span><span class="p">,</span> <span class="n">color</span><span class="p">)</span>
+                        <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">extra</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">state</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">):</span>
+                    <span class="n">extra</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">state</span> <span class="o">==</span> <span class="s1">&#39;r&#39;</span><span class="p">:</span>
+                        <span class="n">state</span> <span class="o">=</span> <span class="s1">&#39;g&#39;</span>
+                    <span class="k">elif</span> <span class="n">state</span> <span class="o">==</span> <span class="s1">&#39;g&#39;</span><span class="p">:</span>
+                        <span class="n">state</span> <span class="o">=</span> <span class="s1">&#39;b&#39;</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">state</span> <span class="o">=</span> <span class="kc">None</span>
+                        <span class="k">try</span><span class="p">:</span>
+                            <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;#&#39;</span> <span class="o">+</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                                <span class="s1">&#39;</span><span class="si">%02X</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">c</span> <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">c</span> <span class="o">&lt;=</span> <span class="mi">255</span> <span class="k">else</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">extra</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span>
+                                <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)])</span>
+                        <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+                            <span class="k">pass</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">sub</span> <span class="o">+=</span> \
+                                <span class="s1">&#39;&lt;span style=&quot;</span><span class="si">%s</span><span class="s1">:</span><span class="si">%s</span><span class="s1">&quot;&gt;&#39;</span> <span class="o">%</span> \
+                                <span class="p">(</span><span class="s1">&#39;color&#39;</span> <span class="k">if</span> <span class="n">extra</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;38&#39;</span> <span class="k">else</span> <span class="s1">&#39;background-color&#39;</span><span class="p">,</span> <span class="n">color</span><span class="p">)</span>
+                            <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">extra</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="s1">&#39;1&#39;</span> <span class="ow">in</span> <span class="n">stack</span><span class="p">:</span>
+                    <span class="n">style</span> <span class="o">=</span> <span class="n">bold_style</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">style</span> <span class="o">=</span> <span class="n">regular_style</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">style</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">sub</span> <span class="o">+=</span> <span class="s1">&#39;&lt;span style=&quot;</span><span class="si">%s</span><span class="s1">&quot;&gt;&#39;</span> <span class="o">%</span> <span class="n">style</span>
+                    <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>  <span class="c1"># Still needs to be added to the stack even if style is empty</span>
+                    <span class="c1">#  (so it can check &#39;1&#39; in stack above, for example)</span>
+        <span class="k">return</span> <span class="n">sub</span>
+    <span class="n">stack</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">regular_style</span><span class="p">,</span> <span class="n">bold_style</span><span class="p">,</span> <span class="n">indexed_style</span> <span class="o">=</span> <span class="n">_ansi2html_get_styles</span><span class="p">(</span><span class="n">palette</span><span class="p">)</span>
+    <span class="n">sub</span> <span class="o">=</span> <span class="n">ANSI2HTML_CODES_RE</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">_ansi2html</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+    <span class="k">while</span> <span class="n">stack</span><span class="p">:</span>
+        <span class="n">sub</span> <span class="o">+=</span> <span class="s1">&#39;&lt;/span&gt;&#39;</span>
+        <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">sub</span></div>
+
+
+<div class="viewcode-block" id="run"><a class="viewcode-back" href="../../../generated_api/nlp_architect.utils.html#nlp_architect.utils.ansi2html.run">[docs]</a><span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">out</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">html</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+                <span class="n">html</span> <span class="o">+=</span> <span class="s1">&#39;&lt;pre&gt;&#39;</span> <span class="o">+</span> <span class="n">ansi2html</span><span class="p">(</span><span class="n">fp</span><span class="o">.</span><span class="n">read</span><span class="p">())</span> <span class="o">+</span> <span class="s1">&#39;&lt;/pre&gt;&#39;</span>
+        <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;File not found: </span><span class="si">%r</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="s1">&#39;pylint.txt&#39;</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">out_fp</span><span class="p">:</span>
+            <span class="n">out_fp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">html</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+        <span class="k">pass</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

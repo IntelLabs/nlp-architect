@@ -1,0 +1,653 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>nlp_architect.models.absa.utils &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+        <script type="text/javascript" src="../../../../_static/install.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/nlp_arch_theme.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html">
+          
+
+          
+            
+            <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../quick_start.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../publications.html">Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials.html">Jupyter Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../model_zoo.html">Model Zoo</a></li>
+</ul>
+<p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tagging/sequence_tagging.html">Sequence Tagging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../sentiment.html">Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../bist_parser.html">Dependency Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../intent.html">Intent Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../lm.html">Language Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../information_extraction.html">Information Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../transformers.html">Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../archived/additional.html">Additional Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Optimized Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../quantized_bert.html">Quantized BERT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../transformers_distillation.html">Transformers Distillation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solutions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../absa_solution.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../term_set_expansion.html">Set Expansion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../trend_analysis.html">Trend Analysis</a></li>
+</ul>
+<p class="caption"><span class="caption-text">For Developers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../developer_guide.html">Developer Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">NLP Architect by Intel® AI Lab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../models.html">nlp_architect.models</a> &raquo;</li>
+        
+      <li>nlp_architect.models.absa.utils</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for nlp_architect.models.absa.utils</h1><div class="highlight"><pre>
+<span></span><span class="c1"># ******************************************************************************</span>
+<span class="c1"># Copyright 2017-2018 Intel Corporation</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ******************************************************************************</span>
+<span class="kn">import</span> <span class="nn">csv</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="k">import</span> <span class="n">walk</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">makedirs</span><span class="p">,</span> <span class="n">PathLike</span><span class="p">,</span> <span class="n">listdir</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="k">import</span> <span class="n">join</span><span class="p">,</span> <span class="n">isfile</span><span class="p">,</span> <span class="n">isdir</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="k">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="k">import</span> <span class="n">tqdm</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">nlp_architect.common.core_nlp_doc</span> <span class="k">import</span> <span class="n">CoreNLPDoc</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.models.absa</span> <span class="k">import</span> <span class="n">INFERENCE_LEXICONS</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.models.absa.inference.data_types</span> <span class="k">import</span> <span class="n">LexiconElement</span><span class="p">,</span> <span class="n">Polarity</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.models.absa.train.data_types</span> <span class="k">import</span> <span class="n">OpinionTerm</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.pipelines.spacy_bist</span> <span class="k">import</span> <span class="n">SpacyBISTParser</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.utils.io</span> <span class="k">import</span> <span class="n">download_unlicensed_file</span><span class="p">,</span> <span class="n">line_count</span>
+
+
+<span class="k">def</span> <span class="nf">_download_pretrained_rerank_model</span><span class="p">(</span><span class="n">rerank_model_full_path</span><span class="p">):</span>
+    <span class="n">rerank_model_dir</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">rerank_model_full_path</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">rerank_model_full_path</span><span class="p">):</span>
+        <span class="n">makedirs</span><span class="p">(</span><span class="n">rerank_model_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;dowloading pre-trained reranking model..&quot;</span><span class="p">)</span>
+        <span class="n">download_unlicensed_file</span><span class="p">(</span><span class="s1">&#39;https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/&#39;</span>
+                                 <span class="s1">&#39;absa/&#39;</span><span class="p">,</span> <span class="s1">&#39;rerank_model.h5&#39;</span><span class="p">,</span> <span class="n">rerank_model_full_path</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">rerank_model_full_path</span>
+
+
+<span class="k">def</span> <span class="nf">_walk_directory</span><span class="p">(</span><span class="n">directory</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">PathLike</span><span class="p">]):</span>
+    <span class="sd">&quot;&quot;&quot;Iterates a directory&#39;s text files and their contents.&quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">dir_path</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">filenames</span> <span class="ow">in</span> <span class="n">walk</span><span class="p">(</span><span class="n">directory</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">filenames</span><span class="p">:</span>
+            <span class="n">file_path</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">dir_path</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">isfile</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">filename</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">):</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+                    <span class="n">doc_text</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+                    <span class="k">yield</span> <span class="n">filename</span><span class="p">,</span> <span class="n">doc_text</span>
+
+
+<div class="viewcode-block" id="parse_docs"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.absa.html#nlp_architect.models.absa.utils.parse_docs">[docs]</a><span class="k">def</span> <span class="nf">parse_docs</span><span class="p">(</span><span class="n">parser</span><span class="p">:</span> <span class="n">SpacyBISTParser</span><span class="p">,</span> <span class="n">docs</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">PathLike</span><span class="p">],</span>
+               <span class="n">out_dir</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">PathLike</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+               <span class="n">show_tok</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">show_doc</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Parse raw documents in the form of text files in a directory or lines in a text file.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        parser (SpacyBISTParser)</span>
+<span class="sd">        docs (str or PathLike)</span>
+<span class="sd">        out_dir (str or PathLike): If specified, the output will also be written to this path.</span>
+<span class="sd">        show_tok (bool, optional): Specifies whether to include token text in output.</span>
+<span class="sd">        show_doc (bool, optional): Specifies whether to include document text in output.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (list of CoreNLPDoc)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">out_dir</span><span class="p">:</span>
+        <span class="n">Path</span><span class="p">(</span><span class="n">out_dir</span><span class="p">)</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">params</span> <span class="o">=</span> <span class="n">parser</span><span class="p">,</span> <span class="n">Path</span><span class="p">(</span><span class="n">docs</span><span class="p">),</span> <span class="n">out_dir</span><span class="p">,</span> <span class="n">show_tok</span><span class="p">,</span> <span class="n">show_doc</span>
+    <span class="n">parsed_docs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">parse_dir</span><span class="p">(</span><span class="o">*</span><span class="n">params</span><span class="p">)</span> <span class="k">if</span> <span class="n">isdir</span><span class="p">(</span><span class="n">docs</span><span class="p">)</span> <span class="k">else</span> <span class="n">parse_txt</span><span class="p">(</span><span class="o">*</span><span class="n">params</span><span class="p">))</span>
+    <span class="n">total_parsed</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span> <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">parsed_docs</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">parsed_docs</span><span class="p">,</span> <span class="n">total_parsed</span></div>
+
+
+<div class="viewcode-block" id="parse_txt"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.absa.html#nlp_architect.models.absa.utils.parse_txt">[docs]</a><span class="k">def</span> <span class="nf">parse_txt</span><span class="p">(</span><span class="n">parser</span><span class="p">:</span> <span class="n">SpacyBISTParser</span><span class="p">,</span> <span class="n">txt_path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">PathLike</span><span class="p">],</span>
+              <span class="n">out_dir</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">PathLike</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">show_tok</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">show_doc</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Parse raw documents in the form of lines in a text file.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        parser (SpacyBISTParser)</span>
+<span class="sd">        txt_path (str or PathLike)</span>
+<span class="sd">        out_dir (str or PathLike): If specified, the output will also be written to this path.</span>
+<span class="sd">        show_tok (bool, optional): Specifies whether to include token text in output.</span>
+<span class="sd">        show_doc (bool, optional): Specifies whether to include document text in output.</span>
+
+<span class="sd">    Yields:</span>
+<span class="sd">        CoreNLPDoc: the annotated document.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">txt_path</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">out_dir</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Writing parsed documents to </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">out_dir</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">doc_text</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">tqdm</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">total</span><span class="o">=</span><span class="n">line_count</span><span class="p">(</span><span class="n">txt_path</span><span class="p">),</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)):</span>
+            <span class="n">parsed_doc</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">doc_text</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">),</span> <span class="n">show_tok</span><span class="p">,</span> <span class="n">show_doc</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">out_dir</span><span class="p">:</span>
+                <span class="n">out_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">out_dir</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;.json&#39;</span><span class="p">)</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">out_path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">doc_file</span><span class="p">:</span>
+                    <span class="n">doc_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">parsed_doc</span><span class="o">.</span><span class="n">pretty_json</span><span class="p">())</span>
+            <span class="k">yield</span> <span class="n">parsed_doc</span></div>
+
+
+<div class="viewcode-block" id="parse_dir"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.absa.html#nlp_architect.models.absa.utils.parse_dir">[docs]</a><span class="k">def</span> <span class="nf">parse_dir</span><span class="p">(</span><span class="n">parser</span><span class="p">,</span> <span class="n">input_dir</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">PathLike</span><span class="p">],</span> <span class="n">out_dir</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">PathLike</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+              <span class="n">show_tok</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">show_doc</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Parse a directory of raw text documents, one by one.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        parser (SpacyBISTParser)</span>
+<span class="sd">        input_dir (str or PathLike)</span>
+<span class="sd">        out_dir (str or PathLike): If specified, the output will also be written to this path.</span>
+<span class="sd">        show_tok (bool, optional): Specifies whether to include token text in output.</span>
+<span class="sd">        show_doc (bool, optional): Specifies whether to include document text in output.</span>
+
+<span class="sd">    Yields:</span>
+<span class="sd">        CoreNLPDoc: the annotated document.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">out_dir</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Writing parsed documents to </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">out_dir</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">filename</span><span class="p">,</span> <span class="n">file_contents</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">_walk_directory</span><span class="p">(</span><span class="n">input_dir</span><span class="p">)),</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">):</span>
+        <span class="n">parsed_doc</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">file_contents</span><span class="p">,</span> <span class="n">show_tok</span><span class="p">,</span> <span class="n">show_doc</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">out_dir</span><span class="p">:</span>
+            <span class="n">out_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">out_dir</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">filename</span> <span class="o">+</span> <span class="s1">&#39;.json&#39;</span><span class="p">)</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">out_path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+                <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">parsed_doc</span><span class="o">.</span><span class="n">pretty_json</span><span class="p">())</span>
+        <span class="k">yield</span> <span class="n">parsed_doc</span></div>
+
+
+<span class="k">def</span> <span class="nf">_read_lexicon_from_csv</span><span class="p">(</span><span class="n">lexicon_path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">PathLike</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Read a lexicon from a CSV file.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Dictionary of LexiconElements, each LexiconElement presents a row.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">lexicon</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">INFERENCE_LEXICONS</span> <span class="o">/</span> <span class="n">lexicon_path</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">csv_file</span><span class="p">:</span>
+        <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">csv_file</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="n">quotechar</span><span class="o">=</span><span class="s1">&#39;|&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">lexicon</span><span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">LexiconElement</span><span class="p">(</span><span class="n">term</span><span class="o">=</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">score</span><span class="o">=</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">polarity</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                                 <span class="n">is_acquired</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="n">row</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                <span class="n">lexicon</span><span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">LexiconElement</span><span class="p">(</span><span class="n">term</span><span class="o">=</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">score</span><span class="o">=</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">polarity</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                                 <span class="n">is_acquired</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">lexicon</span>
+
+
+<div class="viewcode-block" id="load_opinion_lex"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.absa.html#nlp_architect.models.absa.utils.load_opinion_lex">[docs]</a><span class="k">def</span> <span class="nf">load_opinion_lex</span><span class="p">(</span><span class="n">file_name</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">PathLike</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Read opinion lexicon from CSV file.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Dictionary of LexiconElements, each LexiconElement presents a row.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">lexicon</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">csvfile</span><span class="p">:</span>
+        <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">csvfile</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="n">quotechar</span><span class="o">=</span><span class="s1">&#39;|&#39;</span><span class="p">)</span>
+        <span class="nb">next</span><span class="p">(</span><span class="n">reader</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
+            <span class="n">term</span><span class="p">,</span> <span class="n">score</span><span class="p">,</span> <span class="n">polarity</span><span class="p">,</span> <span class="n">is_acquired</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+            <span class="n">score</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">score</span><span class="p">)</span>
+            <span class="c1"># ignore terms with low score</span>
+            <span class="k">if</span> <span class="n">score</span> <span class="o">&gt;=</span> <span class="mf">0.5</span> <span class="ow">and</span> <span class="n">polarity</span> <span class="ow">in</span> <span class="p">(</span><span class="n">Polarity</span><span class="o">.</span><span class="n">POS</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">Polarity</span><span class="o">.</span><span class="n">NEG</span><span class="o">.</span><span class="n">value</span><span class="p">):</span>
+                <span class="n">lexicon</span><span class="p">[</span><span class="n">term</span><span class="p">]</span> <span class="o">=</span> \
+                    <span class="n">LexiconElement</span><span class="p">(</span><span class="n">term</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span>
+                                   <span class="n">score</span> <span class="k">if</span> <span class="n">polarity</span> <span class="o">==</span> <span class="n">Polarity</span><span class="o">.</span><span class="n">POS</span><span class="o">.</span><span class="n">value</span> <span class="k">else</span> <span class="o">-</span><span class="n">score</span><span class="p">,</span> <span class="n">polarity</span><span class="p">,</span>
+                                   <span class="n">is_acquired</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">lexicon</span></div>
+
+
+<span class="k">def</span> <span class="nf">_load_aspect_lexicon</span><span class="p">(</span><span class="n">file_name</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">PathLike</span><span class="p">]):</span>
+    <span class="sd">&quot;&quot;&quot;Read aspect lexicon from CSV file.</span>
+
+<span class="sd">    Returns: Dictionary of LexiconElements, each LexiconElement presents a row.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">lexicon</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8-sig&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">csv_file</span><span class="p">:</span>
+        <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">csv_file</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="n">quotechar</span><span class="o">=</span><span class="s1">&#39;|&#39;</span><span class="p">)</span>
+        <span class="nb">next</span><span class="p">(</span><span class="n">reader</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
+            <span class="n">lexicon</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">LexiconElement</span><span class="p">(</span><span class="n">row</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">lexicon</span>
+
+
+<span class="k">def</span> <span class="nf">_load_parsed_docs_from_dir</span><span class="p">(</span><span class="n">directory</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">PathLike</span><span class="p">]):</span>
+    <span class="sd">&quot;&quot;&quot;Read all file in directory.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        directory (PathLike): path</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">file_name</span> <span class="ow">in</span> <span class="n">listdir</span><span class="p">(</span><span class="n">directory</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">file_name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.txt&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">file_name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.json&#39;</span><span class="p">):</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">directory</span><span class="p">)</span> <span class="o">/</span> <span class="n">file_name</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">content</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+                <span class="n">res</span><span class="p">[</span><span class="n">file_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">object_hook</span><span class="o">=</span><span class="n">CoreNLPDoc</span><span class="o">.</span><span class="n">decoder</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">res</span>
+
+
+<span class="k">def</span> <span class="nf">_write_table</span><span class="p">(</span><span class="n">table</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">PathLike</span><span class="p">]):</span>
+    <span class="sd">&quot;&quot;&quot;Write table as csv to file system.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        table (list): table to be printed, as list of lists</span>
+<span class="sd">        filename (str or Pathlike): file name</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">table</span><span class="p">:</span>
+            <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_write_final_opinion_lex</span><span class="p">(</span><span class="n">dictionary</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">file_name</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">PathLike</span><span class="p">]):</span>
+    <span class="sd">&quot;&quot;&quot;Write generated opinion lex as csv to file.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        dictionary (list): list of filtered terms</span>
+<span class="sd">        file_name (str): file name</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">candidate_terms</span> <span class="o">=</span> <span class="p">[[</span><span class="s2">&quot;#&quot;</span><span class="p">,</span> <span class="s2">&quot;CandidateTerm&quot;</span><span class="p">,</span> <span class="s2">&quot;Frequency&quot;</span><span class="p">,</span> <span class="s2">&quot;Polarity&quot;</span><span class="p">]]</span>
+    <span class="n">term_num</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">candidate_term</span> <span class="ow">in</span> <span class="n">dictionary</span><span class="p">:</span>
+        <span class="n">term_row</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">term_num</span><span class="p">)]</span> <span class="o">+</span> <span class="n">candidate_term</span><span class="o">.</span><span class="n">as_string_list</span><span class="p">()</span>
+        <span class="n">candidate_terms</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">term_row</span><span class="p">)</span>
+        <span class="n">term_num</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">_write_table</span><span class="p">(</span><span class="n">candidate_terms</span><span class="p">,</span> <span class="n">file_name</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_write_final_aspect_lex</span><span class="p">(</span><span class="n">dictionary</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">file_name</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">PathLike</span><span class="p">]):</span>
+    <span class="sd">&quot;&quot;&quot;Write generated aspect lex as csv to file.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        dictionary (list): list of filtered terms</span>
+<span class="sd">        file_name (str or PathLike): file name</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">candidate_terms</span> <span class="o">=</span> <span class="p">[[</span><span class="s2">&quot;Term&quot;</span><span class="p">]]</span>
+    <span class="n">candidate_terms_debug</span> <span class="o">=</span> <span class="p">[[</span><span class="s2">&quot;Frequency&quot;</span><span class="p">,</span> <span class="s2">&quot;Term&quot;</span><span class="p">,</span> <span class="s2">&quot;Lemma&quot;</span><span class="p">]]</span>
+    <span class="k">for</span> <span class="n">candidate_term</span> <span class="ow">in</span> <span class="n">dictionary</span><span class="p">:</span>
+        <span class="n">term_row_debug</span> <span class="o">=</span> <span class="n">candidate_term</span><span class="o">.</span><span class="n">as_string_list_aspect_debug</span><span class="p">()</span>
+        <span class="n">term_row</span> <span class="o">=</span> <span class="n">candidate_term</span><span class="o">.</span><span class="n">as_string_list_aspect</span><span class="p">()</span>
+        <span class="n">candidate_terms_debug</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">term_row_debug</span><span class="p">)</span>
+        <span class="n">candidate_terms</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">term_row</span><span class="p">)</span>
+    <span class="n">_write_table</span><span class="p">(</span><span class="n">candidate_terms</span><span class="p">,</span> <span class="n">file_name</span><span class="p">)</span>
+    <span class="n">_write_table</span><span class="p">(</span><span class="n">candidate_terms_debug</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">file_name</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot;_debug.csv&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_write_generic_sentiment_terms</span><span class="p">(</span><span class="n">dictionary</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">file_name</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">PathLike</span><span class="p">]):</span>
+    <span class="sd">&quot;&quot;&quot;Write generic sentiment terms as csv to file system.&quot;&quot;&quot;</span>
+    <span class="n">generic_terms</span> <span class="o">=</span> <span class="p">[[</span><span class="s2">&quot;Term&quot;</span><span class="p">,</span> <span class="s2">&quot;Score&quot;</span><span class="p">,</span> <span class="s2">&quot;Polarity&quot;</span><span class="p">]]</span>
+    <span class="k">for</span> <span class="n">generic_term</span> <span class="ow">in</span> <span class="n">dictionary</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+        <span class="n">generic_terms</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">generic_term</span><span class="p">),</span> <span class="s2">&quot;1.0&quot;</span><span class="p">,</span> <span class="n">generic_term</span><span class="o">.</span><span class="n">polarity</span><span class="o">.</span><span class="n">name</span><span class="p">])</span>
+    <span class="n">_write_table</span><span class="p">(</span><span class="n">generic_terms</span><span class="p">,</span> <span class="n">file_name</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_load_lex_as_list_from_csv</span><span class="p">(</span><span class="n">file_name</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">PathLike</span><span class="p">]):</span>
+    <span class="sd">&quot;&quot;&quot;Load lexicon as list.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        file_name (str or PathLike): input csv file name</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">lexicon_table</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8-sig&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">DictReader</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">skipinitialspace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">reader</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;file name is None&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">lexicon_table</span>
+
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
+            <span class="n">term</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Term&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="n">lexicon_table</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">term</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">lexicon_table</span>
+
+
+<div class="viewcode-block" id="read_generic_lex_from_file"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.absa.html#nlp_architect.models.absa.utils.read_generic_lex_from_file">[docs]</a><span class="k">def</span> <span class="nf">read_generic_lex_from_file</span><span class="p">(</span><span class="n">file_name</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">PathLike</span><span class="p">]):</span>
+    <span class="sd">&quot;&quot;&quot;Read generic opinion lex for term acquisition.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        file_name (str or PathLike): name of csv file</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8-sig&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">DictReader</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="n">dict_list</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;UsedForAcquisition&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Y&#39;</span><span class="p">:</span>
+                <span class="n">key_term</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;Term&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+                <span class="n">terms</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">terms</span> <span class="o">=</span> <span class="n">key_term</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+                <span class="n">polarity</span> <span class="o">=</span> <span class="n">Polarity</span><span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;Polarity&quot;</span><span class="p">]]</span>
+                <span class="n">dict_list</span><span class="p">[</span><span class="n">key_term</span><span class="p">]</span> <span class="o">=</span> <span class="n">OpinionTerm</span><span class="p">(</span><span class="n">terms</span><span class="p">,</span> <span class="n">polarity</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">dict_list</span></div>
+
+
+<span class="k">def</span> <span class="nf">_read_generic_lex_for_similarity</span><span class="p">(</span><span class="n">file_name</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">PathLike</span><span class="p">]):</span>
+    <span class="sd">&quot;&quot;&quot;Read generic opinion terms for similarity calc from csv file.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        file_name (str or PathLike): name of csv file</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8-sig&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">DictReader</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="n">dict_list</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;UsedForReranking&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Y&#39;</span><span class="p">:</span>
+                <span class="n">key_term</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;Term&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+                <span class="n">polarity</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;Polarity&quot;</span><span class="p">]</span>
+                <span class="n">dict_list</span><span class="p">[</span><span class="n">key_term</span><span class="p">]</span> <span class="o">=</span> <span class="n">polarity</span>
+    <span class="k">return</span> <span class="n">dict_list</span>
+
+
+<span class="k">def</span> <span class="nf">_write_aspect_lex</span><span class="p">(</span><span class="n">parsed_data</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">PathLike</span><span class="p">],</span> <span class="n">generated_aspect_lex</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+                      <span class="n">out_dir</span><span class="p">:</span> <span class="n">Path</span><span class="p">):</span>
+    <span class="n">parsed_docs</span> <span class="o">=</span> <span class="n">_load_parsed_docs_from_dir</span><span class="p">(</span><span class="n">parsed_data</span><span class="p">)</span>
+    <span class="n">aspect_dict</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">max_examples</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;AS&#39;</span>
+    <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">parsed_docs</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">sent_text</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">doc</span><span class="o">.</span><span class="n">sent_iter</span><span class="p">():</span>
+
+            <span class="k">for</span> <span class="n">term</span><span class="p">,</span> <span class="n">lemma</span> <span class="ow">in</span> <span class="n">generated_aspect_lex</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">sent_text</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+                    <span class="n">_find_aspect_in_sentence</span><span class="p">(</span><span class="n">term</span><span class="p">,</span> <span class="n">lemma</span><span class="p">,</span> <span class="n">sent_text</span><span class="p">,</span> <span class="n">aspect_dict</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span>
+                                             <span class="n">max_examples</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">lemma</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span> <span class="ow">and</span> <span class="n">lemma</span> <span class="ow">in</span> <span class="n">sent_text</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+                    <span class="n">_find_aspect_in_sentence</span><span class="p">(</span><span class="n">term</span><span class="p">,</span> <span class="n">lemma</span><span class="p">,</span> <span class="n">sent_text</span><span class="p">,</span> <span class="n">aspect_dict</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span>
+                                             <span class="n">max_examples</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># write aspect lex to file</span>
+    <span class="n">header_row</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Term&quot;</span><span class="p">,</span> <span class="s2">&quot;Alias1&quot;</span><span class="p">,</span> <span class="s2">&quot;Alias2&quot;</span><span class="p">,</span> <span class="s2">&quot;Alias3&quot;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_examples</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">header_row</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Example&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">k</span><span class="p">))</span>
+    <span class="n">aspect_table</span> <span class="o">=</span> <span class="p">[</span><span class="n">header_row</span><span class="p">]</span>
+
+    <span class="k">for</span> <span class="p">[</span><span class="n">term</span><span class="p">,</span> <span class="n">lemma</span><span class="p">],</span> <span class="n">sentences</span> <span class="ow">in</span> <span class="n">aspect_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">term_row</span> <span class="o">=</span> <span class="p">[</span><span class="n">term</span><span class="p">,</span> <span class="n">lemma</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">sent</span> <span class="ow">in</span> <span class="n">sentences</span><span class="p">:</span>
+            <span class="n">term_row</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sent</span><span class="p">)</span>
+        <span class="n">aspect_table</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">term_row</span><span class="p">)</span>
+
+    <span class="n">out_dir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">out_file_path</span> <span class="o">=</span> <span class="n">out_dir</span> <span class="o">/</span> <span class="s1">&#39;generated_aspect_lex.csv&#39;</span>
+    <span class="n">_write_table</span><span class="p">(</span><span class="n">aspect_table</span><span class="p">,</span> <span class="n">out_file_path</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Aspect lexicon written to </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">out_file_path</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">_find_aspect_in_sentence</span><span class="p">(</span><span class="n">term</span><span class="p">,</span> <span class="n">lemma</span><span class="p">,</span> <span class="n">sent_text</span><span class="p">,</span> <span class="n">aspect_dict</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">max_examples</span><span class="p">,</span>
+                             <span class="n">found_lemma</span><span class="p">):</span>
+    <span class="n">search_term</span> <span class="o">=</span> <span class="n">term</span>
+    <span class="k">if</span> <span class="n">found_lemma</span><span class="p">:</span>
+        <span class="n">search_term</span> <span class="o">=</span> <span class="n">lemma</span>
+
+    <span class="n">start_idx</span> <span class="o">=</span> <span class="n">sent_text</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">search_term</span><span class="p">)</span>
+    <span class="n">end_idx</span> <span class="o">=</span> <span class="n">start_idx</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">search_term</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">start_idx</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">sent_text</span><span class="p">[</span><span class="n">start_idx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span>
+            <span class="n">end_idx</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">sent_text</span><span class="p">)</span> <span class="ow">and</span> <span class="n">sent_text</span><span class="p">[</span><span class="n">end_idx</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39; &#39;</span><span class="p">):</span>
+
+        <span class="n">sent_text_html</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">sent_text</span><span class="p">[:</span><span class="n">start_idx</span><span class="p">],</span> <span class="s1">&#39;&lt;span class=&quot;&#39;</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="s1">&#39;&quot;&gt;&#39;</span><span class="p">,</span> <span class="n">sent_text</span><span class="p">[</span><span class="n">start_idx</span><span class="p">:</span> <span class="n">end_idx</span><span class="p">],</span>
+             <span class="s1">&#39;&lt;/span&gt;&#39;</span><span class="p">,</span> <span class="n">sent_text</span><span class="p">[</span><span class="n">end_idx</span><span class="p">:]))</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">term</span><span class="p">,</span> <span class="n">lemma</span><span class="p">)</span> <span class="ow">in</span> <span class="n">aspect_dict</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">aspect_dict</span><span class="p">[</span><span class="n">term</span><span class="p">,</span> <span class="n">lemma</span><span class="p">])</span> <span class="o">&lt;</span> <span class="n">max_examples</span><span class="p">:</span>
+                <span class="n">aspect_dict</span><span class="p">[</span><span class="n">term</span><span class="p">,</span> <span class="n">lemma</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">sent_text_html</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">aspect_dict</span><span class="p">[</span><span class="n">term</span><span class="p">,</span> <span class="n">lemma</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">sent_text_html</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">_write_opinion_lex</span><span class="p">(</span><span class="n">parsed_data</span><span class="p">,</span> <span class="n">generated_opinion_lex_reranked</span><span class="p">,</span> <span class="n">out_dir</span><span class="p">):</span>
+
+    <span class="n">parsed_docs</span> <span class="o">=</span> <span class="n">_load_parsed_docs_from_dir</span><span class="p">(</span><span class="n">parsed_data</span><span class="p">)</span>
+    <span class="n">opinion_dict</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">max_examples</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;OP&#39;</span>
+    <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">parsed_docs</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">sent_text</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">doc</span><span class="o">.</span><span class="n">sent_iter</span><span class="p">():</span>
+
+            <span class="k">for</span> <span class="n">term</span><span class="p">,</span> <span class="n">terms_params</span> <span class="ow">in</span> <span class="n">generated_opinion_lex_reranked</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">is_acquired</span> <span class="o">=</span> <span class="n">terms_params</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">is_acquired</span> <span class="o">==</span> <span class="s1">&#39;Y&#39;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">sent_text</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+                        <span class="n">_find_opinion_in_sentence</span><span class="p">(</span><span class="n">term</span><span class="p">,</span> <span class="n">terms_params</span><span class="p">,</span> <span class="n">sent_text</span><span class="p">,</span> <span class="n">opinion_dict</span><span class="p">,</span>
+                                                  <span class="n">label</span><span class="p">,</span> <span class="n">max_examples</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">opinion_dict</span><span class="p">[</span><span class="n">term</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">terms_params</span><span class="p">)</span>
+
+    <span class="c1"># write opinion lex to file</span>
+    <span class="n">header_row</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Term&quot;</span><span class="p">,</span> <span class="s2">&quot;Score&quot;</span><span class="p">,</span> <span class="s2">&quot;Polarity&quot;</span><span class="p">,</span> <span class="s2">&quot;isAcquired&quot;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_examples</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">header_row</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Example&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">k</span><span class="p">))</span>
+    <span class="n">opinion_table</span> <span class="o">=</span> <span class="p">[</span><span class="n">header_row</span><span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">term</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">opinion_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">term_row</span> <span class="o">=</span> <span class="p">[</span><span class="n">term</span><span class="p">,</span> <span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">value</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">value</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">)):</span>
+            <span class="n">term_row</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+        <span class="n">opinion_table</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">term_row</span><span class="p">)</span>
+
+    <span class="n">out_dir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">out_file_path</span> <span class="o">=</span> <span class="n">out_dir</span> <span class="o">/</span> <span class="s1">&#39;generated_opinion_lex_reranked.csv&#39;</span>
+    <span class="n">_write_table</span><span class="p">(</span><span class="n">opinion_table</span><span class="p">,</span> <span class="n">out_file_path</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Reranked opinion lexicon written to </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">out_file_path</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">_find_opinion_in_sentence</span><span class="p">(</span><span class="n">term</span><span class="p">,</span> <span class="n">terms_params</span><span class="p">,</span> <span class="n">sent_text</span><span class="p">,</span> <span class="n">opinion_dict</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">max_examples</span><span class="p">):</span>
+
+    <span class="n">start_idx</span> <span class="o">=</span> <span class="n">sent_text</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">term</span><span class="p">)</span>
+    <span class="n">end_idx</span> <span class="o">=</span> <span class="n">start_idx</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">term</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">start_idx</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">sent_text</span><span class="p">[</span><span class="n">start_idx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span>
+            <span class="n">end_idx</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">sent_text</span><span class="p">)</span> <span class="ow">and</span> <span class="n">sent_text</span><span class="p">[</span><span class="n">end_idx</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39; &#39;</span><span class="p">):</span>
+
+        <span class="n">sent_text_html</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">sent_text</span><span class="p">[:</span><span class="n">start_idx</span><span class="p">],</span> <span class="s1">&#39;&lt;span class=&quot;&#39;</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="s1">&#39;&quot;&gt;&#39;</span><span class="p">,</span> <span class="n">sent_text</span><span class="p">[</span><span class="n">start_idx</span><span class="p">:</span> <span class="n">end_idx</span><span class="p">],</span>
+             <span class="s1">&#39;&lt;/span&gt;&#39;</span><span class="p">,</span> <span class="n">sent_text</span><span class="p">[</span><span class="n">end_idx</span><span class="p">:]))</span>
+
+        <span class="k">if</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">opinion_dict</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">opinion_dict</span><span class="p">[</span><span class="n">term</span><span class="p">])</span> <span class="o">&lt;</span> <span class="n">max_examples</span><span class="p">:</span>
+                <span class="n">opinion_dict</span><span class="p">[</span><span class="n">term</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">sent_text_html</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">vals</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">terms_params</span><span class="p">)</span>
+            <span class="n">vals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">sent_text_html</span><span class="p">))</span>
+            <span class="n">opinion_dict</span><span class="p">[</span><span class="n">term</span><span class="p">]</span> <span class="o">=</span> <span class="n">vals</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

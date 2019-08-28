@@ -1,0 +1,450 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>nlp_architect.solutions.set_expansion package &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/install.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/nlp_arch_theme.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="nlp_architect.solutions.set_expansion.ui package" href="nlp_architect.solutions.set_expansion.ui.html" />
+    <link rel="prev" title="nlp_architect.solutions.absa_solution package" href="nlp_architect.solutions.absa_solution.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html">
+          
+
+          
+            
+            <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../publications.html">Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials.html">Jupyter Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model_zoo.html">Model Zoo</a></li>
+</ul>
+<p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tagging/sequence_tagging.html">Sequence Tagging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sentiment.html">Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bist_parser.html">Dependency Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intent.html">Intent Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lm.html">Language Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../information_extraction.html">Information Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transformers.html">Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../archived/additional.html">Additional Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Optimized Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../quantized_bert.html">Quantized BERT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transformers_distillation.html">Transformers Distillation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solutions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../absa_solution.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../term_set_expansion.html">Set Expansion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trend_analysis.html">Trend Analysis</a></li>
+</ul>
+<p class="caption"><span class="caption-text">For Developers</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="nlp_architect_api_index.html">nlp_architect API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.api.html">nlp_architect.api package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.cli.html">nlp_architect.cli package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.common.html">nlp_architect.common package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.data.html">nlp_architect.data package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.models.html">nlp_architect.models package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.nlp.html">nlp_architect.nlp package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.nn.html">nlp_architect.nn package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.pipelines.html">nlp_architect.pipelines package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.procedures.html">nlp_architect.procedures package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.server.html">nlp_architect.server package</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="nlp_architect.solutions.html">nlp_architect.solutions package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="nlp_architect.solutions.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.solutions.absa_solution.html">nlp_architect.solutions.absa_solution package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">nlp_architect.solutions.set_expansion package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.solutions.trend_analysis.html">nlp_architect.solutions.trend_analysis package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.solutions.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.solutions.html#module-nlp_architect.solutions.start_ui">nlp_architect.solutions.start_ui module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.solutions.html#module-nlp_architect.solutions">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.utils.html">nlp_architect.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer_guide.html">Developer Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">NLP Architect by Intel® AI Lab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="nlp_architect_api_index.html"><code class="docutils literal notranslate"><span class="pre">nlp\_architect</span></code> package</a> &raquo;</li>
+        
+          <li><a href="nlp_architect.solutions.html">nlp_architect.solutions package</a> &raquo;</li>
+        
+      <li>nlp_architect.solutions.set_expansion package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="nlp-architect-solutions-set-expansion-package">
+<h1>nlp_architect.solutions.set_expansion package<a class="headerlink" href="#nlp-architect-solutions-set-expansion-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="nlp_architect.solutions.set_expansion.ui.html">nlp_architect.solutions.set_expansion.ui package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.solutions.set_expansion.ui.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.solutions.set_expansion.ui.html#module-nlp_architect.solutions.set_expansion.ui.main">nlp_architect.solutions.set_expansion.ui.main module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.solutions.set_expansion.ui.html#module-nlp_architect.solutions.set_expansion.ui.settings">nlp_architect.solutions.set_expansion.ui.settings module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.solutions.set_expansion.ui.html#module-nlp_architect.solutions.set_expansion.ui">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-nlp_architect.solutions.set_expansion.expand_server">
+<span id="nlp-architect-solutions-set-expansion-expand-server-module"></span><h2>nlp_architect.solutions.set_expansion.expand_server module<a class="headerlink" href="#module-nlp_architect.solutions.set_expansion.expand_server" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nlp_architect.solutions.set_expansion.expand_server.MyTCPHandler">
+<em class="property">class </em><code class="descclassname">nlp_architect.solutions.set_expansion.expand_server.</code><code class="descname">MyTCPHandler</code><span class="sig-paren">(</span><em>request</em>, <em>client_address</em>, <em>server</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/solutions/set_expansion/expand_server.html#MyTCPHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.solutions.set_expansion.expand_server.MyTCPHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">socketserver.BaseRequestHandler</span></code></p>
+<p>A simple server to load the w2v model and handle expand requests from the
+ui</p>
+<dl class="staticmethod">
+<dt id="nlp_architect.solutions.set_expansion.expand_server.MyTCPHandler.annotate">
+<em class="property">static </em><code class="descname">annotate</code><span class="sig-paren">(</span><em>text</em>, <em>seed</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/solutions/set_expansion/expand_server.html#MyTCPHandler.annotate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.solutions.set_expansion.expand_server.MyTCPHandler.annotate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.solutions.set_expansion.expand_server.MyTCPHandler.handle">
+<code class="descname">handle</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/solutions/set_expansion/expand_server.html#MyTCPHandler.handle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.solutions.set_expansion.expand_server.MyTCPHandler.handle" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-nlp_architect.solutions.set_expansion.prepare_data">
+<span id="nlp-architect-solutions-set-expansion-prepare-data-module"></span><h2>nlp_architect.solutions.set_expansion.prepare_data module<a class="headerlink" href="#module-nlp_architect.solutions.set_expansion.prepare_data" title="Permalink to this headline">¶</a></h2>
+<p>Script that prepares the input corpus for np2vec training: it runs NP extractor on the corpus and
+marks extracted NP’s.</p>
+<dl class="function">
+<dt id="nlp_architect.solutions.set_expansion.prepare_data.extract_noun_phrases">
+<code class="descclassname">nlp_architect.solutions.set_expansion.prepare_data.</code><code class="descname">extract_noun_phrases</code><span class="sig-paren">(</span><em>docs</em>, <em>nlp_parser</em>, <em>chunker</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/solutions/set_expansion/prepare_data.html#extract_noun_phrases"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.solutions.set_expansion.prepare_data.extract_noun_phrases" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.solutions.set_expansion.prepare_data.get_group_norm">
+<code class="descclassname">nlp_architect.solutions.set_expansion.prepare_data.</code><code class="descname">get_group_norm</code><span class="sig-paren">(</span><em>spacy_span</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/solutions/set_expansion/prepare_data.html#get_group_norm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.solutions.set_expansion.prepare_data.get_group_norm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Give a span, determine the its group and return the normalized text representing the group</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>spacy_span</strong> (<em>spacy.tokens.Span</em>) – </td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.solutions.set_expansion.prepare_data.load_parser">
+<code class="descclassname">nlp_architect.solutions.set_expansion.prepare_data.</code><code class="descname">load_parser</code><span class="sig-paren">(</span><em>chunker</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/solutions/set_expansion/prepare_data.html#load_parser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.solutions.set_expansion.prepare_data.load_parser" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.solutions.set_expansion.prepare_data.mark_noun_phrases">
+<code class="descclassname">nlp_architect.solutions.set_expansion.prepare_data.</code><code class="descname">mark_noun_phrases</code><span class="sig-paren">(</span><em>corpus_file</em>, <em>marked_corpus_file</em>, <em>nlp_parser</em>, <em>lines_count</em>, <em>chunker</em>, <em>mark_char='_'</em>, <em>grouping=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/solutions/set_expansion/prepare_data.html#mark_noun_phrases"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.solutions.set_expansion.prepare_data.mark_noun_phrases" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.solutions.set_expansion.prepare_data.merge_groups">
+<code class="descclassname">nlp_architect.solutions.set_expansion.prepare_data.</code><code class="descname">merge_groups</code><span class="sig-paren">(</span><em>np</em>, <em>old_id</em>, <em>diff_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/solutions/set_expansion/prepare_data.html#merge_groups"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.solutions.set_expansion.prepare_data.merge_groups" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-nlp_architect.solutions.set_expansion.set_expand">
+<span id="nlp-architect-solutions-set-expansion-set-expand-module"></span><h2>nlp_architect.solutions.set_expansion.set_expand module<a class="headerlink" href="#module-nlp_architect.solutions.set_expansion.set_expand" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nlp_architect.solutions.set_expansion.set_expand.SetExpand">
+<em class="property">class </em><code class="descclassname">nlp_architect.solutions.set_expansion.set_expand.</code><code class="descname">SetExpand</code><span class="sig-paren">(</span><em>np2vec_model_file</em>, <em>binary=False</em>, <em>word_ngrams=False</em>, <em>grouping=False</em>, <em>light_grouping=False</em>, <em>grouping_map_dir=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/solutions/set_expansion/set_expand.html#SetExpand"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.solutions.set_expansion.set_expand.SetExpand" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Set expansion module, given a trained np2vec model.</p>
+<dl class="method">
+<dt id="nlp_architect.solutions.set_expansion.set_expand.SetExpand.expand">
+<code class="descname">expand</code><span class="sig-paren">(</span><em>seed</em>, <em>topn=500</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/solutions/set_expansion/set_expand.html#SetExpand.expand"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.solutions.set_expansion.set_expand.SetExpand.expand" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a seed of terms, return the expanded set of terms.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>seed</strong> – seed terms</li>
+<li><strong>topn</strong> – maximal number of expanded terms to return</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">up to topn expanded terms and their probabilities</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.solutions.set_expansion.set_expand.SetExpand.get_group">
+<code class="descname">get_group</code><span class="sig-paren">(</span><em>term</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/solutions/set_expansion/set_expand.html#SetExpand.get_group"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.solutions.set_expansion.set_expand.SetExpand.get_group" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.solutions.set_expansion.set_expand.SetExpand.get_seed_id">
+<code class="descname">get_seed_id</code><span class="sig-paren">(</span><em>seed</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/solutions/set_expansion/set_expand.html#SetExpand.get_seed_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.solutions.set_expansion.set_expand.SetExpand.get_seed_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.solutions.set_expansion.set_expand.SetExpand.get_vocab">
+<code class="descname">get_vocab</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/solutions/set_expansion/set_expand.html#SetExpand.get_vocab"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.solutions.set_expansion.set_expand.SetExpand.get_vocab" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the vocabulary as the list of terms.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the list of terms.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.solutions.set_expansion.set_expand.SetExpand.in_vocab">
+<code class="descname">in_vocab</code><span class="sig-paren">(</span><em>term</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/solutions/set_expansion/set_expand.html#SetExpand.in_vocab"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.solutions.set_expansion.set_expand.SetExpand.in_vocab" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.solutions.set_expansion.set_expand.SetExpand.seed2term_similarity">
+<code class="descname">seed2term_similarity</code><span class="sig-paren">(</span><em>seed_id</em>, <em>term_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/solutions/set_expansion/set_expand.html#SetExpand.seed2term_similarity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.solutions.set_expansion.set_expand.SetExpand.seed2term_similarity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute cosine similarity between a seed terms and a term.
+:param seed_id: seed term id’s
+:param term_id: the term id</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Similarity between the seed terms and the term</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.solutions.set_expansion.set_expand.SetExpand.similarity">
+<code class="descname">similarity</code><span class="sig-paren">(</span><em>terms</em>, <em>seed</em>, <em>threshold</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/solutions/set_expansion/set_expand.html#SetExpand.similarity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.solutions.set_expansion.set_expand.SetExpand.similarity" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.solutions.set_expansion.set_expand.SetExpand.term2id">
+<code class="descname">term2id</code><span class="sig-paren">(</span><em>term</em>, <em>suffix=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/solutions/set_expansion/set_expand.html#SetExpand.term2id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.solutions.set_expansion.set_expand.SetExpand.term2id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given an term, return its id.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>term</strong> (<em>str</em>) – term (noun phrase)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">its id (if is part of the model)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.solutions.set_expansion.set_expand.SetExpand.term2term_similarity">
+<code class="descname">term2term_similarity</code><span class="sig-paren">(</span><em>term_id_1</em>, <em>term_id_2</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/solutions/set_expansion/set_expand.html#SetExpand.term2term_similarity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.solutions.set_expansion.set_expand.SetExpand.term2term_similarity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute cosine similarity between two term id’s.
+:param term_id_1: first term id
+:param term_id_2: second term id</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Similarity between the first and second term id’s</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-nlp_architect.solutions.set_expansion">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-nlp_architect.solutions.set_expansion" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

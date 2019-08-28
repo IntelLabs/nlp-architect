@@ -1,4 +1,4 @@
-sphinx
+sphinx==1.8.5
 sphinx_rtd_theme
 flake8-html
 pep8

@@ -14,69 +14,65 @@
 .. limitations under the License.
 .. ---------------------------------------------------------------------------
 
+==============================
 NLP Architect by Intel® AI Lab
-###############################
+==============================
 
-NLP Architect is an open-source Python library for exploring the state-of-the-art deep learning topologies and techniques for natural language processing and natural
-language understanding. It is intended to be a platform for future research and
-collaboration.
+NLP Architect is an open source Python library for exploring state-of-the-art deep learning topologies and techniques for optimizing Natural Language Processing and Natural Language Understanding neural network.
 
 The library includes our past and ongoing NLP research and development efforts as part of Intel AI Lab.
 
 NLP Architect can be downloaded from Github: https://github.com/NervanaSystems/nlp-architect
 
-Library Overview
-================
+Overview
+========
 
-Research driven NLP/NLU models
-------------------------------
-The library contains state-of-art and novel NLP and NLU models in a variety of topics:
+NLP Architect is designed to be flexible for adding new models, neural network components, data handling methods and for easy training and running models.
 
-- Dependency parsing
-- Intent detection and Slot tagging model for Intent based applications
-- Memory Networks for goal-oriented dialog
-- Noun phrase embedding vectors model
-- Noun phrase semantic segmentation
-- Named Entity Recognition
-- Word Chunking
-- Reading comprehension
-- Language modeling using Temporal Convolution Network
-- Unsupervised Crosslingual Word Embedding
-- Aspect Based Sentiment Analysis
-- Supervised sentiment analysis
-- Sparse and quantized neural machine translation
-- Relation Identification and cross document coreference
+Features:
 
-.. include:: _quick_install.rst
+* Core NLP models used in many NLP tasks and useful in many NLP applications
+* Novel NLU models showcasing novel *topologies* and *techniques*
+* **Optimized NLP/NLU models** showcasing different optimization algorithms on neural NLP/NLU models
+* Model-oriented design:
 
-How can NLP Architect be used
-=============================
+  * Train and run models from command-line.
+  * API for using models for inference in python.
+  * Procedures to define custom processes for training, inference or anything related to processing.
+  * CLI sub-system for running procedures
+  
+* Based on the following Deep Learning frameworks:
 
-- Train models using provided algorithms, reference datasets and configurations
-- Train models using your own data
-- Create new/extend models based on existing models or topologies
-- Explore how deep learning models tackle various NLP tasks
-- Experiment and optimize state-of-the-art deep learning algorithms
-- integrate modules and utilities from the library to solutions
+  * TensorFlow
+  * PyTorch
+  * Intel-Optimized TensorFlow with MKL-DNN
+  * Dynet
 
-Deep Learning frameworks
-------------------------
-Because of the current research nature of the library, several open source deep learning frameworks are used in this repository including:
+* Essential utilities for working with NLP models - Text/String pre-processing, IO, data-manipulation, metrics, embeddings.
+* Plug-able REST API server to serve models via REST API
 
-- Tensorflow_ or `Intel-Optimized TensorFlow`_
-- Dynet_
 
-Overtime the list of models and frameworks included in this space will change, though all generally run with Python 3.6+
+Library design philosophy
+=========================
 
-Using the Models
-----------------
-Each of the models includes a comprehensive description on algorithms, network topologies, reference dataset descriptions and loader, and evaluation results. Overtime the list of models included in this space will grow.
+NLP Architect is a model-oriented library designed to showcase novel and different neural network optimizations. The library contains NLP/NLU related models per task, different neural network topologies (which are used in models), procedures for simplifying workflows in the library, pre-defined data processors and dataset loaders and misc utilities. The library is designed to be a tool for model development: data pre-process, build model, train, validate, infer, save or load a model.
 
-Contributing to the library
----------------------------
-We welcome collaboration, suggestions, and critiques. For information on how to become a developer
-on this project, please see the :doc:`developer guide <developer_guide>`.
+The main design guidelines are:
 
+* Deep Learning framework agnostic
+* NLP/NLU models per task
+* Different topologies (moduels) implementations that can be used with models
+* Showcase End-to-End applications (Solutions) utilizing one or more NLP Architect model
+* Generic dataset loaders, textual data processing utilities, and miscellaneous utilities that support NLP model development (loaders, text processors, io, metrics, etc.)
+* ``Procedures`` for defining processes for training, inference, optimization or any kind of elaborate script.
+* Pythonic API for using models for inference
+* REST API servers with ability to serve trained models via HTTP
+* Extensive model documentation and tutorials
+
+Disclaimer
+==========
+
+NLP Architect is an active space of research and development; Throughout future releases new models, solutions, topologies and framework additions and changes will be made. We aim to make sure all models run with Python 3.6+. We encourage researchers and developers to contribute their work into the library.
 
 .. _Tensorflow: https://www.tensorflow.org/
 .. _Intel-Optimized TensorFlow: https://software.intel.com/en-us/articles/intel-optimized-tensorflow-wheel-now-available

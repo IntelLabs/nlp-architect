@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.api &mdash; NLP Architect by Intel® AI Lab 0.4.post2 documentation</title>
+  <title>nlp_architect.api &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
   
 
   
@@ -25,6 +25,8 @@
         <script type="text/javascript" src="../_static/underscore.js"></script>
         <script type="text/javascript" src="../_static/doctools.js"></script>
         <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/install.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -33,8 +35,9 @@
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" type="text/css" />
-  <link rel="stylesheet" href="../_static/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/nlp_arch_theme.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
 </head>
@@ -55,7 +58,7 @@
 
           
             
-            <img src="../_static/nlp_architect_logo_white.png" class="logo" alt="Logo"/>
+            <img src="../_static/logo.png" class="logo" alt="Logo"/>
           
           </a>
 
@@ -81,31 +84,27 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../main.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start.html">Quick start</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../publications.html">Publications</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorials.html">Jupyter Tutorials</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../developer_guide.html">Developer Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../model_zoo.html">Model Zoo</a></li>
 </ul>
 <p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../absa.html">Aspect Based Sentiment Analysis</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../chunker.html">Sequence Chunker</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ner_crf.html">Named Entity Recognition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tagging/sequence_tagging.html">Sequence Tagging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sentiment.html">Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bist_parser.html">Dependency Parsing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../intent.html">Intent Extraction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../np_segmentation.html">Noun Phrase Semantic Segmentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../bist_parser.html">BIST Dependency Parser</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../word_sense.html">Most Common Word Sense</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../np2vec.html">Noun Phrase to Vec</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../supervised_sentiment.html">Supervised Sentiment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../reading_comprehension.html">Reading Comprehension</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../memn2n.html">End-to-End Memory Networks for Goal Oriented Dialogue</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tcn.html">TCN Language Model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../crosslingual_emb.html">Unsupervised Crosslingual Embeddings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../cross_doc_coref.html">Cross Document Co-Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../identifying_semantic_relation.html">Semantic Relation Identification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lm.html">Language Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../information_extraction.html">Information Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transformers.html">Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../archived/additional.html">Additional Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Optimized Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../quantized_bert.html">Quantized BERT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transformers_distillation.html">Transformers Distillation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Solutions</span></p>
@@ -114,14 +113,11 @@
 <li class="toctree-l1"><a class="reference internal" href="../term_set_expansion.html">Set Expansion</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../trend_analysis.html">Trend Analysis</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Pipelines</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../spacy_bist.html">Spacy-BIST Parser</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../spacy_np_annotator.html">Spacy-NP Annotator</a></li>
-</ul>
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer_guide.html">Developer Guide</a></li>
 </ul>
 
             
@@ -188,93 +184,20 @@
 <h1><code class="docutils literal notranslate"><span class="pre">nlp_architect.api</span></code><a class="headerlink" href="#nlp-architect-api" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="nlp_architect.api.abstract_api.AbstractApi">
-<em class="property">class </em><code class="sig-prename descclassname">nlp_architect.api.abstract_api.</code><code class="sig-name descname">AbstractApi</code><a class="reference internal" href="../_modules/nlp_architect/api/abstract_api.html#AbstractApi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.api.abstract_api.AbstractApi" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">nlp_architect.api.abstract_api.</code><code class="descname">AbstractApi</code><a class="reference internal" href="../_modules/nlp_architect/api/abstract_api.html#AbstractApi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.api.abstract_api.AbstractApi" title="Permalink to this definition">¶</a></dt>
 <dd><p>Abstract class for API’s to the server</p>
-<dl class="method">
-<dt id="nlp_architect.api.abstract_api.AbstractApi.inference">
-<em class="property">abstract </em><code class="sig-name descname">inference</code><span class="sig-paren">(</span><em class="sig-param">doc</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/api/abstract_api.html#AbstractApi.inference"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.api.abstract_api.AbstractApi.inference" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="nlp_architect.api.abstract_api.AbstractApi.load_model">
-<em class="property">abstract </em><code class="sig-name descname">load_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/api/abstract_api.html#AbstractApi.load_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.api.abstract_api.AbstractApi.load_model" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="class">
 <dt id="nlp_architect.api.bist_parser_api.BistParserApi">
-<em class="property">class </em><code class="sig-prename descclassname">nlp_architect.api.bist_parser_api.</code><code class="sig-name descname">BistParserApi</code><a class="reference internal" href="../_modules/nlp_architect/api/bist_parser_api.html#BistParserApi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.api.bist_parser_api.BistParserApi" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">nlp_architect.api.bist_parser_api.</code><code class="descname">BistParserApi</code><a class="reference internal" href="../_modules/nlp_architect/api/bist_parser_api.html#BistParserApi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.api.bist_parser_api.BistParserApi" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bist Parser API</p>
-<dl class="method">
-<dt id="nlp_architect.api.bist_parser_api.BistParserApi.inference">
-<code class="sig-name descname">inference</code><span class="sig-paren">(</span><em class="sig-param">doc</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/api/bist_parser_api.html#BistParserApi.inference"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.api.bist_parser_api.BistParserApi.inference" title="Permalink to this definition">¶</a></dt>
-<dd><p>Parse according to SpacyBISTParser’s model</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>doc</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – the doc str</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>the parser’s response hosted in CoreNLPDoc object</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference internal" href="../generated/nlp_architect.common.core_nlp_doc.CoreNLPDoc.html#nlp_architect.common.core_nlp_doc.CoreNLPDoc" title="nlp_architect.common.core_nlp_doc.CoreNLPDoc">CoreNLPDoc</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="method">
-<dt id="nlp_architect.api.bist_parser_api.BistParserApi.load_model">
-<code class="sig-name descname">load_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/api/bist_parser_api.html#BistParserApi.load_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.api.bist_parser_api.BistParserApi.load_model" title="Permalink to this definition">¶</a></dt>
-<dd><p>Load SpacyBISTParser model</p>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="class">
 <dt id="nlp_architect.api.ner_api.NerApi">
-<em class="property">class </em><code class="sig-prename descclassname">nlp_architect.api.ner_api.</code><code class="sig-name descname">NerApi</code><span class="sig-paren">(</span><em class="sig-param">prompt=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/api/ner_api.html#NerApi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.api.ner_api.NerApi" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">nlp_architect.api.ner_api.</code><code class="descname">NerApi</code><span class="sig-paren">(</span><em>prompt=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/api/ner_api.html#NerApi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.api.ner_api.NerApi" title="Permalink to this definition">¶</a></dt>
 <dd><p>NER model API</p>
-<dl class="method">
-<dt id="nlp_architect.api.ner_api.NerApi.inference">
-<code class="sig-name descname">inference</code><span class="sig-paren">(</span><em class="sig-param">doc</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/api/ner_api.html#NerApi.inference"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.api.ner_api.NerApi.inference" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="nlp_architect.api.ner_api.NerApi.load_model">
-<code class="sig-name descname">load_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/api/ner_api.html#NerApi.load_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.api.ner_api.NerApi.load_model" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="nlp_architect.api.ner_api.NerApi.model_dir">
-<code class="sig-name descname">model_dir</code><em class="property"> = '/Users/pizsak/nlp-architect/cache/ner-pretrained'</em><a class="headerlink" href="#nlp_architect.api.ner_api.NerApi.model_dir" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="nlp_architect.api.ner_api.NerApi.pretrained_model">
-<code class="sig-name descname">pretrained_model</code><em class="property"> = '/Users/pizsak/nlp-architect/cache/ner-pretrained/model_v4.h5'</em><a class="headerlink" href="#nlp_architect.api.ner_api.NerApi.pretrained_model" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="nlp_architect.api.ner_api.NerApi.pretrained_model_info">
-<code class="sig-name descname">pretrained_model_info</code><em class="property"> = '/Users/pizsak/nlp-architect/cache/ner-pretrained/model_info_v4.dat'</em><a class="headerlink" href="#nlp_architect.api.ner_api.NerApi.pretrained_model_info" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="nlp_architect.api.ner_api.NerApi.pretty_print">
-<em class="property">static </em><code class="sig-name descname">pretty_print</code><span class="sig-paren">(</span><em class="sig-param">text</em>, <em class="sig-param">tags</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/api/ner_api.html#NerApi.pretty_print"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.api.ner_api.NerApi.pretty_print" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="nlp_architect.api.ner_api.NerApi.process_text">
-<code class="sig-name descname">process_text</code><span class="sig-paren">(</span><em class="sig-param">text</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/api/ner_api.html#NerApi.process_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.api.ner_api.NerApi.process_text" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="nlp_architect.api.ner_api.NerApi.vectorize">
-<code class="sig-name descname">vectorize</code><span class="sig-paren">(</span><em class="sig-param">doc</em>, <em class="sig-param">vocab</em>, <em class="sig-param">char_vocab</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/api/ner_api.html#NerApi.vectorize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.api.ner_api.NerApi.vectorize" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 </div>

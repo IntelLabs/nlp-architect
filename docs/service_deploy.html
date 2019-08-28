@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>NLP Architect Server Deployment Tutorial &mdash; NLP Architect by Intel® AI Lab 0.4.post2 documentation</title>
+  <title>NLP Architect Server Deployment Tutorial &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
   
 
   
@@ -25,6 +25,8 @@
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
         <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/install.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -33,8 +35,9 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" type="text/css" />
-  <link rel="stylesheet" href="_static/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/nlp_arch_theme.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" /> 
 </head>
@@ -55,7 +58,7 @@
 
           
             
-            <img src="_static/nlp_architect_logo_white.png" class="logo" alt="Logo"/>
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
           
           </a>
 
@@ -81,31 +84,27 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="main.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick start</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="publications.html">Publications</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Jupyter Tutorials</a></li>
-<li class="toctree-l1"><a class="reference internal" href="developer_guide.html">Developer Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model_zoo.html">Model Zoo</a></li>
 </ul>
 <p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="absa.html">Aspect Based Sentiment Analysis</a></li>
-<li class="toctree-l1"><a class="reference internal" href="chunker.html">Sequence Chunker</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ner_crf.html">Named Entity Recognition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tagging/sequence_tagging.html">Sequence Tagging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sentiment.html">Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bist_parser.html">Dependency Parsing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="intent.html">Intent Extraction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="np_segmentation.html">Noun Phrase Semantic Segmentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bist_parser.html">BIST Dependency Parser</a></li>
-<li class="toctree-l1"><a class="reference internal" href="word_sense.html">Most Common Word Sense</a></li>
-<li class="toctree-l1"><a class="reference internal" href="np2vec.html">Noun Phrase to Vec</a></li>
-<li class="toctree-l1"><a class="reference internal" href="supervised_sentiment.html">Supervised Sentiment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="reading_comprehension.html">Reading Comprehension</a></li>
-<li class="toctree-l1"><a class="reference internal" href="memn2n.html">End-to-End Memory Networks for Goal Oriented Dialogue</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tcn.html">TCN Language Model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="crosslingual_emb.html">Unsupervised Crosslingual Embeddings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cross_doc_coref.html">Cross Document Co-Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="identifying_semantic_relation.html">Semantic Relation Identification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lm.html">Language Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="information_extraction.html">Information Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transformers.html">Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="archived/additional.html">Additional Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Optimized Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quantized_bert.html">Quantized BERT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transformers_distillation.html">Transformers Distillation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Solutions</span></p>
@@ -114,14 +113,11 @@
 <li class="toctree-l1"><a class="reference internal" href="term_set_expansion.html">Set Expansion</a></li>
 <li class="toctree-l1"><a class="reference internal" href="trend_analysis.html">Trend Analysis</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Pipelines</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="spacy_bist.html">Spacy-BIST Parser</a></li>
-<li class="toctree-l1"><a class="reference internal" href="spacy_np_annotator.html">Spacy-NP Annotator</a></li>
-</ul>
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer_guide.html">Developer Guide</a></li>
 </ul>
 
             
@@ -199,16 +195,16 @@ Deployment allows the server to scale well based on user requests.</p>
 <div class="section" id="prerequisites">
 <h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic simple">
-<li><p>Ubuntu 16.04</p></li>
-<li><p>Must have root privileges</p></li>
-<li><p>Virtualization must be enabled in your computer BIOS</p></li>
+<li>Ubuntu 16.04</li>
+<li>Must have root privileges</li>
+<li>Virtualization must be enabled in your computer BIOS</li>
 </ol>
 </div>
 <div class="section" id="kubectl-installation">
 <h2>Kubectl Installation<a class="headerlink" href="#kubectl-installation" title="Permalink to this headline">¶</a></h2>
 <p>kubectl is a command line interface for running commands against Kubernetes clusters.
 Following are the installation instructions</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span> <span class="o">&amp;&amp;</span> <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">apt</span><span class="o">-</span><span class="n">transport</span><span class="o">-</span><span class="n">https</span>
+<div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span> <span class="o">&amp;&amp;</span> <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">apt</span><span class="o">-</span><span class="n">transport</span><span class="o">-</span><span class="n">https</span>
 <span class="n">curl</span> <span class="o">-</span><span class="n">s</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">packages</span><span class="o">.</span><span class="n">cloud</span><span class="o">.</span><span class="n">google</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">apt</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">apt</span><span class="o">-</span><span class="n">key</span><span class="o">.</span><span class="n">gpg</span> <span class="o">|</span> <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">key</span> <span class="n">add</span> <span class="o">-</span>
 <span class="n">sudo</span> <span class="n">touch</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">apt</span><span class="o">/</span><span class="n">sources</span><span class="o">.</span><span class="n">list</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">kubernetes</span><span class="o">.</span><span class="n">list</span>
 <span class="n">echo</span> <span class="s2">&quot;deb http://apt.kubernetes.io/ kubernetes-xenial main&quot;</span> <span class="o">|</span> <span class="n">sudo</span> <span class="n">tee</span> <span class="o">-</span><span class="n">a</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">apt</span><span class="o">/</span><span class="n">sources</span><span class="o">.</span><span class="n">list</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">kubernetes</span><span class="o">.</span><span class="n">list</span>
@@ -221,7 +217,7 @@ Following are the installation instructions</p>
 <h2>Minikube Installation<a class="headerlink" href="#minikube-installation" title="Permalink to this headline">¶</a></h2>
 <p>Minikube provides a simple way of running Kubernetes on your local machine.
 Following are the installation instructions</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">curl</span> <span class="o">-</span><span class="n">Lo</span> <span class="n">minikube</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">storage</span><span class="o">.</span><span class="n">googleapis</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">minikube</span><span class="o">/</span><span class="n">releases</span><span class="o">/</span><span class="n">v0</span><span class="o">.</span><span class="mf">25.0</span><span class="o">/</span><span class="n">minikube</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">amd64</span> <span class="o">&amp;&amp;</span> <span class="n">chmod</span> <span class="o">+</span><span class="n">x</span> <span class="n">minikube</span> <span class="o">&amp;&amp;</span> <span class="n">sudo</span> <span class="n">mv</span> <span class="n">minikube</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span>
+<div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">curl</span> <span class="o">-</span><span class="n">Lo</span> <span class="n">minikube</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">storage</span><span class="o">.</span><span class="n">googleapis</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">minikube</span><span class="o">/</span><span class="n">releases</span><span class="o">/</span><span class="n">v0</span><span class="o">.</span><span class="mf">25.0</span><span class="o">/</span><span class="n">minikube</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">amd64</span> <span class="o">&amp;&amp;</span> <span class="n">chmod</span> <span class="o">+</span><span class="n">x</span> <span class="n">minikube</span> <span class="o">&amp;&amp;</span> <span class="n">sudo</span> <span class="n">mv</span> <span class="n">minikube</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span>
 <span class="n">sudo</span> <span class="n">minikube</span> <span class="n">start</span> <span class="o">--</span><span class="n">vm</span><span class="o">-</span><span class="n">driver</span><span class="o">=</span><span class="n">none</span>
 <span class="n">Follow</span> <span class="n">instructions</span> <span class="n">posted</span> <span class="n">by</span> <span class="n">minikube</span>
 </pre></div>
@@ -229,7 +225,7 @@ Following are the installation instructions</p>
 </div>
 <div class="section" id="docker-installation">
 <h2>Docker Installation<a class="headerlink" href="#docker-installation" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>sudo apt-get install ca-certificates curl gnupg2 software-properties-common
+<div class="code highlight-default notranslate"><div class="highlight"><pre><span></span>sudo apt-get install ca-certificates curl gnupg2 software-properties-common
 sudo add-apt-repository \
 &quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu \
 $(lsb_release -cs) stable&quot;
@@ -243,7 +239,7 @@ exec su -l $USER
 </div>
 <div class="section" id="launch-docker-registry">
 <h2>Launch Docker Registry<a class="headerlink" href="#launch-docker-registry" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Follow</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">docs</span><span class="o">.</span><span class="n">docker</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">config</span><span class="o">/</span><span class="n">daemon</span><span class="o">/</span><span class="n">systemd</span><span class="o">/</span><span class="c1">#httphttps-proxy to fix proxy things if need be</span>
+<div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Follow</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">docs</span><span class="o">.</span><span class="n">docker</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">config</span><span class="o">/</span><span class="n">daemon</span><span class="o">/</span><span class="n">systemd</span><span class="o">/</span><span class="c1">#httphttps-proxy to fix proxy things if need be</span>
 <span class="n">docker</span> <span class="n">run</span> <span class="o">-</span><span class="n">d</span> <span class="o">-</span><span class="n">p</span> <span class="mi">5000</span><span class="p">:</span><span class="mi">5000</span> <span class="o">--</span><span class="n">restart</span><span class="o">=</span><span class="n">always</span> <span class="o">--</span><span class="n">name</span> <span class="n">registry</span> <span class="n">registry</span><span class="p">:</span><span class="mi">2</span>
 </pre></div>
 </div>
@@ -251,7 +247,7 @@ exec su -l $USER
 <div class="section" id="build-dockerfile">
 <h2>Build DockerFile<a class="headerlink" href="#build-dockerfile" title="Permalink to this headline">¶</a></h2>
 <p>Create a Dockerfile with the following content and save it in your deployment directory.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>FROM python:3.6 AS builder
+<div class="code highlight-default notranslate"><div class="highlight"><pre><span></span>FROM python:3.6 AS builder
 
 RUN apt-get update
 RUN apt-get install -y git
@@ -280,7 +276,7 @@ CMD [ &quot;nlp_architect&quot;, &quot;server&quot;, &quot;-p&quot;, &quot;8080&
 </pre></div>
 </div>
 <p>Run the following commands to build the docker file</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>docker build --build-arg GITHUB_ACCESS_TOKEN=${GITHUB_ACCESS_TOKEN} --build-arg HTTP_PROXY=${HTTP_PROXY} --build-arg HTTPS_PROXY=${HTTPS_PROXY} --build-arg http_proxy=${http_proxy} --build-arg https_proxy=${https_proxy} -t nlp_architect .
+<div class="code highlight-default notranslate"><div class="highlight"><pre><span></span>docker build --build-arg GITHUB_ACCESS_TOKEN=${GITHUB_ACCESS_TOKEN} --build-arg HTTP_PROXY=${HTTP_PROXY} --build-arg HTTPS_PROXY=${HTTPS_PROXY} --build-arg http_proxy=${http_proxy} --build-arg https_proxy=${https_proxy} -t nlp_architect .
 docker tag nlp_architect localhost:5000/nlp_architect
 docker push localhost:5000/nlp_architect
 docker run --rm -it -p 8080:8080 localhost:5000/nlp_architect
@@ -290,7 +286,7 @@ docker run --rm -it -p 8080:8080 localhost:5000/nlp_architect
 <div class="section" id="deploy-kubernetes">
 <h2>Deploy Kubernetes<a class="headerlink" href="#deploy-kubernetes" title="Permalink to this headline">¶</a></h2>
 <p>Create a depolyment.yaml file in the same directory as your deployment. Fill the deployment.yaml file with the following contents</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">apiVersion</span><span class="p">:</span> <span class="n">extensions</span><span class="o">/</span><span class="n">v1beta1</span>
+<div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">apiVersion</span><span class="p">:</span> <span class="n">extensions</span><span class="o">/</span><span class="n">v1beta1</span>
 <span class="n">kind</span><span class="p">:</span> <span class="n">Deployment</span>
 <span class="n">metadata</span><span class="p">:</span>
   <span class="n">name</span><span class="p">:</span> <span class="n">nlp</span><span class="o">-</span><span class="n">server</span>
@@ -353,7 +349,7 @@ docker run --rm -it -p 8080:8080 localhost:5000/nlp_architect
 </pre></div>
 </div>
 <p>Run the following commands to create a deployment on the kubernetes cluster</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kubectl</span> <span class="n">create</span> <span class="o">-</span><span class="n">f</span> <span class="n">deployment</span><span class="o">.</span><span class="n">yaml</span>
+<div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kubectl</span> <span class="n">create</span> <span class="o">-</span><span class="n">f</span> <span class="n">deployment</span><span class="o">.</span><span class="n">yaml</span>
 <span class="c1"># run the following command to see your pods spin up; there will be 3 of them if your machine has enough resources</span>
 <span class="n">watch</span> <span class="o">-</span><span class="n">n1</span> <span class="n">kubectl</span> <span class="n">get</span> <span class="n">pods</span>
 <span class="c1"># this next command gives you the {nodeportvalue} below, it&#39;ll be in the format `8080:{nodeportvalue}`</span>
@@ -371,7 +367,7 @@ docker run --rm -it -p 8080:8080 localhost:5000/nlp_architect
 </pre></div>
 </div>
 <p>To test the server</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>curl --noproxy &quot;*&quot; $(sudo minikube ip):{nodeportvalue}
+<div class="code highlight-default notranslate"><div class="highlight"><pre><span></span>curl --noproxy &quot;*&quot; $(sudo minikube ip):{nodeportvalue}
 Where nodeportvalue is from kubectl get svc
 </pre></div>
 </div>

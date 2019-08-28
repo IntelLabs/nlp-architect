@@ -305,7 +305,7 @@ class TokenClsInputExample(InputExample):
 
 
 class TokenClsProcessor(DataProcessor):
-    """Sequence token classficiation Processor dataset loader.
+    """Sequence token classification Processor dataset loader.
     Loads a directory with train.txt/test.txt/dev.txt files in tab separeted
     format (one token per line - conll style).
     Label dictionary is given in labels.txt file.

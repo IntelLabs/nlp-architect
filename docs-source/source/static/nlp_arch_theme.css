@@ -1,0 +1,85 @@
+.rst-content div[class^='highlight'] pre {
+    border: none;
+    background: none;
+    font-family: "Roboto Mono", "Consolas", "Menlo", "Andale Mono WT", "Andale Mono", "Lucida Console", "monospace";
+  }
+  
+body, h1, h2, h3, h4, h5, h6, legend {
+    font-family: 'Open Sans', sans-serif;
+    /* background: #ffffff; */
+    font-weight: 400;
+}
+.wy-menu-vertical header, .wy-menu-vertical p.caption {
+    color: #EF4C23;
+    font-weight: 400;
+    font-size: 100%;
+}
+
+.rst-content .toctree-wrapper p.caption {
+    font-family: 'Open Sans', sans-serif;
+    /* background: #ffffff; */
+    font-weight: 300;
+}
+.wy-menu-vertical {
+    font-weight: 300;
+}
+
+.wy-menu-vertical a {
+    color: #d9d9d9;
+}
+
+.wy-menu-vertical li ul li a {
+    font-weight: 300;
+}
+
+.wy-menu-vertical li.on a, .wy-menu-vertical li.current>a {
+    font-weight: 400;
+}
+
+.installation_table label {
+    display: inline;
+}
+
+.wy-table-responsive table td, .wy-table-responsive table th {
+    white-space: inherit;
+}
+
+.wy-nav-content {
+    padding: 1.618em 3.236em;
+    height: 100%;
+    /* max-width: 1000px !important; */
+    margin: 0;
+}
+
+@media screen and (min-width: 767px) {
+
+    .wy-table-responsive table td {
+       /* !important prevents the common CSS stylesheets from overriding
+          this as on RTD they are loaded after this stylesheet */
+       white-space: normal !important;
+    }
+ 
+    .wy-table-responsive {
+       overflow: visible !important;
+    }
+ }
+
+ .wy-side-nav-search {
+     background-color: #EF4C23;
+ }
+
+ .wy-side-nav-search input[type=text] {
+    border-color: #555;
+ }
+
+ .wy-nav-side {
+     background: #231F20;
+ }
+
+ .wy-menu-vertical a:active {
+     background: #EF4C23;
+ }
+
+.rst-content a:link, .rst-content a:visited, .rst-content a:hover, .rst-content a:active {
+    color: #EF4C23;
+  }

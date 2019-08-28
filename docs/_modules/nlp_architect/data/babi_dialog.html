@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.data.babi_dialog &mdash; NLP Architect by Intel® AI Lab 0.4.post2 documentation</title>
+  <title>nlp_architect.data.babi_dialog &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
   
 
   
@@ -25,6 +25,8 @@
         <script type="text/javascript" src="../../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../../_static/doctools.js"></script>
         <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script type="text/javascript" src="../../../_static/install.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
@@ -33,8 +35,9 @@
   
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/nlp_arch_theme.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
@@ -55,7 +58,7 @@
 
           
             
-            <img src="../../../_static/nlp_architect_logo_white.png" class="logo" alt="Logo"/>
+            <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
           
           </a>
 
@@ -81,31 +84,27 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../main.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick_start.html">Quick start</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../publications.html">Publications</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorials.html">Jupyter Tutorials</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../developer_guide.html">Developer Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../model_zoo.html">Model Zoo</a></li>
 </ul>
 <p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../absa.html">Aspect Based Sentiment Analysis</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../chunker.html">Sequence Chunker</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../ner_crf.html">Named Entity Recognition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tagging/sequence_tagging.html">Sequence Tagging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../sentiment.html">Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../bist_parser.html">Dependency Parsing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../intent.html">Intent Extraction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../np_segmentation.html">Noun Phrase Semantic Segmentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../bist_parser.html">BIST Dependency Parser</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../word_sense.html">Most Common Word Sense</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../np2vec.html">Noun Phrase to Vec</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../supervised_sentiment.html">Supervised Sentiment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../reading_comprehension.html">Reading Comprehension</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../memn2n.html">End-to-End Memory Networks for Goal Oriented Dialogue</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../tcn.html">TCN Language Model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../crosslingual_emb.html">Unsupervised Crosslingual Embeddings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../cross_doc_coref.html">Cross Document Co-Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../identifying_semantic_relation.html">Semantic Relation Identification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lm.html">Language Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../information_extraction.html">Information Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../transformers.html">Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../archived/additional.html">Additional Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Optimized Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quantized_bert.html">Quantized BERT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../transformers_distillation.html">Transformers Distillation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Solutions</span></p>
@@ -114,14 +113,11 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../term_set_expansion.html">Set Expansion</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../trend_analysis.html">Trend Analysis</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Pipelines</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../spacy_bist.html">Spacy-BIST Parser</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../spacy_np_annotator.html">Spacy-NP Annotator</a></li>
-</ul>
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer_guide.html">Developer Guide</a></li>
 </ul>
 
             
@@ -217,7 +213,7 @@
 <span class="kn">from</span> <span class="nn">nlp_architect.utils.io</span> <span class="k">import</span> <span class="n">download_unlicensed_file</span><span class="p">,</span> <span class="n">valid_path_append</span>
 
 
-<span class="k">def</span> <span class="nf">pad_sentences</span><span class="p">(</span><span class="n">sentences</span><span class="p">,</span> <span class="n">sentence_length</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">pad_val</span><span class="o">=</span><span class="mf">0.</span><span class="p">):</span>
+<div class="viewcode-block" id="pad_sentences"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.babi_dialog.pad_sentences">[docs]</a><span class="k">def</span> <span class="nf">pad_sentences</span><span class="p">(</span><span class="n">sentences</span><span class="p">,</span> <span class="n">sentence_length</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">pad_val</span><span class="o">=</span><span class="mf">0.</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Pad all sentences to have the same length (number of words)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -231,10 +227,10 @@
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">sent</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sentences</span><span class="p">):</span>
         <span class="n">trunc</span> <span class="o">=</span> <span class="n">sent</span><span class="p">[</span><span class="o">-</span><span class="n">sentence_length</span><span class="p">:]</span>
         <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">trunc</span><span class="p">)]</span> <span class="o">=</span> <span class="n">trunc</span>
-    <span class="k">return</span> <span class="n">X</span>
+    <span class="k">return</span> <span class="n">X</span></div>
 
 
-<span class="k">def</span> <span class="nf">pad_stories</span><span class="p">(</span><span class="n">stories</span><span class="p">,</span> <span class="n">sentence_length</span><span class="p">,</span> <span class="n">max_story_length</span><span class="p">,</span> <span class="n">pad_val</span><span class="o">=</span><span class="mf">0.</span><span class="p">):</span>
+<div class="viewcode-block" id="pad_stories"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.babi_dialog.pad_stories">[docs]</a><span class="k">def</span> <span class="nf">pad_stories</span><span class="p">(</span><span class="n">stories</span><span class="p">,</span> <span class="n">sentence_length</span><span class="p">,</span> <span class="n">max_story_length</span><span class="p">,</span> <span class="n">pad_val</span><span class="o">=</span><span class="mf">0.</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Pad all stories to have the same number of sentences (max_story_length).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -251,10 +247,10 @@
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">story</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">stories</span><span class="p">):</span>
         <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">story</span><span class="p">)]</span> <span class="o">=</span> <span class="n">story</span>
 
-    <span class="k">return</span> <span class="n">X</span>
+    <span class="k">return</span> <span class="n">X</span></div>
 
 
-<div class="viewcode-block" id="BABI_Dialog"><a class="viewcode-back" href="../../../generated/nlp_architect.data.babi_dialog.BABI_Dialog.html#nlp_architect.data.babi_dialog.BABI_Dialog">[docs]</a><span class="k">class</span> <span class="nc">BABI_Dialog</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="BABI_Dialog"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.babi_dialog.BABI_Dialog">[docs]</a><span class="k">class</span> <span class="nc">BABI_Dialog</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This class loads in the Facebook bAbI goal oriented dialog dataset and</span>
 <span class="sd">    vectorizes them into user utterances, bot utterances, and answers.</span>
@@ -298,7 +294,7 @@
 <span class="sd">            mapping from match-type to the associated fixed index of the candidate vector</span>
 <span class="sd">            which indicated this match type.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-<div class="viewcode-block" id="BABI_Dialog.__init__"><a class="viewcode-back" href="../../../generated/nlp_architect.data.babi_dialog.BABI_Dialog.html#nlp_architect.data.babi_dialog.BABI_Dialog.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">task</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">oov</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">use_match_type</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">task</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">oov</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">use_match_type</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                  <span class="n">use_time</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">use_speaker_tag</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cache_match_type</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                  <span class="n">cache_vectorized</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;http://www.thespermwhale.com/jaseweston/babi&#39;</span>
@@ -409,9 +405,9 @@
                 <span class="s1">&#39;axes&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;batch&#39;</span><span class="p">,</span> <span class="s1">&#39;cand_axis&#39;</span><span class="p">,</span> <span class="s1">&#39;REC&#39;</span><span class="p">)}</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">data_dict</span><span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">][</span><span class="s1">&#39;cands_mat&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
                 <span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_cands_mat</span><span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">,</span> <span class="n">cache_match_type</span><span class="p">),</span>
-                <span class="s1">&#39;axes&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;batch&#39;</span><span class="p">,</span> <span class="s1">&#39;cand_axis&#39;</span><span class="p">,</span> <span class="s1">&#39;REC&#39;</span><span class="p">)}</span></div>
+                <span class="s1">&#39;axes&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;batch&#39;</span><span class="p">,</span> <span class="s1">&#39;cand_axis&#39;</span><span class="p">,</span> <span class="s1">&#39;REC&#39;</span><span class="p">)}</span>
 
-<div class="viewcode-block" id="BABI_Dialog.load_data"><a class="viewcode-back" href="../../../generated/nlp_architect.data.babi_dialog.BABI_Dialog.html#nlp_architect.data.babi_dialog.BABI_Dialog.load_data">[docs]</a>    <span class="k">def</span> <span class="nf">load_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BABI_Dialog.load_data"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.babi_dialog.BABI_Dialog.load_data">[docs]</a>    <span class="k">def</span> <span class="nf">load_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Fetch and extract the Facebook bAbI-dialog dataset if not already downloaded.</span>
 
@@ -478,7 +474,7 @@
 
         <span class="k">return</span> <span class="n">train_file</span><span class="p">,</span> <span class="n">dev_file</span><span class="p">,</span> <span class="n">test_file</span><span class="p">,</span> <span class="n">cand_file</span><span class="p">,</span> <span class="n">kb_file</span><span class="p">,</span> <span class="n">vocab_file</span><span class="p">,</span> <span class="n">vectorized_file</span></div>
 
-<div class="viewcode-block" id="BABI_Dialog.parse_dialog"><a class="viewcode-back" href="../../../generated/nlp_architect.data.babi_dialog.BABI_Dialog.html#nlp_architect.data.babi_dialog.BABI_Dialog.parse_dialog">[docs]</a>    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="BABI_Dialog.parse_dialog"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.babi_dialog.BABI_Dialog.parse_dialog">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">parse_dialog</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">use_time</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">use_speaker_tag</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Given a dialog file, parse into user and bot utterances, adding time and speaker tags.</span>
@@ -537,7 +533,7 @@
 
         <span class="k">return</span> <span class="n">all_dialogues</span></div>
 
-<div class="viewcode-block" id="BABI_Dialog.words_to_vector"><a class="viewcode-back" href="../../../generated/nlp_architect.data.babi_dialog.BABI_Dialog.html#nlp_architect.data.babi_dialog.BABI_Dialog.words_to_vector">[docs]</a>    <span class="k">def</span> <span class="nf">words_to_vector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">words</span><span class="p">):</span>
+<div class="viewcode-block" id="BABI_Dialog.words_to_vector"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.babi_dialog.BABI_Dialog.words_to_vector">[docs]</a>    <span class="k">def</span> <span class="nf">words_to_vector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">words</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Convert a list of words into vector form.</span>
 
@@ -550,7 +546,7 @@
         <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">word_to_index</span><span class="p">[</span><span class="n">w</span><span class="p">]</span> <span class="k">if</span> <span class="n">w</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">vocab</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">word_to_index</span><span class="p">[</span>
             <span class="s1">&#39;&lt;OOV&gt;&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">words</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="BABI_Dialog.one_hot_vector"><a class="viewcode-back" href="../../../generated/nlp_architect.data.babi_dialog.BABI_Dialog.html#nlp_architect.data.babi_dialog.BABI_Dialog.one_hot_vector">[docs]</a>    <span class="k">def</span> <span class="nf">one_hot_vector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">answer</span><span class="p">):</span>
+<div class="viewcode-block" id="BABI_Dialog.one_hot_vector"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.babi_dialog.BABI_Dialog.one_hot_vector">[docs]</a>    <span class="k">def</span> <span class="nf">one_hot_vector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">answer</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create one-hot representation of an answer.</span>
 
@@ -564,7 +560,7 @@
         <span class="n">vector</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">candidate_answers</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">answer</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">1</span>
         <span class="k">return</span> <span class="n">vector</span></div>
 
-<div class="viewcode-block" id="BABI_Dialog.vectorize_stories"><a class="viewcode-back" href="../../../generated/nlp_architect.data.babi_dialog.BABI_Dialog.html#nlp_architect.data.babi_dialog.BABI_Dialog.vectorize_stories">[docs]</a>    <span class="k">def</span> <span class="nf">vectorize_stories</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+<div class="viewcode-block" id="BABI_Dialog.vectorize_stories"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.babi_dialog.BABI_Dialog.vectorize_stories">[docs]</a>    <span class="k">def</span> <span class="nf">vectorize_stories</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Convert (memory, user_utt, answer) word data into vectors.</span>
 
@@ -597,7 +593,7 @@
 
         <span class="k">return</span> <span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">m_mask</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="BABI_Dialog.vectorize_cands"><a class="viewcode-back" href="../../../generated/nlp_architect.data.babi_dialog.BABI_Dialog.html#nlp_architect.data.babi_dialog.BABI_Dialog.vectorize_cands">[docs]</a>    <span class="k">def</span> <span class="nf">vectorize_cands</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+<div class="viewcode-block" id="BABI_Dialog.vectorize_cands"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.babi_dialog.BABI_Dialog.vectorize_cands">[docs]</a>    <span class="k">def</span> <span class="nf">vectorize_cands</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Convert candidate answer word data into vectors.</span>
 
@@ -616,7 +612,7 @@
         <span class="n">c</span> <span class="o">=</span> <span class="n">pad_sentences</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_cand_len</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">c</span></div>
 
-<div class="viewcode-block" id="BABI_Dialog.get_vocab"><a class="viewcode-back" href="../../../generated/nlp_architect.data.babi_dialog.BABI_Dialog.html#nlp_architect.data.babi_dialog.BABI_Dialog.get_vocab">[docs]</a>    <span class="k">def</span> <span class="nf">get_vocab</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dialog</span><span class="p">):</span>
+<div class="viewcode-block" id="BABI_Dialog.get_vocab"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.babi_dialog.BABI_Dialog.get_vocab">[docs]</a>    <span class="k">def</span> <span class="nf">get_vocab</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dialog</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Compute vocabulary from the set of dialogs.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -647,7 +643,7 @@
         <span class="n">vocab</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">all_words</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">vocab</span></div>
 
-<div class="viewcode-block" id="BABI_Dialog.compute_statistics"><a class="viewcode-back" href="../../../generated/nlp_architect.data.babi_dialog.BABI_Dialog.html#nlp_architect.data.babi_dialog.BABI_Dialog.compute_statistics">[docs]</a>    <span class="k">def</span> <span class="nf">compute_statistics</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BABI_Dialog.compute_statistics"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.babi_dialog.BABI_Dialog.compute_statistics">[docs]</a>    <span class="k">def</span> <span class="nf">compute_statistics</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Compute vocab, word index, and max length of stories and queries.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -697,14 +693,14 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">max_cand_len</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_cand_len_pre_match</span></div>
 
-<div class="viewcode-block" id="BABI_Dialog.clean_cands"><a class="viewcode-back" href="../../../generated/nlp_architect.data.babi_dialog.BABI_Dialog.html#nlp_architect.data.babi_dialog.BABI_Dialog.clean_cands">[docs]</a>    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="BABI_Dialog.clean_cands"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.babi_dialog.BABI_Dialog.clean_cands">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">clean_cands</span><span class="p">(</span><span class="n">cand</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Remove leading line number and final newline from candidate answer</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cand</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">:])</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="BABI_Dialog.load_candidate_answers"><a class="viewcode-back" href="../../../generated/nlp_architect.data.babi_dialog.BABI_Dialog.html#nlp_architect.data.babi_dialog.BABI_Dialog.load_candidate_answers">[docs]</a>    <span class="k">def</span> <span class="nf">load_candidate_answers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BABI_Dialog.load_candidate_answers"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.babi_dialog.BABI_Dialog.load_candidate_answers">[docs]</a>    <span class="k">def</span> <span class="nf">load_candidate_answers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Load candidate answers from file, compute number, and store for final softmax</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -718,7 +714,7 @@
             <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">candidate_answers</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">candidate_answers_w</span></div>
 
-<div class="viewcode-block" id="BABI_Dialog.process_interactive"><a class="viewcode-back" href="../../../generated/nlp_architect.data.babi_dialog.BABI_Dialog.html#nlp_architect.data.babi_dialog.BABI_Dialog.process_interactive">[docs]</a>    <span class="k">def</span> <span class="nf">process_interactive</span><span class="p">(</span>
+<div class="viewcode-block" id="BABI_Dialog.process_interactive"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.babi_dialog.BABI_Dialog.process_interactive">[docs]</a>    <span class="k">def</span> <span class="nf">process_interactive</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
             <span class="n">line_in</span><span class="p">,</span>
             <span class="n">context</span><span class="p">,</span>
@@ -802,7 +798,7 @@
 
         <span class="k">return</span> <span class="n">user_utt_pad</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">memory_pad</span><span class="p">,</span> <span class="n">cands_mat</span><span class="p">,</span> <span class="n">time_feat</span></div>
 
-<div class="viewcode-block" id="BABI_Dialog.load_kb"><a class="viewcode-back" href="../../../generated/nlp_architect.data.babi_dialog.BABI_Dialog.html#nlp_architect.data.babi_dialog.BABI_Dialog.load_kb">[docs]</a>    <span class="k">def</span> <span class="nf">load_kb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BABI_Dialog.load_kb"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.babi_dialog.BABI_Dialog.load_kb">[docs]</a>    <span class="k">def</span> <span class="nf">load_kb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Load knowledge base from file, parse into entities and types</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -820,7 +816,7 @@
 
         <span class="k">return</span> <span class="n">kb_ents_to_type</span></div>
 
-<div class="viewcode-block" id="BABI_Dialog.create_match_maps"><a class="viewcode-back" href="../../../generated/nlp_architect.data.babi_dialog.BABI_Dialog.html#nlp_architect.data.babi_dialog.BABI_Dialog.create_match_maps">[docs]</a>    <span class="k">def</span> <span class="nf">create_match_maps</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BABI_Dialog.create_match_maps"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.babi_dialog.BABI_Dialog.create_match_maps">[docs]</a>    <span class="k">def</span> <span class="nf">create_match_maps</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create dictionary mapping from each entity in the knowledge base to the set of</span>
 <span class="sd">        indicies in the candidate_answers array that contain that entity. Will be used for</span>
@@ -840,7 +836,7 @@
 
         <span class="k">return</span> <span class="n">kb_ents_to_cand_idxs</span></div>
 
-<div class="viewcode-block" id="BABI_Dialog.encode_match_feats"><a class="viewcode-back" href="../../../generated/nlp_architect.data.babi_dialog.BABI_Dialog.html#nlp_architect.data.babi_dialog.BABI_Dialog.encode_match_feats">[docs]</a>    <span class="k">def</span> <span class="nf">encode_match_feats</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BABI_Dialog.encode_match_feats"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.babi_dialog.BABI_Dialog.encode_match_feats">[docs]</a>    <span class="k">def</span> <span class="nf">encode_match_feats</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Replace entity names and match type names with indexes</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -854,7 +850,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">word_to_index</span><span class="p">[</span><span class="n">k</span><span class="p">]:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span>
             <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">match_type_idxs</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span></div>
 
-<div class="viewcode-block" id="BABI_Dialog.create_cands_mat"><a class="viewcode-back" href="../../../generated/nlp_architect.data.babi_dialog.BABI_Dialog.html#nlp_architect.data.babi_dialog.BABI_Dialog.create_cands_mat">[docs]</a>    <span class="k">def</span> <span class="nf">create_cands_mat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_split</span><span class="p">,</span> <span class="n">cache_match_type</span><span class="p">):</span>
+<div class="viewcode-block" id="BABI_Dialog.create_cands_mat"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.babi_dialog.BABI_Dialog.create_cands_mat">[docs]</a>    <span class="k">def</span> <span class="nf">create_cands_mat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_split</span><span class="p">,</span> <span class="n">cache_match_type</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add match type features to candidate answers for each example in the dataaset.</span>
 <span class="sd">        Caches once complete.</span>

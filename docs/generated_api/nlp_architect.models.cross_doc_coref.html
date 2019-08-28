@@ -1,0 +1,498 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>nlp_architect.models.cross_doc_coref package &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/install.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/nlp_arch_theme.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="nlp_architect.models.cross_doc_coref.system package" href="nlp_architect.models.cross_doc_coref.system.html" />
+    <link rel="prev" title="nlp_architect.models.bist.eval.conllu package" href="nlp_architect.models.bist.eval.conllu.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html">
+          
+
+          
+            
+            <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../publications.html">Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials.html">Jupyter Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model_zoo.html">Model Zoo</a></li>
+</ul>
+<p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tagging/sequence_tagging.html">Sequence Tagging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sentiment.html">Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bist_parser.html">Dependency Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intent.html">Intent Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lm.html">Language Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../information_extraction.html">Information Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transformers.html">Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../archived/additional.html">Additional Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Optimized Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../quantized_bert.html">Quantized BERT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transformers_distillation.html">Transformers Distillation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solutions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../absa_solution.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../term_set_expansion.html">Set Expansion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trend_analysis.html">Trend Analysis</a></li>
+</ul>
+<p class="caption"><span class="caption-text">For Developers</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="nlp_architect_api_index.html">nlp_architect API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.api.html">nlp_architect.api package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.cli.html">nlp_architect.cli package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.common.html">nlp_architect.common package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.data.html">nlp_architect.data package</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="nlp_architect.models.html">nlp_architect.models package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="nlp_architect.models.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.models.absa.html">nlp_architect.models.absa package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.models.bist.html">nlp_architect.models.bist package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">nlp_architect.models.cross_doc_coref package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.models.gnmt.html">nlp_architect.models.gnmt package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.models.transformers.html">nlp_architect.models.transformers package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.bist_parser">nlp_architect.models.bist_parser module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.chunker">nlp_architect.models.chunker module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.cross_doc_sieves">nlp_architect.models.cross_doc_sieves module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.crossling_emb">nlp_architect.models.crossling_emb module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.gnmt_model">nlp_architect.models.gnmt_model module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.intent_extraction">nlp_architect.models.intent_extraction module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.matchlstm_ansptr">nlp_architect.models.matchlstm_ansptr module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.memn2n_dialogue">nlp_architect.models.memn2n_dialogue module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.most_common_word_sense">nlp_architect.models.most_common_word_sense module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.ner_crf">nlp_architect.models.ner_crf module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.np2vec">nlp_architect.models.np2vec module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.np_semantic_segmentation">nlp_architect.models.np_semantic_segmentation module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.supervised_sentiment">nlp_architect.models.supervised_sentiment module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.tagging">nlp_architect.models.tagging module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.temporal_convolutional_network">nlp_architect.models.temporal_convolutional_network module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.nlp.html">nlp_architect.nlp package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.nn.html">nlp_architect.nn package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.pipelines.html">nlp_architect.pipelines package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.procedures.html">nlp_architect.procedures package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.server.html">nlp_architect.server package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.solutions.html">nlp_architect.solutions package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.utils.html">nlp_architect.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer_guide.html">Developer Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">NLP Architect by Intel® AI Lab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="nlp_architect_api_index.html"><code class="docutils literal notranslate"><span class="pre">nlp\_architect</span></code> package</a> &raquo;</li>
+        
+          <li><a href="nlp_architect.models.html">nlp_architect.models package</a> &raquo;</li>
+        
+      <li>nlp_architect.models.cross_doc_coref package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="nlp-architect-models-cross-doc-coref-package">
+<h1>nlp_architect.models.cross_doc_coref package<a class="headerlink" href="#nlp-architect-models-cross-doc-coref-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="nlp_architect.models.cross_doc_coref.system.html">nlp_architect.models.cross_doc_coref.system package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.models.cross_doc_coref.system.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.cross_doc_coref.system.sieves.html">nlp_architect.models.cross_doc_coref.system.sieves package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.models.cross_doc_coref.system.sieves.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.models.cross_doc_coref.system.sieves.html#module-nlp_architect.models.cross_doc_coref.system.sieves.run_sieve_system">nlp_architect.models.cross_doc_coref.system.sieves.run_sieve_system module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.models.cross_doc_coref.system.sieves.html#module-nlp_architect.models.cross_doc_coref.system.sieves.sieves">nlp_architect.models.cross_doc_coref.system.sieves.sieves module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.models.cross_doc_coref.system.sieves.html#module-nlp_architect.models.cross_doc_coref.system.sieves">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.models.cross_doc_coref.system.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.models.cross_doc_coref.system.html#module-nlp_architect.models.cross_doc_coref.system.cdc_utils">nlp_architect.models.cross_doc_coref.system.cdc_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.models.cross_doc_coref.system.html#module-nlp_architect.models.cross_doc_coref.system.sieves_container_init">nlp_architect.models.cross_doc_coref.system.sieves_container_init module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.models.cross_doc_coref.system.html#module-nlp_architect.models.cross_doc_coref.system">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-nlp_architect.models.cross_doc_coref.sieves_config">
+<span id="nlp-architect-models-cross-doc-coref-sieves-config-module"></span><h2>nlp_architect.models.cross_doc_coref.sieves_config module<a class="headerlink" href="#module-nlp_architect.models.cross_doc_coref.sieves_config" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nlp_architect.models.cross_doc_coref.sieves_config.EntitySievesConfiguration">
+<em class="property">class </em><code class="descclassname">nlp_architect.models.cross_doc_coref.sieves_config.</code><code class="descname">EntitySievesConfiguration</code><a class="reference internal" href="../_modules/nlp_architect/models/cross_doc_coref/sieves_config.html#EntitySievesConfiguration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.cross_doc_coref.sieves_config.EntitySievesConfiguration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nlp_architect.models.cross_doc_coref.sieves_config.SievesConfiguration" title="nlp_architect.models.cross_doc_coref.sieves_config.SievesConfiguration"><code class="xref py py-class docutils literal notranslate"><span class="pre">nlp_architect.models.cross_doc_coref.sieves_config.SievesConfiguration</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="nlp_architect.models.cross_doc_coref.sieves_config.EventSievesConfiguration">
+<em class="property">class </em><code class="descclassname">nlp_architect.models.cross_doc_coref.sieves_config.</code><code class="descname">EventSievesConfiguration</code><a class="reference internal" href="../_modules/nlp_architect/models/cross_doc_coref/sieves_config.html#EventSievesConfiguration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.cross_doc_coref.sieves_config.EventSievesConfiguration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nlp_architect.models.cross_doc_coref.sieves_config.SievesConfiguration" title="nlp_architect.models.cross_doc_coref.sieves_config.SievesConfiguration"><code class="xref py py-class docutils literal notranslate"><span class="pre">nlp_architect.models.cross_doc_coref.sieves_config.SievesConfiguration</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="nlp_architect.models.cross_doc_coref.sieves_config.SievesConfiguration">
+<em class="property">class </em><code class="descclassname">nlp_architect.models.cross_doc_coref.sieves_config.</code><code class="descname">SievesConfiguration</code><a class="reference internal" href="../_modules/nlp_architect/models/cross_doc_coref/sieves_config.html#SievesConfiguration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.cross_doc_coref.sieves_config.SievesConfiguration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="attribute">
+<dt id="nlp_architect.models.cross_doc_coref.sieves_config.SievesConfiguration.run_evaluation">
+<code class="descname">run_evaluation</code><a class="headerlink" href="#nlp_architect.models.cross_doc_coref.sieves_config.SievesConfiguration.run_evaluation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Should run evaluation (True/False)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.models.cross_doc_coref.sieves_config.SievesConfiguration.sieves_order">
+<code class="descname">sieves_order</code><a class="headerlink" href="#nlp_architect.models.cross_doc_coref.sieves_config.SievesConfiguration.sieves_order" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sieve definition and Sieve running order</p>
+<p>Tuple[SieveType, RelationType, Threshold(float)] - define sieves to run, were</p>
+<p>Strict- Merge clusters only in case all mentions has current relation between them,
+Relax- Merge clusters in case (matched mentions) / len(cluster_1.mentions)) &gt;= thresh,
+Very_Relax- Merge clusters in case (matched mentions) / (all possible pairs) &gt;= thresh</p>
+<p>RelationType represent the type of sieve to run.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-nlp_architect.models.cross_doc_coref.sieves_resource">
+<span id="nlp-architect-models-cross-doc-coref-sieves-resource-module"></span><h2>nlp_architect.models.cross_doc_coref.sieves_resource module<a class="headerlink" href="#module-nlp_architect.models.cross_doc_coref.sieves_resource" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nlp_architect.models.cross_doc_coref.sieves_resource.SievesResources">
+<em class="property">class </em><code class="descclassname">nlp_architect.models.cross_doc_coref.sieves_resource.</code><code class="descname">SievesResources</code><a class="reference internal" href="../_modules/nlp_architect/models/cross_doc_coref/sieves_resource.html#SievesResources"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.cross_doc_coref.sieves_resource.SievesResources" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="attribute">
+<dt id="nlp_architect.models.cross_doc_coref.sieves_resource.SievesResources.elastic_host">
+<code class="descname">elastic_host</code><a class="headerlink" href="#nlp_architect.models.cross_doc_coref.sieves_resource.SievesResources.elastic_host" title="Permalink to this definition">¶</a></dt>
+<dd><p>Elastic host, #Required when using Elastic evaluation using Wikipedia sieve</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.models.cross_doc_coref.sieves_resource.SievesResources.elastic_index">
+<code class="descname">elastic_index</code><a class="headerlink" href="#nlp_architect.models.cross_doc_coref.sieves_resource.SievesResources.elastic_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Elastic index name, #Required when using Elastic evaluation using Wikipedia sieve</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.models.cross_doc_coref.sieves_resource.SievesResources.elastic_port">
+<code class="descname">elastic_port</code><a class="headerlink" href="#nlp_architect.models.cross_doc_coref.sieves_resource.SievesResources.elastic_port" title="Permalink to this definition">¶</a></dt>
+<dd><p>Elastic port number, #Required when using Elastic evaluation using Wikipedia sieve</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.models.cross_doc_coref.sieves_resource.SievesResources.elmo_file">
+<code class="descname">elmo_file</code><a class="headerlink" href="#nlp_architect.models.cross_doc_coref.sieves_resource.SievesResources.elmo_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Location of Elmo mini data set file, #Required mini data set file location for Offline
+evaluation using GloVe sieve</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.models.cross_doc_coref.sieves_resource.SievesResources.embed_search_method">
+<code class="descname">embed_search_method</code><a class="headerlink" href="#nlp_architect.models.cross_doc_coref.sieves_resource.SievesResources.embed_search_method" title="Permalink to this definition">¶</a></dt>
+<dd><p>EmbeddingMethod.GLOVE, EmbeddingMethod.GLOVE_OFFLINE,
+EmbeddingMethod.ELMO, EmbeddingMethod.ELMO_OFFLINE</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">Wordnet search method type, one of</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.models.cross_doc_coref.sieves_resource.SievesResources.eval_output_dir">
+<code class="descname">eval_output_dir</code><a class="headerlink" href="#nlp_architect.models.cross_doc_coref.sieves_resource.SievesResources.eval_output_dir" title="Permalink to this definition">¶</a></dt>
+<dd><p>The output dir of the evaluation files, here scorer file for cross doc coref spans will
+be saved</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.models.cross_doc_coref.sieves_resource.SievesResources.glove_file">
+<code class="descname">glove_file</code><a class="headerlink" href="#nlp_architect.models.cross_doc_coref.sieves_resource.SievesResources.glove_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Location of GloVe mini data set file, #Required mini data set file location for Offline
+evaluation using GloVe sieve</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.models.cross_doc_coref.sieves_resource.SievesResources.referent_dict_file">
+<code class="descname">referent_dict_file</code><a class="headerlink" href="#nlp_architect.models.cross_doc_coref.sieves_resource.SievesResources.referent_dict_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Location of Referent dic data set file, #Required mini data set file for Offline
+evaluation or original file for Online evaluation using Referent Dict sieve</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.models.cross_doc_coref.sieves_resource.SievesResources.referent_dict_method">
+<code class="descname">referent_dict_method</code><a class="headerlink" href="#nlp_architect.models.cross_doc_coref.sieves_resource.SievesResources.referent_dict_method" title="Permalink to this definition">¶</a></dt>
+<dd><p>OnlineOROfflineMethod.ONLINE,
+OnlineOROfflineMethod.OFFLINE</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">Referent Dict search method type, one of</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.models.cross_doc_coref.sieves_resource.SievesResources.vo_dict_file">
+<code class="descname">vo_dict_file</code><a class="headerlink" href="#nlp_architect.models.cross_doc_coref.sieves_resource.SievesResources.vo_dict_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Location of VerbOcean data set file, #Required mini data set file for Offline evaluation or
+original file for Online evaluation using VerbOcean sieve</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.models.cross_doc_coref.sieves_resource.SievesResources.vo_search_method">
+<code class="descname">vo_search_method</code><a class="headerlink" href="#nlp_architect.models.cross_doc_coref.sieves_resource.SievesResources.vo_search_method" title="Permalink to this definition">¶</a></dt>
+<dd><p>OnlineOROfflineMethod.ONLINE,
+OnlineOROfflineMethod.OFFLINE</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">VerbOcean search method type, one of</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.models.cross_doc_coref.sieves_resource.SievesResources.wd_file">
+<code class="descname">wd_file</code><a class="headerlink" href="#nlp_architect.models.cross_doc_coref.sieves_resource.SievesResources.wd_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Location of Within doc data set file, #Required when using Within doc sieve</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.models.cross_doc_coref.sieves_resource.SievesResources.wiki_folder">
+<code class="descname">wiki_folder</code><a class="headerlink" href="#nlp_architect.models.cross_doc_coref.sieves_resource.SievesResources.wiki_folder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Location of Wikipedia mini data set file, #Required mini data set file location for Offline
+evaluation using Wikipedia sieve</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.models.cross_doc_coref.sieves_resource.SievesResources.wiki_search_method">
+<code class="descname">wiki_search_method</code><a class="headerlink" href="#nlp_architect.models.cross_doc_coref.sieves_resource.SievesResources.wiki_search_method" title="Permalink to this definition">¶</a></dt>
+<dd><p>WikipediaSearchMethod.ONLINE,
+WikipediaSearchMethod.OFFLINE, WikipediaSearchMethod.ELASTIC</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">Wikipedia search method type, one of</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.models.cross_doc_coref.sieves_resource.SievesResources.wn_folder">
+<code class="descname">wn_folder</code><a class="headerlink" href="#nlp_architect.models.cross_doc_coref.sieves_resource.SievesResources.wn_folder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Location of WordNet mini data set file, #Required mini data set file location for Offline
+evaluation using WordNet sieve</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.models.cross_doc_coref.sieves_resource.SievesResources.wn_search_method">
+<code class="descname">wn_search_method</code><a class="headerlink" href="#nlp_architect.models.cross_doc_coref.sieves_resource.SievesResources.wn_search_method" title="Permalink to this definition">¶</a></dt>
+<dd><p>OnlineOROfflineMethod.ONLINE,
+OnlineOROfflineMethod.OFFLINE</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">Wordnet search method type, one of</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-nlp_architect.models.cross_doc_coref">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-nlp_architect.models.cross_doc_coref" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

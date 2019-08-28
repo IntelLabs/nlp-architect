@@ -1,0 +1,323 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Language Models &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/install.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/nlp_arch_theme.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Information Extraction" href="information_extraction.html" />
+    <link rel="prev" title="Intent Extraction" href="intent.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html">
+          
+
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="publications.html">Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Jupyter Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model_zoo.html">Model Zoo</a></li>
+</ul>
+<p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="tagging/sequence_tagging.html">Sequence Tagging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sentiment.html">Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bist_parser.html">Dependency Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intent.html">Intent Extraction</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Language Models</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#language-modeling-with-tcn">Language Modeling with TCN</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#data-loading">Data Loading</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#running-modalities">Running Modalities</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#training">Training</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#inference">Inference</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="information_extraction.html">Information Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transformers.html">Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="archived/additional.html">Additional Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Optimized Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quantized_bert.html">Quantized BERT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transformers_distillation.html">Transformers Distillation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solutions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="absa_solution.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="term_set_expansion.html">Set Expansion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="trend_analysis.html">Trend Analysis</a></li>
+</ul>
+<p class="caption"><span class="caption-text">For Developers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer_guide.html">Developer Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">NLP Architect by Intel® AI Lab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Language Models</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="language-models">
+<h1>Language Models<a class="headerlink" href="#language-models" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="language-modeling-with-tcn">
+<h2>Language Modeling with TCN<a class="headerlink" href="#language-modeling-with-tcn" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="overview">
+<h3>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h3>
+<p>A language model (LM) is a probability distribution over a sequence of words. Given a sequence, a trained language model can provide the probability that the sequence is realistic. Using deep learning, one manner of creating an LM is by training a neural network to predict the probability of occurrence of the next word (or character) in the sequence given all the words (or characters) preceding it. (In other words, the joint distribution over elements in a sequence is broken up using the chain rule.)</p>
+<p>This folder contains scripts that implement a word-level language model using Temporal Convolutional Network (TCN) as described in the paper <a class="reference external" href="https://arxiv.org/abs/1803.01271">An Empirical Evaluation of Generic Convolutional and Recurrent Networks for Sequence Modeling</a> by Shaojie Bai, J. Zico Kolter and Vladlen Koltun. In this paper, the authors show that TCNs architectures are competitive with RNNs  across a diverse set of discrete sequence tasks. For language modeling, it is shown that TCN’s performance on two datasets (Penn Tree Bank and WikiText) is comparable to that of an optimized LSTM architecture (with recurrent and embedding dropout, etc).</p>
+</div>
+<div class="section" id="data-loading">
+<h3>Data Loading<a class="headerlink" href="#data-loading" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p class="first">PTB can be downloaded from <a class="reference external" href="http://www.fit.vutbr.cz/~imikolov/rnnlm/">here</a></p>
+</li>
+<li><p class="first">Wikitext can be downloaded from <a class="reference external" href="https://einstein.ai/research/the-wikitext-long-term-dependency-language-modeling-dataset">here</a></p>
+</li>
+<li><p class="first">The terms and conditions of the data set licenses apply. Intel does not grant any rights to the data files or databases.</p>
+</li>
+<li><p class="first">For the language modeling task, dataloader for the Penn tree bank (<a class="reference internal" href="generated_api/nlp_architect.data.html#nlp_architect.data.ptb.PTBDataLoader" title="nlp_architect.data.ptb.PTBDataLoader"><code class="xref py py-class docutils literal notranslate"><span class="pre">PTB</span></code></a>) dataset (or the Wikitext-103 dataset) can be imported as</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">nlp_architect.data.ptb</span> <span class="kn">import</span> <span class="n">PTBDataLoader</span><span class="p">,</span> <span class="n">PTBDictionary</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">Note that the data loader prompts the user to automatically download the data if not already present. Please provide the location to save the data as an argument to the data loader.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="running-modalities">
+<h3>Running Modalities<a class="headerlink" href="#running-modalities" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="training">
+<h4>Training<a class="headerlink" href="#training" title="Permalink to this headline">¶</a></h4>
+<p>The base class that defines <a class="reference internal" href="generated_api/nlp_architect.models.html#nlp_architect.models.temporal_convolutional_network.TCN" title="nlp_architect.models.temporal_convolutional_network.TCN"><code class="xref py py-class docutils literal notranslate"><span class="pre">TCN</span></code></a> topology can be imported as:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">nlp_architect.models.temporal_convolutional_network</span> <span class="kn">import</span> <span class="n">TCN</span>
+</pre></div>
+</div>
+<p>Note that this is only the base class which defines the architecture. For defining a full trainable model, inherit this class and define the methods <cite>build_train_graph()</cite>, which should define the loss functions, and <cite>run()</cite>, which should define the training method.</p>
+<p>For the language model, loss functions and the training strategy are implemented in <cite>examples/word_language_model_with_tcn/mle_language_model/language_modeling_with_tcn.py</cite>.</p>
+<p>To train the model using PTB, use the following command:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">examples</span><span class="o">/</span><span class="n">word_language_model_with_tcn</span><span class="o">/</span><span class="n">mle_language_model</span><span class="o">/</span><span class="n">language_modeling_with_tcn</span><span class="o">.</span><span class="n">py</span> \
+  <span class="o">--</span><span class="n">batch_size</span> <span class="mi">16</span> <span class="o">--</span><span class="n">dropout</span> <span class="mf">0.45</span> <span class="o">--</span><span class="n">epochs</span> <span class="mi">100</span> <span class="o">--</span><span class="n">ksize</span> <span class="mi">3</span> <span class="o">--</span><span class="n">levels</span> <span class="mi">4</span> <span class="o">--</span><span class="n">seq_len</span> <span class="mi">60</span> \
+  <span class="o">--</span><span class="n">nhid</span> <span class="mi">600</span> <span class="o">--</span><span class="n">em_len</span> <span class="mi">600</span> <span class="o">--</span><span class="n">em_dropout</span> <span class="mf">0.25</span> <span class="o">--</span><span class="n">lr</span> <span class="mi">4</span> \
+  <span class="o">--</span><span class="n">grad_clip_value</span> <span class="mf">0.35</span> <span class="o">--</span><span class="n">results_dir</span> <span class="o">./</span> <span class="o">--</span><span class="n">dataset</span> <span class="n">PTB</span>
+</pre></div>
+</div>
+<p>The following tensorboard snapshots shows the result of a training run; plots for the training loss, perplexity, validation loss and perplexity are provided. With <code class="xref py py-class docutils literal notranslate"><span class="pre">TCN</span></code> dataset.</p>
+<img alt="_images/lm.png" src="_images/lm.png" />
+</div>
+</div>
+<div class="section" id="inference">
+<h3>Inference<a class="headerlink" href="#inference" title="Permalink to this headline">¶</a></h3>
+<p>To run inference and generate sample data, run the following command:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">examples</span><span class="o">/</span><span class="n">word_language_model_with_tcn</span><span class="o">/</span><span class="n">mle_language_model</span><span class="o">/</span><span class="n">language_modeling_with_tcn</span><span class="o">.</span><span class="n">py</span> \
+  <span class="o">--</span><span class="n">dropout</span> <span class="mf">0.45</span> <span class="o">--</span><span class="n">ksize</span> <span class="mi">3</span> <span class="o">--</span><span class="n">levels</span> <span class="mi">4</span> <span class="o">--</span><span class="n">seq_len</span> <span class="mi">60</span> <span class="o">--</span><span class="n">nhid</span> <span class="mi">600</span> <span class="o">--</span><span class="n">em_len</span> <span class="mi">600</span> \
+  <span class="o">--</span><span class="n">em_dropout</span> <span class="mf">0.25</span> <span class="o">--</span><span class="n">ckpt</span> <span class="o">&lt;</span><span class="n">path</span> <span class="n">to</span> <span class="n">trained</span> <span class="n">ckpt</span> <span class="nb">file</span><span class="o">&gt;</span> <span class="o">--</span><span class="n">inference</span> <span class="o">--</span><span class="n">num_samples</span> <span class="mi">100</span>
+</pre></div>
+</div>
+<p>Using the provided trained checkpoint file, this will generate and print samples to stdout.
+Some sample “sentences” generated using the <a class="reference internal" href="generated_api/nlp_architect.data.html#nlp_architect.data.ptb.PTBDataLoader" title="nlp_architect.data.ptb.PTBDataLoader"><code class="xref py py-class docutils literal notranslate"><span class="pre">PTB</span></code></a> are shown below:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>over a third hundred feet in control of u.s. marketing units and nearly three years ago as well
+as N N to N N has cleared the group for $ N and they &#39;re the revenue of at least N decade a
+&lt;unk&gt; &lt;unk&gt; electrical electrical home home and pharmaceuticals was in its battle mr. &lt;unk&gt; said
+
+as &lt;unk&gt; by &lt;unk&gt; and young smoke could follow as a real goal of writers
+
+&lt;unk&gt; &lt;unk&gt; while &lt;unk&gt; fit with this plan to cut back costs
+
+about light trucks
+
+more uncertainty than recycled paper people
+
+new jersey stock exchanges say i mean a &lt;unk&gt; &lt;unk&gt; part of those affecting the &lt;unk&gt; or
+female &lt;unk&gt; reported an &lt;unk&gt; of photographs &lt;unk&gt; and national security pacific
+
+&lt;unk&gt; and ford had previously been an &lt;unk&gt; &lt;unk&gt; that is the &lt;unk&gt; taping of &lt;unk&gt;
+thousands in the &lt;unk&gt; of &lt;unk&gt; fuels
+
+&lt;unk&gt; and &lt;unk&gt; tv paintings
+
+book values of about N department stores in france
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

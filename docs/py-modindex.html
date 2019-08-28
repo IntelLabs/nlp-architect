@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Python Module Index &mdash; NLP Architect by Intel® AI Lab 0.4.post2 documentation</title>
+  <title>Python Module Index &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
   
 
   
@@ -25,6 +25,8 @@
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
         <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/install.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -33,8 +35,9 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" type="text/css" />
-  <link rel="stylesheet" href="_static/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/nlp_arch_theme.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
  
@@ -58,7 +61,7 @@
 
           
             
-            <img src="_static/nlp_architect_logo_white.png" class="logo" alt="Logo"/>
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
           
           </a>
 
@@ -84,31 +87,27 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="main.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick start</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="publications.html">Publications</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Jupyter Tutorials</a></li>
-<li class="toctree-l1"><a class="reference internal" href="developer_guide.html">Developer Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model_zoo.html">Model Zoo</a></li>
 </ul>
 <p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="absa.html">Aspect Based Sentiment Analysis</a></li>
-<li class="toctree-l1"><a class="reference internal" href="chunker.html">Sequence Chunker</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ner_crf.html">Named Entity Recognition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tagging/sequence_tagging.html">Sequence Tagging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sentiment.html">Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bist_parser.html">Dependency Parsing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="intent.html">Intent Extraction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="np_segmentation.html">Noun Phrase Semantic Segmentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bist_parser.html">BIST Dependency Parser</a></li>
-<li class="toctree-l1"><a class="reference internal" href="word_sense.html">Most Common Word Sense</a></li>
-<li class="toctree-l1"><a class="reference internal" href="np2vec.html">Noun Phrase to Vec</a></li>
-<li class="toctree-l1"><a class="reference internal" href="supervised_sentiment.html">Supervised Sentiment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="reading_comprehension.html">Reading Comprehension</a></li>
-<li class="toctree-l1"><a class="reference internal" href="memn2n.html">End-to-End Memory Networks for Goal Oriented Dialogue</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tcn.html">TCN Language Model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="crosslingual_emb.html">Unsupervised Crosslingual Embeddings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cross_doc_coref.html">Cross Document Co-Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="identifying_semantic_relation.html">Semantic Relation Identification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lm.html">Language Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="information_extraction.html">Information Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transformers.html">Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="archived/additional.html">Additional Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Optimized Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quantized_bert.html">Quantized BERT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transformers_distillation.html">Transformers Distillation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Solutions</span></p>
@@ -117,14 +116,11 @@
 <li class="toctree-l1"><a class="reference internal" href="term_set_expansion.html">Set Expansion</a></li>
 <li class="toctree-l1"><a class="reference internal" href="trend_analysis.html">Trend Analysis</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Pipelines</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="spacy_bist.html">Spacy-BIST Parser</a></li>
-<li class="toctree-l1"><a class="reference internal" href="spacy_np_annotator.html">Spacy-NP Annotator</a></li>
-</ul>
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer_guide.html">Developer Guide</a></li>
 </ul>
 
             
@@ -205,7 +201,937 @@
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="generated/nlp_architect.models.cross_doc_sieves.html#module-nlp_architect.models.cross_doc_sieves"><code class="xref">nlp_architect.models.cross_doc_sieves</code></a></td><td>
+       <a href="generated_api/nlp_architect.api.html#module-nlp_architect.api"><code class="xref">nlp_architect.api</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.api.html#module-nlp_architect.api.abstract_api"><code class="xref">nlp_architect.api.abstract_api</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.api.html#module-nlp_architect.api.base"><code class="xref">nlp_architect.api.base</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.api.html#module-nlp_architect.api.bist_parser_api"><code class="xref">nlp_architect.api.bist_parser_api</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.api.html#module-nlp_architect.api.intent_extraction_api"><code class="xref">nlp_architect.api.intent_extraction_api</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.api.html#module-nlp_architect.api.machine_comprehension_api"><code class="xref">nlp_architect.api.machine_comprehension_api</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.api.html#module-nlp_architect.api.ner_api"><code class="xref">nlp_architect.api.ner_api</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.cli.html#module-nlp_architect.cli"><code class="xref">nlp_architect.cli</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.cli.html#module-nlp_architect.cli.cli_commands"><code class="xref">nlp_architect.cli.cli_commands</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.cli.html#module-nlp_architect.cli.cmd_registry"><code class="xref">nlp_architect.cli.cmd_registry</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.common.html#module-nlp_architect.common"><code class="xref">nlp_architect.common</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.common.cdc.html#module-nlp_architect.common.cdc"><code class="xref">nlp_architect.common.cdc</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.common.cdc.html#module-nlp_architect.common.cdc.cluster"><code class="xref">nlp_architect.common.cdc.cluster</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.common.cdc.html#module-nlp_architect.common.cdc.mention_data"><code class="xref">nlp_architect.common.cdc.mention_data</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.common.cdc.html#module-nlp_architect.common.cdc.topics"><code class="xref">nlp_architect.common.cdc.topics</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.common.html#module-nlp_architect.common.core_nlp_doc"><code class="xref">nlp_architect.common.core_nlp_doc</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.common.html#module-nlp_architect.common.high_level_doc"><code class="xref">nlp_architect.common.high_level_doc</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.data.html#module-nlp_architect.data"><code class="xref">nlp_architect.data</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.data.html#module-nlp_architect.data.amazon_reviews"><code class="xref">nlp_architect.data.amazon_reviews</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.data.html#module-nlp_architect.data.babi_dialog"><code class="xref">nlp_architect.data.babi_dialog</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.data.cdc_resources.html#module-nlp_architect.data.cdc_resources"><code class="xref">nlp_architect.data.cdc_resources</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.data.cdc_resources.data_types.html#module-nlp_architect.data.cdc_resources.data_types"><code class="xref">nlp_architect.data.cdc_resources.data_types</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.data.cdc_resources.data_types.wiki.html#module-nlp_architect.data.cdc_resources.data_types.wiki"><code class="xref">nlp_architect.data.cdc_resources.data_types.wiki</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.data.cdc_resources.data_types.wiki.html#module-nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_page"><code class="xref">nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_page</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.data.cdc_resources.data_types.wiki.html#module-nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_page_extracted_relations"><code class="xref">nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_page_extracted_relations</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.data.cdc_resources.data_types.wiki.html#module-nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_pages"><code class="xref">nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_pages</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.data.cdc_resources.data_types.wn.html#module-nlp_architect.data.cdc_resources.data_types.wn"><code class="xref">nlp_architect.data.cdc_resources.data_types.wn</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.data.cdc_resources.data_types.wn.html#module-nlp_architect.data.cdc_resources.data_types.wn.wordnet_page"><code class="xref">nlp_architect.data.cdc_resources.data_types.wn.wordnet_page</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.data.cdc_resources.embedding.html#module-nlp_architect.data.cdc_resources.embedding"><code class="xref">nlp_architect.data.cdc_resources.embedding</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.data.cdc_resources.embedding.html#module-nlp_architect.data.cdc_resources.embedding.embed_elmo"><code class="xref">nlp_architect.data.cdc_resources.embedding.embed_elmo</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.data.cdc_resources.embedding.html#module-nlp_architect.data.cdc_resources.embedding.embed_glove"><code class="xref">nlp_architect.data.cdc_resources.embedding.embed_glove</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.data.cdc_resources.gen_scripts.html#module-nlp_architect.data.cdc_resources.gen_scripts"><code class="xref">nlp_architect.data.cdc_resources.gen_scripts</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.data.cdc_resources.gen_scripts.html#module-nlp_architect.data.cdc_resources.gen_scripts.create_word_embed_elmo_dump"><code class="xref">nlp_architect.data.cdc_resources.gen_scripts.create_word_embed_elmo_dump</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.data.cdc_resources.relations.html#module-nlp_architect.data.cdc_resources.relations"><code class="xref">nlp_architect.data.cdc_resources.relations</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.data.cdc_resources.relations.html#module-nlp_architect.data.cdc_resources.relations.computed_relation_extraction"><code class="xref">nlp_architect.data.cdc_resources.relations.computed_relation_extraction</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.data.cdc_resources.relations.html#module-nlp_architect.data.cdc_resources.relations.referent_dict_relation_extraction"><code class="xref">nlp_architect.data.cdc_resources.relations.referent_dict_relation_extraction</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.data.cdc_resources.relations.html#module-nlp_architect.data.cdc_resources.relations.relation_extraction"><code class="xref">nlp_architect.data.cdc_resources.relations.relation_extraction</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.data.cdc_resources.relations.html#module-nlp_architect.data.cdc_resources.relations.relation_types_enums"><code class="xref">nlp_architect.data.cdc_resources.relations.relation_types_enums</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.data.cdc_resources.relations.html#module-nlp_architect.data.cdc_resources.relations.verbocean_relation_extraction"><code class="xref">nlp_architect.data.cdc_resources.relations.verbocean_relation_extraction</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.data.cdc_resources.relations.html#module-nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction"><code class="xref">nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.data.cdc_resources.relations.html#module-nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction"><code class="xref">nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.data.cdc_resources.relations.html#module-nlp_architect.data.cdc_resources.relations.word_embedding_relation_extraction"><code class="xref">nlp_architect.data.cdc_resources.relations.word_embedding_relation_extraction</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.data.cdc_resources.relations.html#module-nlp_architect.data.cdc_resources.relations.wordnet_relation_extraction"><code class="xref">nlp_architect.data.cdc_resources.relations.wordnet_relation_extraction</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.data.cdc_resources.wikipedia.html#module-nlp_architect.data.cdc_resources.wikipedia"><code class="xref">nlp_architect.data.cdc_resources.wikipedia</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.data.cdc_resources.wikipedia.html#module-nlp_architect.data.cdc_resources.wikipedia.wiki_elastic"><code class="xref">nlp_architect.data.cdc_resources.wikipedia.wiki_elastic</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.data.cdc_resources.wikipedia.html#module-nlp_architect.data.cdc_resources.wikipedia.wiki_offline"><code class="xref">nlp_architect.data.cdc_resources.wikipedia.wiki_offline</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.data.cdc_resources.wikipedia.html#module-nlp_architect.data.cdc_resources.wikipedia.wiki_online"><code class="xref">nlp_architect.data.cdc_resources.wikipedia.wiki_online</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.data.cdc_resources.wikipedia.html#module-nlp_architect.data.cdc_resources.wikipedia.wiki_search_page_result"><code class="xref">nlp_architect.data.cdc_resources.wikipedia.wiki_search_page_result</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.data.cdc_resources.wordnet.html#module-nlp_architect.data.cdc_resources.wordnet"><code class="xref">nlp_architect.data.cdc_resources.wordnet</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.data.cdc_resources.wordnet.html#module-nlp_architect.data.cdc_resources.wordnet.wordnet_offline"><code class="xref">nlp_architect.data.cdc_resources.wordnet.wordnet_offline</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.data.cdc_resources.wordnet.html#module-nlp_architect.data.cdc_resources.wordnet.wordnet_online"><code class="xref">nlp_architect.data.cdc_resources.wordnet.wordnet_online</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.data.html#module-nlp_architect.data.conll"><code class="xref">nlp_architect.data.conll</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.data.html#module-nlp_architect.data.fasttext_emb"><code class="xref">nlp_architect.data.fasttext_emb</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.data.html#module-nlp_architect.data.glue_tasks"><code class="xref">nlp_architect.data.glue_tasks</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.data.html#module-nlp_architect.data.intent_datasets"><code class="xref">nlp_architect.data.intent_datasets</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.data.html#module-nlp_architect.data.ptb"><code class="xref">nlp_architect.data.ptb</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.data.html#module-nlp_architect.data.sequence_classification"><code class="xref">nlp_architect.data.sequence_classification</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.data.html#module-nlp_architect.data.sequential_tagging"><code class="xref">nlp_architect.data.sequential_tagging</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.data.html#module-nlp_architect.data.utils"><code class="xref">nlp_architect.data.utils</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.html#module-nlp_architect.models"><code class="xref">nlp_architect.models</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.absa.html#module-nlp_architect.models.absa"><code class="xref">nlp_architect.models.absa</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.absa.inference.html#module-nlp_architect.models.absa.inference"><code class="xref">nlp_architect.models.absa.inference</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.absa.inference.html#module-nlp_architect.models.absa.inference.data_types"><code class="xref">nlp_architect.models.absa.inference.data_types</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.absa.inference.html#module-nlp_architect.models.absa.inference.inference"><code class="xref">nlp_architect.models.absa.inference.inference</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.absa.train.html#module-nlp_architect.models.absa.train"><code class="xref">nlp_architect.models.absa.train</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.absa.train.html#module-nlp_architect.models.absa.train.acquire_terms"><code class="xref">nlp_architect.models.absa.train.acquire_terms</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.absa.train.html#module-nlp_architect.models.absa.train.data_types"><code class="xref">nlp_architect.models.absa.train.data_types</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.absa.train.html#module-nlp_architect.models.absa.train.generate_lexicons"><code class="xref">nlp_architect.models.absa.train.generate_lexicons</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.absa.train.html#module-nlp_architect.models.absa.train.rerank_terms"><code class="xref">nlp_architect.models.absa.train.rerank_terms</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.absa.train.html#module-nlp_architect.models.absa.train.rules"><code class="xref">nlp_architect.models.absa.train.rules</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.absa.train.html#module-nlp_architect.models.absa.train.train"><code class="xref">nlp_architect.models.absa.train.train</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.absa.html#module-nlp_architect.models.absa.utils"><code class="xref">nlp_architect.models.absa.utils</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.bist.html#module-nlp_architect.models.bist"><code class="xref">nlp_architect.models.bist</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.bist.html#module-nlp_architect.models.bist.decoder"><code class="xref">nlp_architect.models.bist.decoder</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.bist.eval.html#module-nlp_architect.models.bist.eval"><code class="xref">nlp_architect.models.bist.eval</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.bist.eval.conllu.html#module-nlp_architect.models.bist.eval.conllu"><code class="xref">nlp_architect.models.bist.eval.conllu</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.bist.eval.conllu.html#module-nlp_architect.models.bist.eval.conllu.conll17_ud_eval"><code class="xref">nlp_architect.models.bist.eval.conllu.conll17_ud_eval</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.bist.html#module-nlp_architect.models.bist.mstlstm"><code class="xref">nlp_architect.models.bist.mstlstm</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.bist.html#module-nlp_architect.models.bist.utils"><code class="xref">nlp_architect.models.bist.utils</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.html#module-nlp_architect.models.bist_parser"><code class="xref">nlp_architect.models.bist_parser</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.html#module-nlp_architect.models.chunker"><code class="xref">nlp_architect.models.chunker</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.cross_doc_coref.html#module-nlp_architect.models.cross_doc_coref"><code class="xref">nlp_architect.models.cross_doc_coref</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.cross_doc_coref.html#module-nlp_architect.models.cross_doc_coref.sieves_config"><code class="xref">nlp_architect.models.cross_doc_coref.sieves_config</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.cross_doc_coref.html#module-nlp_architect.models.cross_doc_coref.sieves_resource"><code class="xref">nlp_architect.models.cross_doc_coref.sieves_resource</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.cross_doc_coref.system.html#module-nlp_architect.models.cross_doc_coref.system"><code class="xref">nlp_architect.models.cross_doc_coref.system</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.cross_doc_coref.system.html#module-nlp_architect.models.cross_doc_coref.system.cdc_utils"><code class="xref">nlp_architect.models.cross_doc_coref.system.cdc_utils</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.cross_doc_coref.system.sieves.html#module-nlp_architect.models.cross_doc_coref.system.sieves"><code class="xref">nlp_architect.models.cross_doc_coref.system.sieves</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.cross_doc_coref.system.sieves.html#module-nlp_architect.models.cross_doc_coref.system.sieves.run_sieve_system"><code class="xref">nlp_architect.models.cross_doc_coref.system.sieves.run_sieve_system</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.cross_doc_coref.system.sieves.html#module-nlp_architect.models.cross_doc_coref.system.sieves.sieves"><code class="xref">nlp_architect.models.cross_doc_coref.system.sieves.sieves</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.cross_doc_coref.system.html#module-nlp_architect.models.cross_doc_coref.system.sieves_container_init"><code class="xref">nlp_architect.models.cross_doc_coref.system.sieves_container_init</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.html#module-nlp_architect.models.cross_doc_sieves"><code class="xref">nlp_architect.models.cross_doc_sieves</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.html#module-nlp_architect.models.crossling_emb"><code class="xref">nlp_architect.models.crossling_emb</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.gnmt.html#module-nlp_architect.models.gnmt"><code class="xref">nlp_architect.models.gnmt</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.gnmt.html#module-nlp_architect.models.gnmt.attention_model"><code class="xref">nlp_architect.models.gnmt.attention_model</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.gnmt.html#module-nlp_architect.models.gnmt.model"><code class="xref">nlp_architect.models.gnmt.model</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.gnmt.html#module-nlp_architect.models.gnmt.model_helper"><code class="xref">nlp_architect.models.gnmt.model_helper</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.gnmt.scripts.html#module-nlp_architect.models.gnmt.scripts"><code class="xref">nlp_architect.models.gnmt.scripts</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.gnmt.scripts.html#module-nlp_architect.models.gnmt.scripts.bleu"><code class="xref">nlp_architect.models.gnmt.scripts.bleu</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.gnmt.scripts.html#module-nlp_architect.models.gnmt.scripts.rouge"><code class="xref">nlp_architect.models.gnmt.scripts.rouge</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.gnmt.utils.html#module-nlp_architect.models.gnmt.utils"><code class="xref">nlp_architect.models.gnmt.utils</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.gnmt.utils.html#module-nlp_architect.models.gnmt.utils.evaluation_utils"><code class="xref">nlp_architect.models.gnmt.utils.evaluation_utils</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.gnmt.utils.html#module-nlp_architect.models.gnmt.utils.iterator_utils"><code class="xref">nlp_architect.models.gnmt.utils.iterator_utils</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.gnmt.utils.html#module-nlp_architect.models.gnmt.utils.misc_utils"><code class="xref">nlp_architect.models.gnmt.utils.misc_utils</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.gnmt.utils.html#module-nlp_architect.models.gnmt.utils.nmt_utils"><code class="xref">nlp_architect.models.gnmt.utils.nmt_utils</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.gnmt.utils.html#module-nlp_architect.models.gnmt.utils.standard_hparams_utils"><code class="xref">nlp_architect.models.gnmt.utils.standard_hparams_utils</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.gnmt.utils.html#module-nlp_architect.models.gnmt.utils.vocab_utils"><code class="xref">nlp_architect.models.gnmt.utils.vocab_utils</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.html#module-nlp_architect.models.gnmt_model"><code class="xref">nlp_architect.models.gnmt_model</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.html#module-nlp_architect.models.intent_extraction"><code class="xref">nlp_architect.models.intent_extraction</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.html#module-nlp_architect.models.matchlstm_ansptr"><code class="xref">nlp_architect.models.matchlstm_ansptr</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.html#module-nlp_architect.models.memn2n_dialogue"><code class="xref">nlp_architect.models.memn2n_dialogue</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.html#module-nlp_architect.models.most_common_word_sense"><code class="xref">nlp_architect.models.most_common_word_sense</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.html#module-nlp_architect.models.ner_crf"><code class="xref">nlp_architect.models.ner_crf</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.html#module-nlp_architect.models.np2vec"><code class="xref">nlp_architect.models.np2vec</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.html#module-nlp_architect.models.np_semantic_segmentation"><code class="xref">nlp_architect.models.np_semantic_segmentation</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.html#module-nlp_architect.models.supervised_sentiment"><code class="xref">nlp_architect.models.supervised_sentiment</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.html#module-nlp_architect.models.tagging"><code class="xref">nlp_architect.models.tagging</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.html#module-nlp_architect.models.temporal_convolutional_network"><code class="xref">nlp_architect.models.temporal_convolutional_network</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.transformers.html#module-nlp_architect.models.transformers"><code class="xref">nlp_architect.models.transformers</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.transformers.html#module-nlp_architect.models.transformers.base_model"><code class="xref">nlp_architect.models.transformers.base_model</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.transformers.html#module-nlp_architect.models.transformers.quantized_bert"><code class="xref">nlp_architect.models.transformers.quantized_bert</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.transformers.html#module-nlp_architect.models.transformers.sequence_classification"><code class="xref">nlp_architect.models.transformers.sequence_classification</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.models.transformers.html#module-nlp_architect.models.transformers.token_classification"><code class="xref">nlp_architect.models.transformers.token_classification</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.nlp.html#module-nlp_architect.nlp"><code class="xref">nlp_architect.nlp</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.nn.html#module-nlp_architect.nn"><code class="xref">nlp_architect.nn</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.nn.tensorflow.html#module-nlp_architect.nn.tensorflow"><code class="xref">nlp_architect.nn.tensorflow</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.nn.tensorflow.python.html#module-nlp_architect.nn.tensorflow.python"><code class="xref">nlp_architect.nn.tensorflow.python</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.nn.tensorflow.python.keras.html#module-nlp_architect.nn.tensorflow.python.keras"><code class="xref">nlp_architect.nn.tensorflow.python.keras</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.nn.tensorflow.python.keras.html#module-nlp_architect.nn.tensorflow.python.keras.callbacks"><code class="xref">nlp_architect.nn.tensorflow.python.keras.callbacks</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.nn.tensorflow.python.keras.layers.html#module-nlp_architect.nn.tensorflow.python.keras.layers"><code class="xref">nlp_architect.nn.tensorflow.python.keras.layers</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.nn.tensorflow.python.keras.layers.html#module-nlp_architect.nn.tensorflow.python.keras.layers.crf"><code class="xref">nlp_architect.nn.tensorflow.python.keras.layers.crf</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.nn.tensorflow.python.keras.utils.html#module-nlp_architect.nn.tensorflow.python.keras.utils"><code class="xref">nlp_architect.nn.tensorflow.python.keras.utils</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.nn.tensorflow.python.keras.utils.html#module-nlp_architect.nn.tensorflow.python.keras.utils.layer_utils"><code class="xref">nlp_architect.nn.tensorflow.python.keras.utils.layer_utils</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.nn.torch.html#module-nlp_architect.nn.torch"><code class="xref">nlp_architect.nn.torch</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.nn.torch.data.html#module-nlp_architect.nn.torch.data"><code class="xref">nlp_architect.nn.torch.data</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.nn.torch.data.html#module-nlp_architect.nn.torch.data.dataset"><code class="xref">nlp_architect.nn.torch.data.dataset</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.nn.torch.html#module-nlp_architect.nn.torch.distillation"><code class="xref">nlp_architect.nn.torch.distillation</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.nn.torch.layers.html#module-nlp_architect.nn.torch.layers"><code class="xref">nlp_architect.nn.torch.layers</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.nn.torch.layers.html#module-nlp_architect.nn.torch.layers.crf"><code class="xref">nlp_architect.nn.torch.layers.crf</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.nn.torch.modules.html#module-nlp_architect.nn.torch.modules"><code class="xref">nlp_architect.nn.torch.modules</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.nn.torch.modules.html#module-nlp_architect.nn.torch.modules.embedders"><code class="xref">nlp_architect.nn.torch.modules.embedders</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.nn.torch.html#module-nlp_architect.nn.torch.quantization"><code class="xref">nlp_architect.nn.torch.quantization</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.pipelines.html#module-nlp_architect.pipelines"><code class="xref">nlp_architect.pipelines</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.pipelines.html#module-nlp_architect.pipelines.spacy_bist"><code class="xref">nlp_architect.pipelines.spacy_bist</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.pipelines.html#module-nlp_architect.pipelines.spacy_np_annotator"><code class="xref">nlp_architect.pipelines.spacy_np_annotator</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.procedures.html#module-nlp_architect.procedures"><code class="xref">nlp_architect.procedures</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.procedures.html#module-nlp_architect.procedures.procedure"><code class="xref">nlp_architect.procedures.procedure</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.procedures.html#module-nlp_architect.procedures.registry"><code class="xref">nlp_architect.procedures.registry</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.procedures.html#module-nlp_architect.procedures.token_tagging"><code class="xref">nlp_architect.procedures.token_tagging</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.procedures.transformers.html#module-nlp_architect.procedures.transformers"><code class="xref">nlp_architect.procedures.transformers</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.procedures.transformers.html#module-nlp_architect.procedures.transformers.base"><code class="xref">nlp_architect.procedures.transformers.base</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.procedures.transformers.html#module-nlp_architect.procedures.transformers.glue"><code class="xref">nlp_architect.procedures.transformers.glue</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.procedures.transformers.html#module-nlp_architect.procedures.transformers.seq_tag"><code class="xref">nlp_architect.procedures.transformers.seq_tag</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.server.html#module-nlp_architect.server"><code class="xref">nlp_architect.server</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.server.html#module-nlp_architect.server.serve"><code class="xref">nlp_architect.server.serve</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.server.html#module-nlp_architect.server.service"><code class="xref">nlp_architect.server.service</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.solutions.html#module-nlp_architect.solutions"><code class="xref">nlp_architect.solutions</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.solutions.absa_solution.html#module-nlp_architect.solutions.absa_solution"><code class="xref">nlp_architect.solutions.absa_solution</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.solutions.absa_solution.html#module-nlp_architect.solutions.absa_solution.sentiment_solution"><code class="xref">nlp_architect.solutions.absa_solution.sentiment_solution</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.solutions.absa_solution.html#module-nlp_architect.solutions.absa_solution.ui"><code class="xref">nlp_architect.solutions.absa_solution.ui</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.solutions.absa_solution.html#module-nlp_architect.solutions.absa_solution.utils"><code class="xref">nlp_architect.solutions.absa_solution.utils</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.solutions.set_expansion.html#module-nlp_architect.solutions.set_expansion"><code class="xref">nlp_architect.solutions.set_expansion</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.solutions.set_expansion.html#module-nlp_architect.solutions.set_expansion.expand_server"><code class="xref">nlp_architect.solutions.set_expansion.expand_server</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.solutions.set_expansion.html#module-nlp_architect.solutions.set_expansion.prepare_data"><code class="xref">nlp_architect.solutions.set_expansion.prepare_data</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.solutions.set_expansion.html#module-nlp_architect.solutions.set_expansion.set_expand"><code class="xref">nlp_architect.solutions.set_expansion.set_expand</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.solutions.set_expansion.ui.html#module-nlp_architect.solutions.set_expansion.ui"><code class="xref">nlp_architect.solutions.set_expansion.ui</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.solutions.set_expansion.ui.html#module-nlp_architect.solutions.set_expansion.ui.main"><code class="xref">nlp_architect.solutions.set_expansion.ui.main</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.solutions.set_expansion.ui.html#module-nlp_architect.solutions.set_expansion.ui.settings"><code class="xref">nlp_architect.solutions.set_expansion.ui.settings</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.solutions.html#module-nlp_architect.solutions.start_ui"><code class="xref">nlp_architect.solutions.start_ui</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.solutions.trend_analysis.html#module-nlp_architect.solutions.trend_analysis"><code class="xref">nlp_architect.solutions.trend_analysis</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.solutions.trend_analysis.html#module-nlp_architect.solutions.trend_analysis.np_scorer"><code class="xref">nlp_architect.solutions.trend_analysis.np_scorer</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.solutions.trend_analysis.html#module-nlp_architect.solutions.trend_analysis.scoring_utils"><code class="xref">nlp_architect.solutions.trend_analysis.scoring_utils</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.solutions.trend_analysis.html#module-nlp_architect.solutions.trend_analysis.topic_extraction"><code class="xref">nlp_architect.solutions.trend_analysis.topic_extraction</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.solutions.trend_analysis.html#module-nlp_architect.solutions.trend_analysis.trend_analysis"><code class="xref">nlp_architect.solutions.trend_analysis.trend_analysis</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.solutions.trend_analysis.ui.html#module-nlp_architect.solutions.trend_analysis.ui"><code class="xref">nlp_architect.solutions.trend_analysis.ui</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.solutions.trend_analysis.ui.html#module-nlp_architect.solutions.trend_analysis.ui.main"><code class="xref">nlp_architect.solutions.trend_analysis.ui.main</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.utils.html#module-nlp_architect.utils"><code class="xref">nlp_architect.utils</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.utils.html#module-nlp_architect.utils.ansi2html"><code class="xref">nlp_architect.utils.ansi2html</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.utils.html#module-nlp_architect.utils.embedding"><code class="xref">nlp_architect.utils.embedding</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.utils.html#module-nlp_architect.utils.ensembler"><code class="xref">nlp_architect.utils.ensembler</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.utils.html#module-nlp_architect.utils.generic"><code class="xref">nlp_architect.utils.generic</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.utils.html#module-nlp_architect.utils.io"><code class="xref">nlp_architect.utils.io</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.utils.html#module-nlp_architect.utils.metrics"><code class="xref">nlp_architect.utils.metrics</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.utils.html#module-nlp_architect.utils.mrc_utils"><code class="xref">nlp_architect.utils.mrc_utils</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.utils.resources.html#module-nlp_architect.utils.resources"><code class="xref">nlp_architect.utils.resources</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.utils.html#module-nlp_architect.utils.string_utils"><code class="xref">nlp_architect.utils.string_utils</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.utils.html#module-nlp_architect.utils.testing"><code class="xref">nlp_architect.utils.testing</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="generated_api/nlp_architect.utils.html#module-nlp_architect.utils.text"><code class="xref">nlp_architect.utils.text</code></a></td><td>
        <em></em></td></tr>
    </table>
 

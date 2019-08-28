@@ -1,0 +1,364 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Transformer model distillation &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/install.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/nlp_arch_theme.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Compression of Google Neural Machine Translation Model" href="sparse_gnmt.html" />
+    <link rel="prev" title="Quantize BERT with Quantization Aware Training" href="quantized_bert.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html">
+          
+
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="publications.html">Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Jupyter Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model_zoo.html">Model Zoo</a></li>
+</ul>
+<p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tagging/sequence_tagging.html">Sequence Tagging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sentiment.html">Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bist_parser.html">Dependency Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intent.html">Intent Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lm.html">Language Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="information_extraction.html">Information Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transformers.html">Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="archived/additional.html">Additional Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Optimized Models</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="quantized_bert.html">Quantized BERT</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Transformers Distillation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#knowledge-distillation">Knowledge Distillation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#teacherstudentdistill"><code class="docutils literal notranslate"><span class="pre">TeacherStudentDistill</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#supported-models">Supported models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#neuraltagger"><code class="docutils literal notranslate"><span class="pre">NeuralTagger</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solutions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="absa_solution.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="term_set_expansion.html">Set Expansion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="trend_analysis.html">Trend Analysis</a></li>
+</ul>
+<p class="caption"><span class="caption-text">For Developers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer_guide.html">Developer Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">NLP Architect by Intel® AI Lab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Transformer model distillation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="transformer-model-distillation">
+<h1>Transformer model distillation<a class="headerlink" href="#transformer-model-distillation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Transformer models which were pre-trained on large corpora, such as BERT/XLNet/XLM,
+have shown to improve the accuracy of many NLP tasks. However, such models have two
+distinct disadvantages - (1) model size and (2) speed, since such large models are
+computationally heavy.</p>
+<p>One possible approach to overcome these cons is to use Knowledge Distillation (KD).
+Using this approach a large model is trained on the data set and then used to <em>teach</em>
+a much smaller and more efficient network. This is often referred to a Student-Teacher
+training where a teacher network adds its error to the student’s loss function, thus,
+helping the student network to converge to a better solution.</p>
+</div>
+<div class="section" id="knowledge-distillation">
+<h2>Knowledge Distillation<a class="headerlink" href="#knowledge-distillation" title="Permalink to this headline">¶</a></h2>
+<p>One approach is similar to the method in Hinton 2015 <a class="footnote-reference" href="#id2" id="id1">[1]</a>. The loss function is
+modified to include a measure of distributions divergence, which can be measured
+using KL divergence or MSE between the logits of the student and the teacher network.</p>
+<blockquote>
+<div><span class="math notranslate nohighlight">\(loss = w_s \cdot loss_{student} + w_d \cdot KL(logits_{student} / T || logits_{teacher} / T)\)</span></div></blockquote>
+<p>where <em>T</em> is a value representing temperature for softening the logits prior to
+applying softmax. <cite>loss_{student}</cite> is the original loss of the student network
+obtained during regular training. Finally, the losses are weighted.</p>
+<div class="section" id="teacherstudentdistill">
+<h3><code class="docutils literal notranslate"><span class="pre">TeacherStudentDistill</span></code><a class="headerlink" href="#teacherstudentdistill" title="Permalink to this headline">¶</a></h3>
+<p>This class can be added to support for distillation in a model.
+To add support for distillation, the student model must include handling of training
+using <code class="docutils literal notranslate"><span class="pre">TeacherStudentDistill</span></code> class, see <code class="docutils literal notranslate"><span class="pre">nlp_architect.procedures.token_tagging.do_kd_training</span></code> for
+an example how to train a neural tagger using a transformer model using distillation.</p>
+<dl class="class">
+<dt id="nlp_architect.nn.torch.distillation.TeacherStudentDistill">
+<em class="property">class </em><code class="descclassname">nlp_architect.nn.torch.distillation.</code><code class="descname">TeacherStudentDistill</code><span class="sig-paren">(</span><em>teacher_model: nlp_architect.models.TrainableModel</em>, <em>temperature: float = 1.0</em>, <em>kd_w: float = 0.5</em>, <em>loss_w: float = 0.5</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nlp_architect/nn/torch/distillation.html#TeacherStudentDistill"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.distillation.TeacherStudentDistill" title="Permalink to this definition">¶</a></dt>
+<dd><p>Teacher-Student knowledge distillation helper.
+Use this object when training a model with KD and a teacher model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>teacher_model</strong> (<a class="reference internal" href="generated_api/nlp_architect.models.html#nlp_architect.models.TrainableModel" title="nlp_architect.models.TrainableModel"><em>TrainableModel</em></a>) – teacher model</li>
+<li><strong>temperature</strong> (<em>float</em><em>, </em><em>optional</em>) – KD temperature. Defaults to 1.0.</li>
+<li><strong>kd_w</strong> (<em>float</em><em>, </em><em>optional</em>) – teacher loss weight. Defaults to 0.5.</li>
+<li><strong>loss_w</strong> (<em>float</em><em>, </em><em>optional</em>) – student loss weight. Defaults to 0.5.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="staticmethod">
+<dt id="nlp_architect.nn.torch.distillation.TeacherStudentDistill.add_args">
+<em class="property">static </em><code class="descname">add_args</code><span class="sig-paren">(</span><em>parser: argparse.ArgumentParser</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nlp_architect/nn/torch/distillation.html#TeacherStudentDistill.add_args"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.distillation.TeacherStudentDistill.add_args" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add KD arguments to parser</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parser</strong> (<em>argparse.ArgumentParser</em>) – parser</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.nn.torch.distillation.TeacherStudentDistill.distill_loss">
+<code class="descname">distill_loss</code><span class="sig-paren">(</span><em>loss</em>, <em>student_logits</em>, <em>teacher_logits</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nlp_architect/nn/torch/distillation.html#TeacherStudentDistill.distill_loss"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.distillation.TeacherStudentDistill.distill_loss" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add KD loss</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>loss</strong> – student loss</li>
+<li><strong>student_logits</strong> – student model logits</li>
+<li><strong>teacher_logits</strong> – teacher model logits</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">KD loss</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.nn.torch.distillation.TeacherStudentDistill.get_teacher_logits">
+<code class="descname">get_teacher_logits</code><span class="sig-paren">(</span><em>inputs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nlp_architect/nn/torch/distillation.html#TeacherStudentDistill.get_teacher_logits"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.distillation.TeacherStudentDistill.get_teacher_logits" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get teacher logits</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>inputs</strong> – input</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">teachr logits</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="supported-models">
+<h2>Supported models<a class="headerlink" href="#supported-models" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="neuraltagger">
+<h3><code class="docutils literal notranslate"><span class="pre">NeuralTagger</span></code><a class="headerlink" href="#neuraltagger" title="Permalink to this headline">¶</a></h3>
+<p>Useful for training taggers from Transformer models. <a class="reference internal" href="tagging/sequence_tagging.html#nlp_architect.models.tagging.NeuralTagger" title="nlp_architect.models.tagging.NeuralTagger"><code class="xref py py-class docutils literal notranslate"><span class="pre">NeuralTagger</span></code></a> model that uses LSTM and CNN based embedders are ~3M parameters in size (~30-100x smaller than BERT models) and ~10x faster on average.</p>
+<p>Usage:</p>
+<ol class="arabic simple">
+<li>Train a transformer tagger using <code class="xref py py-class docutils literal notranslate"><span class="pre">TransformerTokenClassifier</span></code> or using <code class="docutils literal notranslate"><span class="pre">nlp_architect</span> <span class="pre">train</span> <span class="pre">transformer_token</span></code> command</li>
+<li>Train a neural tagger <a class="reference internal" href="tagging/sequence_tagging.html#nlp_architect.models.tagging.NeuralTagger" title="nlp_architect.models.tagging.NeuralTagger"><code class="xref py py-class docutils literal notranslate"><span class="pre">Neural</span> <span class="pre">Tagger</span></code></a> using the trained transformer model and use the <a class="reference internal" href="#nlp_architect.nn.torch.distillation.TeacherStudentDistill" title="nlp_architect.nn.torch.distillation.TeacherStudentDistill"><code class="xref py py-class docutils literal notranslate"><span class="pre">TeacherStudentDistill</span></code></a> model that was configured with the transformer model. This can be done using <a class="reference internal" href="tagging/sequence_tagging.html#nlp_architect.models.tagging.NeuralTagger" title="nlp_architect.models.tagging.NeuralTagger"><code class="xref py py-class docutils literal notranslate"><span class="pre">Neural</span> <span class="pre">Tagger</span></code></a>’s train loop or by using <code class="docutils literal notranslate"><span class="pre">nlp_architect</span> <span class="pre">train</span> <span class="pre">tagger_kd</span></code> command</li>
+</ol>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">More models supporting distillation will be added in next releases</p>
+</div>
+<table class="docutils footnote" frame="void" id="id2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>Distilling the Knowledge in a Neural Network: Geoffrey Hinton, Oriol Vinyals, Jeff Dean, <a class="reference external" href="https://arxiv.org/abs/1503.02531">https://arxiv.org/abs/1503.02531</a></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -28,7 +28,7 @@ from torch.utils.data import DataLoader, SequentialSampler, TensorDataset
 from nlp_architect.data.sequence_classification import SequenceClsInputExample
 from nlp_architect.models.transformers.base_model import (InputFeatures,
                                                           TransformerBase)
-from nlp_architect.models.quantized_bert import QuantizedBertForSequenceClassification
+from nlp_architect.models.transformers.quantized_bert import QuantizedBertForSequenceClassification
 from nlp_architect.utils.metrics import simple_accuracy
 
 logger = logging.getLogger(__name__)
@@ -37,6 +37,14 @@ logger = logging.getLogger(__name__)
 class TransformerSequenceClassifier(TransformerBase):
     """
     Transformer sequence classifier
+
+    Args:
+        model_type (str): transformer base model type
+        labels (List[str], optional): list of labels. Defaults to None.
+        task_type (str, optional): task type (classification/regression). Defaults to
+        classification.
+        metric_fn ([type], optional): metric to use for evaluation. Defaults to
+        simple_accuracy.
     """
     MODEL_CLASS = {
         'bert': BertForSequenceClassification,
@@ -48,17 +56,6 @@ class TransformerSequenceClassifier(TransformerBase):
     def __init__(self, model_type: str, labels: List[str] = None,
                  task_type="classification", metric_fn=simple_accuracy,
                  *args, **kwargs):
-        """
-        Transformer sequence classifier
-
-        Args:
-            model_type (str): transformer base model stype
-            labels (List[str], optional): list of labels. Defaults to None.
-            task_type (str, optional): task type (classification/regression). Defaults to
-            classification.
-            metric_fn ([type], optional): metric to use for evaluation. Defaults to
-            simple_accuracy.
-        """
         assert model_type in self.MODEL_CLASS.keys(), "unsupported model type"
         self.labels = labels
         self.num_labels = len(labels)

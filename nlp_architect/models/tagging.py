@@ -47,7 +47,7 @@ class NeuralTagger(TrainableModel):
         labels (List, optional): list of labels. Defaults to None
         use_crf (bool, optional): use CRF a the classifier (instead of Softmax). Defaults to False.
         device (str, optional): device backend. Defatuls to 'cpu'.
-        n_gpus (int, optionla): number of gpus. Default to 0.
+        n_gpus (int, optional): number of gpus. Default to 0.
     """
 
     def __init__(self, embedder_model, word_vocab: Vocabulary, labels: List[str] = None,

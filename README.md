@@ -41,10 +41,11 @@ Features:
 * Core NLP models used in many NLP tasks and useful in many NLP applications
 * Novel NLU models showcasing novel topologies and techniques
 * Optimized NLP/NLU models showcasing different optimization algorithms on neural NLP/NLU models
-* Simple REST API server ([doc](http://nlp_architect.nervanasys.com/service.html)):
-  * serving trained models (for inference)
-  * plug-in system for adding your own model
-* 4 Demos of models (pre-trained by us) showcasing NLP Architect (Dependency parser, NER, Intent Extraction, Q&A)
+* Model-oriented design:
+  * Train and run models from command-line.
+  * API for using models for inference in python.
+  * Procedures to define custom processes for training,    inference or anything related to processing.
+  * CLI sub-system for running procedures
 * Based on optimized Deep Learning frameworks:
 
   * [TensorFlow]
@@ -52,12 +53,20 @@ Features:
   * [Intel-Optimized TensorFlow with MKL-DNN]
   * [Dynet]
 
-* Documentation [website](http://nlp_architect.nervanasys.com/) and [tutorials](http://nlp_architect.nervanasys.com/tutorials.html)
 * Essential utilities for working with NLP models - Text/String pre-processing, IO, data-manipulation, metrics, embeddings.
+* Plug-able REST API server to serve models via REST API
 
 ## Installing NLP Architect
 
 We recommend to install NLP Architect in a new python environment, to use python 3.6+ with up-to-date `pip`, `setuptools` and `h5py`.
+
+### Install using `pip`
+
+Includes only core library (without `examples/` directory)
+
+```sh
+pip install nlp-architect
+```
 
 ### Install from source (Github)
 
@@ -76,14 +85,6 @@ Install (in develop mode)
 pip install -e .
 ```
 
-### Install from pypi (using `pip install`)
-
-Includes only core library
-
-```sh
-pip install nlp-architect
-```
-
 ### Further installation options
 
 Refer to our full [installation instructions](http://nlp_architect.nervanasys.com/installation.html) page on our website for complete details on how to install NLP Architect and other backend installations such as MKL-DNN or GPU backends.
@@ -93,39 +94,29 @@ Users can install any deep learning backends manually before/after they install 
 
 NLP models that provide best (or near) in class performance:
 
-* [Word chunking](http://nlp_architect.nervanasys.com/chunker.html)
-* [Named Entity Recognition](http://nlp_architect.nervanasys.com/ner_crf.html)
+* [Word chunking](http://nlp_architect.nervanasys.com/tagging/sequence_tagging.html#word-chunker)
+* [Named Entity Recognition](http://nlp_architect.nervanasys.com/tagging/sequence_tagging.html#named-entity-recognition)
 * [Dependency parsing](http://nlp_architect.nervanasys.com/bist_parser.html)
 * [Intent Extraction](http://nlp_architect.nervanasys.com/intent.html)
-* [Sentiment classification](http://nlp_architect.nervanasys.com/supervised_sentiment.html)
-* [Language models](http://nlp_architect.nervanasys.com/tcn.html)
-* [Transformers](http://nlp_architect.nervanasys.com/) (for most NLP tasks)
+* [Sentiment classification](http://nlp_architect.nervanasys.com/sentiment.html#supervised-sentiment)
+* [Language models](http://nlp_architect.nervanasys.com/lm.html#language-modeling-with-tcn)
+* [Transformers](http://nlp_architect.nervanasys.com/transformers.html) (for NLP tasks)
 
 Natural Language Understanding (NLU) models that address semantic understanding:
 
 * [Aspect Based Sentiment Analysis (ABSA)](http://nlp_architect.nervanasys.com/absa.html)
+* [Joint intent detection and slot tagging](http://nlp_architect.nervanasys.com/intent.html)
 * [Noun phrase embedding representation (NP2Vec)](http://nlp_architect.nervanasys.com/np2vec.html)
 * [Most common word sense detection](http://nlp_architect.nervanasys.com/word_sense.html)
 * [Relation identification](http://nlp_architect.nervanasys.com/identifying_semantic_relation.html)
 * [Cross document coreference](http://nlp_architect.nervanasys.com/cross_doc_coref.html)
 * [Noun phrase semantic segmentation](http://nlp_architect.nervanasys.com/np_segmentation.html)
 
-Components instrumental for conversational AI:
-
-* [Joint intent detection and slot tagging](http://nlp_architect.nervanasys.com/intent.html)
-* [Memory Networks for goal oriented dialog](http://nlp_architect.nervanasys.com/memn2n.html)
-
 Optimizing NLP/NLU models and misc. optimization techniques:
 
-* [Quantized BERT (8bit)](http://nlp_architect.nervanasys.com/)
-* [Knowledge Distillation using BERT](http://nlp_architect.nervanasys.com/)
+* [Quantized BERT (8bit)](http://nlp_architect.nervanasys.com/quantized_bert.html)
+* [Knowledge Distillation using Transformers](http://nlp_architect.nervanasys.com/transformers_distillation.html)
 * [Sparse and Quantized Neural Machine Translation (GNMT)](http://nlp_architect.nervanasys.com/sparse_gnmt.html)
-
-End-to-end Deep Learning-based NLP models:
-
-* [Reading comprehension](http://nlp_architect.nervanasys.com/reading_comprehension.html)
-* [Language Modeling using Temporal Convolution Network (TCN)](http://nlp_architect.nervanasys.com/tcn.html)
-* [Unsupervised Cross-lingual embeddings](http://nlp_architect.nervanasys.com/crosslingual_emb.html)
 
 Solutions (End-to-end applications) using one or more models:
 
@@ -155,34 +146,8 @@ The main design guidelines are:
 * REST API servers with ability to serve trained models via HTTP
 * Extensive model documentation and tutorials
 
-## Demo UI examples
-
-Dependency parser
-<p>
-  <img src="https://raw.githubusercontent.com/NervanaSystems/nlp-architect/master/assets/bist-demo-small.png" height="375"/>
-</p>
-Intent Extraction
-<p>
-  <img src="https://raw.githubusercontent.com/NervanaSystems/nlp-architect/master/assets/ie-demo-small.png" height="375"/>
-<p>
-
-## Packages
-
-| Package                 	| Description                                          	|
-|-------------------------	|------------------------------------------------------	|
-| `nlp_architect.api`      	| Model API interfaces                                 	|
-| `nlp_architect.common`   	| Common packages                                      	|
-| `nlp_architect.cli`      	| Command line module                                  	|
-| `nlp_architect.data`     	| Datasets, loaders and data processors                	|
-| `nlp_architect.models`   	| NLP, NLU and End-to-End models                       	|
-| `nlp_architect.nn`      	| Topology related models and additions (per framework)	|
-| `nlp_architect.pipelines`	| End-to-end NLP apps                                  	|
-| `nlp_architect.procedures`| Procedure scripts                                    	|
-| `nlp_architect.server`   	| API Server and demos UI                              	|
-| `nlp_architect.solutions` | Solution applications                                	|
-| `nlp_architect.utils`    	| Misc. I/O, metric, pre-processing and text utilities 	|
-
 ### Note
+
 NLP Architect is an active space of research and development; Throughout future
 releases new models, solutions, topologies and framework additions and changes
 will be made. We aim to make sure all models run with Python 3.6+. We
@@ -191,7 +156,7 @@ encourage researchers and developers to contribute their work into the library.
 ## Citing
 
 If you use NLP Architect in your research, please use the following citation:
-```
+
 @misc{izsak_peter_2018_1477518,
   title        = {NLP Architect by Intel AI Lab},
   month        = nov,
@@ -199,9 +164,9 @@ If you use NLP Architect in your research, please use the following citation:
   doi          = {10.5281/zenodo.1477518},
   url          = {https://doi.org/10.5281/zenodo.1477518}
 }
-```
 
 ## Disclaimer
+
 The NLP Architect is released as reference code for research purposes. It is
 not an official Intel product, and the level of quality and support may not be
 as expected from an official product. NLP Architect is intended to be used

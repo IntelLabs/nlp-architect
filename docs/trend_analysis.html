@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Topic and Trend Analysis Solution &mdash; NLP Architect by Intel® AI Lab 0.4.post2 documentation</title>
+  <title>Topic and Trend Analysis Solution &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
   
 
   
@@ -25,6 +25,8 @@
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
         <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/install.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -33,11 +35,12 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" type="text/css" />
-  <link rel="stylesheet" href="_static/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/nlp_arch_theme.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Spacy-BIST Parser" href="spacy_bist.html" />
+    <link rel="next" title="nlp\_architect package" href="generated_api/nlp_architect_api_index.html" />
     <link rel="prev" title="Set Expansion Solution" href="term_set_expansion.html" /> 
 </head>
 
@@ -57,7 +60,7 @@
 
           
             
-            <img src="_static/nlp_architect_logo_white.png" class="logo" alt="Logo"/>
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
           
           </a>
 
@@ -83,31 +86,27 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="main.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick start</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="publications.html">Publications</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Jupyter Tutorials</a></li>
-<li class="toctree-l1"><a class="reference internal" href="developer_guide.html">Developer Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model_zoo.html">Model Zoo</a></li>
 </ul>
 <p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="absa.html">Aspect Based Sentiment Analysis</a></li>
-<li class="toctree-l1"><a class="reference internal" href="chunker.html">Sequence Chunker</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ner_crf.html">Named Entity Recognition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tagging/sequence_tagging.html">Sequence Tagging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sentiment.html">Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bist_parser.html">Dependency Parsing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="intent.html">Intent Extraction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="np_segmentation.html">Noun Phrase Semantic Segmentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bist_parser.html">BIST Dependency Parser</a></li>
-<li class="toctree-l1"><a class="reference internal" href="word_sense.html">Most Common Word Sense</a></li>
-<li class="toctree-l1"><a class="reference internal" href="np2vec.html">Noun Phrase to Vec</a></li>
-<li class="toctree-l1"><a class="reference internal" href="supervised_sentiment.html">Supervised Sentiment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="reading_comprehension.html">Reading Comprehension</a></li>
-<li class="toctree-l1"><a class="reference internal" href="memn2n.html">End-to-End Memory Networks for Goal Oriented Dialogue</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tcn.html">TCN Language Model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="crosslingual_emb.html">Unsupervised Crosslingual Embeddings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cross_doc_coref.html">Cross Document Co-Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="identifying_semantic_relation.html">Semantic Relation Identification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lm.html">Language Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="information_extraction.html">Information Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transformers.html">Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="archived/additional.html">Additional Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Optimized Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quantized_bert.html">Quantized BERT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transformers_distillation.html">Transformers Distillation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Solutions</span></p>
@@ -129,14 +128,11 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Pipelines</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="spacy_bist.html">Spacy-BIST Parser</a></li>
-<li class="toctree-l1"><a class="reference internal" href="spacy_np_annotator.html">Spacy-NP Annotator</a></li>
-</ul>
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer_guide.html">Developer Guide</a></li>
 </ul>
 
             
@@ -210,8 +206,8 @@
 <h2>Flow<a class="headerlink" href="#flow" title="Permalink to this headline">¶</a></h2>
 <p>The first stage is to extract the topics from the two textual corpora:</p>
 <ul class="simple">
-<li><p>A target corpus (e.g., current month’s financial reports)</p></li>
-<li><p>A reference corpus (e.g., last month’s financial reports).</p></li>
+<li>A target corpus (e.g., current month’s financial reports)</li>
+<li>A reference corpus (e.g., last month’s financial reports).</li>
 </ul>
 <p>The analysis is done by running the two corpora through the Topic Extraction pipeline: Normalization -&gt; Noun Phrase extraction -&gt; Refinement -&gt; Scoring.
 In this stage, the algorithm will also train a W2V model on the joint corpora to be used for the clustering report (this step can be skipped).
@@ -226,19 +222,19 @@ Finally the UI reads the analysis data and generates automatic reports for extra
 <div class="section" id="reports">
 <h2>Reports<a class="headerlink" href="#reports" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><p><strong>Top Topics</strong>:           highest scored topics from each corpora</p></li>
-<li><p><strong>Hot Trends</strong>:            topics with highest positive change in scores</p></li>
-<li><p><strong>Cold Trends</strong>:          topics with highest negative change in scores</p></li>
-<li><p><strong>Trend Clustering</strong>:      scatter graph showing trends clusters</p></li>
-<li><p><strong>Topic Clustering</strong>:      scatter graph showing topic clusters for each corpus</p></li>
-<li><p><strong>Custom Trends</strong>:         topics selected by the user to monitor (see section: <a class="reference internal" href="#filter-section"><span class="std std-ref">Filter Phrases and Custom Trends</span></a>)</p></li>
+<li><strong>Top Topics</strong>:           highest scored topics from each corpora</li>
+<li><strong>Hot Trends</strong>:            topics with highest positive change in scores</li>
+<li><strong>Cold Trends</strong>:          topics with highest negative change in scores</li>
+<li><strong>Trend Clustering</strong>:      scatter graph showing trends clusters</li>
+<li><strong>Topic Clustering</strong>:      scatter graph showing topic clusters for each corpus</li>
+<li><strong>Custom Trends</strong>:         topics selected by the user to monitor (see section: <a class="reference internal" href="#filter-section"><span class="std std-ref">Filter Phrases and Custom Trends</span></a>)</li>
 </ul>
 </div>
 <div class="section" id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="first-stage">
 <h3>First stage<a class="headerlink" href="#first-stage" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">nlp_architect</span><span class="o">.</span><span class="n">solutions</span><span class="o">.</span><span class="n">trend_analysis</span><span class="o">.</span><span class="n">topic_extraction</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">notrain</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">url</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">single_thread</span><span class="p">]</span>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">nlp_architect</span><span class="o">.</span><span class="n">solutions</span><span class="o">.</span><span class="n">trend_analysis</span><span class="o">.</span><span class="n">topic_extraction</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">notrain</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">url</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">single_thread</span><span class="p">]</span>
                            <span class="n">target_corpus</span> <span class="n">ref_corpus</span>
 
 <span class="n">positional</span> <span class="n">arguments</span><span class="p">:</span>
@@ -246,9 +242,9 @@ Finally the UI reads the analysis data and generates automatic reports for extra
   <span class="n">ref_corpus</span>       <span class="n">a</span> <span class="n">path</span> <span class="n">to</span> <span class="n">a</span> <span class="n">folder</span> <span class="n">containing</span> <span class="n">text</span> <span class="n">files</span>
 
 <span class="n">optional</span> <span class="n">arguments</span><span class="p">:</span>
-  <span class="o">-</span><span class="n">h</span><span class="p">,</span> <span class="o">--</span><span class="n">help</span>       <span class="n">show</span> <span class="n">this</span> <span class="n">help</span> <span class="n">message</span> <span class="ow">and</span> <span class="nb">exit</span>
+  <span class="o">-</span><span class="n">h</span><span class="p">,</span> <span class="o">--</span><span class="n">help</span>       <span class="n">show</span> <span class="n">this</span> <span class="n">help</span> <span class="n">message</span> <span class="ow">and</span> <span class="n">exit</span>
   <span class="o">--</span><span class="n">no_train</span>        <span class="n">skip</span> <span class="n">the</span> <span class="n">creation</span> <span class="n">of</span> <span class="n">w2v</span> <span class="n">model</span>
-  <span class="o">--</span><span class="n">url</span>            <span class="n">corpus</span> <span class="ow">is</span> <span class="n">provided</span> <span class="k">as</span> <span class="n">csv</span> <span class="nb">file</span> <span class="k">with</span> <span class="n">urls</span>
+  <span class="o">--</span><span class="n">url</span>            <span class="n">corpus</span> <span class="ow">is</span> <span class="n">provided</span> <span class="k">as</span> <span class="n">csv</span> <span class="n">file</span> <span class="k">with</span> <span class="n">urls</span>
   <span class="o">--</span><span class="n">single_thread</span>  <span class="n">analyze</span> <span class="n">corpora</span> <span class="n">sequentially</span>
 </pre></div>
 </div>
@@ -258,17 +254,17 @@ To use the trend analysis step (step below) it is required to run the topic extr
 </div>
 <div class="section" id="second-stage">
 <h3>Second stage<a class="headerlink" href="#second-stage" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">nlp_architect</span><span class="o">.</span><span class="n">solutions</span><span class="o">.</span><span class="n">trend_analysis</span><span class="o">.</span><span class="n">trend_analysis</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">top_n</span> <span class="n">TOP_N</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">top_vectors</span> <span class="n">TOP_VECTORS</span><span class="p">]</span>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">nlp_architect</span><span class="o">.</span><span class="n">solutions</span><span class="o">.</span><span class="n">trend_analysis</span><span class="o">.</span><span class="n">trend_analysis</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">top_n</span> <span class="n">TOP_N</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">top_vectors</span> <span class="n">TOP_VECTORS</span><span class="p">]</span>
                      <span class="n">target_topics</span> <span class="n">ref_topics</span>
 
 <span class="n">positional</span> <span class="n">arguments</span><span class="p">:</span>
-  <span class="n">target_topics</span>         <span class="n">a</span> <span class="n">path</span> <span class="n">to</span> <span class="n">a</span> <span class="n">csv</span> <span class="n">topic</span><span class="o">-</span><span class="nb">list</span> <span class="n">extracted</span> <span class="kn">from</span> <span class="nn">the</span> <span class="nn">target</span>
+  <span class="n">target_topics</span>         <span class="n">a</span> <span class="n">path</span> <span class="n">to</span> <span class="n">a</span> <span class="n">csv</span> <span class="n">topic</span><span class="o">-</span><span class="nb">list</span> <span class="n">extracted</span> <span class="kn">from</span> <span class="nn">the</span> <span class="n">target</span>
                         <span class="n">corpus</span>
   <span class="n">ref_topics</span>            <span class="n">a</span> <span class="n">path</span> <span class="n">to</span> <span class="n">a</span> <span class="n">csv</span> <span class="n">topic</span><span class="o">-</span><span class="nb">list</span> <span class="n">extracted</span> <span class="kn">from</span> <span class="nn">the</span>
                         <span class="n">reference</span> <span class="n">corpus</span>
 
 <span class="n">optional</span> <span class="n">arguments</span><span class="p">:</span>
-  <span class="o">-</span><span class="n">h</span><span class="p">,</span> <span class="o">--</span><span class="n">help</span>            <span class="n">show</span> <span class="n">this</span> <span class="n">help</span> <span class="n">message</span> <span class="ow">and</span> <span class="nb">exit</span>
+  <span class="o">-</span><span class="n">h</span><span class="p">,</span> <span class="o">--</span><span class="n">help</span>            <span class="n">show</span> <span class="n">this</span> <span class="n">help</span> <span class="n">message</span> <span class="ow">and</span> <span class="n">exit</span>
   <span class="o">--</span><span class="n">top_n</span> <span class="n">TOP_N</span>         <span class="n">compare</span> <span class="n">only</span> <span class="n">top</span> <span class="n">N</span> <span class="n">topics</span> <span class="p">(</span><span class="n">default</span><span class="p">:</span> <span class="mi">10000</span><span class="p">)</span>
   <span class="o">--</span><span class="n">top_vectors</span> <span class="n">TOP_VECTORS</span>
                         <span class="n">include</span> <span class="n">only</span> <span class="n">top</span> <span class="n">N</span> <span class="n">vectors</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">scatter</span> <span class="n">graph</span>
@@ -281,11 +277,11 @@ The analysis results will be saved into the data folder and will be used by the 
 <div class="section" id="ui-stage">
 <h3>UI stage<a class="headerlink" href="#ui-stage" title="Permalink to this headline">¶</a></h3>
 <p>In order to visualize the analysis results run:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">nlp_architect</span><span class="o">.</span><span class="n">solutions</span><span class="o">.</span><span class="n">start_ui</span> <span class="o">--</span><span class="n">solution</span> <span class="n">trend_analysis</span>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">nlp_architect</span><span class="o">.</span><span class="n">solutions</span><span class="o">.</span><span class="n">start_ui</span> <span class="o">--</span><span class="n">solution</span> <span class="n">trend_analysis</span>
 </pre></div>
 </div>
 <p>You can also load the UI as a server using –address and –port, for example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">nlp_architect</span><span class="o">.</span><span class="n">solutions</span><span class="o">.</span><span class="n">start_ui</span> <span class="o">--</span><span class="n">solution</span> <span class="n">trend_analysis</span> <span class="o">--</span><span class="n">address</span><span class="o">=</span><span class="mf">12.13</span><span class="o">.</span><span class="mf">14.15</span> <span class="o">--</span><span class="n">port</span><span class="o">=</span><span class="mi">1010</span>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">nlp_architect</span><span class="o">.</span><span class="n">solutions</span><span class="o">.</span><span class="n">start_ui</span> <span class="o">--</span><span class="n">solution</span> <span class="n">trend_analysis</span> <span class="o">--</span><span class="n">address</span><span class="o">=</span><span class="mf">12.13</span><span class="o">.</span><span class="mf">14.15</span> <span class="o">--</span><span class="n">port</span><span class="o">=</span><span class="mi">1010</span>
 </pre></div>
 </div>
 <p>and then access it through a browser: <a class="reference external" href="http://12.13.14.15:1010/ui">http://12.13.14.15:1010/ui</a></p>

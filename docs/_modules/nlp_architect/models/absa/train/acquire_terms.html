@@ -1,0 +1,686 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>nlp_architect.models.absa.train.acquire_terms &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../../../_static/language_data.js"></script>
+        <script type="text/javascript" src="../../../../../_static/install.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/nlp_arch_theme.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../../index.html">
+          
+
+          
+            
+            <img src="../../../../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../quick_start.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../publications.html">Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../tutorials.html">Jupyter Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../model_zoo.html">Model Zoo</a></li>
+</ul>
+<p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../tagging/sequence_tagging.html">Sequence Tagging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../sentiment.html">Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../bist_parser.html">Dependency Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../intent.html">Intent Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../lm.html">Language Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../information_extraction.html">Information Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../transformers.html">Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../archived/additional.html">Additional Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Optimized Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../quantized_bert.html">Quantized BERT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../transformers_distillation.html">Transformers Distillation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solutions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../absa_solution.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../term_set_expansion.html">Set Expansion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../trend_analysis.html">Trend Analysis</a></li>
+</ul>
+<p class="caption"><span class="caption-text">For Developers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../developer_guide.html">Developer Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">NLP Architect by Intel® AI Lab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../../models.html">nlp_architect.models</a> &raquo;</li>
+        
+      <li>nlp_architect.models.absa.train.acquire_terms</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for nlp_architect.models.absa.train.acquire_terms</h1><div class="highlight"><pre>
+<span></span><span class="c1"># ******************************************************************************</span>
+<span class="c1"># Copyright 2017-2018 Intel Corporation</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ******************************************************************************</span>
+<span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="k">import</span> <span class="n">PathLike</span>
+
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="k">import</span> <span class="n">tqdm</span>
+
+<span class="kn">from</span> <span class="nn">nlp_architect.models.absa</span> <span class="k">import</span> <span class="n">TRAIN_LEXICONS</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.models.absa</span> <span class="k">import</span> <span class="n">TRAIN_OUT</span><span class="p">,</span> <span class="n">GENERIC_OP_LEX</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.models.absa.inference.data_types</span> <span class="k">import</span> <span class="n">Polarity</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.models.absa.train.data_types</span> <span class="k">import</span> <span class="n">AspectTerm</span><span class="p">,</span> \
+    <span class="n">DepRelation</span><span class="p">,</span> <span class="n">DepRelationTerm</span><span class="p">,</span> <span class="n">LoadOpinionStopLists</span><span class="p">,</span> <span class="n">LoadAspectStopLists</span><span class="p">,</span> <span class="n">OpinionTerm</span><span class="p">,</span> \
+    <span class="n">QualifiedTerm</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.models.absa.train.rules</span> <span class="k">import</span> <span class="n">rule_1</span><span class="p">,</span> <span class="n">rule_2</span><span class="p">,</span> <span class="n">rule_3</span><span class="p">,</span> <span class="n">rule_4</span><span class="p">,</span> <span class="n">rule_5</span><span class="p">,</span> <span class="n">rule_6</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.models.absa.utils</span> <span class="k">import</span> <span class="n">_load_parsed_docs_from_dir</span><span class="p">,</span> <span class="n">_write_final_opinion_lex</span><span class="p">,</span> \
+    <span class="n">_load_lex_as_list_from_csv</span><span class="p">,</span> <span class="n">read_generic_lex_from_file</span>
+
+
+<div class="viewcode-block" id="AcquireTerms"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.models.absa.train.html#nlp_architect.models.absa.train.acquire_terms.AcquireTerms">[docs]</a><span class="k">class</span> <span class="nc">AcquireTerms</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Lexicon acquisition. produce opinion lexicon and an aspect lexicon based</span>
+<span class="sd">    on input dataset.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        opinion_candidate_list_curr_iter (dict): candidate opinion terms in the current iteration</span>
+<span class="sd">        opinion_candidate_list_prev_iter (dict): opinion candidates list of previous iteration</span>
+<span class="sd">        opinion_candidate_list (dict): opinion terms learned across all iterations</span>
+<span class="sd">        opinion_candidates_list_final (list): final opinion candidates list</span>
+<span class="sd">        opinion_candidate_list_raw (dict): all instances of candidate opinion terms</span>
+<span class="sd">                                           across all iterations</span>
+<span class="sd">        aspect_candidate_list_curr_iter (dict): candidate terms in the current iteration</span>
+<span class="sd">        aspects_candidate_list_prev_iter(list): Aspect candidates list of previous iteration</span>
+<span class="sd">        aspect_candidate_list (list):  aspect terms learned across all iterations</span>
+<span class="sd">        aspect_candidates_list_final (list): final aspect candidates list</span>
+<span class="sd">        aspect_candidate_list_raw (dict): all instances of candidate aspect terms</span>
+<span class="sd">                                          across all iterations</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+    <span class="n">out_dir</span> <span class="o">=</span> <span class="n">TRAIN_OUT</span> <span class="o">/</span> <span class="s1">&#39;output&#39;</span>
+    <span class="n">feature_table_path</span> <span class="o">=</span> <span class="n">out_dir</span> <span class="o">/</span> <span class="s1">&#39;feature_table.csv&#39;</span>
+    <span class="n">generic_opinion_lex_path</span> <span class="o">=</span> <span class="n">GENERIC_OP_LEX</span>
+    <span class="n">acquired_opinion_terms_path</span> <span class="o">=</span> <span class="n">out_dir</span> <span class="o">/</span> <span class="s1">&#39;generated_opinion_lex.csv&#39;</span>
+    <span class="n">acquired_aspect_terms_path</span> <span class="o">=</span> <span class="n">out_dir</span> <span class="o">/</span> <span class="s1">&#39;generated_aspect_lex.csv&#39;</span>
+
+    <span class="n">GENERIC_OPINION_LEX</span> <span class="o">=</span> <span class="n">_load_lex_as_list_from_csv</span><span class="p">(</span><span class="n">GENERIC_OP_LEX</span><span class="p">)</span>
+    <span class="n">GENERAL_ADJECTIVES_LEX</span> <span class="o">=</span> <span class="n">_load_lex_as_list_from_csv</span><span class="p">(</span>
+        <span class="n">TRAIN_LEXICONS</span> <span class="o">/</span> <span class="s1">&#39;GeneralAdjectivesLex.csv&#39;</span><span class="p">)</span>
+    <span class="n">GENERIC_QUANTIFIERS_LEX</span> <span class="o">=</span> <span class="n">_load_lex_as_list_from_csv</span><span class="p">(</span>
+        <span class="n">TRAIN_LEXICONS</span> <span class="o">/</span> <span class="s1">&#39;GenericQuantifiersLex.csv&#39;</span><span class="p">)</span>
+    <span class="n">GEOGRAPHICAL_ADJECTIVES_LEX</span> <span class="o">=</span> <span class="n">_load_lex_as_list_from_csv</span><span class="p">(</span>
+        <span class="n">TRAIN_LEXICONS</span> <span class="o">/</span> <span class="s1">&#39;GeographicalAdjectivesLex.csv&#39;</span><span class="p">)</span>
+    <span class="n">INTENSIFIERS_LEX</span> <span class="o">=</span> <span class="n">_load_lex_as_list_from_csv</span><span class="p">(</span><span class="n">TRAIN_LEXICONS</span> <span class="o">/</span> <span class="s1">&#39;IntensifiersLex.csv&#39;</span><span class="p">)</span>
+    <span class="n">TIME_ADJECTIVE_LEX</span> <span class="o">=</span> <span class="n">_load_lex_as_list_from_csv</span><span class="p">(</span><span class="n">TRAIN_LEXICONS</span> <span class="o">/</span> <span class="s1">&#39;TimeAdjectiveLex.csv&#39;</span><span class="p">)</span>
+    <span class="n">ORDINAL_NUMBERS_LEX</span> <span class="o">=</span> <span class="n">_load_lex_as_list_from_csv</span><span class="p">(</span><span class="n">TRAIN_LEXICONS</span> <span class="o">/</span> <span class="s1">&#39;OrdinalNumbersLex.csv&#39;</span><span class="p">)</span>
+    <span class="n">PREPOSITIONS_LEX</span> <span class="o">=</span> <span class="n">_load_lex_as_list_from_csv</span><span class="p">(</span><span class="n">TRAIN_LEXICONS</span> <span class="o">/</span> <span class="s1">&#39;PrepositionsLex.csv&#39;</span><span class="p">)</span>
+    <span class="n">PRONOUNS_LEX</span> <span class="o">=</span> <span class="n">_load_lex_as_list_from_csv</span><span class="p">(</span><span class="n">TRAIN_LEXICONS</span> <span class="o">/</span> <span class="s1">&#39;PronounsLex.csv&#39;</span><span class="p">)</span>
+    <span class="n">COLORS_LEX</span> <span class="o">=</span> <span class="n">_load_lex_as_list_from_csv</span><span class="p">(</span><span class="n">TRAIN_LEXICONS</span> <span class="o">/</span> <span class="s1">&#39;ColorsLex.csv&#39;</span><span class="p">)</span>
+    <span class="n">DETERMINERS_LEX</span> <span class="o">=</span> <span class="n">_load_lex_as_list_from_csv</span><span class="p">(</span><span class="n">TRAIN_LEXICONS</span> <span class="o">/</span> <span class="s1">&#39;DeterminersLex.csv&#39;</span><span class="p">)</span>
+    <span class="n">NEGATION_LEX</span> <span class="o">=</span> <span class="n">_load_lex_as_list_from_csv</span><span class="p">(</span><span class="n">TRAIN_LEXICONS</span> <span class="o">/</span> <span class="s1">&#39;NegationLex.csv&#39;</span><span class="p">)</span>
+    <span class="n">AUXILIARIES_LEX</span> <span class="o">=</span> <span class="n">_load_lex_as_list_from_csv</span><span class="p">(</span><span class="n">TRAIN_LEXICONS</span> <span class="o">/</span> <span class="s1">&#39;AuxiliariesLex.csv&#39;</span><span class="p">)</span>
+
+    <span class="n">OPINION_STOP_LIST</span> <span class="o">=</span> <span class="n">LoadOpinionStopLists</span><span class="p">(</span><span class="n">DETERMINERS_LEX</span><span class="p">,</span>
+                                             <span class="n">GENERAL_ADJECTIVES_LEX</span><span class="p">,</span>
+                                             <span class="n">GENERIC_QUANTIFIERS_LEX</span><span class="p">,</span>
+                                             <span class="n">GEOGRAPHICAL_ADJECTIVES_LEX</span><span class="p">,</span>
+                                             <span class="n">INTENSIFIERS_LEX</span><span class="p">,</span> <span class="n">TIME_ADJECTIVE_LEX</span><span class="p">,</span>
+                                             <span class="n">ORDINAL_NUMBERS_LEX</span><span class="p">,</span>
+                                             <span class="n">PREPOSITIONS_LEX</span><span class="p">,</span> <span class="n">COLORS_LEX</span><span class="p">,</span> <span class="n">NEGATION_LEX</span><span class="p">)</span>
+
+    <span class="n">ASPECT_STOP_LIST</span> <span class="o">=</span> <span class="n">LoadAspectStopLists</span><span class="p">(</span><span class="n">GENERIC_OPINION_LEX</span><span class="p">,</span>
+                                           <span class="n">DETERMINERS_LEX</span><span class="p">,</span>
+                                           <span class="n">GENERAL_ADJECTIVES_LEX</span><span class="p">,</span>
+                                           <span class="n">GENERIC_QUANTIFIERS_LEX</span><span class="p">,</span>
+                                           <span class="n">GEOGRAPHICAL_ADJECTIVES_LEX</span><span class="p">,</span>
+                                           <span class="n">INTENSIFIERS_LEX</span><span class="p">,</span> <span class="n">TIME_ADJECTIVE_LEX</span><span class="p">,</span>
+                                           <span class="n">ORDINAL_NUMBERS_LEX</span><span class="p">,</span>
+                                           <span class="n">PREPOSITIONS_LEX</span><span class="p">,</span> <span class="n">PRONOUNS_LEX</span><span class="p">,</span> <span class="n">COLORS_LEX</span><span class="p">,</span>
+                                           <span class="n">NEGATION_LEX</span><span class="p">,</span> <span class="n">AUXILIARIES_LEX</span><span class="p">)</span>
+
+    <span class="n">FILTER_PATTERNS</span> <span class="o">=</span> <span class="p">[</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;.*\d+.*&#39;</span><span class="p">)]</span>
+    <span class="n">FLOAT_FORMAT</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{0:.3g}</span><span class="s1">&#39;</span>
+    <span class="c1"># maximum number of iterations</span>
+    <span class="n">NUM_OF_SENTENCES_PER_OPINION_AND_ASPECT_TERM_INC</span> <span class="o">=</span> <span class="mi">35000</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">asp_thresh</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">op_thresh</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">opinion_candidate_list_prev_iter</span> <span class="o">=</span> \
+            <span class="n">read_generic_lex_from_file</span><span class="p">(</span><span class="n">AcquireTerms</span><span class="o">.</span><span class="n">generic_opinion_lex_path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">generic_sent_dict</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">opinion_candidate_list_prev_iter</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">opinion_candidate_list</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">opinion_candidate_list_raw</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">opinion_candidate_list_curr_iter</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">opinion_candidates_list_final</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">aspect_candidate_list_raw</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">aspect_candidate_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">aspect_candidate_list_curr_iter</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">aspect_candidates_list_final</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">init_aspect_dict</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">aspects_candidate_list_prev_iter</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">min_freq_aspect_candidate</span> <span class="o">=</span> <span class="n">asp_thresh</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">min_freq_opinion_candidate</span> <span class="o">=</span> <span class="n">op_thresh</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_num_of_iterations</span> <span class="o">=</span> <span class="n">max_iter</span>
+
+<div class="viewcode-block" id="AcquireTerms.extract_terms_from_doc"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.models.absa.train.html#nlp_architect.models.absa.train.acquire_terms.AcquireTerms.extract_terms_from_doc">[docs]</a>    <span class="k">def</span> <span class="nf">extract_terms_from_doc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parsed_doc</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Extract candidate terms for sentences in parsed document.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            parsed_doc (ParsedDocument): Input parsed document.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">text</span><span class="p">,</span> <span class="n">parsed_sent</span> <span class="ow">in</span> <span class="n">parsed_doc</span><span class="o">.</span><span class="n">sent_iter</span><span class="p">():</span>
+            <span class="n">relations</span> <span class="o">=</span> <span class="n">_get_rel_list</span><span class="p">(</span><span class="n">parsed_sent</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">rel_entry</span> <span class="ow">in</span> <span class="n">relations</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">rel_entry</span><span class="o">.</span><span class="n">rel</span> <span class="o">!=</span> <span class="s1">&#39;root&#39;</span><span class="p">:</span>
+                    <span class="n">gov_seen</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">opinion_candidate_list_prev_iter</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">rel_entry</span><span class="o">.</span><span class="n">gov</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+                    <span class="n">dep_seen</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">opinion_candidate_list_prev_iter</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">rel_entry</span><span class="o">.</span><span class="n">dep</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+                    <span class="n">opinions</span> <span class="o">=</span> <span class="p">[]</span>
+                    <span class="n">aspects</span> <span class="o">=</span> <span class="p">[]</span>
+
+                    <span class="c1"># =========================== acquisition rules ==============================</span>
+
+                    <span class="k">if</span> <span class="nb">bool</span><span class="p">(</span><span class="n">gov_seen</span><span class="p">)</span> <span class="o">^</span> <span class="nb">bool</span><span class="p">(</span><span class="n">dep_seen</span><span class="p">):</span>
+                        <span class="n">opinions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rule_1</span><span class="p">(</span><span class="n">rel_entry</span><span class="p">,</span> <span class="n">gov_seen</span><span class="p">,</span> <span class="n">dep_seen</span><span class="p">,</span> <span class="n">text</span><span class="p">))</span>
+
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">gov_seen</span> <span class="ow">and</span> <span class="n">dep_seen</span><span class="p">:</span>
+                        <span class="n">opinions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rule_2</span><span class="p">(</span><span class="n">rel_entry</span><span class="p">,</span> <span class="n">relations</span><span class="p">,</span> <span class="n">dep_seen</span><span class="p">,</span> <span class="n">text</span><span class="p">))</span>
+
+                        <span class="n">aspects</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rule_3</span><span class="p">(</span><span class="n">rel_entry</span><span class="p">,</span> <span class="n">relations</span><span class="p">,</span> <span class="n">text</span><span class="p">))</span>
+
+                        <span class="n">aspects</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rule_4</span><span class="p">(</span><span class="n">rel_entry</span><span class="p">,</span> <span class="n">relations</span><span class="p">,</span> <span class="n">text</span><span class="p">))</span>
+
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">aspects_candidate_list_prev_iter</span> <span class="ow">and</span> \
+                            <span class="n">AspectTerm</span><span class="o">.</span><span class="n">from_token</span><span class="p">(</span><span class="n">rel_entry</span><span class="o">.</span><span class="n">gov</span><span class="p">)</span> \
+                            <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">aspects_candidate_list_prev_iter</span> <span class="ow">and</span> \
+                            <span class="n">AspectTerm</span><span class="o">.</span><span class="n">from_token</span><span class="p">(</span><span class="n">rel_entry</span><span class="o">.</span><span class="n">dep</span><span class="p">)</span> \
+                            <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">aspects_candidate_list_prev_iter</span><span class="p">:</span>
+                        <span class="n">opinions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rule_5</span><span class="p">(</span><span class="n">rel_entry</span><span class="p">,</span> <span class="n">text</span><span class="p">))</span>
+                        <span class="n">aspects</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rule_6</span><span class="p">(</span><span class="n">rel_entry</span><span class="p">,</span> <span class="n">relations</span><span class="p">,</span> <span class="n">text</span><span class="p">))</span>
+
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_add_opinion_term</span><span class="p">(</span><span class="n">opinions</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_add_aspect_term</span><span class="p">(</span><span class="n">aspects</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AcquireTerms.extract_opinion_and_aspect_terms"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.models.absa.train.html#nlp_architect.models.absa.train.acquire_terms.AcquireTerms.extract_opinion_and_aspect_terms">[docs]</a>    <span class="k">def</span> <span class="nf">extract_opinion_and_aspect_terms</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parsed_document_iter</span><span class="p">,</span> <span class="n">num_of_docs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Extract candidate terms from parsed document iterator.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            parsed_document_iter (Iterator): Parsed document iterator.</span>
+<span class="sd">            num_of_docs (int): number of documents on iterator.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">for</span> <span class="n">parsed_document</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">parsed_document_iter</span><span class="p">,</span> <span class="n">total</span><span class="o">=</span><span class="n">num_of_docs</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">extract_terms_from_doc</span><span class="p">(</span><span class="n">parsed_document</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_is_valid_term</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cand_term</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Validates a candidate term.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            cand_term (CandidateTerm): candidate terms list.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">term</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">cand_term</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">pattern</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">FILTER_PATTERNS</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">pattern</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">term</span><span class="p">):</span>
+                <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">OPINION_STOP_LIST</span><span class="o">.</span><span class="n">is_in_stop_list</span><span class="p">(</span><span class="n">term</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">term</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">!=</span> <span class="n">term</span> <span class="ow">and</span> <span class="n">term</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="o">!=</span> <span class="n">term</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">_add_aspect_term</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">terms</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        add new aspect term to table.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            terms (list of CandidateTerm): candidate terms list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">terms</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">term</span><span class="p">:</span>
+                <span class="n">term_entry</span> <span class="o">=</span> <span class="n">AspectTerm</span><span class="p">(</span><span class="n">term</span><span class="o">.</span><span class="n">term</span><span class="p">,</span> <span class="n">term</span><span class="o">.</span><span class="n">pos</span><span class="p">,</span> <span class="n">term</span><span class="o">.</span><span class="n">lemma</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">term_entry</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">init_aspect_dict</span> <span class="ow">and</span> \
+                        <span class="n">term_entry</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">aspect_candidate_list</span> <span class="ow">and</span> <span class="ow">not</span> \
+                        <span class="bp">self</span><span class="o">.</span><span class="n">ASPECT_STOP_LIST</span><span class="o">.</span><span class="n">is_in_stop_list</span><span class="p">(</span><span class="n">term</span><span class="o">.</span><span class="n">term</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="ow">and</span> \
+                        <span class="nb">len</span><span class="p">(</span><span class="n">term</span><span class="o">.</span><span class="n">term</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">_insert_new_term_to_table</span><span class="p">(</span><span class="n">term</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">aspect_candidate_list_curr_iter</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">_add_opinion_term</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">terms</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add new opinion term to table</span>
+<span class="sd">        Args:</span>
+<span class="sd">            terms (list of CandidateTerm): candidate term</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">terms</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">term</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_valid_term</span><span class="p">(</span><span class="n">term</span><span class="p">):</span>
+                <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">term</span><span class="o">.</span><span class="n">term</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">generic_sent_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">term</span><span class="o">.</span><span class="n">term</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">opinion_candidate_list</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">term</span><span class="o">.</span><span class="n">term</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                            <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">isalnum</span><span class="p">()</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">term</span><span class="o">.</span><span class="n">term</span><span class="p">[</span><span class="mi">0</span><span class="p">])):</span>
+                                <span class="n">_insert_new_term_to_table</span><span class="p">(</span><span class="n">term</span><span class="p">,</span>
+                                                          <span class="bp">self</span><span class="o">.</span><span class="n">opinion_candidate_list_curr_iter</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_insert_new_terms_to_tables</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Insert new terms to tables</span>
+<span class="sd">        clear candidates lists from previous iteration</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">opinion_candidate_list_prev_iter</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">opinion_candidate_list_raw</span> <span class="o">=</span> <span class="n">_merge_tables</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">opinion_candidate_list_raw</span><span class="p">,</span>
+                                                        <span class="bp">self</span><span class="o">.</span><span class="n">opinion_candidate_list_curr_iter</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">cand_term_list</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">opinion_candidate_list_curr_iter</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cand_term_list</span><span class="p">)</span> <span class="o">&gt;=</span> \
+                    <span class="bp">self</span><span class="o">.</span><span class="n">min_freq_opinion_candidate</span><span class="p">:</span>
+                <span class="n">new_opinion_term</span> <span class="o">=</span> <span class="n">_set_opinion_term_polarity</span><span class="p">(</span><span class="n">cand_term_list</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">opinion_candidate_list_prev_iter</span><span class="p">[</span>
+                    <span class="nb">str</span><span class="p">(</span><span class="n">new_opinion_term</span><span class="p">)]</span> <span class="o">=</span> <span class="n">new_opinion_term</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">opinion_candidate_list_curr_iter</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">opinion_candidate_list</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">opinion_candidate_list</span><span class="p">,</span>
+                                       <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">opinion_candidate_list_prev_iter</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">aspects_candidate_list_prev_iter</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">aspect_candidate_list_raw</span> <span class="o">=</span> <span class="n">_merge_tables</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">aspect_candidate_list_raw</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">aspect_candidate_list_curr_iter</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">extracted_aspect_list</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">aspect_candidate_list_curr_iter</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">extracted_aspect_list</span><span class="p">)</span> <span class="o">&gt;=</span> \
+                    <span class="bp">self</span><span class="o">.</span><span class="n">min_freq_aspect_candidate</span><span class="p">:</span>
+                <span class="n">first</span> <span class="o">=</span> <span class="n">extracted_aspect_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">new_aspect_entry</span> <span class="o">=</span> <span class="n">AspectTerm</span><span class="p">(</span><span class="n">first</span><span class="o">.</span><span class="n">term</span><span class="p">,</span> <span class="n">first</span><span class="o">.</span><span class="n">pos</span><span class="p">,</span> <span class="n">first</span><span class="o">.</span><span class="n">lemma</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">new_aspect_entry</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">aspects_candidate_list_prev_iter</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">aspects_candidate_list_prev_iter</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_aspect_entry</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">aspect_candidate_list_curr_iter</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">aspect_candidate_list</span> <span class="o">=</span> \
+            <span class="bp">self</span><span class="o">.</span><span class="n">aspect_candidate_list</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">aspects_candidate_list_prev_iter</span>
+
+    <span class="k">def</span> <span class="nf">_write_candidate_opinion_lex</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        write generated lexicons to csv files</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">AcquireTerms</span><span class="o">.</span><span class="n">out_dir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">_write_final_opinion_lex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">opinion_candidates_list_final</span><span class="p">,</span>
+                                 <span class="bp">self</span><span class="o">.</span><span class="n">acquired_opinion_terms_path</span><span class="p">)</span>
+
+<div class="viewcode-block" id="AcquireTerms.acquire_lexicons"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.models.absa.train.html#nlp_architect.models.absa.train.acquire_terms.AcquireTerms.acquire_lexicons">[docs]</a>    <span class="k">def</span> <span class="nf">acquire_lexicons</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parsed_dir</span><span class="p">:</span> <span class="nb">str</span> <span class="ow">or</span> <span class="n">PathLike</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Acquire new opinion and aspect lexicons.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            parsed_dir (PathLike): Path to parsed documents folder.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">parsed_docs</span> <span class="o">=</span> <span class="n">_load_parsed_docs_from_dir</span><span class="p">(</span><span class="n">parsed_dir</span><span class="p">)</span>
+        <span class="n">dataset_sentence_len</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">parsed_doc</span> <span class="ow">in</span> <span class="n">parsed_docs</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">dataset_sentence_len</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parsed_doc</span><span class="o">.</span><span class="n">sentences</span><span class="p">)</span>
+
+        <span class="n">add_to_thresholds</span> <span class="o">=</span> \
+            <span class="nb">int</span><span class="p">(</span><span class="n">dataset_sentence_len</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">NUM_OF_SENTENCES_PER_OPINION_AND_ASPECT_TERM_INC</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">min_freq_opinion_candidate</span> <span class="o">+=</span> <span class="n">add_to_thresholds</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">min_freq_aspect_candidate</span> <span class="o">+=</span> <span class="n">add_to_thresholds</span>
+
+        <span class="k">for</span> <span class="n">iteration_num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_num_of_iterations</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">opinion_candidate_list_prev_iter</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> \
+                    <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">aspects_candidate_list_prev_iter</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">break</span>
+
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">#Iteration: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">iteration_num</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">extract_opinion_and_aspect_terms</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">parsed_docs</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span>
+                                                  <span class="nb">len</span><span class="p">(</span><span class="n">parsed_docs</span><span class="p">))</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_insert_new_terms_to_tables</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">opinion_candidates_list_final</span> <span class="o">=</span> \
+            <span class="n">generate_final_opinion_candidates_list</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">opinion_candidate_list_raw</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">opinion_candidates_list_final</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">min_freq_opinion_candidate</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">aspect_candidates_list_final</span> <span class="o">=</span> \
+            <span class="n">_generate_final_aspect_candidates_list</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">aspect_candidate_list_raw</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">aspect_candidates_list_final</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">min_freq_aspect_candidate</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_write_candidate_opinion_lex</span><span class="p">()</span>
+
+        <span class="n">aspect_dict</span> <span class="o">=</span> <span class="n">_add_lemmas_aspect_lex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">aspect_candidates_list_final</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">aspect_dict</span></div></div>
+
+
+<span class="k">def</span> <span class="nf">_add_lemmas_aspect_lex</span><span class="p">(</span><span class="n">aspect_candidates_list_final</span><span class="p">):</span>
+
+    <span class="n">aspect_dict</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">cand_term</span> <span class="ow">in</span> <span class="n">aspect_candidates_list_final</span><span class="p">:</span>
+        <span class="n">lemma</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">cand_term</span><span class="o">.</span><span class="n">term</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">cand_term</span><span class="o">.</span><span class="n">lemma</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+            <span class="n">lemma</span> <span class="o">=</span> <span class="n">cand_term</span><span class="o">.</span><span class="n">lemma</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">aspect_dict</span><span class="p">[</span><span class="n">cand_term</span><span class="o">.</span><span class="n">term</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">lemma</span>
+
+    <span class="c1"># unify aspect with aspect lemmas</span>
+    <span class="n">lemma_to_erase</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">lemma</span> <span class="ow">in</span> <span class="n">aspect_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">lemma</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span> <span class="ow">and</span> <span class="n">lemma</span> <span class="ow">in</span> <span class="n">aspect_dict</span><span class="p">:</span>
+            <span class="n">lemma_to_erase</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">lemma</span><span class="p">)</span>
+
+    <span class="c1"># delete all duplicates (aspects that are lemmas of other aspects)</span>
+    <span class="k">for</span> <span class="n">lemma</span> <span class="ow">in</span> <span class="n">lemma_to_erase</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">lemma</span> <span class="ow">in</span> <span class="n">aspect_dict</span><span class="p">:</span>
+            <span class="k">del</span> <span class="n">aspect_dict</span><span class="p">[</span><span class="n">lemma</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">aspect_dict</span>
+
+
+<span class="k">def</span> <span class="nf">_get_rel_list</span><span class="p">(</span><span class="n">parsed_sentence</span><span class="p">):</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">gen_toks</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">tok</span> <span class="ow">in</span> <span class="n">parsed_sentence</span><span class="p">:</span>
+        <span class="n">gen_toks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="n">DepRelationTerm</span><span class="p">(</span><span class="n">tok</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">],</span> <span class="n">tok</span><span class="p">[</span><span class="s1">&#39;lemma&#39;</span><span class="p">],</span> <span class="n">tok</span><span class="p">[</span><span class="s1">&#39;pos&#39;</span><span class="p">],</span> <span class="n">tok</span><span class="p">[</span><span class="s1">&#39;ner&#39;</span><span class="p">],</span> <span class="n">tok</span><span class="p">[</span><span class="s1">&#39;start&#39;</span><span class="p">]))</span>
+
+    <span class="k">for</span> <span class="n">gen_tok</span><span class="p">,</span> <span class="n">tok</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">gen_toks</span><span class="p">,</span> <span class="n">parsed_sentence</span><span class="p">):</span>
+        <span class="n">gov_idx</span> <span class="o">=</span> <span class="n">tok</span><span class="p">[</span><span class="s1">&#39;gov&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">gov_idx</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">DepRelation</span><span class="p">(</span><span class="n">gen_toks</span><span class="p">[</span><span class="n">gov_idx</span><span class="p">],</span> <span class="n">gen_tok</span><span class="p">,</span> <span class="n">tok</span><span class="p">[</span><span class="s1">&#39;rel&#39;</span><span class="p">]))</span>
+    <span class="k">return</span> <span class="n">res</span>
+
+
+<span class="k">def</span> <span class="nf">_merge_tables</span><span class="p">(</span><span class="n">d1</span><span class="p">,</span> <span class="n">d2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Merge dictionaries</span>
+<span class="sd">    Args:</span>
+<span class="sd">        d1 (dict): first dict to merge</span>
+<span class="sd">        d2 (dict): second dict to merge</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">d2</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">d1</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">l</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">item</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">d1</span><span class="p">[</span><span class="n">key</span><span class="p">]:</span>
+                    <span class="n">d1</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">d1</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">l</span>
+    <span class="k">return</span> <span class="n">d1</span>
+
+
+<span class="k">def</span> <span class="nf">_insert_new_term_to_table</span><span class="p">(</span><span class="n">term</span><span class="p">,</span> <span class="n">curr_table</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Insert term to table of lists.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        term (term): term to be inserted</span>
+<span class="sd">        curr_table (dict): input table</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">table_key_word</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">term</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">table_key_word</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">table_key_word</span> <span class="ow">in</span> <span class="n">curr_table</span> <span class="ow">and</span> <span class="n">term</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">curr_table</span><span class="p">[</span><span class="n">table_key_word</span><span class="p">]:</span>
+            <span class="n">curr_table</span><span class="p">[</span><span class="n">table_key_word</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">term</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">curr_table</span><span class="p">[</span><span class="n">table_key_word</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">term</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">_set_opinion_term_polarity</span><span class="p">(</span><span class="n">terms_list</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Set opinion term polarity.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        terms_list (list): list of opinion terms</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">first</span> <span class="o">=</span> <span class="n">terms_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">new_term</span> <span class="o">=</span> <span class="n">first</span><span class="o">.</span><span class="n">term</span>
+
+    <span class="n">positive_pol</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">negative_pol</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">pol</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">terms_list</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">pol</span> <span class="o">=</span> <span class="n">term</span><span class="o">.</span><span class="n">term_polarity</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;extracted_term missing term_polarity: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">pol</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">pol</span> <span class="o">==</span> <span class="n">Polarity</span><span class="o">.</span><span class="n">POS</span><span class="p">:</span>
+                <span class="n">positive_pol</span> <span class="o">=</span> <span class="n">positive_pol</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">pol</span> <span class="o">==</span> <span class="n">Polarity</span><span class="o">.</span><span class="n">NEG</span><span class="p">:</span>
+                <span class="n">negative_pol</span> <span class="o">=</span> <span class="n">negative_pol</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">new_term_polarity</span> <span class="o">=</span> <span class="n">Polarity</span><span class="o">.</span><span class="n">UNK</span>
+    <span class="k">if</span> <span class="n">positive_pol</span> <span class="o">&gt;=</span> <span class="n">negative_pol</span> <span class="ow">and</span> <span class="n">positive_pol</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">new_term_polarity</span> <span class="o">=</span> <span class="n">Polarity</span><span class="o">.</span><span class="n">POS</span>
+    <span class="k">elif</span> <span class="n">negative_pol</span> <span class="o">&gt;=</span> <span class="n">positive_pol</span> <span class="ow">and</span> <span class="n">negative_pol</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">new_term_polarity</span> <span class="o">=</span> <span class="n">Polarity</span><span class="o">.</span><span class="n">NEG</span>
+
+    <span class="k">return</span> <span class="n">OpinionTerm</span><span class="p">(</span><span class="n">new_term</span><span class="p">,</span> <span class="n">new_term_polarity</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_generate_final_aspect_candidates_list</span><span class="p">(</span><span class="n">aspect_candidate_list_raw</span><span class="p">,</span>
+                                           <span class="n">final_aspect_candidates_list</span><span class="p">,</span>
+                                           <span class="n">frequency_threshold</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    generate final aspect candidates list from map</span>
+<span class="sd">    Args:</span>
+<span class="sd">        aspect_candidate_list_raw (dict): key = term, value =</span>
+<span class="sd">        lists of candidate terms.</span>
+<span class="sd">        final_aspect_candidates_list (list): list of final aspect candidates</span>
+<span class="sd">        frequency_threshold (int): minimum freq. for qualifying term</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">term_polarity</span> <span class="o">=</span> <span class="n">Polarity</span><span class="o">.</span><span class="n">UNK</span>
+    <span class="k">for</span> <span class="n">extracted_term_list</span> <span class="ow">in</span> <span class="n">aspect_candidate_list_raw</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">extracted_term_list</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">frequency_threshold</span><span class="p">:</span>
+            <span class="n">term</span> <span class="o">=</span> <span class="n">extracted_term_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">qualified_term</span> <span class="o">=</span> <span class="n">QualifiedTerm</span><span class="p">(</span><span class="n">term</span><span class="o">.</span><span class="n">term</span><span class="p">,</span> <span class="n">term</span><span class="o">.</span><span class="n">lemma</span><span class="p">,</span> <span class="n">term</span><span class="o">.</span><span class="n">pos</span><span class="p">,</span>
+                                           <span class="nb">len</span><span class="p">(</span><span class="n">extracted_term_list</span><span class="p">),</span>
+                                           <span class="n">term_polarity</span><span class="p">)</span>
+            <span class="n">final_aspect_candidates_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">qualified_term</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">final_aspect_candidates_list</span>
+
+
+<div class="viewcode-block" id="generate_final_opinion_candidates_list"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.models.absa.train.html#nlp_architect.models.absa.train.acquire_terms.generate_final_opinion_candidates_list">[docs]</a><span class="k">def</span> <span class="nf">generate_final_opinion_candidates_list</span><span class="p">(</span><span class="n">opinion_candidate_list_raw</span><span class="p">,</span>
+                                           <span class="n">final_opinion_candidates_list</span><span class="p">,</span>
+                                           <span class="n">frequency_threshold</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    generate final opinion candidates list from raw opinion candidate list</span>
+<span class="sd">    Args:</span>
+<span class="sd">        opinion_candidate_list_raw (dict): key = term, value =</span>
+<span class="sd">        lists of extracted terms.</span>
+<span class="sd">        final_opinion_candidates_list (list): list of final opinion candidates</span>
+<span class="sd">        frequency_threshold (int): minimum freq. for qualifying term</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">candidate_list</span> <span class="ow">in</span> <span class="n">opinion_candidate_list_raw</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+        <span class="n">positive_pol</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">negative_pol</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">candidate_list</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">frequency_threshold</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">candidate_list</span><span class="p">:</span>
+                <span class="n">pol</span> <span class="o">=</span> <span class="n">candidate</span><span class="o">.</span><span class="n">term_polarity</span>
+                <span class="k">if</span> <span class="n">pol</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">pol</span> <span class="o">==</span> <span class="n">Polarity</span><span class="o">.</span><span class="n">POS</span><span class="p">:</span>
+                        <span class="n">positive_pol</span> <span class="o">=</span> <span class="n">positive_pol</span> <span class="o">+</span> <span class="mi">1</span>
+                    <span class="k">if</span> <span class="n">pol</span> <span class="o">==</span> <span class="n">Polarity</span><span class="o">.</span><span class="n">NEG</span><span class="p">:</span>
+                        <span class="n">negative_pol</span> <span class="o">=</span> <span class="n">negative_pol</span> <span class="o">+</span> <span class="mi">1</span>
+
+            <span class="n">term_polarity</span> <span class="o">=</span> <span class="n">Polarity</span><span class="o">.</span><span class="n">UNK</span>
+            <span class="k">if</span> <span class="n">positive_pol</span> <span class="o">&gt;</span> <span class="n">negative_pol</span> <span class="ow">and</span> <span class="n">positive_pol</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">term_polarity</span> <span class="o">=</span> <span class="n">Polarity</span><span class="o">.</span><span class="n">POS</span>
+            <span class="k">elif</span> <span class="n">negative_pol</span> <span class="o">&gt;=</span> <span class="n">positive_pol</span> <span class="ow">and</span> <span class="n">negative_pol</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">term_polarity</span> <span class="o">=</span> <span class="n">Polarity</span><span class="o">.</span><span class="n">NEG</span>
+
+            <span class="n">term</span> <span class="o">=</span> <span class="n">candidate_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+            <span class="n">qualified_term</span> <span class="o">=</span> <span class="n">QualifiedTerm</span><span class="p">(</span><span class="n">term</span><span class="o">.</span><span class="n">term</span><span class="p">,</span> <span class="n">term</span><span class="o">.</span><span class="n">term</span><span class="p">,</span> <span class="n">term</span><span class="o">.</span><span class="n">pos</span><span class="p">,</span>
+                                           <span class="nb">len</span><span class="p">(</span><span class="n">candidate_list</span><span class="p">),</span> <span class="n">term_polarity</span><span class="p">)</span>
+            <span class="n">final_opinion_candidates_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">qualified_term</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">final_opinion_candidates_list</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

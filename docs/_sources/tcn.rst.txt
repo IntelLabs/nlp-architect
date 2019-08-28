@@ -14,12 +14,12 @@
 .. limitations under the License.
 .. ---------------------------------------------------------------------------
 
-Language Modeling
-#################
+Language Modeling with TCN
+==========================
 
 
 Overview
-========
+--------
 
 A language model (LM) is a probability distribution over a sequence of words. Given a sequence, a trained language model can provide the probability that the sequence is realistic. Using deep learning, one manner of creating an LM is by training a neural network to predict the probability of occurrence of the next word (or character) in the sequence given all the words (or characters) preceding it. (In other words, the joint distribution over elements in a sequence is broken up using the chain rule.)
 
@@ -28,7 +28,7 @@ This folder contains scripts that implement a word-level language model using Te
 
 
 Data Loading
-============
+------------
 - PTB can be downloaded from `here <http://www.fit.vutbr.cz/~imikolov/rnnlm/>`_
 
 - Wikitext can be downloaded from `here <https://einstein.ai/research/the-wikitext-long-term-dependency-language-modeling-dataset>`_
@@ -44,9 +44,9 @@ Data Loading
 - Note that the data loader prompts the user to automatically download the data if not already present. Please provide the location to save the data as an argument to the data loader.
 
 Running Modalities
-==================
+------------------
 Training
---------
+~~~~~~~~
 The base class that defines :py:class:`TCN <nlp_architect.models.temporal_convolutional_network.TCN>` topology can be imported as:
 
 .. code-block:: python

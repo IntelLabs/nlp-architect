@@ -1,0 +1,578 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>nlp_architect.models.gnmt package &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/install.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/nlp_arch_theme.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="nlp_architect.models.gnmt.scripts package" href="nlp_architect.models.gnmt.scripts.html" />
+    <link rel="prev" title="nlp_architect.models.cross_doc_coref.system.sieves package" href="nlp_architect.models.cross_doc_coref.system.sieves.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html">
+          
+
+          
+            
+            <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../publications.html">Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials.html">Jupyter Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model_zoo.html">Model Zoo</a></li>
+</ul>
+<p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tagging/sequence_tagging.html">Sequence Tagging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sentiment.html">Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bist_parser.html">Dependency Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intent.html">Intent Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lm.html">Language Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../information_extraction.html">Information Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transformers.html">Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../archived/additional.html">Additional Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Optimized Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../quantized_bert.html">Quantized BERT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transformers_distillation.html">Transformers Distillation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solutions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../absa_solution.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../term_set_expansion.html">Set Expansion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trend_analysis.html">Trend Analysis</a></li>
+</ul>
+<p class="caption"><span class="caption-text">For Developers</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="nlp_architect_api_index.html">nlp_architect API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.api.html">nlp_architect.api package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.cli.html">nlp_architect.cli package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.common.html">nlp_architect.common package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.data.html">nlp_architect.data package</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="nlp_architect.models.html">nlp_architect.models package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="nlp_architect.models.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.models.absa.html">nlp_architect.models.absa package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.models.bist.html">nlp_architect.models.bist package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.models.cross_doc_coref.html">nlp_architect.models.cross_doc_coref package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">nlp_architect.models.gnmt package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.models.transformers.html">nlp_architect.models.transformers package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.bist_parser">nlp_architect.models.bist_parser module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.chunker">nlp_architect.models.chunker module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.cross_doc_sieves">nlp_architect.models.cross_doc_sieves module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.crossling_emb">nlp_architect.models.crossling_emb module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.gnmt_model">nlp_architect.models.gnmt_model module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.intent_extraction">nlp_architect.models.intent_extraction module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.matchlstm_ansptr">nlp_architect.models.matchlstm_ansptr module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.memn2n_dialogue">nlp_architect.models.memn2n_dialogue module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.most_common_word_sense">nlp_architect.models.most_common_word_sense module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.ner_crf">nlp_architect.models.ner_crf module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.np2vec">nlp_architect.models.np2vec module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.np_semantic_segmentation">nlp_architect.models.np_semantic_segmentation module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.supervised_sentiment">nlp_architect.models.supervised_sentiment module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.tagging">nlp_architect.models.tagging module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.temporal_convolutional_network">nlp_architect.models.temporal_convolutional_network module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.nlp.html">nlp_architect.nlp package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.nn.html">nlp_architect.nn package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.pipelines.html">nlp_architect.pipelines package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.procedures.html">nlp_architect.procedures package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.server.html">nlp_architect.server package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.solutions.html">nlp_architect.solutions package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.utils.html">nlp_architect.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer_guide.html">Developer Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">NLP Architect by Intel® AI Lab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="nlp_architect_api_index.html"><code class="docutils literal notranslate"><span class="pre">nlp\_architect</span></code> package</a> &raquo;</li>
+        
+          <li><a href="nlp_architect.models.html">nlp_architect.models package</a> &raquo;</li>
+        
+      <li>nlp_architect.models.gnmt package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="nlp-architect-models-gnmt-package">
+<h1>nlp_architect.models.gnmt package<a class="headerlink" href="#nlp-architect-models-gnmt-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="nlp_architect.models.gnmt.scripts.html">nlp_architect.models.gnmt.scripts package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.models.gnmt.scripts.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.models.gnmt.scripts.html#module-nlp_architect.models.gnmt.scripts.bleu">nlp_architect.models.gnmt.scripts.bleu module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.models.gnmt.scripts.html#module-nlp_architect.models.gnmt.scripts.rouge">nlp_architect.models.gnmt.scripts.rouge module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.models.gnmt.scripts.html#module-nlp_architect.models.gnmt.scripts">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="nlp_architect.models.gnmt.utils.html">nlp_architect.models.gnmt.utils package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.models.gnmt.utils.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.models.gnmt.utils.html#module-nlp_architect.models.gnmt.utils.evaluation_utils">nlp_architect.models.gnmt.utils.evaluation_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.models.gnmt.utils.html#module-nlp_architect.models.gnmt.utils.iterator_utils">nlp_architect.models.gnmt.utils.iterator_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.models.gnmt.utils.html#module-nlp_architect.models.gnmt.utils.misc_utils">nlp_architect.models.gnmt.utils.misc_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.models.gnmt.utils.html#module-nlp_architect.models.gnmt.utils.nmt_utils">nlp_architect.models.gnmt.utils.nmt_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.models.gnmt.utils.html#module-nlp_architect.models.gnmt.utils.standard_hparams_utils">nlp_architect.models.gnmt.utils.standard_hparams_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.models.gnmt.utils.html#module-nlp_architect.models.gnmt.utils.vocab_utils">nlp_architect.models.gnmt.utils.vocab_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.models.gnmt.utils.html#module-nlp_architect.models.gnmt.utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-nlp_architect.models.gnmt.attention_model">
+<span id="nlp-architect-models-gnmt-attention-model-module"></span><h2>nlp_architect.models.gnmt.attention_model module<a class="headerlink" href="#module-nlp_architect.models.gnmt.attention_model" title="Permalink to this headline">¶</a></h2>
+<p>Attention-based sequence-to-sequence model with dynamic RNN support.</p>
+<dl class="class">
+<dt id="nlp_architect.models.gnmt.attention_model.AttentionModel">
+<em class="property">class </em><code class="descclassname">nlp_architect.models.gnmt.attention_model.</code><code class="descname">AttentionModel</code><span class="sig-paren">(</span><em>hparams</em>, <em>mode</em>, <em>iterator</em>, <em>source_vocab_table</em>, <em>target_vocab_table</em>, <em>reverse_target_vocab_table=None</em>, <em>scope=None</em>, <em>extra_args=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/gnmt/attention_model.html#AttentionModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.gnmt.attention_model.AttentionModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nlp_architect.models.gnmt.model.Model" title="nlp_architect.models.gnmt.model.Model"><code class="xref py py-class docutils literal notranslate"><span class="pre">nlp_architect.models.gnmt.model.Model</span></code></a></p>
+<p>Sequence-to-sequence dynamic model with attention.</p>
+<p>This class implements a multi-layer recurrent neural network as encoder,
+and an attention-based decoder. This is the same as the model described in
+(Luong et al., EMNLP’2015) paper: <a class="reference external" href="https://arxiv.org/pdf/1508.04025v5.pdf">https://arxiv.org/pdf/1508.04025v5.pdf</a>.
+This class also allows to use GRU cells in addition to LSTM cells with
+support for dropout.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-nlp_architect.models.gnmt.model">
+<span id="nlp-architect-models-gnmt-model-module"></span><h2>nlp_architect.models.gnmt.model module<a class="headerlink" href="#module-nlp_architect.models.gnmt.model" title="Permalink to this headline">¶</a></h2>
+<p>Basic sequence-to-sequence model with dynamic RNN support.</p>
+<dl class="class">
+<dt id="nlp_architect.models.gnmt.model.BaseModel">
+<em class="property">class </em><code class="descclassname">nlp_architect.models.gnmt.model.</code><code class="descname">BaseModel</code><span class="sig-paren">(</span><em>hparams</em>, <em>mode</em>, <em>iterator</em>, <em>source_vocab_table</em>, <em>target_vocab_table</em>, <em>reverse_target_vocab_table=None</em>, <em>scope=None</em>, <em>extra_args=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/gnmt/model.html#BaseModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.gnmt.model.BaseModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Sequence-to-sequence base class.</p>
+<dl class="method">
+<dt id="nlp_architect.models.gnmt.model.BaseModel.build_encoder_states">
+<code class="descname">build_encoder_states</code><span class="sig-paren">(</span><em>include_embeddings=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/gnmt/model.html#BaseModel.build_encoder_states"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.gnmt.model.BaseModel.build_encoder_states" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stack encoder states and return tensor [batch, length, layer, size].</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.models.gnmt.model.BaseModel.build_graph">
+<code class="descname">build_graph</code><span class="sig-paren">(</span><em>hparams</em>, <em>scope=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/gnmt/model.html#BaseModel.build_graph"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.gnmt.model.BaseModel.build_graph" title="Permalink to this definition">¶</a></dt>
+<dd><p>Subclass must implement this method.</p>
+<p>Creates a sequence-to-sequence model with dynamic RNN decoder API.
+:param hparams: Hyperparameter configurations.
+:param scope: VariableScope for the created subgraph; default “dynamic_seq2seq”.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A tuple of the form (logits, loss_tuple, final_context_state, sample_id),
+where:<blockquote>
+<div>logits: float32 Tensor [batch_size x num_decoder_symbols].
+loss: loss = the total loss / batch_size.
+final_context_state: the final state of decoder RNN.
+sample_id: sampling indices.</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – if encoder_type differs from mono and bi, or
+attention_option is not (luong | scaled_luong |
+bahdanau | normed_bahdanau).</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.models.gnmt.model.BaseModel.decode">
+<code class="descname">decode</code><span class="sig-paren">(</span><em>sess</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/gnmt/model.html#BaseModel.decode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.gnmt.model.BaseModel.decode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decode a batch.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sess</strong> – tensorflow session to use.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
+<dt>A tuple consiting of outputs, infer_summary.</dt>
+<dd>outputs: of size [batch_size, time]</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.models.gnmt.model.BaseModel.eval">
+<code class="descname">eval</code><span class="sig-paren">(</span><em>sess</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/gnmt/model.html#BaseModel.eval"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.gnmt.model.BaseModel.eval" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute eval graph.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.models.gnmt.model.BaseModel.get_max_time">
+<code class="descname">get_max_time</code><span class="sig-paren">(</span><em>tensor</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/gnmt/model.html#BaseModel.get_max_time"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.gnmt.model.BaseModel.get_max_time" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.models.gnmt.model.BaseModel.infer">
+<code class="descname">infer</code><span class="sig-paren">(</span><em>sess</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/gnmt/model.html#BaseModel.infer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.gnmt.model.BaseModel.infer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.models.gnmt.model.BaseModel.init_embeddings">
+<code class="descname">init_embeddings</code><span class="sig-paren">(</span><em>hparams</em>, <em>scope</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/gnmt/model.html#BaseModel.init_embeddings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.gnmt.model.BaseModel.init_embeddings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Init embeddings.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.models.gnmt.model.BaseModel.train">
+<code class="descname">train</code><span class="sig-paren">(</span><em>sess</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/gnmt/model.html#BaseModel.train"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.gnmt.model.BaseModel.train" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute train graph.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nlp_architect.models.gnmt.model.Model">
+<em class="property">class </em><code class="descclassname">nlp_architect.models.gnmt.model.</code><code class="descname">Model</code><span class="sig-paren">(</span><em>hparams</em>, <em>mode</em>, <em>iterator</em>, <em>source_vocab_table</em>, <em>target_vocab_table</em>, <em>reverse_target_vocab_table=None</em>, <em>scope=None</em>, <em>extra_args=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/gnmt/model.html#Model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.gnmt.model.Model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nlp_architect.models.gnmt.model.BaseModel" title="nlp_architect.models.gnmt.model.BaseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">nlp_architect.models.gnmt.model.BaseModel</span></code></a></p>
+<p>Sequence-to-sequence dynamic model.</p>
+<p>This class implements a multi-layer recurrent neural network as encoder,
+and a multi-layer recurrent neural network decoder.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-nlp_architect.models.gnmt.model_helper">
+<span id="nlp-architect-models-gnmt-model-helper-module"></span><h2>nlp_architect.models.gnmt.model_helper module<a class="headerlink" href="#module-nlp_architect.models.gnmt.model_helper" title="Permalink to this headline">¶</a></h2>
+<p>Utility functions for building models.</p>
+<dl class="function">
+<dt id="nlp_architect.models.gnmt.model_helper.get_initializer">
+<code class="descclassname">nlp_architect.models.gnmt.model_helper.</code><code class="descname">get_initializer</code><span class="sig-paren">(</span><em>init_op</em>, <em>seed=None</em>, <em>init_weight=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/gnmt/model_helper.html#get_initializer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.gnmt.model_helper.get_initializer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an initializer. init_weight is only for uniform.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.models.gnmt.model_helper.get_device_str">
+<code class="descclassname">nlp_architect.models.gnmt.model_helper.</code><code class="descname">get_device_str</code><span class="sig-paren">(</span><em>device_id</em>, <em>num_gpus</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/gnmt/model_helper.html#get_device_str"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.gnmt.model_helper.get_device_str" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a device string for multi-GPU setup.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.models.gnmt.model_helper.create_train_model">
+<code class="descclassname">nlp_architect.models.gnmt.model_helper.</code><code class="descname">create_train_model</code><span class="sig-paren">(</span><em>model_creator</em>, <em>hparams</em>, <em>scope=None</em>, <em>num_workers=1</em>, <em>jobid=0</em>, <em>extra_args=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/gnmt/model_helper.html#create_train_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.gnmt.model_helper.create_train_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create train graph, model, and iterator.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.models.gnmt.model_helper.create_eval_model">
+<code class="descclassname">nlp_architect.models.gnmt.model_helper.</code><code class="descname">create_eval_model</code><span class="sig-paren">(</span><em>model_creator</em>, <em>hparams</em>, <em>scope=None</em>, <em>extra_args=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/gnmt/model_helper.html#create_eval_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.gnmt.model_helper.create_eval_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create train graph, model, src/tgt file holders, and iterator.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.models.gnmt.model_helper.create_infer_model">
+<code class="descclassname">nlp_architect.models.gnmt.model_helper.</code><code class="descname">create_infer_model</code><span class="sig-paren">(</span><em>model_creator</em>, <em>hparams</em>, <em>scope=None</em>, <em>extra_args=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/gnmt/model_helper.html#create_infer_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.gnmt.model_helper.create_infer_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create inference model.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.models.gnmt.model_helper.create_emb_for_encoder_and_decoder">
+<code class="descclassname">nlp_architect.models.gnmt.model_helper.</code><code class="descname">create_emb_for_encoder_and_decoder</code><span class="sig-paren">(</span><em>share_vocab</em>, <em>src_vocab_size</em>, <em>tgt_vocab_size</em>, <em>src_embed_size</em>, <em>tgt_embed_size</em>, <em>embed_type='dense'</em>, <em>dtype=tf.float32</em>, <em>num_enc_partitions=0</em>, <em>num_dec_partitions=0</em>, <em>src_vocab_file=None</em>, <em>tgt_vocab_file=None</em>, <em>src_embed_file=None</em>, <em>tgt_embed_file=None</em>, <em>use_char_encode=False</em>, <em>scope=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/gnmt/model_helper.html#create_emb_for_encoder_and_decoder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.gnmt.model_helper.create_emb_for_encoder_and_decoder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create embedding matrix for both encoder and decoder.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>share_vocab</strong> – A boolean. Whether to share embedding matrix for both
+encoder and decoder.</li>
+<li><strong>src_vocab_size</strong> – An integer. The source vocab size.</li>
+<li><strong>tgt_vocab_size</strong> – An integer. The target vocab size.</li>
+<li><strong>src_embed_size</strong> – An integer. The embedding dimension for the encoder’s
+embedding.</li>
+<li><strong>tgt_embed_size</strong> – An integer. The embedding dimension for the decoder’s
+embedding.</li>
+<li><strong>dtype</strong> – dtype of the embedding matrix. Default to float32.</li>
+<li><strong>num_enc_partitions</strong> – number of partitions used for the encoder’s embedding
+vars.</li>
+<li><strong>num_dec_partitions</strong> – number of partitions used for the decoder’s embedding
+vars.</li>
+<li><strong>scope</strong> – VariableScope for the created subgraph. Default to “embedding”.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Encoder’s embedding matrix.
+embedding_decoder: Decoder’s embedding matrix.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first">embedding_encoder</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – if use share_vocab but source and target have different vocab
+size.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.models.gnmt.model_helper.create_rnn_cell">
+<code class="descclassname">nlp_architect.models.gnmt.model_helper.</code><code class="descname">create_rnn_cell</code><span class="sig-paren">(</span><em>unit_type</em>, <em>num_units</em>, <em>num_layers</em>, <em>num_residual_layers</em>, <em>forget_bias</em>, <em>dropout</em>, <em>mode</em>, <em>num_gpus</em>, <em>base_gpu=0</em>, <em>single_cell_fn=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/gnmt/model_helper.html#create_rnn_cell"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.gnmt.model_helper.create_rnn_cell" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create multi-layer RNN cell.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>unit_type</strong> – string representing the unit type, i.e. “lstm”.</li>
+<li><strong>num_units</strong> – the depth of each unit.</li>
+<li><strong>num_layers</strong> – number of cells.</li>
+<li><strong>num_residual_layers</strong> – Number of residual layers from top to bottom. For
+example, if <cite>num_layers=4</cite> and <cite>num_residual_layers=2</cite>, the last 2 RNN
+cells in the returned list will be wrapped with <cite>ResidualWrapper</cite>.</li>
+<li><strong>forget_bias</strong> – the initial forget bias of the RNNCell(s).</li>
+<li><strong>dropout</strong> – floating point value between 0.0 and 1.0:
+the probability of dropout.  this is ignored if <cite>mode != TRAIN</cite>.</li>
+<li><strong>mode</strong> – either tf.contrib.learn.TRAIN/EVAL/INFER</li>
+<li><strong>num_gpus</strong> – The number of gpus to use when performing round-robin
+placement of layers.</li>
+<li><strong>base_gpu</strong> – The gpu device id to use for the first RNN cell in the
+returned list. The i-th RNN cell will use <cite>(base_gpu + i) % num_gpus</cite>
+as its device id.</li>
+<li><strong>single_cell_fn</strong> – allow for adding customized cell.
+When not specified, we default to model_helper._single_cell</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">An <cite>RNNCell</cite> instance.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.models.gnmt.model_helper.gradient_clip">
+<code class="descclassname">nlp_architect.models.gnmt.model_helper.</code><code class="descname">gradient_clip</code><span class="sig-paren">(</span><em>gradients</em>, <em>max_gradient_norm</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/gnmt/model_helper.html#gradient_clip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.gnmt.model_helper.gradient_clip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clipping gradients of a model.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.models.gnmt.model_helper.create_or_load_model">
+<code class="descclassname">nlp_architect.models.gnmt.model_helper.</code><code class="descname">create_or_load_model</code><span class="sig-paren">(</span><em>model</em>, <em>model_dir</em>, <em>session</em>, <em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/gnmt/model_helper.html#create_or_load_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.gnmt.model_helper.create_or_load_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create translation model and initialize or load parameters in session.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.models.gnmt.model_helper.load_model">
+<code class="descclassname">nlp_architect.models.gnmt.model_helper.</code><code class="descname">load_model</code><span class="sig-paren">(</span><em>model</em>, <em>ckpt_path</em>, <em>session</em>, <em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/gnmt/model_helper.html#load_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.gnmt.model_helper.load_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load model from a checkpoint.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.models.gnmt.model_helper.avg_checkpoints">
+<code class="descclassname">nlp_architect.models.gnmt.model_helper.</code><code class="descname">avg_checkpoints</code><span class="sig-paren">(</span><em>model_dir</em>, <em>num_last_checkpoints</em>, <em>global_step</em>, <em>global_step_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/gnmt/model_helper.html#avg_checkpoints"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.gnmt.model_helper.avg_checkpoints" title="Permalink to this definition">¶</a></dt>
+<dd><p>Average the last N checkpoints in the model_dir.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.models.gnmt.model_helper.compute_perplexity">
+<code class="descclassname">nlp_architect.models.gnmt.model_helper.</code><code class="descname">compute_perplexity</code><span class="sig-paren">(</span><em>model</em>, <em>sess</em>, <em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/gnmt/model_helper.html#compute_perplexity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.gnmt.model_helper.compute_perplexity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute perplexity of the output of the model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>model</strong> – model for compute perplexity.</li>
+<li><strong>sess</strong> – tensorflow session to use.</li>
+<li><strong>name</strong> – name of the batch.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The perplexity of the eval outputs.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-nlp_architect.models.gnmt">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-nlp_architect.models.gnmt" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

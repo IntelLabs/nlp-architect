@@ -1,0 +1,1802 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>nlp_architect.data package &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/install.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/nlp_arch_theme.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="nlp_architect.data.cdc_resources package" href="nlp_architect.data.cdc_resources.html" />
+    <link rel="prev" title="nlp_architect.common.cdc package" href="nlp_architect.common.cdc.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html">
+          
+
+          
+            
+            <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../publications.html">Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials.html">Jupyter Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model_zoo.html">Model Zoo</a></li>
+</ul>
+<p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tagging/sequence_tagging.html">Sequence Tagging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sentiment.html">Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bist_parser.html">Dependency Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intent.html">Intent Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lm.html">Language Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../information_extraction.html">Information Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transformers.html">Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../archived/additional.html">Additional Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Optimized Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../quantized_bert.html">Quantized BERT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transformers_distillation.html">Transformers Distillation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solutions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../absa_solution.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../term_set_expansion.html">Set Expansion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trend_analysis.html">Trend Analysis</a></li>
+</ul>
+<p class="caption"><span class="caption-text">For Developers</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="nlp_architect_api_index.html">nlp_architect API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.api.html">nlp_architect.api package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.cli.html">nlp_architect.cli package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.common.html">nlp_architect.common package</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">nlp_architect.data package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.data.cdc_resources.html">nlp_architect.data.cdc_resources package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.data.amazon_reviews">nlp_architect.data.amazon_reviews module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.data.babi_dialog">nlp_architect.data.babi_dialog module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.data.conll">nlp_architect.data.conll module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.data.fasttext_emb">nlp_architect.data.fasttext_emb module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.data.glue_tasks">nlp_architect.data.glue_tasks module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.data.intent_datasets">nlp_architect.data.intent_datasets module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.data.ptb">nlp_architect.data.ptb module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.data.sequence_classification">nlp_architect.data.sequence_classification module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.data.sequential_tagging">nlp_architect.data.sequential_tagging module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.data.utils">nlp_architect.data.utils module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.data">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.models.html">nlp_architect.models package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.nlp.html">nlp_architect.nlp package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.nn.html">nlp_architect.nn package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.pipelines.html">nlp_architect.pipelines package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.procedures.html">nlp_architect.procedures package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.server.html">nlp_architect.server package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.solutions.html">nlp_architect.solutions package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.utils.html">nlp_architect.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer_guide.html">Developer Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">NLP Architect by Intel® AI Lab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="nlp_architect_api_index.html"><code class="docutils literal notranslate"><span class="pre">nlp\_architect</span></code> package</a> &raquo;</li>
+        
+      <li>nlp_architect.data package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="nlp-architect-data-package">
+<h1>nlp_architect.data package<a class="headerlink" href="#nlp-architect-data-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="nlp_architect.data.cdc_resources.html">nlp_architect.data.cdc_resources package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.data.cdc_resources.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.data.cdc_resources.data_types.html">nlp_architect.data.cdc_resources.data_types package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.data.cdc_resources.data_types.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="nlp_architect.data.cdc_resources.data_types.wiki.html">nlp_architect.data.cdc_resources.data_types.wiki package</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.data.cdc_resources.data_types.wiki.html#submodules">Submodules</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.data.cdc_resources.data_types.wiki.html#module-nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_page">nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_page module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.data.cdc_resources.data_types.wiki.html#module-nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_page_extracted_relations">nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_page_extracted_relations module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.data.cdc_resources.data_types.wiki.html#module-nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_pages">nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_pages module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.data.cdc_resources.data_types.wiki.html#module-nlp_architect.data.cdc_resources.data_types.wiki">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="nlp_architect.data.cdc_resources.data_types.wn.html">nlp_architect.data.cdc_resources.data_types.wn package</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.data.cdc_resources.data_types.wn.html#submodules">Submodules</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.data.cdc_resources.data_types.wn.html#module-nlp_architect.data.cdc_resources.data_types.wn.wordnet_page">nlp_architect.data.cdc_resources.data_types.wn.wordnet_page module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="nlp_architect.data.cdc_resources.data_types.wn.html#module-nlp_architect.data.cdc_resources.data_types.wn">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.data.cdc_resources.data_types.html#module-nlp_architect.data.cdc_resources.data_types">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.data.cdc_resources.embedding.html">nlp_architect.data.cdc_resources.embedding package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.data.cdc_resources.embedding.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.data.cdc_resources.embedding.html#module-nlp_architect.data.cdc_resources.embedding.embed_elmo">nlp_architect.data.cdc_resources.embedding.embed_elmo module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.data.cdc_resources.embedding.html#module-nlp_architect.data.cdc_resources.embedding.embed_glove">nlp_architect.data.cdc_resources.embedding.embed_glove module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.data.cdc_resources.embedding.html#module-nlp_architect.data.cdc_resources.embedding">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.data.cdc_resources.gen_scripts.html">nlp_architect.data.cdc_resources.gen_scripts package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.data.cdc_resources.gen_scripts.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.data.cdc_resources.gen_scripts.html#nlp-architect-data-cdc-resources-gen-scripts-create-reference-dict-dump-module">nlp_architect.data.cdc_resources.gen_scripts.create_reference_dict_dump module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.data.cdc_resources.gen_scripts.html#nlp-architect-data-cdc-resources-gen-scripts-create-verbocean-dump-module">nlp_architect.data.cdc_resources.gen_scripts.create_verbocean_dump module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.data.cdc_resources.gen_scripts.html#nlp-architect-data-cdc-resources-gen-scripts-create-wiki-dump-module">nlp_architect.data.cdc_resources.gen_scripts.create_wiki_dump module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.data.cdc_resources.gen_scripts.html#module-nlp_architect.data.cdc_resources.gen_scripts.create_word_embed_elmo_dump">nlp_architect.data.cdc_resources.gen_scripts.create_word_embed_elmo_dump module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.data.cdc_resources.gen_scripts.html#nlp-architect-data-cdc-resources-gen-scripts-create-word-embed-glove-dump-module">nlp_architect.data.cdc_resources.gen_scripts.create_word_embed_glove_dump module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.data.cdc_resources.gen_scripts.html#nlp-architect-data-cdc-resources-gen-scripts-create-wordnet-dump-module">nlp_architect.data.cdc_resources.gen_scripts.create_wordnet_dump module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.data.cdc_resources.gen_scripts.html#module-nlp_architect.data.cdc_resources.gen_scripts">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.data.cdc_resources.relations.html">nlp_architect.data.cdc_resources.relations package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.data.cdc_resources.relations.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.data.cdc_resources.relations.html#module-nlp_architect.data.cdc_resources.relations.computed_relation_extraction">nlp_architect.data.cdc_resources.relations.computed_relation_extraction module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.data.cdc_resources.relations.html#module-nlp_architect.data.cdc_resources.relations.referent_dict_relation_extraction">nlp_architect.data.cdc_resources.relations.referent_dict_relation_extraction module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.data.cdc_resources.relations.html#module-nlp_architect.data.cdc_resources.relations.relation_extraction">nlp_architect.data.cdc_resources.relations.relation_extraction module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.data.cdc_resources.relations.html#module-nlp_architect.data.cdc_resources.relations.relation_types_enums">nlp_architect.data.cdc_resources.relations.relation_types_enums module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.data.cdc_resources.relations.html#module-nlp_architect.data.cdc_resources.relations.verbocean_relation_extraction">nlp_architect.data.cdc_resources.relations.verbocean_relation_extraction module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.data.cdc_resources.relations.html#module-nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction">nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.data.cdc_resources.relations.html#module-nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction">nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.data.cdc_resources.relations.html#module-nlp_architect.data.cdc_resources.relations.word_embedding_relation_extraction">nlp_architect.data.cdc_resources.relations.word_embedding_relation_extraction module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.data.cdc_resources.relations.html#module-nlp_architect.data.cdc_resources.relations.wordnet_relation_extraction">nlp_architect.data.cdc_resources.relations.wordnet_relation_extraction module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.data.cdc_resources.relations.html#module-nlp_architect.data.cdc_resources.relations">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.data.cdc_resources.wikipedia.html">nlp_architect.data.cdc_resources.wikipedia package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.data.cdc_resources.wikipedia.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.data.cdc_resources.wikipedia.html#module-nlp_architect.data.cdc_resources.wikipedia.wiki_elastic">nlp_architect.data.cdc_resources.wikipedia.wiki_elastic module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.data.cdc_resources.wikipedia.html#module-nlp_architect.data.cdc_resources.wikipedia.wiki_offline">nlp_architect.data.cdc_resources.wikipedia.wiki_offline module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.data.cdc_resources.wikipedia.html#module-nlp_architect.data.cdc_resources.wikipedia.wiki_online">nlp_architect.data.cdc_resources.wikipedia.wiki_online module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.data.cdc_resources.wikipedia.html#module-nlp_architect.data.cdc_resources.wikipedia.wiki_search_page_result">nlp_architect.data.cdc_resources.wikipedia.wiki_search_page_result module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.data.cdc_resources.wikipedia.html#module-nlp_architect.data.cdc_resources.wikipedia">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.data.cdc_resources.wordnet.html">nlp_architect.data.cdc_resources.wordnet package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.data.cdc_resources.wordnet.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.data.cdc_resources.wordnet.html#module-nlp_architect.data.cdc_resources.wordnet.wordnet_offline">nlp_architect.data.cdc_resources.wordnet.wordnet_offline module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.data.cdc_resources.wordnet.html#module-nlp_architect.data.cdc_resources.wordnet.wordnet_online">nlp_architect.data.cdc_resources.wordnet.wordnet_online module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.data.cdc_resources.wordnet.html#module-nlp_architect.data.cdc_resources.wordnet">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.data.cdc_resources.html#module-nlp_architect.data.cdc_resources">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-nlp_architect.data.amazon_reviews">
+<span id="nlp-architect-data-amazon-reviews-module"></span><h2>nlp_architect.data.amazon_reviews module<a class="headerlink" href="#module-nlp_architect.data.amazon_reviews" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nlp_architect.data.amazon_reviews.Amazon_Reviews">
+<em class="property">class </em><code class="descclassname">nlp_architect.data.amazon_reviews.</code><code class="descname">Amazon_Reviews</code><span class="sig-paren">(</span><em>review_file</em>, <em>run_balance=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/amazon_reviews.html#Amazon_Reviews"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.amazon_reviews.Amazon_Reviews" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Take the <a href="#id1"><span class="problematic" id="id2">*</span></a>.json file of Amazon reviews as downloaded from
+<a class="reference external" href="http://jmcauley.ucsd.edu/data/amazon/">http://jmcauley.ucsd.edu/data/amazon/</a>
+Then does data cleaning and balancing, as well as transforms the reviews 1-5 to a sentiment</p>
+<dl class="method">
+<dt id="nlp_architect.data.amazon_reviews.Amazon_Reviews.process">
+<code class="descname">process</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/amazon_reviews.html#Amazon_Reviews.process"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.amazon_reviews.Amazon_Reviews.process" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.data.amazon_reviews.review_to_sentiment">
+<code class="descclassname">nlp_architect.data.amazon_reviews.</code><code class="descname">review_to_sentiment</code><span class="sig-paren">(</span><em>review</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/amazon_reviews.html#review_to_sentiment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.amazon_reviews.review_to_sentiment" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-nlp_architect.data.babi_dialog">
+<span id="nlp-architect-data-babi-dialog-module"></span><h2>nlp_architect.data.babi_dialog module<a class="headerlink" href="#module-nlp_architect.data.babi_dialog" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nlp_architect.data.babi_dialog.BABI_Dialog">
+<em class="property">class </em><code class="descclassname">nlp_architect.data.babi_dialog.</code><code class="descname">BABI_Dialog</code><span class="sig-paren">(</span><em>path='.'</em>, <em>task=1</em>, <em>oov=False</em>, <em>use_match_type=False</em>, <em>use_time=True</em>, <em>use_speaker_tag=True</em>, <em>cache_match_type=False</em>, <em>cache_vectorized=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/babi_dialog.html#BABI_Dialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.babi_dialog.BABI_Dialog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This class loads in the Facebook bAbI goal oriented dialog dataset and
+vectorizes them into user utterances, bot utterances, and answers.</p>
+<p>As described in: “Learning End-to-End Goal Oriented Dialog”.
+<a class="reference external" href="https://arxiv.org/abs/1605.07683">https://arxiv.org/abs/1605.07683</a>.</p>
+<p>For a particular task, the class will read both train and test files
+and combine the vocabulary.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>path</strong> (<em>str</em>) – Directory to store the dataset</li>
+<li><strong>task</strong> (<em>str</em>) – a particular task to solve (all bAbI tasks are train
+and tested separately)</li>
+<li><strong>oov</strong> (<em>bool</em><em>, </em><em>optional</em>) – Load test set with out of vocabulary entity words</li>
+<li><strong>use_match_type</strong> (<em>bool</em><em>, </em><em>optional</em>) – Flag to use match-type features</li>
+<li><strong>use_time</strong> (<em>bool</em><em>, </em><em>optional</em>) – Add time words to each memory, encoding when the
+memory was formed</li>
+<li><strong>use_speaker_tag</strong> (<em>bool</em><em>, </em><em>optional</em>) – Add speaker words to each memory
+(&lt;BOT&gt; or &lt;USER&gt;) indicating who spoke each memory.</li>
+<li><strong>cache_match_type</strong> (<em>bool</em><em>, </em><em>optional</em>) – Flag to save match-type features after processing</li>
+<li><strong>cache_vectorized</strong> (<em>bool</em><em>, </em><em>optional</em>) – Flag to save all vectorized data after processing</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="nlp_architect.data.babi_dialog.BABI_Dialog.data_dict">
+<code class="descname">data_dict</code><a class="headerlink" href="#nlp_architect.data.babi_dialog.BABI_Dialog.data_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dictionary containing final vectorized train, val, and test datasets</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.babi_dialog.BABI_Dialog.cands">
+<code class="descname">cands</code><a class="headerlink" href="#nlp_architect.data.babi_dialog.BABI_Dialog.cands" title="Permalink to this definition">¶</a></dt>
+<dd><p>Vectorized array of potential candidate answers, encoded</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">np.array</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">as integers, as returned by BABI_Dialog class. Shape = [num_cands, max_cand_length]</code></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.babi_dialog.BABI_Dialog.num_cands">
+<code class="descname">num_cands</code><a class="headerlink" href="#nlp_architect.data.babi_dialog.BABI_Dialog.num_cands" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of potential candidate answers.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.babi_dialog.BABI_Dialog.max_cand_len">
+<code class="descname">max_cand_len</code><a class="headerlink" href="#nlp_architect.data.babi_dialog.BABI_Dialog.max_cand_len" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maximum length of a candidate answer sentence in number of words.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.babi_dialog.BABI_Dialog.memory_size">
+<code class="descname">memory_size</code><a class="headerlink" href="#nlp_architect.data.babi_dialog.BABI_Dialog.memory_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maximum number of sentences to keep in memory at any given time.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.babi_dialog.BABI_Dialog.max_utt_len">
+<code class="descname">max_utt_len</code><a class="headerlink" href="#nlp_architect.data.babi_dialog.BABI_Dialog.max_utt_len" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maximum length of any given sentence / user utterance</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.babi_dialog.BABI_Dialog.vocab_size">
+<code class="descname">vocab_size</code><a class="headerlink" href="#nlp_architect.data.babi_dialog.BABI_Dialog.vocab_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of unique words in the vocabulary + 2 (0 is reserved for
+a padding symbol, and 1 is reserved for OOV)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.babi_dialog.BABI_Dialog.use_match_type">
+<code class="descname">use_match_type</code><a class="headerlink" href="#nlp_architect.data.babi_dialog.BABI_Dialog.use_match_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flag to use match-type features</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">bool, optional</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.babi_dialog.BABI_Dialog.kb_ents_to_type">
+<code class="descname">kb_ents_to_type</code><a class="headerlink" href="#nlp_architect.data.babi_dialog.BABI_Dialog.kb_ents_to_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>For use with match-type features, dictionary of
+entities found in the dataset mapping to their associated match-type</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">dict, optional</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.babi_dialog.BABI_Dialog.kb_ents_to_cand_idxs">
+<code class="descname">kb_ents_to_cand_idxs</code><a class="headerlink" href="#nlp_architect.data.babi_dialog.BABI_Dialog.kb_ents_to_cand_idxs" title="Permalink to this definition">¶</a></dt>
+<dd><p>For use with match-type features, dictionary
+mapping from each entity in the  knowledge base to the set of indicies in the
+candidate_answers array that contain that entity.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">dict, optional</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.babi_dialog.BABI_Dialog.match_type_idxs">
+<code class="descname">match_type_idxs</code><a class="headerlink" href="#nlp_architect.data.babi_dialog.BABI_Dialog.match_type_idxs" title="Permalink to this definition">¶</a></dt>
+<dd><p>For use with match-type features, dictionary
+mapping from match-type to the associated fixed index of the candidate vector
+which indicated this match type.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">dict, optional</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="nlp_architect.data.babi_dialog.BABI_Dialog.clean_cands">
+<em class="property">static </em><code class="descname">clean_cands</code><span class="sig-paren">(</span><em>cand</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/babi_dialog.html#BABI_Dialog.clean_cands"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.babi_dialog.BABI_Dialog.clean_cands" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove leading line number and final newline from candidate answer</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.babi_dialog.BABI_Dialog.compute_statistics">
+<code class="descname">compute_statistics</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/babi_dialog.html#BABI_Dialog.compute_statistics"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.babi_dialog.BABI_Dialog.compute_statistics" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute vocab, word index, and max length of stories and queries.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.babi_dialog.BABI_Dialog.create_cands_mat">
+<code class="descname">create_cands_mat</code><span class="sig-paren">(</span><em>data_split</em>, <em>cache_match_type</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/babi_dialog.html#BABI_Dialog.create_cands_mat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.babi_dialog.BABI_Dialog.create_cands_mat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add match type features to candidate answers for each example in the dataaset.
+Caches once complete.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.babi_dialog.BABI_Dialog.create_match_maps">
+<code class="descname">create_match_maps</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/babi_dialog.html#BABI_Dialog.create_match_maps"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.babi_dialog.BABI_Dialog.create_match_maps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create dictionary mapping from each entity in the knowledge base to the set of
+indicies in the candidate_answers array that contain that entity. Will be used for
+quickly adding the match type features to the candidate answers during fprop.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.babi_dialog.BABI_Dialog.encode_match_feats">
+<code class="descname">encode_match_feats</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/babi_dialog.html#BABI_Dialog.encode_match_feats"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.babi_dialog.BABI_Dialog.encode_match_feats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replace entity names and match type names with indexes</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.babi_dialog.BABI_Dialog.get_vocab">
+<code class="descname">get_vocab</code><span class="sig-paren">(</span><em>dialog</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/babi_dialog.html#BABI_Dialog.get_vocab"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.babi_dialog.BABI_Dialog.get_vocab" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute vocabulary from the set of dialogs.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.babi_dialog.BABI_Dialog.load_candidate_answers">
+<code class="descname">load_candidate_answers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/babi_dialog.html#BABI_Dialog.load_candidate_answers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.babi_dialog.BABI_Dialog.load_candidate_answers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load candidate answers from file, compute number, and store for final softmax</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.babi_dialog.BABI_Dialog.load_data">
+<code class="descname">load_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/babi_dialog.html#BABI_Dialog.load_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.babi_dialog.BABI_Dialog.load_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetch and extract the Facebook bAbI-dialog dataset if not already downloaded.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">training and test filenames are returned</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">tuple</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.babi_dialog.BABI_Dialog.load_kb">
+<code class="descname">load_kb</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/babi_dialog.html#BABI_Dialog.load_kb"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.babi_dialog.BABI_Dialog.load_kb" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load knowledge base from file, parse into entities and types</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.babi_dialog.BABI_Dialog.one_hot_vector">
+<code class="descname">one_hot_vector</code><span class="sig-paren">(</span><em>answer</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/babi_dialog.html#BABI_Dialog.one_hot_vector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.babi_dialog.BABI_Dialog.one_hot_vector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create one-hot representation of an answer.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>answer</strong> (<em>string</em>) – The word answer.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">One-hot representation of answer.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="nlp_architect.data.babi_dialog.BABI_Dialog.parse_dialog">
+<em class="property">static </em><code class="descname">parse_dialog</code><span class="sig-paren">(</span><em>fn</em>, <em>use_time=True</em>, <em>use_speaker_tag=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/babi_dialog.html#BABI_Dialog.parse_dialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.babi_dialog.BABI_Dialog.parse_dialog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a dialog file, parse into user and bot utterances, adding time and speaker tags.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>fn</strong> (<em>str</em>) – Filename to parse</li>
+<li><strong>use_time</strong> (<em>bool</em><em>, </em><em>optional</em>) – Flag to append ‘time-words’ to the end of each utterance</li>
+<li><strong>use_speaker_tag</strong> (<em>bool</em><em>, </em><em>optional</em>) – Flag to append tags specifiying the speaker to
+each utterance.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.babi_dialog.BABI_Dialog.process_interactive">
+<code class="descname">process_interactive</code><span class="sig-paren">(</span><em>line_in</em>, <em>context</em>, <em>response</em>, <em>db_results</em>, <em>time_feat</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/babi_dialog.html#BABI_Dialog.process_interactive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.babi_dialog.BABI_Dialog.process_interactive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse a given user’s input into the same format as training, build the memory
+from the given context and previous response, update the context.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.babi_dialog.BABI_Dialog.vectorize_cands">
+<code class="descname">vectorize_cands</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/babi_dialog.html#BABI_Dialog.vectorize_cands"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.babi_dialog.BABI_Dialog.vectorize_cands" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert candidate answer word data into vectors.</p>
+<p>If sentence length &lt; max_cand_len it is padded with 0’s</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>list of lists</em>) – list of candidate answers split into words</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">padded numpy array of word indexes forr all candidate answers</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">tuple (2d numpy array)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.babi_dialog.BABI_Dialog.vectorize_stories">
+<code class="descname">vectorize_stories</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/babi_dialog.html#BABI_Dialog.vectorize_stories"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.babi_dialog.BABI_Dialog.vectorize_stories" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert (memory, user_utt, answer) word data into vectors.</p>
+<p>If sentence length &lt; max_utt_len it is padded with 0’s
+If memory length &lt; memory size, it is padded with empty memorys (max_utt_len 0’s)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>tuple</em>) – Tuple of memories, user_utt, answer word data.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Tuple of memories, memory_lengths, user_utt, answer vectors.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">tuple</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.babi_dialog.BABI_Dialog.words_to_vector">
+<code class="descname">words_to_vector</code><span class="sig-paren">(</span><em>words</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/babi_dialog.html#BABI_Dialog.words_to_vector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.babi_dialog.BABI_Dialog.words_to_vector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a list of words into vector form.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>words</strong> (<em>list</em>) – List of words.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Vectorized list of words.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.data.babi_dialog.pad_sentences">
+<code class="descclassname">nlp_architect.data.babi_dialog.</code><code class="descname">pad_sentences</code><span class="sig-paren">(</span><em>sentences</em>, <em>sentence_length=0</em>, <em>pad_val=0.0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/babi_dialog.html#pad_sentences"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.babi_dialog.pad_sentences" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pad all sentences to have the same length (number of words)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.data.babi_dialog.pad_stories">
+<code class="descclassname">nlp_architect.data.babi_dialog.</code><code class="descname">pad_stories</code><span class="sig-paren">(</span><em>stories</em>, <em>sentence_length</em>, <em>max_story_length</em>, <em>pad_val=0.0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/babi_dialog.html#pad_stories"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.babi_dialog.pad_stories" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pad all stories to have the same number of sentences (max_story_length).</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-nlp_architect.data.conll">
+<span id="nlp-architect-data-conll-module"></span><h2>nlp_architect.data.conll module<a class="headerlink" href="#module-nlp_architect.data.conll" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nlp_architect.data.conll.ConllEntry">
+<em class="property">class </em><code class="descclassname">nlp_architect.data.conll.</code><code class="descname">ConllEntry</code><span class="sig-paren">(</span><em>eid</em>, <em>form</em>, <em>lemma</em>, <em>pos</em>, <em>cpos</em>, <em>feats=None</em>, <em>parent_id=None</em>, <em>relation=None</em>, <em>deps=None</em>, <em>misc=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/conll.html#ConllEntry"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.conll.ConllEntry" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.data.conll.normalize">
+<code class="descclassname">nlp_architect.data.conll.</code><code class="descname">normalize</code><span class="sig-paren">(</span><em>word</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/conll.html#normalize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.conll.normalize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-nlp_architect.data.fasttext_emb">
+<span id="nlp-architect-data-fasttext-emb-module"></span><h2>nlp_architect.data.fasttext_emb module<a class="headerlink" href="#module-nlp_architect.data.fasttext_emb" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nlp_architect.data.fasttext_emb.Dictionary">
+<em class="property">class </em><code class="descclassname">nlp_architect.data.fasttext_emb.</code><code class="descname">Dictionary</code><span class="sig-paren">(</span><em>id2word</em>, <em>word2id</em>, <em>lang</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/fasttext_emb.html#Dictionary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.fasttext_emb.Dictionary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Merges word2idx and idx2word dictionaries
+:param id2word dictionary:
+:param word2id dictionary:
+:param language of the dictionary:</p>
+<dl class="docutils">
+<dt>Usage:</dt>
+<dd>dico.index(word) - returns an index
+dico[index] - returns the word</dd>
+</dl>
+<dl class="method">
+<dt id="nlp_architect.data.fasttext_emb.Dictionary.check_valid">
+<code class="descname">check_valid</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/fasttext_emb.html#Dictionary.check_valid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.fasttext_emb.Dictionary.check_valid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check that the dictionary is valid.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.fasttext_emb.Dictionary.index">
+<code class="descname">index</code><span class="sig-paren">(</span><em>word</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/fasttext_emb.html#Dictionary.index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.fasttext_emb.Dictionary.index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the index of the specified word.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nlp_architect.data.fasttext_emb.FastTextEmb">
+<em class="property">class </em><code class="descclassname">nlp_architect.data.fasttext_emb.</code><code class="descname">FastTextEmb</code><span class="sig-paren">(</span><em>path</em>, <em>language</em>, <em>vocab_size</em>, <em>emb_dim=300</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/fasttext_emb.html#FastTextEmb"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.fasttext_emb.FastTextEmb" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Downloads FastText Embeddings for a given language to the given path.
+:param path: Local path to copy embeddings
+:type path: str
+:param language: Embeddings language
+:type language: str
+:param vocab_size: Size of vocabulary
+:type vocab_size: int</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Returns a dictionary and reverse dictionary
+Returns a numpy array with embeddings in emb_sizexvocab_size shape</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="nlp_architect.data.fasttext_emb.FastTextEmb.load_embeddings">
+<code class="descname">load_embeddings</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/fasttext_emb.html#FastTextEmb.load_embeddings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.fasttext_emb.FastTextEmb.load_embeddings" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.fasttext_emb.FastTextEmb.read_embeddings">
+<code class="descname">read_embeddings</code><span class="sig-paren">(</span><em>filepath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/fasttext_emb.html#FastTextEmb.read_embeddings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.fasttext_emb.FastTextEmb.read_embeddings" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.data.fasttext_emb.get_eval_data">
+<code class="descclassname">nlp_architect.data.fasttext_emb.</code><code class="descname">get_eval_data</code><span class="sig-paren">(</span><em>eval_path</em>, <em>src_lang</em>, <em>tgt_lang</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/fasttext_emb.html#get_eval_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.fasttext_emb.get_eval_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Downloads evaluation cross lingual dictionaries to the eval_path
+:param eval_path: Path where cross-lingual dictionaries are downloaded
+:param src_lang: Source Language
+:param tgt_lang: Target Language</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Path to where cross lingual dictionaries are downloaded</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-nlp_architect.data.glue_tasks">
+<span id="nlp-architect-data-glue-tasks-module"></span><h2>nlp_architect.data.glue_tasks module<a class="headerlink" href="#module-nlp_architect.data.glue_tasks" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nlp_architect.data.glue_tasks.ColaProcessor">
+<em class="property">class </em><code class="descclassname">nlp_architect.data.glue_tasks.</code><code class="descname">ColaProcessor</code><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#ColaProcessor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.ColaProcessor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nlp_architect.data.utils.DataProcessor" title="nlp_architect.data.utils.DataProcessor"><code class="xref py py-class docutils literal notranslate"><span class="pre">nlp_architect.data.utils.DataProcessor</span></code></a></p>
+<p>Processor for the CoLA data set (GLUE version).</p>
+<dl class="method">
+<dt id="nlp_architect.data.glue_tasks.ColaProcessor.get_dev_examples">
+<code class="descname">get_dev_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#ColaProcessor.get_dev_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.ColaProcessor.get_dev_examples" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a collection of <a href="#id3"><span class="problematic" id="id4">`</span></a>InputExample`s for the dev set.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.glue_tasks.ColaProcessor.get_labels">
+<code class="descname">get_labels</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#ColaProcessor.get_labels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.ColaProcessor.get_labels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the list of labels for this data set.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.glue_tasks.ColaProcessor.get_test_examples">
+<code class="descname">get_test_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#ColaProcessor.get_test_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.ColaProcessor.get_test_examples" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a collection of <a href="#id5"><span class="problematic" id="id6">`</span></a>InputExample`s for the test set.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.glue_tasks.ColaProcessor.get_train_examples">
+<code class="descname">get_train_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#ColaProcessor.get_train_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.ColaProcessor.get_train_examples" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a collection of <a href="#id7"><span class="problematic" id="id8">`</span></a>InputExample`s for the train set.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nlp_architect.data.glue_tasks.InputFeatures">
+<em class="property">class </em><code class="descclassname">nlp_architect.data.glue_tasks.</code><code class="descname">InputFeatures</code><span class="sig-paren">(</span><em>input_ids</em>, <em>input_mask</em>, <em>segment_ids</em>, <em>label_id</em>, <em>valid_ids=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#InputFeatures"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.InputFeatures" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A single set of features of data.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="nlp_architect.data.glue_tasks.MnliMismatchedProcessor">
+<em class="property">class </em><code class="descclassname">nlp_architect.data.glue_tasks.</code><code class="descname">MnliMismatchedProcessor</code><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#MnliMismatchedProcessor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.MnliMismatchedProcessor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nlp_architect.data.glue_tasks.MnliProcessor" title="nlp_architect.data.glue_tasks.MnliProcessor"><code class="xref py py-class docutils literal notranslate"><span class="pre">nlp_architect.data.glue_tasks.MnliProcessor</span></code></a></p>
+<p>Processor for the MultiNLI Mismatched data set (GLUE version).</p>
+<dl class="method">
+<dt id="nlp_architect.data.glue_tasks.MnliMismatchedProcessor.get_dev_examples">
+<code class="descname">get_dev_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#MnliMismatchedProcessor.get_dev_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.MnliMismatchedProcessor.get_dev_examples" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a collection of <a href="#id9"><span class="problematic" id="id10">`</span></a>InputExample`s for the dev set.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.glue_tasks.MnliMismatchedProcessor.get_test_examples">
+<code class="descname">get_test_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#MnliMismatchedProcessor.get_test_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.MnliMismatchedProcessor.get_test_examples" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a collection of <a href="#id11"><span class="problematic" id="id12">`</span></a>InputExample`s for the test set.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nlp_architect.data.glue_tasks.MnliProcessor">
+<em class="property">class </em><code class="descclassname">nlp_architect.data.glue_tasks.</code><code class="descname">MnliProcessor</code><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#MnliProcessor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.MnliProcessor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nlp_architect.data.utils.DataProcessor" title="nlp_architect.data.utils.DataProcessor"><code class="xref py py-class docutils literal notranslate"><span class="pre">nlp_architect.data.utils.DataProcessor</span></code></a></p>
+<p>Processor for the MultiNLI data set (GLUE version).</p>
+<dl class="method">
+<dt id="nlp_architect.data.glue_tasks.MnliProcessor.get_dev_examples">
+<code class="descname">get_dev_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#MnliProcessor.get_dev_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.MnliProcessor.get_dev_examples" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a collection of <a href="#id13"><span class="problematic" id="id14">`</span></a>InputExample`s for the dev set.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.glue_tasks.MnliProcessor.get_labels">
+<code class="descname">get_labels</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#MnliProcessor.get_labels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.MnliProcessor.get_labels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the list of labels for this data set.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.glue_tasks.MnliProcessor.get_test_examples">
+<code class="descname">get_test_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#MnliProcessor.get_test_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.MnliProcessor.get_test_examples" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a collection of <a href="#id15"><span class="problematic" id="id16">`</span></a>InputExample`s for the test set.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.glue_tasks.MnliProcessor.get_train_examples">
+<code class="descname">get_train_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#MnliProcessor.get_train_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.MnliProcessor.get_train_examples" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a collection of <a href="#id17"><span class="problematic" id="id18">`</span></a>InputExample`s for the train set.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nlp_architect.data.glue_tasks.MrpcProcessor">
+<em class="property">class </em><code class="descclassname">nlp_architect.data.glue_tasks.</code><code class="descname">MrpcProcessor</code><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#MrpcProcessor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.MrpcProcessor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nlp_architect.data.utils.DataProcessor" title="nlp_architect.data.utils.DataProcessor"><code class="xref py py-class docutils literal notranslate"><span class="pre">nlp_architect.data.utils.DataProcessor</span></code></a></p>
+<p>Processor for the MRPC data set (GLUE version).</p>
+<dl class="method">
+<dt id="nlp_architect.data.glue_tasks.MrpcProcessor.get_dev_examples">
+<code class="descname">get_dev_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#MrpcProcessor.get_dev_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.MrpcProcessor.get_dev_examples" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a collection of <a href="#id19"><span class="problematic" id="id20">`</span></a>InputExample`s for the dev set.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.glue_tasks.MrpcProcessor.get_labels">
+<code class="descname">get_labels</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#MrpcProcessor.get_labels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.MrpcProcessor.get_labels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the list of labels for this data set.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.glue_tasks.MrpcProcessor.get_test_examples">
+<code class="descname">get_test_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#MrpcProcessor.get_test_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.MrpcProcessor.get_test_examples" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a collection of <a href="#id21"><span class="problematic" id="id22">`</span></a>InputExample`s for the test set.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.glue_tasks.MrpcProcessor.get_train_examples">
+<code class="descname">get_train_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#MrpcProcessor.get_train_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.MrpcProcessor.get_train_examples" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a collection of <a href="#id23"><span class="problematic" id="id24">`</span></a>InputExample`s for the train set.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nlp_architect.data.glue_tasks.QnliProcessor">
+<em class="property">class </em><code class="descclassname">nlp_architect.data.glue_tasks.</code><code class="descname">QnliProcessor</code><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#QnliProcessor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.QnliProcessor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nlp_architect.data.utils.DataProcessor" title="nlp_architect.data.utils.DataProcessor"><code class="xref py py-class docutils literal notranslate"><span class="pre">nlp_architect.data.utils.DataProcessor</span></code></a></p>
+<p>Processor for the QNLI data set (GLUE version).</p>
+<dl class="method">
+<dt id="nlp_architect.data.glue_tasks.QnliProcessor.get_dev_examples">
+<code class="descname">get_dev_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#QnliProcessor.get_dev_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.QnliProcessor.get_dev_examples" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a collection of <a href="#id25"><span class="problematic" id="id26">`</span></a>InputExample`s for the dev set.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.glue_tasks.QnliProcessor.get_labels">
+<code class="descname">get_labels</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#QnliProcessor.get_labels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.QnliProcessor.get_labels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the list of labels for this data set.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.glue_tasks.QnliProcessor.get_test_examples">
+<code class="descname">get_test_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#QnliProcessor.get_test_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.QnliProcessor.get_test_examples" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a collection of <a href="#id27"><span class="problematic" id="id28">`</span></a>InputExample`s for the test set.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.glue_tasks.QnliProcessor.get_train_examples">
+<code class="descname">get_train_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#QnliProcessor.get_train_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.QnliProcessor.get_train_examples" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a collection of <a href="#id29"><span class="problematic" id="id30">`</span></a>InputExample`s for the train set.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nlp_architect.data.glue_tasks.QqpProcessor">
+<em class="property">class </em><code class="descclassname">nlp_architect.data.glue_tasks.</code><code class="descname">QqpProcessor</code><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#QqpProcessor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.QqpProcessor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nlp_architect.data.utils.DataProcessor" title="nlp_architect.data.utils.DataProcessor"><code class="xref py py-class docutils literal notranslate"><span class="pre">nlp_architect.data.utils.DataProcessor</span></code></a></p>
+<p>Processor for the QQP data set (GLUE version).</p>
+<dl class="method">
+<dt id="nlp_architect.data.glue_tasks.QqpProcessor.get_dev_examples">
+<code class="descname">get_dev_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#QqpProcessor.get_dev_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.QqpProcessor.get_dev_examples" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a collection of <a href="#id31"><span class="problematic" id="id32">`</span></a>InputExample`s for the dev set.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.glue_tasks.QqpProcessor.get_labels">
+<code class="descname">get_labels</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#QqpProcessor.get_labels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.QqpProcessor.get_labels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the list of labels for this data set.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.glue_tasks.QqpProcessor.get_test_examples">
+<code class="descname">get_test_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#QqpProcessor.get_test_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.QqpProcessor.get_test_examples" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a collection of <a href="#id33"><span class="problematic" id="id34">`</span></a>InputExample`s for the test set.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.glue_tasks.QqpProcessor.get_train_examples">
+<code class="descname">get_train_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#QqpProcessor.get_train_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.QqpProcessor.get_train_examples" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a collection of <a href="#id35"><span class="problematic" id="id36">`</span></a>InputExample`s for the train set.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nlp_architect.data.glue_tasks.RteProcessor">
+<em class="property">class </em><code class="descclassname">nlp_architect.data.glue_tasks.</code><code class="descname">RteProcessor</code><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#RteProcessor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.RteProcessor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nlp_architect.data.utils.DataProcessor" title="nlp_architect.data.utils.DataProcessor"><code class="xref py py-class docutils literal notranslate"><span class="pre">nlp_architect.data.utils.DataProcessor</span></code></a></p>
+<p>Processor for the RTE data set (GLUE version).</p>
+<dl class="method">
+<dt id="nlp_architect.data.glue_tasks.RteProcessor.get_dev_examples">
+<code class="descname">get_dev_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#RteProcessor.get_dev_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.RteProcessor.get_dev_examples" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a collection of <a href="#id37"><span class="problematic" id="id38">`</span></a>InputExample`s for the dev set.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.glue_tasks.RteProcessor.get_labels">
+<code class="descname">get_labels</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#RteProcessor.get_labels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.RteProcessor.get_labels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the list of labels for this data set.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.glue_tasks.RteProcessor.get_test_examples">
+<code class="descname">get_test_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#RteProcessor.get_test_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.RteProcessor.get_test_examples" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a collection of <a href="#id39"><span class="problematic" id="id40">`</span></a>InputExample`s for the test set.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.glue_tasks.RteProcessor.get_train_examples">
+<code class="descname">get_train_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#RteProcessor.get_train_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.RteProcessor.get_train_examples" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a collection of <a href="#id41"><span class="problematic" id="id42">`</span></a>InputExample`s for the train set.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nlp_architect.data.glue_tasks.Sst2Processor">
+<em class="property">class </em><code class="descclassname">nlp_architect.data.glue_tasks.</code><code class="descname">Sst2Processor</code><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#Sst2Processor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.Sst2Processor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nlp_architect.data.utils.DataProcessor" title="nlp_architect.data.utils.DataProcessor"><code class="xref py py-class docutils literal notranslate"><span class="pre">nlp_architect.data.utils.DataProcessor</span></code></a></p>
+<p>Processor for the SST-2 data set (GLUE version).</p>
+<dl class="method">
+<dt id="nlp_architect.data.glue_tasks.Sst2Processor.get_dev_examples">
+<code class="descname">get_dev_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#Sst2Processor.get_dev_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.Sst2Processor.get_dev_examples" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a collection of <a href="#id43"><span class="problematic" id="id44">`</span></a>InputExample`s for the dev set.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.glue_tasks.Sst2Processor.get_labels">
+<code class="descname">get_labels</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#Sst2Processor.get_labels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.Sst2Processor.get_labels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the list of labels for this data set.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.glue_tasks.Sst2Processor.get_test_examples">
+<code class="descname">get_test_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#Sst2Processor.get_test_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.Sst2Processor.get_test_examples" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a collection of <a href="#id45"><span class="problematic" id="id46">`</span></a>InputExample`s for the test set.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.glue_tasks.Sst2Processor.get_train_examples">
+<code class="descname">get_train_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#Sst2Processor.get_train_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.Sst2Processor.get_train_examples" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a collection of <a href="#id47"><span class="problematic" id="id48">`</span></a>InputExample`s for the train set.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nlp_architect.data.glue_tasks.StsbProcessor">
+<em class="property">class </em><code class="descclassname">nlp_architect.data.glue_tasks.</code><code class="descname">StsbProcessor</code><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#StsbProcessor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.StsbProcessor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nlp_architect.data.utils.DataProcessor" title="nlp_architect.data.utils.DataProcessor"><code class="xref py py-class docutils literal notranslate"><span class="pre">nlp_architect.data.utils.DataProcessor</span></code></a></p>
+<p>Processor for the STS-B data set (GLUE version).</p>
+<dl class="method">
+<dt id="nlp_architect.data.glue_tasks.StsbProcessor.get_dev_examples">
+<code class="descname">get_dev_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#StsbProcessor.get_dev_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.StsbProcessor.get_dev_examples" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a collection of <a href="#id49"><span class="problematic" id="id50">`</span></a>InputExample`s for the dev set.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.glue_tasks.StsbProcessor.get_labels">
+<code class="descname">get_labels</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#StsbProcessor.get_labels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.StsbProcessor.get_labels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the list of labels for this data set.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.glue_tasks.StsbProcessor.get_test_examples">
+<code class="descname">get_test_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#StsbProcessor.get_test_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.StsbProcessor.get_test_examples" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a collection of <a href="#id51"><span class="problematic" id="id52">`</span></a>InputExample`s for the test set.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.glue_tasks.StsbProcessor.get_train_examples">
+<code class="descname">get_train_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#StsbProcessor.get_train_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.StsbProcessor.get_train_examples" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a collection of <a href="#id53"><span class="problematic" id="id54">`</span></a>InputExample`s for the train set.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nlp_architect.data.glue_tasks.WnliProcessor">
+<em class="property">class </em><code class="descclassname">nlp_architect.data.glue_tasks.</code><code class="descname">WnliProcessor</code><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#WnliProcessor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.WnliProcessor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nlp_architect.data.utils.DataProcessor" title="nlp_architect.data.utils.DataProcessor"><code class="xref py py-class docutils literal notranslate"><span class="pre">nlp_architect.data.utils.DataProcessor</span></code></a></p>
+<p>Processor for the WNLI data set (GLUE version).</p>
+<dl class="method">
+<dt id="nlp_architect.data.glue_tasks.WnliProcessor.get_dev_examples">
+<code class="descname">get_dev_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#WnliProcessor.get_dev_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.WnliProcessor.get_dev_examples" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a collection of <a href="#id55"><span class="problematic" id="id56">`</span></a>InputExample`s for the dev set.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.glue_tasks.WnliProcessor.get_labels">
+<code class="descname">get_labels</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#WnliProcessor.get_labels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.WnliProcessor.get_labels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the list of labels for this data set.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.glue_tasks.WnliProcessor.get_test_examples">
+<code class="descname">get_test_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#WnliProcessor.get_test_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.WnliProcessor.get_test_examples" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a collection of <a href="#id57"><span class="problematic" id="id58">`</span></a>InputExample`s for the test set.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.glue_tasks.WnliProcessor.get_train_examples">
+<code class="descname">get_train_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#WnliProcessor.get_train_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.WnliProcessor.get_train_examples" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a collection of <a href="#id59"><span class="problematic" id="id60">`</span></a>InputExample`s for the train set.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.data.glue_tasks.convert_examples_to_features">
+<code class="descclassname">nlp_architect.data.glue_tasks.</code><code class="descname">convert_examples_to_features</code><span class="sig-paren">(</span><em>examples</em>, <em>label_list</em>, <em>max_seq_length</em>, <em>tokenizer</em>, <em>output_mode</em>, <em>cls_token_at_end=False</em>, <em>pad_on_left=False</em>, <em>cls_token='[CLS]'</em>, <em>sep_token='[SEP]'</em>, <em>pad_token=0</em>, <em>sequence_a_segment_id=0</em>, <em>sequence_b_segment_id=1</em>, <em>cls_token_segment_id=1</em>, <em>pad_token_segment_id=0</em>, <em>mask_padding_with_zero=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#convert_examples_to_features"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.convert_examples_to_features" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads a data file into a list of <cite>InputBatch`s
+`cls_token_at_end</cite> define the location of the CLS token:</p>
+<blockquote>
+<div><ul class="simple">
+<li>False (Default, BERT/XLM pattern): [CLS] + A + [SEP] + B + [SEP]</li>
+<li>True (XLNet/GPT pattern): A + [SEP] + B + [SEP] + [CLS]</li>
+</ul>
+</div></blockquote>
+<p><cite>cls_token_segment_id</cite> define the segment id associated to the CLS token
+(0 for BERT, 2 for XLNet)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.data.glue_tasks.get_glue_task">
+<code class="descclassname">nlp_architect.data.glue_tasks.</code><code class="descname">get_glue_task</code><span class="sig-paren">(</span><em>task_name: str</em>, <em>data_dir: str = None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#get_glue_task"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.get_glue_task" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a GLUE task object
+:param task_name: name of GLUE task
+:type task_name: str
+:param data_dir: path to dataset, if not provided will be taken from</p>
+<blockquote>
+<div>GLUE_DIR env. variable</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-nlp_architect.data.intent_datasets">
+<span id="nlp-architect-data-intent-datasets-module"></span><h2>nlp_architect.data.intent_datasets module<a class="headerlink" href="#module-nlp_architect.data.intent_datasets" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nlp_architect.data.intent_datasets.IntentDataset">
+<em class="property">class </em><code class="descclassname">nlp_architect.data.intent_datasets.</code><code class="descname">IntentDataset</code><span class="sig-paren">(</span><em>sentence_length=50</em>, <em>word_length=12</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/intent_datasets.html#IntentDataset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.intent_datasets.IntentDataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Intent extraction dataset base class</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sentence_length</strong> (<em>int</em>) – max sentence length</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="nlp_architect.data.intent_datasets.IntentDataset.char_vocab">
+<code class="descname">char_vocab</code><a class="headerlink" href="#nlp_architect.data.intent_datasets.IntentDataset.char_vocab" title="Permalink to this definition">¶</a></dt>
+<dd><p>word character vocabulary</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.intent_datasets.IntentDataset.char_vocab_size">
+<code class="descname">char_vocab_size</code><a class="headerlink" href="#nlp_architect.data.intent_datasets.IntentDataset.char_vocab_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>char vocabulary size</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.intent_datasets.IntentDataset.intent_size">
+<code class="descname">intent_size</code><a class="headerlink" href="#nlp_architect.data.intent_datasets.IntentDataset.intent_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>intent label vocabulary size</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.intent_datasets.IntentDataset.intents_vocab">
+<code class="descname">intents_vocab</code><a class="headerlink" href="#nlp_architect.data.intent_datasets.IntentDataset.intents_vocab" title="Permalink to this definition">¶</a></dt>
+<dd><p>intent labels vocabulary</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.intent_datasets.IntentDataset.label_vocab_size">
+<code class="descname">label_vocab_size</code><a class="headerlink" href="#nlp_architect.data.intent_datasets.IntentDataset.label_vocab_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>label vocabulary size</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.intent_datasets.IntentDataset.tags_vocab">
+<code class="descname">tags_vocab</code><a class="headerlink" href="#nlp_architect.data.intent_datasets.IntentDataset.tags_vocab" title="Permalink to this definition">¶</a></dt>
+<dd><p>labels vocabulary</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.intent_datasets.IntentDataset.test_set">
+<code class="descname">test_set</code><a class="headerlink" href="#nlp_architect.data.intent_datasets.IntentDataset.test_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>test set</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tuple</span></code> of <code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.intent_datasets.IntentDataset.train_set">
+<code class="descname">train_set</code><a class="headerlink" href="#nlp_architect.data.intent_datasets.IntentDataset.train_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>train set</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tuple</span></code> of <code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.intent_datasets.IntentDataset.word_vocab">
+<code class="descname">word_vocab</code><a class="headerlink" href="#nlp_architect.data.intent_datasets.IntentDataset.word_vocab" title="Permalink to this definition">¶</a></dt>
+<dd><p>tokens vocabulary</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.intent_datasets.IntentDataset.word_vocab_size">
+<code class="descname">word_vocab_size</code><a class="headerlink" href="#nlp_architect.data.intent_datasets.IntentDataset.word_vocab_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>vocabulary size</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nlp_architect.data.intent_datasets.SNIPS">
+<em class="property">class </em><code class="descclassname">nlp_architect.data.intent_datasets.</code><code class="descname">SNIPS</code><span class="sig-paren">(</span><em>path</em>, <em>sentence_length=30</em>, <em>word_length=12</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/intent_datasets.html#SNIPS"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.intent_datasets.SNIPS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nlp_architect.data.intent_datasets.IntentDataset" title="nlp_architect.data.intent_datasets.IntentDataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">nlp_architect.data.intent_datasets.IntentDataset</span></code></a></p>
+<p>SNIPS dataset class</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>path</strong> (<em>str</em>) – dataset path</li>
+<li><strong>sentence_length</strong> (<em>int</em><em>, </em><em>optional</em>) – max sentence length</li>
+<li><strong>word_length</strong> (<em>int</em><em>, </em><em>optional</em>) – max word length</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="nlp_architect.data.intent_datasets.SNIPS.files">
+<code class="descname">files</code><em class="property"> = ['train', 'test']</em><a class="headerlink" href="#nlp_architect.data.intent_datasets.SNIPS.files" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.intent_datasets.SNIPS.test_files">
+<code class="descname">test_files</code><em class="property"> = ['AddToPlaylist/validate_AddToPlaylist.json', 'BookRestaurant/validate_BookRestaurant.json', 'GetWeather/validate_GetWeather.json', 'PlayMusic/validate_PlayMusic.json', 'RateBook/validate_RateBook.json', 'SearchCreativeWork/validate_SearchCreativeWork.json', 'SearchScreeningEvent/validate_SearchScreeningEvent.json']</em><a class="headerlink" href="#nlp_architect.data.intent_datasets.SNIPS.test_files" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.intent_datasets.SNIPS.train_files">
+<code class="descname">train_files</code><em class="property"> = ['AddToPlaylist/train_AddToPlaylist_full.json', 'BookRestaurant/train_BookRestaurant_full.json', 'GetWeather/train_GetWeather_full.json', 'PlayMusic/train_PlayMusic_full.json', 'RateBook/train_RateBook_full.json', 'SearchCreativeWork/train_SearchCreativeWork_full.json', 'SearchScreeningEvent/train_SearchScreeningEvent_full.json']</em><a class="headerlink" href="#nlp_architect.data.intent_datasets.SNIPS.train_files" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nlp_architect.data.intent_datasets.TabularIntentDataset">
+<em class="property">class </em><code class="descclassname">nlp_architect.data.intent_datasets.</code><code class="descname">TabularIntentDataset</code><span class="sig-paren">(</span><em>train_file</em>, <em>test_file</em>, <em>sentence_length=30</em>, <em>word_length=12</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/intent_datasets.html#TabularIntentDataset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.intent_datasets.TabularIntentDataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nlp_architect.data.intent_datasets.IntentDataset" title="nlp_architect.data.intent_datasets.IntentDataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">nlp_architect.data.intent_datasets.IntentDataset</span></code></a></p>
+<p>Tabular Intent/Slot tags dataset loader.
+Compatible with many sequence tagging datasets (ATIS, CoNLL, etc..)
+data format must be int tabular format where:
+- one word per line with tag annotation and intent type separated
+by tabs &lt;token&gt;     &lt;tag_label&gt;     &lt;intent&gt;</p>
+<ul class="simple">
+<li>sentences are separated by an empty line</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>train_file</strong> (<em>str</em>) – path to train set file</li>
+<li><strong>test_file</strong> (<em>str</em>) – path to test set file</li>
+<li><strong>sentence_length</strong> (<em>int</em>) – max sentence length</li>
+<li><strong>word_length</strong> (<em>int</em>) – max word length</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="nlp_architect.data.intent_datasets.TabularIntentDataset.files">
+<code class="descname">files</code><em class="property"> = ['train', 'test']</em><a class="headerlink" href="#nlp_architect.data.intent_datasets.TabularIntentDataset.files" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-nlp_architect.data.ptb">
+<span id="nlp-architect-data-ptb-module"></span><h2>nlp_architect.data.ptb module<a class="headerlink" href="#module-nlp_architect.data.ptb" title="Permalink to this headline">¶</a></h2>
+<p>Data loader for penn tree bank dataset</p>
+<dl class="class">
+<dt id="nlp_architect.data.ptb.PTBDataLoader">
+<em class="property">class </em><code class="descclassname">nlp_architect.data.ptb.</code><code class="descname">PTBDataLoader</code><span class="sig-paren">(</span><em>word_dict</em>, <em>seq_len=100</em>, <em>data_dir='/Users/pizsak/data'</em>, <em>dataset='WikiText-103'</em>, <em>batch_size=32</em>, <em>skip=30</em>, <em>split_type='train'</em>, <em>loop=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/ptb.html#PTBDataLoader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.ptb.PTBDataLoader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class that defines data loader</p>
+<dl class="method">
+<dt id="nlp_architect.data.ptb.PTBDataLoader.decode_line">
+<code class="descname">decode_line</code><span class="sig-paren">(</span><em>tokens</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/ptb.html#PTBDataLoader.decode_line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.ptb.PTBDataLoader.decode_line" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decode a given line from index to word
+:param tokens: List of indexes</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">str, a sentence</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.ptb.PTBDataLoader.get_batch">
+<code class="descname">get_batch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/ptb.html#PTBDataLoader.get_batch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.ptb.PTBDataLoader.get_batch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get one batch of the data
+:returns: None</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.ptb.PTBDataLoader.load_series">
+<code class="descname">load_series</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/ptb.html#PTBDataLoader.load_series"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.ptb.PTBDataLoader.load_series" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load all the data into an array
+:param path: str, location of the input data file</p>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.ptb.PTBDataLoader.reset">
+<code class="descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/ptb.html#PTBDataLoader.reset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.ptb.PTBDataLoader.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resets the sample count to zero, re-shuffles data
+:returns: None</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nlp_architect.data.ptb.PTBDictionary">
+<em class="property">class </em><code class="descclassname">nlp_architect.data.ptb.</code><code class="descname">PTBDictionary</code><span class="sig-paren">(</span><em>data_dir='/Users/pizsak/data'</em>, <em>dataset='WikiText-103'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/ptb.html#PTBDictionary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.ptb.PTBDictionary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class for generating a dictionary of all words in the PTB corpus</p>
+<dl class="method">
+<dt id="nlp_architect.data.ptb.PTBDictionary.add_word">
+<code class="descname">add_word</code><span class="sig-paren">(</span><em>word</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/ptb.html#PTBDictionary.add_word"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.ptb.PTBDictionary.add_word" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method for adding a single word to the dictionary
+:param word: str, word to be added</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.ptb.PTBDictionary.load_dictionary">
+<code class="descname">load_dictionary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/ptb.html#PTBDictionary.load_dictionary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.ptb.PTBDictionary.load_dictionary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Populate the corpus with words from train, test and valid splits of data
+:returns: None</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.ptb.PTBDictionary.save_dictionary">
+<code class="descname">save_dictionary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/ptb.html#PTBDictionary.save_dictionary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.ptb.PTBDictionary.save_dictionary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save dictionary to file
+:returns: None</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-nlp_architect.data.sequence_classification">
+<span id="nlp-architect-data-sequence-classification-module"></span><h2>nlp_architect.data.sequence_classification module<a class="headerlink" href="#module-nlp_architect.data.sequence_classification" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nlp_architect.data.sequence_classification.SequenceClsInputExample">
+<em class="property">class </em><code class="descclassname">nlp_architect.data.sequence_classification.</code><code class="descname">SequenceClsInputExample</code><span class="sig-paren">(</span><em>guid: str</em>, <em>text: str</em>, <em>text_b: str = None</em>, <em>label: str = None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/sequence_classification.html#SequenceClsInputExample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.sequence_classification.SequenceClsInputExample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nlp_architect.data.utils.InputExample" title="nlp_architect.data.utils.InputExample"><code class="xref py py-class docutils literal notranslate"><span class="pre">nlp_architect.data.utils.InputExample</span></code></a></p>
+<p>A single training/test example for simple sequence classification.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-nlp_architect.data.sequential_tagging">
+<span id="nlp-architect-data-sequential-tagging-module"></span><h2>nlp_architect.data.sequential_tagging module<a class="headerlink" href="#module-nlp_architect.data.sequential_tagging" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nlp_architect.data.sequential_tagging.CONLL2000">
+<em class="property">class </em><code class="descclassname">nlp_architect.data.sequential_tagging.</code><code class="descname">CONLL2000</code><span class="sig-paren">(</span><em>data_path</em>, <em>sentence_length=None</em>, <em>max_word_length=None</em>, <em>extract_chars=False</em>, <em>lowercase=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/sequential_tagging.html#CONLL2000"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.sequential_tagging.CONLL2000" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>CONLL 2000 POS/chunking task data set (numpy)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data_path</strong> (<em>str</em>) – directory containing CONLL2000 files</li>
+<li><strong>sentence_length</strong> (<em>int</em><em>, </em><em>optional</em>) – number of time steps to embed the data.
+None value will not truncate vectors</li>
+<li><strong>max_word_length</strong> (<em>int</em><em>, </em><em>optional</em>) – max word length in characters.
+None value will not truncate vectors</li>
+<li><strong>extract_chars</strong> (<em>boolean</em><em>, </em><em>optional</em>) – Yield Char RNN features.</li>
+<li><strong>lowercase</strong> (<em>bool</em><em>, </em><em>optional</em>) – lower case sentence words</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="nlp_architect.data.sequential_tagging.CONLL2000.char_vocab">
+<code class="descname">char_vocab</code><a class="headerlink" href="#nlp_architect.data.sequential_tagging.CONLL2000.char_vocab" title="Permalink to this definition">¶</a></dt>
+<dd><p>character Vocabulary</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.sequential_tagging.CONLL2000.chunk_vocab">
+<code class="descname">chunk_vocab</code><a class="headerlink" href="#nlp_architect.data.sequential_tagging.CONLL2000.chunk_vocab" title="Permalink to this definition">¶</a></dt>
+<dd><p>chunk label Vocabulary</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.sequential_tagging.CONLL2000.dataset_files">
+<code class="descname">dataset_files</code><em class="property"> = {'test': 'test.txt', 'train': 'train.txt'}</em><a class="headerlink" href="#nlp_architect.data.sequential_tagging.CONLL2000.dataset_files" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.sequential_tagging.CONLL2000.pos_vocab">
+<code class="descname">pos_vocab</code><a class="headerlink" href="#nlp_architect.data.sequential_tagging.CONLL2000.pos_vocab" title="Permalink to this definition">¶</a></dt>
+<dd><p>pos label Vocabulary</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.sequential_tagging.CONLL2000.test_set">
+<code class="descname">test_set</code><a class="headerlink" href="#nlp_architect.data.sequential_tagging.CONLL2000.test_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>get the test set</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.sequential_tagging.CONLL2000.train_set">
+<code class="descname">train_set</code><a class="headerlink" href="#nlp_architect.data.sequential_tagging.CONLL2000.train_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>get the train set</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.sequential_tagging.CONLL2000.word_vocab">
+<code class="descname">word_vocab</code><a class="headerlink" href="#nlp_architect.data.sequential_tagging.CONLL2000.word_vocab" title="Permalink to this definition">¶</a></dt>
+<dd><p>word Vocabulary</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nlp_architect.data.sequential_tagging.SequentialTaggingDataset">
+<em class="property">class </em><code class="descclassname">nlp_architect.data.sequential_tagging.</code><code class="descname">SequentialTaggingDataset</code><span class="sig-paren">(</span><em>train_file</em>, <em>test_file</em>, <em>max_sentence_length=30</em>, <em>max_word_length=20</em>, <em>tag_field_no=2</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/sequential_tagging.html#SequentialTaggingDataset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.sequential_tagging.SequentialTaggingDataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Sequential tagging dataset loader.
+Loads train/test files with tabular separation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>train_file</strong> (<em>str</em>) – path to train file</li>
+<li><strong>test_file</strong> (<em>str</em>) – path to test file</li>
+<li><strong>max_sentence_length</strong> (<em>int</em><em>, </em><em>optional</em>) – max sentence length</li>
+<li><strong>max_word_length</strong> (<em>int</em><em>, </em><em>optional</em>) – max word length</li>
+<li><strong>tag_field_no</strong> (<em>int</em><em>, </em><em>optional</em>) – index of column to use a y-samples</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="nlp_architect.data.sequential_tagging.SequentialTaggingDataset.char_vocab">
+<code class="descname">char_vocab</code><a class="headerlink" href="#nlp_architect.data.sequential_tagging.SequentialTaggingDataset.char_vocab" title="Permalink to this definition">¶</a></dt>
+<dd><p>characters vocabulary</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.sequential_tagging.SequentialTaggingDataset.char_vocab_size">
+<code class="descname">char_vocab_size</code><a class="headerlink" href="#nlp_architect.data.sequential_tagging.SequentialTaggingDataset.char_vocab_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>character vocabulary size</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.sequential_tagging.SequentialTaggingDataset.test_set">
+<code class="descname">test_set</code><a class="headerlink" href="#nlp_architect.data.sequential_tagging.SequentialTaggingDataset.test_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the test set</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.sequential_tagging.SequentialTaggingDataset.train_set">
+<code class="descname">train_set</code><a class="headerlink" href="#nlp_architect.data.sequential_tagging.SequentialTaggingDataset.train_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the train set</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.sequential_tagging.SequentialTaggingDataset.word_vocab">
+<code class="descname">word_vocab</code><a class="headerlink" href="#nlp_architect.data.sequential_tagging.SequentialTaggingDataset.word_vocab" title="Permalink to this definition">¶</a></dt>
+<dd><p>words vocabulary</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.sequential_tagging.SequentialTaggingDataset.word_vocab_size">
+<code class="descname">word_vocab_size</code><a class="headerlink" href="#nlp_architect.data.sequential_tagging.SequentialTaggingDataset.word_vocab_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>word vocabulary size</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.sequential_tagging.SequentialTaggingDataset.y_labels">
+<code class="descname">y_labels</code><a class="headerlink" href="#nlp_architect.data.sequential_tagging.SequentialTaggingDataset.y_labels" title="Permalink to this definition">¶</a></dt>
+<dd><p>return y labels</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nlp_architect.data.sequential_tagging.TokenClsInputExample">
+<em class="property">class </em><code class="descclassname">nlp_architect.data.sequential_tagging.</code><code class="descname">TokenClsInputExample</code><span class="sig-paren">(</span><em>guid: str, text: str, tokens: List[str], label: List[str] = None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/sequential_tagging.html#TokenClsInputExample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.sequential_tagging.TokenClsInputExample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nlp_architect.data.utils.InputExample" title="nlp_architect.data.utils.InputExample"><code class="xref py py-class docutils literal notranslate"><span class="pre">nlp_architect.data.utils.InputExample</span></code></a></p>
+<p>A single training/test example for simple sequence token classification.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="nlp_architect.data.sequential_tagging.TokenClsProcessor">
+<em class="property">class </em><code class="descclassname">nlp_architect.data.sequential_tagging.</code><code class="descname">TokenClsProcessor</code><span class="sig-paren">(</span><em>data_dir</em>, <em>tag_col: int = -1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/sequential_tagging.html#TokenClsProcessor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.sequential_tagging.TokenClsProcessor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nlp_architect.data.utils.DataProcessor" title="nlp_architect.data.utils.DataProcessor"><code class="xref py py-class docutils literal notranslate"><span class="pre">nlp_architect.data.utils.DataProcessor</span></code></a></p>
+<p>Sequence token classification Processor dataset loader.
+Loads a directory with train.txt/test.txt/dev.txt files in tab separeted
+format (one token per line - conll style).
+Label dictionary is given in labels.txt file.</p>
+<dl class="method">
+<dt id="nlp_architect.data.sequential_tagging.TokenClsProcessor.get_dev_examples">
+<code class="descname">get_dev_examples</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/sequential_tagging.html#TokenClsProcessor.get_dev_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.sequential_tagging.TokenClsProcessor.get_dev_examples" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a collection of <a href="#id61"><span class="problematic" id="id62">`</span></a>InputExample`s for the dev set.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.sequential_tagging.TokenClsProcessor.get_labels">
+<code class="descname">get_labels</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/sequential_tagging.html#TokenClsProcessor.get_labels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.sequential_tagging.TokenClsProcessor.get_labels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the list of labels for this data set.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="nlp_architect.data.sequential_tagging.TokenClsProcessor.get_labels_filename">
+<em class="property">static </em><code class="descname">get_labels_filename</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/sequential_tagging.html#TokenClsProcessor.get_labels_filename"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.sequential_tagging.TokenClsProcessor.get_labels_filename" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.sequential_tagging.TokenClsProcessor.get_test_examples">
+<code class="descname">get_test_examples</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/sequential_tagging.html#TokenClsProcessor.get_test_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.sequential_tagging.TokenClsProcessor.get_test_examples" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a collection of <a href="#id63"><span class="problematic" id="id64">`</span></a>InputExample`s for the test set.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.sequential_tagging.TokenClsProcessor.get_train_examples">
+<code class="descname">get_train_examples</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/sequential_tagging.html#TokenClsProcessor.get_train_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.sequential_tagging.TokenClsProcessor.get_train_examples" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a collection of <a href="#id65"><span class="problematic" id="id66">`</span></a>InputExample`s for the train set.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.sequential_tagging.TokenClsProcessor.get_vocabulary">
+<code class="descname">get_vocabulary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/sequential_tagging.html#TokenClsProcessor.get_vocabulary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.sequential_tagging.TokenClsProcessor.get_vocabulary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-nlp_architect.data.utils">
+<span id="nlp-architect-data-utils-module"></span><h2>nlp_architect.data.utils module<a class="headerlink" href="#module-nlp_architect.data.utils" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nlp_architect.data.utils.DataProcessor">
+<em class="property">class </em><code class="descclassname">nlp_architect.data.utils.</code><code class="descname">DataProcessor</code><a class="reference internal" href="../_modules/nlp_architect/data/utils.html#DataProcessor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.utils.DataProcessor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Base class for data converters for sequence/token classification data sets.</p>
+<dl class="method">
+<dt id="nlp_architect.data.utils.DataProcessor.get_dev_examples">
+<code class="descname">get_dev_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/utils.html#DataProcessor.get_dev_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.utils.DataProcessor.get_dev_examples" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a collection of <a href="#id67"><span class="problematic" id="id68">`</span></a>InputExample`s for the dev set.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.utils.DataProcessor.get_labels">
+<code class="descname">get_labels</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/utils.html#DataProcessor.get_labels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.utils.DataProcessor.get_labels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the list of labels for this data set.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.utils.DataProcessor.get_test_examples">
+<code class="descname">get_test_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/utils.html#DataProcessor.get_test_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.utils.DataProcessor.get_test_examples" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a collection of <a href="#id69"><span class="problematic" id="id70">`</span></a>InputExample`s for the test set.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.utils.DataProcessor.get_train_examples">
+<code class="descname">get_train_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/utils.html#DataProcessor.get_train_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.utils.DataProcessor.get_train_examples" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a collection of <a href="#id71"><span class="problematic" id="id72">`</span></a>InputExample`s for the train set.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nlp_architect.data.utils.InputExample">
+<em class="property">class </em><code class="descclassname">nlp_architect.data.utils.</code><code class="descname">InputExample</code><span class="sig-paren">(</span><em>guid: str</em>, <em>text</em>, <em>label=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/utils.html#InputExample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.utils.InputExample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>Base class for a single training/dev/test example</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="nlp_architect.data.utils.Task">
+<em class="property">class </em><code class="descclassname">nlp_architect.data.utils.</code><code class="descname">Task</code><span class="sig-paren">(</span><em>name: str</em>, <em>processor: nlp_architect.data.utils.DataProcessor</em>, <em>data_dir: str</em>, <em>task_type: str</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/utils.html#Task"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.utils.Task" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A task definition class
+:param name: the name of the task
+:type name: str
+:param processor: a DataProcessor class containing a dataset loader
+:type processor: DataProcessor
+:param data_dir: path to the data source
+:type data_dir: str
+:param task_type: the task type (classification/regression/tagging)
+:type task_type: str</p>
+<dl class="method">
+<dt id="nlp_architect.data.utils.Task.get_dev_examples">
+<code class="descname">get_dev_examples</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/utils.html#Task.get_dev_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.utils.Task.get_dev_examples" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.utils.Task.get_labels">
+<code class="descname">get_labels</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/utils.html#Task.get_labels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.utils.Task.get_labels" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.utils.Task.get_split_train_examples">
+<code class="descname">get_split_train_examples</code><span class="sig-paren">(</span><em>labeled: int</em>, <em>unlabeled: int</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/utils.html#Task.get_split_train_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.utils.Task.get_split_train_examples" title="Permalink to this definition">¶</a></dt>
+<dd><p>split the train set into 2 sub sets (given by input size) to be
+used as labelled and unlabeled sets for semi-supervision tasks</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.utils.Task.get_test_examples">
+<code class="descname">get_test_examples</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/utils.html#Task.get_test_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.utils.Task.get_test_examples" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.utils.Task.get_train_examples">
+<code class="descname">get_train_examples</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/utils.html#Task.get_train_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.utils.Task.get_train_examples" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.data.utils.read_column_tagged_file">
+<code class="descclassname">nlp_architect.data.utils.</code><code class="descname">read_column_tagged_file</code><span class="sig-paren">(</span><em>filename: str</em>, <em>tag_col: int = -1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/utils.html#read_column_tagged_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.utils.read_column_tagged_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads column tagged (CONLL) style file (tab separated and token per line)
+tag_col is the column number to use as tag of the token (defualts to the last in line)
+return format :
+[ [‘token’, ‘TAG’], [‘token’, ‘TAG2’],… ]</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.data.utils.read_tsv">
+<code class="descclassname">nlp_architect.data.utils.</code><code class="descname">read_tsv</code><span class="sig-paren">(</span><em>input_file</em>, <em>quotechar=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/utils.html#read_tsv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.utils.read_tsv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads a tab separated value file.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.data.utils.sample_label_unlabeled">
+<code class="descclassname">nlp_architect.data.utils.</code><code class="descname">sample_label_unlabeled</code><span class="sig-paren">(</span><em>samples: List[nlp_architect.data.utils.InputExample], no_labeled: int, no_unlabeled: int</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/utils.html#sample_label_unlabeled"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.utils.sample_label_unlabeled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Randomly sample 2 sets of samples from a given collection of InputExamples
+(used for semi-supervised models)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.data.utils.write_column_tagged_file">
+<code class="descclassname">nlp_architect.data.utils.</code><code class="descname">write_column_tagged_file</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/utils.html#write_column_tagged_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.utils.write_column_tagged_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-nlp_architect.data">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-nlp_architect.data" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

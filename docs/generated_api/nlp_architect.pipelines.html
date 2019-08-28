@@ -1,0 +1,415 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>nlp_architect.pipelines package &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/install.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/nlp_arch_theme.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="nlp_architect.procedures package" href="nlp_architect.procedures.html" />
+    <link rel="prev" title="nlp_architect.nn.torch.modules package" href="nlp_architect.nn.torch.modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html">
+          
+
+          
+            
+            <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../publications.html">Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials.html">Jupyter Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model_zoo.html">Model Zoo</a></li>
+</ul>
+<p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tagging/sequence_tagging.html">Sequence Tagging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sentiment.html">Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bist_parser.html">Dependency Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intent.html">Intent Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lm.html">Language Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../information_extraction.html">Information Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transformers.html">Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../archived/additional.html">Additional Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Optimized Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../quantized_bert.html">Quantized BERT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transformers_distillation.html">Transformers Distillation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solutions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../absa_solution.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../term_set_expansion.html">Set Expansion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trend_analysis.html">Trend Analysis</a></li>
+</ul>
+<p class="caption"><span class="caption-text">For Developers</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="nlp_architect_api_index.html">nlp_architect API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.api.html">nlp_architect.api package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.cli.html">nlp_architect.cli package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.common.html">nlp_architect.common package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.data.html">nlp_architect.data package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.models.html">nlp_architect.models package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.nlp.html">nlp_architect.nlp package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.nn.html">nlp_architect.nn package</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">nlp_architect.pipelines package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.pipelines.spacy_bist">nlp_architect.pipelines.spacy_bist module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.pipelines.spacy_np_annotator">nlp_architect.pipelines.spacy_np_annotator module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.pipelines">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.procedures.html">nlp_architect.procedures package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.server.html">nlp_architect.server package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.solutions.html">nlp_architect.solutions package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.utils.html">nlp_architect.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer_guide.html">Developer Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">NLP Architect by Intel® AI Lab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="nlp_architect_api_index.html"><code class="docutils literal notranslate"><span class="pre">nlp\_architect</span></code> package</a> &raquo;</li>
+        
+      <li>nlp_architect.pipelines package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="nlp-architect-pipelines-package">
+<h1>nlp_architect.pipelines package<a class="headerlink" href="#nlp-architect-pipelines-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-nlp_architect.pipelines.spacy_bist">
+<span id="nlp-architect-pipelines-spacy-bist-module"></span><h2>nlp_architect.pipelines.spacy_bist module<a class="headerlink" href="#module-nlp_architect.pipelines.spacy_bist" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nlp_architect.pipelines.spacy_bist.SpacyBISTParser">
+<em class="property">class </em><code class="descclassname">nlp_architect.pipelines.spacy_bist.</code><code class="descname">SpacyBISTParser</code><span class="sig-paren">(</span><em>verbose=False</em>, <em>spacy_model='en'</em>, <em>bist_model=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/pipelines/spacy_bist.html#SpacyBISTParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.pipelines.spacy_bist.SpacyBISTParser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Main class which handles parsing with Spacy-BIST parser.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>verbose</strong> (<em>bool</em><em>, </em><em>optional</em>) – Controls output verbosity.</li>
+<li><strong>spacy_model</strong> (<em>str</em><em>, </em><em>optional</em>) – Spacy model to use</li>
+<li><strong>https</strong> (<em>(</em><em>see</em>) – //spacy.io/api/top-level#spacy.load).</li>
+<li><strong>bist_model</strong> (<em>str</em><em>, </em><em>optional</em>) – Path to a .model file to load. Defaults pre-trained model’.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="nlp_architect.pipelines.spacy_bist.SpacyBISTParser.dir">
+<code class="descname">dir</code><em class="property"> = PosixPath('/Users/pizsak/nlp-architect/cache/bist-pretrained')</em><a class="headerlink" href="#nlp_architect.pipelines.spacy_bist.SpacyBISTParser.dir" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.pipelines.spacy_bist.SpacyBISTParser.parse">
+<code class="descname">parse</code><span class="sig-paren">(</span><em>doc_text</em>, <em>show_tok=True</em>, <em>show_doc=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/pipelines/spacy_bist.html#SpacyBISTParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.pipelines.spacy_bist.SpacyBISTParser.parse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse a raw text document.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>doc_text</strong> (<em>str</em>) – </li>
+<li><strong>show_tok</strong> (<em>bool</em><em>, </em><em>optional</em>) – Specifies whether to include token text in output.</li>
+<li><strong>show_doc</strong> (<em>bool</em><em>, </em><em>optional</em>) – Specifies whether to include document text in output.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The annotated document.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="nlp_architect.common.html#nlp_architect.common.core_nlp_doc.CoreNLPDoc" title="nlp_architect.common.core_nlp_doc.CoreNLPDoc">CoreNLPDoc</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.pipelines.spacy_bist.SpacyBISTParser.to_conll">
+<code class="descname">to_conll</code><span class="sig-paren">(</span><em>doc_text</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/pipelines/spacy_bist.html#SpacyBISTParser.to_conll"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.pipelines.spacy_bist.SpacyBISTParser.to_conll" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts a document to CoNLL format with spacy POS tags.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>doc_text</strong> (<em>str</em>) – raw document text.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Yields:</th><td class="field-body"><em>list of ConllEntry</em> – The next sentence in the document in CoNLL format.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-nlp_architect.pipelines.spacy_np_annotator">
+<span id="nlp-architect-pipelines-spacy-np-annotator-module"></span><h2>nlp_architect.pipelines.spacy_np_annotator module<a class="headerlink" href="#module-nlp_architect.pipelines.spacy_np_annotator" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nlp_architect.pipelines.spacy_np_annotator.NPAnnotator">
+<em class="property">class </em><code class="descclassname">nlp_architect.pipelines.spacy_np_annotator.</code><code class="descname">NPAnnotator</code><span class="sig-paren">(</span><em>model</em>, <em>word_vocab</em>, <em>char_vocab</em>, <em>chunk_vocab</em>, <em>batch_size: int = 32</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/pipelines/spacy_np_annotator.html#NPAnnotator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.pipelines.spacy_np_annotator.NPAnnotator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Spacy based NP annotator - uses models.SequenceChunker model for annotation</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>model</strong> (<a class="reference internal" href="nlp_architect.models.html#nlp_architect.models.chunker.SequenceChunker" title="nlp_architect.models.chunker.SequenceChunker"><em>SequenceChunker</em></a>) – a chunker model</li>
+<li><strong>word_vocab</strong> (<a class="reference internal" href="nlp_architect.utils.html#nlp_architect.utils.text.Vocabulary" title="nlp_architect.utils.text.Vocabulary"><em>Vocabulary</em></a>) – word-id vocabulary of the model</li>
+<li><strong>char_vocab</strong> (<a class="reference internal" href="nlp_architect.utils.html#nlp_architect.utils.text.Vocabulary" title="nlp_architect.utils.text.Vocabulary"><em>Vocabulary</em></a>) – char id vocabulary of words of the model</li>
+<li><strong>chunk_vocab</strong> (<a class="reference internal" href="nlp_architect.utils.html#nlp_architect.utils.text.Vocabulary" title="nlp_architect.utils.text.Vocabulary"><em>Vocabulary</em></a>) – chunk tag vocabulary of the model</li>
+<li><strong>batch_size</strong> (<em>int</em><em>, </em><em>optional</em>) – inference batch size</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="classmethod">
+<dt id="nlp_architect.pipelines.spacy_np_annotator.NPAnnotator.load">
+<em class="property">classmethod </em><code class="descname">load</code><span class="sig-paren">(</span><em>model_path: str</em>, <em>parameter_path: str</em>, <em>batch_size: int = 32</em>, <em>use_cudnn: bool = False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/pipelines/spacy_np_annotator.html#NPAnnotator.load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.pipelines.spacy_np_annotator.NPAnnotator.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load a NPAnnotator annotator</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>model_path</strong> (<em>str</em>) – path to trained model</li>
+<li><strong>parameter_path</strong> (<em>str</em>) – path to model parameters</li>
+<li><strong>batch_size</strong> (<em>int</em><em>, </em><em>optional</em>) – inference batch_size</li>
+<li><strong>use_cudnn</strong> (<em>bool</em><em>, </em><em>optional</em>) – use gpu for inference (cudnn cells)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">NPAnnotator class with loaded model</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nlp_architect.pipelines.spacy_np_annotator.SpacyNPAnnotator">
+<em class="property">class </em><code class="descclassname">nlp_architect.pipelines.spacy_np_annotator.</code><code class="descname">SpacyNPAnnotator</code><span class="sig-paren">(</span><em>model_path</em>, <em>settings_path</em>, <em>spacy_model='en'</em>, <em>batch_size=32</em>, <em>use_cudnn=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/pipelines/spacy_np_annotator.html#SpacyNPAnnotator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.pipelines.spacy_np_annotator.SpacyNPAnnotator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Simple Spacy pipe with NP extraction annotations</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.pipelines.spacy_np_annotator.get_noun_phrases">
+<code class="descclassname">nlp_architect.pipelines.spacy_np_annotator.</code><code class="descname">get_noun_phrases</code><span class="sig-paren">(</span><em>doc: spacy.tokens.doc.Doc</em><span class="sig-paren">)</span> &#x2192; [&lt;class 'spacy.tokens.span.Span'&gt;]<a class="reference internal" href="../_modules/nlp_architect/pipelines/spacy_np_annotator.html#get_noun_phrases"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.pipelines.spacy_np_annotator.get_noun_phrases" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get noun phrase tags from a spacy annotated document.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>doc</strong> (<em>Doc</em>) – a spacy type document</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a list of noun phrase Span objects</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.pipelines.spacy_np_annotator.set_noun_phrases">
+<code class="descclassname">nlp_architect.pipelines.spacy_np_annotator.</code><code class="descname">set_noun_phrases</code><span class="sig-paren">(</span><em>doc: spacy.tokens.doc.Doc, nps: [&lt;class 'spacy.tokens.span.Span'&gt;]</em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="../_modules/nlp_architect/pipelines/spacy_np_annotator.html#set_noun_phrases"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.pipelines.spacy_np_annotator.set_noun_phrases" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set noun phrase tags</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>doc</strong> (<em>Doc</em>) – a spacy type document</li>
+<li><strong>nps</strong> (<em>[</em><em>Span</em><em>]</em>) – a list of Spans</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-nlp_architect.pipelines">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-nlp_architect.pipelines" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

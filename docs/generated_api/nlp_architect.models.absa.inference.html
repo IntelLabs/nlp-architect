@@ -1,0 +1,550 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>nlp_architect.models.absa.inference package &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/install.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/nlp_arch_theme.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="nlp_architect.models.absa.train package" href="nlp_architect.models.absa.train.html" />
+    <link rel="prev" title="nlp_architect.models.absa package" href="nlp_architect.models.absa.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html">
+          
+
+          
+            
+            <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../publications.html">Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials.html">Jupyter Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model_zoo.html">Model Zoo</a></li>
+</ul>
+<p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tagging/sequence_tagging.html">Sequence Tagging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sentiment.html">Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bist_parser.html">Dependency Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intent.html">Intent Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lm.html">Language Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../information_extraction.html">Information Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transformers.html">Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../archived/additional.html">Additional Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Optimized Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../quantized_bert.html">Quantized BERT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transformers_distillation.html">Transformers Distillation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solutions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../absa_solution.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../term_set_expansion.html">Set Expansion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trend_analysis.html">Trend Analysis</a></li>
+</ul>
+<p class="caption"><span class="caption-text">For Developers</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="nlp_architect_api_index.html">nlp_architect API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.api.html">nlp_architect.api package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.cli.html">nlp_architect.cli package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.common.html">nlp_architect.common package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.data.html">nlp_architect.data package</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="nlp_architect.models.html">nlp_architect.models package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="nlp_architect.models.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="nlp_architect.models.absa.html">nlp_architect.models.absa package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.models.bist.html">nlp_architect.models.bist package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.models.cross_doc_coref.html">nlp_architect.models.cross_doc_coref package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.models.gnmt.html">nlp_architect.models.gnmt package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.models.transformers.html">nlp_architect.models.transformers package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.bist_parser">nlp_architect.models.bist_parser module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.chunker">nlp_architect.models.chunker module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.cross_doc_sieves">nlp_architect.models.cross_doc_sieves module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.crossling_emb">nlp_architect.models.crossling_emb module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.gnmt_model">nlp_architect.models.gnmt_model module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.intent_extraction">nlp_architect.models.intent_extraction module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.matchlstm_ansptr">nlp_architect.models.matchlstm_ansptr module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.memn2n_dialogue">nlp_architect.models.memn2n_dialogue module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.most_common_word_sense">nlp_architect.models.most_common_word_sense module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.ner_crf">nlp_architect.models.ner_crf module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.np2vec">nlp_architect.models.np2vec module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.np_semantic_segmentation">nlp_architect.models.np_semantic_segmentation module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.supervised_sentiment">nlp_architect.models.supervised_sentiment module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.tagging">nlp_architect.models.tagging module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.temporal_convolutional_network">nlp_architect.models.temporal_convolutional_network module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.nlp.html">nlp_architect.nlp package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.nn.html">nlp_architect.nn package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.pipelines.html">nlp_architect.pipelines package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.procedures.html">nlp_architect.procedures package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.server.html">nlp_architect.server package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.solutions.html">nlp_architect.solutions package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.utils.html">nlp_architect.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer_guide.html">Developer Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">NLP Architect by Intel® AI Lab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="nlp_architect_api_index.html"><code class="docutils literal notranslate"><span class="pre">nlp\_architect</span></code> package</a> &raquo;</li>
+        
+          <li><a href="nlp_architect.models.html">nlp_architect.models package</a> &raquo;</li>
+        
+          <li><a href="nlp_architect.models.absa.html">nlp_architect.models.absa package</a> &raquo;</li>
+        
+      <li>nlp_architect.models.absa.inference package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="nlp-architect-models-absa-inference-package">
+<h1>nlp_architect.models.absa.inference package<a class="headerlink" href="#nlp-architect-models-absa-inference-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-nlp_architect.models.absa.inference.data_types">
+<span id="nlp-architect-models-absa-inference-data-types-module"></span><h2>nlp_architect.models.absa.inference.data_types module<a class="headerlink" href="#module-nlp_architect.models.absa.inference.data_types" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nlp_architect.models.absa.inference.data_types.LexiconElement">
+<em class="property">class </em><code class="descclassname">nlp_architect.models.absa.inference.data_types.</code><code class="descname">LexiconElement</code><span class="sig-paren">(</span><em>term: list</em>, <em>score: str = None</em>, <em>polarity: str = None</em>, <em>is_acquired: str = None</em>, <em>position: str = None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/absa/inference/data_types.html#LexiconElement"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.absa.inference.data_types.LexiconElement" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="nlp_architect.models.absa.inference.data_types.Polarity">
+<em class="property">class </em><code class="descclassname">nlp_architect.models.absa.inference.data_types.</code><code class="descname">Polarity</code><a class="reference internal" href="../_modules/nlp_architect/models/absa/inference/data_types.html#Polarity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.absa.inference.data_types.Polarity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>An enumeration.</p>
+<dl class="attribute">
+<dt id="nlp_architect.models.absa.inference.data_types.Polarity.NEG">
+<code class="descname">NEG</code><em class="property"> = 'NEG'</em><a class="headerlink" href="#nlp_architect.models.absa.inference.data_types.Polarity.NEG" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.models.absa.inference.data_types.Polarity.POS">
+<code class="descname">POS</code><em class="property"> = 'POS'</em><a class="headerlink" href="#nlp_architect.models.absa.inference.data_types.Polarity.POS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.models.absa.inference.data_types.Polarity.UNK">
+<code class="descname">UNK</code><em class="property"> = 'UNK'</em><a class="headerlink" href="#nlp_architect.models.absa.inference.data_types.Polarity.UNK" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nlp_architect.models.absa.inference.data_types.SentimentDoc">
+<em class="property">class </em><code class="descclassname">nlp_architect.models.absa.inference.data_types.</code><code class="descname">SentimentDoc</code><span class="sig-paren">(</span><em>doc_text: str = None</em>, <em>sentences: list = None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/absa/inference/data_types.html#SentimentDoc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.absa.inference.data_types.SentimentDoc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="staticmethod">
+<dt id="nlp_architect.models.absa.inference.data_types.SentimentDoc.decoder">
+<em class="property">static </em><code class="descname">decoder</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/absa/inference/data_types.html#SentimentDoc.decoder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.absa.inference.data_types.SentimentDoc.decoder" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>obj</strong> – object to be decoded</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">decoded Sentence object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.models.absa.inference.data_types.SentimentDoc.doc_text">
+<code class="descname">doc_text</code><a class="headerlink" href="#nlp_architect.models.absa.inference.data_types.SentimentDoc.doc_text" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.models.absa.inference.data_types.SentimentDoc.json">
+<code class="descname">json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/absa/inference/data_types.html#SentimentDoc.json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.absa.inference.data_types.SentimentDoc.json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return json representations of the object</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">json representations of the object</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#nlp_architect.models.absa.inference.data_types.SentimentDoc.json" title="nlp_architect.models.absa.inference.data_types.SentimentDoc.json"><code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.models.absa.inference.data_types.SentimentDoc.pretty_json">
+<code class="descname">pretty_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/absa/inference/data_types.html#SentimentDoc.pretty_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.absa.inference.data_types.SentimentDoc.pretty_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return pretty json representations of the object</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">pretty json representations of the object</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#nlp_architect.models.absa.inference.data_types.SentimentDoc.json" title="nlp_architect.models.absa.inference.data_types.SentimentDoc.json"><code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.models.absa.inference.data_types.SentimentDoc.sentences">
+<code class="descname">sentences</code><a class="headerlink" href="#nlp_architect.models.absa.inference.data_types.SentimentDoc.sentences" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nlp_architect.models.absa.inference.data_types.SentimentDocEncoder">
+<em class="property">class </em><code class="descclassname">nlp_architect.models.absa.inference.data_types.</code><code class="descname">SentimentDocEncoder</code><span class="sig-paren">(</span><em>*</em>, <em>skipkeys=False</em>, <em>ensure_ascii=True</em>, <em>check_circular=True</em>, <em>allow_nan=True</em>, <em>sort_keys=False</em>, <em>indent=None</em>, <em>separators=None</em>, <em>default=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/absa/inference/data_types.html#SentimentDocEncoder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.absa.inference.data_types.SentimentDocEncoder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">json.encoder.JSONEncoder</span></code></p>
+<dl class="method">
+<dt id="nlp_architect.models.absa.inference.data_types.SentimentDocEncoder.default">
+<code class="descname">default</code><span class="sig-paren">(</span><em>o</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/absa/inference/data_types.html#SentimentDocEncoder.default"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.absa.inference.data_types.SentimentDocEncoder.default" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implement this method in a subclass such that it returns
+a serializable object for <code class="docutils literal notranslate"><span class="pre">o</span></code>, or calls the base implementation
+(to raise a <code class="docutils literal notranslate"><span class="pre">TypeError</span></code>).</p>
+<p>For example, to support arbitrary iterators, you could
+implement default like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">default</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">o</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">iterable</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
+    <span class="c1"># Let the base class default method raise the TypeError</span>
+    <span class="k">return</span> <span class="n">JSONEncoder</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">o</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nlp_architect.models.absa.inference.data_types.SentimentSentence">
+<em class="property">class </em><code class="descclassname">nlp_architect.models.absa.inference.data_types.</code><code class="descname">SentimentSentence</code><span class="sig-paren">(</span><em>start: int</em>, <em>end: int</em>, <em>events: list</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/absa/inference/data_types.html#SentimentSentence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.absa.inference.data_types.SentimentSentence" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="attribute">
+<dt id="nlp_architect.models.absa.inference.data_types.SentimentSentence.end">
+<code class="descname">end</code><a class="headerlink" href="#nlp_architect.models.absa.inference.data_types.SentimentSentence.end" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.models.absa.inference.data_types.SentimentSentence.events">
+<code class="descname">events</code><a class="headerlink" href="#nlp_architect.models.absa.inference.data_types.SentimentSentence.events" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.models.absa.inference.data_types.SentimentSentence.start">
+<code class="descname">start</code><a class="headerlink" href="#nlp_architect.models.absa.inference.data_types.SentimentSentence.start" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nlp_architect.models.absa.inference.data_types.Term">
+<em class="property">class </em><code class="descclassname">nlp_architect.models.absa.inference.data_types.</code><code class="descname">Term</code><span class="sig-paren">(</span><em>text: str</em>, <em>kind: nlp_architect.models.absa.inference.data_types.TermType</em>, <em>polarity: nlp_architect.models.absa.inference.data_types.Polarity</em>, <em>score: float</em>, <em>start: int</em>, <em>length: int</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/absa/inference/data_types.html#Term"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.absa.inference.data_types.Term" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="attribute">
+<dt id="nlp_architect.models.absa.inference.data_types.Term.len">
+<code class="descname">len</code><a class="headerlink" href="#nlp_architect.models.absa.inference.data_types.Term.len" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.models.absa.inference.data_types.Term.polarity">
+<code class="descname">polarity</code><a class="headerlink" href="#nlp_architect.models.absa.inference.data_types.Term.polarity" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.models.absa.inference.data_types.Term.score">
+<code class="descname">score</code><a class="headerlink" href="#nlp_architect.models.absa.inference.data_types.Term.score" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.models.absa.inference.data_types.Term.start">
+<code class="descname">start</code><a class="headerlink" href="#nlp_architect.models.absa.inference.data_types.Term.start" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.models.absa.inference.data_types.Term.text">
+<code class="descname">text</code><a class="headerlink" href="#nlp_architect.models.absa.inference.data_types.Term.text" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.models.absa.inference.data_types.Term.type">
+<code class="descname">type</code><a class="headerlink" href="#nlp_architect.models.absa.inference.data_types.Term.type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nlp_architect.models.absa.inference.data_types.TermType">
+<em class="property">class </em><code class="descclassname">nlp_architect.models.absa.inference.data_types.</code><code class="descname">TermType</code><a class="reference internal" href="../_modules/nlp_architect/models/absa/inference/data_types.html#TermType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.absa.inference.data_types.TermType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>An enumeration.</p>
+<dl class="attribute">
+<dt id="nlp_architect.models.absa.inference.data_types.TermType.ASPECT">
+<code class="descname">ASPECT</code><em class="property"> = 'AS'</em><a class="headerlink" href="#nlp_architect.models.absa.inference.data_types.TermType.ASPECT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.models.absa.inference.data_types.TermType.INTENSIFIER">
+<code class="descname">INTENSIFIER</code><em class="property"> = 'INT'</em><a class="headerlink" href="#nlp_architect.models.absa.inference.data_types.TermType.INTENSIFIER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.models.absa.inference.data_types.TermType.NEGATION">
+<code class="descname">NEGATION</code><em class="property"> = 'NEG'</em><a class="headerlink" href="#nlp_architect.models.absa.inference.data_types.TermType.NEGATION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.models.absa.inference.data_types.TermType.OPINION">
+<code class="descname">OPINION</code><em class="property"> = 'OP'</em><a class="headerlink" href="#nlp_architect.models.absa.inference.data_types.TermType.OPINION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-nlp_architect.models.absa.inference.inference">
+<span id="nlp-architect-models-absa-inference-inference-module"></span><h2>nlp_architect.models.absa.inference.inference module<a class="headerlink" href="#module-nlp_architect.models.absa.inference.inference" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nlp_architect.models.absa.inference.inference.SentimentInference">
+<em class="property">class </em><code class="descclassname">nlp_architect.models.absa.inference.inference.</code><code class="descname">SentimentInference</code><span class="sig-paren">(</span><em>aspect_lex: Union[str, os.PathLike], opinion_lex: Union[str, os.PathLike, dict], parse: bool = True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/absa/inference/inference.html#SentimentInference"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.absa.inference.inference.SentimentInference" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Main class for sentiment inference execution.</p>
+<dl class="attribute">
+<dt id="nlp_architect.models.absa.inference.inference.SentimentInference.opinion_lex">
+<code class="descname">opinion_lex</code><a class="headerlink" href="#nlp_architect.models.absa.inference.inference.SentimentInference.opinion_lex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Opinion lexicon as outputted by TrainSentiment module.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.models.absa.inference.inference.SentimentInference.aspect_lex">
+<code class="descname">aspect_lex</code><a class="headerlink" href="#nlp_architect.models.absa.inference.inference.SentimentInference.aspect_lex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Aspect lexicon as outputted by TrainSentiment module.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.models.absa.inference.inference.SentimentInference.intensifier_lex">
+<code class="descname">intensifier_lex</code><a class="headerlink" href="#nlp_architect.models.absa.inference.inference.SentimentInference.intensifier_lex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pre-defined intensifier lexicon.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.models.absa.inference.inference.SentimentInference.negation_lex">
+<code class="descname">negation_lex</code><a class="headerlink" href="#nlp_architect.models.absa.inference.inference.SentimentInference.negation_lex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pre-defined negation lexicon.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.models.absa.inference.inference.SentimentInference.run">
+<code class="descname">run</code><span class="sig-paren">(</span><em>doc: str = None</em>, <em>parsed_doc: nlp_architect.common.core_nlp_doc.CoreNLPDoc = None</em><span class="sig-paren">)</span> &#x2192; nlp_architect.models.absa.inference.data_types.SentimentDoc<a class="reference internal" href="../_modules/nlp_architect/models/absa/inference/inference.html#SentimentInference.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.absa.inference.inference.SentimentInference.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run SentimentInference on a single document.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The sentiment annotated document, which contains the detected events per sentence.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-nlp_architect.models.absa.inference">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-nlp_architect.models.absa.inference" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

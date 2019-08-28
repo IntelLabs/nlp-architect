@@ -1,0 +1,436 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>nlp_architect.solutions.trend_analysis.ui package &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/install.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/nlp_arch_theme.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="nlp_architect.utils package" href="nlp_architect.utils.html" />
+    <link rel="prev" title="nlp_architect.solutions.trend_analysis package" href="nlp_architect.solutions.trend_analysis.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html">
+          
+
+          
+            
+            <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../publications.html">Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials.html">Jupyter Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model_zoo.html">Model Zoo</a></li>
+</ul>
+<p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tagging/sequence_tagging.html">Sequence Tagging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sentiment.html">Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bist_parser.html">Dependency Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intent.html">Intent Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lm.html">Language Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../information_extraction.html">Information Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transformers.html">Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../archived/additional.html">Additional Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Optimized Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../quantized_bert.html">Quantized BERT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transformers_distillation.html">Transformers Distillation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solutions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../absa_solution.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../term_set_expansion.html">Set Expansion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trend_analysis.html">Trend Analysis</a></li>
+</ul>
+<p class="caption"><span class="caption-text">For Developers</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="nlp_architect_api_index.html">nlp_architect API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.api.html">nlp_architect.api package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.cli.html">nlp_architect.cli package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.common.html">nlp_architect.common package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.data.html">nlp_architect.data package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.models.html">nlp_architect.models package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.nlp.html">nlp_architect.nlp package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.nn.html">nlp_architect.nn package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.pipelines.html">nlp_architect.pipelines package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.procedures.html">nlp_architect.procedures package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.server.html">nlp_architect.server package</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="nlp_architect.solutions.html">nlp_architect.solutions package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="nlp_architect.solutions.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.solutions.absa_solution.html">nlp_architect.solutions.absa_solution package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.solutions.set_expansion.html">nlp_architect.solutions.set_expansion package</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="nlp_architect.solutions.trend_analysis.html">nlp_architect.solutions.trend_analysis package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.solutions.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.solutions.html#module-nlp_architect.solutions.start_ui">nlp_architect.solutions.start_ui module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.solutions.html#module-nlp_architect.solutions">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.utils.html">nlp_architect.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer_guide.html">Developer Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">NLP Architect by Intel® AI Lab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="nlp_architect_api_index.html"><code class="docutils literal notranslate"><span class="pre">nlp\_architect</span></code> package</a> &raquo;</li>
+        
+          <li><a href="nlp_architect.solutions.html">nlp_architect.solutions package</a> &raquo;</li>
+        
+          <li><a href="nlp_architect.solutions.trend_analysis.html">nlp_architect.solutions.trend_analysis package</a> &raquo;</li>
+        
+      <li>nlp_architect.solutions.trend_analysis.ui package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="nlp-architect-solutions-trend-analysis-ui-package">
+<h1>nlp_architect.solutions.trend_analysis.ui package<a class="headerlink" href="#nlp-architect-solutions-trend-analysis-ui-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-nlp_architect.solutions.trend_analysis.ui.main">
+<span id="nlp-architect-solutions-trend-analysis-ui-main-module"></span><h2>nlp_architect.solutions.trend_analysis.ui.main module<a class="headerlink" href="#module-nlp_architect.solutions.trend_analysis.ui.main" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="nlp_architect.solutions.trend_analysis.ui.main.clear_search_callback">
+<code class="descclassname">nlp_architect.solutions.trend_analysis.ui.main.</code><code class="descname">clear_search_callback</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/solutions/trend_analysis/ui/main.html#clear_search_callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.solutions.trend_analysis.ui.main.clear_search_callback" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.solutions.trend_analysis.ui.main.create_custom_trends_graph">
+<code class="descclassname">nlp_architect.solutions.trend_analysis.ui.main.</code><code class="descname">create_custom_trends_graph</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/solutions/trend_analysis/ui/main.html#create_custom_trends_graph"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.solutions.trend_analysis.ui.main.create_custom_trends_graph" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.solutions.trend_analysis.ui.main.create_graphs">
+<code class="descclassname">nlp_architect.solutions.trend_analysis.ui.main.</code><code class="descname">create_graphs</code><span class="sig-paren">(</span><em>top_n_phrases</em>, <em>top_n_clusters</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/solutions/trend_analysis/ui/main.html#create_graphs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.solutions.trend_analysis.ui.main.create_graphs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.solutions.trend_analysis.ui.main.create_top_after_graph">
+<code class="descclassname">nlp_architect.solutions.trend_analysis.ui.main.</code><code class="descname">create_top_after_graph</code><span class="sig-paren">(</span><em>topN</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/solutions/trend_analysis/ui/main.html#create_top_after_graph"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.solutions.trend_analysis.ui.main.create_top_after_graph" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.solutions.trend_analysis.ui.main.create_top_before_graph">
+<code class="descclassname">nlp_architect.solutions.trend_analysis.ui.main.</code><code class="descname">create_top_before_graph</code><span class="sig-paren">(</span><em>top_n</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/solutions/trend_analysis/ui/main.html#create_top_before_graph"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.solutions.trend_analysis.ui.main.create_top_before_graph" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.solutions.trend_analysis.ui.main.create_topic_clustering_after_graph">
+<code class="descclassname">nlp_architect.solutions.trend_analysis.ui.main.</code><code class="descname">create_topic_clustering_after_graph</code><span class="sig-paren">(</span><em>top_n</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/solutions/trend_analysis/ui/main.html#create_topic_clustering_after_graph"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.solutions.trend_analysis.ui.main.create_topic_clustering_after_graph" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.solutions.trend_analysis.ui.main.create_topic_clustering_before_graph">
+<code class="descclassname">nlp_architect.solutions.trend_analysis.ui.main.</code><code class="descname">create_topic_clustering_before_graph</code><span class="sig-paren">(</span><em>top_n</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/solutions/trend_analysis/ui/main.html#create_topic_clustering_before_graph"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.solutions.trend_analysis.ui.main.create_topic_clustering_before_graph" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.solutions.trend_analysis.ui.main.create_trend_clustering_graph">
+<code class="descclassname">nlp_architect.solutions.trend_analysis.ui.main.</code><code class="descname">create_trend_clustering_graph</code><span class="sig-paren">(</span><em>top_n</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/solutions/trend_analysis/ui/main.html#create_trend_clustering_graph"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.solutions.trend_analysis.ui.main.create_trend_clustering_graph" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.solutions.trend_analysis.ui.main.create_trend_graphs">
+<code class="descclassname">nlp_architect.solutions.trend_analysis.ui.main.</code><code class="descname">create_trend_graphs</code><span class="sig-paren">(</span><em>top_n</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/solutions/trend_analysis/ui/main.html#create_trend_graphs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.solutions.trend_analysis.ui.main.create_trend_graphs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.solutions.trend_analysis.ui.main.cut_phrase">
+<code class="descclassname">nlp_architect.solutions.trend_analysis.ui.main.</code><code class="descname">cut_phrase</code><span class="sig-paren">(</span><em>phrase</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/solutions/trend_analysis/ui/main.html#cut_phrase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.solutions.trend_analysis.ui.main.cut_phrase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cut phrases which exceeds phrase max length to present</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.solutions.trend_analysis.ui.main.draw_ui">
+<code class="descclassname">nlp_architect.solutions.trend_analysis.ui.main.</code><code class="descname">draw_ui</code><span class="sig-paren">(</span><em>top_n_phrases</em>, <em>top_n_clusters</em>, <em>active_area</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/solutions/trend_analysis/ui/main.html#draw_ui"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.solutions.trend_analysis.ui.main.draw_ui" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.solutions.trend_analysis.ui.main.filter_custom_selected_callback">
+<code class="descclassname">nlp_architect.solutions.trend_analysis.ui.main.</code><code class="descname">filter_custom_selected_callback</code><span class="sig-paren">(</span><em>indices</em>, <em>old</em>, <em>new</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/solutions/trend_analysis/ui/main.html#filter_custom_selected_callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.solutions.trend_analysis.ui.main.filter_custom_selected_callback" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.solutions.trend_analysis.ui.main.filter_topic_selected_callback">
+<code class="descclassname">nlp_architect.solutions.trend_analysis.ui.main.</code><code class="descname">filter_topic_selected_callback</code><span class="sig-paren">(</span><em>indices</em>, <em>old</em>, <em>new</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/solutions/trend_analysis/ui/main.html#filter_topic_selected_callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.solutions.trend_analysis.ui.main.filter_topic_selected_callback" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.solutions.trend_analysis.ui.main.get_custom_indices">
+<code class="descclassname">nlp_architect.solutions.trend_analysis.ui.main.</code><code class="descname">get_custom_indices</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/solutions/trend_analysis/ui/main.html#get_custom_indices"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.solutions.trend_analysis.ui.main.get_custom_indices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the custom-table indices of all custom selected phrases</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.solutions.trend_analysis.ui.main.get_custom_phrases">
+<code class="descclassname">nlp_architect.solutions.trend_analysis.ui.main.</code><code class="descname">get_custom_phrases</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/solutions/trend_analysis/ui/main.html#get_custom_phrases"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.solutions.trend_analysis.ui.main.get_custom_phrases" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list of all phrases selected by the user for the custom trends graph</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.solutions.trend_analysis.ui.main.get_valid_indices">
+<code class="descclassname">nlp_architect.solutions.trend_analysis.ui.main.</code><code class="descname">get_valid_indices</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/solutions/trend_analysis/ui/main.html#get_valid_indices"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.solutions.trend_analysis.ui.main.get_valid_indices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the filter-table indices of all whitelist/valid phrases</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.solutions.trend_analysis.ui.main.get_valid_phrases">
+<code class="descclassname">nlp_architect.solutions.trend_analysis.ui.main.</code><code class="descname">get_valid_phrases</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/solutions/trend_analysis/ui/main.html#get_valid_phrases"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.solutions.trend_analysis.ui.main.get_valid_phrases" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list of all whitelist/valid phrases (which were not filtered-out by the user)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.solutions.trend_analysis.ui.main.handle_selected_graph">
+<code class="descclassname">nlp_architect.solutions.trend_analysis.ui.main.</code><code class="descname">handle_selected_graph</code><span class="sig-paren">(</span><em>selected</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/solutions/trend_analysis/ui/main.html#handle_selected_graph"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.solutions.trend_analysis.ui.main.handle_selected_graph" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.solutions.trend_analysis.ui.main.is_valid_topic">
+<code class="descclassname">nlp_architect.solutions.trend_analysis.ui.main.</code><code class="descname">is_valid_topic</code><span class="sig-paren">(</span><em>index</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/solutions/trend_analysis/ui/main.html#is_valid_topic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.solutions.trend_analysis.ui.main.is_valid_topic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if a certain phrase should be presented</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.solutions.trend_analysis.ui.main.re_analyze">
+<code class="descclassname">nlp_architect.solutions.trend_analysis.ui.main.</code><code class="descname">re_analyze</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/solutions/trend_analysis/ui/main.html#re_analyze"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.solutions.trend_analysis.ui.main.re_analyze" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.solutions.trend_analysis.ui.main.re_analyze_callback">
+<code class="descclassname">nlp_architect.solutions.trend_analysis.ui.main.</code><code class="descname">re_analyze_callback</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/solutions/trend_analysis/ui/main.html#re_analyze_callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.solutions.trend_analysis.ui.main.re_analyze_callback" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.solutions.trend_analysis.ui.main.read_filter_graph_data">
+<code class="descclassname">nlp_architect.solutions.trend_analysis.ui.main.</code><code class="descname">read_filter_graph_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/solutions/trend_analysis/ui/main.html#read_filter_graph_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.solutions.trend_analysis.ui.main.read_filter_graph_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.solutions.trend_analysis.ui.main.refresh_filter_area">
+<code class="descclassname">nlp_architect.solutions.trend_analysis.ui.main.</code><code class="descname">refresh_filter_area</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/solutions/trend_analysis/ui/main.html#refresh_filter_area"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.solutions.trend_analysis.ui.main.refresh_filter_area" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.solutions.trend_analysis.ui.main.regenerate_graphs">
+<code class="descclassname">nlp_architect.solutions.trend_analysis.ui.main.</code><code class="descname">regenerate_graphs</code><span class="sig-paren">(</span><em>top_n_phrases</em>, <em>top_n_clusters</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/solutions/trend_analysis/ui/main.html#regenerate_graphs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.solutions.trend_analysis.ui.main.regenerate_graphs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.solutions.trend_analysis.ui.main.reset_filters">
+<code class="descclassname">nlp_architect.solutions.trend_analysis.ui.main.</code><code class="descname">reset_filters</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/solutions/trend_analysis/ui/main.html#reset_filters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.solutions.trend_analysis.ui.main.reset_filters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resets the filter tables (e.g. after clearing search)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.solutions.trend_analysis.ui.main.search">
+<code class="descclassname">nlp_architect.solutions.trend_analysis.ui.main.</code><code class="descname">search</code><span class="sig-paren">(</span><em>item</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/solutions/trend_analysis/ui/main.html#search"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.solutions.trend_analysis.ui.main.search" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search an item in the filter tables</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.solutions.trend_analysis.ui.main.search_topic_callback">
+<code class="descclassname">nlp_architect.solutions.trend_analysis.ui.main.</code><code class="descname">search_topic_callback</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/solutions/trend_analysis/ui/main.html#search_topic_callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.solutions.trend_analysis.ui.main.search_topic_callback" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.solutions.trend_analysis.ui.main.selected_graph_changed_callback">
+<code class="descclassname">nlp_architect.solutions.trend_analysis.ui.main.</code><code class="descname">selected_graph_changed_callback</code><span class="sig-paren">(</span><em>active</em>, <em>old</em>, <em>new</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/solutions/trend_analysis/ui/main.html#selected_graph_changed_callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.solutions.trend_analysis.ui.main.selected_graph_changed_callback" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.solutions.trend_analysis.ui.main.set_weights">
+<code class="descclassname">nlp_architect.solutions.trend_analysis.ui.main.</code><code class="descname">set_weights</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/solutions/trend_analysis/ui/main.html#set_weights"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.solutions.trend_analysis.ui.main.set_weights" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.solutions.trend_analysis.ui.main.tab_changed_callback">
+<code class="descclassname">nlp_architect.solutions.trend_analysis.ui.main.</code><code class="descname">tab_changed_callback</code><span class="sig-paren">(</span><em>active</em>, <em>old</em>, <em>new</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/solutions/trend_analysis/ui/main.html#tab_changed_callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.solutions.trend_analysis.ui.main.tab_changed_callback" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.solutions.trend_analysis.ui.main.top_n_clusters_changed_callback">
+<code class="descclassname">nlp_architect.solutions.trend_analysis.ui.main.</code><code class="descname">top_n_clusters_changed_callback</code><span class="sig-paren">(</span><em>value</em>, <em>old</em>, <em>new</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/solutions/trend_analysis/ui/main.html#top_n_clusters_changed_callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.solutions.trend_analysis.ui.main.top_n_clusters_changed_callback" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.solutions.trend_analysis.ui.main.top_n_phrases_changed_callback">
+<code class="descclassname">nlp_architect.solutions.trend_analysis.ui.main.</code><code class="descname">top_n_phrases_changed_callback</code><span class="sig-paren">(</span><em>value</em>, <em>old</em>, <em>new</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/solutions/trend_analysis/ui/main.html#top_n_phrases_changed_callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.solutions.trend_analysis.ui.main.top_n_phrases_changed_callback" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-nlp_architect.solutions.trend_analysis.ui">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-nlp_architect.solutions.trend_analysis.ui" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

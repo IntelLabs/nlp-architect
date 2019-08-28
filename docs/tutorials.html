@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Jupyter Tutorials &mdash; NLP Architect by Intel® AI Lab 0.4.post2 documentation</title>
+  <title>Jupyter Tutorials &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
   
 
   
@@ -25,6 +25,8 @@
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
         <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/install.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -33,11 +35,12 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" type="text/css" />
-  <link rel="stylesheet" href="_static/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/nlp_arch_theme.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Developer Guide" href="developer_guide.html" />
+    <link rel="next" title="NLP Architect Model Zoo" href="model_zoo.html" />
     <link rel="prev" title="Publications" href="publications.html" /> 
 </head>
 
@@ -57,7 +60,7 @@
 
           
             
-            <img src="_static/nlp_architect_logo_white.png" class="logo" alt="Logo"/>
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
           
           </a>
 
@@ -83,7 +86,7 @@
             
             
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="main.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick start</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="publications.html">Publications</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Jupyter Tutorials</a><ul>
@@ -91,27 +94,23 @@
 <li class="toctree-l2"><a class="reference internal" href="#list-of-tutorials">List of tutorials</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="developer_guide.html">Developer Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model_zoo.html">Model Zoo</a></li>
 </ul>
 <p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="absa.html">Aspect Based Sentiment Analysis</a></li>
-<li class="toctree-l1"><a class="reference internal" href="chunker.html">Sequence Chunker</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ner_crf.html">Named Entity Recognition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tagging/sequence_tagging.html">Sequence Tagging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sentiment.html">Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bist_parser.html">Dependency Parsing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="intent.html">Intent Extraction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="np_segmentation.html">Noun Phrase Semantic Segmentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bist_parser.html">BIST Dependency Parser</a></li>
-<li class="toctree-l1"><a class="reference internal" href="word_sense.html">Most Common Word Sense</a></li>
-<li class="toctree-l1"><a class="reference internal" href="np2vec.html">Noun Phrase to Vec</a></li>
-<li class="toctree-l1"><a class="reference internal" href="supervised_sentiment.html">Supervised Sentiment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="reading_comprehension.html">Reading Comprehension</a></li>
-<li class="toctree-l1"><a class="reference internal" href="memn2n.html">End-to-End Memory Networks for Goal Oriented Dialogue</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tcn.html">TCN Language Model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="crosslingual_emb.html">Unsupervised Crosslingual Embeddings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cross_doc_coref.html">Cross Document Co-Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="identifying_semantic_relation.html">Semantic Relation Identification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lm.html">Language Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="information_extraction.html">Information Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transformers.html">Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="archived/additional.html">Additional Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Optimized Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quantized_bert.html">Quantized BERT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transformers_distillation.html">Transformers Distillation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Solutions</span></p>
@@ -120,14 +119,11 @@
 <li class="toctree-l1"><a class="reference internal" href="term_set_expansion.html">Set Expansion</a></li>
 <li class="toctree-l1"><a class="reference internal" href="trend_analysis.html">Trend Analysis</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Pipelines</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="spacy_bist.html">Spacy-BIST Parser</a></li>
-<li class="toctree-l1"><a class="reference internal" href="spacy_np_annotator.html">Spacy-NP Annotator</a></li>
-</ul>
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer_guide.html">Developer Guide</a></li>
 </ul>
 
             
@@ -197,39 +193,41 @@
 <p>To get started and familiarized quickly with the models and solutions NLP Architect has, we provide several tutorials as notebook in the well known Jupyter framework.</p>
 <p>If you don’t have Jupyter installed, follow these instructions to install:</p>
 <ul>
-<li><p>Install jupyter</p>
+<li><p class="first">Install jupyter</p>
 <blockquote>
-<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pip3</span> <span class="n">install</span> <span class="n">jupyter</span>
+<div><div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip3</span> <span class="n">install</span> <span class="n">jupyter</span>
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Make sure your virtual environment is activated with NLP Architect installed.</p>
+<p class="first admonition-title">Note</p>
+<p class="last">Make sure your virtual environment is activated with NLP Architect installed.</p>
 </div>
 </div></blockquote>
 </li>
-<li><p>Once Jupyter is installed, go to NLP Architect root dir and start Jupyter Notebook:</p>
+<li><p class="first">Once Jupyter is installed, go to NLP Architect root dir and start Jupyter Notebook:</p>
 <blockquote>
-<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">&lt;</span><span class="n">NLP</span> <span class="n">Architect</span> <span class="n">root</span><span class="o">&gt;</span>
+<div><div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">&lt;</span><span class="n">NLP</span> <span class="n">Architect</span> <span class="n">root</span><span class="o">&gt;</span>
 <span class="n">jupyter</span> <span class="n">notebook</span>
 </pre></div>
 </div>
 </div></blockquote>
 </li>
-<li><p>Open your browser and go to <a class="reference external" href="http://localhost:8888/">http://localhost:8888/</a></p></li>
-<li><p>Select a tutorial and start learning</p></li>
+<li><p class="first">Open your browser and go to <a class="reference external" href="http://localhost:8888/">http://localhost:8888/</a></p>
+</li>
+<li><p class="first">Select a tutorial and start learning</p>
+</li>
 </ul>
 </div>
 <div class="section" id="list-of-tutorials">
 <h2>List of tutorials<a class="headerlink" href="#list-of-tutorials" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><p><a class="reference external" href="https://github.com/NervanaSystems/nlp-architect/blob/master/tutorials/Question_Answering/Natural_Language_Question_Answer_Systems.ipynb">Natural Language Question/Answering Systems</a></p></li>
-<li><p><a class="reference external" href="https://github.com/NervanaSystems/nlp-architect/blob/master/tutorials/intent_extraction/intent_extraction_demo.ipynb">Intent Extraction</a></p></li>
-<li><p><a class="reference external" href="https://github.com/NervanaSystems/nlp-architect/blob/master/tutorials/ner/ner_demo.ipynb">Named Entity Recognition</a></p></li>
-<li><p><a class="reference external" href="https://github.com/NervanaSystems/nlp-architect/blob/master/tutorials/np_semantic_segmentation/np_semantic_segmentation_demo.ipynb">NP Semantic Segmentation</a></p></li>
-<li><p><a class="reference external" href="https://github.com/NervanaSystems/nlp-architect/blob/master/tutorials/sentiment/Deep_Learning_Sentiment_Demo.ipynb">Sentiment Analysis</a></p></li>
-<li><p><a class="reference external" href="https://github.com/NervanaSystems/nlp-architect/blob/master/tutorials/NP2vec/NP2vec_training.ipynb">NP2Vec</a></p></li>
-<li><p><a class="reference external" href="https://github.com/NervanaSystems/private-nlp-architect/blob/master/tutorials/Term_Set_Expansion/term_set_expansion.ipynb">Term set expansion</a></p></li>
+<li><a class="reference external" href="https://github.com/NervanaSystems/nlp-architect/blob/master/tutorials/Question_Answering/Natural_Language_Question_Answer_Systems.ipynb">Natural Language Question/Answering Systems</a></li>
+<li><a class="reference external" href="https://github.com/NervanaSystems/nlp-architect/blob/master/tutorials/intent_extraction/intent_extraction_demo.ipynb">Intent Extraction</a></li>
+<li><a class="reference external" href="https://github.com/NervanaSystems/nlp-architect/blob/master/tutorials/ner/ner_demo.ipynb">Named Entity Recognition</a></li>
+<li><a class="reference external" href="https://github.com/NervanaSystems/nlp-architect/blob/master/tutorials/np_semantic_segmentation/np_semantic_segmentation_demo.ipynb">NP Semantic Segmentation</a></li>
+<li><a class="reference external" href="https://github.com/NervanaSystems/nlp-architect/blob/master/tutorials/sentiment/Deep_Learning_Sentiment_Demo.ipynb">Sentiment Analysis</a></li>
+<li><a class="reference external" href="https://github.com/NervanaSystems/nlp-architect/blob/master/tutorials/NP2vec/NP2vec_training.ipynb">NP2Vec</a></li>
+<li><a class="reference external" href="https://github.com/NervanaSystems/private-nlp-architect/blob/master/tutorials/Term_Set_Expansion/term_set_expansion.ipynb">Term set expansion</a></li>
 </ul>
 </div>
 </div>

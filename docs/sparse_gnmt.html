@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Compression of Google Neural Machine Translation Model &mdash; NLP Architect by Intel® AI Lab 0.4.post2 documentation</title>
+  <title>Compression of Google Neural Machine Translation Model &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
   
 
   
@@ -25,6 +25,8 @@
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
         <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/install.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -33,12 +35,13 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" type="text/css" />
-  <link rel="stylesheet" href="_static/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/nlp_arch_theme.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Aspect Based Sentiment Analysis (ABSA) Solution" href="absa_solution.html" />
-    <link rel="prev" title="Identifying Semantic Relations" href="identifying_semantic_relation.html" /> 
+    <link rel="prev" title="Transformer model distillation" href="transformers_distillation.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -57,7 +60,7 @@
 
           
             
-            <img src="_static/nlp_architect_logo_white.png" class="logo" alt="Logo"/>
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
           
           </a>
 
@@ -83,31 +86,27 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="main.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick start</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="publications.html">Publications</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Jupyter Tutorials</a></li>
-<li class="toctree-l1"><a class="reference internal" href="developer_guide.html">Developer Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model_zoo.html">Model Zoo</a></li>
 </ul>
 <p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="absa.html">Aspect Based Sentiment Analysis</a></li>
-<li class="toctree-l1"><a class="reference internal" href="chunker.html">Sequence Chunker</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ner_crf.html">Named Entity Recognition</a></li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tagging/sequence_tagging.html">Sequence Tagging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sentiment.html">Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bist_parser.html">Dependency Parsing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="intent.html">Intent Extraction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="np_segmentation.html">Noun Phrase Semantic Segmentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bist_parser.html">BIST Dependency Parser</a></li>
-<li class="toctree-l1"><a class="reference internal" href="word_sense.html">Most Common Word Sense</a></li>
-<li class="toctree-l1"><a class="reference internal" href="np2vec.html">Noun Phrase to Vec</a></li>
-<li class="toctree-l1"><a class="reference internal" href="supervised_sentiment.html">Supervised Sentiment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="reading_comprehension.html">Reading Comprehension</a></li>
-<li class="toctree-l1"><a class="reference internal" href="memn2n.html">End-to-End Memory Networks for Goal Oriented Dialogue</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tcn.html">TCN Language Model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="crosslingual_emb.html">Unsupervised Crosslingual Embeddings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cross_doc_coref.html">Cross Document Co-Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="identifying_semantic_relation.html">Semantic Relation Identification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lm.html">Language Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="information_extraction.html">Information Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transformers.html">Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="archived/additional.html">Additional Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Optimized Models</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="quantized_bert.html">Quantized BERT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transformers_distillation.html">Transformers Distillation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Sparse Neural Machine Translation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#gnmt-model">GNMT Model</a></li>
@@ -135,14 +134,11 @@
 <li class="toctree-l1"><a class="reference internal" href="term_set_expansion.html">Set Expansion</a></li>
 <li class="toctree-l1"><a class="reference internal" href="trend_analysis.html">Trend Analysis</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Pipelines</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="spacy_bist.html">Spacy-BIST Parser</a></li>
-<li class="toctree-l1"><a class="reference internal" href="spacy_np_annotator.html">Spacy-NP Annotator</a></li>
-</ul>
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer_guide.html">Developer Guide</a></li>
 </ul>
 
             
@@ -210,24 +206,24 @@
 <div class="section" id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p>Google Neural Machine Translation (GNMT) is a Sequence to sequence (Seq2seq) model which learns a mapping from an input text to an output text. </p>
-<p>The example below demonstrates how to train a highly sparse GNMT model with minimal loss in accuracy. The model is based on the <em>GNMT model presented in the paper Google’s Neural Machine Translation System: Bridging the Gap between Human and Machine Translation</em> <a class="footnote-reference brackets" href="#id7" id="id1">1</a> which consists of approximately 210M floating point parameters.</p>
+<p>The example below demonstrates how to train a highly sparse GNMT model with minimal loss in accuracy. The model is based on the <em>GNMT model presented in the paper Google’s Neural Machine Translation System: Bridging the Gap between Human and Machine Translation</em> <a class="footnote-reference" href="#id7" id="id1">[1]</a> which consists of approximately 210M floating point parameters.</p>
 </div>
 <div class="section" id="gnmt-model">
 <h2>GNMT Model<a class="headerlink" href="#gnmt-model" title="Permalink to this headline">¶</a></h2>
-<p>The GNMT architecture is an encoder-decoder architecture with attention as presented in the original paper <a class="footnote-reference brackets" href="#id7" id="id2">1</a>.</p>
+<p>The GNMT architecture is an encoder-decoder architecture with attention as presented in the original paper <a class="footnote-reference" href="#id7" id="id2">[1]</a>.</p>
 <p>The encoder consists of an embedding layer followed by 1 bi-directional and 3 uni-directional LSTM layers with residual connections between them.
 The decoder consists of an embedding layer followed by 4 uni-directional LSTM layers and a linear Softmax layer.
 The attention mechanism connects between the encoder’s bi-directional LSTM layer to all of the decoder’s LSTM layers.</p>
-<p>The GNMT model was adapted from the model shown in <em>Neural Machine Translation (seq2seq) Tutorial</em> <a class="footnote-reference brackets" href="#id8" id="id3">2</a> and from its <a class="reference external" href="https://github.com/tensorflow/nmt">repository</a>.</p>
-<p>The Sparse model implementation can be found in <a class="reference internal" href="generated/nlp_architect.models.gnmt_model.GNMTModel.html#nlp_architect.models.gnmt_model.GNMTModel" title="nlp_architect.models.gnmt_model.GNMTModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">GNMTModel</span></code></a> and offers several options to build the GNMT model.</p>
+<p>The GNMT model was adapted from the model shown in <em>Neural Machine Translation (seq2seq) Tutorial</em> <a class="footnote-reference" href="#id8" id="id3">[2]</a> and from its <a class="reference external" href="https://github.com/tensorflow/nmt">repository</a>.</p>
+<p>The Sparse model implementation can be found in <a class="reference internal" href="generated_api/nlp_architect.models.html#nlp_architect.models.gnmt_model.GNMTModel" title="nlp_architect.models.gnmt_model.GNMTModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">GNMTModel</span></code></a> and offers several options to build the GNMT model.</p>
 </div>
 <div class="section" id="sparsity-pruning-gnmt">
 <h2>Sparsity - Pruning GNMT<a class="headerlink" href="#sparsity-pruning-gnmt" title="Permalink to this headline">¶</a></h2>
 <p>Sparse neural networks are networks where a portion of the network weights are zeros.
 A high sparsity ratio can help compress the model and accelerate inference, reduce power consumption used for memory transfer and computing.</p>
 <p>In order to produce a sparse network the network weights are pruned while training by forcing weights to be zero.
-There are a number of methods to prune neural networks, for example the paper <em>To prune, or not to prune: exploring the efficacy of pruning for model compression</em> <a class="footnote-reference brackets" href="#id9" id="id4">3</a> presents a method for gradual pruning of weights with low amplitude.</p>
-<p>The example below demonstrates how to prune the GNMT model up to 90% sparsity with minimal loss in BLEU score using the Tensorflow <a class="reference external" href="https://github.com/tensorflow/tensorflow/tree/r1.10/tensorflow/contrib/model_pruning">model_pruning</a> package which implements the method presented in <a class="footnote-reference brackets" href="#id9" id="id5">3</a></p>
+There are a number of methods to prune neural networks, for example the paper <em>To prune, or not to prune: exploring the efficacy of pruning for model compression</em> <a class="footnote-reference" href="#id9" id="id4">[3]</a> presents a method for gradual pruning of weights with low amplitude.</p>
+<p>The example below demonstrates how to prune the GNMT model up to 90% sparsity with minimal loss in BLEU score using the Tensorflow <a class="reference external" href="https://github.com/tensorflow/tensorflow/tree/r1.10/tensorflow/contrib/model_pruning">model_pruning</a> package which implements the method presented in <a class="footnote-reference" href="#id9" id="id5">[3]</a></p>
 </div>
 <div class="section" id="post-training-weight-quantization">
 <h2>Post Training Weight Quantization<a class="headerlink" href="#post-training-weight-quantization" title="Permalink to this headline">¶</a></h2>
@@ -240,10 +236,10 @@ When using the model for inference, the int8 weights of the sparse and quantized
 <h2>Dataset<a class="headerlink" href="#dataset" title="Permalink to this headline">¶</a></h2>
 <p>The models below were trained using the following datasets:</p>
 <ul class="simple">
-<li><p>Europarlv7 <a class="footnote-reference brackets" href="#id10" id="id6">4</a></p></li>
-<li><p>Common Crawl Corpus</p></li>
-<li><p>News Commentary 11</p></li>
-<li><p>Development and test sets</p></li>
+<li>Europarlv7 <a class="footnote-reference" href="#id10" id="id6">[4]</a></li>
+<li>Common Crawl Corpus</li>
+<li>News Commentary 11</li>
+<li>Development and test sets</li>
 </ul>
 <p>All datasets are provided by <a class="reference external" href="http://www.statmt.org/wmt16/translation-task.html">WMT Shared Task: Machine Translation of News</a></p>
 <p>You can use this script <a class="reference external" href="https://github.com/tensorflow/nmt/blob/master/nmt/scripts/wmt16_en_de.sh">wmt16_en_de.sh</a> to download and prepare the data for training and evaluating your model.</p>
@@ -252,62 +248,62 @@ When using the model for inference, the int8 weights of the sparse and quantized
 <h2>Results &amp; Pre-Trained Models<a class="headerlink" href="#results-pre-trained-models" title="Permalink to this headline">¶</a></h2>
 <p>The following table presents some of our experiments and results. We provide pre-trained checkpoints for a 90% sparse GNMT model and a similar 90% sparse but with 2x2 sparsity blocks pattern. See table below and our <a class="reference external" href="http://nlp_architect.nervanasys.com/model_zoo.html">Model Zoo</a>.
 You can use these models to <a class="reference internal" href="#run-inference-using-our-pre-trained-models">Run Inference using our Pre-Trained Models</a> and evaluate them.</p>
-<table class="docutils align-default">
+<table border="1" class="docutils">
 <colgroup>
-<col style="width: 37%" />
-<col style="width: 13%" />
-<col style="width: 8%" />
-<col style="width: 28%" />
-<col style="width: 14%" />
+<col width="37%" />
+<col width="13%" />
+<col width="8%" />
+<col width="28%" />
+<col width="14%" />
 </colgroup>
-<tbody>
-<tr class="row-odd"><td><p>Model</p></td>
-<td><p>Sparsity</p></td>
-<td><p>BLEU</p></td>
-<td><p>Non-Zero Parameters</p></td>
-<td><p>Data Type</p></td>
+<tbody valign="top">
+<tr class="row-odd"><td>Model</td>
+<td>Sparsity</td>
+<td>BLEU</td>
+<td>Non-Zero Parameters</td>
+<td>Data Type</td>
 </tr>
-<tr class="row-even"><td><p>Baseline</p></td>
-<td><p>0%</p></td>
-<td><p>29.9</p></td>
-<td><p>~210M</p></td>
-<td><p>Float32</p></td>
+<tr class="row-even"><td>Baseline</td>
+<td>0%</td>
+<td>29.9</td>
+<td>~210M</td>
+<td>Float32</td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/sparse_gnmt/gnmt_sparse.zip">Sparse</a></p></td>
-<td><p>90%</p></td>
-<td><p>28.4</p></td>
-<td><p>~22M</p></td>
-<td><p>Float32</p></td>
+<tr class="row-odd"><td><a class="reference external" href="https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/sparse_gnmt/gnmt_sparse.zip">Sparse</a></td>
+<td>90%</td>
+<td>28.4</td>
+<td>~22M</td>
+<td>Float32</td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/sparse_gnmt/gnmt_blocksparse2x2.zip">2x2 Block Sparse</a></p></td>
-<td><p>90%</p></td>
-<td><p>27.8</p></td>
-<td><p>~22M</p></td>
-<td><p>Float32</p></td>
+<tr class="row-even"><td><a class="reference external" href="https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/sparse_gnmt/gnmt_blocksparse2x2.zip">2x2 Block Sparse</a></td>
+<td>90%</td>
+<td>27.8</td>
+<td>~22M</td>
+<td>Float32</td>
 </tr>
-<tr class="row-odd"><td><p>Quantized Sparse</p></td>
-<td><p>90%</p></td>
-<td><p>28.4</p></td>
-<td><p>~22M</p></td>
-<td><p>Integer8</p></td>
+<tr class="row-odd"><td>Quantized Sparse</td>
+<td>90%</td>
+<td>28.4</td>
+<td>~22M</td>
+<td>Integer8</td>
 </tr>
-<tr class="row-even"><td><p>Quantized 2x2 Block Sparse</p></td>
-<td><p>90%</p></td>
-<td><p>27.6</p></td>
-<td><p>~22M</p></td>
-<td><p>Integer8</p></td>
+<tr class="row-even"><td>Quantized 2x2 Block Sparse</td>
+<td>90%</td>
+<td>27.6</td>
+<td>~22M</td>
+<td>Integer8</td>
 </tr>
 </tbody>
 </table>
 <ol class="arabic simple">
-<li><p>The pruning is applied to the embedding, decoder projection layer and all LSTM layers in both the encoder and decoder.</p></li>
-<li><p>BLEU score is measured using <em>newstest2015</em> test set provided by the <a class="reference external" href="http://www.statmt.org/wmt16/translation-task.html">Shared Task</a>.</p></li>
-<li><p>The accuracy of the quantized model was measure when we converted the 8 bits weights back to floating point during inference.</p></li>
+<li>The pruning is applied to the embedding, decoder projection layer and all LSTM layers in both the encoder and decoder.</li>
+<li>BLEU score is measured using <em>newstest2015</em> test set provided by the <a class="reference external" href="http://www.statmt.org/wmt16/translation-task.html">Shared Task</a>.</li>
+<li>The accuracy of the quantized model was measure when we converted the 8 bits weights back to floating point during inference.</li>
 </ol>
 </div>
 <div class="section" id="running-modalities">
 <h2>Running Modalities<a class="headerlink" href="#running-modalities" title="Permalink to this headline">¶</a></h2>
-<p>Below are simple examples for training 90% sparse <a class="reference internal" href="generated/nlp_architect.models.gnmt_model.GNMTModel.html#nlp_architect.models.gnmt_model.GNMTModel" title="nlp_architect.models.gnmt_model.GNMTModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">GNMTModel</span></code></a> model, running inference using a pre-trained/trained model, quantizing a model to 8bit Integer and running inference using a quantized model. Before inference, the int8 weights of the sparse and quantized model are de-quantize back to fp32.</p>
+<p>Below are simple examples for training 90% sparse <a class="reference internal" href="generated_api/nlp_architect.models.html#nlp_architect.models.gnmt_model.GNMTModel" title="nlp_architect.models.gnmt_model.GNMTModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">GNMTModel</span></code></a> model, running inference using a pre-trained/trained model, quantizing a model to 8bit Integer and running inference using a quantized model. Before inference, the int8 weights of the sparse and quantized model are de-quantize back to fp32.</p>
 <div class="section" id="training">
 <h3>Training<a class="headerlink" href="#training" title="Permalink to this headline">¶</a></h3>
 <p>Train a German to English GNMT model with 90% sparsity using the WMT16 dataset:</p>
@@ -329,10 +325,10 @@ python -m sparse_gnmt.nmt <span class="se">\</span>
 </pre></div>
 </div>
 <ul class="simple">
-<li><p>Train using GPUs by adding <code class="docutils literal notranslate"><span class="pre">--num_gpus=&lt;n&gt;</span></code></p></li>
-<li><p>Model configuration JSON files are found in <code class="docutils literal notranslate"><span class="pre">examples/sparse_gnmt/standard_hparams</span></code> directory.</p></li>
-<li><p>Sparsity policy can be re-configured by changing the parameters given in <code class="docutils literal notranslate"><span class="pre">--pruning_hparams</span></code>. E.g. change <code class="docutils literal notranslate"><span class="pre">target_policy=0.7</span></code> in order to train 70% sparse GNMT.</p></li>
-<li><p>All pruning hyper parameters are listed in <a class="reference external" href="https://github.com/tensorflow/tensorflow/tree/r1.10/tensorflow/contrib/model_pruning">model_pruning</a>.</p></li>
+<li>Train using GPUs by adding <code class="docutils literal notranslate"><span class="pre">--num_gpus=&lt;n&gt;</span></code></li>
+<li>Model configuration JSON files are found in <code class="docutils literal notranslate"><span class="pre">examples/sparse_gnmt/standard_hparams</span></code> directory.</li>
+<li>Sparsity policy can be re-configured by changing the parameters given in <code class="docutils literal notranslate"><span class="pre">--pruning_hparams</span></code>. E.g. change <code class="docutils literal notranslate"><span class="pre">target_policy=0.7</span></code> in order to train 70% sparse GNMT.</li>
+<li>All pruning hyper parameters are listed in <a class="reference external" href="https://github.com/tensorflow/tensorflow/tree/r1.10/tensorflow/contrib/model_pruning">model_pruning</a>.</li>
 </ul>
 <p>While training Tensorflow checkpoints, Tensorboard events, Hyper-Parameters used and log files will be saved in the output directory given.</p>
 </div>
@@ -354,8 +350,8 @@ python -m sparse_gnmt.nmt <span class="se">\</span>
 </pre></div>
 </div>
 <ul class="simple">
-<li><p>Measure performance and BLEU score against a reference file by adding <code class="docutils literal notranslate"><span class="pre">--inference_ref_file=&lt;reference</span> <span class="pre">file</span> <span class="pre">in</span> <span class="pre">the</span> <span class="pre">target</span> <span class="pre">language&gt;</span></code></p></li>
-<li><p>Inference using GPUs by adding <code class="docutils literal notranslate"><span class="pre">--num_gpus=&lt;n&gt;</span></code></p></li>
+<li>Measure performance and BLEU score against a reference file by adding <code class="docutils literal notranslate"><span class="pre">--inference_ref_file=&lt;reference</span> <span class="pre">file</span> <span class="pre">in</span> <span class="pre">the</span> <span class="pre">target</span> <span class="pre">language&gt;</span></code></li>
+<li>Inference using GPUs by adding <code class="docutils literal notranslate"><span class="pre">--num_gpus=&lt;n&gt;</span></code></li>
 </ul>
 <div class="section" id="run-inference-using-our-pre-trained-models">
 <h4>Run Inference using our Pre-Trained Models<a class="headerlink" href="#run-inference-using-our-pre-trained-models" title="Permalink to this headline">¶</a></h4>
@@ -386,8 +382,8 @@ python -m sparse_gnmt.nmt <span class="se">\</span>
 <h4>Quantized Inference<a class="headerlink" href="#quantized-inference" title="Permalink to this headline">¶</a></h4>
 <p>Add the following flags to the <a class="reference internal" href="#inference">Inference</a> command line in order to quantize the pre-trained models and run inference with the quantized models:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">--quantize_ckpt=true</span></code>: Produce a quantized checkpoint. Checkpoint will be saved in the output directory. Inference will run using the produced checkpoint.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--from_quantized_ckpt=true</span></code>: Inference using an already quantized checkpoint</p></li>
+<li><code class="docutils literal notranslate"><span class="pre">--quantize_ckpt=true</span></code>: Produce a quantized checkpoint. Checkpoint will be saved in the output directory. Inference will run using the produced checkpoint.</li>
+<li><code class="docutils literal notranslate"><span class="pre">--from_quantized_ckpt=true</span></code>: Inference using an already quantized checkpoint</li>
 </ul>
 </div>
 </div>
@@ -395,307 +391,382 @@ python -m sparse_gnmt.nmt <span class="se">\</span>
 <h3>Custom Training/Inference Parameters<a class="headerlink" href="#custom-training-inference-parameters" title="Permalink to this headline">¶</a></h3>
 <p>All customizable parameters can be obtained by running: <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">nlp-architect.examples.sparse_gnmt.nmt</span> <span class="pre">-h</span></code></p>
 <blockquote>
-<div><dl class="option-list">
-<dt><kbd><span class="option">-h</span>, <span class="option">--help</span></kbd></dt>
-<dd><p>show this help message and exit</p>
-</dd>
-<dt><kbd><span class="option">--num_units <var>NUM_UNITS</var></span></kbd></dt>
-<dd><p>Network size.</p>
-</dd>
-<dt><kbd><span class="option">--num_layers <var>NUM_LAYERS</var></span></kbd></dt>
-<dd><p>Network depth.</p>
-</dd>
-<dt><kbd><span class="option">--num_encoder_layers <var>NUM_ENCODER_LAYERS</var></span></kbd></dt>
-<dd><p>Encoder depth, equal to num_layers if None.</p>
-</dd>
-<dt><kbd><span class="option">--num_decoder_layers <var>NUM_DECODER_LAYERS</var></span></kbd></dt>
-<dd><p>Decoder depth, equal to num_layers if None.</p>
-</dd>
-<dt><kbd><span class="option">--encoder_type</span></kbd></dt>
-<dd><p>uni | bi | gnmt. For bi, we build num_encoder_layers/2
+<div><table class="docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group">
+<kbd><span class="option">-h</span>, <span class="option">--help</span></kbd></td>
+<td>show this help message and exit</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--num_units <var>NUM_UNITS</var></span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>Network size.</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--num_layers <var>NUM_LAYERS</var></span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>Network depth.</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--num_encoder_layers <var>NUM_ENCODER_LAYERS</var></span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>Encoder depth, equal to num_layers if None.</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--num_decoder_layers <var>NUM_DECODER_LAYERS</var></span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>Decoder depth, equal to num_layers if None.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">--encoder_type</span></kbd></td>
+<td>uni | bi | gnmt. For bi, we build num_encoder_layers/2
 bi-directional layers. For gnmt, we build 1 bi-
 directional layer, and (num_encoder_layers - 1) uni-
-directional layers.</p>
-</dd>
-<dt><kbd><span class="option">--residual</span></kbd></dt>
-<dd><p>Whether to add residual connections.</p>
-</dd>
-<dt><kbd><span class="option">--time_major</span></kbd></dt>
-<dd><p>Whether to use time-major mode for dynamic RNN.</p>
-</dd>
-<dt><kbd><span class="option">--num_embeddings_partitions <var>NUM_EMBEDDINGS_PARTITIONS</var></span></kbd></dt>
-<dd><p>Number of partitions for embedding vars.</p>
-</dd>
-<dt><kbd><span class="option">--attention</span></kbd></dt>
-<dd><p>luong | scaled_luong | bahdanau | normed_bahdanau or
-set to “” for no attention</p>
-</dd>
-<dt><kbd><span class="option">--attention_architecture</span></kbd></dt>
-<dd><p>standard | gnmt | gnmt_v2. standard: use top layer to
+directional layers.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">--residual</span></kbd></td>
+<td>Whether to add residual connections.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">--time_major</span></kbd></td>
+<td>Whether to use time-major mode for dynamic RNN.</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--num_embeddings_partitions <var>NUM_EMBEDDINGS_PARTITIONS</var></span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>Number of partitions for embedding vars.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">--attention</span></kbd></td>
+<td>luong | scaled_luong | bahdanau | normed_bahdanau or
+set to “” for no attention</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--attention_architecture</span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>standard | gnmt | gnmt_v2. standard: use top layer to
 compute attention. gnmt: GNMT style of computing
 attention, use previous bottom layer to compute
 attention. gnmt_v2: similar to gnmt, but use current
-bottom layer to compute attention.</p>
-</dd>
-<dt><kbd><span class="option">--output_attention</span></kbd></dt>
-<dd><p>Only used in standard attention_architecture. Whether
-use attention as the cell output at each timestep.</p>
-</dd>
-<dt><kbd><span class="option">--pass_hidden_state</span></kbd></dt>
-<dd><p>Whether to pass encoder’s hidden state to decoder when
-using an attention based model.</p>
-</dd>
-<dt><kbd><span class="option">--optimizer</span></kbd></dt>
-<dd><p>sgd | adam</p>
-</dd>
-<dt><kbd><span class="option">--learning_rate <var>LEARNING_RATE</var></span></kbd></dt>
-<dd><p>Learning rate. Adam: 0.001 | 0.0001</p>
-</dd>
-<dt><kbd><span class="option">--warmup_steps <var>WARMUP_STEPS</var></span></kbd></dt>
-<dd><p>How many steps we inverse-decay learning.</p>
-</dd>
-<dt><kbd><span class="option">--warmup_scheme</span></kbd></dt>
-<dd><p>How to warmup learning rates. Options include: t2t:
+bottom layer to compute attention.</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--output_attention</span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>Only used in standard attention_architecture. Whether
+use attention as the cell output at each timestep.</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--pass_hidden_state</span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>Whether to pass encoder’s hidden state to decoder when
+using an attention based model.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">--optimizer</span></kbd></td>
+<td>sgd | adam</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--learning_rate <var>LEARNING_RATE</var></span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>Learning rate. Adam: 0.001 | 0.0001</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--warmup_steps <var>WARMUP_STEPS</var></span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>How many steps we inverse-decay learning.</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--warmup_scheme</span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>How to warmup learning rates. Options include: t2t:
 Tensor2Tensor’s way, start with lr 100 times smaller,
-then exponentiate until the specified lr.</p>
-</dd>
-<dt><kbd><span class="option">--decay_scheme</span></kbd></dt>
-<dd><p>How we decay learning rate. Options include: luong234:
+then exponentiate until the specified lr.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">--decay_scheme</span></kbd></td>
+<td>How we decay learning rate. Options include: luong234:
 after 2/3 num train steps, we start halving the
 learning rate for 4 times before finishing. luong5:
 after 1/2 num train steps, we start halving the
 learning rate for 5 times before finishing. luong10:
 after 1/2 num train steps, we start halving the
-learning rate for 10 times before finishing.</p>
-</dd>
-<dt><kbd><span class="option">--num_train_steps <var>NUM_TRAIN_STEPS</var></span></kbd></dt>
-<dd><p>Num steps to train.</p>
-</dd>
-<dt><kbd><span class="option">--colocate_gradients_with_ops</span></kbd></dt>
-<dd><p>Whether try colocating gradients with corresponding op</p>
-</dd>
-<dt><kbd><span class="option">--init_op</span></kbd></dt>
-<dd><p>uniform | glorot_normal | glorot_uniform</p>
-</dd>
-<dt><kbd><span class="option">--init_weight <var>INIT_WEIGHT</var></span></kbd></dt>
-<dd><p>for uniform init_op, initialize weights between
-.</p>
-</dd>
-<dt><kbd><span class="option">--src <var>SRC</var></span></kbd></dt>
-<dd><p>Source suffix, e.g., en.</p>
-</dd>
-<dt><kbd><span class="option">--tgt <var>TGT</var></span></kbd></dt>
-<dd><p>Target suffix, e.g., de.</p>
-</dd>
-<dt><kbd><span class="option">--train_prefix <var>TRAIN_PREFIX</var></span></kbd></dt>
-<dd><p>Train prefix, expect files with src/tgt suffixes.</p>
-</dd>
-<dt><kbd><span class="option">--dev_prefix <var>DEV_PREFIX</var></span></kbd></dt>
-<dd><p>Dev prefix, expect files with src/tgt suffixes.</p>
-</dd>
-<dt><kbd><span class="option">--test_prefix <var>TEST_PREFIX</var></span></kbd></dt>
-<dd><p>Test prefix, expect files with src/tgt suffixes.</p>
-</dd>
-<dt><kbd><span class="option">--out_dir <var>OUT_DIR</var></span></kbd></dt>
-<dd><p>Store log/model files.</p>
-</dd>
-<dt><kbd><span class="option">--vocab_prefix <var>VOCAB_PREFIX</var></span></kbd></dt>
-<dd><p>Vocab prefix, expect files with src/tgt suffixes.</p>
-</dd>
-<dt><kbd><span class="option">--embed_prefix <var>EMBED_PREFIX</var></span></kbd></dt>
-<dd><p>Pretrained embedding prefix, expect files with src/tgt
+learning rate for 10 times before finishing.</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--num_train_steps <var>NUM_TRAIN_STEPS</var></span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>Num steps to train.</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--colocate_gradients_with_ops</span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>Whether try colocating gradients with corresponding op</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">--init_op</span></kbd></td>
+<td>uniform | glorot_normal | glorot_uniform</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--init_weight <var>INIT_WEIGHT</var></span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>for uniform init_op, initialize weights between
+.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">--src <var>SRC</var></span></kbd></td>
+<td>Source suffix, e.g., en.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">--tgt <var>TGT</var></span></kbd></td>
+<td>Target suffix, e.g., de.</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--train_prefix <var>TRAIN_PREFIX</var></span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>Train prefix, expect files with src/tgt suffixes.</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--dev_prefix <var>DEV_PREFIX</var></span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>Dev prefix, expect files with src/tgt suffixes.</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--test_prefix <var>TEST_PREFIX</var></span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>Test prefix, expect files with src/tgt suffixes.</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--out_dir <var>OUT_DIR</var></span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>Store log/model files.</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--vocab_prefix <var>VOCAB_PREFIX</var></span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>Vocab prefix, expect files with src/tgt suffixes.</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--embed_prefix <var>EMBED_PREFIX</var></span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>Pretrained embedding prefix, expect files with src/tgt
 suffixes. The embedding files should be Glove formatted
-txt files.</p>
-</dd>
-<dt><kbd><span class="option">--sos <var>SOS</var></span></kbd></dt>
-<dd><p>Start-of-sentence symbol.</p>
-</dd>
-<dt><kbd><span class="option">--eos <var>EOS</var></span></kbd></dt>
-<dd><p>End-of-sentence symbol.</p>
-</dd>
-<dt><kbd><span class="option">--share_vocab</span></kbd></dt>
-<dd><p>Whether to use the source vocab and embeddings for
-both source and target.</p>
-</dd>
-<dt><kbd><span class="option">--check_special_token <var>CHECK_SPECIAL_TOKEN</var></span></kbd></dt>
-<dd><p>Whether check special sos, eos, unk tokens exist in
-the vocab files.</p>
-</dd>
-<dt><kbd><span class="option">--src_max_len <var>SRC_MAX_LEN</var></span></kbd></dt>
-<dd><p>Max length of src sequences during training.</p>
-</dd>
-<dt><kbd><span class="option">--tgt_max_len <var>TGT_MAX_LEN</var></span></kbd></dt>
-<dd><p>Max length of tgt sequences during training.</p>
-</dd>
-<dt><kbd><span class="option">--src_max_len_infer <var>SRC_MAX_LEN_INFER</var></span></kbd></dt>
-<dd><p>Max length of src sequences during inference.</p>
-</dd>
-<dt><kbd><span class="option">--tgt_max_len_infer <var>TGT_MAX_LEN_INFER</var></span></kbd></dt>
-<dd><p>Max length of tgt sequences during inference. Also used
-to restrict the maximum decoding length.</p>
-</dd>
-<dt><kbd><span class="option">--unit_type</span></kbd></dt>
-<dd><p>lstm | gru | layer_norm_lstm | nas | mlstm</p>
-</dd>
-<dt><kbd><span class="option">--projection_type</span></kbd></dt>
-<dd><p>dense | sparse</p>
-</dd>
-<dt><kbd><span class="option">--embedding_type</span></kbd></dt>
-<dd><p>dense | sparse</p>
-</dd>
-<dt><kbd><span class="option">--forget_bias <var>FORGET_BIAS</var></span></kbd></dt>
-<dd><p>Forget bias for BasicLSTMCell.</p>
-</dd>
-<dt><kbd><span class="option">--dropout <var>DROPOUT</var></span></kbd></dt>
-<dd><p>Dropout rate (not keep_prob)</p>
-</dd>
-<dt><kbd><span class="option">--max_gradient_norm <var>MAX_GRADIENT_NORM</var></span></kbd></dt>
-<dd><p>Clip gradients to this norm.</p>
-</dd>
-<dt><kbd><span class="option">--batch_size <var>BATCH_SIZE</var></span></kbd></dt>
-<dd><p>Batch size.</p>
-</dd>
-<dt><kbd><span class="option">--steps_per_stats <var>STEPS_PER_STATS</var></span></kbd></dt>
-<dd><p>How many training steps to do per stats logging.Save
-checkpoint every 10x steps_per_stats</p>
-</dd>
-<dt><kbd><span class="option">--max_train <var>MAX_TRAIN</var></span></kbd></dt>
-<dd><p>Limit on the size of training data (0: no limit).</p>
-</dd>
-<dt><kbd><span class="option">--num_buckets <var>NUM_BUCKETS</var></span></kbd></dt>
-<dd><p>Put data into similar-length buckets.</p>
-</dd>
-<dt><kbd><span class="option">--num_sampled_softmax <var>NUM_SAMPLED_SOFTMAX</var></span></kbd></dt>
-<dd><p>Use sampled_softmax_loss if &gt; 0.Otherwise, use full
-softmax loss.</p>
-</dd>
-<dt><kbd><span class="option">--subword_option</span></kbd></dt>
-<dd><p>Set to bpe or spm to activate subword desegmentation.</p>
-</dd>
-<dt><kbd><span class="option">--use_char_encode <var>USE_CHAR_ENCODE</var></span></kbd></dt>
-<dd><p>Whether to split each word or bpe into character, and
+txt files.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">--sos <var>SOS</var></span></kbd></td>
+<td>Start-of-sentence symbol.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">--eos <var>EOS</var></span></kbd></td>
+<td>End-of-sentence symbol.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">--share_vocab</span></kbd></td>
+<td>Whether to use the source vocab and embeddings for
+both source and target.</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--check_special_token <var>CHECK_SPECIAL_TOKEN</var></span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>Whether check special sos, eos, unk tokens exist in
+the vocab files.</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--src_max_len <var>SRC_MAX_LEN</var></span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>Max length of src sequences during training.</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--tgt_max_len <var>TGT_MAX_LEN</var></span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>Max length of tgt sequences during training.</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--src_max_len_infer <var>SRC_MAX_LEN_INFER</var></span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>Max length of src sequences during inference.</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--tgt_max_len_infer <var>TGT_MAX_LEN_INFER</var></span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>Max length of tgt sequences during inference. Also used
+to restrict the maximum decoding length.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">--unit_type</span></kbd></td>
+<td>lstm | gru | layer_norm_lstm | nas | mlstm</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--projection_type</span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>dense | sparse</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--embedding_type</span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>dense | sparse</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--forget_bias <var>FORGET_BIAS</var></span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>Forget bias for BasicLSTMCell.</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--dropout <var>DROPOUT</var></span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>Dropout rate (not keep_prob)</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--max_gradient_norm <var>MAX_GRADIENT_NORM</var></span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>Clip gradients to this norm.</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--batch_size <var>BATCH_SIZE</var></span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>Batch size.</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--steps_per_stats <var>STEPS_PER_STATS</var></span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>How many training steps to do per stats logging.Save
+checkpoint every 10x steps_per_stats</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--max_train <var>MAX_TRAIN</var></span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>Limit on the size of training data (0: no limit).</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--num_buckets <var>NUM_BUCKETS</var></span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>Put data into similar-length buckets.</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--num_sampled_softmax <var>NUM_SAMPLED_SOFTMAX</var></span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>Use sampled_softmax_loss if &gt; 0.Otherwise, use full
+softmax loss.</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--subword_option</span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>Set to bpe or spm to activate subword desegmentation.</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--use_char_encode <var>USE_CHAR_ENCODE</var></span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>Whether to split each word or bpe into character, and
 then generate the word-level representation from the
-character representation.</p>
-</dd>
-<dt><kbd><span class="option">--num_gpus <var>NUM_GPUS</var></span></kbd></dt>
-<dd><p>Number of gpus in each worker.</p>
-</dd>
-<dt><kbd><span class="option">--log_device_placement</span></kbd></dt>
-<dd><p>Debug GPU allocation.</p>
-</dd>
-<dt><kbd><span class="option">--metrics <var>METRICS</var></span></kbd></dt>
-<dd><p>Comma-separated list of evaluations metrics
-(bleu,rouge,accuracy)</p>
-</dd>
-<dt><kbd><span class="option">--steps_per_external_eval <var>STEPS_PER_EXTERNAL_EVAL</var></span></kbd></dt>
-<dd><p>How many training steps to do per external evaluation.
-Automatically set based on data if None.</p>
-</dd>
-<dt><kbd><span class="option">--scope <var>SCOPE</var></span></kbd></dt>
-<dd><p>scope to put variables under</p>
-</dd>
-<dt><kbd><span class="option">--hparams_path <var>HPARAMS_PATH</var></span></kbd></dt>
-<dd><p>Path to standard hparams json file that
-overrides hparams values from FLAGS.</p>
-</dd>
-<dt><kbd><span class="option">--random_seed <var>RANDOM_SEED</var></span></kbd></dt>
-<dd><p>Random seed (&gt;0, set a specific seed).</p>
-</dd>
-<dt><kbd><span class="option">--override_loaded_hparams</span></kbd></dt>
-<dd><p>Override loaded hparams with values specified</p>
-</dd>
-<dt><kbd><span class="option">--num_keep_ckpts <var>NUM_KEEP_CKPTS</var></span></kbd></dt>
-<dd><p>Max number of checkpoints to keep.</p>
-</dd>
-<dt><kbd><span class="option">--avg_ckpts</span></kbd></dt>
-<dd><p>Average the last N checkpoints for external
+character representation.</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--num_gpus <var>NUM_GPUS</var></span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>Number of gpus in each worker.</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--log_device_placement</span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>Debug GPU allocation.</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--metrics <var>METRICS</var></span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>Comma-separated list of evaluations metrics
+(bleu,rouge,accuracy)</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--steps_per_external_eval <var>STEPS_PER_EXTERNAL_EVAL</var></span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>How many training steps to do per external evaluation.
+Automatically set based on data if None.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">--scope <var>SCOPE</var></span></kbd></td>
+<td>scope to put variables under</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--hparams_path <var>HPARAMS_PATH</var></span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>Path to standard hparams json file that
+overrides hparams values from FLAGS.</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--random_seed <var>RANDOM_SEED</var></span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>Random seed (&gt;0, set a specific seed).</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--override_loaded_hparams</span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>Override loaded hparams with values specified</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--num_keep_ckpts <var>NUM_KEEP_CKPTS</var></span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>Max number of checkpoints to keep.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">--avg_ckpts</span></kbd></td>
+<td>Average the last N checkpoints for external
 evaluation. N can be controlled by setting
-–num_keep_ckpts.</p>
-</dd>
-<dt><kbd><span class="option">--language_model</span></kbd></dt>
-<dd><p>True to train a language model, ignoring encoder</p>
-</dd>
-<dt><kbd><span class="option">--ckpt <var>CKPT</var></span></kbd></dt>
-<dd><p>Checkpoint file to load a model for inference.</p>
-</dd>
-<dt><kbd><span class="option">--quantize_ckpt <var>QUANTIZE_CKPT</var></span></kbd></dt>
-<dd><p>Set to True to produce a quantized checkpoint from
-existing checkpoint</p>
-</dd>
-<dt><kbd><span class="option">--from_quantized_ckpt <var>FROM_QUANTIZED_CKPT</var></span></kbd></dt>
-<dd><p>Set to True when the given checkpoint is quantized</p>
-</dd>
-<dt><kbd><span class="option">--inference_input_file <var>INFERENCE_INPUT_FILE</var></span></kbd></dt>
-<dd><p>Set to the text to decode.</p>
-</dd>
-<dt><kbd><span class="option">--inference_list <var>INFERENCE_LIST</var></span></kbd></dt>
-<dd><p>A comma-separated list of sentence indices (0-based)
-to decode.</p>
-</dd>
-<dt><kbd><span class="option">--infer_batch_size <var>INFER_BATCH_SIZE</var></span></kbd></dt>
-<dd><p>Batch size for inference mode.</p>
-</dd>
-<dt><kbd><span class="option">--inference_output_file <var>INFERENCE_OUTPUT_FILE</var></span></kbd></dt>
-<dd><p>Output file to store decoding results.</p>
-</dd>
-<dt><kbd><span class="option">--inference_ref_file <var>INFERENCE_REF_FILE</var></span></kbd></dt>
-<dd><p>Reference file to compute evaluation scores (if
-provided).</p>
-</dd>
-<dt><kbd><span class="option">--infer_mode</span></kbd></dt>
-<dd><p>Which type of decoder to use during inference.</p>
-</dd>
-<dt><kbd><span class="option">--beam_width <var>BEAM_WIDTH</var></span></kbd></dt>
-<dd><p>beam width when using beam search decoder. If 0
-(default), use standard decoder with greedy helper.</p>
-</dd>
-<dt><kbd><span class="option">--length_penalty_weight <var>LENGTH_PENALTY_WEIGHT</var></span></kbd></dt>
-<dd><p>Length penalty for beam search.</p>
-</dd>
-<dt><kbd><span class="option">--sampling_temperature <var>SAMPLING_TEMPERATURE</var></span></kbd></dt>
-<dd><p>Softmax sampling temperature for inference decoding,
+–num_keep_ckpts.</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--language_model</span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>True to train a language model, ignoring encoder</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">--ckpt <var>CKPT</var></span></kbd></td>
+<td>Checkpoint file to load a model for inference.</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--quantize_ckpt <var>QUANTIZE_CKPT</var></span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>Set to True to produce a quantized checkpoint from
+existing checkpoint</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--from_quantized_ckpt <var>FROM_QUANTIZED_CKPT</var></span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>Set to True when the given checkpoint is quantized</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--inference_input_file <var>INFERENCE_INPUT_FILE</var></span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>Set to the text to decode.</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--inference_list <var>INFERENCE_LIST</var></span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>A comma-separated list of sentence indices (0-based)
+to decode.</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--infer_batch_size <var>INFER_BATCH_SIZE</var></span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>Batch size for inference mode.</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--inference_output_file <var>INFERENCE_OUTPUT_FILE</var></span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>Output file to store decoding results.</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--inference_ref_file <var>INFERENCE_REF_FILE</var></span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>Reference file to compute evaluation scores (if
+provided).</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">--infer_mode</span></kbd></td>
+<td>Which type of decoder to use during inference.</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--beam_width <var>BEAM_WIDTH</var></span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>beam width when using beam search decoder. If 0
+(default), use standard decoder with greedy helper.</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--length_penalty_weight <var>LENGTH_PENALTY_WEIGHT</var></span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>Length penalty for beam search.</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--sampling_temperature <var>SAMPLING_TEMPERATURE</var></span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>Softmax sampling temperature for inference decoding,
 0.0 means greedy decoding. This option is ignored when
-using beam search.</p>
-</dd>
-<dt><kbd><span class="option">--num_translations_per_input <var>NUM_TRANSLATIONS_PER_INPUT</var></span></kbd></dt>
-<dd><p>Number of translations generated for each sentence.
-This is only used for inference.</p>
-</dd>
-<dt><kbd><span class="option">--jobid <var>JOBID</var></span></kbd></dt>
-<dd><p>Task id of the worker.</p>
-</dd>
-<dt><kbd><span class="option">--num_workers <var>NUM_WORKERS</var></span></kbd></dt>
-<dd><p>Number of workers (inference only).</p>
-</dd>
-<dt><kbd><span class="option">--num_inter_threads <var>NUM_INTER_THREADS</var></span></kbd></dt>
-<dd><p>number of inter_op_parallelism_threads</p>
-</dd>
-<dt><kbd><span class="option">--num_intra_threads <var>NUM_INTRA_THREADS</var></span></kbd></dt>
-<dd><p>number of intra_op_parallelism_threads</p>
-</dd>
-<dt><kbd><span class="option">--pruning_hparams <var>PRUNING_HPARAMS</var></span></kbd></dt>
-<dd><p>model pruning parameters</p>
-</dd>
-</dl>
+using beam search.</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--num_translations_per_input <var>NUM_TRANSLATIONS_PER_INPUT</var></span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>Number of translations generated for each sentence.
+This is only used for inference.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">--jobid <var>JOBID</var></span></kbd></td>
+<td>Task id of the worker.</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--num_workers <var>NUM_WORKERS</var></span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>Number of workers (inference only).</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--num_inter_threads <var>NUM_INTER_THREADS</var></span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>number of inter_op_parallelism_threads</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--num_intra_threads <var>NUM_INTRA_THREADS</var></span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>number of intra_op_parallelism_threads</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--pruning_hparams <var>PRUNING_HPARAMS</var></span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>model pruning parameters</td></tr>
+</tbody>
+</table>
 </div></blockquote>
 </div>
 </div>
 <div class="section" id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
-<dl class="footnote brackets">
-<dt class="label" id="id7"><span class="brackets">1</span><span class="fn-backref">(<a href="#id1">1</a>,<a href="#id2">2</a>)</span></dt>
-<dd><p>Wu, Yonghui and Schuster, Mike and Chen, Zhifeng and Le, Quoc V and Norouzi, Mohammad and Macherey, Wolfgang and Krikun, Maxim and Cao, Yuan and Gao, Qin and Macherey, Klaus and others. Google’s neural machine translation system: Bridging the gap between human and machine translation. <a class="reference external" href="https://arxiv.org/pdf/1609.08144.pdf">https://arxiv.org/pdf/1609.08144.pdf</a></p>
-</dd>
-<dt class="label" id="id8"><span class="brackets"><a class="fn-backref" href="#id3">2</a></span></dt>
-<dd><p>Minh-Thang Luong and Eugene Brevdo and Rui Zhao. Neural Machine Translation (seq2seq) Tutorial. <a class="reference external" href="https://github.com/tensorflow/nmt">https://github.com/tensorflow/nmt</a></p>
-</dd>
-<dt class="label" id="id9"><span class="brackets">3</span><span class="fn-backref">(<a href="#id4">1</a>,<a href="#id5">2</a>)</span></dt>
-<dd><p>Zhu, Michael and Gupta, Suyog. To prune, or not to prune: exploring the efficacy of pruning for model compression. <a class="reference external" href="https://arxiv.org/pdf/1710.01878.pdf">https://arxiv.org/pdf/1710.01878.pdf</a></p>
-</dd>
-<dt class="label" id="id10"><span class="brackets"><a class="fn-backref" href="#id6">4</a></span></dt>
-<dd><p>A Parallel Corpus for Statistical Machine Translation, Philipp Koehn, MT Summit 2005</p>
-</dd>
-</dl>
+<table class="docutils footnote" frame="void" id="id7" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td><em>(<a class="fn-backref" href="#id1">1</a>, <a class="fn-backref" href="#id2">2</a>)</em> Wu, Yonghui and Schuster, Mike and Chen, Zhifeng and Le, Quoc V and Norouzi, Mohammad and Macherey, Wolfgang and Krikun, Maxim and Cao, Yuan and Gao, Qin and Macherey, Klaus and others. Google’s neural machine translation system: Bridging the gap between human and machine translation. <a class="reference external" href="https://arxiv.org/pdf/1609.08144.pdf">https://arxiv.org/pdf/1609.08144.pdf</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id8" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[2]</a></td><td>Minh-Thang Luong and Eugene Brevdo and Rui Zhao. Neural Machine Translation (seq2seq) Tutorial. <a class="reference external" href="https://github.com/tensorflow/nmt">https://github.com/tensorflow/nmt</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id9" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[3]</td><td><em>(<a class="fn-backref" href="#id4">1</a>, <a class="fn-backref" href="#id5">2</a>)</em> Zhu, Michael and Gupta, Suyog. To prune, or not to prune: exploring the efficacy of pruning for model compression. <a class="reference external" href="https://arxiv.org/pdf/1710.01878.pdf">https://arxiv.org/pdf/1710.01878.pdf</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id10" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id6">[4]</a></td><td>A Parallel Corpus for Statistical Machine Translation, Philipp Koehn, MT Summit 2005</td></tr>
+</tbody>
+</table>
 </div>
 </div>
 

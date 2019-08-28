@@ -8,14 +8,12 @@
 .styleenv
 .coverage
 flake8.txt
-/build/
+**/build/*
 generated
 /dist/
 *.hdf5
 *.h5
-#!nlp_architect/server/angular-ui/dist/angular-ui/*.html
-#*.html
-docs-sources/build/**
+docs-source/_build/**
 !nlp_architect/solutions/set_expansion/ui/templates/*.html
 .vscode
 !tests/fixtures/data/server/*.gz

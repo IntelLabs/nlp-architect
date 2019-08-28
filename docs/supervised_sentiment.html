@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Supervised Sentiment &mdash; NLP Architect by Intel® AI Lab 0.4.post2 documentation</title>
+  <title>Supervised Sentiment &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
   
 
   
@@ -25,6 +25,8 @@
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
         <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/install.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -33,12 +35,11 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" type="text/css" />
-  <link rel="stylesheet" href="_static/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/nlp_arch_theme.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Reading Comprehension" href="reading_comprehension.html" />
-    <link rel="prev" title="Noun Phrase to Vec" href="np2vec.html" /> 
+    <link rel="search" title="Search" href="search.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -57,7 +58,7 @@
 
           
             
-            <img src="_static/nlp_architect_logo_white.png" class="logo" alt="Logo"/>
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
           
           </a>
 
@@ -83,46 +84,27 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="main.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick start</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="publications.html">Publications</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Jupyter Tutorials</a></li>
-<li class="toctree-l1"><a class="reference internal" href="developer_guide.html">Developer Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model_zoo.html">Model Zoo</a></li>
 </ul>
 <p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="absa.html">Aspect Based Sentiment Analysis</a></li>
-<li class="toctree-l1"><a class="reference internal" href="chunker.html">Sequence Chunker</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ner_crf.html">Named Entity Recognition</a></li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tagging/sequence_tagging.html">Sequence Tagging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sentiment.html">Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bist_parser.html">Dependency Parsing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="intent.html">Intent Extraction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="np_segmentation.html">Noun Phrase Semantic Segmentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bist_parser.html">BIST Dependency Parser</a></li>
-<li class="toctree-l1"><a class="reference internal" href="word_sense.html">Most Common Word Sense</a></li>
-<li class="toctree-l1"><a class="reference internal" href="np2vec.html">Noun Phrase to Vec</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Supervised Sentiment</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#files">Files</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#models">Models</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#bi-directional-lstm">Bi-directional LSTM</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#temporal-cnn">Temporal CNN</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lm.html">Language Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="information_extraction.html">Information Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transformers.html">Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="archived/additional.html">Additional Models</a></li>
 </ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#datasets">Datasets</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#running-modalities">Running Modalities</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#ensemble-train-test">Ensemble Train/Test</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#hyperparameter-optimization">Hyperparameter optimization</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="reading_comprehension.html">Reading Comprehension</a></li>
-<li class="toctree-l1"><a class="reference internal" href="memn2n.html">End-to-End Memory Networks for Goal Oriented Dialogue</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tcn.html">TCN Language Model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="crosslingual_emb.html">Unsupervised Crosslingual Embeddings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cross_doc_coref.html">Cross Document Co-Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="identifying_semantic_relation.html">Semantic Relation Identification</a></li>
+<p class="caption"><span class="caption-text">Optimized Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quantized_bert.html">Quantized BERT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transformers_distillation.html">Transformers Distillation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Solutions</span></p>
@@ -131,14 +113,11 @@
 <li class="toctree-l1"><a class="reference internal" href="term_set_expansion.html">Set Expansion</a></li>
 <li class="toctree-l1"><a class="reference internal" href="trend_analysis.html">Trend Analysis</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Pipelines</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="spacy_bist.html">Spacy-BIST Parser</a></li>
-<li class="toctree-l1"><a class="reference internal" href="spacy_np_annotator.html">Spacy-NP Annotator</a></li>
-</ul>
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer_guide.html">Developer Guide</a></li>
 </ul>
 
             
@@ -211,11 +190,11 @@ The larger idea behind these models is to allow ensemble learning with other sup
 <div class="section" id="files">
 <h2>Files<a class="headerlink" href="#files" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><p><strong>nlp_architect/models/supervised_sentiment.py</strong>: Sentiment analysis models - currently an LSTM and a one-hot CNN</p></li>
-<li><p><strong>nlp_architect/data/amazon_reviews.py</strong>: Code which will download and process the Amazon datasets described below</p></li>
-<li><p><strong>nlp_architect/utils/ensembler.py</strong>: Contains the ensemble learning algorithm(s)</p></li>
-<li><p><strong>examples/supervised_sentiment/example_ensemble.py</strong>: An example of how the sentiment models can be trained and ensembled.</p></li>
-<li><p><strong>examples/supervised_sentiment/optimize_example.py</strong>: An example of using an hyperparameter optimizer with the simple LSTM model.</p></li>
+<li><strong>nlp_architect/models/supervised_sentiment.py</strong>: Sentiment analysis models - currently an LSTM and a one-hot CNN</li>
+<li><strong>nlp_architect/data/amazon_reviews.py</strong>: Code which will download and process the Amazon datasets described below</li>
+<li><strong>nlp_architect/utils/ensembler.py</strong>: Contains the ensemble learning algorithm(s)</li>
+<li><strong>examples/supervised_sentiment/example_ensemble.py</strong>: An example of how the sentiment models can be trained and ensembled.</li>
+<li><strong>examples/supervised_sentiment/optimize_example.py</strong>: An example of using an hyperparameter optimizer with the simple LSTM model.</li>
 </ul>
 </div>
 <div class="section" id="models">
@@ -239,8 +218,8 @@ Only the “overall”, “reviewText”, and “summary” columns of the revie
 The “summary” or title of the review is concatenated with the review text and subsequently cleaned.</p>
 <p>The Amazon Review Dataset was published in the following papers:</p>
 <ul class="simple">
-<li><p>Ups and downs: Modeling the visual evolution of fashion trends with one-class collaborative filtering. R. He, J. McAuley. WWW, 2016. <a class="reference external" href="http://cseweb.ucsd.edu/~jmcauley/pdfs/www16a.pdf">http://cseweb.ucsd.edu/~jmcauley/pdfs/www16a.pdf</a></p></li>
-<li><p>Image-based recommendations on styles and substitutes. J. McAuley, C. Targett, J. Shi, A. van den Hengel. SIGIR, 2015. <a class="reference external" href="http://cseweb.ucsd.edu/~jmcauley/pdfs/sigir15.pdf">http://cseweb.ucsd.edu/~jmcauley/pdfs/sigir15.pdf</a></p></li>
+<li>Ups and downs: Modeling the visual evolution of fashion trends with one-class collaborative filtering. R. He, J. McAuley. WWW, 2016. <a class="reference external" href="http://cseweb.ucsd.edu/~jmcauley/pdfs/www16a.pdf">http://cseweb.ucsd.edu/~jmcauley/pdfs/www16a.pdf</a></li>
+<li>Image-based recommendations on styles and substitutes. J. McAuley, C. Targett, J. Shi, A. van den Hengel. SIGIR, 2015. <a class="reference external" href="http://cseweb.ucsd.edu/~jmcauley/pdfs/sigir15.pdf">http://cseweb.ucsd.edu/~jmcauley/pdfs/sigir15.pdf</a></li>
 </ul>
 </div>
 <div class="section" id="running-modalities">
@@ -248,7 +227,7 @@ The “summary” or title of the review is concatenated with the review text an
 <div class="section" id="ensemble-train-test">
 <h3>Ensemble Train/Test<a class="headerlink" href="#ensemble-train-test" title="Permalink to this headline">¶</a></h3>
 <p>Currently, the pipeline shows a full train/test/ensemble cycle. The main pipeline can be run with the following command:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">examples</span><span class="o">/</span><span class="n">supervised_sentiment</span><span class="o">/</span><span class="n">example_ensemble</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">file_path</span> <span class="o">./</span><span class="n">reviews_Movies_and_TV</span><span class="o">.</span><span class="n">json</span><span class="o">/</span>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">examples</span><span class="o">/</span><span class="n">supervised_sentiment</span><span class="o">/</span><span class="n">example_ensemble</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">file_path</span> <span class="o">./</span><span class="n">reviews_Movies_and_TV</span><span class="o">.</span><span class="n">json</span><span class="o">/</span>
 </pre></div>
 </div>
 <p>At the conclusion of training a final confusion matrix will be displayed.</p>
@@ -256,7 +235,7 @@ The “summary” or title of the review is concatenated with the review text an
 <div class="section" id="hyperparameter-optimization">
 <h3>Hyperparameter optimization<a class="headerlink" href="#hyperparameter-optimization" title="Permalink to this headline">¶</a></h3>
 <p>An example of hyperparameter optimization is given using the python package hyperopt which uses a Tree of Parzen estimator to optimize the simple bi-LSTM algorithm. To run this example the following command can be utilized:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">examples</span><span class="o">/</span><span class="n">supervised_sentiment</span><span class="o">/</span><span class="n">optimize_example</span><span class="o">.</span><span class="n">py</span> \
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">examples</span><span class="o">/</span><span class="n">supervised_sentiment</span><span class="o">/</span><span class="n">optimize_example</span><span class="o">.</span><span class="n">py</span> \
   <span class="o">--</span><span class="n">file_path</span> <span class="o">./</span><span class="n">reviews_Movies_and_TV</span><span class="o">.</span><span class="n">json</span><span class="o">/</span> \
   <span class="o">--</span><span class="n">new_trials</span> <span class="mi">50</span> <span class="o">--</span><span class="n">output_file</span> <span class="o">./</span><span class="n">data</span><span class="o">/</span><span class="n">optimize_output</span><span class="o">.</span><span class="n">pkl</span>
 </pre></div>

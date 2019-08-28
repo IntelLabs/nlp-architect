@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Spacy-NP Annotator &mdash; NLP Architect by Intel® AI Lab 0.4.post2 documentation</title>
+  <title>Spacy-NP Annotator &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
   
 
   
@@ -25,6 +25,8 @@
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
         <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/install.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -33,12 +35,11 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" type="text/css" />
-  <link rel="stylesheet" href="_static/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/nlp_arch_theme.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="API" href="api.html" />
-    <link rel="prev" title="Spacy-BIST Parser" href="spacy_bist.html" /> 
+    <link rel="search" title="Search" href="search.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -57,7 +58,7 @@
 
           
             
-            <img src="_static/nlp_architect_logo_white.png" class="logo" alt="Logo"/>
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
           
           </a>
 
@@ -83,31 +84,27 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="main.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick start</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="publications.html">Publications</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Jupyter Tutorials</a></li>
-<li class="toctree-l1"><a class="reference internal" href="developer_guide.html">Developer Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model_zoo.html">Model Zoo</a></li>
 </ul>
 <p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="absa.html">Aspect Based Sentiment Analysis</a></li>
-<li class="toctree-l1"><a class="reference internal" href="chunker.html">Sequence Chunker</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ner_crf.html">Named Entity Recognition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tagging/sequence_tagging.html">Sequence Tagging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sentiment.html">Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bist_parser.html">Dependency Parsing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="intent.html">Intent Extraction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="np_segmentation.html">Noun Phrase Semantic Segmentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bist_parser.html">BIST Dependency Parser</a></li>
-<li class="toctree-l1"><a class="reference internal" href="word_sense.html">Most Common Word Sense</a></li>
-<li class="toctree-l1"><a class="reference internal" href="np2vec.html">Noun Phrase to Vec</a></li>
-<li class="toctree-l1"><a class="reference internal" href="supervised_sentiment.html">Supervised Sentiment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="reading_comprehension.html">Reading Comprehension</a></li>
-<li class="toctree-l1"><a class="reference internal" href="memn2n.html">End-to-End Memory Networks for Goal Oriented Dialogue</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tcn.html">TCN Language Model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="crosslingual_emb.html">Unsupervised Crosslingual Embeddings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cross_doc_coref.html">Cross Document Co-Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="identifying_semantic_relation.html">Semantic Relation Identification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lm.html">Language Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="information_extraction.html">Information Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transformers.html">Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="archived/additional.html">Additional Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Optimized Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quantized_bert.html">Quantized BERT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transformers_distillation.html">Transformers Distillation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Solutions</span></p>
@@ -116,24 +113,11 @@
 <li class="toctree-l1"><a class="reference internal" href="term_set_expansion.html">Set Expansion</a></li>
 <li class="toctree-l1"><a class="reference internal" href="trend_analysis.html">Trend Analysis</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Pipelines</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="spacy_bist.html">Spacy-BIST Parser</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Spacy-NP Annotator</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#chunker-based-noun-phrase-annotator">Chunker based noun phrase annotator</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#usage-example">Usage example</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#standalone-spacy-npannotator">Standalone Spacy-NPAnnotator</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id1">Usage example</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer_guide.html">Developer Guide</a></li>
 </ul>
 
             
@@ -201,18 +185,18 @@
 <div class="section" id="chunker-based-noun-phrase-annotator">
 <h2>Chunker based noun phrase annotator<a class="headerlink" href="#chunker-based-noun-phrase-annotator" title="Permalink to this headline">¶</a></h2>
 <p>The noun phrase annotator is a plug-in that can be used with <a class="reference external" href="https://spacy.io">Spacy</a> pipeline structure.</p>
-<p>The annotator loads a trained <a class="reference internal" href="generated/nlp_architect.models.chunker.SequenceChunker.html#nlp_architect.models.chunker.SequenceChunker" title="nlp_architect.models.chunker.SequenceChunker"><code class="xref py py-class docutils literal notranslate"><span class="pre">SequenceChunker</span></code></a> model that is able to predict chunk labels, creates Spacy based Span objects and applies a sequence of filtering to produce a set of noun phrases, finally, it attaches it to the document object.</p>
-<p>The annotator implementation can be found in <a class="reference internal" href="generated/nlp_architect.pipelines.spacy_np_annotator.NPAnnotator.html#nlp_architect.pipelines.spacy_np_annotator.NPAnnotator" title="nlp_architect.pipelines.spacy_np_annotator.NPAnnotator"><code class="xref py py-class docutils literal notranslate"><span class="pre">NPAnnotator</span></code></a>.</p>
+<p>The annotator loads a trained <a class="reference internal" href="generated_api/nlp_architect.models.html#nlp_architect.models.chunker.SequenceChunker" title="nlp_architect.models.chunker.SequenceChunker"><code class="xref py py-class docutils literal notranslate"><span class="pre">SequenceChunker</span></code></a> model that is able to predict chunk labels, creates Spacy based Span objects and applies a sequence of filtering to produce a set of noun phrases, finally, it attaches it to the document object.</p>
+<p>The annotator implementation can be found in <a class="reference internal" href="generated_api/nlp_architect.pipelines.html#nlp_architect.pipelines.spacy_np_annotator.NPAnnotator" title="nlp_architect.pipelines.spacy_np_annotator.NPAnnotator"><code class="xref py py-class docutils literal notranslate"><span class="pre">NPAnnotator</span></code></a>.</p>
 <div class="section" id="usage-example">
 <h3>Usage example<a class="headerlink" href="#usage-example" title="Permalink to this headline">¶</a></h3>
-<p>Loading a Spacy pipeline and adding a sentence breaker (required) and <a class="reference internal" href="generated/nlp_architect.pipelines.spacy_np_annotator.NPAnnotator.html#nlp_architect.pipelines.spacy_np_annotator.NPAnnotator" title="nlp_architect.pipelines.spacy_np_annotator.NPAnnotator"><code class="xref py py-class docutils literal notranslate"><span class="pre">NPAnnotator</span></code></a> annotator as the last annotator in the pipeline:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">nlp</span> <span class="o">=</span> <span class="n">spacy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;en&#39;</span><span class="p">)</span>
-<span class="n">nlp</span><span class="o">.</span><span class="n">add_pipe</span><span class="p">(</span><span class="n">nlp</span><span class="o">.</span><span class="n">create_pipe</span><span class="p">(</span><span class="s1">&#39;sentencizer&#39;</span><span class="p">),</span> <span class="n">first</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-<span class="n">nlp</span><span class="o">.</span><span class="n">add_pipe</span><span class="p">(</span><span class="n">NPAnnotator</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="o">&lt;</span><span class="n">path_to_model</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">path_to_params</span><span class="o">&gt;</span><span class="p">),</span> <span class="n">last</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<p>Loading a Spacy pipeline and adding a sentence breaker (required) and <a class="reference internal" href="generated_api/nlp_architect.pipelines.html#nlp_architect.pipelines.spacy_np_annotator.NPAnnotator" title="nlp_architect.pipelines.spacy_np_annotator.NPAnnotator"><code class="xref py py-class docutils literal notranslate"><span class="pre">NPAnnotator</span></code></a> annotator as the last annotator in the pipeline:</p>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nlp</span> <span class="o">=</span> <span class="n">spacy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;en&#39;</span><span class="p">)</span>
+<span class="n">nlp</span><span class="o">.</span><span class="n">add_pipe</span><span class="p">(</span><span class="n">nlp</span><span class="o">.</span><span class="n">create_pipe</span><span class="p">(</span><span class="s1">&#39;sentencizer&#39;</span><span class="p">),</span> <span class="n">first</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">nlp</span><span class="o">.</span><span class="n">add_pipe</span><span class="p">(</span><span class="n">NPAnnotator</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="o">&lt;</span><span class="n">path_to_model</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">path_to_params</span><span class="o">&gt;</span><span class="p">),</span> <span class="n">last</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Parse documents regularly and get the noun phrase annotations using a dedicated method:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">doc</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="s1">&#39;The quick brown fox jumped over the fence&#39;</span><span class="p">)</span>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">doc</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="s1">&#39;The quick brown fox jumped over the fence&#39;</span><span class="p">)</span>
 <span class="n">noun_phrases</span> <span class="o">=</span> <span class="n">nlp_architect</span><span class="o">.</span><span class="n">pipelines</span><span class="o">.</span><span class="n">spacy_np_annotator</span><span class="o">.</span><span class="n">get_noun_phrases</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -220,12 +204,12 @@
 </div>
 <div class="section" id="standalone-spacy-npannotator">
 <h2>Standalone Spacy-NPAnnotator<a class="headerlink" href="#standalone-spacy-npannotator" title="Permalink to this headline">¶</a></h2>
-<p>For use cases in which the user is not interested in specialized Spacy pipelines we have implemented <a class="reference internal" href="generated/nlp_architect.pipelines.spacy_np_annotator.SpacyNPAnnotator.html#nlp_architect.pipelines.spacy_np_annotator.SpacyNPAnnotator" title="nlp_architect.pipelines.spacy_np_annotator.SpacyNPAnnotator"><code class="xref py py-class docutils literal notranslate"><span class="pre">SpacyNPAnnotator</span></code></a> which will run a Spacy pipeline internally and provide string based noun phrase chunks given documents in string format.</p>
+<p>For use cases in which the user is not interested in specialized Spacy pipelines we have implemented <a class="reference internal" href="generated_api/nlp_architect.pipelines.html#nlp_architect.pipelines.spacy_np_annotator.SpacyNPAnnotator" title="nlp_architect.pipelines.spacy_np_annotator.SpacyNPAnnotator"><code class="xref py py-class docutils literal notranslate"><span class="pre">SpacyNPAnnotator</span></code></a> which will run a Spacy pipeline internally and provide string based noun phrase chunks given documents in string format.</p>
 <div class="section" id="id1">
 <h3>Usage example<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
-<p>Just as in <a class="reference internal" href="generated/nlp_architect.pipelines.spacy_np_annotator.NPAnnotator.html#nlp_architect.pipelines.spacy_np_annotator.NPAnnotator" title="nlp_architect.pipelines.spacy_np_annotator.NPAnnotator"><code class="xref py py-class docutils literal notranslate"><span class="pre">NPAnnotator</span></code></a>, we need to provide a trained <a class="reference internal" href="generated/nlp_architect.models.chunker.SequenceChunker.html#nlp_architect.models.chunker.SequenceChunker" title="nlp_architect.models.chunker.SequenceChunker"><code class="xref py py-class docutils literal notranslate"><span class="pre">SequenceChunker</span></code></a> model and its parameters file. It is also possible to provide a specific Spacy model to base the pipeline on.</p>
+<p>Just as in <a class="reference internal" href="generated_api/nlp_architect.pipelines.html#nlp_architect.pipelines.spacy_np_annotator.NPAnnotator" title="nlp_architect.pipelines.spacy_np_annotator.NPAnnotator"><code class="xref py py-class docutils literal notranslate"><span class="pre">NPAnnotator</span></code></a>, we need to provide a trained <a class="reference internal" href="generated_api/nlp_architect.models.html#nlp_architect.models.chunker.SequenceChunker" title="nlp_architect.models.chunker.SequenceChunker"><code class="xref py py-class docutils literal notranslate"><span class="pre">SequenceChunker</span></code></a> model and its parameters file. It is also possible to provide a specific Spacy model to base the pipeline on.</p>
 <p>The following example shows how to load a model/parameters using the default Spacy English model (<cite>en</cite>) and how to get the noun phrase annotations.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">spacy_np</span> <span class="o">=</span> <span class="n">SpacyNPAnnotator</span><span class="p">(</span><span class="o">&lt;</span><span class="n">model_path</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">model_parameters_path</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">spacy_mode</span><span class="o">=</span><span class="s1">&#39;en&#39;</span><span class="p">)</span>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">spacy_np</span> <span class="o">=</span> <span class="n">SpacyNPAnnotator</span><span class="p">(</span><span class="o">&lt;</span><span class="n">model_path</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">model_parameters_path</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">spacy_mode</span><span class="o">=</span><span class="s1">&#39;en&#39;</span><span class="p">)</span>
 <span class="n">noun_phrases</span> <span class="o">=</span> <span class="n">spacy_np</span><span class="p">(</span><span class="s1">&#39;The quick brown fox jumped over the fence&#39;</span><span class="p">)</span>
 </pre></div>
 </div>

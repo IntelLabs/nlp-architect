@@ -1,0 +1,754 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>nlp_architect.data.glue_tasks &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script type="text/javascript" src="../../../_static/install.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/nlp_arch_theme.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html">
+          
+
+          
+            
+            <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick_start.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../publications.html">Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials.html">Jupyter Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../model_zoo.html">Model Zoo</a></li>
+</ul>
+<p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tagging/sequence_tagging.html">Sequence Tagging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../sentiment.html">Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../bist_parser.html">Dependency Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../intent.html">Intent Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lm.html">Language Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../information_extraction.html">Information Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../transformers.html">Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../archived/additional.html">Additional Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Optimized Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quantized_bert.html">Quantized BERT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../transformers_distillation.html">Transformers Distillation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solutions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../absa_solution.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../term_set_expansion.html">Set Expansion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../trend_analysis.html">Trend Analysis</a></li>
+</ul>
+<p class="caption"><span class="caption-text">For Developers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer_guide.html">Developer Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">NLP Architect by Intel® AI Lab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>nlp_architect.data.glue_tasks</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for nlp_architect.data.glue_tasks</h1><div class="highlight"><pre>
+<span></span><span class="c1"># ******************************************************************************</span>
+<span class="c1"># Copyright 2017-2019 Intel Corporation</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ******************************************************************************</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">from</span> <span class="nn">nlp_architect.data.sequence_classification</span> <span class="k">import</span> <span class="n">SequenceClsInputExample</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.data.utils</span> <span class="k">import</span> <span class="n">DataProcessor</span><span class="p">,</span> <span class="n">Task</span><span class="p">,</span> <span class="n">read_tsv</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="InputFeatures"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.InputFeatures">[docs]</a><span class="k">class</span> <span class="nc">InputFeatures</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A single set of features of data.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_ids</span><span class="p">,</span> <span class="n">input_mask</span><span class="p">,</span> <span class="n">segment_ids</span><span class="p">,</span> <span class="n">label_id</span><span class="p">,</span> <span class="n">valid_ids</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input_ids</span> <span class="o">=</span> <span class="n">input_ids</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input_mask</span> <span class="o">=</span> <span class="n">input_mask</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">segment_ids</span> <span class="o">=</span> <span class="n">segment_ids</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label_id</span> <span class="o">=</span> <span class="n">label_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">valid_ids</span> <span class="o">=</span> <span class="n">valid_ids</span></div>
+
+
+<div class="viewcode-block" id="MrpcProcessor"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.MrpcProcessor">[docs]</a><span class="k">class</span> <span class="nc">MrpcProcessor</span><span class="p">(</span><span class="n">DataProcessor</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Processor for the MRPC data set (GLUE version).&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="MrpcProcessor.get_train_examples"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.MrpcProcessor.get_train_examples">[docs]</a>    <span class="k">def</span> <span class="nf">get_train_examples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_examples</span><span class="p">(</span><span class="n">read_tsv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;train.tsv&quot;</span><span class="p">)),</span> <span class="s2">&quot;train&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MrpcProcessor.get_dev_examples"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.MrpcProcessor.get_dev_examples">[docs]</a>    <span class="k">def</span> <span class="nf">get_dev_examples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_examples</span><span class="p">(</span><span class="n">read_tsv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;dev.tsv&quot;</span><span class="p">)),</span> <span class="s2">&quot;dev&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MrpcProcessor.get_test_examples"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.MrpcProcessor.get_test_examples">[docs]</a>    <span class="k">def</span> <span class="nf">get_test_examples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_examples</span><span class="p">(</span><span class="n">read_tsv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;test.tsv&quot;</span><span class="p">)),</span> <span class="s2">&quot;test&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MrpcProcessor.get_labels"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.MrpcProcessor.get_labels">[docs]</a>    <span class="k">def</span> <span class="nf">get_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;0&quot;</span><span class="p">,</span> <span class="s2">&quot;1&quot;</span><span class="p">]</span></div>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_create_examples</span><span class="p">(</span><span class="n">lines</span><span class="p">,</span> <span class="n">set_type</span><span class="p">):</span>
+        <span class="n">examples</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">lines</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">guid</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">-</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">set_type</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+            <span class="n">text_a</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+            <span class="n">text_b</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">set_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="s2">&quot;dev&quot;</span><span class="p">]:</span>
+                <span class="n">label</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">examples</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="n">SequenceClsInputExample</span><span class="p">(</span><span class="n">guid</span><span class="o">=</span><span class="n">guid</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text_a</span><span class="p">,</span> <span class="n">text_b</span><span class="o">=</span><span class="n">text_b</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">examples</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">SequenceClsInputExample</span><span class="p">(</span><span class="n">guid</span><span class="o">=</span><span class="n">guid</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text_a</span><span class="p">,</span> <span class="n">text_b</span><span class="o">=</span><span class="n">text_b</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">examples</span></div>
+
+
+<div class="viewcode-block" id="MnliProcessor"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.MnliProcessor">[docs]</a><span class="k">class</span> <span class="nc">MnliProcessor</span><span class="p">(</span><span class="n">DataProcessor</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Processor for the MultiNLI data set (GLUE version).&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="MnliProcessor.get_train_examples"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.MnliProcessor.get_train_examples">[docs]</a>    <span class="k">def</span> <span class="nf">get_train_examples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_examples</span><span class="p">(</span><span class="n">read_tsv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;train.tsv&quot;</span><span class="p">)),</span> <span class="s2">&quot;train&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MnliProcessor.get_dev_examples"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.MnliProcessor.get_dev_examples">[docs]</a>    <span class="k">def</span> <span class="nf">get_dev_examples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_examples</span><span class="p">(</span><span class="n">read_tsv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;dev_matched.tsv&quot;</span><span class="p">)),</span>
+                                     <span class="s2">&quot;dev_matched&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MnliProcessor.get_test_examples"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.MnliProcessor.get_test_examples">[docs]</a>    <span class="k">def</span> <span class="nf">get_test_examples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_examples</span><span class="p">(</span><span class="n">read_tsv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;test_matched.tsv&quot;</span><span class="p">)),</span>
+                                     <span class="s2">&quot;test_matched&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MnliProcessor.get_labels"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.MnliProcessor.get_labels">[docs]</a>    <span class="k">def</span> <span class="nf">get_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;contradiction&quot;</span><span class="p">,</span> <span class="s2">&quot;entailment&quot;</span><span class="p">,</span> <span class="s2">&quot;neutral&quot;</span><span class="p">]</span></div>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_create_examples</span><span class="p">(</span><span class="n">lines</span><span class="p">,</span> <span class="n">set_type</span><span class="p">):</span>
+        <span class="n">examples</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">lines</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">guid</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">-</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">set_type</span><span class="p">,</span> <span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">text_a</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span>
+            <span class="n">text_b</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">set_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="s2">&quot;dev_matched&quot;</span><span class="p">]:</span>
+                <span class="n">label</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">examples</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="n">SequenceClsInputExample</span><span class="p">(</span><span class="n">guid</span><span class="o">=</span><span class="n">guid</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text_a</span><span class="p">,</span> <span class="n">text_b</span><span class="o">=</span><span class="n">text_b</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">examples</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">SequenceClsInputExample</span><span class="p">(</span><span class="n">guid</span><span class="o">=</span><span class="n">guid</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text_a</span><span class="p">,</span> <span class="n">text_b</span><span class="o">=</span><span class="n">text_b</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">examples</span></div>
+
+
+<div class="viewcode-block" id="MnliMismatchedProcessor"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.MnliMismatchedProcessor">[docs]</a><span class="k">class</span> <span class="nc">MnliMismatchedProcessor</span><span class="p">(</span><span class="n">MnliProcessor</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Processor for the MultiNLI Mismatched data set (GLUE version).&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="MnliMismatchedProcessor.get_dev_examples"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.MnliMismatchedProcessor.get_dev_examples">[docs]</a>    <span class="k">def</span> <span class="nf">get_dev_examples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_examples</span><span class="p">(</span><span class="n">read_tsv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;dev_mismatched.tsv&quot;</span><span class="p">)),</span>
+                                     <span class="s2">&quot;dev_matched&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MnliMismatchedProcessor.get_test_examples"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.MnliMismatchedProcessor.get_test_examples">[docs]</a>    <span class="k">def</span> <span class="nf">get_test_examples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_examples</span><span class="p">(</span><span class="n">read_tsv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;test_mismatched.tsv&quot;</span><span class="p">)),</span>
+                                     <span class="s2">&quot;test_mismatched&quot;</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="ColaProcessor"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.ColaProcessor">[docs]</a><span class="k">class</span> <span class="nc">ColaProcessor</span><span class="p">(</span><span class="n">DataProcessor</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Processor for the CoLA data set (GLUE version).&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ColaProcessor.get_train_examples"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.ColaProcessor.get_train_examples">[docs]</a>    <span class="k">def</span> <span class="nf">get_train_examples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_examples</span><span class="p">(</span><span class="n">read_tsv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;train.tsv&quot;</span><span class="p">)),</span> <span class="s2">&quot;train&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ColaProcessor.get_dev_examples"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.ColaProcessor.get_dev_examples">[docs]</a>    <span class="k">def</span> <span class="nf">get_dev_examples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_examples</span><span class="p">(</span><span class="n">read_tsv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;dev.tsv&quot;</span><span class="p">)),</span> <span class="s2">&quot;dev&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ColaProcessor.get_test_examples"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.ColaProcessor.get_test_examples">[docs]</a>    <span class="k">def</span> <span class="nf">get_test_examples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_examples</span><span class="p">(</span><span class="n">read_tsv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;test.tsv&quot;</span><span class="p">)),</span> <span class="s2">&quot;test&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ColaProcessor.get_labels"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.ColaProcessor.get_labels">[docs]</a>    <span class="k">def</span> <span class="nf">get_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;0&quot;</span><span class="p">,</span> <span class="s2">&quot;1&quot;</span><span class="p">]</span></div>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_create_examples</span><span class="p">(</span><span class="n">lines</span><span class="p">,</span> <span class="n">set_type</span><span class="p">):</span>
+        <span class="n">examples</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">lines</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">set_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="s2">&quot;dev&quot;</span><span class="p">]:</span>
+                <span class="k">continue</span>
+            <span class="n">guid</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">-</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">set_type</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">set_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="s2">&quot;dev&quot;</span><span class="p">]:</span>
+                <span class="n">text_a</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+                <span class="n">label</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">examples</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="n">SequenceClsInputExample</span><span class="p">(</span><span class="n">guid</span><span class="o">=</span><span class="n">guid</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text_a</span><span class="p">,</span> <span class="n">text_b</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">text_a</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">examples</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">SequenceClsInputExample</span><span class="p">(</span><span class="n">guid</span><span class="o">=</span><span class="n">guid</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text_a</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">examples</span></div>
+
+
+<div class="viewcode-block" id="Sst2Processor"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.Sst2Processor">[docs]</a><span class="k">class</span> <span class="nc">Sst2Processor</span><span class="p">(</span><span class="n">DataProcessor</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Processor for the SST-2 data set (GLUE version).&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Sst2Processor.get_train_examples"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.Sst2Processor.get_train_examples">[docs]</a>    <span class="k">def</span> <span class="nf">get_train_examples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_examples</span><span class="p">(</span><span class="n">read_tsv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;train.tsv&quot;</span><span class="p">)),</span> <span class="s2">&quot;train&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Sst2Processor.get_dev_examples"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.Sst2Processor.get_dev_examples">[docs]</a>    <span class="k">def</span> <span class="nf">get_dev_examples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_examples</span><span class="p">(</span><span class="n">read_tsv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;dev.tsv&quot;</span><span class="p">)),</span> <span class="s2">&quot;dev&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Sst2Processor.get_test_examples"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.Sst2Processor.get_test_examples">[docs]</a>    <span class="k">def</span> <span class="nf">get_test_examples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_examples</span><span class="p">(</span><span class="n">read_tsv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;test.tsv&quot;</span><span class="p">)),</span> <span class="s2">&quot;test&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Sst2Processor.get_labels"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.Sst2Processor.get_labels">[docs]</a>    <span class="k">def</span> <span class="nf">get_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;0&quot;</span><span class="p">,</span> <span class="s2">&quot;1&quot;</span><span class="p">]</span></div>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_create_examples</span><span class="p">(</span><span class="n">lines</span><span class="p">,</span> <span class="n">set_type</span><span class="p">):</span>
+        <span class="n">examples</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">lines</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">guid</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">-</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">set_type</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">set_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="s2">&quot;dev&quot;</span><span class="p">]:</span>
+                <span class="n">text_a</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">label</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">examples</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="n">SequenceClsInputExample</span><span class="p">(</span><span class="n">guid</span><span class="o">=</span><span class="n">guid</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text_a</span><span class="p">,</span> <span class="n">text_b</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">text_a</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">examples</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">SequenceClsInputExample</span><span class="p">(</span><span class="n">guid</span><span class="o">=</span><span class="n">guid</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text_a</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">examples</span></div>
+
+
+<div class="viewcode-block" id="StsbProcessor"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.StsbProcessor">[docs]</a><span class="k">class</span> <span class="nc">StsbProcessor</span><span class="p">(</span><span class="n">DataProcessor</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Processor for the STS-B data set (GLUE version).&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="StsbProcessor.get_train_examples"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.StsbProcessor.get_train_examples">[docs]</a>    <span class="k">def</span> <span class="nf">get_train_examples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_examples</span><span class="p">(</span><span class="n">read_tsv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;train.tsv&quot;</span><span class="p">)),</span> <span class="s2">&quot;train&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="StsbProcessor.get_dev_examples"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.StsbProcessor.get_dev_examples">[docs]</a>    <span class="k">def</span> <span class="nf">get_dev_examples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_examples</span><span class="p">(</span><span class="n">read_tsv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;dev.tsv&quot;</span><span class="p">)),</span> <span class="s2">&quot;dev&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="StsbProcessor.get_test_examples"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.StsbProcessor.get_test_examples">[docs]</a>    <span class="k">def</span> <span class="nf">get_test_examples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_examples</span><span class="p">(</span><span class="n">read_tsv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;test.tsv&quot;</span><span class="p">)),</span> <span class="s2">&quot;test&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="StsbProcessor.get_labels"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.StsbProcessor.get_labels">[docs]</a>    <span class="k">def</span> <span class="nf">get_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span></div>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_create_examples</span><span class="p">(</span><span class="n">lines</span><span class="p">,</span> <span class="n">set_type</span><span class="p">):</span>
+        <span class="n">examples</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">lines</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">guid</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">-</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">set_type</span><span class="p">,</span> <span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">text_a</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span>
+            <span class="n">text_b</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">set_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="s2">&quot;dev&quot;</span><span class="p">]:</span>
+                <span class="n">label</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">examples</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="n">SequenceClsInputExample</span><span class="p">(</span><span class="n">guid</span><span class="o">=</span><span class="n">guid</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text_a</span><span class="p">,</span> <span class="n">text_b</span><span class="o">=</span><span class="n">text_b</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">examples</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">SequenceClsInputExample</span><span class="p">(</span><span class="n">guid</span><span class="o">=</span><span class="n">guid</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text_a</span><span class="p">,</span> <span class="n">text_b</span><span class="o">=</span><span class="n">text_b</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">examples</span></div>
+
+
+<div class="viewcode-block" id="QqpProcessor"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.QqpProcessor">[docs]</a><span class="k">class</span> <span class="nc">QqpProcessor</span><span class="p">(</span><span class="n">DataProcessor</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Processor for the QQP data set (GLUE version).&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="QqpProcessor.get_train_examples"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.QqpProcessor.get_train_examples">[docs]</a>    <span class="k">def</span> <span class="nf">get_train_examples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_examples</span><span class="p">(</span><span class="n">read_tsv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;train.tsv&quot;</span><span class="p">)),</span> <span class="s2">&quot;train&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QqpProcessor.get_dev_examples"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.QqpProcessor.get_dev_examples">[docs]</a>    <span class="k">def</span> <span class="nf">get_dev_examples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_examples</span><span class="p">(</span><span class="n">read_tsv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;dev.tsv&quot;</span><span class="p">)),</span> <span class="s2">&quot;dev&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QqpProcessor.get_test_examples"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.QqpProcessor.get_test_examples">[docs]</a>    <span class="k">def</span> <span class="nf">get_test_examples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_examples</span><span class="p">(</span><span class="n">read_tsv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;test.tsv&quot;</span><span class="p">)),</span> <span class="s2">&quot;test&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QqpProcessor.get_labels"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.QqpProcessor.get_labels">[docs]</a>    <span class="k">def</span> <span class="nf">get_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;0&quot;</span><span class="p">,</span> <span class="s2">&quot;1&quot;</span><span class="p">]</span></div>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_create_examples</span><span class="p">(</span><span class="n">lines</span><span class="p">,</span> <span class="n">set_type</span><span class="p">):</span>
+        <span class="n">examples</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">lines</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">guid</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">-</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">set_type</span><span class="p">,</span> <span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">set_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="s2">&quot;dev&quot;</span><span class="p">]:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">text_a</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+                    <span class="n">text_b</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+                    <span class="n">label</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+                <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                <span class="n">examples</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="n">SequenceClsInputExample</span><span class="p">(</span><span class="n">guid</span><span class="o">=</span><span class="n">guid</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text_a</span><span class="p">,</span> <span class="n">text_b</span><span class="o">=</span><span class="n">text_b</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">text_a</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="n">text_b</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+                <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                <span class="n">examples</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">SequenceClsInputExample</span><span class="p">(</span><span class="n">guid</span><span class="o">=</span><span class="n">guid</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text_a</span><span class="p">,</span> <span class="n">text_b</span><span class="o">=</span><span class="n">text_b</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">examples</span></div>
+
+
+<div class="viewcode-block" id="QnliProcessor"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.QnliProcessor">[docs]</a><span class="k">class</span> <span class="nc">QnliProcessor</span><span class="p">(</span><span class="n">DataProcessor</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Processor for the QNLI data set (GLUE version).&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="QnliProcessor.get_train_examples"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.QnliProcessor.get_train_examples">[docs]</a>    <span class="k">def</span> <span class="nf">get_train_examples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_examples</span><span class="p">(</span><span class="n">read_tsv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;train.tsv&quot;</span><span class="p">)),</span> <span class="s2">&quot;train&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QnliProcessor.get_dev_examples"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.QnliProcessor.get_dev_examples">[docs]</a>    <span class="k">def</span> <span class="nf">get_dev_examples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_examples</span><span class="p">(</span><span class="n">read_tsv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;dev.tsv&quot;</span><span class="p">)),</span> <span class="s2">&quot;dev&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QnliProcessor.get_test_examples"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.QnliProcessor.get_test_examples">[docs]</a>    <span class="k">def</span> <span class="nf">get_test_examples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_examples</span><span class="p">(</span><span class="n">read_tsv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;test.tsv&quot;</span><span class="p">)),</span> <span class="s2">&quot;test&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QnliProcessor.get_labels"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.QnliProcessor.get_labels">[docs]</a>    <span class="k">def</span> <span class="nf">get_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;entailment&quot;</span><span class="p">,</span> <span class="s2">&quot;not_entailment&quot;</span><span class="p">]</span></div>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_create_examples</span><span class="p">(</span><span class="n">lines</span><span class="p">,</span> <span class="n">set_type</span><span class="p">):</span>
+        <span class="n">examples</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">lines</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">guid</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">-</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">set_type</span><span class="p">,</span> <span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">text_a</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">text_b</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">set_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="s2">&quot;dev&quot;</span><span class="p">]:</span>
+                <span class="n">label</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">examples</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="n">SequenceClsInputExample</span><span class="p">(</span><span class="n">guid</span><span class="o">=</span><span class="n">guid</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text_a</span><span class="p">,</span> <span class="n">text_b</span><span class="o">=</span><span class="n">text_b</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">examples</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">SequenceClsInputExample</span><span class="p">(</span><span class="n">guid</span><span class="o">=</span><span class="n">guid</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text_a</span><span class="p">,</span> <span class="n">text_b</span><span class="o">=</span><span class="n">text_b</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">examples</span></div>
+
+
+<div class="viewcode-block" id="RteProcessor"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.RteProcessor">[docs]</a><span class="k">class</span> <span class="nc">RteProcessor</span><span class="p">(</span><span class="n">DataProcessor</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Processor for the RTE data set (GLUE version).&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="RteProcessor.get_train_examples"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.RteProcessor.get_train_examples">[docs]</a>    <span class="k">def</span> <span class="nf">get_train_examples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_examples</span><span class="p">(</span><span class="n">read_tsv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;train.tsv&quot;</span><span class="p">)),</span> <span class="s2">&quot;train&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RteProcessor.get_dev_examples"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.RteProcessor.get_dev_examples">[docs]</a>    <span class="k">def</span> <span class="nf">get_dev_examples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_examples</span><span class="p">(</span><span class="n">read_tsv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;dev.tsv&quot;</span><span class="p">)),</span> <span class="s2">&quot;dev&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RteProcessor.get_test_examples"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.RteProcessor.get_test_examples">[docs]</a>    <span class="k">def</span> <span class="nf">get_test_examples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_examples</span><span class="p">(</span><span class="n">read_tsv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;test.tsv&quot;</span><span class="p">)),</span> <span class="s2">&quot;test&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RteProcessor.get_labels"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.RteProcessor.get_labels">[docs]</a>    <span class="k">def</span> <span class="nf">get_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;entailment&quot;</span><span class="p">,</span> <span class="s2">&quot;not_entailment&quot;</span><span class="p">]</span></div>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_create_examples</span><span class="p">(</span><span class="n">lines</span><span class="p">,</span> <span class="n">set_type</span><span class="p">):</span>
+        <span class="n">examples</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">lines</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">guid</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">-</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">set_type</span><span class="p">,</span> <span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">text_a</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">text_b</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">set_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="s2">&quot;dev&quot;</span><span class="p">]:</span>
+                <span class="n">label</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">examples</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="n">SequenceClsInputExample</span><span class="p">(</span><span class="n">guid</span><span class="o">=</span><span class="n">guid</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text_a</span><span class="p">,</span> <span class="n">text_b</span><span class="o">=</span><span class="n">text_b</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">examples</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">SequenceClsInputExample</span><span class="p">(</span><span class="n">guid</span><span class="o">=</span><span class="n">guid</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text_a</span><span class="p">,</span> <span class="n">text_b</span><span class="o">=</span><span class="n">text_b</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">examples</span></div>
+
+
+<div class="viewcode-block" id="WnliProcessor"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.WnliProcessor">[docs]</a><span class="k">class</span> <span class="nc">WnliProcessor</span><span class="p">(</span><span class="n">DataProcessor</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Processor for the WNLI data set (GLUE version).&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="WnliProcessor.get_train_examples"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.WnliProcessor.get_train_examples">[docs]</a>    <span class="k">def</span> <span class="nf">get_train_examples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_examples</span><span class="p">(</span><span class="n">read_tsv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;train.tsv&quot;</span><span class="p">)),</span> <span class="s2">&quot;train&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="WnliProcessor.get_dev_examples"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.WnliProcessor.get_dev_examples">[docs]</a>    <span class="k">def</span> <span class="nf">get_dev_examples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_examples</span><span class="p">(</span><span class="n">read_tsv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;dev.tsv&quot;</span><span class="p">)),</span> <span class="s2">&quot;dev&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="WnliProcessor.get_test_examples"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.WnliProcessor.get_test_examples">[docs]</a>    <span class="k">def</span> <span class="nf">get_test_examples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_examples</span><span class="p">(</span><span class="n">read_tsv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;test.tsv&quot;</span><span class="p">)),</span> <span class="s2">&quot;test&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="WnliProcessor.get_labels"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.WnliProcessor.get_labels">[docs]</a>    <span class="k">def</span> <span class="nf">get_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;0&quot;</span><span class="p">,</span> <span class="s2">&quot;1&quot;</span><span class="p">]</span></div>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_create_examples</span><span class="p">(</span><span class="n">lines</span><span class="p">,</span> <span class="n">set_type</span><span class="p">):</span>
+        <span class="n">examples</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">lines</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">guid</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">-</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">set_type</span><span class="p">,</span> <span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">text_a</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">text_b</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">set_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="s2">&quot;dev&quot;</span><span class="p">]:</span>
+                <span class="n">label</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">examples</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="n">SequenceClsInputExample</span><span class="p">(</span><span class="n">guid</span><span class="o">=</span><span class="n">guid</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text_a</span><span class="p">,</span> <span class="n">text_b</span><span class="o">=</span><span class="n">text_b</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">examples</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">SequenceClsInputExample</span><span class="p">(</span><span class="n">guid</span><span class="o">=</span><span class="n">guid</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text_a</span><span class="p">,</span> <span class="n">text_b</span><span class="o">=</span><span class="n">text_b</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">examples</span></div>
+
+
+<div class="viewcode-block" id="convert_examples_to_features"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.convert_examples_to_features">[docs]</a><span class="k">def</span> <span class="nf">convert_examples_to_features</span><span class="p">(</span><span class="n">examples</span><span class="p">,</span> <span class="n">label_list</span><span class="p">,</span> <span class="n">max_seq_length</span><span class="p">,</span>
+                                 <span class="n">tokenizer</span><span class="p">,</span> <span class="n">output_mode</span><span class="p">,</span>
+                                 <span class="n">cls_token_at_end</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">pad_on_left</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                 <span class="n">cls_token</span><span class="o">=</span><span class="s1">&#39;[CLS]&#39;</span><span class="p">,</span> <span class="n">sep_token</span><span class="o">=</span><span class="s1">&#39;[SEP]&#39;</span><span class="p">,</span> <span class="n">pad_token</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                                 <span class="n">sequence_a_segment_id</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sequence_b_segment_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                                 <span class="n">cls_token_segment_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">pad_token_segment_id</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                                 <span class="n">mask_padding_with_zero</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Loads a data file into a list of `InputBatch`s</span>
+<span class="sd">        `cls_token_at_end` define the location of the CLS token:</span>
+<span class="sd">            - False (Default, BERT/XLM pattern): [CLS] + A + [SEP] + B + [SEP]</span>
+<span class="sd">            - True (XLNet/GPT pattern): A + [SEP] + B + [SEP] + [CLS]</span>
+<span class="sd">        `cls_token_segment_id` define the segment id associated to the CLS token</span>
+<span class="sd">        (0 for BERT, 2 for XLNet)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">label_map</span> <span class="o">=</span> <span class="p">{</span><span class="n">label</span><span class="p">:</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">label_list</span><span class="p">)}</span>
+
+    <span class="n">features</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">ex_index</span><span class="p">,</span> <span class="n">example</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">examples</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">ex_index</span> <span class="o">%</span> <span class="mi">10000</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Writing example </span><span class="si">{}</span><span class="s2"> of </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ex_index</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">examples</span><span class="p">)))</span>
+
+        <span class="n">tokens_a</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">example</span><span class="o">.</span><span class="n">text_a</span><span class="p">)</span>
+
+        <span class="n">tokens_b</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">example</span><span class="o">.</span><span class="n">text_b</span><span class="p">:</span>
+            <span class="n">tokens_b</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">example</span><span class="o">.</span><span class="n">text_b</span><span class="p">)</span>
+            <span class="c1"># Modifies `tokens_a` and `tokens_b` in place so that the total</span>
+            <span class="c1"># length is less than the specified length.</span>
+            <span class="c1"># Account for [CLS], [SEP], [SEP] with &quot;- 3&quot;</span>
+            <span class="n">_truncate_seq_pair</span><span class="p">(</span><span class="n">tokens_a</span><span class="p">,</span> <span class="n">tokens_b</span><span class="p">,</span> <span class="n">max_seq_length</span> <span class="o">-</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Account for [CLS] and [SEP] with &quot;- 2&quot;</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokens_a</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">max_seq_length</span> <span class="o">-</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">tokens_a</span> <span class="o">=</span> <span class="n">tokens_a</span><span class="p">[:(</span><span class="n">max_seq_length</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)]</span>
+
+        <span class="c1"># The convention in BERT is:</span>
+        <span class="c1"># (a) For sequence pairs:</span>
+        <span class="c1">#  tokens:   [CLS] is this jack ##son ##ville ? [SEP] no it is not . [SEP]</span>
+        <span class="c1">#  type_ids:   0   0  0    0    0     0       0   0   1  1  1  1   1   1</span>
+        <span class="c1"># (b) For single sequences:</span>
+        <span class="c1">#  tokens:   [CLS] the dog is hairy . [SEP]</span>
+        <span class="c1">#  type_ids:   0   0   0   0  0     0   0</span>
+        <span class="c1">#</span>
+        <span class="c1"># Where &quot;type_ids&quot; are used to indicate whether this is the first</span>
+        <span class="c1"># sequence or the second sequence. The embedding vectors for `type=0` and</span>
+        <span class="c1"># `type=1` were learned during pre-training and are added to the wordpiece</span>
+        <span class="c1"># embedding vector (and position vector). This is not *strictly* necessary</span>
+        <span class="c1"># since the [SEP] token unambiguously separates the sequences, but it makes</span>
+        <span class="c1"># it easier for the model to learn the concept of sequences.</span>
+        <span class="c1">#</span>
+        <span class="c1"># For classification tasks, the first vector (corresponding to [CLS]) is</span>
+        <span class="c1"># used as as the &quot;sentence vector&quot;. Note that this only makes sense because</span>
+        <span class="c1"># the entire model is fine-tuned.</span>
+        <span class="n">tokens</span> <span class="o">=</span> <span class="n">tokens_a</span> <span class="o">+</span> <span class="p">[</span><span class="n">sep_token</span><span class="p">]</span>
+        <span class="n">segment_ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">sequence_a_segment_id</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">tokens_b</span><span class="p">:</span>
+            <span class="n">tokens</span> <span class="o">+=</span> <span class="n">tokens_b</span> <span class="o">+</span> <span class="p">[</span><span class="n">sep_token</span><span class="p">]</span>
+            <span class="n">segment_ids</span> <span class="o">+=</span> <span class="p">[</span><span class="n">sequence_b_segment_id</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">tokens_b</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">cls_token_at_end</span><span class="p">:</span>
+            <span class="n">tokens</span> <span class="o">=</span> <span class="n">tokens</span> <span class="o">+</span> <span class="p">[</span><span class="n">cls_token</span><span class="p">]</span>
+            <span class="n">segment_ids</span> <span class="o">=</span> <span class="n">segment_ids</span> <span class="o">+</span> <span class="p">[</span><span class="n">cls_token_segment_id</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">tokens</span> <span class="o">=</span> <span class="p">[</span><span class="n">cls_token</span><span class="p">]</span> <span class="o">+</span> <span class="n">tokens</span>
+            <span class="n">segment_ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">cls_token_segment_id</span><span class="p">]</span> <span class="o">+</span> <span class="n">segment_ids</span>
+
+        <span class="n">input_ids</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">convert_tokens_to_ids</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+
+        <span class="c1"># The mask has 1 for real tokens and 0 for padding tokens. Only real</span>
+        <span class="c1"># tokens are attended to.</span>
+        <span class="n">input_mask</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span> <span class="k">if</span> <span class="n">mask_padding_with_zero</span> <span class="k">else</span> <span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">input_ids</span><span class="p">)</span>
+
+        <span class="c1"># Zero-pad up to the sequence length.</span>
+        <span class="n">padding_length</span> <span class="o">=</span> <span class="n">max_seq_length</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">input_ids</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">pad_on_left</span><span class="p">:</span>
+            <span class="n">input_ids</span> <span class="o">=</span> <span class="p">([</span><span class="n">pad_token</span><span class="p">]</span> <span class="o">*</span> <span class="n">padding_length</span><span class="p">)</span> <span class="o">+</span> <span class="n">input_ids</span>
+            <span class="n">input_mask</span> <span class="o">=</span> <span class="p">([</span><span class="mi">0</span> <span class="k">if</span> <span class="n">mask_padding_with_zero</span> <span class="k">else</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">padding_length</span><span class="p">)</span> <span class="o">+</span> <span class="n">input_mask</span>
+            <span class="n">segment_ids</span> <span class="o">=</span> <span class="p">([</span><span class="n">pad_token_segment_id</span><span class="p">]</span> <span class="o">*</span> <span class="n">padding_length</span><span class="p">)</span> <span class="o">+</span> <span class="n">segment_ids</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">input_ids</span> <span class="o">=</span> <span class="n">input_ids</span> <span class="o">+</span> <span class="p">([</span><span class="n">pad_token</span><span class="p">]</span> <span class="o">*</span> <span class="n">padding_length</span><span class="p">)</span>
+            <span class="n">input_mask</span> <span class="o">=</span> <span class="n">input_mask</span> <span class="o">+</span> <span class="p">([</span><span class="mi">0</span> <span class="k">if</span> <span class="n">mask_padding_with_zero</span> <span class="k">else</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">padding_length</span><span class="p">)</span>
+            <span class="n">segment_ids</span> <span class="o">=</span> <span class="n">segment_ids</span> <span class="o">+</span> <span class="p">([</span><span class="n">pad_token_segment_id</span><span class="p">]</span> <span class="o">*</span> <span class="n">padding_length</span><span class="p">)</span>
+
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">input_ids</span><span class="p">)</span> <span class="o">==</span> <span class="n">max_seq_length</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">input_mask</span><span class="p">)</span> <span class="o">==</span> <span class="n">max_seq_length</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">segment_ids</span><span class="p">)</span> <span class="o">==</span> <span class="n">max_seq_length</span>
+
+        <span class="k">if</span> <span class="n">output_mode</span> <span class="o">==</span> <span class="s2">&quot;classification&quot;</span><span class="p">:</span>
+            <span class="n">label_id</span> <span class="o">=</span> <span class="n">label_map</span><span class="p">[</span><span class="n">example</span><span class="o">.</span><span class="n">label</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">output_mode</span> <span class="o">==</span> <span class="s2">&quot;regression&quot;</span><span class="p">:</span>
+            <span class="n">label_id</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">example</span><span class="o">.</span><span class="n">label</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="n">output_mode</span><span class="p">)</span>
+
+        <span class="n">features</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">InputFeatures</span><span class="p">(</span><span class="n">input_ids</span><span class="o">=</span><span class="n">input_ids</span><span class="p">,</span>
+                                      <span class="n">input_mask</span><span class="o">=</span><span class="n">input_mask</span><span class="p">,</span>
+                                      <span class="n">segment_ids</span><span class="o">=</span><span class="n">segment_ids</span><span class="p">,</span>
+                                      <span class="n">label_id</span><span class="o">=</span><span class="n">label_id</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">features</span></div>
+
+
+<span class="k">def</span> <span class="nf">_truncate_seq_pair</span><span class="p">(</span><span class="n">tokens_a</span><span class="p">,</span> <span class="n">tokens_b</span><span class="p">,</span> <span class="n">max_length</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Truncates a sequence pair in place to the maximum length.&quot;&quot;&quot;</span>
+
+    <span class="c1"># This is a simple heuristic which will always truncate the longer sequence</span>
+    <span class="c1"># one token at a time. This makes more sense than truncating an equal percent</span>
+    <span class="c1"># of tokens from each, since if one sequence is very short then each token</span>
+    <span class="c1"># that&#39;s truncated likely contains more information than a longer sequence.</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">total_length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokens_a</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokens_b</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">total_length</span> <span class="o">&lt;=</span> <span class="n">max_length</span><span class="p">:</span>
+            <span class="k">break</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokens_a</span><span class="p">)</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokens_b</span><span class="p">):</span>
+            <span class="n">tokens_a</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">tokens_b</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+
+
+<span class="n">processors</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;cola&quot;</span><span class="p">:</span> <span class="n">ColaProcessor</span><span class="p">,</span>
+    <span class="s2">&quot;mnli&quot;</span><span class="p">:</span> <span class="n">MnliProcessor</span><span class="p">,</span>
+    <span class="s2">&quot;mnli-mm&quot;</span><span class="p">:</span> <span class="n">MnliMismatchedProcessor</span><span class="p">,</span>
+    <span class="s2">&quot;mrpc&quot;</span><span class="p">:</span> <span class="n">MrpcProcessor</span><span class="p">,</span>
+    <span class="s2">&quot;sst-2&quot;</span><span class="p">:</span> <span class="n">Sst2Processor</span><span class="p">,</span>
+    <span class="s2">&quot;sts-b&quot;</span><span class="p">:</span> <span class="n">StsbProcessor</span><span class="p">,</span>
+    <span class="s2">&quot;qqp&quot;</span><span class="p">:</span> <span class="n">QqpProcessor</span><span class="p">,</span>
+    <span class="s2">&quot;qnli&quot;</span><span class="p">:</span> <span class="n">QnliProcessor</span><span class="p">,</span>
+    <span class="s2">&quot;rte&quot;</span><span class="p">:</span> <span class="n">RteProcessor</span><span class="p">,</span>
+    <span class="s2">&quot;wnli&quot;</span><span class="p">:</span> <span class="n">WnliProcessor</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">output_modes</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;cola&quot;</span><span class="p">:</span> <span class="s2">&quot;classification&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;mnli&quot;</span><span class="p">:</span> <span class="s2">&quot;classification&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;mnli-mm&quot;</span><span class="p">:</span> <span class="s2">&quot;classification&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;mrpc&quot;</span><span class="p">:</span> <span class="s2">&quot;classification&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;sst-2&quot;</span><span class="p">:</span> <span class="s2">&quot;classification&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;sts-b&quot;</span><span class="p">:</span> <span class="s2">&quot;regression&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;qqp&quot;</span><span class="p">:</span> <span class="s2">&quot;classification&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;qnli&quot;</span><span class="p">:</span> <span class="s2">&quot;classification&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;rte&quot;</span><span class="p">:</span> <span class="s2">&quot;classification&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;wnli&quot;</span><span class="p">:</span> <span class="s2">&quot;classification&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">DEFAULT_FOLDER_NAMES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;cola&quot;</span><span class="p">:</span> <span class="s2">&quot;CoLA&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;sst&quot;</span><span class="p">:</span> <span class="s2">&quot;SST-2&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;mrpc&quot;</span><span class="p">:</span> <span class="s2">&quot;MRPC&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;stsb&quot;</span><span class="p">:</span> <span class="s2">&quot;STS-B&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;qqp&quot;</span><span class="p">:</span> <span class="s2">&quot;QQP&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;mnli&quot;</span><span class="p">:</span> <span class="s2">&quot;MNLI&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;qnli&quot;</span><span class="p">:</span> <span class="s2">&quot;QNLI&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;rte&quot;</span><span class="p">:</span> <span class="s2">&quot;RTE&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;wnli&quot;</span><span class="p">:</span> <span class="s2">&quot;WNLI&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;snli&quot;</span><span class="p">:</span> <span class="s2">&quot;SNLI&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+<div class="viewcode-block" id="get_glue_task"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.get_glue_task">[docs]</a><span class="k">def</span> <span class="nf">get_glue_task</span><span class="p">(</span><span class="n">task_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return a GLUE task object</span>
+<span class="sd">    Args:</span>
+<span class="sd">        task_name (str): name of GLUE task</span>
+<span class="sd">        data_dir (str, optional): path to dataset, if not provided will be taken from</span>
+<span class="sd">            GLUE_DIR env. variable</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">task_name</span> <span class="o">=</span> <span class="n">task_name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">task_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">processors</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Task not found: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">task_name</span><span class="p">))</span>
+    <span class="n">task_processor</span> <span class="o">=</span> <span class="n">processors</span><span class="p">[</span><span class="n">task_name</span><span class="p">]()</span>
+    <span class="k">if</span> <span class="n">data_dir</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">data_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;GLUE_DIR&quot;</span><span class="p">],</span> <span class="n">DEFAULT_FOLDER_NAMES</span><span class="p">[</span><span class="n">task_name</span><span class="p">])</span>
+    <span class="n">task_type</span> <span class="o">=</span> <span class="n">output_modes</span><span class="p">[</span><span class="n">task_name</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">Task</span><span class="p">(</span><span class="n">task_name</span><span class="p">,</span> <span class="n">task_processor</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">,</span> <span class="n">task_type</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

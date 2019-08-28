@@ -35,11 +35,16 @@ Before installing the library make sure you has the most recent packages listed 
    pkg-config, pkg-config, Retrieves information about installed libraries
 
 .. note::
-  The default installation of NLP Architect use CPU-based binaries of all deep learning frameworks. Intel Optimized MKL-DNN binaries will be installed if a Linux is detected. GPU backed is supported online on Linux and if a GPU is present. See details below for instructions on how to install each backend.
 
+  The default installation of NLP Architect use CPU-based binaries of all deep learning frameworks. Intel Optimized MKL-DNN binaries will be installed if a Linux is detected. GPU backend on Linux will install Tensorflow with MKL-DNN and if a GPU is present. See details below for instructions on how to install each backend.
+
+.. note::
+
+    For specific installation of backends of Tensorflow or PyTorch (CPU/MKL/GPU) we recommend installing NLP Architect and then installing the desired package of framework.
 
 Installation
 ============
+
 Prerequisites
 -------------
 
@@ -121,47 +126,3 @@ Using `pip`
 .. code:: bash
 
     pip install -U nlp-architect
-
-======
-
-Compiling Intel® optimized Tensorflow with MKL-DNN
-==================================================
-
-NLP Architect supports MKL-DNN flavor of Tensorflow out of the box, however, if the user wishes to compile Tensorflow we provide instructions below.
-
-Tensorflow has a guide `guide <https://www.tensorflow.org/install/install_sources>`_ for compiling and installing Tensorflow with with MKL-DNN optimization. Make sure to install all required tools: bazel and python development dependencies.
-
-Alternatively, follow the instructions below to compile and install the latest version of Tensorflow with MKL-DNN:
-
-* Clone Tensorflow repository from GitHub:
-
-  .. code::
-
-      git clone https://github.com/tensorflow/tensorflow
-      cd tensorflow
-
-* Configure Tensorflow for compilation:
-
-  .. code::
-
-      ./configure
-
-* Compile Tensorflow with MKL-DNN:
-
-  .. code::
-
-      bazel build --config=mkl --config=opt //tensorflow/tools/pip_package:build_pip_package
-
-* Create pip package in ``/tmp/tensorflow_pkg``:
-
-  .. code::
-
-      bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/tensorflow_pkg
-
-* Install Tensorflow pip package:
-
-  .. code::
-
-      pip install <tensorflow package name>.whl
-
-* Refer to `this <https://www.tensorflow.org/performance/performance_guide#tensorflow_with_intel_mkl_dnn>`_ guide for specific configuration to get optimal performance when running your model.

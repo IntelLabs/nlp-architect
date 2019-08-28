@@ -1,0 +1,432 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>nlp_architect.server package &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/install.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/nlp_arch_theme.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="nlp_architect.server.angular-ui package" href="nlp_architect.server.angular-ui.html" />
+    <link rel="prev" title="nlp_architect.procedures.transformers package" href="nlp_architect.procedures.transformers.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html">
+          
+
+          
+            
+            <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../publications.html">Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials.html">Jupyter Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model_zoo.html">Model Zoo</a></li>
+</ul>
+<p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tagging/sequence_tagging.html">Sequence Tagging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sentiment.html">Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bist_parser.html">Dependency Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intent.html">Intent Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lm.html">Language Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../information_extraction.html">Information Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transformers.html">Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../archived/additional.html">Additional Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Optimized Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../quantized_bert.html">Quantized BERT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transformers_distillation.html">Transformers Distillation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solutions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../absa_solution.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../term_set_expansion.html">Set Expansion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trend_analysis.html">Trend Analysis</a></li>
+</ul>
+<p class="caption"><span class="caption-text">For Developers</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="nlp_architect_api_index.html">nlp_architect API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.api.html">nlp_architect.api package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.cli.html">nlp_architect.cli package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.common.html">nlp_architect.common package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.data.html">nlp_architect.data package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.models.html">nlp_architect.models package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.nlp.html">nlp_architect.nlp package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.nn.html">nlp_architect.nn package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.pipelines.html">nlp_architect.pipelines package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.procedures.html">nlp_architect.procedures package</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">nlp_architect.server package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nlp_architect.server.angular-ui.html">nlp_architect.server.angular-ui package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.server.serve">nlp_architect.server.serve module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.server.service">nlp_architect.server.service module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.server">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.solutions.html">nlp_architect.solutions package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.utils.html">nlp_architect.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer_guide.html">Developer Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">NLP Architect by Intel® AI Lab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="nlp_architect_api_index.html"><code class="docutils literal notranslate"><span class="pre">nlp\_architect</span></code> package</a> &raquo;</li>
+        
+      <li>nlp_architect.server package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="nlp-architect-server-package">
+<h1>nlp_architect.server package<a class="headerlink" href="#nlp-architect-server-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="nlp_architect.server.angular-ui.html">nlp_architect.server.angular-ui package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.server.angular-ui.html#module-contents">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-nlp_architect.server.serve">
+<span id="nlp-architect-server-serve-module"></span><h2>nlp_architect.server.serve module<a class="headerlink" href="#module-nlp_architect.server.serve" title="Permalink to this headline">¶</a></h2>
+<p>REST Server to respond to different API requests</p>
+<dl class="function">
+<dt id="nlp_architect.server.serve.get_index">
+<code class="descclassname">nlp_architect.server.serve.</code><code class="descname">get_index</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/server/serve.html#get_index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.server.serve.get_index" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.server.serve.get_paragraphs">
+<code class="descclassname">nlp_architect.server.serve.</code><code class="descname">get_paragraphs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/server/serve.html#get_paragraphs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.server.serve.get_paragraphs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.server.serve.inference">
+<code class="descclassname">nlp_architect.server.serve.</code><code class="descname">inference</code><span class="sig-paren">(</span><em>request</em>, <em>body</em>, <em>response</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/server/serve.html#inference"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.server.serve.inference" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes an inference to a certain model</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.server.serve.prefetch_models">
+<code class="descclassname">nlp_architect.server.serve.</code><code class="descname">prefetch_models</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/server/serve.html#prefetch_models"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.server.serve.prefetch_models" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.server.serve.static">
+<code class="descclassname">nlp_architect.server.serve.</code><code class="descname">static</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/server/serve.html#static"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.server.serve.static" title="Permalink to this definition">¶</a></dt>
+<dd><p>Statically serves a directory to client</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-nlp_architect.server.service">
+<span id="nlp-architect-server-service-module"></span><h2>nlp_architect.server.service module<a class="headerlink" href="#module-nlp_architect.server.service" title="Permalink to this headline">¶</a></h2>
+<p>Service file used to import different features for server</p>
+<dl class="class">
+<dt id="nlp_architect.server.service.Service">
+<em class="property">class </em><code class="descclassname">nlp_architect.server.service.</code><code class="descname">Service</code><span class="sig-paren">(</span><em>service_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/server/service.html#Service"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.server.service.Service" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Handles loading and inference using specific models</p>
+<dl class="method">
+<dt id="nlp_architect.server.service.Service.get_paragraphs">
+<code class="descname">get_paragraphs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/server/service.html#Service.get_paragraphs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.server.service.Service.get_paragraphs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.server.service.Service.get_service_inference">
+<code class="descname">get_service_inference</code><span class="sig-paren">(</span><em>docs</em>, <em>headers</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/server/service.html#Service.get_service_inference"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.server.service.Service.get_service_inference" title="Permalink to this definition">¶</a></dt>
+<dd><p>get parser response from service API</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>headers</strong> (<em>list</em><em>(</em><em>str</em><em>)</em>) – the headers of the request</li>
+<li><strong>docs</strong> – input received from the request</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">the service API output</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.server.service.Service.load_service">
+<code class="descname">load_service</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/server/service.html#Service.load_service"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.server.service.Service.load_service" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize and load service from input given name, using “services.json” properties file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<em>str</em>) – The name of service to upload using server</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The loaded service</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.server.service.extract_module_name">
+<code class="descclassname">nlp_architect.server.service.</code><code class="descname">extract_module_name</code><span class="sig-paren">(</span><em>model_path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/server/service.html#extract_module_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.server.service.extract_module_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract the module’s name from path</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>model_path</strong> (<em>str</em>) – the module’s class path</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the modules name</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.server.service.format_response">
+<code class="descclassname">nlp_architect.server.service.</code><code class="descname">format_response</code><span class="sig-paren">(</span><em>resp_format</em>, <em>parsed_doc</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/server/service.html#format_response"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.server.service.format_response" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transform string of server’s response to the requested format</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>resp_format</strong> (<em>str</em>) – the desired response format</li>
+<li><strong>parsed_doc</strong> – the server’s response</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">formatted response</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.server.service.package_home">
+<code class="descclassname">nlp_architect.server.service.</code><code class="descname">package_home</code><span class="sig-paren">(</span><em>gdict</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/server/service.html#package_home"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.server.service.package_home" title="Permalink to this definition">¶</a></dt>
+<dd><p>help function for running paths from out-of-class scripts</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.server.service.parse_headers">
+<code class="descclassname">nlp_architect.server.service.</code><code class="descname">parse_headers</code><span class="sig-paren">(</span><em>req_headers</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/server/service.html#parse_headers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.server.service.parse_headers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load headers from request to dictionary</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>req_headers</strong> (<em>dict</em>) – the request’s headers</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">dictionary hosting the request headers</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.server.service.set_headers">
+<code class="descclassname">nlp_architect.server.service.</code><code class="descname">set_headers</code><span class="sig-paren">(</span><em>res</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/server/service.html#set_headers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.server.service.set_headers" title="Permalink to this definition">¶</a></dt>
+<dd><p>set expected headers for request (CORS)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>res</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">falcon.Response</span></code>) – the request</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-nlp_architect.server">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-nlp_architect.server" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

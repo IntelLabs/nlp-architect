@@ -21,12 +21,10 @@
    :hidden:
    :maxdepth: 1
 
-   Home <main.rst>
+   quick_start.rst
    installation.rst
    publications.rst
    Jupyter Tutorials <tutorials.rst>
-   developer_guide.rst
-   REST Server <service.rst>
    Model Zoo <model_zoo.rst>
 
 .. toctree::
@@ -34,21 +32,22 @@
    :maxdepth: 1
    :caption: NLP/NLU Models
 
-   Aspect Based Sentiment Analysis <absa.rst>
-   chunker.rst
-   ner_crf.rst
-   intent.rst
-   np_segmentation.rst
-   bist_parser.rst
-   word_sense.rst
-   np2vec.rst
-   supervised_sentiment.rst
-   reading_comprehension.rst
-   memn2n.rst
-   TCN Language Model <tcn.rst>
-   Unsupervised Crosslingual Embeddings <crosslingual_emb.rst>
-   Cross Document Co-Reference <cross_doc_coref.rst>
-   Semantic Relation Identification  <identifying_semantic_relation.rst>
+   Sequence Tagging <tagging/sequence_tagging.rst>
+   Sentiment Analysis <sentiment.rst>
+   Dependency Parsing <bist_parser.rst>
+   Intent Extraction <intent.rst>
+   Language Models <lm.rst>
+   Information Extraction <information_extraction.rst>
+   Transformers <transformers.rst>
+   Additional Models <archived/additional.rst>
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+   :caption: Optimized Models
+
+   Quantized BERT <quantized_bert.rst>
+   Transformers Distillation <transformers_distillation.rst>
    Sparse Neural Machine Translation <sparse_gnmt.rst>
 
 .. toctree::
@@ -60,19 +59,21 @@
    Set Expansion <term_set_expansion.rst>
    Trend Analysis <trend_analysis.rst>
 
-.. toctree::
-   :hidden:
-   :maxdepth: 1
-   :caption: Pipelines
+.. .. toctree::
+..    :hidden:
+..    :maxdepth: 1
+..    :caption: Pipelines
 
-   spacy_bist.rst
-   spacy_np_annotator.rst
+..    spacy_bist.rst
+..    spacy_np_annotator.rst
 
 .. toctree::
    :hidden:
    :maxdepth: 1
    :caption: For Developers
 
-   api.rst
+   nlp_architect API <generated_api/nlp_architect_api_index.rst>
+   REST Server <service.rst>
+   developer_guide.rst
 
 .. _https://github.com/NervanaSystems/nlp-architect: https://github.com/NervanaSystems/nlp-architect

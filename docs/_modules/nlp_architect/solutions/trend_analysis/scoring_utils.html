@@ -1,0 +1,514 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>nlp_architect.solutions.trend_analysis.scoring_utils &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+        <script type="text/javascript" src="../../../../_static/install.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/nlp_arch_theme.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html">
+          
+
+          
+            
+            <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../quick_start.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../publications.html">Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials.html">Jupyter Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../model_zoo.html">Model Zoo</a></li>
+</ul>
+<p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tagging/sequence_tagging.html">Sequence Tagging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../sentiment.html">Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../bist_parser.html">Dependency Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../intent.html">Intent Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../lm.html">Language Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../information_extraction.html">Information Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../transformers.html">Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../archived/additional.html">Additional Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Optimized Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../quantized_bert.html">Quantized BERT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../transformers_distillation.html">Transformers Distillation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solutions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../absa_solution.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../term_set_expansion.html">Set Expansion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../trend_analysis.html">Trend Analysis</a></li>
+</ul>
+<p class="caption"><span class="caption-text">For Developers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../developer_guide.html">Developer Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">NLP Architect by Intel® AI Lab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>nlp_architect.solutions.trend_analysis.scoring_utils</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for nlp_architect.solutions.trend_analysis.scoring_utils</h1><div class="highlight"><pre>
+<span></span><span class="c1"># ******************************************************************************</span>
+<span class="c1"># Copyright 2017-2018 Intel Corporation</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ******************************************************************************</span>
+<span class="c1"># pylint: disable=no-name-in-module</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">import</span> <span class="nn">math</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">spacy.tokens.doc</span> <span class="k">import</span> <span class="n">Doc</span>
+<span class="kn">from</span> <span class="nn">spacy.tokens.span</span> <span class="k">import</span> <span class="n">Span</span>
+<span class="kn">from</span> <span class="nn">spacy.tokens.token</span> <span class="k">import</span> <span class="n">Token</span>
+<span class="kn">from</span> <span class="nn">wordfreq</span> <span class="k">import</span> <span class="n">zipf_frequency</span>
+
+
+<div class="viewcode-block" id="TextSpanScoring"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.solutions.trend_analysis.html#nlp_architect.solutions.trend_analysis.scoring_utils.TextSpanScoring">[docs]</a><span class="k">class</span> <span class="nc">TextSpanScoring</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Text spans scoring class.</span>
+<span class="sd">    Contains misc scoring algorithms for scoring text fragments extracted</span>
+<span class="sd">    from a corpus.</span>
+
+<span class="sd">    Arguments:</span>
+<span class="sd">        documents(list): List of spaCy documents.</span>
+<span class="sd">        spans(list[list]): List of spaCy spans representing noun phrases of documents</span>
+<span class="sd">            document.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">documents</span><span class="p">,</span> <span class="n">spans</span><span class="p">,</span> <span class="n">min_tf</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">documents</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">spans</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_documents</span> <span class="o">=</span> <span class="n">documents</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_doc_text_spans</span> <span class="o">=</span> <span class="n">spans</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">CorpusIndex</span><span class="p">(</span><span class="n">documents</span><span class="p">,</span> <span class="n">spans</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">min_tf</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;min_tf must be &gt; 0&#39;</span>
+        <span class="k">if</span> <span class="n">min_tf</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">re_index_min_tf</span><span class="p">(</span><span class="n">min_tf</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TextSpanScoring.re_index_min_tf"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.solutions.trend_analysis.html#nlp_architect.solutions.trend_analysis.scoring_utils.TextSpanScoring.re_index_min_tf">[docs]</a>    <span class="k">def</span> <span class="nf">re_index_min_tf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tf</span><span class="p">):</span>
+        <span class="n">filtered_doc_text_spans</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">doc_text_spans</span><span class="p">:</span>
+            <span class="n">filtered_doc_phrases</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">d</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">tf</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">tf</span><span class="p">]</span>
+            <span class="n">filtered_doc_text_spans</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">filtered_doc_phrases</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_doc_text_spans</span> <span class="o">=</span> <span class="n">filtered_doc_text_spans</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">CorpusIndex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">documents</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">doc_text_spans</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">documents</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_documents</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">doc_text_spans</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_doc_text_spans</span>
+
+<div class="viewcode-block" id="TextSpanScoring.get_tfidf_scores"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.solutions.trend_analysis.html#nlp_architect.solutions.trend_analysis.scoring_utils.TextSpanScoring.get_tfidf_scores">[docs]</a>    <span class="k">def</span> <span class="nf">get_tfidf_scores</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group_similar_spans</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get TF-IDF scores of spans</span>
+<span class="sd">        return a list of spans sorted by desc order of importance</span>
+<span class="sd">        span score = TF (global) * (1 + log_n(DF/N))</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">phrases_and_scores</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">num_of_docs</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">documents</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">noun_phrases</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">documents</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">doc_text_spans</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">noun_phrases</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">p</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">phrases_and_scores</span><span class="p">:</span>
+                    <span class="n">tf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">tf</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+                    <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">df</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+                    <span class="n">phrases_and_scores</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> \
+                        <span class="p">(</span><span class="n">tf</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">num_of_docs</span> <span class="o">/</span> <span class="n">df</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">phrases_and_scores</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_maybe_group_and_sort</span><span class="p">(</span><span class="n">group_similar_spans</span><span class="p">,</span>
+                                              <span class="n">phrases_and_scores</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[]</span></div>
+
+<div class="viewcode-block" id="TextSpanScoring.get_freq_scores"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.solutions.trend_analysis.html#nlp_architect.solutions.trend_analysis.scoring_utils.TextSpanScoring.get_freq_scores">[docs]</a>    <span class="k">def</span> <span class="nf">get_freq_scores</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group_similar_spans</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">phrases_and_scores</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">noun_phrases</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">documents</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">doc_text_spans</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">noun_phrases</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">p</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">phrases_and_scores</span><span class="p">:</span>
+                    <span class="n">phrases_and_scores</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="n">zipf_frequency</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="s1">&#39;en&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_maybe_group_and_sort</span><span class="p">(</span><span class="n">group_similar_spans</span><span class="p">,</span>
+                                          <span class="n">phrases_and_scores</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TextSpanScoring.group_spans"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.solutions.trend_analysis.html#nlp_architect.solutions.trend_analysis.scoring_utils.TextSpanScoring.group_spans">[docs]</a>    <span class="k">def</span> <span class="nf">group_spans</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">phrases</span><span class="p">):</span>
+        <span class="n">pid_phrase_scores</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;k&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">get_pid</span><span class="p">(</span><span class="n">p</span><span class="p">),</span>
+                              <span class="s1">&#39;v&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">s</span><span class="p">)}</span>
+                             <span class="k">for</span> <span class="n">p</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">phrases</span><span class="o">.</span><span class="n">items</span><span class="p">()]</span>
+        <span class="n">phrase_groups</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span>
+                <span class="nb">sorted</span><span class="p">(</span><span class="n">pid_phrase_scores</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">]),</span>
+                <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">]):</span>
+            <span class="n">_group</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
+            <span class="n">phrases</span> <span class="o">=</span> <span class="p">{</span><span class="n">g</span><span class="p">[</span><span class="s1">&#39;v&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">_group</span><span class="p">}</span>
+            <span class="n">score</span> <span class="o">=</span> <span class="n">_group</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;v&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">phrase_groups</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="nb">sorted</span><span class="p">(</span><span class="n">phrases</span><span class="p">),</span> <span class="n">score</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">phrase_groups</span></div>
+
+    <span class="k">def</span> <span class="nf">_maybe_group_and_sort</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">is_group</span><span class="p">,</span> <span class="n">phrases_dict</span><span class="p">):</span>
+        <span class="n">phrase_groups</span> <span class="o">=</span> <span class="n">phrases_dict</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">is_group</span><span class="p">:</span>
+            <span class="n">phrase_groups</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">group_spans</span><span class="p">(</span><span class="n">phrases_dict</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">phrase_groups</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TextSpanScoring.normalize_minmax"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.solutions.trend_analysis.html#nlp_architect.solutions.trend_analysis.scoring_utils.TextSpanScoring.normalize_minmax">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">normalize_minmax</span><span class="p">(</span><span class="n">phrases_list</span><span class="p">,</span> <span class="n">invert</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">scores</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">phrases_list</span><span class="p">))</span>
+        <span class="n">max_score</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span>
+        <span class="n">min_score</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span>
+        <span class="n">norm_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">p</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">phrases_list</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">max_score</span> <span class="o">-</span> <span class="n">min_score</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">new_score</span> <span class="o">=</span> <span class="p">(</span><span class="n">s</span> <span class="o">-</span> <span class="n">min_score</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">max_score</span> <span class="o">-</span> <span class="n">min_score</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">new_score</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">norm_list</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">p</span><span class="p">,</span> <span class="n">new_score</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">invert</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">norm_list</span><span class="p">:</span>
+                <span class="n">e</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">e</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">norm_list</span></div>
+
+<div class="viewcode-block" id="TextSpanScoring.normalize_l2"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.solutions.trend_analysis.html#nlp_architect.solutions.trend_analysis.scoring_utils.TextSpanScoring.normalize_l2">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">normalize_l2</span><span class="p">(</span><span class="n">phrases_list</span><span class="p">):</span>
+        <span class="n">phrases</span><span class="p">,</span> <span class="n">scores</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">phrases_list</span><span class="p">))</span>
+        <span class="n">scores</span> <span class="o">=</span> <span class="n">scores</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">phrases</span><span class="p">,</span> <span class="n">scores</span><span class="o">.</span><span class="n">tolist</span><span class="p">()))</span></div>
+
+<div class="viewcode-block" id="TextSpanScoring.interpolate_scores"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.solutions.trend_analysis.html#nlp_architect.solutions.trend_analysis.scoring_utils.TextSpanScoring.interpolate_scores">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">interpolate_scores</span><span class="p">(</span><span class="n">phrase_lists</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">weights</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">weights</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.0</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">phrase_lists</span><span class="p">)]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">weights</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">phrase_lists</span><span class="p">)</span>
+
+        <span class="n">list_sizes</span> <span class="o">=</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">l</span><span class="p">)</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">phrase_lists</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">list_sizes</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">phrase_lists</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="n">l</span><span class="p">,</span> <span class="s1">&#39;list sizes not equal&#39;</span>
+
+        <span class="n">phrase_list_dicts</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">lst</span> <span class="ow">in</span> <span class="n">phrase_lists</span><span class="p">:</span>
+            <span class="n">phrase_list_dicts</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="nb">tuple</span><span class="p">(</span><span class="n">k</span><span class="p">):</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">})</span>
+
+        <span class="n">phrases</span> <span class="o">=</span> <span class="n">phrase_list_dicts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+        <span class="n">interp_scores</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">phrases</span><span class="p">:</span>
+            <span class="n">interp_scores</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+            <span class="k">for</span> <span class="n">ref</span><span class="p">,</span> <span class="n">w</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">phrase_list_dicts</span><span class="p">,</span> <span class="n">weights</span><span class="p">):</span>
+                <span class="n">interp_scores</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">+=</span> <span class="n">ref</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">*</span> <span class="n">w</span>
+        <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">interp_scores</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TextSpanScoring.get_cvalue_scores"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.solutions.trend_analysis.html#nlp_architect.solutions.trend_analysis.scoring_utils.TextSpanScoring.get_cvalue_scores">[docs]</a>    <span class="k">def</span> <span class="nf">get_cvalue_scores</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group_similar_spans</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">phrases_text</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">ps</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">pid_to_spans</span><span class="o">.</span><span class="n">values</span><span class="p">()</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">ps</span><span class="p">]</span>
+        <span class="n">phrase_scores</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">phrase</span> <span class="ow">in</span> <span class="n">phrases_text</span><span class="p">:</span>
+            <span class="n">sub_phrase_pids</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">phrase</span><span class="p">:</span>
+                <span class="n">sub_pids</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">get_subphrases_of_word</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">sub_phrase_pids</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">sub_phrase_pids</span> <span class="o">=</span> <span class="n">sub_pids</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">sub_phrase_pids</span> <span class="o">=</span> <span class="n">sub_phrase_pids</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">sub_pids</span><span class="p">)</span>
+            <span class="n">sub_phrase_pids</span><span class="o">.</span><span class="n">discard</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">get_pid</span><span class="p">(</span><span class="n">phrase</span><span class="p">))</span>
+
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sub_phrase_pids</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">score</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">phrase</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">tf</span><span class="p">(</span><span class="n">phrase</span><span class="p">)</span> <span class="o">-</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">sub_phrase_pids</span><span class="p">)</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">(</span>
+                        <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">tf</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">get_phrase</span><span class="p">(</span><span class="n">p</span><span class="p">))[</span><span class="mi">0</span><span class="p">])</span>
+                         <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">sub_phrase_pids</span><span class="p">]))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">score</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">phrase</span><span class="p">))</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">tf</span><span class="p">(</span><span class="n">phrase</span><span class="p">)</span>
+            <span class="n">phrase_scores</span><span class="p">[</span><span class="n">phrase</span><span class="p">]</span> <span class="o">=</span> <span class="n">score</span>
+        <span class="k">for</span> <span class="n">phrase</span> <span class="ow">in</span> <span class="n">phrase_scores</span><span class="p">:</span>
+            <span class="n">score</span> <span class="o">=</span> <span class="p">[</span><span class="n">phrase_scores</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span>
+                     <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">get_phrase</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">get_pid</span><span class="p">(</span><span class="n">phrase</span><span class="p">))]</span>
+            <span class="n">phrase_scores</span><span class="p">[</span><span class="n">phrase</span><span class="p">]</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">score</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">score</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_maybe_group_and_sort</span><span class="p">(</span><span class="n">group_similar_spans</span><span class="p">,</span>
+                                          <span class="n">phrase_scores</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TextSpanScoring.multiply_scores"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.solutions.trend_analysis.html#nlp_architect.solutions.trend_analysis.scoring_utils.TextSpanScoring.multiply_scores">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">multiply_scores</span><span class="p">(</span><span class="n">phrase_lists</span><span class="p">):</span>
+        <span class="n">phrase_list_dicts</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">lst</span> <span class="ow">in</span> <span class="n">phrase_lists</span><span class="p">:</span>
+            <span class="n">phrase_list_dicts</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="nb">tuple</span><span class="p">(</span><span class="n">k</span><span class="p">):</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">})</span>
+        <span class="n">phrases</span> <span class="o">=</span> <span class="n">phrase_list_dicts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+        <span class="n">interp_scores</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">phrases</span><span class="p">:</span>
+            <span class="n">interp_scores</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
+            <span class="k">for</span> <span class="n">ref</span> <span class="ow">in</span> <span class="n">phrase_list_dicts</span><span class="p">:</span>
+                <span class="n">interp_scores</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">*=</span> <span class="n">ref</span><span class="p">[</span><span class="n">p</span><span class="p">]</span>
+        <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">interp_scores</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="CorpusIndex"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.solutions.trend_analysis.html#nlp_architect.solutions.trend_analysis.scoring_utils.CorpusIndex">[docs]</a><span class="k">class</span> <span class="nc">CorpusIndex</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Text span index class.</span>
+<span class="sd">    Holds TF and DF values per span. Text spans are normalized and similar</span>
+<span class="sd">    spans are mapped to the same TF DF values.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">documents</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">spans</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">df_index</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># span to DF</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tf_index</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># span, doc to TF</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pid_to_spans</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># id to spans (normalized types)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">word_to_phrase_index</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">documents</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">d</span><span class="p">,</span> <span class="n">phrases</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">documents</span><span class="p">,</span> <span class="n">spans</span><span class="p">):</span>
+            <span class="n">doc_id</span> <span class="o">=</span> <span class="n">CorpusIndex</span><span class="o">.</span><span class="n">get_docid</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">documents</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">doc_id</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">phrase</span> <span class="ow">in</span> <span class="n">phrases</span><span class="p">:</span>
+                <span class="n">pid</span> <span class="o">=</span> <span class="n">CorpusIndex</span><span class="o">.</span><span class="n">get_pid</span><span class="p">(</span><span class="n">phrase</span><span class="p">)</span>
+                <span class="c1"># add to norm phrases dict</span>
+                <span class="k">if</span> <span class="n">pid</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pid_to_spans</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">pid_to_spans</span><span class="p">[</span><span class="n">pid</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">pid_to_spans</span><span class="p">[</span><span class="n">pid</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">phrase</span><span class="p">)</span>
+
+                <span class="c1"># add to df index</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">df_index</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pid</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">df_index</span><span class="p">[</span><span class="n">pid</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="n">doc_id</span><span class="p">}</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">df_index</span><span class="p">[</span><span class="n">pid</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">doc_id</span><span class="p">)</span>
+
+                <span class="c1"># add to tf index</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tf_index</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pid</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">tf_index</span><span class="p">[</span><span class="n">pid</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">tf_index</span><span class="p">[</span><span class="n">pid</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+                <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">phrase</span><span class="p">:</span>
+                    <span class="n">wid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_wid</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">wid</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">word_to_phrase_index</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">word_to_phrase_index</span><span class="p">[</span><span class="n">wid</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">word_to_phrase_index</span><span class="p">[</span><span class="n">wid</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">pid</span><span class="p">)</span>
+
+<div class="viewcode-block" id="CorpusIndex.get_phrase"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.solutions.trend_analysis.html#nlp_architect.solutions.trend_analysis.scoring_utils.CorpusIndex.get_phrase">[docs]</a>    <span class="k">def</span> <span class="nf">get_phrase</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pid</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pid_to_spans</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pid</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CorpusIndex.get_subphrases_of_word"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.solutions.trend_analysis.html#nlp_architect.solutions.trend_analysis.scoring_utils.CorpusIndex.get_subphrases_of_word">[docs]</a>    <span class="k">def</span> <span class="nf">get_subphrases_of_word</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">w</span><span class="p">):</span>
+        <span class="n">wid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_wid</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">word_to_phrase_index</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">wid</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CorpusIndex.get_wid"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.solutions.trend_analysis.html#nlp_architect.solutions.trend_analysis.scoring_utils.CorpusIndex.get_wid">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_wid</span><span class="p">(</span><span class="n">w</span><span class="p">:</span> <span class="n">Token</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get word id</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">CorpusIndex</span><span class="o">.</span><span class="n">hash_func</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">text</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CorpusIndex.get_pid"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.solutions.trend_analysis.html#nlp_architect.solutions.trend_analysis.scoring_utils.CorpusIndex.get_pid">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_pid</span><span class="p">(</span><span class="n">p</span><span class="p">:</span> <span class="n">Span</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get phrase id</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">CorpusIndex</span><span class="o">.</span><span class="n">hash_func</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">lemma_</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CorpusIndex.get_docid"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.solutions.trend_analysis.html#nlp_architect.solutions.trend_analysis.scoring_utils.CorpusIndex.get_docid">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_docid</span><span class="p">(</span><span class="n">d</span><span class="p">:</span> <span class="n">Doc</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get doc id</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">CorpusIndex</span><span class="o">.</span><span class="n">hash_func</span><span class="p">(</span><span class="n">d</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CorpusIndex.hash_func"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.solutions.trend_analysis.html#nlp_architect.solutions.trend_analysis.scoring_utils.CorpusIndex.hash_func">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">hash_func</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CorpusIndex.tf"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.solutions.trend_analysis.html#nlp_architect.solutions.trend_analysis.scoring_utils.CorpusIndex.tf">[docs]</a>    <span class="k">def</span> <span class="nf">tf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">phrase</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get TF of phrase in doc</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pid</span> <span class="o">=</span> <span class="n">CorpusIndex</span><span class="o">.</span><span class="n">get_pid</span><span class="p">(</span><span class="n">phrase</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tf_index</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pid</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tf_index</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pid</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mi">0</span></div>
+
+<div class="viewcode-block" id="CorpusIndex.df"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.solutions.trend_analysis.html#nlp_architect.solutions.trend_analysis.scoring_utils.CorpusIndex.df">[docs]</a>    <span class="k">def</span> <span class="nf">df</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">phrase</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get DF of phrase in corpus</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pid</span> <span class="o">=</span> <span class="n">CorpusIndex</span><span class="o">.</span><span class="n">get_pid</span><span class="p">(</span><span class="n">phrase</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">df_index</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pid</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df_index</span><span class="p">[</span><span class="n">pid</span><span class="p">])</span>
+        <span class="k">return</span> <span class="mi">0</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

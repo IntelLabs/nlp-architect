@@ -1,0 +1,1440 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>nlp_architect.data.cdc_resources.relations package &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/install.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/nlp_arch_theme.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="nlp_architect.data.cdc_resources.wikipedia package" href="nlp_architect.data.cdc_resources.wikipedia.html" />
+    <link rel="prev" title="nlp_architect.data.cdc_resources.gen_scripts package" href="nlp_architect.data.cdc_resources.gen_scripts.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html">
+          
+
+          
+            
+            <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../publications.html">Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials.html">Jupyter Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model_zoo.html">Model Zoo</a></li>
+</ul>
+<p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tagging/sequence_tagging.html">Sequence Tagging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sentiment.html">Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bist_parser.html">Dependency Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intent.html">Intent Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lm.html">Language Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../information_extraction.html">Information Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transformers.html">Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../archived/additional.html">Additional Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Optimized Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../quantized_bert.html">Quantized BERT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transformers_distillation.html">Transformers Distillation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solutions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../absa_solution.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../term_set_expansion.html">Set Expansion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../trend_analysis.html">Trend Analysis</a></li>
+</ul>
+<p class="caption"><span class="caption-text">For Developers</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="nlp_architect_api_index.html">nlp_architect API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.api.html">nlp_architect.api package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.cli.html">nlp_architect.cli package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.common.html">nlp_architect.common package</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="nlp_architect.data.html">nlp_architect.data package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="nlp_architect.data.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="nlp_architect.data.cdc_resources.html">nlp_architect.data.cdc_resources package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.data.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.data.html#module-nlp_architect.data.amazon_reviews">nlp_architect.data.amazon_reviews module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.data.html#module-nlp_architect.data.babi_dialog">nlp_architect.data.babi_dialog module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.data.html#module-nlp_architect.data.conll">nlp_architect.data.conll module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.data.html#module-nlp_architect.data.fasttext_emb">nlp_architect.data.fasttext_emb module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.data.html#module-nlp_architect.data.glue_tasks">nlp_architect.data.glue_tasks module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.data.html#module-nlp_architect.data.intent_datasets">nlp_architect.data.intent_datasets module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.data.html#module-nlp_architect.data.ptb">nlp_architect.data.ptb module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.data.html#module-nlp_architect.data.sequence_classification">nlp_architect.data.sequence_classification module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.data.html#module-nlp_architect.data.sequential_tagging">nlp_architect.data.sequential_tagging module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.data.html#module-nlp_architect.data.utils">nlp_architect.data.utils module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.data.html#module-nlp_architect.data">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.models.html">nlp_architect.models package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.nlp.html">nlp_architect.nlp package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.nn.html">nlp_architect.nn package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.pipelines.html">nlp_architect.pipelines package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.procedures.html">nlp_architect.procedures package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.server.html">nlp_architect.server package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.solutions.html">nlp_architect.solutions package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.utils.html">nlp_architect.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer_guide.html">Developer Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">NLP Architect by Intel® AI Lab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="nlp_architect_api_index.html"><code class="docutils literal notranslate"><span class="pre">nlp\_architect</span></code> package</a> &raquo;</li>
+        
+          <li><a href="nlp_architect.data.html">nlp_architect.data package</a> &raquo;</li>
+        
+          <li><a href="nlp_architect.data.cdc_resources.html">nlp_architect.data.cdc_resources package</a> &raquo;</li>
+        
+      <li>nlp_architect.data.cdc_resources.relations package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="nlp-architect-data-cdc-resources-relations-package">
+<h1>nlp_architect.data.cdc_resources.relations package<a class="headerlink" href="#nlp-architect-data-cdc-resources-relations-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-nlp_architect.data.cdc_resources.relations.computed_relation_extraction">
+<span id="nlp-architect-data-cdc-resources-relations-computed-relation-extraction-module"></span><h2>nlp_architect.data.cdc_resources.relations.computed_relation_extraction module<a class="headerlink" href="#module-nlp_architect.data.cdc_resources.relations.computed_relation_extraction" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nlp_architect.data.cdc_resources.relations.computed_relation_extraction.ComputedRelationExtraction">
+<em class="property">class </em><code class="descclassname">nlp_architect.data.cdc_resources.relations.computed_relation_extraction.</code><code class="descname">ComputedRelationExtraction</code><a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/computed_relation_extraction.html#ComputedRelationExtraction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.computed_relation_extraction.ComputedRelationExtraction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nlp_architect.data.cdc_resources.relations.relation_extraction.RelationExtraction" title="nlp_architect.data.cdc_resources.relations.relation_extraction.RelationExtraction"><code class="xref py py-class docutils literal notranslate"><span class="pre">nlp_architect.data.cdc_resources.relations.relation_extraction.RelationExtraction</span></code></a></p>
+<p>Extract Relation between two mentions according to computation and rule based algorithms</p>
+<dl class="method">
+<dt id="nlp_architect.data.cdc_resources.relations.computed_relation_extraction.ComputedRelationExtraction.extract_all_relations">
+<code class="descname">extract_all_relations</code><span class="sig-paren">(</span><em>mention_x: nlp_architect.common.cdc.mention_data.MentionDataLight</em>, <em>mention_y: nlp_architect.common.cdc.mention_data.MentionDataLight</em><span class="sig-paren">)</span> &#x2192; Set[nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType]<a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/computed_relation_extraction.html#ComputedRelationExtraction.extract_all_relations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.computed_relation_extraction.ComputedRelationExtraction.extract_all_relations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Try to find if mentions has anyone or more of the relations this class support</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>mention_x</strong> – MentionDataLight</li>
+<li><strong>mention_y</strong> – MentionDataLight</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><dl class="docutils">
+<dt>One or more of: RelationType.EXACT_STRING, RelationType.FUZZY_FIT,</dt>
+<dd><p class="first last">RelationType.FUZZY_HEAD_FIT, RelationType.SAME_HEAD_LEMMA,
+RelationType.SAME_HEAD_LEMMA_RELAX</p>
+</dd>
+</dl>
+</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Set[<a class="reference internal" href="#nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType" title="nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType">RelationType</a>]</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="nlp_architect.data.cdc_resources.relations.computed_relation_extraction.ComputedRelationExtraction.extract_exact_string">
+<em class="property">static </em><code class="descname">extract_exact_string</code><span class="sig-paren">(</span><em>mention_x: nlp_architect.common.cdc.mention_data.MentionDataLight</em>, <em>mention_y: nlp_architect.common.cdc.mention_data.MentionDataLight</em><span class="sig-paren">)</span> &#x2192; nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType<a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/computed_relation_extraction.html#ComputedRelationExtraction.extract_exact_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.computed_relation_extraction.ComputedRelationExtraction.extract_exact_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if input mentions has exact string relation</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>mention_x</strong> – MentionDataLight</li>
+<li><strong>mention_y</strong> – MentionDataLight</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">RelationType.EXACT_STRING or RelationType.NO_RELATION_FOUND</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="nlp_architect.data.cdc_resources.relations.computed_relation_extraction.ComputedRelationExtraction.extract_fuzzy_fit">
+<em class="property">static </em><code class="descname">extract_fuzzy_fit</code><span class="sig-paren">(</span><em>mention_x: nlp_architect.common.cdc.mention_data.MentionDataLight</em>, <em>mention_y: nlp_architect.common.cdc.mention_data.MentionDataLight</em><span class="sig-paren">)</span> &#x2192; nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType<a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/computed_relation_extraction.html#ComputedRelationExtraction.extract_fuzzy_fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.computed_relation_extraction.ComputedRelationExtraction.extract_fuzzy_fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if input mentions has fuzzy fit relation</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>mention_x</strong> – MentionDataLight</li>
+<li><strong>mention_y</strong> – MentionDataLight</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">RelationType.FUZZY_FIT or RelationType.NO_RELATION_FOUND</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="nlp_architect.data.cdc_resources.relations.computed_relation_extraction.ComputedRelationExtraction.extract_fuzzy_head_fit">
+<em class="property">static </em><code class="descname">extract_fuzzy_head_fit</code><span class="sig-paren">(</span><em>mention_x: nlp_architect.common.cdc.mention_data.MentionDataLight</em>, <em>mention_y: nlp_architect.common.cdc.mention_data.MentionDataLight</em><span class="sig-paren">)</span> &#x2192; nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType<a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/computed_relation_extraction.html#ComputedRelationExtraction.extract_fuzzy_head_fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.computed_relation_extraction.ComputedRelationExtraction.extract_fuzzy_head_fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if input mentions has fuzzy head fit relation</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>mention_x</strong> – MentionDataLight</li>
+<li><strong>mention_y</strong> – MentionDataLight</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">RelationType.FUZZY_HEAD_FIT or RelationType.NO_RELATION_FOUND</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="nlp_architect.data.cdc_resources.relations.computed_relation_extraction.ComputedRelationExtraction.extract_same_head_lemma">
+<em class="property">static </em><code class="descname">extract_same_head_lemma</code><span class="sig-paren">(</span><em>mention_x: nlp_architect.common.cdc.mention_data.MentionDataLight</em>, <em>mention_y: nlp_architect.common.cdc.mention_data.MentionDataLight</em><span class="sig-paren">)</span> &#x2192; nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType<a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/computed_relation_extraction.html#ComputedRelationExtraction.extract_same_head_lemma"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.computed_relation_extraction.ComputedRelationExtraction.extract_same_head_lemma" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if input mentions has same head lemma relation</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>mention_x</strong> – MentionDataLight</li>
+<li><strong>mention_y</strong> – MentionDataLight</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">RelationType.SAME_HEAD_LEMMA or RelationType.NO_RELATION_FOUND</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.cdc_resources.relations.computed_relation_extraction.ComputedRelationExtraction.extract_sub_relations">
+<code class="descname">extract_sub_relations</code><span class="sig-paren">(</span><em>mention_x: nlp_architect.common.cdc.mention_data.MentionDataLight</em>, <em>mention_y: nlp_architect.common.cdc.mention_data.MentionDataLight</em>, <em>relation: nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType</em><span class="sig-paren">)</span> &#x2192; nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType<a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/computed_relation_extraction.html#ComputedRelationExtraction.extract_sub_relations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.computed_relation_extraction.ComputedRelationExtraction.extract_sub_relations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if input mentions has the given relation between them</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>mention_x</strong> – MentionDataLight</li>
+<li><strong>mention_y</strong> – MentionDataLight</li>
+<li><strong>relation</strong> – RelationType</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><dl class="docutils">
+<dt>relation in case mentions has given relation or</dt>
+<dd><p class="first last">RelationType.NO_RELATION_FOUND otherwise</p>
+</dd>
+</dl>
+</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType" title="nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType">RelationType</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="nlp_architect.data.cdc_resources.relations.computed_relation_extraction.ComputedRelationExtraction.get_supported_relations">
+<em class="property">static </em><code class="descname">get_supported_relations</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; List[nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType]<a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/computed_relation_extraction.html#ComputedRelationExtraction.get_supported_relations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.computed_relation_extraction.ComputedRelationExtraction.get_supported_relations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return all supported relations by this class</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List[RelationType]</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-nlp_architect.data.cdc_resources.relations.referent_dict_relation_extraction">
+<span id="nlp-architect-data-cdc-resources-relations-referent-dict-relation-extraction-module"></span><h2>nlp_architect.data.cdc_resources.relations.referent_dict_relation_extraction module<a class="headerlink" href="#module-nlp_architect.data.cdc_resources.relations.referent_dict_relation_extraction" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nlp_architect.data.cdc_resources.relations.referent_dict_relation_extraction.ReferentDictRelationExtraction">
+<em class="property">class </em><code class="descclassname">nlp_architect.data.cdc_resources.relations.referent_dict_relation_extraction.</code><code class="descname">ReferentDictRelationExtraction</code><span class="sig-paren">(</span><em>method: nlp_architect.data.cdc_resources.relations.relation_types_enums.OnlineOROfflineMethod = &lt;OnlineOROfflineMethod.ONLINE: 'online'&gt;</em>, <em>ref_dict: str = None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/referent_dict_relation_extraction.html#ReferentDictRelationExtraction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.referent_dict_relation_extraction.ReferentDictRelationExtraction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nlp_architect.data.cdc_resources.relations.relation_extraction.RelationExtraction" title="nlp_architect.data.cdc_resources.relations.relation_extraction.RelationExtraction"><code class="xref py py-class docutils literal notranslate"><span class="pre">nlp_architect.data.cdc_resources.relations.relation_extraction.RelationExtraction</span></code></a></p>
+<dl class="method">
+<dt id="nlp_architect.data.cdc_resources.relations.referent_dict_relation_extraction.ReferentDictRelationExtraction.extract_all_relations">
+<code class="descname">extract_all_relations</code><span class="sig-paren">(</span><em>mention_x: nlp_architect.common.cdc.mention_data.MentionDataLight</em>, <em>mention_y: nlp_architect.common.cdc.mention_data.MentionDataLight</em><span class="sig-paren">)</span> &#x2192; Set[nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType]<a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/referent_dict_relation_extraction.html#ReferentDictRelationExtraction.extract_all_relations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.referent_dict_relation_extraction.ReferentDictRelationExtraction.extract_all_relations" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.cdc_resources.relations.referent_dict_relation_extraction.ReferentDictRelationExtraction.extract_sub_relations">
+<code class="descname">extract_sub_relations</code><span class="sig-paren">(</span><em>mention_x: nlp_architect.common.cdc.mention_data.MentionDataLight</em>, <em>mention_y: nlp_architect.common.cdc.mention_data.MentionDataLight</em>, <em>relation: nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType</em><span class="sig-paren">)</span> &#x2192; nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType<a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/referent_dict_relation_extraction.html#ReferentDictRelationExtraction.extract_sub_relations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.referent_dict_relation_extraction.ReferentDictRelationExtraction.extract_sub_relations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if input mentions has the given relation between them</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>mention_x</strong> – MentionDataLight</li>
+<li><strong>mention_y</strong> – MentionDataLight</li>
+<li><strong>relation</strong> – RelationType</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><dl class="docutils">
+<dt>relation in case mentions has given relation or</dt>
+<dd><p class="first last">RelationType.NO_RELATION_FOUND otherwise</p>
+</dd>
+</dl>
+</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType" title="nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType">RelationType</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="nlp_architect.data.cdc_resources.relations.referent_dict_relation_extraction.ReferentDictRelationExtraction.get_supported_relations">
+<em class="property">static </em><code class="descname">get_supported_relations</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/referent_dict_relation_extraction.html#ReferentDictRelationExtraction.get_supported_relations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.referent_dict_relation_extraction.ReferentDictRelationExtraction.get_supported_relations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return all supported relations by this class</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List[RelationType]</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.cdc_resources.relations.referent_dict_relation_extraction.ReferentDictRelationExtraction.is_referent_dict">
+<code class="descname">is_referent_dict</code><span class="sig-paren">(</span><em>mention_x: nlp_architect.common.cdc.mention_data.MentionDataLight</em>, <em>mention_y: nlp_architect.common.cdc.mention_data.MentionDataLight</em><span class="sig-paren">)</span> &#x2192; bool<a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/referent_dict_relation_extraction.html#ReferentDictRelationExtraction.is_referent_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.referent_dict_relation_extraction.ReferentDictRelationExtraction.is_referent_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if input mentions has referent dictionary relation between them</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>mention_x</strong> – MentionDataLight</li>
+<li><strong>mention_y</strong> – MentionDataLight</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">bool</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="nlp_architect.data.cdc_resources.relations.referent_dict_relation_extraction.ReferentDictRelationExtraction.load_reference_dict">
+<em class="property">static </em><code class="descname">load_reference_dict</code><span class="sig-paren">(</span><em>dict_fname: str</em><span class="sig-paren">)</span> &#x2192; Dict[str, List[str]]<a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/referent_dict_relation_extraction.html#ReferentDictRelationExtraction.load_reference_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.referent_dict_relation_extraction.ReferentDictRelationExtraction.load_reference_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to load referent dictionary to memory</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List[RelationType]</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-nlp_architect.data.cdc_resources.relations.relation_extraction">
+<span id="nlp-architect-data-cdc-resources-relations-relation-extraction-module"></span><h2>nlp_architect.data.cdc_resources.relations.relation_extraction module<a class="headerlink" href="#module-nlp_architect.data.cdc_resources.relations.relation_extraction" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nlp_architect.data.cdc_resources.relations.relation_extraction.RelationExtraction">
+<em class="property">class </em><code class="descclassname">nlp_architect.data.cdc_resources.relations.relation_extraction.</code><code class="descname">RelationExtraction</code><a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/relation_extraction.html#RelationExtraction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.relation_extraction.RelationExtraction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="nlp_architect.data.cdc_resources.relations.relation_extraction.RelationExtraction.extract_relation">
+<code class="descname">extract_relation</code><span class="sig-paren">(</span><em>mention_x: nlp_architect.common.cdc.mention_data.MentionDataLight</em>, <em>mention_y: nlp_architect.common.cdc.mention_data.MentionDataLight</em>, <em>relation: nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType</em><span class="sig-paren">)</span> &#x2192; nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType<a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/relation_extraction.html#RelationExtraction.extract_relation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.relation_extraction.RelationExtraction.extract_relation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base Class Check if Sub class support given relation before executing the sub class</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>mention_x</strong> – MentionDataLight</li>
+<li><strong>mention_y</strong> – MentionDataLight</li>
+<li><strong>relation</strong> – RelationType</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><dl class="docutils">
+<dt>relation in case mentions has given relation and</dt>
+<dd><p class="first last">RelationType.NO_RELATION_FOUND otherwise</p>
+</dd>
+</dl>
+</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType" title="nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType">RelationType</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.cdc_resources.relations.relation_extraction.RelationExtraction.extract_sub_relations">
+<code class="descname">extract_sub_relations</code><span class="sig-paren">(</span><em>mention_x: nlp_architect.common.cdc.mention_data.MentionDataLight</em>, <em>mention_y: nlp_architect.common.cdc.mention_data.MentionDataLight</em>, <em>relation: nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType</em><span class="sig-paren">)</span> &#x2192; nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType<a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/relation_extraction.html#RelationExtraction.extract_sub_relations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.relation_extraction.RelationExtraction.extract_sub_relations" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="nlp_architect.data.cdc_resources.relations.relation_extraction.RelationExtraction.get_supported_relations">
+<em class="property">static </em><code class="descname">get_supported_relations</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; List[nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType]<a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/relation_extraction.html#RelationExtraction.get_supported_relations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.relation_extraction.RelationExtraction.get_supported_relations" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-nlp_architect.data.cdc_resources.relations.relation_types_enums">
+<span id="nlp-architect-data-cdc-resources-relations-relation-types-enums-module"></span><h2>nlp_architect.data.cdc_resources.relations.relation_types_enums module<a class="headerlink" href="#module-nlp_architect.data.cdc_resources.relations.relation_types_enums" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nlp_architect.data.cdc_resources.relations.relation_types_enums.EmbeddingMethod">
+<em class="property">class </em><code class="descclassname">nlp_architect.data.cdc_resources.relations.relation_types_enums.</code><code class="descname">EmbeddingMethod</code><a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/relation_types_enums.html#EmbeddingMethod"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.relation_types_enums.EmbeddingMethod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>An enumeration.</p>
+<dl class="attribute">
+<dt id="nlp_architect.data.cdc_resources.relations.relation_types_enums.EmbeddingMethod.ELMO">
+<code class="descname">ELMO</code><em class="property"> = 'elmo'</em><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.relation_types_enums.EmbeddingMethod.ELMO" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.cdc_resources.relations.relation_types_enums.EmbeddingMethod.ELMO_OFFLINE">
+<code class="descname">ELMO_OFFLINE</code><em class="property"> = 'elmo_offline'</em><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.relation_types_enums.EmbeddingMethod.ELMO_OFFLINE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.cdc_resources.relations.relation_types_enums.EmbeddingMethod.GLOVE">
+<code class="descname">GLOVE</code><em class="property"> = 'glove'</em><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.relation_types_enums.EmbeddingMethod.GLOVE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.cdc_resources.relations.relation_types_enums.EmbeddingMethod.GLOVE_OFFLINE">
+<code class="descname">GLOVE_OFFLINE</code><em class="property"> = 'glove_offline'</em><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.relation_types_enums.EmbeddingMethod.GLOVE_OFFLINE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nlp_architect.data.cdc_resources.relations.relation_types_enums.OnlineOROfflineMethod">
+<em class="property">class </em><code class="descclassname">nlp_architect.data.cdc_resources.relations.relation_types_enums.</code><code class="descname">OnlineOROfflineMethod</code><a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/relation_types_enums.html#OnlineOROfflineMethod"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.relation_types_enums.OnlineOROfflineMethod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>An enumeration.</p>
+<dl class="attribute">
+<dt id="nlp_architect.data.cdc_resources.relations.relation_types_enums.OnlineOROfflineMethod.OFFLINE">
+<code class="descname">OFFLINE</code><em class="property"> = 'offline'</em><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.relation_types_enums.OnlineOROfflineMethod.OFFLINE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.cdc_resources.relations.relation_types_enums.OnlineOROfflineMethod.ONLINE">
+<code class="descname">ONLINE</code><em class="property"> = 'online'</em><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.relation_types_enums.OnlineOROfflineMethod.ONLINE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType">
+<em class="property">class </em><code class="descclassname">nlp_architect.data.cdc_resources.relations.relation_types_enums.</code><code class="descname">RelationType</code><a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/relation_types_enums.html#RelationType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>An enumeration.</p>
+<dl class="attribute">
+<dt id="nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType.EXACT_STRING">
+<code class="descname">EXACT_STRING</code><em class="property"> = 8</em><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType.EXACT_STRING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType.FUZZY_FIT">
+<code class="descname">FUZZY_FIT</code><em class="property"> = 9</em><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType.FUZZY_FIT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType.FUZZY_HEAD_FIT">
+<code class="descname">FUZZY_HEAD_FIT</code><em class="property"> = 10</em><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType.FUZZY_HEAD_FIT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType.NO_RELATION_FOUND">
+<code class="descname">NO_RELATION_FOUND</code><em class="property"> = 0</em><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType.NO_RELATION_FOUND" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType.OTHER">
+<code class="descname">OTHER</code><em class="property"> = 21</em><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType.OTHER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType.REFERENT_DICT">
+<code class="descname">REFERENT_DICT</code><em class="property"> = 18</em><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType.REFERENT_DICT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType.SAME_HEAD_LEMMA">
+<code class="descname">SAME_HEAD_LEMMA</code><em class="property"> = 11</em><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType.SAME_HEAD_LEMMA" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType.VERBOCEAN_MATCH">
+<code class="descname">VERBOCEAN_MATCH</code><em class="property"> = 13</em><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType.VERBOCEAN_MATCH" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType.WIKIPEDIA_ALIASES">
+<code class="descname">WIKIPEDIA_ALIASES</code><em class="property"> = 2</em><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType.WIKIPEDIA_ALIASES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType.WIKIPEDIA_BE_COMP">
+<code class="descname">WIKIPEDIA_BE_COMP</code><em class="property"> = 7</em><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType.WIKIPEDIA_BE_COMP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType.WIKIPEDIA_CATEGORY">
+<code class="descname">WIKIPEDIA_CATEGORY</code><em class="property"> = 5</em><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType.WIKIPEDIA_CATEGORY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType.WIKIPEDIA_DISAMBIGUATION">
+<code class="descname">WIKIPEDIA_DISAMBIGUATION</code><em class="property"> = 3</em><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType.WIKIPEDIA_DISAMBIGUATION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType.WIKIPEDIA_PART_OF_SAME_NAME">
+<code class="descname">WIKIPEDIA_PART_OF_SAME_NAME</code><em class="property"> = 4</em><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType.WIKIPEDIA_PART_OF_SAME_NAME" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType.WIKIPEDIA_REDIRECT_LINK">
+<code class="descname">WIKIPEDIA_REDIRECT_LINK</code><em class="property"> = 1</em><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType.WIKIPEDIA_REDIRECT_LINK" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType.WIKIPEDIA_TITLE_PARENTHESIS">
+<code class="descname">WIKIPEDIA_TITLE_PARENTHESIS</code><em class="property"> = 6</em><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType.WIKIPEDIA_TITLE_PARENTHESIS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType.WITHIN_DOC_COREF">
+<code class="descname">WITHIN_DOC_COREF</code><em class="property"> = 20</em><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType.WITHIN_DOC_COREF" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType.WORDNET_DERIVATIONALLY">
+<code class="descname">WORDNET_DERIVATIONALLY</code><em class="property"> = 14</em><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType.WORDNET_DERIVATIONALLY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType.WORDNET_PARTIAL_SYNSET_MATCH">
+<code class="descname">WORDNET_PARTIAL_SYNSET_MATCH</code><em class="property"> = 15</em><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType.WORDNET_PARTIAL_SYNSET_MATCH" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType.WORDNET_SAME_SYNSET">
+<code class="descname">WORDNET_SAME_SYNSET</code><em class="property"> = 17</em><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType.WORDNET_SAME_SYNSET" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType.WORD_EMBEDDING_MATCH">
+<code class="descname">WORD_EMBEDDING_MATCH</code><em class="property"> = 19</em><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType.WORD_EMBEDDING_MATCH" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nlp_architect.data.cdc_resources.relations.relation_types_enums.WikipediaSearchMethod">
+<em class="property">class </em><code class="descclassname">nlp_architect.data.cdc_resources.relations.relation_types_enums.</code><code class="descname">WikipediaSearchMethod</code><a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/relation_types_enums.html#WikipediaSearchMethod"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.relation_types_enums.WikipediaSearchMethod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>An enumeration.</p>
+<dl class="attribute">
+<dt id="nlp_architect.data.cdc_resources.relations.relation_types_enums.WikipediaSearchMethod.ELASTIC">
+<code class="descname">ELASTIC</code><em class="property"> = 'elastic'</em><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.relation_types_enums.WikipediaSearchMethod.ELASTIC" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.cdc_resources.relations.relation_types_enums.WikipediaSearchMethod.OFFLINE">
+<code class="descname">OFFLINE</code><em class="property"> = 'offline'</em><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.relation_types_enums.WikipediaSearchMethod.OFFLINE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.data.cdc_resources.relations.relation_types_enums.WikipediaSearchMethod.ONLINE">
+<code class="descname">ONLINE</code><em class="property"> = 'online'</em><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.relation_types_enums.WikipediaSearchMethod.ONLINE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-nlp_architect.data.cdc_resources.relations.verbocean_relation_extraction">
+<span id="nlp-architect-data-cdc-resources-relations-verbocean-relation-extraction-module"></span><h2>nlp_architect.data.cdc_resources.relations.verbocean_relation_extraction module<a class="headerlink" href="#module-nlp_architect.data.cdc_resources.relations.verbocean_relation_extraction" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nlp_architect.data.cdc_resources.relations.verbocean_relation_extraction.VerboceanRelationExtraction">
+<em class="property">class </em><code class="descclassname">nlp_architect.data.cdc_resources.relations.verbocean_relation_extraction.</code><code class="descname">VerboceanRelationExtraction</code><span class="sig-paren">(</span><em>method: nlp_architect.data.cdc_resources.relations.relation_types_enums.OnlineOROfflineMethod = &lt;OnlineOROfflineMethod.ONLINE: 'online'&gt;</em>, <em>vo_file: str = None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/verbocean_relation_extraction.html#VerboceanRelationExtraction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.verbocean_relation_extraction.VerboceanRelationExtraction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nlp_architect.data.cdc_resources.relations.relation_extraction.RelationExtraction" title="nlp_architect.data.cdc_resources.relations.relation_extraction.RelationExtraction"><code class="xref py py-class docutils literal notranslate"><span class="pre">nlp_architect.data.cdc_resources.relations.relation_extraction.RelationExtraction</span></code></a></p>
+<dl class="method">
+<dt id="nlp_architect.data.cdc_resources.relations.verbocean_relation_extraction.VerboceanRelationExtraction.extract_all_relations">
+<code class="descname">extract_all_relations</code><span class="sig-paren">(</span><em>mention_x: nlp_architect.common.cdc.mention_data.MentionDataLight</em>, <em>mention_y: nlp_architect.common.cdc.mention_data.MentionDataLight</em><span class="sig-paren">)</span> &#x2192; Set[nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType]<a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/verbocean_relation_extraction.html#VerboceanRelationExtraction.extract_all_relations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.verbocean_relation_extraction.VerboceanRelationExtraction.extract_all_relations" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.cdc_resources.relations.verbocean_relation_extraction.VerboceanRelationExtraction.extract_sub_relations">
+<code class="descname">extract_sub_relations</code><span class="sig-paren">(</span><em>mention_x: nlp_architect.common.cdc.mention_data.MentionDataLight</em>, <em>mention_y: nlp_architect.common.cdc.mention_data.MentionDataLight</em>, <em>relation: nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType</em><span class="sig-paren">)</span> &#x2192; nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType<a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/verbocean_relation_extraction.html#VerboceanRelationExtraction.extract_sub_relations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.verbocean_relation_extraction.VerboceanRelationExtraction.extract_sub_relations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if input mentions has the given relation between them</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>mention_x</strong> – MentionDataLight</li>
+<li><strong>mention_y</strong> – MentionDataLight</li>
+<li><strong>relation</strong> – RelationType</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><dl class="docutils">
+<dt>relation in case mentions has given relation or</dt>
+<dd><p class="first last">RelationType.NO_RELATION_FOUND otherwise</p>
+</dd>
+</dl>
+</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType" title="nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType">RelationType</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="nlp_architect.data.cdc_resources.relations.verbocean_relation_extraction.VerboceanRelationExtraction.get_supported_relations">
+<em class="property">static </em><code class="descname">get_supported_relations</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/verbocean_relation_extraction.html#VerboceanRelationExtraction.get_supported_relations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.verbocean_relation_extraction.VerboceanRelationExtraction.get_supported_relations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return all supported relations by this class</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List[RelationType]</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.cdc_resources.relations.verbocean_relation_extraction.VerboceanRelationExtraction.is_verbocean_relation">
+<code class="descname">is_verbocean_relation</code><span class="sig-paren">(</span><em>mention_x: nlp_architect.common.cdc.mention_data.MentionDataLight</em>, <em>mention_y: nlp_architect.common.cdc.mention_data.MentionDataLight</em><span class="sig-paren">)</span> &#x2192; bool<a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/verbocean_relation_extraction.html#VerboceanRelationExtraction.is_verbocean_relation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.verbocean_relation_extraction.VerboceanRelationExtraction.is_verbocean_relation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if input mentions has VerbOcean relation between them</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>mention_x</strong> – MentionDataLight</li>
+<li><strong>mention_y</strong> – MentionDataLight</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">bool</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="nlp_architect.data.cdc_resources.relations.verbocean_relation_extraction.VerboceanRelationExtraction.load_verbocean_file">
+<em class="property">static </em><code class="descname">load_verbocean_file</code><span class="sig-paren">(</span><em>fname: str</em><span class="sig-paren">)</span> &#x2192; Dict[str, Dict[str, str]]<a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/verbocean_relation_extraction.html#VerboceanRelationExtraction.load_verbocean_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.verbocean_relation_extraction.VerboceanRelationExtraction.load_verbocean_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to load referent dictionary to memory</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List[RelationType]</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction">
+<span id="nlp-architect-data-cdc-resources-relations-wikipedia-relation-extraction-module"></span><h2>nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction module<a class="headerlink" href="#module-nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction.WikipediaRelationExtraction">
+<em class="property">class </em><code class="descclassname">nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction.</code><code class="descname">WikipediaRelationExtraction</code><span class="sig-paren">(</span><em>method: nlp_architect.data.cdc_resources.relations.relation_types_enums.WikipediaSearchMethod = &lt;WikipediaSearchMethod.ONLINE: 'online'&gt;</em>, <em>wiki_file: str = None</em>, <em>host: str = None</em>, <em>port: int = None</em>, <em>index: str = None</em>, <em>filter_pronouns: bool = True</em>, <em>filter_time_data: bool = True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/wikipedia_relation_extraction.html#WikipediaRelationExtraction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction.WikipediaRelationExtraction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nlp_architect.data.cdc_resources.relations.relation_extraction.RelationExtraction" title="nlp_architect.data.cdc_resources.relations.relation_extraction.RelationExtraction"><code class="xref py py-class docutils literal notranslate"><span class="pre">nlp_architect.data.cdc_resources.relations.relation_extraction.RelationExtraction</span></code></a></p>
+<dl class="staticmethod">
+<dt id="nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction.WikipediaRelationExtraction.extract_aliases">
+<em class="property">static </em><code class="descname">extract_aliases</code><span class="sig-paren">(</span><em>pages1: nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_pages.WikipediaPages, pages2: nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_pages.WikipediaPages, titles1: Set[str], titles2: Set[str]</em><span class="sig-paren">)</span> &#x2192; nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType<a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/wikipedia_relation_extraction.html#WikipediaRelationExtraction.extract_aliases"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction.WikipediaRelationExtraction.extract_aliases" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if input mentions has aliases relation</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pages1</strong> – WikipediaPages</li>
+<li><strong>pages2</strong> – WikipediaPage</li>
+<li><strong>titles1</strong> – Set[str]</li>
+<li><strong>titles2</strong> – Set[str]</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">RelationType.WIKIPEDIA_ALIASES or RelationType.NO_RELATION_FOUND</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction.WikipediaRelationExtraction.extract_all_relations">
+<code class="descname">extract_all_relations</code><span class="sig-paren">(</span><em>mention_x: nlp_architect.common.cdc.mention_data.MentionDataLight</em>, <em>mention_y: nlp_architect.common.cdc.mention_data.MentionDataLight</em><span class="sig-paren">)</span> &#x2192; Set[nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType]<a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/wikipedia_relation_extraction.html#WikipediaRelationExtraction.extract_all_relations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction.WikipediaRelationExtraction.extract_all_relations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Try to find if mentions has anyone or more of the relations this class support</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>mention_x</strong> – MentionDataLight</li>
+<li><strong>mention_y</strong> – MentionDataLight</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><dl class="docutils">
+<dt>One or more of: RelationType.WIKIPEDIA_BE_COMP,</dt>
+<dd><p class="first last">RelationType.WIKIPEDIA_TITLE_PARENTHESIS,
+RelationType.WIKIPEDIA_DISAMBIGUATION, RelationType.WIKIPEDIA_CATEGORY,
+RelationType.WIKIPEDIA_REDIRECT_LINK, RelationType.WIKIPEDIA_ALIASES,
+RelationType.WIKIPEDIA_PART_OF_SAME_NAME</p>
+</dd>
+</dl>
+</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Set[<a class="reference internal" href="#nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType" title="nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType">RelationType</a>]</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction.WikipediaRelationExtraction.extract_be_comp">
+<em class="property">static </em><code class="descname">extract_be_comp</code><span class="sig-paren">(</span><em>pages1: nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_pages.WikipediaPages, pages2: nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_pages.WikipediaPages, titles1: Set[str], titles2: Set[str]</em><span class="sig-paren">)</span> &#x2192; nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType<a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/wikipedia_relation_extraction.html#WikipediaRelationExtraction.extract_be_comp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction.WikipediaRelationExtraction.extract_be_comp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if input mentions has be-comp/is-a relation</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pages1</strong> – WikipediaPages</li>
+<li><strong>pages2</strong> – WikipediaPage</li>
+<li><strong>titles1</strong> – Set[str]</li>
+<li><strong>titles2</strong> – Set[str]</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">RelationType.WIKIPEDIA_BE_COMP or RelationType.NO_RELATION_FOUND</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction.WikipediaRelationExtraction.extract_category">
+<em class="property">static </em><code class="descname">extract_category</code><span class="sig-paren">(</span><em>pages1: nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_pages.WikipediaPages, pages2: nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_pages.WikipediaPages, titles1: Set[str], titles2: Set[str]</em><span class="sig-paren">)</span> &#x2192; nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType<a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/wikipedia_relation_extraction.html#WikipediaRelationExtraction.extract_category"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction.WikipediaRelationExtraction.extract_category" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if input mentions has category relation</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pages1</strong> – WikipediaPages</li>
+<li><strong>pages2</strong> – WikipediaPage</li>
+<li><strong>titles1</strong> – Set[str]</li>
+<li><strong>titles2</strong> – Set[str]</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">RelationType.WIKIPEDIA_CATEGORY or RelationType.NO_RELATION_FOUND</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction.WikipediaRelationExtraction.extract_disambig">
+<em class="property">static </em><code class="descname">extract_disambig</code><span class="sig-paren">(</span><em>pages1: nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_pages.WikipediaPages, pages2: nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_pages.WikipediaPages, titles1: Set[str], titles2: Set[str]</em><span class="sig-paren">)</span> &#x2192; nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType<a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/wikipedia_relation_extraction.html#WikipediaRelationExtraction.extract_disambig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction.WikipediaRelationExtraction.extract_disambig" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if input mentions has disambiguation relation</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pages1</strong> – WikipediaPages</li>
+<li><strong>pages2</strong> – WikipediaPage</li>
+<li><strong>titles1</strong> – Set[str]</li>
+<li><strong>titles2</strong> – Set[str]</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">RelationType.WIKIPEDIA_DISAMBIGUATION or RelationType.NO_RELATION_FOUND</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction.WikipediaRelationExtraction.extract_parenthesis">
+<em class="property">static </em><code class="descname">extract_parenthesis</code><span class="sig-paren">(</span><em>pages1: nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_pages.WikipediaPages, pages2: nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_pages.WikipediaPages, titles1: Set[str], titles2: Set[str]</em><span class="sig-paren">)</span> &#x2192; nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType<a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/wikipedia_relation_extraction.html#WikipediaRelationExtraction.extract_parenthesis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction.WikipediaRelationExtraction.extract_parenthesis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if input mentions has parenthesis relation</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pages1</strong> – WikipediaPages</li>
+<li><strong>pages2</strong> – WikipediaPage</li>
+<li><strong>titles1</strong> – Set[str]</li>
+<li><strong>titles2</strong> – Set[str]</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">RelationType.WIKIPEDIA_TITLE_PARENTHESIS or RelationType.NO_RELATION_FOUND</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction.WikipediaRelationExtraction.extract_sub_relations">
+<code class="descname">extract_sub_relations</code><span class="sig-paren">(</span><em>mention_x: nlp_architect.common.cdc.mention_data.MentionDataLight</em>, <em>mention_y: nlp_architect.common.cdc.mention_data.MentionDataLight</em>, <em>relation: nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType</em><span class="sig-paren">)</span> &#x2192; nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType<a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/wikipedia_relation_extraction.html#WikipediaRelationExtraction.extract_sub_relations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction.WikipediaRelationExtraction.extract_sub_relations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if input mentions has the given relation between them</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>mention_x</strong> – MentionDataLight</li>
+<li><strong>mention_y</strong> – MentionDataLight</li>
+<li><strong>relation</strong> – RelationType</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><dl class="docutils">
+<dt>relation in case mentions has given relation or</dt>
+<dd><p class="first last">RelationType.NO_RELATION_FOUND otherwise</p>
+</dd>
+</dl>
+</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType" title="nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType">RelationType</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction.WikipediaRelationExtraction.get_phrase_related_pages">
+<code class="descname">get_phrase_related_pages</code><span class="sig-paren">(</span><em>mention_str: str</em><span class="sig-paren">)</span> &#x2192; nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_pages.WikipediaPages<a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/wikipedia_relation_extraction.html#WikipediaRelationExtraction.get_phrase_related_pages"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction.WikipediaRelationExtraction.get_phrase_related_pages" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all WikipediaPages pages related with this mention string</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mention_str</strong> – str</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">WikipediaPages</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction.WikipediaRelationExtraction.get_supported_relations">
+<em class="property">static </em><code class="descname">get_supported_relations</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; List[nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType]<a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/wikipedia_relation_extraction.html#WikipediaRelationExtraction.get_supported_relations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction.WikipediaRelationExtraction.get_supported_relations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return all supported relations by this class</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List[RelationType]</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction.WikipediaRelationExtraction.is_both_data_or_time">
+<em class="property">static </em><code class="descname">is_both_data_or_time</code><span class="sig-paren">(</span><em>mention1: nlp_architect.common.cdc.mention_data.MentionDataLight</em>, <em>mention2: nlp_architect.common.cdc.mention_data.MentionDataLight</em><span class="sig-paren">)</span> &#x2192; bool<a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/wikipedia_relation_extraction.html#WikipediaRelationExtraction.is_both_data_or_time"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction.WikipediaRelationExtraction.is_both_data_or_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>check if both phrases refers to time or date</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction.WikipediaRelationExtraction.is_both_opposite_personal_pronouns">
+<em class="property">static </em><code class="descname">is_both_opposite_personal_pronouns</code><span class="sig-paren">(</span><em>phrase1: str</em>, <em>phrase2: str</em><span class="sig-paren">)</span> &#x2192; bool<a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/wikipedia_relation_extraction.html#WikipediaRelationExtraction.is_both_opposite_personal_pronouns"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction.WikipediaRelationExtraction.is_both_opposite_personal_pronouns" title="Permalink to this definition">¶</a></dt>
+<dd><p>check if both phrases refers to pronouns</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction.WikipediaRelationExtraction.is_part_of_same_name">
+<code class="descname">is_part_of_same_name</code><span class="sig-paren">(</span><em>pages1: nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_pages.WikipediaPages</em>, <em>pages2: nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_pages.WikipediaPages</em><span class="sig-paren">)</span> &#x2192; bool<a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/wikipedia_relation_extraction.html#WikipediaRelationExtraction.is_part_of_same_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction.WikipediaRelationExtraction.is_part_of_same_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if input mentions has part of same name relation (eg: page1=John, page2=Smith)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pages1</strong> – WikipediaPages</li>
+<li><strong>pages2</strong> – WikipediaPage</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">bool</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction.WikipediaRelationExtraction.is_redirect_same">
+<em class="property">static </em><code class="descname">is_redirect_same</code><span class="sig-paren">(</span><em>pages1: nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_pages.WikipediaPages</em>, <em>pages2: nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_pages.WikipediaPages</em><span class="sig-paren">)</span> &#x2192; bool<a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/wikipedia_relation_extraction.html#WikipediaRelationExtraction.is_redirect_same"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction.WikipediaRelationExtraction.is_redirect_same" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if input mentions has same wikipedia redirect page</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pages1</strong> – WikipediaPages</li>
+<li><strong>pages2</strong> – WikipediaPage</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">bool</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction">
+<span id="nlp-architect-data-cdc-resources-relations-within-doc-coref-extraction-module"></span><h2>nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction module<a class="headerlink" href="#module-nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref">
+<em class="property">class </em><code class="descclassname">nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction.</code><code class="descname">WithinDocCoref</code><span class="sig-paren">(</span><em>wd_file: str</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/within_doc_coref_extraction.html#WithinDocCoref"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nlp_architect.data.cdc_resources.relations.relation_extraction.RelationExtraction" title="nlp_architect.data.cdc_resources.relations.relation_extraction.RelationExtraction"><code class="xref py py-class docutils literal notranslate"><span class="pre">nlp_architect.data.cdc_resources.relations.relation_extraction.RelationExtraction</span></code></a></p>
+<dl class="staticmethod">
+<dt id="nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref.arrange_resource">
+<em class="property">static </em><code class="descname">arrange_resource</code><span class="sig-paren">(</span><em>wd_mentions_json</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/within_doc_coref_extraction.html#WithinDocCoref.arrange_resource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref.arrange_resource" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref.create_ment_id">
+<em class="property">static </em><code class="descname">create_ment_id</code><span class="sig-paren">(</span><em>mention_x: nlp_architect.common.cdc.mention_data.MentionData</em>, <em>mention_y: nlp_architect.common.cdc.mention_data.MentionData</em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/within_doc_coref_extraction.html#WithinDocCoref.create_ment_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref.create_ment_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref.extract_all_relations">
+<code class="descname">extract_all_relations</code><span class="sig-paren">(</span><em>mention_x: nlp_architect.common.cdc.mention_data.MentionData</em>, <em>mention_y: nlp_architect.common.cdc.mention_data.MentionData</em><span class="sig-paren">)</span> &#x2192; Set[nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType]<a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/within_doc_coref_extraction.html#WithinDocCoref.extract_all_relations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref.extract_all_relations" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref.extract_sub_relations">
+<code class="descname">extract_sub_relations</code><span class="sig-paren">(</span><em>mention_x: nlp_architect.common.cdc.mention_data.MentionData</em>, <em>mention_y: nlp_architect.common.cdc.mention_data.MentionData</em>, <em>relation: nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType</em><span class="sig-paren">)</span> &#x2192; nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType<a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/within_doc_coref_extraction.html#WithinDocCoref.extract_sub_relations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref.extract_sub_relations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if input mentions has the given relation between them</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>mention_x</strong> – MentionDataLight</li>
+<li><strong>mention_y</strong> – MentionDataLight</li>
+<li><strong>relation</strong> – RelationType</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><dl class="docutils">
+<dt>relation in case mentions has given relation or</dt>
+<dd><p class="first last">RelationType.NO_RELATION_FOUND otherwise</p>
+</dd>
+</dl>
+</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType" title="nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType">RelationType</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref.extract_within_coref">
+<code class="descname">extract_within_coref</code><span class="sig-paren">(</span><em>mention: nlp_architect.common.cdc.mention_data.MentionData</em><span class="sig-paren">)</span> &#x2192; List[str]<a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/within_doc_coref_extraction.html#WithinDocCoref.extract_within_coref"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref.extract_within_coref" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref.get_supported_relations">
+<em class="property">static </em><code class="descname">get_supported_relations</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; List[nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType]<a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/within_doc_coref_extraction.html#WithinDocCoref.get_supported_relations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref.get_supported_relations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return all supported relations by this class</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List[RelationType]</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref.get_within_doc_coref_chain">
+<code class="descname">get_within_doc_coref_chain</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/within_doc_coref_extraction.html#WithinDocCoref.get_within_doc_coref_chain"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref.get_within_doc_coref_chain" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-nlp_architect.data.cdc_resources.relations.word_embedding_relation_extraction">
+<span id="nlp-architect-data-cdc-resources-relations-word-embedding-relation-extraction-module"></span><h2>nlp_architect.data.cdc_resources.relations.word_embedding_relation_extraction module<a class="headerlink" href="#module-nlp_architect.data.cdc_resources.relations.word_embedding_relation_extraction" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nlp_architect.data.cdc_resources.relations.word_embedding_relation_extraction.WordEmbeddingRelationExtraction">
+<em class="property">class </em><code class="descclassname">nlp_architect.data.cdc_resources.relations.word_embedding_relation_extraction.</code><code class="descname">WordEmbeddingRelationExtraction</code><span class="sig-paren">(</span><em>method: nlp_architect.data.cdc_resources.relations.relation_types_enums.EmbeddingMethod = &lt;EmbeddingMethod.GLOVE: 'glove'&gt;</em>, <em>glove_file: str = None</em>, <em>elmo_file: str = None</em>, <em>cos_accepted_dist: float = 0.7</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/word_embedding_relation_extraction.html#WordEmbeddingRelationExtraction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.word_embedding_relation_extraction.WordEmbeddingRelationExtraction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nlp_architect.data.cdc_resources.relations.relation_extraction.RelationExtraction" title="nlp_architect.data.cdc_resources.relations.relation_extraction.RelationExtraction"><code class="xref py py-class docutils literal notranslate"><span class="pre">nlp_architect.data.cdc_resources.relations.relation_extraction.RelationExtraction</span></code></a></p>
+<dl class="method">
+<dt id="nlp_architect.data.cdc_resources.relations.word_embedding_relation_extraction.WordEmbeddingRelationExtraction.extract_all_relations">
+<code class="descname">extract_all_relations</code><span class="sig-paren">(</span><em>mention_x: nlp_architect.common.cdc.mention_data.MentionDataLight</em>, <em>mention_y: nlp_architect.common.cdc.mention_data.MentionDataLight</em><span class="sig-paren">)</span> &#x2192; Set[nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType]<a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/word_embedding_relation_extraction.html#WordEmbeddingRelationExtraction.extract_all_relations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.word_embedding_relation_extraction.WordEmbeddingRelationExtraction.extract_all_relations" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.cdc_resources.relations.word_embedding_relation_extraction.WordEmbeddingRelationExtraction.extract_sub_relations">
+<code class="descname">extract_sub_relations</code><span class="sig-paren">(</span><em>mention_x: nlp_architect.common.cdc.mention_data.MentionDataLight</em>, <em>mention_y: nlp_architect.common.cdc.mention_data.MentionDataLight</em>, <em>relation: nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType</em><span class="sig-paren">)</span> &#x2192; nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType<a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/word_embedding_relation_extraction.html#WordEmbeddingRelationExtraction.extract_sub_relations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.word_embedding_relation_extraction.WordEmbeddingRelationExtraction.extract_sub_relations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if input mentions has the given relation between them</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>mention_x</strong> – MentionDataLight</li>
+<li><strong>mention_y</strong> – MentionDataLight</li>
+<li><strong>relation</strong> – RelationType</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><dl class="docutils">
+<dt>relation in case mentions has given relation or</dt>
+<dd><p class="first last">RelationType.NO_RELATION_FOUND otherwise</p>
+</dd>
+</dl>
+</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType" title="nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType">RelationType</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="nlp_architect.data.cdc_resources.relations.word_embedding_relation_extraction.WordEmbeddingRelationExtraction.get_supported_relations">
+<em class="property">static </em><code class="descname">get_supported_relations</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; List[nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType]<a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/word_embedding_relation_extraction.html#WordEmbeddingRelationExtraction.get_supported_relations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.word_embedding_relation_extraction.WordEmbeddingRelationExtraction.get_supported_relations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return all supported relations by this class</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List[RelationType]</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.cdc_resources.relations.word_embedding_relation_extraction.WordEmbeddingRelationExtraction.is_word_embed_match">
+<code class="descname">is_word_embed_match</code><span class="sig-paren">(</span><em>mention_x: nlp_architect.common.cdc.mention_data.MentionDataLight</em>, <em>mention_y: nlp_architect.common.cdc.mention_data.MentionDataLight</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/word_embedding_relation_extraction.html#WordEmbeddingRelationExtraction.is_word_embed_match"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.word_embedding_relation_extraction.WordEmbeddingRelationExtraction.is_word_embed_match" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if input mentions Word Embedding cosine distance below above 0.65</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>mention_x</strong> – MentionDataLight</li>
+<li><strong>mention_y</strong> – MentionDataLight</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">bool</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-nlp_architect.data.cdc_resources.relations.wordnet_relation_extraction">
+<span id="nlp-architect-data-cdc-resources-relations-wordnet-relation-extraction-module"></span><h2>nlp_architect.data.cdc_resources.relations.wordnet_relation_extraction module<a class="headerlink" href="#module-nlp_architect.data.cdc_resources.relations.wordnet_relation_extraction" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nlp_architect.data.cdc_resources.relations.wordnet_relation_extraction.WordnetRelationExtraction">
+<em class="property">class </em><code class="descclassname">nlp_architect.data.cdc_resources.relations.wordnet_relation_extraction.</code><code class="descname">WordnetRelationExtraction</code><span class="sig-paren">(</span><em>method: nlp_architect.data.cdc_resources.relations.relation_types_enums.OnlineOROfflineMethod = &lt;OnlineOROfflineMethod.ONLINE: 'online'&gt;</em>, <em>wn_file: str = None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/wordnet_relation_extraction.html#WordnetRelationExtraction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.wordnet_relation_extraction.WordnetRelationExtraction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nlp_architect.data.cdc_resources.relations.relation_extraction.RelationExtraction" title="nlp_architect.data.cdc_resources.relations.relation_extraction.RelationExtraction"><code class="xref py py-class docutils literal notranslate"><span class="pre">nlp_architect.data.cdc_resources.relations.relation_extraction.RelationExtraction</span></code></a></p>
+<dl class="method">
+<dt id="nlp_architect.data.cdc_resources.relations.wordnet_relation_extraction.WordnetRelationExtraction.extract_all_relations">
+<code class="descname">extract_all_relations</code><span class="sig-paren">(</span><em>mention_x: nlp_architect.common.cdc.mention_data.MentionDataLight</em>, <em>mention_y: nlp_architect.common.cdc.mention_data.MentionDataLight</em><span class="sig-paren">)</span> &#x2192; Set[nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType]<a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/wordnet_relation_extraction.html#WordnetRelationExtraction.extract_all_relations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.wordnet_relation_extraction.WordnetRelationExtraction.extract_all_relations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Try to find if mentions has anyone or more of the relations this class support</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>mention_x</strong> – MentionDataLight</li>
+<li><strong>mention_y</strong> – MentionDataLight</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><dl class="docutils">
+<dt>One or more of: RelationType.WORDNET_SAME_SYNSET_ENTITY,</dt>
+<dd><p class="first last">RelationType.WORDNET_SAME_SYNSET_EVENT, RelationType.WORDNET_PARTIAL_SYNSET_MATCH,
+RelationType.WORDNET_DERIVATIONALLY</p>
+</dd>
+</dl>
+</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Set[<a class="reference internal" href="#nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType" title="nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType">RelationType</a>]</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="nlp_architect.data.cdc_resources.relations.wordnet_relation_extraction.WordnetRelationExtraction.extract_derivation">
+<em class="property">static </em><code class="descname">extract_derivation</code><span class="sig-paren">(</span><em>page_x: nlp_architect.data.cdc_resources.data_types.wn.wordnet_page.WordnetPage</em>, <em>page_y: nlp_architect.data.cdc_resources.data_types.wn.wordnet_page.WordnetPage</em><span class="sig-paren">)</span> &#x2192; nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType<a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/wordnet_relation_extraction.html#WordnetRelationExtraction.extract_derivation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.wordnet_relation_extraction.WordnetRelationExtraction.extract_derivation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if input mentions has derivation relation</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>page_x</strong> – WordnetPage</li>
+<li><strong>page_y</strong> – WordnetPage</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">RelationType.WORDNET_DERIVATIONALLY or RelationType.NO_RELATION_FOUND</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="nlp_architect.data.cdc_resources.relations.wordnet_relation_extraction.WordnetRelationExtraction.extract_partial_synset_match">
+<em class="property">static </em><code class="descname">extract_partial_synset_match</code><span class="sig-paren">(</span><em>page_x: nlp_architect.data.cdc_resources.data_types.wn.wordnet_page.WordnetPage</em>, <em>page_y: nlp_architect.data.cdc_resources.data_types.wn.wordnet_page.WordnetPage</em><span class="sig-paren">)</span> &#x2192; nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType<a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/wordnet_relation_extraction.html#WordnetRelationExtraction.extract_partial_synset_match"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.wordnet_relation_extraction.WordnetRelationExtraction.extract_partial_synset_match" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if input mentions has partial synset relation</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>page_x</strong> – WordnetPage</li>
+<li><strong>page_y</strong> – WordnetPage</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">RelationType.WORDNET_PARTIAL_SYNSET_MATCH or RelationType.NO_RELATION_FOUND</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="nlp_architect.data.cdc_resources.relations.wordnet_relation_extraction.WordnetRelationExtraction.extract_same_synset_entity">
+<em class="property">static </em><code class="descname">extract_same_synset_entity</code><span class="sig-paren">(</span><em>page_x: nlp_architect.data.cdc_resources.data_types.wn.wordnet_page.WordnetPage</em>, <em>page_y: nlp_architect.data.cdc_resources.data_types.wn.wordnet_page.WordnetPage</em><span class="sig-paren">)</span> &#x2192; nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType<a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/wordnet_relation_extraction.html#WordnetRelationExtraction.extract_same_synset_entity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.wordnet_relation_extraction.WordnetRelationExtraction.extract_same_synset_entity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if input mentions has same synset relation for entity mentions</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>page_x</strong> – WordnetPage</li>
+<li><strong>page_y</strong> – WordnetPage</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">RelationType.WORDNET_SAME_SYNSET_ENTITY or RelationType.NO_RELATION_FOUND</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.data.cdc_resources.relations.wordnet_relation_extraction.WordnetRelationExtraction.extract_sub_relations">
+<code class="descname">extract_sub_relations</code><span class="sig-paren">(</span><em>mention_x: nlp_architect.common.cdc.mention_data.MentionDataLight</em>, <em>mention_y: nlp_architect.common.cdc.mention_data.MentionDataLight</em>, <em>relation: nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType</em><span class="sig-paren">)</span> &#x2192; nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType<a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/wordnet_relation_extraction.html#WordnetRelationExtraction.extract_sub_relations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.wordnet_relation_extraction.WordnetRelationExtraction.extract_sub_relations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if input mentions has the given relation between them</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>mention_x</strong> – MentionDataLight</li>
+<li><strong>mention_y</strong> – MentionDataLight</li>
+<li><strong>relation</strong> – RelationType</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><dl class="docutils">
+<dt>relation in case mentions has given relation or</dt>
+<dd><p class="first last">RelationType.NO_RELATION_FOUND otherwise</p>
+</dd>
+</dl>
+</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType" title="nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType">RelationType</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="nlp_architect.data.cdc_resources.relations.wordnet_relation_extraction.WordnetRelationExtraction.get_supported_relations">
+<em class="property">static </em><code class="descname">get_supported_relations</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; List[nlp_architect.data.cdc_resources.relations.relation_types_enums.RelationType]<a class="reference internal" href="../_modules/nlp_architect/data/cdc_resources/relations/wordnet_relation_extraction.html#WordnetRelationExtraction.get_supported_relations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.cdc_resources.relations.wordnet_relation_extraction.WordnetRelationExtraction.get_supported_relations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return all supported relations by this class</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List[RelationType]</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-nlp_architect.data.cdc_resources.relations">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-nlp_architect.data.cdc_resources.relations" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

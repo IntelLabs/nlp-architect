@@ -1,0 +1,422 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Quantize BERT with Quantization Aware Training &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/install.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/nlp_arch_theme.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Transformer model distillation" href="transformers_distillation.html" />
+    <link rel="prev" title="Additional Models" href="archived/additional.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html">
+          
+
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="publications.html">Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Jupyter Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model_zoo.html">Model Zoo</a></li>
+</ul>
+<p class="caption"><span class="caption-text">NLP/NLU Models</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tagging/sequence_tagging.html">Sequence Tagging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sentiment.html">Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bist_parser.html">Dependency Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intent.html">Intent Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lm.html">Language Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="information_extraction.html">Information Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transformers.html">Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="archived/additional.html">Additional Models</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Optimized Models</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Quantized BERT</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#quantization-aware-training">Quantization Aware Training</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#results">Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running-modalities">Running Modalities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#training">Training</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#inference">Inference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="transformers_distillation.html">Transformers Distillation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sparse_gnmt.html">Sparse Neural Machine Translation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solutions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="absa_solution.html">Aspect Based Sentiment Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="term_set_expansion.html">Set Expansion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="trend_analysis.html">Trend Analysis</a></li>
+</ul>
+<p class="caption"><span class="caption-text">For Developers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="service.html">REST Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer_guide.html">Developer Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">NLP Architect by Intel® AI Lab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Quantize BERT with Quantization Aware Training</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="quantize-bert-with-quantization-aware-training">
+<h1>Quantize BERT with Quantization Aware Training<a class="headerlink" href="#quantize-bert-with-quantization-aware-training" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>BERT - Bidirectional Encoder Representations from Transformers, is a language
+representation model introduced last year by Devlin et al <a class="footnote-reference" href="#id6" id="id1">[1]</a> .
+It was shown that by fine-tuning a pre-trained BERT model it is possible to
+achieve state-of-the-art performance on a wide variety of Natural Language
+Processing (NLP) applications. </p>
+<p>In this page we are going to show how to run quantization aware training in the
+fine tuning phase to a specific task in order to produce a quantized BERT
+model.</p>
+</div>
+<div class="section" id="quantization-aware-training">
+<h2>Quantization Aware Training<a class="headerlink" href="#quantization-aware-training" title="Permalink to this headline">¶</a></h2>
+<p>The idea of quantization aware training is to introduce to the model the
+error caused by quantization while training in order for the model to learn
+to overcome this error. </p>
+<p>In this work we use the quantization scheme and method offered by Jacob et
+al <a class="footnote-reference" href="#id7" id="id2">[2]</a>. At the forward pass we use fake quantization to simulate the
+quantization error during the forward pass and at the backward pass we estimate
+the fake quantization gradients using Straight-Through Estimator <a class="footnote-reference" href="#id8" id="id3">[3]</a>.</p>
+</div>
+<div class="section" id="results">
+<h2>Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
+<p>The following table presents our experiments results. In the Quantization
+Aware Training column we present the relative loss of accuracy w.r.t BERT
+fine tuned to the specific task. Each result here is an average of 5
+experiments. We used BERT-Base architecture and pre-trained model in all
+the experiments except experiments with <em>-large</em> suffix which use the
+BERT-Large architecture and pre-trained model.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="10%" />
+<col width="17%" />
+<col width="18%" />
+<col width="16%" />
+<col width="24%" />
+<col width="15%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>&#160;</td>
+<td>Metric</td>
+<td>BERT baseline accuracy</td>
+<td>Quantized BERT 8bit</td>
+<td>Relative Reduction of Accuracy</td>
+<td>Dataset Size (<a href="#id4"><span class="problematic" id="id5">*</span></a>1k)</td>
+</tr>
+<tr class="row-even"><td>CoLA*</td>
+<td>Matthew’s corr. (mcc)</td>
+<td>58.48</td>
+<td>58.48</td>
+<td>0.00%</td>
+<td>8.5</td>
+</tr>
+<tr class="row-odd"><td>MRPC</td>
+<td>F1</td>
+<td>90</td>
+<td>89.56</td>
+<td>0.49%</td>
+<td>3.5</td>
+</tr>
+<tr class="row-even"><td>MRPC-Large</td>
+<td>F1</td>
+<td>90.86</td>
+<td>90.9</td>
+<td>-0.04%</td>
+<td>3.5</td>
+</tr>
+<tr class="row-odd"><td>QNLI</td>
+<td>Accuracy</td>
+<td>90.3</td>
+<td>90.62</td>
+<td>-0.35%</td>
+<td>108</td>
+</tr>
+<tr class="row-even"><td>QNLI-Large</td>
+<td>Accuracy</td>
+<td>91.66</td>
+<td>91.74</td>
+<td>-0.09%</td>
+<td>108</td>
+</tr>
+<tr class="row-odd"><td>QQP</td>
+<td>F1</td>
+<td>87.84</td>
+<td>87.96</td>
+<td>-0.14%</td>
+<td>363</td>
+</tr>
+<tr class="row-even"><td>RTE*</td>
+<td>Accuracy</td>
+<td>69.7</td>
+<td>68.78</td>
+<td>1.32%</td>
+<td>2.5</td>
+</tr>
+<tr class="row-odd"><td>SST-2</td>
+<td>Accuracy</td>
+<td>92.36</td>
+<td>92.24</td>
+<td>0.13%</td>
+<td>67</td>
+</tr>
+<tr class="row-even"><td>STS-B</td>
+<td>Pearson corr.</td>
+<td>89.62</td>
+<td>89.04</td>
+<td>0.65%</td>
+<td>5.7</td>
+</tr>
+<tr class="row-odd"><td>STS-B-Large</td>
+<td>Pearson corr.</td>
+<td>90.34</td>
+<td>90.12</td>
+<td>0.24%</td>
+<td>5.7</td>
+</tr>
+<tr class="row-even"><td>SQuAD</td>
+<td>F1</td>
+<td>88.46</td>
+<td>87.74</td>
+<td>0.81%</td>
+<td>87</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="running-modalities">
+<h2>Running Modalities<a class="headerlink" href="#running-modalities" title="Permalink to this headline">¶</a></h2>
+<p>In the following instructions for training and inference we use the <a class="reference external" href="https://www.microsoft.com/en-us/download/details.aspx?id=52398">Microsoft
+Research Paraphrase Corpus (MRPC)</a> which is included in the <a class="reference external" href="https://gluebenchmark.com/">GLUE benchmark</a>
+as an example dataset.</p>
+<div class="section" id="training">
+<h3>Training<a class="headerlink" href="#training" title="Permalink to this headline">¶</a></h3>
+<p>To train Quantized BERT use the following code snippet:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nlp_architect train transformer_glue <span class="se">\</span>
+    --task_name mrpc <span class="se">\</span>
+    --model_name_or_path bert-base-uncased <span class="se">\</span>
+    --model_type quant_bert <span class="se">\</span>
+    --learning_rate 2e-5 <span class="se">\</span>
+    --output_dir /tmp/mrpc-8bit <span class="se">\</span>
+    --evaluate_during_training <span class="se">\</span>
+    --data_dir /path/to/MRPC <span class="se">\</span>
+    --do_lower_case
+</pre></div>
+</div>
+</div>
+<div class="section" id="inference">
+<h3>Inference<a class="headerlink" href="#inference" title="Permalink to this headline">¶</a></h3>
+<p>To run inference or evaluation with a fine tuned quantized BERT use the
+following code snippet:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nlp_architect run transformer_glue <span class="se">\</span>
+    --model_path /tmp/mrpc-8bit <span class="se">\</span>
+    --task_name mrpc <span class="se">\</span>
+    --model_type quant_bert <span class="se">\</span>
+    --output_dir /tmp/mrpc-8bit <span class="se">\</span>
+    --data_dir /path/to/MRPC <span class="se">\</span>
+    --do_lower_case <span class="se">\</span>
+    --overwrite_output_dir
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<table class="docutils footnote" frame="void" id="id6" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>Jacob Devlin and Ming-Wei Chang and Kenton Lee and Kristina Toutanova, BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding, <a class="reference external" href="https://arxiv.org/pdf/1810.04805.pdf">https://arxiv.org/pdf/1810.04805.pdf</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id7" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>Benoit Jacob and Skirmantas Kligys and Bo Chen and  Menglong Zhu and Matthew Tang and Andrew Howard and Hartwig Adam and Dmitry Kalenichenko, Quantization and Training of Neural Networks for Efficient Integer-Arithmetic-Only Inference, <a class="reference external" href="https://arxiv.org/pdf/1712.05877.pdf">https://arxiv.org/pdf/1712.05877.pdf</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id8" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[3]</a></td><td>Yoshua Bengio and Nicholas Leonard and Aaron Courville, Estimating or Propagating Gradients Through Stochastic Neurons for Conditional Computation, <a class="reference external" href="https://arxiv.org/pdf/1308.3432.pdf">https://arxiv.org/pdf/1308.3432.pdf</a></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -22,8 +22,9 @@ Contribution Process
    * Create an issue on GitHub:
      https://github.com/NervanaSystems/nlp-architect/issues
 
-2. Clone and/or update your checked out copy of nlp-architect to ensure you have the
-   most recent commits from the master branch:
+2. Fork NLP Architect and/or update your checked out copy of 
+   nlp-architect to ensure you have the
+   most recent commits from the master branch, for example:
 
   .. code-block:: bash
 
@@ -48,8 +49,8 @@ Contribution Process
 
   .. code-block:: bash
 
-      nlp_architect test   # ensure all are OK
-      nlp_architect style  # ensure there are no style related issues
+      ./scripts/run_tests.sh    # ensure all are OK
+      ./scripts/check_style.sh  # ensure there are no style related issues
 
 5. If necessary you may want to update and/or rebuild the documentation.
    This all exists under docs-source/source and is in
@@ -57,8 +58,7 @@ Contribution Process
 
   .. code-block:: bash
 
-      cd scripts/
-      sh create_docs.sh   # builds the doc and starts a local server directly
+      ./scripts/create_docs.sh   # builds the doc and starts a local server directly
 
 6. Commit your changes and push your feature branch to your GitHub fork.  Be
    sure to add a descriptive message and reference the GitHub issue associated
@@ -71,23 +71,10 @@ Contribution Process
       git commit -m "Added new awesome functionality.  Closes issue #1"
       git push origin my_new_feature_branch
 
-7. Create a new pull request to get your feature branch merged into master for
-   others to use.  You'll first need to ensure your feature branch contains the
-   latest changes from master.  Furthermore, internal devs will need to assign
-   the request to someone else for a code review.  You must also ensure there
-   are no errors when run through the items defined in step 4.
-
-  .. code-block:: bash
-
-      # (external contribs): make a new pull request:
-      https://github.com/NervanaSystems/nlp-architect/pulls
-
-      # merge latest master changes into your feature branch
-      git fetch origin
-      git checkout master
-      git pull origin master
-      git checkout my_new_feature_branch
-      git merge master  # you may need to manually resolve any merge conflicts
+7. Create a new `pull request <https://github.com/NervanaSystems/nlp-architect/pulls>`_
+   to get your feature branch merged into master for others to use.
+   You'll first need to ensure your feature branch contains the latest changes from
+   master.
 
 8. If there are issues you can continue to push commits to your feature branch
    by following step 6.  They will automatically be added to this same merge
