@@ -81,9 +81,5 @@ class TeacherStudentDistill:
         """
         student_log_sm = F.log_softmax(student_logits / self.t, dim=2)
         teacher_log_sm = F.softmax(teacher_logits / self.t, dim=2)
-        distill_loss = F.mse_loss(student_log_sm, teacher_log_sm.detach())
-        # distill_loss = F.kl_div(student_log_sm,
-        #                         teacher_log_sm.detach(),
-        #                         size_average=False) / teacher_log_sm.shape[0]
-        # normalize losses ?!?
+        distill_loss = F.mse_loss(student_log_sm, teacher_log_sm.detach())  # add KL div as option
         return loss * self.loss_w + distill_loss * self.kd_w
