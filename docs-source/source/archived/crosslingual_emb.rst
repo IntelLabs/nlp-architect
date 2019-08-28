@@ -5,7 +5,7 @@ Overview
 ========
 This model uses a GAN to learn mapping between two language embeddings without supervision as demonstrated in Word Translation Without Parallel Data [1]_.
 
-.. image:: assets/w2w.png
+.. image:: ../assets/w2w.png
 
 
 Files

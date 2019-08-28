@@ -25,7 +25,7 @@ from torch.utils.data import DataLoader
 from tqdm import trange, tqdm
 
 from nlp_architect.models import TrainableModel
-from nlp_architect.models.quantized_bert import QuantizedBertConfig
+from nlp_architect.models.transformers.quantized_bert import QuantizedBertConfig
 
 logger = logging.getLogger(__name__)
 

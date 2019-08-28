@@ -160,8 +160,3 @@ def process_inference_input(input_file):
     for i, t in enumerate(texts):
         examples.append(TokenClsInputExample(str(i), t, tokenizer.tokenize(t)))
     return examples
-
-
-if __name__ == '__main__':
-    # TransformerTokenClsTrain.run()
-    TransformerTokenClsRun.run()

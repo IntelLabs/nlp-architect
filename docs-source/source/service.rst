@@ -191,5 +191,4 @@ In order to add a new service to the server you need to go over 3 steps:
 
     "<service_name>" : {"file_name": "<api_file_name>", "type": <"core"/"high_level>"}
 
-
-.. include:: service_deploy.rst
+.. .. include:: service_deploy.rst

@@ -75,6 +75,8 @@ class RunTagger(Procedure):
         parser.add_argument("--data_file", default=None, type=str,
                             required=True,
                             help="The data file containing data for inference")
+        parser.add_argument('--model_dir', type=str, required=True,
+                            help='Path to trained model directory')
         parser.add_argument('--output_dir', type=str, required=True,
                             help='Output directory where the model will be saved')
         parser.add_argument('--overwrite_output_dir', action='store_true',
@@ -292,7 +294,7 @@ def do_inference(args):
     device, n_gpus = setup_backend(args.no_cuda)
     args.batch_size = args.per_gpu_eval_batch_size * max(1, n_gpus)
     inference_examples = process_inference_input(args.data_file)
-    classifier = NeuralTagger.load_model(model_path=args.output_dir)
+    classifier = NeuralTagger.load_model(model_path=args.model_dir)
     classifier.to(device, n_gpus)
     output = classifier.inference(inference_examples, args.b)
     write_column_tagged_file(args.output_dir + os.sep + "output.txt", output)
@@ -306,8 +308,3 @@ def process_inference_input(input_file):
     for i, t in enumerate(texts):
         examples.append(TokenClsInputExample(str(i), t, tokenizer.tokenize(t)))
     return examples
-
-
-if __name__ == "__main__":
-    # TrainTagger.run()
-    TrainTaggerKD.run()

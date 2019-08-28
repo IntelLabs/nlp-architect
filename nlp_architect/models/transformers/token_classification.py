@@ -22,7 +22,7 @@ from torch.utils.data import DataLoader, TensorDataset, SequentialSampler
 
 from nlp_architect.data.sequential_tagging import TokenClsInputExample
 from nlp_architect.models.transformers.base_model import TransformerBase, logger, InputFeatures
-from nlp_architect.models.quantized_bert import QuantizedBertForTokenClassification
+from nlp_architect.models.transformers.quantized_bert import QuantizedBertForTokenClassification
 from nlp_architect.utils.metrics import tagging
 
 
@@ -93,6 +93,10 @@ class XLNetForTokenClassification(XLNetPreTrainedModel):
 class TransformerTokenClassifier(TransformerBase):
     """
     Transformer word tagging classifier
+    
+    Args:
+        model_type(str): model family (classifier head), choose between bert/quant_bert/xlnet
+        labels (List[str], optional): list of tag labels
     """
     MODEL_CLASS = {
         'bert': BertForTagging,
@@ -101,13 +105,6 @@ class TransformerTokenClassifier(TransformerBase):
     }
 
     def __init__(self, model_type: str, labels: List[str] = None, *args, **kwargs):
-        """
-        Transformer word tagging classifier
-
-        Args:
-            model_type (str): model type (bert/xlnet)
-            labels (List[str], optional): list of labels. Defaults to None.
-        """
         assert model_type in self.MODEL_CLASS.keys(), "unsupported model type"
         self.labels = labels
         self.num_labels = len(labels) + 1  # +1 for padding label

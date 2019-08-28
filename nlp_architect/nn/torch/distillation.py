@@ -21,11 +21,7 @@ from nlp_architect.models import TrainableModel
 
 
 class TeacherStudentDistill:
-    def __init__(self, teacher_model: TrainableModel,
-                 temperature: float = 1.0,
-                 kd_w: float = 0.5,
-                 loss_w: float = 0.5):
-        """
+    """
         Teacher-Student knowledge distillation helper.
         Use this object when training a model with KD and a teacher model.
 
@@ -35,6 +31,10 @@ class TeacherStudentDistill:
             kd_w (float, optional): teacher loss weight. Defaults to 0.5.
             loss_w (float, optional): student loss weight. Defaults to 0.5.
         """
+    def __init__(self, teacher_model: TrainableModel,
+                 temperature: float = 1.0,
+                 kd_w: float = 0.5,
+                 loss_w: float = 0.5):
         self.teacher = teacher_model
         self.t = temperature
         self.kd_w = kd_w

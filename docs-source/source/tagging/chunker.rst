@@ -14,11 +14,11 @@
 .. limitations under the License.
 .. ---------------------------------------------------------------------------
 
-Sequence Chunker
-################
+Word Chunker
+================
 
 Overview
-========
+--------
 
 Phrase chunking is a basic NLP task that consists of tagging parts of a sentence (1 or more tokens)
 syntactically, i.e. POS tagging.
@@ -33,7 +33,7 @@ In this example the sentence can be divided into 4 phrases, ``The quick brown fo
 are noun phrases, ``jumped`` is a verb phrase and ``over`` is a prepositional phrase.
 
 Dataset
-=======
+-------
 
 We used the CONLL2000_ shared task dataset in our example for training a phrase chunker. More info about the CONLL2000_ shared task can be found here: https://www.clips.uantwerpen.be/conll2000/chunking/. The terms and conditions of the data set license apply. Intel does not grant any rights to the data files. The annotation of the data has been derived from the WSJ corpus by a program written by Sabine Buchholz from Tilburg University, The Netherlands.
 
@@ -56,7 +56,7 @@ To get the dataset follow these steps:
 3. provide ``CONLL2000`` data loader or ``train.py`` sample below the directory containing the files.
 
 Model
-=====
+-----
 
 The sequence chunker is a Tensorflow-keras based model and it is implemented in :py:class:`SequenceChunker <nlp_architect.models.chunker.SequenceChunker>` and comes with several options for creating the topology depending on what input is given (tokens, external word embedding model, topology parameters).
 
@@ -72,7 +72,7 @@ The model has additional improvements to the model presented in the paper:
 The model's embedding vector size and LSTM layer hidden state have equal sizes, the default training optimizer is Adam with default parameters.
 
 Running Modalities
-==================
+------------------
 
 We provide a simple example for training and running inference using the :py:class:`SequenceChunker <nlp_architect.models.chunker.SequenceChunker>` model.
 
@@ -81,7 +81,8 @@ We provide a simple example for training and running inference using the :py:cla
 ``examples/chunker/inference.py`` will load a saved model and a given text file with sentences and print the chunks found on the stdout.
 
 Training
---------
+~~~~~~~~
+
 Quick train
 ^^^^^^^^^^^
 Train a model with default parameters (use sentence words and default network settings):
@@ -120,7 +121,7 @@ Saving the model after training is done automatically by specifying a model name
 * ``chunker_model.params`` - model parameter files (topology parameters, vocabs)
 
 Inference
----------
+~~~~~~~~~
 
 Running inference on a trained model using an input file (text based, each line is a document):
 

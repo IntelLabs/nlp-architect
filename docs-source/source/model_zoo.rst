@@ -14,8 +14,9 @@
 .. limitations under the License.
 .. ---------------------------------------------------------------------------
 
+=======================
 NLP Architect Model Zoo
-#######################
+=======================
 
 .. list-table::
    :widths: 10 30 10
@@ -25,7 +26,7 @@ NLP Architect Model Zoo
      - Description
      - Links
    * - :doc:`Sparse GNMT <sparse_gnmt>`
-     - 90% sparse GNMT model and a 2x2 block sparse translating German to English trained on Europarl-v7 [1]_ , Common Crawl and News Commentary 11 datasets
+     - 90% sparse GNMT model and a 2x2 block sparse translating German to English trained on Europarl-v7 [#]_ , Common Crawl and News Commentary 11 datasets
      -  | `model <https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/sparse_gnmt/gnmt_sparse.zip>`_
         | `2x2 block sparse model <https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/sparse_gnmt/gnmt_blocksparse2x2.zip>`_
    * - :doc:`Intent Extraction <intent>`
@@ -49,5 +50,6 @@ NLP Architect Model Zoo
        | `params <https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/chunker/model_info.dat.params>`_
 
 References
-==========
-.. [1] Europarl-v7: A Parallel Corpus for Statistical Machine Translation, Philipp Koehn, MT Summit 2005
+----------
+
+.. [#] Europarl-v7: A Parallel Corpus for Statistical Machine Translation, Philipp Koehn, MT Summit 2005

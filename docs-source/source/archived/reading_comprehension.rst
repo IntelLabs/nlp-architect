@@ -27,7 +27,7 @@ input to the pointer network which identifies the start and end indices of the a
 Model Architecture
 ------------------
 
-.. image:: ../../examples/reading_comprehension/MatchLSTM_Model.png
+.. image:: ../../../examples/reading_comprehension/MatchLSTM_Model.png
 
 
 Files

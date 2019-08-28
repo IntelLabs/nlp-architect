@@ -14,15 +14,18 @@
 .. limitations under the License.
 .. ---------------------------------------------------------------------------
 
+===============
 Developer Guide
-###############
+===============
 
-The following sections describe how to set up a development environment, how to contribute your code and what are our contribution standards.
+The following sections describe how to set up a development environment,
+how to contribute your code and what are our contribution standards.
 
 Prepare Environment
 ===================
 
-Install NLP Architect from source (Github) and install supplemental development packages:
+Install NLP Architect from source (Github) and install supplemental
+development packages:
 
 .. code:: bash
 
@@ -58,11 +61,19 @@ Documentation Conventions
 
 * Limit your docs to 2-3 levels of headings.
 
-* New .rst files will show up in the sidebar, and any first and second level headings will also show up in the menu. Keep the sidebar short and only add essentials items there. Otherwise, add your documentation to the pre-existing files. You can add to the toctree manually, but please don't add or create pages unless absolutely necessary!
+* New .rst files will show up in the sidebar, and any first and second level
+  headings will also show up in the menu. Keep the sidebar short and only
+  add essentials items there. Otherwise, add your documentation to the
+  pre-existing files. You can add to the toctree manually, but please don't
+  add or create pages unless absolutely necessary!
 
-* If you created a new class, add it to the API by creating a new section in api.rst and create an autosummary_. Anytime you add an autosummary, please remember to add :nosignatures: to keep things consistent with the rest of our docs.
+* If you created a new class, add it to the API by creating a new section in
+  api.rst and create an autosummary_. Anytime you add an autosummary, please
+  remember to add :nosignatures: to keep things consistent with the rest of
+  our docs.
 
-* Every time you make a significant contribution, add a short description of it in the relevant document.
+* Every time you make a significant contribution, add a short description
+  of it in the relevant document.
 
 .. include:: writing_tests.rst
 

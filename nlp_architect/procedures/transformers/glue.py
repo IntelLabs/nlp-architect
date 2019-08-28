@@ -166,8 +166,3 @@ def get_metric_fn(task_name):
         return lambda p, l: {"acc": simple_accuracy(p, l)}
     else:
         raise KeyError(task_name)
-
-
-if __name__ == '__main__':
-    # TransformerGlueTrain.run()
-    TransformerGlueRun.run()

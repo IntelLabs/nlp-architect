@@ -18,10 +18,16 @@
 import os
 import sys
 
+import sphinx_rtd_theme  # noqa: E402
+from sphinx.ext import apidoc
+
+from nlp_architect.version import NLP_ARCHITECT_VERSION
+
+# -- Options for HTML output ----------------------------------------------
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
-from nlp_architect.version import NLP_ARCHITECT_VERSION
+
 
 sys.path.insert(0, os.path.abspath('../..'))
 
@@ -39,16 +45,16 @@ extensions = [
     'sphinx.ext.autosummary',
     'sphinx.ext.napoleon',
     'sphinx.ext.doctest',
-    'sphinx.ext.intersphinx',
-    'sphinx.ext.todo',
-    'sphinx.ext.coverage',
+    # 'sphinx.ext.intersphinx',
+    # 'sphinx.ext.todo',
+    # 'sphinx.ext.coverage',
     'sphinx.ext.mathjax',
-    'sphinx.ext.ifconfig',
+    # 'sphinx.ext.ifconfig',
     'sphinx.ext.viewcode',
+    'sphinx_rtd_theme',
 ]
-
 # Autodoc settings
-autodoc_default_flags = ['members', 'undoc-members', 'inherited-members']
+# autodoc_default_flags = ['members', 'undoc-members', 'inherited-members']
 
 # Autosummary settings
 autosummary_generate = True
@@ -122,7 +128,7 @@ exclude_patterns = []
 # show_authors = False
 
 # The name of the Pygments (syntax highlighting) style to use.
-pygments_style = 'tango'
+pygments_style = 'default'
 
 # A list of ignored prefixes for module index sorting.
 # modindex_common_prefix = []
@@ -131,14 +137,12 @@ pygments_style = 'tango'
 # keep_warnings = False
 
 
-# -- Options for HTML output ----------------------------------------------
-import sphinx_rtd_theme  # noqa: E402
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
 html_theme = 'sphinx_rtd_theme'
-html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
+# html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 html_theme_options = {
     # 'canonical_url': '',
     # 'analytics_id': '',
@@ -165,7 +169,7 @@ html_theme_options = {
 
 # The name of an image file (relative to this directory) to place at the top
 # of the sidebar.
-html_logo = '../../assets/nlp_architect_logo_white.png'
+html_logo = 'assets/logo.png'
 
 # The name of an image file (within the static path) to use as favicon of the
 # docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
@@ -176,10 +180,17 @@ html_favicon = ''
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['static/']
+html_css_files = [
+    'nlp_arch_theme.css',
+    # 'https://fonts.googleapis.com/css?family=Lato',
+    # 'https://fonts.googleapis.com/css?family=Oswald',
+    'https://fonts.googleapis.com/css?family=Roboto+Mono',
+    'https://fonts.googleapis.com/css?family=Open+Sans:100,900'
+]
 
-def setup(app):
-    app.add_stylesheet('https://fonts.googleapis.com/css?family=Lato')
-    app.add_stylesheet('theme.css')
+html_js_files = [
+    'install.js'
+]
 
 # Add any extra paths that contain custom files (such as robots.txt or
 # .htaccess) here, relative to this directory. These files are copied
@@ -277,3 +288,13 @@ rst_epilog = """
 .. |Geon| replace:: Nervana Graph
 .. |TF| replace:: TensorFlow\ |trade|
 """
+def run_apidoc(_):
+    api_docs = os.path.join(os.path.abspath("./source/"), "generated_api")
+    argv = ["-f", "-o", api_docs, os.path.abspath("../nlp_architect/")]
+    
+    apidoc.main(argv)
+    os.remove(os.path.join(api_docs, "modules.rst"))
+    os.remove(os.path.join(api_docs, "nlp_architect.rst"))
+
+def setup(app):
+    app.connect("builder-inited", run_apidoc)
