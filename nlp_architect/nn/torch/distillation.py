@@ -14,10 +14,25 @@
 # limitations under the License.
 # ******************************************************************************
 import argparse
+import logging
 
+import torch.nn as nn
 import torch.nn.functional as F
 
 from nlp_architect.models import TrainableModel
+
+logger = logging.getLogger(__name__)
+
+
+MSE_loss = nn.MSELoss(reduction='mean')
+KL_loss = nn.KLDivLoss(reduction='batchmean')
+
+losses = {
+    'kl': KL_loss,
+    'mse': MSE_loss,
+}
+
+TEACHER_TYPES = ['bert']
 
 
 class TeacherStudentDistill:
@@ -28,17 +43,22 @@ class TeacherStudentDistill:
         Args:
             teacher_model (TrainableModel): teacher model
             temperature (float, optional): KD temperature. Defaults to 1.0.
-            kd_w (float, optional): teacher loss weight. Defaults to 0.5.
-            loss_w (float, optional): student loss weight. Defaults to 0.5.
+            dist_w (float, optional): distillation loss weight. Defaults to 0.1.
+            loss_w (float, optional): student loss weight. Defaults to 1.0.
+            loss_function (str, optional): loss function to use (kl for KLDivLoss,
+                mse for MSELoss)
         """
+
     def __init__(self, teacher_model: TrainableModel,
                  temperature: float = 1.0,
-                 kd_w: float = 0.5,
-                 loss_w: float = 0.5):
+                 dist_w: float = 0.1,
+                 loss_w: float = 1.0,
+                 loss_function='kl'):
         self.teacher = teacher_model
         self.t = temperature
-        self.kd_w = kd_w
+        self.dist_w = dist_w
         self.loss_w = loss_w
+        self.loss_fn = losses.get(loss_function, KL_loss)
 
     def get_teacher_logits(self, inputs):
         """
@@ -60,12 +80,19 @@ class TeacherStudentDistill:
         Args:
             parser (argparse.ArgumentParser): parser
         """
-        parser.add_argument("--kd_t", type=float, default=1.0,
-                            help="KD temperature")
-        parser.add_argument("--kd_teacher_w", type=float, default=0.5,
-                            help="KD teacher loss weight")
-        parser.add_argument("--kd_student_w", type=float, default=0.5,
-                            help="KD student loss weight")
+        parser.add_argument("--teacher_model_path", type=str, required=True,
+                            help="Path to teacher model")
+        parser.add_argument("--teacher_model_type", type=str, required=True,
+                            choices=TEACHER_TYPES,
+                            help="Teacher model class type")
+        parser.add_argument("--kd_temp", type=float, default=1.0,
+                            help="KD temperature value")
+        parser.add_argument("--kd_loss_fn", type=str, choices=['kl', 'mse'], default='kl',
+                            help="KD loss function")
+        parser.add_argument("--kd_dist_w", type=float, default=0.1,
+                            help="KD weight on loss")
+        parser.add_argument("--kd_student_w", type=float, default=1.0,
+                            help="KD student weight on loss")
 
     def distill_loss(self, loss, student_logits, teacher_logits):
         """
@@ -79,7 +106,8 @@ class TeacherStudentDistill:
         Returns:
             KD loss
         """
-        student_log_sm = F.log_softmax(student_logits / self.t, dim=2)
-        teacher_log_sm = F.softmax(teacher_logits / self.t, dim=2)
-        distill_loss = F.mse_loss(student_log_sm, teacher_log_sm.detach())  # add KL div as option
-        return loss * self.loss_w + distill_loss * self.kd_w
+        student_log_sm = F.log_softmax(student_logits / self.t, dim=-1)
+        teacher_log_sm = F.softmax(teacher_logits / self.t, dim=-1)
+        distill_loss = self.loss_fn(input=student_log_sm,
+                                    target=teacher_log_sm)
+        return self.loss_w * loss + distill_loss * self.dist_w * (self.t ** 2)

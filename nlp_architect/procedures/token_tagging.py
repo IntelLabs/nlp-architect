@@ -55,11 +55,6 @@ class TrainTaggerKD(Procedure):
     @staticmethod
     def add_arguments(parser: argparse.ArgumentParser):
         add_parse_args(parser)
-        parser.add_argument("--teacher_model_path", type=str, required=True,
-                            help="Path to teacher model")
-        parser.add_argument("--teacher_model_type", type=str, required=True,
-                            choices=TEACHER_TYPES,
-                            help="Teacher model class type")
         TeacherStudentDistill.add_args(parser)
 
     @staticmethod
@@ -134,8 +129,6 @@ MODEL_TYPE = {
     "cnn-lstm": CNNLSTM,
     "id-cnn": IDCNN
 }
-
-TEACHER_TYPES = ['bert']
 
 
 def do_training(args):
@@ -277,7 +270,8 @@ def do_kd_training(args):
     if args.lr is not None:
         opt = classifier.get_optimizer(lr=args.lr)
 
-    distiller = TeacherStudentDistill(teacher, args.kd_t, args.kd_teacher_w, args.kd_student_w)
+    distiller = TeacherStudentDistill(teacher, args.kd_temp, args.kd_dist_w, args.kd_student_w,
+                                      args.kd_loss_fn)
     classifier.train(train_dl, dev_dl, test_dl,
                      epochs=args.e,
                      batch_size=args.b,

@@ -148,7 +148,7 @@ class NeuralTagger(TrainableModel):
             dataset = TensorDataset(all_input_ids, all_char_ids, masks)
         return dataset
 
-    def get_optimizer(self, lr: int = 0.001):
+    def get_optimizer(self, opt_fn=None, lr: int = 0.001):
         """
         Get default optimizer
 
@@ -158,7 +158,12 @@ class NeuralTagger(TrainableModel):
         Returns:
             torch.optim.Optimizer: optimizer
         """
-        return optim.Adam(self.model.parameters(), lr=lr)
+        params = self.model.parameters()
+        if self.use_crf:
+            params = list(params) + list(self.crf.parameters())
+        if opt_fn is None:
+            opt_fn = optim.Adam
+        return opt_fn(params, lr=lr)
 
     @staticmethod
     def batch_mapper(batch):
@@ -193,7 +198,7 @@ class NeuralTagger(TrainableModel):
             test_data_set (DataLoader, optional): test examples dataloader. Defaults to None.
             epochs (int, optional): num of epochs to train. Defaults to 3.
             batch_size (int, optional): batch size. Defaults to 8.
-            optimizer ([type], optional): optimizer. Defaults to default model optimizer.
+            optimizer (fn, optional): optimizer function. Defaults to default model optimizer.
             max_grad_norm (float, optional): max gradient norm. Defaults to 5.0.
             logging_steps (int, optional): number of steps between logging. Defaults to 50.
             save_steps (int, optional): number of steps between model saves. Defaults to 100.
@@ -215,7 +220,8 @@ class NeuralTagger(TrainableModel):
         epoch_it = trange(epochs, desc="Epoch")
         for _ in epoch_it:
             step_it = tqdm(train_data_set, desc="Train iteration")
-            for _, batch in enumerate(step_it):
+            avg_loss = 0
+            for s_idx, batch in enumerate(step_it):
                 self.model.train()
                 if distiller:
                     batch, t_batch = batch[:2]
@@ -240,10 +246,12 @@ class NeuralTagger(TrainableModel):
                 torch.nn.utils.clip_grad_norm_(self.model.parameters(), max_grad_norm)
 
                 optimizer.step()
-                self.model.zero_grad()
+                # self.model.zero_grad()
+                optimizer.zero_grad()
                 global_step += 1
+                avg_loss += loss.item()
                 if global_step % logging_steps == 0:
-                    logger.info(" global_step = %s, average loss = %s", global_step, loss.item())
+                    logger.info(" global_step = %s, average loss = %s", global_step, avg_loss / s_idx)
                     self._get_eval(dev_data_set, "dev")
                     self._get_eval(test_data_set, "test")
                 if save_path is not None and global_step % save_steps == 0:
