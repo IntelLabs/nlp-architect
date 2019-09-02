@@ -30,3 +30,4 @@ pillow
 hug
 falcon==2.0.0
 falcon_multipart
+regex==2018.02.21  # manual fix
