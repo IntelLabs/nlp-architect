@@ -59,6 +59,15 @@ def simple_accuracy(preds, labels):
     return (preds == labels).mean()
 
 
+def accuracy(preds, labels):
+    """return simple accuracy in expected dict format
+    """
+    acc = simple_accuracy(preds, labels)
+    return {
+        "acc": acc
+    }
+
+
 def acc_and_f1(preds, labels):
     """return accuracy and f1 score
     """

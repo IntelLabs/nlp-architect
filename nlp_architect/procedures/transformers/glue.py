@@ -56,6 +56,7 @@ class TransformerGlueRun(Procedure):
     @staticmethod
     def add_arguments(parser: argparse.ArgumentParser):
         add_glue_args(parser)
+        add_glue_inference_args(parser)
         inference_args(parser)
         create_base_args(parser, model_types=TransformerSequenceClassifier.MODEL_CLASS.keys())
 
@@ -71,6 +72,11 @@ def add_glue_args(parser: argparse.ArgumentParser):
     parser.add_argument("--data_dir", default=None, type=str, required=True,
                         help="The input data dir. Should contain dataset files to be parsed "
                         + "by the dataloaders.")
+
+
+def add_glue_inference_args(parser: argparse.ArgumentParser):
+    parser.add_argument("--evaluate", action='store_true',
+                        help="Evaluate the model on the task's development set")
 
 
 def do_training(args):
@@ -133,9 +139,13 @@ def do_inference(args):
     task = get_glue_task(args.task_name, data_dir=args.data_dir)
     args.batch_size = args.per_gpu_eval_batch_size * max(1, n_gpus)
     classifier = TransformerSequenceClassifier.load_model(model_path=args.model_path,
-                                                          model_type=args.model_type)
+                                                          model_type=args.model_type,
+                                                          metric_fn=get_metric_fn(task.name),
+                                                          do_lower_case=args.do_lower_case)
     classifier.to(device, n_gpus)
-    preds = classifier.inference(task.get_test_examples(), args.batch_size)
+    examples = task.get_dev_examples() if args.evaluate else \
+        task.get_test_examples()
+    preds = classifier.inference(examples, args.batch_size, evaluate=args.evaluate)
     with io.open(os.path.join(args.output_dir, "output.txt"), "w", encoding="utf-8") as fw:
         for p in preds:
             fw.write("{}\n".format(p))
