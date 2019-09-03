@@ -112,7 +112,7 @@ class TransformerSequenceClassifier(TransformerBase):
 
     def evaluate_predictions(self, logits, label_ids):
         """
-        Run evaluation of given logist and truth labels
+        Run evaluation of given logits and truth labels
 
         Args:
             logits: model logits

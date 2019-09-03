@@ -50,6 +50,7 @@ class TransformerGlueTrain(Procedure):
     def run_procedure(args):
         do_training(args)
 
+
 @register_run_cmd(name='transformer_glue',
                   description='Run a BERT/XLNet/XLM model on a GLUE task')
 class TransformerGlueRun(Procedure):
@@ -150,9 +151,8 @@ def do_inference(args):
         for p in preds:
             fw.write("{}\n".format(p))
 
+
 # GLUE task metrics
-
-
 def get_metric_fn(task_name):
     if task_name == "cola":
         return lambda p, l: {"mcc": matthews_corrcoef(p, l)}
