@@ -34,7 +34,7 @@ logger = logging.getLogger(__name__)
 
 def get_dynamic_scale(x, bits, with_grad=False):
     """Calculate dynamic scale for quantization from input by taking the
-    maximum absoulute value from x and number of bits"""
+    maximum absolute value from x and number of bits"""
     with torch.set_grad_enabled(with_grad):
         threshold = x.abs().max()
     return get_scale(bits, threshold)
@@ -74,7 +74,7 @@ class FakeLinearQuantizationWithSTE(torch.autograd.Function):
     @staticmethod
     def backward(ctx, grad_output):
         """Calculate estimated gradients for fake quantization using
-        Straigh-Through Estimator (STE) according to:
+        Straight-Through Estimator (STE) according to:
         https://openreview.net/pdf?id=B1ae1lZRb"""
         return grad_output, None, None
 
