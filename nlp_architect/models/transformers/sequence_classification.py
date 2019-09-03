@@ -29,7 +29,7 @@ from nlp_architect.data.sequence_classification import SequenceClsInputExample
 from nlp_architect.models.transformers.base_model import (InputFeatures,
                                                           TransformerBase)
 from nlp_architect.models.transformers.quantized_bert import QuantizedBertForSequenceClassification
-from nlp_architect.utils.metrics import simple_accuracy
+from nlp_architect.utils.metrics import accuracy
 
 logger = logging.getLogger(__name__)
 
@@ -54,7 +54,7 @@ class TransformerSequenceClassifier(TransformerBase):
     }
 
     def __init__(self, model_type: str, labels: List[str] = None,
-                 task_type="classification", metric_fn=simple_accuracy,
+                 task_type="classification", metric_fn=accuracy,
                  *args, **kwargs):
         assert model_type in self.MODEL_CLASS.keys(), "unsupported model type"
         self.labels = labels
@@ -118,15 +118,14 @@ class TransformerSequenceClassifier(TransformerBase):
             logits: model logits
             label_ids: truth label ids
         """
-        preds = logits.numpy()
+        preds = self._postprocess_logits(logits)
         label_ids = label_ids.numpy()
-        if self.task_type == "classification":
-            preds = np.argmax(preds, axis=1)
-        elif self.task_type == "regression":
-            preds = np.squeeze(preds)
         result = self.metric_fn(preds, label_ids)
-        output_eval_file = os.path.join(
-            self.output_path, "eval_results.txt")
+        try:
+            output_eval_file = os.path.join(
+                self.output_path, "eval_results.txt")
+        except TypeError:
+            output_eval_file = os.devnull
         with open(output_eval_file, "w") as writer:
             logger.info("***** Eval results *****")
             for key in sorted(result.keys()):
@@ -176,7 +175,7 @@ class TransformerSequenceClassifier(TransformerBase):
             return TensorDataset(all_input_ids, all_input_mask, all_segment_ids, all_label_ids)
         return TensorDataset(all_input_ids, all_input_mask, all_segment_ids)
 
-    def inference(self, examples: List[SequenceClsInputExample], batch_size: int = 64):
+    def inference(self, examples: List[SequenceClsInputExample], batch_size: int = 64, evaluate=False):
         """
         Run inference on given examples
 
@@ -187,10 +186,19 @@ class TransformerSequenceClassifier(TransformerBase):
         Returns:
             logits
         """
-        data_set = self.convert_to_tensors(examples, include_labels=False)
+        data_set = self.convert_to_tensors(examples, include_labels=evaluate)
         inf_sampler = SequentialSampler(data_set)
         inf_dataloader = DataLoader(data_set, sampler=inf_sampler, batch_size=batch_size)
         logits = self._evaluate(inf_dataloader)
+        if not evaluate:
+            preds = self._postprocess_logits(logits)
+        else:
+            logits, label_ids = logits
+            preds = self._postprocess_logits(logits)
+            self.evaluate_predictions(logits, label_ids)
+        return preds
+
+    def _postprocess_logits(self, logits):
         preds = logits.numpy()
         if self.task_type == "classification":
             preds = np.argmax(preds, axis=1)

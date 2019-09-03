@@ -100,7 +100,7 @@ To train Quantized BERT use the following code snippet:
 
 Inference
 ---------
-To run inference or evaluation with a fine tuned quantized BERT use the
+To run inference with a fine tuned quantized BERT use the
 following code snippet:
 
 .. code-block:: bash
@@ -113,6 +113,9 @@ following code snippet:
         --data_dir /path/to/MRPC \
         --do_lower_case \
         --overwrite_output_dir
+
+To run evaluation on the task's development set add the flag ``--evaluate``
+to the command line.
 
 References
 ==========

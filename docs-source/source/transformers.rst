@@ -69,6 +69,9 @@ Running a model:
         --do_lower_case \
         --overwrite_output_dir
 
+To run evaluation on the task's development set add the flag ``--evaluate``
+to the command line.
+
 Token classification
 ~~~~~~~~~~~~~~~~~~~~
 
