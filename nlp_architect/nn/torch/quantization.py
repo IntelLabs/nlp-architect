@@ -21,12 +21,12 @@ Quantization ops
 from __future__ import absolute_import, division, print_function, unicode_literals
 from enum import Enum, auto
 import logging
-import json
-import copy
 
 import torch
 from torch import nn
 from torch.nn import functional as F
+
+from nlp_architect.common import Config
 
 
 logger = logging.getLogger(__name__)
@@ -257,9 +257,8 @@ class QuantizedEmbedding(nn.Embedding):
         return super().extra_repr() + f", mode={self.mode}, weight_bits={self.weight_bits}"
 
 
-class QuantizationConfig(object):
+class QuantizationConfig(Config):
     """Quantization Configuration Object"""
-
     def __init__(self,
                  activation_bits=8,
                  weight_bits=8,
@@ -274,23 +273,3 @@ class QuantizationConfig(object):
         self.start_step = start_step
         self.ema_decay = ema_decay
         self.requantize_output = requantize_output
-
-    @classmethod
-    def from_dict(cls, json_object):
-        """Constructs a `QuantizationConfig` from a Python dictionary of parameters."""
-        config = QuantizationConfig()
-        for key, value in json_object.items():
-            config.__dict__[key] = value
-        return config
-
-    def __repr__(self):
-        return str(self.to_json_string())
-
-    def to_json_string(self):
-        """Serializes this instance to a JSON string."""
-        return json.dumps(self.to_dict(), indent=2, sort_keys=True) + "\n"
-
-    def to_dict(self):
-        """Serializes this instance to a Python dictionary."""
-        output = copy.deepcopy(self.__dict__)
-        return output
