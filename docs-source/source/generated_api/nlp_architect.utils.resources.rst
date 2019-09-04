@@ -5,6 +5,6 @@ Module contents
 ---------------
 
 .. automodule:: nlp_architect.utils.resources
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
