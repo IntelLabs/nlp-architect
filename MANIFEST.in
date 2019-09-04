@@ -3,6 +3,8 @@ include nlp_architect/server/services.json
 graft nlp_architect/utils/resources
 graft nlp_architect/solutions/set_expansion/ui
 graft nlp_architect/solutions/trend_analysis
+graft nlp_architect/solutions/absa_solution
+graft nlp_architect/solutions/absa_solution/style
 graft nlp_architect/server/angular-ui
 graft nlp_architect/models/absa/inference/lexicons
 graft nlp_architect/models/absa/train/lexicons
