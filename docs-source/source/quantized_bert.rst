@@ -28,7 +28,13 @@ Processing (NLP) applications. \
 
 In this page we are going to show how to run quantization aware training in the
 fine tuning phase to a specific task in order to produce a quantized BERT
-model.
+model which simulates quantized inference. In order to utilize
+quantization for compressing the model's memory footprint or for
+accelarating computation, true quantization must be applied using
+optimized kernels and dedicated hardware.
+
+.. note::
+    The :py:class:`QuantizedBertModel <nlp_architect.models.transformers.quantized_bert.QuantizedBertModel>` is only simulating quantization, meaning, the model is saved and computed using FP32 representation. During inference quantization is done online using Int8 values represented and computed with FP32 tensors.
 
 Quantization Aware Training
 ===========================

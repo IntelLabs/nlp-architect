@@ -6,12 +6,12 @@ Subpackages
 
 .. toctree::
 
-    nlp_architect.nn.tensorflow.python
+   nlp_architect.nn.tensorflow.python
 
 Module contents
 ---------------
 
 .. automodule:: nlp_architect.nn.tensorflow
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
