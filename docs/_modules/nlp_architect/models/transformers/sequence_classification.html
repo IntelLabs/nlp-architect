@@ -214,7 +214,7 @@
 <span class="kn">from</span> <span class="nn">nlp_architect.models.transformers.base_model</span> <span class="k">import</span> <span class="p">(</span><span class="n">InputFeatures</span><span class="p">,</span>
                                                           <span class="n">TransformerBase</span><span class="p">)</span>
 <span class="kn">from</span> <span class="nn">nlp_architect.models.transformers.quantized_bert</span> <span class="k">import</span> <span class="n">QuantizedBertForSequenceClassification</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.utils.metrics</span> <span class="k">import</span> <span class="n">simple_accuracy</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.utils.metrics</span> <span class="k">import</span> <span class="n">accuracy</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
@@ -239,7 +239,7 @@
     <span class="p">}</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">labels</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                 <span class="n">task_type</span><span class="o">=</span><span class="s2">&quot;classification&quot;</span><span class="p">,</span> <span class="n">metric_fn</span><span class="o">=</span><span class="n">simple_accuracy</span><span class="p">,</span>
+                 <span class="n">task_type</span><span class="o">=</span><span class="s2">&quot;classification&quot;</span><span class="p">,</span> <span class="n">metric_fn</span><span class="o">=</span><span class="n">accuracy</span><span class="p">,</span>
                  <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">assert</span> <span class="n">model_type</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">MODEL_CLASS</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="s2">&quot;unsupported model type&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">labels</span> <span class="o">=</span> <span class="n">labels</span>
@@ -297,21 +297,20 @@
 
 <div class="viewcode-block" id="TransformerSequenceClassifier.evaluate_predictions"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.transformers.html#nlp_architect.models.transformers.sequence_classification.TransformerSequenceClassifier.evaluate_predictions">[docs]</a>    <span class="k">def</span> <span class="nf">evaluate_predictions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">logits</span><span class="p">,</span> <span class="n">label_ids</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Run evaluation of given logist and truth labels</span>
+<span class="sd">        Run evaluation of given logits and truth labels</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            logits: model logits</span>
 <span class="sd">            label_ids: truth label ids</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">preds</span> <span class="o">=</span> <span class="n">logits</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+        <span class="n">preds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_postprocess_logits</span><span class="p">(</span><span class="n">logits</span><span class="p">)</span>
         <span class="n">label_ids</span> <span class="o">=</span> <span class="n">label_ids</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">task_type</span> <span class="o">==</span> <span class="s2">&quot;classification&quot;</span><span class="p">:</span>
-            <span class="n">preds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">task_type</span> <span class="o">==</span> <span class="s2">&quot;regression&quot;</span><span class="p">:</span>
-            <span class="n">preds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">preds</span><span class="p">)</span>
         <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metric_fn</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">label_ids</span><span class="p">)</span>
-        <span class="n">output_eval_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">output_path</span><span class="p">,</span> <span class="s2">&quot;eval_results.txt&quot;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">output_eval_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">output_path</span><span class="p">,</span> <span class="s2">&quot;eval_results.txt&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+            <span class="n">output_eval_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">devnull</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">output_eval_file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">writer</span><span class="p">:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;***** Eval results *****&quot;</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
@@ -359,10 +358,9 @@
             <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">task_type</span> <span class="o">==</span> <span class="s2">&quot;regression&quot;</span><span class="p">:</span>
                 <span class="n">all_label_ids</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="n">f</span><span class="o">.</span><span class="n">label_id</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">features</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">TensorDataset</span><span class="p">(</span><span class="n">all_input_ids</span><span class="p">,</span> <span class="n">all_input_mask</span><span class="p">,</span> <span class="n">all_segment_ids</span><span class="p">,</span> <span class="n">all_label_ids</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">TensorDataset</span><span class="p">(</span><span class="n">all_input_ids</span><span class="p">,</span> <span class="n">all_input_mask</span><span class="p">,</span> <span class="n">all_segment_ids</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">TensorDataset</span><span class="p">(</span><span class="n">all_input_ids</span><span class="p">,</span> <span class="n">all_input_mask</span><span class="p">,</span> <span class="n">all_segment_ids</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="TransformerSequenceClassifier.inference"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.transformers.html#nlp_architect.models.transformers.sequence_classification.TransformerSequenceClassifier.inference">[docs]</a>    <span class="k">def</span> <span class="nf">inference</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">examples</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">SequenceClsInputExample</span><span class="p">],</span> <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">64</span><span class="p">):</span>
+<div class="viewcode-block" id="TransformerSequenceClassifier.inference"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.transformers.html#nlp_architect.models.transformers.sequence_classification.TransformerSequenceClassifier.inference">[docs]</a>    <span class="k">def</span> <span class="nf">inference</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">examples</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">SequenceClsInputExample</span><span class="p">],</span> <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">64</span><span class="p">,</span> <span class="n">evaluate</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Run inference on given examples</span>
 
@@ -373,16 +371,25 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            logits</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">data_set</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">convert_to_tensors</span><span class="p">(</span><span class="n">examples</span><span class="p">,</span> <span class="n">include_labels</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">data_set</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">convert_to_tensors</span><span class="p">(</span><span class="n">examples</span><span class="p">,</span> <span class="n">include_labels</span><span class="o">=</span><span class="n">evaluate</span><span class="p">)</span>
         <span class="n">inf_sampler</span> <span class="o">=</span> <span class="n">SequentialSampler</span><span class="p">(</span><span class="n">data_set</span><span class="p">)</span>
         <span class="n">inf_dataloader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">data_set</span><span class="p">,</span> <span class="n">sampler</span><span class="o">=</span><span class="n">inf_sampler</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">)</span>
         <span class="n">logits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_evaluate</span><span class="p">(</span><span class="n">inf_dataloader</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">evaluate</span><span class="p">:</span>
+            <span class="n">preds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_postprocess_logits</span><span class="p">(</span><span class="n">logits</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logits</span><span class="p">,</span> <span class="n">label_ids</span> <span class="o">=</span> <span class="n">logits</span>
+            <span class="n">preds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_postprocess_logits</span><span class="p">(</span><span class="n">logits</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">evaluate_predictions</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">label_ids</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">preds</span></div>
+
+    <span class="k">def</span> <span class="nf">_postprocess_logits</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">logits</span><span class="p">):</span>
         <span class="n">preds</span> <span class="o">=</span> <span class="n">logits</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">task_type</span> <span class="o">==</span> <span class="s2">&quot;classification&quot;</span><span class="p">:</span>
             <span class="n">preds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">task_type</span> <span class="o">==</span> <span class="s2">&quot;regression&quot;</span><span class="p">:</span>
             <span class="n">preds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">preds</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">preds</span></div>
+        <span class="k">return</span> <span class="n">preds</span>
 
     <span class="k">def</span> <span class="nf">_convert_examples_to_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">examples</span><span class="p">,</span> <span class="n">max_seq_length</span><span class="p">,</span>
                                       <span class="n">tokenizer</span><span class="p">,</span> <span class="n">task_type</span><span class="p">,</span> <span class="n">include_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>

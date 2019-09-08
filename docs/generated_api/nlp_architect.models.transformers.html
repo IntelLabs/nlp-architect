@@ -144,6 +144,7 @@
 <li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.ner_crf">nlp_architect.models.ner_crf module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.np2vec">nlp_architect.models.np2vec module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.np_semantic_segmentation">nlp_architect.models.np_semantic_segmentation module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.pretrained_models">nlp_architect.models.pretrained_models module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.supervised_sentiment">nlp_architect.models.supervised_sentiment module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.tagging">nlp_architect.models.tagging module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.temporal_convolutional_network">nlp_architect.models.temporal_convolutional_network module</a></li>
@@ -290,7 +291,7 @@
 
 <dl class="classmethod">
 <dt id="nlp_architect.models.transformers.base_model.TransformerBase.load_model">
-<em class="property">classmethod </em><code class="descname">load_model</code><span class="sig-paren">(</span><em>model_path: str</em>, <em>model_type: str</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/transformers/base_model.html#TransformerBase.load_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.transformers.base_model.TransformerBase.load_model" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">load_model</code><span class="sig-paren">(</span><em>model_path: str</em>, <em>model_type: str</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/transformers/base_model.html#TransformerBase.load_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.transformers.base_model.TransformerBase.load_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a TranformerBase deom from given path</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -514,7 +515,7 @@
 <span id="nlp-architect-models-transformers-sequence-classification-module"></span><h2>nlp_architect.models.transformers.sequence_classification module<a class="headerlink" href="#module-nlp_architect.models.transformers.sequence_classification" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="nlp_architect.models.transformers.sequence_classification.TransformerSequenceClassifier">
-<em class="property">class </em><code class="descclassname">nlp_architect.models.transformers.sequence_classification.</code><code class="descname">TransformerSequenceClassifier</code><span class="sig-paren">(</span><em>model_type: str</em>, <em>labels: List[str] = None</em>, <em>task_type='classification'</em>, <em>metric_fn=&lt;function simple_accuracy&gt;</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/transformers/sequence_classification.html#TransformerSequenceClassifier"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.transformers.sequence_classification.TransformerSequenceClassifier" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">nlp_architect.models.transformers.sequence_classification.</code><code class="descname">TransformerSequenceClassifier</code><span class="sig-paren">(</span><em>model_type: str</em>, <em>labels: List[str] = None</em>, <em>task_type='classification'</em>, <em>metric_fn=&lt;function accuracy&gt;</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/transformers/sequence_classification.html#TransformerSequenceClassifier"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.transformers.sequence_classification.TransformerSequenceClassifier" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nlp_architect.models.transformers.base_model.TransformerBase" title="nlp_architect.models.transformers.base_model.TransformerBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">nlp_architect.models.transformers.base_model.TransformerBase</span></code></a></p>
 <p>Transformer sequence classifier</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -566,7 +567,7 @@
 <dl class="method">
 <dt id="nlp_architect.models.transformers.sequence_classification.TransformerSequenceClassifier.evaluate_predictions">
 <code class="descname">evaluate_predictions</code><span class="sig-paren">(</span><em>logits</em>, <em>label_ids</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/transformers/sequence_classification.html#TransformerSequenceClassifier.evaluate_predictions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.transformers.sequence_classification.TransformerSequenceClassifier.evaluate_predictions" title="Permalink to this definition">¶</a></dt>
-<dd><p>Run evaluation of given logist and truth labels</p>
+<dd><p>Run evaluation of given logits and truth labels</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -583,7 +584,7 @@
 
 <dl class="method">
 <dt id="nlp_architect.models.transformers.sequence_classification.TransformerSequenceClassifier.inference">
-<code class="descname">inference</code><span class="sig-paren">(</span><em>examples: List[nlp_architect.data.sequence_classification.SequenceClsInputExample], batch_size: int = 64</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/transformers/sequence_classification.html#TransformerSequenceClassifier.inference"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.transformers.sequence_classification.TransformerSequenceClassifier.inference" title="Permalink to this definition">¶</a></dt>
+<code class="descname">inference</code><span class="sig-paren">(</span><em>examples: List[nlp_architect.data.sequence_classification.SequenceClsInputExample], batch_size: int = 64, evaluate=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/transformers/sequence_classification.html#TransformerSequenceClassifier.inference"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.transformers.sequence_classification.TransformerSequenceClassifier.inference" title="Permalink to this definition">¶</a></dt>
 <dd><p>Run inference on given examples</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />

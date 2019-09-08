@@ -6,12 +6,12 @@ Subpackages
 
 .. toctree::
 
-   nlp_architect.models.bist.eval.conllu
+    nlp_architect.models.bist.eval.conllu
 
 Module contents
 ---------------
 
 .. automodule:: nlp_architect.models.bist.eval
-   :members:
-   :undoc-members:
-   :show-inheritance:
+    :members:
+    :undoc-members:
+    :show-inheritance:

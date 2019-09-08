@@ -111,6 +111,14 @@ nlp\_architect.models.np\_semantic\_segmentation module
     :undoc-members:
     :show-inheritance:
 
+nlp\_architect.models.pretrained\_models module
+-----------------------------------------------
+
+.. automodule:: nlp_architect.models.pretrained_models
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 nlp\_architect.models.supervised\_sentiment module
 --------------------------------------------------
 

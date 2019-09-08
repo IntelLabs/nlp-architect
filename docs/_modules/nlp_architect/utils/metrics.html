@@ -242,6 +242,15 @@
     <span class="k">return</span> <span class="p">(</span><span class="n">preds</span> <span class="o">==</span> <span class="n">labels</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span></div>
 
 
+<div class="viewcode-block" id="accuracy"><a class="viewcode-back" href="../../../generated_api/nlp_architect.utils.html#nlp_architect.utils.metrics.accuracy">[docs]</a><span class="k">def</span> <span class="nf">accuracy</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;return simple accuracy in expected dict format</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">acc</span> <span class="o">=</span> <span class="n">simple_accuracy</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;acc&quot;</span><span class="p">:</span> <span class="n">acc</span>
+    <span class="p">}</span></div>
+
+
 <div class="viewcode-block" id="acc_and_f1"><a class="viewcode-back" href="../../../generated_api/nlp_architect.utils.html#nlp_architect.utils.metrics.acc_and_f1">[docs]</a><span class="k">def</span> <span class="nf">acc_and_f1</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;return accuracy and f1 score</span>
 <span class="sd">    &quot;&quot;&quot;</span>

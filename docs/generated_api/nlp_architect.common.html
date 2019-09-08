@@ -126,6 +126,7 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.common.config">nlp_architect.common.config module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.common.core_nlp_doc">nlp_architect.common.core_nlp_doc module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.common.high_level_doc">nlp_architect.common.high_level_doc module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.common">Module contents</a></li>
@@ -227,6 +228,47 @@
 </div>
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-nlp_architect.common.config">
+<span id="nlp-architect-common-config-module"></span><h2>nlp_architect.common.config module<a class="headerlink" href="#module-nlp_architect.common.config" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>Generic config object:</dt>
+<dd>load config from json file
+load config from ordinary python dict
+export config as dictionaty or json string
+define in init default parameters</dd>
+</dl>
+<dl class="class">
+<dt id="nlp_architect.common.config.Config">
+<em class="property">class </em><code class="descclassname">nlp_architect.common.config.</code><code class="descname">Config</code><a class="reference internal" href="../_modules/nlp_architect/common/config.html#Config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.config.Config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>Quantization Configuration Object</p>
+<dl class="classmethod">
+<dt id="nlp_architect.common.config.Config.from_dict">
+<em class="property">classmethod </em><code class="descname">from_dict</code><span class="sig-paren">(</span><em>json_object</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/common/config.html#Config.from_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.config.Config.from_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructs a config from a Python dictionary of parameters.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="nlp_architect.common.config.Config.from_json_file">
+<em class="property">classmethod </em><code class="descname">from_json_file</code><span class="sig-paren">(</span><em>json_file</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/common/config.html#Config.from_json_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.config.Config.from_json_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructs Config from a json file of parameters.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.common.config.Config.to_dict">
+<code class="descname">to_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/common/config.html#Config.to_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.config.Config.to_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Serializes this instance to a Python dictionary.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.common.config.Config.to_json_string">
+<code class="descname">to_json_string</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/common/config.html#Config.to_json_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.config.Config.to_json_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Serializes this instance to a JSON string.</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 <div class="section" id="module-nlp_architect.common.core_nlp_doc">
 <span id="nlp-architect-common-core-nlp-doc-module"></span><h2>nlp_architect.common.core_nlp_doc module<a class="headerlink" href="#module-nlp_architect.common.core_nlp_doc" title="Permalink to this headline">¶</a></h2>

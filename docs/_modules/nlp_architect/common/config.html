@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.cli.cli_commands &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
+  <title>nlp_architect.common.config &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
   
 
   
@@ -165,9 +165,7 @@
         
           <li><a href="../../index.html">Module code</a> &raquo;</li>
         
-          <li><a href="../cli.html">nlp_architect.cli</a> &raquo;</li>
-        
-      <li>nlp_architect.cli.cli_commands</li>
+      <li>nlp_architect.common.config</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -182,7 +180,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <h1>Source code for nlp_architect.cli.cli_commands</h1><div class="highlight"><pre>
+  <h1>Source code for nlp_architect.common.config</h1><div class="highlight"><pre>
 <span></span><span class="c1"># ******************************************************************************</span>
 <span class="c1"># Copyright 2017-2019 Intel Corporation</span>
 <span class="c1">#</span>
@@ -198,61 +196,51 @@
 <span class="c1"># See the License for the specific language governing permissions and</span>
 <span class="c1"># limitations under the License.</span>
 <span class="c1"># ******************************************************************************</span>
-<span class="c1"># CLI definition</span>
-<span class="kn">from</span> <span class="nn">argparse</span> <span class="k">import</span> <span class="n">_SubParsersAction</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Generic config object:  </span>
+<span class="sd">    load config from json file</span>
+<span class="sd">    load config from ordinary python dict</span>
+<span class="sd">    export config as dictionaty or json string</span>
+<span class="sd">    define in init default parameters</span>
+<span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">nlp_architect.cli.cmd_registry</span> <span class="k">import</span> <span class="n">CMD_REGISTRY</span>
-
-
-<div class="viewcode-block" id="generic_cmd"><a class="viewcode-back" href="../../../generated_api/nlp_architect.cli.html#nlp_architect.cli.cli_commands.generic_cmd">[docs]</a><span class="k">def</span> <span class="nf">generic_cmd</span><span class="p">(</span><span class="n">cmd_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">subtitle</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">description</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">subparsers</span><span class="p">:</span> <span class="n">_SubParsersAction</span><span class="p">):</span>
-    <span class="n">parser</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="n">cmd_name</span><span class="p">,</span>
-                                   <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
-                                   <span class="n">help</span><span class="o">=</span><span class="n">description</span><span class="p">)</span>
-
-    <span class="n">subsubparsers</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_subparsers</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">subtitle</span><span class="p">,</span>
-                                          <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">CMD_REGISTRY</span><span class="p">[</span><span class="n">cmd_name</span><span class="p">]:</span>
-        <span class="n">sp</span> <span class="o">=</span> <span class="n">subsubparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="n">model</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>
-                                      <span class="n">description</span><span class="o">=</span><span class="n">model</span><span class="p">[</span><span class="s1">&#39;description&#39;</span><span class="p">],</span>
-                                      <span class="n">help</span><span class="o">=</span><span class="n">model</span><span class="p">[</span><span class="s1">&#39;description&#39;</span><span class="p">])</span>
-        <span class="n">model</span><span class="p">[</span><span class="s1">&#39;arg_adder&#39;</span><span class="p">](</span><span class="n">sp</span><span class="p">)</span>
-        <span class="n">sp</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">model</span><span class="p">[</span><span class="s1">&#39;fn&#39;</span><span class="p">])</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="n">parser</span><span class="o">.</span><span class="n">print_help</span><span class="p">())</span></div>
+<span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">abc</span>
 
 
-<div class="viewcode-block" id="cli_train_cmd"><a class="viewcode-back" href="../../../generated_api/nlp_architect.cli.html#nlp_architect.cli.cli_commands.cli_train_cmd">[docs]</a><span class="k">def</span> <span class="nf">cli_train_cmd</span><span class="p">(</span><span class="n">subparsers</span><span class="p">:</span> <span class="n">_SubParsersAction</span><span class="p">):</span>
-    <span class="n">generic_cmd</span><span class="p">(</span><span class="s1">&#39;train&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;Available models&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;Train a model from the library&#39;</span><span class="p">,</span>
-                <span class="n">subparsers</span><span class="p">)</span></div>
+<div class="viewcode-block" id="Config"><a class="viewcode-back" href="../../../generated_api/nlp_architect.common.html#nlp_architect.common.config.Config">[docs]</a><span class="k">class</span> <span class="nc">Config</span><span class="p">(</span><span class="n">abc</span><span class="o">.</span><span class="n">ABC</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Quantization Configuration Object&quot;&quot;&quot;</span>
+    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
 
+<div class="viewcode-block" id="Config.from_dict"><a class="viewcode-back" href="../../../generated_api/nlp_architect.common.html#nlp_architect.common.config.Config.from_dict">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">json_object</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Constructs a config from a Python dictionary of parameters.&quot;&quot;&quot;</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">json_object</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">config</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="k">return</span> <span class="n">config</span></div>
 
-<div class="viewcode-block" id="cli_run_cmd"><a class="viewcode-back" href="../../../generated_api/nlp_architect.cli.html#nlp_architect.cli.cli_commands.cli_run_cmd">[docs]</a><span class="k">def</span> <span class="nf">cli_run_cmd</span><span class="p">(</span><span class="n">subparsers</span><span class="p">:</span> <span class="n">_SubParsersAction</span><span class="p">):</span>
-    <span class="n">generic_cmd</span><span class="p">(</span><span class="s1">&#39;run&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;Available models&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;Run a model from the library&#39;</span><span class="p">,</span>
-                <span class="n">subparsers</span><span class="p">)</span></div>
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">to_json_string</span><span class="p">())</span>
 
+<div class="viewcode-block" id="Config.to_json_string"><a class="viewcode-back" href="../../../generated_api/nlp_architect.common.html#nlp_architect.common.config.Config.to_json_string">[docs]</a>    <span class="k">def</span> <span class="nf">to_json_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Serializes this instance to a JSON string.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span></div>
 
-<div class="viewcode-block" id="cli_process_cmd"><a class="viewcode-back" href="../../../generated_api/nlp_architect.cli.html#nlp_architect.cli.cli_commands.cli_process_cmd">[docs]</a><span class="k">def</span> <span class="nf">cli_process_cmd</span><span class="p">(</span><span class="n">subparsers</span><span class="p">:</span> <span class="n">_SubParsersAction</span><span class="p">):</span>
-    <span class="n">generic_cmd</span><span class="p">(</span><span class="s1">&#39;process&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;Available data processors&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;Run a data processor from the library&#39;</span><span class="p">,</span>
-                <span class="n">subparsers</span><span class="p">)</span></div>
+<div class="viewcode-block" id="Config.to_dict"><a class="viewcode-back" href="../../../generated_api/nlp_architect.common.html#nlp_architect.common.config.Config.to_dict">[docs]</a>    <span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Serializes this instance to a Python dictionary.&quot;&quot;&quot;</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">output</span></div>
 
-
-<div class="viewcode-block" id="cli_solution_cmd"><a class="viewcode-back" href="../../../generated_api/nlp_architect.cli.html#nlp_architect.cli.cli_commands.cli_solution_cmd">[docs]</a><span class="k">def</span> <span class="nf">cli_solution_cmd</span><span class="p">(</span><span class="n">subparsers</span><span class="p">:</span> <span class="n">_SubParsersAction</span><span class="p">):</span>
-    <span class="n">generic_cmd</span><span class="p">(</span><span class="s1">&#39;solution&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;Available solutions&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;Run a solution process from the library&#39;</span><span class="p">,</span>
-                <span class="n">subparsers</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="cli_serve_cmd"><a class="viewcode-back" href="../../../generated_api/nlp_architect.cli.html#nlp_architect.cli.cli_commands.cli_serve_cmd">[docs]</a><span class="k">def</span> <span class="nf">cli_serve_cmd</span><span class="p">(</span><span class="n">subparsers</span><span class="p">:</span> <span class="n">_SubParsersAction</span><span class="p">):</span>
-    <span class="n">generic_cmd</span><span class="p">(</span><span class="s1">&#39;serve&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;Available models&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;Server a trained model using REST service&#39;</span><span class="p">,</span>
-                <span class="n">subparsers</span><span class="p">)</span></div>
+<div class="viewcode-block" id="Config.from_json_file"><a class="viewcode-back" href="../../../generated_api/nlp_architect.common.html#nlp_architect.common.config.Config.from_json_file">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_json_file</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">json_file</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Constructs Config from a json file of parameters.&quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">json_file</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">reader</span><span class="p">:</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">text</span><span class="p">))</span></div></div>
 </pre></div>
 
            </div>

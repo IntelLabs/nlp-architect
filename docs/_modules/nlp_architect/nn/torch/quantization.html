@@ -206,12 +206,12 @@
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">unicode_literals</span>
 <span class="kn">from</span> <span class="nn">enum</span> <span class="k">import</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">auto</span>
 <span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">import</span> <span class="nn">copy</span>
 
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="k">import</span> <span class="n">nn</span>
 <span class="kn">from</span> <span class="nn">torch.nn</span> <span class="k">import</span> <span class="n">functional</span> <span class="k">as</span> <span class="n">F</span>
+
+<span class="kn">from</span> <span class="nn">nlp_architect.common</span> <span class="k">import</span> <span class="n">Config</span>
 
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
@@ -219,7 +219,7 @@
 
 <div class="viewcode-block" id="get_dynamic_scale"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.nn.torch.html#nlp_architect.nn.torch.quantization.get_dynamic_scale">[docs]</a><span class="k">def</span> <span class="nf">get_dynamic_scale</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">bits</span><span class="p">,</span> <span class="n">with_grad</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Calculate dynamic scale for quantization from input by taking the</span>
-<span class="sd">    maximum absoulute value from x and number of bits&quot;&quot;&quot;</span>
+<span class="sd">    maximum absolute value from x and number of bits&quot;&quot;&quot;</span>
     <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">set_grad_enabled</span><span class="p">(</span><span class="n">with_grad</span><span class="p">):</span>
         <span class="n">threshold</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">get_scale</span><span class="p">(</span><span class="n">bits</span><span class="p">,</span> <span class="n">threshold</span><span class="p">)</span></div>
@@ -259,7 +259,7 @@
 <div class="viewcode-block" id="FakeLinearQuantizationWithSTE.backward"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.nn.torch.html#nlp_architect.nn.torch.quantization.FakeLinearQuantizationWithSTE.backward">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">backward</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">grad_output</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Calculate estimated gradients for fake quantization using</span>
-<span class="sd">        Straigh-Through Estimator (STE) according to:</span>
+<span class="sd">        Straight-Through Estimator (STE) according to:</span>
 <span class="sd">        https://openreview.net/pdf?id=B1ae1lZRb&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">grad_output</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span></div></div>
 
@@ -442,9 +442,8 @@
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">extra_repr</span><span class="p">()</span> <span class="o">+</span> <span class="n">f</span><span class="s2">&quot;, mode=</span><span class="si">{self.mode}</span><span class="s2">, weight_bits=</span><span class="si">{self.weight_bits}</span><span class="s2">&quot;</span></div></div>
 
 
-<div class="viewcode-block" id="QuantizationConfig"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.nn.torch.html#nlp_architect.nn.torch.quantization.QuantizationConfig">[docs]</a><span class="k">class</span> <span class="nc">QuantizationConfig</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="QuantizationConfig"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.nn.torch.html#nlp_architect.nn.torch.quantization.QuantizationConfig">[docs]</a><span class="k">class</span> <span class="nc">QuantizationConfig</span><span class="p">(</span><span class="n">Config</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Quantization Configuration Object&quot;&quot;&quot;</span>
-
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                  <span class="n">activation_bits</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
                  <span class="n">weight_bits</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
@@ -458,27 +457,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="n">mode</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">start_step</span> <span class="o">=</span> <span class="n">start_step</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ema_decay</span> <span class="o">=</span> <span class="n">ema_decay</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">requantize_output</span> <span class="o">=</span> <span class="n">requantize_output</span>
-
-<div class="viewcode-block" id="QuantizationConfig.from_dict"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.nn.torch.html#nlp_architect.nn.torch.quantization.QuantizationConfig.from_dict">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">json_object</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Constructs a `QuantizationConfig` from a Python dictionary of parameters.&quot;&quot;&quot;</span>
-        <span class="n">config</span> <span class="o">=</span> <span class="n">QuantizationConfig</span><span class="p">()</span>
-        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">json_object</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="n">config</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
-        <span class="k">return</span> <span class="n">config</span></div>
-
-    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">to_json_string</span><span class="p">())</span>
-
-<div class="viewcode-block" id="QuantizationConfig.to_json_string"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.nn.torch.html#nlp_architect.nn.torch.quantization.QuantizationConfig.to_json_string">[docs]</a>    <span class="k">def</span> <span class="nf">to_json_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Serializes this instance to a JSON string.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span></div>
-
-<div class="viewcode-block" id="QuantizationConfig.to_dict"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.nn.torch.html#nlp_architect.nn.torch.quantization.QuantizationConfig.to_dict">[docs]</a>    <span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Serializes this instance to a Python dictionary.&quot;&quot;&quot;</span>
-        <span class="n">output</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">output</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">requantize_output</span> <span class="o">=</span> <span class="n">requantize_output</span></div>
 </pre></div>
 
            </div>

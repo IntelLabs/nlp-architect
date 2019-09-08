@@ -144,6 +144,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.models.ner_crf">nlp_architect.models.ner_crf module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.models.np2vec">nlp_architect.models.np2vec module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.models.np_semantic_segmentation">nlp_architect.models.np_semantic_segmentation module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.models.pretrained_models">nlp_architect.models.pretrained_models module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.models.supervised_sentiment">nlp_architect.models.supervised_sentiment module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.models.tagging">nlp_architect.models.tagging module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.models.temporal_convolutional_network">nlp_architect.models.temporal_convolutional_network module</a></li>
@@ -1673,6 +1674,147 @@ how many relevant items are selected.</p>
 </dd></dl>
 
 </div>
+<div class="section" id="module-nlp_architect.models.pretrained_models">
+<span id="nlp-architect-models-pretrained-models-module"></span><h2>nlp_architect.models.pretrained_models module<a class="headerlink" href="#module-nlp_architect.models.pretrained_models" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nlp_architect.models.pretrained_models.AbsaModel">
+<em class="property">class </em><code class="descclassname">nlp_architect.models.pretrained_models.</code><code class="descname">AbsaModel</code><a class="reference internal" href="../_modules/nlp_architect/models/pretrained_models.html#AbsaModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.pretrained_models.AbsaModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nlp_architect.models.pretrained_models.PretrainedModel" title="nlp_architect.models.pretrained_models.PretrainedModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">nlp_architect.models.pretrained_models.PretrainedModel</span></code></a></p>
+<p>Download and process (unzip) pre-trained ABSA model</p>
+<dl class="attribute">
+<dt id="nlp_architect.models.pretrained_models.AbsaModel.files">
+<code class="descname">files</code><em class="property"> = ['rerank_model.h5']</em><a class="headerlink" href="#nlp_architect.models.pretrained_models.AbsaModel.files" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.models.pretrained_models.AbsaModel.sub_path">
+<code class="descname">sub_path</code><em class="property"> = 'models/absa/'</em><a class="headerlink" href="#nlp_architect.models.pretrained_models.AbsaModel.sub_path" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nlp_architect.models.pretrained_models.BistModel">
+<em class="property">class </em><code class="descclassname">nlp_architect.models.pretrained_models.</code><code class="descname">BistModel</code><a class="reference internal" href="../_modules/nlp_architect/models/pretrained_models.html#BistModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.pretrained_models.BistModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nlp_architect.models.pretrained_models.PretrainedModel" title="nlp_architect.models.pretrained_models.PretrainedModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">nlp_architect.models.pretrained_models.PretrainedModel</span></code></a></p>
+<p>Download and process (unzip) pre-trained BIST model</p>
+<dl class="attribute">
+<dt id="nlp_architect.models.pretrained_models.BistModel.files">
+<code class="descname">files</code><em class="property"> = ['bist-pretrained.zip']</em><a class="headerlink" href="#nlp_architect.models.pretrained_models.BistModel.files" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.models.pretrained_models.BistModel.sub_path">
+<code class="descname">sub_path</code><em class="property"> = 'models/dep_parse/'</em><a class="headerlink" href="#nlp_architect.models.pretrained_models.BistModel.sub_path" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nlp_architect.models.pretrained_models.ChunkerModel">
+<em class="property">class </em><code class="descclassname">nlp_architect.models.pretrained_models.</code><code class="descname">ChunkerModel</code><a class="reference internal" href="../_modules/nlp_architect/models/pretrained_models.html#ChunkerModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.pretrained_models.ChunkerModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nlp_architect.models.pretrained_models.PretrainedModel" title="nlp_architect.models.pretrained_models.PretrainedModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">nlp_architect.models.pretrained_models.PretrainedModel</span></code></a></p>
+<p>Download and process (unzip) pre-trained Chunker model</p>
+<dl class="attribute">
+<dt id="nlp_architect.models.pretrained_models.ChunkerModel.files">
+<code class="descname">files</code><em class="property"> = ['model.h5', 'model_info.dat.params']</em><a class="headerlink" href="#nlp_architect.models.pretrained_models.ChunkerModel.files" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.models.pretrained_models.ChunkerModel.sub_path">
+<code class="descname">sub_path</code><em class="property"> = 'models/chunker/'</em><a class="headerlink" href="#nlp_architect.models.pretrained_models.ChunkerModel.sub_path" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nlp_architect.models.pretrained_models.IntentModel">
+<em class="property">class </em><code class="descclassname">nlp_architect.models.pretrained_models.</code><code class="descname">IntentModel</code><a class="reference internal" href="../_modules/nlp_architect/models/pretrained_models.html#IntentModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.pretrained_models.IntentModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nlp_architect.models.pretrained_models.PretrainedModel" title="nlp_architect.models.pretrained_models.PretrainedModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">nlp_architect.models.pretrained_models.PretrainedModel</span></code></a></p>
+<p>Download and process (unzip) pre-trained Intent model</p>
+<dl class="attribute">
+<dt id="nlp_architect.models.pretrained_models.IntentModel.files">
+<code class="descname">files</code><em class="property"> = ['model_info.dat', 'model.h5']</em><a class="headerlink" href="#nlp_architect.models.pretrained_models.IntentModel.files" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.models.pretrained_models.IntentModel.sub_path">
+<code class="descname">sub_path</code><em class="property"> = 'models/intent/'</em><a class="headerlink" href="#nlp_architect.models.pretrained_models.IntentModel.sub_path" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nlp_architect.models.pretrained_models.MrcModel">
+<em class="property">class </em><code class="descclassname">nlp_architect.models.pretrained_models.</code><code class="descname">MrcModel</code><a class="reference internal" href="../_modules/nlp_architect/models/pretrained_models.html#MrcModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.pretrained_models.MrcModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nlp_architect.models.pretrained_models.PretrainedModel" title="nlp_architect.models.pretrained_models.PretrainedModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">nlp_architect.models.pretrained_models.PretrainedModel</span></code></a></p>
+<p>Download and process (unzip) pre-trained MRC model</p>
+<dl class="attribute">
+<dt id="nlp_architect.models.pretrained_models.MrcModel.files">
+<code class="descname">files</code><em class="property"> = ['mrc_data.zip', 'mrc_model.zip']</em><a class="headerlink" href="#nlp_architect.models.pretrained_models.MrcModel.files" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.models.pretrained_models.MrcModel.sub_path">
+<code class="descname">sub_path</code><em class="property"> = 'models/mrc/'</em><a class="headerlink" href="#nlp_architect.models.pretrained_models.MrcModel.sub_path" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nlp_architect.models.pretrained_models.NerModel">
+<em class="property">class </em><code class="descclassname">nlp_architect.models.pretrained_models.</code><code class="descname">NerModel</code><a class="reference internal" href="../_modules/nlp_architect/models/pretrained_models.html#NerModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.pretrained_models.NerModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nlp_architect.models.pretrained_models.PretrainedModel" title="nlp_architect.models.pretrained_models.PretrainedModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">nlp_architect.models.pretrained_models.PretrainedModel</span></code></a></p>
+<p>Download and process (unzip) pre-trained NER model</p>
+<dl class="attribute">
+<dt id="nlp_architect.models.pretrained_models.NerModel.files">
+<code class="descname">files</code><em class="property"> = ['model_v4.h5', 'model_info_v4.dat']</em><a class="headerlink" href="#nlp_architect.models.pretrained_models.NerModel.files" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.models.pretrained_models.NerModel.sub_path">
+<code class="descname">sub_path</code><em class="property"> = 'models/ner/'</em><a class="headerlink" href="#nlp_architect.models.pretrained_models.NerModel.sub_path" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nlp_architect.models.pretrained_models.PretrainedModel">
+<em class="property">class </em><code class="descclassname">nlp_architect.models.pretrained_models.</code><code class="descname">PretrainedModel</code><span class="sig-paren">(</span><em>model_name</em>, <em>sub_path</em>, <em>files</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/pretrained_models.html#PretrainedModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.pretrained_models.PretrainedModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Generic class to download the pre-trained models</p>
+<p>Usage Example:</p>
+<p>chunker = ChunkerModel.get_instance()
+chunker2 = ChunkerModel.get_instance()
+print(chunker, chunker2)
+print(“Local File path = “, chunker.get_file_path())
+files_models = chunker2.get_model_files()
+for idx, file_name in enumerate(files_models):</p>
+<blockquote>
+<div>print(str(idx) + “: ” + file_name)</div></blockquote>
+<dl class="method">
+<dt id="nlp_architect.models.pretrained_models.PretrainedModel.get_file_path">
+<code class="descname">get_file_path</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/pretrained_models.html#PretrainedModel.get_file_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.pretrained_models.PretrainedModel.get_file_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return local file path of downloaded model files</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="nlp_architect.models.pretrained_models.PretrainedModel.get_instance">
+<em class="property">classmethod </em><code class="descname">get_instance</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/pretrained_models.html#PretrainedModel.get_instance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.pretrained_models.PretrainedModel.get_instance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Static instance access method
+:param cls: Calling class
+:type cls: Class name</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.models.pretrained_models.PretrainedModel.get_model_files">
+<code class="descname">get_model_files</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/pretrained_models.html#PretrainedModel.get_model_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.pretrained_models.PretrainedModel.get_model_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return individual file names of downloaded models</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
 <div class="section" id="module-nlp_architect.models.supervised_sentiment">
 <span id="nlp-architect-models-supervised-sentiment-module"></span><h2>nlp_architect.models.supervised_sentiment module<a class="headerlink" href="#module-nlp_architect.models.supervised_sentiment" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
@@ -1852,7 +1994,7 @@ Supports pytorch embedder models, multi-gpu training, KD from teacher models</p>
 
 <dl class="method">
 <dt id="nlp_architect.models.tagging.NeuralTagger.get_optimizer">
-<code class="descname">get_optimizer</code><span class="sig-paren">(</span><em>lr: int = 0.001</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/tagging.html#NeuralTagger.get_optimizer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.tagging.NeuralTagger.get_optimizer" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_optimizer</code><span class="sig-paren">(</span><em>opt_fn=None</em>, <em>lr: int = 0.001</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/tagging.html#NeuralTagger.get_optimizer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.tagging.NeuralTagger.get_optimizer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get default optimizer</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1957,7 +2099,7 @@ Supports pytorch embedder models, multi-gpu training, KD from teacher models</p>
 <li><strong>test_data_set</strong> (<em>DataLoader</em><em>, </em><em>optional</em>) – test examples dataloader. Defaults to None.</li>
 <li><strong>epochs</strong> (<em>int</em><em>, </em><em>optional</em>) – num of epochs to train. Defaults to 3.</li>
 <li><strong>batch_size</strong> (<em>int</em><em>, </em><em>optional</em>) – batch size. Defaults to 8.</li>
-<li><strong>optimizer</strong> (<em>[</em><em>type</em><em>]</em><em>, </em><em>optional</em>) – optimizer. Defaults to default model optimizer.</li>
+<li><strong>optimizer</strong> (<em>fn</em><em>, </em><em>optional</em>) – optimizer function. Defaults to default model optimizer.</li>
 <li><strong>max_grad_norm</strong> (<em>float</em><em>, </em><em>optional</em>) – max gradient norm. Defaults to 5.0.</li>
 <li><strong>logging_steps</strong> (<em>int</em><em>, </em><em>optional</em>) – number of steps between logging. Defaults to 50.</li>
 <li><strong>save_steps</strong> (<em>int</em><em>, </em><em>optional</em>) – number of steps between model saves. Defaults to 100.</li>

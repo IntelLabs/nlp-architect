@@ -197,7 +197,7 @@
 <span class="c1"># limitations under the License.</span>
 <span class="c1"># ******************************************************************************</span>
 <span class="kn">import</span> <span class="nn">argparse</span>
-<span class="kn">import</span> <span class="nn">logging</span> 
+<span class="kn">import</span> <span class="nn">logging</span>
 
 <span class="c1"># register all procedures by importing</span>
 <span class="kn">import</span> <span class="nn">nlp_architect.procedures</span>  <span class="c1"># noqa: F401</span>
@@ -210,6 +210,7 @@
 <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(asctime)s</span><span class="s1"> - </span><span class="si">%(levelname)s</span><span class="s1"> - </span><span class="si">%(name)s</span><span class="s1"> - </span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">,</span>
                     <span class="n">datefmt</span><span class="o">=</span><span class="s1">&#39;%m/</span><span class="si">%d</span><span class="s1">/%Y %H:%M:%S&#39;</span><span class="p">,</span>
                     <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+
 
 <div class="viewcode-block" id="run_cli"><a class="viewcode-back" href="../../generated_api/nlp_architect.cli.html#nlp_architect.cli.run_cli">[docs]</a><span class="k">def</span> <span class="nf">run_cli</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot; Run nlp_architect command line application</span>

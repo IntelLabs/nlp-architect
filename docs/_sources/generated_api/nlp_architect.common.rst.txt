@@ -11,6 +11,14 @@ Subpackages
 Submodules
 ----------
 
+nlp\_architect.common.config module
+-----------------------------------
+
+.. automodule:: nlp_architect.common.config
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 nlp\_architect.common.core\_nlp\_doc module
 -------------------------------------------
 

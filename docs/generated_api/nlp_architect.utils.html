@@ -138,6 +138,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.utils.ansi2html">nlp_architect.utils.ansi2html module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.utils.embedding">nlp_architect.utils.embedding module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.utils.ensembler">nlp_architect.utils.ensembler module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.utils.file_cache">nlp_architect.utils.file_cache module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.utils.generic">nlp_architect.utils.generic module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.utils.io">nlp_architect.utils.io module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.utils.metrics">nlp_architect.utils.metrics module</a></li>
@@ -413,6 +414,46 @@ have the vector representing pad value to be 0s.</li>
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-nlp_architect.utils.file_cache">
+<span id="nlp-architect-utils-file-cache-module"></span><h2>nlp_architect.utils.file_cache module<a class="headerlink" href="#module-nlp_architect.utils.file_cache" title="Permalink to this headline">¶</a></h2>
+<p>Utilities for working with the local dataset cache.</p>
+<dl class="function">
+<dt id="nlp_architect.utils.file_cache.cached_path">
+<code class="descclassname">nlp_architect.utils.file_cache.</code><code class="descname">cached_path</code><span class="sig-paren">(</span><em>url_or_filename: Union[str, pathlib.Path], cache_dir: str = None</em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="../_modules/nlp_architect/utils/file_cache.html#cached_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.utils.file_cache.cached_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given something that might be a URL (or might be a local path),
+determine which. If it’s a URL, download the file and cache it, and
+return the path to the cached file. If it’s already a local path,
+make sure the file exists and then return the path.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.utils.file_cache.filename_to_url">
+<code class="descclassname">nlp_architect.utils.file_cache.</code><code class="descname">filename_to_url</code><span class="sig-paren">(</span><em>filename: str</em>, <em>cache_dir: str = None</em><span class="sig-paren">)</span> &#x2192; Tuple[str, str]<a class="reference internal" href="../_modules/nlp_architect/utils/file_cache.html#filename_to_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.utils.file_cache.filename_to_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the url and etag (which may be <code class="docutils literal notranslate"><span class="pre">None</span></code>) stored for <cite>filename</cite>.
+Raise <code class="docutils literal notranslate"><span class="pre">FileNotFoundError</span></code> if <cite>filename</cite> or its stored metadata do not exist.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.utils.file_cache.get_from_cache">
+<code class="descclassname">nlp_architect.utils.file_cache.</code><code class="descname">get_from_cache</code><span class="sig-paren">(</span><em>url: str</em>, <em>cache_dir: str = None</em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="../_modules/nlp_architect/utils/file_cache.html#get_from_cache"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.utils.file_cache.get_from_cache" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a URL, look for the corresponding dataset in the local cache.
+If it’s not there, download it. Then return the path to the cached file.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.utils.file_cache.http_get">
+<code class="descclassname">nlp_architect.utils.file_cache.</code><code class="descname">http_get</code><span class="sig-paren">(</span><em>url: str</em>, <em>temp_file: IO</em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="../_modules/nlp_architect/utils/file_cache.html#http_get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.utils.file_cache.http_get" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.utils.file_cache.url_to_filename">
+<code class="descclassname">nlp_architect.utils.file_cache.</code><code class="descname">url_to_filename</code><span class="sig-paren">(</span><em>url: str</em>, <em>etag: str = None</em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="../_modules/nlp_architect/utils/file_cache.html#url_to_filename"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.utils.file_cache.url_to_filename" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert <cite>url</cite> into a hashed filename in a repeatable way.
+If <cite>etag</cite> is specified, append its hash to the url’s, delimited
+by a period.</p>
 </dd></dl>
 
 </div>
@@ -751,6 +792,22 @@ for returning.</li>
 <dd><p>Iterates a directory’s text files and their contents.</p>
 </dd></dl>
 
+<dl class="function">
+<dt id="nlp_architect.utils.io.zipfile_list">
+<code class="descclassname">nlp_architect.utils.io.</code><code class="descname">zipfile_list</code><span class="sig-paren">(</span><em>filepath: str</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/utils/io.html#zipfile_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.utils.io.zipfile_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>List the files inside a given zip file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filepath</strong> (<em>str</em>) – path to file</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">String list of filenames</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
 <div class="section" id="module-nlp_architect.utils.metrics">
 <span id="nlp-architect-utils-metrics-module"></span><h2>nlp_architect.utils.metrics module<a class="headerlink" href="#module-nlp_architect.utils.metrics" title="Permalink to this headline">¶</a></h2>
@@ -758,6 +815,12 @@ for returning.</li>
 <dt id="nlp_architect.utils.metrics.acc_and_f1">
 <code class="descclassname">nlp_architect.utils.metrics.</code><code class="descname">acc_and_f1</code><span class="sig-paren">(</span><em>preds</em>, <em>labels</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/utils/metrics.html#acc_and_f1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.utils.metrics.acc_and_f1" title="Permalink to this definition">¶</a></dt>
 <dd><p>return accuracy and f1 score</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.utils.metrics.accuracy">
+<code class="descclassname">nlp_architect.utils.metrics.</code><code class="descname">accuracy</code><span class="sig-paren">(</span><em>preds</em>, <em>labels</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/utils/metrics.html#accuracy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.utils.metrics.accuracy" title="Permalink to this definition">¶</a></dt>
+<dd><p>return simple accuracy in expected dict format</p>
 </dd></dl>
 
 <dl class="function">

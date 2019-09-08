@@ -5,6 +5,6 @@ Module contents
 ---------------
 
 .. automodule:: nlp_architect.server.angular-ui
-   :members:
-   :undoc-members:
-   :show-inheritance:
+    :members:
+    :undoc-members:
+    :show-inheritance:

@@ -242,7 +242,7 @@
 <span id="nlp-architect-nn-torch-distillation-module"></span><h2>nlp_architect.nn.torch.distillation module<a class="headerlink" href="#module-nlp_architect.nn.torch.distillation" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="nlp_architect.nn.torch.distillation.TeacherStudentDistill">
-<em class="property">class </em><code class="descclassname">nlp_architect.nn.torch.distillation.</code><code class="descname">TeacherStudentDistill</code><span class="sig-paren">(</span><em>teacher_model: nlp_architect.models.TrainableModel</em>, <em>temperature: float = 1.0</em>, <em>kd_w: float = 0.5</em>, <em>loss_w: float = 0.5</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/distillation.html#TeacherStudentDistill"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.distillation.TeacherStudentDistill" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">nlp_architect.nn.torch.distillation.</code><code class="descname">TeacherStudentDistill</code><span class="sig-paren">(</span><em>teacher_model: nlp_architect.models.TrainableModel</em>, <em>temperature: float = 1.0</em>, <em>dist_w: float = 0.1</em>, <em>loss_w: float = 1.0</em>, <em>loss_function='kl'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/distillation.html#TeacherStudentDistill"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.distillation.TeacherStudentDistill" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Teacher-Student knowledge distillation helper.
 Use this object when training a model with KD and a teacher model.</p>
@@ -253,8 +253,10 @@ Use this object when training a model with KD and a teacher model.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>teacher_model</strong> (<a class="reference internal" href="nlp_architect.models.html#nlp_architect.models.TrainableModel" title="nlp_architect.models.TrainableModel"><em>TrainableModel</em></a>) – teacher model</li>
 <li><strong>temperature</strong> (<em>float</em><em>, </em><em>optional</em>) – KD temperature. Defaults to 1.0.</li>
-<li><strong>kd_w</strong> (<em>float</em><em>, </em><em>optional</em>) – teacher loss weight. Defaults to 0.5.</li>
-<li><strong>loss_w</strong> (<em>float</em><em>, </em><em>optional</em>) – student loss weight. Defaults to 0.5.</li>
+<li><strong>dist_w</strong> (<em>float</em><em>, </em><em>optional</em>) – distillation loss weight. Defaults to 0.1.</li>
+<li><strong>loss_w</strong> (<em>float</em><em>, </em><em>optional</em>) – student loss weight. Defaults to 1.0.</li>
+<li><strong>loss_function</strong> (<em>str</em><em>, </em><em>optional</em>) – loss function to use (kl for KLDivLoss,
+mse for MSELoss)</li>
 </ul>
 </td>
 </tr>
@@ -327,7 +329,7 @@ Use this object when training a model with KD and a teacher model.</p>
 <dt id="nlp_architect.nn.torch.quantization.FakeLinearQuantizationWithSTE.backward">
 <em class="property">static </em><code class="descname">backward</code><span class="sig-paren">(</span><em>ctx</em>, <em>grad_output</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/quantization.html#FakeLinearQuantizationWithSTE.backward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.quantization.FakeLinearQuantizationWithSTE.backward" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate estimated gradients for fake quantization using
-Straigh-Through Estimator (STE) according to:
+Straight-Through Estimator (STE) according to:
 <a class="reference external" href="https://openreview.net/pdf?id=B1ae1lZRb">https://openreview.net/pdf?id=B1ae1lZRb</a></p>
 </dd></dl>
 
@@ -343,26 +345,8 @@ quantize(input))</p>
 <dl class="class">
 <dt id="nlp_architect.nn.torch.quantization.QuantizationConfig">
 <em class="property">class </em><code class="descclassname">nlp_architect.nn.torch.quantization.</code><code class="descname">QuantizationConfig</code><span class="sig-paren">(</span><em>activation_bits=8</em>, <em>weight_bits=8</em>, <em>mode='none'</em>, <em>start_step=0</em>, <em>ema_decay=0.9999</em>, <em>requantize_output=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/quantization.html#QuantizationConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizationConfig" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dd><p>Bases: <a class="reference internal" href="nlp_architect.common.html#nlp_architect.common.config.Config" title="nlp_architect.common.config.Config"><code class="xref py py-class docutils literal notranslate"><span class="pre">nlp_architect.common.config.Config</span></code></a></p>
 <p>Quantization Configuration Object</p>
-<dl class="classmethod">
-<dt id="nlp_architect.nn.torch.quantization.QuantizationConfig.from_dict">
-<em class="property">classmethod </em><code class="descname">from_dict</code><span class="sig-paren">(</span><em>json_object</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/quantization.html#QuantizationConfig.from_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizationConfig.from_dict" title="Permalink to this definition">¶</a></dt>
-<dd><p>Constructs a <cite>QuantizationConfig</cite> from a Python dictionary of parameters.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="nlp_architect.nn.torch.quantization.QuantizationConfig.to_dict">
-<code class="descname">to_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/quantization.html#QuantizationConfig.to_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizationConfig.to_dict" title="Permalink to this definition">¶</a></dt>
-<dd><p>Serializes this instance to a Python dictionary.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="nlp_architect.nn.torch.quantization.QuantizationConfig.to_json_string">
-<code class="descname">to_json_string</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/quantization.html#QuantizationConfig.to_json_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizationConfig.to_json_string" title="Permalink to this definition">¶</a></dt>
-<dd><p>Serializes this instance to a JSON string.</p>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="class">
@@ -526,7 +510,7 @@ This function should only be used while training</p>
 <dt id="nlp_architect.nn.torch.quantization.get_dynamic_scale">
 <code class="descclassname">nlp_architect.nn.torch.quantization.</code><code class="descname">get_dynamic_scale</code><span class="sig-paren">(</span><em>x</em>, <em>bits</em>, <em>with_grad=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/quantization.html#get_dynamic_scale"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.quantization.get_dynamic_scale" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate dynamic scale for quantization from input by taking the
-maximum absoulute value from x and number of bits</p>
+maximum absolute value from x and number of bits</p>
 </dd></dl>
 
 <dl class="function">

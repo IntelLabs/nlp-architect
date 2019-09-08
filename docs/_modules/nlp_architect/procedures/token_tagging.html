@@ -238,11 +238,6 @@
 <div class="viewcode-block" id="TrainTaggerKD.add_arguments"><a class="viewcode-back" href="../../../generated_api/nlp_architect.procedures.html#nlp_architect.procedures.token_tagging.TrainTaggerKD.add_arguments">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">add_arguments</span><span class="p">(</span><span class="n">parser</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">):</span>
         <span class="n">add_parse_args</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
-        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--teacher_model_path&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Path to teacher model&quot;</span><span class="p">)</span>
-        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--teacher_model_type&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                            <span class="n">choices</span><span class="o">=</span><span class="n">TEACHER_TYPES</span><span class="p">,</span>
-                            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Teacher model class type&quot;</span><span class="p">)</span>
         <span class="n">TeacherStudentDistill</span><span class="o">.</span><span class="n">add_args</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TrainTaggerKD.run_procedure"><a class="viewcode-back" href="../../../generated_api/nlp_architect.procedures.html#nlp_architect.procedures.token_tagging.TrainTaggerKD.run_procedure">[docs]</a>    <span class="nd">@staticmethod</span>
@@ -317,8 +312,6 @@
     <span class="s2">&quot;cnn-lstm&quot;</span><span class="p">:</span> <span class="n">CNNLSTM</span><span class="p">,</span>
     <span class="s2">&quot;id-cnn&quot;</span><span class="p">:</span> <span class="n">IDCNN</span>
 <span class="p">}</span>
-
-<span class="n">TEACHER_TYPES</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;bert&#39;</span><span class="p">]</span>
 
 
 <div class="viewcode-block" id="do_training"><a class="viewcode-back" href="../../../generated_api/nlp_architect.procedures.html#nlp_architect.procedures.token_tagging.do_training">[docs]</a><span class="k">def</span> <span class="nf">do_training</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
@@ -460,7 +453,8 @@
     <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">lr</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">opt</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">get_optimizer</span><span class="p">(</span><span class="n">lr</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">lr</span><span class="p">)</span>
 
-    <span class="n">distiller</span> <span class="o">=</span> <span class="n">TeacherStudentDistill</span><span class="p">(</span><span class="n">teacher</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">kd_t</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">kd_teacher_w</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">kd_student_w</span><span class="p">)</span>
+    <span class="n">distiller</span> <span class="o">=</span> <span class="n">TeacherStudentDistill</span><span class="p">(</span><span class="n">teacher</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">kd_temp</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">kd_dist_w</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">kd_student_w</span><span class="p">,</span>
+                                      <span class="n">args</span><span class="o">.</span><span class="n">kd_loss_fn</span><span class="p">)</span>
     <span class="n">classifier</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">train_dl</span><span class="p">,</span> <span class="n">dev_dl</span><span class="p">,</span> <span class="n">test_dl</span><span class="p">,</span>
                      <span class="n">epochs</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">e</span><span class="p">,</span>
                      <span class="n">batch_size</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">b</span><span class="p">,</span>

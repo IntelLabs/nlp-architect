@@ -35,6 +35,14 @@ nlp\_architect.utils.ensembler module
     :undoc-members:
     :show-inheritance:
 
+nlp\_architect.utils.file\_cache module
+---------------------------------------
+
+.. automodule:: nlp_architect.utils.file_cache
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 nlp\_architect.utils.generic module
 -----------------------------------
 

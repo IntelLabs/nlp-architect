@@ -225,7 +225,7 @@ using <code class="docutils literal notranslate"><span class="pre">TeacherStuden
 an example how to train a neural tagger using a transformer model using distillation.</p>
 <dl class="class">
 <dt id="nlp_architect.nn.torch.distillation.TeacherStudentDistill">
-<em class="property">class </em><code class="descclassname">nlp_architect.nn.torch.distillation.</code><code class="descname">TeacherStudentDistill</code><span class="sig-paren">(</span><em>teacher_model: nlp_architect.models.TrainableModel</em>, <em>temperature: float = 1.0</em>, <em>kd_w: float = 0.5</em>, <em>loss_w: float = 0.5</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nlp_architect/nn/torch/distillation.html#TeacherStudentDistill"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.distillation.TeacherStudentDistill" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">nlp_architect.nn.torch.distillation.</code><code class="descname">TeacherStudentDistill</code><span class="sig-paren">(</span><em>teacher_model: nlp_architect.models.TrainableModel</em>, <em>temperature: float = 1.0</em>, <em>dist_w: float = 0.1</em>, <em>loss_w: float = 1.0</em>, <em>loss_function='kl'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nlp_architect/nn/torch/distillation.html#TeacherStudentDistill"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.distillation.TeacherStudentDistill" title="Permalink to this definition">¶</a></dt>
 <dd><p>Teacher-Student knowledge distillation helper.
 Use this object when training a model with KD and a teacher model.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -235,8 +235,10 @@ Use this object when training a model with KD and a teacher model.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>teacher_model</strong> (<a class="reference internal" href="generated_api/nlp_architect.models.html#nlp_architect.models.TrainableModel" title="nlp_architect.models.TrainableModel"><em>TrainableModel</em></a>) – teacher model</li>
 <li><strong>temperature</strong> (<em>float</em><em>, </em><em>optional</em>) – KD temperature. Defaults to 1.0.</li>
-<li><strong>kd_w</strong> (<em>float</em><em>, </em><em>optional</em>) – teacher loss weight. Defaults to 0.5.</li>
-<li><strong>loss_w</strong> (<em>float</em><em>, </em><em>optional</em>) – student loss weight. Defaults to 0.5.</li>
+<li><strong>dist_w</strong> (<em>float</em><em>, </em><em>optional</em>) – distillation loss weight. Defaults to 0.1.</li>
+<li><strong>loss_w</strong> (<em>float</em><em>, </em><em>optional</em>) – student loss weight. Defaults to 1.0.</li>
+<li><strong>loss_function</strong> (<em>str</em><em>, </em><em>optional</em>) – loss function to use (kl for KLDivLoss,
+mse for MSELoss)</li>
 </ul>
 </td>
 </tr>

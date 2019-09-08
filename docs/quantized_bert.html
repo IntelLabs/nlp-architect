@@ -204,7 +204,14 @@ achieve state-of-the-art performance on a wide variety of Natural Language
 Processing (NLP) applications. </p>
 <p>In this page we are going to show how to run quantization aware training in the
 fine tuning phase to a specific task in order to produce a quantized BERT
-model.</p>
+model which simulates quantized inference. In order to utilize
+quantization for compressing the model’s memory footprint or for
+accelarating computation, true quantization must be applied using
+optimized kernels and dedicated hardware.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The <a class="reference internal" href="generated_api/nlp_architect.models.transformers.html#nlp_architect.models.transformers.quantized_bert.QuantizedBertModel" title="nlp_architect.models.transformers.quantized_bert.QuantizedBertModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">QuantizedBertModel</span></code></a> is only simulating quantization, meaning, the model is saved and computed using FP32 representation. During inference quantization is done online using Int8 values represented and computed with FP32 tensors.</p>
+</div>
 </div>
 <div class="section" id="quantization-aware-training">
 <h2>Quantization Aware Training<a class="headerlink" href="#quantization-aware-training" title="Permalink to this headline">¶</a></h2>
@@ -343,7 +350,7 @@ as an example dataset.</p>
 </div>
 <div class="section" id="inference">
 <h3>Inference<a class="headerlink" href="#inference" title="Permalink to this headline">¶</a></h3>
-<p>To run inference or evaluation with a fine tuned quantized BERT use the
+<p>To run inference with a fine tuned quantized BERT use the
 following code snippet:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nlp_architect run transformer_glue <span class="se">\</span>
     --model_path /tmp/mrpc-8bit <span class="se">\</span>
@@ -355,6 +362,8 @@ following code snippet:</p>
     --overwrite_output_dir
 </pre></div>
 </div>
+<p>To run evaluation on the task’s development set add the flag <code class="docutils literal notranslate"><span class="pre">--evaluate</span></code>
+to the command line.</p>
 </div>
 </div>
 <div class="section" id="references">
