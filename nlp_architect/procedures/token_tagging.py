@@ -286,7 +286,7 @@ def do_kd_training(args):
 def do_inference(args):
     prepare_output_path(args.output_dir, args.overwrite_output_dir)
     device, n_gpus = setup_backend(args.no_cuda)
-    args.batch_size = args.per_gpu_eval_batch_size * max(1, n_gpus)
+    args.batch_size = args.b * max(1, n_gpus)
     inference_examples = process_inference_input(args.data_file)
     classifier = NeuralTagger.load_model(model_path=args.model_dir)
     classifier.to(device, n_gpus)
