@@ -21,6 +21,7 @@ Quantization ops
 from __future__ import absolute_import, division, print_function, unicode_literals
 from enum import Enum, auto
 import logging
+from abc import ABC, abstractmethod
 
 import torch
 from torch import nn
@@ -88,25 +89,81 @@ class QuantizationMode(Enum):
 _fake_quantize = FakeLinearQuantizationWithSTE.apply
 
 
-class QuantizedLinear(nn.Linear):
-    """Linear layer with quantization aware training capability"""
+class QuantizedLayer(ABC):
+    """Quantized Layer interface"""
+    CONFIG_ATTRIBUTES = ["weight_bits", "start_step", "mode"]
+    REPR_ATTRIBUTES = ["mode", "weight_bits"]
 
-    def __init__(self, *args, activation_bits=8, weight_bits=8,
-                 requantize_output=True, ema_decay=0.9999, start_step=0, mode='none',
-                 **kwargs):
+    def __init__(self, *args, weight_bits=8, start_step=0, mode='none', **kwargs):
+        if weight_bits < 2:
+            raise ValueError(f"weight_bits={weight_bits} must be higher than 1 ")
         super().__init__(*args, **kwargs)
-        if activation_bits < 2 or weight_bits < 2:
-            raise ValueError(
-                f"activation_bits={activation_bits} and weight_bits="
-                f"{weight_bits} must be higher than 1 ")
-        self.activation_bits = activation_bits
         self.weight_bits = weight_bits
+        self.mode = QuantizationMode[mode.upper()]
+        self.start_step = start_step
+        self.register_buffer('_step', torch.zeros(1))
+
+    def forward(self, input):
+        if self.mode == QuantizationMode.NONE:
+            return super().forward(input)
+        if self.training:
+            if self._step >= self.start_step:
+                out = self.training_quantized_forward(input)
+            else:
+                out = super().forward(input)
+            self._step += 1
+        else:
+            out = self.inference_quantized_forward(input)
+        return out
+
+    @abstractmethod
+    def training_quantized_forward(self, input):
+        """Implement forward method to be used while training"""
+
+    @abstractmethod
+    def inference_quantized_forward(self, input):
+        """Implement forward method to be used while evaluating"""
+
+    @classmethod
+    def from_config(cls, *args, config=None, **kwargs):
+        """Initialize quantized layer from config"""
+        return cls(*args, **kwargs, **{k: getattr(config, k) for k in cls.CONFIG_ATTRIBUTES})
+
+    @property
+    def fake_quantized_weight(self):
+        return _fake_quantize(self.weight, self.weight_scale, self.weight_bits)
+
+    @property
+    def quantized_weight(self):
+        return quantize(self.weight, self.weight_scale, self.weight_bits)
+
+    @property
+    def weight_scale(self):
+        return get_dynamic_scale(self.weight, self.weight_bits)
+
+    def extra_repr(self):
+        s = ""
+        for entry in self.REPR_ATTRIBUTES:
+            s += f", {entry}={getattr(self, entry)}"
+        return super().extra_repr() + s
+
+
+class QuantizedLinear(QuantizedLayer, nn.Linear):
+    """Linear layer with quantization aware training capability"""
+    CONFIG_ATTRIBUTES = QuantizedLayer.CONFIG_ATTRIBUTES + \
+        ["activation_bits", "requantize_output", "ema_decay"]
+    REPR_ATTRIBUTES = QuantizedLayer.REPR_ATTRIBUTES + \
+        ["activation_bits", "accumulation_bits", "ema_decay", "requantize_output"]
+
+    def __init__(self, *args, activation_bits=8, requantize_output=True, ema_decay=0.9999, **kwargs):
+        super().__init__(*args, **kwargs)
+        if activation_bits < 2:
+            raise ValueError(
+                f"activation_bits={activation_bits} must be higher than 1 ")
+        self.activation_bits = activation_bits
         self.accumulation_bits = 32
         self.ema_decay = ema_decay
         self.requantize_output = requantize_output
-        self.start_step = start_step
-        self.mode = QuantizationMode[mode.upper()]
-        self.register_buffer('_step', torch.zeros(1))
         self.register_buffer('input_thresh', torch.zeros(1))
         self.register_buffer('output_thresh', torch.zeros(1))
 
@@ -127,13 +184,6 @@ class QuantizedLinear(nn.Linear):
                 out, self._get_output_scale(out), self.activation_bits)
         return out
 
-    @classmethod
-    def from_config(cls, *args, config=None, **kwargs):
-        """Initialize quantized layer from config"""
-        keys = ['weight_bits', 'start_step', 'mode',
-                'activation_bits', 'requantize_output', 'ema_decay']
-        return cls(*args, **kwargs, **{k: getattr(config, k) for k in keys})
-
     def inference_quantized_forward(self, input):
         """Simulate quantized inference. quantize input and perform calculation with only integer numbers.
         This function should only be used while doing inference"""
@@ -149,37 +199,12 @@ class QuantizedLinear(nn.Linear):
             out = dequantize(quantize(out, output_scale, self.activation_bits), output_scale)
         return out
 
-    def forward(self, input):
-        if self.mode == QuantizationMode.NONE:
-            return super().forward(input)
-        if self.training:
-            if self._step >= self.start_step:
-                out = self.training_quantized_forward(input)
-            else:
-                out = super().forward(input)
-            self._step += 1
-        else:
-            out = self.inference_quantized_forward(input)
-        return out
-
     def get_quantized_bias(self, scale):
         try:
             bias = quantize(self.bias, scale, self.accumulation_bits)
         except AttributeError:
             bias = None
         return bias
-
-    @property
-    def fake_quantized_weight(self):
-        return _fake_quantize(self.weight, self.weight_scale, self.weight_bits)
-
-    @property
-    def quantized_weight(self):
-        return quantize(self.weight, self.weight_scale, self.weight_bits)
-
-    @property
-    def weight_scale(self):
-        return get_dynamic_scale(self.weight, self.weight_bits)
 
     def _get_input_scale(self, input):
         return self._get_activation_scale(input, self.input_thresh)
@@ -203,62 +228,28 @@ class QuantizedLinear(nn.Linear):
         else:
             ema.sub_((1 - self.ema_decay) * (ema - reduce_fn(input)))
 
-    def extra_repr(self):
-        return super().extra_repr() + f', mode={self.mode}, activation_bits=' \
-            f'{self.activation_bits}, weight_bits={self.weight_bits}, ema_decay=' \
-            f'{self.ema_decay if self.mode == QuantizationMode.EMA else None}'
 
-
-class QuantizedEmbedding(nn.Embedding):
+class QuantizedEmbedding(QuantizedLayer, nn.Embedding):
     """Embedding layer with quantization aware training capability"""
 
-    def __init__(self, *args, weight_bits=8, start_step=0, mode='none', **kwargs):
-        super().__init__(*args, **kwargs)
-        if weight_bits < 2:
-            raise ValueError(
-                f"weight_bits={weight_bits} must be higher than 1 ")
-        self.weight_bits = weight_bits
-        self.mode = QuantizationMode[mode.upper()]
-        self.start_step = start_step
-        self.register_buffer('_step', torch.zeros(1))
-
-    def forward(self, input):
-        if self.mode == QuantizationMode.NONE:
-            return super().forward(input)
-        if self._step >= self.start_step:
-            out = self.quantized_forward(input)
-        else:
-            out = super().forward(input)
-        if self.training:
-            self._step += 1
-        return out
-
-    @classmethod
-    def from_config(cls, *args, config=None, **kwargs):
-        """Initialize quantized layer from config"""
-        keys = ['weight_bits', 'start_step', 'mode']
-        return cls(*args, **kwargs, **{k: getattr(config, k) for k in keys})
-
-    def quantized_forward(self, input):
+    def training_quantized_forward(self, input):
         """Return quantized embeddings"""
+        # assert self.training, "should only be called when not training"
         return F.embedding(
             input, self.fake_quantized_weight, self.padding_idx, self.max_norm,
             self.norm_type, self.scale_grad_by_freq, self.sparse)
 
-    @property
-    def fake_quantized_weight(self):
-        return _fake_quantize(self.weight, self.weight_scale, self.weight_bits)
-
-    @property
-    def weight_scale(self):
-        return get_dynamic_scale(self.weight, self.weight_bits)
-
-    def extra_repr(self):
-        return super().extra_repr() + f", mode={self.mode}, weight_bits={self.weight_bits}"
+    def inference_quantized_forward(self, input):
+        """forward to be used during inference"""
+        assert not self.training, "should only be called when not training"
+        q_embeddings = F.embedding(input, self.quantized_weight, self.padding_idx,
+                                   self.max_norm, self.norm_type, self.scale_grad_by_freq, self.sparse)
+        return dequantize(q_embeddings, self.weight_scale)
 
 
 class QuantizationConfig(Config):
     """Quantization Configuration Object"""
+
     def __init__(self,
                  activation_bits=8,
                  weight_bits=8,

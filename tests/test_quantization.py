@@ -220,7 +220,7 @@ class QuantizedLinearTest(unittest.TestCase):
 
 
 class QuantizedEmbeddingTest(unittest.TestCase):
-    def test_quantized_embedding_forward(self):
+    def test_quantized_embedding_training_forward(self):
         embedding = QuantizedEmbedding(10, 3, mode="ema")
         with torch.no_grad():
             scale = 127. / embedding.weight.abs().max()
@@ -229,6 +229,20 @@ class QuantizedEmbeddingTest(unittest.TestCase):
         embedding.weight.data = torch.randn_like(embedding.weight).mul(
             127.).round().clamp(-127., 127.)
         indices = torch.tensor(np.arange(10))
+        ground = F.embedding(indices, embedding.weight)
+        quantized = embedding(indices)
+        self.assertTrue((ground == quantized).all())
+
+    def test_quantized_embedding_inference_forward(self):
+        embedding = QuantizedEmbedding(10, 3, mode="ema")
+        with torch.no_grad():
+            scale = 127. / embedding.weight.abs().max()
+        self.assertTrue((embedding.fake_quantized_weight == fake_quantize_np(
+            embedding.weight.detach(), scale, 8)).all())
+        embedding.weight.data = torch.randn_like(embedding.weight).mul(
+            127.).round().clamp(-127., 127.)
+        indices = torch.tensor(np.arange(10))
+        embedding.eval()
         ground = F.embedding(indices, embedding.weight)
         quantized = embedding(indices)
         self.assertTrue((ground == quantized).all())
