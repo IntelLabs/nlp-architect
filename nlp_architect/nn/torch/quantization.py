@@ -249,18 +249,11 @@ class QuantizedEmbedding(QuantizedLayer, nn.Embedding):
 
 class QuantizationConfig(Config):
     """Quantization Configuration Object"""
-
-    def __init__(self,
-                 activation_bits=8,
-                 weight_bits=8,
-                 mode='none',
-                 start_step=0,
-                 ema_decay=0.9999,
-                 requantize_output=True
-                 ):
-        self.activation_bits = activation_bits
-        self.weight_bits = weight_bits
-        self.mode = mode
-        self.start_step = start_step
-        self.ema_decay = ema_decay
-        self.requantize_output = requantize_output
+    ATTRIBUTES = {
+        "activation_bits": 8,
+        "weight_bits": 8,
+        "mode": "none",
+        "start_step": 0,
+        "ema_decay": 0.999,
+        "requantize_output": True
+    }
