@@ -102,6 +102,11 @@ class QuantizedLayer(ABC):
         self.mode = QuantizationMode[mode.upper()]
         self.start_step = start_step
         self.register_buffer('_step', torch.zeros(1))
+        # buffers for inference
+        self.register_buffer('quantized_weight', None)
+        self.register_buffer('_weight_scale', torch.zeros(1))
+        # handle import and export in 8bit
+        # self._hook_remove_handle = None
 
     def forward(self, input):
         if self.mode == QuantizationMode.NONE:
@@ -134,12 +139,35 @@ class QuantizedLayer(ABC):
         return _fake_quantize(self.weight, self.weight_scale, self.weight_bits)
 
     @property
-    def quantized_weight(self):
-        return quantize(self.weight, self.weight_scale, self.weight_bits)
-
-    @property
     def weight_scale(self):
-        return get_dynamic_scale(self.weight, self.weight_bits)
+        return get_dynamic_scale(self.weight, self.weight_bits) if self.training else self._weight_scale
+
+    def train(self, mode=True):
+        """handle transition between quantized model and simulated quantization"""
+        if self.training != mode:
+            if mode:
+                self._train()
+            else:
+                self._eval()
+        super().train(mode)
+
+    def _train(self):
+        """function to be called by self.train(mode=True) which modifies modules attributes according to the model"""
+        self._weight_scale = torch.zeros(1)
+        self.quantized_weight = None
+
+    def _eval(self):
+        """function to be called by self.train(mode=False), or eval() which modifies modules attributes according to the model"""
+        self._weight_scale = self.weight_scale
+        self.quantized_weight = quantize(
+            self.weight, self.weight_scale, self.weight_bits)
+
+    # def toggle_save_to_8bit(self):
+    #     """toggle export quantized module to 8bit tensors, places hooks to state_dict() method to export model in 8bits"""
+    #     # use _register_state_dict_hook to place hook for saving quantized model
+    
+    # def _save_to_8bit_hook(self):
+    #     """hook to be registered to module when exporting the model to 8bit, can be overrided to customize to layer behaviour"""
 
     def extra_repr(self):
         s = ""
@@ -193,6 +221,7 @@ class QuantizedLinear(QuantizedLayer, nn.Linear):
         quantized_input = quantize(input, input_scale, self.activation_bits)
         out = F.linear(quantized_input, self.quantized_weight,
                        self.get_quantized_bias(dequantize_scale))
+        # TODO(ofir) fuse the operation of requantization with dequantiz
         out = dequantize(out, dequantize_scale)
         if self.requantize_output:
             output_scale = self._get_output_scale(out)
