@@ -106,7 +106,7 @@ class QuantizedLayer(ABC):
         self.register_buffer('quantized_weight', None)
         self.register_buffer('_weight_scale', torch.zeros(1))
         # handle import and export in 8bit
-        # self._hook_remove_handle = None
+        # self._remove_hook_handle = None
 
     def forward(self, input):
         if self.mode == QuantizationMode.NONE:
@@ -164,10 +164,23 @@ class QuantizedLayer(ABC):
 
     # def toggle_save_to_8bit(self):
     #     """toggle export quantized module to 8bit tensors, places hooks to state_dict() method to export model in 8bits"""
-    #     # use _register_state_dict_hook to place hook for saving quantized model
-    
-    # def _save_to_8bit_hook(self):
+    #     try:
+    #         self._remove_hook_handle.remove()
+    #         self._remove_hook_handle = None
+    #     except AttributeError:
+    #         self._remove_hook_handle = self._register_state_dict_hook(self._save_to_8bit_hook)
+
+    # @property
+    # def export_8bit(self):
+    #     return self._remove_hook_handle is not None
+
+    # @staticmethod
+    # def _save_to_8bit_hook(module, state_dict, prefix, local_metadata):
     #     """hook to be registered to module when exporting the model to 8bit, can be overrided to customize to layer behaviour"""
+    #     assert not module.training, "save to 8bit should only be called when model is in eval mode"
+    #     del state_dict[prefix + 'weight']
+    #     del state_dict[prefix + '_step']
+    #     state_dict[prefix + 'quantized_weight'] = state_dict[prefix + 'quantized_weight'].char()
 
     def extra_repr(self):
         s = ""
@@ -194,6 +207,9 @@ class QuantizedLinear(QuantizedLayer, nn.Linear):
         self.requantize_output = requantize_output
         self.register_buffer('input_thresh', torch.zeros(1))
         self.register_buffer('output_thresh', torch.zeros(1))
+        # real quantization
+        self.register_buffer('_quantized_bias', None)
+        self.register_buffer('bias_scale', torch.zeros(1))
 
     def training_quantized_forward(self, input):
         """fake quantized forward, fake quantizes weights and activations,
@@ -217,28 +233,49 @@ class QuantizedLinear(QuantizedLayer, nn.Linear):
         This function should only be used while doing inference"""
         assert not self.training, "should only be called when not training"
         input_scale = self._get_input_scale(input)
-        dequantize_scale = self.weight_scale * input_scale
+        self.bias_scale = self.weight_scale * input_scale
         quantized_input = quantize(input, input_scale, self.activation_bits)
         out = F.linear(quantized_input, self.quantized_weight,
-                       self.get_quantized_bias(dequantize_scale))
+                       self.quantized_bias)
         # TODO(ofir) fuse the operation of requantization with dequantiz
-        out = dequantize(out, dequantize_scale)
+        out = dequantize(out, self.bias_scale)
         if self.requantize_output:
             output_scale = self._get_output_scale(out)
             out = dequantize(quantize(out, output_scale, self.activation_bits), output_scale)
         return out
 
-    def get_quantized_bias(self, scale):
+    def _eval(self):
+        super()._eval()
+        if self.mode == QuantizationMode.EMA and self.bias is not None:
+            self.bias_scale = self._get_input_scale() * self.weight_scale
+            self.quantized_bias = quantize(self.bias, self.bias_scale, self.accumulation_bits)
+
+    def _train(self):
+        super()._train()
+        self.bias_scale = torch.zeros(1)
+        self.quantized_bias = None
+
+    @property
+    def quantized_bias(self):
         try:
-            bias = quantize(self.bias, scale, self.accumulation_bits)
+            if self.mode == QuantizationMode.EMA:
+                bias = self._quantized_bias
+            elif self.mode == QuantizationMode.DYNAMIC:
+                bias = quantize(self.bias, self.bias_scale, self.accumulation_bits)
+            else:
+                raise RuntimeError(f"Unknown quantization mode: {self.mode}")
         except AttributeError:
             bias = None
         return bias
 
-    def _get_input_scale(self, input):
+    @quantized_bias.setter
+    def quantized_bias(self, value):
+        self._quantized_bias = value
+
+    def _get_input_scale(self, input=None):
         return self._get_activation_scale(input, self.input_thresh)
 
-    def _get_output_scale(self, output):
+    def _get_output_scale(self, output=None):
         return self._get_activation_scale(output, self.output_thresh)
 
     def _get_activation_scale(self, activation, threshold):
