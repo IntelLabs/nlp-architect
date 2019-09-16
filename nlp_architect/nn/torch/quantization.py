@@ -104,9 +104,9 @@ class QuantizedLayer(ABC):
         self.register_buffer('_step', torch.zeros(1))
         # buffers for inference
         self.register_buffer('quantized_weight', None)
-        self.register_buffer('_weight_scale', torch.zeros(1))
+        self.register_buffer('_weight_scale', None)
         # handle import and export in 8bit
-        # self._remove_hook_handle = None
+        self._remove_hook_handle = []
 
     def forward(self, input):
         if self.mode == QuantizationMode.NONE:
@@ -153,7 +153,7 @@ class QuantizedLayer(ABC):
 
     def _train(self):
         """function to be called by self.train(mode=True) which modifies modules attributes according to the model"""
-        self._weight_scale = torch.zeros(1)
+        self._weight_scale = None
         self.quantized_weight = None
 
     def _eval(self):
@@ -162,25 +162,30 @@ class QuantizedLayer(ABC):
         self.quantized_weight = quantize(
             self.weight, self.weight_scale, self.weight_bits)
 
-    # def toggle_save_to_8bit(self):
-    #     """toggle export quantized module to 8bit tensors, places hooks to state_dict() method to export model in 8bits"""
-    #     try:
-    #         self._remove_hook_handle.remove()
-    #         self._remove_hook_handle = None
-    #     except AttributeError:
-    #         self._remove_hook_handle = self._register_state_dict_hook(self._save_to_8bit_hook)
+    def activate_8bit(self):
+        """toggle export&import quantized module to 8bit tensors, places hooks to state_dict and _load_from_state_dict method to export model in 8bits"""
+        self._remove_hook_handle.append(
+            self._register_state_dict_hook(self._save_to_8bit_hook))
+        self._remove_hook_handle.append(
+            self._register_load_state_dict_pre_hook(self._load_from_8bit_hook))
 
-    # @property
-    # def export_8bit(self):
-    #     return self._remove_hook_handle is not None
+    def deactivate_8bit(self):
+        while self._remove_hook_handle:
+            self._remove_hook_handle.pop().remove()
 
-    # @staticmethod
-    # def _save_to_8bit_hook(module, state_dict, prefix, local_metadata):
-    #     """hook to be registered to module when exporting the model to 8bit, can be overrided to customize to layer behaviour"""
-    #     assert not module.training, "save to 8bit should only be called when model is in eval mode"
-    #     del state_dict[prefix + 'weight']
-    #     del state_dict[prefix + '_step']
-    #     state_dict[prefix + 'quantized_weight'] = state_dict[prefix + 'quantized_weight'].char()
+    @staticmethod
+    def _save_to_8bit_hook(module, state_dict, prefix, local_metadata):
+        """hook to be registered to module when exporting the model to 8bit, can be overrided to customize to layer behaviour"""
+        assert not module.training, "save to 8bit should only be called when model is in eval mode"
+        del state_dict[prefix + 'weight']
+        del state_dict[prefix + '_step']
+        state_dict[prefix + 'quantized_weight'] = state_dict[prefix + 'quantized_weight'].char()
+
+    @staticmethod
+    def _load_from_8bit_hook(state_dict, prefix, local_metadata, strict, missing_keys, unexpected_keys, error_msgs):
+        """hook to be registered to module when importing the model from 8bit, can be overrided to customize to layer behaviour"""
+        assert not module.training, "save to 8bit should only be called when model is in eval mode"
+        state_dict[prefix + 'quantized_weight'] = state_dict[prefix + 'quantized_weight'].float()
 
     def extra_repr(self):
         s = ""
@@ -208,8 +213,9 @@ class QuantizedLinear(QuantizedLayer, nn.Linear):
         self.register_buffer('input_thresh', torch.zeros(1))
         self.register_buffer('output_thresh', torch.zeros(1))
         # real quantization
-        self.register_buffer('_quantized_bias', None)
-        self.register_buffer('bias_scale', torch.zeros(1))
+        if kwargs.get('bias', True):
+            self.register_buffer('_quantized_bias', None)
+            self.register_buffer('bias_scale', None)
 
     def training_quantized_forward(self, input):
         """fake quantized forward, fake quantizes weights and activations,
@@ -252,8 +258,29 @@ class QuantizedLinear(QuantizedLayer, nn.Linear):
 
     def _train(self):
         super()._train()
-        self.bias_scale = torch.zeros(1)
+        self.bias_scale = None
         self.quantized_bias = None
+
+    @staticmethod
+    def _save_to_8bit_hook(module, state_dict, prefix, local_metadata):
+        """hook to be registered to module when exporting the model to 8bit, can be overrided to customize to layer behaviour"""
+        super()._save_to_8bit_hook(module, state_dict, prefix, local_metadata)
+        if module.mode == QuantizationMode.EMA:
+            try:
+                del state_dict['bias']
+                state_dict[prefix + '_quantized_bias'] = state_dict[prefix + '_quantized_bias'].int()
+            except KeyError:
+                # in case there is no bias dont do anything
+                pass
+
+    @staticmethod
+    def _load_from_8bit_hook(state_dict, prefix, local_metadata, strict, missing_keys, unexpected_keys, error_msgs):
+        """hook to be registered to module when importing the model from 8bit, can be overrided to customize to layer behaviour"""
+        try:
+            state_dict[prefix + '_quantized_bias'] = state_dict[prefix + '_quantized_bias'].float()
+        except KeyError:
+            # if bias doesnt exists, do nothing
+            pass
 
     @property
     def quantized_bias(self):
