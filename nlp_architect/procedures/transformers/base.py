@@ -62,6 +62,8 @@ def inference_args(parser: argparse.ArgumentParser):
     """
     parser.add_argument("--model_path", default=None, type=str, required=True,
                         help="Path to pre-trained model")
+    parser.add_argument("--quantized_inference", action="store_true",
+                        help="Perform Inference from saved quantized model, 'quant_pytorch_model.bin' file must exist in directory and model type must be 'quant_bert'")
 
 
 def train_args(parser: argparse.ArgumentParser, models_family=None):

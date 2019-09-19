@@ -142,7 +142,8 @@ def do_inference(args):
     classifier = TransformerSequenceClassifier.load_model(model_path=args.model_path,
                                                           model_type=args.model_type,
                                                           metric_fn=get_metric_fn(task.name),
-                                                          do_lower_case=args.do_lower_case)
+                                                          do_lower_case=args.do_lower_case,
+                                                          quant_infer=args.quantized_inference)
     classifier.to(device, n_gpus)
     examples = task.get_dev_examples() if args.evaluate else \
         task.get_test_examples()

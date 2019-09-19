@@ -163,15 +163,25 @@ class QuantizedLayer(ABC):
             self.weight, self.weight_scale, self.weight_bits)
 
     def activate_8bit(self):
-        """toggle export&import quantized module to 8bit tensors, places hooks to state_dict and _load_from_state_dict method to export model in 8bits"""
-        self._remove_hook_handle.append(
-            self._register_state_dict_hook(self._save_to_8bit_hook))
-        self._remove_hook_handle.append(
-            self._register_load_state_dict_pre_hook(self._load_from_8bit_hook))
+        """activate export&import quantized module to 8bit tensors, places hooks to state_dict and _load_from_state_dict method to export model in 8bits"""
+        if self.mode != QuantizationMode.NONE:
+            self._remove_hook_handle.append(
+                self._register_state_dict_hook(self._save_to_8bit_hook))
+            self._remove_hook_handle.append(
+                self._register_load_state_dict_pre_hook(self._load_from_8bit_hook))
 
     def deactivate_8bit(self):
-        while self._remove_hook_handle:
-            self._remove_hook_handle.pop().remove()
+        """deactivate export&import of quantized modules"""
+        if self.mode != QuantizationMode.NONE:
+            while self._remove_hook_handle:
+                self._remove_hook_handle.pop().remove()
+
+    def toggle_8bit(self):
+        """toggle 8bit for easier use"""
+        if self._remove_hook_handle:
+            self.deactivate_8bit()
+        else:
+            self.activate_8bit()
 
     @staticmethod
     def _save_to_8bit_hook(module, state_dict, prefix, local_metadata):
@@ -267,7 +277,7 @@ class QuantizedLinear(QuantizedLayer, nn.Linear):
         super()._save_to_8bit_hook(module, state_dict, prefix, local_metadata)
         if module.mode == QuantizationMode.EMA:
             try:
-                del state_dict['bias']
+                del state_dict[prefix + 'bias']
                 state_dict[prefix + '_quantized_bias'] = state_dict[prefix + '_quantized_bias'].int()
             except KeyError:
                 # in case there is no bias dont do anything

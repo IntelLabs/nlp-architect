@@ -123,32 +123,33 @@ class QuantizedLinearTest(unittest.TestCase):
         self.assertEqual(qlinear.input_thresh, input_ema)
         self.assertEqual(qlinear.output_thresh, output_ema)
 
-    def test_ema_quantization_data_parallel(self):
-        # TODO(ofir) this test is for 3+ gpus configuration, fix it to be more general
-        if not torch.cuda.is_available():
-            return
-        ema_decay = 0.9
-        fake_quantize = FakeLinearQuantizationWithSTE().apply
-        qlinear = nn.DataParallel(QuantizedLinear(
-            10, 5, bias=False, ema_decay=ema_decay, mode="EMA")).cuda()
-        for i in range(5):
-            x = torch.randn(3, 10).cuda()
-            tmp_input_thresh = x[0].abs().max()
-            if i == 0:
-                input_ema = tmp_input_thresh
-            else:
-                input_ema -= (1 - ema_decay) * (input_ema - tmp_input_thresh)
-            y = (fake_quantize(x, get_scale(8, input_ema), 8)
-                 @ qlinear.module.fake_quantized_weight.t()).detach()
-            tmp_output_thresh = y[0].abs().max()
-            if i == 0:
-                output_ema = tmp_output_thresh
-            else:
-                output_ema -= (1 - ema_decay) * \
-                              (output_ema - tmp_output_thresh)
-            qlinear(x)
-        self.assertEqual(qlinear.module.input_thresh, input_ema)
-        self.assertEqual(qlinear.module.output_thresh, output_ema)
+    # def test_ema_quantization_data_parallel(self):
+    #     # TODO(ofir) this test only works with 4gpus, need to fix it to 
+    #     #            adapt to the number of gpus available
+    #     if not torch.cuda.is_available():
+    #         return
+    #     ema_decay = 0.9
+    #     fake_quantize = FakeLinearQuantizationWithSTE().apply
+    #     qlinear = nn.DataParallel(QuantizedLinear(
+    #         10, 5, bias=False, ema_decay=ema_decay, mode="EMA")).cuda()
+    #     for i in range(5):
+    #         x = torch.randn(3, 10).cuda()
+    #         tmp_input_thresh = x[0].abs().max()
+    #         if i == 0:
+    #             input_ema = tmp_input_thresh
+    #         else:
+    #             input_ema -= (1 - ema_decay) * (input_ema - tmp_input_thresh)
+    #         y = (fake_quantize(x, get_scale(8, input_ema), 8)
+    #              @ qlinear.module.fake_quantized_weight.t()).detach()
+    #         tmp_output_thresh = y[0].abs().max()
+    #         if i == 0:
+    #             output_ema = tmp_output_thresh
+    #         else:
+    #             output_ema -= (1 - ema_decay) * \
+    #                           (output_ema - tmp_output_thresh)
+    #         qlinear(x)
+    #     self.assertEqual(qlinear.module.input_thresh, input_ema)
+    #     self.assertEqual(qlinear.module.output_thresh, output_ema)
 
     def test_start_quantization_delay(self):
         quantization_delay = 2
@@ -269,7 +270,7 @@ class QuantizedLinearTest(unittest.TestCase):
         self.assertTrue('_quantized_bias' not in state_dict)
         self.assertTrue('bias_scale' not in state_dict)
 
-    def test_import_to_8bit_without_bias(self):
+    def test_import_from_8bit_without_bias(self):
         exporter = QuantizedLinear(10, 5, bias=False, mode='dynamic')
         exporter.eval()
         exporter.activate_8bit()
@@ -282,7 +283,7 @@ class QuantizedLinearTest(unittest.TestCase):
         x = torch.randn(3, 10)
         self.assertTrue((exporter(x) == importer(x)).all())
 
-    def test_import_to_8bit_with_bias(self):
+    def test_import_from_8bit_with_bias(self):
         # QuantizationMode dynamic
         exporter = QuantizedLinear(10, 5, mode='dynamic')
         exporter.eval()
@@ -400,6 +401,3 @@ class QuantizedEmbeddingTest(unittest.TestCase):
         indices = torch.tensor(np.arange(10))
         self.assertTrue((exporter(indices) == importer(indices)).all())
 
-
-if __name__ == "__main__":
-    unittest.main()
