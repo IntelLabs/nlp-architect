@@ -110,7 +110,7 @@ class QuantizedLayer(ABC):
         self._imported_from_quantized = False
         # register saving hook
         self._register_state_dict_hook(self._state_dict_hook)
-        
+
     def forward(self, input):
         if self.mode == QuantizationMode.NONE:
             return super().forward(input)
@@ -150,7 +150,8 @@ class QuantizedLayer(ABC):
         if self.training != mode:
             if mode:
                 if self._imported_from_quantized:
-                    raise RuntimeError("Model imported from quantized checkpoint cannot be moved to training mode")
+                    raise RuntimeError(
+                        "Model imported from quantized checkpoint cannot be moved to training mode")
                 self._train()
             else:
                 self._eval()
@@ -169,10 +170,13 @@ class QuantizedLayer(ABC):
                               missing_keys, unexpected_keys, error_msgs):
         """check if model is loaded from quantized checkpoint or regular checkpoint"""
         super()._load_from_state_dict(state_dict, prefix, local_metadata, strict,
-                              missing_keys, unexpected_keys, error_msgs)
+                                      missing_keys, unexpected_keys, error_msgs)
         if state_dict.get(prefix + 'quantized_weight', None) is not None:
+            if self.training:
+                raise RuntimeError(
+                    "Can't load quantized model in training mode, first change model's mode to evaluation and then load the saved model")
             self._imported_from_quantized = True
-        
+
     @staticmethod
     def _state_dict_hook(module, state_dict, prefix, local_metadata):
         """hook to be registered to module when exporting the model to 8bit, can be overrided to customize to layer behaviour"""
