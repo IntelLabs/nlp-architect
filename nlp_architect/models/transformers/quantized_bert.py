@@ -217,14 +217,15 @@ class QuantizedBertPreTrainedModel(BertPreTrainedModel):
                 pretrained_model_name_or_path, *args, **kwargs)
 
         # Load model
-        model_dir = os.path.join(pretrained_model_name_or_path, QUANT_WEIGHTS_NAME)
+        model_file = os.path.join(pretrained_model_name_or_path, QUANT_WEIGHTS_NAME)
 
         # Instantiate model.
         model = cls(config)
         # Set model in evaluation mode to desactivate DropOut modules by default
         model.eval()
         # Get state dict of model
-        state_dict = torch.load(model_dir, map_location='cpu')
+        state_dict = torch.load(model_file, map_location='cpu')
+        logger.info("loading weights file {}".format(model_file))
 
         # Load from a PyTorch state_dict
         missing_keys = []
@@ -278,19 +279,20 @@ class QuantizedBertPreTrainedModel(BertPreTrainedModel):
         super().save_pretrained(save_directory)
         # Only save the model it-self if we are using distributed training
         model_to_save = self.module if hasattr(self, 'module') else self
-        model_to_save.apply(model_to_save._toggle_8bit)
-        training = model_to_save.training
-        model_to_save.eval()
+        model_to_save.toggle_8bit(True)
         output_model_file = os.path.join(save_directory, QUANT_WEIGHTS_NAME)
         torch.save(model_to_save.state_dict(), output_model_file)
-        model_to_save.apply(model_to_save._toggle_8bit)
-        model_to_save.train(training)
+        model_to_save.toggle_8bit(False)
 
-    @staticmethod
-    def _toggle_8bit(module):
-        """funtion to be applied on the module in order to activate 8bit using module.apply"""
-        if isinstance(module, QuantizedLayer):
-            module.toggle_8bit()
+    def toggle_8bit(self, mode: bool):
+        def toggle_8bit(module):
+            if isinstance(module, QuantizedLayer):
+                module.toggle_8bit = mode
+        self.apply(toggle_8bit)
+        if mode:
+            training = self.training
+            self.eval()
+            self.train(training)
 
 
 class QuantizedBertModel(QuantizedBertPreTrainedModel, BertModel):
