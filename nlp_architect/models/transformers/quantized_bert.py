@@ -221,7 +221,7 @@ class QuantizedBertPreTrainedModel(BertPreTrainedModel):
 
         # Instantiate model.
         model = cls(config)
-        # Set model in evaluation mode to desactivate DropOut modules by default
+        # Set model to initialize variables to be loaded from quantized checkpoint which are None by Default
         model.eval()
         # Get state dict of model
         state_dict = torch.load(model_file, map_location='cpu')
@@ -285,10 +285,10 @@ class QuantizedBertPreTrainedModel(BertPreTrainedModel):
         model_to_save.toggle_8bit(False)
 
     def toggle_8bit(self, mode: bool):
-        def toggle_8bit(module):
+        def _toggle_8bit(module):
             if isinstance(module, QuantizedLayer):
-                module.toggle_8bit = mode
-        self.apply(toggle_8bit)
+                module.mode_8bit = mode
+        self.apply(_toggle_8bit)
         if mode:
             training = self.training
             self.eval()

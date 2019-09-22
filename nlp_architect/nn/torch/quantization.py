@@ -106,10 +106,11 @@ class QuantizedLayer(ABC):
         self.register_buffer('quantized_weight', None)
         self.register_buffer('_weight_scale', None)
         # handle import and export in 8bit
-        self._remove_hook_handle = None
+        self.mode_8bit = False
+        self._imported_from_quantized = False
         # register saving hook
         self._register_state_dict_hook(self._state_dict_hook)
-
+        
     def forward(self, input):
         if self.mode == QuantizationMode.NONE:
             return super().forward(input)
@@ -148,6 +149,8 @@ class QuantizedLayer(ABC):
         """handle transition between quantized model and simulated quantization"""
         if self.training != mode:
             if mode:
+                if self._imported_from_quantized:
+                    raise RuntimeError("Model imported from quantized checkpoint cannot be moved to training mode")
                 self._train()
             else:
                 self._eval()
@@ -162,37 +165,24 @@ class QuantizedLayer(ABC):
         self.quantized_weight = quantize(
             self.weight, self.weight_scale, self.weight_bits)
 
-    @property
-    def toggle_8bit(self):
-        return self._remove_hook_handle is not None
-
-    @toggle_8bit.setter
-    def toggle_8bit(self, value: bool):
-        if value == self.toggle_8bit:
-            return
-        if self.mode != QuantizationMode.NONE:
-            if value:
-                self._remove_hook_handle = self._register_load_state_dict_pre_hook(
-                    self._load_from_8bit_hook)
-            else:
-                self._remove_hook_handle.remove()
-                self._remove_hook_handle = None
-
+    def _load_from_state_dict(self, state_dict, prefix, local_metadata, strict,
+                              missing_keys, unexpected_keys, error_msgs):
+        """check if model is loaded from quantized checkpoint or regular checkpoint"""
+        super()._load_from_state_dict(state_dict, prefix, local_metadata, strict,
+                              missing_keys, unexpected_keys, error_msgs)
+        if state_dict.get(prefix + 'quantized_weight', None) is not None:
+            self._imported_from_quantized = True
+        
     @staticmethod
     def _state_dict_hook(module, state_dict, prefix, local_metadata):
         """hook to be registered to module when exporting the model to 8bit, can be overrided to customize to layer behaviour"""
-        if not module.toggle_8bit:
-            state_dict.pop(prefix + 'quantized_weight', None)
-            state_dict.pop(prefix + '_weight_scale', None)
-        else:
+        if module.mode_8bit and module.mode != QuantizationMode.NONE:
             state_dict.pop(prefix + 'weight', None)
             state_dict.pop(prefix + '_step', None)
             state_dict[prefix + 'quantized_weight'] = state_dict[prefix + 'quantized_weight'].char()
-
-    @staticmethod
-    def _load_from_8bit_hook(state_dict, prefix, local_metadata, strict, missing_keys, unexpected_keys, error_msgs):
-        """hook to be registered to module when importing the model from 8bit, can be overrided to customize to layer behaviour"""
-        state_dict[prefix + 'quantized_weight'] = state_dict[prefix + 'quantized_weight'].float()
+        else:
+            state_dict.pop(prefix + 'quantized_weight', None)
+            state_dict.pop(prefix + '_weight_scale', None)
 
     def extra_repr(self):
         s = ""
@@ -268,7 +258,7 @@ class QuantizedLinear(QuantizedLayer, nn.Linear):
     def _state_dict_hook(module, state_dict, prefix, local_metadata):
         """hook to be registered to module when exporting the model to 8bit, can be overrided to customize to layer behaviour"""
         super()._state_dict_hook(module, state_dict, prefix, local_metadata)
-        if module.toggle_8bit:
+        if module.mode_8bit:
             if module.mode == QuantizationMode.EMA:
                 state_dict.pop(prefix + 'bias', None)
                 try:
@@ -280,15 +270,6 @@ class QuantizedLinear(QuantizedLayer, nn.Linear):
         else:
             state_dict.pop(prefix + '_quantized_bias', None)
             state_dict.pop(prefix + 'bias_scale', None)
-
-    @staticmethod
-    def _load_from_8bit_hook(state_dict, prefix, local_metadata, strict, missing_keys, unexpected_keys, error_msgs):
-        """hook to be registered to module when importing the model from 8bit, can be overrided to customize to layer behaviour"""
-        try:
-            state_dict[prefix + '_quantized_bias'] = state_dict[prefix + '_quantized_bias'].float()
-        except KeyError:
-            # if bias doesnt exists, do nothing
-            pass
 
     @property
     def quantized_bias(self):
@@ -355,6 +336,6 @@ class QuantizationConfig(Config):
         "weight_bits": 8,
         "mode": "none",
         "start_step": 0,
-        "ema_decay": 0.999,
+        "ema_decay": 0.9999,
         "requantize_output": True
     }
