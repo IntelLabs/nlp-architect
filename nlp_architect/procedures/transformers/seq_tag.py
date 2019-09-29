@@ -148,7 +148,7 @@ def do_inference(args):
     classifier = TransformerTokenClassifier.load_model(model_path=args.model_path,
                                                        model_type=args.model_type,
                                                        do_lower_case=args.do_lower_case,
-                                                       quant_infer=args.quantized_inference)
+                                                       load_quantized=args.load_quantized_model)
     classifier.to(device, n_gpus)
     output = classifier.inference(inference_examples, args.batch_size)
     write_column_tagged_file(args.output_dir + os.sep + "output.txt", output)
