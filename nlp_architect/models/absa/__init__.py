@@ -26,6 +26,8 @@ TRAIN_CONF = ABSA_ROOT / 'train' / 'config.ini'
 
 TRAIN_OUT = LIBRARY_OUT / 'absa' / 'train'
 
+LEXICONS_OUT = TRAIN_OUT / 'lexicons'
+
 INFERENCE_LEXICONS = ABSA_ROOT / 'inference' / 'lexicons'
 
 INFERENCE_OUT = LIBRARY_OUT / 'absa' / 'inference'

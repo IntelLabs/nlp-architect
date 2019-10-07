@@ -20,7 +20,7 @@ from os import PathLike
 
 from tqdm import tqdm
 
-from nlp_architect.models.absa import TRAIN_LEXICONS
+from nlp_architect.models.absa import TRAIN_LEXICONS, LEXICONS_OUT
 from nlp_architect.models.absa import TRAIN_OUT, GENERIC_OP_LEX
 from nlp_architect.models.absa.inference.data_types import Polarity
 from nlp_architect.models.absa.train.data_types import AspectTerm, \
@@ -51,11 +51,9 @@ class AcquireTerms(object):
                                           across all iterations
         """
 
-    out_dir = TRAIN_OUT / 'output'
-    feature_table_path = out_dir / 'feature_table.csv'
     generic_opinion_lex_path = GENERIC_OP_LEX
-    acquired_opinion_terms_path = out_dir / 'generated_opinion_lex.csv'
-    acquired_aspect_terms_path = out_dir / 'generated_aspect_lex.csv'
+    acquired_opinion_terms_path = LEXICONS_OUT / 'generated_opinion_lex.csv'
+    acquired_aspect_terms_path = LEXICONS_OUT / 'generated_aspect_lex.csv'
 
     GENERIC_OPINION_LEX = _load_lex_as_list_from_csv(GENERIC_OP_LEX)
     GENERAL_ADJECTIVES_LEX = _load_lex_as_list_from_csv(
@@ -97,7 +95,7 @@ class AcquireTerms(object):
     # maximum number of iterations
     NUM_OF_SENTENCES_PER_OPINION_AND_ASPECT_TERM_INC = 35000
 
-    def __init__(self, asp_thresh=3, op_thresh=2, max_iter=3):
+    def __init__(self, asp_thresh=3, op_thresh=2, max_iter=1):
         self.opinion_candidate_list_prev_iter = \
             read_generic_lex_from_file(AcquireTerms.generic_opinion_lex_path)
         self.generic_sent_dict = copy.deepcopy(self.opinion_candidate_list_prev_iter)
@@ -250,7 +248,7 @@ class AcquireTerms(object):
         """
         write generated lexicons to csv files
         """
-        AcquireTerms.out_dir.mkdir(parents=True, exist_ok=True)
+        LEXICONS_OUT.mkdir(parents=True, exist_ok=True)
 
         _write_final_opinion_lex(self.opinion_candidates_list_final,
                                  self.acquired_opinion_terms_path)
