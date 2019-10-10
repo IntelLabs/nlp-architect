@@ -141,6 +141,7 @@ def do_inference(args):
     args.batch_size = args.per_gpu_eval_batch_size * max(1, n_gpus)
     classifier = TransformerSequenceClassifier.load_model(model_path=args.model_path,
                                                           model_type=args.model_type,
+                                                          task_type=task.task_type,
                                                           metric_fn=get_metric_fn(task.name),
                                                           do_lower_case=args.do_lower_case)
     classifier.to(device, n_gpus)
