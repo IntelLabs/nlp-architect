@@ -35,6 +35,7 @@ from bokeh.transform import dodge
 from bokeh.core.properties import value
 from tornado.web import StaticFileHandler
 
+from nlp_architect.models.absa import LEXICONS_OUT
 from nlp_architect.models.absa.train.acquire_terms import AcquireTerms
 from nlp_architect.models.absa.train.rerank_terms import RerankTerms
 from nlp_architect.models.absa.train.train import TrainSentiment
@@ -254,7 +255,7 @@ def _create_ui_components() -> (Figure, ColumnDataSource):  # pylint: disable=to
         file_data = file_data.decode("utf-8")
         asp_src.data = {'file_contents': [file_data], 'file_name': ['nameFile.csv']}
 
-        out_path = RerankTerms.out_dir / 'generated_opinion_lex_reranked.csv'
+        out_path = LEXICONS_OUT / 'generated_opinion_lex_reranked.csv'
         with io.open(out_path, "r") as fp:
             opinion_data_csv = fp.read()
         file_data = base64.b64encode(str.encode(opinion_data_csv))

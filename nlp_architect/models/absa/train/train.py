@@ -17,7 +17,7 @@ from pathlib import Path, PosixPath
 from os import PathLike
 from typing import Union
 
-from nlp_architect.models.absa import TRAIN_OUT
+from nlp_architect.models.absa import TRAIN_OUT, LEXICONS_OUT
 from nlp_architect.models.absa.train.acquire_terms import AcquireTerms
 from nlp_architect.models.absa.train.rerank_terms import RerankTerms
 from nlp_architect.models.absa.utils import parse_docs, _download_pretrained_rerank_model, \
@@ -56,14 +56,13 @@ class TrainSentiment:
             parsed_dir = Path(out_dir) / 'parsed' / Path(data).stem
             parsed_data = self.parse_data(data, parsed_dir)
 
-        lexicons_out = Path(out_dir) / 'train_out'
         generated_aspect_lex = self.acquire_lexicon.acquire_lexicons(parsed_data)
-        _write_aspect_lex(parsed_data, generated_aspect_lex, lexicons_out)
+        _write_aspect_lex(parsed_data, generated_aspect_lex, LEXICONS_OUT)
 
         generated_opinion_lex_reranked = \
             self.rerank.predict(AcquireTerms.acquired_opinion_terms_path,
                                 AcquireTerms.generic_opinion_lex_path)
-        _write_opinion_lex(parsed_data, generated_opinion_lex_reranked, lexicons_out)
+        _write_opinion_lex(parsed_data, generated_opinion_lex_reranked, LEXICONS_OUT)
 
         return generated_opinion_lex_reranked, generated_aspect_lex
 

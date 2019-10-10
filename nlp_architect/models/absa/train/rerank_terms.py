@@ -21,7 +21,7 @@ from os import PathLike
 from pathlib import Path
 
 from nlp_architect.models.absa.utils import _read_generic_lex_for_similarity
-from nlp_architect.models.absa import TRAIN_OUT, TRAIN_LEXICONS, GENERIC_OP_LEX
+from nlp_architect.models.absa import TRAIN_OUT, TRAIN_LEXICONS, GENERIC_OP_LEX, LEXICONS_OUT
 
 from scipy.spatial.distance import cosine
 from sklearn.model_selection import StratifiedKFold
@@ -33,7 +33,6 @@ from nlp_architect.utils.embedding import load_word_embeddings
 
 
 class RerankTerms(object):
-    out_dir = TRAIN_OUT / 'output'
     model_dir = TRAIN_OUT / 'reranking_model'
     train_rerank_data_path = TRAIN_LEXICONS / 'RerankTrainingData.csv'
     PREDICTION_THRESHOLD = 0.7
@@ -62,7 +61,7 @@ class RerankTerms(object):
         self.rerank_model_path = rerank_model
         self.emb_model_path = emb_model_path
 
-        RerankTerms.out_dir.mkdir(parents=True, exist_ok=True)
+        LEXICONS_OUT.mkdir(parents=True, exist_ok=True)
 
         tensorflow.logging.set_verbosity(tensorflow.logging.ERROR)
 
@@ -522,7 +521,7 @@ class RerankTerms(object):
 
     @staticmethod
     def _write_prediction_results(concat_opinion_dict, out_override):
-        out_dir = Path(out_override) if out_override else RerankTerms.out_dir
+        out_dir = Path(out_override) if out_override else LEXICONS_OUT
         out_path = out_dir / 'generated_opinion_lex_reranked.csv'
         with open(out_path, 'w') as csv_file:
             writer = csv.writer(csv_file)
