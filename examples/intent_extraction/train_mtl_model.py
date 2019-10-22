@@ -22,7 +22,7 @@ from os import path
 
 from tensorflow.python.keras.utils import to_categorical
 
-from nlp_architect.nn.tensorflow import ConllCallback
+from nlp_architect.nn.tensorflow.python.keras.callbacks import ConllCallback
 from nlp_architect.data.intent_datasets import SNIPS
 from nlp_architect.models.intent_extraction import MultiTaskIntentModel
 from nlp_architect.utils.embedding import get_embedding_matrix, load_word_embeddings
@@ -109,7 +109,8 @@ if __name__ == '__main__':
     if args.embedding_model is not None:
         print('Loading external word embedding')
         embedding_model, _ = load_word_embeddings(args.embedding_model)
-        embedding_mat = get_embedding_matrix(embedding_model, dataset.word_vocab)
+        embedding_mat = get_embedding_matrix(embedding_model, dataset.word_vocab,
+                                             dataset.word_vocab_size)
         model.load_embedding_weights(embedding_mat)
 
     conll_cb = ConllCallback(test_inputs, test_y, dataset.tags_vocab.vocab, batch_size=args.b)

@@ -51,9 +51,9 @@ class IntentDataset(object):
         train_size = len(train_set)
         test_size = len(test_set)
         texts, tags, intents = list(zip(*train_set + test_set))
-        text_vectors, self._tokens_vocab = word_vector_generator(texts, lower=True, start=2)
+        text_vectors, self._tokens_vocab = word_vector_generator(texts, lower=True, start=1)
         tag_vectors, self._tags_vocab = word_vector_generator(tags, lower=False, start=1)
-        chars_vectors, self._chars_vocab = character_vector_generator(texts, start=2)
+        chars_vectors, self._chars_vocab = character_vector_generator(texts, start=1)
         i, self._intents_vocab = word_vector_generator([intents])
         i = np.asarray(i[0])
 
@@ -78,12 +78,12 @@ class IntentDataset(object):
     @property
     def word_vocab_size(self):
         """int: vocabulary size"""
-        return len(self._tokens_vocab) + 2
+        return len(self._tokens_vocab) + 1
 
     @property
     def char_vocab_size(self):
         """int: char vocabulary size"""
-        return len(self._chars_vocab) + 2
+        return len(self._chars_vocab) + 1
 
     @property
     def label_vocab_size(self):

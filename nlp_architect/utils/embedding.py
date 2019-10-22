@@ -81,19 +81,24 @@ def fill_embedding_mat(src_mat, src_lex, emb_lex, emb_size):
     return emb_mat
 
 
-def get_embedding_matrix(embeddings: dict, vocab: Vocabulary) -> np.ndarray:
+def get_embedding_matrix(embeddings: dict, vocab: Vocabulary,
+                         embedding_size: int=None) -> np.ndarray:
     """
     Generate a matrix of word embeddings given a vocabulary
 
     Args:
         embeddings (dict): a dictionary of embedding vectors
         vocab (Vocabulary): a Vocabulary
+        embedding_size (int): custom embedding matrix size
 
     Returns:
         a 2D numpy matrix of lexicon embeddings
     """
     emb_size = len(next(iter(embeddings.values())))
-    mat = np.zeros((vocab.max, emb_size))
+    if embedding_size:
+        mat = np.zeros((embedding_size, emb_size))
+    else:
+        mat = np.zeros((len(vocab), emb_size))
     for word, wid in vocab.vocab.items():
         vec = embeddings.get(word.lower(), None)
         if vec is not None:
