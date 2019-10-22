@@ -39,9 +39,9 @@ class Vocabulary:
         self._vocab = {}
         self._rev_vocab = {}
         self.include_oov = include_oov
-        self.oov_id = start
         if include_oov:
             self._vocab["<UNK>"] = start
+            self.oov_id = start
             self._rev_vocab[start] = "<UNK>"
             self.next = start + 1
         else:
@@ -341,9 +341,7 @@ def word_vector_generator(data, lower=False, start=0):
             word = w
             if lower:
                 word = word.lower()
-            wid = vocab[word]
-            if wid is None:
-                wid = vocab.add(word)
+            wid = vocab.add(word)
             sentence_vec.append(wid)
         data_vec.append(sentence_vec)
     return data_vec, vocab
@@ -370,9 +368,7 @@ def character_vector_generator(data, start=0):
         for w in sentence:
             word_vec = []
             for char in w:
-                cid = vocab[char]
-                if cid is None:
-                    cid = vocab.add(char)
+                cid = vocab.add(char)
                 word_vec.append(cid)
             sentence_vec.append(word_vec)
         data_vec.append(sentence_vec)
