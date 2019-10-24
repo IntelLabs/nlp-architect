@@ -124,8 +124,6 @@ class QuantizedLinearTest(unittest.TestCase):
         self.assertEqual(qlinear.output_thresh, output_ema)
 
     def test_ema_quantization_data_parallel(self):
-        # TODO(ofir) this test only works with 4gpus, need to fix it to
-        #            adapt to the number of gpus available
         if not torch.cuda.is_available() or torch.cuda.device_count() <= 1:
             return
         ema_decay = 0.9
