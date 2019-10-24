@@ -22,7 +22,7 @@ from nlp_architect import LIBRARY_OUT
 from nlp_architect.utils.io import download_unlicensed_file, uncompress_file
 from nlp_architect.utils.io import validate
 from nlp_architect.utils.text import SpacyInstance
-
+from nlp_architect.utils.text import _spacy_pos_to_ptb
 
 class SpacyBISTParser(object):
     """Main class which handles parsing with Spacy-BIST parser.
@@ -149,31 +149,3 @@ def _download_pretrained_model():
         uncompress_file(zip_path, outpath=str(SpacyBISTParser.dir))
         remove(zip_path)
         print('Done.')
-
-
-def _spacy_pos_to_ptb(pos, text):
-    """
-    Converts a Spacy part-of-speech tag to a Penn Treebank part-of-speech tag.
-
-    Args:
-        pos (str): Spacy POS tag.
-        text (str): The token text.
-
-    Returns:
-        ptb_tag (str): Standard PTB POS tag.
-    """
-    validate((pos, str, 0, 30), (text, str, 0, 1000))
-    ptb_tag = pos
-    if text in ['...', '—']:
-        ptb_tag = ':'
-    elif text == '*':
-        ptb_tag = 'SYM'
-    elif pos == 'AFX':
-        ptb_tag = 'JJ'
-    elif pos == 'ADD':
-        ptb_tag = 'NN'
-    elif text != pos and text in [',', '.', ":", '``', '-RRB-', '-LRB-']:
-        ptb_tag = text
-    elif pos in ['NFP', 'HYPH', 'XX']:
-        ptb_tag = 'SYM'
-    return ptb_tag

@@ -14,6 +14,7 @@
 # limitations under the License.
 # ******************************************************************************
 import json
+from nlp_architect.utils.text import _spacy_pos_to_ptb
 
 
 def merge_punct_tok(merged_punct_sentence, last_merged_punct_index, punct_text, is_traverse):
@@ -68,7 +69,7 @@ def merge_punctuation(sentence):
     return merged_punct_sentence
 
 
-class CoreNLPDoc(object):
+class CoreNLPDoc:
     """Object for core-components (POS, Dependency Relations, etc).
 
     Attributes:
@@ -185,3 +186,22 @@ class CoreNLPDoc(object):
                                                  'start': arc_start, 'end': arc_end})
             doc.append(sentence_doc)
         return doc
+
+    @staticmethod
+    def from_spacy(spacy_doc, show_tok=True, show_doc=True, ptb_pos=False):
+        core_sents = []
+        for spacy_sent in spacy_doc.sents:
+            cur_sent = []
+            for tok in spacy_sent:
+                pos = _spacy_pos_to_ptb(tok.tag_, tok.text) if ptb_pos else tok.tag_
+                core_tok = {"start": tok.idx, "len": len(tok), "pos": pos,
+                                "lemma": tok.lemma_, "rel": tok.dep_.lower(), 
+                                "gov": -1 if tok.dep_ == "ROOT" else tok.head.i - spacy_sent.start}
+                if show_tok:
+                    core_tok["text"] = tok.text
+                cur_sent.append(core_tok)
+            core_sents.append(cur_sent)
+        core_doc = CoreNLPDoc(sentences=core_sents)
+        if show_doc:
+            core_doc.doc_text = spacy_doc.text
+        return core_doc

@@ -25,7 +25,7 @@ from nltk.stem.snowball import EnglishStemmer
 from spacy.cli.download import download as spacy_download
 from spacy.lang.en import LEMMA_EXC, LEMMA_INDEX, LEMMA_RULES
 from spacy.lemmatizer import Lemmatizer
-
+from nlp_architect.utils.io import validate
 from nlp_architect.utils.generic import license_prompt
 
 
@@ -428,3 +428,30 @@ def bio_to_spans(text: List[str], tags: List[str]) -> List[Tuple[int, int, str]]
             e_char += 1 + len(text[s_i + e])
         spans.append((s_char, s_char + e_char, label_str))
     return spans
+
+def _spacy_pos_to_ptb(pos, text):
+    """
+    Converts a Spacy part-of-speech tag to a Penn Treebank part-of-speech tag.
+
+    Args:
+        pos (str): Spacy POS tag (`tok.tag_`).
+        text (str): The token text.
+
+    Returns:
+        ptb_tag (str): Standard PTB POS tag.
+    """
+    validate((pos, str, 0, 30), (text, str, 0, 1000))
+    ptb_tag = pos
+    if text in ['...', '—']:
+        ptb_tag = ':'
+    elif text == '*':
+        ptb_tag = 'SYM'
+    elif pos == 'AFX':
+        ptb_tag = 'JJ'
+    elif pos == 'ADD':
+        ptb_tag = 'NN'
+    elif text != pos and text in [',', '.', ":", '``', '-RRB-', '-LRB-']:
+        ptb_tag = text
+    elif pos in ['NFP', 'HYPH', 'XX']:
+        ptb_tag = 'SYM'
+    return ptb_tag

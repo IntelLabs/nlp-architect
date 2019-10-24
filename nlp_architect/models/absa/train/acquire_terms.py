@@ -21,7 +21,7 @@ from os import PathLike
 from tqdm import tqdm
 
 from nlp_architect.models.absa import TRAIN_LEXICONS, LEXICONS_OUT
-from nlp_architect.models.absa import TRAIN_OUT, GENERIC_OP_LEX
+from nlp_architect.models.absa import GENERIC_OP_LEX
 from nlp_architect.models.absa.inference.data_types import Polarity
 from nlp_architect.models.absa.train.data_types import AspectTerm, \
     DepRelation, DepRelationTerm, LoadOpinionStopLists, LoadAspectStopLists, OpinionTerm, \
@@ -325,7 +325,7 @@ def _get_rel_list(parsed_sentence):
     gen_toks = []
     for tok in parsed_sentence:
         gen_toks.append(
-            DepRelationTerm(tok['text'], tok['lemma'], tok['pos'], tok['ner'], tok['start']))
+            DepRelationTerm(tok.get('text'), tok.get('lemma'), tok.get('pos'), tok.get('ner'), tok.get('start')))
 
     for gen_tok, tok in zip(gen_toks, parsed_sentence):
         gov_idx = tok['gov']
