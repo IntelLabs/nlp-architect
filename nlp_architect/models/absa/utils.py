@@ -29,7 +29,7 @@ from nlp_architect.models.absa.inference.data_types import LexiconElement, Polar
 from nlp_architect.models.absa.train.data_types import OpinionTerm
 from nlp_architect.pipelines.spacy_bist import SpacyBISTParser
 from nlp_architect.utils.io import download_unlicensed_file, line_count
-
+from types import GeneratorType
 
 def _download_pretrained_rerank_model(rerank_model_full_path):
     rerank_model_dir = path.dirname(rerank_model_full_path)
@@ -56,15 +56,28 @@ def _walk_directory(directory: Union[str, PathLike], yield_fname=True):
 
 def parse_docs(parser, docs: Union[str, PathLike], out_dir: Union[str, PathLike] = None,
                show_tok=True, show_doc=True):
-    
-    doc_stream = _walk_directory(docs) if isdir(docs) else textfile_generator(docs)
-
+    if isinstance(docs, (list, GeneratorType)):
+        doc_stream = (doc for doc in docs)
+    elif isdir(docs):
+        doc_stream = _walk_directory(docs)
+    elif str(docs).endswith('.txt'):
+        doc_stream = txt_line_generator(docs)
+    elif str(docs).endswith('.csv'):
+        doc_stream = csv_line_iterator(docs)
+    else:
+        raise ValueError("Invalid data format. Please input a list of strings, a directory of txt files or a multi-line csv/txt file.")
     return parser.parse_multiple(doc_stream, out_dir, show_tok, show_doc)
     
-def textfile_generator(txt_file):
+def txt_line_generator(txt_file):
     with open(txt_file, encoding='utf-8') as f:
         for line in f:
             yield line.strip('\n')
+
+def csv_line_iterator(csv_file):
+    with open(csv_file, newline='', encoding="utf-8") as f:
+        reader = csv.reader(f, delimiter=',', quotechar='|')
+        for row in reader:
+            yield row[0]
 
 def parse_docs_bist(parser, docs: Union[str, PathLike],
                out_dir: Union[str, PathLike] = None,

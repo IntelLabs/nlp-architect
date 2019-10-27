@@ -23,13 +23,15 @@ from nlp_architect.models.absa import INFERENCE_OUT
 from nlp_architect.models.absa.inference.data_types import Term, TermType, Polarity, SentimentDoc,\
     SentimentSentence, LexiconElement
 from nlp_architect.models.absa.utils import _read_lexicon_from_csv, load_opinion_lex, \
-    _load_aspect_lexicon
+    _load_aspect_lexicon, parse_docs, _load_parsed_docs_from_dir
+from types import GeneratorType
+from tqdm import tqdm
 
 INTENSIFIER_FACTOR = 0.3
 VERB_POS = {"VB", "VBD", "VBG", "VBN", "VBP", "VBZ"}
 
 
-class SentimentInference(object):
+class SentimentInference:
     """Main class for sentiment inference execution.
 
     Attributes:
@@ -40,7 +42,7 @@ class SentimentInference(object):
     """
 
     def __init__(self, aspect_lex: Union[str, PathLike], opinion_lex: Union[str, PathLike, dict],
-                 parse: bool = True):
+                 parse: bool = True, parser='spacy', spacy_model = 'en_core_web_sm'):
         """Inits SentimentInference with given aspect and opinion lexicons."""
         INFERENCE_OUT.mkdir(parents=True, exist_ok=True)
         self.opinion_lex = \
@@ -50,8 +52,12 @@ class SentimentInference(object):
         self.negation_lex = _read_lexicon_from_csv('NegationSentLex.csv')
 
         if parse:
-            from nlp_architect.pipelines.spacy_bist import SpacyBISTParser
-            self.parser = SpacyBISTParser(spacy_model='en')
+            if parser == 'bist':
+                from nlp_architect.pipelines.spacy_bist import SpacyBISTParser
+                self.parser = SpacyBISTParser(spacy_model=spacy_model)
+            elif parser == 'spacy':
+                from nlp_architect.pipelines.spacy_parser_mt import SpacyParserMT
+                self.parser = SpacyParserMT(thin=True, model=spacy_model)
         else:
             self.parser = None
 
@@ -63,7 +69,7 @@ class SentimentInference(object):
         """
         if not parsed_doc:
             if not self.parser:
-                raise RuntimeError("Parser not initialized (try parse=True at init )")
+                raise RuntimeError("Parser not initialized (try parse=True at init)")
             parsed_doc = self.parser.parse(doc)
 
         sentiment_doc = None
@@ -83,6 +89,30 @@ class SentimentInference(object):
                     SentimentSentence(sentence[0]['start'],
                                       sentence[-1]['start'] + sentence[-1]['len'] - 1, events))
         return sentiment_doc
+
+    def run_multiple(self, docs, data_name=None, out_base_dir: Union[str, PathLike] = INFERENCE_OUT):
+        """
+            docs: An iterable of strings or a path to a directory or txt/csv file containing documents
+            data_name (optional): Used for parsed files directory name. 
+        """
+        if self.parser == 'bist':
+            raise NotImplementedError()
+        
+        if data_name:
+            dir_name = data_name
+        elif isinstance(docs, (list, GeneratorType)):
+            dir_name = 'unnamed_data'
+        else:
+            dir_name = Path(docs).stem
+        out_dir = Path(out_base_dir) / 'parsed' / dir_name
+        out_dir.mkdir(parents=True, exist_ok=True)
+        parse_docs(self.parser, docs, out_dir=out_dir)
+
+        sentiment_docs = {}
+        for parsed_doc in tqdm(_load_parsed_docs_from_dir(out_dir).values()):
+            sentiment_doc = self.run(parsed_doc = parsed_doc)
+            sentiment_docs[parsed_doc.doc_text] = sentiment_doc
+        return sentiment_docs
 
     def _extract_intensifier_terms(self, toks, sentiment_index, polarity, sentence):
         """Extract intensifier events from sentence."""

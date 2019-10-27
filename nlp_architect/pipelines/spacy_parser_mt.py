@@ -29,9 +29,18 @@ class SpacyParserMT:
         spacy_model (str, optional): Spacy model to use
         (see https://spacy.io/api/top-level#spacy.load).
     """
-    def __init__(self, model='en_core_web_sm', disable=None):
+    def __init__(self, model='en_core_web_sm', thin=False):
         print("Loaded model '%s'" % model)
+        disable = []
+        if thin:
+            disable = ["merge_noun_chunks", "ner", "entity_linker",
+                 "textcat", "entity_ruler", "sentencizer", "merge_entities"]
         self.nlp = SpacyInstance(model, disable=disable).parser
+
+    def parse(self, doc_text, show_tok=True, show_doc=True):
+        doc = self.nlp(doc_text)
+        parsed_doc = CoreNLPDoc.from_spacy(doc, show_tok, show_doc, ptb_pos=True)
+        return parsed_doc
 
     def parse_multiple(self, doc_texts, output_dir, show_tok=True, show_doc=True, n_jobs=4, 
                         batch_size=1000):
@@ -42,7 +51,7 @@ class SpacyParserMT:
         do = delayed(partial(process_batch, self.nlp))
         tasks = (do(i, batch, output_dir, show_tok, show_doc) for i, batch in enumerate(partitions))
         executor(tasks)
-        return 1000 # TODO: repleace with number of written jsons
+        return len(list(doc_texts))
 
 def process_batch(nlp, batch_id, texts, output_dir, show_tok, show_doc):
     print("Processing batch", batch_id)

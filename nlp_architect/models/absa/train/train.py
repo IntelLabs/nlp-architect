@@ -33,7 +33,8 @@ RERANK_MODEL_DEFAULT_PATH = rerank_model_dir = TRAIN_OUT / 'reranking_model' / '
 
 class TrainSentiment:
     def __init__(self, parse: bool = True, rerank_model: PathLike = None,
-                 asp_thresh: int = 3, op_thresh: int = 2, max_iter: int = 3, parser = 'spacy'):
+                 asp_thresh: int = 3, op_thresh: int = 2, max_iter: int = 3, parser = 'spacy',
+                 spacy_model = 'en_core_web_sm'):
         start = time.time() # TODO REMOVE
 
         self.acquire_lexicon = AcquireTerms(asp_thresh, op_thresh, max_iter)
@@ -42,11 +43,10 @@ class TrainSentiment:
         if parse:
             if parser == 'bist':
                 from nlp_architect.pipelines.spacy_bist import SpacyBISTParser
-                self.parser = SpacyBISTParser()
+                self.parser = SpacyBISTParser(spacy_model=spacy_model)
             elif parser == 'spacy':
                 from nlp_architect.pipelines.spacy_parser_mt import SpacyParserMT
-                self.parser = SpacyParserMT(disable=["merge_noun_chunks", "ner", "entity_linker",
-                 "textcat", "entity_ruler", "sentencizer", "merge_entities"])
+                self.parser = SpacyParserMT(thin=True, model=spacy_model)
         else:
             self.parser = None
 
@@ -54,6 +54,7 @@ class TrainSentiment:
             print('using pre-trained reranking model')
             rerank_model = _download_pretrained_rerank_model(RERANK_MODEL_DEFAULT_PATH)
 
+        download_unzip(*EMBEDDING_URL, EMBEDDING_PATH, license_msg="Glove word embeddings.")
         self.rerank = RerankTerms(vector_cache=True, rerank_model=rerank_model,
                                   emb_model_path=EMBEDDING_PATH)
         
@@ -62,7 +63,7 @@ class TrainSentiment:
     def run(self, data: Union[str, PathLike] = None, parsed_data: Union[str, PathLike] = None,
             out_dir: Union[str, PathLike] = TRAIN_OUT):
 
-        start = time.time() # TODO REMOVE
+        # start = time.time() # TODO REMOVE
 
         if not parsed_data:
             if not self.parser:
@@ -70,39 +71,39 @@ class TrainSentiment:
             parsed_dir = Path(out_dir) / 'parsed' / Path(data).stem
             parsed_data = self.parse_data(data, parsed_dir)
             
-        parse_time = time.time()  # TODO REMOVE
-        print('Parse time: {}'.format(parse_time - start)) # TODO REMOVE
+        # parse_time = time.time()  # TODO REMOVE
+        # print('Parse time: {}'.format(parse_time - start)) # TODO REMOVE
 
         generated_aspect_lex = self.acquire_lexicon.acquire_lexicons(parsed_data)
-        acquire_time = time.time()  # TODO REMOVE
-        print('acquire_lexicons time: {}'.format(acquire_time - parse_time)) # TODO REMOVE
+        # acquire_time = time.time()  # TODO REMOVE
+        # print('acquire_lexicons time: {}'.format(acquire_time - parse_time)) # TODO REMOVE
 
         _write_aspect_lex(parsed_data, generated_aspect_lex, LEXICONS_OUT)
-        write_asp_time = time.time()  # TODO REMOVE
-        print('_write_aspect_lex time: {}'.format(write_asp_time - acquire_time)) # TODO REMOVE
+        # write_asp_time = time.time()  # TODO REMOVE
+        # print('_write_aspect_lex time: {}'.format(write_asp_time - acquire_time)) # TODO REMOVE
 
         generated_opinion_lex_reranked = \
             self.rerank.predict(AcquireTerms.acquired_opinion_terms_path,
                                 AcquireTerms.generic_opinion_lex_path)
 
-        rerank_time = time.time()  # TODO REMOVE
-        print('rerank time: {}'.format(rerank_time - write_asp_time)) # TODO REMOVE
+        # rerank_time = time.time()  # TODO REMOVE
+        # print('rerank time: {}'.format(rerank_time - write_asp_time)) # TODO REMOVE
 
         _write_opinion_lex(parsed_data, generated_opinion_lex_reranked, LEXICONS_OUT)
-        write_op = time.time()  # TODO REMOVE
-        print('_write_opinion_lex time: {}'.format(write_op - rerank_time)) # TODO REMOVE
+        # write_op = time.time()  # TODO REMOVE
+        # print('_write_opinion_lex time: {}'.format(write_op - rerank_time)) # TODO REMOVE
 
         return generated_opinion_lex_reranked, generated_aspect_lex
 
-    def parse_data(self, data: PathLike or PosixPath, parsed_dir: Union[str, PathLike]):
-        if parsed_dir:
-            Path(parsed_dir).mkdir(parents=True, exist_ok=True)
+    def parse_data(self, data: PathLike or PosixPath, out_dir: Union[str, PathLike]):
+        if out_dir:
+            Path(out_dir).mkdir(parents=True, exist_ok=True)
         if self.parser_name == 'bist':
-            _, data_size = parse_docs_bist(self.parser, data, out_dir=parsed_dir)
+            _, data_size = parse_docs_bist(self.parser, data, out_dir=out_dir)
         elif self.parser_name == 'spacy':
-            data_size = parse_docs(self.parser, data, out_dir=parsed_dir)
+            data_size = parse_docs(self.parser, data, out_dir=out_dir)
             print(data_size)
         if data_size < 1000:
             raise ValueError('The data contains only {0} sentences. A minimum of 1000 '
                              'sentences is required for training.'.format(data_size))
-        return parsed_dir
+        return out_dir

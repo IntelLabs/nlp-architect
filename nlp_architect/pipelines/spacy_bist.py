@@ -24,7 +24,7 @@ from nlp_architect.utils.io import validate
 from nlp_architect.utils.text import SpacyInstance
 from nlp_architect.utils.text import _spacy_pos_to_ptb
 
-class SpacyBISTParser(object):
+class SpacyBISTParser:
     """Main class which handles parsing with Spacy-BIST parser.
 
     Args:
