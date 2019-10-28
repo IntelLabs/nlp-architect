@@ -28,30 +28,30 @@ root = os.path.abspath(os.path.dirname(__file__))
 with open('requirements.txt') as fp:
     install_requirements = fp.readlines()
 
-# check if GPU available
-p = subprocess.Popen(['command -v nvidia-smi'], stdout=subprocess.PIPE, shell=True)
-out = p.communicate()[0].decode('utf8')
-gpu_available = len(out) > 0
+# # check if GPU available
+# p = subprocess.Popen(['command -v nvidia-smi'], stdout=subprocess.PIPE, shell=True)
+# out = p.communicate()[0].decode('utf8')
+# gpu_available = len(out) > 0
 
-# Tensorflow version (make sure CPU/MKL/GPU versions exist before changing)
-for r in install_requirements:
-    if r.startswith('tensorflow=='):
-        tf_version = r.split('==')[1]
+# # Tensorflow version (make sure CPU/MKL/GPU versions exist before changing)
+# for r in install_requirements:
+#     if r.startswith('tensorflow=='):
+#         tf_version = r.split('==')[1]
 
-# default TF is CPU
-chosen_tf = 'tensorflow=={}'.format(tf_version)
-# check system is linux for MKL/GPU backends
-if 'linux' in sys.platform:
-    system_type = 'linux'
-    tf_be = os.getenv('NLP_ARCHITECT_BE', False)
-    if tf_be and 'mkl' == tf_be.lower():
-        chosen_tf = 'intel-tensorflow=={}'.format(tf_version)
-    elif tf_be and 'gpu' == tf_be.lower() and gpu_available:
-        chosen_tf = 'tensorflow-gpu=={}'.format(tf_version)
+# # default TF is CPU
+# chosen_tf = 'tensorflow=={}'.format(tf_version)
+# # check system is linux for MKL/GPU backends
+# if 'linux' in sys.platform:
+#     system_type = 'linux'
+#     tf_be = os.getenv('NLP_ARCHITECT_BE', False)
+#     if tf_be and 'mkl' == tf_be.lower():
+#         chosen_tf = 'intel-tensorflow=={}'.format(tf_version)
+#     elif tf_be and 'gpu' == tf_be.lower() and gpu_available:
+#         chosen_tf = 'tensorflow-gpu=={}'.format(tf_version)
 
-for r in install_requirements:
-    if r.startswith('tensorflow=='):
-        install_requirements[install_requirements.index(r)] = chosen_tf
+# for r in install_requirements:
+#     if r.startswith('tensorflow=='):
+#         install_requirements[install_requirements.index(r)] = chosen_tf
 
 with open('README.md', encoding='utf8') as fp:
     long_desc = fp.read()
