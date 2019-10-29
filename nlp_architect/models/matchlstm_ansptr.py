@@ -526,12 +526,14 @@ class MatchLSTMAnswerPointer(object):
                 # Print Paragraph
                 print("\n")
                 print("Paragraph Number AA:", idx)
-                test_paragraph = [vocab_forward[ele].replace(" ", "") for ele in valid[idx][0] if ele != 0]
+                test_paragraph = \
+                    [vocab_forward[ele].replace(" ", "") for ele in valid[idx][0] if ele != 0]
                 para_string = " ".join(map(str, test_paragraph))
                 print(para_string)
 
                 # Print corresponding Question
-                test_question = [vocab_forward[ele].replace(" ", "") for ele in valid[idx][1] if ele != 0]
+                test_question = \
+                    [vocab_forward[ele].replace(" ", "") for ele in valid[idx][1] if ele != 0]
                 ques_string = " ".join(map(str, test_question))
                 print("Question:", ques_string)
                 question_ids = valid[idx][1]

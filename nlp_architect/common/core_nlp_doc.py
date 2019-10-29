@@ -195,8 +195,8 @@ class CoreNLPDoc:
             for tok in spacy_sent:
                 pos = _spacy_pos_to_ptb(tok.tag_, tok.text) if ptb_pos else tok.tag_
                 core_tok = {"start": tok.idx, "len": len(tok), "pos": pos,
-                                "lemma": tok.lemma_, "rel": tok.dep_.lower(), 
-                                "gov": -1 if tok.dep_ == "ROOT" else tok.head.i - spacy_sent.start}
+                            "lemma": tok.lemma_, "rel": tok.dep_.lower(),
+                            "gov": -1 if tok.dep_ == "ROOT" else tok.head.i - spacy_sent.start}
                 if show_tok:
                     core_tok["text"] = tok.text
                 cur_sent.append(core_tok)

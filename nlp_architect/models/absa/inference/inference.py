@@ -42,7 +42,7 @@ class SentimentInference:
     """
 
     def __init__(self, aspect_lex: Union[str, PathLike], opinion_lex: Union[str, PathLike, dict],
-                 parse: bool = True, parser='spacy', spacy_model = 'en_core_web_sm'):
+                 parse: bool = True, parser='spacy', spacy_model='en_core_web_sm'):
         """Inits SentimentInference with given aspect and opinion lexicons."""
         INFERENCE_OUT.mkdir(parents=True, exist_ok=True)
         self.opinion_lex = \
@@ -90,14 +90,14 @@ class SentimentInference:
                                       sentence[-1]['start'] + sentence[-1]['len'] - 1, events))
         return sentiment_doc
 
-    def run_multiple(self, docs, data_name=None, out_base_dir: Union[str, PathLike] = INFERENCE_OUT):
+    def run_multiple(self, docs, data_name=None,
+                     out_base_dir: Union[str, PathLike] = INFERENCE_OUT):
         """
-            docs: An iterable of strings or a path to a directory or txt/csv file containing documents
-            data_name (optional): Used for parsed files directory name. 
+            docs: Iterable of strings or path to directory or txt/csv file containing documents
+            data_name (optional): Used for parsed files directory name.
         """
         if self.parser == 'bist':
-            raise NotImplementedError()
-        
+            raise NotImplementedError("BIST multithreading not implemented.")
         if data_name:
             dir_name = data_name
         elif isinstance(docs, (list, GeneratorType)):
@@ -110,7 +110,7 @@ class SentimentInference:
 
         sentiment_docs = {}
         for parsed_doc in tqdm(_load_parsed_docs_from_dir(out_dir).values()):
-            sentiment_doc = self.run(parsed_doc = parsed_doc)
+            sentiment_doc = self.run(parsed_doc=parsed_doc)
             sentiment_docs[parsed_doc.doc_text] = sentiment_doc
         return sentiment_docs
 

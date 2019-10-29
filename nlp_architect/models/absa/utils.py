@@ -31,6 +31,7 @@ from nlp_architect.pipelines.spacy_bist import SpacyBISTParser
 from nlp_architect.utils.io import download_unlicensed_file, line_count
 from types import GeneratorType
 
+
 def _download_pretrained_rerank_model(rerank_model_full_path):
     rerank_model_dir = path.dirname(rerank_model_full_path)
     if not path.isfile(rerank_model_full_path):
@@ -54,6 +55,7 @@ def _walk_directory(directory: Union[str, PathLike], yield_fname=True):
                     else:
                         yield doc_text
 
+
 def parse_docs(parser, docs: Union[str, PathLike], out_dir: Union[str, PathLike] = None,
                show_tok=True, show_doc=True):
     if isinstance(docs, (list, GeneratorType)):
@@ -65,13 +67,16 @@ def parse_docs(parser, docs: Union[str, PathLike], out_dir: Union[str, PathLike]
     elif str(docs).endswith('.csv'):
         doc_stream = csv_line_iterator(docs)
     else:
-        raise ValueError("Invalid data format. Please input a list of strings, a directory of txt files or a multi-line csv/txt file.")
+        raise ValueError("Invalid data format. Please input a list of strings,"
+                         "a directory of txt files or a multi-line csv/txt file.")
     return parser.parse_multiple(doc_stream, out_dir, show_tok, show_doc)
-    
+
+
 def txt_line_generator(txt_file):
     with open(txt_file, encoding='utf-8') as f:
         for line in f:
             yield line.strip('\n')
+
 
 def csv_line_iterator(csv_file):
     with open(csv_file, newline='', encoding="utf-8") as f:
@@ -79,9 +84,9 @@ def csv_line_iterator(csv_file):
         for row in reader:
             yield row[0]
 
-def parse_docs_bist(parser, docs: Union[str, PathLike],
-               out_dir: Union[str, PathLike] = None,
-               show_tok=True, show_doc=True):
+
+def parse_docs_bist(parser, docs: Union[str, PathLike], out_dir: Union[str, PathLike] = None,
+                    show_tok=True, show_doc=True):
     """Parse raw documents in the form of text files in a directory or lines in a text file.
 
     Args:

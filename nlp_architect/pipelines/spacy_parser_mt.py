@@ -34,7 +34,7 @@ class SpacyParserMT:
         disable = []
         if thin:
             disable = ["merge_noun_chunks", "ner", "entity_linker",
-                 "textcat", "entity_ruler", "sentencizer", "merge_entities"]
+                       "textcat", "entity_ruler", "sentencizer", "merge_entities"]
         self.nlp = SpacyInstance(model, disable=disable).parser
 
     def parse(self, doc_text, show_tok=True, show_doc=True):
@@ -42,22 +42,27 @@ class SpacyParserMT:
         parsed_doc = CoreNLPDoc.from_spacy(doc, show_tok, show_doc, ptb_pos=True)
         return parsed_doc
 
-    def parse_multiple(self, doc_texts, output_dir, show_tok=True, show_doc=True, n_jobs=4, 
-                        batch_size=1000):
+    def parse_multiple(self, doc_texts, output_dir, show_tok=True, show_doc=True, n_jobs=4,
+                       batch_size=1000):
         print("Processing texts...")
         partitions = minibatch(doc_texts, size=batch_size)
         print(batch_size)
         executor = Parallel(n_jobs=n_jobs, backend="multiprocessing", prefer="processes")
         do = delayed(partial(process_batch, self.nlp))
-        tasks = (do(i, batch, output_dir, show_tok, show_doc) for i, batch in enumerate(partitions))
-        executor(tasks)
-        return len(list(doc_texts))
+        tasks = \
+            (do(i, batch, output_dir, show_tok, show_doc) for i, batch in enumerate(partitions))
+        num_parsed = sum(executor(tasks))
+        return num_parsed
+
 
 def process_batch(nlp, batch_id, texts, output_dir, show_tok, show_doc):
     print("Processing batch", batch_id)
+    count = 0
     for i, doc in enumerate(nlp.pipe(texts)):
         out_path = Path(output_dir) / ("{}.{}.json".format(batch_id, i))
+        parsed_doc = CoreNLPDoc.from_spacy(doc, show_tok, show_doc, ptb_pos=True)
+        count += 1
         with out_path.open("w", encoding="utf8") as f:
-            parsed_doc = CoreNLPDoc.from_spacy(doc, show_tok, show_doc, ptb_pos=True)
             f.write(parsed_doc.pretty_json())
     print("Saved {} CoreNLPDocs".format(len(texts)))
+    return count

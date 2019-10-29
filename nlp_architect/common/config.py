@@ -14,7 +14,7 @@
 # limitations under the License.
 # ******************************************************************************
 """
-Generic config object:  
+Generic config object:
     load config from json file
     load config from ordinary python dict
     export config as dictionaty or json string

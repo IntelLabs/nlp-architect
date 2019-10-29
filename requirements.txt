@@ -1,6 +1,6 @@
 tensorflow==1.13.1
 dynet==2.1
-spacy==2.1.8
+spacy==2.1.4
 nltk
 sklearn
 scipy
@@ -10,3 +10,4 @@ tqdm
 pandas==0.24.2
 tensorflow_hub
 gensim
+joblib

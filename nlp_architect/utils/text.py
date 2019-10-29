@@ -429,6 +429,7 @@ def bio_to_spans(text: List[str], tags: List[str]) -> List[Tuple[int, int, str]]
         spans.append((s_char, s_char + e_char, label_str))
     return spans
 
+
 def _spacy_pos_to_ptb(pos, text):
     """
     Converts a Spacy part-of-speech tag to a Penn Treebank part-of-speech tag.

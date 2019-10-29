@@ -251,7 +251,8 @@ class NeuralTagger(TrainableModel):
                 global_step += 1
                 avg_loss += loss.item()
                 if global_step % logging_steps == 0:
-                    logger.info(" global_step = %s, average loss = %s", global_step, avg_loss / s_idx)
+                    logger.info(" global_step = %s, average loss = %s", global_step,
+                                avg_loss / s_idx)
                     self._get_eval(dev_data_set, "dev")
                     self._get_eval(test_data_set, "test")
                 if save_path is not None and global_step % save_steps == 0:
