@@ -33,7 +33,6 @@ class TrainSentiment:
     def __init__(self, parse: bool = True, rerank_model: PathLike = None,
                  asp_thresh: int = 3, op_thresh: int = 2, max_iter: int = 3, parser='spacy',
                  spacy_model='en_core_web_sm'):
-        # start = time.time() # TODO REMOVE
 
         self.acquire_lexicon = AcquireTerms(asp_thresh, op_thresh, max_iter)
         self.parser_name = parser
