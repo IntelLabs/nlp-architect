@@ -143,7 +143,8 @@ def do_inference(args):
                                                           model_type=args.model_type,
                                                           task_type=task.task_type,
                                                           metric_fn=get_metric_fn(task.name),
-                                                          do_lower_case=args.do_lower_case)
+                                                          do_lower_case=args.do_lower_case,
+                                                          load_quantized=args.load_quantized_model)
     classifier.to(device, n_gpus)
     examples = task.get_dev_examples() if args.evaluate else \
         task.get_test_examples()

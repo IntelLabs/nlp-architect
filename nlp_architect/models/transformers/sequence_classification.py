@@ -54,7 +54,7 @@ class TransformerSequenceClassifier(TransformerBase):
     }
 
     def __init__(self, model_type: str, labels: List[str] = None,
-                 task_type="classification", metric_fn=accuracy,
+                 task_type="classification", metric_fn=accuracy, load_quantized=False,
                  *args, **kwargs):
         assert model_type in self.MODEL_CLASS.keys(), "unsupported model type"
         self.labels = labels
@@ -65,7 +65,7 @@ class TransformerSequenceClassifier(TransformerBase):
                                                             **kwargs)
         self.model_class = self.MODEL_CLASS[model_type]
         self.model = self.model_class.from_pretrained(self.model_name_or_path, from_tf=bool(
-            '.ckpt' in self.model_name_or_path), config=self.config)
+            '.ckpt' in self.model_name_or_path), config=self.config, from_8bit=load_quantized)
         self.task_type = task_type
         self.metric_fn = metric_fn
         self.to(self.device, self.n_gpus)

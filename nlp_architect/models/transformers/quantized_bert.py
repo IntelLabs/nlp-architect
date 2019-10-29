@@ -19,7 +19,10 @@ Quantized BERT layers and model
 """
 
 import sys
+import os
+import logging
 
+import torch
 from torch import nn
 from pytorch_transformers.modeling_bert import (BertEmbeddings,
                                                 BertLayerNorm,
@@ -40,8 +43,13 @@ from pytorch_transformers.modeling_bert import (BertEmbeddings,
                                                 BertConfig)
 
 from nlp_architect.nn.torch.quantization import (QuantizationConfig,
+                                                 QuantizedLayer,
                                                  QuantizedEmbedding,
                                                  QuantizedLinear)
+
+logger = logging.getLogger(__name__)
+
+QUANT_WEIGHTS_NAME = "quant_pytorch_model.bin"
 
 QUANT_BERT_PRETRAINED_CONFIG_ARCHIVE_MAP = {
     'bert-base-uncased': "https://nlp-architect-data.s3-us-west-2.amazonaws.com/models/transformers/bert-base-uncased.json",  # noqa: E501
@@ -194,6 +202,97 @@ class QuantizedBertPreTrainedModel(BertPreTrainedModel):
             module.weight.data.fill_(1.0)
         if isinstance(module, nn.Linear) and module.bias is not None:
             module.bias.data.zero_()
+
+    @classmethod
+    def from_pretrained(cls, pretrained_model_name_or_path, *args, from_8bit=False, **kwargs):
+        """load trained model from 8bit model"""
+        if not from_8bit:
+            return super().from_pretrained(pretrained_model_name_or_path, *args, **kwargs)
+        config = kwargs.pop('config', None)
+        output_loading_info = kwargs.pop('output_loading_info', False)
+
+        # Load config
+        if config is None:
+            config = cls.config_class.from_pretrained(
+                pretrained_model_name_or_path, *args, **kwargs)
+
+        # Load model
+        model_file = os.path.join(pretrained_model_name_or_path, QUANT_WEIGHTS_NAME)
+
+        # Instantiate model.
+        model = cls(config)
+        # Set model to initialize variables to be loaded from quantized checkpoint which are None by Default
+        model.eval()
+        # Get state dict of model
+        state_dict = torch.load(model_file, map_location='cpu')
+        logger.info("loading weights file {}".format(model_file))
+
+        # Load from a PyTorch state_dict
+        missing_keys = []
+        unexpected_keys = []
+        error_msgs = []
+        # copy state_dict so _load_from_state_dict can modify it
+        metadata = getattr(state_dict, '_metadata', None)
+        state_dict = state_dict.copy()
+        if metadata is not None:
+            state_dict._metadata = metadata
+
+        def load(module, prefix=''):
+            local_metadata = {} if metadata is None else metadata.get(prefix[:-1], {})
+            module._load_from_state_dict(
+                state_dict, prefix, local_metadata, True, missing_keys, unexpected_keys, error_msgs)
+            for name, child in module._modules.items():
+                if child is not None:
+                    load(child, prefix + name + '.')
+
+        # Make sure we are able to load base models as well as derived models (with heads)
+        start_prefix = ''
+        model_to_load = model
+        if not hasattr(model, cls.base_model_prefix) and any(s.startswith(cls.base_model_prefix) for s in state_dict.keys()):
+            start_prefix = cls.base_model_prefix + '.'
+        if hasattr(model, cls.base_model_prefix) and not any(s.startswith(cls.base_model_prefix) for s in state_dict.keys()):
+            model_to_load = getattr(model, cls.base_model_prefix)
+
+        load(model_to_load, prefix=start_prefix)
+        if len(missing_keys) > 0:
+            logger.info("Weights of {} not initialized from pretrained model: {}".format(
+                model.__class__.__name__, missing_keys))
+        if len(unexpected_keys) > 0:
+            logger.info("Weights from pretrained model not used in {}: {}".format(
+                model.__class__.__name__, unexpected_keys))
+        if len(error_msgs) > 0:
+            raise RuntimeError('Error(s) in loading state_dict for {}:\n\t{}'.format(
+                               model.__class__.__name__, "\n\t".join(error_msgs)))
+
+        if hasattr(model, 'tie_weights'):
+            model.tie_weights()  # make sure word embedding weights are still tied
+
+        if output_loading_info:
+            loading_info = {"missing_keys": missing_keys,
+                            "unexpected_keys": unexpected_keys, "error_msgs": error_msgs}
+            return model, loading_info
+
+        return model
+
+    def save_pretrained(self, save_directory):
+        """save trained model in 8bit"""
+        super().save_pretrained(save_directory)
+        # Only save the model it-self if we are using distributed training
+        model_to_save = self.module if hasattr(self, 'module') else self
+        model_to_save.toggle_8bit(True)
+        output_model_file = os.path.join(save_directory, QUANT_WEIGHTS_NAME)
+        torch.save(model_to_save.state_dict(), output_model_file)
+        model_to_save.toggle_8bit(False)
+
+    def toggle_8bit(self, mode: bool):
+        def _toggle_8bit(module):
+            if isinstance(module, QuantizedLayer):
+                module.mode_8bit = mode
+        self.apply(_toggle_8bit)
+        if mode:
+            training = self.training
+            self.eval()
+            self.train(training)
 
 
 class QuantizedBertModel(QuantizedBertPreTrainedModel, BertModel):

@@ -124,14 +124,14 @@ class QuantizedLinearTest(unittest.TestCase):
         self.assertEqual(qlinear.output_thresh, output_ema)
 
     def test_ema_quantization_data_parallel(self):
-        if not torch.cuda.is_available():
+        if not torch.cuda.is_available() or torch.cuda.device_count() <= 1:
             return
         ema_decay = 0.9
         fake_quantize = FakeLinearQuantizationWithSTE().apply
         qlinear = nn.DataParallel(QuantizedLinear(
             10, 5, bias=False, ema_decay=ema_decay, mode="EMA")).cuda()
         for i in range(5):
-            x = torch.randn(3, 10).cuda()
+            x = torch.randn(2, 10).cuda()
             tmp_input_thresh = x[0].abs().max()
             if i == 0:
                 input_ema = tmp_input_thresh
@@ -218,9 +218,117 @@ class QuantizedLinearTest(unittest.TestCase):
         y_hat = qlinear(x)
         self.assertTrue((y - y_hat).norm() < 1e-6)
 
+    def test_export_to_8bit_with_bias(self):
+        qlinear = QuantizedLinear(10, 5, mode='EMA')
+        qlinear.eval()
+        state_dict = qlinear.state_dict()
+        self.assertTrue('weight' in state_dict)
+        self.assertTrue('bias' in state_dict)
+        self.assertTrue('quantized_weight' not in state_dict)
+        self.assertTrue('_quantized_bias' not in state_dict)
+        self.assertTrue('bias_scale' not in state_dict)
+        qlinear.mode_8bit = True
+        state_dict = qlinear.state_dict()
+        self.assertTrue('weight' not in state_dict)
+        self.assertTrue('bias' not in state_dict)
+        self.assertTrue('quantized_weight' in state_dict)
+        self.assertTrue(state_dict['quantized_weight'].dtype == torch.int8)
+        self.assertTrue('_quantized_bias' in state_dict)
+        self.assertTrue(state_dict['_quantized_bias'].dtype == torch.int32)
+        self.assertTrue('bias_scale' in state_dict)
+        qlinear.mode_8bit = False
+        state_dict = qlinear.state_dict()
+        self.assertTrue('weight' in state_dict)
+        self.assertTrue('bias' in state_dict)
+        self.assertTrue('quantized_weight' not in state_dict)
+        self.assertTrue('_quantized_bias' not in state_dict)
+        self.assertTrue('bias_scale' not in state_dict)
+
+    def test_export_to_8bit_without_bias(self):
+        qlinear = QuantizedLinear(10, 5, bias=False, mode='EMA')
+        qlinear.eval()
+        qlinear.mode_8bit = True
+        state_dict = qlinear.state_dict()
+        self.assertTrue('weight' not in state_dict)
+        self.assertTrue('bias' not in state_dict)
+        self.assertTrue('quantized_weight' in state_dict)
+        self.assertTrue(state_dict['quantized_weight'].dtype == torch.int8)
+        self.assertTrue('_quantized_bias' not in state_dict)
+        self.assertTrue('bias_scale' not in state_dict)
+        qlinear.mode_8bit = False
+        state_dict = qlinear.state_dict()
+        self.assertTrue('weight' in state_dict)
+        self.assertTrue('bias' not in state_dict)
+        self.assertTrue('quantized_weight' not in state_dict)
+        self.assertTrue('_quantized_bias' not in state_dict)
+        self.assertTrue('bias_scale' not in state_dict)
+
+    def test_import_from_8bit_without_bias(self):
+        exporter = QuantizedLinear(10, 5, bias=False, mode='dynamic')
+        exporter.eval()
+        exporter.mode_8bit = True
+        state_dict = exporter.state_dict()
+        exporter.mode_8bit = False
+        importer = QuantizedLinear(10, 5, bias=False, mode='dynamic')
+        self.assertTrue((exporter.weight != importer.weight).any())
+        importer.eval()
+        importer.load_state_dict(state_dict, strict=False)
+        x = torch.randn(3, 10)
+        self.assertTrue((exporter(x) == importer(x)).all())
+
+    def test_import_from_8bit_with_bias(self):
+        # QuantizationMode dynamic
+        exporter = QuantizedLinear(10, 5, mode='dynamic')
+        exporter.eval()
+        exporter.mode_8bit = True
+        state_dict = exporter.state_dict()
+        exporter.mode_8bit = False
+        importer = QuantizedLinear(10, 5, mode='dynamic')
+        self.assertTrue((exporter.weight != importer.weight).any())
+        self.assertTrue((exporter.bias != importer.bias).any())
+        importer.eval()
+        importer.load_state_dict(state_dict, strict=False)
+        x = torch.randn(3, 10)
+        self.assertTrue((exporter(x) == importer(x)).all())
+        # QuantizationMode ema
+        exporter = QuantizedLinear(10, 5, requantize_output=False, mode='ema')
+        x = torch.randn(3, 10)
+        exporter(x)
+        self.assertTrue(exporter.input_thresh != 0.)
+        exporter.eval()
+        exporter.mode_8bit = True
+        state_dict = exporter.state_dict()
+        exporter.mode_8bit = False
+        importer = QuantizedLinear(10, 5, requantize_output=False, mode='ema')
+        self.assertTrue((exporter.weight != importer.weight).any())
+        self.assertTrue((exporter.bias != importer.bias).any())
+        importer.eval()
+        importer.load_state_dict(state_dict, strict=False)
+        self.assertTrue((exporter(x) == importer(x)).all())
+
+    def test_train_block_when_loading_quantized_model(self):
+        exporter = QuantizedLinear(10, 5, mode='dynamic')
+        exporter.eval()
+        exporter.mode_8bit = True
+        state_dict = exporter.state_dict()
+        importer = QuantizedLinear(10, 5, mode='dynamic')
+        importer.eval()
+        importer.load_state_dict(state_dict, strict=False)
+        with self.assertRaises(RuntimeError):
+            importer.train()
+
+    def test_restrict_loading_to_train_model(self):
+        exporter = QuantizedLinear(10, 5, mode='dynamic')
+        exporter.eval()
+        exporter.mode_8bit = True
+        state_dict = exporter.state_dict()
+        importer = QuantizedLinear(10, 5, mode='dynamic')
+        with self.assertRaises(RuntimeError):
+            importer.load_state_dict(state_dict, strict=False)
+
 
 class QuantizedEmbeddingTest(unittest.TestCase):
-    def test_quantized_embedding_forward(self):
+    def test_quantized_embedding_training_forward(self):
         embedding = QuantizedEmbedding(10, 3, mode="ema")
         with torch.no_grad():
             scale = 127. / embedding.weight.abs().max()
@@ -229,6 +337,20 @@ class QuantizedEmbeddingTest(unittest.TestCase):
         embedding.weight.data = torch.randn_like(embedding.weight).mul(
             127.).round().clamp(-127., 127.)
         indices = torch.tensor(np.arange(10))
+        ground = F.embedding(indices, embedding.weight)
+        quantized = embedding(indices)
+        self.assertTrue((ground == quantized).all())
+
+    def test_quantized_embedding_inference_forward(self):
+        embedding = QuantizedEmbedding(10, 3, mode="ema")
+        with torch.no_grad():
+            scale = 127. / embedding.weight.abs().max()
+        self.assertTrue((embedding.fake_quantized_weight == fake_quantize_np(
+            embedding.weight.detach(), scale, 8)).all())
+        embedding.weight.data = torch.randn_like(embedding.weight).mul(
+            127.).round().clamp(-127., 127.)
+        indices = torch.tensor(np.arange(10))
+        embedding.eval()
         ground = F.embedding(indices, embedding.weight)
         quantized = embedding(indices)
         self.assertTrue((ground == quantized).all())
@@ -260,3 +382,32 @@ class QuantizedEmbeddingTest(unittest.TestCase):
         indices = torch.tensor(np.arange(10))
         self.assertTrue((embedding(indices) == qembedding(indices)).all())
         self.assertTrue((embedding(indices) == qembedding(indices)).all())
+
+    def test_export_to_8bit(self):
+        qembed = QuantizedEmbedding(10, 5, mode='EMA')
+        qembed.eval()
+        state_dict = qembed.state_dict()
+        self.assertTrue('quantized_weight' not in state_dict)
+        self.assertTrue('weight' in state_dict)
+        qembed.mode_8bit = True
+        state_dict = qembed.state_dict()
+        self.assertTrue('quantized_weight' in state_dict)
+        self.assertTrue(state_dict['quantized_weight'].dtype == torch.int8)
+        self.assertTrue('weight' not in state_dict)
+        qembed.mode_8bit = False
+        state_dict = qembed.state_dict()
+        self.assertTrue('quantized_weight' not in state_dict)
+        self.assertTrue('weight' in state_dict)
+
+    def test_load_from_8bit(self):
+        exporter = QuantizedEmbedding(10, 5, mode='EMA')
+        exporter.eval()
+        exporter.mode_8bit = True
+        state_dict = exporter.state_dict()
+        exporter.mode_8bit = False
+        importer = QuantizedEmbedding(10, 5, mode='EMA')
+        self.assertTrue((exporter.weight != importer.weight).any())
+        importer.eval()
+        importer.load_state_dict(state_dict, strict=False)
+        indices = torch.tensor(np.arange(10))
+        self.assertTrue((exporter(indices) == importer(indices)).all())

@@ -28,9 +28,13 @@ import abc
 
 class Config(abc.ABC):
     """Quantization Configuration Object"""
-    @abc.abstractmethod
-    def __init__(self):
-        pass
+    ATTRIBUTES = {}
+
+    def __init__(self, **kwargs):
+        for entry in self.ATTRIBUTES:
+            setattr(self, entry, kwargs.pop(entry, self.ATTRIBUTES[entry]))
+        if kwargs:
+            raise TypeError(f"got an unexpected keyword argument: {list(kwargs.keys())}")
 
     @classmethod
     def from_dict(cls, json_object):

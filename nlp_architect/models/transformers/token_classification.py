@@ -133,7 +133,7 @@ class TransformerTokenClassifier(TransformerBase):
         'xlnet': XLNetForTokenClassification,
     }
 
-    def __init__(self, model_type: str, labels: List[str] = None, *args, **kwargs):
+    def __init__(self, model_type: str, labels: List[str] = None, *args, load_quantized=False, **kwargs):
         assert model_type in self.MODEL_CLASS.keys(), "unsupported model type"
         self.labels = labels
         self.num_labels = len(labels) + 1  # +1 for padding label
@@ -146,7 +146,7 @@ class TransformerTokenClassifier(TransformerBase):
 
         self.model_class = self.MODEL_CLASS[model_type]
         self.model = self.model_class.from_pretrained(self.model_name_or_path, from_tf=bool(
-            '.ckpt' in self.model_name_or_path), config=self.config)
+            '.ckpt' in self.model_name_or_path), config=self.config, from_8bit=load_quantized)
         self.to(self.device, self.n_gpus)
 
     def train(self,
