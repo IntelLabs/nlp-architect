@@ -135,7 +135,7 @@ def do_training(args):
     prepare_output_path(args.output_dir, args.overwrite_output_dir)
     device, n_gpus = setup_backend(args.no_cuda)
     # Set seed
-    set_seed(args.seed, n_gpus)
+    args.seed = set_seed(args.seed, n_gpus)
     # prepare data
     processor = TokenClsProcessor(args.data_dir, tag_col=args.tag_col)
     train_ex = processor.get_train_examples()
@@ -205,7 +205,7 @@ def do_kd_training(args):
     prepare_output_path(args.output_dir, args.overwrite_output_dir)
     device, n_gpus = setup_backend(args.no_cuda)
     # Set seed
-    set_seed(args.seed, n_gpus)
+    args.seed = set_seed(args.seed, n_gpus)
     # prepare data
     processor = TokenClsProcessor(args.data_dir, tag_col=args.tag_col)
     train_ex = processor.get_train_examples()

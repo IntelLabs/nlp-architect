@@ -34,7 +34,7 @@ def setup_backend(no_cuda):
 
 
 def set_seed(seed, n_gpus=None):
-    """set seed
+    """set and return seed
     """
     if seed == -1:
         seed = int(time.time())
@@ -43,3 +43,4 @@ def set_seed(seed, n_gpus=None):
     torch.manual_seed(seed)
     if n_gpus is not None and n_gpus > 0:
         torch.cuda.manual_seed_all(seed)
+    return seed
