@@ -87,7 +87,7 @@ class TeacherStudentDistill:
                             help="Teacher model class type")
         parser.add_argument("--kd_temp", type=float, default=1.0,
                             help="KD temperature value")
-        parser.add_argument("--kd_loss_fn", type=str, choices=['kl', 'mse'], default='kl',
+        parser.add_argument("--kd_loss_fn", type=str, choices=['kl', 'mse'], default='mse',
                             help="KD loss function")
         parser.add_argument("--kd_dist_w", type=float, default=0.1,
                             help="KD weight on loss")

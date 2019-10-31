@@ -19,16 +19,17 @@ from __future__ import (absolute_import, division, print_function,
 
 import logging
 import os
+import random
 from os import path
 from typing import List
 
 import numpy as np
 
 from nlp_architect.data.utils import (DataProcessor, InputExample,
-                                      read_column_tagged_file)
+                                      read_column_tagged_file, write_column_tagged_file)
 from nlp_architect.utils.generic import pad_sentences
 from nlp_architect.utils.io import (validate_existing_directory,
-                                    validate_existing_filepath)
+                                    validate_existing_filepath, prepare_output_path)
 from nlp_architect.utils.text import (character_vector_generator,
                                       read_sequential_tagging_file,
                                       word_vector_generator)
@@ -326,8 +327,8 @@ class TokenClsProcessor(DataProcessor):
         return self._create_examples(read_column_tagged_file(os.path.join(data_dir, file_name),
                                                              tag_col=self.tag_col), set_name)
 
-    def get_train_examples(self):
-        return self._read_examples(self.data_dir, "train.txt", "train")
+    def get_train_examples(self, filename="train.txt"):
+        return self._read_examples(self.data_dir, filename, "train")
 
     def get_dev_examples(self):
         return self._read_examples(self.data_dir, "dev.txt", "dev")
@@ -354,6 +355,27 @@ class TokenClsProcessor(DataProcessor):
     @staticmethod
     def get_labels_filename():
         return "labels.txt"
+
+
+    def split_dataset(self, labeled: int, unlabeled: int, out_folder):
+        lines = read_column_tagged_file(os.path.join(self.data_dir, "train.txt"), tag_col=self.tag_col)
+        labeled_data = []
+        unlabeled_data = []
+        num_of_examples = len(lines)
+        print("num=" + str(num_of_examples))
+        assert labeled > 0 and unlabeled > 0
+        all_indices = list(range(num_of_examples))
+        labeled_indices = random.sample(all_indices, labeled)
+        all_indices = list(set(all_indices).difference(set(labeled_indices)))
+        unlabeled_indices = random.sample(all_indices, unlabeled)
+        for i, (sentence, labels) in enumerate(lines):
+            if i in labeled_indices:
+                labeled_data.append((sentence, labels))
+            elif i in unlabeled_indices:
+                unlabeled_data.append((sentence, labels))
+        write_column_tagged_file(out_folder + os.sep + 'labeled.txt', labeled_data)
+        write_column_tagged_file(out_folder + os.sep +'unlabeled.txt', unlabeled_data)
+
 
     @staticmethod
     def _create_examples(lines, set_type):

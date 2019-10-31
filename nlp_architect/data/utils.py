@@ -51,6 +51,9 @@ class DataProcessor(object):
         """Gets the list of labels for this data set."""
         raise NotImplementedError()
 
+    def get_split_train_examples(self, labeled: int, unlabeled: int):
+        """Gets a collection of `InputExample`s for the labeled/unlabeled train sets."""
+        raise NotImplementedError()
 
 class Task:
     """ A task definition class

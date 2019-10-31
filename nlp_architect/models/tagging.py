@@ -226,6 +226,7 @@ class NeuralTagger(TrainableModel):
                 if distiller:
                     batch, t_batch = batch[:2]
                     t_batch = tuple(t.to(self.device) for t in t_batch)
+                    t_logits = distiller.get_teacher_logits(t_batch)
                 batch = tuple(t.to(self.device) for t in batch)
                 inputs = self.batch_mapper(batch)
                 logits = self.model(**inputs)
@@ -239,7 +240,6 @@ class NeuralTagger(TrainableModel):
 
                 # add distillation loss if activated
                 if distiller:
-                    t_logits = distiller.get_teacher_logits(t_batch)
                     loss = distiller.distill_loss(loss, logits, t_logits)
 
                 loss.backward()
@@ -251,17 +251,159 @@ class NeuralTagger(TrainableModel):
                 global_step += 1
                 avg_loss += loss.item()
                 if global_step % logging_steps == 0:
-                    logger.info(" global_step = %s, average loss = %s", global_step, avg_loss / s_idx)
+                    if s_idx != 0:
+                        logger.info(" global_step = %s, average loss = %s", global_step, avg_loss / s_idx)
                     self._get_eval(dev_data_set, "dev")
                     self._get_eval(test_data_set, "test")
                 if save_path is not None and global_step % save_steps == 0:
                     self.save_model(save_path)
+
+    def train_pseudo(self, labeled_data_set: DataLoader,
+              unlabeled_data_set: DataLoader,
+              distiller: TeacherStudentDistill,
+              dev_data_set: DataLoader = None,
+              test_data_set: DataLoader = None,
+              batch_size_l: int = 8, 
+              batch_size_ul: int = 8,
+              epochs: int = 100,
+              optimizer=None,
+              max_grad_norm: float = 5.0,
+              logging_steps: int = 50,
+              save_steps: int = 100,
+              save_path: str = None):
+        """
+        Train a tagging model
+
+        Args:
+            train_data_set (DataLoader): train examples dataloader. If distiller object is
+            provided train examples should contain a tuple of student/teacher data examples.
+            dev_data_set (DataLoader, optional): dev examples dataloader. Defaults to None.
+            test_data_set (DataLoader, optional): test examples dataloader. Defaults to None.
+            batch_size_l (int, optional): batch size for the labeled dataset. Defaults to 8.
+            batch_size_ul (int, optional): batch size for the unlabeled dataset. Defaults to 8.
+            epochs (int, optional): num of epochs to train. Defaults to 100.
+            optimizer (fn, optional): optimizer function. Defaults to default model optimizer.
+            max_grad_norm (float, optional): max gradient norm. Defaults to 5.0.
+            logging_steps (int, optional): number of steps between logging. Defaults to 50.
+            save_steps (int, optional): number of steps between model saves. Defaults to 100.
+            save_path (str, optional): model output path. Defaults to None.
+            distiller (TeacherStudentDistill, optional): KD model for training the model using
+            a teacher model. Defaults to None.
+        """
+        if optimizer is None:
+            optimizer = self.get_optimizer()
+        train_batch_size_l = batch_size_l * max(1, self.n_gpus)
+        train_batch_size_ul = batch_size_ul * max(1, self.n_gpus)
+        logger.info("***** Running training *****")
+        logger.info("  Num labeled examples = %d", len(labeled_data_set.dataset))
+        logger.info("  Num unlabeled examples = %d", len(unlabeled_data_set.dataset))
+        logger.info("  Instantaneous labeled batch size per GPU/CPU = %d",
+                    batch_size_l)
+        logger.info("  Instantaneous unlabeled batch size per GPU/CPU = %d",
+                    batch_size_ul)
+        logger.info("  Total batch size labeled= %d", train_batch_size_l)
+        logger.info("  Total batch size unlabeled= %d", train_batch_size_ul)
+        global_step = 0
+        self.model.zero_grad()
+        avg_loss = 0
+        iter_l = iter(labeled_data_set)
+        iter_ul = iter(unlabeled_data_set)
+        epoch_l = 0
+        epoch_ul = 0
+        s_idx = -1
+        best_dev = 0
+        best_test = 0
+        while(True):
+            logger.info("labeled epoch=%d, unlabeled epoch=%d", epoch_l, epoch_ul)
+            loss_labeled = 0
+            loss_unlabeled = 0
+            try:
+                batch_l = next(iter_l)
+                s_idx += 1
+            except StopIteration:
+                iter_l = iter(labeled_data_set)
+                epoch_l += 1
+                batch_l = next(iter_l)
+                s_idx = 0
+                avg_loss = 0
+            try:
+                batch_ul = next(iter_ul)
+            except StopIteration:
+                iter_ul = iter(unlabeled_data_set)
+                epoch_ul += 1
+                batch_ul = next(iter_ul)
+            if epoch_ul > epochs:
+                logger.info("Done")
+                return
+            self.model.train()
+            batch_l, t_batch_l = batch_l[:2]
+            t_batch_l = tuple(t.to(self.device) for t in t_batch_l)
+            t_logits = distiller.get_teacher_logits(t_batch_l)
+            batch_l = tuple(t.to(self.device) for t in batch_l)
+            inputs = self.batch_mapper(batch_l)
+            logits = self.model(**inputs)                
+            if self.use_crf:
+                loss_labeled = -1.0 * self.crf(logits, inputs['labels'], mask=inputs['mask'] != 0.0)
+            else:
+                loss_fn = CrossEntropyLoss(ignore_index=0)
+                loss_labeled = loss_fn(logits.view(-1, self.num_labels), inputs['labels'].view(-1))
+
+            if self.n_gpus > 1:
+                loss_labeled = loss_labeled.mean()
+
+            # add distillation loss
+            loss_labeled = distiller.distill_loss(loss_labeled, logits, t_logits)
+
+            # unlabeled
+            batch_ul, t_batch_ul = batch_ul[:2]
+            t_batch_ul = tuple(t.to(self.device) for t in t_batch_ul)
+            t_logits = distiller.get_teacher_logits(t_batch_ul)
+            batch_ul = tuple(t.to(self.device) for t in batch_ul)
+            inputs = self.batch_mapper(batch_ul)
+            logits = self.model(**inputs)
+            t_labels = torch.argmax(F.log_softmax(t_logits, dim=2), dim=2)                
+            if self.use_crf:
+                loss_unlabeled = -1.0 * self.crf(logits, t_labels, mask=inputs['mask'] != 0.0)
+            else:
+                loss_fn = CrossEntropyLoss(ignore_index=0)
+                loss_unlabeled = loss_fn(logits.view(-1, self.num_labels), t_labels.view(-1))
+
+            if self.n_gpus > 1:
+                loss_unlabeled = loss_unlabeled.mean()
+
+            # add distillation loss
+            loss_unlabeled = distiller.distill_loss(loss_unlabeled, logits, t_logits)
+
+            # sum labeled and unlabeled losses
+            loss = loss_labeled + loss_unlabeled
+            
+            loss.backward()
+            torch.nn.utils.clip_grad_norm_(self.model.parameters(), max_grad_norm)
+            optimizer.step()
+            # self.model.zero_grad()
+            optimizer.zero_grad()
+
+            global_step += 1
+            avg_loss += loss.item()
+            if global_step % logging_steps == 0:
+                if s_idx != 0:
+                    logger.info(" global_step = %s, average loss = %s", global_step, avg_loss/s_idx)
+                dev = self._get_eval(dev_data_set, "dev")
+                test = self._get_eval(test_data_set, "test")
+                if dev > best_dev:
+                    best_dev = dev
+                    best_test = test
+                logger.info("Best result: dev= %s, test= %s", str(best_dev), str(best_test))
+            if save_path is not None and global_step % save_steps == 0:
+                self.save_model(save_path)
+
 
     def _get_eval(self, ds, set_name):
         if ds is not None:
             logits, out_label_ids = self.evaluate(ds)
             res = self.evaluate_predictions(logits, out_label_ids)
             logger.info(" {} set F1 = {}".format(set_name, res['f1']))
+            return res['f1']
 
     def to(self, device='cpu', n_gpus=0):
         """

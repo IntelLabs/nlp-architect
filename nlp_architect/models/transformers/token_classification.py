@@ -216,6 +216,7 @@ class TransformerTokenClassifier(TransformerBase):
         out_label_ids = active_labels.detach().cpu().numpy()
         _, _, f1 = self.extract_labels(out_label_ids, self.labels_id_map, logits)
         logger.info("Evaluation on set = F1: {}".format(f1))
+        return f1
 
     @staticmethod
     def extract_labels(label_ids, label_map, logits):
