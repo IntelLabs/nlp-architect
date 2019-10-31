@@ -69,7 +69,7 @@ def parse_docs(parser, docs: Union[str, PathLike], out_dir: Union[str, PathLike]
     else:
         raise ValueError("Invalid data format. Please input a list of strings,"
                          "a directory of txt files or a multi-line csv/txt file.")
-    return parser.parse_multiple(doc_stream, out_dir, show_tok, show_doc)
+    return parser.parse(doc_stream, out_dir)
 
 
 def txt_line_generator(txt_file):

@@ -15,14 +15,13 @@
 # ******************************************************************************
 from os import path, remove, makedirs
 
-from nlp_architect.common.core_nlp_doc import CoreNLPDoc
+from nlp_architect.common.core_nlp_doc import CoreNLPDoc, _spacy_pos_to_ptb
 from nlp_architect.data.conll import ConllEntry
 from nlp_architect.models.bist_parser import BISTModel
 from nlp_architect import LIBRARY_OUT
 from nlp_architect.utils.io import download_unlicensed_file, uncompress_file
 from nlp_architect.utils.io import validate
 from nlp_architect.utils.text import SpacyInstance
-from nlp_architect.utils.text import _spacy_pos_to_ptb
 
 
 class SpacyBISTParser:

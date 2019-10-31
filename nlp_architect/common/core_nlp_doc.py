@@ -14,7 +14,7 @@
 # limitations under the License.
 # ******************************************************************************
 import json
-from nlp_architect.utils.text import _spacy_pos_to_ptb
+from nlp_architect.utils.io import validate
 
 
 def merge_punct_tok(merged_punct_sentence, last_merged_punct_index, punct_text, is_traverse):
@@ -44,6 +44,34 @@ def fix_gov_indexes(merged_punct_sentence, sentence):
             orig_gov = sentence[tok_gov]
             correct_index = find_correct_index(orig_gov, merged_punct_sentence)
             merged_token['gov'] = correct_index
+
+
+def _spacy_pos_to_ptb(pos, text):
+    """
+    Converts a Spacy part-of-speech tag to a Penn Treebank part-of-speech tag.
+
+    Args:
+        pos (str): Spacy POS tag (`tok.tag_`).
+        text (str): The token text.
+
+    Returns:
+        ptb_tag (str): Standard PTB POS tag.
+    """
+    validate((pos, str, 0, 30), (text, str, 0, 1000))
+    ptb_tag = pos
+    if text in ['...', '—']:
+        ptb_tag = ':'
+    elif text == '*':
+        ptb_tag = 'SYM'
+    elif pos == 'AFX':
+        ptb_tag = 'JJ'
+    elif pos == 'ADD':
+        ptb_tag = 'NN'
+    elif text != pos and text in [',', '.', ":", '``', '-RRB-', '-LRB-']:
+        ptb_tag = text
+    elif pos in ['NFP', 'HYPH', 'XX']:
+        ptb_tag = 'SYM'
+    return ptb_tag
 
 
 def merge_punctuation(sentence):

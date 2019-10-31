@@ -42,8 +42,10 @@ class TrainSentiment:
                 from nlp_architect.pipelines.spacy_bist import SpacyBISTParser
                 self.parser = SpacyBISTParser(spacy_model=spacy_model)
             elif parser == 'spacy':
-                from nlp_architect.pipelines.spacy_parser_mt import SpacyParserMT
-                self.parser = SpacyParserMT(thin=True, model=spacy_model)
+                from nlp_architect.utils.text import SpacyInstance
+                disable = ["merge_noun_chunks", "ner", "entity_linker",
+                           "textcat", "entity_ruler", "sentencizer", "merge_entities"]
+                self.parser = SpacyInstance(model=spacy_model, disable=disable, ptb_pos=True)
         else:
             self.parser = None
 
@@ -76,7 +78,8 @@ class TrainSentiment:
         if self.parser_name == 'bist':
             _, data_size = parse_docs_bist(self.parser, data, out_dir=out_dir)
         elif self.parser_name == 'spacy':
-            data_size = parse_docs(self.parser, data, out_dir=out_dir)
+            parsed_docs = parse_docs(self.parser, data, out_dir=out_dir)
+            data_size = sum(len(doc.sentences) for doc in parsed_docs)
         if data_size < 1000:
             raise ValueError('The data contains only {0} sentences. A minimum of 1000 '
                              'sentences is required for training.'.format(data_size))

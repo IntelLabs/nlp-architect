@@ -56,8 +56,11 @@ class SentimentInference:
                 from nlp_architect.pipelines.spacy_bist import SpacyBISTParser
                 self.parser = SpacyBISTParser(spacy_model=spacy_model)
             elif parser == 'spacy':
-                from nlp_architect.pipelines.spacy_parser_mt import SpacyParserMT
-                self.parser = SpacyParserMT(thin=True, model=spacy_model)
+                from nlp_architect.utils.text import SpacyInstance
+                disable = ["merge_noun_chunks", "ner", "entity_linker",
+                           "textcat", "entity_ruler", "sentencizer", "merge_entities"]
+                self.parser = SpacyInstance(model=spacy_model, disable=disable, ptb_pos=True,
+                                            n_jobs=1)
         else:
             self.parser = None
 
@@ -70,7 +73,7 @@ class SentimentInference:
         if not parsed_doc:
             if not self.parser:
                 raise RuntimeError("Parser not initialized (try parse=True at init)")
-            parsed_doc = self.parser.parse(doc)
+            parsed_doc = self.parser.parse([doc])[0]
 
         sentiment_doc = None
         for sentence in parsed_doc.sentences:
