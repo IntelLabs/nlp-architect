@@ -29,6 +29,7 @@ from nlp_architect.models.absa.inference.data_types import LexiconElement, Polar
 from nlp_architect.models.absa.train.data_types import OpinionTerm
 from nlp_architect.pipelines.spacy_bist import SpacyBISTParser
 from nlp_architect.utils.io import download_unlicensed_file, line_count
+from types import GeneratorType
 
 
 def _download_pretrained_rerank_model(rerank_model_full_path):
@@ -41,7 +42,7 @@ def _download_pretrained_rerank_model(rerank_model_full_path):
     return rerank_model_full_path
 
 
-def _walk_directory(directory: Union[str, PathLike]):
+def _walk_directory(directory: Union[str, PathLike], yield_fname=True):
     """Iterates a directory's text files and their contents."""
     for dir_path, _, filenames in walk(directory):
         for filename in filenames:
@@ -49,16 +50,47 @@ def _walk_directory(directory: Union[str, PathLike]):
             if isfile(file_path) and not filename.startswith('.'):
                 with open(file_path, encoding='utf-8') as file:
                     doc_text = file.read()
-                    yield filename, doc_text
+                    if yield_fname:
+                        yield filename, doc_text
+                    else:
+                        yield doc_text
 
 
-def parse_docs(parser: SpacyBISTParser, docs: Union[str, PathLike],
-               out_dir: Union[str, PathLike] = None,
+def parse_docs(parser, docs: Union[str, PathLike], out_dir: Union[str, PathLike] = None,
                show_tok=True, show_doc=True):
+    if isinstance(docs, (list, GeneratorType)):
+        doc_stream = (doc for doc in docs)
+    elif isdir(docs):
+        doc_stream = _walk_directory(docs)
+    elif str(docs).endswith('.txt'):
+        doc_stream = txt_line_generator(docs)
+    elif str(docs).endswith('.csv'):
+        doc_stream = csv_line_iterator(docs)
+    else:
+        raise ValueError("Invalid data format. Please input a list of strings,"
+                         "a directory of txt files or a multi-line csv/txt file.")
+    return parser.parse(doc_stream, out_dir)
+
+
+def txt_line_generator(txt_file):
+    with open(txt_file, encoding='utf-8') as f:
+        for line in f:
+            yield line.strip('\n')
+
+
+def csv_line_iterator(csv_file):
+    with open(csv_file, newline='', encoding="utf-8") as f:
+        reader = csv.reader(f, delimiter=',', quotechar='|')
+        for row in reader:
+            yield row[0]
+
+
+def parse_docs_bist(parser, docs: Union[str, PathLike], out_dir: Union[str, PathLike] = None,
+                    show_tok=True, show_doc=True):
     """Parse raw documents in the form of text files in a directory or lines in a text file.
 
     Args:
-        parser (SpacyBISTParser)
+        parser
         docs (str or PathLike)
         out_dir (str or PathLike): If specified, the output will also be written to this path.
         show_tok (bool, optional): Specifies whether to include token text in output.

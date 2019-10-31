@@ -175,7 +175,8 @@ class TransformerSequenceClassifier(TransformerBase):
             return TensorDataset(all_input_ids, all_input_mask, all_segment_ids, all_label_ids)
         return TensorDataset(all_input_ids, all_input_mask, all_segment_ids)
 
-    def inference(self, examples: List[SequenceClsInputExample], batch_size: int = 64, evaluate=False):
+    def inference(self, examples: List[SequenceClsInputExample], batch_size: int = 64,
+                  evaluate=False):
         """
         Run inference on given examples
 

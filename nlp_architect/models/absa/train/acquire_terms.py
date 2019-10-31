@@ -21,7 +21,7 @@ from os import PathLike
 from tqdm import tqdm
 
 from nlp_architect.models.absa import TRAIN_LEXICONS, LEXICONS_OUT
-from nlp_architect.models.absa import TRAIN_OUT, GENERIC_OP_LEX
+from nlp_architect.models.absa import GENERIC_OP_LEX
 from nlp_architect.models.absa.inference.data_types import Polarity
 from nlp_architect.models.absa.train.data_types import AspectTerm, \
     DepRelation, DepRelationTerm, LoadOpinionStopLists, LoadAspectStopLists, OpinionTerm, \
@@ -148,7 +148,6 @@ class AcquireTerms(object):
                             not in self.aspects_candidate_list_prev_iter:
                         opinions.append(rule_5(rel_entry, text))
                         aspects.append(rule_6(rel_entry, relations, text))
-
                     self._add_opinion_term(opinions)
                     self._add_aspect_term(aspects)
 
@@ -292,9 +291,7 @@ class AcquireTerms(object):
                 self.min_freq_aspect_candidate)
 
         self._write_candidate_opinion_lex()
-
         aspect_dict = _add_lemmas_aspect_lex(self.aspect_candidates_list_final)
-
         return aspect_dict
 
 
@@ -325,7 +322,8 @@ def _get_rel_list(parsed_sentence):
     gen_toks = []
     for tok in parsed_sentence:
         gen_toks.append(
-            DepRelationTerm(tok['text'], tok['lemma'], tok['pos'], tok['ner'], tok['start']))
+            DepRelationTerm(tok.get('text'), tok.get('lemma'), tok.get('pos'),
+                            tok.get('ner'), tok.get('start')))
 
     for gen_tok, tok in zip(gen_toks, parsed_sentence):
         gov_idx = tok['gov']
