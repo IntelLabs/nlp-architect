@@ -23,7 +23,6 @@ from nlp_architect.common.cdc.mention_data import MentionData
 from nlp_architect.data.cdc_resources.embedding.embed_elmo import ElmoEmbedding
 from nlp_architect.utils import io
 
-logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 

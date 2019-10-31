@@ -24,7 +24,6 @@ from nlp_architect.models.cross_doc_coref.system.cdc_utils import load_mentions_
 from nlp_architect.utils import io
 from nlp_architect.utils.io import json_dumper
 
-logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 result_dump = {}

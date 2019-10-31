@@ -22,7 +22,6 @@ import numpy as np
 from nlp_architect.models.cross_doc_coref.system.cdc_utils import load_mentions_vocab_from_files
 from nlp_architect.utils import io
 
-logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 parser = argparse.ArgumentParser(description='Create GloVe dataset only dump')

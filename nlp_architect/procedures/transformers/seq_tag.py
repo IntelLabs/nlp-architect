@@ -35,10 +35,6 @@ from nlp_architect.utils.io import prepare_output_path
 from nlp_architect.utils.text import SpacyInstance
 
 logger = logging.getLogger(__name__)
-# Setup logging
-logging.basicConfig(format='%(asctime)s - %(levelname)s - %(name)s - %(message)s',
-                    datefmt='%m/%d/%Y %H:%M:%S',
-                    level=logging.INFO)
 
 
 @register_train_cmd(name='transformer_token',

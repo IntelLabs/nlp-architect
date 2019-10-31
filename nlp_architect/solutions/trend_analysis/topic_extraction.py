@@ -33,7 +33,6 @@ from nlp_architect.utils.embedding import FasttextEmbeddingsModel
 from nlp_architect.utils.io import validate_existing_directory
 from nlp_architect.utils.text import SpacyInstance
 
-logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 logger = logging.getLogger(__name__)
 data_dir = str(LIBRARY_OUT / 'trend-analysis-data')
 

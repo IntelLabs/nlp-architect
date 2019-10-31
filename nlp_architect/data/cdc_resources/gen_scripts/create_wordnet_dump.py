@@ -22,7 +22,6 @@ from nlp_architect.data.cdc_resources.wordnet.wordnet_online import WordnetOnlin
 from nlp_architect.utils import io
 from nlp_architect.utils.io import json_dumper
 
-logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 parser = argparse.ArgumentParser(description='Create WordNet dataset only dump')
