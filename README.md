@@ -30,7 +30,7 @@ A Deep Learning NLP/NLU library by <a href="https://www.intel.ai/research/">Inte
 
 NLP Architect is an open source Python library for exploring state-of-the-art
 deep learning topologies and techniques for optimizing Natural Language Processing and
-Natural Language Understanding neural network.
+Natural Language Understanding Neural Networks.
 
 ## Overview
 
