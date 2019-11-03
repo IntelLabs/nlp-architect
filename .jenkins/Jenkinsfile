@@ -4,10 +4,10 @@
 
 pipeline {
     agent {
-        node {
-                label 'swarm'
-                customWorkspace '/state/ws'
-            }
+        label 'metal-node'
+        docker {
+            image 'ubuntu:latest'
+        }
     }
     options {
         timestamps()
