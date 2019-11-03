@@ -5,7 +5,7 @@
 pipeline {
     agent {
         node {
-                label 'swarm'
+                label 'metal-node'
                 customWorkspace '/state/ws'
             }
     }
