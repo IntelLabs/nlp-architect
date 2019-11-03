@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.utils.embedding &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
+  <title>nlp_architect.utils.embedding &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
   
 
   
@@ -264,19 +264,24 @@
     <span class="k">return</span> <span class="n">emb_mat</span></div>
 
 
-<div class="viewcode-block" id="get_embedding_matrix"><a class="viewcode-back" href="../../../generated_api/nlp_architect.utils.html#nlp_architect.utils.embedding.get_embedding_matrix">[docs]</a><span class="k">def</span> <span class="nf">get_embedding_matrix</span><span class="p">(</span><span class="n">embeddings</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">vocab</span><span class="p">:</span> <span class="n">Vocabulary</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<div class="viewcode-block" id="get_embedding_matrix"><a class="viewcode-back" href="../../../generated_api/nlp_architect.utils.html#nlp_architect.utils.embedding.get_embedding_matrix">[docs]</a><span class="k">def</span> <span class="nf">get_embedding_matrix</span><span class="p">(</span><span class="n">embeddings</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">vocab</span><span class="p">:</span> <span class="n">Vocabulary</span><span class="p">,</span>
+                         <span class="n">embedding_size</span><span class="p">:</span> <span class="nb">int</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generate a matrix of word embeddings given a vocabulary</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        embeddings (dict): a dictionary of embedding vectors</span>
 <span class="sd">        vocab (Vocabulary): a Vocabulary</span>
+<span class="sd">        embedding_size (int): custom embedding matrix size</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        a 2D numpy matrix of lexicon embeddings</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">emb_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">embeddings</span><span class="o">.</span><span class="n">values</span><span class="p">())))</span>
-    <span class="n">mat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">vocab</span><span class="o">.</span><span class="n">max</span><span class="p">,</span> <span class="n">emb_size</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">embedding_size</span><span class="p">:</span>
+        <span class="n">mat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">embedding_size</span><span class="p">,</span> <span class="n">emb_size</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">mat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">vocab</span><span class="p">),</span> <span class="n">emb_size</span><span class="p">))</span>
     <span class="k">for</span> <span class="n">word</span><span class="p">,</span> <span class="n">wid</span> <span class="ow">in</span> <span class="n">vocab</span><span class="o">.</span><span class="n">vocab</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="n">vec</span> <span class="o">=</span> <span class="n">embeddings</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">word</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="kc">None</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">vec</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>

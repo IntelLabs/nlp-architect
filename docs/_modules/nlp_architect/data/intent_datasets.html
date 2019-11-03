@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.data.intent_datasets &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
+  <title>nlp_architect.data.intent_datasets &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
   
 
   
@@ -234,9 +234,9 @@
         <span class="n">train_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_set</span><span class="p">)</span>
         <span class="n">test_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_set</span><span class="p">)</span>
         <span class="n">texts</span><span class="p">,</span> <span class="n">tags</span><span class="p">,</span> <span class="n">intents</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">train_set</span> <span class="o">+</span> <span class="n">test_set</span><span class="p">))</span>
-        <span class="n">text_vectors</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tokens_vocab</span> <span class="o">=</span> <span class="n">word_vector_generator</span><span class="p">(</span><span class="n">texts</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">text_vectors</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tokens_vocab</span> <span class="o">=</span> <span class="n">word_vector_generator</span><span class="p">(</span><span class="n">texts</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
         <span class="n">tag_vectors</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tags_vocab</span> <span class="o">=</span> <span class="n">word_vector_generator</span><span class="p">(</span><span class="n">tags</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-        <span class="n">chars_vectors</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_chars_vocab</span> <span class="o">=</span> <span class="n">character_vector_generator</span><span class="p">(</span><span class="n">texts</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">chars_vectors</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_chars_vocab</span> <span class="o">=</span> <span class="n">character_vector_generator</span><span class="p">(</span><span class="n">texts</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
         <span class="n">i</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_intents_vocab</span> <span class="o">=</span> <span class="n">word_vector_generator</span><span class="p">([</span><span class="n">intents</span><span class="p">])</span>
         <span class="n">i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
@@ -261,12 +261,12 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">word_vocab_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;int: vocabulary size&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tokens_vocab</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tokens_vocab</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">char_vocab_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;int: char vocabulary size&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_chars_vocab</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_chars_vocab</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">label_vocab_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>

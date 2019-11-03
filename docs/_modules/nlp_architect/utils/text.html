@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.utils.text &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
+  <title>nlp_architect.utils.text &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
   
 
   
@@ -222,9 +222,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_vocab</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_rev_vocab</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">include_oov</span> <span class="o">=</span> <span class="n">include_oov</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">oov_id</span> <span class="o">=</span> <span class="n">start</span>
         <span class="k">if</span> <span class="n">include_oov</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_vocab</span><span class="p">[</span><span class="s2">&quot;&lt;UNK&gt;&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">start</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">oov_id</span> <span class="o">=</span> <span class="n">start</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_rev_vocab</span><span class="p">[</span><span class="n">start</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&lt;UNK&gt;&quot;</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">start</span> <span class="o">+</span> <span class="mi">1</span>
         <span class="k">else</span><span class="p">:</span>
@@ -524,9 +524,7 @@
             <span class="n">word</span> <span class="o">=</span> <span class="n">w</span>
             <span class="k">if</span> <span class="n">lower</span><span class="p">:</span>
                 <span class="n">word</span> <span class="o">=</span> <span class="n">word</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-            <span class="n">wid</span> <span class="o">=</span> <span class="n">vocab</span><span class="p">[</span><span class="n">word</span><span class="p">]</span>
-            <span class="k">if</span> <span class="n">wid</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">wid</span> <span class="o">=</span> <span class="n">vocab</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+            <span class="n">wid</span> <span class="o">=</span> <span class="n">vocab</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
             <span class="n">sentence_vec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">wid</span><span class="p">)</span>
         <span class="n">data_vec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sentence_vec</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">data_vec</span><span class="p">,</span> <span class="n">vocab</span></div>
@@ -553,9 +551,7 @@
         <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">sentence</span><span class="p">:</span>
             <span class="n">word_vec</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">w</span><span class="p">:</span>
-                <span class="n">cid</span> <span class="o">=</span> <span class="n">vocab</span><span class="p">[</span><span class="n">char</span><span class="p">]</span>
-                <span class="k">if</span> <span class="n">cid</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="n">cid</span> <span class="o">=</span> <span class="n">vocab</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">char</span><span class="p">)</span>
+                <span class="n">cid</span> <span class="o">=</span> <span class="n">vocab</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">char</span><span class="p">)</span>
                 <span class="n">word_vec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cid</span><span class="p">)</span>
             <span class="n">sentence_vec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">word_vec</span><span class="p">)</span>
         <span class="n">data_vec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sentence_vec</span><span class="p">)</span>

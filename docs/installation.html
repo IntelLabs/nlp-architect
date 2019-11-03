@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Installation &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
+  <title>Installation &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
   
 
   
@@ -88,20 +88,15 @@
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick start</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id1">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#quick-install">Quick Install</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#install-from-source">Install from source</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#selecting-a-backend">Selecting a backend</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id2">Installation</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#updating-nlp-architect">Updating NLP Architect</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#from-source">From source</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#using-pip">Using <cite>pip</cite></a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="#install-from-pip">Install from <code class="docutils literal notranslate"><span class="pre">pip</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#install-from-source">Install from source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#updating-nlp-architect">Updating NLP Architect</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#using-pip">Using <code class="docutils literal notranslate"><span class="pre">pip</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#from-source">From source</a></li>
 </ul>
 </li>
 </ul>
@@ -234,17 +229,11 @@ Linux* or UNIX-based OS (like Mac OS). We recommend using the library with Ubunt
 </tr>
 </tbody>
 </table>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The default installation of NLP Architect use CPU-based binaries of all deep learning frameworks. Intel Optimized MKL-DNN binaries will be installed if a Linux is detected. GPU backend on Linux will install Tensorflow with MKL-DNN and if a GPU is present. See details below for instructions on how to install each backend.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The installation of NLP Architect will install CPU-based binaries of all deep learning frameworks.
+For specific installation of backends of Tensorflow or PyTorch (CPU/MKL/GPU) we recommend installing NLP Architect and then installing the desired backend DL framework.</p>
 </div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">For specific installation of backends of Tensorflow or PyTorch (CPU/MKL/GPU) we recommend installing NLP Architect and then installing the desired package of framework.</p>
-</div>
-</div>
-<div class="section" id="id1">
-<h2>Installation<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="prerequisites">
 <h3>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h3>
 <p>Make sure <code class="docutils literal notranslate"><span class="pre">pip</span></code> and <code class="docutils literal notranslate"><span class="pre">setuptools</span></code> and <code class="docutils literal notranslate"><span class="pre">venv</span></code> are up to date before installing.</p>
@@ -259,117 +248,34 @@ the work done using the library.</p>
 </pre></div>
 </div>
 </div>
-<div class="section" id="quick-install">
-<h3>Quick Install<a class="headerlink" href="#quick-install" title="Permalink to this headline">¶</a></h3>
-<p>Select the desired configuration of your system:</p>
-<div id="app" class="wy-table-responsive">
-<table class="docutils option-list installation_table" frame="void" rules="none">
-    <colgroup><col class="option">
-    <col class="description">
-    </colgroup><tbody valign="top">
-    <tr><td class="option-group">
-    <kbd><span class="option">
-        <strong>Install from</strong>
-    </span></kbd></td>
-    <td>
-        <label class="radio">
-          <input v-model="form.source" type="radio" value="1">Pip
-        </label>
-        <label class="radio">
-          <input v-model="form.source" type="radio" value="0" checked>GitHub
-        </label>
-    </td></tr>
-    <tr><td class="option-group">
-    <kbd><span class="option">
-        <strong>Create virtualenv?</strong>
-    </span></kbd></td>
-    <td>
-        <label class="radio">
-          <input v-model="form.with_env" type="radio" value="1">Yes
-        </label>
-        <label class="radio">
-          <input v-model="form.with_env" type="radio" value="0" checked>No
-        </label>
-    </td></tr>
-    <tr><td class="option-group">
-    <kbd><span class="option">
-        <strong>Backend</strong>
-    </span></kbd></td>
-    <td>
-        <label class="radio">
-          <input v-model="form.backend" type="radio" value="CPU">CPU
-        </label>
-        <label class="radio">
-          <input v-model="form.backend" type="radio" value="MKL" checked>MKL
-        </label>
-        <label class="radio">
-          <input v-model="form.backend" type="radio" value="GPU" checked>GPU
-        </label>
-    </td></tr>
-    <tr><td class="option-group">
-    <kbd><span class="option">
-        <strong>Install in developer mode?</strong>
-    </span></kbd></td>
-    <td>
-    <label class="radio">
-          <input v-model="form.inst_type" type="radio" value="0">Yes
-        </label>
-        <label class="radio">
-          <input v-model="form.inst_type" type="radio" value="1" checked>No
-        </label>
-    </td></tr>
-    </tbody>
-</table><p>Run the following commands to install NLP Architect:</p>
-<div class="code python highlight-default notranslate"><div class="highlight">
-<pre v-html="get_commands()">
+</div>
+<div class="section" id="install-from-pip">
+<h2>Install from <code class="docutils literal notranslate"><span class="pre">pip</span></code><a class="headerlink" href="#install-from-pip" title="Permalink to this headline">¶</a></h2>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">nlp</span><span class="o">-</span><span class="n">architect</span>
 </pre></div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/vue"></script>
-<script src="_static/install.js"></script><p>It is recommended to install NLP Architect in development mode to utilize all its features, examples and solutions.</p>
 </div>
 <div class="section" id="install-from-source">
-<h3>Install from source<a class="headerlink" href="#install-from-source" title="Permalink to this headline">¶</a></h3>
-<p>To get started, clone our repository:</p>
+<h2>Install from source<a class="headerlink" href="#install-from-source" title="Permalink to this headline">¶</a></h2>
 <div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">NervanaSystems</span><span class="o">/</span><span class="n">nlp</span><span class="o">-</span><span class="n">architect</span><span class="o">.</span><span class="n">git</span>
 <span class="n">cd</span> <span class="n">nlp</span><span class="o">-</span><span class="n">architect</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">e</span> <span class="o">.</span>
 </pre></div>
-</div>
-<div class="section" id="selecting-a-backend">
-<h4>Selecting a backend<a class="headerlink" href="#selecting-a-backend" title="Permalink to this headline">¶</a></h4>
-<p>NLP Architect supports CPU, GPU and Intel Optimized Tensorflow (MKL-DNN) backends.
-Users can select the desired backend using a dedicated environment variable (default: CPU). (MKL-DNN and GPU backends are supported only on Linux)</p>
-<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">NLP_ARCHITECT_BE</span><span class="o">=</span><span class="n">CPU</span><span class="o">/</span><span class="n">MKL</span><span class="o">/</span><span class="n">GPU</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="id2">
-<h4>Installation<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
-<p>NLP Architect is installed using <cite>pip</cite> and it is recommended to install in development mode.</p>
-<p>Default:</p>
-<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip3</span> <span class="n">install</span> <span class="o">.</span>
-</pre></div>
-</div>
-<p>Development mode:</p>
-<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip3</span> <span class="n">install</span> <span class="o">-</span><span class="n">e</span> <span class="o">.</span>
-</pre></div>
-</div>
-<p>Once installed, the <code class="docutils literal notranslate"><span class="pre">nlp_architect</span></code> command provides additional options to work with the library, issue <code class="docutils literal notranslate"><span class="pre">nlp_architect</span> <span class="pre">-h</span></code> to see all options.</p>
 </div>
 </div>
 <div class="section" id="updating-nlp-architect">
-<h3>Updating NLP Architect<a class="headerlink" href="#updating-nlp-architect" title="Permalink to this headline">¶</a></h3>
+<h2>Updating NLP Architect<a class="headerlink" href="#updating-nlp-architect" title="Permalink to this headline">¶</a></h2>
 <p>Depending of how you installed NLP Architect to update the library:</p>
-<div class="section" id="from-source">
-<h4>From source<a class="headerlink" href="#from-source" title="Permalink to this headline">¶</a></h4>
-<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">pull</span> <span class="n">origin</span> <span class="n">master</span>
-</pre></div>
-</div>
-</div>
 <div class="section" id="using-pip">
-<h4>Using <cite>pip</cite><a class="headerlink" href="#using-pip" title="Permalink to this headline">¶</a></h4>
+<h3>Using <code class="docutils literal notranslate"><span class="pre">pip</span></code><a class="headerlink" href="#using-pip" title="Permalink to this headline">¶</a></h3>
 <div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">U</span> <span class="n">nlp</span><span class="o">-</span><span class="n">architect</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="from-source">
+<h3>From source<a class="headerlink" href="#from-source" title="Permalink to this headline">¶</a></h3>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">pull</span> <span class="n">origin</span> <span class="n">master</span>
+</pre></div>
 </div>
 </div>
 </div>

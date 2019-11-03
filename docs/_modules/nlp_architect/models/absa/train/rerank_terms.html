@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.models.absa.train.rerank_terms &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
+  <title>nlp_architect.models.absa.train.rerank_terms &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
   
 
   
@@ -206,7 +206,7 @@
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="k">import</span> <span class="n">Path</span>
 
 <span class="kn">from</span> <span class="nn">nlp_architect.models.absa.utils</span> <span class="k">import</span> <span class="n">_read_generic_lex_for_similarity</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.models.absa</span> <span class="k">import</span> <span class="n">TRAIN_OUT</span><span class="p">,</span> <span class="n">TRAIN_LEXICONS</span><span class="p">,</span> <span class="n">GENERIC_OP_LEX</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.models.absa</span> <span class="k">import</span> <span class="n">TRAIN_OUT</span><span class="p">,</span> <span class="n">TRAIN_LEXICONS</span><span class="p">,</span> <span class="n">GENERIC_OP_LEX</span><span class="p">,</span> <span class="n">LEXICONS_OUT</span>
 
 <span class="kn">from</span> <span class="nn">scipy.spatial.distance</span> <span class="k">import</span> <span class="n">cosine</span>
 <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="k">import</span> <span class="n">StratifiedKFold</span>
@@ -218,7 +218,6 @@
 
 
 <div class="viewcode-block" id="RerankTerms"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.models.absa.train.html#nlp_architect.models.absa.train.rerank_terms.RerankTerms">[docs]</a><span class="k">class</span> <span class="nc">RerankTerms</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="n">out_dir</span> <span class="o">=</span> <span class="n">TRAIN_OUT</span> <span class="o">/</span> <span class="s1">&#39;output&#39;</span>
     <span class="n">model_dir</span> <span class="o">=</span> <span class="n">TRAIN_OUT</span> <span class="o">/</span> <span class="s1">&#39;reranking_model&#39;</span>
     <span class="n">train_rerank_data_path</span> <span class="o">=</span> <span class="n">TRAIN_LEXICONS</span> <span class="o">/</span> <span class="s1">&#39;RerankTrainingData.csv&#39;</span>
     <span class="n">PREDICTION_THRESHOLD</span> <span class="o">=</span> <span class="mf">0.7</span>
@@ -247,7 +246,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">rerank_model_path</span> <span class="o">=</span> <span class="n">rerank_model</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">emb_model_path</span> <span class="o">=</span> <span class="n">emb_model_path</span>
 
-        <span class="n">RerankTerms</span><span class="o">.</span><span class="n">out_dir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">LEXICONS_OUT</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
         <span class="n">tensorflow</span><span class="o">.</span><span class="n">logging</span><span class="o">.</span><span class="n">set_verbosity</span><span class="p">(</span><span class="n">tensorflow</span><span class="o">.</span><span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
 
@@ -707,7 +706,7 @@
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_write_prediction_results</span><span class="p">(</span><span class="n">concat_opinion_dict</span><span class="p">,</span> <span class="n">out_override</span><span class="p">):</span>
-        <span class="n">out_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">out_override</span><span class="p">)</span> <span class="k">if</span> <span class="n">out_override</span> <span class="k">else</span> <span class="n">RerankTerms</span><span class="o">.</span><span class="n">out_dir</span>
+        <span class="n">out_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">out_override</span><span class="p">)</span> <span class="k">if</span> <span class="n">out_override</span> <span class="k">else</span> <span class="n">LEXICONS_OUT</span>
         <span class="n">out_path</span> <span class="o">=</span> <span class="n">out_dir</span> <span class="o">/</span> <span class="s1">&#39;generated_opinion_lex_reranked.csv&#39;</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">out_path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">csv_file</span><span class="p">:</span>
             <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">csv_file</span><span class="p">)</span>
