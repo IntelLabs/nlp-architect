@@ -32,7 +32,6 @@ from bokeh.plotting import figure
 from nlp_architect.solutions.trend_analysis.trend_analysis import analyze
 from nlp_architect import LIBRARY_OUT
 
-logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 logger = logging.getLogger(__name__)
 dir = str(LIBRARY_OUT / 'trend-analysis-data')
 graph_data_path = path.join(dir, 'graph_data.csv')

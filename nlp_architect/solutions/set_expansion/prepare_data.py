@@ -32,7 +32,6 @@ from nlp_architect.pipelines.spacy_np_annotator import NPAnnotator, get_noun_phr
 from nlp_architect.utils.io import check_size, download_unlicensed_file, validate_parent_exists
 from nlp_architect.utils.text import spacy_normalizer, SpacyInstance
 
-logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 np2id = {}

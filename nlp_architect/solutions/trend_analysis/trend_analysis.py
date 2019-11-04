@@ -33,7 +33,6 @@ from nlp_architect.utils.io import check_size, validate_existing_filepath
 from nlp_architect.utils.text import simple_normalizer
 
 dir = str(LIBRARY_OUT / 'trend-analysis-data')
-logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 logger = logging.getLogger(__name__)
 target_topics_path = path.join(dir, 'target_topics.csv')
 ref_topics_path = path.join(dir, 'ref_topics.csv')

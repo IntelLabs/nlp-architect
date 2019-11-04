@@ -29,7 +29,6 @@ nlp_chunker_url = 'https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/
 chunker_model_dat_file = 'model_info.dat.params'
 chunker_model_file = 'model.h5'
 chunker_local_path = str(LIBRARY_OUT / 'chunker-pretrained')
-logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 

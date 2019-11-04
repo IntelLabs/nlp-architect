@@ -19,15 +19,18 @@ import os
 from typing import List, Union
 
 import torch
-from pytorch_transformers import XLNetConfig, XLMConfig, BertTokenizer, BertConfig, \
-    XLNetTokenizer, XLMTokenizer, AdamW, WarmupLinearSchedule
 from torch.utils.data import DataLoader
-from tqdm import trange, tqdm
+from tqdm import tqdm, trange
+from transformers import (AdamW, BertConfig, BertTokenizer, RobertaConfig,
+                          RobertaTokenizer, WarmupLinearSchedule, XLMConfig,
+                          XLMTokenizer, XLNetConfig, XLNetTokenizer)
 
 from nlp_architect.models import TrainableModel
-from nlp_architect.models.transformers.quantized_bert import QuantizedBertConfig
+from nlp_architect.models.transformers.quantized_bert import \
+    QuantizedBertConfig
 
 logger = logging.getLogger(__name__)
+
 
 ALL_MODELS = sum((tuple(conf.pretrained_config_archive_map.keys())
                   for conf in (BertConfig, XLNetConfig, XLMConfig)), ())
@@ -48,6 +51,7 @@ class TransformerBase(TrainableModel):
         'quant_bert': (QuantizedBertConfig, BertTokenizer),
         'xlnet': (XLNetConfig, XLNetTokenizer),
         'xlm': (XLMConfig, XLMTokenizer),
+        'roberta': (RobertaConfig, RobertaTokenizer)
     }
 
     def __init__(self, model_type: str, model_name_or_path: str, labels: List[str] = None,

@@ -22,7 +22,6 @@ from argparse import ArgumentParser
 from nlp_architect.models.np2vec import NP2vec
 from nlp_architect.utils.io import validate_existing_filepath, check_size, load_json_file
 
-logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
