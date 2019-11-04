@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.utils package &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
+  <title>nlp_architect.utils package &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
   
 
   
@@ -327,7 +327,7 @@ model provided.</p>
 
 <dl class="function">
 <dt id="nlp_architect.utils.embedding.get_embedding_matrix">
-<code class="descclassname">nlp_architect.utils.embedding.</code><code class="descname">get_embedding_matrix</code><span class="sig-paren">(</span><em>embeddings: dict</em>, <em>vocab: nlp_architect.utils.text.Vocabulary</em><span class="sig-paren">)</span> &#x2192; numpy.ndarray<a class="reference internal" href="../_modules/nlp_architect/utils/embedding.html#get_embedding_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.utils.embedding.get_embedding_matrix" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nlp_architect.utils.embedding.</code><code class="descname">get_embedding_matrix</code><span class="sig-paren">(</span><em>embeddings: dict</em>, <em>vocab: nlp_architect.utils.text.Vocabulary</em>, <em>embedding_size: int = None</em><span class="sig-paren">)</span> &#x2192; numpy.ndarray<a class="reference internal" href="../_modules/nlp_architect/utils/embedding.html#get_embedding_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.utils.embedding.get_embedding_matrix" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate a matrix of word embeddings given a vocabulary</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -336,6 +336,7 @@ model provided.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>embeddings</strong> (<em>dict</em>) – a dictionary of embedding vectors</li>
 <li><strong>vocab</strong> (<a class="reference internal" href="#nlp_architect.utils.text.Vocabulary" title="nlp_architect.utils.text.Vocabulary"><em>Vocabulary</em></a>) – a Vocabulary</li>
+<li><strong>embedding_size</strong> (<em>int</em>) – custom embedding matrix size</li>
 </ul>
 </td>
 </tr>

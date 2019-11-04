@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.procedures package &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
+  <title>nlp_architect.procedures package &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
   
 
   
@@ -132,10 +132,10 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.procedures.procedure">nlp_architect.procedures.procedure module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.procedures.registry">nlp_architect.procedures.registry module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.procedures.token_tagging">nlp_architect.procedures.token_tagging module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.procedures">Module contents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#nlp-architect-procedures-procedure-module">nlp_architect.procedures.procedure module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#nlp-architect-procedures-registry-module">nlp_architect.procedures.registry module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#nlp-architect-procedures-token-tagging-module">nlp_architect.procedures.token_tagging module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-contents">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="nlp_architect.server.html">nlp_architect.server package</a></li>
@@ -217,9 +217,9 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="nlp_architect.procedures.transformers.html">nlp_architect.procedures.transformers package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="nlp_architect.procedures.transformers.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nlp_architect.procedures.transformers.html#module-nlp_architect.procedures.transformers.base">nlp_architect.procedures.transformers.base module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nlp_architect.procedures.transformers.html#module-nlp_architect.procedures.transformers.glue">nlp_architect.procedures.transformers.glue module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nlp_architect.procedures.transformers.html#module-nlp_architect.procedures.transformers.seq_tag">nlp_architect.procedures.transformers.seq_tag module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.procedures.transformers.html#nlp-architect-procedures-transformers-base-module">nlp_architect.procedures.transformers.base module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.procedures.transformers.html#nlp-architect-procedures-transformers-glue-module">nlp_architect.procedures.transformers.glue module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.procedures.transformers.html#nlp-architect-procedures-transformers-seq-tag-module">nlp_architect.procedures.transformers.seq_tag module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nlp_architect.procedures.transformers.html#module-nlp_architect.procedures.transformers">Module contents</a></li>
 </ul>
 </li>
@@ -229,146 +229,17 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-nlp_architect.procedures.procedure">
-<span id="nlp-architect-procedures-procedure-module"></span><h2>nlp_architect.procedures.procedure module<a class="headerlink" href="#module-nlp_architect.procedures.procedure" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="nlp_architect.procedures.procedure.Procedure">
-<em class="property">class </em><code class="descclassname">nlp_architect.procedures.procedure.</code><code class="descname">Procedure</code><span class="sig-paren">(</span><em>parser=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/procedures/procedure.html#Procedure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.procedures.procedure.Procedure" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="staticmethod">
-<dt id="nlp_architect.procedures.procedure.Procedure.add_arguments">
-<em class="property">static </em><code class="descname">add_arguments</code><span class="sig-paren">(</span><em>parser: argparse.ArgumentParser</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/procedures/procedure.html#Procedure.add_arguments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.procedures.procedure.Procedure.add_arguments" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="classmethod">
-<dt id="nlp_architect.procedures.procedure.Procedure.run">
-<em class="property">classmethod </em><code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/procedures/procedure.html#Procedure.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.procedures.procedure.Procedure.run" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="staticmethod">
-<dt id="nlp_architect.procedures.procedure.Procedure.run_procedure">
-<em class="property">static </em><code class="descname">run_procedure</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/procedures/procedure.html#Procedure.run_procedure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.procedures.procedure.Procedure.run_procedure" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
+<div class="section" id="nlp-architect-procedures-procedure-module">
+<h2>nlp_architect.procedures.procedure module<a class="headerlink" href="#nlp-architect-procedures-procedure-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-nlp_architect.procedures.registry">
-<span id="nlp-architect-procedures-registry-module"></span><h2>nlp_architect.procedures.registry module<a class="headerlink" href="#module-nlp_architect.procedures.registry" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
-<dt id="nlp_architect.procedures.registry.register_cmd">
-<code class="descclassname">nlp_architect.procedures.registry.</code><code class="descname">register_cmd</code><span class="sig-paren">(</span><em>registry: dict</em>, <em>name: str</em>, <em>description: str</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/procedures/registry.html#register_cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.procedures.registry.register_cmd" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="nlp_architect.procedures.registry.register_infer_cmd">
-<code class="descclassname">nlp_architect.procedures.registry.</code><code class="descname">register_infer_cmd</code><span class="sig-paren">(</span><em>name: str</em>, <em>description: str</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/procedures/registry.html#register_infer_cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.procedures.registry.register_infer_cmd" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="nlp_architect.procedures.registry.register_process_cmd">
-<code class="descclassname">nlp_architect.procedures.registry.</code><code class="descname">register_process_cmd</code><span class="sig-paren">(</span><em>name: str</em>, <em>description: str</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/procedures/registry.html#register_process_cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.procedures.registry.register_process_cmd" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="nlp_architect.procedures.registry.register_run_cmd">
-<code class="descclassname">nlp_architect.procedures.registry.</code><code class="descname">register_run_cmd</code><span class="sig-paren">(</span><em>name: str</em>, <em>description: str</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/procedures/registry.html#register_run_cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.procedures.registry.register_run_cmd" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="nlp_architect.procedures.registry.register_serve_cmd">
-<code class="descclassname">nlp_architect.procedures.registry.</code><code class="descname">register_serve_cmd</code><span class="sig-paren">(</span><em>name: str</em>, <em>description: str</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/procedures/registry.html#register_serve_cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.procedures.registry.register_serve_cmd" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="nlp_architect.procedures.registry.register_solution_cmd">
-<code class="descclassname">nlp_architect.procedures.registry.</code><code class="descname">register_solution_cmd</code><span class="sig-paren">(</span><em>name: str</em>, <em>description: str</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/procedures/registry.html#register_solution_cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.procedures.registry.register_solution_cmd" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="nlp_architect.procedures.registry.register_train_cmd">
-<code class="descclassname">nlp_architect.procedures.registry.</code><code class="descname">register_train_cmd</code><span class="sig-paren">(</span><em>name: str</em>, <em>description: str</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/procedures/registry.html#register_train_cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.procedures.registry.register_train_cmd" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
+<div class="section" id="nlp-architect-procedures-registry-module">
+<h2>nlp_architect.procedures.registry module<a class="headerlink" href="#nlp-architect-procedures-registry-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-nlp_architect.procedures.token_tagging">
-<span id="nlp-architect-procedures-token-tagging-module"></span><h2>nlp_architect.procedures.token_tagging module<a class="headerlink" href="#module-nlp_architect.procedures.token_tagging" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="nlp_architect.procedures.token_tagging.RunTagger">
-<em class="property">class </em><code class="descclassname">nlp_architect.procedures.token_tagging.</code><code class="descname">RunTagger</code><span class="sig-paren">(</span><em>parser=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/procedures/token_tagging.html#RunTagger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.procedures.token_tagging.RunTagger" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#nlp_architect.procedures.procedure.Procedure" title="nlp_architect.procedures.procedure.Procedure"><code class="xref py py-class docutils literal notranslate"><span class="pre">nlp_architect.procedures.procedure.Procedure</span></code></a></p>
-<dl class="staticmethod">
-<dt id="nlp_architect.procedures.token_tagging.RunTagger.add_arguments">
-<em class="property">static </em><code class="descname">add_arguments</code><span class="sig-paren">(</span><em>parser: argparse.ArgumentParser</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/procedures/token_tagging.html#RunTagger.add_arguments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.procedures.token_tagging.RunTagger.add_arguments" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="staticmethod">
-<dt id="nlp_architect.procedures.token_tagging.RunTagger.run_procedure">
-<em class="property">static </em><code class="descname">run_procedure</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/procedures/token_tagging.html#RunTagger.run_procedure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.procedures.token_tagging.RunTagger.run_procedure" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="nlp_architect.procedures.token_tagging.TrainTagger">
-<em class="property">class </em><code class="descclassname">nlp_architect.procedures.token_tagging.</code><code class="descname">TrainTagger</code><span class="sig-paren">(</span><em>parser=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/procedures/token_tagging.html#TrainTagger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.procedures.token_tagging.TrainTagger" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#nlp_architect.procedures.procedure.Procedure" title="nlp_architect.procedures.procedure.Procedure"><code class="xref py py-class docutils literal notranslate"><span class="pre">nlp_architect.procedures.procedure.Procedure</span></code></a></p>
-<dl class="staticmethod">
-<dt id="nlp_architect.procedures.token_tagging.TrainTagger.add_arguments">
-<em class="property">static </em><code class="descname">add_arguments</code><span class="sig-paren">(</span><em>parser: argparse.ArgumentParser</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/procedures/token_tagging.html#TrainTagger.add_arguments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.procedures.token_tagging.TrainTagger.add_arguments" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="staticmethod">
-<dt id="nlp_architect.procedures.token_tagging.TrainTagger.run_procedure">
-<em class="property">static </em><code class="descname">run_procedure</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/procedures/token_tagging.html#TrainTagger.run_procedure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.procedures.token_tagging.TrainTagger.run_procedure" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="nlp_architect.procedures.token_tagging.TrainTaggerKD">
-<em class="property">class </em><code class="descclassname">nlp_architect.procedures.token_tagging.</code><code class="descname">TrainTaggerKD</code><span class="sig-paren">(</span><em>parser=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/procedures/token_tagging.html#TrainTaggerKD"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.procedures.token_tagging.TrainTaggerKD" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#nlp_architect.procedures.procedure.Procedure" title="nlp_architect.procedures.procedure.Procedure"><code class="xref py py-class docutils literal notranslate"><span class="pre">nlp_architect.procedures.procedure.Procedure</span></code></a></p>
-<dl class="staticmethod">
-<dt id="nlp_architect.procedures.token_tagging.TrainTaggerKD.add_arguments">
-<em class="property">static </em><code class="descname">add_arguments</code><span class="sig-paren">(</span><em>parser: argparse.ArgumentParser</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/procedures/token_tagging.html#TrainTaggerKD.add_arguments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.procedures.token_tagging.TrainTaggerKD.add_arguments" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="staticmethod">
-<dt id="nlp_architect.procedures.token_tagging.TrainTaggerKD.run_procedure">
-<em class="property">static </em><code class="descname">run_procedure</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/procedures/token_tagging.html#TrainTaggerKD.run_procedure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.procedures.token_tagging.TrainTaggerKD.run_procedure" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="function">
-<dt id="nlp_architect.procedures.token_tagging.add_parse_args">
-<code class="descclassname">nlp_architect.procedures.token_tagging.</code><code class="descname">add_parse_args</code><span class="sig-paren">(</span><em>parser: argparse.ArgumentParser</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/procedures/token_tagging.html#add_parse_args"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.procedures.token_tagging.add_parse_args" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="nlp_architect.procedures.token_tagging.do_inference">
-<code class="descclassname">nlp_architect.procedures.token_tagging.</code><code class="descname">do_inference</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/procedures/token_tagging.html#do_inference"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.procedures.token_tagging.do_inference" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="nlp_architect.procedures.token_tagging.do_kd_training">
-<code class="descclassname">nlp_architect.procedures.token_tagging.</code><code class="descname">do_kd_training</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/procedures/token_tagging.html#do_kd_training"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.procedures.token_tagging.do_kd_training" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="nlp_architect.procedures.token_tagging.do_training">
-<code class="descclassname">nlp_architect.procedures.token_tagging.</code><code class="descname">do_training</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/procedures/token_tagging.html#do_training"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.procedures.token_tagging.do_training" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="nlp_architect.procedures.token_tagging.process_inference_input">
-<code class="descclassname">nlp_architect.procedures.token_tagging.</code><code class="descname">process_inference_input</code><span class="sig-paren">(</span><em>input_file</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/procedures/token_tagging.html#process_inference_input"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.procedures.token_tagging.process_inference_input" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
+<div class="section" id="nlp-architect-procedures-token-tagging-module">
+<h2>nlp_architect.procedures.token_tagging module<a class="headerlink" href="#nlp-architect-procedures-token-tagging-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-nlp_architect.procedures">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-nlp_architect.procedures" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-contents">
+<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 

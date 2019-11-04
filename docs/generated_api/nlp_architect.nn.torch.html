@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.nn.torch package &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
+  <title>nlp_architect.nn.torch package &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
   
 
   
@@ -344,9 +344,14 @@ quantize(input))</p>
 
 <dl class="class">
 <dt id="nlp_architect.nn.torch.quantization.QuantizationConfig">
-<em class="property">class </em><code class="descclassname">nlp_architect.nn.torch.quantization.</code><code class="descname">QuantizationConfig</code><span class="sig-paren">(</span><em>activation_bits=8</em>, <em>weight_bits=8</em>, <em>mode='none'</em>, <em>start_step=0</em>, <em>ema_decay=0.9999</em>, <em>requantize_output=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/quantization.html#QuantizationConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizationConfig" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">nlp_architect.nn.torch.quantization.</code><code class="descname">QuantizationConfig</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/quantization.html#QuantizationConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizationConfig" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="nlp_architect.common.html#nlp_architect.common.config.Config" title="nlp_architect.common.config.Config"><code class="xref py py-class docutils literal notranslate"><span class="pre">nlp_architect.common.config.Config</span></code></a></p>
 <p>Quantization Configuration Object</p>
+<dl class="attribute">
+<dt id="nlp_architect.nn.torch.quantization.QuantizationConfig.ATTRIBUTES">
+<code class="descname">ATTRIBUTES</code><em class="property"> = {'activation_bits': 8, 'ema_decay': 0.9999, 'mode': 'none', 'requantize_output': True, 'start_step': 0, 'weight_bits': 8}</em><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizationConfig.ATTRIBUTES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="class">
@@ -374,97 +379,96 @@ quantize(input))</p>
 <dl class="class">
 <dt id="nlp_architect.nn.torch.quantization.QuantizedEmbedding">
 <em class="property">class </em><code class="descclassname">nlp_architect.nn.torch.quantization.</code><code class="descname">QuantizedEmbedding</code><span class="sig-paren">(</span><em>*args</em>, <em>weight_bits=8</em>, <em>start_step=0</em>, <em>mode='none'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/quantization.html#QuantizedEmbedding"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizedEmbedding" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.sparse.Embedding</span></code></p>
+<dd><p>Bases: <a class="reference internal" href="#nlp_architect.nn.torch.quantization.QuantizedLayer" title="nlp_architect.nn.torch.quantization.QuantizedLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">nlp_architect.nn.torch.quantization.QuantizedLayer</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.sparse.Embedding</span></code></p>
 <p>Embedding layer with quantization aware training capability</p>
 <dl class="method">
-<dt id="nlp_architect.nn.torch.quantization.QuantizedEmbedding.extra_repr">
-<code class="descname">extra_repr</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/quantization.html#QuantizedEmbedding.extra_repr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizedEmbedding.extra_repr" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set the extra representation of the module</p>
-<p>To print customized extra information, you should reimplement
-this method in your own modules. Both single-line and multi-line
-strings are acceptable.</p>
+<dt id="nlp_architect.nn.torch.quantization.QuantizedEmbedding.inference_quantized_forward">
+<code class="descname">inference_quantized_forward</code><span class="sig-paren">(</span><em>input</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/quantization.html#QuantizedEmbedding.inference_quantized_forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizedEmbedding.inference_quantized_forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>forward to be used during inference</p>
 </dd></dl>
 
+<dl class="method">
+<dt id="nlp_architect.nn.torch.quantization.QuantizedEmbedding.training_quantized_forward">
+<code class="descname">training_quantized_forward</code><span class="sig-paren">(</span><em>input</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/quantization.html#QuantizedEmbedding.training_quantized_forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizedEmbedding.training_quantized_forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return quantized embeddings</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nlp_architect.nn.torch.quantization.QuantizedLayer">
+<em class="property">class </em><code class="descclassname">nlp_architect.nn.torch.quantization.</code><code class="descname">QuantizedLayer</code><span class="sig-paren">(</span><em>*args</em>, <em>weight_bits=8</em>, <em>start_step=0</em>, <em>mode='none'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/quantization.html#QuantizedLayer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizedLayer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>Quantized Layer interface</p>
 <dl class="attribute">
-<dt id="nlp_architect.nn.torch.quantization.QuantizedEmbedding.fake_quantized_weight">
-<code class="descname">fake_quantized_weight</code><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizedEmbedding.fake_quantized_weight" title="Permalink to this definition">¶</a></dt>
+<dt id="nlp_architect.nn.torch.quantization.QuantizedLayer.CONFIG_ATTRIBUTES">
+<code class="descname">CONFIG_ATTRIBUTES</code><em class="property"> = ['weight_bits', 'start_step', 'mode']</em><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizedLayer.CONFIG_ATTRIBUTES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.nn.torch.quantization.QuantizedLayer.REPR_ATTRIBUTES">
+<code class="descname">REPR_ATTRIBUTES</code><em class="property"> = ['mode', 'weight_bits']</em><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizedLayer.REPR_ATTRIBUTES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="nlp_architect.nn.torch.quantization.QuantizedEmbedding.forward">
-<code class="descname">forward</code><span class="sig-paren">(</span><em>input</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/quantization.html#QuantizedEmbedding.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizedEmbedding.forward" title="Permalink to this definition">¶</a></dt>
-<dd><p>Defines the computation performed at every call.</p>
-<p>Should be overridden by all subclasses.</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Although the recipe for forward pass needs to be defined within
-this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
-instead of this since the former takes care of running the
-registered hooks while the latter silently ignores them.</p>
-</div>
-</dd></dl>
+<dt id="nlp_architect.nn.torch.quantization.QuantizedLayer.extra_repr">
+<code class="descname">extra_repr</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/quantization.html#QuantizedLayer.extra_repr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizedLayer.extra_repr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nlp_architect.nn.torch.quantization.QuantizedLayer.fake_quantized_weight">
+<code class="descname">fake_quantized_weight</code><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizedLayer.fake_quantized_weight" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.nn.torch.quantization.QuantizedLayer.forward">
+<code class="descname">forward</code><span class="sig-paren">(</span><em>input</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/quantization.html#QuantizedLayer.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizedLayer.forward" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="classmethod">
-<dt id="nlp_architect.nn.torch.quantization.QuantizedEmbedding.from_config">
-<em class="property">classmethod </em><code class="descname">from_config</code><span class="sig-paren">(</span><em>*args</em>, <em>config=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/quantization.html#QuantizedEmbedding.from_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizedEmbedding.from_config" title="Permalink to this definition">¶</a></dt>
+<dt id="nlp_architect.nn.torch.quantization.QuantizedLayer.from_config">
+<em class="property">classmethod </em><code class="descname">from_config</code><span class="sig-paren">(</span><em>*args</em>, <em>config=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/quantization.html#QuantizedLayer.from_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizedLayer.from_config" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initialize quantized layer from config</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="nlp_architect.nn.torch.quantization.QuantizedEmbedding.quantized_forward">
-<code class="descname">quantized_forward</code><span class="sig-paren">(</span><em>input</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/quantization.html#QuantizedEmbedding.quantized_forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizedEmbedding.quantized_forward" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return quantized embeddings</p>
+<dt id="nlp_architect.nn.torch.quantization.QuantizedLayer.inference_quantized_forward">
+<code class="descname">inference_quantized_forward</code><span class="sig-paren">(</span><em>input</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/quantization.html#QuantizedLayer.inference_quantized_forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizedLayer.inference_quantized_forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implement forward method to be used while evaluating</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.nn.torch.quantization.QuantizedLayer.train">
+<code class="descname">train</code><span class="sig-paren">(</span><em>mode=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/quantization.html#QuantizedLayer.train"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizedLayer.train" title="Permalink to this definition">¶</a></dt>
+<dd><p>handle transition between quantized model and simulated quantization</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.nn.torch.quantization.QuantizedLayer.training_quantized_forward">
+<code class="descname">training_quantized_forward</code><span class="sig-paren">(</span><em>input</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/quantization.html#QuantizedLayer.training_quantized_forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizedLayer.training_quantized_forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implement forward method to be used while training</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="nlp_architect.nn.torch.quantization.QuantizedEmbedding.weight_scale">
-<code class="descname">weight_scale</code><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizedEmbedding.weight_scale" title="Permalink to this definition">¶</a></dt>
+<dt id="nlp_architect.nn.torch.quantization.QuantizedLayer.weight_scale">
+<code class="descname">weight_scale</code><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizedLayer.weight_scale" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="nlp_architect.nn.torch.quantization.QuantizedLinear">
-<em class="property">class </em><code class="descclassname">nlp_architect.nn.torch.quantization.</code><code class="descname">QuantizedLinear</code><span class="sig-paren">(</span><em>*args</em>, <em>activation_bits=8</em>, <em>weight_bits=8</em>, <em>requantize_output=True</em>, <em>ema_decay=0.9999</em>, <em>start_step=0</em>, <em>mode='none'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/quantization.html#QuantizedLinear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizedLinear" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.linear.Linear</span></code></p>
+<em class="property">class </em><code class="descclassname">nlp_architect.nn.torch.quantization.</code><code class="descname">QuantizedLinear</code><span class="sig-paren">(</span><em>*args</em>, <em>activation_bits=8</em>, <em>requantize_output=True</em>, <em>ema_decay=0.9999</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/quantization.html#QuantizedLinear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizedLinear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nlp_architect.nn.torch.quantization.QuantizedLayer" title="nlp_architect.nn.torch.quantization.QuantizedLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">nlp_architect.nn.torch.quantization.QuantizedLayer</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.linear.Linear</span></code></p>
 <p>Linear layer with quantization aware training capability</p>
-<dl class="method">
-<dt id="nlp_architect.nn.torch.quantization.QuantizedLinear.extra_repr">
-<code class="descname">extra_repr</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/quantization.html#QuantizedLinear.extra_repr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizedLinear.extra_repr" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set the extra representation of the module</p>
-<p>To print customized extra information, you should reimplement
-this method in your own modules. Both single-line and multi-line
-strings are acceptable.</p>
-</dd></dl>
-
 <dl class="attribute">
-<dt id="nlp_architect.nn.torch.quantization.QuantizedLinear.fake_quantized_weight">
-<code class="descname">fake_quantized_weight</code><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizedLinear.fake_quantized_weight" title="Permalink to this definition">¶</a></dt>
+<dt id="nlp_architect.nn.torch.quantization.QuantizedLinear.CONFIG_ATTRIBUTES">
+<code class="descname">CONFIG_ATTRIBUTES</code><em class="property"> = ['weight_bits', 'start_step', 'mode', 'activation_bits', 'requantize_output', 'ema_decay']</em><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizedLinear.CONFIG_ATTRIBUTES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="method">
-<dt id="nlp_architect.nn.torch.quantization.QuantizedLinear.forward">
-<code class="descname">forward</code><span class="sig-paren">(</span><em>input</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/quantization.html#QuantizedLinear.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizedLinear.forward" title="Permalink to this definition">¶</a></dt>
-<dd><p>Defines the computation performed at every call.</p>
-<p>Should be overridden by all subclasses.</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Although the recipe for forward pass needs to be defined within
-this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
-instead of this since the former takes care of running the
-registered hooks while the latter silently ignores them.</p>
-</div>
-</dd></dl>
-
-<dl class="classmethod">
-<dt id="nlp_architect.nn.torch.quantization.QuantizedLinear.from_config">
-<em class="property">classmethod </em><code class="descname">from_config</code><span class="sig-paren">(</span><em>*args</em>, <em>config=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/quantization.html#QuantizedLinear.from_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizedLinear.from_config" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initialize quantized layer from config</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="nlp_architect.nn.torch.quantization.QuantizedLinear.get_quantized_bias">
-<code class="descname">get_quantized_bias</code><span class="sig-paren">(</span><em>scale</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/quantization.html#QuantizedLinear.get_quantized_bias"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizedLinear.get_quantized_bias" title="Permalink to this definition">¶</a></dt>
+<dl class="attribute">
+<dt id="nlp_architect.nn.torch.quantization.QuantizedLinear.REPR_ATTRIBUTES">
+<code class="descname">REPR_ATTRIBUTES</code><em class="property"> = ['mode', 'weight_bits', 'activation_bits', 'accumulation_bits', 'ema_decay', 'requantize_output']</em><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizedLinear.REPR_ATTRIBUTES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -475,8 +479,8 @@ This function should only be used while doing inference</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="nlp_architect.nn.torch.quantization.QuantizedLinear.quantized_weight">
-<code class="descname">quantized_weight</code><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizedLinear.quantized_weight" title="Permalink to this definition">¶</a></dt>
+<dt id="nlp_architect.nn.torch.quantization.QuantizedLinear.quantized_bias">
+<code class="descname">quantized_bias</code><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizedLinear.quantized_bias" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -486,11 +490,6 @@ This function should only be used while doing inference</p>
 learn quantization ranges if quantization mode is EMA.
 This function should only be used while training</p>
 </dd></dl>
-
-<dl class="attribute">
-<dt id="nlp_architect.nn.torch.quantization.QuantizedLinear.weight_scale">
-<code class="descname">weight_scale</code><a class="headerlink" href="#nlp_architect.nn.torch.quantization.QuantizedLinear.weight_scale" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 </dd></dl>
 
@@ -531,7 +530,7 @@ maximum absolute value from x and number of bits</p>
 <dl class="function">
 <dt id="nlp_architect.nn.torch.set_seed">
 <code class="descclassname">nlp_architect.nn.torch.</code><code class="descname">set_seed</code><span class="sig-paren">(</span><em>seed</em>, <em>n_gpus=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch.html#set_seed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.set_seed" title="Permalink to this definition">¶</a></dt>
-<dd><p>set seed</p>
+<dd><p>set and return seed</p>
 </dd></dl>
 
 <dl class="function">

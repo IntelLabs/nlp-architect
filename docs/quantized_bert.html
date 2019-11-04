@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Quantize BERT with Quantization Aware Training &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
+  <title>Quantize BERT with Quantization Aware Training &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
   
 
   
@@ -210,7 +210,7 @@ accelarating computation, true quantization must be applied using
 optimized kernels and dedicated hardware.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">The <a class="reference internal" href="generated_api/nlp_architect.models.transformers.html#nlp_architect.models.transformers.quantized_bert.QuantizedBertModel" title="nlp_architect.models.transformers.quantized_bert.QuantizedBertModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">QuantizedBertModel</span></code></a> is only simulating quantization, meaning, the model is saved and computed using FP32 representation. During inference quantization is done online using Int8 values represented and computed with FP32 tensors.</p>
+<p class="last"><code class="xref py py-class docutils literal notranslate"><span class="pre">QuantizedBertModel</span></code> class does not make use of optimized Integer kernels for quantized Matrix Multiplication. Therefore, we expect that quantized inference will be slower than regular inference since quantization and dequantization operations are added to the unoptimized compute graph.</p>
 </div>
 </div>
 <div class="section" id="quantization-aware-training">
@@ -347,6 +347,14 @@ as an example dataset.</p>
     --do_lower_case
 </pre></div>
 </div>
+<dl class="docutils">
+<dt>The model is saved at the end of training in 2 files:</dt>
+<dd><ol class="first last arabic simple">
+<li>A model saved in FP32 for further <code class="docutils literal notranslate"><span class="pre">pytorch_model.bin</span></code></li>
+<li>A quantized model for inference only <code class="docutils literal notranslate"><span class="pre">quant_pytorch_model.bin</span></code></li>
+</ol>
+</dd>
+</dl>
 </div>
 <div class="section" id="inference">
 <h3>Inference<a class="headerlink" href="#inference" title="Permalink to this headline">¶</a></h3>
@@ -362,8 +370,12 @@ following code snippet:</p>
     --overwrite_output_dir
 </pre></div>
 </div>
-<p>To run evaluation on the task’s development set add the flag <code class="docutils literal notranslate"><span class="pre">--evaluate</span></code>
-to the command line.</p>
+<ul class="simple">
+<li>To run evaluation on the task’s development set add the flag <code class="docutils literal notranslate"><span class="pre">--evaluate</span></code>
+to the command line.</li>
+<li>To run the quantized model saved in <code class="docutils literal notranslate"><span class="pre">quant_pytorch_model.bin</span></code> add the flag
+<code class="docutils literal notranslate"><span class="pre">--load_quantized_model</span></code> to the command line.</li>
+</ul>
 </div>
 </div>
 <div class="section" id="references">

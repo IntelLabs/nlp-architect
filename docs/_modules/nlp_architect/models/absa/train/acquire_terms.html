@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.models.absa.train.acquire_terms &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
+  <title>nlp_architect.models.absa.train.acquire_terms &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
   
 
   
@@ -205,7 +205,7 @@
 
 <span class="kn">from</span> <span class="nn">tqdm</span> <span class="k">import</span> <span class="n">tqdm</span>
 
-<span class="kn">from</span> <span class="nn">nlp_architect.models.absa</span> <span class="k">import</span> <span class="n">TRAIN_LEXICONS</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.models.absa</span> <span class="k">import</span> <span class="n">TRAIN_LEXICONS</span><span class="p">,</span> <span class="n">LEXICONS_OUT</span>
 <span class="kn">from</span> <span class="nn">nlp_architect.models.absa</span> <span class="k">import</span> <span class="n">TRAIN_OUT</span><span class="p">,</span> <span class="n">GENERIC_OP_LEX</span>
 <span class="kn">from</span> <span class="nn">nlp_architect.models.absa.inference.data_types</span> <span class="k">import</span> <span class="n">Polarity</span>
 <span class="kn">from</span> <span class="nn">nlp_architect.models.absa.train.data_types</span> <span class="k">import</span> <span class="n">AspectTerm</span><span class="p">,</span> \
@@ -236,11 +236,9 @@
 <span class="sd">                                          across all iterations</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-    <span class="n">out_dir</span> <span class="o">=</span> <span class="n">TRAIN_OUT</span> <span class="o">/</span> <span class="s1">&#39;output&#39;</span>
-    <span class="n">feature_table_path</span> <span class="o">=</span> <span class="n">out_dir</span> <span class="o">/</span> <span class="s1">&#39;feature_table.csv&#39;</span>
     <span class="n">generic_opinion_lex_path</span> <span class="o">=</span> <span class="n">GENERIC_OP_LEX</span>
-    <span class="n">acquired_opinion_terms_path</span> <span class="o">=</span> <span class="n">out_dir</span> <span class="o">/</span> <span class="s1">&#39;generated_opinion_lex.csv&#39;</span>
-    <span class="n">acquired_aspect_terms_path</span> <span class="o">=</span> <span class="n">out_dir</span> <span class="o">/</span> <span class="s1">&#39;generated_aspect_lex.csv&#39;</span>
+    <span class="n">acquired_opinion_terms_path</span> <span class="o">=</span> <span class="n">LEXICONS_OUT</span> <span class="o">/</span> <span class="s1">&#39;generated_opinion_lex.csv&#39;</span>
+    <span class="n">acquired_aspect_terms_path</span> <span class="o">=</span> <span class="n">LEXICONS_OUT</span> <span class="o">/</span> <span class="s1">&#39;generated_aspect_lex.csv&#39;</span>
 
     <span class="n">GENERIC_OPINION_LEX</span> <span class="o">=</span> <span class="n">_load_lex_as_list_from_csv</span><span class="p">(</span><span class="n">GENERIC_OP_LEX</span><span class="p">)</span>
     <span class="n">GENERAL_ADJECTIVES_LEX</span> <span class="o">=</span> <span class="n">_load_lex_as_list_from_csv</span><span class="p">(</span>
@@ -282,7 +280,7 @@
     <span class="c1"># maximum number of iterations</span>
     <span class="n">NUM_OF_SENTENCES_PER_OPINION_AND_ASPECT_TERM_INC</span> <span class="o">=</span> <span class="mi">35000</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">asp_thresh</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">op_thresh</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">asp_thresh</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">op_thresh</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">opinion_candidate_list_prev_iter</span> <span class="o">=</span> \
             <span class="n">read_generic_lex_from_file</span><span class="p">(</span><span class="n">AcquireTerms</span><span class="o">.</span><span class="n">generic_opinion_lex_path</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">generic_sent_dict</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">opinion_candidate_list_prev_iter</span><span class="p">)</span>
@@ -435,7 +433,7 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        write generated lexicons to csv files</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">AcquireTerms</span><span class="o">.</span><span class="n">out_dir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">LEXICONS_OUT</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
         <span class="n">_write_final_opinion_lex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">opinion_candidates_list_final</span><span class="p">,</span>
                                  <span class="bp">self</span><span class="o">.</span><span class="n">acquired_opinion_terms_path</span><span class="p">)</span>
