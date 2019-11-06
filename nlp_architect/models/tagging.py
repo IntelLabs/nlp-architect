@@ -270,7 +270,8 @@ class NeuralTagger(TrainableModel):
               max_grad_norm: float = 5.0,
               logging_steps: int = 50,
               save_steps: int = 100,
-              save_path: str = None):
+              save_path: str = None,
+              save_best: bool = False):
         """
         Train a tagging model
 
@@ -287,6 +288,7 @@ class NeuralTagger(TrainableModel):
             logging_steps (int, optional): number of steps between logging. Defaults to 50.
             save_steps (int, optional): number of steps between model saves. Defaults to 100.
             save_path (str, optional): model output path. Defaults to None.
+            save_best (str, optional): wether to save model when result is best on dev set
             distiller (TeacherStudentDistill, optional): KD model for training the model using
             a teacher model. Defaults to None.
         """
@@ -337,42 +339,33 @@ class NeuralTagger(TrainableModel):
                 return
             self.model.train()
             batch_l, t_batch_l = batch_l[:2]
+            batch_ul, t_batch_ul = batch_ul[:2]
             t_batch_l = tuple(t.to(self.device) for t in t_batch_l)
+            t_batch_ul = tuple(t.to(self.device) for t in t_batch_ul)
             t_logits = distiller.get_teacher_logits(t_batch_l)
+            t_logits_ul = distiller.get_teacher_logits(t_batch_ul)
             batch_l = tuple(t.to(self.device) for t in batch_l)
+            batch_ul = tuple(t.to(self.device) for t in batch_ul)
             inputs = self.batch_mapper(batch_l)
-            logits = self.model(**inputs)                
+            inputs_ul = self.batch_mapper(batch_ul)
+            logits = self.model(**inputs)
+            logits_ul = self.model(**inputs_ul)
+            t_labels = torch.argmax(F.log_softmax(t_logits, dim=2), dim=2)                
             if self.use_crf:
                 loss_labeled = -1.0 * self.crf(logits, inputs['labels'], mask=inputs['mask'] != 0.0)
+                loss_unlabeled = -1.0 * self.crf(logits_ul, t_labels, mask=inputs_ul['mask'] != 0.0)
             else:
                 loss_fn = CrossEntropyLoss(ignore_index=0)
                 loss_labeled = loss_fn(logits.view(-1, self.num_labels), inputs['labels'].view(-1))
+                loss_unlabeled = loss_fn(logits_ul.view(-1, self.num_labels), t_labels.view(-1))
 
             if self.n_gpus > 1:
                 loss_labeled = loss_labeled.mean()
-
-            # add distillation loss
-            loss_labeled = distiller.distill_loss(loss_labeled, logits, t_logits)
-
-            # unlabeled
-            batch_ul, t_batch_ul = batch_ul[:2]
-            t_batch_ul = tuple(t.to(self.device) for t in t_batch_ul)
-            t_logits = distiller.get_teacher_logits(t_batch_ul)
-            batch_ul = tuple(t.to(self.device) for t in batch_ul)
-            inputs = self.batch_mapper(batch_ul)
-            logits = self.model(**inputs)
-            t_labels = torch.argmax(F.log_softmax(t_logits, dim=2), dim=2)                
-            if self.use_crf:
-                loss_unlabeled = -1.0 * self.crf(logits, t_labels, mask=inputs['mask'] != 0.0)
-            else:
-                loss_fn = CrossEntropyLoss(ignore_index=0)
-                loss_unlabeled = loss_fn(logits.view(-1, self.num_labels), t_labels.view(-1))
-
-            if self.n_gpus > 1:
                 loss_unlabeled = loss_unlabeled.mean()
 
             # add distillation loss
-            loss_unlabeled = distiller.distill_loss(loss_unlabeled, logits, t_logits)
+            loss_labeled = distiller.distill_loss(loss_labeled, logits, t_logits)
+            loss_unlabeled = distiller.distill_loss(loss_unlabeled, logits_ul, t_logits_ul)
 
             # sum labeled and unlabeled losses
             loss = loss_labeled + loss_unlabeled
@@ -382,7 +375,6 @@ class NeuralTagger(TrainableModel):
             optimizer.step()
             # self.model.zero_grad()
             optimizer.zero_grad()
-
             global_step += 1
             avg_loss += loss.item()
             if global_step % logging_steps == 0:
@@ -393,6 +385,8 @@ class NeuralTagger(TrainableModel):
                 if dev > best_dev:
                     best_dev = dev
                     best_test = test
+                    if save_path is not None and save_best:
+                        self.save_model(save_path)
                 logger.info("Best result: dev= %s, test= %s", str(best_dev), str(best_test))
             if save_path is not None and global_step % save_steps == 0:
                 self.save_model(save_path)
