@@ -357,8 +357,8 @@ class TokenClsProcessor(DataProcessor):
         return "labels.txt"
 
 
-    def split_dataset(self, labeled: int, unlabeled: int, out_folder):
-        lines = read_column_tagged_file(os.path.join(self.data_dir, "train.txt"), tag_col=self.tag_col)
+    def split_dataset(self, labeled: int, unlabeled: int, out_folder, dataset: str = 'train.txt'):
+        lines = read_column_tagged_file(os.path.join(self.data_dir, dataset), tag_col=self.tag_col)
         labeled_data = []
         unlabeled_data = []
         num_of_examples = len(lines)

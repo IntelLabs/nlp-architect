@@ -350,7 +350,7 @@ class NeuralTagger(TrainableModel):
             inputs_ul = self.batch_mapper(batch_ul)
             logits = self.model(**inputs)
             logits_ul = self.model(**inputs_ul)
-            t_labels = torch.argmax(F.log_softmax(t_logits, dim=2), dim=2)                
+            t_labels = torch.argmax(F.log_softmax(t_logits_ul, dim=2), dim=2)                
             if self.use_crf:
                 loss_labeled = -1.0 * self.crf(logits, inputs['labels'], mask=inputs['mask'] != 0.0)
                 loss_unlabeled = -1.0 * self.crf(logits_ul, t_labels, mask=inputs_ul['mask'] != 0.0)
