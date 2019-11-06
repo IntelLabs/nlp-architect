@@ -69,12 +69,6 @@ class Task:
         self.data_dir = data_dir
         self.task_type = task_type
 
-    def get_split_train_examples(self, labeled: int, unlabeled: int):
-        """split the train set into 2 sub sets (given by input size) to be
-        used as labelled and unlabeled sets for semi-supervision tasks
-        """
-        return self.processor.get_split_train_examples(self.data_dir, labeled, unlabeled)
-
     def get_train_examples(self):
         return self.processor.get_train_examples(self.data_dir)
 
