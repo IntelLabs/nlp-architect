@@ -140,7 +140,7 @@ def do_training(args):
                      logging_steps=args.logging_steps,
                      save_steps=args.save_steps)
     classifier.save_model(args.output_dir, args=args)
-    
+
 
 def do_inference(args):
     prepare_output_path(args.output_dir, args.overwrite_output_dir)

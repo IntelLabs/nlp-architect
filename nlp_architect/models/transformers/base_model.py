@@ -195,7 +195,8 @@ class TransformerBase(TrainableModel):
             raise FileNotFoundError
         with io.open(model_path + os.sep + 'labels.txt') as fp:
             labels = [l.strip() for l in fp.readlines()]
-        return cls(model_type=model_type, model_name_or_path=model_path, labels=labels, *args, **kwargs)
+        return cls(
+            model_type=model_type, model_name_or_path=model_path, labels=labels, *args, **kwargs)
 
     @staticmethod
     def get_train_steps_epochs(max_steps: int,

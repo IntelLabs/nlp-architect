@@ -252,26 +252,28 @@ class NeuralTagger(TrainableModel):
                 avg_loss += loss.item()
                 if global_step % logging_steps == 0:
                     if s_idx != 0:
-                        logger.info(" global_step = %s, average loss = %s", global_step, avg_loss / s_idx)
+                        logger.info(
+                            " global_step = %s, average loss = %s", global_step, avg_loss / s_idx)
                     self._get_eval(dev_data_set, "dev")
                     self._get_eval(test_data_set, "test")
                 if save_path is not None and global_step % save_steps == 0:
                     self.save_model(save_path)
 
-    def train_pseudo(self, labeled_data_set: DataLoader,
-              unlabeled_data_set: DataLoader,
-              distiller: TeacherStudentDistill,
-              dev_data_set: DataLoader = None,
-              test_data_set: DataLoader = None,
-              batch_size_l: int = 8, 
-              batch_size_ul: int = 8,
-              epochs: int = 100,
-              optimizer=None,
-              max_grad_norm: float = 5.0,
-              logging_steps: int = 50,
-              save_steps: int = 100,
-              save_path: str = None,
-              save_best: bool = False):
+    def train_pseudo(
+            self, labeled_data_set: DataLoader,
+            unlabeled_data_set: DataLoader,
+            distiller: TeacherStudentDistill,
+            dev_data_set: DataLoader = None,
+            test_data_set: DataLoader = None,
+            batch_size_l: int = 8,
+            batch_size_ul: int = 8,
+            epochs: int = 100,
+            optimizer=None,
+            max_grad_norm: float = 5.0,
+            logging_steps: int = 50,
+            save_steps: int = 100,
+            save_path: str = None,
+            save_best: bool = False):
         """
         Train a tagging model
 
@@ -350,10 +352,12 @@ class NeuralTagger(TrainableModel):
             inputs_ul = self.batch_mapper(batch_ul)
             logits = self.model(**inputs)
             logits_ul = self.model(**inputs_ul)
-            t_labels = torch.argmax(F.log_softmax(t_logits_ul, dim=2), dim=2)                
+            t_labels = torch.argmax(F.log_softmax(t_logits_ul, dim=2), dim=2)
             if self.use_crf:
-                loss_labeled = -1.0 * self.crf(logits, inputs['labels'], mask=inputs['mask'] != 0.0)
-                loss_unlabeled = -1.0 * self.crf(logits_ul, t_labels, mask=inputs_ul['mask'] != 0.0)
+                loss_labeled = -1.0 * self.crf(
+                    logits, inputs['labels'], mask=inputs['mask'] != 0.0)
+                loss_unlabeled = -1.0 * self.crf(
+                    logits_ul, t_labels, mask=inputs_ul['mask'] != 0.0)
             else:
                 loss_fn = CrossEntropyLoss(ignore_index=0)
                 loss_labeled = loss_fn(logits.view(-1, self.num_labels), inputs['labels'].view(-1))
@@ -369,7 +373,6 @@ class NeuralTagger(TrainableModel):
 
             # sum labeled and unlabeled losses
             loss = loss_labeled + loss_unlabeled
-            
             loss.backward()
             torch.nn.utils.clip_grad_norm_(self.model.parameters(), max_grad_norm)
             optimizer.step()
@@ -379,7 +382,8 @@ class NeuralTagger(TrainableModel):
             avg_loss += loss.item()
             if global_step % logging_steps == 0:
                 if s_idx != 0:
-                    logger.info(" global_step = %s, average loss = %s", global_step, avg_loss/s_idx)
+                    logger.info(
+                        " global_step = %s, average loss = %s", global_step, avg_loss / s_idx)
                 dev = self._get_eval(dev_data_set, "dev")
                 test = self._get_eval(test_data_set, "test")
                 if dev > best_dev:
@@ -391,13 +395,13 @@ class NeuralTagger(TrainableModel):
             if save_path is not None and global_step % save_steps == 0:
                 self.save_model(save_path)
 
-
     def _get_eval(self, ds, set_name):
         if ds is not None:
             logits, out_label_ids = self.evaluate(ds)
             res = self.evaluate_predictions(logits, out_label_ids)
             logger.info(" {} set F1 = {}".format(set_name, res['f1']))
             return res['f1']
+        return None
 
     def to(self, device='cpu', n_gpus=0):
         """

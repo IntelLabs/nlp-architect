@@ -221,7 +221,8 @@ class QuantizedBertPreTrainedModel(BertPreTrainedModel):
 
         # Instantiate model.
         model = cls(config)
-        # Set model to initialize variables to be loaded from quantized checkpoint which are None by Default
+        # Set model to initialize variables to be loaded from quantized
+        # checkpoint which are None by Default
         model.eval()
         # Get state dict of model
         state_dict = torch.load(model_file, map_location='cpu')
@@ -240,7 +241,8 @@ class QuantizedBertPreTrainedModel(BertPreTrainedModel):
         def load(module, prefix=''):
             local_metadata = {} if metadata is None else metadata.get(prefix[:-1], {})
             module._load_from_state_dict(
-                state_dict, prefix, local_metadata, True, missing_keys, unexpected_keys, error_msgs)
+                state_dict, prefix, local_metadata, True, missing_keys,
+                unexpected_keys, error_msgs)
             for name, child in module._modules.items():
                 if child is not None:
                     load(child, prefix + name + '.')
@@ -248,9 +250,11 @@ class QuantizedBertPreTrainedModel(BertPreTrainedModel):
         # Make sure we are able to load base models as well as derived models (with heads)
         start_prefix = ''
         model_to_load = model
-        if not hasattr(model, cls.base_model_prefix) and any(s.startswith(cls.base_model_prefix) for s in state_dict.keys()):
+        if not hasattr(model, cls.base_model_prefix) and any(
+                s.startswith(cls.base_model_prefix) for s in state_dict.keys()):
             start_prefix = cls.base_model_prefix + '.'
-        if hasattr(model, cls.base_model_prefix) and not any(s.startswith(cls.base_model_prefix) for s in state_dict.keys()):
+        if hasattr(model, cls.base_model_prefix) and not any(
+                s.startswith(cls.base_model_prefix) for s in state_dict.keys()):
             model_to_load = getattr(model, cls.base_model_prefix)
 
         load(model_to_load, prefix=start_prefix)

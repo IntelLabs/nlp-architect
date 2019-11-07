@@ -61,6 +61,7 @@ class TrainTaggerKD(Procedure):
     def run_procedure(args):
         do_kd_training(args)
 
+
 @register_train_cmd(name='tagger_kd_pseudo',
                     description='Train a neural tagger using Knowledge Distillation'
                                 ' and a Transformer teacher model + pseudo-labeling')
@@ -301,6 +302,7 @@ def do_kd_training(args):
                      distiller=distiller)
     classifier.save_model(args.output_dir)
 
+
 def do_kd_pseudo_training(args):
     prepare_output_path(args.output_dir, args.overwrite_output_dir)
     device, n_gpus = setup_backend(args.no_cuda)
@@ -339,26 +341,29 @@ def do_kd_pseudo_training(args):
 
     train_batch_size = args.b * max(1, n_gpus)
     train_batch_size_ul = args.b_ul * max(1, n_gpus)
-    train_labeled_dataset = classifier.convert_to_tensors(train_labeled_ex,
-                                                  max_seq_length=args.max_sentence_length,
-                                                  max_word_length=args.max_word_length)
-    train_unlabeled_dataset = classifier.convert_to_tensors(train_unlabeled_ex,
-                                                  max_seq_length=args.max_sentence_length,
-                                                  max_word_length=args.max_word_length,
-                                                  include_labels=False)        
-    teacher = TransformerTokenClassifier.load_model(model_path=args.teacher_model_path,
-                                                    model_type=args.teacher_model_type)
+    train_labeled_dataset = classifier.convert_to_tensors(
+        train_labeled_ex, max_seq_length=args.max_sentence_length,
+        max_word_length=args.max_word_length)
+    train_unlabeled_dataset = classifier.convert_to_tensors(
+        train_unlabeled_ex, max_seq_length=args.max_sentence_length,
+        max_word_length=args.max_word_length, include_labels=False)
+    teacher = TransformerTokenClassifier.load_model(
+        model_path=args.teacher_model_path,
+        model_type=args.teacher_model_type)
     teacher.to(device, n_gpus)
-    teacher_labeled_dataset = teacher.convert_to_tensors(train_labeled_ex, args.max_sentence_length, False)
-    teacher_unlabeled_dataset = teacher.convert_to_tensors(train_unlabeled_ex, args.max_sentence_length, False)
+    teacher_labeled_dataset = teacher.convert_to_tensors(
+        train_labeled_ex, args.max_sentence_length, False)
+    teacher_unlabeled_dataset = teacher.convert_to_tensors(
+        train_unlabeled_ex, args.max_sentence_length, False)
     train_labeled_dataset = ParallelDataset(train_labeled_dataset, teacher_labeled_dataset)
     train_unlabeled_dataset = ParallelDataset(train_unlabeled_dataset, teacher_unlabeled_dataset)
     train_labeled_sampler = RandomSampler(train_labeled_dataset)
     train_unlabeled_sampler = RandomSampler(train_unlabeled_dataset)
-    train_labeled_dl = DataLoader(train_labeled_dataset, sampler=train_labeled_sampler,
-                          batch_size=train_batch_size)
-    train_unlabeled_dl = DataLoader(train_unlabeled_dataset, sampler=train_unlabeled_sampler,
-                          batch_size=train_batch_size_ul)
+    train_labeled_dl = DataLoader(
+        train_labeled_dataset, sampler=train_labeled_sampler,
+        batch_size=train_batch_size)
+    train_unlabeled_dl = DataLoader(
+        train_unlabeled_dataset, sampler=train_unlabeled_sampler, batch_size=train_batch_size_ul)
 
     if dev_ex is not None:
         dev_dataset = classifier.convert_to_tensors(dev_ex,
@@ -380,14 +385,11 @@ def do_kd_pseudo_training(args):
 
     distiller = TeacherStudentDistill(teacher, args.kd_temp, args.kd_dist_w, args.kd_student_w,
                                       args.kd_loss_fn)
-    classifier.train_pseudo(train_labeled_dl, train_unlabeled_dl, distiller, dev_dl, test_dl,
-                     batch_size_l=args.b,
-                     batch_size_ul=args.b_ul,
-                     epochs=args.e,
-                     logging_steps=args.logging_steps,
-                     save_steps=args.save_steps,
-                     save_path=args.output_dir,
-                     optimizer=opt if opt is not None else None)
+    classifier.train_pseudo(
+        train_labeled_dl, train_unlabeled_dl, distiller, dev_dl, test_dl, batch_size_l=args.b,
+        batch_size_ul=args.b_ul, epochs=args.e, logging_steps=args.logging_steps,
+        save_steps=args.save_steps, save_path=args.output_dir,
+        optimizer=opt if opt is not None else None)
     classifier.save_model(args.output_dir)
 
 

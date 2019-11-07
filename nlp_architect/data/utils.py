@@ -35,15 +35,15 @@ class InputExample(ABC):
 class DataProcessor(object):
     """Base class for data converters for sequence/token classification data sets."""
 
-    def get_train_examples(self, data_dir):
+    def get_train_examples(self, data_dir, filename):
         """Gets a collection of `InputExample`s for the train set."""
         raise NotImplementedError()
 
-    def get_dev_examples(self, data_dir):
+    def get_dev_examples(self):
         """Gets a collection of `InputExample`s for the dev set."""
         raise NotImplementedError()
 
-    def get_test_examples(self, data_dir):
+    def get_test_examples(self):
         """Gets a collection of `InputExample`s for the test set."""
         raise NotImplementedError()
 
@@ -51,9 +51,6 @@ class DataProcessor(object):
         """Gets the list of labels for this data set."""
         raise NotImplementedError()
 
-    def get_split_train_examples(self, labeled: int, unlabeled: int):
-        """Gets a collection of `InputExample`s for the labeled/unlabeled train sets."""
-        raise NotImplementedError()
 
 class Task:
     """ A task definition class

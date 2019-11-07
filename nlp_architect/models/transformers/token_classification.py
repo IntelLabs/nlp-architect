@@ -27,7 +27,7 @@ from nlp_architect.utils.metrics import tagging
 
 
 def bert_for_tagging_forward(bert, input_ids, token_type_ids=None, attention_mask=None,
-                             labels=None, position_ids=None, head_mask=None, valid_ids=None):
+                             labels=None, head_mask=None, valid_ids=None):
     outputs = bert.bert(
         input_ids,
         token_type_ids=token_type_ids,
@@ -59,8 +59,7 @@ class BertForTagging(BertForTokenClassification):
                 position_ids=None, head_mask=None, valid_ids=None):
         return bert_for_tagging_forward(self, input_ids, token_type_ids=token_type_ids,
                                         attention_mask=attention_mask, labels=labels,
-                                        position_ids=position_ids, head_mask=head_mask,
-                                        valid_ids=valid_ids)
+                                        head_mask=head_mask, valid_ids=valid_ids)
 
 
 class QuantizedBertForTagging(QuantizedBertForTokenClassification):
@@ -75,8 +74,7 @@ class QuantizedBertForTagging(QuantizedBertForTokenClassification):
                 position_ids=None, head_mask=None, valid_ids=None):
         return bert_for_tagging_forward(self, input_ids, token_type_ids=token_type_ids,
                                         attention_mask=attention_mask, labels=labels,
-                                        position_ids=position_ids, head_mask=head_mask,
-                                        valid_ids=valid_ids)
+                                        head_mask=head_mask, valid_ids=valid_ids)
 
 
 class XLNetForTokenClassification(XLNetPreTrainedModel):
@@ -101,10 +99,11 @@ class XLNetForTokenClassification(XLNetPreTrainedModel):
                 mems=None, perm_mask=None, target_mapping=None,
                 labels=None, head_mask=None, valid_ids=None):
         # raise NotImplementedError
-        transformer_outputs = self.transformer(input_ids, token_type_ids=token_type_ids,
-                                               input_mask=input_mask, attention_mask=attention_mask,
-                                               mems=mems, perm_mask=perm_mask, target_mapping=target_mapping,
-                                               head_mask=head_mask)
+        transformer_outputs = self.transformer(
+            input_ids, token_type_ids=token_type_ids,
+            input_mask=input_mask, attention_mask=attention_mask,
+            mems=mems, perm_mask=perm_mask, target_mapping=target_mapping,
+            head_mask=head_mask)
         sequence_output = transformer_outputs[0]
         output = self.dropout(sequence_output)
         logits = self.logits_proj(output)
@@ -133,7 +132,9 @@ class TransformerTokenClassifier(TransformerBase):
         'xlnet': XLNetForTokenClassification,
     }
 
-    def __init__(self, model_type: str, labels: List[str] = None, *args, load_quantized=False, **kwargs):
+    def __init__(
+            self, model_type: str, labels: List[str] = None,
+            *args, load_quantized=False, **kwargs):
         assert model_type in self.MODEL_CLASS.keys(), "unsupported model type"
         self.labels = labels
         self.num_labels = len(labels) + 1  # +1 for padding label
@@ -301,7 +302,7 @@ class TransformerTokenClassifier(TransformerBase):
         features = []
         for (ex_index, example) in enumerate(examples):
             if ex_index % 10000 == 0:
-                logger.info("Processing example %d of %d" % (ex_index, len(examples)))
+                logger.info("Processing example %d of %d", ex_index, len(examples))
 
             tokens = []
             labels = []
