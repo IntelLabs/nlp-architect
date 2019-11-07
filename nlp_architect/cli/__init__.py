@@ -23,10 +23,7 @@ from nlp_architect.cli.cli_commands import (cli_process_cmd, cli_run_cmd,
                                             cli_train_cmd)
 from nlp_architect.version import NLP_ARCHITECT_VERSION
 
-# Setup logging
-logging.basicConfig(format='%(asctime)s - %(levelname)s - %(name)s - %(message)s',
-                    datefmt='%m/%d/%Y %H:%M:%S',
-                    level=logging.INFO)
+logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
 
 def run_cli():

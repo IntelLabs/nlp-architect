@@ -20,7 +20,6 @@ import sys
 from nlp_architect.models.np2vec import NP2vec
 from nlp_architect.utils.io import validate_existing_filepath, check_size
 
-logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 if __name__ == "__main__":

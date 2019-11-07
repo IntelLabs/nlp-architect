@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.models.absa.train package &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
+  <title>nlp_architect.models.absa.train package &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
   
 
   
@@ -239,7 +239,7 @@
 <span id="nlp-architect-models-absa-train-acquire-terms-module"></span><h2>nlp_architect.models.absa.train.acquire_terms module<a class="headerlink" href="#module-nlp_architect.models.absa.train.acquire_terms" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="nlp_architect.models.absa.train.acquire_terms.AcquireTerms">
-<em class="property">class </em><code class="descclassname">nlp_architect.models.absa.train.acquire_terms.</code><code class="descname">AcquireTerms</code><span class="sig-paren">(</span><em>asp_thresh=3</em>, <em>op_thresh=2</em>, <em>max_iter=3</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/absa/train/acquire_terms.html#AcquireTerms"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.absa.train.acquire_terms.AcquireTerms" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">nlp_architect.models.absa.train.acquire_terms.</code><code class="descname">AcquireTerms</code><span class="sig-paren">(</span><em>asp_thresh=3</em>, <em>op_thresh=2</em>, <em>max_iter=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/absa/train/acquire_terms.html#AcquireTerms"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.absa.train.acquire_terms.AcquireTerms" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Lexicon acquisition. produce opinion lexicon and an aspect lexicon based
 on input dataset.</p>
@@ -491,12 +491,12 @@ across all iterations</p>
 
 <dl class="attribute">
 <dt id="nlp_architect.models.absa.train.acquire_terms.AcquireTerms.acquired_aspect_terms_path">
-<code class="descname">acquired_aspect_terms_path</code><em class="property"> = PosixPath('/Users/pizsak/nlp-architect/cache/absa/train/output/generated_aspect_lex.csv')</em><a class="headerlink" href="#nlp_architect.models.absa.train.acquire_terms.AcquireTerms.acquired_aspect_terms_path" title="Permalink to this definition">¶</a></dt>
+<code class="descname">acquired_aspect_terms_path</code><em class="property"> = PosixPath('/home/peter_nlp/nlp-architect/cache/absa/train/lexicons/generated_aspect_lex.csv')</em><a class="headerlink" href="#nlp_architect.models.absa.train.acquire_terms.AcquireTerms.acquired_aspect_terms_path" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="nlp_architect.models.absa.train.acquire_terms.AcquireTerms.acquired_opinion_terms_path">
-<code class="descname">acquired_opinion_terms_path</code><em class="property"> = PosixPath('/Users/pizsak/nlp-architect/cache/absa/train/output/generated_opinion_lex.csv')</em><a class="headerlink" href="#nlp_architect.models.absa.train.acquire_terms.AcquireTerms.acquired_opinion_terms_path" title="Permalink to this definition">¶</a></dt>
+<code class="descname">acquired_opinion_terms_path</code><em class="property"> = PosixPath('/home/peter_nlp/nlp-architect/cache/absa/train/lexicons/generated_opinion_lex.csv')</em><a class="headerlink" href="#nlp_architect.models.absa.train.acquire_terms.AcquireTerms.acquired_opinion_terms_path" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -532,18 +532,8 @@ across all iterations</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="nlp_architect.models.absa.train.acquire_terms.AcquireTerms.feature_table_path">
-<code class="descname">feature_table_path</code><em class="property"> = PosixPath('/Users/pizsak/nlp-architect/cache/absa/train/output/feature_table.csv')</em><a class="headerlink" href="#nlp_architect.models.absa.train.acquire_terms.AcquireTerms.feature_table_path" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
 <dt id="nlp_architect.models.absa.train.acquire_terms.AcquireTerms.generic_opinion_lex_path">
-<code class="descname">generic_opinion_lex_path</code><em class="property"> = PosixPath('/Users/pizsak/Peter/Repositories/private-nlp-architect/nlp_architect/models/absa/train/lexicons/GenericOpinionLex.csv')</em><a class="headerlink" href="#nlp_architect.models.absa.train.acquire_terms.AcquireTerms.generic_opinion_lex_path" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="nlp_architect.models.absa.train.acquire_terms.AcquireTerms.out_dir">
-<code class="descname">out_dir</code><em class="property"> = PosixPath('/Users/pizsak/nlp-architect/cache/absa/train/output')</em><a class="headerlink" href="#nlp_architect.models.absa.train.acquire_terms.AcquireTerms.out_dir" title="Permalink to this definition">¶</a></dt>
+<code class="descname">generic_opinion_lex_path</code><em class="property"> = PosixPath('/data/home/peter_nlp/repos/nlp-architect/nlp_architect/models/absa/train/lexicons/GenericOpinionLex.csv')</em><a class="headerlink" href="#nlp_architect.models.absa.train.acquire_terms.AcquireTerms.generic_opinion_lex_path" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -1818,12 +1808,7 @@ polarities: opinion polarity per term</td>
 
 <dl class="attribute">
 <dt id="nlp_architect.models.absa.train.rerank_terms.RerankTerms.model_dir">
-<code class="descname">model_dir</code><em class="property"> = PosixPath('/Users/pizsak/nlp-architect/cache/absa/train/reranking_model')</em><a class="headerlink" href="#nlp_architect.models.absa.train.rerank_terms.RerankTerms.model_dir" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="nlp_architect.models.absa.train.rerank_terms.RerankTerms.out_dir">
-<code class="descname">out_dir</code><em class="property"> = PosixPath('/Users/pizsak/nlp-architect/cache/absa/train/output')</em><a class="headerlink" href="#nlp_architect.models.absa.train.rerank_terms.RerankTerms.out_dir" title="Permalink to this definition">¶</a></dt>
+<code class="descname">model_dir</code><em class="property"> = PosixPath('/home/peter_nlp/nlp-architect/cache/absa/train/reranking_model')</em><a class="headerlink" href="#nlp_architect.models.absa.train.rerank_terms.RerankTerms.model_dir" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1914,7 +1899,7 @@ polarities: opinion polarity per term</td>
 
 <dl class="attribute">
 <dt id="nlp_architect.models.absa.train.rerank_terms.RerankTerms.train_rerank_data_path">
-<code class="descname">train_rerank_data_path</code><em class="property"> = PosixPath('/Users/pizsak/Peter/Repositories/private-nlp-architect/nlp_architect/models/absa/train/lexicons/RerankTrainingData.csv')</em><a class="headerlink" href="#nlp_architect.models.absa.train.rerank_terms.RerankTerms.train_rerank_data_path" title="Permalink to this definition">¶</a></dt>
+<code class="descname">train_rerank_data_path</code><em class="property"> = PosixPath('/data/home/peter_nlp/repos/nlp-architect/nlp_architect/models/absa/train/lexicons/RerankTrainingData.csv')</em><a class="headerlink" href="#nlp_architect.models.absa.train.rerank_terms.RerankTerms.train_rerank_data_path" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="staticmethod">
@@ -2069,7 +2054,7 @@ compound relation add it to aspect.</p>
 
 <dl class="method">
 <dt id="nlp_architect.models.absa.train.train.TrainSentiment.run">
-<code class="descname">run</code><span class="sig-paren">(</span><em>data: Union[str</em>, <em>os.PathLike] = None</em>, <em>parsed_data: Union[str</em>, <em>os.PathLike] = None</em>, <em>out_dir: Union[str</em>, <em>os.PathLike] = PosixPath('/Users/pizsak/nlp-architect/cache/absa/train')</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/absa/train/train.html#TrainSentiment.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.absa.train.train.TrainSentiment.run" title="Permalink to this definition">¶</a></dt>
+<code class="descname">run</code><span class="sig-paren">(</span><em>data: Union[str</em>, <em>os.PathLike] = None</em>, <em>parsed_data: Union[str</em>, <em>os.PathLike] = None</em>, <em>out_dir: Union[str</em>, <em>os.PathLike] = PosixPath('/home/peter_nlp/nlp-architect/cache/absa/train')</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/absa/train/train.html#TrainSentiment.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.absa.train.train.TrainSentiment.run" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>

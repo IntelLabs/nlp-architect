@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.models.absa.train.train &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
+  <title>nlp_architect.models.absa.train.train &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
   
 
   
@@ -202,7 +202,7 @@
 <span class="kn">from</span> <span class="nn">os</span> <span class="k">import</span> <span class="n">PathLike</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">Union</span>
 
-<span class="kn">from</span> <span class="nn">nlp_architect.models.absa</span> <span class="k">import</span> <span class="n">TRAIN_OUT</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.models.absa</span> <span class="k">import</span> <span class="n">TRAIN_OUT</span><span class="p">,</span> <span class="n">LEXICONS_OUT</span>
 <span class="kn">from</span> <span class="nn">nlp_architect.models.absa.train.acquire_terms</span> <span class="k">import</span> <span class="n">AcquireTerms</span>
 <span class="kn">from</span> <span class="nn">nlp_architect.models.absa.train.rerank_terms</span> <span class="k">import</span> <span class="n">RerankTerms</span>
 <span class="kn">from</span> <span class="nn">nlp_architect.models.absa.utils</span> <span class="k">import</span> <span class="n">parse_docs</span><span class="p">,</span> <span class="n">_download_pretrained_rerank_model</span><span class="p">,</span> \
@@ -241,14 +241,13 @@
             <span class="n">parsed_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">out_dir</span><span class="p">)</span> <span class="o">/</span> <span class="s1">&#39;parsed&#39;</span> <span class="o">/</span> <span class="n">Path</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">stem</span>
             <span class="n">parsed_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_data</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">parsed_dir</span><span class="p">)</span>
 
-        <span class="n">lexicons_out</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">out_dir</span><span class="p">)</span> <span class="o">/</span> <span class="s1">&#39;train_out&#39;</span>
         <span class="n">generated_aspect_lex</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">acquire_lexicon</span><span class="o">.</span><span class="n">acquire_lexicons</span><span class="p">(</span><span class="n">parsed_data</span><span class="p">)</span>
-        <span class="n">_write_aspect_lex</span><span class="p">(</span><span class="n">parsed_data</span><span class="p">,</span> <span class="n">generated_aspect_lex</span><span class="p">,</span> <span class="n">lexicons_out</span><span class="p">)</span>
+        <span class="n">_write_aspect_lex</span><span class="p">(</span><span class="n">parsed_data</span><span class="p">,</span> <span class="n">generated_aspect_lex</span><span class="p">,</span> <span class="n">LEXICONS_OUT</span><span class="p">)</span>
 
         <span class="n">generated_opinion_lex_reranked</span> <span class="o">=</span> \
             <span class="bp">self</span><span class="o">.</span><span class="n">rerank</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">AcquireTerms</span><span class="o">.</span><span class="n">acquired_opinion_terms_path</span><span class="p">,</span>
                                 <span class="n">AcquireTerms</span><span class="o">.</span><span class="n">generic_opinion_lex_path</span><span class="p">)</span>
-        <span class="n">_write_opinion_lex</span><span class="p">(</span><span class="n">parsed_data</span><span class="p">,</span> <span class="n">generated_opinion_lex_reranked</span><span class="p">,</span> <span class="n">lexicons_out</span><span class="p">)</span>
+        <span class="n">_write_opinion_lex</span><span class="p">(</span><span class="n">parsed_data</span><span class="p">,</span> <span class="n">generated_opinion_lex_reranked</span><span class="p">,</span> <span class="n">LEXICONS_OUT</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">generated_opinion_lex_reranked</span><span class="p">,</span> <span class="n">generated_aspect_lex</span></div>
 

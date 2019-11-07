@@ -14,11 +14,8 @@
 # limitations under the License.
 # ******************************************************************************
 import argparse
-import logging
 
 from nlp_architect.models.transformers.base_model import get_models
-
-logger = logging.getLogger(__name__)
 
 
 def create_base_args(parser: argparse.ArgumentParser, model_types=None):

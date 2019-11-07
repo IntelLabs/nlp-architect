@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.solutions.absa_solution.ui &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
+  <title>nlp_architect.solutions.absa_solution.ui &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
   
 
   
@@ -218,6 +218,7 @@
 <span class="kn">from</span> <span class="nn">bokeh.core.properties</span> <span class="k">import</span> <span class="n">value</span>
 <span class="kn">from</span> <span class="nn">tornado.web</span> <span class="k">import</span> <span class="n">StaticFileHandler</span>
 
+<span class="kn">from</span> <span class="nn">nlp_architect.models.absa</span> <span class="k">import</span> <span class="n">LEXICONS_OUT</span>
 <span class="kn">from</span> <span class="nn">nlp_architect.models.absa.train.acquire_terms</span> <span class="k">import</span> <span class="n">AcquireTerms</span>
 <span class="kn">from</span> <span class="nn">nlp_architect.models.absa.train.rerank_terms</span> <span class="k">import</span> <span class="n">RerankTerms</span>
 <span class="kn">from</span> <span class="nn">nlp_architect.models.absa.train.train</span> <span class="k">import</span> <span class="n">TrainSentiment</span>
@@ -437,7 +438,7 @@
         <span class="n">file_data</span> <span class="o">=</span> <span class="n">file_data</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
         <span class="n">asp_src</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;file_contents&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">file_data</span><span class="p">],</span> <span class="s1">&#39;file_name&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;nameFile.csv&#39;</span><span class="p">]}</span>
 
-        <span class="n">out_path</span> <span class="o">=</span> <span class="n">RerankTerms</span><span class="o">.</span><span class="n">out_dir</span> <span class="o">/</span> <span class="s1">&#39;generated_opinion_lex_reranked.csv&#39;</span>
+        <span class="n">out_path</span> <span class="o">=</span> <span class="n">LEXICONS_OUT</span> <span class="o">/</span> <span class="s1">&#39;generated_opinion_lex_reranked.csv&#39;</span>
         <span class="k">with</span> <span class="n">io</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">out_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
             <span class="n">opinion_data_csv</span> <span class="o">=</span> <span class="n">fp</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
         <span class="n">file_data</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="nb">str</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">opinion_data_csv</span><span class="p">))</span>

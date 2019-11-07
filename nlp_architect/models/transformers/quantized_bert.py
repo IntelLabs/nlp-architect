@@ -18,33 +18,25 @@
 Quantized BERT layers and model
 """
 
-import sys
-import os
 import logging
+import os
+import sys
 
 import torch
 from torch import nn
-from pytorch_transformers.modeling_bert import (BertEmbeddings,
-                                                BertLayerNorm,
-                                                BertSelfAttention,
-                                                BertSelfOutput,
-                                                BertAttention,
-                                                BertIntermediate,
-                                                BertOutput,
-                                                BertLayer,
-                                                BertEncoder,
-                                                BertPooler,
-                                                BertModel,
-                                                BertForQuestionAnswering,
-                                                BertForSequenceClassification,
-                                                BertForTokenClassification,
-                                                ACT2FN,
-                                                BertPreTrainedModel,
-                                                BertConfig)
+from transformers.modeling_bert import (ACT2FN, BertAttention, BertConfig,
+                                        BertEmbeddings, BertEncoder,
+                                        BertForQuestionAnswering,
+                                        BertForSequenceClassification,
+                                        BertForTokenClassification,
+                                        BertIntermediate, BertLayer,
+                                        BertLayerNorm, BertModel, BertOutput,
+                                        BertPooler, BertPreTrainedModel,
+                                        BertSelfAttention, BertSelfOutput)
 
 from nlp_architect.nn.torch.quantization import (QuantizationConfig,
-                                                 QuantizedLayer,
                                                  QuantizedEmbedding,
+                                                 QuantizedLayer,
                                                  QuantizedLinear)
 
 logger = logging.getLogger(__name__)

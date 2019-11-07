@@ -36,6 +36,18 @@ In order to use the Transformer models just sub-class the base model and include
 
 Models
 ------
+
+Available transformer family models in NLP Architect:
+
++-------------------------+------+----------------+-----+-------+---------+
+|                         | BERT | Quantized BERT | XLM | XLNet | RoBERTa |
++=========================+======+================+=====+=======+=========+
+| Sequence classification | Y    | Y              | Y   | Y     | Y       |
++-------------------------+------+----------------+-----+-------+---------+
+| Token classification    | Y    | Y              |     | Y     | Y       |
++-------------------------+------+----------------+-----+-------+---------+
+
+
 Sequence classification
 ~~~~~~~~~~~~~~~~~~~~~~~
 

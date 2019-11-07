@@ -34,7 +34,7 @@ accelarating computation, true quantization must be applied using
 optimized kernels and dedicated hardware.
 
 .. note::
-    The :py:class:`QuantizedBertModel <nlp_architect.models.transformers.quantized_bert.QuantizedBertModel>` is only simulating quantization, meaning, the model is saved and computed using FP32 representation. During inference quantization is done online using Int8 values represented and computed with FP32 tensors.
+    :py:class:`QuantizedBertModel <nlp_architect.models.transformers.quantized_bert.QuantizedBertModel>` class does not make use of optimized Integer kernels for quantized Matrix Multiplication. Therefore, we expect that quantized inference will be slower than regular inference since quantization and dequantization operations are added to the unoptimized compute graph.
 
 Quantization Aware Training
 ===========================
@@ -104,6 +104,10 @@ To train Quantized BERT use the following code snippet:
         --data_dir /path/to/MRPC \
         --do_lower_case
 
+The model is saved at the end of training in 2 files:
+   1. A model saved in FP32 for further ``pytorch_model.bin``
+   2. A quantized model for inference only ``quant_pytorch_model.bin``
+
 Inference
 ---------
 To run inference with a fine tuned quantized BERT use the
@@ -120,8 +124,11 @@ following code snippet:
         --do_lower_case \
         --overwrite_output_dir
 
-To run evaluation on the task's development set add the flag ``--evaluate``
-to the command line.
+- To run evaluation on the task's development set add the flag ``--evaluate``
+  to the command line.
+- To run the quantized model saved in ``quant_pytorch_model.bin`` add the flag
+  ``--load_quantized_model`` to the command line.
+
 
 References
 ==========

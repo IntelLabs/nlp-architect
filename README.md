@@ -30,7 +30,7 @@ A Deep Learning NLP/NLU library by <a href="https://www.intel.ai/research/">Inte
 
 NLP Architect is an open source Python library for exploring state-of-the-art
 deep learning topologies and techniques for optimizing Natural Language Processing and
-Natural Language Understanding neural network.
+Natural Language Understanding Neural Networks.
 
 ## Overview
 
@@ -62,7 +62,7 @@ We recommend to install NLP Architect in a new python environment, to use python
 
 ### Install using `pip`
 
-Includes only core library (without `examples/` directory)
+Includes only core library (for examples, tutorials and the rest clone the repo)
 
 ```sh
 pip install nlp-architect
@@ -70,25 +70,11 @@ pip install nlp-architect
 
 ### Install from source (Github)
 
-Includes core library and all content (example scripts, datasets, tutorials)
-
-Clone repository
-
 ```sh
 git clone https://github.com/NervanaSystems/nlp-architect.git
 cd nlp-architect
+pip install -e .  # install in developer mode
 ```
-
-Install (in develop mode)
-
-```sh
-pip install -e .
-```
-
-### Further installation options
-
-Refer to our full [installation instructions](http://nlp_architect.nervanasys.com/installation.html) page on our website for complete details on how to install NLP Architect and other backend installations such as MKL-DNN or GPU backends.
-Users can install any deep learning backends manually before/after they install NLP Architect.
 
 ## Models
 

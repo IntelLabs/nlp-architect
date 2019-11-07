@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pathlib &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
+  <title>pathlib &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
   
 
   
@@ -1006,10 +1006,8 @@
                                        <span class="bp">self</span><span class="o">.</span><span class="n">_parts</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">name</span><span class="p">])</span>
 
     <span class="k">def</span> <span class="nf">with_suffix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">suffix</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Return a new path with the file suffix changed.  If the path</span>
-<span class="sd">        has no suffix, add given suffix.  If the given suffix is an empty</span>
-<span class="sd">        string, remove the suffix from the path.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Return a new path with the file suffix changed (or added, if none).&quot;&quot;&quot;</span>
+        <span class="c1"># XXX if suffix is None, should the current suffix be removed?</span>
         <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_flavour</span>
         <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">sep</span> <span class="ow">in</span> <span class="n">suffix</span> <span class="ow">or</span> <span class="n">f</span><span class="o">.</span><span class="n">altsep</span> <span class="ow">and</span> <span class="n">f</span><span class="o">.</span><span class="n">altsep</span> <span class="ow">in</span> <span class="n">suffix</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid suffix </span><span class="si">%r</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">suffix</span><span class="p">))</span>
