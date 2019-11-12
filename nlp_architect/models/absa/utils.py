@@ -75,14 +75,17 @@ def parse_docs(parser, docs: Union[str, PathLike], out_dir: Union[str, PathLike]
 def txt_line_generator(txt_file):
     with open(txt_file, encoding='utf-8') as f:
         for line in f:
-            yield line.strip('\n')
+            line_s = line.strip('\n')
+            if line_s:
+                yield line_s
 
 
 def csv_line_iterator(csv_file):
     with open(csv_file, newline='', encoding="utf-8") as f:
         reader = csv.reader(f, delimiter=',', quotechar='|')
         for row in reader:
-            yield row[0]
+            if row:
+                yield row[0]
 
 
 def parse_docs_bist(parser, docs: Union[str, PathLike], out_dir: Union[str, PathLike] = None,
