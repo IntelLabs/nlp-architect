@@ -35,7 +35,7 @@ def create_base_args(parser: argparse.ArgumentParser, model_types=None):
     # Other parameters
     parser.add_argument("--tokenizer_name", default="", type=str,
                         help="Pretrained tokenizer name or path if not the same as model_name")
-    parser.add_argument("--max_seq_length", default=128, type=int,
+    parser.add_argument("--max_seq_length", default=384, type=int,
                         help="The maximum total input sequence length after tokenization. "
                         "Sequences longer than this will be truncated, sequences shorter "
                         "will be padded.")
@@ -78,7 +78,7 @@ def train_args(parser: argparse.ArgumentParser, models_family=None):
     parser.add_argument('--gradient_accumulation_steps', type=int, default=1,
                         help="Number of updates steps to accumulate before performing a "
                         "backward/update pass.")
-    parser.add_argument("--learning_rate", default=5e-5, type=float,
+    parser.add_argument("--learning_rate", default=3e-5, type=float,
                         help="The initial learning rate for Adam.")
     parser.add_argument("--weight_decay", default=0.0, type=float,
                         help="Weight deay if we apply some.")

@@ -19,10 +19,13 @@ import csv
 import os
 import random
 import sys
+import json
 from abc import ABC
 from io import open
 from typing import List, Tuple
+import logging
 
+logger = logging.getLogger(__name__)
 
 class InputExample(ABC):
     """Base class for a single training/dev/test example """
@@ -154,3 +157,12 @@ def sample_label_unlabeled(samples: List[InputExample], no_labeled: int, no_unla
     label_samples = [samples[i] for i in labeled_indices]
     unlabel_samples = [samples[i] for i in unlabeled_indices]
     return label_samples, unlabel_samples
+
+
+def whitespace_tokenize(text):
+    """Runs basic whitespace cleaning and splitting on a piece of text."""
+    text = text.strip()
+    if not text:
+        return []
+    tokens = text.split()
+    return tokens

@@ -176,9 +176,9 @@ class TransformerBase(TrainableModel):
         if not save_checkpoint:
             if self.tokenizer is not None:
                 self.tokenizer.save_pretrained(output_dir)
-            with io.open(output_dir + os.sep + 'labels.txt', 'w', encoding='utf-8') as fw:
-                for l in self.labels:
-                    fw.write('{}\n'.format(l))
+            # with io.open(output_dir + os.sep + 'labels.txt', 'w', encoding='utf-8') as fw:
+            #     for l in self.labels:
+            #         fw.write('{}\n'.format(l))
             if args is not None:
                 torch.save(args, os.path.join(output_dir, 'training_args.bin'))
 
@@ -393,3 +393,4 @@ class InputFeatures(object):
         self.segment_ids = segment_ids
         self.label_id = label_id
         self.valid_ids = valid_ids
+
