@@ -40,9 +40,7 @@ class TransformerQuestionAnsweringTrain(Procedure):
         parser.add_argument("--version_2_with_negative", action='store_true',
                         help='If true, the SQuAD examples contain some that do not have an answer.')
         parser.add_argument("--null_score_diff_threshold", type=float, default=0.0,
-                        help="If null_score - best_non_null is greater than the threshold predict null.")
-        parser.add_argument("--eval_script", type=str,
-                        help="Path to the evaluation script.")                
+                        help="If null_score - best_non_null is greater than the threshold predict null.")               
 
         train_args(parser, models_family=TransformerQuestionAnswering.MODEL_CLASS.keys())
         create_base_args(parser, model_types=TransformerQuestionAnswering.MODEL_CLASS.keys())
@@ -115,7 +113,7 @@ def do_training(args):
                                        adam_epsilon=args.adam_epsilon,
                                        warmup_steps=args.warmup_steps,
                                        total_steps=total_steps)
-    classifier.train(train_dl, dev_dl, dev_ex, dev_feat, None,
+    classifier.train(train_dl, dev_dl, dev_ex, dev_feat,
                      gradient_accumulation_steps=args.gradient_accumulation_steps,
                      per_gpu_train_batch_size=args.per_gpu_train_batch_size,
                      max_steps=args.max_steps,
@@ -123,6 +121,5 @@ def do_training(args):
                      max_grad_norm=args.max_grad_norm,
                      logging_steps=args.logging_steps,
                      save_steps=args.save_steps,
-                     eval_script_path=args.eval_script,
                      data_dir=args.data_dir)
     classifier.save_model(args.output_dir, args=args)
