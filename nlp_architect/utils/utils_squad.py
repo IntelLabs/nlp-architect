@@ -700,7 +700,7 @@ def write_predictions_extended(all_examples, all_features, all_results, n_best_s
                                 output_nbest_file,
                                 output_null_log_odds_file, orig_data_file,
                                 start_n_top, end_n_top, version_2_with_negative,
-                                tokenizer, verbose_logging):
+                                tokenizer):
     """ XLNet write prediction logic (more complex than Bert's).
         Write final predictions to the json file and log-odds of null if needed.
         Requires utils_squad_evaluate.py
@@ -811,8 +811,7 @@ def write_predictions_extended(all_examples, all_features, all_results, n_best_s
             tok_text = " ".join(tok_text.split())
             orig_text = " ".join(orig_tokens)
 
-            final_text = get_final_text(tok_text, orig_text, tokenizer.do_lower_case,
-                                        verbose_logging)
+            final_text = get_final_text(tok_text, orig_text, tokenizer.do_lower_case)
 
             if final_text in seen_predictions:
                 continue
