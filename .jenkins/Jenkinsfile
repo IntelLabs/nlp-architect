@@ -5,9 +5,7 @@
 pipeline {
     agent {
         label 'metal-node'
-        docker {
-            image 'ubuntu:latest'
-        }
+        customWorkspace '/state/ws'
     }
     options {
         timestamps()
