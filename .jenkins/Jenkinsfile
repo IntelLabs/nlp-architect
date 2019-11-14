@@ -4,8 +4,10 @@
 
 pipeline {
     agent {
-        label 'metal-node'
-        customWorkspace '/state/ws'
+        node {
+                label 'metal-node'
+                customWorkspace '/state/ws'
+            }
     }
     options {
         timestamps()
