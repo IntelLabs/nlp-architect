@@ -45,6 +45,7 @@ headers = {"clean": "True", "display_post_preprocces": "True",
 server_data_rel_path = 'fixtures/data/server/'
 
 
+@pytest.skip
 def load_test_data(service_name):
     """
     load test data (input and expected response) for given service from 'tests_data.json'
@@ -113,6 +114,7 @@ def assert_response_struct(result_doc, expected_result):
             assert key in result_words
 
 
+@pytest.skip
 @pytest.mark.parametrize('service_name', ['bist', 'ner'])
 def test_request(service_name):
     test_data = load_test_data(service_name)
@@ -129,6 +131,7 @@ def test_request(service_name):
     assert response.status == hug.HTTP_OK
 
 
+@pytest.skip
 @pytest.mark.parametrize('service_name', ['bist', 'ner'])
 def test_gzip_file_request(service_name):
     file_path = os.path.join(os.path.dirname(__file__), server_data_rel_path + service_name
@@ -147,6 +150,7 @@ def test_gzip_file_request(service_name):
     assert response.status == hug.HTTP_OK
 
 
+@pytest.skip
 @pytest.mark.parametrize('service_name', ['bist', 'ner'])
 def test_json_file_request(service_name):
     file_path = os.path.join(os.path.dirname(__file__), server_data_rel_path + service_name
