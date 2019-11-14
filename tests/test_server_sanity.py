@@ -26,7 +26,7 @@ from os.path import dirname
 import hug
 import pytest
 
-import nlp_architect.server.serve
+# import nlp_architect.server.serve
 from nlp_architect.server.serve import api
 from nlp_architect.utils.text import try_to_load_spacy
 
