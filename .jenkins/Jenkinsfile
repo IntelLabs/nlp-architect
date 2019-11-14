@@ -6,7 +6,6 @@ pipeline {
     agent {
         node {
                 label 'metal-node'
-                customWorkspace '/state/ws'
             }
     }
     options {
