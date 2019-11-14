@@ -4,9 +4,10 @@
 
 pipeline {
     agent {
-        node {
-                label 'metal-node'
-            }
+        docker {
+            image 'python:3.6'
+            label 'metal-node'
+        }
     }
     options {
         timestamps()
