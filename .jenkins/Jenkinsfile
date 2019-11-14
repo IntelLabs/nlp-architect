@@ -18,12 +18,13 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                deleteDir()
                 checkout scm
             }
         }
         stage('Build environment') {
             steps {
+                sh 'pip install -U setuptools pip'
+                sh 'pip install nlp-architect'
                 sh 'python3 -m venv .nlp_architect_env'
                 sh """
                 . .nlp_architect_env/bin/activate
