@@ -104,5 +104,8 @@ pipeline {
         always {
             deleteDir()
         }
+        cleanup {
+            deleteDir()
+        }
     }
 }
