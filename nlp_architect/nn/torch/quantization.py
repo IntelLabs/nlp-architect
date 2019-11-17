@@ -143,8 +143,8 @@ class QuantizedLayer(ABC):
 
     @property
     def weight_scale(self):
-        return
-        get_dynamic_scale(self.weight, self.weight_bits) if self.training else self._weight_scale
+        return get_dynamic_scale(
+            self.weight, self.weight_bits) if self.training else self._weight_scale
 
     def train(self, mode=True):
         """handle transition between quantized model and simulated quantization"""

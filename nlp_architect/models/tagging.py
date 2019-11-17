@@ -221,7 +221,7 @@ class NeuralTagger(TrainableModel):
         for _ in epoch_it:
             step_it = tqdm(train_data_set, desc="Train iteration")
             avg_loss = 0
-            for s_idx, batch in enumerate(step_it):
+            for step, batch in enumerate(step_it):
                 self.model.train()
                 if distiller:
                     batch, t_batch = batch[:2]
@@ -251,9 +251,9 @@ class NeuralTagger(TrainableModel):
                 global_step += 1
                 avg_loss += loss.item()
                 if global_step % logging_steps == 0:
-                    if s_idx != 0:
+                    if step != 0:
                         logger.info(
-                            " global_step = %s, average loss = %s", global_step, avg_loss / s_idx)
+                            " global_step = %s, average loss = %s", global_step, avg_loss / step)
                     self._get_eval(dev_data_set, "dev")
                     self._get_eval(test_data_set, "test")
                 if save_path is not None and global_step % save_steps == 0:

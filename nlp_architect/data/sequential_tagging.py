@@ -330,11 +330,11 @@ class TokenClsProcessor(DataProcessor):
     def get_train_examples(self, filename="train.txt"):
         return self._read_examples(self.data_dir, filename, "train")
 
-    def get_dev_examples(self):
-        return self._read_examples(self.data_dir, "dev.txt", "dev")
+    def get_dev_examples(self, filename="dev.txt"):
+        return self._read_examples(self.data_dir, filename, "dev")
 
-    def get_test_examples(self):
-        return self._read_examples(self.data_dir, "test.txt", "test")
+    def get_test_examples(self, filename="test.txt"):
+        return self._read_examples(self.data_dir, filename, "test")
 
     # pylint: disable=arguments-differ
     def get_labels(self):
@@ -355,25 +355,6 @@ class TokenClsProcessor(DataProcessor):
     @staticmethod
     def get_labels_filename():
         return "labels.txt"
-
-    def split_dataset(self, labeled: int, unlabeled: int, out_folder, dataset: str = 'train.txt'):
-        lines = read_column_tagged_file(os.path.join(self.data_dir, dataset), tag_col=self.tag_col)
-        labeled_data = []
-        unlabeled_data = []
-        num_of_examples = len(lines)
-        print("num=" + str(num_of_examples))
-        assert labeled > 0 and unlabeled > 0
-        all_indices = list(range(num_of_examples))
-        labeled_indices = random.sample(all_indices, labeled)
-        all_indices = list(set(all_indices).difference(set(labeled_indices)))
-        unlabeled_indices = random.sample(all_indices, unlabeled)
-        for i, (sentence, labels) in enumerate(lines):
-            if i in labeled_indices:
-                labeled_data.append((sentence, labels))
-            elif i in unlabeled_indices:
-                unlabeled_data.append((sentence, labels))
-        write_column_tagged_file(out_folder + os.sep + 'labeled.txt', labeled_data)
-        write_column_tagged_file(out_folder + os.sep + 'unlabeled.txt', unlabeled_data)
 
     @staticmethod
     def _create_examples(lines, set_type):
