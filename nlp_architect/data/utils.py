@@ -150,7 +150,8 @@ def sample_label_unlabeled(samples: List[InputExample], no_labeled: int, no_unla
     return label_samples, unlabel_samples
 
 
-def split_column_dataset(m: int, n: int, out_folder, dataset, m_filename='m.txt', n_filename='n.txt', tag_col=-1):
+def split_column_dataset(
+        m: int, n: int, out_folder, dataset, m_filename='m.txt', n_filename='n.txt', tag_col=-1):
     """
     Splits a single column tagged dataset into two files according to the amount of examples
     requested to be included in each file.

@@ -19,14 +19,13 @@ from __future__ import (absolute_import, division, print_function,
 
 import logging
 import os
-import random
 from os import path
 from typing import List
 
 import numpy as np
 
 from nlp_architect.data.utils import (DataProcessor, InputExample,
-                                      read_column_tagged_file, write_column_tagged_file)
+                                      read_column_tagged_file)
 from nlp_architect.utils.generic import pad_sentences
 from nlp_architect.utils.io import (validate_existing_directory,
                                     validate_existing_filepath)
