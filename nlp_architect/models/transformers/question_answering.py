@@ -1,18 +1,37 @@
+# ******************************************************************************
+# Copyright 2017-2019 Intel Corporation
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ******************************************************************************
 import logging
 import os
-import torch
 from typing import List, Union
+
+import torch
+from torch.utils.data import DataLoader, SequentialSampler, TensorDataset
 from tqdm import tqdm, trange
 from transformers import (BertForQuestionAnswering,
                           XLMForQuestionAnswering,
                           XLNetForQuestionAnswering)
-from torch.utils.data import DataLoader, SequentialSampler, TensorDataset
+                          
 from nlp_architect.utils.utils_squad import SquadExample
 from nlp_architect.models.transformers.base_model import TransformerBase
 from nlp_architect.utils.utils_squad import InputFeatures
-from nlp_architect.utils.utils_squad import (
-    convert_examples_to_features, RawResult,
-    write_predictions, RawResultExtended, write_predictions_extended)
+from nlp_architect.utils.utils_squad import (convert_examples_to_features,
+                                             RawResult,
+                                             write_predictions,
+                                             RawResultExtended,
+                                             write_predictions_extended)
 from nlp_architect.utils.utils_squad_evaluate import EVAL_OPTS, main as evaluation_script
 
 
@@ -39,7 +58,7 @@ class TransformerQuestionAnswering(TransformerBase):
     }
 
     def __init__(
-            self, model_type: str, max_answer_length: int, n_best_size: int, 
+            self, model_type: str, max_answer_length: int, n_best_size: int,
             version_2_with_negative: bool, null_score_diff_threshold: float,
             max_query_length: int, *args, load_quantized: bool = False, **kwargs):
         assert model_type in self.MODEL_CLASS.keys(), "unsupported model type"
@@ -64,7 +83,7 @@ class TransformerQuestionAnswering(TransformerBase):
     def convert_to_tensors(self,
                            examples: List[SquadExample],
                            evaluate: bool,
-                           max_seq_length: int = 128, 
+                           max_seq_length: int = 128,
                            doc_stride: int = 128) -> TensorDataset:
         features = convert_examples_to_features(examples=examples,
                                                 tokenizer=self.tokenizer,
@@ -157,11 +176,11 @@ class TransformerQuestionAnswering(TransformerBase):
                     'start_positions': batch[3],
                     'end_positions': batch[4],
                     'token_type_ids': None if self.model_type == 'xlm' else batch[2]
-                    }
+                }
                 if self.model_type in ['xlnet', 'xlm']:
                     inputs.update(
                         {'cls_index': batch[5], 'p_mask': batch[6]}
-                        )
+                    )
                 outputs = self.model(**inputs)
                 loss = outputs[0]
 
@@ -182,7 +201,7 @@ class TransformerQuestionAnswering(TransformerBase):
                     if logging_steps > 0 and global_step % logging_steps == 0:
                         ds = [dev_data_set]
                         for d in ds:
-                            eval_results = self._evaluate(d, dev_features)                            
+                            eval_results = self._evaluate(d, dev_features)
                             pred_file, odds_file = self.compute_predictions(
                                 examples=dev_examples, features=dev_features,
                                 eval_results=eval_results, prefix=global_step)
@@ -205,7 +224,6 @@ class TransformerQuestionAnswering(TransformerBase):
 
         logger.info(" global_step = %s, average loss = %s", global_step, tr_loss)
 
-
     def _evaluate(self, dataset: DataLoader, features: InputFeatures):
         logger.info("***** Running inference *****")
         logger.info(" Batch size: {}".format(dataset.batch_size))
@@ -219,12 +237,12 @@ class TransformerQuestionAnswering(TransformerBase):
                     'input_ids': batch[0],
                     'attention_mask': batch[1],
                     'token_type_ids': None if self.model_type == 'xlm' else batch[2]
-                    }
+                }
                 example_indices = batch[3]
                 if self.model_type in ['xlnet', 'xlm']:
                     inputs.update(
                         {'cls_index': batch[4], 'p_mask': batch[5]}
-                        )
+                    )
                 outputs = self.model(**inputs)
 
             for i, example_index in enumerate(example_indices):
@@ -274,7 +292,6 @@ class TransformerQuestionAnswering(TransformerBase):
                 self.version_2_with_negative, self.null_score_diff_threshold)
         return output_prediction_file, output_null_log_odds_file
 
-
     def evaluate_predictions(self, data_dir, output_prediction_file, output_null_log_odds_file):
         file_name = 'dev-v2.0.json' if self.version_2_with_negative else 'dev-v1.1.json'
         dev_file = os.path.join(data_dir, file_name)
@@ -284,7 +301,6 @@ class TransformerQuestionAnswering(TransformerBase):
             na_prob_file=output_null_log_odds_file)
         results = evaluation_script(evaluate_options)
         return results
-
 
     def inference(self, examples: List[SquadExample], max_seq_length: int, batch_size: int = 64):
         """
@@ -297,13 +313,13 @@ class TransformerQuestionAnswering(TransformerBase):
         Returns:
             logits
         """
-        data_set, features = self.convert_to_tensors(examples, max_seq_length=max_seq_length, evaluate=True)
+        data_set, features = self.convert_to_tensors(
+            examples, max_seq_length=max_seq_length, evaluate=True)
         inf_sampler = SequentialSampler(data_set)
         inf_dataloader = DataLoader(data_set, sampler=inf_sampler, batch_size=batch_size)
         logits = self._evaluate(inf_dataloader, features)
         self.compute_predictions(
             examples=examples, features=features, eval_results=logits, prefix='inf')
-
 
     @classmethod
     def load_model(

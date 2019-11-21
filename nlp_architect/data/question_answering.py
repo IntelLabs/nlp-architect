@@ -17,9 +17,12 @@ from __future__ import absolute_import, division, print_function
 
 import logging
 import os
+
 from nlp_architect.data.utils import DataProcessor
 from nlp_architect.utils.text import Vocabulary
 from nlp_architect.utils.utils_squad import read_squad_examples
+
+
 logger = logging.getLogger(__name__)
 
 
@@ -44,7 +47,7 @@ class QuestionAnsweringProcessor(DataProcessor):
             os.path.join(self.data_dir, file_name),
             is_training=(set_name == 'train'),
             version_2_with_negative=self. version_2_with_negative
-            )
+        )
 
     def get_train_examples(self):
         file_name = "train-v2.0.json" if self.version_2_with_negative else "train-v1.1.json"
