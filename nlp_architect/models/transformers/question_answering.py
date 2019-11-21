@@ -23,7 +23,8 @@ from tqdm import tqdm, trange
 from transformers import (BertForQuestionAnswering,
                           XLMForQuestionAnswering,
                           XLNetForQuestionAnswering)
-                          
+
+from nlp_architect.models.transformers.quantized_bert import QuantizedBertForQuestionAnswering
 from nlp_architect.utils.utils_squad import SquadExample
 from nlp_architect.models.transformers.base_model import TransformerBase
 from nlp_architect.utils.utils_squad import InputFeatures
@@ -53,6 +54,7 @@ class TransformerQuestionAnswering(TransformerBase):
     """
     MODEL_CLASS = {
         'bert': BertForQuestionAnswering,
+        'quant_bert': QuantizedBertForQuestionAnswering,
         'xlnet': XLNetForQuestionAnswering,
         'xlm': XLMForQuestionAnswering,
     }
