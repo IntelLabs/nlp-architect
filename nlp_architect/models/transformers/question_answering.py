@@ -65,13 +65,12 @@ class TransformerQuestionAnswering(TransformerBase):
                            examples: List[SquadExample],
                            evaluate: bool,
                            max_seq_length: int = 128, 
-                           doc_stride: int = 128,
-                           max_query_length: int = 64) -> TensorDataset:
+                           doc_stride: int = 128) -> TensorDataset:
         features = convert_examples_to_features(examples=examples,
                                                 tokenizer=self.tokenizer,
                                                 max_seq_length=max_seq_length,
                                                 doc_stride=doc_stride,
-                                                max_query_length=max_query_length,
+                                                max_query_length=self.max_query_length,
                                                 is_training=not evaluate)
         # Convert to Tensors and build dataset
         all_input_ids = torch.tensor([f.input_ids for f in features], dtype=torch.long)
@@ -287,7 +286,7 @@ class TransformerQuestionAnswering(TransformerBase):
         return results
 
 
-    def inference(self, examples: List[SquadExample], batch_size: int = 64):
+    def inference(self, examples: List[SquadExample], max_seq_length: int, batch_size: int = 64):
         """
         Run inference on given examples
 
@@ -298,7 +297,7 @@ class TransformerQuestionAnswering(TransformerBase):
         Returns:
             logits
         """
-        data_set, features = self.convert_to_tensors(examples, evaluate=True)
+        data_set, features = self.convert_to_tensors(examples, max_seq_length=max_seq_length, evaluate=True)
         inf_sampler = SequentialSampler(data_set)
         inf_dataloader = DataLoader(data_set, sampler=inf_sampler, batch_size=batch_size)
         logits = self._evaluate(inf_dataloader, features)

@@ -94,7 +94,6 @@ def do_training(args):
     # prepare data
     processor = QuestionAnsweringProcessor(args.data_dir, args.version_2_with_negative)
 
-
     classifier = TransformerQuestionAnswering(
         model_type=args.model_type,
         max_answer_length=args.max_answer_length,
@@ -118,13 +117,15 @@ def do_training(args):
 
     train_batch_size = args.per_gpu_train_batch_size * max(1, n_gpus)
 
-    train_dataset = classifier.convert_to_tensors(train_ex, evaluate=False)
+    train_dataset = classifier.convert_to_tensors(
+        train_ex, evaluate=False, max_seq_length=args.max_seq_length)
     train_sampler = RandomSampler(train_dataset)
     train_dl = DataLoader(train_dataset, sampler=train_sampler,
                           batch_size=train_batch_size)
     dev_dl = None
     if dev_ex is not None:
-        dev_dataset, dev_feat = classifier.convert_to_tensors(dev_ex, evaluate=True)
+        dev_dataset, dev_feat = classifier.convert_to_tensors(
+            dev_ex, evaluate=True, max_seq_length=args.max_seq_length)
         dev_sampler = SequentialSampler(dev_dataset)
         dev_dl = DataLoader(dev_dataset, sampler=dev_sampler,
                             batch_size=args.per_gpu_eval_batch_size)
@@ -167,9 +168,9 @@ def do_inference(args):
         output_path=args.output_dir,
         do_lower_case=args.do_lower_case,
         load_quantized=args.load_quantized_model
-        )
+    )
     classifier.to(device, n_gpus)
-    classifier.inference(inference_examples, args.batch_size)
+    classifier.inference(inference_examples, args.max_seq_length, args.batch_size)
 
 
 def process_inference_input(input_file, version_2_with_negative):
