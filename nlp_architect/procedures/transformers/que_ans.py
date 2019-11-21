@@ -112,11 +112,9 @@ def do_training(args):
         n_gpus=n_gpus)
 
     train_ex = processor.get_train_examples()
-    train_ex = train_ex[0:50]
     if train_ex is None:
         raise Exception("No train examples found, quitting.")
     dev_ex = processor.get_dev_examples()
-    dev_ex = dev_ex[0:50]
 
     train_batch_size = args.per_gpu_train_batch_size * max(1, n_gpus)
 
@@ -166,7 +164,9 @@ def do_inference(args):
         version_2_with_negative=args.version_2_with_negative,
         null_score_diff_threshold=args.null_score_diff_threshold,
         max_query_length=args.max_query_length,
-        output_path=args.output_dir
+        output_path=args.output_dir,
+        do_lower_case=args.do_lower_case,
+        load_quantized=args.load_quantized_model
         )
     classifier.to(device, n_gpus)
     classifier.inference(inference_examples, args.batch_size)

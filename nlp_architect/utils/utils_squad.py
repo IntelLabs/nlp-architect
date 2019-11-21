@@ -371,7 +371,7 @@ def convert_examples_to_features(examples, tokenizer, max_seq_length,
                 start_position = cls_index
                 end_position = cls_index
 
-            if example_index < 20:
+            if example_index < 1:
                 logger.info("*** Example ***")
                 logger.info("unique_id: %s" % (unique_id))
                 logger.info("example_index: %s" % (example_index))
@@ -494,6 +494,7 @@ def _check_is_max_context(doc_spans, cur_span_index, position):
 
 RawResult = collections.namedtuple("RawResult",
                                    ["unique_id", "start_logits", "end_logits"])
+
 
 def write_predictions(all_examples, all_features, all_results, n_best_size,
                       max_answer_length, do_lower_case, output_prediction_file,
@@ -627,12 +628,12 @@ def write_predictions(all_examples, all_features, all_results, n_best_size,
                         text="",
                         start_logit=null_start_logit,
                         end_logit=null_end_logit))
-                
+
             # In very rare edge cases we could only have single null prediction.
             # So we just create a nonce prediction in this case to avoid failure.
-            if len(nbest)==1:
+            if len(nbest) == 1:
                 nbest.insert(0,
-                    _NbestPrediction(text="empty", start_logit=0.0, end_logit=0.0))
+                             _NbestPrediction(text="empty", start_logit=0.0, end_logit=0.0))
 
         # In very rare edge cases we could have no valid predictions. So we
         # just create a nonce prediction in this case to avoid failure.
@@ -691,16 +692,16 @@ def write_predictions(all_examples, all_features, all_results, n_best_size,
 
 # For XLNet (and XLM which uses the same head)
 RawResultExtended = collections.namedtuple("RawResultExtended",
-    ["unique_id", "start_top_log_probs", "start_top_index",
-     "end_top_log_probs", "end_top_index", "cls_logits"])
+                                           ["unique_id", "start_top_log_probs", "start_top_index",
+                                            "end_top_log_probs", "end_top_index", "cls_logits"])
 
 
 def write_predictions_extended(all_examples, all_features, all_results, n_best_size,
-                                max_answer_length, output_prediction_file,
-                                output_nbest_file,
-                                output_null_log_odds_file, orig_data_file,
-                                start_n_top, end_n_top, version_2_with_negative,
-                                tokenizer):
+                               max_answer_length, output_prediction_file,
+                               output_nbest_file,
+                               output_null_log_odds_file, orig_data_file,
+                               start_n_top, end_n_top, version_2_with_negative,
+                               tokenizer):
     """ XLNet write prediction logic (more complex than Bert's).
         Write final predictions to the json file and log-odds of null if needed.
         Requires utils_squad_evaluate.py
@@ -708,7 +709,7 @@ def write_predictions_extended(all_examples, all_features, all_results, n_best_s
     _PrelimPrediction = collections.namedtuple(  # pylint: disable=invalid-name
         "PrelimPrediction",
         ["feature_index", "start_index", "end_index",
-        "start_log_prob", "end_log_prob"])
+         "start_log_prob", "end_log_prob"])
 
     _NbestPrediction = collections.namedtuple(  # pylint: disable=invalid-name
         "NbestPrediction", ["text", "start_log_prob", "end_log_prob"])
@@ -791,7 +792,7 @@ def write_predictions_extended(all_examples, all_features, all_results, n_best_s
 
             # XLNet un-tokenizer
             # Let's keep it simple for now and see if we need all this later.
-            # 
+            #
             # tok_start_to_orig_index = feature.tok_start_to_orig_index
             # tok_end_to_orig_index = feature.tok_end_to_orig_index
             # start_orig_pos = tok_start_to_orig_index[pred.start_index]
@@ -829,7 +830,7 @@ def write_predictions_extended(all_examples, all_features, all_results, n_best_s
         if not nbest:
             nbest.append(
                 _NbestPrediction(text="", start_log_prob=-1e6,
-                end_log_prob=-1e6))
+                                 end_log_prob=-1e6))
 
         total_scores = []
         best_non_null_entry = None
@@ -879,7 +880,8 @@ def write_predictions_extended(all_examples, all_features, all_results, n_best_s
     exact_raw, f1_raw = get_raw_scores(orig_data, all_predictions)
     out_eval = {}
 
-    find_all_best_thresh_v2(out_eval, all_predictions, exact_raw, f1_raw, scores_diff_json, qid_to_has_ans)
+    find_all_best_thresh_v2(out_eval, all_predictions, exact_raw,
+                            f1_raw, scores_diff_json, qid_to_has_ans)
 
     return out_eval
 
