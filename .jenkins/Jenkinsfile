@@ -5,15 +5,11 @@
 pipeline {
     agent {
         node {
-                label 'swarm'
-                customWorkspace '/state/ws'
+                label 'metal-node'
             }
     }
     options {
         timestamps()
-    }
-    environment { 
-        NLP_ARCHITECT_BE = 'CPU'
     }
     stages {
         stage('Checkout') {
@@ -28,7 +24,6 @@ pipeline {
                 sh """
                 . .nlp_architect_env/bin/activate
                 pip3 install -U pip setuptools h5py
-                export NLP_ARCHITECT_BE=CPU
                 pip3 install -r requirements.txt
                 pip3 install -r dev-requirements.txt
                 pip3 install -e .
@@ -103,6 +98,9 @@ pipeline {
             }
         }
         always {
+            deleteDir()
+        }
+        cleanup {
             deleteDir()
         }
     }
