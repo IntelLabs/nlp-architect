@@ -450,7 +450,7 @@ class TransformerTokenClassifier(TransformerBase):
                                           valid_ids=valid_tokens))
         return features
 
-    def inference(self, examples: List[TokenClsInputExample], batch_size: int = 64):
+    def inference(self, examples: List[TokenClsInputExample], max_seq_length: int, batch_size: int = 64):
         """
         Run inference on given examples
 
@@ -461,7 +461,8 @@ class TransformerTokenClassifier(TransformerBase):
         Returns:
             logits
         """
-        data_set = self.convert_to_tensors(examples, include_labels=False)
+        data_set = self.convert_to_tensors(
+            examples, max_seq_length=max_seq_length, include_labels=False)
         inf_sampler = SequentialSampler(data_set)
         inf_dataloader = DataLoader(data_set, sampler=inf_sampler, batch_size=batch_size)
         logits = self._evaluate(inf_dataloader)
