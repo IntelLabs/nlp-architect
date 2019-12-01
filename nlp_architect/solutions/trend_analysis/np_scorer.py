@@ -14,7 +14,6 @@
 # limitations under the License.
 # ******************************************************************************
 import logging
-import sys
 from os import path, makedirs
 
 from tqdm import tqdm

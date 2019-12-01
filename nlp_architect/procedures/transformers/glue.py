@@ -148,7 +148,7 @@ def do_inference(args):
     classifier.to(device, n_gpus)
     examples = task.get_dev_examples() if args.evaluate else \
         task.get_test_examples()
-    preds = classifier.inference(examples, args.batch_size, evaluate=args.evaluate)
+    preds = classifier.inference(examples, args.max_seq_length, args.batch_size, evaluate=args.evaluate)
     with io.open(os.path.join(args.output_dir, "output.txt"), "w", encoding="utf-8") as fw:
         for p in preds:
             fw.write("{}\n".format(p))

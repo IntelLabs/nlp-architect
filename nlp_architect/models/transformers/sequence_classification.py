@@ -172,8 +172,7 @@ class TransformerSequenceClassifier(TransformerBase):
             return TensorDataset(all_input_ids, all_input_mask, all_segment_ids, all_label_ids)
         return TensorDataset(all_input_ids, all_input_mask, all_segment_ids)
 
-    def inference(
-            self, examples: List[SequenceClsInputExample], batch_size: int = 64, evaluate=False):
+    def inference(self, examples: List[SequenceClsInputExample], max_seq_length: int, batch_size: int = 64, evaluate=False):
         """
         Run inference on given examples
 
@@ -184,7 +183,8 @@ class TransformerSequenceClassifier(TransformerBase):
         Returns:
             logits
         """
-        data_set = self.convert_to_tensors(examples, include_labels=evaluate)
+        data_set = self.convert_to_tensors(
+            examples, max_seq_length=max_seq_length, include_labels=evaluate)
         inf_sampler = SequentialSampler(data_set)
         inf_dataloader = DataLoader(data_set, sampler=inf_sampler, batch_size=batch_size)
         logits = self._evaluate(inf_dataloader)

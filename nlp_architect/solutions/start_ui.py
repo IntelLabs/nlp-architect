@@ -18,6 +18,7 @@ import socket
 import sys
 from os import path
 from subprocess import run
+import sys
 
 SOLUTIONS_PATH = path.dirname(path.realpath(__file__))
 

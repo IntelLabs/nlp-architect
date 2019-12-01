@@ -73,22 +73,21 @@ def analyze(target_data, ref_data, tar_header, ref_header, top_n=10000, top_n_ve
         calc_scores(target_data, tfidf_w, cval_w, lm_w, target_scores_path)
         calc_scores(ref_data, tfidf_w, cval_w, lm_w, ref_scores_path)
         # unify all topics:
-        with open(ref_data) as f:
+        with open(ref_data, encoding='utf-8', errors='ignore') as f:
             topics1 = sum(1 for _ in f)
-        with open(target_data) as f:
+        with open(target_data, encoding='utf-8', errors='ignore') as f:
             topics2 = sum(1 for _ in f)
         sum_topics = topics1 + topics2
         logger.info("sum of all topics= %s", str(sum_topics))
         merge_phrases(ref_scores_path, True, hash2group, rep2rank, top_n, sum_topics)
         merge_phrases(target_scores_path, False, hash2group, rep2rank, top_n, sum_topics)
         logger.info("Total number of evaluated topics: %s", str(len(rep2rank)))
-
+        all_topics_sorted = sorted(rep2rank, key=rep2rank.get)
+        top_n_scatter = len(
+            all_topics_sorted) if top_n_vectors is None else top_n_vectors
         # compute 2D space clusters if model exists:
         w2v_loc = path.join(dir, 'W2V_Models/model.bin')
         if os.path.isfile(w2v_loc):
-            all_topics_sorted = sorted(rep2rank, key=rep2rank.get)
-            top_n_scatter = len(
-                all_topics_sorted) if top_n_vectors is None else top_n_vectors
             scatter_group = all_topics_sorted[0:top_n_scatter]
             np_scat, x_scat, y_scat, in_model_count =\
                 compute_scatter_subwords(scatter_group, w2v_loc)
@@ -210,7 +209,6 @@ def save_report_data(hash2group, groups_r_sorted, groups_t_sorted,
                         weights) else ('',)
                     new_row += (in_model_count, top_n_scatter) if i == 0 else ('',)
                     data_writer.writerow(new_row)
-
                     filter_row = (all_topics_sorted[i], 1, 0)
                     filter_writer.writerow(filter_row)
                 except Exception as e:
@@ -284,7 +282,7 @@ def calc_scores(scores_file, tfidf_w, cval_w, lm_w, output_path):
     logger.info("calculating scores for file: %s with: tfidf_w=%s, cval_w=%s,"
                 " freq_w=%s", scores_file, str(tfidf_w), str(cval_w), str(lm_w))
     with open(scores_file, encoding='utf-8', errors='ignore') as csv_file:
-        lines = csv.reader(csv_file, delimiter=',')
+        lines = csv.reader((x.replace('\0', '') for x in csv_file), delimiter=',')
         final_list = []
         for group, tfidf, cval, freq in lines:
             score = (float(tfidf) * tfidf_w) + (float(cval) * cval_w) + (float(freq) * lm_w)
