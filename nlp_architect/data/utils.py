@@ -151,36 +151,23 @@ def sample_label_unlabeled(samples: List[InputExample], no_labeled: int, no_unla
 
 
 def split_column_dataset(
-        m: int, n: int, out_folder, dataset, m_filename='m.txt', n_filename='n.txt', tag_col=-1):
+        first_count: int, second_count: int, out_folder, dataset, first_filename, second_filename, tag_col=-1):
     """
     Splits a single column tagged dataset into two files according to the amount of examples
     requested to be included in each file.
-    n (int) : the amount of examples to include in the first split file
-    m (int) : the amount of examples to include in the second split file
+    split1_count (int) : the amount of examples to include in the first split file
+    split2_count (int) : the amount of examples to include in the second split file
     out_folder (str) : the folder in which the result files will be stored
     dataset (str) : the path to the original data file
-    m_filename (str) : the name of the first split file
-    n_filename (str) : the name of the second split file
+    split1_filename (str) : the name of the first split file
+    split2_filename (str) : the name of the second split file
     tag_col (int) : the index of the tag column
     """
     lines = read_column_tagged_file(dataset, tag_col=tag_col)
     num_of_examples = len(lines)
-    assert m + n <= num_of_examples and m > 0 and n > 0
-    selected_lines = random.sample(lines, m + n)
-    m_data = selected_lines[:m]
-    n_data = selected_lines[m:]
-    write_column_tagged_file(out_folder + os.sep + m_filename, m_data)
-    write_column_tagged_file(out_folder + os.sep + n_filename, n_data)
-
-
-def count_examples(file):
-    ctr = 0
-    if os.path.exists(file):
-        with open(file) as fp:
-            for line in fp:
-                line = line.strip()
-                if len(line) == 0:
-                    ctr += 1
-    else:
-        print("File:" + file + " doesn't exist")
-    return ctr
+    assert first_count + second_count <= num_of_examples and first_count > 0 and second_count > 0
+    selected_lines = random.sample(lines, first_count + second_count)
+    first_data = selected_lines[:first_count]
+    second_data = selected_lines[first_count:]
+    write_column_tagged_file(out_folder + os.sep + first_filename, first_data)
+    write_column_tagged_file(out_folder + os.sep + second_filename, second_data)
