@@ -428,3 +428,12 @@ def bio_to_spans(text: List[str], tags: List[str]) -> List[Tuple[int, int, str]]
             e_char += 1 + len(text[s_i + e])
         spans.append((s_char, s_char + e_char, label_str))
     return spans
+
+
+def whitespace_tokenize(text):
+    """Runs basic whitespace cleaning and splitting on a piece of text."""
+    text = text.strip()
+    if not text:
+        return []
+    tokens = text.split()
+    return tokens

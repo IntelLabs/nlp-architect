@@ -1,3 +1,7 @@
+# This file contains code from huggingface library:
+# https://github.com/huggingface/transformers/tree/master/examples
+# methods get_best_indexes and compute_softmax are taken from 'utils_squad.py' file.
+
 # ******************************************************************************
 # Copyright 2017-2019 Intel Corporation
 #
@@ -19,13 +23,14 @@ import csv
 import os
 import random
 import sys
-import json
+import math
 from abc import ABC
 from io import open
 from typing import List, Tuple
 import logging
 
 logger = logging.getLogger(__name__)
+
 
 class InputExample(ABC):
     """Base class for a single training/dev/test example """
@@ -159,10 +164,36 @@ def sample_label_unlabeled(samples: List[InputExample], no_labeled: int, no_unla
     return label_samples, unlabel_samples
 
 
-def whitespace_tokenize(text):
-    """Runs basic whitespace cleaning and splitting on a piece of text."""
-    text = text.strip()
-    if not text:
+def compute_softmax(scores):
+    """Compute softmax probability over raw logits."""
+    if not scores:
         return []
-    tokens = text.split()
-    return tokens
+
+    max_score = None
+    for score in scores:
+        if max_score is None or score > max_score:
+            max_score = score
+
+    exp_scores = []
+    total_sum = 0.0
+    for score in scores:
+        x = math.exp(score - max_score)
+        exp_scores.append(x)
+        total_sum += x
+
+    probs = []
+    for score in exp_scores:
+        probs.append(score / total_sum)
+    return probs
+
+
+def get_best_indexes(logits, n_best_size):
+    """Get the n-best logits from a list."""
+    index_and_score = sorted(enumerate(logits), key=lambda x: x[1], reverse=True)
+
+    best_indexes = []
+    for i in range(len(index_and_score)):
+        if i >= n_best_size:
+            break
+        best_indexes.append(index_and_score[i][0])
+    return best_indexes

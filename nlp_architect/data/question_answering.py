@@ -20,7 +20,8 @@ import os
 
 from nlp_architect.data.utils import DataProcessor
 from nlp_architect.utils.text import Vocabulary
-from nlp_architect.utils.utils_squad import read_squad_examples
+from nlp_architect.models.transformers.question_answering.question_answering import \
+    read_squad_examples
 
 
 logger = logging.getLogger(__name__)
@@ -32,6 +33,12 @@ class QuestionAnsweringProcessor(DataProcessor):
     """
 
     def __init__(self, data_dir, version_2_with_negative):
+        """Constructs a QuestionAnsweringProcessor.
+        Args:
+            data_dir: the folder containing the train/dev datasets
+            version_2_with_negative: If true, the examples contain some that
+            don't have an answer
+        """
         if not os.path.exists(data_dir):
             raise FileNotFoundError
         self.data_dir = data_dir

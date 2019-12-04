@@ -27,9 +27,11 @@ from nlp_architect.procedures.registry import (register_run_cmd,
 from nlp_architect.procedures.transformers.base import (create_base_args,
                                                         inference_args,
                                                         train_args)
-from nlp_architect.models.transformers.question_answering import TransformerQuestionAnswering
+from nlp_architect.models.transformers.question_answering.question_answering\
+    import TransformerQuestionAnswering
 from nlp_architect.utils.io import prepare_output_path
-from nlp_architect.utils.utils_squad import read_squad_examples
+from nlp_architect.models.transformers.question_answering.question_answering\
+    import read_squad_examples
 
 logger = logging.getLogger(__name__)
 

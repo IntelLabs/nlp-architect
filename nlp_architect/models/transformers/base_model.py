@@ -176,9 +176,9 @@ class TransformerBase(TrainableModel):
         if not save_checkpoint:
             if self.tokenizer is not None:
                 self.tokenizer.save_pretrained(output_dir)
-            # with io.open(output_dir + os.sep + 'labels.txt', 'w', encoding='utf-8') as fw:
-            #     for l in self.labels:
-            #         fw.write('{}\n'.format(l))
+            with io.open(output_dir + os.sep + 'labels.txt', 'w', encoding='utf-8') as fw:
+                for l in self.labels:
+                    fw.write('{}\n'.format(l))
             if args is not None:
                 torch.save(args, os.path.join(output_dir, 'training_args.bin'))
 
@@ -199,7 +199,8 @@ class TransformerBase(TrainableModel):
             raise FileNotFoundError
         with io.open(model_path + os.sep + 'labels.txt') as fp:
             labels = [l.strip() for l in fp.readlines()]
-        return cls(model_type=model_type, model_name_or_path=model_path, labels=labels, *args, **kwargs)
+        return cls(model_type=model_type, model_name_or_path=model_path,
+                   labels=labels, *args, **kwargs)
 
     @staticmethod
     def get_train_steps_epochs(max_steps: int,
@@ -393,4 +394,3 @@ class InputFeatures(object):
         self.segment_ids = segment_ids
         self.label_id = label_id
         self.valid_ids = valid_ids
-
