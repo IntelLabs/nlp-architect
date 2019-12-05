@@ -25,7 +25,7 @@ from nlp_architect.data.glue_tasks import get_glue_task, processors
 from nlp_architect.models.transformers import TransformerSequenceClassifier
 from nlp_architect.nn.torch import setup_backend, set_seed
 from nlp_architect.procedures.procedure import Procedure
-from nlp_architect.procedures.registry import (register_run_cmd,
+from nlp_architect.procedures.registry import (register_inference_cmd,
                                                register_train_cmd)
 from nlp_architect.procedures.transformers.base import (create_base_args,
                                                         inference_args,
@@ -51,8 +51,8 @@ class TransformerGlueTrain(Procedure):
         do_training(args)
 
 
-@register_run_cmd(name='transformer_glue',
-                  description='Run a BERT/XLNet/XLM model on a GLUE task')
+@register_inference_cmd(name='transformer_glue',
+                        description='Run a BERT/XLNet/XLM model on a GLUE task')
 class TransformerGlueRun(Procedure):
     @staticmethod
     def add_arguments(parser: argparse.ArgumentParser):
@@ -148,7 +148,8 @@ def do_inference(args):
     classifier.to(device, n_gpus)
     examples = task.get_dev_examples() if args.evaluate else \
         task.get_test_examples()
-    preds = classifier.inference(examples, args.max_seq_length, args.batch_size, evaluate=args.evaluate)
+    preds = classifier.inference(examples, args.max_seq_length,
+                                 args.batch_size, evaluate=args.evaluate)
     with io.open(os.path.join(args.output_dir, "output.txt"), "w", encoding="utf-8") as fw:
         for p in preds:
             fw.write("{}\n".format(p))

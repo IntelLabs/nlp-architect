@@ -26,7 +26,7 @@ from nlp_architect.data.utils import write_column_tagged_file
 from nlp_architect.models.transformers import TransformerTokenClassifier
 from nlp_architect.nn.torch import setup_backend, set_seed
 from nlp_architect.procedures.procedure import Procedure
-from nlp_architect.procedures.registry import (register_run_cmd,
+from nlp_architect.procedures.registry import (register_inference_cmd,
                                                register_train_cmd)
 from nlp_architect.procedures.transformers.base import (create_base_args,
                                                         inference_args,
@@ -55,8 +55,8 @@ class TransformerTokenClsTrain(Procedure):
         do_training(args)
 
 
-@register_run_cmd(name='transformer_token',
-                  description='Run a BERT/XLNet model with token classification head')
+@register_inference_cmd(name='transformer_token',
+                        description='Run a BERT/XLNet model with token classification head')
 class TransformerTokenClsRun(Procedure):
     @staticmethod
     def add_arguments(parser: argparse.ArgumentParser):

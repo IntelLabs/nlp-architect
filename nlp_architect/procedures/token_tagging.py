@@ -27,7 +27,7 @@ from nlp_architect.nn.torch.modules.embedders import IDCNN, CNNLSTM
 from nlp_architect.nn.torch import setup_backend, set_seed
 from nlp_architect.nn.torch.distillation import TeacherStudentDistill
 from nlp_architect.procedures.procedure import Procedure
-from nlp_architect.procedures.registry import register_train_cmd, register_run_cmd
+from nlp_architect.procedures.registry import register_train_cmd, register_inference_cmd
 from nlp_architect.utils.embedding import (get_embedding_matrix,
                                            load_embedding_file)
 from nlp_architect.utils.io import prepare_output_path
@@ -80,8 +80,8 @@ class TrainTaggerKDPseudo(Procedure):
         do_kd_pseudo_training(args)
 
 
-@register_run_cmd(name='tagger',
-                  description='Run a neural tagger model')
+@register_inference_cmd(name='tagger',
+                        description='Run a neural tagger model')
 class RunTagger(Procedure):
     @staticmethod
     def add_arguments(parser: argparse.ArgumentParser):

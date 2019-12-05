@@ -24,6 +24,8 @@ from nlp_architect.version import NLP_ARCHITECT_VERSION
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
 
+from nlp_architect.cli.cli_commands import nlp_train_cli, nlp_inference_cli
+
 def run_cli():
     """ Run nlp_architect command line application
     """

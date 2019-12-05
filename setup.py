@@ -48,7 +48,12 @@ setup(name='nlp-architect',
       packages=find_packages(exclude=['tests.*', 'tests', '*.tests', '*.tests.*',
                                       'examples.*', 'examples', '*.examples', '*.examples.*']),
       install_requires=install_requirements,
-      scripts=['nlp_architect/nlp_architect'],
+      entry_points={
+          'console_scripts': [
+              'nlp-train = nlp_architect.cli:nlp_train_cli',
+              'nlp-inference = nlp_architect.cli:nlp_inference_cli',
+          ],
+      },
       include_package_data=True,
       classifiers=[
           'Development Status :: 3 - Alpha',
