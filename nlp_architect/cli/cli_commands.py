@@ -47,24 +47,3 @@ def cli_run_cmd(subparsers: _SubParsersAction):
                 'Available models',
                 'Run a model from the library',
                 subparsers)
-
-
-def cli_process_cmd(subparsers: _SubParsersAction):
-    generic_cmd('process',
-                'Available data processors',
-                'Run a data processor from the library',
-                subparsers)
-
-
-def cli_solution_cmd(subparsers: _SubParsersAction):
-    generic_cmd('solution',
-                'Available solutions',
-                'Run a solution process from the library',
-                subparsers)
-
-
-def cli_serve_cmd(subparsers: _SubParsersAction):
-    generic_cmd('serve',
-                'Available models',
-                'Server a trained model using REST service',
-                subparsers)

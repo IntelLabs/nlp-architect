@@ -16,7 +16,4 @@
 CMD_REGISTRY = {
     'train': [],
     'run': [],
-    'process': [],
-    'solution': [],
-    'serve': [],
 }
