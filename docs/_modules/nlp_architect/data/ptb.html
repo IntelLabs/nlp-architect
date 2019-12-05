@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.data.ptb &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
+  <title>nlp_architect.data.ptb &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
   
 
   
@@ -116,7 +116,6 @@
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developer_guide.html">Developer Guide</a></li>
 </ul>
 
@@ -221,7 +220,7 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Class for generating a dictionary of all words in the PTB corpus</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s1">&#39;~/data&#39;</span><span class="p">),</span> <span class="n">dataset</span><span class="o">=</span><span class="s1">&#39;WikiText-103&#39;</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s1">&#39;~/data&#39;</span><span class="p">),</span> <span class="n">dataset</span><span class="o">=</span><span class="s1">&#39;WikiText-103&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize class</span>
 <span class="sd">        Args:</span>
@@ -362,7 +361,7 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Class that defines data loader</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word_dict</span><span class="p">,</span> <span class="n">seq_len</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">data_dir</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s1">&#39;~/data&#39;</span><span class="p">),</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word_dict</span><span class="p">,</span> <span class="n">seq_len</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">data_dir</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s1">&#39;~/data&#39;</span><span class="p">),</span>
                  <span class="n">dataset</span><span class="o">=</span><span class="s1">&#39;WikiText-103&#39;</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">skip</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">split_type</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="n">loop</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize class</span>
@@ -394,10 +393,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span> <span class="o">=</span> <span class="n">batch_size</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sample_count</span> <span class="o">=</span> <span class="mi">0</span>
 
-    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span>
 
-    <span class="k">def</span> <span class="nf">__next__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__next__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_batch</span><span class="p">()</span>
 
 <div class="viewcode-block" id="PTBDataLoader.reset"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.ptb.PTBDataLoader.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>

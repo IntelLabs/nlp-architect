@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.common.core_nlp_doc &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
+  <title>nlp_architect.common.core_nlp_doc &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
   
 
   
@@ -116,7 +116,6 @@
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developer_guide.html">Developer Guide</a></li>
 </ul>
 
@@ -260,7 +259,7 @@
 <span class="sd">            represented by a dictionary, structured as follows: {&#39;start&#39;: (int), &#39;len&#39;: (int),</span>
 <span class="sd">            &#39;pos&#39;: (str), &#39;ner&#39;: (str), &#39;lemma&#39;: (str), &#39;gov&#39;: (int), &#39;rel&#39;: (str)}</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doc_text</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">sentences</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doc_text</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">sentences</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">sentences</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">sentences</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_doc_text</span> <span class="o">=</span> <span class="n">doc_text</span>
@@ -288,16 +287,16 @@
             <span class="k">return</span> <span class="n">CoreNLPDoc</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s1">&#39;_doc_text&#39;</span><span class="p">],</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;_sentences&#39;</span><span class="p">])</span>
         <span class="k">return</span> <span class="n">obj</span></div>
 
-    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pretty_json</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sentences</span><span class="o">.</span><span class="fm">__iter__</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sentences</span><span class="p">)</span>
 
 <div class="viewcode-block" id="CoreNLPDoc.json"><a class="viewcode-back" href="../../../generated_api/nlp_architect.common.html#nlp_architect.common.core_nlp_doc.CoreNLPDoc.json">[docs]</a>    <span class="k">def</span> <span class="nf">json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>

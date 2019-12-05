@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.solutions.trend_analysis.topic_extraction &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
+  <title>nlp_architect.solutions.trend_analysis.topic_extraction &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
   
 
   
@@ -116,7 +116,6 @@
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../developer_guide.html">Developer Guide</a></li>
 </ul>
 
@@ -197,7 +196,7 @@
 <span class="c1"># limitations under the License.</span>
 <span class="c1"># ******************************************************************************</span>
 
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="p">(</span><span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="p">(</span><span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span>
                         <span class="n">unicode_literals</span><span class="p">)</span>
 
 <span class="kn">import</span> <span class="nn">argparse</span>
@@ -205,18 +204,17 @@
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="k">import</span> <span class="n">Pool</span>
-<span class="kn">from</span> <span class="nn">os</span> <span class="k">import</span> <span class="n">makedirs</span><span class="p">,</span> <span class="n">path</span>
+<span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="kn">import</span> <span class="n">Pool</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">makedirs</span><span class="p">,</span> <span class="n">path</span>
 
-<span class="kn">from</span> <span class="nn">newspaper</span> <span class="k">import</span> <span class="n">Article</span>
+<span class="kn">from</span> <span class="nn">newspaper</span> <span class="kn">import</span> <span class="n">Article</span>
 
-<span class="kn">from</span> <span class="nn">nlp_architect</span> <span class="k">import</span> <span class="n">LIBRARY_OUT</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.solutions.trend_analysis.np_scorer</span> <span class="k">import</span> <span class="n">NPScorer</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.utils.embedding</span> <span class="k">import</span> <span class="n">FasttextEmbeddingsModel</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.utils.io</span> <span class="k">import</span> <span class="n">validate_existing_directory</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.utils.text</span> <span class="k">import</span> <span class="n">SpacyInstance</span>
+<span class="kn">from</span> <span class="nn">nlp_architect</span> <span class="kn">import</span> <span class="n">LIBRARY_OUT</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.solutions.trend_analysis.np_scorer</span> <span class="kn">import</span> <span class="n">NPScorer</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.utils.embedding</span> <span class="kn">import</span> <span class="n">FasttextEmbeddingsModel</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.utils.io</span> <span class="kn">import</span> <span class="n">validate_existing_directory</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.utils.text</span> <span class="kn">import</span> <span class="n">SpacyInstance</span>
 
-<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">stream</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 <span class="n">data_dir</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">LIBRARY_OUT</span> <span class="o">/</span> <span class="s1">&#39;trend-analysis-data&#39;</span><span class="p">)</span>
 

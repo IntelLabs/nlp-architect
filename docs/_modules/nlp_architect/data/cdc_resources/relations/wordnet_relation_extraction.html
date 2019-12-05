@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.data.cdc_resources.relations.wordnet_relation_extraction &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
+  <title>nlp_architect.data.cdc_resources.relations.wordnet_relation_extraction &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
   
 
   
@@ -116,7 +116,6 @@
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../developer_guide.html">Developer Guide</a></li>
 </ul>
 
@@ -199,22 +198,22 @@
 
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">Set</span><span class="p">,</span> <span class="n">List</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Set</span><span class="p">,</span> <span class="n">List</span>
 
-<span class="kn">from</span> <span class="nn">nlp_architect.common.cdc.mention_data</span> <span class="k">import</span> <span class="n">MentionDataLight</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.data.cdc_resources.data_types.wn.wordnet_page</span> <span class="k">import</span> <span class="n">WordnetPage</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.data.cdc_resources.relations.relation_extraction</span> <span class="k">import</span> <span class="n">RelationExtraction</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.data.cdc_resources.relations.relation_types_enums</span> <span class="k">import</span> <span class="n">RelationType</span><span class="p">,</span> \
+<span class="kn">from</span> <span class="nn">nlp_architect.common.cdc.mention_data</span> <span class="kn">import</span> <span class="n">MentionDataLight</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.data.cdc_resources.data_types.wn.wordnet_page</span> <span class="kn">import</span> <span class="n">WordnetPage</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.data.cdc_resources.relations.relation_extraction</span> <span class="kn">import</span> <span class="n">RelationExtraction</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.data.cdc_resources.relations.relation_types_enums</span> <span class="kn">import</span> <span class="n">RelationType</span><span class="p">,</span> \
     <span class="n">OnlineOROfflineMethod</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.data.cdc_resources.wordnet.wordnet_offline</span> <span class="k">import</span> <span class="n">WordnetOffline</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.data.cdc_resources.wordnet.wordnet_online</span> <span class="k">import</span> <span class="n">WordnetOnline</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.utils.string_utils</span> <span class="k">import</span> <span class="n">StringUtils</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.data.cdc_resources.wordnet.wordnet_offline</span> <span class="kn">import</span> <span class="n">WordnetOffline</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.data.cdc_resources.wordnet.wordnet_online</span> <span class="kn">import</span> <span class="n">WordnetOnline</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.utils.string_utils</span> <span class="kn">import</span> <span class="n">StringUtils</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="WordnetRelationExtraction"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.relations.html#nlp_architect.data.cdc_resources.relations.wordnet_relation_extraction.WordnetRelationExtraction">[docs]</a><span class="k">class</span> <span class="nc">WordnetRelationExtraction</span><span class="p">(</span><span class="n">RelationExtraction</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="p">:</span> <span class="n">OnlineOROfflineMethod</span> <span class="o">=</span> <span class="n">OnlineOROfflineMethod</span><span class="o">.</span><span class="n">ONLINE</span><span class="p">,</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="p">:</span> <span class="n">OnlineOROfflineMethod</span> <span class="o">=</span> <span class="n">OnlineOROfflineMethod</span><span class="o">.</span><span class="n">ONLINE</span><span class="p">,</span>
                  <span class="n">wn_file</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Extract Relation between two mentions according to Word Embedding cosine distance</span>

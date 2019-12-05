@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.models.pretrained_models &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
+  <title>nlp_architect.models.pretrained_models &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
   
 
   
@@ -116,7 +116,6 @@
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developer_guide.html">Developer Guide</a></li>
 </ul>
 
@@ -199,10 +198,10 @@
 <span class="c1"># limitations under the License.</span>
 <span class="c1"># ******************************************************************************</span>
 
-<span class="kn">from</span> <span class="nn">nlp_architect.utils.io</span> <span class="k">import</span> <span class="n">uncompress_file</span><span class="p">,</span> <span class="n">zipfile_list</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.utils.file_cache</span> <span class="k">import</span> <span class="n">cached_path</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.utils.io</span> <span class="kn">import</span> <span class="n">uncompress_file</span><span class="p">,</span> <span class="n">zipfile_list</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.utils.file_cache</span> <span class="kn">import</span> <span class="n">cached_path</span>
 
-<span class="kn">from</span> <span class="nn">nlp_architect</span> <span class="k">import</span> <span class="n">LIBRARY_OUT</span>
+<span class="kn">from</span> <span class="nn">nlp_architect</span> <span class="kn">import</span> <span class="n">LIBRARY_OUT</span>
 
 <span class="n">S3_PREFIX</span> <span class="o">=</span> <span class="s2">&quot;https://s3-us-west-2.amazonaws.com/nlp-architect-data/&quot;</span>
 
@@ -223,7 +222,7 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_name</span><span class="p">,</span> <span class="n">sub_path</span><span class="p">,</span> <span class="n">files</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_name</span><span class="p">,</span> <span class="n">sub_path</span><span class="p">,</span> <span class="n">files</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="p">(</span><span class="n">BistModel</span><span class="p">,</span> <span class="n">ChunkerModel</span><span class="p">,</span> <span class="n">MrcModel</span><span class="p">,</span> <span class="n">IntentModel</span><span class="p">,</span> <span class="n">AbsaModel</span><span class="p">,</span> <span class="n">NerModel</span><span class="p">)):</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_instance</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>    <span class="c1"># pylint: disable=no-member</span>
                 <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;This class is a singleton!&quot;</span><span class="p">)</span>
@@ -287,7 +286,7 @@
     <span class="n">sub_path</span> <span class="o">=</span> <span class="s1">&#39;models/dep_parse/&#39;</span>
     <span class="n">files</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;bist-pretrained.zip&#39;</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s1">&#39;bist&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sub_path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="p">)</span>
         <span class="n">BistModel</span><span class="o">.</span><span class="n">_instance</span> <span class="o">=</span> <span class="bp">self</span></div>
 
@@ -300,7 +299,7 @@
     <span class="n">sub_path</span> <span class="o">=</span> <span class="s1">&#39;models/intent/&#39;</span>
     <span class="n">files</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;model_info.dat&#39;</span><span class="p">,</span> <span class="s1">&#39;model.h5&#39;</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s1">&#39;intent&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sub_path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="p">)</span>
         <span class="n">IntentModel</span><span class="o">.</span><span class="n">_instance</span> <span class="o">=</span> <span class="bp">self</span></div>
 
@@ -313,7 +312,7 @@
     <span class="n">sub_path</span> <span class="o">=</span> <span class="s1">&#39;models/mrc/&#39;</span>
     <span class="n">files</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;mrc_data.zip&#39;</span><span class="p">,</span> <span class="s1">&#39;mrc_model.zip&#39;</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s1">&#39;mrc&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sub_path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="p">)</span>
         <span class="n">MrcModel</span><span class="o">.</span><span class="n">_instance</span> <span class="o">=</span> <span class="bp">self</span></div>
 
@@ -326,7 +325,7 @@
     <span class="n">sub_path</span> <span class="o">=</span> <span class="s1">&#39;models/ner/&#39;</span>
     <span class="n">files</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;model_v4.h5&#39;</span><span class="p">,</span> <span class="s1">&#39;model_info_v4.dat&#39;</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s1">&#39;ner&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sub_path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="p">)</span>
         <span class="n">NerModel</span><span class="o">.</span><span class="n">_instance</span> <span class="o">=</span> <span class="bp">self</span></div>
 
@@ -339,7 +338,7 @@
     <span class="n">sub_path</span> <span class="o">=</span> <span class="s1">&#39;models/absa/&#39;</span>
     <span class="n">files</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;rerank_model.h5&#39;</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s1">&#39;absa&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sub_path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="p">)</span>
         <span class="n">AbsaModel</span><span class="o">.</span><span class="n">_instance</span> <span class="o">=</span> <span class="bp">self</span></div>
 
@@ -352,7 +351,7 @@
     <span class="n">sub_path</span> <span class="o">=</span> <span class="s1">&#39;models/chunker/&#39;</span>
     <span class="n">files</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;model.h5&#39;</span><span class="p">,</span> <span class="s1">&#39;model_info.dat.params&#39;</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s1">&#39;chunker&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sub_path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="p">)</span>
         <span class="n">ChunkerModel</span><span class="o">.</span><span class="n">_instance</span> <span class="o">=</span> <span class="bp">self</span></div>
 </pre></div>

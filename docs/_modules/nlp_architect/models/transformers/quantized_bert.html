@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.models.transformers.quantized_bert &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
+  <title>nlp_architect.models.transformers.quantized_bert &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
   
 
   
@@ -116,7 +116,6 @@
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../developer_guide.html">Developer Guide</a></li>
 </ul>
 
@@ -203,30 +202,30 @@
 <span class="sd">Quantized BERT layers and model</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 
-<span class="kn">from</span> <span class="nn">torch</span> <span class="k">import</span> <span class="n">nn</span>
-<span class="kn">from</span> <span class="nn">pytorch_transformers.modeling_bert</span> <span class="k">import</span> <span class="p">(</span><span class="n">BertEmbeddings</span><span class="p">,</span>
-                                                <span class="n">BertLayerNorm</span><span class="p">,</span>
-                                                <span class="n">BertSelfAttention</span><span class="p">,</span>
-                                                <span class="n">BertSelfOutput</span><span class="p">,</span>
-                                                <span class="n">BertAttention</span><span class="p">,</span>
-                                                <span class="n">BertIntermediate</span><span class="p">,</span>
-                                                <span class="n">BertOutput</span><span class="p">,</span>
-                                                <span class="n">BertLayer</span><span class="p">,</span>
-                                                <span class="n">BertEncoder</span><span class="p">,</span>
-                                                <span class="n">BertPooler</span><span class="p">,</span>
-                                                <span class="n">BertModel</span><span class="p">,</span>
-                                                <span class="n">BertForQuestionAnswering</span><span class="p">,</span>
-                                                <span class="n">BertForSequenceClassification</span><span class="p">,</span>
-                                                <span class="n">BertForTokenClassification</span><span class="p">,</span>
-                                                <span class="n">ACT2FN</span><span class="p">,</span>
-                                                <span class="n">BertPreTrainedModel</span><span class="p">,</span>
-                                                <span class="n">BertConfig</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
+<span class="kn">from</span> <span class="nn">transformers.modeling_bert</span> <span class="kn">import</span> <span class="p">(</span><span class="n">ACT2FN</span><span class="p">,</span> <span class="n">BertAttention</span><span class="p">,</span> <span class="n">BertConfig</span><span class="p">,</span>
+                                        <span class="n">BertEmbeddings</span><span class="p">,</span> <span class="n">BertEncoder</span><span class="p">,</span>
+                                        <span class="n">BertForQuestionAnswering</span><span class="p">,</span>
+                                        <span class="n">BertForSequenceClassification</span><span class="p">,</span>
+                                        <span class="n">BertForTokenClassification</span><span class="p">,</span>
+                                        <span class="n">BertIntermediate</span><span class="p">,</span> <span class="n">BertLayer</span><span class="p">,</span>
+                                        <span class="n">BertLayerNorm</span><span class="p">,</span> <span class="n">BertModel</span><span class="p">,</span> <span class="n">BertOutput</span><span class="p">,</span>
+                                        <span class="n">BertPooler</span><span class="p">,</span> <span class="n">BertPreTrainedModel</span><span class="p">,</span>
+                                        <span class="n">BertSelfAttention</span><span class="p">,</span> <span class="n">BertSelfOutput</span><span class="p">)</span>
 
-<span class="kn">from</span> <span class="nn">nlp_architect.nn.torch.quantization</span> <span class="k">import</span> <span class="p">(</span><span class="n">QuantizationConfig</span><span class="p">,</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.nn.torch.quantization</span> <span class="kn">import</span> <span class="p">(</span><span class="n">QuantizationConfig</span><span class="p">,</span>
                                                  <span class="n">QuantizedEmbedding</span><span class="p">,</span>
+                                                 <span class="n">QuantizedLayer</span><span class="p">,</span>
                                                  <span class="n">QuantizedLinear</span><span class="p">)</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="n">QUANT_WEIGHTS_NAME</span> <span class="o">=</span> <span class="s2">&quot;quant_pytorch_model.bin&quot;</span>
 
 <span class="n">QUANT_BERT_PRETRAINED_CONFIG_ARCHIVE_MAP</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s1">&#39;bert-base-uncased&#39;</span><span class="p">:</span> <span class="s2">&quot;https://nlp-architect-data.s3-us-west-2.amazonaws.com/models/transformers/bert-base-uncased.json&quot;</span><span class="p">,</span>  <span class="c1"># noqa: E501</span>
@@ -263,7 +262,7 @@
 
 
 <div class="viewcode-block" id="QuantizedBertEmbeddings"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.transformers.html#nlp_architect.models.transformers.quantized_bert.QuantizedBertEmbeddings">[docs]</a><span class="k">class</span> <span class="nc">QuantizedBertEmbeddings</span><span class="p">(</span><span class="n">BertEmbeddings</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">BertEmbeddings</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">word_embeddings</span> <span class="o">=</span> <span class="n">quantized_embedding_setup</span><span class="p">(</span>
             <span class="n">config</span><span class="p">,</span> <span class="s1">&#39;word_embeddings&#39;</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">vocab_size</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">padding_idx</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
@@ -277,7 +276,7 @@
 
 
 <div class="viewcode-block" id="QuantizedBertSelfAttention"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.transformers.html#nlp_architect.models.transformers.quantized_bert.QuantizedBertSelfAttention">[docs]</a><span class="k">class</span> <span class="nc">QuantizedBertSelfAttention</span><span class="p">(</span><span class="n">BertSelfAttention</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">BertSelfAttention</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">hidden_size</span> <span class="o">%</span> <span class="n">config</span><span class="o">.</span><span class="n">num_attention_heads</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
@@ -300,7 +299,7 @@
 
 
 <div class="viewcode-block" id="QuantizedBertSelfOutput"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.transformers.html#nlp_architect.models.transformers.quantized_bert.QuantizedBertSelfOutput">[docs]</a><span class="k">class</span> <span class="nc">QuantizedBertSelfOutput</span><span class="p">(</span><span class="n">BertSelfOutput</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">BertSelfOutput</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dense</span> <span class="o">=</span> <span class="n">quantized_linear_setup</span><span class="p">(</span>
             <span class="n">config</span><span class="p">,</span> <span class="s1">&#39;attention_output&#39;</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">)</span>
@@ -309,7 +308,7 @@
 
 
 <div class="viewcode-block" id="QuantizedBertAttention"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.transformers.html#nlp_architect.models.transformers.quantized_bert.QuantizedBertAttention">[docs]</a><span class="k">class</span> <span class="nc">QuantizedBertAttention</span><span class="p">(</span><span class="n">BertAttention</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">BertAttention</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">self</span> <span class="o">=</span> <span class="n">QuantizedBertSelfAttention</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">output</span> <span class="o">=</span> <span class="n">QuantizedBertSelfOutput</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
@@ -319,7 +318,7 @@
 
 
 <div class="viewcode-block" id="QuantizedBertIntermediate"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.transformers.html#nlp_architect.models.transformers.quantized_bert.QuantizedBertIntermediate">[docs]</a><span class="k">class</span> <span class="nc">QuantizedBertIntermediate</span><span class="p">(</span><span class="n">BertIntermediate</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">BertIntermediate</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dense</span> <span class="o">=</span> <span class="n">quantized_linear_setup</span><span class="p">(</span>
             <span class="n">config</span><span class="p">,</span> <span class="s2">&quot;ffn_intermediate&quot;</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">intermediate_size</span><span class="p">)</span>
@@ -332,7 +331,7 @@
 
 
 <div class="viewcode-block" id="QuantizedBertOutput"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.transformers.html#nlp_architect.models.transformers.quantized_bert.QuantizedBertOutput">[docs]</a><span class="k">class</span> <span class="nc">QuantizedBertOutput</span><span class="p">(</span><span class="n">BertOutput</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">BertOutput</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dense</span> <span class="o">=</span> <span class="n">quantized_linear_setup</span><span class="p">(</span>
             <span class="n">config</span><span class="p">,</span> <span class="s2">&quot;ffn_output&quot;</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">intermediate_size</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">)</span>
@@ -341,7 +340,7 @@
 
 
 <div class="viewcode-block" id="QuantizedBertLayer"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.transformers.html#nlp_architect.models.transformers.quantized_bert.QuantizedBertLayer">[docs]</a><span class="k">class</span> <span class="nc">QuantizedBertLayer</span><span class="p">(</span><span class="n">BertLayer</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">BertLayer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">attention</span> <span class="o">=</span> <span class="n">QuantizedBertAttention</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">intermediate</span> <span class="o">=</span> <span class="n">QuantizedBertIntermediate</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
@@ -349,7 +348,7 @@
 
 
 <div class="viewcode-block" id="QuantizedBertEncoder"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.transformers.html#nlp_architect.models.transformers.quantized_bert.QuantizedBertEncoder">[docs]</a><span class="k">class</span> <span class="nc">QuantizedBertEncoder</span><span class="p">(</span><span class="n">BertEncoder</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">BertEncoder</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">output_attentions</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">output_attentions</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">output_hidden_states</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">output_hidden_states</span>
@@ -358,7 +357,7 @@
 
 
 <div class="viewcode-block" id="QuantizedBertPooler"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.transformers.html#nlp_architect.models.transformers.quantized_bert.QuantizedBertPooler">[docs]</a><span class="k">class</span> <span class="nc">QuantizedBertPooler</span><span class="p">(</span><span class="n">BertPooler</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">BertPooler</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dense</span> <span class="o">=</span> <span class="n">quantized_linear_setup</span><span class="p">(</span>
             <span class="n">config</span><span class="p">,</span> <span class="s2">&quot;pooler&quot;</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">)</span>
@@ -378,11 +377,106 @@
             <span class="n">module</span><span class="o">.</span><span class="n">bias</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">zero_</span><span class="p">()</span>
             <span class="n">module</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">fill_</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">)</span> <span class="ow">and</span> <span class="n">module</span><span class="o">.</span><span class="n">bias</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">module</span><span class="o">.</span><span class="n">bias</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">zero_</span><span class="p">()</span></div></div>
+            <span class="n">module</span><span class="o">.</span><span class="n">bias</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">zero_</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="QuantizedBertPreTrainedModel.from_pretrained"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.transformers.html#nlp_architect.models.transformers.quantized_bert.QuantizedBertPreTrainedModel.from_pretrained">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_pretrained</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">pretrained_model_name_or_path</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">from_8bit</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;load trained model from 8bit model&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">from_8bit</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="n">pretrained_model_name_or_path</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;config&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">output_loading_info</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;output_loading_info&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+
+        <span class="c1"># Load config</span>
+        <span class="k">if</span> <span class="n">config</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">config</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">config_class</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span>
+                <span class="n">pretrained_model_name_or_path</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="c1"># Load model</span>
+        <span class="n">model_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pretrained_model_name_or_path</span><span class="p">,</span> <span class="n">QUANT_WEIGHTS_NAME</span><span class="p">)</span>
+
+        <span class="c1"># Instantiate model.</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+        <span class="c1"># Set model to initialize variables to be loaded from quantized</span>
+        <span class="c1"># checkpoint which are None by Default</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+        <span class="c1"># Get state dict of model</span>
+        <span class="n">state_dict</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">model_file</span><span class="p">,</span> <span class="n">map_location</span><span class="o">=</span><span class="s1">&#39;cpu&#39;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;loading weights file </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">model_file</span><span class="p">))</span>
+
+        <span class="c1"># Load from a PyTorch state_dict</span>
+        <span class="n">missing_keys</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">unexpected_keys</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">error_msgs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># copy state_dict so _load_from_state_dict can modify it</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">state_dict</span><span class="p">,</span> <span class="s1">&#39;_metadata&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">state_dict</span> <span class="o">=</span> <span class="n">state_dict</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">metadata</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">state_dict</span><span class="o">.</span><span class="n">_metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+
+        <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+            <span class="n">local_metadata</span> <span class="o">=</span> <span class="p">{}</span> <span class="k">if</span> <span class="n">metadata</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">prefix</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">{})</span>
+            <span class="n">module</span><span class="o">.</span><span class="n">_load_from_state_dict</span><span class="p">(</span>
+                <span class="n">state_dict</span><span class="p">,</span> <span class="n">prefix</span><span class="p">,</span> <span class="n">local_metadata</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">missing_keys</span><span class="p">,</span>
+                <span class="n">unexpected_keys</span><span class="p">,</span> <span class="n">error_msgs</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">module</span><span class="o">.</span><span class="n">_modules</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">child</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">load</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="n">prefix</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Make sure we are able to load base models as well as derived models (with heads)</span>
+        <span class="n">start_prefix</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="n">model_to_load</span> <span class="o">=</span> <span class="n">model</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">base_model_prefix</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">any</span><span class="p">(</span>
+                <span class="n">s</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">base_model_prefix</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">state_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+            <span class="n">start_prefix</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">base_model_prefix</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">base_model_prefix</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span>
+                <span class="n">s</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">base_model_prefix</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">state_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+            <span class="n">model_to_load</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">base_model_prefix</span><span class="p">)</span>
+
+        <span class="n">load</span><span class="p">(</span><span class="n">model_to_load</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="n">start_prefix</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">missing_keys</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Weights of </span><span class="si">{}</span><span class="s2"> not initialized from pretrained model: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">model</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">missing_keys</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">unexpected_keys</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Weights from pretrained model not used in </span><span class="si">{}</span><span class="s2">: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">model</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">unexpected_keys</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">error_msgs</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;Error(s) in loading state_dict for </span><span class="si">{}</span><span class="s1">:</span><span class="se">\n\t</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                               <span class="n">model</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">error_msgs</span><span class="p">)))</span>
+
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s1">&#39;tie_weights&#39;</span><span class="p">):</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">tie_weights</span><span class="p">()</span>  <span class="c1"># make sure word embedding weights are still tied</span>
+
+        <span class="k">if</span> <span class="n">output_loading_info</span><span class="p">:</span>
+            <span class="n">loading_info</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;missing_keys&quot;</span><span class="p">:</span> <span class="n">missing_keys</span><span class="p">,</span>
+                            <span class="s2">&quot;unexpected_keys&quot;</span><span class="p">:</span> <span class="n">unexpected_keys</span><span class="p">,</span> <span class="s2">&quot;error_msgs&quot;</span><span class="p">:</span> <span class="n">error_msgs</span><span class="p">}</span>
+            <span class="k">return</span> <span class="n">model</span><span class="p">,</span> <span class="n">loading_info</span>
+
+        <span class="k">return</span> <span class="n">model</span></div>
+
+<div class="viewcode-block" id="QuantizedBertPreTrainedModel.save_pretrained"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.transformers.html#nlp_architect.models.transformers.quantized_bert.QuantizedBertPreTrainedModel.save_pretrained">[docs]</a>    <span class="k">def</span> <span class="nf">save_pretrained</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">save_directory</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;save trained model in 8bit&quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">save_pretrained</span><span class="p">(</span><span class="n">save_directory</span><span class="p">)</span>
+        <span class="c1"># Only save the model it-self if we are using distributed training</span>
+        <span class="n">model_to_save</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">module</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;module&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="bp">self</span>
+        <span class="n">model_to_save</span><span class="o">.</span><span class="n">toggle_8bit</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">output_model_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">save_directory</span><span class="p">,</span> <span class="n">QUANT_WEIGHTS_NAME</span><span class="p">)</span>
+        <span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">model_to_save</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span> <span class="n">output_model_file</span><span class="p">)</span>
+        <span class="n">model_to_save</span><span class="o">.</span><span class="n">toggle_8bit</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="QuantizedBertPreTrainedModel.toggle_8bit"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.transformers.html#nlp_architect.models.transformers.quantized_bert.QuantizedBertPreTrainedModel.toggle_8bit">[docs]</a>    <span class="k">def</span> <span class="nf">toggle_8bit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">_toggle_8bit</span><span class="p">(</span><span class="n">module</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">QuantizedLayer</span><span class="p">):</span>
+                <span class="n">module</span><span class="o">.</span><span class="n">mode_8bit</span> <span class="o">=</span> <span class="n">mode</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">_toggle_8bit</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">mode</span><span class="p">:</span>
+            <span class="n">training</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">training</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">training</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="QuantizedBertModel"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.transformers.html#nlp_architect.models.transformers.quantized_bert.QuantizedBertModel">[docs]</a><span class="k">class</span> <span class="nc">QuantizedBertModel</span><span class="p">(</span><span class="n">QuantizedBertPreTrainedModel</span><span class="p">,</span> <span class="n">BertModel</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
         <span class="c1"># we only want BertForQuestionAnswering init to run to avoid unnecessary</span>
         <span class="c1"># initializations</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">BertModel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
@@ -396,7 +490,7 @@
 
 <div class="viewcode-block" id="QuantizedBertForSequenceClassification"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.transformers.html#nlp_architect.models.transformers.quantized_bert.QuantizedBertForSequenceClassification">[docs]</a><span class="k">class</span> <span class="nc">QuantizedBertForSequenceClassification</span><span class="p">(</span><span class="n">QuantizedBertPreTrainedModel</span><span class="p">,</span>
                                              <span class="n">BertForSequenceClassification</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
         <span class="c1"># we only want BertForQuestionAnswering init to run to avoid unnecessary</span>
         <span class="c1"># initializations</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">BertForSequenceClassification</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
@@ -411,7 +505,7 @@
 
 
 <div class="viewcode-block" id="QuantizedBertForQuestionAnswering"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.transformers.html#nlp_architect.models.transformers.quantized_bert.QuantizedBertForQuestionAnswering">[docs]</a><span class="k">class</span> <span class="nc">QuantizedBertForQuestionAnswering</span><span class="p">(</span><span class="n">QuantizedBertPreTrainedModel</span><span class="p">,</span> <span class="n">BertForQuestionAnswering</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
         <span class="c1"># we only want BertForQuestionAnswering init to run to avoid unnecessary</span>
         <span class="c1"># initializations</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">BertForQuestionAnswering</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
@@ -426,7 +520,7 @@
 
 <div class="viewcode-block" id="QuantizedBertForTokenClassification"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.transformers.html#nlp_architect.models.transformers.quantized_bert.QuantizedBertForTokenClassification">[docs]</a><span class="k">class</span> <span class="nc">QuantizedBertForTokenClassification</span><span class="p">(</span><span class="n">QuantizedBertPreTrainedModel</span><span class="p">,</span>
                                           <span class="n">BertForTokenClassification</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">BertForTokenClassification</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">num_labels</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">num_labels</span>
 

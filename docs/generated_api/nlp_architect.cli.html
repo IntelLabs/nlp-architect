@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.cli package &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
+  <title>nlp_architect.cli package &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
   
 
   
@@ -121,9 +121,9 @@
 <li class="toctree-l2"><a class="reference internal" href="nlp_architect.api.html">nlp_architect.api package</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">nlp_architect.cli package</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#nlp-architect-cli-cli-commands-module">nlp_architect.cli.cli_commands module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#nlp-architect-cli-cmd-registry-module">nlp_architect.cli.cmd_registry module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-contents">Module contents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.cli.cli_commands">nlp_architect.cli.cli_commands module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.cli.cmd_registry">nlp_architect.cli.cmd_registry module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.cli">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="nlp_architect.common.html">nlp_architect.common package</a></li>
@@ -133,12 +133,10 @@
 <li class="toctree-l2"><a class="reference internal" href="nlp_architect.nn.html">nlp_architect.nn package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nlp_architect.pipelines.html">nlp_architect.pipelines package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nlp_architect.procedures.html">nlp_architect.procedures package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nlp_architect.server.html">nlp_architect.server package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nlp_architect.solutions.html">nlp_architect.solutions package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nlp_architect.utils.html">nlp_architect.utils package</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../developer_guide.html">Developer Guide</a></li>
 </ul>
 
@@ -209,14 +207,45 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="nlp-architect-cli-cli-commands-module">
-<h2>nlp_architect.cli.cli_commands module<a class="headerlink" href="#nlp-architect-cli-cli-commands-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-nlp_architect.cli.cli_commands">
+<span id="nlp-architect-cli-cli-commands-module"></span><h2>nlp_architect.cli.cli_commands module<a class="headerlink" href="#module-nlp_architect.cli.cli_commands" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="nlp_architect.cli.cli_commands.cli_run_cmd">
+<code class="descclassname">nlp_architect.cli.cli_commands.</code><code class="descname">cli_run_cmd</code><span class="sig-paren">(</span><em>subparsers: argparse._SubParsersAction</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/cli/cli_commands.html#cli_run_cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.cli.cli_commands.cli_run_cmd" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.cli.cli_commands.cli_train_cmd">
+<code class="descclassname">nlp_architect.cli.cli_commands.</code><code class="descname">cli_train_cmd</code><span class="sig-paren">(</span><em>subparsers: argparse._SubParsersAction</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/cli/cli_commands.html#cli_train_cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.cli.cli_commands.cli_train_cmd" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.cli.cli_commands.generic_cmd">
+<code class="descclassname">nlp_architect.cli.cli_commands.</code><code class="descname">generic_cmd</code><span class="sig-paren">(</span><em>cmd_name: str</em>, <em>subtitle: str</em>, <em>description: str</em>, <em>subparsers: argparse._SubParsersAction</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/cli/cli_commands.html#generic_cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.cli.cli_commands.generic_cmd" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.cli.cli_commands.nlp_inference_cli">
+<code class="descclassname">nlp_architect.cli.cli_commands.</code><code class="descname">nlp_inference_cli</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/cli/cli_commands.html#nlp_inference_cli"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.cli.cli_commands.nlp_inference_cli" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.cli.cli_commands.nlp_train_cli">
+<code class="descclassname">nlp_architect.cli.cli_commands.</code><code class="descname">nlp_train_cli</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/cli/cli_commands.html#nlp_train_cli"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.cli.cli_commands.nlp_train_cli" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </div>
-<div class="section" id="nlp-architect-cli-cmd-registry-module">
-<h2>nlp_architect.cli.cmd_registry module<a class="headerlink" href="#nlp-architect-cli-cmd-registry-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-nlp_architect.cli.cmd_registry">
+<span id="nlp-architect-cli-cmd-registry-module"></span><h2>nlp_architect.cli.cmd_registry module<a class="headerlink" href="#module-nlp_architect.cli.cmd_registry" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-nlp_architect.cli">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-nlp_architect.cli" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="nlp_architect.cli.run_cli">
+<code class="descclassname">nlp_architect.cli.</code><code class="descname">run_cli</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/cli.html#run_cli"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.cli.run_cli" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run nlp_architect command line application</p>
+</dd></dl>
+
 </div>
 </div>
 

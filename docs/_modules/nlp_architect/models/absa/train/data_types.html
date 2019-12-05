@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.models.absa.train.data_types &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
+  <title>nlp_architect.models.absa.train.data_types &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
   
 
   
@@ -116,7 +116,6 @@
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../developer_guide.html">Developer Guide</a></li>
 </ul>
 
@@ -199,10 +198,10 @@
 <span class="c1"># limitations under the License.</span>
 <span class="c1"># ******************************************************************************</span>
 <span class="kn">import</span> <span class="nn">csv</span>
-<span class="kn">from</span> <span class="nn">enum</span> <span class="k">import</span> <span class="n">Enum</span>
-<span class="kn">from</span> <span class="nn">os</span> <span class="k">import</span> <span class="n">PathLike</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">PathLike</span>
 
-<span class="kn">from</span> <span class="nn">nlp_architect.models.absa</span> <span class="k">import</span> <span class="n">TRAIN_LEXICONS</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.models.absa</span> <span class="kn">import</span> <span class="n">TRAIN_LEXICONS</span>
 
 
 <div class="viewcode-block" id="OpinionTerm"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.models.absa.train.html#nlp_architect.models.absa.train.acquire_terms.OpinionTerm">[docs]</a><span class="k">class</span> <span class="nc">OpinionTerm</span><span class="p">:</span>
@@ -213,11 +212,11 @@
 <span class="sd">        polarity (Polarity): polarity of the sentiment</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">terms</span><span class="p">,</span> <span class="n">polarity</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">terms</span><span class="p">,</span> <span class="n">polarity</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">terms</span> <span class="o">=</span> <span class="n">terms</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">polarity</span> <span class="o">=</span> <span class="n">polarity</span>
 
-    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">terms</span><span class="p">)</span></div>
 
 
@@ -229,7 +228,7 @@
 <span class="sd">        pos (list): list of pos</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">terms</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">lemmas</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">terms</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">lemmas</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Args:</span>
 <span class="sd">            terms (list): list of terms</span>
@@ -239,10 +238,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">lemmas</span> <span class="o">=</span> <span class="n">lemmas</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pos</span> <span class="o">=</span> <span class="n">pos</span>
 
-    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">terms</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Override the default equals behavior.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -264,7 +263,7 @@
 <span class="sd">        term_polarity (int): term polarity</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">term_a</span><span class="p">,</span> <span class="n">term_b</span><span class="p">,</span> <span class="n">sent_text</span><span class="p">,</span> <span class="n">candidate_term_polarity</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">term_a</span><span class="p">,</span> <span class="n">term_b</span><span class="p">,</span> <span class="n">sent_text</span><span class="p">,</span> <span class="n">candidate_term_polarity</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Args:</span>
 <span class="sd">            term_a (DepRelationTerm): first term</span>
@@ -279,10 +278,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">sentence</span> <span class="o">=</span> <span class="n">sent_text</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">term_polarity</span> <span class="o">=</span> <span class="n">candidate_term_polarity</span>
 
-    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">term</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">other</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="vm">__class__</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">term</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="n">term</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">term</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">other</span><span class="o">.</span><span class="n">term</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -293,7 +292,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sentence</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">sentence</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sentence</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> \
             <span class="n">other</span><span class="o">.</span><span class="n">sentence</span> <span class="ow">is</span> <span class="kc">None</span>
 
-    <span class="k">def</span> <span class="nf">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span> <span class="o">==</span> <span class="n">other</span></div>
 
 
@@ -306,7 +305,7 @@
 <span class="sd">        rel (str): relation type between governor and dependent</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gov</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dep</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rel</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gov</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dep</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rel</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">gov</span> <span class="o">=</span> <span class="n">gov</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dep</span> <span class="o">=</span> <span class="n">dep</span>
         <span class="n">rel_split</span> <span class="o">=</span> <span class="n">rel</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
@@ -330,7 +329,7 @@
 <span class="sd">        idx (int, optional): token start index (within the sentence)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lemma</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ner</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">idx</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lemma</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ner</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">idx</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">text</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lemma</span> <span class="o">=</span> <span class="n">lemma</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pos</span> <span class="o">=</span> <span class="n">pos</span>
@@ -355,7 +354,7 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">term</span><span class="p">,</span> <span class="n">lemma</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">frequency</span><span class="p">,</span> <span class="n">term_polarity</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">term</span><span class="p">,</span> <span class="n">lemma</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">frequency</span><span class="p">,</span> <span class="n">term_polarity</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">term</span> <span class="o">=</span> <span class="n">term</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lemma</span> <span class="o">=</span> <span class="n">lemma</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pos</span> <span class="o">=</span> <span class="n">pos</span>
@@ -519,7 +518,7 @@
 <span class="sd">        negation_lex (dict): negation terms lexicon</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">generic_opinion_lex</span><span class="p">,</span> <span class="n">determiners_lex</span><span class="p">,</span> <span class="n">general_adjectives_lex</span><span class="p">,</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">generic_opinion_lex</span><span class="p">,</span> <span class="n">determiners_lex</span><span class="p">,</span> <span class="n">general_adjectives_lex</span><span class="p">,</span>
                  <span class="n">generic_quantifiers_lex</span><span class="p">,</span> <span class="n">geographical_adjectives_lex</span><span class="p">,</span> <span class="n">intensifiers_lex</span><span class="p">,</span>
                  <span class="n">time_adjective_lex</span><span class="p">,</span> <span class="n">ordinal_numbers_lex</span><span class="p">,</span> <span class="n">prepositions_lex</span><span class="p">,</span> <span class="n">pronouns_lex</span><span class="p">,</span>
                  <span class="n">colors_lex</span><span class="p">,</span> <span class="n">negation_lex</span><span class="p">,</span> <span class="n">auxiliaries_lex</span><span class="p">):</span>
@@ -559,7 +558,7 @@
 <span class="sd">        negation_lex (dict): negation terms lexicon</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">determiners_lex</span><span class="p">,</span> <span class="n">general_adjectives_lex</span><span class="p">,</span> <span class="n">generic_quantifiers_lex</span><span class="p">,</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">determiners_lex</span><span class="p">,</span> <span class="n">general_adjectives_lex</span><span class="p">,</span> <span class="n">generic_quantifiers_lex</span><span class="p">,</span>
                  <span class="n">geographical_adjectives_lex</span><span class="p">,</span> <span class="n">intensifiers_lex</span><span class="p">,</span> <span class="n">time_adjective_lex</span><span class="p">,</span>
                  <span class="n">ordinal_numbers_lex</span><span class="p">,</span> <span class="n">prepositions_lex</span><span class="p">,</span> <span class="n">colors_lex</span><span class="p">,</span> <span class="n">negation_lex</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">determiners_lex</span> <span class="o">=</span> <span class="n">determiners_lex</span>

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_page &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
+  <title>nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_page &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
   
 
   
@@ -116,7 +116,6 @@
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../../service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../../developer_guide.html">Developer Guide</a></li>
 </ul>
 
@@ -197,15 +196,15 @@
 <span class="c1"># limitations under the License.</span>
 <span class="c1"># ******************************************************************************</span>
 <span class="kn">import</span> <span class="nn">re</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">Dict</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span>
 
-<span class="kn">from</span> <span class="nn">nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_page_extracted_relations</span> <span class="k">import</span> \
+<span class="kn">from</span> <span class="nn">nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_page_extracted_relations</span> <span class="kn">import</span> \
     <span class="n">WikipediaPageExtractedRelations</span><span class="p">,</span> <span class="n">DISAMBIGUATION_TITLE</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.utils.string_utils</span> <span class="k">import</span> <span class="n">StringUtils</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.utils.string_utils</span> <span class="kn">import</span> <span class="n">StringUtils</span>
 
 
 <div class="viewcode-block" id="WikipediaPage"><a class="viewcode-back" href="../../../../../../generated_api/nlp_architect.data.cdc_resources.data_types.wiki.html#nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_page.WikipediaPage">[docs]</a><span class="k">class</span> <span class="nc">WikipediaPage</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">orig_phrase</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">orig_phrase_norm</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">orig_phrase</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">orig_phrase_norm</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                  <span class="n">wiki_title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">wiki_title_norm</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                  <span class="n">score</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">pageid</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                  <span class="n">relations</span><span class="p">:</span> <span class="n">WikipediaPageExtractedRelations</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -252,14 +251,14 @@
         <span class="n">result_dict</span><span class="p">[</span><span class="s1">&#39;relations&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">relations</span><span class="o">.</span><span class="n">toJson</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">result_dict</span></div>
 
-    <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">orig_phrase</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">orig_phrase</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">wiki_title</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">wiki_title</span> <span class="ow">and</span> \
             <span class="bp">self</span><span class="o">.</span><span class="n">pageid</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">pageid</span>
 
-    <span class="k">def</span> <span class="nf">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">orig_phrase</span><span class="p">)</span> <span class="o">+</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pageid</span><span class="p">)</span> <span class="o">+</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wiki_title</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="n">result_str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">title_strip</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;(</span><span class="se">\u2018</span><span class="s1">|</span><span class="se">\u2019</span><span class="s1">)&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\&#39;</span><span class="s1">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">orig_phrase</span><span class="p">)</span>

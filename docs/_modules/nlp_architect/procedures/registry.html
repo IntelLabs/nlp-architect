@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.procedures.registry &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
+  <title>nlp_architect.procedures.registry &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
   
 
   
@@ -116,7 +116,6 @@
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developer_guide.html">Developer Guide</a></li>
 </ul>
 
@@ -197,8 +196,8 @@
 <span class="c1"># limitations under the License.</span>
 <span class="c1"># ******************************************************************************</span>
 <span class="c1"># Register procedures to be used by CLI</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.cli.cmd_registry</span> <span class="k">import</span> <span class="n">CMD_REGISTRY</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.procedures.procedure</span> <span class="k">import</span> <span class="n">Procedure</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.cli.cmd_registry</span> <span class="kn">import</span> <span class="n">CMD_REGISTRY</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.procedures.procedure</span> <span class="kn">import</span> <span class="n">Procedure</span>
 
 
 <div class="viewcode-block" id="register_cmd"><a class="viewcode-back" href="../../../generated_api/nlp_architect.procedures.html#nlp_architect.procedures.registry.register_cmd">[docs]</a><span class="k">def</span> <span class="nf">register_cmd</span><span class="p">(</span><span class="n">registry</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">description</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
@@ -221,25 +220,8 @@
 <div class="viewcode-block" id="register_train_cmd"><a class="viewcode-back" href="../../../generated_api/nlp_architect.procedures.html#nlp_architect.procedures.registry.register_train_cmd">[docs]</a><span class="k">def</span> <span class="nf">register_train_cmd</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">description</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">register_cmd</span><span class="p">(</span><span class="n">CMD_REGISTRY</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">],</span> <span class="n">name</span><span class="p">,</span> <span class="n">description</span><span class="p">)</span></div>
 
-
-<div class="viewcode-block" id="register_infer_cmd"><a class="viewcode-back" href="../../../generated_api/nlp_architect.procedures.html#nlp_architect.procedures.registry.register_infer_cmd">[docs]</a><span class="k">def</span> <span class="nf">register_infer_cmd</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">description</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">register_cmd</span><span class="p">(</span><span class="n">CMD_REGISTRY</span><span class="p">[</span><span class="s1">&#39;infer&#39;</span><span class="p">],</span> <span class="n">name</span><span class="p">,</span> <span class="n">description</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="register_run_cmd"><a class="viewcode-back" href="../../../generated_api/nlp_architect.procedures.html#nlp_architect.procedures.registry.register_run_cmd">[docs]</a><span class="k">def</span> <span class="nf">register_run_cmd</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">description</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">register_cmd</span><span class="p">(</span><span class="n">CMD_REGISTRY</span><span class="p">[</span><span class="s1">&#39;run&#39;</span><span class="p">],</span> <span class="n">name</span><span class="p">,</span> <span class="n">description</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="register_process_cmd"><a class="viewcode-back" href="../../../generated_api/nlp_architect.procedures.html#nlp_architect.procedures.registry.register_process_cmd">[docs]</a><span class="k">def</span> <span class="nf">register_process_cmd</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">description</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">register_cmd</span><span class="p">(</span><span class="n">CMD_REGISTRY</span><span class="p">[</span><span class="s1">&#39;process&#39;</span><span class="p">],</span> <span class="n">name</span><span class="p">,</span> <span class="n">description</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="register_solution_cmd"><a class="viewcode-back" href="../../../generated_api/nlp_architect.procedures.html#nlp_architect.procedures.registry.register_solution_cmd">[docs]</a><span class="k">def</span> <span class="nf">register_solution_cmd</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">description</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">register_cmd</span><span class="p">(</span><span class="n">CMD_REGISTRY</span><span class="p">[</span><span class="s1">&#39;solution&#39;</span><span class="p">],</span> <span class="n">name</span><span class="p">,</span> <span class="n">description</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="register_serve_cmd"><a class="viewcode-back" href="../../../generated_api/nlp_architect.procedures.html#nlp_architect.procedures.registry.register_serve_cmd">[docs]</a><span class="k">def</span> <span class="nf">register_serve_cmd</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">description</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">register_cmd</span><span class="p">(</span><span class="n">CMD_REGISTRY</span><span class="p">[</span><span class="s1">&#39;serve&#39;</span><span class="p">],</span> <span class="n">name</span><span class="p">,</span> <span class="n">description</span><span class="p">)</span></div>
+<div class="viewcode-block" id="register_inference_cmd"><a class="viewcode-back" href="../../../generated_api/nlp_architect.procedures.html#nlp_architect.procedures.registry.register_inference_cmd">[docs]</a><span class="k">def</span> <span class="nf">register_inference_cmd</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">description</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">register_cmd</span><span class="p">(</span><span class="n">CMD_REGISTRY</span><span class="p">[</span><span class="s1">&#39;inference&#39;</span><span class="p">],</span> <span class="n">name</span><span class="p">,</span> <span class="n">description</span><span class="p">)</span></div>
 </pre></div>
 
            </div>

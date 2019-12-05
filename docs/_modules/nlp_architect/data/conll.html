@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.data.conll &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
+  <title>nlp_architect.data.conll &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
   
 
   
@@ -116,7 +116,6 @@
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developer_guide.html">Developer Guide</a></li>
 </ul>
 
@@ -215,7 +214,7 @@
 
 
 <div class="viewcode-block" id="ConllEntry"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.conll.ConllEntry">[docs]</a><span class="k">class</span> <span class="nc">ConllEntry</span><span class="p">:</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eid</span><span class="p">,</span> <span class="n">form</span><span class="p">,</span> <span class="n">lemma</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">cpos</span><span class="p">,</span> <span class="n">feats</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">relation</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eid</span><span class="p">,</span> <span class="n">form</span><span class="p">,</span> <span class="n">lemma</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">cpos</span><span class="p">,</span> <span class="n">feats</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">relation</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">deps</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">misc</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">eid</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">form</span> <span class="o">=</span> <span class="n">form</span>
@@ -236,7 +235,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">vec</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lstms</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lemma</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cpos</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pos</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">feats</span><span class="p">,</span>
                   <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pred_parent_id</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pred_parent_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
                   <span class="bp">self</span><span class="o">.</span><span class="n">pred_relation</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">deps</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">misc</span><span class="p">]</span>

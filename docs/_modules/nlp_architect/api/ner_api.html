@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.api.ner_api &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
+  <title>nlp_architect.api.ner_api &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
   
 
   
@@ -116,7 +116,6 @@
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developer_guide.html">Developer Guide</a></li>
 </ul>
 
@@ -197,16 +196,16 @@
 <span class="c1"># limitations under the License.</span>
 <span class="c1"># ******************************************************************************</span>
 <span class="kn">import</span> <span class="nn">pickle</span>
-<span class="kn">from</span> <span class="nn">os</span> <span class="k">import</span> <span class="n">makedirs</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">sys</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">makedirs</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">sys</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="kn">from</span> <span class="nn">nlp_architect.api.abstract_api</span> <span class="k">import</span> <span class="n">AbstractApi</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.models.ner_crf</span> <span class="k">import</span> <span class="n">NERCRF</span>
-<span class="kn">from</span> <span class="nn">nlp_architect</span> <span class="k">import</span> <span class="n">LIBRARY_OUT</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.utils.generic</span> <span class="k">import</span> <span class="n">pad_sentences</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.utils.io</span> <span class="k">import</span> <span class="n">download_unlicensed_file</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.utils.text</span> <span class="k">import</span> <span class="n">SpacyInstance</span><span class="p">,</span> <span class="n">bio_to_spans</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.api.abstract_api</span> <span class="kn">import</span> <span class="n">AbstractApi</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.models.ner_crf</span> <span class="kn">import</span> <span class="n">NERCRF</span>
+<span class="kn">from</span> <span class="nn">nlp_architect</span> <span class="kn">import</span> <span class="n">LIBRARY_OUT</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.utils.generic</span> <span class="kn">import</span> <span class="n">pad_sentences</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.utils.io</span> <span class="kn">import</span> <span class="n">download_unlicensed_file</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.utils.text</span> <span class="kn">import</span> <span class="n">SpacyInstance</span><span class="p">,</span> <span class="n">bio_to_spans</span>
 
 
 <div class="viewcode-block" id="NerApi"><a class="viewcode-back" href="../../../generated_api/nlp_architect.api.html#nlp_architect.api.ner_api.NerApi">[docs]</a><span class="k">class</span> <span class="nc">NerApi</span><span class="p">(</span><span class="n">AbstractApi</span><span class="p">):</span>
@@ -217,7 +216,7 @@
     <span class="n">pretrained_model</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">model_dir</span><span class="p">,</span> <span class="s1">&#39;model_v4.h5&#39;</span><span class="p">)</span>
     <span class="n">pretrained_model_info</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">model_dir</span><span class="p">,</span> <span class="s1">&#39;model_info_v4.dat&#39;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prompt</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prompt</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model_info</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">word_vocab</span> <span class="o">=</span> <span class="kc">None</span>

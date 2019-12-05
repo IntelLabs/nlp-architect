@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.models.bist.mstlstm &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
+  <title>nlp_architect.models.bist.mstlstm &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
   
 
   
@@ -116,7 +116,6 @@
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../developer_guide.html">Developer Guide</a></li>
 </ul>
 
@@ -207,15 +206,15 @@
 
 <span class="kn">import</span> <span class="nn">random</span>
 <span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">namedtuple</span>
-<span class="kn">from</span> <span class="nn">operator</span> <span class="k">import</span> <span class="n">itemgetter</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
+<span class="kn">from</span> <span class="nn">operator</span> <span class="kn">import</span> <span class="n">itemgetter</span>
 
-<span class="kn">from</span> <span class="nn">dynet</span> <span class="k">import</span> <span class="n">ParameterCollection</span><span class="p">,</span> <span class="n">AdamTrainer</span><span class="p">,</span> <span class="n">LSTMBuilder</span><span class="p">,</span> <span class="n">tanh</span><span class="p">,</span> <span class="n">logistic</span><span class="p">,</span> <span class="n">rectify</span><span class="p">,</span> <span class="n">cmult</span><span class="p">,</span> \
+<span class="kn">from</span> <span class="nn">dynet</span> <span class="kn">import</span> <span class="n">ParameterCollection</span><span class="p">,</span> <span class="n">AdamTrainer</span><span class="p">,</span> <span class="n">LSTMBuilder</span><span class="p">,</span> <span class="n">tanh</span><span class="p">,</span> <span class="n">logistic</span><span class="p">,</span> <span class="n">rectify</span><span class="p">,</span> <span class="n">cmult</span><span class="p">,</span> \
     <span class="n">SimpleRNNBuilder</span><span class="p">,</span> <span class="n">concatenate</span><span class="p">,</span> <span class="n">np</span><span class="p">,</span> <span class="n">renew_cg</span><span class="p">,</span> <span class="n">esum</span>
 
-<span class="kn">from</span> <span class="nn">nlp_architect.data.conll</span> <span class="k">import</span> <span class="n">ConllEntry</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.models.bist</span> <span class="k">import</span> <span class="n">decoder</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.models.bist.utils</span> <span class="k">import</span> <span class="n">read_conll</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.data.conll</span> <span class="kn">import</span> <span class="n">ConllEntry</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.models.bist</span> <span class="kn">import</span> <span class="n">decoder</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.models.bist.utils</span> <span class="kn">import</span> <span class="n">read_conll</span>
 
 
 <span class="c1"># Things that were changed from the original:</span>
@@ -232,7 +231,7 @@
 <div class="viewcode-block" id="MSTParserLSTM"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.bist.html#nlp_architect.models.bist.mstlstm.MSTParserLSTM">[docs]</a><span class="k">class</span> <span class="nc">MSTParserLSTM</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Underlying LSTM model for MSTParser used by BIST parser.&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vocab</span><span class="p">,</span> <span class="n">w2i</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">rels</span><span class="p">,</span> <span class="n">options</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vocab</span><span class="p">,</span> <span class="n">w2i</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">rels</span><span class="p">,</span> <span class="n">options</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">options</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
             <span class="n">options</span> <span class="o">=</span> <span class="n">_dict_to_obj</span><span class="p">(</span><span class="n">options</span><span class="p">,</span> <span class="s1">&#39;Values&#39;</span><span class="p">)</span>
 

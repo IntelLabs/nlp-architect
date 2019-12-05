@@ -22,6 +22,7 @@ Requirements
 
 The NLP Architect requires **Python 3.6+** running on a
 Linux* or UNIX-based OS (like Mac OS). We recommend using the library with Ubuntu 16.04+.
+We recommand installing basic OS compilers and python development packages.
 
 Before installing the library make sure you has the most recent packages listed below:
 
@@ -31,10 +32,11 @@ Before installing the library make sure you has the most recent packages listed 
    :escape: ~
 
    python-pip, pip, Tool to install Python dependencies
+   python-dev, python-dev, Python development dependencies
    libhdf5-dev, h5py, Enables loading of hdf5 formats
    pkg-config, pkg-config, Retrieves information about installed libraries
 
-.. warning::
+.. note::
 
     The installation of NLP Architect will install CPU-based binaries of all deep learning frameworks.
     For specific installation of backends of Tensorflow or PyTorch (CPU/MKL/GPU) we recommend installing NLP Architect and then installing the desired backend DL framework.
@@ -56,8 +58,8 @@ To create and activate a new virtual environment (or skip this step and use the 
 
 .. code:: bash
 
-    python3.6 -m venv .nlp_architect_env
-    source .nlp_architect_env/bin/activate
+    python3.6 -m venv <my_new_env>
+    source <my_new_env>/bin/activate
 
 Install from ``pip``
 ====================

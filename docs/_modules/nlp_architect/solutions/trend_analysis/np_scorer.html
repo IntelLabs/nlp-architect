@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.solutions.trend_analysis.np_scorer &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
+  <title>nlp_architect.solutions.trend_analysis.np_scorer &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
   
 
   
@@ -116,7 +116,6 @@
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../developer_guide.html">Developer Guide</a></li>
 </ul>
 
@@ -197,27 +196,25 @@
 <span class="c1"># limitations under the License.</span>
 <span class="c1"># ******************************************************************************</span>
 <span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">from</span> <span class="nn">os</span> <span class="k">import</span> <span class="n">path</span><span class="p">,</span> <span class="n">makedirs</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">path</span><span class="p">,</span> <span class="n">makedirs</span>
 
-<span class="kn">from</span> <span class="nn">tqdm</span> <span class="k">import</span> <span class="n">tqdm</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
 
-<span class="kn">from</span> <span class="nn">nlp_architect.pipelines.spacy_np_annotator</span> <span class="k">import</span> <span class="n">NPAnnotator</span><span class="p">,</span> <span class="n">get_noun_phrases</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.solutions.trend_analysis.scoring_utils</span> <span class="k">import</span> <span class="n">TextSpanScoring</span>
-<span class="kn">from</span> <span class="nn">nlp_architect</span> <span class="k">import</span> <span class="n">LIBRARY_OUT</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.utils.io</span> <span class="k">import</span> <span class="n">download_unlicensed_file</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.utils.text</span> <span class="k">import</span> <span class="n">SpacyInstance</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.pipelines.spacy_np_annotator</span> <span class="kn">import</span> <span class="n">NPAnnotator</span><span class="p">,</span> <span class="n">get_noun_phrases</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.solutions.trend_analysis.scoring_utils</span> <span class="kn">import</span> <span class="n">TextSpanScoring</span>
+<span class="kn">from</span> <span class="nn">nlp_architect</span> <span class="kn">import</span> <span class="n">LIBRARY_OUT</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.utils.io</span> <span class="kn">import</span> <span class="n">download_unlicensed_file</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.utils.text</span> <span class="kn">import</span> <span class="n">SpacyInstance</span>
 
 <span class="n">nlp_chunker_url</span> <span class="o">=</span> <span class="s1">&#39;https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/chunker/&#39;</span>
 <span class="n">chunker_model_dat_file</span> <span class="o">=</span> <span class="s1">&#39;model_info.dat.params&#39;</span>
 <span class="n">chunker_model_file</span> <span class="o">=</span> <span class="s1">&#39;model.h5&#39;</span>
 <span class="n">chunker_local_path</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">LIBRARY_OUT</span> <span class="o">/</span> <span class="s1">&#39;chunker-pretrained&#39;</span><span class="p">)</span>
-<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">stream</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="NPScorer"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.solutions.trend_analysis.html#nlp_architect.solutions.trend_analysis.np_scorer.NPScorer">[docs]</a><span class="k">class</span> <span class="nc">NPScorer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parser</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parser</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">parser</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">nlp</span> <span class="o">=</span> <span class="n">SpacyInstance</span><span class="p">(</span>
                 <span class="n">disable</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;ner&#39;</span><span class="p">,</span> <span class="s1">&#39;parser&#39;</span><span class="p">,</span> <span class="s1">&#39;vectors&#39;</span><span class="p">,</span> <span class="s1">&#39;textcat&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">parser</span>

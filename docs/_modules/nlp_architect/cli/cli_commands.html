@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.cli.cli_commands &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
+  <title>nlp_architect.cli.cli_commands &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
   
 
   
@@ -116,7 +116,6 @@
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developer_guide.html">Developer Guide</a></li>
 </ul>
 
@@ -199,9 +198,54 @@
 <span class="c1"># limitations under the License.</span>
 <span class="c1"># ******************************************************************************</span>
 <span class="c1"># CLI definition</span>
-<span class="kn">from</span> <span class="nn">argparse</span> <span class="k">import</span> <span class="n">_SubParsersAction</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">from</span> <span class="nn">argparse</span> <span class="kn">import</span> <span class="n">_SubParsersAction</span>
 
-<span class="kn">from</span> <span class="nn">nlp_architect.cli.cmd_registry</span> <span class="k">import</span> <span class="n">CMD_REGISTRY</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.cli.cmd_registry</span> <span class="kn">import</span> <span class="n">CMD_REGISTRY</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.version</span> <span class="kn">import</span> <span class="n">NLP_ARCHITECT_VERSION</span>
+
+
+<div class="viewcode-block" id="nlp_train_cli"><a class="viewcode-back" href="../../../generated_api/nlp_architect.cli.html#nlp_architect.cli.cli_commands.nlp_train_cli">[docs]</a><span class="k">def</span> <span class="nf">nlp_train_cli</span><span class="p">():</span>
+    <span class="n">prog_name</span> <span class="o">=</span> <span class="s1">&#39;nlp-train&#39;</span>
+    <span class="n">desc</span> <span class="o">=</span> <span class="s1">&#39;NLP Architect Train CLI [</span><span class="si">{}</span><span class="s1">]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">NLP_ARCHITECT_VERSION</span><span class="p">)</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">desc</span><span class="p">,</span> <span class="n">prog</span><span class="o">=</span><span class="n">prog_name</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-v&#39;</span><span class="p">,</span> <span class="s1">&#39;--version&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;version&#39;</span><span class="p">,</span>
+                        <span class="n">version</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(prog)s</span><span class="s1"> v</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">NLP_ARCHITECT_VERSION</span><span class="p">))</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="n">parser</span><span class="o">.</span><span class="n">print_help</span><span class="p">())</span>
+    <span class="n">subparsers</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_subparsers</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Models&#39;</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">CMD_REGISTRY</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">]:</span>
+        <span class="n">sp</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="n">model</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>
+                                   <span class="n">description</span><span class="o">=</span><span class="n">model</span><span class="p">[</span><span class="s1">&#39;description&#39;</span><span class="p">],</span>
+                                   <span class="n">help</span><span class="o">=</span><span class="n">model</span><span class="p">[</span><span class="s1">&#39;description&#39;</span><span class="p">])</span>
+        <span class="n">model</span><span class="p">[</span><span class="s1">&#39;arg_adder&#39;</span><span class="p">](</span><span class="n">sp</span><span class="p">)</span>
+        <span class="n">sp</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">model</span><span class="p">[</span><span class="s1">&#39;fn&#39;</span><span class="p">])</span>
+    
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="s1">&#39;func&#39;</span><span class="p">):</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">func</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">print_help</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="nlp_inference_cli"><a class="viewcode-back" href="../../../generated_api/nlp_architect.cli.html#nlp_architect.cli.cli_commands.nlp_inference_cli">[docs]</a><span class="k">def</span> <span class="nf">nlp_inference_cli</span><span class="p">():</span>
+    <span class="n">prog_name</span> <span class="o">=</span> <span class="s1">&#39;nlp-inference&#39;</span>
+    <span class="n">desc</span> <span class="o">=</span> <span class="s1">&#39;NLP Architect Inference CLI [</span><span class="si">{}</span><span class="s1">]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">NLP_ARCHITECT_VERSION</span><span class="p">)</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">desc</span><span class="p">,</span> <span class="n">prog</span><span class="o">=</span><span class="n">prog_name</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-v&#39;</span><span class="p">,</span> <span class="s1">&#39;--version&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;version&#39;</span><span class="p">,</span>
+                        <span class="n">version</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(prog)s</span><span class="s1"> v</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">NLP_ARCHITECT_VERSION</span><span class="p">))</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="n">parser</span><span class="o">.</span><span class="n">print_help</span><span class="p">())</span>
+    <span class="n">subparsers</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_subparsers</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Models&#39;</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">CMD_REGISTRY</span><span class="p">[</span><span class="s1">&#39;inference&#39;</span><span class="p">]:</span>
+        <span class="n">sp</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="n">model</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>
+                                   <span class="n">description</span><span class="o">=</span><span class="n">model</span><span class="p">[</span><span class="s1">&#39;description&#39;</span><span class="p">],</span>
+                                   <span class="n">help</span><span class="o">=</span><span class="n">model</span><span class="p">[</span><span class="s1">&#39;description&#39;</span><span class="p">])</span>
+        <span class="n">model</span><span class="p">[</span><span class="s1">&#39;arg_adder&#39;</span><span class="p">](</span><span class="n">sp</span><span class="p">)</span>
+        <span class="n">sp</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">model</span><span class="p">[</span><span class="s1">&#39;fn&#39;</span><span class="p">])</span>
+    
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="s1">&#39;func&#39;</span><span class="p">):</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">func</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">print_help</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="generic_cmd"><a class="viewcode-back" href="../../../generated_api/nlp_architect.cli.html#nlp_architect.cli.cli_commands.generic_cmd">[docs]</a><span class="k">def</span> <span class="nf">generic_cmd</span><span class="p">(</span><span class="n">cmd_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">subtitle</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">description</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">subparsers</span><span class="p">:</span> <span class="n">_SubParsersAction</span><span class="p">):</span>
@@ -231,27 +275,6 @@
     <span class="n">generic_cmd</span><span class="p">(</span><span class="s1">&#39;run&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;Available models&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;Run a model from the library&#39;</span><span class="p">,</span>
-                <span class="n">subparsers</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="cli_process_cmd"><a class="viewcode-back" href="../../../generated_api/nlp_architect.cli.html#nlp_architect.cli.cli_commands.cli_process_cmd">[docs]</a><span class="k">def</span> <span class="nf">cli_process_cmd</span><span class="p">(</span><span class="n">subparsers</span><span class="p">:</span> <span class="n">_SubParsersAction</span><span class="p">):</span>
-    <span class="n">generic_cmd</span><span class="p">(</span><span class="s1">&#39;process&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;Available data processors&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;Run a data processor from the library&#39;</span><span class="p">,</span>
-                <span class="n">subparsers</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="cli_solution_cmd"><a class="viewcode-back" href="../../../generated_api/nlp_architect.cli.html#nlp_architect.cli.cli_commands.cli_solution_cmd">[docs]</a><span class="k">def</span> <span class="nf">cli_solution_cmd</span><span class="p">(</span><span class="n">subparsers</span><span class="p">:</span> <span class="n">_SubParsersAction</span><span class="p">):</span>
-    <span class="n">generic_cmd</span><span class="p">(</span><span class="s1">&#39;solution&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;Available solutions&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;Run a solution process from the library&#39;</span><span class="p">,</span>
-                <span class="n">subparsers</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="cli_serve_cmd"><a class="viewcode-back" href="../../../generated_api/nlp_architect.cli.html#nlp_architect.cli.cli_commands.cli_serve_cmd">[docs]</a><span class="k">def</span> <span class="nf">cli_serve_cmd</span><span class="p">(</span><span class="n">subparsers</span><span class="p">:</span> <span class="n">_SubParsersAction</span><span class="p">):</span>
-    <span class="n">generic_cmd</span><span class="p">(</span><span class="s1">&#39;serve&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;Available models&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;Server a trained model using REST service&#39;</span><span class="p">,</span>
                 <span class="n">subparsers</span><span class="p">)</span></div>
 </pre></div>
 

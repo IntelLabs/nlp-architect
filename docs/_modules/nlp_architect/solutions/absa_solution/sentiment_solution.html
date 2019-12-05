@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.solutions.absa_solution.sentiment_solution &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
+  <title>nlp_architect.solutions.absa_solution.sentiment_solution &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
   
 
   
@@ -116,7 +116,6 @@
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../developer_guide.html">Developer Guide</a></li>
 </ul>
 
@@ -198,23 +197,23 @@
 <span class="c1"># ******************************************************************************</span>
 <span class="kn">import</span> <span class="nn">argparse</span>
 <span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">from</span> <span class="nn">os</span> <span class="k">import</span> <span class="n">PathLike</span>
-<span class="kn">from</span> <span class="nn">os.path</span> <span class="k">import</span> <span class="n">isdir</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">PathLike</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">isdir</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">tqdm</span> <span class="k">import</span> <span class="n">tqdm</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
 
-<span class="kn">from</span> <span class="nn">nlp_architect.common.core_nlp_doc</span> <span class="k">import</span> <span class="n">CoreNLPDoc</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.models.absa.inference.data_types</span> <span class="k">import</span> <span class="n">TermType</span><span class="p">,</span> \
+<span class="kn">from</span> <span class="nn">nlp_architect.common.core_nlp_doc</span> <span class="kn">import</span> <span class="n">CoreNLPDoc</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.models.absa.inference.data_types</span> <span class="kn">import</span> <span class="n">TermType</span><span class="p">,</span> \
     <span class="n">SentimentDocEncoder</span><span class="p">,</span> <span class="n">SentimentDoc</span>
 <span class="kn">from</span> <span class="nn">nlp_architect.models.absa.inference.inference</span> \
     <span class="kn">import</span> <span class="nn">SentimentInference</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.models.absa.utils</span> <span class="k">import</span> <span class="n">load_opinion_lex</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.solutions.absa_solution</span> <span class="k">import</span> <span class="n">SENTIMENT_OUT</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.solutions.absa_solution.utils</span> <span class="k">import</span> <span class="n">Anonymiser</span><span class="p">,</span> <span class="n">_ui_format</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.utils.io</span> <span class="k">import</span> <span class="n">walk_directory</span><span class="p">,</span> <span class="n">validate_existing_filepath</span><span class="p">,</span> \
+<span class="kn">from</span> <span class="nn">nlp_architect.models.absa.utils</span> <span class="kn">import</span> <span class="n">load_opinion_lex</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.solutions.absa_solution</span> <span class="kn">import</span> <span class="n">SENTIMENT_OUT</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.solutions.absa_solution.utils</span> <span class="kn">import</span> <span class="n">Anonymiser</span><span class="p">,</span> <span class="n">_ui_format</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.utils.io</span> <span class="kn">import</span> <span class="n">walk_directory</span><span class="p">,</span> <span class="n">validate_existing_filepath</span><span class="p">,</span> \
     <span class="n">validate_existing_directory</span><span class="p">,</span> <span class="n">validate_existing_path</span><span class="p">,</span> <span class="n">line_count</span>
 
 
@@ -226,7 +225,7 @@
 <span class="sd">        max_events (int, optional): Maximum number of events to show for each aspect-polarity pair.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">anonymiser</span><span class="p">:</span> <span class="n">Anonymiser</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">max_events</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">400</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">anonymiser</span><span class="p">:</span> <span class="n">Anonymiser</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">max_events</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">400</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">anonymiser</span> <span class="o">=</span> <span class="n">anonymiser</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">max_events</span> <span class="o">=</span> <span class="n">max_events</span>
         <span class="n">SENTIMENT_OUT</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -248,7 +247,7 @@
             <span class="n">inference</span> <span class="o">=</span> <span class="n">SentimentInference</span><span class="p">(</span><span class="n">aspect_lex</span><span class="p">,</span> <span class="n">opinions</span><span class="p">,</span> <span class="n">parse</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
             <span class="n">parse</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">parsed_data</span><span class="p">:</span>  <span class="c1"># source data is raw text, need to parse</span>
-                <span class="kn">from</span> <span class="nn">nlp_architect.pipelines.spacy_bist</span> <span class="k">import</span> <span class="n">SpacyBISTParser</span>
+                <span class="kn">from</span> <span class="nn">nlp_architect.pipelines.spacy_bist</span> <span class="kn">import</span> <span class="n">SpacyBISTParser</span>
                 <span class="n">parse</span> <span class="o">=</span> <span class="n">SpacyBISTParser</span><span class="p">()</span><span class="o">.</span><span class="n">parse</span>
 
             <span class="n">results</span> <span class="o">=</span> <span class="p">{}</span>

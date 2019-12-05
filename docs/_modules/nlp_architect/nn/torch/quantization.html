@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.nn.torch.quantization &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
+  <title>nlp_architect.nn.torch.quantization &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
   
 
   
@@ -116,7 +116,6 @@
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../developer_guide.html">Developer Guide</a></li>
 </ul>
 
@@ -203,16 +202,16 @@
 <span class="sd">Quantization ops</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">unicode_literals</span>
-<span class="kn">from</span> <span class="nn">enum</span> <span class="k">import</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">auto</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">unicode_literals</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">auto</span>
 <span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">from</span> <span class="nn">abc</span> <span class="k">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
+<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
 
 <span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">from</span> <span class="nn">torch</span> <span class="k">import</span> <span class="n">nn</span>
-<span class="kn">from</span> <span class="nn">torch.nn</span> <span class="k">import</span> <span class="n">functional</span> <span class="k">as</span> <span class="n">F</span>
+<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
+<span class="kn">from</span> <span class="nn">torch.nn</span> <span class="kn">import</span> <span class="n">functional</span> <span class="k">as</span> <span class="n">F</span>
 
-<span class="kn">from</span> <span class="nn">nlp_architect.common</span> <span class="k">import</span> <span class="n">Config</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.common</span> <span class="kn">import</span> <span class="n">Config</span>
 
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
@@ -279,9 +278,9 @@
     <span class="n">CONFIG_ATTRIBUTES</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;weight_bits&quot;</span><span class="p">,</span> <span class="s2">&quot;start_step&quot;</span><span class="p">,</span> <span class="s2">&quot;mode&quot;</span><span class="p">]</span>
     <span class="n">REPR_ATTRIBUTES</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;mode&quot;</span><span class="p">,</span> <span class="s2">&quot;weight_bits&quot;</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">weight_bits</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">start_step</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">weight_bits</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">start_step</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">weight_bits</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;weight_bits=</span><span class="si">{weight_bits}</span><span class="s2"> must be higher than 1 &quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;weight_bits=</span><span class="si">{weight_bits}</span><span class="s2"> must be higher than 1 &quot;</span><span class="p">)</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">weight_bits</span> <span class="o">=</span> <span class="n">weight_bits</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="n">QuantizationMode</span><span class="p">[</span><span class="n">mode</span><span class="o">.</span><span class="n">upper</span><span class="p">()]</span>
@@ -328,7 +327,8 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">weight_scale</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">get_dynamic_scale</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">weight</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">weight_bits</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">training</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_weight_scale</span>
+        <span class="k">return</span> <span class="n">get_dynamic_scale</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">weight</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">weight_bits</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">training</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_weight_scale</span>
 
 <div class="viewcode-block" id="QuantizedLayer.train"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.nn.torch.html#nlp_architect.nn.torch.quantization.QuantizedLayer.train">[docs]</a>    <span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;handle transition between quantized model and simulated quantization&quot;&quot;&quot;</span>
@@ -336,17 +336,20 @@
             <span class="k">if</span> <span class="n">mode</span><span class="p">:</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_imported_from_quantized</span><span class="p">:</span>
                     <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
-                        <span class="s2">&quot;Model imported from quantized checkpoint cannot be moved to training mode&quot;</span><span class="p">)</span>
+                        <span class="s2">&quot;Model imported from quantized checkpoint cannot be moved to </span><span class="se">\</span>
+<span class="s2">                            training mode&quot;</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_train</span><span class="p">()</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_eval</span><span class="p">()</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">_train</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;function to be called by self.train(mode=True) which modifies modules attributes according to the model&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;function to be called by self.train(mode=True) which modifies modules attributes\</span>
+<span class="sd">             according to the model&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">_eval</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;function to be called by self.train(mode=False), or eval() which modifies modules attributes according to the model&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;function to be called by self.train(mode=False), or eval() which modifies modules\</span>
+<span class="sd">             attributes according to the model&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_weight_scale</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">weight_scale</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">quantized_weight</span> <span class="o">=</span> <span class="n">quantize</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">weight</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">weight_scale</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">weight_bits</span><span class="p">)</span>
@@ -359,16 +362,19 @@
         <span class="k">if</span> <span class="n">state_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">prefix</span> <span class="o">+</span> <span class="s1">&#39;quantized_weight&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">training</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
-                    <span class="s2">&quot;Can&#39;t load quantized model in training mode, first change model&#39;s mode to evaluation and then load the saved model&quot;</span><span class="p">)</span>
+                    <span class="s2">&quot;Can&#39;t load quantized model in training mode, first change model&#39;s </span><span class="se">\</span>
+<span class="s2">                         to evaluation and then load the saved model&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_imported_from_quantized</span> <span class="o">=</span> <span class="kc">True</span>
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_state_dict_hook</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">state_dict</span><span class="p">,</span> <span class="n">prefix</span><span class="p">,</span> <span class="n">local_metadata</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;hook to be registered to module when exporting the model to 8bit, can be overrided to customize to layer behaviour&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;hook to be registered to module when exporting the model to 8bit, can be overrided\</span>
+<span class="sd">             to customize to layer behaviour&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">module</span><span class="o">.</span><span class="n">mode_8bit</span> <span class="ow">and</span> <span class="n">module</span><span class="o">.</span><span class="n">mode</span> <span class="o">!=</span> <span class="n">QuantizationMode</span><span class="o">.</span><span class="n">NONE</span><span class="p">:</span>
             <span class="n">state_dict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">prefix</span> <span class="o">+</span> <span class="s1">&#39;weight&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
             <span class="n">state_dict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">prefix</span> <span class="o">+</span> <span class="s1">&#39;_step&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-            <span class="n">state_dict</span><span class="p">[</span><span class="n">prefix</span> <span class="o">+</span> <span class="s1">&#39;quantized_weight&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">state_dict</span><span class="p">[</span><span class="n">prefix</span> <span class="o">+</span> <span class="s1">&#39;quantized_weight&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">char</span><span class="p">()</span>
+            <span class="n">state_dict</span><span class="p">[</span>
+                <span class="n">prefix</span> <span class="o">+</span> <span class="s1">&#39;quantized_weight&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">state_dict</span><span class="p">[</span><span class="n">prefix</span> <span class="o">+</span> <span class="s1">&#39;quantized_weight&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">char</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">state_dict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">prefix</span> <span class="o">+</span> <span class="s1">&#39;quantized_weight&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
             <span class="n">state_dict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">prefix</span> <span class="o">+</span> <span class="s1">&#39;_weight_scale&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
@@ -376,7 +382,7 @@
 <div class="viewcode-block" id="QuantizedLayer.extra_repr"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.nn.torch.html#nlp_architect.nn.torch.quantization.QuantizedLayer.extra_repr">[docs]</a>    <span class="k">def</span> <span class="nf">extra_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
         <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">REPR_ATTRIBUTES</span><span class="p">:</span>
-            <span class="n">s</span> <span class="o">+=</span> <span class="n">f</span><span class="s2">&quot;, </span><span class="si">{entry}</span><span class="s2">={getattr(self, entry)}&quot;</span>
+            <span class="n">s</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;, </span><span class="si">{entry}</span><span class="s2">={getattr(self, entry)}&quot;</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">extra_repr</span><span class="p">()</span> <span class="o">+</span> <span class="n">s</span></div></div>
 
 
@@ -387,11 +393,12 @@
     <span class="n">REPR_ATTRIBUTES</span> <span class="o">=</span> <span class="n">QuantizedLayer</span><span class="o">.</span><span class="n">REPR_ATTRIBUTES</span> <span class="o">+</span> \
         <span class="p">[</span><span class="s2">&quot;activation_bits&quot;</span><span class="p">,</span> <span class="s2">&quot;accumulation_bits&quot;</span><span class="p">,</span> <span class="s2">&quot;ema_decay&quot;</span><span class="p">,</span> <span class="s2">&quot;requantize_output&quot;</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">activation_bits</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">requantize_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ema_decay</span><span class="o">=</span><span class="mf">0.9999</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">activation_bits</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">requantize_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ema_decay</span><span class="o">=</span><span class="mf">0.9999</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">activation_bits</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="n">f</span><span class="s2">&quot;activation_bits=</span><span class="si">{activation_bits}</span><span class="s2"> must be higher than 1 &quot;</span><span class="p">)</span>
+                <span class="sa">f</span><span class="s2">&quot;activation_bits=</span><span class="si">{activation_bits}</span><span class="s2"> must be higher than 1 &quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">activation_bits</span> <span class="o">=</span> <span class="n">activation_bits</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">accumulation_bits</span> <span class="o">=</span> <span class="mi">32</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ema_decay</span> <span class="o">=</span> <span class="n">ema_decay</span>
@@ -445,14 +452,15 @@
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_state_dict_hook</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">state_dict</span><span class="p">,</span> <span class="n">prefix</span><span class="p">,</span> <span class="n">local_metadata</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;hook to be registered to module when exporting the model to 8bit, can be overrided to customize to layer behaviour&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;hook to be registered to module when exporting the model to 8bit,\</span>
+<span class="sd">             can be overrided to customize to layer behaviour&quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_state_dict_hook</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">state_dict</span><span class="p">,</span> <span class="n">prefix</span><span class="p">,</span> <span class="n">local_metadata</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">module</span><span class="o">.</span><span class="n">mode_8bit</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">module</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="n">QuantizationMode</span><span class="o">.</span><span class="n">EMA</span><span class="p">:</span>
                 <span class="n">state_dict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">prefix</span> <span class="o">+</span> <span class="s1">&#39;bias&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
                 <span class="k">try</span><span class="p">:</span>
-                    <span class="n">state_dict</span><span class="p">[</span><span class="n">prefix</span> <span class="o">+</span> <span class="s1">&#39;_quantized_bias&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">state_dict</span><span class="p">[</span><span class="n">prefix</span> <span class="o">+</span>
-                                                                        <span class="s1">&#39;_quantized_bias&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">int</span><span class="p">()</span>
+                    <span class="n">state_dict</span><span class="p">[</span><span class="n">prefix</span> <span class="o">+</span> <span class="s1">&#39;_quantized_bias&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">state_dict</span><span class="p">[</span>
+                        <span class="n">prefix</span> <span class="o">+</span> <span class="s1">&#39;_quantized_bias&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">int</span><span class="p">()</span>
                 <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
                     <span class="c1"># in case there is no bias dont do anything</span>
                     <span class="k">pass</span>
@@ -468,7 +476,7 @@
             <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="n">QuantizationMode</span><span class="o">.</span><span class="n">DYNAMIC</span><span class="p">:</span>
                 <span class="n">bias</span> <span class="o">=</span> <span class="n">quantize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bias</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bias_scale</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">accumulation_bits</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Unknown quantization mode: </span><span class="si">{self.mode}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown quantization mode: </span><span class="si">{self.mode}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
             <span class="n">bias</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">return</span> <span class="n">bias</span>
@@ -514,7 +522,8 @@
         <span class="sd">&quot;&quot;&quot;forward to be used during inference&quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">training</span><span class="p">,</span> <span class="s2">&quot;should only be called when not training&quot;</span>
         <span class="n">q_embeddings</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">embedding</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">quantized_weight</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding_idx</span><span class="p">,</span>
-                                   <span class="bp">self</span><span class="o">.</span><span class="n">max_norm</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">norm_type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale_grad_by_freq</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sparse</span><span class="p">)</span>
+                                   <span class="bp">self</span><span class="o">.</span><span class="n">max_norm</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">norm_type</span><span class="p">,</span>
+                                   <span class="bp">self</span><span class="o">.</span><span class="n">scale_grad_by_freq</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sparse</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">dequantize</span><span class="p">(</span><span class="n">q_embeddings</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">weight_scale</span><span class="p">)</span></div></div>
 
 

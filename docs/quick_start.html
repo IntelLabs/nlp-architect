@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Quick start &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
+  <title>Quick start &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
   
 
   
@@ -127,7 +127,6 @@
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="developer_guide.html">Developer Guide</a></li>
 </ul>
 
@@ -253,13 +252,10 @@
 <tr class="row-odd"><td><cite>nlp_architect.procedures</cite></td>
 <td>Procedure scripts</td>
 </tr>
-<tr class="row-even"><td><cite>nlp_architect.server</cite></td>
-<td>API Server and demos UI</td>
-</tr>
-<tr class="row-odd"><td><cite>nlp_architect.solutions</cite></td>
+<tr class="row-even"><td><cite>nlp_architect.solutions</cite></td>
 <td>Solution applications</td>
 </tr>
-<tr class="row-even"><td><cite>nlp_architect.utils</cite></td>
+<tr class="row-odd"><td><cite>nlp_architect.utils</cite></td>
 <td>Misc. I/O, metric, pre-processing and text utilities</td>
 </tr>
 </tbody>
@@ -273,16 +269,12 @@
 <p class="last">The CLI is in development and some functionality is not complete
 and will be added in future versions</p>
 </div>
-<p>The list of possible options can be obtained by <code class="docutils literal notranslate"><span class="pre">nlp_architect</span> <span class="pre">-h</span></code>:</p>
-<p><code class="docutils literal notranslate"><span class="pre">nlp_architect</span></code> commands:</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>train        Train a model from the library
-run          Run a model from the library
-process      Run a data processor from the library
-solution     Run a solution process from the library
-serve        Server a trained model using REST service
+<p>NLP Architect commands:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>nlp-train       Train a model from the library
+nlp-inference   Run a model from the library
 </pre></div>
 </div>
-<p>Use <code class="docutils literal notranslate"><span class="pre">nlp_architect</span> <span class="pre">&lt;command&gt;</span> <span class="pre">-h</span></code> for per command usage instructions.</p>
+<p>Use <code class="docutils literal notranslate"><span class="pre">nlp-train/inference</span> <span class="pre">-h</span></code> for per command usage instructions.</p>
 </div>
 </div>
 

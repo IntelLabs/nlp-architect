@@ -17,8 +17,6 @@
 Service class documentation
 ###########################
 
-.. autoclass:: nlp_architect.server.service.Service
-
 .. autoclass:: nlp_architect.common.core_nlp_doc.CoreNLPDoc
 
 .. autoclass:: nlp_architect.common.high_level_doc.HighLevelDoc

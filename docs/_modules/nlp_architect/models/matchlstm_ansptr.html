@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.models.matchlstm_ansptr &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
+  <title>nlp_architect.models.matchlstm_ansptr &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
   
 
   
@@ -116,7 +116,6 @@
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developer_guide.html">Developer Guide</a></li>
 </ul>
 
@@ -199,14 +198,14 @@
 <span class="c1"># limitations under the License.</span>
 <span class="c1"># ******************************************************************************</span>
 
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 <span class="kn">import</span> <span class="nn">re</span>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">Counter</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
 
-<span class="kn">from</span> <span class="nn">nlp_architect.utils.text</span> <span class="k">import</span> <span class="n">SpacyInstance</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.utils.text</span> <span class="kn">import</span> <span class="n">SpacyInstance</span>
 
 
 <div class="viewcode-block" id="MatchLSTMAnswerPointer"><a class="viewcode-back" href="../../../generated_api/nlp_architect.models.html#nlp_architect.models.matchlstm_ansptr.MatchLSTMAnswerPointer">[docs]</a><span class="k">class</span> <span class="nc">MatchLSTMAnswerPointer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -214,7 +213,7 @@
 <span class="sd">    Defines end to end MatchLSTM and Answer_Pointer network for Reading Comprehension</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params_dict</span><span class="p">,</span> <span class="n">embeddings</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params_dict</span><span class="p">,</span> <span class="n">embeddings</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Args:</span>
 <span class="sd">            params_dict: Dictionary containing the following keys-</span>
@@ -711,12 +710,14 @@
                 <span class="c1"># Print Paragraph</span>
                 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
                 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Paragraph Number AA:&quot;</span><span class="p">,</span> <span class="n">idx</span><span class="p">)</span>
-                <span class="n">test_paragraph</span> <span class="o">=</span> <span class="p">[</span><span class="n">vocab_forward</span><span class="p">[</span><span class="n">ele</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">ele</span> <span class="ow">in</span> <span class="n">valid</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">ele</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span>
+                <span class="n">test_paragraph</span> <span class="o">=</span> <span class="p">[</span><span class="n">vocab_forward</span><span class="p">[</span><span class="n">ele</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
+                    <span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">ele</span> <span class="ow">in</span> <span class="n">valid</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">ele</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span>
                 <span class="n">para_string</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">test_paragraph</span><span class="p">))</span>
                 <span class="nb">print</span><span class="p">(</span><span class="n">para_string</span><span class="p">)</span>
 
                 <span class="c1"># Print corresponding Question</span>
-                <span class="n">test_question</span> <span class="o">=</span> <span class="p">[</span><span class="n">vocab_forward</span><span class="p">[</span><span class="n">ele</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">ele</span> <span class="ow">in</span> <span class="n">valid</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="n">ele</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span>
+                <span class="n">test_question</span> <span class="o">=</span> <span class="p">[</span><span class="n">vocab_forward</span><span class="p">[</span><span class="n">ele</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
+                    <span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">ele</span> <span class="ow">in</span> <span class="n">valid</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="n">ele</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span>
                 <span class="n">ques_string</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">test_question</span><span class="p">))</span>
                 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Question:&quot;</span><span class="p">,</span> <span class="n">ques_string</span><span class="p">)</span>
                 <span class="n">question_ids</span> <span class="o">=</span> <span class="n">valid</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>

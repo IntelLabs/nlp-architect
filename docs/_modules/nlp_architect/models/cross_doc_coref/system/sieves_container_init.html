@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.models.cross_doc_coref.system.sieves_container_init &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
+  <title>nlp_architect.models.cross_doc_coref.system.sieves_container_init &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
   
 
   
@@ -116,7 +116,6 @@
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../developer_guide.html">Developer Guide</a></li>
 </ul>
 
@@ -200,17 +199,17 @@
 <span class="c1"># ******************************************************************************</span>
 
 <span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">List</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
 
-<span class="kn">from</span> <span class="nn">nlp_architect.data.cdc_resources.relations.relation_extraction</span> <span class="k">import</span> <span class="n">RelationExtraction</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.models.cross_doc_coref.sieves_config</span> <span class="k">import</span> \
+<span class="kn">from</span> <span class="nn">nlp_architect.data.cdc_resources.relations.relation_extraction</span> <span class="kn">import</span> <span class="n">RelationExtraction</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.models.cross_doc_coref.sieves_config</span> <span class="kn">import</span> \
     <span class="n">EventSievesConfiguration</span><span class="p">,</span> <span class="n">EntitySievesConfiguration</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="SievesContainerInitialization"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.models.cross_doc_coref.system.html#nlp_architect.models.cross_doc_coref.system.sieves_container_init.SievesContainerInitialization">[docs]</a><span class="k">class</span> <span class="nc">SievesContainerInitialization</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event_coref_config</span><span class="p">:</span> <span class="n">EventSievesConfiguration</span><span class="p">,</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event_coref_config</span><span class="p">:</span> <span class="n">EventSievesConfiguration</span><span class="p">,</span>
                  <span class="n">entity_coref_config</span><span class="p">:</span> <span class="n">EntitySievesConfiguration</span><span class="p">,</span>
                  <span class="n">sieves_model_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RelationExtraction</span><span class="p">]):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sieves_model_list</span> <span class="o">=</span> <span class="n">sieves_model_list</span>

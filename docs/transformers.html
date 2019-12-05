@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Transformers &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
+  <title>Transformers &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
   
 
   
@@ -126,7 +126,6 @@
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="developer_guide.html">Developer Guide</a></li>
 </ul>
 
@@ -195,7 +194,7 @@
 <p>NLP Architect integrated the Transformer models available in <a class="reference external" href="https://github.com/huggingface/pytorch-transformers">pytorch-transformers</a>. Using Transformer models based on a pre-trained models usually done by attaching a classification head on the transformer model and fine-tuning the model (transformer and classifier) on the target (down-stream) task.</p>
 <div class="section" id="base-model">
 <h2>Base model<a class="headerlink" href="#base-model" title="Permalink to this headline">¶</a></h2>
-<p><code class="xref py py-class docutils literal notranslate"><span class="pre">TransformerBase</span></code> is a base class for handling
+<p><a class="reference internal" href="generated_api/nlp_architect.models.transformers.html#nlp_architect.models.transformers.base_model.TransformerBase" title="nlp_architect.models.transformers.base_model.TransformerBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">TransformerBase</span></code></a> is a base class for handling
 loading, saving, training and inference of transformer models.</p>
 <p>The base model support <cite>pytorch-transformers</cite> configs, tokenizers and base models as documented in their <a class="reference external" href="https://github.com/huggingface/pytorch-transformers">website</a> (see our base-class for supported models).</p>
 <p>In order to use the Transformer models just sub-class the base model and include:</p>
@@ -245,10 +244,10 @@ loading, saving, training and inference of transformer models.</p>
 </table>
 <div class="section" id="sequence-classification">
 <h3>Sequence classification<a class="headerlink" href="#sequence-classification" title="Permalink to this headline">¶</a></h3>
-<p><code class="xref py py-class docutils literal notranslate"><span class="pre">TransformerSequenceClassifier</span></code> is a transformer model with sentence classification head (the <code class="docutils literal notranslate"><span class="pre">[CLS]</span></code> token is used as classification label) for sentence classification tasks (classification/regression).</p>
+<p><a class="reference internal" href="generated_api/nlp_architect.models.transformers.html#nlp_architect.models.transformers.sequence_classification.TransformerSequenceClassifier" title="nlp_architect.models.transformers.sequence_classification.TransformerSequenceClassifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">TransformerSequenceClassifier</span></code></a> is a transformer model with sentence classification head (the <code class="docutils literal notranslate"><span class="pre">[CLS]</span></code> token is used as classification label) for sentence classification tasks (classification/regression).</p>
 <p>See <code class="docutils literal notranslate"><span class="pre">nlp_architect.procedures.transformers.glue</span></code> for an example of training sequence classification models on GLUE benchmark tasks.</p>
 <p>Training a model on GLUE tasks, using BERT-base uncased base model:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nlp_architect train transformer_glue <span class="se">\</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nlp-train transformer_glue <span class="se">\</span>
     --task_name &lt;task name&gt; <span class="se">\</span>
     --model_name_or_path bert-base-uncased <span class="se">\</span>
     --model_type bert <span class="se">\</span>
@@ -259,7 +258,7 @@ loading, saving, training and inference of transformer models.</p>
 </pre></div>
 </div>
 <p>Running a model:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nlp_architect run transformer_glue <span class="se">\</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nlp-inference run transformer_glue <span class="se">\</span>
     --model_path &lt;path to model&gt; <span class="se">\</span>
     --task_name &lt;task_name&gt; <span class="se">\</span>
     --model_type bert <span class="se">\</span>
@@ -274,7 +273,7 @@ to the command line.</p>
 </div>
 <div class="section" id="token-classification">
 <h3>Token classification<a class="headerlink" href="#token-classification" title="Permalink to this headline">¶</a></h3>
-<p><code class="xref py py-class docutils literal notranslate"><span class="pre">TransformerTokenClassifier</span></code> is a transformer model for token classification for tasks such as NER, POS or chunking.</p>
+<p><a class="reference internal" href="generated_api/nlp_architect.models.transformers.html#nlp_architect.models.transformers.token_classification.TransformerTokenClassifier" title="nlp_architect.models.transformers.token_classification.TransformerTokenClassifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">TransformerTokenClassifier</span></code></a> is a transformer model for token classification for tasks such as NER, POS or chunking.</p>
 <p>See example for usage <a class="reference internal" href="tagging/sequence_tagging.html#transformer-cls"><span class="std std-ref">TransformerTokenClassifier</span></a> NER model description.</p>
 </div>
 </div>
