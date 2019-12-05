@@ -154,16 +154,12 @@ class TransformerSequenceClassifier(TransformerBase):
         Returns:
             TensorDataset:
         """
-        features = self._convert_examples_to_features(examples,
-                                                      max_seq_length,
-                                                      self.tokenizer,
-                                                      self.task_type,
-                                                      include_labels,
-                                                      pad_on_left=bool(
-                                                          self.model_type in ['xlnet']),
-                                                      pad_token=self.tokenizer.convert_tokens_to_ids(
-                                                          [self.tokenizer.pad_token])[0],
-                                                      pad_token_segment_id=4 if self.model_type in ['xlnet'] else 0)
+        features = self._convert_examples_to_features(
+            examples, max_seq_length, self.tokenizer,
+            self.task_type, include_labels, pad_on_left=bool(
+                self.model_type in ['xlnet']), pad_token=self.tokenizer.convert_tokens_to_ids(
+                    [self.tokenizer.pad_token])[0], pad_token_segment_id=4 if self.model_type in [
+                        'xlnet'] else 0)
         # Convert to Tensors and build dataset
         all_input_ids = torch.tensor([f.input_ids for f in features], dtype=torch.long)
         all_input_mask = torch.tensor([f.input_mask for f in features], dtype=torch.long)
@@ -232,7 +228,7 @@ class TransformerSequenceClassifier(TransformerBase):
         features = []
         for (ex_index, example) in enumerate(examples):
             if ex_index % 10000 == 0:
-                logger.info("Writing example %d of %d" % (ex_index, len(examples)))
+                logger.info("Writing example %d of %d", ex_index, len(examples))
 
             inputs = tokenizer.encode_plus(
                 example.text,

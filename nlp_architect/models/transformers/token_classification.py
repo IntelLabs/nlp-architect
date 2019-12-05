@@ -27,8 +27,7 @@ from transformers import (ROBERTA_PRETRAINED_MODEL_ARCHIVE_MAP,
 
 from nlp_architect.data.sequential_tagging import TokenClsInputExample
 from nlp_architect.models.transformers.base_model import (InputFeatures,
-                                                          TransformerBase,
-                                                          logger)
+                                                          TransformerBase)
 from nlp_architect.models.transformers.quantized_bert import \
     QuantizedBertForTokenClassification
 from nlp_architect.utils.metrics import tagging
@@ -114,10 +113,10 @@ class XLNetTokenClassificationHead(XLNetPreTrainedModel):
     def forward(self, input_ids, token_type_ids=None, input_mask=None, attention_mask=None,
                 mems=None, perm_mask=None, target_mapping=None,
                 labels=None, head_mask=None, valid_ids=None):
-        transformer_outputs = self.transformer(input_ids, token_type_ids=token_type_ids,
-                                               input_mask=input_mask, attention_mask=attention_mask,
-                                               mems=mems, perm_mask=perm_mask, target_mapping=target_mapping,
-                                               head_mask=head_mask)
+        transformer_outputs = self.transformer(
+            input_ids, token_type_ids=token_type_ids, input_mask=input_mask,
+            attention_mask=attention_mask, mems=mems, perm_mask=perm_mask,
+            target_mapping=target_mapping, head_mask=head_mask)
         sequence_output = transformer_outputs[0]
         output = self.dropout(sequence_output)
         logits = self.logits_proj(output)
@@ -193,7 +192,9 @@ class TransformerTokenClassifier(TransformerBase):
         'roberta': RobertaForTokenClassificationHead,
     }
 
-    def __init__(self, model_type: str, labels: List[str] = None, *args, load_quantized=False, **kwargs):
+    def __init__(
+            self, model_type: str, labels: List[str] = None,
+            *args, load_quantized=False, **kwargs):
         assert model_type in self.MODEL_CLASS.keys(), "unsupported model type"
         self.labels = labels
         self.num_labels = len(labels) + 1  # +1 for padding label
@@ -280,6 +281,7 @@ class TransformerTokenClassifier(TransformerBase):
         out_label_ids = active_labels.detach().cpu().numpy()
         _, _, f1 = self.extract_labels(out_label_ids, self.labels_id_map, logits)
         logger.info("Results on evaluation set: F1 = {}".format(f1))
+        return f1
 
     @staticmethod
     def extract_labels(label_ids, label_map, logits):
@@ -306,27 +308,22 @@ class TransformerTokenClassifier(TransformerBase):
         Returns:
             TensorDataset:
         """
-        features = self._convert_examples_to_features(examples,
-                                                      max_seq_length,
-                                                      self.tokenizer,
-                                                      include_labels,
-                                                      # xlnet has a cls token at the end
-                                                      cls_token_at_end=bool(
-                                                          self.model_type in ['xlnet']),
-                                                      cls_token=self.tokenizer.cls_token,
-                                                      cls_token_segment_id=2
-                                                      if self.model_type in['xlnet'] else 0,
-                                                      sep_token=self.tokenizer.sep_token,
-                                                      sep_token_extra=bool(
-                                                          self.model_type in ['roberta']),
-                                                      # pad on the left for xlnet
-                                                      pad_on_left=bool(
-                                                          self.model_type in ['xlnet']),
-                                                      pad_token=self.tokenizer.convert_tokens_to_ids(
-                                                          [self.tokenizer.pad_token])[0],
-                                                      pad_token_segment_id=4
-                                                      if self.model_type in [
-                                                          'xlnet'] else 0)
+        features = self._convert_examples_to_features(
+            examples, max_seq_length, self.tokenizer, include_labels,
+            # xlnet has a cls token at the end
+            cls_token_at_end=bool(
+                self.model_type in [
+                    'xlnet']), cls_token=self.tokenizer.cls_token,
+            cls_token_segment_id=2 if self.model_type in[
+                'xlnet'] else 0, sep_token=self.tokenizer.sep_token,
+            sep_token_extra=bool(self.model_type in ['roberta']),
+            # pad on the left for xlnet
+            pad_on_left=bool(
+                self.model_type in ['xlnet']), pad_token=self.tokenizer.convert_tokens_to_ids(
+                    [
+                        self.tokenizer.pad_token
+                    ])[0],
+            pad_token_segment_id=4 if self.model_type in ['xlnet'] else 0)
         # Convert to Tensors and build dataset
         all_input_ids = torch.tensor([f.input_ids for f in features], dtype=torch.long)
         all_input_mask = torch.tensor([f.input_mask for f in features], dtype=torch.long)
@@ -368,7 +365,7 @@ class TransformerTokenClassifier(TransformerBase):
         features = []
         for (ex_index, example) in enumerate(examples):
             if ex_index % 10000 == 0:
-                logger.info("Processing example %d of %d" % (ex_index, len(examples)))
+                logger.info("Processing example %d of %d", ex_index, len(examples))
 
             tokens = []
             labels = []

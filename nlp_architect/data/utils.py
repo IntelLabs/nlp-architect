@@ -35,15 +35,15 @@ class InputExample(ABC):
 class DataProcessor(object):
     """Base class for data converters for sequence/token classification data sets."""
 
-    def get_train_examples(self, data_dir):
+    def get_train_examples(self):
         """Gets a collection of `InputExample`s for the train set."""
         raise NotImplementedError()
 
-    def get_dev_examples(self, data_dir):
+    def get_dev_examples(self):
         """Gets a collection of `InputExample`s for the dev set."""
         raise NotImplementedError()
 
-    def get_test_examples(self, data_dir):
+    def get_test_examples(self):
         """Gets a collection of `InputExample`s for the test set."""
         raise NotImplementedError()
 
@@ -65,12 +65,6 @@ class Task:
         self.processor = processor
         self.data_dir = data_dir
         self.task_type = task_type
-
-    def get_split_train_examples(self, labeled: int, unlabeled: int):
-        """split the train set into 2 sub sets (given by input size) to be
-        used as labelled and unlabeled sets for semi-supervision tasks
-        """
-        return self.processor.get_split_train_examples(self.data_dir, labeled, unlabeled)
 
     def get_train_examples(self):
         return self.processor.get_train_examples(self.data_dir)
@@ -154,3 +148,26 @@ def sample_label_unlabeled(samples: List[InputExample], no_labeled: int, no_unla
     label_samples = [samples[i] for i in labeled_indices]
     unlabel_samples = [samples[i] for i in unlabeled_indices]
     return label_samples, unlabel_samples
+
+
+def split_column_dataset(
+        first_count: int, second_count: int, out_folder, dataset, first_filename, second_filename, tag_col=-1):
+    """
+    Splits a single column tagged dataset into two files according to the amount of examples
+    requested to be included in each file.
+    split1_count (int) : the amount of examples to include in the first split file
+    split2_count (int) : the amount of examples to include in the second split file
+    out_folder (str) : the folder in which the result files will be stored
+    dataset (str) : the path to the original data file
+    split1_filename (str) : the name of the first split file
+    split2_filename (str) : the name of the second split file
+    tag_col (int) : the index of the tag column
+    """
+    lines = read_column_tagged_file(dataset, tag_col=tag_col)
+    num_of_examples = len(lines)
+    assert first_count + second_count <= num_of_examples and first_count > 0 and second_count > 0
+    selected_lines = random.sample(lines, first_count + second_count)
+    first_data = selected_lines[:first_count]
+    second_data = selected_lines[first_count:]
+    write_column_tagged_file(out_folder + os.sep + first_filename, first_data)
+    write_column_tagged_file(out_folder + os.sep + second_filename, second_data)

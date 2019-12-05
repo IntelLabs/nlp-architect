@@ -39,7 +39,7 @@ One approach is similar to the method in Hinton 2015 [#]_. The loss function is
 modified to include a measure of distributions divergence, which can be measured
 using KL divergence or MSE between the logits of the student and the teacher network.
 
-    :math:`loss = w_s \cdot loss_{student} + w_d \cdot KL(logits_{student} / T || logits_{teacher} / T)`
+:math:`loss = w_s \cdot loss_{student} + w_d \cdot KL(logits_{student} / T || logits_{teacher} / T)`
 
 where *T* is a value representing temperature for softening the logits prior to 
 applying softmax. `loss_{student}` is the original loss of the student network 
@@ -72,6 +72,20 @@ Usage:
 
 .. note::
     More models supporting distillation will be added in next releases
+
+Pseudo Labeling
+================
+
+This method can be used in order to produce pseudo-labels when training the student on unlabeled examples.
+The pseudo-guess is produced by applying arg max on the logits of the teacher model, and results in the following loss:
+
+.. math::
+
+    loss &= \Bigg\{\begin{eqnarray}CE(yˆ, y) && labeled&example\\ CE(yˆ, yˆt) && unlabeled&example\end{eqnarray}
+
+
+where CE is Cross Entropy loss, yˆ is the predicted entity label class by the student model and yˆt is
+the predicted label by the teacher model.
 
 
 .. [#] Distilling the Knowledge in a Neural Network: Geoffrey Hinton, Oriol Vinyals, Jeff Dean, https://arxiv.org/abs/1503.02531

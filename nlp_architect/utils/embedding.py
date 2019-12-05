@@ -82,7 +82,7 @@ def fill_embedding_mat(src_mat, src_lex, emb_lex, emb_size):
 
 
 def get_embedding_matrix(embeddings: dict, vocab: Vocabulary,
-                         embedding_size: int=None) -> np.ndarray:
+                         embedding_size: int = None) -> np.ndarray:
     """
     Generate a matrix of word embeddings given a vocabulary
 

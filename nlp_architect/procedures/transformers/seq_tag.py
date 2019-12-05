@@ -47,6 +47,8 @@ class TransformerTokenClsTrain(Procedure):
                                  + "by the dataloaders.")
         train_args(parser, models_family=TransformerTokenClassifier.MODEL_CLASS.keys())
         create_base_args(parser, model_types=TransformerTokenClassifier.MODEL_CLASS.keys())
+        parser.add_argument('--train_file_name', type=str, default="train.txt",
+                            help='File name of the training dataset')
 
     @staticmethod
     def run_procedure(args):
@@ -86,7 +88,7 @@ def do_training(args):
                                             device=device,
                                             n_gpus=n_gpus)
 
-    train_ex = processor.get_train_examples()
+    train_ex = processor.get_train_examples(filename=args.train_file_name)
     if train_ex is None:
         raise Exception("No train examples found, quitting.")
     dev_ex = processor.get_dev_examples()
