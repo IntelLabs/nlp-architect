@@ -73,7 +73,6 @@
    :caption: For Developers
 
    nlp_architect API <generated_api/nlp_architect_api_index.rst>
-   REST Server <service.rst>
    developer_guide.rst
 
 .. _https://github.com/NervanaSystems/nlp-architect: https://github.com/NervanaSystems/nlp-architect
