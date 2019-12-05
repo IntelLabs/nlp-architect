@@ -12,6 +12,5 @@
     nlp_architect.nn
     nlp_architect.pipelines
     nlp_architect.procedures
-    nlp_architect.server
     nlp_architect.solutions
     nlp_architect.utils

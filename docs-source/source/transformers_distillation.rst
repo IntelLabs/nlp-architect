@@ -66,8 +66,8 @@ Useful for training taggers from Transformer models. :py:class:`NeuralTagger <nl
 
 Usage:
 
-#. Train a transformer tagger using :py:class:`TransformerTokenClassifier <nlp_architect.models.transformers.TransformerTokenClassifier>` or using ``nlp_architect train transformer_token`` command
-#. Train a neural tagger :py:class:`Neural Tagger <nlp_architect.models.tagging.NeuralTagger>` using the trained transformer model and use the :py:class:`TeacherStudentDistill <nlp_architect.nn.torch.distillation.TeacherStudentDistill>` model that was configured with the transformer model. This can be done using :py:class:`Neural Tagger <nlp_architect.models.tagging.NeuralTagger>`'s train loop or by using ``nlp_architect train tagger_kd`` command
+#. Train a transformer tagger using :py:class:`TransformerTokenClassifier <nlp_architect.models.transformers.TransformerTokenClassifier>` or using ``nlp-train transformer_token`` command
+#. Train a neural tagger :py:class:`Neural Tagger <nlp_architect.models.tagging.NeuralTagger>` using the trained transformer model and use the :py:class:`TeacherStudentDistill <nlp_architect.nn.torch.distillation.TeacherStudentDistill>` model that was configured with the transformer model. This can be done using :py:class:`Neural Tagger <nlp_architect.models.tagging.NeuralTagger>`'s train loop or by using ``nlp-train tagger_kd`` command
 
 
 .. note::

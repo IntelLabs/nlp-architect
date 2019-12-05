@@ -49,7 +49,6 @@ Features:
   * Dynet
 
 * Essential utilities for working with NLP models - Text/String pre-processing, IO, data-manipulation, metrics, embeddings.
-* Plug-able REST API server to serve models via REST API
 
 
 Library design philosophy
@@ -66,7 +65,6 @@ The main design guidelines are:
 * Generic dataset loaders, textual data processing utilities, and miscellaneous utilities that support NLP model development (loaders, text processors, io, metrics, etc.)
 * ``Procedures`` for defining processes for training, inference, optimization or any kind of elaborate script.
 * Pythonic API for using models for inference
-* REST API servers with ability to serve trained models via HTTP
 * Extensive model documentation and tutorials
 
 Disclaimer

@@ -22,7 +22,7 @@ from os import path
 import hug
 from falcon import status_codes
 
-from nlp_architect.server.service import Service, parse_headers, format_response
+from service import Service, parse_headers, format_response
 
 services = {}
 
