@@ -94,7 +94,7 @@ To train Quantized BERT use the following code snippet:
 
 .. code-block:: bash
 
-    nlp_architect train transformer_glue \
+    nlp-train transformer_glue \
         --task_name mrpc \
         --model_name_or_path bert-base-uncased \
         --model_type quant_bert \
@@ -115,7 +115,7 @@ following code snippet:
 
 .. code-block:: bash
 
-    nlp_architect run transformer_glue \
+    nlp-inference transformer_glue \
         --model_path /tmp/mrpc-8bit \
         --task_name mrpc \
         --model_type quant_bert \
