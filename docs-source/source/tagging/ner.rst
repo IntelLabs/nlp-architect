@@ -52,9 +52,9 @@ See ```nlp-train tagger -h``` for full list of options for training.
 
 Running inference on trained model::
 
-    nlp_architect run tagger --data_file <input data file> --model_dir <model dir> --output_dir <output dir>
+    nlp-inference tagger --data_file <input data file> --model_dir <model dir> --output_dir <output dir>
 
-See ```nlp_architect run tagger -h``` for full list of options for running a trained model.
+See ```nlp-inference tagger -h``` for full list of options for running a trained model.
 
 .. autoclass:: nlp_architect.nn.torch.modules.embedders.CNNLSTM
    
@@ -86,10 +86,10 @@ See ```nlp-train tagger -h``` for full list of options for training.
 
 Running inference on trained model::
 
-    nlp_architect run tagger --data_file <input data file> --model_dir <model dir> --output_dir <output dir>
+    nlp-inference tagger --data_file <input data file> --model_dir <model dir> --output_dir <output dir>
 
 
-See ```nlp_architect run tagger -h``` for full list of options for running a trained model.
+See ```nlp-inference tagger -h``` for full list of options for running a trained model.
 
 .. autoclass:: nlp_architect.nn.torch.modules.embedders.IDCNN
 
@@ -121,13 +121,13 @@ See ```nlp-train transformer_token -h``` for full list of options for training.
 
 Running inference on a trained model::
 
-    nlp_architect run transformer_token \
+    nlp-inference transformer_token \
         --data_file <path to input file> \
         --model_path <path to trained model> \
         --model_type [bert, quant_bert, xlnet] \
         --output_dir <output path>
 
-See ``nlp_architect run tagger -h`` for full list of options for running a trained model.
+See ``nlp-inference tagger -h`` for full list of options for running a trained model.
 
 .. _BIO: https://en.wikipedia.org/wiki/Inside%E2%80%93outside%E2%80%93beginning_(tagging)
 .. _`Lample et al.`: https://arxiv.org/abs/1603.01360

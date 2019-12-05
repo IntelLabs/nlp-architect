@@ -32,20 +32,28 @@ Currently we provide 4 services:
 
 The server has two main components:
 
-- :py:class:`Service <nlp_architect.server.service.Service>` which is a representation of each model's API.
-- ``nlp_architect.server.serve`` module which is a `hug <http://www.hug.rest/>`_ application which handles processing of HTTP requests and initiating calls to the desired model.
+- :py:class:`Service <server.service.Service>` which is a representation of each model's API.
+- ``server.serve`` module which is a `hug <http://www.hug.rest/>`_ application which handles processing of HTTP requests and initiating calls to the desired model.
 
 The server supports extending with new services using provided API classes, see `Annotation Structure Types - Server Responses`_ for more details.
 
 Running NLP Architect Server
 ============================
+Install requirements
+--------------------
+The server requires extra python packages:
+
+.. code:: bash
+
+    pip install -r server/requirements.txt
+
 Starting the server
 -------------------
 To run the server run the following command:
 
 .. code:: bash
 
-    nlp_architect server -p 8080
+    hug -f serve.py -p 8080
 
 The server will run locally on port 8080 and can be queried on ``/inference`` directive.
 
@@ -179,7 +187,7 @@ Adding new services
 ===================
 Adding a new service to the server
 ----------------------------------
-All the services are declared in a ``JSON`` file found at ``nlp_architect/server/services.json``.
+All the services are declared in a ``JSON`` file found at ``server/services.json``.
 
 In order to add a new service to the server you need to go over 3 steps:
 

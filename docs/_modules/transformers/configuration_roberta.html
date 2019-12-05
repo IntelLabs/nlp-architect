@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.cli &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
+  <title>transformers.configuration_roberta &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
   
 
   
@@ -164,7 +164,7 @@
         
           <li><a href="../index.html">Module code</a> &raquo;</li>
         
-      <li>nlp_architect.cli</li>
+      <li>transformers.configuration_roberta</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -179,9 +179,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <h1>Source code for nlp_architect.cli</h1><div class="highlight"><pre>
-<span></span><span class="c1"># ******************************************************************************</span>
-<span class="c1"># Copyright 2017-2019 Intel Corporation</span>
+  <h1>Source code for transformers.configuration_roberta</h1><div class="highlight"><pre>
+<span></span><span class="c1"># coding=utf-8</span>
+<span class="c1"># Copyright 2018 The Google AI Language Team Authors and The HuggingFace Inc. team.</span>
+<span class="c1"># Copyright (c) 2018, NVIDIA CORPORATION.  All rights reserved.</span>
 <span class="c1">#</span>
 <span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
 <span class="c1"># you may not use this file except in compliance with the License.</span>
@@ -194,48 +195,29 @@
 <span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
 <span class="c1"># See the License for the specific language governing permissions and</span>
 <span class="c1"># limitations under the License.</span>
-<span class="c1"># ******************************************************************************</span>
-<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="sd">&quot;&quot;&quot; RoBERTa configuration &quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="p">(</span><span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span>
+                        <span class="n">unicode_literals</span><span class="p">)</span>
+
 <span class="kn">import</span> <span class="nn">logging</span>
 
-<span class="c1"># register all procedures by importing</span>
-<span class="kn">import</span> <span class="nn">nlp_architect.procedures</span>  <span class="c1"># noqa: F401</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.cli.cli_commands</span> <span class="kn">import</span> <span class="n">cli_train_cmd</span><span class="p">,</span> <span class="n">cli_run_cmd</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.version</span> <span class="kn">import</span> <span class="n">NLP_ARCHITECT_VERSION</span>
+<span class="kn">from</span> <span class="nn">.configuration_bert</span> <span class="kn">import</span> <span class="n">BertConfig</span>
 
-<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(asctime)s</span><span class="s1"> : </span><span class="si">%(levelname)s</span><span class="s1"> : </span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
-
-<span class="kn">from</span> <span class="nn">nlp_architect.cli.cli_commands</span> <span class="kn">import</span> <span class="n">nlp_train_cli</span><span class="p">,</span> <span class="n">nlp_inference_cli</span>
-
-<div class="viewcode-block" id="run_cli"><a class="viewcode-back" href="../../generated_api/nlp_architect.cli.html#nlp_architect.cli.run_cli">[docs]</a><span class="k">def</span> <span class="nf">run_cli</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot; Run nlp_architect command line application</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">prog_name</span> <span class="o">=</span> <span class="s1">&#39;nlp_architect&#39;</span>
-    <span class="n">desc</span> <span class="o">=</span> <span class="s1">&#39;NLP Architect CLI [</span><span class="si">{}</span><span class="s1">]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">NLP_ARCHITECT_VERSION</span><span class="p">)</span>
-    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">desc</span><span class="p">,</span> <span class="n">prog</span><span class="o">=</span><span class="n">prog_name</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-v&#39;</span><span class="p">,</span> <span class="s1">&#39;--version&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;version&#39;</span><span class="p">,</span>
-                        <span class="n">version</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(prog)s</span><span class="s1"> v</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">NLP_ARCHITECT_VERSION</span><span class="p">))</span>
-
-    <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="n">parser</span><span class="o">.</span><span class="n">print_help</span><span class="p">())</span>
-    <span class="n">subparsers</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_subparsers</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;commands&#39;</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">command</span> <span class="ow">in</span> <span class="n">sub_commands</span><span class="p">:</span>
-        <span class="n">command</span><span class="p">(</span><span class="n">subparsers</span><span class="p">)</span>
-    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
-    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="s1">&#39;func&#39;</span><span class="p">):</span>
-        <span class="n">args</span><span class="o">.</span><span class="n">func</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">parser</span><span class="o">.</span><span class="n">print_help</span><span class="p">()</span></div>
+<span class="n">ROBERTA_PRETRAINED_CONFIG_ARCHIVE_MAP</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;roberta-base&#39;</span><span class="p">:</span> <span class="s2">&quot;https://s3.amazonaws.com/models.huggingface.co/bert/roberta-base-config.json&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;roberta-large&#39;</span><span class="p">:</span> <span class="s2">&quot;https://s3.amazonaws.com/models.huggingface.co/bert/roberta-large-config.json&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;roberta-large-mnli&#39;</span><span class="p">:</span> <span class="s2">&quot;https://s3.amazonaws.com/models.huggingface.co/bert/roberta-large-mnli-config.json&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;distilroberta-base&#39;</span><span class="p">:</span> <span class="s2">&quot;https://s3.amazonaws.com/models.huggingface.co/bert/distilroberta-base-config.json&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;roberta-base-openai-detector&#39;</span><span class="p">:</span> <span class="s2">&quot;https://s3.amazonaws.com/models.huggingface.co/bert/roberta-base-openai-detector-config.json&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;roberta-large-openai-detector&#39;</span><span class="p">:</span> <span class="s2">&quot;https://s3.amazonaws.com/models.huggingface.co/bert/roberta-large-openai-detector-config.json&quot;</span><span class="p">,</span>
+<span class="p">}</span>
 
 
-<span class="c1"># sub commands list</span>
-<span class="n">sub_commands</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="n">cli_train_cmd</span><span class="p">,</span>
-    <span class="n">cli_run_cmd</span><span class="p">,</span>
-<span class="p">]</span>
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">run_cli</span><span class="p">()</span>
+<span class="k">class</span> <span class="nc">RobertaConfig</span><span class="p">(</span><span class="n">BertConfig</span><span class="p">):</span>
+    <span class="n">pretrained_config_archive_map</span> <span class="o">=</span> <span class="n">ROBERTA_PRETRAINED_CONFIG_ARCHIVE_MAP</span>
 </pre></div>
 
            </div>

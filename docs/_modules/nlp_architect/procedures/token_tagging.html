@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.procedures.token_tagging &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
+  <title>nlp_architect.procedures.token_tagging &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
   
 
   
@@ -116,7 +116,6 @@
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developer_guide.html">Developer Guide</a></li>
 </ul>
 
@@ -200,23 +199,23 @@
 <span class="kn">import</span> <span class="nn">io</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="k">import</span> <span class="n">DataLoader</span><span class="p">,</span> <span class="n">RandomSampler</span><span class="p">,</span> <span class="n">SequentialSampler</span>
+<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span><span class="p">,</span> <span class="n">RandomSampler</span><span class="p">,</span> <span class="n">SequentialSampler</span>
 
-<span class="kn">from</span> <span class="nn">nlp_architect.data.sequential_tagging</span> <span class="k">import</span> <span class="p">(</span><span class="n">TokenClsInputExample</span><span class="p">,</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.data.sequential_tagging</span> <span class="kn">import</span> <span class="p">(</span><span class="n">TokenClsInputExample</span><span class="p">,</span>
                                                    <span class="n">TokenClsProcessor</span><span class="p">)</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.data.utils</span> <span class="k">import</span> <span class="n">write_column_tagged_file</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.models.tagging</span> <span class="k">import</span> <span class="n">NeuralTagger</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.nn.torch.modules.embedders</span> <span class="k">import</span> <span class="n">IDCNN</span><span class="p">,</span> <span class="n">CNNLSTM</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.nn.torch</span> <span class="k">import</span> <span class="n">setup_backend</span><span class="p">,</span> <span class="n">set_seed</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.nn.torch.distillation</span> <span class="k">import</span> <span class="n">TeacherStudentDistill</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.procedures.procedure</span> <span class="k">import</span> <span class="n">Procedure</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.procedures.registry</span> <span class="k">import</span> <span class="n">register_train_cmd</span><span class="p">,</span> <span class="n">register_run_cmd</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.utils.embedding</span> <span class="k">import</span> <span class="p">(</span><span class="n">get_embedding_matrix</span><span class="p">,</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.data.utils</span> <span class="kn">import</span> <span class="n">write_column_tagged_file</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.models.tagging</span> <span class="kn">import</span> <span class="n">NeuralTagger</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.nn.torch.modules.embedders</span> <span class="kn">import</span> <span class="n">IDCNN</span><span class="p">,</span> <span class="n">CNNLSTM</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.nn.torch</span> <span class="kn">import</span> <span class="n">setup_backend</span><span class="p">,</span> <span class="n">set_seed</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.nn.torch.distillation</span> <span class="kn">import</span> <span class="n">TeacherStudentDistill</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.procedures.procedure</span> <span class="kn">import</span> <span class="n">Procedure</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.procedures.registry</span> <span class="kn">import</span> <span class="n">register_train_cmd</span><span class="p">,</span> <span class="n">register_inference_cmd</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.utils.embedding</span> <span class="kn">import</span> <span class="p">(</span><span class="n">get_embedding_matrix</span><span class="p">,</span>
                                            <span class="n">load_embedding_file</span><span class="p">)</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.utils.io</span> <span class="k">import</span> <span class="n">prepare_output_path</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.utils.text</span> <span class="k">import</span> <span class="n">SpacyInstance</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.nn.torch.data.dataset</span> <span class="k">import</span> <span class="n">ParallelDataset</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.models.transformers</span> <span class="k">import</span> <span class="n">TransformerTokenClassifier</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.utils.io</span> <span class="kn">import</span> <span class="n">prepare_output_path</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.utils.text</span> <span class="kn">import</span> <span class="n">SpacyInstance</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.nn.torch.data.dataset</span> <span class="kn">import</span> <span class="n">ParallelDataset</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.models.transformers</span> <span class="kn">import</span> <span class="n">TransformerTokenClassifier</span>
 
 
 <div class="viewcode-block" id="TrainTagger"><a class="viewcode-back" href="../../../generated_api/nlp_architect.procedures.html#nlp_architect.procedures.token_tagging.TrainTagger">[docs]</a><span class="nd">@register_train_cmd</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;tagger&#39;</span><span class="p">,</span>
@@ -245,8 +244,26 @@
         <span class="n">do_kd_training</span><span class="p">(</span><span class="n">args</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="RunTagger"><a class="viewcode-back" href="../../../generated_api/nlp_architect.procedures.html#nlp_architect.procedures.token_tagging.RunTagger">[docs]</a><span class="nd">@register_run_cmd</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;tagger&#39;</span><span class="p">,</span>
-                  <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Run a neural tagger model&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="TrainTaggerKDPseudo"><a class="viewcode-back" href="../../../generated_api/nlp_architect.procedures.html#nlp_architect.procedures.token_tagging.TrainTaggerKDPseudo">[docs]</a><span class="nd">@register_train_cmd</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;tagger_kd_pseudo&#39;</span><span class="p">,</span>
+                    <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Train a neural tagger using Knowledge Distillation&#39;</span>
+                                <span class="s1">&#39; and a Transformer teacher model + pseudo-labeling&#39;</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">TrainTaggerKDPseudo</span><span class="p">(</span><span class="n">Procedure</span><span class="p">):</span>
+<div class="viewcode-block" id="TrainTaggerKDPseudo.add_arguments"><a class="viewcode-back" href="../../../generated_api/nlp_architect.procedures.html#nlp_architect.procedures.token_tagging.TrainTaggerKDPseudo.add_arguments">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">add_arguments</span><span class="p">(</span><span class="n">parser</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">):</span>
+        <span class="n">add_parse_args</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+        <span class="n">TeacherStudentDistill</span><span class="o">.</span><span class="n">add_args</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--labeled_train_file&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;labeled.txt&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+                            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The file name containing the labeled training examples&quot;</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--unlabeled_train_file&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;unlabeled.txt&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+                            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The file name containing the unlabeled training examples&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TrainTaggerKDPseudo.run_procedure"><a class="viewcode-back" href="../../../generated_api/nlp_architect.procedures.html#nlp_architect.procedures.token_tagging.TrainTaggerKDPseudo.run_procedure">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">run_procedure</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+        <span class="n">do_kd_pseudo_training</span><span class="p">(</span><span class="n">args</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="RunTagger"><a class="viewcode-back" href="../../../generated_api/nlp_architect.procedures.html#nlp_architect.procedures.token_tagging.RunTagger">[docs]</a><span class="nd">@register_inference_cmd</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;tagger&#39;</span><span class="p">,</span>
+                        <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Run a neural tagger model&#39;</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">RunTagger</span><span class="p">(</span><span class="n">Procedure</span><span class="p">):</span>
 <div class="viewcode-block" id="RunTagger.add_arguments"><a class="viewcode-back" href="../../../generated_api/nlp_architect.procedures.html#nlp_architect.procedures.token_tagging.RunTagger.add_arguments">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">add_arguments</span><span class="p">(</span><span class="n">parser</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">):</span>
@@ -277,7 +294,9 @@
                         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Embedder model configuration file&quot;</span><span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-b&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
                         <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Batch size&#39;</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-e&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-b_ul&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Batch size of unlabeled data&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-e&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">155</span><span class="p">,</span>
                         <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Number of epochs&#39;</span><span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--data_dir&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The input data dir. Should contain dataset files to be parsed by &quot;</span>
@@ -318,7 +337,7 @@
     <span class="n">prepare_output_path</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">overwrite_output_dir</span><span class="p">)</span>
     <span class="n">device</span><span class="p">,</span> <span class="n">n_gpus</span> <span class="o">=</span> <span class="n">setup_backend</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">no_cuda</span><span class="p">)</span>
     <span class="c1"># Set seed</span>
-    <span class="n">set_seed</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">seed</span><span class="p">,</span> <span class="n">n_gpus</span><span class="p">)</span>
+    <span class="n">args</span><span class="o">.</span><span class="n">seed</span> <span class="o">=</span> <span class="n">set_seed</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">seed</span><span class="p">,</span> <span class="n">n_gpus</span><span class="p">)</span>
     <span class="c1"># prepare data</span>
     <span class="n">processor</span> <span class="o">=</span> <span class="n">TokenClsProcessor</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">tag_col</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">tag_col</span><span class="p">)</span>
     <span class="n">train_ex</span> <span class="o">=</span> <span class="n">processor</span><span class="o">.</span><span class="n">get_train_examples</span><span class="p">()</span>
@@ -388,7 +407,7 @@
     <span class="n">prepare_output_path</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">overwrite_output_dir</span><span class="p">)</span>
     <span class="n">device</span><span class="p">,</span> <span class="n">n_gpus</span> <span class="o">=</span> <span class="n">setup_backend</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">no_cuda</span><span class="p">)</span>
     <span class="c1"># Set seed</span>
-    <span class="n">set_seed</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">seed</span><span class="p">,</span> <span class="n">n_gpus</span><span class="p">)</span>
+    <span class="n">args</span><span class="o">.</span><span class="n">seed</span> <span class="o">=</span> <span class="n">set_seed</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">seed</span><span class="p">,</span> <span class="n">n_gpus</span><span class="p">)</span>
     <span class="c1"># prepare data</span>
     <span class="n">processor</span> <span class="o">=</span> <span class="n">TokenClsProcessor</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">tag_col</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">tag_col</span><span class="p">)</span>
     <span class="n">train_ex</span> <span class="o">=</span> <span class="n">processor</span><span class="o">.</span><span class="n">get_train_examples</span><span class="p">()</span>
@@ -466,10 +485,100 @@
     <span class="n">classifier</span><span class="o">.</span><span class="n">save_model</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">output_dir</span><span class="p">)</span></div>
 
 
+<div class="viewcode-block" id="do_kd_pseudo_training"><a class="viewcode-back" href="../../../generated_api/nlp_architect.procedures.html#nlp_architect.procedures.token_tagging.do_kd_pseudo_training">[docs]</a><span class="k">def</span> <span class="nf">do_kd_pseudo_training</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+    <span class="n">prepare_output_path</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">overwrite_output_dir</span><span class="p">)</span>
+    <span class="n">device</span><span class="p">,</span> <span class="n">n_gpus</span> <span class="o">=</span> <span class="n">setup_backend</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">no_cuda</span><span class="p">)</span>
+    <span class="c1"># Set seed</span>
+    <span class="n">set_seed</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">seed</span><span class="p">,</span> <span class="n">n_gpus</span><span class="p">)</span>
+    <span class="c1"># prepare data</span>
+    <span class="n">processor</span> <span class="o">=</span> <span class="n">TokenClsProcessor</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">tag_col</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">tag_col</span><span class="p">)</span>
+    <span class="n">train_labeled_ex</span> <span class="o">=</span> <span class="n">processor</span><span class="o">.</span><span class="n">get_train_examples</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">labeled_train_file</span><span class="p">)</span>
+    <span class="n">train_unlabeled_ex</span> <span class="o">=</span> <span class="n">processor</span><span class="o">.</span><span class="n">get_train_examples</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">unlabeled_train_file</span><span class="p">)</span>
+    <span class="n">dev_ex</span> <span class="o">=</span> <span class="n">processor</span><span class="o">.</span><span class="n">get_dev_examples</span><span class="p">()</span>
+    <span class="n">test_ex</span> <span class="o">=</span> <span class="n">processor</span><span class="o">.</span><span class="n">get_test_examples</span><span class="p">()</span>
+    <span class="n">vocab</span> <span class="o">=</span> <span class="n">processor</span><span class="o">.</span><span class="n">get_vocabulary</span><span class="p">()</span>
+    <span class="n">vocab_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vocab</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">num_labels</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">processor</span><span class="o">.</span><span class="n">get_labels</span><span class="p">())</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="c1"># create an embedder</span>
+    <span class="n">embedder_cls</span> <span class="o">=</span> <span class="n">MODEL_TYPE</span><span class="p">[</span><span class="n">args</span><span class="o">.</span><span class="n">model_type</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">config_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">embedder_model</span> <span class="o">=</span> <span class="n">embedder_cls</span><span class="o">.</span><span class="n">from_config</span><span class="p">(</span><span class="n">vocab_size</span><span class="p">,</span>
+                                                  <span class="n">num_labels</span><span class="p">,</span>
+                                                  <span class="n">args</span><span class="o">.</span><span class="n">config_file</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">embedder_model</span> <span class="o">=</span> <span class="n">embedder_cls</span><span class="p">(</span><span class="n">vocab_size</span><span class="p">,</span> <span class="n">num_labels</span><span class="p">)</span>
+
+    <span class="c1"># load external word embeddings if present</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">embedding_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">emb_dict</span> <span class="o">=</span> <span class="n">load_embedding_file</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">embedding_file</span><span class="p">)</span>
+        <span class="n">emb_mat</span> <span class="o">=</span> <span class="n">get_embedding_matrix</span><span class="p">(</span><span class="n">emb_dict</span><span class="p">,</span> <span class="n">vocab</span><span class="p">)</span>
+        <span class="n">emb_mat</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">emb_mat</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float</span><span class="p">)</span>
+        <span class="n">embedder_model</span><span class="o">.</span><span class="n">load_embeddings</span><span class="p">(</span><span class="n">emb_mat</span><span class="p">)</span>
+
+    <span class="n">classifier</span> <span class="o">=</span> <span class="n">NeuralTagger</span><span class="p">(</span><span class="n">embedder_model</span><span class="p">,</span>
+                              <span class="n">word_vocab</span><span class="o">=</span><span class="n">vocab</span><span class="p">,</span>
+                              <span class="n">labels</span><span class="o">=</span><span class="n">processor</span><span class="o">.</span><span class="n">get_labels</span><span class="p">(),</span>
+                              <span class="n">use_crf</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">use_crf</span><span class="p">,</span>
+                              <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span> <span class="n">n_gpus</span><span class="o">=</span><span class="n">n_gpus</span><span class="p">)</span>
+
+    <span class="n">train_batch_size</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">b</span> <span class="o">*</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_gpus</span><span class="p">)</span>
+    <span class="n">train_batch_size_ul</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">b_ul</span> <span class="o">*</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_gpus</span><span class="p">)</span>
+    <span class="n">train_labeled_dataset</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">convert_to_tensors</span><span class="p">(</span>
+        <span class="n">train_labeled_ex</span><span class="p">,</span> <span class="n">max_seq_length</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">max_sentence_length</span><span class="p">,</span>
+        <span class="n">max_word_length</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">max_word_length</span><span class="p">)</span>
+    <span class="n">train_unlabeled_dataset</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">convert_to_tensors</span><span class="p">(</span>
+        <span class="n">train_unlabeled_ex</span><span class="p">,</span> <span class="n">max_seq_length</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">max_sentence_length</span><span class="p">,</span>
+        <span class="n">max_word_length</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">max_word_length</span><span class="p">,</span> <span class="n">include_labels</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">teacher</span> <span class="o">=</span> <span class="n">TransformerTokenClassifier</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span>
+        <span class="n">model_path</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">teacher_model_path</span><span class="p">,</span>
+        <span class="n">model_type</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">teacher_model_type</span><span class="p">)</span>
+    <span class="n">teacher</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">n_gpus</span><span class="p">)</span>
+    <span class="n">teacher_labeled_dataset</span> <span class="o">=</span> <span class="n">teacher</span><span class="o">.</span><span class="n">convert_to_tensors</span><span class="p">(</span>
+        <span class="n">train_labeled_ex</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">max_sentence_length</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+    <span class="n">teacher_unlabeled_dataset</span> <span class="o">=</span> <span class="n">teacher</span><span class="o">.</span><span class="n">convert_to_tensors</span><span class="p">(</span>
+        <span class="n">train_unlabeled_ex</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">max_sentence_length</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+    <span class="n">train_labeled_dataset</span> <span class="o">=</span> <span class="n">ParallelDataset</span><span class="p">(</span><span class="n">train_labeled_dataset</span><span class="p">,</span> <span class="n">teacher_labeled_dataset</span><span class="p">)</span>
+    <span class="n">train_unlabeled_dataset</span> <span class="o">=</span> <span class="n">ParallelDataset</span><span class="p">(</span><span class="n">train_unlabeled_dataset</span><span class="p">,</span> <span class="n">teacher_unlabeled_dataset</span><span class="p">)</span>
+    <span class="n">train_labeled_sampler</span> <span class="o">=</span> <span class="n">RandomSampler</span><span class="p">(</span><span class="n">train_labeled_dataset</span><span class="p">)</span>
+    <span class="n">train_unlabeled_sampler</span> <span class="o">=</span> <span class="n">RandomSampler</span><span class="p">(</span><span class="n">train_unlabeled_dataset</span><span class="p">)</span>
+    <span class="n">train_labeled_dl</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span>
+        <span class="n">train_labeled_dataset</span><span class="p">,</span> <span class="n">sampler</span><span class="o">=</span><span class="n">train_labeled_sampler</span><span class="p">,</span>
+        <span class="n">batch_size</span><span class="o">=</span><span class="n">train_batch_size</span><span class="p">)</span>
+    <span class="n">train_unlabeled_dl</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span>
+        <span class="n">train_unlabeled_dataset</span><span class="p">,</span> <span class="n">sampler</span><span class="o">=</span><span class="n">train_unlabeled_sampler</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">train_batch_size_ul</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">dev_ex</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">dev_dataset</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">convert_to_tensors</span><span class="p">(</span><span class="n">dev_ex</span><span class="p">,</span>
+                                                    <span class="n">max_seq_length</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">max_sentence_length</span><span class="p">,</span>
+                                                    <span class="n">max_word_length</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">max_word_length</span><span class="p">)</span>
+        <span class="n">dev_sampler</span> <span class="o">=</span> <span class="n">SequentialSampler</span><span class="p">(</span><span class="n">dev_dataset</span><span class="p">)</span>
+        <span class="n">dev_dl</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">dev_dataset</span><span class="p">,</span> <span class="n">sampler</span><span class="o">=</span><span class="n">dev_sampler</span><span class="p">,</span>
+                            <span class="n">batch_size</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">b</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">test_ex</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">test_dataset</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">convert_to_tensors</span><span class="p">(</span><span class="n">test_ex</span><span class="p">,</span>
+                                                     <span class="n">max_seq_length</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">max_sentence_length</span><span class="p">,</span>
+                                                     <span class="n">max_word_length</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">max_word_length</span><span class="p">)</span>
+        <span class="n">test_sampler</span> <span class="o">=</span> <span class="n">SequentialSampler</span><span class="p">(</span><span class="n">test_dataset</span><span class="p">)</span>
+        <span class="n">test_dl</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">test_dataset</span><span class="p">,</span> <span class="n">sampler</span><span class="o">=</span><span class="n">test_sampler</span><span class="p">,</span>
+                             <span class="n">batch_size</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">b</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">lr</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">opt</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">get_optimizer</span><span class="p">(</span><span class="n">lr</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">lr</span><span class="p">)</span>
+
+    <span class="n">distiller</span> <span class="o">=</span> <span class="n">TeacherStudentDistill</span><span class="p">(</span><span class="n">teacher</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">kd_temp</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">kd_dist_w</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">kd_student_w</span><span class="p">,</span>
+                                      <span class="n">args</span><span class="o">.</span><span class="n">kd_loss_fn</span><span class="p">)</span>
+    <span class="n">classifier</span><span class="o">.</span><span class="n">train_pseudo</span><span class="p">(</span>
+        <span class="n">train_labeled_dl</span><span class="p">,</span> <span class="n">train_unlabeled_dl</span><span class="p">,</span> <span class="n">distiller</span><span class="p">,</span> <span class="n">dev_dl</span><span class="p">,</span> <span class="n">test_dl</span><span class="p">,</span> <span class="n">batch_size_l</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">b</span><span class="p">,</span>
+        <span class="n">batch_size_ul</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">b_ul</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">e</span><span class="p">,</span> <span class="n">logging_steps</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">logging_steps</span><span class="p">,</span>
+        <span class="n">save_steps</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">save_steps</span><span class="p">,</span> <span class="n">save_path</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">output_dir</span><span class="p">,</span>
+        <span class="n">optimizer</span><span class="o">=</span><span class="n">opt</span> <span class="k">if</span> <span class="n">opt</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">classifier</span><span class="o">.</span><span class="n">save_model</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">output_dir</span><span class="p">)</span></div>
+
+
 <div class="viewcode-block" id="do_inference"><a class="viewcode-back" href="../../../generated_api/nlp_architect.procedures.html#nlp_architect.procedures.token_tagging.do_inference">[docs]</a><span class="k">def</span> <span class="nf">do_inference</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
     <span class="n">prepare_output_path</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">overwrite_output_dir</span><span class="p">)</span>
     <span class="n">device</span><span class="p">,</span> <span class="n">n_gpus</span> <span class="o">=</span> <span class="n">setup_backend</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">no_cuda</span><span class="p">)</span>
-    <span class="n">args</span><span class="o">.</span><span class="n">batch_size</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">per_gpu_eval_batch_size</span> <span class="o">*</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_gpus</span><span class="p">)</span>
+    <span class="n">args</span><span class="o">.</span><span class="n">batch_size</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">b</span> <span class="o">*</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_gpus</span><span class="p">)</span>
     <span class="n">inference_examples</span> <span class="o">=</span> <span class="n">process_inference_input</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">data_file</span><span class="p">)</span>
     <span class="n">classifier</span> <span class="o">=</span> <span class="n">NeuralTagger</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="n">model_path</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">model_dir</span><span class="p">)</span>
     <span class="n">classifier</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">n_gpus</span><span class="p">)</span>

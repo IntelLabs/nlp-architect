@@ -59,7 +59,7 @@ Training a model on GLUE tasks, using BERT-base uncased base model:
 
 .. code-block:: bash
 
-    nlp_architect train transformer_glue \
+    nlp-train transformer_glue \
         --task_name <task name> \
         --model_name_or_path bert-base-uncased \
         --model_type bert \
@@ -72,7 +72,7 @@ Running a model:
 
 .. code-block:: bash
 
-    nlp_architect run transformer_glue \
+    nlp-inference run transformer_glue \
         --model_path <path to model> \
         --task_name <task_name> \
         --model_type bert \

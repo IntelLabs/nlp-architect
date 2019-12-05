@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.models.np2vec &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
+  <title>nlp_architect.models.np2vec &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
   
 
   
@@ -116,7 +116,6 @@
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developer_guide.html">Developer Guide</a></li>
 </ul>
 
@@ -203,13 +202,13 @@
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 
-<span class="kn">from</span> <span class="nn">gensim.models</span> <span class="k">import</span> <span class="n">FastText</span><span class="p">,</span> <span class="n">Word2Vec</span><span class="p">,</span> <span class="n">KeyedVectors</span>
-<span class="kn">from</span> <span class="nn">gensim.models.word2vec</span> <span class="k">import</span> <span class="n">LineSentence</span>
-<span class="kn">from</span> <span class="nn">gensim</span> <span class="k">import</span> <span class="n">utils</span>
+<span class="kn">from</span> <span class="nn">gensim.models</span> <span class="kn">import</span> <span class="n">FastText</span><span class="p">,</span> <span class="n">Word2Vec</span><span class="p">,</span> <span class="n">KeyedVectors</span>
+<span class="kn">from</span> <span class="nn">gensim.models.word2vec</span> <span class="kn">import</span> <span class="n">LineSentence</span>
+<span class="kn">from</span> <span class="nn">gensim</span> <span class="kn">import</span> <span class="n">utils</span>
 <span class="kn">import</span> <span class="nn">nltk</span>
-<span class="kn">from</span> <span class="nn">nltk.corpus</span> <span class="k">import</span> <span class="n">conll2000</span>
-<span class="kn">from</span> <span class="nn">six</span> <span class="k">import</span> <span class="n">iteritems</span>
-<span class="kn">from</span> <span class="nn">smart_open</span> <span class="k">import</span> <span class="nb">open</span> <span class="k">as</span> <span class="n">smart_open</span>
+<span class="kn">from</span> <span class="nn">nltk.corpus</span> <span class="kn">import</span> <span class="n">conll2000</span>
+<span class="kn">from</span> <span class="nn">six</span> <span class="kn">import</span> <span class="n">iteritems</span>
+<span class="kn">from</span> <span class="nn">smart_open</span> <span class="kn">import</span> <span class="nb">open</span> <span class="k">as</span> <span class="n">smart_open</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
@@ -232,7 +231,7 @@
     <span class="c1"># pylint: disable-msg=too-many-arguments</span>
     <span class="c1"># pylint: disable-msg=too-many-locals</span>
     <span class="c1"># pylint: disable-msg=too-many-branches</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span>  <span class="c1"># noqa: C901</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>  <span class="c1"># noqa: C901</span>
             <span class="bp">self</span><span class="p">,</span>
             <span class="n">corpus</span><span class="p">,</span>
             <span class="n">corpus_format</span><span class="o">=</span><span class="s1">&#39;txt&#39;</span><span class="p">,</span>

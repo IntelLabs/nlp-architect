@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.models.absa.inference.inference &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
+  <title>nlp_architect.models.absa.inference.inference &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
   
 
   
@@ -116,7 +116,6 @@
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../developer_guide.html">Developer Guide</a></li>
 </ul>
 
@@ -199,15 +198,15 @@
 <span class="c1"># limitations under the License.</span>
 <span class="c1"># ******************************************************************************</span>
 <span class="kn">import</span> <span class="nn">math</span>
-<span class="kn">from</span> <span class="nn">os</span> <span class="k">import</span> <span class="n">PathLike</span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="k">import</span> <span class="n">Path</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">PathLike</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
 
-<span class="kn">from</span> <span class="nn">nlp_architect.common.core_nlp_doc</span> <span class="k">import</span> <span class="n">CoreNLPDoc</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.models.absa</span> <span class="k">import</span> <span class="n">INFERENCE_OUT</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.models.absa.inference.data_types</span> <span class="k">import</span> <span class="n">Term</span><span class="p">,</span> <span class="n">TermType</span><span class="p">,</span> <span class="n">Polarity</span><span class="p">,</span> <span class="n">SentimentDoc</span><span class="p">,</span>\
+<span class="kn">from</span> <span class="nn">nlp_architect.common.core_nlp_doc</span> <span class="kn">import</span> <span class="n">CoreNLPDoc</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.models.absa</span> <span class="kn">import</span> <span class="n">INFERENCE_OUT</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.models.absa.inference.data_types</span> <span class="kn">import</span> <span class="n">Term</span><span class="p">,</span> <span class="n">TermType</span><span class="p">,</span> <span class="n">Polarity</span><span class="p">,</span> <span class="n">SentimentDoc</span><span class="p">,</span>\
     <span class="n">SentimentSentence</span><span class="p">,</span> <span class="n">LexiconElement</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.models.absa.utils</span> <span class="k">import</span> <span class="n">_read_lexicon_from_csv</span><span class="p">,</span> <span class="n">load_opinion_lex</span><span class="p">,</span> \
+<span class="kn">from</span> <span class="nn">nlp_architect.models.absa.utils</span> <span class="kn">import</span> <span class="n">_read_lexicon_from_csv</span><span class="p">,</span> <span class="n">load_opinion_lex</span><span class="p">,</span> \
     <span class="n">_load_aspect_lexicon</span>
 
 <span class="n">INTENSIFIER_FACTOR</span> <span class="o">=</span> <span class="mf">0.3</span>
@@ -224,7 +223,7 @@
 <span class="sd">        negation_lex (dict): Pre-defined negation lexicon.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">aspect_lex</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">PathLike</span><span class="p">],</span> <span class="n">opinion_lex</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">PathLike</span><span class="p">,</span> <span class="nb">dict</span><span class="p">],</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">aspect_lex</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">PathLike</span><span class="p">],</span> <span class="n">opinion_lex</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">PathLike</span><span class="p">,</span> <span class="nb">dict</span><span class="p">],</span>
                  <span class="n">parse</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Inits SentimentInference with given aspect and opinion lexicons.&quot;&quot;&quot;</span>
         <span class="n">INFERENCE_OUT</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -235,7 +234,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">negation_lex</span> <span class="o">=</span> <span class="n">_read_lexicon_from_csv</span><span class="p">(</span><span class="s1">&#39;NegationSentLex.csv&#39;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">parse</span><span class="p">:</span>
-            <span class="kn">from</span> <span class="nn">nlp_architect.pipelines.spacy_bist</span> <span class="k">import</span> <span class="n">SpacyBISTParser</span>
+            <span class="kn">from</span> <span class="nn">nlp_architect.pipelines.spacy_bist</span> <span class="kn">import</span> <span class="n">SpacyBISTParser</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">parser</span> <span class="o">=</span> <span class="n">SpacyBISTParser</span><span class="p">(</span><span class="n">spacy_model</span><span class="o">=</span><span class="s1">&#39;en&#39;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">parser</span> <span class="o">=</span> <span class="kc">None</span>

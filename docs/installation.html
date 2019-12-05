@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Installation &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
+  <title>Installation &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
   
 
   
@@ -131,7 +131,6 @@
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="developer_guide.html">Developer Guide</a></li>
 </ul>
 
@@ -200,7 +199,8 @@
 <div class="section" id="requirements">
 <h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
 <p>The NLP Architect requires <strong>Python 3.6+</strong> running on a
-Linux* or UNIX-based OS (like Mac OS). We recommend using the library with Ubuntu 16.04+.</p>
+Linux* or UNIX-based OS (like Mac OS). We recommend using the library with Ubuntu 16.04+.
+We recommand installing basic OS compilers and python development packages.</p>
 <p>Before installing the library make sure you has the most recent packages listed below:</p>
 <table border="1" class="colwidths-given docutils">
 <colgroup>
@@ -219,18 +219,22 @@ Linux* or UNIX-based OS (like Mac OS). We recommend using the library with Ubunt
 <td>pip</td>
 <td>Tool to install Python dependencies</td>
 </tr>
-<tr class="row-odd"><td>libhdf5-dev</td>
+<tr class="row-odd"><td>python-dev</td>
+<td>python-dev</td>
+<td>Python development dependencies</td>
+</tr>
+<tr class="row-even"><td>libhdf5-dev</td>
 <td>h5py</td>
 <td>Enables loading of hdf5 formats</td>
 </tr>
-<tr class="row-even"><td>pkg-config</td>
+<tr class="row-odd"><td>pkg-config</td>
 <td>pkg-config</td>
 <td>Retrieves information about installed libraries</td>
 </tr>
 </tbody>
 </table>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
 <p class="last">The installation of NLP Architect will install CPU-based binaries of all deep learning frameworks.
 For specific installation of backends of Tensorflow or PyTorch (CPU/MKL/GPU) we recommend installing NLP Architect and then installing the desired backend DL framework.</p>
 </div>
@@ -243,8 +247,8 @@ For specific installation of backends of Tensorflow or PyTorch (CPU/MKL/GPU) we 
 <p>We recommend installing NLP Architect in a virtual environment to self-contain
 the work done using the library.</p>
 <p>To create and activate a new virtual environment (or skip this step and use the wizard below):</p>
-<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span><span class="o">.</span><span class="mi">6</span> <span class="o">-</span><span class="n">m</span> <span class="n">venv</span> <span class="o">.</span><span class="n">nlp_architect_env</span>
-<span class="n">source</span> <span class="o">.</span><span class="n">nlp_architect_env</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span><span class="o">.</span><span class="mi">6</span> <span class="o">-</span><span class="n">m</span> <span class="n">venv</span> <span class="o">&lt;</span><span class="n">my_new_env</span><span class="o">&gt;</span>
+<span class="n">source</span> <span class="o">&lt;</span><span class="n">my_new_env</span><span class="o">&gt;/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
 </pre></div>
 </div>
 </div>

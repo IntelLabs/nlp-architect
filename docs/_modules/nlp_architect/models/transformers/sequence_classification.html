@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.models.transformers.sequence_classification &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
+  <title>nlp_architect.models.transformers.sequence_classification &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
   
 
   
@@ -116,7 +116,6 @@
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../developer_guide.html">Developer Guide</a></li>
 </ul>
 
@@ -201,20 +200,22 @@
 
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">from</span> <span class="nn">pytorch_transformers</span> <span class="k">import</span> <span class="p">(</span><span class="n">BertForSequenceClassification</span><span class="p">,</span>
-                                  <span class="n">XLMForSequenceClassification</span><span class="p">,</span>
-                                  <span class="n">XLNetForSequenceClassification</span><span class="p">)</span>
-<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="k">import</span> <span class="n">DataLoader</span><span class="p">,</span> <span class="n">SequentialSampler</span><span class="p">,</span> <span class="n">TensorDataset</span>
+<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span><span class="p">,</span> <span class="n">SequentialSampler</span><span class="p">,</span> <span class="n">TensorDataset</span>
+<span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="p">(</span><span class="n">BertForSequenceClassification</span><span class="p">,</span>
+                          <span class="n">RobertaForSequenceClassification</span><span class="p">,</span>
+                          <span class="n">XLMForSequenceClassification</span><span class="p">,</span>
+                          <span class="n">XLNetForSequenceClassification</span><span class="p">)</span>
 
-<span class="kn">from</span> <span class="nn">nlp_architect.data.sequence_classification</span> <span class="k">import</span> <span class="n">SequenceClsInputExample</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.models.transformers.base_model</span> <span class="k">import</span> <span class="p">(</span><span class="n">InputFeatures</span><span class="p">,</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.data.sequence_classification</span> <span class="kn">import</span> <span class="n">SequenceClsInputExample</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.models.transformers.base_model</span> <span class="kn">import</span> <span class="p">(</span><span class="n">InputFeatures</span><span class="p">,</span>
                                                           <span class="n">TransformerBase</span><span class="p">)</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.models.transformers.quantized_bert</span> <span class="k">import</span> <span class="n">QuantizedBertForSequenceClassification</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.utils.metrics</span> <span class="k">import</span> <span class="n">accuracy</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.models.transformers.quantized_bert</span> <span class="kn">import</span> \
+    <span class="n">QuantizedBertForSequenceClassification</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.utils.metrics</span> <span class="kn">import</span> <span class="n">accuracy</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
@@ -235,11 +236,12 @@
         <span class="s1">&#39;bert&#39;</span><span class="p">:</span> <span class="n">BertForSequenceClassification</span><span class="p">,</span>
         <span class="s1">&#39;quant_bert&#39;</span><span class="p">:</span> <span class="n">QuantizedBertForSequenceClassification</span><span class="p">,</span>
         <span class="s1">&#39;xlnet&#39;</span><span class="p">:</span> <span class="n">XLNetForSequenceClassification</span><span class="p">,</span>
-        <span class="s1">&#39;xlm&#39;</span><span class="p">:</span> <span class="n">XLMForSequenceClassification</span>
+        <span class="s1">&#39;xlm&#39;</span><span class="p">:</span> <span class="n">XLMForSequenceClassification</span><span class="p">,</span>
+        <span class="s1">&#39;roberta&#39;</span><span class="p">:</span> <span class="n">RobertaForSequenceClassification</span>
     <span class="p">}</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">labels</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                 <span class="n">task_type</span><span class="o">=</span><span class="s2">&quot;classification&quot;</span><span class="p">,</span> <span class="n">metric_fn</span><span class="o">=</span><span class="n">accuracy</span><span class="p">,</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">labels</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">task_type</span><span class="o">=</span><span class="s2">&quot;classification&quot;</span><span class="p">,</span> <span class="n">metric_fn</span><span class="o">=</span><span class="n">accuracy</span><span class="p">,</span> <span class="n">load_quantized</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                  <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">assert</span> <span class="n">model_type</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">MODEL_CLASS</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="s2">&quot;unsupported model type&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">labels</span> <span class="o">=</span> <span class="n">labels</span>
@@ -249,8 +251,12 @@
                                                             <span class="n">num_labels</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_labels</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span>
                                                             <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model_class</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">MODEL_CLASS</span><span class="p">[</span><span class="n">model_type</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_class</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_name_or_path</span><span class="p">,</span> <span class="n">from_tf</span><span class="o">=</span><span class="nb">bool</span><span class="p">(</span>
-            <span class="s1">&#39;.ckpt&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_name_or_path</span><span class="p">),</span> <span class="n">config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">model_type</span> <span class="o">==</span> <span class="s1">&#39;quant_bert&#39;</span> <span class="ow">and</span> <span class="n">load_quantized</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_class</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_name_or_path</span><span class="p">,</span> <span class="n">from_tf</span><span class="o">=</span><span class="nb">bool</span><span class="p">(</span>
+                <span class="s1">&#39;.ckpt&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_name_or_path</span><span class="p">),</span> <span class="n">config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">,</span> <span class="n">from_8bit</span><span class="o">=</span><span class="n">load_quantized</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_class</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_name_or_path</span><span class="p">,</span> <span class="n">from_tf</span><span class="o">=</span><span class="nb">bool</span><span class="p">(</span>
+                <span class="s1">&#39;.ckpt&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_name_or_path</span><span class="p">),</span> <span class="n">config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">task_type</span> <span class="o">=</span> <span class="n">task_type</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">metric_fn</span> <span class="o">=</span> <span class="n">metric_fn</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_gpus</span><span class="p">)</span>
@@ -312,7 +318,7 @@
         <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
             <span class="n">output_eval_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">devnull</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">output_eval_file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">writer</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;***** Eval results *****&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;***** Evaluation results *****&quot;</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
                 <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;  </span><span class="si">%s</span><span class="s2"> = </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="n">key</span><span class="p">]))</span>
                 <span class="n">writer</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> = </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="n">key</span><span class="p">])))</span></div>
@@ -332,22 +338,12 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            TensorDataset:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_convert_examples_to_features</span><span class="p">(</span><span class="n">examples</span><span class="p">,</span>
-                                                      <span class="n">max_seq_length</span><span class="p">,</span>
-                                                      <span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span><span class="p">,</span>
-                                                      <span class="bp">self</span><span class="o">.</span><span class="n">task_type</span><span class="p">,</span>
-                                                      <span class="n">include_labels</span><span class="p">,</span>
-                                                      <span class="n">cls_token_at_end</span><span class="o">=</span><span class="nb">bool</span><span class="p">(</span>
-                                                          <span class="bp">self</span><span class="o">.</span><span class="n">model_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;xlnet&#39;</span><span class="p">]),</span>
-                                                      <span class="n">cls_token</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">cls_token</span><span class="p">,</span>
-                                                      <span class="n">sep_token</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">sep_token</span><span class="p">,</span>
-                                                      <span class="n">cls_token_segment_id</span><span class="o">=</span><span class="mi">2</span> <span class="k">if</span>
-                                                      <span class="bp">self</span><span class="o">.</span><span class="n">model_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;xlnet&#39;</span><span class="p">]</span> <span class="k">else</span> <span class="mi">1</span><span class="p">,</span>
-                                                      <span class="c1"># pad on the left for xlnet</span>
-                                                      <span class="n">pad_on_left</span><span class="o">=</span><span class="nb">bool</span><span class="p">(</span>
-                                                          <span class="bp">self</span><span class="o">.</span><span class="n">model_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;xlnet&#39;</span><span class="p">]),</span>
-                                                      <span class="n">pad_token_segment_id</span><span class="o">=</span><span class="mi">4</span>
-                                                      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;xlnet&#39;</span><span class="p">]</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_convert_examples_to_features</span><span class="p">(</span>
+            <span class="n">examples</span><span class="p">,</span> <span class="n">max_seq_length</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">task_type</span><span class="p">,</span> <span class="n">include_labels</span><span class="p">,</span> <span class="n">pad_on_left</span><span class="o">=</span><span class="nb">bool</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">model_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;xlnet&#39;</span><span class="p">]),</span> <span class="n">pad_token</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">convert_tokens_to_ids</span><span class="p">(</span>
+                    <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">pad_token</span><span class="p">])[</span><span class="mi">0</span><span class="p">],</span> <span class="n">pad_token_segment_id</span><span class="o">=</span><span class="mi">4</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_type</span> <span class="ow">in</span> <span class="p">[</span>
+                        <span class="s1">&#39;xlnet&#39;</span><span class="p">]</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
         <span class="c1"># Convert to Tensors and build dataset</span>
         <span class="n">all_input_ids</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="n">f</span><span class="o">.</span><span class="n">input_ids</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">features</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">)</span>
         <span class="n">all_input_mask</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="n">f</span><span class="o">.</span><span class="n">input_mask</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">features</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">)</span>
@@ -360,7 +356,7 @@
             <span class="k">return</span> <span class="n">TensorDataset</span><span class="p">(</span><span class="n">all_input_ids</span><span class="p">,</span> <span class="n">all_input_mask</span><span class="p">,</span> <span class="n">all_segment_ids</span><span class="p">,</span> <span class="n">all_label_ids</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">TensorDataset</span><span class="p">(</span><span class="n">all_input_ids</span><span class="p">,</span> <span class="n">all_input_mask</span><span class="p">,</span> <span class="n">all_segment_ids</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="TransformerSequenceClassifier.inference"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.transformers.html#nlp_architect.models.transformers.sequence_classification.TransformerSequenceClassifier.inference">[docs]</a>    <span class="k">def</span> <span class="nf">inference</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">examples</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">SequenceClsInputExample</span><span class="p">],</span> <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">64</span><span class="p">,</span> <span class="n">evaluate</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="TransformerSequenceClassifier.inference"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.transformers.html#nlp_architect.models.transformers.sequence_classification.TransformerSequenceClassifier.inference">[docs]</a>    <span class="k">def</span> <span class="nf">inference</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">examples</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">SequenceClsInputExample</span><span class="p">],</span> <span class="n">max_seq_length</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">64</span><span class="p">,</span> <span class="n">evaluate</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Run inference on given examples</span>
 
@@ -371,7 +367,8 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            logits</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">data_set</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">convert_to_tensors</span><span class="p">(</span><span class="n">examples</span><span class="p">,</span> <span class="n">include_labels</span><span class="o">=</span><span class="n">evaluate</span><span class="p">)</span>
+        <span class="n">data_set</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">convert_to_tensors</span><span class="p">(</span>
+            <span class="n">examples</span><span class="p">,</span> <span class="n">max_seq_length</span><span class="o">=</span><span class="n">max_seq_length</span><span class="p">,</span> <span class="n">include_labels</span><span class="o">=</span><span class="n">evaluate</span><span class="p">)</span>
         <span class="n">inf_sampler</span> <span class="o">=</span> <span class="n">SequentialSampler</span><span class="p">(</span><span class="n">data_set</span><span class="p">)</span>
         <span class="n">inf_dataloader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">data_set</span><span class="p">,</span> <span class="n">sampler</span><span class="o">=</span><span class="n">inf_sampler</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">)</span>
         <span class="n">logits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_evaluate</span><span class="p">(</span><span class="n">inf_dataloader</span><span class="p">)</span>
@@ -391,12 +388,15 @@
             <span class="n">preds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">preds</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">preds</span>
 
-    <span class="k">def</span> <span class="nf">_convert_examples_to_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">examples</span><span class="p">,</span> <span class="n">max_seq_length</span><span class="p">,</span>
-                                      <span class="n">tokenizer</span><span class="p">,</span> <span class="n">task_type</span><span class="p">,</span> <span class="n">include_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                                      <span class="n">cls_token_at_end</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">pad_on_left</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                                      <span class="n">cls_token</span><span class="o">=</span><span class="s1">&#39;[CLS]&#39;</span><span class="p">,</span> <span class="n">sep_token</span><span class="o">=</span><span class="s1">&#39;[SEP]&#39;</span><span class="p">,</span> <span class="n">pad_token</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-                                      <span class="n">sequence_a_segment_id</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sequence_b_segment_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-                                      <span class="n">cls_token_segment_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">pad_token_segment_id</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="k">def</span> <span class="nf">_convert_examples_to_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                                      <span class="n">examples</span><span class="p">,</span>
+                                      <span class="n">max_seq_length</span><span class="p">,</span>
+                                      <span class="n">tokenizer</span><span class="p">,</span>
+                                      <span class="n">task_type</span><span class="p">,</span>
+                                      <span class="n">include_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                      <span class="n">pad_on_left</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                      <span class="n">pad_token</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                                      <span class="n">pad_token_segment_id</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
                                       <span class="n">mask_padding_with_zero</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Loads a data file into a list of `InputBatch`s</span>
 <span class="sd">            `cls_token_at_end` define the location of the CLS token:</span>
@@ -412,74 +412,33 @@
         <span class="n">features</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="p">(</span><span class="n">ex_index</span><span class="p">,</span> <span class="n">example</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">examples</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">ex_index</span> <span class="o">%</span> <span class="mi">10000</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Writing example </span><span class="si">%d</span><span class="s2"> of </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">ex_index</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">examples</span><span class="p">)))</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Writing example </span><span class="si">%d</span><span class="s2"> of </span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">ex_index</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">examples</span><span class="p">))</span>
 
-            <span class="n">tokens_a</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">example</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+            <span class="n">inputs</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">encode_plus</span><span class="p">(</span>
+                <span class="n">example</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+                <span class="n">example</span><span class="o">.</span><span class="n">text_b</span><span class="p">,</span>
+                <span class="n">add_special_tokens</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">max_length</span><span class="o">=</span><span class="n">max_seq_length</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">input_ids</span><span class="p">,</span> <span class="n">token_type_ids</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">[</span><span class="s2">&quot;input_ids&quot;</span><span class="p">],</span> <span class="n">inputs</span><span class="p">[</span><span class="s2">&quot;token_type_ids&quot;</span><span class="p">]</span>
 
-            <span class="n">tokens_b</span> <span class="o">=</span> <span class="kc">None</span>
-            <span class="k">if</span> <span class="n">example</span><span class="o">.</span><span class="n">text_b</span><span class="p">:</span>
-                <span class="n">tokens_b</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">example</span><span class="o">.</span><span class="n">text_b</span><span class="p">)</span>
-                <span class="c1"># Modifies `tokens_a` and `tokens_b` in place so that the total</span>
-                <span class="c1"># length is less than the specified length.</span>
-                <span class="c1"># Account for [CLS], [SEP], [SEP] with &quot;- 3&quot;</span>
-                <span class="n">_truncate_seq_pair</span><span class="p">(</span><span class="n">tokens_a</span><span class="p">,</span> <span class="n">tokens_b</span><span class="p">,</span> <span class="n">max_seq_length</span> <span class="o">-</span> <span class="mi">3</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="c1"># Account for [CLS] and [SEP] with &quot;- 2&quot;</span>
-                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokens_a</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">max_seq_length</span> <span class="o">-</span> <span class="mi">2</span><span class="p">:</span>
-                    <span class="n">tokens_a</span> <span class="o">=</span> <span class="n">tokens_a</span><span class="p">[:(</span><span class="n">max_seq_length</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)]</span>
+            <span class="n">attention_mask</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span> <span class="k">if</span> <span class="n">mask_padding_with_zero</span> <span class="k">else</span> <span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">input_ids</span><span class="p">)</span>
 
-            <span class="c1"># The convention in BERT is:</span>
-            <span class="c1"># (a) For sequence pairs:</span>
-            <span class="c1">#  tokens:   [CLS] is this jack ##son ##ville ? [SEP] no it is not . [SEP]</span>
-            <span class="c1">#  type_ids:   0   0  0    0    0     0       0   0   1  1  1  1   1   1</span>
-            <span class="c1"># (b) For single sequences:</span>
-            <span class="c1">#  tokens:   [CLS] the dog is hairy . [SEP]</span>
-            <span class="c1">#  type_ids:   0   0   0   0  0     0   0</span>
-            <span class="c1">#</span>
-            <span class="c1"># Where &quot;type_ids&quot; are used to indicate whether this is the first</span>
-            <span class="c1"># sequence or the second sequence. The embedding vectors for `type=0` and</span>
-            <span class="c1"># `type=1` were learned during pre-training and are added to the wordpiece</span>
-            <span class="c1"># embedding vector (and position vector). This is not *strictly* necessary</span>
-            <span class="c1"># since the [SEP] token unambiguously separates the sequences, but it makes</span>
-            <span class="c1"># it easier for the model to learn the concept of sequences.</span>
-            <span class="c1">#</span>
-            <span class="c1"># For classification tasks, the first vector (corresponding to [CLS]) is</span>
-            <span class="c1"># used as as the &quot;sentence vector&quot;. Note that this only makes sense because</span>
-            <span class="c1"># the entire model is fine-tuned.</span>
-            <span class="n">tokens</span> <span class="o">=</span> <span class="n">tokens_a</span> <span class="o">+</span> <span class="p">[</span><span class="n">sep_token</span><span class="p">]</span>
-            <span class="n">segment_ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">sequence_a_segment_id</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
-
-            <span class="k">if</span> <span class="n">tokens_b</span><span class="p">:</span>
-                <span class="n">tokens</span> <span class="o">+=</span> <span class="n">tokens_b</span> <span class="o">+</span> <span class="p">[</span><span class="n">sep_token</span><span class="p">]</span>
-                <span class="n">segment_ids</span> <span class="o">+=</span> <span class="p">[</span><span class="n">sequence_b_segment_id</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">tokens_b</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-
-            <span class="k">if</span> <span class="n">cls_token_at_end</span><span class="p">:</span>
-                <span class="n">tokens</span> <span class="o">=</span> <span class="n">tokens</span> <span class="o">+</span> <span class="p">[</span><span class="n">cls_token</span><span class="p">]</span>
-                <span class="n">segment_ids</span> <span class="o">=</span> <span class="n">segment_ids</span> <span class="o">+</span> <span class="p">[</span><span class="n">cls_token_segment_id</span><span class="p">]</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">tokens</span> <span class="o">=</span> <span class="p">[</span><span class="n">cls_token</span><span class="p">]</span> <span class="o">+</span> <span class="n">tokens</span>
-                <span class="n">segment_ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">cls_token_segment_id</span><span class="p">]</span> <span class="o">+</span> <span class="n">segment_ids</span>
-
-            <span class="n">input_ids</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">convert_tokens_to_ids</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
-
-            <span class="c1"># The mask has 1 for real tokens and 0 for padding tokens. Only real</span>
-            <span class="c1"># tokens are attended to.</span>
-            <span class="n">input_mask</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span> <span class="k">if</span> <span class="n">mask_padding_with_zero</span> <span class="k">else</span> <span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">input_ids</span><span class="p">)</span>
-
-            <span class="c1"># Zero-pad up to the sequence length.</span>
             <span class="n">padding_length</span> <span class="o">=</span> <span class="n">max_seq_length</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">input_ids</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">pad_on_left</span><span class="p">:</span>
                 <span class="n">input_ids</span> <span class="o">=</span> <span class="p">([</span><span class="n">pad_token</span><span class="p">]</span> <span class="o">*</span> <span class="n">padding_length</span><span class="p">)</span> <span class="o">+</span> <span class="n">input_ids</span>
-                <span class="n">input_mask</span> <span class="o">=</span> <span class="p">([</span><span class="mi">0</span> <span class="k">if</span> <span class="n">mask_padding_with_zero</span> <span class="k">else</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">padding_length</span><span class="p">)</span> <span class="o">+</span> <span class="n">input_mask</span>
-                <span class="n">segment_ids</span> <span class="o">=</span> <span class="p">([</span><span class="n">pad_token_segment_id</span><span class="p">]</span> <span class="o">*</span> <span class="n">padding_length</span><span class="p">)</span> <span class="o">+</span> <span class="n">segment_ids</span>
+                <span class="n">attention_mask</span> <span class="o">=</span> <span class="p">([</span><span class="mi">0</span> <span class="k">if</span> <span class="n">mask_padding_with_zero</span> <span class="k">else</span> <span class="mi">1</span><span class="p">]</span>
+                                  <span class="o">*</span> <span class="n">padding_length</span><span class="p">)</span> <span class="o">+</span> <span class="n">attention_mask</span>
+                <span class="n">token_type_ids</span> <span class="o">=</span> <span class="p">([</span><span class="n">pad_token_segment_id</span><span class="p">]</span> <span class="o">*</span> <span class="n">padding_length</span><span class="p">)</span> <span class="o">+</span> <span class="n">token_type_ids</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">input_ids</span> <span class="o">=</span> <span class="n">input_ids</span> <span class="o">+</span> <span class="p">([</span><span class="n">pad_token</span><span class="p">]</span> <span class="o">*</span> <span class="n">padding_length</span><span class="p">)</span>
-                <span class="n">input_mask</span> <span class="o">=</span> <span class="n">input_mask</span> <span class="o">+</span> <span class="p">([</span><span class="mi">0</span> <span class="k">if</span> <span class="n">mask_padding_with_zero</span> <span class="k">else</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">padding_length</span><span class="p">)</span>
-                <span class="n">segment_ids</span> <span class="o">=</span> <span class="n">segment_ids</span> <span class="o">+</span> <span class="p">([</span><span class="n">pad_token_segment_id</span><span class="p">]</span> <span class="o">*</span> <span class="n">padding_length</span><span class="p">)</span>
+                <span class="n">attention_mask</span> <span class="o">=</span> <span class="n">attention_mask</span> <span class="o">+</span> \
+                    <span class="p">([</span><span class="mi">0</span> <span class="k">if</span> <span class="n">mask_padding_with_zero</span> <span class="k">else</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">padding_length</span><span class="p">)</span>
+                <span class="n">token_type_ids</span> <span class="o">=</span> <span class="n">token_type_ids</span> <span class="o">+</span> <span class="p">([</span><span class="n">pad_token_segment_id</span><span class="p">]</span> <span class="o">*</span> <span class="n">padding_length</span><span class="p">)</span>
 
             <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">input_ids</span><span class="p">)</span> <span class="o">==</span> <span class="n">max_seq_length</span>
-            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">input_mask</span><span class="p">)</span> <span class="o">==</span> <span class="n">max_seq_length</span>
-            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">segment_ids</span><span class="p">)</span> <span class="o">==</span> <span class="n">max_seq_length</span>
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">attention_mask</span><span class="p">)</span> <span class="o">==</span> <span class="n">max_seq_length</span>
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">token_type_ids</span><span class="p">)</span> <span class="o">==</span> <span class="n">max_seq_length</span>
 
             <span class="k">if</span> <span class="n">include_labels</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">task_type</span> <span class="o">==</span> <span class="s2">&quot;classification&quot;</span><span class="p">:</span>
@@ -492,26 +451,10 @@
                 <span class="n">label_id</span> <span class="o">=</span> <span class="kc">None</span>
 
             <span class="n">features</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">InputFeatures</span><span class="p">(</span><span class="n">input_ids</span><span class="o">=</span><span class="n">input_ids</span><span class="p">,</span>
-                                          <span class="n">input_mask</span><span class="o">=</span><span class="n">input_mask</span><span class="p">,</span>
-                                          <span class="n">segment_ids</span><span class="o">=</span><span class="n">segment_ids</span><span class="p">,</span>
+                                          <span class="n">input_mask</span><span class="o">=</span><span class="n">attention_mask</span><span class="p">,</span>
+                                          <span class="n">segment_ids</span><span class="o">=</span><span class="n">token_type_ids</span><span class="p">,</span>
                                           <span class="n">label_id</span><span class="o">=</span><span class="n">label_id</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">features</span></div>
-
-
-<span class="k">def</span> <span class="nf">_truncate_seq_pair</span><span class="p">(</span><span class="n">tokens_a</span><span class="p">,</span> <span class="n">tokens_b</span><span class="p">,</span> <span class="n">max_length</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Truncates a sequence pair in place to the maximum length.&quot;&quot;&quot;</span>
-    <span class="c1"># This is a simple heuristic which will always truncate the longer sequence</span>
-    <span class="c1"># one token at a time. This makes more sense than truncating an equal percent</span>
-    <span class="c1"># of tokens from each, since if one sequence is very short then each token</span>
-    <span class="c1"># that&#39;s truncated likely contains more information than a longer sequence.</span>
-    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="n">total_length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokens_a</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokens_b</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">total_length</span> <span class="o">&lt;=</span> <span class="n">max_length</span><span class="p">:</span>
-            <span class="k">break</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokens_a</span><span class="p">)</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokens_b</span><span class="p">):</span>
-            <span class="n">tokens_a</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">tokens_b</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
 </pre></div>
 
            </div>

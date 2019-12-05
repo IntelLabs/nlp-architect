@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.models.transformers.base_model &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
+  <title>nlp_architect.models.transformers.base_model &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
   
 
   
@@ -116,7 +116,6 @@
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../developer_guide.html">Developer Guide</a></li>
 </ul>
 
@@ -201,18 +200,22 @@
 <span class="kn">import</span> <span class="nn">io</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">from</span> <span class="nn">pytorch_transformers</span> <span class="k">import</span> <span class="n">XLNetConfig</span><span class="p">,</span> <span class="n">XLMConfig</span><span class="p">,</span> <span class="n">BertTokenizer</span><span class="p">,</span> <span class="n">BertConfig</span><span class="p">,</span> \
-    <span class="n">XLNetTokenizer</span><span class="p">,</span> <span class="n">XLMTokenizer</span><span class="p">,</span> <span class="n">AdamW</span><span class="p">,</span> <span class="n">WarmupLinearSchedule</span>
-<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="k">import</span> <span class="n">DataLoader</span>
-<span class="kn">from</span> <span class="nn">tqdm</span> <span class="k">import</span> <span class="n">trange</span><span class="p">,</span> <span class="n">tqdm</span>
+<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span><span class="p">,</span> <span class="n">trange</span>
+<span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="p">(</span><span class="n">AdamW</span><span class="p">,</span> <span class="n">BertConfig</span><span class="p">,</span> <span class="n">BertTokenizer</span><span class="p">,</span> <span class="n">RobertaConfig</span><span class="p">,</span>
+                          <span class="n">RobertaTokenizer</span><span class="p">,</span> <span class="n">XLMConfig</span><span class="p">,</span> <span class="n">XLMTokenizer</span><span class="p">,</span>
+                          <span class="n">XLNetConfig</span><span class="p">,</span> <span class="n">XLNetTokenizer</span><span class="p">,</span>
+                          <span class="n">get_linear_schedule_with_warmup</span><span class="p">)</span>
 
-<span class="kn">from</span> <span class="nn">nlp_architect.models</span> <span class="k">import</span> <span class="n">TrainableModel</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.models.transformers.quantized_bert</span> <span class="k">import</span> <span class="n">QuantizedBertConfig</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.models</span> <span class="kn">import</span> <span class="n">TrainableModel</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.models.transformers.quantized_bert</span> <span class="kn">import</span> \
+    <span class="n">QuantizedBertConfig</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
 
 <span class="n">ALL_MODELS</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">((</span><span class="nb">tuple</span><span class="p">(</span><span class="n">conf</span><span class="o">.</span><span class="n">pretrained_config_archive_map</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
                   <span class="k">for</span> <span class="n">conf</span> <span class="ow">in</span> <span class="p">(</span><span class="n">BertConfig</span><span class="p">,</span> <span class="n">XLNetConfig</span><span class="p">,</span> <span class="n">XLMConfig</span><span class="p">)),</span> <span class="p">())</span>
@@ -233,9 +236,10 @@
         <span class="s1">&#39;quant_bert&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">QuantizedBertConfig</span><span class="p">,</span> <span class="n">BertTokenizer</span><span class="p">),</span>
         <span class="s1">&#39;xlnet&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">XLNetConfig</span><span class="p">,</span> <span class="n">XLNetTokenizer</span><span class="p">),</span>
         <span class="s1">&#39;xlm&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">XLMConfig</span><span class="p">,</span> <span class="n">XLMTokenizer</span><span class="p">),</span>
+        <span class="s1">&#39;roberta&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">RobertaConfig</span><span class="p">,</span> <span class="n">RobertaTokenizer</span><span class="p">)</span>
     <span class="p">}</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">model_name_or_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">labels</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">model_name_or_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">labels</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                  <span class="n">num_labels</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">config_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">tokenizer_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">do_lower_case</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">output_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">device</span><span class="o">=</span><span class="s1">&#39;cpu&#39;</span><span class="p">,</span> <span class="n">n_gpus</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
@@ -323,8 +327,9 @@
                 <span class="n">nd</span> <span class="ow">in</span> <span class="n">n</span> <span class="k">for</span> <span class="n">nd</span> <span class="ow">in</span> <span class="n">no_decay</span><span class="p">)],</span> <span class="s1">&#39;weight_decay&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">}</span>
         <span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span> <span class="o">=</span> <span class="n">AdamW</span><span class="p">(</span><span class="n">optimizer_grouped_parameters</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="n">learning_rate</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="n">adam_epsilon</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">scheduler</span> <span class="o">=</span> <span class="n">WarmupLinearSchedule</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span><span class="p">,</span> <span class="n">warmup_steps</span><span class="o">=</span><span class="n">warmup_steps</span><span class="p">,</span>
-                                              <span class="n">t_total</span><span class="o">=</span><span class="n">total_steps</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scheduler</span> <span class="o">=</span> <span class="n">get_linear_schedule_with_warmup</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span><span class="p">,</span>
+                                                         <span class="n">num_warmup_steps</span><span class="o">=</span><span class="n">warmup_steps</span><span class="p">,</span>
+                                                         <span class="n">num_training_steps</span><span class="o">=</span><span class="n">total_steps</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">_load_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config_class</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="n">config_name</span> <span class="k">if</span> <span class="n">config_name</span>
@@ -380,7 +385,8 @@
             <span class="k">raise</span> <span class="ne">FileNotFoundError</span>
         <span class="k">with</span> <span class="n">io</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">model_path</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="o">+</span> <span class="s1">&#39;labels.txt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
             <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">l</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">fp</span><span class="o">.</span><span class="n">readlines</span><span class="p">()]</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">model_type</span><span class="o">=</span><span class="n">model_type</span><span class="p">,</span> <span class="n">model_name_or_path</span><span class="o">=</span><span class="n">model_path</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="n">model_type</span><span class="o">=</span><span class="n">model_type</span><span class="p">,</span> <span class="n">model_name_or_path</span><span class="o">=</span><span class="n">model_path</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TransformerBase.get_train_steps_epochs"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.transformers.html#nlp_architect.models.transformers.base_model.TransformerBase.get_train_steps_epochs">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">get_train_steps_epochs</span><span class="p">(</span><span class="n">max_steps</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
@@ -568,7 +574,7 @@
 <div class="viewcode-block" id="InputFeatures"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.transformers.html#nlp_architect.models.transformers.base_model.InputFeatures">[docs]</a><span class="k">class</span> <span class="nc">InputFeatures</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A single set of features of data.&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_ids</span><span class="p">,</span> <span class="n">input_mask</span><span class="p">,</span> <span class="n">segment_ids</span><span class="p">,</span> <span class="n">label_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">valid_ids</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_ids</span><span class="p">,</span> <span class="n">input_mask</span><span class="p">,</span> <span class="n">segment_ids</span><span class="p">,</span> <span class="n">label_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">valid_ids</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">input_ids</span> <span class="o">=</span> <span class="n">input_ids</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">input_mask</span> <span class="o">=</span> <span class="n">input_mask</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">segment_ids</span> <span class="o">=</span> <span class="n">segment_ids</span>

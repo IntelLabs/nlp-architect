@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.solutions.trend_analysis.trend_analysis &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
+  <title>nlp_architect.solutions.trend_analysis.trend_analysis &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
   
 
   
@@ -116,7 +116,6 @@
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../developer_guide.html">Developer Guide</a></li>
 </ul>
 
@@ -202,21 +201,20 @@
 <span class="kn">import</span> <span class="nn">operator</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">from</span> <span class="nn">os</span> <span class="k">import</span> <span class="n">path</span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="k">import</span> <span class="n">Path</span>
-<span class="kn">from</span> <span class="nn">shutil</span> <span class="k">import</span> <span class="n">copyfile</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">path</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">shutil</span> <span class="kn">import</span> <span class="n">copyfile</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">sklearn.manifold</span> <span class="k">import</span> <span class="n">TSNE</span>
+<span class="kn">from</span> <span class="nn">sklearn.manifold</span> <span class="kn">import</span> <span class="n">TSNE</span>
 
-<span class="kn">from</span> <span class="nn">nlp_architect</span> <span class="k">import</span> <span class="n">LIBRARY_OUT</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.utils.embedding</span> <span class="k">import</span> <span class="n">FasttextEmbeddingsModel</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.utils.io</span> <span class="k">import</span> <span class="n">check_size</span><span class="p">,</span> <span class="n">validate_existing_filepath</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.utils.text</span> <span class="k">import</span> <span class="n">simple_normalizer</span>
+<span class="kn">from</span> <span class="nn">nlp_architect</span> <span class="kn">import</span> <span class="n">LIBRARY_OUT</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.utils.embedding</span> <span class="kn">import</span> <span class="n">FasttextEmbeddingsModel</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.utils.io</span> <span class="kn">import</span> <span class="n">check_size</span><span class="p">,</span> <span class="n">validate_existing_filepath</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.utils.text</span> <span class="kn">import</span> <span class="n">simple_normalizer</span>
 
 <span class="nb">dir</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">LIBRARY_OUT</span> <span class="o">/</span> <span class="s1">&#39;trend-analysis-data&#39;</span><span class="p">)</span>
-<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">stream</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 <span class="n">target_topics_path</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">dir</span><span class="p">,</span> <span class="s1">&#39;target_topics.csv&#39;</span><span class="p">)</span>
 <span class="n">ref_topics_path</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">dir</span><span class="p">,</span> <span class="s1">&#39;ref_topics.csv&#39;</span><span class="p">)</span>
@@ -257,22 +255,21 @@
         <span class="n">calc_scores</span><span class="p">(</span><span class="n">target_data</span><span class="p">,</span> <span class="n">tfidf_w</span><span class="p">,</span> <span class="n">cval_w</span><span class="p">,</span> <span class="n">lm_w</span><span class="p">,</span> <span class="n">target_scores_path</span><span class="p">)</span>
         <span class="n">calc_scores</span><span class="p">(</span><span class="n">ref_data</span><span class="p">,</span> <span class="n">tfidf_w</span><span class="p">,</span> <span class="n">cval_w</span><span class="p">,</span> <span class="n">lm_w</span><span class="p">,</span> <span class="n">ref_scores_path</span><span class="p">)</span>
         <span class="c1"># unify all topics:</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">ref_data</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">ref_data</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="n">topics1</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">f</span><span class="p">)</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">target_data</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">target_data</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="n">topics2</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">f</span><span class="p">)</span>
         <span class="n">sum_topics</span> <span class="o">=</span> <span class="n">topics1</span> <span class="o">+</span> <span class="n">topics2</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;sum of all topics= </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">sum_topics</span><span class="p">))</span>
         <span class="n">merge_phrases</span><span class="p">(</span><span class="n">ref_scores_path</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">hash2group</span><span class="p">,</span> <span class="n">rep2rank</span><span class="p">,</span> <span class="n">top_n</span><span class="p">,</span> <span class="n">sum_topics</span><span class="p">)</span>
         <span class="n">merge_phrases</span><span class="p">(</span><span class="n">target_scores_path</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="n">hash2group</span><span class="p">,</span> <span class="n">rep2rank</span><span class="p">,</span> <span class="n">top_n</span><span class="p">,</span> <span class="n">sum_topics</span><span class="p">)</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Total number of evaluated topics: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rep2rank</span><span class="p">)))</span>
-
+        <span class="n">all_topics_sorted</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">rep2rank</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">rep2rank</span><span class="o">.</span><span class="n">get</span><span class="p">)</span>
+        <span class="n">top_n_scatter</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span>
+            <span class="n">all_topics_sorted</span><span class="p">)</span> <span class="k">if</span> <span class="n">top_n_vectors</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">top_n_vectors</span>
         <span class="c1"># compute 2D space clusters if model exists:</span>
         <span class="n">w2v_loc</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">dir</span><span class="p">,</span> <span class="s1">&#39;W2V_Models/model.bin&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">w2v_loc</span><span class="p">):</span>
-            <span class="n">all_topics_sorted</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">rep2rank</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">rep2rank</span><span class="o">.</span><span class="n">get</span><span class="p">)</span>
-            <span class="n">top_n_scatter</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span>
-                <span class="n">all_topics_sorted</span><span class="p">)</span> <span class="k">if</span> <span class="n">top_n_vectors</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">top_n_vectors</span>
             <span class="n">scatter_group</span> <span class="o">=</span> <span class="n">all_topics_sorted</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">top_n_scatter</span><span class="p">]</span>
             <span class="n">np_scat</span><span class="p">,</span> <span class="n">x_scat</span><span class="p">,</span> <span class="n">y_scat</span><span class="p">,</span> <span class="n">in_model_count</span> <span class="o">=</span>\
                 <span class="n">compute_scatter_subwords</span><span class="p">(</span><span class="n">scatter_group</span><span class="p">,</span> <span class="n">w2v_loc</span><span class="p">)</span>
@@ -394,7 +391,6 @@
                         <span class="n">weights</span><span class="p">)</span> <span class="k">else</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,)</span>
                     <span class="n">new_row</span> <span class="o">+=</span> <span class="p">(</span><span class="n">in_model_count</span><span class="p">,</span> <span class="n">top_n_scatter</span><span class="p">)</span> <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,)</span>
                     <span class="n">data_writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">new_row</span><span class="p">)</span>
-
                     <span class="n">filter_row</span> <span class="o">=</span> <span class="p">(</span><span class="n">all_topics_sorted</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
                     <span class="n">filter_writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">filter_row</span><span class="p">)</span>
                 <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
@@ -468,7 +464,7 @@
     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;calculating scores for file: </span><span class="si">%s</span><span class="s2"> with: tfidf_w=</span><span class="si">%s</span><span class="s2">, cval_w=</span><span class="si">%s</span><span class="s2">,&quot;</span>
                 <span class="s2">&quot; freq_w=</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">scores_file</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">tfidf_w</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">cval_w</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">lm_w</span><span class="p">))</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">scores_file</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">csv_file</span><span class="p">:</span>
-        <span class="n">lines</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">csv_file</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">((</span><span class="n">x</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\0</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">csv_file</span><span class="p">),</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
         <span class="n">final_list</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">group</span><span class="p">,</span> <span class="n">tfidf</span><span class="p">,</span> <span class="n">cval</span><span class="p">,</span> <span class="n">freq</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
             <span class="n">score</span> <span class="o">=</span> <span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">tfidf</span><span class="p">)</span> <span class="o">*</span> <span class="n">tfidf_w</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">cval</span><span class="p">)</span> <span class="o">*</span> <span class="n">cval_w</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">freq</span><span class="p">)</span> <span class="o">*</span> <span class="n">lm_w</span><span class="p">)</span>

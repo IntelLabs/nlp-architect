@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.procedures.transformers.base &mdash; NLP Architect by Intel® AI Lab 0.5 documentation</title>
+  <title>nlp_architect.procedures.transformers.base &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
   
 
   
@@ -116,7 +116,6 @@
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../developer_guide.html">Developer Guide</a></li>
 </ul>
 
@@ -197,11 +196,8 @@
 <span class="c1"># limitations under the License.</span>
 <span class="c1"># ******************************************************************************</span>
 <span class="kn">import</span> <span class="nn">argparse</span>
-<span class="kn">import</span> <span class="nn">logging</span>
 
-<span class="kn">from</span> <span class="nn">nlp_architect.models.transformers.base_model</span> <span class="k">import</span> <span class="n">get_models</span>
-
-<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.models.transformers.base_model</span> <span class="kn">import</span> <span class="n">get_models</span>
 
 
 <div class="viewcode-block" id="create_base_args"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.procedures.transformers.html#nlp_architect.procedures.transformers.base.create_base_args">[docs]</a><span class="k">def</span> <span class="nf">create_base_args</span><span class="p">(</span><span class="n">parser</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">,</span> <span class="n">model_types</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -244,7 +240,11 @@
     <span class="sd">&quot;&quot;&quot; Add inference specific arguments for Transoformer based models</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--model_path&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Path to pre-trained model&quot;</span><span class="p">)</span></div>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Path to pre-trained model&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--load_quantized_model&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Load and perform Inference from saved quantized model,</span><span class="se">\</span>
+<span class="s2">                        &#39;quant_pytorch_model.bin&#39; file must exist in directory and model</span><span class="se">\</span>
+<span class="s2">                             type must be &#39;quant_&lt;model&gt;&#39;&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="train_args"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.procedures.transformers.html#nlp_architect.procedures.transformers.base.train_args">[docs]</a><span class="k">def</span> <span class="nf">train_args</span><span class="p">(</span><span class="n">parser</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">,</span> <span class="n">models_family</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>

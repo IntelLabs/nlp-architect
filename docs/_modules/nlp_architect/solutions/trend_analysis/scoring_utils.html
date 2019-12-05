@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.solutions.trend_analysis.scoring_utils &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
+  <title>nlp_architect.solutions.trend_analysis.scoring_utils &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
   
 
   
@@ -116,7 +116,6 @@
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../developer_guide.html">Developer Guide</a></li>
 </ul>
 
@@ -201,10 +200,10 @@
 <span class="kn">import</span> <span class="nn">math</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">spacy.tokens.doc</span> <span class="k">import</span> <span class="n">Doc</span>
-<span class="kn">from</span> <span class="nn">spacy.tokens.span</span> <span class="k">import</span> <span class="n">Span</span>
-<span class="kn">from</span> <span class="nn">spacy.tokens.token</span> <span class="k">import</span> <span class="n">Token</span>
-<span class="kn">from</span> <span class="nn">wordfreq</span> <span class="k">import</span> <span class="n">zipf_frequency</span>
+<span class="kn">from</span> <span class="nn">spacy.tokens.doc</span> <span class="kn">import</span> <span class="n">Doc</span>
+<span class="kn">from</span> <span class="nn">spacy.tokens.span</span> <span class="kn">import</span> <span class="n">Span</span>
+<span class="kn">from</span> <span class="nn">spacy.tokens.token</span> <span class="kn">import</span> <span class="n">Token</span>
+<span class="kn">from</span> <span class="nn">wordfreq</span> <span class="kn">import</span> <span class="n">zipf_frequency</span>
 
 
 <div class="viewcode-block" id="TextSpanScoring"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.solutions.trend_analysis.html#nlp_architect.solutions.trend_analysis.scoring_utils.TextSpanScoring">[docs]</a><span class="k">class</span> <span class="nc">TextSpanScoring</span><span class="p">:</span>
@@ -219,7 +218,7 @@
 <span class="sd">            document.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">documents</span><span class="p">,</span> <span class="n">spans</span><span class="p">,</span> <span class="n">min_tf</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">documents</span><span class="p">,</span> <span class="n">spans</span><span class="p">,</span> <span class="n">min_tf</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
         <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">documents</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">spans</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_documents</span> <span class="o">=</span> <span class="n">documents</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_doc_text_spans</span> <span class="o">=</span> <span class="n">spans</span>
@@ -388,7 +387,7 @@
 <span class="sd">    spans are mapped to the same TF DF values.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">documents</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">spans</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">documents</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">spans</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">df_index</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># span to DF</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tf_index</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># span, doc to TF</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pid_to_spans</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># id to spans (normalized types)</span>

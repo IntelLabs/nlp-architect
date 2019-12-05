@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.data.cdc_resources.wikipedia.wiki_offline &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
+  <title>nlp_architect.data.cdc_resources.wikipedia.wiki_offline &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
   
 
   
@@ -116,7 +116,6 @@
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../developer_guide.html">Developer Guide</a></li>
 </ul>
 
@@ -198,21 +197,21 @@
 <span class="c1"># ******************************************************************************</span>
 
 <span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">from</span> <span class="nn">os</span> <span class="k">import</span> <span class="n">listdir</span>
-<span class="kn">from</span> <span class="nn">os.path</span> <span class="k">import</span> <span class="n">join</span><span class="p">,</span> <span class="n">isfile</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">listdir</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">join</span><span class="p">,</span> <span class="n">isfile</span>
 
-<span class="kn">from</span> <span class="nn">nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_page</span> <span class="k">import</span> <span class="n">WikipediaPage</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_page_extracted_relations</span> <span class="k">import</span> \
+<span class="kn">from</span> <span class="nn">nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_page</span> <span class="kn">import</span> <span class="n">WikipediaPage</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_page_extracted_relations</span> <span class="kn">import</span> \
     <span class="n">WikipediaPageExtractedRelations</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.data.cdc_resources.wikipedia.wiki_search_page_result</span> <span class="k">import</span> \
+<span class="kn">from</span> <span class="nn">nlp_architect.data.cdc_resources.wikipedia.wiki_search_page_result</span> <span class="kn">import</span> \
     <span class="n">WikipediaSearchPageResult</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.utils.io</span> <span class="k">import</span> <span class="n">load_json_file</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.utils.io</span> <span class="kn">import</span> <span class="n">load_json_file</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="WikiOffline"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.wikipedia.html#nlp_architect.data.cdc_resources.wikipedia.wiki_offline.WikiOffline">[docs]</a><span class="k">class</span> <span class="nc">WikiOffline</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wikidump</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wikidump</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">wikidump</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">dump</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_dump</span><span class="p">(</span><span class="n">wikidump</span><span class="p">)</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Wikipedia dump loaded successfully!&#39;</span><span class="p">)</span>
@@ -286,11 +285,11 @@
 <div class="viewcode-block" id="WikiOffline.NoPage"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.wikipedia.html#nlp_architect.data.cdc_resources.wikipedia.wiki_offline.WikiOffline.NoPage">[docs]</a>    <span class="k">class</span> <span class="nc">NoPage</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Attribute not found. &quot;&quot;&quot;</span>
 
-        <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>  <span class="c1"># real signature unknown</span>
+        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>  <span class="c1"># real signature unknown</span>
             <span class="k">pass</span>
 
         <span class="nd">@staticmethod</span>  <span class="c1"># known case of __new__</span>
-        <span class="k">def</span> <span class="nf">__new__</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="o">*</span><span class="n">more</span><span class="p">):</span>  <span class="c1"># real signature unknown; restored from __doc__</span>
+        <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="o">*</span><span class="n">more</span><span class="p">):</span>  <span class="c1"># real signature unknown; restored from __doc__</span>
             <span class="sd">&quot;&quot;&quot; T.__new__(S, ...) -&gt; a new object with type S, a subtype of T &quot;&quot;&quot;</span></div></div>
 </pre></div>
 

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.models.tagging &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
+  <title>nlp_architect.models.tagging &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
   
 
   
@@ -116,7 +116,6 @@
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developer_guide.html">Developer Guide</a></li>
 </ul>
 
@@ -202,21 +201,21 @@
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">pickle</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">List</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
 
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">import</span> <span class="nn">torch.optim</span> <span class="k">as</span> <span class="nn">optim</span>
-<span class="kn">from</span> <span class="nn">torch.nn</span> <span class="k">import</span> <span class="n">CrossEntropyLoss</span>
-<span class="kn">from</span> <span class="nn">torch.nn</span> <span class="k">import</span> <span class="n">functional</span> <span class="k">as</span> <span class="n">F</span>
-<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="k">import</span> <span class="n">DataLoader</span><span class="p">,</span> <span class="n">SequentialSampler</span><span class="p">,</span> <span class="n">TensorDataset</span>
-<span class="kn">from</span> <span class="nn">tqdm</span> <span class="k">import</span> <span class="n">tqdm</span><span class="p">,</span> <span class="n">trange</span>
+<span class="kn">from</span> <span class="nn">torch.nn</span> <span class="kn">import</span> <span class="n">CrossEntropyLoss</span>
+<span class="kn">from</span> <span class="nn">torch.nn</span> <span class="kn">import</span> <span class="n">functional</span> <span class="k">as</span> <span class="n">F</span>
+<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span><span class="p">,</span> <span class="n">SequentialSampler</span><span class="p">,</span> <span class="n">TensorDataset</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span><span class="p">,</span> <span class="n">trange</span>
 
-<span class="kn">from</span> <span class="nn">nlp_architect.data.sequential_tagging</span> <span class="k">import</span> <span class="n">TokenClsInputExample</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.models</span> <span class="k">import</span> <span class="n">TrainableModel</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.nn.torch.layers</span> <span class="k">import</span> <span class="n">CRF</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.nn.torch.distillation</span> <span class="k">import</span> <span class="n">TeacherStudentDistill</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.utils.metrics</span> <span class="k">import</span> <span class="n">tagging</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.utils.text</span> <span class="k">import</span> <span class="n">Vocabulary</span><span class="p">,</span> <span class="n">char_to_id</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.data.sequential_tagging</span> <span class="kn">import</span> <span class="n">TokenClsInputExample</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.models</span> <span class="kn">import</span> <span class="n">TrainableModel</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.nn.torch.layers</span> <span class="kn">import</span> <span class="n">CRF</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.nn.torch.distillation</span> <span class="kn">import</span> <span class="n">TeacherStudentDistill</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.utils.metrics</span> <span class="kn">import</span> <span class="n">tagging</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.utils.text</span> <span class="kn">import</span> <span class="n">Vocabulary</span><span class="p">,</span> <span class="n">char_to_id</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
@@ -235,7 +234,7 @@
 <span class="sd">        n_gpus (int, optional): number of gpus. Default to 0.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">embedder_model</span><span class="p">,</span> <span class="n">word_vocab</span><span class="p">:</span> <span class="n">Vocabulary</span><span class="p">,</span> <span class="n">labels</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">embedder_model</span><span class="p">,</span> <span class="n">word_vocab</span><span class="p">:</span> <span class="n">Vocabulary</span><span class="p">,</span> <span class="n">labels</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                  <span class="n">use_crf</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">device</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;cpu&#39;</span><span class="p">,</span> <span class="n">n_gpus</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">NeuralTagger</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">embedder_model</span>
@@ -406,11 +405,12 @@
         <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">epoch_it</span><span class="p">:</span>
             <span class="n">step_it</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">train_data_set</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Train iteration&quot;</span><span class="p">)</span>
             <span class="n">avg_loss</span> <span class="o">=</span> <span class="mi">0</span>
-            <span class="k">for</span> <span class="n">s_idx</span><span class="p">,</span> <span class="n">batch</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">step_it</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">step</span><span class="p">,</span> <span class="n">batch</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">step_it</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
                 <span class="k">if</span> <span class="n">distiller</span><span class="p">:</span>
                     <span class="n">batch</span><span class="p">,</span> <span class="n">t_batch</span> <span class="o">=</span> <span class="n">batch</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
                     <span class="n">t_batch</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">t_batch</span><span class="p">)</span>
+                    <span class="n">t_logits</span> <span class="o">=</span> <span class="n">distiller</span><span class="o">.</span><span class="n">get_teacher_logits</span><span class="p">(</span><span class="n">t_batch</span><span class="p">)</span>
                 <span class="n">batch</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">batch</span><span class="p">)</span>
                 <span class="n">inputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">batch_mapper</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
                 <span class="n">logits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="o">**</span><span class="n">inputs</span><span class="p">)</span>
@@ -424,7 +424,6 @@
 
                 <span class="c1"># add distillation loss if activated</span>
                 <span class="k">if</span> <span class="n">distiller</span><span class="p">:</span>
-                    <span class="n">t_logits</span> <span class="o">=</span> <span class="n">distiller</span><span class="o">.</span><span class="n">get_teacher_logits</span><span class="p">(</span><span class="n">t_batch</span><span class="p">)</span>
                     <span class="n">loss</span> <span class="o">=</span> <span class="n">distiller</span><span class="o">.</span><span class="n">distill_loss</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">logits</span><span class="p">,</span> <span class="n">t_logits</span><span class="p">)</span>
 
                 <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
@@ -436,17 +435,157 @@
                 <span class="n">global_step</span> <span class="o">+=</span> <span class="mi">1</span>
                 <span class="n">avg_loss</span> <span class="o">+=</span> <span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
                 <span class="k">if</span> <span class="n">global_step</span> <span class="o">%</span> <span class="n">logging_steps</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot; global_step = </span><span class="si">%s</span><span class="s2">, average loss = </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">global_step</span><span class="p">,</span> <span class="n">avg_loss</span> <span class="o">/</span> <span class="n">s_idx</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">step</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                            <span class="s2">&quot; global_step = </span><span class="si">%s</span><span class="s2">, average loss = </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">global_step</span><span class="p">,</span> <span class="n">avg_loss</span> <span class="o">/</span> <span class="n">step</span><span class="p">)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_get_eval</span><span class="p">(</span><span class="n">dev_data_set</span><span class="p">,</span> <span class="s2">&quot;dev&quot;</span><span class="p">)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_get_eval</span><span class="p">(</span><span class="n">test_data_set</span><span class="p">,</span> <span class="s2">&quot;test&quot;</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">save_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">global_step</span> <span class="o">%</span> <span class="n">save_steps</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">save_model</span><span class="p">(</span><span class="n">save_path</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="NeuralTagger.train_pseudo"><a class="viewcode-back" href="../../../generated_api/nlp_architect.models.html#nlp_architect.models.tagging.NeuralTagger.train_pseudo">[docs]</a>    <span class="k">def</span> <span class="nf">train_pseudo</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">labeled_data_set</span><span class="p">:</span> <span class="n">DataLoader</span><span class="p">,</span>
+            <span class="n">unlabeled_data_set</span><span class="p">:</span> <span class="n">DataLoader</span><span class="p">,</span>
+            <span class="n">distiller</span><span class="p">:</span> <span class="n">TeacherStudentDistill</span><span class="p">,</span>
+            <span class="n">dev_data_set</span><span class="p">:</span> <span class="n">DataLoader</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">test_data_set</span><span class="p">:</span> <span class="n">DataLoader</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">batch_size_l</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">8</span><span class="p">,</span>
+            <span class="n">batch_size_ul</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">8</span><span class="p">,</span>
+            <span class="n">epochs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+            <span class="n">optimizer</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">max_grad_norm</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">5.0</span><span class="p">,</span>
+            <span class="n">logging_steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
+            <span class="n">save_steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+            <span class="n">save_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">save_best</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Train a tagging model</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            train_data_set (DataLoader): train examples dataloader. If distiller object is</span>
+<span class="sd">            provided train examples should contain a tuple of student/teacher data examples.</span>
+<span class="sd">            dev_data_set (DataLoader, optional): dev examples dataloader. Defaults to None.</span>
+<span class="sd">            test_data_set (DataLoader, optional): test examples dataloader. Defaults to None.</span>
+<span class="sd">            batch_size_l (int, optional): batch size for the labeled dataset. Defaults to 8.</span>
+<span class="sd">            batch_size_ul (int, optional): batch size for the unlabeled dataset. Defaults to 8.</span>
+<span class="sd">            epochs (int, optional): num of epochs to train. Defaults to 100.</span>
+<span class="sd">            optimizer (fn, optional): optimizer function. Defaults to default model optimizer.</span>
+<span class="sd">            max_grad_norm (float, optional): max gradient norm. Defaults to 5.0.</span>
+<span class="sd">            logging_steps (int, optional): number of steps between logging. Defaults to 50.</span>
+<span class="sd">            save_steps (int, optional): number of steps between model saves. Defaults to 100.</span>
+<span class="sd">            save_path (str, optional): model output path. Defaults to None.</span>
+<span class="sd">            save_best (str, optional): wether to save model when result is best on dev set</span>
+<span class="sd">            distiller (TeacherStudentDistill, optional): KD model for training the model using</span>
+<span class="sd">            a teacher model. Defaults to None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">optimizer</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">optimizer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_optimizer</span><span class="p">()</span>
+        <span class="n">train_batch_size_l</span> <span class="o">=</span> <span class="n">batch_size_l</span> <span class="o">*</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_gpus</span><span class="p">)</span>
+        <span class="n">train_batch_size_ul</span> <span class="o">=</span> <span class="n">batch_size_ul</span> <span class="o">*</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_gpus</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;***** Running training *****&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;  Num labeled examples = </span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">labeled_data_set</span><span class="o">.</span><span class="n">dataset</span><span class="p">))</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;  Num unlabeled examples = </span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">unlabeled_data_set</span><span class="o">.</span><span class="n">dataset</span><span class="p">))</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;  Instantaneous labeled batch size per GPU/CPU = </span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">,</span>
+                    <span class="n">batch_size_l</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;  Instantaneous unlabeled batch size per GPU/CPU = </span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">,</span>
+                    <span class="n">batch_size_ul</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;  Total batch size labeled= </span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">train_batch_size_l</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;  Total batch size unlabeled= </span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">train_batch_size_ul</span><span class="p">)</span>
+        <span class="n">global_step</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+        <span class="n">avg_loss</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">iter_l</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">labeled_data_set</span><span class="p">)</span>
+        <span class="n">iter_ul</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">unlabeled_data_set</span><span class="p">)</span>
+        <span class="n">epoch_l</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">epoch_ul</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">s_idx</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="n">best_dev</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">best_test</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span><span class="p">(</span><span class="kc">True</span><span class="p">):</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;labeled epoch=</span><span class="si">%d</span><span class="s2">, unlabeled epoch=</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">epoch_l</span><span class="p">,</span> <span class="n">epoch_ul</span><span class="p">)</span>
+            <span class="n">loss_labeled</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">loss_unlabeled</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">batch_l</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">iter_l</span><span class="p">)</span>
+                <span class="n">s_idx</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>
+                <span class="n">iter_l</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">labeled_data_set</span><span class="p">)</span>
+                <span class="n">epoch_l</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">batch_l</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">iter_l</span><span class="p">)</span>
+                <span class="n">s_idx</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">avg_loss</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">batch_ul</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">iter_ul</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>
+                <span class="n">iter_ul</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">unlabeled_data_set</span><span class="p">)</span>
+                <span class="n">epoch_ul</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">batch_ul</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">iter_ul</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">epoch_ul</span> <span class="o">&gt;</span> <span class="n">epochs</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Done&quot;</span><span class="p">)</span>
+                <span class="k">return</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+            <span class="n">batch_l</span><span class="p">,</span> <span class="n">t_batch_l</span> <span class="o">=</span> <span class="n">batch_l</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
+            <span class="n">batch_ul</span><span class="p">,</span> <span class="n">t_batch_ul</span> <span class="o">=</span> <span class="n">batch_ul</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
+            <span class="n">t_batch_l</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">t_batch_l</span><span class="p">)</span>
+            <span class="n">t_batch_ul</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">t_batch_ul</span><span class="p">)</span>
+            <span class="n">t_logits</span> <span class="o">=</span> <span class="n">distiller</span><span class="o">.</span><span class="n">get_teacher_logits</span><span class="p">(</span><span class="n">t_batch_l</span><span class="p">)</span>
+            <span class="n">t_logits_ul</span> <span class="o">=</span> <span class="n">distiller</span><span class="o">.</span><span class="n">get_teacher_logits</span><span class="p">(</span><span class="n">t_batch_ul</span><span class="p">)</span>
+            <span class="n">batch_l</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">batch_l</span><span class="p">)</span>
+            <span class="n">batch_ul</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">batch_ul</span><span class="p">)</span>
+            <span class="n">inputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">batch_mapper</span><span class="p">(</span><span class="n">batch_l</span><span class="p">)</span>
+            <span class="n">inputs_ul</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">batch_mapper</span><span class="p">(</span><span class="n">batch_ul</span><span class="p">)</span>
+            <span class="n">logits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="o">**</span><span class="n">inputs</span><span class="p">)</span>
+            <span class="n">logits_ul</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="o">**</span><span class="n">inputs_ul</span><span class="p">)</span>
+            <span class="n">t_labels</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">log_softmax</span><span class="p">(</span><span class="n">t_logits_ul</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">dim</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_crf</span><span class="p">:</span>
+                <span class="n">loss_labeled</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">crf</span><span class="p">(</span>
+                    <span class="n">logits</span><span class="p">,</span> <span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;labels&#39;</span><span class="p">],</span> <span class="n">mask</span><span class="o">=</span><span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;mask&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="mf">0.0</span><span class="p">)</span>
+                <span class="n">loss_unlabeled</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">crf</span><span class="p">(</span>
+                    <span class="n">logits_ul</span><span class="p">,</span> <span class="n">t_labels</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">inputs_ul</span><span class="p">[</span><span class="s1">&#39;mask&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="mf">0.0</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">loss_fn</span> <span class="o">=</span> <span class="n">CrossEntropyLoss</span><span class="p">(</span><span class="n">ignore_index</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                <span class="n">loss_labeled</span> <span class="o">=</span> <span class="n">loss_fn</span><span class="p">(</span><span class="n">logits</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_labels</span><span class="p">),</span> <span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;labels&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+                <span class="n">loss_unlabeled</span> <span class="o">=</span> <span class="n">loss_fn</span><span class="p">(</span><span class="n">logits_ul</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_labels</span><span class="p">),</span> <span class="n">t_labels</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_gpus</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">loss_labeled</span> <span class="o">=</span> <span class="n">loss_labeled</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+                <span class="n">loss_unlabeled</span> <span class="o">=</span> <span class="n">loss_unlabeled</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+            <span class="c1"># add distillation loss</span>
+            <span class="n">loss_labeled</span> <span class="o">=</span> <span class="n">distiller</span><span class="o">.</span><span class="n">distill_loss</span><span class="p">(</span><span class="n">loss_labeled</span><span class="p">,</span> <span class="n">logits</span><span class="p">,</span> <span class="n">t_logits</span><span class="p">)</span>
+            <span class="n">loss_unlabeled</span> <span class="o">=</span> <span class="n">distiller</span><span class="o">.</span><span class="n">distill_loss</span><span class="p">(</span><span class="n">loss_unlabeled</span><span class="p">,</span> <span class="n">logits_ul</span><span class="p">,</span> <span class="n">t_logits_ul</span><span class="p">)</span>
+
+            <span class="c1"># sum labeled and unlabeled losses</span>
+            <span class="n">loss</span> <span class="o">=</span> <span class="n">loss_labeled</span> <span class="o">+</span> <span class="n">loss_unlabeled</span>
+            <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">clip_grad_norm_</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">max_grad_norm</span><span class="p">)</span>
+            <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+            <span class="c1"># self.model.zero_grad()</span>
+            <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+            <span class="n">global_step</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">avg_loss</span> <span class="o">+=</span> <span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">global_step</span> <span class="o">%</span> <span class="n">logging_steps</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">s_idx</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                        <span class="s2">&quot; global_step = </span><span class="si">%s</span><span class="s2">, average loss = </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">global_step</span><span class="p">,</span> <span class="n">avg_loss</span> <span class="o">/</span> <span class="n">s_idx</span><span class="p">)</span>
+                <span class="n">dev</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_eval</span><span class="p">(</span><span class="n">dev_data_set</span><span class="p">,</span> <span class="s2">&quot;dev&quot;</span><span class="p">)</span>
+                <span class="n">test</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_eval</span><span class="p">(</span><span class="n">test_data_set</span><span class="p">,</span> <span class="s2">&quot;test&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">dev</span> <span class="o">&gt;</span> <span class="n">best_dev</span><span class="p">:</span>
+                    <span class="n">best_dev</span> <span class="o">=</span> <span class="n">dev</span>
+                    <span class="n">best_test</span> <span class="o">=</span> <span class="n">test</span>
+                    <span class="k">if</span> <span class="n">save_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">save_best</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">save_model</span><span class="p">(</span><span class="n">save_path</span><span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Best result: dev= </span><span class="si">%s</span><span class="s2">, test= </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">best_dev</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">best_test</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">save_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">global_step</span> <span class="o">%</span> <span class="n">save_steps</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">save_model</span><span class="p">(</span><span class="n">save_path</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">_get_eval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ds</span><span class="p">,</span> <span class="n">set_name</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">ds</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">logits</span><span class="p">,</span> <span class="n">out_label_ids</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">ds</span><span class="p">)</span>
             <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">evaluate_predictions</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">out_label_ids</span><span class="p">)</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot; </span><span class="si">{}</span><span class="s2"> set F1 = </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">set_name</span><span class="p">,</span> <span class="n">res</span><span class="p">[</span><span class="s1">&#39;f1&#39;</span><span class="p">]))</span>
+            <span class="k">return</span> <span class="n">res</span><span class="p">[</span><span class="s1">&#39;f1&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="kc">None</span>
 
 <div class="viewcode-block" id="NeuralTagger.to"><a class="viewcode-back" href="../../../generated_api/nlp_architect.models.html#nlp_architect.models.tagging.NeuralTagger.to">[docs]</a>    <span class="k">def</span> <span class="nf">to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="s1">&#39;cpu&#39;</span><span class="p">,</span> <span class="n">n_gpus</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -640,7 +779,7 @@
 <div class="viewcode-block" id="InputFeatures"><a class="viewcode-back" href="../../../generated_api/nlp_architect.models.html#nlp_architect.models.tagging.InputFeatures">[docs]</a><span class="k">class</span> <span class="nc">InputFeatures</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A single set of features of data.&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_ids</span><span class="p">,</span> <span class="n">char_ids</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">label_id</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_ids</span><span class="p">,</span> <span class="n">char_ids</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">label_id</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">input_ids</span> <span class="o">=</span> <span class="n">input_ids</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">char_ids</span> <span class="o">=</span> <span class="n">char_ids</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mask</span> <span class="o">=</span> <span class="n">mask</span>
