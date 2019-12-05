@@ -72,7 +72,7 @@ Running a model:
 
 .. code-block:: bash
 
-    nlp_architect run transformer_glue \
+    nlp-inference run transformer_glue \
         --model_path <path to model> \
         --task_name <task_name> \
         --model_type bert \
