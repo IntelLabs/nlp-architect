@@ -1,4 +1,3 @@
-import os
 from nlp_architect.common.cdc.mention_data import MentionData
 
 
@@ -227,16 +226,3 @@ def get_wordnet_mentions():
         mentions.append(MentionData.read_json_mention_data_line(json))
 
     return mentions
-
-
-def count_examples(file):
-    ctr = 0
-    if os.path.exists(file):
-        with open(file) as fp:
-            for line in fp:
-                line = line.strip()
-                if len(line) == 0:
-                    ctr += 1
-    else:
-        print("File:" + file + " doesn't exist")
-    return ctr

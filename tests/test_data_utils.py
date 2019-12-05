@@ -17,7 +17,7 @@
 import math
 import os
 from nlp_architect.data.utils import split_column_dataset
-from tests.cdc.test_utils import count_examples
+from tests.utils import count_examples
 
 
 def test_split_dataset():
