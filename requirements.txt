@@ -17,7 +17,7 @@ pywikibot
 num2words
 hyperopt
 h5py
-pandas==0.24.2
+pandas
 tqdm
 ftfy
 bokeh
@@ -25,8 +25,4 @@ six
 future
 requests
 termcolor
-pillow
-hug
-falcon==2.0.0
-falcon_multipart
-regex==2018.02.21  # manual fix
+python-dateutil<2.8.1  # temp hack
