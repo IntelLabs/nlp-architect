@@ -45,8 +45,7 @@ setup(name='nlp-architect',
       url='https://github.com/NervanaSystems/nlp-architect',
       license='Apache 2.0',
       python_requires='>=3.6.*',
-      packages=find_packages(exclude=['tests.*', 'tests', '*.tests', '*.tests.*',
-                                      'examples.*', 'examples', '*.examples', '*.examples.*']),
+      packages=find_packages(exclude=['tests.*', 'tests', 'server.*', 'server', 'examples.*', 'examples']),
       install_requires=install_requirements,
       entry_points={
           'console_scripts': [
