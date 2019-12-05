@@ -21,7 +21,7 @@ from os import PathLike
 from tqdm import tqdm
 
 from nlp_architect.models.absa import TRAIN_LEXICONS, LEXICONS_OUT
-from nlp_architect.models.absa import TRAIN_OUT, GENERIC_OP_LEX
+from nlp_architect.models.absa import GENERIC_OP_LEX
 from nlp_architect.models.absa.inference.data_types import Polarity
 from nlp_architect.models.absa.train.data_types import AspectTerm, \
     DepRelation, DepRelationTerm, LoadOpinionStopLists, LoadAspectStopLists, OpinionTerm, \

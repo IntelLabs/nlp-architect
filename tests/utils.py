@@ -1,5 +1,5 @@
 # ******************************************************************************
-# Copyright 2017-2019 Intel Corporation
+# Copyright 2017-2018 Intel Corporation
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,7 +13,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
-CMD_REGISTRY = {
-    'train': [],
-    'inference': [],
-}
+
+import os
+
+
+def count_examples(file):
+    ctr = 0
+    if os.path.exists(file):
+        with open(file) as fp:
+            for line in fp:
+                line = line.strip()
+                if len(line) == 0:
+                    ctr += 1
+    else:
+        print("File:" + file + " doesn't exist")
+    return ctr

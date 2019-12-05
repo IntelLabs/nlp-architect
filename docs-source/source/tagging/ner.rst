@@ -46,9 +46,9 @@ Use :py:class:`TokenClsProcessor <nlp_architect.data.sequential_tagging.TokenCls
 
 Training a model::
 
-    nlp_architect train tagger --model_type cnn-lstm --data_dir <path to data dir> --output_dir <model output dir>
+    nlp-train tagger --model_type cnn-lstm --data_dir <path to data dir> --output_dir <model output dir>
 
-See ```nlp_architect train tagger -h``` for full list of options for training.
+See ```nlp-train tagger -h``` for full list of options for training.
 
 Running inference on trained model::
 
@@ -79,10 +79,10 @@ Use :py:class:`TokenClsProcessor <nlp_architect.data.sequential_tagging.TokenCls
 
 Training a model::
 
-    nlp_architect train tagger --model_type id-cnn --data_dir <path to data dir> --output_dir <model output dir>
+    nlp-train tagger --model_type id-cnn --data_dir <path to data dir> --output_dir <model output dir>
 
 
-See ```nlp_architect train tagger -h``` for full list of options for training.
+See ```nlp-train tagger -h``` for full list of options for training.
 
 Running inference on trained model::
 
@@ -101,7 +101,7 @@ See ```nlp_architect run tagger -h``` for full list of options for running a tra
 A tagger using a Transformer-based topology and a pre-trained model on a large collection of data (usually wikipedia and such).
 
 :py:class:`TransformerTokenClassifier <nlp_architect.models.transformers.TransformerTokenClassifier>` We provide token tagging classifier head module for Transformer-based pre-trained models. 
-Currently we support BERT/XLNet and quantized BERT base models which utilize a fully-connected layer with *Softmax* classifier. Tokens which were broken into multiple sub-tokens (using Wordpiece algorithm or such) are ignored. For a complete list of transformer base models run ```nlp_architect train transformer_token -h``` to see a list of models that can be fine-tuned to your task. 
+Currently we support BERT/XLNet and quantized BERT base models which utilize a fully-connected layer with *Softmax* classifier. Tokens which were broken into multiple sub-tokens (using Wordpiece algorithm or such) are ignored. For a complete list of transformer base models run ```nlp-train transformer_token -h``` to see a list of models that can be fine-tuned to your task. 
 
 **Usage**
 
@@ -111,13 +111,13 @@ See model class :py:class:`TransformerTokenClassifier <nlp_architect.models.tran
 
 Training a model::
 
-    nlp_architect train transformer_token \
+    nlp-train transformer_token \
         --data_dir <path to data> \
         --model_name_or_path <name of pre-trained model or path> \
         --model_type [bert, quant_bert, xlnet] \
         --output_dir <path to output dir>
 
-See ```nlp_architect train transformer_token -h``` for full list of options for training.
+See ```nlp-train transformer_token -h``` for full list of options for training.
 
 Running inference on a trained model::
 

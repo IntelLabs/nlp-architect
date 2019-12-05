@@ -38,22 +38,5 @@ def register_cmd(registry: dict, name: str, description: str):
 def register_train_cmd(name: str, description: str):
     return register_cmd(CMD_REGISTRY['train'], name, description)
 
-
-def register_infer_cmd(name: str, description: str):
-    return register_cmd(CMD_REGISTRY['infer'], name, description)
-
-
-def register_run_cmd(name: str, description: str):
-    return register_cmd(CMD_REGISTRY['run'], name, description)
-
-
-def register_process_cmd(name: str, description: str):
-    return register_cmd(CMD_REGISTRY['process'], name, description)
-
-
-def register_solution_cmd(name: str, description: str):
-    return register_cmd(CMD_REGISTRY['solution'], name, description)
-
-
-def register_serve_cmd(name: str, description: str):
-    return register_cmd(CMD_REGISTRY['serve'], name, description)
+def register_inference_cmd(name: str, description: str):
+    return register_cmd(CMD_REGISTRY['inference'], name, description)

@@ -18,13 +18,13 @@ import logging
 
 # register all procedures by importing
 import nlp_architect.procedures  # noqa: F401
-from nlp_architect.cli.cli_commands import (cli_process_cmd, cli_run_cmd,
-                                            cli_serve_cmd, cli_solution_cmd,
-                                            cli_train_cmd)
+from nlp_architect.cli.cli_commands import cli_train_cmd, cli_run_cmd
 from nlp_architect.version import NLP_ARCHITECT_VERSION
 
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
+
+from nlp_architect.cli.cli_commands import nlp_train_cli, nlp_inference_cli
 
 def run_cli():
     """ Run nlp_architect command line application
@@ -50,9 +50,6 @@ def run_cli():
 sub_commands = [
     cli_train_cmd,
     cli_run_cmd,
-    cli_process_cmd,
-    cli_solution_cmd,
-    cli_serve_cmd
 ]
 
 if __name__ == "__main__":
