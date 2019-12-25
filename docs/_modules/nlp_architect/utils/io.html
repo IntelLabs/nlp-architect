@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.utils.io &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
+  <title>nlp_architect.utils.io &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
   
 
   
@@ -116,7 +116,6 @@
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developer_guide.html">Developer Guide</a></li>
 </ul>
 
@@ -205,14 +204,14 @@
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">zipfile</span>
-<span class="kn">from</span> <span class="nn">os</span> <span class="k">import</span> <span class="n">PathLike</span><span class="p">,</span> <span class="n">makedirs</span><span class="p">,</span> <span class="n">remove</span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="k">import</span> <span class="n">Path</span>
-<span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="k">import</span> <span class="n">urlparse</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">PathLike</span><span class="p">,</span> <span class="n">makedirs</span><span class="p">,</span> <span class="n">remove</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="kn">import</span> <span class="n">urlparse</span>
 
 <span class="kn">import</span> <span class="nn">requests</span>
-<span class="kn">from</span> <span class="nn">tqdm</span> <span class="k">import</span> <span class="n">tqdm</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
 
-<span class="kn">from</span> <span class="nn">nlp_architect.utils.generic</span> <span class="k">import</span> <span class="n">license_prompt</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.utils.generic</span> <span class="kn">import</span> <span class="n">license_prompt</span>
 
 
 <div class="viewcode-block" id="download_unlicensed_file"><a class="viewcode-back" href="../../../generated_api/nlp_architect.utils.html#nlp_architect.utils.io.download_unlicensed_file">[docs]</a><span class="k">def</span> <span class="nf">download_unlicensed_file</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">sourcefile</span><span class="p">,</span> <span class="n">destfile</span><span class="p">,</span> <span class="n">totalsz</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -435,7 +434,7 @@
 
 <div class="viewcode-block" id="check"><a class="viewcode-back" href="../../../generated_api/nlp_architect.utils.html#nlp_architect.utils.io.check">[docs]</a><span class="k">def</span> <span class="nf">check</span><span class="p">(</span><span class="n">validator</span><span class="p">):</span>
     <span class="k">class</span> <span class="nc">CustomAction</span><span class="p">(</span><span class="n">argparse</span><span class="o">.</span><span class="n">Action</span><span class="p">):</span>
-        <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parser</span><span class="p">,</span> <span class="n">namespace</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">option_string</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parser</span><span class="p">,</span> <span class="n">namespace</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">option_string</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
             <span class="n">validator</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
             <span class="nb">setattr</span><span class="p">(</span><span class="n">namespace</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dest</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
 
@@ -444,7 +443,7 @@
 
 <div class="viewcode-block" id="check_size"><a class="viewcode-back" href="../../../generated_api/nlp_architect.utils.html#nlp_architect.utils.io.check_size">[docs]</a><span class="k">def</span> <span class="nf">check_size</span><span class="p">(</span><span class="n">min_size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_size</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="k">class</span> <span class="nc">CustomAction</span><span class="p">(</span><span class="n">argparse</span><span class="o">.</span><span class="n">Action</span><span class="p">):</span>
-        <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parser</span><span class="p">,</span> <span class="n">namespace</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">option_string</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parser</span><span class="p">,</span> <span class="n">namespace</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">option_string</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
             <span class="n">validate</span><span class="p">((</span><span class="n">values</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">min_size</span><span class="p">,</span> <span class="n">max_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dest</span><span class="p">))</span>
             <span class="nb">setattr</span><span class="p">(</span><span class="n">namespace</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dest</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
 

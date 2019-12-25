@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.data.utils &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
+  <title>nlp_architect.data.utils &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
   
 
   
@@ -116,7 +116,6 @@
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developer_guide.html">Developer Guide</a></li>
 </ul>
 
@@ -196,20 +195,20 @@
 <span class="c1"># See the License for the specific language governing permissions and</span>
 <span class="c1"># limitations under the License.</span>
 <span class="c1"># ******************************************************************************</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span>
 
 <span class="kn">import</span> <span class="nn">csv</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">random</span>
 <span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">from</span> <span class="nn">abc</span> <span class="k">import</span> <span class="n">ABC</span>
-<span class="kn">from</span> <span class="nn">io</span> <span class="k">import</span> <span class="nb">open</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span>
+<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABC</span>
+<span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="nb">open</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span>
 
 
 <div class="viewcode-block" id="InputExample"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.utils.InputExample">[docs]</a><span class="k">class</span> <span class="nc">InputExample</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Base class for a single training/dev/test example &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">guid</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">guid</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">guid</span> <span class="o">=</span> <span class="n">guid</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">text</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">label</span></div>
@@ -218,15 +217,15 @@
 <div class="viewcode-block" id="DataProcessor"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.utils.DataProcessor">[docs]</a><span class="k">class</span> <span class="nc">DataProcessor</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Base class for data converters for sequence/token classification data sets.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="DataProcessor.get_train_examples"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.utils.DataProcessor.get_train_examples">[docs]</a>    <span class="k">def</span> <span class="nf">get_train_examples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">):</span>
+<div class="viewcode-block" id="DataProcessor.get_train_examples"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.utils.DataProcessor.get_train_examples">[docs]</a>    <span class="k">def</span> <span class="nf">get_train_examples</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Gets a collection of `InputExample`s for the train set.&quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="DataProcessor.get_dev_examples"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.utils.DataProcessor.get_dev_examples">[docs]</a>    <span class="k">def</span> <span class="nf">get_dev_examples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">):</span>
+<div class="viewcode-block" id="DataProcessor.get_dev_examples"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.utils.DataProcessor.get_dev_examples">[docs]</a>    <span class="k">def</span> <span class="nf">get_dev_examples</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Gets a collection of `InputExample`s for the dev set.&quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="DataProcessor.get_test_examples"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.utils.DataProcessor.get_test_examples">[docs]</a>    <span class="k">def</span> <span class="nf">get_test_examples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">):</span>
+<div class="viewcode-block" id="DataProcessor.get_test_examples"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.utils.DataProcessor.get_test_examples">[docs]</a>    <span class="k">def</span> <span class="nf">get_test_examples</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Gets a collection of `InputExample`s for the test set.&quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
 
@@ -243,17 +242,11 @@
 <span class="sd">        data_dir (str): path to the data source</span>
 <span class="sd">        task_type (str): the task type (classification/regression/tagging)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">processor</span><span class="p">:</span> <span class="n">DataProcessor</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">task_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">processor</span><span class="p">:</span> <span class="n">DataProcessor</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">task_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">processor</span> <span class="o">=</span> <span class="n">processor</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data_dir</span> <span class="o">=</span> <span class="n">data_dir</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">task_type</span> <span class="o">=</span> <span class="n">task_type</span>
-
-<div class="viewcode-block" id="Task.get_split_train_examples"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.utils.Task.get_split_train_examples">[docs]</a>    <span class="k">def</span> <span class="nf">get_split_train_examples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">labeled</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">unlabeled</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;split the train set into 2 sub sets (given by input size) to be</span>
-<span class="sd">        used as labelled and unlabeled sets for semi-supervision tasks</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">processor</span><span class="o">.</span><span class="n">get_split_train_examples</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">labeled</span><span class="p">,</span> <span class="n">unlabeled</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Task.get_train_examples"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.utils.Task.get_train_examples">[docs]</a>    <span class="k">def</span> <span class="nf">get_train_examples</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">processor</span><span class="o">.</span><span class="n">get_train_examples</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_dir</span><span class="p">)</span></div>
@@ -337,6 +330,29 @@
     <span class="n">label_samples</span> <span class="o">=</span> <span class="p">[</span><span class="n">samples</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">labeled_indices</span><span class="p">]</span>
     <span class="n">unlabel_samples</span> <span class="o">=</span> <span class="p">[</span><span class="n">samples</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">unlabeled_indices</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">label_samples</span><span class="p">,</span> <span class="n">unlabel_samples</span></div>
+
+
+<div class="viewcode-block" id="split_column_dataset"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.utils.split_column_dataset">[docs]</a><span class="k">def</span> <span class="nf">split_column_dataset</span><span class="p">(</span>
+        <span class="n">first_count</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">second_count</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">out_folder</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">first_filename</span><span class="p">,</span> <span class="n">second_filename</span><span class="p">,</span> <span class="n">tag_col</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Splits a single column tagged dataset into two files according to the amount of examples</span>
+<span class="sd">    requested to be included in each file.</span>
+<span class="sd">    split1_count (int) : the amount of examples to include in the first split file</span>
+<span class="sd">    split2_count (int) : the amount of examples to include in the second split file</span>
+<span class="sd">    out_folder (str) : the folder in which the result files will be stored</span>
+<span class="sd">    dataset (str) : the path to the original data file</span>
+<span class="sd">    split1_filename (str) : the name of the first split file</span>
+<span class="sd">    split2_filename (str) : the name of the second split file</span>
+<span class="sd">    tag_col (int) : the index of the tag column</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">lines</span> <span class="o">=</span> <span class="n">read_column_tagged_file</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">tag_col</span><span class="o">=</span><span class="n">tag_col</span><span class="p">)</span>
+    <span class="n">num_of_examples</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">first_count</span> <span class="o">+</span> <span class="n">second_count</span> <span class="o">&lt;=</span> <span class="n">num_of_examples</span> <span class="ow">and</span> <span class="n">first_count</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">second_count</span> <span class="o">&gt;</span> <span class="mi">0</span>
+    <span class="n">selected_lines</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">lines</span><span class="p">,</span> <span class="n">first_count</span> <span class="o">+</span> <span class="n">second_count</span><span class="p">)</span>
+    <span class="n">first_data</span> <span class="o">=</span> <span class="n">selected_lines</span><span class="p">[:</span><span class="n">first_count</span><span class="p">]</span>
+    <span class="n">second_data</span> <span class="o">=</span> <span class="n">selected_lines</span><span class="p">[</span><span class="n">first_count</span><span class="p">:]</span>
+    <span class="n">write_column_tagged_file</span><span class="p">(</span><span class="n">out_folder</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="o">+</span> <span class="n">first_filename</span><span class="p">,</span> <span class="n">first_data</span><span class="p">)</span>
+    <span class="n">write_column_tagged_file</span><span class="p">(</span><span class="n">out_folder</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="o">+</span> <span class="n">second_filename</span><span class="p">,</span> <span class="n">second_data</span><span class="p">)</span></div>
 </pre></div>
 
            </div>

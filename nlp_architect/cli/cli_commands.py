@@ -14,9 +14,54 @@
 # limitations under the License.
 # ******************************************************************************
 # CLI definition
+import argparse
 from argparse import _SubParsersAction
 
 from nlp_architect.cli.cmd_registry import CMD_REGISTRY
+from nlp_architect.version import NLP_ARCHITECT_VERSION
+
+
+def nlp_train_cli():
+    prog_name = 'nlp-train'
+    desc = 'NLP Architect Train CLI [{}]'.format(NLP_ARCHITECT_VERSION)
+    parser = argparse.ArgumentParser(description=desc, prog=prog_name)
+    parser.add_argument('-v', '--version', action='version',
+                        version='%(prog)s v{}'.format(NLP_ARCHITECT_VERSION))
+    parser.set_defaults(func=lambda _: parser.print_help())
+    subparsers = parser.add_subparsers(title='Models', metavar='')
+    for model in CMD_REGISTRY['train']:
+        sp = subparsers.add_parser(model['name'],
+                                   description=model['description'],
+                                   help=model['description'])
+        model['arg_adder'](sp)
+        sp.set_defaults(func=model['fn'])
+    
+    args = parser.parse_args()
+    if hasattr(args, 'func'):
+        args.func(args)
+    else:
+        parser.print_help()
+
+def nlp_inference_cli():
+    prog_name = 'nlp-inference'
+    desc = 'NLP Architect Inference CLI [{}]'.format(NLP_ARCHITECT_VERSION)
+    parser = argparse.ArgumentParser(description=desc, prog=prog_name)
+    parser.add_argument('-v', '--version', action='version',
+                        version='%(prog)s v{}'.format(NLP_ARCHITECT_VERSION))
+    parser.set_defaults(func=lambda _: parser.print_help())
+    subparsers = parser.add_subparsers(title='Models', metavar='')
+    for model in CMD_REGISTRY['inference']:
+        sp = subparsers.add_parser(model['name'],
+                                   description=model['description'],
+                                   help=model['description'])
+        model['arg_adder'](sp)
+        sp.set_defaults(func=model['fn'])
+    
+    args = parser.parse_args()
+    if hasattr(args, 'func'):
+        args.func(args)
+    else:
+        parser.print_help()
 
 
 def generic_cmd(cmd_name: str, subtitle: str, description: str, subparsers: _SubParsersAction):
@@ -46,25 +91,4 @@ def cli_run_cmd(subparsers: _SubParsersAction):
     generic_cmd('run',
                 'Available models',
                 'Run a model from the library',
-                subparsers)
-
-
-def cli_process_cmd(subparsers: _SubParsersAction):
-    generic_cmd('process',
-                'Available data processors',
-                'Run a data processor from the library',
-                subparsers)
-
-
-def cli_solution_cmd(subparsers: _SubParsersAction):
-    generic_cmd('solution',
-                'Available solutions',
-                'Run a solution process from the library',
-                subparsers)
-
-
-def cli_serve_cmd(subparsers: _SubParsersAction):
-    generic_cmd('serve',
-                'Available models',
-                'Server a trained model using REST service',
                 subparsers)

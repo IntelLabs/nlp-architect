@@ -15,8 +15,10 @@
 # ******************************************************************************
 import argparse
 import socket
+import sys
 from os import path
 from subprocess import run
+import sys
 
 SOLUTIONS_PATH = path.dirname(path.realpath(__file__))
 
@@ -47,7 +49,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
     if args.address and not check_if_ip(args.address):
         print('given address is not in a valid ip address format')
-        exit(1)
+        sys.exit()
 
     cmd_str = 'bokeh serve --show {} --port {}'.format(solution_uis[args.solution], args.port)
     if args.address:
@@ -55,4 +57,4 @@ if __name__ == '__main__':
                    '--allow-websocket-origin={}:{}'.\
             format(args.address, args.address, args.port)
 
-    run(cmd_str, shell=not args.no_shell)
+    run(cmd_str, shell=not args.no_shell, check=True)

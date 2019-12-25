@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Language Modeling with TCN &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
+  <title>Language Modeling with TCN &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
   
 
   
@@ -116,7 +116,6 @@
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="developer_guide.html">Developer Guide</a></li>
 </ul>
 
@@ -233,7 +232,7 @@
 <p>To run inference and generate sample data, run the following command:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">examples</span><span class="o">/</span><span class="n">word_language_model_with_tcn</span><span class="o">/</span><span class="n">mle_language_model</span><span class="o">/</span><span class="n">language_modeling_with_tcn</span><span class="o">.</span><span class="n">py</span> \
   <span class="o">--</span><span class="n">dropout</span> <span class="mf">0.45</span> <span class="o">--</span><span class="n">ksize</span> <span class="mi">3</span> <span class="o">--</span><span class="n">levels</span> <span class="mi">4</span> <span class="o">--</span><span class="n">seq_len</span> <span class="mi">60</span> <span class="o">--</span><span class="n">nhid</span> <span class="mi">600</span> <span class="o">--</span><span class="n">em_len</span> <span class="mi">600</span> \
-  <span class="o">--</span><span class="n">em_dropout</span> <span class="mf">0.25</span> <span class="o">--</span><span class="n">ckpt</span> <span class="o">&lt;</span><span class="n">path</span> <span class="n">to</span> <span class="n">trained</span> <span class="n">ckpt</span> <span class="nb">file</span><span class="o">&gt;</span> <span class="o">--</span><span class="n">inference</span> <span class="o">--</span><span class="n">num_samples</span> <span class="mi">100</span>
+  <span class="o">--</span><span class="n">em_dropout</span> <span class="mf">0.25</span> <span class="o">--</span><span class="n">ckpt</span> <span class="o">&lt;</span><span class="n">path</span> <span class="n">to</span> <span class="n">trained</span> <span class="n">ckpt</span> <span class="n">file</span><span class="o">&gt;</span> <span class="o">--</span><span class="n">inference</span> <span class="o">--</span><span class="n">num_samples</span> <span class="mi">100</span>
 </pre></div>
 </div>
 <p>Using the provided trained checkpoint file, this will generate and print samples to stdout.

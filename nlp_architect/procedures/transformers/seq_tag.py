@@ -26,7 +26,7 @@ from nlp_architect.data.utils import write_column_tagged_file
 from nlp_architect.models.transformers import TransformerTokenClassifier
 from nlp_architect.nn.torch import setup_backend, set_seed
 from nlp_architect.procedures.procedure import Procedure
-from nlp_architect.procedures.registry import (register_run_cmd,
+from nlp_architect.procedures.registry import (register_inference_cmd,
                                                register_train_cmd)
 from nlp_architect.procedures.transformers.base import (create_base_args,
                                                         inference_args,
@@ -47,14 +47,16 @@ class TransformerTokenClsTrain(Procedure):
                                  + "by the dataloaders.")
         train_args(parser, models_family=TransformerTokenClassifier.MODEL_CLASS.keys())
         create_base_args(parser, model_types=TransformerTokenClassifier.MODEL_CLASS.keys())
+        parser.add_argument('--train_file_name', type=str, default="train.txt",
+                            help='File name of the training dataset')
 
     @staticmethod
     def run_procedure(args):
         do_training(args)
 
 
-@register_run_cmd(name='transformer_token',
-                  description='Run a BERT/XLNet model with token classification head')
+@register_inference_cmd(name='transformer_token',
+                        description='Run a BERT/XLNet model with token classification head')
 class TransformerTokenClsRun(Procedure):
     @staticmethod
     def add_arguments(parser: argparse.ArgumentParser):
@@ -86,7 +88,7 @@ def do_training(args):
                                             device=device,
                                             n_gpus=n_gpus)
 
-    train_ex = processor.get_train_examples()
+    train_ex = processor.get_train_examples(filename=args.train_file_name)
     if train_ex is None:
         raise Exception("No train examples found, quitting.")
     dev_ex = processor.get_dev_examples()
@@ -146,7 +148,7 @@ def do_inference(args):
                                                        do_lower_case=args.do_lower_case,
                                                        load_quantized=args.load_quantized_model)
     classifier.to(device, n_gpus)
-    output = classifier.inference(inference_examples, args.batch_size)
+    output = classifier.inference(inference_examples, args.max_seq_length, args.batch_size)
     write_column_tagged_file(args.output_dir + os.sep + "output.txt", output)
 
 

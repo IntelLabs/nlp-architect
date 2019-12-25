@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Using as a REST service &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
+  <title>Using as a REST service &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
   
 
   
@@ -39,9 +39,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Developer Guide" href="developer_guide.html" />
-    <link rel="prev" title="nlp_architect.utils.resources package" href="generated_api/nlp_architect.utils.resources.html" /> 
+    <link rel="search" title="Search" href="search.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -116,30 +114,8 @@
 <li class="toctree-l1"><a class="reference internal" href="trend_analysis.html">Trend Analysis</a></li>
 </ul>
 <p class="caption"><span class="caption-text">For Developers</span></p>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">REST Server</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#running-nlp-architect-server">Running NLP Architect Server</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#starting-the-server">Starting the server</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#requests">Requests</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#responses">Responses</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#example">Example</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#visualization-previews">Visualization previews</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#annotation-structure-types-server-responses">Annotation Structure Types - Server Responses</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#core-nlp-models-annotation-structure">Core NLP models annotation structure</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#high-level-models-annotation-structure">High-level models annotation structure</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#machine-comprehension-structure">Machine Comprehension structure</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#adding-new-services">Adding new services</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#adding-a-new-service-to-the-server">Adding a new service to the server</a></li>
-</ul>
-</li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="developer_guide.html">Developer Guide</a></li>
 </ul>
 
@@ -221,17 +197,24 @@ The server includes a web front-end exposing the model’s annotations.</p>
 </div></blockquote>
 <p>The server has two main components:</p>
 <ul class="simple">
-<li><a class="reference internal" href="generated_api/nlp_architect.server.html#nlp_architect.server.service.Service" title="nlp_architect.server.service.Service"><code class="xref py py-class docutils literal notranslate"><span class="pre">Service</span></code></a> which is a representation of each model’s API.</li>
-<li><code class="docutils literal notranslate"><span class="pre">nlp_architect.server.serve</span></code> module which is a <a class="reference external" href="http://www.hug.rest/">hug</a> application which handles processing of HTTP requests and initiating calls to the desired model.</li>
+<li><code class="xref py py-class docutils literal notranslate"><span class="pre">Service</span></code> which is a representation of each model’s API.</li>
+<li><code class="docutils literal notranslate"><span class="pre">server.serve</span></code> module which is a <a class="reference external" href="http://www.hug.rest/">hug</a> application which handles processing of HTTP requests and initiating calls to the desired model.</li>
 </ul>
 <p>The server supports extending with new services using provided API classes, see <a class="reference internal" href="#annotation-structure-types-server-responses">Annotation Structure Types - Server Responses</a> for more details.</p>
 </div>
 <div class="section" id="running-nlp-architect-server">
 <h2>Running NLP Architect Server<a class="headerlink" href="#running-nlp-architect-server" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="install-requirements">
+<h3>Install requirements<a class="headerlink" href="#install-requirements" title="Permalink to this headline">¶</a></h3>
+<p>The server requires extra python packages:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">server</span><span class="o">/</span><span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="starting-the-server">
 <h3>Starting the server<a class="headerlink" href="#starting-the-server" title="Permalink to this headline">¶</a></h3>
 <p>To run the server run the following command:</p>
-<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nlp_architect</span> <span class="n">server</span> <span class="o">-</span><span class="n">p</span> <span class="mi">8080</span>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">hug</span> <span class="o">-</span><span class="n">f</span> <span class="n">serve</span><span class="o">.</span><span class="n">py</span> <span class="o">-</span><span class="n">p</span> <span class="mi">8080</span>
 </pre></div>
 </div>
 <p>The server will run locally on port 8080 and can be queried on <code class="docutils literal notranslate"><span class="pre">/inference</span></code> directive.</p>
@@ -360,7 +343,7 @@ The server includes a web front-end exposing the model’s annotations.</p>
 <h2>Adding new services<a class="headerlink" href="#adding-new-services" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="adding-a-new-service-to-the-server">
 <h3>Adding a new service to the server<a class="headerlink" href="#adding-a-new-service-to-the-server" title="Permalink to this headline">¶</a></h3>
-<p>All the services are declared in a <code class="docutils literal notranslate"><span class="pre">JSON</span></code> file found at <code class="docutils literal notranslate"><span class="pre">nlp_architect/server/services.json</span></code>.</p>
+<p>All the services are declared in a <code class="docutils literal notranslate"><span class="pre">JSON</span></code> file found at <code class="docutils literal notranslate"><span class="pre">server/services.json</span></code>.</p>
 <p>In order to add a new service to the server you need to go over 3 steps:</p>
 <ol class="arabic simple">
 <li>Detect the type of your service suitable for your model, either Core NLP model or High-level model.</li>

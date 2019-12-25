@@ -43,7 +43,7 @@ class CNNLSTM(nn.Module):
     def __init__(self,
                  word_vocab_size: int,
                  num_labels: int,
-                 word_embedding_dims: int = 50,
+                 word_embedding_dims: int = 100,
                  char_embedding_dims: int = 16,
                  cnn_kernel_size: int = 3,
                  cnn_num_filters: int = 128,

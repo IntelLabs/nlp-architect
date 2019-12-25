@@ -16,7 +16,6 @@
 # pylint: disable=global-statement
 import csv
 import logging
-import sys
 import time
 from os import path
 from os.path import isfile
@@ -200,7 +199,7 @@ def read_filter_graph_data():
     global all_topics, filter_rows
     all_topics = []
     filter_rows = []
-    with open(filter_data_path) as f:
+    with open(filter_data_path, errors='ignore') as f:
         reader = csv.reader(f)
         next(reader, None)
         for line in enumerate(reader):
@@ -297,6 +296,7 @@ def create_graphs(top_n_phrases, top_n_clusters):
     global topic_clustering_before, topic_clustering_after, gd
     if gd is None:  # initialization
         gd = pd.read_csv(graph_data_path)
+        gd = gd.fillna(0)
         read_filter_graph_data()  # read only once- then update using the filter table
         global white_list, custom_nps
         white_list = get_valid_phrases()
@@ -477,6 +477,7 @@ def create_trend_clustering_graph(top_n):
     phrases_c, changes_c, x_c, y_c, hover_data_c = [], [], [], [], []
     opacity_h, opacity_c = [], []
     hot, cold = 0, 0  # counters for each list
+    opacity_norm = 1
     if len(hot_change) > 0 and len(cold_change) > 0:
         highest_change = max(hot_change[0], abs(cold_change[0]))
         opacity_norm = 1 / (highest_change) if highest_change != 0 else 0.05

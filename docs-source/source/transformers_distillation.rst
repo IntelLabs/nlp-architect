@@ -39,7 +39,7 @@ One approach is similar to the method in Hinton 2015 [#]_. The loss function is
 modified to include a measure of distributions divergence, which can be measured
 using KL divergence or MSE between the logits of the student and the teacher network.
 
-    :math:`loss = w_s \cdot loss_{student} + w_d \cdot KL(logits_{student} / T || logits_{teacher} / T)`
+:math:`loss = w_s \cdot loss_{student} + w_d \cdot KL(logits_{student} / T || logits_{teacher} / T)`
 
 where *T* is a value representing temperature for softening the logits prior to 
 applying softmax. `loss_{student}` is the original loss of the student network 
@@ -66,12 +66,26 @@ Useful for training taggers from Transformer models. :py:class:`NeuralTagger <nl
 
 Usage:
 
-#. Train a transformer tagger using :py:class:`TransformerTokenClassifier <nlp_architect.models.transformers.TransformerTokenClassifier>` or using ``nlp_architect train transformer_token`` command
-#. Train a neural tagger :py:class:`Neural Tagger <nlp_architect.models.tagging.NeuralTagger>` using the trained transformer model and use the :py:class:`TeacherStudentDistill <nlp_architect.nn.torch.distillation.TeacherStudentDistill>` model that was configured with the transformer model. This can be done using :py:class:`Neural Tagger <nlp_architect.models.tagging.NeuralTagger>`'s train loop or by using ``nlp_architect train tagger_kd`` command
+#. Train a transformer tagger using :py:class:`TransformerTokenClassifier <nlp_architect.models.transformers.TransformerTokenClassifier>` or using ``nlp-train transformer_token`` command
+#. Train a neural tagger :py:class:`Neural Tagger <nlp_architect.models.tagging.NeuralTagger>` using the trained transformer model and use the :py:class:`TeacherStudentDistill <nlp_architect.nn.torch.distillation.TeacherStudentDistill>` model that was configured with the transformer model. This can be done using :py:class:`Neural Tagger <nlp_architect.models.tagging.NeuralTagger>`'s train loop or by using ``nlp-train tagger_kd`` command
 
 
 .. note::
     More models supporting distillation will be added in next releases
+
+Pseudo Labeling
+================
+
+This method can be used in order to produce pseudo-labels when training the student on unlabeled examples.
+The pseudo-guess is produced by applying arg max on the logits of the teacher model, and results in the following loss:
+
+.. math::
+
+    loss &= \Bigg\{\begin{eqnarray}CE(yˆ, y) && labeled&example\\ CE(yˆ, yˆt) && unlabeled&example\end{eqnarray}
+
+
+where CE is Cross Entropy loss, yˆ is the predicted entity label class by the student model and yˆt is
+the predicted label by the teacher model.
 
 
 .. [#] Distilling the Knowledge in a Neural Network: Geoffrey Hinton, Oriol Vinyals, Jeff Dean, https://arxiv.org/abs/1503.02531

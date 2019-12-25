@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.pipelines.spacy_np_annotator &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
+  <title>nlp_architect.pipelines.spacy_np_annotator &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
   
 
   
@@ -116,7 +116,6 @@
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developer_guide.html">Developer Guide</a></li>
 </ul>
 
@@ -197,17 +196,17 @@
 <span class="c1"># limitations under the License.</span>
 <span class="c1"># ******************************************************************************</span>
 <span class="kn">import</span> <span class="nn">pickle</span>
-<span class="kn">from</span> <span class="nn">os</span> <span class="k">import</span> <span class="n">path</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">path</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">spacy</span>
-<span class="kn">from</span> <span class="nn">spacy.tokens</span> <span class="k">import</span> <span class="n">Doc</span>
-<span class="kn">from</span> <span class="nn">spacy.tokens</span> <span class="k">import</span> <span class="n">Span</span>
+<span class="kn">from</span> <span class="nn">spacy.tokens</span> <span class="kn">import</span> <span class="n">Doc</span>
+<span class="kn">from</span> <span class="nn">spacy.tokens</span> <span class="kn">import</span> <span class="n">Span</span>
 
-<span class="kn">from</span> <span class="nn">nlp_architect.models.chunker</span> <span class="k">import</span> <span class="n">SequenceChunker</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.utils.generic</span> <span class="k">import</span> <span class="n">pad_sentences</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.utils.io</span> <span class="k">import</span> <span class="n">validate_existing_filepath</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.utils.text</span> <span class="k">import</span> <span class="n">extract_nps</span><span class="p">,</span> <span class="n">Stopwords</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.models.chunker</span> <span class="kn">import</span> <span class="n">SequenceChunker</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.utils.generic</span> <span class="kn">import</span> <span class="n">pad_sentences</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.utils.io</span> <span class="kn">import</span> <span class="n">validate_existing_filepath</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.utils.text</span> <span class="kn">import</span> <span class="n">extract_nps</span><span class="p">,</span> <span class="n">Stopwords</span>
 
 
 <div class="viewcode-block" id="NPAnnotator"><a class="viewcode-back" href="../../../generated_api/nlp_architect.pipelines.html#nlp_architect.pipelines.spacy_np_annotator.NPAnnotator">[docs]</a><span class="k">class</span> <span class="nc">NPAnnotator</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -222,7 +221,7 @@
 <span class="sd">        batch_size (int, optional): inference batch size</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">word_vocab</span><span class="p">,</span> <span class="n">char_vocab</span><span class="p">,</span> <span class="n">chunk_vocab</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">32</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">word_vocab</span><span class="p">,</span> <span class="n">char_vocab</span><span class="p">,</span> <span class="n">chunk_vocab</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">32</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">bs</span> <span class="o">=</span> <span class="n">batch_size</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">word_vocab</span> <span class="o">=</span> <span class="n">word_vocab</span>
@@ -284,7 +283,7 @@
             <span class="n">features</span> <span class="o">=</span> <span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">sentence_chars</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">features</span>
 
-    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doc</span><span class="p">:</span> <span class="n">Doc</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Doc</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doc</span><span class="p">:</span> <span class="n">Doc</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Doc</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Annotate the document with noun phrase spans</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -508,7 +507,7 @@
 <span class="sd">    Simple Spacy pipe with NP extraction annotations</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_path</span><span class="p">,</span> <span class="n">settings_path</span><span class="p">,</span> <span class="n">spacy_model</span><span class="o">=</span><span class="s1">&#39;en&#39;</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_path</span><span class="p">,</span> <span class="n">settings_path</span><span class="p">,</span> <span class="n">spacy_model</span><span class="o">=</span><span class="s1">&#39;en&#39;</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>
                  <span class="n">use_cudnn</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="n">_model_path</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)),</span> <span class="n">model_path</span><span class="p">)</span>
         <span class="n">validate_existing_filepath</span><span class="p">(</span><span class="n">_model_path</span><span class="p">)</span>
@@ -524,7 +523,7 @@
                                       <span class="n">use_cudnn</span><span class="o">=</span><span class="n">use_cudnn</span><span class="p">),</span> <span class="n">last</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">nlp</span> <span class="o">=</span> <span class="n">nlp</span>
 
-    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Parse a given text and return a list of noun phrases found</span>
 

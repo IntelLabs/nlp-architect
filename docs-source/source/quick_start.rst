@@ -67,8 +67,6 @@ NLP Architect has the following packages:
 +---------------------------+-------------------------------------------------------+
 | `nlp_architect.procedures`| Procedure scripts                                     |
 +---------------------------+-------------------------------------------------------+
-| `nlp_architect.server`    | API Server and demos UI                               |
-+---------------------------+-------------------------------------------------------+
 | `nlp_architect.solutions` | Solution applications                                 |
 +---------------------------+-------------------------------------------------------+
 | `nlp_architect.utils`     | Misc. I/O, metric, pre-processing and text utilities  |
@@ -85,16 +83,11 @@ NLP Architect comes with a CLI application that helps users run procedures and p
     The CLI is in development and some functionality is not complete
     and will be added in future versions
 
-The list of possible options can be obtained by ``nlp_architect -h``:
-
-``nlp_architect`` commands:
+NLP Architect commands:
 
 .. code-block:: text
 
-    train        Train a model from the library
-    run          Run a model from the library
-    process      Run a data processor from the library
-    solution     Run a solution process from the library
-    serve        Server a trained model using REST service
+    nlp-train       Train a model from the library
+    nlp-inference   Run a model from the library
 
-Use ``nlp_architect <command> -h`` for per command usage instructions.
+Use ``nlp-train/inference -h`` for per command usage instructions.

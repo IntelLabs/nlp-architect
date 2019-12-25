@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.api.machine_comprehension_api &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
+  <title>nlp_architect.api.machine_comprehension_api &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
   
 
   
@@ -116,7 +116,6 @@
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developer_guide.html">Developer Guide</a></li>
 </ul>
 
@@ -197,24 +196,24 @@
 <span class="c1"># limitations under the License.</span>
 <span class="c1"># ******************************************************************************</span>
 
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
 
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">zipfile</span>
-<span class="kn">from</span> <span class="nn">os</span> <span class="k">import</span> <span class="n">makedirs</span>
-<span class="kn">from</span> <span class="nn">random</span> <span class="k">import</span> <span class="n">shuffle</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">makedirs</span>
+<span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">shuffle</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 
-<span class="kn">from</span> <span class="nn">nlp_architect.api.abstract_api</span> <span class="k">import</span> <span class="n">AbstractApi</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.models.matchlstm_ansptr</span> <span class="k">import</span> <span class="n">MatchLSTMAnswerPointer</span>
-<span class="kn">from</span> <span class="nn">nlp_architect</span> <span class="k">import</span> <span class="n">LIBRARY_OUT</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.utils.generic</span> <span class="k">import</span> <span class="n">license_prompt</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.utils.io</span> <span class="k">import</span> <span class="n">download_unlicensed_file</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.utils.mrc_utils</span> <span class="k">import</span> <span class="p">(</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.api.abstract_api</span> <span class="kn">import</span> <span class="n">AbstractApi</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.models.matchlstm_ansptr</span> <span class="kn">import</span> <span class="n">MatchLSTMAnswerPointer</span>
+<span class="kn">from</span> <span class="nn">nlp_architect</span> <span class="kn">import</span> <span class="n">LIBRARY_OUT</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.utils.generic</span> <span class="kn">import</span> <span class="n">license_prompt</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.utils.io</span> <span class="kn">import</span> <span class="n">download_unlicensed_file</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.utils.mrc_utils</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">create_squad_training</span><span class="p">,</span> <span class="n">max_values_squad</span><span class="p">,</span> <span class="n">get_data_array_squad</span><span class="p">)</span>
 
 
@@ -228,7 +227,7 @@
     <span class="n">model_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">dir</span><span class="p">,</span> <span class="s1">&#39;mrc_trained_model&#39;</span><span class="p">)</span>
     <span class="n">model_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">dir</span><span class="p">,</span> <span class="s1">&#39;mrc_trained_model&#39;</span><span class="p">,</span> <span class="s1">&#39;trained_model&#39;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prompt</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prompt</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">prompt</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">vocab_dict</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">vocab_rev</span> <span class="o">=</span> <span class="kc">None</span>

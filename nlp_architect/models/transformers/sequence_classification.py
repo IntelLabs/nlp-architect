@@ -153,16 +153,12 @@ class TransformerSequenceClassifier(TransformerBase):
         Returns:
             TensorDataset:
         """
-        features = self._convert_examples_to_features(examples,
-                                                      max_seq_length,
-                                                      self.tokenizer,
-                                                      self.task_type,
-                                                      include_labels,
-                                                      pad_on_left=bool(
-                                                          self.model_type in ['xlnet']),
-                                                      pad_token=self.tokenizer.convert_tokens_to_ids(
-                                                          [self.tokenizer.pad_token])[0],
-                                                      pad_token_segment_id=4 if self.model_type in ['xlnet'] else 0)
+        features = self._convert_examples_to_features(
+            examples, max_seq_length, self.tokenizer,
+            self.task_type, include_labels, pad_on_left=bool(
+                self.model_type in ['xlnet']), pad_token=self.tokenizer.convert_tokens_to_ids(
+                    [self.tokenizer.pad_token])[0], pad_token_segment_id=4 if self.model_type in [
+                        'xlnet'] else 0)
         # Convert to Tensors and build dataset
         all_input_ids = torch.tensor([f.input_ids for f in features], dtype=torch.long)
         all_input_mask = torch.tensor([f.input_mask for f in features], dtype=torch.long)
@@ -175,7 +171,7 @@ class TransformerSequenceClassifier(TransformerBase):
             return TensorDataset(all_input_ids, all_input_mask, all_segment_ids, all_label_ids)
         return TensorDataset(all_input_ids, all_input_mask, all_segment_ids)
 
-    def inference(self, examples: List[SequenceClsInputExample], batch_size: int = 64, evaluate=False):
+    def inference(self, examples: List[SequenceClsInputExample], max_seq_length: int, batch_size: int = 64, evaluate=False):
         """
         Run inference on given examples
 
@@ -186,7 +182,8 @@ class TransformerSequenceClassifier(TransformerBase):
         Returns:
             logits
         """
-        data_set = self.convert_to_tensors(examples, include_labels=evaluate)
+        data_set = self.convert_to_tensors(
+            examples, max_seq_length=max_seq_length, include_labels=evaluate)
         inf_sampler = SequentialSampler(data_set)
         inf_dataloader = DataLoader(data_set, sampler=inf_sampler, batch_size=batch_size)
         logits = self._evaluate(inf_dataloader)
@@ -230,7 +227,7 @@ class TransformerSequenceClassifier(TransformerBase):
         features = []
         for (ex_index, example) in enumerate(examples):
             if ex_index % 10000 == 0:
-                logger.info("Writing example %d of %d" % (ex_index, len(examples)))
+                logger.info("Writing example %d of %d", ex_index, len(examples))
 
             inputs = tokenizer.encode_plus(
                 example.text,

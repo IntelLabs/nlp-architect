@@ -74,12 +74,6 @@ class Task:
         self.data_dir = data_dir
         self.task_type = task_type
 
-    def get_split_train_examples(self, labeled: int, unlabeled: int):
-        """split the train set into 2 sub sets (given by input size) to be
-        used as labelled and unlabeled sets for semi-supervision tasks
-        """
-        return self.processor.get_split_train_examples(self.data_dir, labeled, unlabeled)
-
     def get_train_examples(self):
         return self.processor.get_train_examples(self.data_dir)
 
@@ -197,3 +191,26 @@ def get_best_indexes(logits, n_best_size):
             break
         best_indexes.append(index_and_score[i][0])
     return best_indexes
+
+
+def split_column_dataset(
+        first_count: int, second_count: int, out_folder, dataset, first_filename, second_filename, tag_col=-1):
+    """
+    Splits a single column tagged dataset into two files according to the amount of examples
+    requested to be included in each file.
+    split1_count (int) : the amount of examples to include in the first split file
+    split2_count (int) : the amount of examples to include in the second split file
+    out_folder (str) : the folder in which the result files will be stored
+    dataset (str) : the path to the original data file
+    split1_filename (str) : the name of the first split file
+    split2_filename (str) : the name of the second split file
+    tag_col (int) : the index of the tag column
+    """
+    lines = read_column_tagged_file(dataset, tag_col=tag_col)
+    num_of_examples = len(lines)
+    assert first_count + second_count <= num_of_examples and first_count > 0 and second_count > 0
+    selected_lines = random.sample(lines, first_count + second_count)
+    first_data = selected_lines[:first_count]
+    second_data = selected_lines[first_count:]
+    write_column_tagged_file(out_folder + os.sep + first_filename, first_data)
+    write_column_tagged_file(out_folder + os.sep + second_filename, second_data)

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.models.cross_doc_coref.system.sieves.run_sieve_system &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
+  <title>nlp_architect.models.cross_doc_coref.system.sieves.run_sieve_system &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
   
 
   
@@ -116,7 +116,6 @@
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../../service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../../developer_guide.html">Developer Guide</a></li>
 </ul>
 
@@ -202,17 +201,17 @@
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">time</span>
 
-<span class="kn">from</span> <span class="nn">nlp_architect.common.cdc.cluster</span> <span class="k">import</span> <span class="n">Clusters</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.common.cdc.topics</span> <span class="k">import</span> <span class="n">Topic</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.models.cross_doc_coref.system.sieves.sieves</span> <span class="k">import</span> <span class="n">SieveClusterMerger</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.models.cross_doc_coref.system.sieves_container_init</span> <span class="k">import</span> \
+<span class="kn">from</span> <span class="nn">nlp_architect.common.cdc.cluster</span> <span class="kn">import</span> <span class="n">Clusters</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.common.cdc.topics</span> <span class="kn">import</span> <span class="n">Topic</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.models.cross_doc_coref.system.sieves.sieves</span> <span class="kn">import</span> <span class="n">SieveClusterMerger</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.models.cross_doc_coref.system.sieves_container_init</span> <span class="kn">import</span> \
     <span class="n">SievesContainerInitialization</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="RunSystemsSuper"><a class="viewcode-back" href="../../../../../../generated_api/nlp_architect.models.cross_doc_coref.system.sieves.html#nlp_architect.models.cross_doc_coref.system.sieves.run_sieve_system.RunSystemsSuper">[docs]</a><span class="k">class</span> <span class="nc">RunSystemsSuper</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">topic</span><span class="p">:</span> <span class="n">Topic</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">topic</span><span class="p">:</span> <span class="n">Topic</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sieves</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">results_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">results_ordered</span> <span class="o">=</span> <span class="p">[]</span>
@@ -268,14 +267,14 @@
 
 
 <div class="viewcode-block" id="RunSystemsEntity"><a class="viewcode-back" href="../../../../../../generated_api/nlp_architect.models.cross_doc_coref.system.sieves.html#nlp_architect.models.cross_doc_coref.system.sieves.run_sieve_system.RunSystemsEntity">[docs]</a><span class="k">class</span> <span class="nc">RunSystemsEntity</span><span class="p">(</span><span class="n">RunSystemsSuper</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">topic</span><span class="p">:</span> <span class="n">Topic</span><span class="p">,</span> <span class="n">resources</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">topic</span><span class="p">:</span> <span class="n">Topic</span><span class="p">,</span> <span class="n">resources</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">RunSystemsEntity</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">topic</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sieves</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_sieves_from_config</span><span class="p">(</span><span class="n">resources</span><span class="o">.</span><span class="n">entity_config</span><span class="p">,</span>
                                                   <span class="n">resources</span><span class="o">.</span><span class="n">get_module_from_relation</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="RunSystemsEvent"><a class="viewcode-back" href="../../../../../../generated_api/nlp_architect.models.cross_doc_coref.system.sieves.html#nlp_architect.models.cross_doc_coref.system.sieves.run_sieve_system.RunSystemsEvent">[docs]</a><span class="k">class</span> <span class="nc">RunSystemsEvent</span><span class="p">(</span><span class="n">RunSystemsSuper</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">topic</span><span class="p">,</span> <span class="n">resources</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">topic</span><span class="p">,</span> <span class="n">resources</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">RunSystemsEvent</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">topic</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sieves</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_sieves_from_config</span><span class="p">(</span><span class="n">resources</span><span class="o">.</span><span class="n">event_config</span><span class="p">,</span>
                                                   <span class="n">resources</span><span class="o">.</span><span class="n">get_module_from_relation</span><span class="p">)</span></div>

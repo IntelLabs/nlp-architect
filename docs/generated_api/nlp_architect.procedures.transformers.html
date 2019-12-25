@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.procedures.transformers package &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
+  <title>nlp_architect.procedures.transformers package &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
   
 
   
@@ -40,7 +40,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="nlp_architect.server package" href="nlp_architect.server.html" />
+    <link rel="next" title="nlp_architect.solutions package" href="nlp_architect.solutions.html" />
     <link rel="prev" title="nlp_architect.procedures package" href="nlp_architect.procedures.html" /> 
 </head>
 
@@ -132,18 +132,16 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="nlp_architect.procedures.html#submodules">Submodules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="nlp_architect.procedures.html#nlp-architect-procedures-procedure-module">nlp_architect.procedures.procedure module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="nlp_architect.procedures.html#nlp-architect-procedures-registry-module">nlp_architect.procedures.registry module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="nlp_architect.procedures.html#nlp-architect-procedures-token-tagging-module">nlp_architect.procedures.token_tagging module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="nlp_architect.procedures.html#module-contents">Module contents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.procedures.html#module-nlp_architect.procedures.procedure">nlp_architect.procedures.procedure module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.procedures.html#module-nlp_architect.procedures.registry">nlp_architect.procedures.registry module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.procedures.html#module-nlp_architect.procedures.token_tagging">nlp_architect.procedures.token_tagging module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nlp_architect.procedures.html#module-nlp_architect.procedures">Module contents</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="nlp_architect.server.html">nlp_architect.server package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nlp_architect.solutions.html">nlp_architect.solutions package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nlp_architect.utils.html">nlp_architect.utils package</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../developer_guide.html">Developer Guide</a></li>
 </ul>
 
@@ -216,14 +214,136 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="nlp-architect-procedures-transformers-base-module">
-<h2>nlp_architect.procedures.transformers.base module<a class="headerlink" href="#nlp-architect-procedures-transformers-base-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-nlp_architect.procedures.transformers.base">
+<span id="nlp-architect-procedures-transformers-base-module"></span><h2>nlp_architect.procedures.transformers.base module<a class="headerlink" href="#module-nlp_architect.procedures.transformers.base" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="nlp_architect.procedures.transformers.base.create_base_args">
+<code class="descclassname">nlp_architect.procedures.transformers.base.</code><code class="descname">create_base_args</code><span class="sig-paren">(</span><em>parser: argparse.ArgumentParser</em>, <em>model_types=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/procedures/transformers/base.html#create_base_args"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.procedures.transformers.base.create_base_args" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add base arguments for Transformers based models</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.procedures.transformers.base.inference_args">
+<code class="descclassname">nlp_architect.procedures.transformers.base.</code><code class="descname">inference_args</code><span class="sig-paren">(</span><em>parser: argparse.ArgumentParser</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/procedures/transformers/base.html#inference_args"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.procedures.transformers.base.inference_args" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add inference specific arguments for Transoformer based models</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.procedures.transformers.base.train_args">
+<code class="descclassname">nlp_architect.procedures.transformers.base.</code><code class="descname">train_args</code><span class="sig-paren">(</span><em>parser: argparse.ArgumentParser</em>, <em>models_family=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/procedures/transformers/base.html#train_args"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.procedures.transformers.base.train_args" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add training specific arguments for Transformer based models</p>
+</dd></dl>
+
 </div>
-<div class="section" id="nlp-architect-procedures-transformers-glue-module">
-<h2>nlp_architect.procedures.transformers.glue module<a class="headerlink" href="#nlp-architect-procedures-transformers-glue-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-nlp_architect.procedures.transformers.glue">
+<span id="nlp-architect-procedures-transformers-glue-module"></span><h2>nlp_architect.procedures.transformers.glue module<a class="headerlink" href="#module-nlp_architect.procedures.transformers.glue" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nlp_architect.procedures.transformers.glue.TransformerGlueRun">
+<em class="property">class </em><code class="descclassname">nlp_architect.procedures.transformers.glue.</code><code class="descname">TransformerGlueRun</code><span class="sig-paren">(</span><em>parser=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/procedures/transformers/glue.html#TransformerGlueRun"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.procedures.transformers.glue.TransformerGlueRun" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="nlp_architect.procedures.html#nlp_architect.procedures.procedure.Procedure" title="nlp_architect.procedures.procedure.Procedure"><code class="xref py py-class docutils literal notranslate"><span class="pre">nlp_architect.procedures.procedure.Procedure</span></code></a></p>
+<dl class="staticmethod">
+<dt id="nlp_architect.procedures.transformers.glue.TransformerGlueRun.add_arguments">
+<em class="property">static </em><code class="descname">add_arguments</code><span class="sig-paren">(</span><em>parser: argparse.ArgumentParser</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/procedures/transformers/glue.html#TransformerGlueRun.add_arguments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.procedures.transformers.glue.TransformerGlueRun.add_arguments" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="nlp_architect.procedures.transformers.glue.TransformerGlueRun.run_procedure">
+<em class="property">static </em><code class="descname">run_procedure</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/procedures/transformers/glue.html#TransformerGlueRun.run_procedure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.procedures.transformers.glue.TransformerGlueRun.run_procedure" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nlp_architect.procedures.transformers.glue.TransformerGlueTrain">
+<em class="property">class </em><code class="descclassname">nlp_architect.procedures.transformers.glue.</code><code class="descname">TransformerGlueTrain</code><span class="sig-paren">(</span><em>parser=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/procedures/transformers/glue.html#TransformerGlueTrain"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.procedures.transformers.glue.TransformerGlueTrain" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="nlp_architect.procedures.html#nlp_architect.procedures.procedure.Procedure" title="nlp_architect.procedures.procedure.Procedure"><code class="xref py py-class docutils literal notranslate"><span class="pre">nlp_architect.procedures.procedure.Procedure</span></code></a></p>
+<dl class="staticmethod">
+<dt id="nlp_architect.procedures.transformers.glue.TransformerGlueTrain.add_arguments">
+<em class="property">static </em><code class="descname">add_arguments</code><span class="sig-paren">(</span><em>parser: argparse.ArgumentParser</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/procedures/transformers/glue.html#TransformerGlueTrain.add_arguments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.procedures.transformers.glue.TransformerGlueTrain.add_arguments" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="nlp_architect.procedures.transformers.glue.TransformerGlueTrain.run_procedure">
+<em class="property">static </em><code class="descname">run_procedure</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/procedures/transformers/glue.html#TransformerGlueTrain.run_procedure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.procedures.transformers.glue.TransformerGlueTrain.run_procedure" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.procedures.transformers.glue.add_glue_args">
+<code class="descclassname">nlp_architect.procedures.transformers.glue.</code><code class="descname">add_glue_args</code><span class="sig-paren">(</span><em>parser: argparse.ArgumentParser</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/procedures/transformers/glue.html#add_glue_args"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.procedures.transformers.glue.add_glue_args" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.procedures.transformers.glue.add_glue_inference_args">
+<code class="descclassname">nlp_architect.procedures.transformers.glue.</code><code class="descname">add_glue_inference_args</code><span class="sig-paren">(</span><em>parser: argparse.ArgumentParser</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/procedures/transformers/glue.html#add_glue_inference_args"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.procedures.transformers.glue.add_glue_inference_args" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.procedures.transformers.glue.do_inference">
+<code class="descclassname">nlp_architect.procedures.transformers.glue.</code><code class="descname">do_inference</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/procedures/transformers/glue.html#do_inference"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.procedures.transformers.glue.do_inference" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.procedures.transformers.glue.do_training">
+<code class="descclassname">nlp_architect.procedures.transformers.glue.</code><code class="descname">do_training</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/procedures/transformers/glue.html#do_training"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.procedures.transformers.glue.do_training" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.procedures.transformers.glue.get_metric_fn">
+<code class="descclassname">nlp_architect.procedures.transformers.glue.</code><code class="descname">get_metric_fn</code><span class="sig-paren">(</span><em>task_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/procedures/transformers/glue.html#get_metric_fn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.procedures.transformers.glue.get_metric_fn" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </div>
-<div class="section" id="nlp-architect-procedures-transformers-seq-tag-module">
-<h2>nlp_architect.procedures.transformers.seq_tag module<a class="headerlink" href="#nlp-architect-procedures-transformers-seq-tag-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-nlp_architect.procedures.transformers.seq_tag">
+<span id="nlp-architect-procedures-transformers-seq-tag-module"></span><h2>nlp_architect.procedures.transformers.seq_tag module<a class="headerlink" href="#module-nlp_architect.procedures.transformers.seq_tag" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nlp_architect.procedures.transformers.seq_tag.TransformerTokenClsRun">
+<em class="property">class </em><code class="descclassname">nlp_architect.procedures.transformers.seq_tag.</code><code class="descname">TransformerTokenClsRun</code><span class="sig-paren">(</span><em>parser=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/procedures/transformers/seq_tag.html#TransformerTokenClsRun"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.procedures.transformers.seq_tag.TransformerTokenClsRun" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="nlp_architect.procedures.html#nlp_architect.procedures.procedure.Procedure" title="nlp_architect.procedures.procedure.Procedure"><code class="xref py py-class docutils literal notranslate"><span class="pre">nlp_architect.procedures.procedure.Procedure</span></code></a></p>
+<dl class="staticmethod">
+<dt id="nlp_architect.procedures.transformers.seq_tag.TransformerTokenClsRun.add_arguments">
+<em class="property">static </em><code class="descname">add_arguments</code><span class="sig-paren">(</span><em>parser: argparse.ArgumentParser</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/procedures/transformers/seq_tag.html#TransformerTokenClsRun.add_arguments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.procedures.transformers.seq_tag.TransformerTokenClsRun.add_arguments" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="nlp_architect.procedures.transformers.seq_tag.TransformerTokenClsRun.run_procedure">
+<em class="property">static </em><code class="descname">run_procedure</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/procedures/transformers/seq_tag.html#TransformerTokenClsRun.run_procedure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.procedures.transformers.seq_tag.TransformerTokenClsRun.run_procedure" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nlp_architect.procedures.transformers.seq_tag.TransformerTokenClsTrain">
+<em class="property">class </em><code class="descclassname">nlp_architect.procedures.transformers.seq_tag.</code><code class="descname">TransformerTokenClsTrain</code><span class="sig-paren">(</span><em>parser=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/procedures/transformers/seq_tag.html#TransformerTokenClsTrain"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.procedures.transformers.seq_tag.TransformerTokenClsTrain" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="nlp_architect.procedures.html#nlp_architect.procedures.procedure.Procedure" title="nlp_architect.procedures.procedure.Procedure"><code class="xref py py-class docutils literal notranslate"><span class="pre">nlp_architect.procedures.procedure.Procedure</span></code></a></p>
+<dl class="staticmethod">
+<dt id="nlp_architect.procedures.transformers.seq_tag.TransformerTokenClsTrain.add_arguments">
+<em class="property">static </em><code class="descname">add_arguments</code><span class="sig-paren">(</span><em>parser: argparse.ArgumentParser</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/procedures/transformers/seq_tag.html#TransformerTokenClsTrain.add_arguments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.procedures.transformers.seq_tag.TransformerTokenClsTrain.add_arguments" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="nlp_architect.procedures.transformers.seq_tag.TransformerTokenClsTrain.run_procedure">
+<em class="property">static </em><code class="descname">run_procedure</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/procedures/transformers/seq_tag.html#TransformerTokenClsTrain.run_procedure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.procedures.transformers.seq_tag.TransformerTokenClsTrain.run_procedure" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.procedures.transformers.seq_tag.do_inference">
+<code class="descclassname">nlp_architect.procedures.transformers.seq_tag.</code><code class="descname">do_inference</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/procedures/transformers/seq_tag.html#do_inference"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.procedures.transformers.seq_tag.do_inference" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.procedures.transformers.seq_tag.do_training">
+<code class="descclassname">nlp_architect.procedures.transformers.seq_tag.</code><code class="descname">do_training</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/procedures/transformers/seq_tag.html#do_training"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.procedures.transformers.seq_tag.do_training" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.procedures.transformers.seq_tag.process_inference_input">
+<code class="descclassname">nlp_architect.procedures.transformers.seq_tag.</code><code class="descname">process_inference_input</code><span class="sig-paren">(</span><em>input_file</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/procedures/transformers/seq_tag.html#process_inference_input"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.procedures.transformers.seq_tag.process_inference_input" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </div>
 <div class="section" id="module-nlp_architect.procedures.transformers">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-nlp_architect.procedures.transformers" title="Permalink to this headline">¶</a></h2>

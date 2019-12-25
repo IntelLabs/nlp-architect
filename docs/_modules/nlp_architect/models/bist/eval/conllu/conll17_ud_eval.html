@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.models.bist.eval.conllu.conll17_ud_eval &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
+  <title>nlp_architect.models.bist.eval.conllu.conll17_ud_eval &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
   
 
   
@@ -116,7 +116,6 @@
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../../service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../../developer_guide.html">Developer Guide</a></li>
 </ul>
 
@@ -291,7 +290,7 @@
     <span class="c1"># Internal representation classes</span>
     <span class="k">class</span> <span class="nc">UDRepresentation</span><span class="p">:</span>
         <span class="c1"># pylint: disable=too-few-public-methods</span>
-        <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
             <span class="c1"># Characters of all the tokens in the whole file.</span>
             <span class="c1"># Whitespace between tokens is not included.</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">characters</span> <span class="o">=</span> <span class="p">[]</span>
@@ -304,7 +303,7 @@
 
     <span class="k">class</span> <span class="nc">UDSpan</span><span class="p">:</span>
         <span class="c1"># pylint: disable=too-few-public-methods</span>
-        <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
+        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">start</span> <span class="o">=</span> <span class="n">start</span>
             <span class="c1"># Note that self.end marks the first position **after the end** of</span>
             <span class="c1"># span, so we can use characters[start:end] or range(start, end).</span>
@@ -312,7 +311,7 @@
 
     <span class="k">class</span> <span class="nc">UDWord</span><span class="p">:</span>
         <span class="c1"># pylint: disable=too-few-public-methods</span>
-        <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">span</span><span class="p">,</span> <span class="n">columns</span><span class="p">,</span> <span class="n">is_multiword</span><span class="p">):</span>
+        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">span</span><span class="p">,</span> <span class="n">columns</span><span class="p">,</span> <span class="n">is_multiword</span><span class="p">):</span>
             <span class="c1"># Span of this word (or MWT, see below) within</span>
             <span class="c1"># ud_representation.characters.</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">span</span> <span class="o">=</span> <span class="n">span</span>
@@ -448,7 +447,7 @@
     <span class="c1"># pylint: disable=too-many-locals</span>
     <span class="k">class</span> <span class="nc">Score</span><span class="p">:</span>
         <span class="c1"># pylint: disable=too-few-public-methods</span>
-        <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gold_total</span><span class="p">,</span> <span class="n">system_total</span><span class="p">,</span> <span class="n">correct</span><span class="p">,</span>
+        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gold_total</span><span class="p">,</span> <span class="n">system_total</span><span class="p">,</span> <span class="n">correct</span><span class="p">,</span>
                      <span class="n">aligned_total</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">precision</span> <span class="o">=</span> <span class="n">correct</span> <span class="o">/</span> <span class="n">system_total</span> <span class="k">if</span> <span class="n">system_total</span> <span class="k">else</span> <span class="mf">0.0</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">recall</span> <span class="o">=</span> <span class="n">correct</span> <span class="o">/</span> <span class="n">gold_total</span> <span class="k">if</span> <span class="n">gold_total</span> <span class="k">else</span> <span class="mf">0.0</span>
@@ -459,14 +458,14 @@
 
     <span class="k">class</span> <span class="nc">AlignmentWord</span><span class="p">:</span>
         <span class="c1"># pylint: disable=too-few-public-methods</span>
-        <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gold_word</span><span class="p">,</span> <span class="n">system_word</span><span class="p">):</span>
+        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gold_word</span><span class="p">,</span> <span class="n">system_word</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">gold_word</span> <span class="o">=</span> <span class="n">gold_word</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">system_word</span> <span class="o">=</span> <span class="n">system_word</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">gold_parent</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">system_parent_gold_aligned</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="k">class</span> <span class="nc">Alignment</span><span class="p">:</span>
-        <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gold_words</span><span class="p">,</span> <span class="n">system_words</span><span class="p">):</span>
+        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gold_words</span><span class="p">,</span> <span class="n">system_words</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">gold_words</span> <span class="o">=</span> <span class="n">gold_words</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">system_words</span> <span class="o">=</span> <span class="n">system_words</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">matched_words</span> <span class="o">=</span> <span class="p">[]</span>

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.models.absa.train.train &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
+  <title>nlp_architect.models.absa.train.train &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
   
 
   
@@ -116,7 +116,6 @@
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../developer_guide.html">Developer Guide</a></li>
 </ul>
 
@@ -198,16 +197,16 @@
 <span class="c1"># See the License for the specific language governing permissions and</span>
 <span class="c1"># limitations under the License.</span>
 <span class="c1"># ******************************************************************************</span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="k">import</span> <span class="n">Path</span><span class="p">,</span> <span class="n">PosixPath</span>
-<span class="kn">from</span> <span class="nn">os</span> <span class="k">import</span> <span class="n">PathLike</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span><span class="p">,</span> <span class="n">PosixPath</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">PathLike</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
 
-<span class="kn">from</span> <span class="nn">nlp_architect.models.absa</span> <span class="k">import</span> <span class="n">TRAIN_OUT</span><span class="p">,</span> <span class="n">LEXICONS_OUT</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.models.absa.train.acquire_terms</span> <span class="k">import</span> <span class="n">AcquireTerms</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.models.absa.train.rerank_terms</span> <span class="k">import</span> <span class="n">RerankTerms</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.models.absa.utils</span> <span class="k">import</span> <span class="n">parse_docs</span><span class="p">,</span> <span class="n">_download_pretrained_rerank_model</span><span class="p">,</span> \
+<span class="kn">from</span> <span class="nn">nlp_architect.models.absa</span> <span class="kn">import</span> <span class="n">TRAIN_OUT</span><span class="p">,</span> <span class="n">LEXICONS_OUT</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.models.absa.train.acquire_terms</span> <span class="kn">import</span> <span class="n">AcquireTerms</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.models.absa.train.rerank_terms</span> <span class="kn">import</span> <span class="n">RerankTerms</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.models.absa.utils</span> <span class="kn">import</span> <span class="n">parse_docs</span><span class="p">,</span> <span class="n">_download_pretrained_rerank_model</span><span class="p">,</span> \
     <span class="n">_write_aspect_lex</span><span class="p">,</span> <span class="n">_write_opinion_lex</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.utils.io</span> <span class="k">import</span> <span class="n">download_unzip</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.utils.io</span> <span class="kn">import</span> <span class="n">download_unzip</span>
 
 <span class="n">EMBEDDING_URL</span> <span class="o">=</span> <span class="s1">&#39;http://nlp.stanford.edu/data&#39;</span><span class="p">,</span> <span class="s1">&#39;glove.840B.300d.zip&#39;</span>
 <span class="n">EMBEDDING_PATH</span> <span class="o">=</span> <span class="n">TRAIN_OUT</span> <span class="o">/</span> <span class="s1">&#39;word_emb_unzipped&#39;</span> <span class="o">/</span> <span class="s1">&#39;glove.840B.300d.txt&#39;</span>
@@ -215,11 +214,11 @@
 
 
 <div class="viewcode-block" id="TrainSentiment"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.models.absa.train.html#nlp_architect.models.absa.train.train.TrainSentiment">[docs]</a><span class="k">class</span> <span class="nc">TrainSentiment</span><span class="p">:</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parse</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">rerank_model</span><span class="p">:</span> <span class="n">PathLike</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parse</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">rerank_model</span><span class="p">:</span> <span class="n">PathLike</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                  <span class="n">asp_thresh</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">op_thresh</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">max_iter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">acquire_lexicon</span> <span class="o">=</span> <span class="n">AcquireTerms</span><span class="p">(</span><span class="n">asp_thresh</span><span class="p">,</span> <span class="n">op_thresh</span><span class="p">,</span> <span class="n">max_iter</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">parse</span><span class="p">:</span>
-            <span class="kn">from</span> <span class="nn">nlp_architect.pipelines.spacy_bist</span> <span class="k">import</span> <span class="n">SpacyBISTParser</span>
+            <span class="kn">from</span> <span class="nn">nlp_architect.pipelines.spacy_bist</span> <span class="kn">import</span> <span class="n">SpacyBISTParser</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">parser</span> <span class="o">=</span> <span class="n">SpacyBISTParser</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">parser</span> <span class="o">=</span> <span class="kc">None</span>

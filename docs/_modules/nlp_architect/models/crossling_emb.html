@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.models.crossling_emb &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
+  <title>nlp_architect.models.crossling_emb &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
   
 
   
@@ -116,7 +116,6 @@
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developer_guide.html">Developer Guide</a></li>
 </ul>
 
@@ -198,7 +197,7 @@
 <span class="c1"># See the License for the specific language governing permissions and</span>
 <span class="c1"># limitations under the License.</span>
 <span class="c1"># ******************************************************************************</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">division</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">division</span>
 
 <span class="kn">import</span> <span class="nn">io</span>
 <span class="kn">import</span> <span class="nn">os</span>
@@ -211,7 +210,7 @@
 
 <div class="viewcode-block" id="Discriminator"><a class="viewcode-back" href="../../../generated_api/nlp_architect.models.html#nlp_architect.models.crossling_emb.Discriminator">[docs]</a><span class="k">class</span> <span class="nc">Discriminator</span><span class="p">:</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_data</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">lr_ph</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_data</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">lr_ph</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">input_data</span> <span class="o">=</span> <span class="n">input_data</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lr_ph</span> <span class="o">=</span> <span class="n">lr_ph</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">do_ph</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;dropout_ph&quot;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
@@ -257,7 +256,7 @@
 
 <div class="viewcode-block" id="Generator"><a class="viewcode-back" href="../../../generated_api/nlp_architect.models.html#nlp_architect.models.crossling_emb.Generator">[docs]</a><span class="k">class</span> <span class="nc">Generator</span><span class="p">:</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">src_ten</span><span class="p">,</span> <span class="n">tgt_ten</span><span class="p">,</span> <span class="n">emb_dim</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">smooth_val</span><span class="p">,</span> <span class="n">lr_ph</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">vocab_size</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">src_ten</span><span class="p">,</span> <span class="n">tgt_ten</span><span class="p">,</span> <span class="n">emb_dim</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">smooth_val</span><span class="p">,</span> <span class="n">lr_ph</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">vocab_size</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">src_ten</span> <span class="o">=</span> <span class="n">src_ten</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tgt_ten</span> <span class="o">=</span> <span class="n">tgt_ten</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">emb_dim</span> <span class="o">=</span> <span class="n">emb_dim</span>
@@ -357,7 +356,7 @@
 <span class="sd">    Main network which does cross-lingual embeddings training</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hparams</span><span class="p">,</span> <span class="n">src_vec</span><span class="p">,</span> <span class="n">tgt_vec</span><span class="p">,</span> <span class="n">vocab_size</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hparams</span><span class="p">,</span> <span class="n">src_vec</span><span class="p">,</span> <span class="n">tgt_vec</span><span class="p">,</span> <span class="n">vocab_size</span><span class="p">):</span>
         <span class="c1"># Hyperparameters</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span> <span class="o">=</span> <span class="n">hparams</span><span class="o">.</span><span class="n">batch_size</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">smooth_val</span> <span class="o">=</span> <span class="n">hparams</span><span class="o">.</span><span class="n">smooth_val</span>

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.data.intent_datasets &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
+  <title>nlp_architect.data.intent_datasets &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
   
 
   
@@ -116,7 +116,6 @@
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developer_guide.html">Developer Guide</a></li>
 </ul>
 
@@ -197,15 +196,15 @@
 <span class="c1"># limitations under the License.</span>
 <span class="c1"># ******************************************************************************</span>
 
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">unicode_literals</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">unicode_literals</span>
 
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.utils.generic</span> <span class="k">import</span> <span class="n">pad_sentences</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.utils.text</span> <span class="k">import</span> <span class="n">SpacyInstance</span><span class="p">,</span> <span class="n">Vocabulary</span><span class="p">,</span> <span class="n">character_vector_generator</span><span class="p">,</span> \
+<span class="kn">from</span> <span class="nn">nlp_architect.utils.generic</span> <span class="kn">import</span> <span class="n">pad_sentences</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.utils.text</span> <span class="kn">import</span> <span class="n">SpacyInstance</span><span class="p">,</span> <span class="n">Vocabulary</span><span class="p">,</span> <span class="n">character_vector_generator</span><span class="p">,</span> \
     <span class="n">word_vector_generator</span>
 
 
@@ -217,7 +216,7 @@
 <span class="sd">        sentence_length (int): max sentence length</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sentence_length</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">word_length</span><span class="o">=</span><span class="mi">12</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sentence_length</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">word_length</span><span class="o">=</span><span class="mi">12</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data_dict</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">vecs</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sentence_len</span> <span class="o">=</span> <span class="n">sentence_length</span>
@@ -326,7 +325,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">files</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="s1">&#39;test&#39;</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">train_file</span><span class="p">,</span> <span class="n">test_file</span><span class="p">,</span> <span class="n">sentence_length</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">word_length</span><span class="o">=</span><span class="mi">12</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">train_file</span><span class="p">,</span> <span class="n">test_file</span><span class="p">,</span> <span class="n">sentence_length</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">word_length</span><span class="o">=</span><span class="mi">12</span><span class="p">):</span>
         <span class="n">train_set_raw</span><span class="p">,</span> <span class="n">test_set_raw</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_dataset</span><span class="p">(</span><span class="n">train_file</span><span class="p">,</span> <span class="n">test_file</span><span class="p">)</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">TabularIntentDataset</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">sentence_length</span><span class="o">=</span><span class="n">sentence_length</span><span class="p">,</span>
                                                    <span class="n">word_length</span><span class="o">=</span><span class="n">word_length</span><span class="p">)</span>
@@ -406,7 +405,7 @@
     <span class="p">]</span>
     <span class="n">files</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="s1">&#39;test&#39;</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">sentence_length</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">word_length</span><span class="o">=</span><span class="mi">12</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">sentence_length</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">word_length</span><span class="o">=</span><span class="mi">12</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">path</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
             <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;invalid path for SNIPS dataset loader&#39;</span><span class="p">)</span>
             <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>

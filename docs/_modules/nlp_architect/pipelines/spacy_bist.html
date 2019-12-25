@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.pipelines.spacy_bist &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
+  <title>nlp_architect.pipelines.spacy_bist &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
   
 
   
@@ -116,7 +116,6 @@
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developer_guide.html">Developer Guide</a></li>
 </ul>
 
@@ -196,15 +195,15 @@
 <span class="c1"># See the License for the specific language governing permissions and</span>
 <span class="c1"># limitations under the License.</span>
 <span class="c1"># ******************************************************************************</span>
-<span class="kn">from</span> <span class="nn">os</span> <span class="k">import</span> <span class="n">path</span><span class="p">,</span> <span class="n">remove</span><span class="p">,</span> <span class="n">makedirs</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">path</span><span class="p">,</span> <span class="n">remove</span><span class="p">,</span> <span class="n">makedirs</span>
 
-<span class="kn">from</span> <span class="nn">nlp_architect.common.core_nlp_doc</span> <span class="k">import</span> <span class="n">CoreNLPDoc</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.data.conll</span> <span class="k">import</span> <span class="n">ConllEntry</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.models.bist_parser</span> <span class="k">import</span> <span class="n">BISTModel</span>
-<span class="kn">from</span> <span class="nn">nlp_architect</span> <span class="k">import</span> <span class="n">LIBRARY_OUT</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.utils.io</span> <span class="k">import</span> <span class="n">download_unlicensed_file</span><span class="p">,</span> <span class="n">uncompress_file</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.utils.io</span> <span class="k">import</span> <span class="n">validate</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.utils.text</span> <span class="k">import</span> <span class="n">SpacyInstance</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.common.core_nlp_doc</span> <span class="kn">import</span> <span class="n">CoreNLPDoc</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.data.conll</span> <span class="kn">import</span> <span class="n">ConllEntry</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.models.bist_parser</span> <span class="kn">import</span> <span class="n">BISTModel</span>
+<span class="kn">from</span> <span class="nn">nlp_architect</span> <span class="kn">import</span> <span class="n">LIBRARY_OUT</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.utils.io</span> <span class="kn">import</span> <span class="n">download_unlicensed_file</span><span class="p">,</span> <span class="n">uncompress_file</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.utils.io</span> <span class="kn">import</span> <span class="n">validate</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.utils.text</span> <span class="kn">import</span> <span class="n">SpacyInstance</span>
 
 
 <div class="viewcode-block" id="SpacyBISTParser"><a class="viewcode-back" href="../../../generated_api/nlp_architect.pipelines.html#nlp_architect.pipelines.spacy_bist.SpacyBISTParser">[docs]</a><span class="k">class</span> <span class="nc">SpacyBISTParser</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -219,7 +218,7 @@
     <span class="nb">dir</span> <span class="o">=</span> <span class="n">LIBRARY_OUT</span> <span class="o">/</span> <span class="s1">&#39;bist-pretrained&#39;</span>
     <span class="n">_pretrained</span> <span class="o">=</span> <span class="nb">dir</span> <span class="o">/</span> <span class="s1">&#39;bist.model&#39;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">spacy_model</span><span class="o">=</span><span class="s1">&#39;en&#39;</span><span class="p">,</span> <span class="n">bist_model</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">spacy_model</span><span class="o">=</span><span class="s1">&#39;en&#39;</span><span class="p">,</span> <span class="n">bist_model</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">validate</span><span class="p">((</span><span class="n">verbose</span><span class="p">,</span> <span class="nb">bool</span><span class="p">),</span> <span class="p">(</span><span class="n">spacy_model</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1000</span><span class="p">),</span>
                  <span class="p">(</span><span class="n">bist_model</span><span class="p">,</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="kc">None</span><span class="p">),</span> <span class="nb">str</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1000</span><span class="p">))</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">bist_model</span><span class="p">:</span>

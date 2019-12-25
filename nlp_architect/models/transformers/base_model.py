@@ -22,8 +22,9 @@ import torch
 from torch.utils.data import DataLoader
 from tqdm import tqdm, trange
 from transformers import (AdamW, BertConfig, BertTokenizer, RobertaConfig,
-                          RobertaTokenizer, WarmupLinearSchedule, XLMConfig,
-                          XLMTokenizer, XLNetConfig, XLNetTokenizer)
+                          RobertaTokenizer, XLMConfig, XLMTokenizer,
+                          XLNetConfig, XLNetTokenizer,
+                          get_linear_schedule_with_warmup)
 
 from nlp_architect.models import TrainableModel
 from nlp_architect.models.transformers.quantized_bert import \
@@ -142,8 +143,9 @@ class TransformerBase(TrainableModel):
                 nd in n for nd in no_decay)], 'weight_decay': 0.0}
         ]
         self.optimizer = AdamW(optimizer_grouped_parameters, lr=learning_rate, eps=adam_epsilon)
-        self.scheduler = WarmupLinearSchedule(self.optimizer, warmup_steps=warmup_steps,
-                                              t_total=total_steps)
+        self.scheduler = get_linear_schedule_with_warmup(self.optimizer,
+                                                         num_warmup_steps=warmup_steps,
+                                                         num_training_steps=total_steps)
 
     def _load_config(self, config_name=None):
         config = self.config_class.from_pretrained(config_name if config_name

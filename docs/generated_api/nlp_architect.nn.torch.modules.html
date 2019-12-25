@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.nn.torch.modules package &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
+  <title>nlp_architect.nn.torch.modules package &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
   
 
   
@@ -135,12 +135,10 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="nlp_architect.pipelines.html">nlp_architect.pipelines package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nlp_architect.procedures.html">nlp_architect.procedures package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nlp_architect.server.html">nlp_architect.server package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nlp_architect.solutions.html">nlp_architect.solutions package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nlp_architect.utils.html">nlp_architect.utils package</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../developer_guide.html">Developer Guide</a></li>
 </ul>
 
@@ -219,7 +217,7 @@
 <span id="nlp-architect-nn-torch-modules-embedders-module"></span><h2>nlp_architect.nn.torch.modules.embedders module<a class="headerlink" href="#module-nlp_architect.nn.torch.modules.embedders" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="nlp_architect.nn.torch.modules.embedders.CNNLSTM">
-<em class="property">class </em><code class="descclassname">nlp_architect.nn.torch.modules.embedders.</code><code class="descname">CNNLSTM</code><span class="sig-paren">(</span><em>word_vocab_size: int</em>, <em>num_labels: int</em>, <em>word_embedding_dims: int = 50</em>, <em>char_embedding_dims: int = 16</em>, <em>cnn_kernel_size: int = 3</em>, <em>cnn_num_filters: int = 128</em>, <em>lstm_hidden_size: int = 100</em>, <em>lstm_layers: int = 2</em>, <em>bidir: bool = True</em>, <em>dropout: float = 0.5</em>, <em>padding_idx: int = 0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/modules/embedders.html#CNNLSTM"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.modules.embedders.CNNLSTM" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">nlp_architect.nn.torch.modules.embedders.</code><code class="descname">CNNLSTM</code><span class="sig-paren">(</span><em>word_vocab_size: int</em>, <em>num_labels: int</em>, <em>word_embedding_dims: int = 100</em>, <em>char_embedding_dims: int = 16</em>, <em>cnn_kernel_size: int = 3</em>, <em>cnn_num_filters: int = 128</em>, <em>lstm_hidden_size: int = 100</em>, <em>lstm_layers: int = 2</em>, <em>bidir: bool = True</em>, <em>dropout: float = 0.5</em>, <em>padding_idx: int = 0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/modules/embedders.html#CNNLSTM"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.modules.embedders.CNNLSTM" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
 <p>CNN-LSTM embedder (based on Ma and Hovy. 2016)</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -311,7 +309,7 @@ A valid configuration file is a JSON file with fields as in class <cite>__init__
 
 <dl class="class">
 <dt id="nlp_architect.nn.torch.modules.embedders.IDCNN">
-<em class="property">class </em><code class="descclassname">nlp_architect.nn.torch.modules.embedders.</code><code class="descname">IDCNN</code><span class="sig-paren">(</span><em>word_vocab_size: int</em>, <em>num_labels: int</em>, <em>word_embedding_dims: int = 100</em>, <em>char_embedding_dims: int = 16</em>, <em>char_cnn_filters: int = 128</em>, <em>char_cnn_kernel_size: int = 3</em>, <em>cnn_kernel_size: int = 3</em>, <em>cnn_num_filters: int = 128</em>, <em>input_dropout: float = 0.5</em>, <em>word_dropout: float = 0.5</em>, <em>hidden_dropout: float = 0.5</em>, <em>blocks: int = 1</em>, <em>dilations: List = None</em>, <em>padding_idx: int = 0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/modules/embedders.html#IDCNN"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.modules.embedders.IDCNN" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">nlp_architect.nn.torch.modules.embedders.</code><code class="descname">IDCNN</code><span class="sig-paren">(</span><em>word_vocab_size: int</em>, <em>num_labels: int</em>, <em>word_embedding_dims: int = 100</em>, <em>char_embedding_dims: int = 16</em>, <em>char_cnn_filters: int = 128</em>, <em>char_cnn_kernel_size: int = 3</em>, <em>cnn_kernel_size: int = 3</em>, <em>cnn_num_filters: int = 128</em>, <em>input_dropout: float = 0.5</em>, <em>word_dropout: float = 0.5</em>, <em>hidden_dropout: float = 0.5</em>, <em>blocks: int = 1</em>, <em>dilations: List[T] = None</em>, <em>padding_idx: int = 0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/torch/modules/embedders.html#IDCNN"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.torch.modules.embedders.IDCNN" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
 <p>ID-CNN (iterated dilated) tagging model (based on Strubell et al 2017) with word character
 embedding (using CNN feature extractors)</p>

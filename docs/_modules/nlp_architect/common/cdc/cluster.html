@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.common.cdc.cluster &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
+  <title>nlp_architect.common.cdc.cluster &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
   
 
   
@@ -116,7 +116,6 @@
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../developer_guide.html">Developer Guide</a></li>
 </ul>
 
@@ -196,13 +195,13 @@
 <span class="c1"># See the License for the specific language governing permissions and</span>
 <span class="c1"># limitations under the License.</span>
 <span class="c1"># ******************************************************************************</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">List</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
 
-<span class="kn">from</span> <span class="nn">nlp_architect.common.cdc.mention_data</span> <span class="k">import</span> <span class="n">MentionData</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.common.cdc.mention_data</span> <span class="kn">import</span> <span class="n">MentionData</span>
 
 
 <div class="viewcode-block" id="Cluster"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.common.cdc.html#nlp_architect.common.cdc.cluster.Cluster">[docs]</a><span class="k">class</span> <span class="nc">Cluster</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coref_chain</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coref_chain</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Object represent a set of mentions with same coref chain id</span>
 
@@ -248,7 +247,7 @@
 <div class="viewcode-block" id="Clusters"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.common.cdc.html#nlp_architect.common.cdc.cluster.Clusters">[docs]</a><span class="k">class</span> <span class="nc">Clusters</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="n">cluster_coref_chain</span> <span class="o">=</span> <span class="mi">1000</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">topic_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">mentions</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">MentionData</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">topic_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">mentions</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">MentionData</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="sd">        Args:</span>

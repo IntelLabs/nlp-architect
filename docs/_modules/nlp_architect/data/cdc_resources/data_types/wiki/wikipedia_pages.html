@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_pages &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
+  <title>nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_pages &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
   
 
   
@@ -116,7 +116,6 @@
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../../service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../../developer_guide.html">Developer Guide</a></li>
 </ul>
 
@@ -199,7 +198,7 @@
 
 
 <div class="viewcode-block" id="WikipediaPages"><a class="viewcode-back" href="../../../../../../generated_api/nlp_architect.data.cdc_resources.data_types.wiki.html#nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_pages.WikipediaPages">[docs]</a><span class="k">class</span> <span class="nc">WikipediaPages</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Object represent a set of Wikipedia Pages</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -279,7 +278,7 @@
         <span class="n">result_dict</span><span class="p">[</span><span class="s1">&#39;pages&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">page_list</span>
         <span class="k">return</span> <span class="n">result_dict</span></div>
 
-    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="n">result_str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
         <span class="k">for</span> <span class="n">page</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pages</span><span class="p">:</span>
             <span class="n">result_str</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">page</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span>

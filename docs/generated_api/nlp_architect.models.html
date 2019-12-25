@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.models package &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
+  <title>nlp_architect.models package &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
   
 
   
@@ -155,12 +155,10 @@
 <li class="toctree-l2"><a class="reference internal" href="nlp_architect.nn.html">nlp_architect.nn package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nlp_architect.pipelines.html">nlp_architect.pipelines package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nlp_architect.procedures.html">nlp_architect.procedures package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nlp_architect.server.html">nlp_architect.server package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nlp_architect.solutions.html">nlp_architect.solutions package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nlp_architect.utils.html">nlp_architect.utils package</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../developer_guide.html">Developer Guide</a></li>
 </ul>
 
@@ -341,11 +339,11 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="nlp_architect.models.transformers.html">nlp_architect.models.transformers package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="nlp_architect.models.transformers.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nlp_architect.models.transformers.html#nlp-architect-models-transformers-base-model-module">nlp_architect.models.transformers.base_model module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nlp_architect.models.transformers.html#nlp-architect-models-transformers-quantized-bert-module">nlp_architect.models.transformers.quantized_bert module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nlp_architect.models.transformers.html#nlp-architect-models-transformers-sequence-classification-module">nlp_architect.models.transformers.sequence_classification module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nlp_architect.models.transformers.html#nlp-architect-models-transformers-token-classification-module">nlp_architect.models.transformers.token_classification module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nlp_architect.models.transformers.html#module-contents">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.models.transformers.html#module-nlp_architect.models.transformers.base_model">nlp_architect.models.transformers.base_model module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.models.transformers.html#module-nlp_architect.models.transformers.quantized_bert">nlp_architect.models.transformers.quantized_bert module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.models.transformers.html#module-nlp_architect.models.transformers.sequence_classification">nlp_architect.models.transformers.sequence_classification module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.models.transformers.html#module-nlp_architect.models.transformers.token_classification">nlp_architect.models.transformers.token_classification module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nlp_architect.models.transformers.html#module-nlp_architect.models.transformers">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -2104,6 +2102,37 @@ Supports pytorch embedder models, multi-gpu training, KD from teacher models</p>
 <li><strong>logging_steps</strong> (<em>int</em><em>, </em><em>optional</em>) – number of steps between logging. Defaults to 50.</li>
 <li><strong>save_steps</strong> (<em>int</em><em>, </em><em>optional</em>) – number of steps between model saves. Defaults to 100.</li>
 <li><strong>save_path</strong> (<em>str</em><em>, </em><em>optional</em>) – model output path. Defaults to None.</li>
+<li><strong>distiller</strong> (<a class="reference internal" href="../transformers_distillation.html#nlp_architect.nn.torch.distillation.TeacherStudentDistill" title="nlp_architect.nn.torch.distillation.TeacherStudentDistill"><em>TeacherStudentDistill</em></a><em>, </em><em>optional</em>) – KD model for training the model using</li>
+<li><strong>teacher model. Defaults to None.</strong> (<em>a</em>) – </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nlp_architect.models.tagging.NeuralTagger.train_pseudo">
+<code class="descname">train_pseudo</code><span class="sig-paren">(</span><em>labeled_data_set: torch.utils.data.dataloader.DataLoader</em>, <em>unlabeled_data_set: torch.utils.data.dataloader.DataLoader</em>, <em>distiller: nlp_architect.nn.torch.distillation.TeacherStudentDistill</em>, <em>dev_data_set: torch.utils.data.dataloader.DataLoader = None</em>, <em>test_data_set: torch.utils.data.dataloader.DataLoader = None</em>, <em>batch_size_l: int = 8</em>, <em>batch_size_ul: int = 8</em>, <em>epochs: int = 100</em>, <em>optimizer=None</em>, <em>max_grad_norm: float = 5.0</em>, <em>logging_steps: int = 50</em>, <em>save_steps: int = 100</em>, <em>save_path: str = None</em>, <em>save_best: bool = False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/tagging.html#NeuralTagger.train_pseudo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.tagging.NeuralTagger.train_pseudo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Train a tagging model</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>train_data_set</strong> (<em>DataLoader</em>) – train examples dataloader. If distiller object is</li>
+<li><strong>train examples should contain a tuple of student/teacher data examples.</strong> (<em>provided</em>) – </li>
+<li><strong>dev_data_set</strong> (<em>DataLoader</em><em>, </em><em>optional</em>) – dev examples dataloader. Defaults to None.</li>
+<li><strong>test_data_set</strong> (<em>DataLoader</em><em>, </em><em>optional</em>) – test examples dataloader. Defaults to None.</li>
+<li><strong>batch_size_l</strong> (<em>int</em><em>, </em><em>optional</em>) – batch size for the labeled dataset. Defaults to 8.</li>
+<li><strong>batch_size_ul</strong> (<em>int</em><em>, </em><em>optional</em>) – batch size for the unlabeled dataset. Defaults to 8.</li>
+<li><strong>epochs</strong> (<em>int</em><em>, </em><em>optional</em>) – num of epochs to train. Defaults to 100.</li>
+<li><strong>optimizer</strong> (<em>fn</em><em>, </em><em>optional</em>) – optimizer function. Defaults to default model optimizer.</li>
+<li><strong>max_grad_norm</strong> (<em>float</em><em>, </em><em>optional</em>) – max gradient norm. Defaults to 5.0.</li>
+<li><strong>logging_steps</strong> (<em>int</em><em>, </em><em>optional</em>) – number of steps between logging. Defaults to 50.</li>
+<li><strong>save_steps</strong> (<em>int</em><em>, </em><em>optional</em>) – number of steps between model saves. Defaults to 100.</li>
+<li><strong>save_path</strong> (<em>str</em><em>, </em><em>optional</em>) – model output path. Defaults to None.</li>
+<li><strong>save_best</strong> (<em>str</em><em>, </em><em>optional</em>) – wether to save model when result is best on dev set</li>
 <li><strong>distiller</strong> (<a class="reference internal" href="../transformers_distillation.html#nlp_architect.nn.torch.distillation.TeacherStudentDistill" title="nlp_architect.nn.torch.distillation.TeacherStudentDistill"><em>TeacherStudentDistill</em></a><em>, </em><em>optional</em>) – KD model for training the model using</li>
 <li><strong>teacher model. Defaults to None.</strong> (<em>a</em>) – </li>
 </ul>

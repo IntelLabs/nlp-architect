@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.data.cdc_resources.wikipedia.wiki_elastic &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
+  <title>nlp_architect.data.cdc_resources.wikipedia.wiki_elastic &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
   
 
   
@@ -116,7 +116,6 @@
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../developer_guide.html">Developer Guide</a></li>
 </ul>
 
@@ -200,17 +199,17 @@
 <span class="kn">import</span> <span class="nn">traceback</span>
 
 <span class="kn">import</span> <span class="nn">requests</span>
-<span class="kn">from</span> <span class="nn">elasticsearch</span> <span class="k">import</span> <span class="n">Elasticsearch</span>
+<span class="kn">from</span> <span class="nn">elasticsearch</span> <span class="kn">import</span> <span class="n">Elasticsearch</span>
 
-<span class="kn">from</span> <span class="nn">nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_page</span> <span class="k">import</span> <span class="n">WikipediaPage</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_page_extracted_relations</span> <span class="k">import</span> \
+<span class="kn">from</span> <span class="nn">nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_page</span> <span class="kn">import</span> <span class="n">WikipediaPage</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_page_extracted_relations</span> <span class="kn">import</span> \
     <span class="n">WikipediaPageExtractedRelations</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.data.cdc_resources.wikipedia.wiki_search_page_result</span> <span class="k">import</span> \
+<span class="kn">from</span> <span class="nn">nlp_architect.data.cdc_resources.wikipedia.wiki_search_page_result</span> <span class="kn">import</span> \
     <span class="n">WikipediaSearchPageResult</span>
 
 
 <div class="viewcode-block" id="WikiElastic"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.wikipedia.html#nlp_architect.data.cdc_resources.wikipedia.wiki_elastic.WikiElastic">[docs]</a><span class="k">class</span> <span class="nc">WikiElastic</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
         <span class="c1"># connect to our cluster</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cache</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_connected</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">):</span>

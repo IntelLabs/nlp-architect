@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.data.cdc_resources.embedding.embed_glove &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
+  <title>nlp_architect.data.cdc_resources.embedding.embed_glove &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
   
 
   
@@ -116,7 +116,6 @@
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../developer_guide.html">Developer Guide</a></li>
 </ul>
 
@@ -202,13 +201,13 @@
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="kn">from</span> <span class="nn">nlp_architect.common.cdc.mention_data</span> <span class="k">import</span> <span class="n">MentionDataLight</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.common.cdc.mention_data</span> <span class="kn">import</span> <span class="n">MentionDataLight</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="GloveEmbedding"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.embedding.html#nlp_architect.data.cdc_resources.embedding.embed_glove.GloveEmbedding">[docs]</a><span class="k">class</span> <span class="nc">GloveEmbedding</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">glove_file</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">glove_file</span><span class="p">):</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Loading Glove Online Embedding module, This my take a while...&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">word_to_ix</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">word_embeddings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_glove_for_vocab</span><span class="p">(</span><span class="n">glove_file</span><span class="p">)</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Glove Offline Embedding module lead successfully&#39;</span><span class="p">)</span>
@@ -230,7 +229,7 @@
 
 
 <div class="viewcode-block" id="GloveEmbeddingOffline"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.embedding.html#nlp_architect.data.cdc_resources.embedding.embed_glove.GloveEmbeddingOffline">[docs]</a><span class="k">class</span> <span class="nc">GloveEmbeddingOffline</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">embed_resources</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">embed_resources</span><span class="p">):</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Loading Glove Offline Embedding module&#39;</span><span class="p">)</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">embed_resources</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">out</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">word_to_ix</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">word_embeddings</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;latin1&#39;</span><span class="p">)</span>

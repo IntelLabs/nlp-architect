@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Quantize BERT with Quantization Aware Training &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
+  <title>Quantize BERT with Quantization Aware Training &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
   
 
   
@@ -129,7 +129,6 @@
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="developer_guide.html">Developer Guide</a></li>
 </ul>
 
@@ -210,7 +209,7 @@ accelarating computation, true quantization must be applied using
 optimized kernels and dedicated hardware.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last"><code class="xref py py-class docutils literal notranslate"><span class="pre">QuantizedBertModel</span></code> class does not make use of optimized Integer kernels for quantized Matrix Multiplication. Therefore, we expect that quantized inference will be slower than regular inference since quantization and dequantization operations are added to the unoptimized compute graph.</p>
+<p class="last"><a class="reference internal" href="generated_api/nlp_architect.models.transformers.html#nlp_architect.models.transformers.quantized_bert.QuantizedBertModel" title="nlp_architect.models.transformers.quantized_bert.QuantizedBertModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">QuantizedBertModel</span></code></a> class does not make use of optimized Integer kernels for quantized Matrix Multiplication. Therefore, we expect that quantized inference will be slower than regular inference since quantization and dequantization operations are added to the unoptimized compute graph.</p>
 </div>
 </div>
 <div class="section" id="quantization-aware-training">
@@ -336,7 +335,7 @@ as an example dataset.</p>
 <div class="section" id="training">
 <h3>Training<a class="headerlink" href="#training" title="Permalink to this headline">¶</a></h3>
 <p>To train Quantized BERT use the following code snippet:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nlp_architect train transformer_glue <span class="se">\</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nlp-train transformer_glue <span class="se">\</span>
     --task_name mrpc <span class="se">\</span>
     --model_name_or_path bert-base-uncased <span class="se">\</span>
     --model_type quant_bert <span class="se">\</span>
@@ -360,7 +359,7 @@ as an example dataset.</p>
 <h3>Inference<a class="headerlink" href="#inference" title="Permalink to this headline">¶</a></h3>
 <p>To run inference with a fine tuned quantized BERT use the
 following code snippet:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nlp_architect run transformer_glue <span class="se">\</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nlp-inference transformer_glue <span class="se">\</span>
     --model_path /tmp/mrpc-8bit <span class="se">\</span>
     --task_name mrpc <span class="se">\</span>
     --model_type quant_bert <span class="se">\</span>

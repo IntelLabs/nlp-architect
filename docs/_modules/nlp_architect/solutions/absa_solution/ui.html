@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.solutions.absa_solution.ui &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
+  <title>nlp_architect.solutions.absa_solution.ui &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
   
 
   
@@ -116,7 +116,6 @@
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../developer_guide.html">Developer Guide</a></li>
 </ul>
 
@@ -200,31 +199,30 @@
 <span class="kn">import</span> <span class="nn">io</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">from</span> <span class="nn">os.path</span> <span class="k">import</span> <span class="n">dirname</span><span class="p">,</span> <span class="n">join</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">dirname</span><span class="p">,</span> <span class="n">join</span>
 
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">bokeh</span> <span class="k">import</span> <span class="n">layouts</span>
-<span class="kn">from</span> <span class="nn">bokeh.document</span> <span class="k">import</span> <span class="n">Document</span>
-<span class="kn">from</span> <span class="nn">bokeh.layouts</span> <span class="k">import</span> <span class="n">widgetbox</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">layout</span>
-<span class="kn">from</span> <span class="nn">bokeh.models</span> <span class="k">import</span> <span class="n">Div</span><span class="p">,</span> <span class="n">CustomJS</span><span class="p">,</span> <span class="n">HoverTool</span><span class="p">,</span> <span class="n">Title</span><span class="p">,</span> <span class="n">ColumnDataSource</span>
-<span class="kn">from</span> <span class="nn">bokeh.models.widgets</span> <span class="k">import</span> <span class="n">DataTable</span><span class="p">,</span> <span class="n">TableColumn</span><span class="p">,</span> <span class="n">TextInput</span>
-<span class="kn">from</span> <span class="nn">bokeh.models.widgets</span> <span class="k">import</span> <span class="n">HTMLTemplateFormatter</span><span class="p">,</span> <span class="n">RadioButtonGroup</span>
-<span class="kn">from</span> <span class="nn">bokeh.models.widgets</span> <span class="k">import</span> <span class="n">Dropdown</span>
-<span class="kn">from</span> <span class="nn">bokeh.models.widgets</span> <span class="k">import</span> <span class="n">Tabs</span><span class="p">,</span> <span class="n">Panel</span>
-<span class="kn">from</span> <span class="nn">bokeh.plotting</span> <span class="k">import</span> <span class="n">Figure</span><span class="p">,</span> <span class="n">figure</span>
-<span class="kn">from</span> <span class="nn">bokeh.server.server</span> <span class="k">import</span> <span class="n">Server</span>
-<span class="kn">from</span> <span class="nn">bokeh.transform</span> <span class="k">import</span> <span class="n">dodge</span>
-<span class="kn">from</span> <span class="nn">bokeh.core.properties</span> <span class="k">import</span> <span class="n">value</span>
-<span class="kn">from</span> <span class="nn">tornado.web</span> <span class="k">import</span> <span class="n">StaticFileHandler</span>
+<span class="kn">from</span> <span class="nn">bokeh</span> <span class="kn">import</span> <span class="n">layouts</span>
+<span class="kn">from</span> <span class="nn">bokeh.document</span> <span class="kn">import</span> <span class="n">Document</span>
+<span class="kn">from</span> <span class="nn">bokeh.layouts</span> <span class="kn">import</span> <span class="n">widgetbox</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">layout</span>
+<span class="kn">from</span> <span class="nn">bokeh.models</span> <span class="kn">import</span> <span class="n">Div</span><span class="p">,</span> <span class="n">CustomJS</span><span class="p">,</span> <span class="n">HoverTool</span><span class="p">,</span> <span class="n">Title</span><span class="p">,</span> <span class="n">ColumnDataSource</span>
+<span class="kn">from</span> <span class="nn">bokeh.models.widgets</span> <span class="kn">import</span> <span class="n">DataTable</span><span class="p">,</span> <span class="n">TableColumn</span><span class="p">,</span> <span class="n">TextInput</span>
+<span class="kn">from</span> <span class="nn">bokeh.models.widgets</span> <span class="kn">import</span> <span class="n">HTMLTemplateFormatter</span><span class="p">,</span> <span class="n">RadioButtonGroup</span>
+<span class="kn">from</span> <span class="nn">bokeh.models.widgets</span> <span class="kn">import</span> <span class="n">Dropdown</span>
+<span class="kn">from</span> <span class="nn">bokeh.models.widgets</span> <span class="kn">import</span> <span class="n">Tabs</span><span class="p">,</span> <span class="n">Panel</span>
+<span class="kn">from</span> <span class="nn">bokeh.plotting</span> <span class="kn">import</span> <span class="n">Figure</span><span class="p">,</span> <span class="n">figure</span>
+<span class="kn">from</span> <span class="nn">bokeh.server.server</span> <span class="kn">import</span> <span class="n">Server</span>
+<span class="kn">from</span> <span class="nn">bokeh.transform</span> <span class="kn">import</span> <span class="n">dodge</span>
+<span class="kn">from</span> <span class="nn">bokeh.core.properties</span> <span class="kn">import</span> <span class="n">value</span>
+<span class="kn">from</span> <span class="nn">tornado.web</span> <span class="kn">import</span> <span class="n">StaticFileHandler</span>
 
-<span class="kn">from</span> <span class="nn">nlp_architect.models.absa</span> <span class="k">import</span> <span class="n">LEXICONS_OUT</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.models.absa.train.acquire_terms</span> <span class="k">import</span> <span class="n">AcquireTerms</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.models.absa.train.rerank_terms</span> <span class="k">import</span> <span class="n">RerankTerms</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.models.absa.train.train</span> <span class="k">import</span> <span class="n">TrainSentiment</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.solutions.absa_solution</span> <span class="k">import</span> <span class="n">SENTIMENT_OUT</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.solutions.absa_solution.sentiment_solution</span> <span class="k">import</span> <span class="n">SentimentSolution</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.models.absa.inference.data_types</span> <span class="k">import</span> <span class="n">SentimentDoc</span><span class="p">,</span> <span class="n">SentimentSentence</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.models.absa</span> <span class="kn">import</span> <span class="n">LEXICONS_OUT</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.models.absa.train.acquire_terms</span> <span class="kn">import</span> <span class="n">AcquireTerms</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.models.absa.train.train</span> <span class="kn">import</span> <span class="n">TrainSentiment</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.solutions.absa_solution</span> <span class="kn">import</span> <span class="n">SENTIMENT_OUT</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.solutions.absa_solution.sentiment_solution</span> <span class="kn">import</span> <span class="n">SentimentSolution</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.models.absa.inference.data_types</span> <span class="kn">import</span> <span class="n">SentimentDoc</span><span class="p">,</span> <span class="n">SentimentSentence</span>
 
 <span class="n">POLARITIES</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;POS&#39;</span><span class="p">,</span> <span class="s1">&#39;NEG&#39;</span><span class="p">)</span>
 
@@ -417,7 +415,7 @@
             <span class="n">file_name</span> <span class="o">=</span> <span class="n">train_src</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;file_name&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
             <span class="n">raw_data_path</span> <span class="o">=</span> <span class="n">SENTIMENT_OUT</span> <span class="o">/</span> <span class="n">file_name</span>
             <span class="n">train_data</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">raw_data_path</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Running_SentimentTraining on data...&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Running_SentimentTraining on data...&#39;</span><span class="p">)</span>
             <span class="n">train</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">raw_data_path</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">f_contents</span> <span class="o">=</span> <span class="n">train_src</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;file_contents&#39;</span><span class="p">]</span>
@@ -427,7 +425,7 @@
                 <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">raw_data_path</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">f_content</span><span class="p">,</span> <span class="n">f_name</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">f_contents</span><span class="p">,</span> <span class="n">f_names</span><span class="p">):</span>
                 <span class="n">read_parsed_files</span><span class="p">(</span><span class="n">f_content</span><span class="p">,</span> <span class="n">f_name</span><span class="p">)</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Running_SentimentTraining on data...&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Running_SentimentTraining on data...&#39;</span><span class="p">)</span>
             <span class="n">train</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">parsed_data</span><span class="o">=</span><span class="n">raw_data_path</span><span class="p">)</span>
 
         <span class="n">text_status</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="s2">&quot;Lexicon extraction completed&quot;</span>
@@ -493,7 +491,7 @@
             <span class="n">file_name</span> <span class="o">=</span> <span class="n">infer_src</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;file_name&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
             <span class="n">raw_data_path</span> <span class="o">=</span> <span class="n">SENTIMENT_OUT</span> <span class="o">/</span> <span class="n">file_name</span>
             <span class="n">infer_data</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">raw_data_path</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Running_SentimentInference on data...&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Running_SentimentInference on data...&#39;</span><span class="p">)</span>
             <span class="n">text_status</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="s2">&quot;Running classification on data...&quot;</span>
             <span class="n">stats</span> <span class="o">=</span> <span class="n">solution</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">raw_data_path</span><span class="p">,</span>
                                  <span class="n">aspect_lex</span><span class="o">=</span><span class="n">SENTIMENT_OUT</span> <span class="o">/</span> <span class="s1">&#39;aspects.csv&#39;</span><span class="p">,</span>
@@ -506,7 +504,7 @@
                 <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">raw_data_path</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">f_content</span><span class="p">,</span> <span class="n">f_name</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">f_contents</span><span class="p">,</span> <span class="n">f_names</span><span class="p">):</span>
                 <span class="n">read_parsed_files</span><span class="p">(</span><span class="n">f_content</span><span class="p">,</span> <span class="n">f_name</span><span class="p">)</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Running_SentimentInference on data...&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Running_SentimentInference on data...&#39;</span><span class="p">)</span>
             <span class="n">text_status</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="s2">&quot;Running classification on data...&quot;</span>
             <span class="n">stats</span> <span class="o">=</span> <span class="n">solution</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">parsed_data</span><span class="o">=</span><span class="n">raw_data_path</span><span class="p">,</span>
                                  <span class="n">aspect_lex</span><span class="o">=</span><span class="n">SENTIMENT_OUT</span> <span class="o">/</span> <span class="s1">&#39;aspects.csv&#39;</span><span class="p">,</span>

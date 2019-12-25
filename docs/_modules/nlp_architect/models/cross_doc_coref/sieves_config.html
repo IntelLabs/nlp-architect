@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nlp_architect.models.cross_doc_coref.sieves_config &mdash; NLP Architect by Intel® AI Lab 0.5.1 documentation</title>
+  <title>nlp_architect.models.cross_doc_coref.sieves_config &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
   
 
   
@@ -116,7 +116,6 @@
 <p class="caption"><span class="caption-text">For Developers</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../generated_api/nlp_architect_api_index.html">nlp_architect API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../service.html">REST Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../developer_guide.html">Developer Guide</a></li>
 </ul>
 
@@ -198,13 +197,13 @@
 <span class="c1"># See the License for the specific language governing permissions and</span>
 <span class="c1"># limitations under the License.</span>
 <span class="c1"># ******************************************************************************</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span>
 
-<span class="kn">from</span> <span class="nn">nlp_architect.data.cdc_resources.relations.relation_types_enums</span> <span class="k">import</span> <span class="n">RelationType</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.data.cdc_resources.relations.relation_types_enums</span> <span class="kn">import</span> <span class="n">RelationType</span>
 
 
 <div class="viewcode-block" id="SievesConfiguration"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.cross_doc_coref.html#nlp_architect.models.cross_doc_coref.sieves_config.SievesConfiguration">[docs]</a><span class="k">class</span> <span class="nc">SievesConfiguration</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Cross document co-reference event and entity evaluation configuration settings&quot;&quot;&quot;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">__sieves_order</span> <span class="o">=</span> <span class="kc">None</span>
@@ -241,7 +240,7 @@
 
 
 <div class="viewcode-block" id="EventSievesConfiguration"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.cross_doc_coref.html#nlp_architect.models.cross_doc_coref.sieves_config.EventSievesConfiguration">[docs]</a><span class="k">class</span> <span class="nc">EventSievesConfiguration</span><span class="p">(</span><span class="n">SievesConfiguration</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">EventSievesConfiguration</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">run_evaluation</span> <span class="o">=</span> <span class="kc">True</span>
@@ -264,7 +263,7 @@
 
 
 <div class="viewcode-block" id="EntitySievesConfiguration"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.cross_doc_coref.html#nlp_architect.models.cross_doc_coref.sieves_config.EntitySievesConfiguration">[docs]</a><span class="k">class</span> <span class="nc">EntitySievesConfiguration</span><span class="p">(</span><span class="n">SievesConfiguration</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">EntitySievesConfiguration</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">run_evaluation</span> <span class="o">=</span> <span class="kc">True</span>
