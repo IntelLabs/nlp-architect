@@ -22,7 +22,7 @@ from torch.utils.data import DataLoader, RandomSampler, SequentialSampler
 from nlp_architect.data.question_answering import QuestionAnsweringProcessor
 from nlp_architect.nn.torch import setup_backend, set_seed
 from nlp_architect.procedures.procedure import Procedure
-from nlp_architect.procedures.registry import (register_run_cmd,
+from nlp_architect.procedures.registry import (register_inference_cmd,
                                                register_train_cmd)
 from nlp_architect.procedures.transformers.base import (create_base_args,
                                                         inference_args,
@@ -71,7 +71,7 @@ class TransformerQuestionAnsweringTrain(Procedure):
         do_training(args)
 
 
-@register_run_cmd(name='transformer_qa',
+@register_inference_cmd(name='transformer_qa',
                   description='Run a BERT/XLNet model with question answering head')
 class TransformerQuestionAnsweringRun(Procedure):
     @staticmethod
