@@ -32,7 +32,7 @@ from transformers import (BertForQuestionAnswering,
                           RobertaConfig,
                           RobertaModel)
 from nlp_architect.models.transformers.quantized_bert import QuantizedBertForQuestionAnswering
-from nlp_architect.data.utils_squad import whitespace_tokenize
+from nlp_architect.utils.text import whitespace_tokenize
 from nlp_architect.models.transformers.base_model import TransformerBase
 from nlp_architect.data.utils_squad import (SquadExample,
                                             RawResult,
