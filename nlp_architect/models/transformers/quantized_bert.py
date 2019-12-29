@@ -159,6 +159,10 @@ class QuantizedBertLayer(BertLayer):
     def __init__(self, config):
         super(BertLayer, self).__init__()
         self.attention = QuantizedBertAttention(config)
+        self.is_decoder = config.is_decoder
+        if self.is_decoder:
+            logger.warning("Using QuantizedBertLayer as decoder was not tested.")
+            self.crossattention = QuantizedBertAttention(config)
         self.intermediate = QuantizedBertIntermediate(config)
         self.output = QuantizedBertOutput(config)
 
