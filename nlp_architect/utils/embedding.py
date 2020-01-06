@@ -21,7 +21,6 @@ import os
 from typing import List
 
 import numpy as np
-import pandas as pd
 import tensorflow as tf
 import tensorflow_hub as hub
 from gensim.models import FastText
@@ -117,8 +116,14 @@ def load_embedding_file(filename: str) -> dict:
     """
     if filename is not None and os.path.exists(filename):
         logger.info("Loading external word embeddings from {}".format(filename))
-    df = pd.read_csv(filename, sep=" ", quoting=3, header=None, index_col=0)
-    return {key: val.values for key, val in df.T.items()}
+    embedding_dict = {}
+    with open(filename, encoding='utf-8') as fp:
+        for line in fp:
+            split_line = line.split()
+            word = split_line[0]
+            vec = np.array([float(val) for val in split_line[1:]])
+            embedding_dict[word] = vec
+    return embedding_dict
 
 
 # pylint: disable=not-context-manager
