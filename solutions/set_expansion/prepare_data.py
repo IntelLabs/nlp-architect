@@ -21,7 +21,6 @@ marks extracted NP's.
 import gzip
 import json
 import logging
-import sys
 from argparse import ArgumentParser
 from os import path, makedirs
 

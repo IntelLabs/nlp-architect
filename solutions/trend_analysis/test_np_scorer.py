@@ -13,8 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
-from nlp_architect.solutions.trend_analysis.np_scorer import NPScorer
 from nlp_architect.utils.io import load_files_from_path
+from .np_scorer import NPScorer
 
 
 def test_np_scorer():

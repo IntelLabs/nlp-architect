@@ -23,16 +23,18 @@ import numpy as np
 import pandas as pd
 from tqdm import tqdm
 
+from nlp_architect import LIBRARY_OUT
 from nlp_architect.common.core_nlp_doc import CoreNLPDoc
 from nlp_architect.models.absa.inference.data_types import TermType, \
     SentimentDocEncoder, SentimentDoc
 from nlp_architect.models.absa.inference.inference \
     import SentimentInference
 from nlp_architect.models.absa.utils import load_opinion_lex
-from nlp_architect.solutions.absa_solution import SENTIMENT_OUT
-from nlp_architect.solutions.absa_solution.utils import Anonymiser, _ui_format
 from nlp_architect.utils.io import walk_directory, validate_existing_filepath, \
     validate_existing_directory, validate_existing_path, line_count
+from .utils import Anonymiser, _ui_format
+
+SENTIMENT_OUT = LIBRARY_OUT / 'absa_solution'
 
 
 class SentimentSolution(object):

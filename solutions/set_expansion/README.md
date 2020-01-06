@@ -5,7 +5,7 @@ a more complete set of terms that belong to the same semantic class. This
 solution demonstrates the capability of a corpus-based set expansion system
 in a simple web application.
 
-![Image](../../../doc/source/assets/expansion_demo.png)
+![Image](../../doc/source/assets/expansion_demo.png)
 
 ## Algorithm Overview
 Our approach is described by (Mamou et al, 2018).
@@ -16,7 +16,7 @@ At expansion time, given a seed of terms, the most similar terms are returned.
 
 ## Flow
 
-![Image](../../../doc/source/assets/expansion_flow.png)
+![Image](../../doc/source/assets/expansion_flow.png)
 
 The solution is constructed of the following stages:
 
@@ -142,7 +142,7 @@ python solutions/set_expansion/set_expand.py --np2vec_model_file MODEL_PATH --to
     by the expand server --similarity argument). 
     After selecting the Text Annotation checkbox, a text input is available for the user to type in text to annotate:
 
-    ![Image](../../../doc/source/assets/annotation.png)
+    ![Image](../../doc/source/assets/annotation.png)
 
     ### Grouping
 

@@ -32,12 +32,12 @@ from nlp_architect.utils.embedding import FasttextEmbeddingsModel
 from nlp_architect.utils.io import check_size, validate_existing_filepath
 from nlp_architect.utils.text import simple_normalizer
 
-dir = str(LIBRARY_OUT / 'trend-analysis-data')
+directory = str(LIBRARY_OUT / 'trend-analysis-data')
 logger = logging.getLogger(__name__)
-target_topics_path = path.join(dir, 'target_topics.csv')
-ref_topics_path = path.join(dir, 'ref_topics.csv')
-target_scores_path = path.join(dir, 'target_scores.csv')
-ref_scores_path = path.join(dir, 'ref_scores.csv')
+target_topics_path = path.join(directory, 'target_topics.csv')
+ref_topics_path = path.join(directory, 'ref_topics.csv')
+target_scores_path = path.join(directory, 'target_scores.csv')
+ref_scores_path = path.join(directory, 'ref_scores.csv')
 
 
 def analyze(target_data, ref_data, tar_header, ref_header, top_n=10000, top_n_vectors=500,
@@ -86,7 +86,7 @@ def analyze(target_data, ref_data, tar_header, ref_header, top_n=10000, top_n_ve
         top_n_scatter = len(
             all_topics_sorted) if top_n_vectors is None else top_n_vectors
         # compute 2D space clusters if model exists:
-        w2v_loc = path.join(dir, 'W2V_Models/model.bin')
+        w2v_loc = path.join(directory, 'W2V_Models/model.bin')
         if os.path.isfile(w2v_loc):
             scatter_group = all_topics_sorted[0:top_n_scatter]
             np_scat, x_scat, y_scat, in_model_count =\
@@ -124,8 +124,8 @@ def save_report_data(hash2group, groups_r_sorted, groups_t_sorted,
                      trends_sorted, all_topics_sorted, create_clusters,
                      target_header, ref_header, tfidf_w, cval_w, freq_w,
                      in_model_count, top_n_scatter):
-    filter_output = path.join(dir, 'filter_phrases.csv')
-    data_output = path.join(dir, 'graph_data.csv')
+    filter_output = path.join(directory, 'filter_phrases.csv')
+    data_output = path.join(directory, 'graph_data.csv')
     logger.info('writing results to: %s and: %s ', str(data_output), str(filter_output))
 
     reports_column = [

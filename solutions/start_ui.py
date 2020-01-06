@@ -15,7 +15,6 @@
 # ******************************************************************************
 import argparse
 import socket
-import sys
 from os import path
 from subprocess import run
 import sys
@@ -24,7 +23,7 @@ SOLUTIONS_PATH = path.dirname(path.realpath(__file__))
 
 solution_uis = {
     'set_expansion': path.join(SOLUTIONS_PATH, 'set_expansion', 'ui'),
-    'trend_analysis': path.join(SOLUTIONS_PATH, 'trend_analysis', 'ui')
+    'trend_analysis': path.join(SOLUTIONS_PATH, 'trend_analysis', 'ui_main.py')
 }
 
 

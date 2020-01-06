@@ -28,7 +28,7 @@ from bokeh.models.widgets import DataTable, TableColumn, RadioGroup, Dropdown, T
     TextInput, Button, Slider
 from bokeh.plotting import figure
 
-from nlp_architect.solutions.trend_analysis.trend_analysis import analyze
+from trend_analysis import analyze
 from nlp_architect import LIBRARY_OUT
 
 logger = logging.getLogger(__name__)

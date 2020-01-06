@@ -14,16 +14,14 @@
 # limitations under the License.
 # ******************************************************************************
 import os
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
-from pathlib import Path
 
 from nlp_architect import LIBRARY_ROOT
-from nlp_architect.solutions.absa_solution import SENTIMENT_OUT
-from nlp_architect.solutions.absa_solution.sentiment_solution import \
-    SentimentSolution
 from nlp_architect.utils.io import download_unzip
+from .sentiment_solution import SentimentSolution, SENTIMENT_OUT
 
 
 def test_solution(generate_new=False):

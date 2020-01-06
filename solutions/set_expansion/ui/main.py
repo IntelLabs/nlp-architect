@@ -17,7 +17,6 @@
 import socket
 import pickle
 import logging
-import sys
 import re
 from os.path import dirname, join
 
@@ -27,7 +26,7 @@ from bokeh.models.widgets import Button, DataTable, TableColumn, CheckboxGroup, 
 from bokeh.models.widgets.inputs import TextInput
 from bokeh.io import curdoc
 
-import nlp_architect.solutions.set_expansion.ui.settings as settings
+from settings import grouping, expand_host, expand_port
 
 # pylint: skip-file
 logger = logging.getLogger(__name__)
@@ -48,7 +47,7 @@ expand_columns = [
     TableColumn(field="score", title="Score")
 ]
 empty_table = {'res': 15 * [''], 'score': 15 * ['']}
-checkbox_label = "Show extracted term groups" if settings.grouping else "Show extracted phrases"
+checkbox_label = "Show extracted term groups" if grouping else "Show extracted phrases"
 
 # create ui components
 
@@ -127,7 +126,7 @@ def send_request_to_server(request):
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     try:
         # Connect to server and send data
-        sock.connect((settings.expand_host, settings.expand_port))
+        sock.connect((expand_host, expand_port))
         logger.info('sending request')
         req_packet = pickle.dumps(request)
         # sock.sendall(bytes(request + "\n", "utf-8"))
@@ -314,7 +313,7 @@ def search_callback(value, old, new):
 
 def vocab_phrase_selected_callback(attr, old_selected, new_selected):
     logger.info('vocab selected')
-    if settings.grouping:
+    if grouping:
         # show group info
         if len(new_selected) == 1:
             res = send_request_to_server(['get_group', new_selected[0]])

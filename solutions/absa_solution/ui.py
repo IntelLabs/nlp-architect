@@ -38,9 +38,8 @@ from tornado.web import StaticFileHandler
 from nlp_architect.models.absa import LEXICONS_OUT
 from nlp_architect.models.absa.train.acquire_terms import AcquireTerms
 from nlp_architect.models.absa.train.train import TrainSentiment
-from nlp_architect.solutions.absa_solution import SENTIMENT_OUT
-from nlp_architect.solutions.absa_solution.sentiment_solution import SentimentSolution
 from nlp_architect.models.absa.inference.data_types import SentimentDoc, SentimentSentence
+from sentiment_solution import SENTIMENT_OUT, SentimentSolution
 
 POLARITIES = ('POS', 'NEG')
 

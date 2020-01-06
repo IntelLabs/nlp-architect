@@ -18,11 +18,11 @@ from os import path, makedirs
 
 from tqdm import tqdm
 
-from nlp_architect.pipelines.spacy_np_annotator import NPAnnotator, get_noun_phrases
-from nlp_architect.solutions.trend_analysis.scoring_utils import TextSpanScoring
 from nlp_architect import LIBRARY_OUT
+from nlp_architect.pipelines.spacy_np_annotator import NPAnnotator, get_noun_phrases
 from nlp_architect.utils.io import download_unlicensed_file
 from nlp_architect.utils.text import SpacyInstance
+from .scoring_utils import TextSpanScoring
 
 nlp_chunker_url = 'https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/chunker/'
 chunker_model_dat_file = 'model_info.dat.params'

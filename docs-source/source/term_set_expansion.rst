@@ -47,7 +47,7 @@ This is done by running:
 
 .. code:: python
 
-  python -m nlp_architect.solutions.set_expansion.prepare_data --corpus TRAINING_CORPUS --marked_corpus MARKED_TRAINING_CORPUS
+  python solutions/set_expansion/prepare_data.py --corpus TRAINING_CORPUS --marked_corpus MARKED_TRAINING_CORPUS
 
   optional arguments:
   --corpus CORPUS       path to the input corpus. Compressed files (gz) are
@@ -102,7 +102,7 @@ It can be done in two ways:
 
     .. code:: python
 
-      python -m nlp_architect.solutions.set_expansion.set_expand --np2vec_model_file MODEL_PATH --topn TOPN
+      python solutions/set_expansion/set_expand.py --np2vec_model_file MODEL_PATH --topn TOPN
 
 2. Web application
 
@@ -110,7 +110,7 @@ It can be done in two ways:
 
         .. code:: python
 
-          python -m nlp_architect.solutions.set_expansion.expand_server [--host HOST] [--port PORT] [--similarity SIMILARITY] model_path
+          python solutions/set_expansion/expand_server.py [--host HOST] [--port PORT] [--similarity SIMILARITY] model_path
 
           positional arguments:
           model_path            a path to the w2v model file
@@ -139,14 +139,14 @@ It can be done in two ways:
 
         .. code:: python
 
-          python -m nlp_architect.solutions.start_ui --solution set_expansion
+          python solutions/solutions/start_ui.py --solution set_expansion
 
         You can also load the UI
         application as a server on different address/port using the following command:
 
         .. code:: python
 
-          python -m nlp_architect.solutions.start_ui --solution set_expansion --address=12.13.14.15 --port=1010
+          python solutions/solutions/start_ui.py --solution set_expansion --address=12.13.14.15 --port=1010
 
         The UI is a simple web based application for communicating with the server and performing expansion and annotation.
 

@@ -18,11 +18,11 @@ import socketserver
 import argparse
 import pickle
 import logging
-import sys
 import re
-from nlp_architect.solutions.set_expansion import set_expand
+
 from nlp_architect.utils.io import validate_existing_filepath, check_size
-from nlp_architect.solutions.set_expansion.prepare_data import load_parser, extract_noun_phrases
+from prepare_data import extract_noun_phrases, load_parser
+from set_expand import SetExpand
 
 logger = logging.getLogger(__name__)
 
@@ -98,7 +98,7 @@ if __name__ == "__main__":
     port = args.port
     model_path = args.model_path
     logger.info("loading model")
-    se = set_expand.SetExpand(model_path, grouping=args.grouping)
+    se = SetExpand(model_path, grouping=args.grouping)
     logger.info("loading chunker")
     nlp = load_parser(args.chunker)
     logger.info("loading server")

@@ -15,9 +15,8 @@
 # ******************************************************************************
 import logging
 import sys
-from os import path
-
 from argparse import ArgumentParser
+from os import path
 
 from nlp_architect.models.np2vec import NP2vec
 from nlp_architect.utils.io import validate_existing_filepath, check_size, load_json_file
