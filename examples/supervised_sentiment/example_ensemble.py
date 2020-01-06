@@ -39,11 +39,11 @@ from sklearn.model_selection import train_test_split
 from tensorflow.python.keras.preprocessing.sequence import pad_sequences
 from tensorflow.python.keras.preprocessing.text import Tokenizer
 
-from nlp_architect.data.amazon_reviews import Amazon_Reviews
-from nlp_architect.models.supervised_sentiment import simple_lstm, one_hot_cnn
-from nlp_architect.utils.ensembler import simple_ensembler
+from examples.supervised_sentiment.amazon_reviews import Amazon_Reviews
+from examples.supervised_sentiment.ensembler import simple_ensembler
 from nlp_architect.utils.generic import to_one_hot
 from nlp_architect.utils.io import validate_existing_filepath, check_size
+from .supervised_sentiment import simple_lstm, one_hot_cnn
 
 max_fatures = 2000
 max_len = 300

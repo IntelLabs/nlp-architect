@@ -14,18 +14,19 @@
 # limitations under the License.
 # ******************************************************************************
 
-import pickle
 import argparse
-from sklearn.model_selection import train_test_split
+import pickle
+
 from hyperopt import fmin, tpe, hp, Trials
+from sklearn.model_selection import train_test_split
 # pylint: disable=no-name-in-module
 from tensorflow.python.keras.callbacks import EarlyStopping
 from tensorflow.python.keras.preprocessing.sequence import pad_sequences
 from tensorflow.python.keras.preprocessing.text import Tokenizer
 
-from nlp_architect.data.amazon_reviews import Amazon_Reviews
-from nlp_architect.models.supervised_sentiment import simple_lstm
+from examples.supervised_sentiment.amazon_reviews import Amazon_Reviews
 from nlp_architect.utils.io import validate_parent_exists, check_size, validate_existing_filepath
+from .supervised_sentiment import simple_lstm
 
 max_len = 100
 batch_size = 32

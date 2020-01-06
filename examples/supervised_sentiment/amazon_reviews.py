@@ -30,11 +30,11 @@
 # SIGIR, 2015
 # http://cseweb.ucsd.edu/~jmcauley/pdfs/sigir15.pdf
 
-import pandas as pd
 import json
 
-from nlp_architect.utils.generic import normalize, balance
+import pandas as pd
 
+from nlp_architect.utils.generic import normalize, balance
 
 good_columns = [
     "overall",

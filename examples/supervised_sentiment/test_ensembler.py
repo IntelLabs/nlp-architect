@@ -15,7 +15,7 @@
 # ******************************************************************************
 
 import numpy as np
-from nlp_architect.utils.ensembler import simple_ensembler
+from .ensembler import simple_ensembler
 
 
 def test_ensembler():
