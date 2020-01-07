@@ -15,17 +15,20 @@
 # limitations under the License.
 # ******************************************************************************
 
+from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
-from __future__ import absolute_import
-import pickle
+
 import itertools
-import tarfile
 import os
+import pickle
 import sys
+import tarfile
+
 import numpy as np
 from tqdm import tqdm
+
 from nlp_architect.utils.generic import license_prompt
 from nlp_architect.utils.io import download_unlicensed_file, valid_path_append
 

@@ -43,8 +43,8 @@ import os
 import tensorflow as tf
 from interactive_utils import interactive_loop
 
-from nlp_architect.data.babi_dialog import BABI_Dialog
-from nlp_architect.models.memn2n_dialogue import MemN2N_Dialog
+from examples.memn2n_dialogue.babi_dialog import BABI_Dialog
+from examples.memn2n_dialogue.memn2n_dialogue import MemN2N_Dialog
 from nlp_architect.utils.io import validate_parent_exists, validate
 
 # parse the command line arguments
