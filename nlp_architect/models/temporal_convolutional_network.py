@@ -83,7 +83,7 @@ class WeightNorm(Wrapper):
         self.layer_depth = None
         self.norm_axes = None
         super(WeightNorm, self).__init__(layer, **kwargs)
-        self._track_checkpointable(layer, name='layer')
+        self._track_trackable(layer, name='layer')
 
     def _compute_weights(self):
         """Generate weights by combining the direction of weight vector
