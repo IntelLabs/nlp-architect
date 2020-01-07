@@ -12,7 +12,6 @@ RUN git clone https://github.com/NervanaSystems/nlp-architect.git
 RUN export PYTHONPATH="$PYTHONPATH:/Users/nlp_user/nlp_architect"
 RUN export JUPYTER_PATH="${JUPYTER_PATH}:/Users/nlp_user/nlp_architect"
 WORKDIR "/home/nlp_user/nlp-architect"
-RUN pip3 install --no-cache-dir -e .
-RUN pip3 install --no-cache-dir -r dev-requirements.txt
+RUN pip3 install --no-cache-dir -e .[all,dev]
 EXPOSE 8080
 EXPOSE 8888

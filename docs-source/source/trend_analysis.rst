@@ -59,6 +59,14 @@ Reports
 Usage
 =====
 
+Requirements
+------------
+Install solution extra packages:
+
+.. code:: python
+
+  pip install -r solutions/trend_analysis/requirements.txt
+
 First stage
 -----------
 

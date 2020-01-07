@@ -24,9 +24,7 @@ pipeline {
                 sh """
                 . .nlp_architect_env/bin/activate
                 pip3 install -U pip setuptools h5py
-                pip3 install -r requirements.txt
-                pip3 install -r dev-requirements.txt
-                pip3 install -e .
+                pip3 install -U -e .[all,dev]
                 python -m spacy download en
                 """
             }
@@ -39,7 +37,7 @@ pipeline {
                         . .nlp_architect_env/bin/activate
                         export LC_ALL=en_US.UTF-8
                         export LANG=en_US.UTF-8
-                        pytest ./tests -rs -vv --cov=nlp_architect --junit-xml=pytest_unit.xml
+                        pytest ./ -rs -v -n 20 --dist=loadfile --cov=nlp_architect --junit-xml=pytest_unit.xml
                         """
                     }
                     post {

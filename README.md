@@ -77,6 +77,15 @@ cd nlp-architect
 pip install -e .  # install in developer mode
 ```
 
+### Running Examples and Solutions
+
+To run provided examples and solutions please install the library with `[all]` flag which will install extra packages required. (requires installation from source)
+
+```sh
+pip install .[all]
+```
+
+
 ## Models
 
 NLP models that provide best (or near) in class performance:
