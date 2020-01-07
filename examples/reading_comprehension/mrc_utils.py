@@ -18,7 +18,6 @@ import numpy as np
 
 
 def max_values_squad(data_train):
-
     """
     Function to compute the maximum length of sentences in
     paragraphs and questions
@@ -119,7 +118,7 @@ def create_squad_training(paras_file, ques_file, answer_file, data_train_len=Non
     return data_train
 
 
-def get_data_array_squad(params_dict, data_train, set_val='train'):
+def get_data_array_squad(params_dict, data_train, set_val="train"):
     """
     Function to pad all sentences and restrict to max length defined by user
 
@@ -134,8 +133,8 @@ def get_data_array_squad(params_dict, data_train, set_val='train'):
     Returns a list of tuples with padded sentences and masks
     """
 
-    max_para = params_dict['max_para']
-    max_question = params_dict['max_question']
+    max_para = params_dict["max_para"]
+    max_question = params_dict["max_question"]
     train_set = []
     count = 0
     for ele in data_train:
@@ -148,7 +147,7 @@ def get_data_array_squad(params_dict, data_train, set_val='train'):
             para_idx = para_idx + [0] * pad_length
             para_len = len(para)
             para_mask = np.zeros([1, max_para])
-            para_mask[0, 0:len(para)] = 1
+            para_mask[0, 0 : len(para)] = 1
             para_mask = para_mask.tolist()[0]
 
             question_idx = ele[1]
@@ -162,12 +161,13 @@ def get_data_array_squad(params_dict, data_train, set_val='train'):
                 ques_mask[0, 0:question_len] = 1
                 ques_mask = ques_mask.tolist()[0]
 
-            train_set.append((para_idx, question_idx, para_len, question_len,
-                              ele[2], para_mask, ques_mask))
+            train_set.append(
+                (para_idx, question_idx, para_len, question_len, ele[2], para_mask, ques_mask)
+            )
 
-            if set_val == 'train':
+            if set_val == "train":
                 count += 1
-                if count >= params_dict['train_set_size']:
+                if count >= params_dict["train_set_size"]:
                     break
     return train_set
 
@@ -187,22 +187,22 @@ def create_data_dict(data):
     """
 
     train = {}
-    train['para'] = []
-    train['answer'] = []
-    train['question'] = []
-    train['question_len'] = []
-    train['para_len'] = []
-    train['para_mask'] = []
-    train['question_mask'] = []
+    train["para"] = []
+    train["answer"] = []
+    train["question"] = []
+    train["question_len"] = []
+    train["para_len"] = []
+    train["para_mask"] = []
+    train["question_mask"] = []
 
     for (para_idx, question_idx, para_len, question_len, answer, para_mask, ques_mask) in data:
 
-        train['para'].append(para_idx)
-        train['question'].append(question_idx)
-        train['para_len'].append(para_len)
-        train['question_len'].append(question_len)
-        train['answer'].append(answer)
-        train['para_mask'].append(para_mask)
-        train['question_mask'].append(ques_mask)
+        train["para"].append(para_idx)
+        train["question"].append(question_idx)
+        train["para_len"].append(para_len)
+        train["question_len"].append(question_len)
+        train["answer"].append(answer)
+        train["para_mask"].append(para_mask)
+        train["question_mask"].append(ques_mask)
 
     return train
