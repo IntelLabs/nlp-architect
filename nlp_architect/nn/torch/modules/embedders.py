@@ -173,9 +173,10 @@ class IDCNN(nn.Module):
                  char_cnn_kernel_size: int = 3,
                  cnn_kernel_size: int = 3,
                  cnn_num_filters: int = 128,
-                 input_dropout: float = 0.5,
-                 word_dropout: float = 0.5,
-                 hidden_dropout: float = 0.5,
+                 input_dropout: float = 0.35,
+                 middle_dropout: float = 0,
+                 hidden_dropout: float = 0.15,
+                 word_dropout: float = 0.85,
                  blocks: int = 1,
                  dilations: List = None,
                  padding_idx: int = 0):
@@ -213,10 +214,11 @@ class IDCNN(nn.Module):
                                    kernel_size=char_cnn_kernel_size,
                                    padding=1)
         self.i_drop = nn.Dropout(input_dropout)
-        self.w_drop = nn.Dropout(word_dropout)
+        self.m_drop = nn.Dropout(middle_dropout)
         self.h_drop = nn.Dropout(hidden_dropout)
+        self.word_dropout = word_dropout
 
-    def forward(self, words, word_chars, **kwargs):
+    def forward(self, words, word_chars, no_dropout=False, **kwargs):
         """
         IDCNN forward step
 
@@ -228,10 +230,12 @@ class IDCNN(nn.Module):
             torch.tensor: logits of model
         """
         word_embeds = self.word_embeddings(words)
-        word_embeds = self.i_drop(word_embeds)
+        if not no_dropout:
+            word_embeds = self.i_drop(word_embeds)
         word_embeds = word_embeds.permute(0, 2, 1)
         conv1 = self.conv1(word_embeds)
-        conv1 = self.w_drop(conv1)
+        if not no_dropout:
+            conv1 = self.m_drop(conv1)
         conv_outputs = []
         for _ in range(self.num_blocks):
             for j in range(len(self.cnv_layers)):
@@ -255,7 +259,8 @@ class IDCNN(nn.Module):
         char_features = char_embeds.contiguous().view(new_size)
 
         features = torch.cat((word_features, char_features), -1)
-        features = self.h_drop(features)
+        if not no_dropout:
+            features = self.h_drop(features)
         logits = self.dense(features)
         return logits
 

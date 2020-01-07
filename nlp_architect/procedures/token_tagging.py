@@ -147,6 +147,8 @@ def add_parse_args(parser: argparse.ArgumentParser):
                             help='log path for evaluation output')
     parser.add_argument("--bilou", action='store_true',
                         help="whether to use bilou format")
+    parser.add_argument('--drop_penalty', type=float, default=1e-4,
+                        help='idcnn dropout penalty')
 
 
 MODEL_TYPE = {
@@ -223,7 +225,8 @@ def do_training(args):
                      save_steps=args.save_steps,
                      save_path=args.output_dir,
                      optimizer=opt if opt is not None else None,
-                     log_file=args.log_file)
+                     log_file=args.log_file,
+                     drop_penalty=args.drop_penalty)
     classifier.save_model(args.output_dir)
 
 

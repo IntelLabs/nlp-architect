@@ -25,6 +25,7 @@ from torch.nn import CrossEntropyLoss
 from torch.nn import functional as F
 from torch.utils.data import DataLoader, SequentialSampler, TensorDataset
 from tqdm import tqdm, trange
+import numpy as np
 
 from nlp_architect.data.sequential_tagging import TokenClsInputExample
 from nlp_architect.models import TrainableModel
@@ -189,7 +190,8 @@ class NeuralTagger(TrainableModel):
               save_steps: int = 100,
               save_path: str = None,
               distiller: TeacherStudentDistill = None,
-              log_file: str = ""):
+              log_file: str = None,
+              drop_penalty: float = 0):
         """
         Train a tagging model
 
@@ -232,7 +234,16 @@ class NeuralTagger(TrainableModel):
                     t_logits = distiller.get_teacher_logits(t_batch)
                 batch = tuple(t.to(self.device) for t in batch)
                 inputs = self.batch_mapper(batch)
+                
+                # apply word dropout to the input
+                tokens = inputs['words']
+                tokens = np.array(tokens.detach().cpu())
+                word_probs = np.random.random(tokens.shape)
+                drop_indices = np.where((word_probs > self.model.module.word_dropout) & (tokens != 0)) # ignore padding indices
+                inputs['words'][drop_indices[0], drop_indices[1]] = self.word_vocab.oov_id
+
                 logits = self.model(**inputs)
+
                 if self.use_crf:
                     loss = -1.0 * self.crf(logits, inputs['labels'], mask=inputs['mask'] != 0.0)
                 else:
@@ -240,6 +251,12 @@ class NeuralTagger(TrainableModel):
                     loss = loss_fn(logits.view(-1, self.num_labels), inputs['labels'].view(-1))
                 if self.n_gpus > 1:
                     loss = loss.mean()
+
+                # add dropout penalty
+                logits_no_drop = self.model(**inputs, no_dropout=True)
+                sub = logits.sub(logits_no_drop)
+                drop_loss = torch.div(torch.sum(torch.pow(sub,2)) , 2)
+                loss += drop_penalty * drop_loss
 
                 # add distillation loss if activated
                 if distiller:
