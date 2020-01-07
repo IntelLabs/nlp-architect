@@ -187,7 +187,8 @@ class NeuralTagger(TrainableModel):
               logging_steps: int = 50,
               save_steps: int = 100,
               save_path: str = None,
-              distiller: TeacherStudentDistill = None):
+              distiller: TeacherStudentDistill = None,
+              log_file: str = ""):
         """
         Train a tagging model
 
@@ -216,6 +217,7 @@ class NeuralTagger(TrainableModel):
                     batch_size)
         logger.info("  Total batch size = %d", train_batch_size)
         global_step = 0
+        best_dev = 0
         self.model.zero_grad()
         epoch_it = trange(epochs, desc="Epoch")
         for _ in epoch_it:
@@ -254,8 +256,12 @@ class NeuralTagger(TrainableModel):
                     if step != 0:
                         logger.info(
                             " global_step = %s, average loss = %s", global_step, avg_loss / step)
-                    self._get_eval(dev_data_set, "dev")
-                    self._get_eval(test_data_set, "test")
+                    dev = self._get_eval(dev_data_set, "dev")
+                    test = self._get_eval(test_data_set, "test")
+                    if dev > best_dev:
+                        best_dev = dev
+                        with open(log_file, 'a+') as f:
+                            f.write('best dev= ' + str(best_dev) + ', test= ' + str(test))
                 if save_path is not None and global_step % save_steps == 0:
                     self.save_model(save_path)
 

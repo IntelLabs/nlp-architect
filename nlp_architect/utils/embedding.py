@@ -100,13 +100,15 @@ def get_embedding_matrix(embeddings: dict, vocab: Vocabulary,
     else:
         mat = np.zeros((len(vocab), emb_size))
     for word, wid in vocab.vocab.items():
-        vec = embeddings.get(word.lower(), None)
+        vec = embeddings.get(word, None)
+        if vec is None:
+            vec = embeddings.get(word.lower(), None)
         if vec is not None:
             mat[wid] = vec
     return mat
 
 
-def load_embedding_file(filename: str) -> dict:
+def load_embedding_file(filename: str, dim: int) -> dict:
     """Load a word embedding file
 
     Args:
@@ -118,7 +120,7 @@ def load_embedding_file(filename: str) -> dict:
     if filename is not None and os.path.exists(filename):
         logger.info("Loading external word embeddings from {}".format(filename))
     df = pd.read_csv(filename, sep=" ", quoting=3, header=None, index_col=0)
-    return {key: val.values for key, val in df.T.items()}
+    return {key: val.values[:dim] for key, val in df.T.items()}
 
 
 # pylint: disable=not-context-manager

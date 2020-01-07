@@ -187,8 +187,9 @@ class IDCNN(nn.Module):
         self.padding = dilations
         self.num_labels = num_labels
         self.padding_idx = padding_idx
+        self.word_embedding_dim = word_embedding_dims
         self.word_embeddings = nn.Embedding(word_vocab_size,
-                                            word_embedding_dims,
+                                            self.word_embedding_dim,
                                             padding_idx=padding_idx)
         self.conv1 = nn.Conv1d(in_channels=word_embedding_dims, out_channels=cnn_num_filters,
                                kernel_size=cnn_kernel_size, padding=1)

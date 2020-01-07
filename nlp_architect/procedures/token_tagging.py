@@ -143,6 +143,8 @@ def add_parse_args(parser: argparse.ArgumentParser):
                         help="Overwrite the content of the output directory")
     parser.add_argument("--no_cuda", action='store_true',
                         help="Avoid using CUDA when available")
+    parser.add_argument('--log_file', type=str, default="log_file",
+                            help='log path for evaluation output')
 
 
 MODEL_TYPE = {
@@ -175,7 +177,7 @@ def do_training(args):
 
     # load external word embeddings if present
     if args.embedding_file is not None:
-        emb_dict = load_embedding_file(args.embedding_file)
+        emb_dict = load_embedding_file(args.embedding_file, dim=embedder_model.word_embedding_dim)
         emb_mat = get_embedding_matrix(emb_dict, vocab)
         emb_mat = torch.tensor(emb_mat, dtype=torch.float)
         embedder_model.load_embeddings(emb_mat)
@@ -217,7 +219,8 @@ def do_training(args):
                      logging_steps=args.logging_steps,
                      save_steps=args.save_steps,
                      save_path=args.output_dir,
-                     optimizer=opt if opt is not None else None)
+                     optimizer=opt if opt is not None else None,
+                     log_file=args.log_file)
     classifier.save_model(args.output_dir)
 
 
