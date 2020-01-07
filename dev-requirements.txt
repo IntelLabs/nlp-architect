@@ -1,9 +1,0 @@
-sphinx==1.8.5
-sphinx_rtd_theme
-flake8-html
-pep8
-flake8
-pytest
-pytest-cov
-pytest-mock
-pylint

@@ -14,8 +14,7 @@
 # limitations under the License.
 # ******************************************************************************
 
-from __future__ import (absolute_import, division, print_function,
-                        unicode_literals)
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import argparse
 import csv
@@ -25,7 +24,16 @@ import sys
 from multiprocessing import Pool
 from os import makedirs, path
 
-from newspaper import Article
+logger = logging.getLogger(__name__)
+
+try:
+    from newspaper import Article
+except (AttributeError, ImportError):
+    logger.error(
+        "newspaper3k is not installed, please install nlp_architect with [all] package. "
+        + "for example: pip install nlp_architect[all]"
+    )
+    sys.exit()
 
 from nlp_architect import LIBRARY_OUT
 from nlp_architect.utils.embedding import FasttextEmbeddingsModel
@@ -35,7 +43,7 @@ from nlp_architect.utils.text import SpacyInstance
 from .np_scorer import NPScorer
 
 logger = logging.getLogger(__name__)
-data_dir = str(LIBRARY_OUT / 'trend-analysis-data')
+data_dir = str(LIBRARY_OUT / "trend-analysis-data")
 
 
 def noun_phrase_extraction(docs, parser):
@@ -48,10 +56,10 @@ def noun_phrase_extraction(docs, parser):
     Returns:
         List of topics with their tf_idf, c_value, language-model scores
     """
-    logger.info('extracting NPs')
+    logger.info("extracting NPs")
     np_app = NPScorer(parser=parser)
     np_result = np_app.score_documents(docs, return_all=True)
-    logger.info('got NP extractor result. %s phrases were extracted', str(len(np_result)))
+    logger.info("got NP extractor result. %s phrases were extracted", str(len(np_result)))
     return np_result
 
 
@@ -71,10 +79,11 @@ def load_text_from_folder(folder):
             with open(folder + os.sep + filename, "rb") as f:
                 try:
                     files_content.append(
-                        ((f.read()).decode('UTF-8', errors='replace')).replace(
-                            '\n', ' ').replace('\r',
-                                               ' ').replace(
-                            '\b', ' '))
+                        ((f.read()).decode("UTF-8", errors="replace"))
+                        .replace("\n", " ")
+                        .replace("\r", " ")
+                        .replace("\b", " ")
+                    )
                 except Exception as e:
                     logger.error(str(e))
     except Exception as e:
@@ -94,7 +103,7 @@ def load_url_content(url_list):
         A list of documents (List[String])
     """
     files_content = []
-    url = ''
+    url = ""
     try:
         for url in url_list:
             try:
@@ -103,7 +112,7 @@ def load_url_content(url_list):
                 article = Article(url)
                 article.download()
                 article.parse()
-                files_content.append(article.title + ' ' + article.text)
+                files_content.append(article.title + " " + article.text)
             except Exception as e:
                 logger.error(str(e))
     except Exception as e:
@@ -120,21 +129,22 @@ def save_scores(np_result, file_path):
         np_result: A list of topics with different score types (tfidf, cvalue, freq)
         file_path: The output file path
     """
-    logger.info('saving multi-scores np extraction results to: %s', file_path)
-    with open(file_path, 'wt', encoding='utf-8', newline='') as csv_file:
-        writer = csv.writer(csv_file, delimiter=',')
+    logger.info("saving multi-scores np extraction results to: %s", file_path)
+    with open(file_path, "wt", encoding="utf-8", newline="") as csv_file:
+        writer = csv.writer(csv_file, delimiter=",")
         ctr = 0
         for group, tfidf, cvalue, freq in np_result:
             try:
                 group_str = ""
                 for p in group:
-                    group_str += p + ';'
+                    group_str += p + ";"
                 row = (group_str[0:-1], str(tfidf), str(cvalue), str(freq))
                 writer.writerow(row)
                 ctr += 1
             except Exception as e:
-                logger.error("Error while writing np results. iteration #: %s. Error: %s", str(
-                    ctr), str(e))
+                logger.error(
+                    "Error while writing np results. iteration #: %s. Error: %s", str(ctr), str(e)
+                )
 
 
 def unify_corpora_from_texts(text_list_t, text_list_r):
@@ -147,14 +157,14 @@ def unify_corpora_from_texts(text_list_t, text_list_r):
     Returns:
         The path of the unified corpus
     """
-    logger.info('prepare data for w2v training')
-    out_file = str(path.join(data_dir, 'corpus.txt'))
+    logger.info("prepare data for w2v training")
+    out_file = str(path.join(data_dir, "corpus.txt"))
     try:
-        with open(out_file, 'w+', encoding='utf-8') as writer:
+        with open(out_file, "w+", encoding="utf-8") as writer:
             write_text_list_to_file(text_list_t, writer)
             write_text_list_to_file(text_list_r, writer)
     except Exception as e:
-        logger.error('Error: %s', str(e))
+        logger.error("Error: %s", str(e))
     return out_file
 
 
@@ -168,14 +178,14 @@ def unify_corpora_from_folders(corpus_a, corpus_b):
     Returns:
         The path of the unified corpus
     """
-    logger.info('prepare data for w2v training')
-    out_file = str(path.join(data_dir, 'corpus.txt'))
+    logger.info("prepare data for w2v training")
+    out_file = str(path.join(data_dir, "corpus.txt"))
     try:
-        with open(out_file, 'w+', encoding='utf-8') as writer:
+        with open(out_file, "w+", encoding="utf-8") as writer:
             write_folder_corpus_to_file(corpus_a, writer)
             write_folder_corpus_to_file(corpus_b, writer)
     except Exception as e:
-        logger.error('Error: %s', str(e))
+        logger.error("Error: %s", str(e))
     return out_file
 
 
@@ -190,11 +200,11 @@ def write_folder_corpus_to_file(corpus, writer):
     for filename in os.listdir(corpus):
         try:
             file_path = str(path.join(corpus, filename))
-            with open(file_path, "r", encoding='utf-8') as f:
+            with open(file_path, "r", encoding="utf-8") as f:
                 lines = f.readlines()
                 writer.writelines(lines)
         except Exception as e:
-            logger.error('Error: %s. skipping file: %s', str(e), str(filename))
+            logger.error("Error: %s. skipping file: %s", str(e), str(filename))
 
 
 def write_text_list_to_file(text_list, writer):
@@ -209,7 +219,7 @@ def write_text_list_to_file(text_list, writer):
         for text in text_list:
             writer.writelines(text)
     except Exception as e:
-        logger.error('Error: %s', str(e))
+        logger.error("Error: %s", str(e))
 
 
 def train_w2v_model(data):
@@ -219,15 +229,15 @@ def train_w2v_model(data):
     Args:
         data: A path to the training data (String)
     """
-    with open(data, encoding='utf-8') as fp:
+    with open(data, encoding="utf-8") as fp:
         texts = [l.split() for l in fp.readlines()]
-    logger.info('Fasttext embeddings training...')
+    logger.info("Fasttext embeddings training...")
     try:
         model = FasttextEmbeddingsModel(size=100, min_count=1, skipgram=True)
         model.train(texts, epochs=100)
-        model.save(str(path.join(data_dir, 'W2V_Models/model.bin')))
+        model.save(str(path.join(data_dir, "W2V_Models/model.bin")))
     except Exception as e:
-        logger.error('Error: %s', str(e))
+        logger.error("Error: %s", str(e))
 
 
 def create_w2v_model(text_list_t, text_list_r):
@@ -259,30 +269,28 @@ def get_urls_from_file(file):
 
 
 def initiate_parser():
-    return SpacyInstance(
-        disable=['tagger', 'ner', 'parser', 'vectors', 'textcat']).parser
+    return SpacyInstance(disable=["tagger", "ner", "parser", "vectors", "textcat"]).parser
 
 
 def main(corpus_t, corpus_r, single_thread, no_train, url):
     try:
         if not path.exists(data_dir):
             makedirs(data_dir)
-        if not path.exists(path.join(data_dir, 'W2V_Models')):
-            os.makedirs(path.join(data_dir, 'W2V_Models'))
+        if not path.exists(path.join(data_dir, "W2V_Models")):
+            os.makedirs(path.join(data_dir, "W2V_Models"))
     except Exception:
-        logger.error('failed to create output folder.')
+        logger.error("failed to create output folder.")
         sys.exit()
     if url:
         if not path.isfile(corpus_t) or not path.isfile(corpus_r):
-            logger.error('Please provide a valid csv file with urls')
+            logger.error("Please provide a valid csv file with urls")
             sys.exit()
         else:
             text_t = load_url_content(get_urls_from_file(corpus_t))
             text_r = load_url_content(get_urls_from_file(corpus_r))
     else:
         if not path.isdir(corpus_t) or not path.isdir(corpus_r):
-            logger.error('Please provide valid directories for target_corpus and'
-                         ' for ref_corpus')
+            logger.error("Please provide valid directories for target_corpus and" " for ref_corpus")
             sys.exit()
 
         else:
@@ -297,10 +305,8 @@ def main(corpus_t, corpus_r, single_thread, no_train, url):
         result_r = noun_phrase_extraction(text_r, nlp_parser_r)
     else:
         with Pool(processes=2) as pool:
-            run_np_t = pool.apply_async(noun_phrase_extraction,
-                                        [text_t, nlp_parser_t])
-            run_np_r = pool.apply_async(noun_phrase_extraction,
-                                        [text_r, nlp_parser_r])
+            run_np_t = pool.apply_async(noun_phrase_extraction, [text_t, nlp_parser_t])
+            run_np_r = pool.apply_async(noun_phrase_extraction, [text_r, nlp_parser_r])
             result_t = run_np_t.get()
             result_r = run_np_r.get()
 
@@ -308,27 +314,35 @@ def main(corpus_t, corpus_r, single_thread, no_train, url):
 
     # save_scores(result_t, os.path.splitext(os.path.basename(corpus_t))[0] + '.csv')
     # save_scores(result_r, os.path.splitext(os.path.basename(corpus_r))[0] + '.csv')
-    save_scores(result_t, str(path.join(data_dir, os.path.basename(corpus_t))) + '.csv')
-    save_scores(result_r, str(path.join(data_dir, os.path.basename(corpus_r))) + '.csv')
+    save_scores(result_t, str(path.join(data_dir, os.path.basename(corpus_t))) + ".csv")
+    save_scores(result_r, str(path.join(data_dir, os.path.basename(corpus_r))) + ".csv")
 
     # create w2v model
     if not no_train:
         create_w2v_model(text_t, text_r)
 
 
-if __name__ == '__main__':
-    argparser = argparse.ArgumentParser(prog='topic_extraction.py')
-    argparser.add_argument('target_corpus', metavar='target_corpus',
-                           type=validate_existing_directory,
-                           help='a path to a folder containing text files')
-    argparser.add_argument('ref_corpus', metavar='ref_corpus', type=validate_existing_directory,
-                           help='a path to a folder containing text files')
-    argparser.add_argument('--no_train', action='store_true',
-                           help='skip the creation of w2v model')
-    argparser.add_argument('--url', action='store_true',
-                           help='corpus provided as csv file with urls')
-    argparser.add_argument('--single_thread', action='store_true',
-                           help='analyse corpora sequentially')
+if __name__ == "__main__":
+    argparser = argparse.ArgumentParser(prog="topic_extraction.py")
+    argparser.add_argument(
+        "target_corpus",
+        metavar="target_corpus",
+        type=validate_existing_directory,
+        help="a path to a folder containing text files",
+    )
+    argparser.add_argument(
+        "ref_corpus",
+        metavar="ref_corpus",
+        type=validate_existing_directory,
+        help="a path to a folder containing text files",
+    )
+    argparser.add_argument("--no_train", action="store_true", help="skip the creation of w2v model")
+    argparser.add_argument(
+        "--url", action="store_true", help="corpus provided as csv file with urls"
+    )
+    argparser.add_argument(
+        "--single_thread", action="store_true", help="analyse corpora sequentially"
+    )
     args = argparser.parse_args()
 
     main(args.target_corpus, args.ref_corpus, args.single_thread, args.no_train, args.url)

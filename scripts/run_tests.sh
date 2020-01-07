@@ -1,6 +1,5 @@
 #! /usr/bin/env bash
 
 echo "Running NLP Architect tests"
-# pytest ./ -rs -vv --cov=nlp_architect --junit-xml=pytest_unit.xml
-pytest ./ -rs -n 8 --dist=loadfile
+pytest ./ -rs -v -n 20 --dist=loadfile --cov=nlp_architect --junit-xml=pytest_unit.xml
 echo "Done."

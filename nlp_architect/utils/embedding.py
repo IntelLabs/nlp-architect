@@ -134,7 +134,8 @@ class ELMoEmbedderTFHUB(object):
             import tensorflow_hub as hub
         except (AttributeError, ImportError):
             logger.error(
-                "tensorflow_hub not installed, please install nlp_architect with [all] package"
+                "tensorflow_hub is not installed, "
+                + "please install nlp_architect with [all] package. "
                 + "for example: pip install nlp_architect[all]"
             )
             sys.exit()
