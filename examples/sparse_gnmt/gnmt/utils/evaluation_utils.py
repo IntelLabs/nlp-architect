@@ -39,8 +39,7 @@ import subprocess
 
 import tensorflow as tf
 
-from nlp_architect.models.gnmt.scripts import bleu
-from nlp_architect.models.gnmt.scripts import rouge
+from . import rouge, bleu
 
 __all__ = ["evaluate"]
 

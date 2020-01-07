@@ -38,8 +38,7 @@ import collections
 
 import tensorflow as tf
 
-from nlp_architect.models.gnmt.utils import vocab_utils
-
+from . import vocab_utils
 
 __all__ = ["BatchedInput", "get_iterator", "get_infer_iterator"]
 

@@ -44,12 +44,10 @@ import sys
 import numpy as np
 import tensorflow as tf
 
+from nlp_architect.utils import io
 from . import inference
 from . import train
-from nlp_architect.models.gnmt.utils import evaluation_utils
-from nlp_architect.models.gnmt.utils import misc_utils as utils
-from nlp_architect.models.gnmt.utils import vocab_utils
-from nlp_architect.utils import io
+from .gnmt.utils import misc_utils as utils, vocab_utils, evaluation_utils
 
 utils.check_tensorflow_version()
 

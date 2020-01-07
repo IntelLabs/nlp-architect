@@ -36,17 +36,15 @@
 from __future__ import print_function
 
 import codecs
-import time
 import os
+import time
 
 import tensorflow as tf
 
-from nlp_architect.models.gnmt import attention_model
-from nlp_architect.models import gnmt_model
-from nlp_architect.models.gnmt import model as nmt_model
-from nlp_architect.models.gnmt import model_helper
-from nlp_architect.models.gnmt.utils import misc_utils as utils
-from nlp_architect.models.gnmt.utils import nmt_utils
+from . import gnmt_model
+from .gnmt import attention_model, model as nmt_model
+from .gnmt import model_helper
+from .gnmt.utils import nmt_utils, misc_utils as utils
 
 __all__ = ["load_data", "inference",
            "single_worker_inference", "multi_worker_inference"]

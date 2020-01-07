@@ -38,8 +38,8 @@ from __future__ import print_function
 
 import tensorflow as tf
 
-from nlp_architect.models.gnmt import model
-from nlp_architect.models.gnmt import model_helper
+from . import model
+from . import model_helper
 
 __all__ = ["AttentionModel"]
 

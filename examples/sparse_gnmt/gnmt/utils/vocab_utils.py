@@ -44,7 +44,7 @@ import tensorflow as tf
 # pylint: disable=no-name-in-module
 from tensorflow.python.ops import lookup_ops
 
-from nlp_architect.models.gnmt.utils import misc_utils as utils
+from . import misc_utils as utils
 
 # word level special token
 UNK = "<unk>"

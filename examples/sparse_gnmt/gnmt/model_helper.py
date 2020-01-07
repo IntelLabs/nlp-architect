@@ -44,9 +44,7 @@ import six
 import tensorflow as tf
 
 from tensorflow.python.ops import lookup_ops
-from nlp_architect.models.gnmt.utils import iterator_utils
-from nlp_architect.models.gnmt.utils import misc_utils as utils
-from nlp_architect.models.gnmt.utils import vocab_utils
+from .utils import misc_utils as utils, vocab_utils, iterator_utils
 
 __all__ = [
     "get_initializer", "get_device_str", "create_train_model",

@@ -39,8 +39,7 @@ import time
 import numpy as np
 import tensorflow as tf
 
-from nlp_architect.models.gnmt.utils import evaluation_utils
-from nlp_architect.models.gnmt.utils import misc_utils as utils
+from . import misc_utils as utils, evaluation_utils
 
 __all__ = ["decode_and_evaluate", "get_translation"]
 

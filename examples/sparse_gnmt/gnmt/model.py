@@ -42,13 +42,11 @@ import collections
 
 import tensorflow as tf
 from tensorflow.contrib.model_pruning import get_masks, get_thresholds
-
-from tensorflow.contrib.model_pruning.python.layers import core_layers
 from tensorflow.contrib.model_pruning.python import pruning
+from tensorflow.contrib.model_pruning.python.layers import core_layers
 
-from nlp_architect.models.gnmt import model_helper
-from nlp_architect.models.gnmt.utils import iterator_utils
-from nlp_architect.models.gnmt.utils import misc_utils as utils
+from . import model_helper
+from .utils import misc_utils as utils, iterator_utils
 
 utils.check_tensorflow_version()
 
