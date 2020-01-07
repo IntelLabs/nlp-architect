@@ -30,7 +30,7 @@ args = parser.parse_args(
             '--data_dir', data_dir, '--output_dir', idcnn_crf_output_path,
             '--embedding_file', embeddings_path,
             '--config_file', '/home/shira_nlp/idcnn_experiments/config_files/replicate_config.json', '-b', '128',
-            '--lr', '0.0008', '-e', '1000', '--model_type', 'id-cnn', '--log_file', log_path, '--max_sentence_length',
-            '50', '--max_word_length', '12', '--logging_steps', '500', '--overwrite_output_dir'
+            '--lr', '0.0008', '-e', '300', '--model_type', 'id-cnn', '--log_file', log_path, '--max_sentence_length',
+            '50', '--max_word_length', '12', '--logging_steps', '500', '--bilou', '--overwrite_output_dir'
         ])
 train_procedure.run_procedure(args)    

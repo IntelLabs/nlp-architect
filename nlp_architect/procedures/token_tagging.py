@@ -145,6 +145,8 @@ def add_parse_args(parser: argparse.ArgumentParser):
                         help="Avoid using CUDA when available")
     parser.add_argument('--log_file', type=str, default="log_file",
                             help='log path for evaluation output')
+    parser.add_argument("--bilou", action='store_true',
+                        help="whether to use bilou format")
 
 
 MODEL_TYPE = {
@@ -186,7 +188,8 @@ def do_training(args):
                               word_vocab=vocab,
                               labels=processor.get_labels(),
                               use_crf=args.use_crf,
-                              device=device, n_gpus=n_gpus)
+                              device=device, n_gpus=n_gpus,
+                              bilou_format = args.bilou)
 
     train_batch_size = args.b * max(1, n_gpus)
 

@@ -51,7 +51,7 @@ class NeuralTagger(TrainableModel):
     """
 
     def __init__(self, embedder_model, word_vocab: Vocabulary, labels: List[str] = None,
-                 use_crf: bool = False, device: str = 'cpu', n_gpus=0):
+                 use_crf: bool = False, device: str = 'cpu', n_gpus=0, bilou_format = False):
         super(NeuralTagger, self).__init__()
         self.model = embedder_model
         self.labels = labels
@@ -64,6 +64,7 @@ class NeuralTagger(TrainableModel):
             self.crf = CRF(self.num_labels, batch_first=True)
         self.device = device
         self.n_gpus = n_gpus
+        self.bilou_format = bilou_format
         self.to(self.device, self.n_gpus)
 
     def convert_to_tensors(self,
@@ -501,7 +502,7 @@ class NeuralTagger(TrainableModel):
             logits = logits.detach().cpu().numpy()
         out_label_ids = active_labels.detach().cpu().numpy()
         y_true, y_pred = self.extract_labels(out_label_ids, logits)
-        p, r, f1 = tagging(y_pred, y_true)
+        p, r, f1 = tagging(y_pred, y_true, self.bilou_format)
         return {"p": p, "r": r, "f1": f1}
 
     def extract_labels(self, label_ids, logits):

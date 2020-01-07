@@ -92,8 +92,8 @@ def pearson_and_spearman(preds, labels):
     }
 
 
-def tagging(preds, labels):
-    p = precision_score(labels, preds)
-    r = recall_score(labels, preds)
-    f1 = f1_score(labels, preds)
+def tagging(preds, labels, bilou_format = False):
+    p = precision_score(labels, preds, bilou_format)
+    r = recall_score(labels, preds, bilou_format)
+    f1 = f1_score(labels, preds, bilou_format)
     return p, r, f1
