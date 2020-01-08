@@ -51,11 +51,12 @@ pipeline {
                         }
                     }
                 }
-                stage('flake8') {
+                stage('code quality') {
                     steps {
                         sh """
                         . .nlp_architect_env/bin/activate
                         ./scripts/check_flake.sh
+                        ./scripts/check_pylint.sh
                         """
                     }
                     post {
@@ -66,11 +67,11 @@ pipeline {
                         }
                     }
                 }
-                stage('pylint') {
+                stage('code style') {
                     steps {
                         sh """
                         . .nlp_architect_env/bin/activate
-                        ./scripts/check_pylint.sh
+                        ./scripts/check_black.sh
                         """
                     }
                     post {
