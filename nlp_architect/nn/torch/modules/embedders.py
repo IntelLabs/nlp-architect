@@ -18,6 +18,7 @@ from typing import List
 
 import torch
 from torch import nn as nn
+import torch.nn.functional as F
 
 from nlp_architect.utils.io import load_json_file
 from nlp_architect.utils.text import n_letters
@@ -168,6 +169,8 @@ class IDCNN(nn.Module):
                  word_vocab_size: int,
                  num_labels: int,
                  word_embedding_dims: int = 100,
+                 shape_vocab_size: int = 4,
+                 shape_embedding_dims: int = 5,
                  char_embedding_dims: int = 16,
                  char_cnn_filters: int = 128,
                  char_cnn_kernel_size: int = 3,
@@ -179,6 +182,8 @@ class IDCNN(nn.Module):
                  word_dropout: float = 0.85,
                  blocks: int = 1,
                  dilations: List = None,
+                 padding_word: int = 1,
+                 padding_char: int = 1,
                  padding_idx: int = 0):
         super(IDCNN, self).__init__()
         if dilations is None:
@@ -192,18 +197,19 @@ class IDCNN(nn.Module):
         self.word_embeddings = nn.Embedding(word_vocab_size,
                                             self.word_embedding_dim,
                                             padding_idx=padding_idx)
-        self.conv1 = nn.Conv1d(in_channels=word_embedding_dims, out_channels=cnn_num_filters,
-                               kernel_size=cnn_kernel_size, padding=1)
-        self.relu = nn.ReLU()
+        self.shape_embeddings = nn.Embedding(shape_vocab_size+1,
+                                            shape_embedding_dims,
+                                            padding_idx=padding_idx)
+        self.conv0 = nn.Conv1d(in_channels=word_embedding_dims+shape_embedding_dims, out_channels=cnn_num_filters,
+                               kernel_size=cnn_kernel_size, padding=padding_word)
         self.cnv_layers = []
-
         for i in range(len(self.dilation)):
             self.cnv_layers.append(nn.Conv1d(in_channels=cnn_num_filters,
-                                             out_channels=cnn_num_filters, kernel_size=3,
+                                             out_channels=cnn_num_filters, kernel_size=cnn_kernel_size,
                                              padding=self.padding[i], dilation=self.dilation[i]))
         self.cnv_layers = nn.ModuleList(self.cnv_layers)
         self.dense = nn.Linear(
-            in_features=(cnn_num_filters * self.num_blocks) + char_cnn_filters,
+            in_features=(cnn_num_filters * self.num_blocks),
             out_features=num_labels)
 
         self.char_embeddings = nn.Embedding(n_letters + 1,
@@ -218,7 +224,7 @@ class IDCNN(nn.Module):
         self.h_drop = nn.Dropout(hidden_dropout)
         self.word_dropout = word_dropout
 
-    def forward(self, words, word_chars, no_dropout=False, **kwargs):
+    def forward(self, words, word_chars, shapes, no_dropout=False, **kwargs):
         """
         IDCNN forward step
 
@@ -229,39 +235,40 @@ class IDCNN(nn.Module):
         Returns:
             torch.tensor: logits of model
         """
+        block_scores = []
         word_embeds = self.word_embeddings(words)
+        shape_embeds = self.shape_embeddings(shapes)
+        features = torch.cat((word_embeds, shape_embeds), 2)
         if not no_dropout:
-            word_embeds = self.i_drop(word_embeds)
-        word_embeds = word_embeds.permute(0, 2, 1)
-        conv1 = self.conv1(word_embeds)
-        if not no_dropout:
-            conv1 = self.m_drop(conv1)
-        conv_outputs = []
+            features = self.i_drop(features)
+
+        features = features.permute(0, 2, 1)
+        conv0 = self.conv0(features)
+        conv0 = F.relu(conv0)
+        conv_layer = conv0
         for _ in range(self.num_blocks):
+            conv_outputs = []
             for j in range(len(self.cnv_layers)):
-                conv1 = self.cnv_layers[j](conv1)
-                if j == len(self.cnv_layers) - 1:
-                    conv_outputs.append(conv1.permute(0, 2, 1))
+                conv_layer = self.cnv_layers[j](conv_layer)
+                conv_layer = F.relu(conv_layer)
+                if j == len(self.cnv_layers) - 1: # currently use only last layer
+                    conv_outputs.append(conv_layer)
 
-        word_features = torch.cat(conv_outputs, 2)
+            layers_concat = torch.cat(conv_outputs, 1)
+            if not no_dropout:
+                conv_layer = self.m_drop(layers_concat) # for next block iteration
+            else:
+                conv_layer = layers_concat
 
-        char_embeds = self.char_embeddings(word_chars)
-        saved_char_size = char_embeds.size()[:2]
-        char_embeds = char_embeds.permute(0, 1, 3, 2)
-        input_size = char_embeds.size()
-        squashed_shape = [-1] + list(input_size[2:])
-        char_embeds_reshape = char_embeds.contiguous().view(*squashed_shape)
-        char_embeds = self.char_conv(char_embeds_reshape)
-        char_embeds = char_embeds.permute(0, 2, 1)
-        char_embeds = self.relu(char_embeds)
-        char_embeds, _ = torch.max(char_embeds, 1)  # global max pooling
-        new_size = saved_char_size + char_embeds.size()[1:]
-        char_features = char_embeds.contiguous().view(new_size)
+            layers_concat = layers_concat.squeeze(2).permute(0, 2, 1) # for final block scores
+            if not no_dropout:
+                block_output = self.h_drop(layers_concat)
+            else:
+                block_output = layers_concat
+            scores = self.dense(block_output)
+            block_scores.append(scores)
+            logits = block_scores[-1] # currently use only last block
 
-        features = torch.cat((word_features, char_features), -1)
-        if not no_dropout:
-            features = self.h_drop(features)
-        logits = self.dense(features)
         return logits
 
     @classmethod

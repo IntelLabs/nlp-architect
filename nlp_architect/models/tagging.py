@@ -68,6 +68,18 @@ class NeuralTagger(TrainableModel):
         self.bilou_format = bilou_format
         self.to(self.device, self.n_gpus)
 
+
+    def get_shape(self, string):
+        if all(c.isupper() for c in string):
+            return 1 #"AA"
+        if string[0].isupper():
+            return 2 #"Aa"
+        if any(c for c in string if c.isupper()):
+            return 3 #"aAa"
+        else:
+            return 4 #"a"
+
+            
     def convert_to_tensors(self,
                            examples: List[TokenClsInputExample],
                            max_seq_length: int = 128,
@@ -99,9 +111,11 @@ class NeuralTagger(TrainableModel):
             word_chars = []
             for word in example.tokens:
                 word_chars.append([char_to_id(c) for c in word])
+            word_shapes = [self.get_shape(t) for t in example.tokens]
 
             # cut up to max length
             word_tokens = word_tokens[:max_seq_length]
+            word_shapes = word_shapes[:max_seq_length]
             if include_labels:
                 labels = labels[:max_seq_length]
             word_chars = word_chars[:max_seq_length]
@@ -112,6 +126,7 @@ class NeuralTagger(TrainableModel):
             # Zero-pad up to the sequence length.
             padding_length = max_seq_length - len(word_tokens)
             input_ids = word_tokens + ([pad_id] * padding_length)
+            shape_ids = word_shapes + ([pad_id] * padding_length)
             mask = mask + ([0] * padding_length)
             if include_labels:
                 label_ids = labels + ([labels_pad_id] * padding_length)
@@ -127,6 +142,7 @@ class NeuralTagger(TrainableModel):
                 word_char_ids.append(([pad_id] * max_word_length))
 
             assert len(input_ids) == max_seq_length
+            assert len(shape_ids) == max_seq_length
             if include_labels:
                 assert len(label_ids) == max_seq_length
             assert len(word_char_ids) == max_seq_length
@@ -135,19 +151,21 @@ class NeuralTagger(TrainableModel):
 
             features.append(InputFeatures(input_ids,
                                           word_char_ids,
+                                          shape_ids,
                                           mask=mask,
                                           label_id=label_ids if include_labels else None))
 
         # Convert to Tensors and build dataset
         all_input_ids = torch.tensor([f.input_ids for f in features], dtype=torch.long)
         all_char_ids = torch.tensor([f.char_ids for f in features], dtype=torch.long)
+        all_shape_ids = torch.tensor([f.shape_ids for f in features], dtype=torch.long)
         masks = torch.tensor([f.mask for f in features], dtype=torch.long)
 
         if include_labels:
             all_label_ids = torch.tensor([f.label_id for f in features], dtype=torch.long)
-            dataset = TensorDataset(all_input_ids, all_char_ids, masks, all_label_ids)
+            dataset = TensorDataset(all_input_ids, all_char_ids, all_shape_ids, masks, all_label_ids)
         else:
-            dataset = TensorDataset(all_input_ids, all_char_ids, masks)
+            dataset = TensorDataset(all_input_ids, all_char_ids, all_shape_ids, masks)
         return dataset
 
     def get_optimizer(self, opt_fn=None, lr: int = 0.001):
@@ -174,9 +192,10 @@ class NeuralTagger(TrainableModel):
         """
         mapping = {'words': batch[0],
                    'word_chars': batch[1],
-                   'mask': batch[2]}
-        if len(batch) == 4:
-            mapping.update({'labels': batch[3]})
+                   'shapes': batch[2],
+                   'mask': batch[3]}
+        if len(batch) == 5:
+            mapping.update({'labels': batch[4]})
         return mapping
 
     def train(self, train_data_set: DataLoader,
@@ -619,8 +638,9 @@ class NeuralTagger(TrainableModel):
 class InputFeatures(object):
     """A single set of features of data."""
 
-    def __init__(self, input_ids, char_ids, mask=None, label_id=None):
+    def __init__(self, input_ids, char_ids, shape_ids, mask=None, label_id=None):
         self.input_ids = input_ids
         self.char_ids = char_ids
+        self.shape_ids = shape_ids
         self.mask = mask
         self.label_id = label_id
