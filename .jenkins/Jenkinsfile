@@ -29,57 +29,67 @@ pipeline {
                 """
             }
         }
-        stage('Validation') {
-            parallel {
-                stage('Tests') {
-                    steps {
-                        sh """
-                        . .nlp_architect_env/bin/activate
-                        export LC_ALL=en_US.UTF-8
-                        export LANG=en_US.UTF-8
-                        pytest ./ -rs -v -n 20 --dist=loadfile --cov=nlp_architect --junit-xml=pytest_unit.xml
-                        """
-                    }
-                    post {
-                        always {
-                            junit 'pytest_unit.xml'
-                        }
-                        failure {
-                            script {
-                                currentBuild.result = 'FAILURE'
-                            }
-                        }
+        stage('Tests') {
+            steps {
+                sh """
+                . .nlp_architect_env/bin/activate
+                export LC_ALL=en_US.UTF-8
+                export LANG=en_US.UTF-8
+                pytest ./ -rs -v -n 20 --dist=loadfile --cov=nlp_architect --junit-xml=pytest_unit.xml
+                """
+            }
+            post {
+                always {
+                    junit 'pytest_unit.xml'
+                }
+                failure {
+                    script {
+                        currentBuild.result = 'FAILURE'
                     }
                 }
-                stage('code quality') {
-                    steps {
-                        sh """
-                        . .nlp_architect_env/bin/activate
-                        ./scripts/check_flake.sh
-                        ./scripts/check_pylint.sh
-                        """
-                    }
-                    post {
-                        failure {
-                            script {
-                                currentBuild.result = 'FAILURE'
-                            }
-                        }
+            }
+        }
+        stage('flake8') {
+            steps {
+                sh """
+                . .nlp_architect_env/bin/activate
+                ./scripts/check_flake.sh
+                """
+            }
+            post {
+                failure {
+                    script {
+                        currentBuild.result = 'FAILURE'
                     }
                 }
-                stage('code style') {
-                    steps {
-                        sh """
-                        . .nlp_architect_env/bin/activate
-                        ./scripts/check_black.sh
-                        """
+            }
+        }
+        stage('Code quality') {
+            steps {
+                sh """
+                . .nlp_architect_env/bin/activate
+                ./scripts/check_pylint.sh
+                """
+            }
+            post {
+                failure {
+                    script {
+                        currentBuild.result = 'FAILURE'
                     }
-                    post {
-                        failure {
-                            script {
-                                currentBuild.result = 'FAILURE'
-                            }
-                        }
+                }
+            }
+        }
+        stage('code style') {
+            steps {
+                sh """
+                . .nlp_architect_env/bin/activate
+                ./scripts/check_black.sh
+                """
+            }
+            post {
+                failure {
+                    script {
+                        currentBuild.result = 'FAILURE'
                     }
                 }
             }
