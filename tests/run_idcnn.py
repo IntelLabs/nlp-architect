@@ -23,6 +23,7 @@ if not os.path.exists(idcnn_crf_output_path):
 parser = argparse.ArgumentParser()
 train_procedure = TrainTagger()
 train_procedure.add_arguments(parser)
+docstart_token = "-DOCSTART-"
 # embeddings_path =  '/home/peter_nlp/data/glove.6B/glove.6B.100d.txt'
 embeddings_path = '/home/shira_nlp/dilated-cnn-ner/data/embeddings/lample-embeddings-pre_orig.txt'
 args = parser.parse_args(
@@ -31,6 +32,7 @@ args = parser.parse_args(
             '--embedding_file', embeddings_path,
             '--config_file', '/home/shira_nlp/idcnn_experiments/config_files/replicate_config.json', '-b', '128',
             '--lr', '0.0008', '-e', '300', '--model_type', 'id-cnn', '--log_file', log_path, '--max_sentence_length',
-            '50', '--max_word_length', '12', '--logging_steps', '500', '--drop_penalty', '1e-4', '--bilou', '--overwrite_output_dir'
+            '50', '--max_word_length', '12', '--logging_steps', '500', '--drop_penalty', '1e-4', '--ignore_token=-DOCSTART-',
+            '--bilou', '--overwrite_output_dir'
         ])
 train_procedure.run_procedure(args)    

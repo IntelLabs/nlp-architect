@@ -311,12 +311,13 @@ class TokenClsProcessor(DataProcessor):
     Label dictionary is given in labels.txt file.
     """
 
-    def __init__(self, data_dir, tag_col: int = -1):
+    def __init__(self, data_dir, tag_col: int = -1, ignore_token = None):
         if not os.path.exists(data_dir):
             raise FileNotFoundError
         self.data_dir = data_dir
         self.tag_col = tag_col
         self.labels = None
+        self.ignore_token = ignore_token
 
     def _read_examples(self, data_dir, file_name, set_name):
         if not os.path.exists(data_dir + os.sep + file_name):
@@ -324,7 +325,7 @@ class TokenClsProcessor(DataProcessor):
                 file_name, data_dir))
             return None
         return self._create_examples(read_column_tagged_file(os.path.join(data_dir, file_name),
-                                                             tag_col=self.tag_col), set_name)
+                                                             tag_col=self.tag_col, ignore_line=self.ignore_token), set_name)
 
     def get_train_examples(self, filename="train.txt"):
         return self._read_examples(self.data_dir, filename, "train")

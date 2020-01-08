@@ -91,9 +91,13 @@ def read_tsv(input_file, quotechar=None):
         return lines
 
 
-def read_column_tagged_file(filename: str, tag_col: int = -1):
+def read_column_tagged_file(filename: str, tag_col: int = -1, ignore_line: str = None):
     """Reads column tagged (CONLL) style file (tab separated and token per line)
     tag_col is the column number to use as tag of the token (defualts to the last in line)
+    Args:
+        filename (str): input file path
+        tag_col (int): the column contains the labels
+        ignore_line (str): a str token to exclude its line from parsing 
     return format :
     [ ['token', 'TAG'], ['token', 'TAG2'],... ]
     """
@@ -110,8 +114,10 @@ def read_column_tagged_file(filename: str, tag_col: int = -1):
                     labels = []
                 continue
             splits = line.split()
-            sentence.append(splits[0])
-            labels.append(splits[tag_col])
+            token = splits[0]
+            if token != ignore_line:
+                sentence.append(token)
+                labels.append(splits[tag_col])
 
     if len(sentence) > 0:
         data.append((sentence, labels))

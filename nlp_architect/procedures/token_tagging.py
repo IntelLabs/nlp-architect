@@ -146,9 +146,11 @@ def add_parse_args(parser: argparse.ArgumentParser):
     parser.add_argument('--log_file', type=str, default="log_file",
                             help='log path for evaluation output')
     parser.add_argument("--bilou", action='store_true',
-                        help="whether to use bilou format")
+                        help="whether to use bilou format evaluation")
     parser.add_argument('--drop_penalty', type=float, default=1e-4,
                         help='idcnn dropout penalty')
+    parser.add_argument('--ignore_token', type=str, default="",
+                        help='a token to ignore when processing the data')
 
 
 MODEL_TYPE = {
@@ -163,7 +165,7 @@ def do_training(args):
     # Set seed
     args.seed = set_seed(args.seed, n_gpus)
     # prepare data
-    processor = TokenClsProcessor(args.data_dir, tag_col=args.tag_col)
+    processor = TokenClsProcessor(args.data_dir, tag_col=args.tag_col, ignore_token=args.ignore_token)
     train_ex = processor.get_train_examples()
     dev_ex = processor.get_dev_examples()
     test_ex = processor.get_test_examples()

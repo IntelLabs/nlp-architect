@@ -79,7 +79,7 @@ class NeuralTagger(TrainableModel):
         else:
             return 4 #"a"
 
-            
+
     def convert_to_tensors(self,
                            examples: List[TokenClsInputExample],
                            max_seq_length: int = 128,
@@ -477,7 +477,6 @@ class NeuralTagger(TrainableModel):
         """
         logger.info("***** Running inference *****")
         logger.info(" Batch size: {}".format(data_set.batch_size))
-        eval_loss = 0.0
         preds = None
         out_label_ids = None
         for batch in tqdm(data_set, desc="Inference iteration"):
@@ -486,14 +485,6 @@ class NeuralTagger(TrainableModel):
             with torch.no_grad():
                 inputs = self.batch_mapper(batch)
                 logits = self.model(**inputs)
-                if 'labels' in inputs:
-                    if self.use_crf:
-                        loss = -1.0 * self.crf(logits, inputs['labels'],
-                                               mask=inputs['mask'] != 0.0)
-                    else:
-                        loss_fn = CrossEntropyLoss(ignore_index=0)
-                        loss = loss_fn(logits.view(-1, self.num_labels), inputs['labels'].view(-1))
-                    eval_loss += loss.mean().item()
             model_output = logits.detach().cpu()
             model_out_label_ids = inputs['labels'].detach().cpu(
             ) if 'labels' in inputs else None

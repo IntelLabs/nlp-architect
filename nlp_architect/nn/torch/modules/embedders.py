@@ -184,13 +184,15 @@ class IDCNN(nn.Module):
                  dilations: List = None,
                  padding_word: int = 1,
                  padding_char: int = 1,
-                 padding_idx: int = 0):
+                 padding_idx: int = 0,
+                 use_chars: bool = False):
         super(IDCNN, self).__init__()
         if dilations is None:
             dilations = [1, 2, 1]
         self.num_blocks = blocks
         self.dilation = dilations
         self.padding = dilations
+        self.use_chars = use_chars
         self.num_labels = num_labels
         self.padding_idx = padding_idx
         self.word_embedding_dim = word_embedding_dims
@@ -200,7 +202,8 @@ class IDCNN(nn.Module):
         self.shape_embeddings = nn.Embedding(shape_vocab_size+1,
                                             shape_embedding_dims,
                                             padding_idx=padding_idx)
-        self.conv0 = nn.Conv1d(in_channels=word_embedding_dims+shape_embedding_dims, out_channels=cnn_num_filters,
+        self.char_filters = char_cnn_filters if use_chars else 0
+        self.conv0 = nn.Conv1d(in_channels=word_embedding_dims+shape_embedding_dims+self.char_filters, out_channels=cnn_num_filters,
                                kernel_size=cnn_kernel_size, padding=padding_word)
         self.cnv_layers = []
         for i in range(len(self.dilation)):
@@ -212,13 +215,14 @@ class IDCNN(nn.Module):
             in_features=(cnn_num_filters * self.num_blocks),
             out_features=num_labels)
 
-        self.char_embeddings = nn.Embedding(n_letters + 1,
-                                            char_embedding_dims,
-                                            padding_idx=padding_idx)
-        self.char_conv = nn.Conv1d(in_channels=char_embedding_dims,
-                                   out_channels=char_cnn_filters,
-                                   kernel_size=char_cnn_kernel_size,
-                                   padding=1)
+        if use_chars:
+            self.char_embeddings = nn.Embedding(n_letters + 1,
+                                                char_embedding_dims,
+                                                padding_idx=padding_idx)
+            self.char_conv = nn.Conv1d(in_channels=char_embedding_dims,
+                                    out_channels=self.char_filters,
+                                    kernel_size=char_cnn_kernel_size,
+                                    padding=1)
         self.i_drop = nn.Dropout(input_dropout)
         self.m_drop = nn.Dropout(middle_dropout)
         self.h_drop = nn.Dropout(hidden_dropout)
@@ -236,9 +240,28 @@ class IDCNN(nn.Module):
             torch.tensor: logits of model
         """
         block_scores = []
+        input_features = []
         word_embeds = self.word_embeddings(words)
         shape_embeds = self.shape_embeddings(shapes)
-        features = torch.cat((word_embeds, shape_embeds), 2)
+        input_features.extend([word_embeds, shape_embeds])
+
+        if self.use_chars:
+            char_embeds = self.char_embeddings(word_chars)
+            saved_char_size = char_embeds.size()[:2]
+            char_embeds = char_embeds.permute(0, 1, 3, 2)
+            input_size = char_embeds.size()
+            squashed_shape = [-1] + list(input_size[2:])
+            char_embeds_reshape = char_embeds.contiguous().view(*squashed_shape)
+            char_embeds = self.char_conv(char_embeds_reshape)
+            char_embeds = char_embeds.permute(0, 2, 1)
+            char_embeds = F.relu(char_embeds)
+            char_embeds, _ = torch.max(char_embeds, 1)  # global max pooling
+            new_size = saved_char_size + char_embeds.size()[1:]
+            char_features = char_embeds.contiguous().view(new_size)
+            input_features.append(char_features)
+
+
+        features = torch.cat(input_features, 2)
         if not no_dropout:
             features = self.i_drop(features)
 
