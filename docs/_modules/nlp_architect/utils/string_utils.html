@@ -205,16 +205,16 @@
 
 <span class="n">CURRENT_DIR</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
 
-<span class="n">STOP_WORDS_FILE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">CURRENT_DIR</span><span class="p">,</span> <span class="s1">&#39;resources/stop_words_en.json&#39;</span><span class="p">)</span>
-<span class="n">PRONOUN_FILE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">CURRENT_DIR</span><span class="p">,</span> <span class="s1">&#39;resources/pronoun_en.json&#39;</span><span class="p">)</span>
-<span class="n">PREPOSITION_FILE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">CURRENT_DIR</span><span class="p">,</span> <span class="s1">&#39;resources/preposition_en.json&#39;</span><span class="p">)</span>
-<span class="n">DETERMINERS_FILE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">CURRENT_DIR</span><span class="p">,</span> <span class="s1">&#39;resources/determiners_en.json&#39;</span><span class="p">)</span>
+<span class="n">STOP_WORDS_FILE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">CURRENT_DIR</span><span class="p">,</span> <span class="s2">&quot;resources/stop_words_en.json&quot;</span><span class="p">)</span>
+<span class="n">PRONOUN_FILE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">CURRENT_DIR</span><span class="p">,</span> <span class="s2">&quot;resources/pronoun_en.json&quot;</span><span class="p">)</span>
+<span class="n">PREPOSITION_FILE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">CURRENT_DIR</span><span class="p">,</span> <span class="s2">&quot;resources/preposition_en.json&quot;</span><span class="p">)</span>
+<span class="n">DETERMINERS_FILE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">CURRENT_DIR</span><span class="p">,</span> <span class="s2">&quot;resources/determiners_en.json&quot;</span><span class="p">)</span>
 
-<span class="n">DISAMBIGUATION_CATEGORY</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;disambig&#39;</span><span class="p">,</span> <span class="s1">&#39;disambiguation&#39;</span><span class="p">]</span>
+<span class="n">DISAMBIGUATION_CATEGORY</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;disambig&quot;</span><span class="p">,</span> <span class="s2">&quot;disambiguation&quot;</span><span class="p">]</span>
 
 
 <div class="viewcode-block" id="StringUtils"><a class="viewcode-back" href="../../../generated_api/nlp_architect.utils.html#nlp_architect.utils.string_utils.StringUtils">[docs]</a><span class="k">class</span> <span class="nc">StringUtils</span><span class="p">:</span>
-    <span class="n">spacy_no_parser</span> <span class="o">=</span> <span class="n">SpacyInstance</span><span class="p">(</span><span class="n">disable</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;parser&#39;</span><span class="p">])</span>
+    <span class="n">spacy_no_parser</span> <span class="o">=</span> <span class="n">SpacyInstance</span><span class="p">(</span><span class="n">disable</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;parser&quot;</span><span class="p">])</span>
     <span class="n">spacy_parser</span> <span class="o">=</span> <span class="n">SpacyInstance</span><span class="p">()</span>
     <span class="n">stop_words</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">pronouns</span> <span class="o">=</span> <span class="p">[]</span>
@@ -235,8 +235,9 @@
 
 <div class="viewcode-block" id="StringUtils.normalize_str"><a class="viewcode-back" href="../../../generated_api/nlp_architect.utils.html#nlp_architect.utils.string_utils.StringUtils.normalize_str">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">normalize_str</span><span class="p">(</span><span class="n">in_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="n">str_clean</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;[&#39;</span> <span class="o">+</span> <span class="n">string</span><span class="o">.</span><span class="n">punctuation</span> <span class="o">+</span> <span class="n">string</span><span class="o">.</span><span class="n">whitespace</span> <span class="o">+</span> <span class="s1">&#39;]&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">,</span>
-                           <span class="n">in_str</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="n">str_clean</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;[&quot;</span> <span class="o">+</span> <span class="n">string</span><span class="o">.</span><span class="n">punctuation</span> <span class="o">+</span> <span class="n">string</span><span class="o">.</span><span class="n">whitespace</span> <span class="o">+</span> <span class="s2">&quot;]&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="n">in_str</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="p">)</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">str_clean</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="n">str_clean</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">str_clean</span><span class="p">)</span>
 
@@ -248,7 +249,7 @@
             <span class="k">if</span> <span class="ow">not</span> <span class="n">StringUtils</span><span class="o">.</span><span class="n">is_pronoun</span><span class="p">(</span><span class="n">lemma</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">StringUtils</span><span class="o">.</span><span class="n">is_stop</span><span class="p">(</span><span class="n">lemma</span><span class="p">):</span>
                 <span class="n">ret_clean</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">lemma_</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ret_clean</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ret_clean</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="StringUtils.is_pronoun"><a class="viewcode-back" href="../../../generated_api/nlp_architect.utils.html#nlp_architect.utils.string_utils.StringUtils.is_pronoun">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">is_pronoun</span><span class="p">(</span><span class="n">in_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
@@ -288,7 +289,7 @@
         <span class="n">ret_list</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">_str</span> <span class="ow">in</span> <span class="n">str_list</span><span class="p">:</span>
             <span class="n">normalize_str</span> <span class="o">=</span> <span class="n">StringUtils</span><span class="o">.</span><span class="n">normalize_str</span><span class="p">(</span><span class="n">_str</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">normalize_str</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">normalize_str</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
                 <span class="n">ret_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">normalize_str</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">ret_list</span></div>
 

@@ -19,7 +19,7 @@ import tensorflow as tf
 class MostCommonWordSense(object):
     def __init__(self, epochs, batch_size, callback_args=None):
         self.optimizer = tf.keras.optimizers.SGD(lr=0.1, decay=1e-6, momentum=0.9, nesterov=True)
-        self.loss = 'mean_squared_error'
+        self.loss = "mean_squared_error"
         self.epochs = epochs
         self.batch_size = batch_size
         self.model = None
@@ -28,15 +28,16 @@ class MostCommonWordSense(object):
     def build(self, input_dim):
         # setup model layers
         model = tf.keras.models.Sequential()
-        model.add(tf.keras.layers.Dense(100, activation='relu', input_dim=input_dim))
+        model.add(tf.keras.layers.Dense(100, activation="relu", input_dim=input_dim))
         model.add(tf.keras.layers.Dropout(0.5))
-        model.add(tf.keras.layers.Dense(2, activation='softmax'))
+        model.add(tf.keras.layers.Dense(2, activation="softmax"))
         model.compile(loss=self.loss, optimizer=self.optimizer)
         self.model = model
 
     def fit(self, train_set):
-        self.model.fit(train_set['X'], train_set['y'], epochs=self.epochs,
-                       batch_size=self.batch_size)
+        self.model.fit(
+            train_set["X"], train_set["y"], epochs=self.epochs, batch_size=self.batch_size
+        )
 
     def save(self, save_path):
         self.model.save(save_path)
@@ -45,7 +46,7 @@ class MostCommonWordSense(object):
         self.model = tf.keras.models.load_model(model_path)
 
     def eval(self, valid_set):
-        eval_rate = self.model.evaluate(valid_set['X'], valid_set['y'], batch_size=self.batch_size)
+        eval_rate = self.model.evaluate(valid_set["X"], valid_set["y"], batch_size=self.batch_size)
         return eval_rate
 
     def get_outputs(self, valid_set):

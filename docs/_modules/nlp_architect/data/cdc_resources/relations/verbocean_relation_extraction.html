@@ -202,8 +202,10 @@
 
 <span class="kn">from</span> <span class="nn">nlp_architect.common.cdc.mention_data</span> <span class="kn">import</span> <span class="n">MentionDataLight</span>
 <span class="kn">from</span> <span class="nn">nlp_architect.data.cdc_resources.relations.relation_extraction</span> <span class="kn">import</span> <span class="n">RelationExtraction</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.data.cdc_resources.relations.relation_types_enums</span> <span class="kn">import</span> <span class="n">RelationType</span><span class="p">,</span> \
-    <span class="n">OnlineOROfflineMethod</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.data.cdc_resources.relations.relation_types_enums</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">RelationType</span><span class="p">,</span>
+    <span class="n">OnlineOROfflineMethod</span><span class="p">,</span>
+<span class="p">)</span>
 <span class="kn">from</span> <span class="nn">nlp_architect.utils.io</span> <span class="kn">import</span> <span class="n">load_json_file</span>
 <span class="kn">from</span> <span class="nn">nlp_architect.utils.string_utils</span> <span class="kn">import</span> <span class="n">StringUtils</span>
 
@@ -211,8 +213,9 @@
 
 
 <div class="viewcode-block" id="VerboceanRelationExtraction"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.relations.html#nlp_architect.data.cdc_resources.relations.verbocean_relation_extraction.VerboceanRelationExtraction">[docs]</a><span class="k">class</span> <span class="nc">VerboceanRelationExtraction</span><span class="p">(</span><span class="n">RelationExtraction</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="p">:</span> <span class="n">OnlineOROfflineMethod</span> <span class="o">=</span> <span class="n">OnlineOROfflineMethod</span><span class="o">.</span><span class="n">ONLINE</span><span class="p">,</span>
-                 <span class="n">vo_file</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="p">:</span> <span class="n">OnlineOROfflineMethod</span> <span class="o">=</span> <span class="n">OnlineOROfflineMethod</span><span class="o">.</span><span class="n">ONLINE</span><span class="p">,</span> <span class="n">vo_file</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Extract Relation between two mentions according to VerbOcean knowledge</span>
 
@@ -221,25 +224,27 @@
 <span class="sd">                a sub-set of it (default = ONLINE)</span>
 <span class="sd">            vo_file (required): str Location of VerbOcean file to work with</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Loading Verb Ocean module&#39;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Loading Verb Ocean module&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">vo_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">vo_file</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="n">OnlineOROfflineMethod</span><span class="o">.</span><span class="n">OFFLINE</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">vo</span> <span class="o">=</span> <span class="n">load_json_file</span><span class="p">(</span><span class="n">vo_file</span><span class="p">)</span>
             <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="n">OnlineOROfflineMethod</span><span class="o">.</span><span class="n">ONLINE</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">vo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_verbocean_file</span><span class="p">(</span><span class="n">vo_file</span><span class="p">)</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Verb Ocean module lead successfully&#39;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Verb Ocean module lead successfully&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="s1">&#39;VerbOcean file not found or not in path..&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="s2">&quot;VerbOcean file not found or not in path..&quot;</span><span class="p">)</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">VerboceanRelationExtraction</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
-<div class="viewcode-block" id="VerboceanRelationExtraction.extract_all_relations"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.relations.html#nlp_architect.data.cdc_resources.relations.verbocean_relation_extraction.VerboceanRelationExtraction.extract_all_relations">[docs]</a>    <span class="k">def</span> <span class="nf">extract_all_relations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mention_x</span><span class="p">:</span> <span class="n">MentionDataLight</span><span class="p">,</span>
-                              <span class="n">mention_y</span><span class="p">:</span> <span class="n">MentionDataLight</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="n">RelationType</span><span class="p">]:</span>
+<div class="viewcode-block" id="VerboceanRelationExtraction.extract_all_relations"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.relations.html#nlp_architect.data.cdc_resources.relations.verbocean_relation_extraction.VerboceanRelationExtraction.extract_all_relations">[docs]</a>    <span class="k">def</span> <span class="nf">extract_all_relations</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">mention_x</span><span class="p">:</span> <span class="n">MentionDataLight</span><span class="p">,</span> <span class="n">mention_y</span><span class="p">:</span> <span class="n">MentionDataLight</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="n">RelationType</span><span class="p">]:</span>
         <span class="n">ret_</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
         <span class="n">ret_</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">extract_sub_relations</span><span class="p">(</span><span class="n">mention_x</span><span class="p">,</span> <span class="n">mention_y</span><span class="p">,</span> <span class="n">RelationType</span><span class="o">.</span><span class="n">VERBOCEAN_MATCH</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">ret_</span></div>
 
-<div class="viewcode-block" id="VerboceanRelationExtraction.extract_sub_relations"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.relations.html#nlp_architect.data.cdc_resources.relations.verbocean_relation_extraction.VerboceanRelationExtraction.extract_sub_relations">[docs]</a>    <span class="k">def</span> <span class="nf">extract_sub_relations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mention_x</span><span class="p">:</span> <span class="n">MentionDataLight</span><span class="p">,</span> <span class="n">mention_y</span><span class="p">:</span> <span class="n">MentionDataLight</span><span class="p">,</span>
-                              <span class="n">relation</span><span class="p">:</span> <span class="n">RelationType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RelationType</span><span class="p">:</span>
+<div class="viewcode-block" id="VerboceanRelationExtraction.extract_sub_relations"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.relations.html#nlp_architect.data.cdc_resources.relations.verbocean_relation_extraction.VerboceanRelationExtraction.extract_sub_relations">[docs]</a>    <span class="k">def</span> <span class="nf">extract_sub_relations</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">mention_x</span><span class="p">:</span> <span class="n">MentionDataLight</span><span class="p">,</span> <span class="n">mention_y</span><span class="p">:</span> <span class="n">MentionDataLight</span><span class="p">,</span> <span class="n">relation</span><span class="p">:</span> <span class="n">RelationType</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RelationType</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check if input mentions has the given relation between them</span>
 
@@ -258,7 +263,8 @@
         <span class="n">mention_x_str</span> <span class="o">=</span> <span class="n">mention_x</span><span class="o">.</span><span class="n">tokens_str</span>
         <span class="n">mention_y_str</span> <span class="o">=</span> <span class="n">mention_y</span><span class="o">.</span><span class="n">tokens_str</span>
         <span class="k">if</span> <span class="n">StringUtils</span><span class="o">.</span><span class="n">is_pronoun</span><span class="p">(</span><span class="n">mention_x_str</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span> <span class="ow">or</span> <span class="n">StringUtils</span><span class="o">.</span><span class="n">is_pronoun</span><span class="p">(</span>
-                <span class="n">mention_y_str</span><span class="o">.</span><span class="n">lower</span><span class="p">()):</span>
+            <span class="n">mention_y_str</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="p">):</span>
             <span class="k">return</span> <span class="n">RelationType</span><span class="o">.</span><span class="n">NO_RELATION_FOUND</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_verbocean_relation</span><span class="p">(</span><span class="n">mention_x</span><span class="p">,</span> <span class="n">mention_y</span><span class="p">):</span>
@@ -266,8 +272,9 @@
 
         <span class="k">return</span> <span class="n">RelationType</span><span class="o">.</span><span class="n">NO_RELATION_FOUND</span></div>
 
-<div class="viewcode-block" id="VerboceanRelationExtraction.is_verbocean_relation"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.relations.html#nlp_architect.data.cdc_resources.relations.verbocean_relation_extraction.VerboceanRelationExtraction.is_verbocean_relation">[docs]</a>    <span class="k">def</span> <span class="nf">is_verbocean_relation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mention_x</span><span class="p">:</span> <span class="n">MentionDataLight</span><span class="p">,</span>
-                              <span class="n">mention_y</span><span class="p">:</span> <span class="n">MentionDataLight</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<div class="viewcode-block" id="VerboceanRelationExtraction.is_verbocean_relation"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.relations.html#nlp_architect.data.cdc_resources.relations.verbocean_relation_extraction.VerboceanRelationExtraction.is_verbocean_relation">[docs]</a>    <span class="k">def</span> <span class="nf">is_verbocean_relation</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">mention_x</span><span class="p">:</span> <span class="n">MentionDataLight</span><span class="p">,</span> <span class="n">mention_y</span><span class="p">:</span> <span class="n">MentionDataLight</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check if input mentions has VerbOcean relation between them</span>
 

@@ -135,7 +135,6 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="nlp_architect.pipelines.html">nlp_architect.pipelines package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nlp_architect.procedures.html">nlp_architect.procedures package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nlp_architect.solutions.html">nlp_architect.solutions package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nlp_architect.utils.html">nlp_architect.utils package</a></li>
 </ul>
 </li>
@@ -288,8 +287,9 @@ layer instantiation and layer call.</p>
 <dt id="nlp_architect.nn.tensorflow.python.keras.layers.crf.CRF.compute_output_shape">
 <code class="descname">compute_output_shape</code><span class="sig-paren">(</span><em>input_shape</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/tensorflow/python/keras/layers/crf.html#CRF.compute_output_shape"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.tensorflow.python.keras.layers.crf.CRF.compute_output_shape" title="Permalink to this definition">¶</a></dt>
 <dd><p>Computes the output shape of the layer.</p>
-<p>Assumes that the layer will be built
-to match that input shape provided.</p>
+<p>If the layer has not been built, this method will call <cite>build</cite> on the
+layer. This assumes that the layer will later be used with inputs that
+match the input shape provided here.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />

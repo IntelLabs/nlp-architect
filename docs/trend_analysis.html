@@ -119,6 +119,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#flow-diagram">Flow diagram</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#reports">Reports</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#requirements">Requirements</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#first-stage">First stage</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#second-stage">Second stage</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#ui-stage">UI stage</a></li>
@@ -231,9 +232,16 @@ Finally the UI reads the analysis data and generates automatic reports for extra
 </div>
 <div class="section" id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="requirements">
+<h3>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h3>
+<p>Install solution extra packages:</p>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">solutions</span><span class="o">/</span><span class="n">trend_analysis</span><span class="o">/</span><span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="first-stage">
 <h3>First stage<a class="headerlink" href="#first-stage" title="Permalink to this headline">¶</a></h3>
-<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">nlp_architect</span><span class="o">.</span><span class="n">solutions</span><span class="o">.</span><span class="n">trend_analysis</span><span class="o">.</span><span class="n">topic_extraction</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">notrain</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">url</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">single_thread</span><span class="p">]</span>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">python</span> <span class="n">solutions</span><span class="o">/</span><span class="n">trend_analysis</span><span class="o">/</span><span class="n">topic_extraction</span><span class="o">.</span><span class="n">py</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">notrain</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">url</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">single_thread</span><span class="p">]</span>
                            <span class="n">target_corpus</span> <span class="n">ref_corpus</span>
 
 <span class="n">positional</span> <span class="n">arguments</span><span class="p">:</span>
@@ -253,7 +261,7 @@ To use the trend analysis step (step below) it is required to run the topic extr
 </div>
 <div class="section" id="second-stage">
 <h3>Second stage<a class="headerlink" href="#second-stage" title="Permalink to this headline">¶</a></h3>
-<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">nlp_architect</span><span class="o">.</span><span class="n">solutions</span><span class="o">.</span><span class="n">trend_analysis</span><span class="o">.</span><span class="n">trend_analysis</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">top_n</span> <span class="n">TOP_N</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">top_vectors</span> <span class="n">TOP_VECTORS</span><span class="p">]</span>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">python</span> <span class="n">solutions</span><span class="o">/</span><span class="n">trend_analysis</span><span class="o">/</span><span class="n">trend_analysis</span><span class="o">.</span><span class="n">py</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">top_n</span> <span class="n">TOP_N</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">top_vectors</span> <span class="n">TOP_VECTORS</span><span class="p">]</span>
                      <span class="n">target_topics</span> <span class="n">ref_topics</span>
 
 <span class="n">positional</span> <span class="n">arguments</span><span class="p">:</span>
@@ -276,11 +284,11 @@ The analysis results will be saved into the data folder and will be used by the 
 <div class="section" id="ui-stage">
 <h3>UI stage<a class="headerlink" href="#ui-stage" title="Permalink to this headline">¶</a></h3>
 <p>In order to visualize the analysis results run:</p>
-<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">nlp_architect</span><span class="o">.</span><span class="n">solutions</span><span class="o">.</span><span class="n">start_ui</span> <span class="o">--</span><span class="n">solution</span> <span class="n">trend_analysis</span>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">solutions</span><span class="o">/</span><span class="n">start_ui</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">solution</span> <span class="n">trend_analysis</span>
 </pre></div>
 </div>
 <p>You can also load the UI as a server using –address and –port, for example:</p>
-<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">nlp_architect</span><span class="o">.</span><span class="n">solutions</span><span class="o">.</span><span class="n">start_ui</span> <span class="o">--</span><span class="n">solution</span> <span class="n">trend_analysis</span> <span class="o">--</span><span class="n">address</span><span class="o">=</span><span class="mf">12.13</span><span class="o">.</span><span class="mf">14.15</span> <span class="o">--</span><span class="n">port</span><span class="o">=</span><span class="mi">1010</span>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">solutions</span><span class="o">/</span><span class="n">start_ui</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">solution</span> <span class="n">trend_analysis</span> <span class="o">--</span><span class="n">address</span><span class="o">=</span><span class="mf">12.13</span><span class="o">.</span><span class="mf">14.15</span> <span class="o">--</span><span class="n">port</span><span class="o">=</span><span class="mi">1010</span>
 </pre></div>
 </div>
 <p>and then access it through a browser: <a class="reference external" href="http://12.13.14.15:1010/ui">http://12.13.14.15:1010/ui</a></p>

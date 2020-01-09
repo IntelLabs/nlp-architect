@@ -207,20 +207,17 @@
 <span class="kn">from</span> <span class="nn">nlp_architect.models.transformers</span> <span class="kn">import</span> <span class="n">TransformerSequenceClassifier</span>
 <span class="kn">from</span> <span class="nn">nlp_architect.nn.torch</span> <span class="kn">import</span> <span class="n">setup_backend</span><span class="p">,</span> <span class="n">set_seed</span>
 <span class="kn">from</span> <span class="nn">nlp_architect.procedures.procedure</span> <span class="kn">import</span> <span class="n">Procedure</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.procedures.registry</span> <span class="kn">import</span> <span class="p">(</span><span class="n">register_inference_cmd</span><span class="p">,</span>
-                                               <span class="n">register_train_cmd</span><span class="p">)</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.procedures.transformers.base</span> <span class="kn">import</span> <span class="p">(</span><span class="n">create_base_args</span><span class="p">,</span>
-                                                        <span class="n">inference_args</span><span class="p">,</span>
-                                                        <span class="n">train_args</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.procedures.registry</span> <span class="kn">import</span> <span class="n">register_inference_cmd</span><span class="p">,</span> <span class="n">register_train_cmd</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.procedures.transformers.base</span> <span class="kn">import</span> <span class="n">create_base_args</span><span class="p">,</span> <span class="n">inference_args</span><span class="p">,</span> <span class="n">train_args</span>
 <span class="kn">from</span> <span class="nn">nlp_architect.utils.io</span> <span class="kn">import</span> <span class="n">prepare_output_path</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.utils.metrics</span> <span class="kn">import</span> <span class="p">(</span><span class="n">acc_and_f1</span><span class="p">,</span> <span class="n">pearson_and_spearman</span><span class="p">,</span>
-                                         <span class="n">simple_accuracy</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.utils.metrics</span> <span class="kn">import</span> <span class="n">acc_and_f1</span><span class="p">,</span> <span class="n">pearson_and_spearman</span><span class="p">,</span> <span class="n">simple_accuracy</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="TransformerGlueTrain"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.procedures.transformers.html#nlp_architect.procedures.transformers.glue.TransformerGlueTrain">[docs]</a><span class="nd">@register_train_cmd</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;transformer_glue&#39;</span><span class="p">,</span>
-                    <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Train (finetune) a BERT/XLNet/XLM model on a GLUE task&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="TransformerGlueTrain"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.procedures.transformers.html#nlp_architect.procedures.transformers.glue.TransformerGlueTrain">[docs]</a><span class="nd">@register_train_cmd</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;transformer_glue&quot;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Train (finetune) a BERT/XLNet/XLM model on a GLUE task&quot;</span>
+<span class="p">)</span>
 <span class="k">class</span> <span class="nc">TransformerGlueTrain</span><span class="p">(</span><span class="n">Procedure</span><span class="p">):</span>
 <div class="viewcode-block" id="TransformerGlueTrain.add_arguments"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.procedures.transformers.html#nlp_architect.procedures.transformers.glue.TransformerGlueTrain.add_arguments">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">add_arguments</span><span class="p">(</span><span class="n">parser</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">):</span>
@@ -233,8 +230,9 @@
         <span class="n">do_training</span><span class="p">(</span><span class="n">args</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="TransformerGlueRun"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.procedures.transformers.html#nlp_architect.procedures.transformers.glue.TransformerGlueRun">[docs]</a><span class="nd">@register_inference_cmd</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;transformer_glue&#39;</span><span class="p">,</span>
-                        <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Run a BERT/XLNet/XLM model on a GLUE task&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="TransformerGlueRun"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.procedures.transformers.html#nlp_architect.procedures.transformers.glue.TransformerGlueRun">[docs]</a><span class="nd">@register_inference_cmd</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;transformer_glue&quot;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Run a BERT/XLNet/XLM model on a GLUE task&quot;</span>
+<span class="p">)</span>
 <span class="k">class</span> <span class="nc">TransformerGlueRun</span><span class="p">(</span><span class="n">Procedure</span><span class="p">):</span>
 <div class="viewcode-block" id="TransformerGlueRun.add_arguments"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.procedures.transformers.html#nlp_architect.procedures.transformers.glue.TransformerGlueRun.add_arguments">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">add_arguments</span><span class="p">(</span><span class="n">parser</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">):</span>
@@ -249,17 +247,27 @@
 
 
 <div class="viewcode-block" id="add_glue_args"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.procedures.transformers.html#nlp_architect.procedures.transformers.glue.add_glue_args">[docs]</a><span class="k">def</span> <span class="nf">add_glue_args</span><span class="p">(</span><span class="n">parser</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">):</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--task_name&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The name of the task to train selected in the list: &quot;</span>
-                        <span class="o">+</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">processors</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--data_dir&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The input data dir. Should contain dataset files to be parsed &quot;</span>
-                        <span class="o">+</span> <span class="s2">&quot;by the dataloaders.&quot;</span><span class="p">)</span></div>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--task_name&quot;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The name of the task to train selected in the list: &quot;</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">processors</span><span class="o">.</span><span class="n">keys</span><span class="p">()),</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--data_dir&quot;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The input data dir. Should contain dataset files to be parsed &quot;</span>
+        <span class="o">+</span> <span class="s2">&quot;by the dataloaders.&quot;</span><span class="p">,</span>
+    <span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="add_glue_inference_args"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.procedures.transformers.html#nlp_architect.procedures.transformers.glue.add_glue_inference_args">[docs]</a><span class="k">def</span> <span class="nf">add_glue_inference_args</span><span class="p">(</span><span class="n">parser</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">):</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--evaluate&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
-                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Evaluate the model on the task&#39;s development set&quot;</span><span class="p">)</span></div>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--evaluate&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Evaluate the model on the task&#39;s development set&quot;</span>
+    <span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="do_training"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.procedures.transformers.html#nlp_architect.procedures.transformers.glue.do_training">[docs]</a><span class="k">def</span> <span class="nf">do_training</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
@@ -270,17 +278,19 @@
     <span class="c1"># Prepare GLUE task</span>
     <span class="n">args</span><span class="o">.</span><span class="n">task_name</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">task_name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
     <span class="n">task</span> <span class="o">=</span> <span class="n">get_glue_task</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">task_name</span><span class="p">,</span> <span class="n">data_dir</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">data_dir</span><span class="p">)</span>
-    <span class="n">classifier</span> <span class="o">=</span> <span class="n">TransformerSequenceClassifier</span><span class="p">(</span><span class="n">model_type</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">model_type</span><span class="p">,</span>
-                                               <span class="n">model_name_or_path</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">model_name_or_path</span><span class="p">,</span>
-                                               <span class="n">labels</span><span class="o">=</span><span class="n">task</span><span class="o">.</span><span class="n">get_labels</span><span class="p">(),</span>
-                                               <span class="n">task_type</span><span class="o">=</span><span class="n">task</span><span class="o">.</span><span class="n">task_type</span><span class="p">,</span>
-                                               <span class="n">metric_fn</span><span class="o">=</span><span class="n">get_metric_fn</span><span class="p">(</span><span class="n">task</span><span class="o">.</span><span class="n">name</span><span class="p">),</span>
-                                               <span class="n">config_name</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">config_name</span><span class="p">,</span>
-                                               <span class="n">tokenizer_name</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">tokenizer_name</span><span class="p">,</span>
-                                               <span class="n">do_lower_case</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">do_lower_case</span><span class="p">,</span>
-                                               <span class="n">output_path</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">output_dir</span><span class="p">,</span>
-                                               <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span>
-                                               <span class="n">n_gpus</span><span class="o">=</span><span class="n">n_gpus</span><span class="p">)</span>
+    <span class="n">classifier</span> <span class="o">=</span> <span class="n">TransformerSequenceClassifier</span><span class="p">(</span>
+        <span class="n">model_type</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">model_type</span><span class="p">,</span>
+        <span class="n">model_name_or_path</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">model_name_or_path</span><span class="p">,</span>
+        <span class="n">labels</span><span class="o">=</span><span class="n">task</span><span class="o">.</span><span class="n">get_labels</span><span class="p">(),</span>
+        <span class="n">task_type</span><span class="o">=</span><span class="n">task</span><span class="o">.</span><span class="n">task_type</span><span class="p">,</span>
+        <span class="n">metric_fn</span><span class="o">=</span><span class="n">get_metric_fn</span><span class="p">(</span><span class="n">task</span><span class="o">.</span><span class="n">name</span><span class="p">),</span>
+        <span class="n">config_name</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">config_name</span><span class="p">,</span>
+        <span class="n">tokenizer_name</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">tokenizer_name</span><span class="p">,</span>
+        <span class="n">do_lower_case</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">do_lower_case</span><span class="p">,</span>
+        <span class="n">output_path</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">output_dir</span><span class="p">,</span>
+        <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span>
+        <span class="n">n_gpus</span><span class="o">=</span><span class="n">n_gpus</span><span class="p">,</span>
+    <span class="p">)</span>
 
     <span class="n">train_batch_size</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">per_gpu_train_batch_size</span> <span class="o">*</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_gpus</span><span class="p">)</span>
 
@@ -290,28 +300,31 @@
     <span class="n">dev_dataset</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">convert_to_tensors</span><span class="p">(</span><span class="n">dev_ex</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">max_seq_length</span><span class="p">)</span>
     <span class="n">train_sampler</span> <span class="o">=</span> <span class="n">RandomSampler</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">)</span>
     <span class="n">dev_sampler</span> <span class="o">=</span> <span class="n">SequentialSampler</span><span class="p">(</span><span class="n">dev_dataset</span><span class="p">)</span>
-    <span class="n">train_dl</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">sampler</span><span class="o">=</span><span class="n">train_sampler</span><span class="p">,</span>
-                          <span class="n">batch_size</span><span class="o">=</span><span class="n">train_batch_size</span><span class="p">)</span>
-    <span class="n">dev_dl</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">dev_dataset</span><span class="p">,</span> <span class="n">sampler</span><span class="o">=</span><span class="n">dev_sampler</span><span class="p">,</span>
-                        <span class="n">batch_size</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">per_gpu_eval_batch_size</span><span class="p">)</span>
+    <span class="n">train_dl</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">sampler</span><span class="o">=</span><span class="n">train_sampler</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">train_batch_size</span><span class="p">)</span>
+    <span class="n">dev_dl</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">dev_dataset</span><span class="p">,</span> <span class="n">sampler</span><span class="o">=</span><span class="n">dev_sampler</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">per_gpu_eval_batch_size</span><span class="p">)</span>
 
-    <span class="n">total_steps</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">get_train_steps_epochs</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">max_steps</span><span class="p">,</span>
-                                                       <span class="n">args</span><span class="o">.</span><span class="n">num_train_epochs</span><span class="p">,</span>
-                                                       <span class="n">args</span><span class="o">.</span><span class="n">per_gpu_train_batch_size</span><span class="p">,</span>
-                                                       <span class="nb">len</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">))</span>
-    <span class="n">classifier</span><span class="o">.</span><span class="n">setup_default_optimizer</span><span class="p">(</span><span class="n">weight_decay</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">weight_decay</span><span class="p">,</span>
-                                       <span class="n">learning_rate</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">learning_rate</span><span class="p">,</span>
-                                       <span class="n">adam_epsilon</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">adam_epsilon</span><span class="p">,</span>
-                                       <span class="n">warmup_steps</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">warmup_steps</span><span class="p">,</span>
-                                       <span class="n">total_steps</span><span class="o">=</span><span class="n">total_steps</span><span class="p">)</span>
-    <span class="n">classifier</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">train_dl</span><span class="p">,</span> <span class="n">dev_dl</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span>
-                     <span class="n">gradient_accumulation_steps</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">gradient_accumulation_steps</span><span class="p">,</span>
-                     <span class="n">per_gpu_train_batch_size</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">per_gpu_train_batch_size</span><span class="p">,</span>
-                     <span class="n">max_steps</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">max_steps</span><span class="p">,</span>
-                     <span class="n">num_train_epochs</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">num_train_epochs</span><span class="p">,</span>
-                     <span class="n">max_grad_norm</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">max_grad_norm</span><span class="p">,</span>
-                     <span class="n">logging_steps</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">logging_steps</span><span class="p">,</span>
-                     <span class="n">save_steps</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">save_steps</span><span class="p">)</span>
+    <span class="n">total_steps</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">get_train_steps_epochs</span><span class="p">(</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">max_steps</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">num_train_epochs</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">per_gpu_train_batch_size</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">classifier</span><span class="o">.</span><span class="n">setup_default_optimizer</span><span class="p">(</span>
+        <span class="n">weight_decay</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">weight_decay</span><span class="p">,</span>
+        <span class="n">learning_rate</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">learning_rate</span><span class="p">,</span>
+        <span class="n">adam_epsilon</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">adam_epsilon</span><span class="p">,</span>
+        <span class="n">warmup_steps</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">warmup_steps</span><span class="p">,</span>
+        <span class="n">total_steps</span><span class="o">=</span><span class="n">total_steps</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">classifier</span><span class="o">.</span><span class="n">train</span><span class="p">(</span>
+        <span class="n">train_dl</span><span class="p">,</span>
+        <span class="n">dev_dl</span><span class="p">,</span>
+        <span class="kc">None</span><span class="p">,</span>
+        <span class="n">gradient_accumulation_steps</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">gradient_accumulation_steps</span><span class="p">,</span>
+        <span class="n">per_gpu_train_batch_size</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">per_gpu_train_batch_size</span><span class="p">,</span>
+        <span class="n">max_steps</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">max_steps</span><span class="p">,</span>
+        <span class="n">num_train_epochs</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">num_train_epochs</span><span class="p">,</span>
+        <span class="n">max_grad_norm</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">max_grad_norm</span><span class="p">,</span>
+        <span class="n">logging_steps</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">logging_steps</span><span class="p">,</span>
+        <span class="n">save_steps</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">save_steps</span><span class="p">,</span>
+    <span class="p">)</span>
     <span class="n">classifier</span><span class="o">.</span><span class="n">save_model</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">)</span></div>
 
 
@@ -321,17 +334,19 @@
     <span class="n">args</span><span class="o">.</span><span class="n">task_name</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">task_name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
     <span class="n">task</span> <span class="o">=</span> <span class="n">get_glue_task</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">task_name</span><span class="p">,</span> <span class="n">data_dir</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">data_dir</span><span class="p">)</span>
     <span class="n">args</span><span class="o">.</span><span class="n">batch_size</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">per_gpu_eval_batch_size</span> <span class="o">*</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_gpus</span><span class="p">)</span>
-    <span class="n">classifier</span> <span class="o">=</span> <span class="n">TransformerSequenceClassifier</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="n">model_path</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">model_path</span><span class="p">,</span>
-                                                          <span class="n">model_type</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">model_type</span><span class="p">,</span>
-                                                          <span class="n">task_type</span><span class="o">=</span><span class="n">task</span><span class="o">.</span><span class="n">task_type</span><span class="p">,</span>
-                                                          <span class="n">metric_fn</span><span class="o">=</span><span class="n">get_metric_fn</span><span class="p">(</span><span class="n">task</span><span class="o">.</span><span class="n">name</span><span class="p">),</span>
-                                                          <span class="n">do_lower_case</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">do_lower_case</span><span class="p">,</span>
-                                                          <span class="n">load_quantized</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">load_quantized_model</span><span class="p">)</span>
+    <span class="n">classifier</span> <span class="o">=</span> <span class="n">TransformerSequenceClassifier</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span>
+        <span class="n">model_path</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">model_path</span><span class="p">,</span>
+        <span class="n">model_type</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">model_type</span><span class="p">,</span>
+        <span class="n">task_type</span><span class="o">=</span><span class="n">task</span><span class="o">.</span><span class="n">task_type</span><span class="p">,</span>
+        <span class="n">metric_fn</span><span class="o">=</span><span class="n">get_metric_fn</span><span class="p">(</span><span class="n">task</span><span class="o">.</span><span class="n">name</span><span class="p">),</span>
+        <span class="n">do_lower_case</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">do_lower_case</span><span class="p">,</span>
+        <span class="n">load_quantized</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">load_quantized_model</span><span class="p">,</span>
+    <span class="p">)</span>
     <span class="n">classifier</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">n_gpus</span><span class="p">)</span>
-    <span class="n">examples</span> <span class="o">=</span> <span class="n">task</span><span class="o">.</span><span class="n">get_dev_examples</span><span class="p">()</span> <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">evaluate</span> <span class="k">else</span> \
-        <span class="n">task</span><span class="o">.</span><span class="n">get_test_examples</span><span class="p">()</span>
-    <span class="n">preds</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">inference</span><span class="p">(</span><span class="n">examples</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">max_seq_length</span><span class="p">,</span>
-                                 <span class="n">args</span><span class="o">.</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">evaluate</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">evaluate</span><span class="p">)</span>
+    <span class="n">examples</span> <span class="o">=</span> <span class="n">task</span><span class="o">.</span><span class="n">get_dev_examples</span><span class="p">()</span> <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">evaluate</span> <span class="k">else</span> <span class="n">task</span><span class="o">.</span><span class="n">get_test_examples</span><span class="p">()</span>
+    <span class="n">preds</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">inference</span><span class="p">(</span>
+        <span class="n">examples</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">max_seq_length</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">evaluate</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">evaluate</span>
+    <span class="p">)</span>
     <span class="k">with</span> <span class="n">io</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">output_dir</span><span class="p">,</span> <span class="s2">&quot;output.txt&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fw</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">preds</span><span class="p">:</span>
             <span class="n">fw</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">p</span><span class="p">))</span></div>

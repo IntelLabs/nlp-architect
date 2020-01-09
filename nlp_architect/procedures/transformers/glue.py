@@ -25,20 +25,17 @@ from nlp_architect.data.glue_tasks import get_glue_task, processors
 from nlp_architect.models.transformers import TransformerSequenceClassifier
 from nlp_architect.nn.torch import setup_backend, set_seed
 from nlp_architect.procedures.procedure import Procedure
-from nlp_architect.procedures.registry import (register_inference_cmd,
-                                               register_train_cmd)
-from nlp_architect.procedures.transformers.base import (create_base_args,
-                                                        inference_args,
-                                                        train_args)
+from nlp_architect.procedures.registry import register_inference_cmd, register_train_cmd
+from nlp_architect.procedures.transformers.base import create_base_args, inference_args, train_args
 from nlp_architect.utils.io import prepare_output_path
-from nlp_architect.utils.metrics import (acc_and_f1, pearson_and_spearman,
-                                         simple_accuracy)
+from nlp_architect.utils.metrics import acc_and_f1, pearson_and_spearman, simple_accuracy
 
 logger = logging.getLogger(__name__)
 
 
-@register_train_cmd(name='transformer_glue',
-                    description='Train (finetune) a BERT/XLNet/XLM model on a GLUE task')
+@register_train_cmd(
+    name="transformer_glue", description="Train (finetune) a BERT/XLNet/XLM model on a GLUE task"
+)
 class TransformerGlueTrain(Procedure):
     @staticmethod
     def add_arguments(parser: argparse.ArgumentParser):
@@ -51,8 +48,9 @@ class TransformerGlueTrain(Procedure):
         do_training(args)
 
 
-@register_inference_cmd(name='transformer_glue',
-                        description='Run a BERT/XLNet/XLM model on a GLUE task')
+@register_inference_cmd(
+    name="transformer_glue", description="Run a BERT/XLNet/XLM model on a GLUE task"
+)
 class TransformerGlueRun(Procedure):
     @staticmethod
     def add_arguments(parser: argparse.ArgumentParser):
@@ -67,17 +65,27 @@ class TransformerGlueRun(Procedure):
 
 
 def add_glue_args(parser: argparse.ArgumentParser):
-    parser.add_argument("--task_name", default=None, type=str, required=True,
-                        help="The name of the task to train selected in the list: "
-                        + ", ".join(processors.keys()))
-    parser.add_argument("--data_dir", default=None, type=str, required=True,
-                        help="The input data dir. Should contain dataset files to be parsed "
-                        + "by the dataloaders.")
+    parser.add_argument(
+        "--task_name",
+        default=None,
+        type=str,
+        required=True,
+        help="The name of the task to train selected in the list: " + ", ".join(processors.keys()),
+    )
+    parser.add_argument(
+        "--data_dir",
+        default=None,
+        type=str,
+        required=True,
+        help="The input data dir. Should contain dataset files to be parsed "
+        + "by the dataloaders.",
+    )
 
 
 def add_glue_inference_args(parser: argparse.ArgumentParser):
-    parser.add_argument("--evaluate", action='store_true',
-                        help="Evaluate the model on the task's development set")
+    parser.add_argument(
+        "--evaluate", action="store_true", help="Evaluate the model on the task's development set"
+    )
 
 
 def do_training(args):
@@ -88,17 +96,19 @@ def do_training(args):
     # Prepare GLUE task
     args.task_name = args.task_name.lower()
     task = get_glue_task(args.task_name, data_dir=args.data_dir)
-    classifier = TransformerSequenceClassifier(model_type=args.model_type,
-                                               model_name_or_path=args.model_name_or_path,
-                                               labels=task.get_labels(),
-                                               task_type=task.task_type,
-                                               metric_fn=get_metric_fn(task.name),
-                                               config_name=args.config_name,
-                                               tokenizer_name=args.tokenizer_name,
-                                               do_lower_case=args.do_lower_case,
-                                               output_path=args.output_dir,
-                                               device=device,
-                                               n_gpus=n_gpus)
+    classifier = TransformerSequenceClassifier(
+        model_type=args.model_type,
+        model_name_or_path=args.model_name_or_path,
+        labels=task.get_labels(),
+        task_type=task.task_type,
+        metric_fn=get_metric_fn(task.name),
+        config_name=args.config_name,
+        tokenizer_name=args.tokenizer_name,
+        do_lower_case=args.do_lower_case,
+        output_path=args.output_dir,
+        device=device,
+        n_gpus=n_gpus,
+    )
 
     train_batch_size = args.per_gpu_train_batch_size * max(1, n_gpus)
 
@@ -108,28 +118,31 @@ def do_training(args):
     dev_dataset = classifier.convert_to_tensors(dev_ex, args.max_seq_length)
     train_sampler = RandomSampler(train_dataset)
     dev_sampler = SequentialSampler(dev_dataset)
-    train_dl = DataLoader(train_dataset, sampler=train_sampler,
-                          batch_size=train_batch_size)
-    dev_dl = DataLoader(dev_dataset, sampler=dev_sampler,
-                        batch_size=args.per_gpu_eval_batch_size)
+    train_dl = DataLoader(train_dataset, sampler=train_sampler, batch_size=train_batch_size)
+    dev_dl = DataLoader(dev_dataset, sampler=dev_sampler, batch_size=args.per_gpu_eval_batch_size)
 
-    total_steps, _ = classifier.get_train_steps_epochs(args.max_steps,
-                                                       args.num_train_epochs,
-                                                       args.per_gpu_train_batch_size,
-                                                       len(train_dataset))
-    classifier.setup_default_optimizer(weight_decay=args.weight_decay,
-                                       learning_rate=args.learning_rate,
-                                       adam_epsilon=args.adam_epsilon,
-                                       warmup_steps=args.warmup_steps,
-                                       total_steps=total_steps)
-    classifier.train(train_dl, dev_dl, None,
-                     gradient_accumulation_steps=args.gradient_accumulation_steps,
-                     per_gpu_train_batch_size=args.per_gpu_train_batch_size,
-                     max_steps=args.max_steps,
-                     num_train_epochs=args.num_train_epochs,
-                     max_grad_norm=args.max_grad_norm,
-                     logging_steps=args.logging_steps,
-                     save_steps=args.save_steps)
+    total_steps, _ = classifier.get_train_steps_epochs(
+        args.max_steps, args.num_train_epochs, args.per_gpu_train_batch_size, len(train_dataset)
+    )
+    classifier.setup_default_optimizer(
+        weight_decay=args.weight_decay,
+        learning_rate=args.learning_rate,
+        adam_epsilon=args.adam_epsilon,
+        warmup_steps=args.warmup_steps,
+        total_steps=total_steps,
+    )
+    classifier.train(
+        train_dl,
+        dev_dl,
+        None,
+        gradient_accumulation_steps=args.gradient_accumulation_steps,
+        per_gpu_train_batch_size=args.per_gpu_train_batch_size,
+        max_steps=args.max_steps,
+        num_train_epochs=args.num_train_epochs,
+        max_grad_norm=args.max_grad_norm,
+        logging_steps=args.logging_steps,
+        save_steps=args.save_steps,
+    )
     classifier.save_model(args.output_dir, args=args)
 
 
@@ -139,17 +152,19 @@ def do_inference(args):
     args.task_name = args.task_name.lower()
     task = get_glue_task(args.task_name, data_dir=args.data_dir)
     args.batch_size = args.per_gpu_eval_batch_size * max(1, n_gpus)
-    classifier = TransformerSequenceClassifier.load_model(model_path=args.model_path,
-                                                          model_type=args.model_type,
-                                                          task_type=task.task_type,
-                                                          metric_fn=get_metric_fn(task.name),
-                                                          do_lower_case=args.do_lower_case,
-                                                          load_quantized=args.load_quantized_model)
+    classifier = TransformerSequenceClassifier.load_model(
+        model_path=args.model_path,
+        model_type=args.model_type,
+        task_type=task.task_type,
+        metric_fn=get_metric_fn(task.name),
+        do_lower_case=args.do_lower_case,
+        load_quantized=args.load_quantized_model,
+    )
     classifier.to(device, n_gpus)
-    examples = task.get_dev_examples() if args.evaluate else \
-        task.get_test_examples()
-    preds = classifier.inference(examples, args.max_seq_length,
-                                 args.batch_size, evaluate=args.evaluate)
+    examples = task.get_dev_examples() if args.evaluate else task.get_test_examples()
+    preds = classifier.inference(
+        examples, args.max_seq_length, args.batch_size, evaluate=args.evaluate
+    )
     with io.open(os.path.join(args.output_dir, "output.txt"), "w", encoding="utf-8") as fw:
         for p in preds:
             fw.write("{}\n".format(p))

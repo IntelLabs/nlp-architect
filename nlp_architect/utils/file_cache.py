@@ -33,7 +33,7 @@ import requests
 
 logger = logging.getLogger(__name__)  # pylint: disable=invalid-name
 
-MODEL_CACHE = LIBRARY_OUT / 'pretrained_models'
+MODEL_CACHE = LIBRARY_OUT / "pretrained_models"
 
 
 def cached_path(url_or_filename: Union[str, Path], cache_dir: str = None) -> str:
@@ -52,14 +52,14 @@ def cached_path(url_or_filename: Union[str, Path], cache_dir: str = None) -> str
 
     parsed = urlparse(url_or_filename)
 
-    if parsed.scheme in ('http', 'https'):
+    if parsed.scheme in ("http", "https"):
         # URL, so get it from the cache (downloading if necessary)
         return get_from_cache(url_or_filename, cache_dir)
     if os.path.exists(url_or_filename):
         # File, and it exists.
         print("File already exists. No further processing needed.")
         return url_or_filename
-    if parsed.scheme == '':
+    if parsed.scheme == "":
         # File, but it doesn't exist.
         raise FileNotFoundError("file {} not found".format(url_or_filename))
 
@@ -73,16 +73,16 @@ def url_to_filename(url: str, etag: str = None) -> str:
     If `etag` is specified, append its hash to the url's, delimited
     by a period.
     """
-    if url.split('/')[-1].endswith('zip'):
-        url_bytes = url.encode('utf-8')
+    if url.split("/")[-1].endswith("zip"):
+        url_bytes = url.encode("utf-8")
         url_hash = sha256(url_bytes)
         filename = url_hash.hexdigest()
         if etag:
-            etag_bytes = etag.encode('utf-8')
+            etag_bytes = etag.encode("utf-8")
             etag_hash = sha256(etag_bytes)
-            filename += '.' + etag_hash.hexdigest()
+            filename += "." + etag_hash.hexdigest()
     else:
-        filename = url.split('/')[-1]
+        filename = url.split("/")[-1]
 
     return filename
 
@@ -99,14 +99,14 @@ def filename_to_url(filename: str, cache_dir: str = None) -> Tuple[str, str]:
     if not os.path.exists(cache_path):
         raise FileNotFoundError("file {} not found".format(cache_path))
 
-    meta_path = cache_path + '.json'
+    meta_path = cache_path + ".json"
     if not os.path.exists(meta_path):
         raise FileNotFoundError("file {} not found".format(meta_path))
 
     with open(meta_path) as meta_file:
         metadata = json.load(meta_file)
-    url = metadata['url']
-    etag = metadata['etag']
+    url = metadata["url"]
+    etag = metadata["etag"]
 
     return url, etag
 
@@ -130,8 +130,9 @@ def get_from_cache(url: str, cache_dir: str = None) -> str:
 
     response = requests.head(url, allow_redirects=True)
     if response.status_code != 200:
-        raise IOError("HEAD request failed for url {} with status code {}"
-                      .format(url, response.status_code))
+        raise IOError(
+            "HEAD request failed for url {} with status code {}".format(url, response.status_code)
+        )
     etag = response.headers.get("ETag")
 
     filename = url_to_filename(url, etag)
@@ -143,13 +144,13 @@ def get_from_cache(url: str, cache_dir: str = None) -> str:
 
     if os.path.exists(cache_path):
         # check if etag has changed comparing with the metadata
-        if url.split('/')[-1].endswith('zip'):
-            meta_path = cache_path + '.json'
+        if url.split("/")[-1].endswith("zip"):
+            meta_path = cache_path + ".json"
         else:
-            meta_path = cache_path + '_meta_' + '.json'
+            meta_path = cache_path + "_meta_" + ".json"
         meta = load_json_file(meta_path)
-        if meta['etag'] == etag:
-            print('file already present')
+        if meta["etag"] == etag:
+            print("file already present")
             need_downloading = False
 
     if need_downloading:
@@ -168,16 +169,16 @@ def get_from_cache(url: str, cache_dir: str = None) -> str:
             temp_file.seek(0)
 
             logger.info("copying %s to cache at %s", temp_file.name, cache_path)
-            with open(cache_path, 'wb') as cache_file:
+            with open(cache_path, "wb") as cache_file:
                 shutil.copyfileobj(temp_file, cache_file)
 
             logger.info("creating metadata file for %s", cache_path)
-            meta = {'url': url, 'etag': etag}
-            if url.split('/')[-1].endswith('zip'):
-                meta_path = cache_path + '.json'
+            meta = {"url": url, "etag": etag}
+            if url.split("/")[-1].endswith("zip"):
+                meta_path = cache_path + ".json"
             else:
-                meta_path = cache_path + '_meta_' + '.json'
-            with open(meta_path, 'w') as meta_file:
+                meta_path = cache_path + "_meta_" + ".json"
+            with open(meta_path, "w") as meta_file:
                 json.dump(meta, meta_file)
 
             logger.info("removing temp file %s", temp_file.name)

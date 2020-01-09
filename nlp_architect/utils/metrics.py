@@ -14,15 +14,14 @@
 # limitations under the License.
 # ******************************************************************************
 
-from __future__ import (absolute_import, division, print_function,
-                        unicode_literals)
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 from scipy.stats import pearsonr, spearmanr
 from seqeval.metrics import classification_report, precision_score, recall_score, f1_score
 from sklearn.metrics import f1_score as classification_f1_score
 
 
-def get_conll_scores(predictions, y, y_lex, unk='O'):
+def get_conll_scores(predictions, y, y_lex, unk="O"):
     """Get Conll style scores (precision, recall, f1)
     """
     if isinstance(predictions, list):
@@ -43,7 +42,7 @@ def get_conll_scores(predictions, y, y_lex, unk='O'):
             except KeyError:
                 pass
         test_pval = [unk] * len(test_yval)
-        for e, i in enumerate(list(test_p[n])[:len(test_pval)]):
+        for e, i in enumerate(list(test_p[n])[: len(test_pval)]):
             try:
                 test_pval[e] = y_lex[i]
             except KeyError:
@@ -63,9 +62,7 @@ def accuracy(preds, labels):
     """return simple accuracy in expected dict format
     """
     acc = simple_accuracy(preds, labels)
-    return {
-        "acc": acc
-    }
+    return {"acc": acc}
 
 
 def acc_and_f1(preds, labels):

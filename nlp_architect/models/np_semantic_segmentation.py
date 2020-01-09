@@ -74,8 +74,14 @@ class NpSemanticSegClassifier:
         optimizer (:obj:`tf.keras.optimizers`): the model's optimizer. Default is 'adam'
     """
 
-    def __init__(self, num_epochs, callback_args, loss='binary_crossentropy', optimizer='adam',
-                 batch_size=128, ):
+    def __init__(
+        self,
+        num_epochs,
+        callback_args,
+        loss="binary_crossentropy",
+        optimizer="adam",
+        batch_size=128,
+    ):
         """
         Args:
             num_epochs(int): number of epochs to train the model
@@ -101,12 +107,12 @@ class NpSemanticSegClassifier:
         second_layer_dens = 64
         output_layer_dens = 1
         model = tf.keras.models.Sequential()
-        model.add(tf.keras.layers.Dense(first_layer_dens, activation='relu', input_dim=input_dim))
+        model.add(tf.keras.layers.Dense(first_layer_dens, activation="relu", input_dim=input_dim))
         model.add(tf.keras.layers.Dropout(0.5))
-        model.add(tf.keras.layers.Dense(second_layer_dens, activation='relu'))
+        model.add(tf.keras.layers.Dense(second_layer_dens, activation="relu"))
         model.add(tf.keras.layers.Dropout(0.5))
-        model.add(tf.keras.layers.Dense(output_layer_dens, activation='sigmoid'))
-        metrics = ['binary_accuracy', precision_score, recall_score, f1]
+        model.add(tf.keras.layers.Dense(output_layer_dens, activation="sigmoid"))
+        metrics = ["binary_accuracy", precision_score, recall_score, f1]
         # Compile model
         model.compile(loss=self.loss, optimizer=self.optimizer, metrics=metrics)
         self.model = model
@@ -119,8 +125,13 @@ class NpSemanticSegClassifier:
             train_set (:obj:`numpy.ndarray`): The train set
             args: callback_args and epochs from ArgParser input
         """
-        self.model.fit(train_set['X'], train_set['y'], epochs=self.epochs,
-                       batch_size=self.batch_size, verbose=2)
+        self.model.fit(
+            train_set["X"],
+            train_set["y"],
+            epochs=self.epochs,
+            batch_size=self.batch_size,
+            verbose=2,
+        )
 
     def save(self, model_path):
         """
@@ -131,7 +142,7 @@ class NpSemanticSegClassifier:
         """
         # serialize model to JSON
         model_json = self.model.to_json()
-        with open(model_path[:-2] + 'json', 'w') as json_file:
+        with open(model_path[:-2] + "json", "w") as json_file:
             json_file.write(model_json)
         # serialize weights to HDF5
         self.model.save_weights(model_path)
@@ -145,7 +156,7 @@ class NpSemanticSegClassifier:
             model_path(str): local path for loading the model
         """
         # load json and create model
-        with open(model_path[:-2] + 'json', 'r') as json_file:
+        with open(model_path[:-2] + "json", "r") as json_file:
             loaded_model_json = json_file.read()
         loaded_model = tf.keras.models.model_from_json(loaded_model_json)
         # load weights into new model
@@ -163,7 +174,7 @@ class NpSemanticSegClassifier:
         Returns:
             tuple(float): loss, binary_accuracy, precision, recall and f1 measures
         """
-        return self.model.evaluate(test_set['X'], test_set['y'], batch_size=128, verbose=2)
+        return self.model.evaluate(test_set["X"], test_set["y"], batch_size=128, verbose=2)
 
     def get_outputs(self, test_set):
         """

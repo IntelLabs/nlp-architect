@@ -204,8 +204,12 @@
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">nlp_architect.utils.generic</span> <span class="kn">import</span> <span class="n">pad_sentences</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.utils.text</span> <span class="kn">import</span> <span class="n">SpacyInstance</span><span class="p">,</span> <span class="n">Vocabulary</span><span class="p">,</span> <span class="n">character_vector_generator</span><span class="p">,</span> \
-    <span class="n">word_vector_generator</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.utils.text</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">SpacyInstance</span><span class="p">,</span>
+    <span class="n">Vocabulary</span><span class="p">,</span>
+    <span class="n">character_vector_generator</span><span class="p">,</span>
+    <span class="n">word_vector_generator</span><span class="p">,</span>
+<span class="p">)</span>
 
 
 <div class="viewcode-block" id="IntentDataset"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.intent_datasets.IntentDataset">[docs]</a><span class="k">class</span> <span class="nc">IntentDataset</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -244,18 +248,22 @@
         <span class="n">chars_vectors</span> <span class="o">=</span> <span class="p">[</span><span class="n">pad_sentences</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">word_len</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">chars_vectors</span><span class="p">]</span>
         <span class="n">zeros</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">chars_vectors</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">sentence_len</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">word_len</span><span class="p">))</span>
         <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">chars_vectors</span><span class="p">):</span>
-            <span class="n">d</span> <span class="o">=</span> <span class="n">d</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">sentence_len</span><span class="p">]</span>
-            <span class="n">zeros</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="p">:</span><span class="n">d</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">d</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="n">d</span><span class="p">[:</span> <span class="bp">self</span><span class="o">.</span><span class="n">sentence_len</span><span class="p">]</span>
+            <span class="n">zeros</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="p">:</span> <span class="n">d</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">d</span>
         <span class="n">chars_vectors</span> <span class="o">=</span> <span class="n">zeros</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">vecs</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">text_vectors</span><span class="p">[:</span><span class="n">train_size</span><span class="p">],</span>
-                              <span class="n">chars_vectors</span><span class="p">[:</span><span class="n">train_size</span><span class="p">],</span>
-                              <span class="n">i</span><span class="p">[:</span><span class="n">train_size</span><span class="p">],</span>
-                              <span class="n">tag_vectors</span><span class="p">[:</span><span class="n">train_size</span><span class="p">]]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">vecs</span><span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">text_vectors</span><span class="p">[</span><span class="o">-</span><span class="n">test_size</span><span class="p">:],</span>
-                             <span class="n">chars_vectors</span><span class="p">[</span><span class="o">-</span><span class="n">test_size</span><span class="p">:],</span>
-                             <span class="n">i</span><span class="p">[</span><span class="o">-</span><span class="n">test_size</span><span class="p">:],</span>
-                             <span class="n">tag_vectors</span><span class="p">[</span><span class="o">-</span><span class="n">test_size</span><span class="p">:]]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vecs</span><span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">text_vectors</span><span class="p">[:</span><span class="n">train_size</span><span class="p">],</span>
+            <span class="n">chars_vectors</span><span class="p">[:</span><span class="n">train_size</span><span class="p">],</span>
+            <span class="n">i</span><span class="p">[:</span><span class="n">train_size</span><span class="p">],</span>
+            <span class="n">tag_vectors</span><span class="p">[:</span><span class="n">train_size</span><span class="p">],</span>
+        <span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vecs</span><span class="p">[</span><span class="s2">&quot;test&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">text_vectors</span><span class="p">[</span><span class="o">-</span><span class="n">test_size</span><span class="p">:],</span>
+            <span class="n">chars_vectors</span><span class="p">[</span><span class="o">-</span><span class="n">test_size</span><span class="p">:],</span>
+            <span class="n">i</span><span class="p">[</span><span class="o">-</span><span class="n">test_size</span><span class="p">:],</span>
+            <span class="n">tag_vectors</span><span class="p">[</span><span class="o">-</span><span class="n">test_size</span><span class="p">:],</span>
+        <span class="p">]</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">word_vocab_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -300,12 +308,12 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">train_set</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;:obj:`tuple` of :obj:`numpy.ndarray`: train set&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">vecs</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">vecs</span><span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">]</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">test_set</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;:obj:`tuple` of :obj:`numpy.ndarray`: test set&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">vecs</span><span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">]</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">vecs</span><span class="p">[</span><span class="s2">&quot;test&quot;</span><span class="p">]</span></div>
 
 
 <div class="viewcode-block" id="TabularIntentDataset"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.intent_datasets.TabularIntentDataset">[docs]</a><span class="k">class</span> <span class="nc">TabularIntentDataset</span><span class="p">(</span><span class="n">IntentDataset</span><span class="p">):</span>
@@ -323,12 +331,14 @@
 <span class="sd">        sentence_length (int): max sentence length</span>
 <span class="sd">        word_length (int): max word length</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">files</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="s1">&#39;test&#39;</span><span class="p">]</span>
+
+    <span class="n">files</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="s2">&quot;test&quot;</span><span class="p">]</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">train_file</span><span class="p">,</span> <span class="n">test_file</span><span class="p">,</span> <span class="n">sentence_length</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">word_length</span><span class="o">=</span><span class="mi">12</span><span class="p">):</span>
         <span class="n">train_set_raw</span><span class="p">,</span> <span class="n">test_set_raw</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_dataset</span><span class="p">(</span><span class="n">train_file</span><span class="p">,</span> <span class="n">test_file</span><span class="p">)</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">TabularIntentDataset</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">sentence_length</span><span class="o">=</span><span class="n">sentence_length</span><span class="p">,</span>
-                                                   <span class="n">word_length</span><span class="o">=</span><span class="n">word_length</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">TabularIntentDataset</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">sentence_length</span><span class="o">=</span><span class="n">sentence_length</span><span class="p">,</span> <span class="n">word_length</span><span class="o">=</span><span class="n">word_length</span>
+        <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_load_data</span><span class="p">(</span><span class="n">train_set_raw</span><span class="p">,</span> <span class="n">test_set_raw</span><span class="p">)</span>
 
@@ -339,7 +349,7 @@
         <span class="k">return</span> <span class="n">train</span><span class="p">,</span> <span class="n">test</span>
 
     <span class="k">def</span> <span class="nf">_read_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
             <span class="n">data</span> <span class="o">=</span> <span class="n">fp</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_split_into_sentences</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
@@ -385,34 +395,34 @@
 <span class="sd">            sentence_length (int, optional): max sentence length</span>
 <span class="sd">            word_length (int, optional): max word length</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="n">train_files</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;AddToPlaylist/train_AddToPlaylist_full.json&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;BookRestaurant/train_BookRestaurant_full.json&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;GetWeather/train_GetWeather_full.json&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;PlayMusic/train_PlayMusic_full.json&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;RateBook/train_RateBook_full.json&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;SearchCreativeWork/train_SearchCreativeWork_full.json&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;SearchScreeningEvent/train_SearchScreeningEvent_full.json&#39;</span>
+        <span class="s2">&quot;AddToPlaylist/train_AddToPlaylist_full.json&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;BookRestaurant/train_BookRestaurant_full.json&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;GetWeather/train_GetWeather_full.json&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;PlayMusic/train_PlayMusic_full.json&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;RateBook/train_RateBook_full.json&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;SearchCreativeWork/train_SearchCreativeWork_full.json&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;SearchScreeningEvent/train_SearchScreeningEvent_full.json&quot;</span><span class="p">,</span>
     <span class="p">]</span>
     <span class="n">test_files</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;AddToPlaylist/validate_AddToPlaylist.json&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;BookRestaurant/validate_BookRestaurant.json&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;GetWeather/validate_GetWeather.json&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;PlayMusic/validate_PlayMusic.json&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;RateBook/validate_RateBook.json&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;SearchCreativeWork/validate_SearchCreativeWork.json&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;SearchScreeningEvent/validate_SearchScreeningEvent.json&#39;</span>
+        <span class="s2">&quot;AddToPlaylist/validate_AddToPlaylist.json&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;BookRestaurant/validate_BookRestaurant.json&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;GetWeather/validate_GetWeather.json&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;PlayMusic/validate_PlayMusic.json&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;RateBook/validate_RateBook.json&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;SearchCreativeWork/validate_SearchCreativeWork.json&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;SearchScreeningEvent/validate_SearchScreeningEvent.json&quot;</span><span class="p">,</span>
     <span class="p">]</span>
-    <span class="n">files</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="s1">&#39;test&#39;</span><span class="p">]</span>
+    <span class="n">files</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="s2">&quot;test&quot;</span><span class="p">]</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">sentence_length</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">word_length</span><span class="o">=</span><span class="mi">12</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">path</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;invalid path for SNIPS dataset loader&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;invalid path for SNIPS dataset loader&quot;</span><span class="p">)</span>
             <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dataset_root</span> <span class="o">=</span> <span class="n">path</span>
         <span class="n">train_set_raw</span><span class="p">,</span> <span class="n">test_set_raw</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_dataset</span><span class="p">()</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">SNIPS</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">sentence_length</span><span class="o">=</span><span class="n">sentence_length</span><span class="p">,</span>
-                                    <span class="n">word_length</span><span class="o">=</span><span class="n">word_length</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SNIPS</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">sentence_length</span><span class="o">=</span><span class="n">sentence_length</span><span class="p">,</span> <span class="n">word_length</span><span class="o">=</span><span class="n">word_length</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_load_data</span><span class="p">(</span><span class="n">train_set_raw</span><span class="p">,</span> <span class="n">test_set_raw</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_load_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -428,35 +438,35 @@
         <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">files</span><span class="p">):</span>
             <span class="n">fname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_root</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
             <span class="n">intent</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
                 <span class="n">fdata</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fp</span><span class="p">)</span>
-            <span class="n">entries</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_json</span><span class="p">([</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">fdata</span><span class="p">[</span><span class="n">intent</span><span class="p">]])</span>
+            <span class="n">entries</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_json</span><span class="p">([</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">fdata</span><span class="p">[</span><span class="n">intent</span><span class="p">]])</span>
             <span class="n">data</span><span class="p">[</span><span class="n">intent</span><span class="p">]</span> <span class="o">=</span> <span class="n">entries</span>
         <span class="k">return</span> <span class="n">data</span>
 
     <span class="k">def</span> <span class="nf">_parse_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-        <span class="n">tok</span> <span class="o">=</span> <span class="n">SpacyInstance</span><span class="p">(</span><span class="n">disable</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;tagger&#39;</span><span class="p">,</span> <span class="s1">&#39;ner&#39;</span><span class="p">,</span> <span class="s1">&#39;parser&#39;</span><span class="p">,</span> <span class="s1">&#39;vectors&#39;</span><span class="p">,</span> <span class="s1">&#39;textcat&#39;</span><span class="p">])</span>
+        <span class="n">tok</span> <span class="o">=</span> <span class="n">SpacyInstance</span><span class="p">(</span><span class="n">disable</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;tagger&quot;</span><span class="p">,</span> <span class="s2">&quot;ner&quot;</span><span class="p">,</span> <span class="s2">&quot;parser&quot;</span><span class="p">,</span> <span class="s2">&quot;vectors&quot;</span><span class="p">,</span> <span class="s2">&quot;textcat&quot;</span><span class="p">])</span>
         <span class="n">sentences</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
             <span class="n">tokens</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="n">tags</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
-                <span class="n">new_tokens</span> <span class="o">=</span> <span class="n">tok</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+                <span class="n">new_tokens</span> <span class="o">=</span> <span class="n">tok</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
                 <span class="n">tokens</span> <span class="o">+=</span> <span class="n">new_tokens</span>
-                <span class="n">ent</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;entity&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+                <span class="n">ent</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;entity&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">ent</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">tags</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_tags</span><span class="p">(</span><span class="n">ent</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_tokens</span><span class="p">))</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">tags</span> <span class="o">+=</span> <span class="p">[</span><span class="s1">&#39;O&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_tokens</span><span class="p">)</span>
+                    <span class="n">tags</span> <span class="o">+=</span> <span class="p">[</span><span class="s2">&quot;O&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_tokens</span><span class="p">)</span>
             <span class="n">sentences</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">tokens</span><span class="p">,</span> <span class="n">tags</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">sentences</span>
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_create_tags</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">length</span><span class="p">):</span>
-        <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;B-&#39;</span> <span class="o">+</span> <span class="n">tag</span><span class="p">]</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;B-&quot;</span> <span class="o">+</span> <span class="n">tag</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">length</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
-                <span class="n">labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;I-&#39;</span> <span class="o">+</span> <span class="n">tag</span><span class="p">)</span>
+                <span class="n">labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;I-&quot;</span> <span class="o">+</span> <span class="n">tag</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">labels</span></div>
 </pre></div>
 

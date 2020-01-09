@@ -116,7 +116,10 @@
 <li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#algorithm-overview">Algorithm Overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#flow">Flow</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#training">Training</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#training">Training</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#requirements">Requirements</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#inference">Inference</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
 </ul>
@@ -210,12 +213,18 @@ training corpus using word embeddings in order to estimate the similarity betwee
 </div>
 <div class="section" id="training">
 <h2>Training<a class="headerlink" href="#training" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="requirements">
+<h3>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h3>
+<p>Install solution extra packages:</p>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">solutions</span><span class="o">/</span><span class="n">set_expansion</span><span class="o">/</span><span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+</div>
 <p>The first step in training is to prepare the data for generating a word embedding model. We
 provide a subset of English Wikipedia at datasets/wikipedia as a sample corpus under the
 <a class="reference external" href="https://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-Share-Alike 3.0 License</a> (Copyright 2018 Wikimedia Foundation).
 The output of this step is the marked corpus where noun phrases are marked with the marking character (default: “_”) as described in the NLP Architect <a class="reference internal" href="np2vec.html"><span class="doc">Noun Phrase to Vec</span></a> module documentation. The pre-process script supports using NLP Architect <a class="reference internal" href="spacy_np_annotator.html"><span class="doc">noun phrase extractor</span></a> which uses an LSTM <span class="xref std std-doc">chunker</span> model or using spaCy’s own noun phrases matcher.
 This is done by running:</p>
-<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">nlp_architect</span><span class="o">.</span><span class="n">solutions</span><span class="o">.</span><span class="n">set_expansion</span><span class="o">.</span><span class="n">prepare_data</span> <span class="o">--</span><span class="n">corpus</span> <span class="n">TRAINING_CORPUS</span> <span class="o">--</span><span class="n">marked_corpus</span> <span class="n">MARKED_TRAINING_CORPUS</span>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">solutions</span><span class="o">/</span><span class="n">set_expansion</span><span class="o">/</span><span class="n">prepare_data</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">corpus</span> <span class="n">TRAINING_CORPUS</span> <span class="o">--</span><span class="n">marked_corpus</span> <span class="n">MARKED_TRAINING_CORPUS</span>
 
 <span class="n">optional</span> <span class="n">arguments</span><span class="p">:</span>
 <span class="o">--</span><span class="n">corpus</span> <span class="n">CORPUS</span>       <span class="n">path</span> <span class="n">to</span> <span class="n">the</span> <span class="nb">input</span> <span class="n">corpus</span><span class="o">.</span> <span class="n">Compressed</span> <span class="n">files</span> <span class="p">(</span><span class="n">gz</span><span class="p">)</span> <span class="n">are</span>
@@ -256,6 +265,7 @@ recommended above. <a class="reference external" href="https://s3-us-west-2.amaz
 is also available under the
 <a class="reference external" href="https://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-Share-Alike 3.0 License</a>.</p>
 </div>
+</div>
 <div class="section" id="inference">
 <h2>Inference<a class="headerlink" href="#inference" title="Permalink to this headline">¶</a></h2>
 <p>The inference step consists of expanding given seed terms into a set of terms that belong to the same semantic class.
@@ -263,7 +273,7 @@ It can be done in two ways:</p>
 <ol class="arabic">
 <li><p class="first">Running a python script:</p>
 <blockquote>
-<div><div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">nlp_architect</span><span class="o">.</span><span class="n">solutions</span><span class="o">.</span><span class="n">set_expansion</span><span class="o">.</span><span class="n">set_expand</span> <span class="o">--</span><span class="n">np2vec_model_file</span> <span class="n">MODEL_PATH</span> <span class="o">--</span><span class="n">topn</span> <span class="n">TOPN</span>
+<div><div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">solutions</span><span class="o">/</span><span class="n">set_expansion</span><span class="o">/</span><span class="n">set_expand</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">np2vec_model_file</span> <span class="n">MODEL_PATH</span> <span class="o">--</span><span class="n">topn</span> <span class="n">TOPN</span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -272,7 +282,7 @@ It can be done in two ways:</p>
 <blockquote>
 <div><ol class="upperalpha">
 <li><p class="first">Loading the expand server with the trained model:</p>
-<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">nlp_architect</span><span class="o">.</span><span class="n">solutions</span><span class="o">.</span><span class="n">set_expansion</span><span class="o">.</span><span class="n">expand_server</span> <span class="p">[</span><span class="o">--</span><span class="n">host</span> <span class="n">HOST</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">port</span> <span class="n">PORT</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">similarity</span> <span class="n">SIMILARITY</span><span class="p">]</span> <span class="n">model_path</span>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">solutions</span><span class="o">/</span><span class="n">set_expansion</span><span class="o">/</span><span class="n">expand_server</span><span class="o">.</span><span class="n">py</span> <span class="p">[</span><span class="o">--</span><span class="n">host</span> <span class="n">HOST</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">port</span> <span class="n">PORT</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">similarity</span> <span class="n">SIMILARITY</span><span class="p">]</span> <span class="n">model_path</span>
 
 <span class="n">positional</span> <span class="n">arguments</span><span class="p">:</span>
 <span class="n">model_path</span>            <span class="n">a</span> <span class="n">path</span> <span class="n">to</span> <span class="n">the</span> <span class="n">w2v</span> <span class="n">model</span> <span class="n">file</span>
@@ -299,12 +309,12 @@ The similarity argument is the threshold to use for the annotation feature, see 
 </div>
 </li>
 <li><p class="first">Run the UI application:</p>
-<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">nlp_architect</span><span class="o">.</span><span class="n">solutions</span><span class="o">.</span><span class="n">start_ui</span> <span class="o">--</span><span class="n">solution</span> <span class="n">set_expansion</span>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">solutions</span><span class="o">/</span><span class="n">solutions</span><span class="o">/</span><span class="n">start_ui</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">solution</span> <span class="n">set_expansion</span>
 </pre></div>
 </div>
 <p>You can also load the UI
 application as a server on different address/port using the following command:</p>
-<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">nlp_architect</span><span class="o">.</span><span class="n">solutions</span><span class="o">.</span><span class="n">start_ui</span> <span class="o">--</span><span class="n">solution</span> <span class="n">set_expansion</span> <span class="o">--</span><span class="n">address</span><span class="o">=</span><span class="mf">12.13</span><span class="o">.</span><span class="mf">14.15</span> <span class="o">--</span><span class="n">port</span><span class="o">=</span><span class="mi">1010</span>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">solutions</span><span class="o">/</span><span class="n">solutions</span><span class="o">/</span><span class="n">start_ui</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">solution</span> <span class="n">set_expansion</span> <span class="o">--</span><span class="n">address</span><span class="o">=</span><span class="mf">12.13</span><span class="o">.</span><span class="mf">14.15</span> <span class="o">--</span><span class="n">port</span><span class="o">=</span><span class="mi">1010</span>
 </pre></div>
 </div>
 <p>The UI is a simple web based application for communicating with the server and performing expansion and annotation.</p>

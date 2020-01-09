@@ -23,13 +23,14 @@ from nlp_architect.models.absa.inference.inference import SentimentInference
 
 
 def test_inference():
-    lexicons_dir = Path(LIBRARY_ROOT) / 'examples' / 'absa'
-    inference = SentimentInference(lexicons_dir / 'aspects.csv', lexicons_dir / 'opinions.csv',
-                                   parse=False)
-    data_dir = Path(LIBRARY_ROOT) / 'tests' / 'fixtures' / 'data' / 'absa'
+    lexicons_dir = Path(LIBRARY_ROOT) / "examples" / "absa"
+    inference = SentimentInference(
+        lexicons_dir / "aspects.csv", lexicons_dir / "opinions.csv", parse=False
+    )
+    data_dir = Path(LIBRARY_ROOT) / "tests" / "fixtures" / "data" / "absa"
     for i in range(1, 4):
-        with open(data_dir / 'core_nlp_doc_{}.json'.format(i)) as f:
+        with open(data_dir / "core_nlp_doc_{}.json".format(i)) as f:
             predicted_doc = inference.run(parsed_doc=json.load(f, object_hook=CoreNLPDoc.decoder))
-        with open(data_dir / 'sentiment_doc_{}.json'.format(i)) as f:
+        with open(data_dir / "sentiment_doc_{}.json".format(i)) as f:
             expected_doc = json.load(f, object_hook=SentimentDoc.decoder)
         assert expected_doc == predicted_doc

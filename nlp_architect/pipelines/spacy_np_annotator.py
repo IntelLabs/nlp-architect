@@ -45,11 +45,12 @@ class NPAnnotator(object):
         self.word_vocab = word_vocab
         self.char_vocab = char_vocab
         self.chunk_vocab = chunk_vocab
-        Doc.set_extension('noun_phrases', default=[], force=True)
+        Doc.set_extension("noun_phrases", default=[], force=True)
 
     @classmethod
-    def load(cls, model_path: str, parameter_path: str, batch_size: int = 32,
-             use_cudnn: bool = False):
+    def load(
+        cls, model_path: str, parameter_path: str, batch_size: int = 32, use_cudnn: bool = False
+    ):
         """
         Load a NPAnnotator annotator
 
@@ -70,11 +71,11 @@ class NPAnnotator(object):
 
         model = SequenceChunker(use_cudnn=use_cudnn)
         model.load(_model_path)
-        with open(_parameter_path, 'rb') as fp:
+        with open(_parameter_path, "rb") as fp:
             model_params = pickle.load(fp)
-            word_vocab = model_params['word_vocab']
-            chunk_vocab = model_params['chunk_vocab']
-            char_vocab = model_params.get('char_vocab', None)
+            word_vocab = model_params["word_vocab"]
+            chunk_vocab = model_params["chunk_vocab"]
+            char_vocab = model_params.get("char_vocab", None)
         return cls(model, word_vocab, char_vocab, chunk_vocab, batch_size)
 
     def _infer_chunks(self, input_vec, doc_lengths):
@@ -87,8 +88,9 @@ class NPAnnotator(object):
         return extract_nps(chunk_tags)
 
     def _feature_extractor(self, doc):
-        features = np.asarray([self.word_vocab[w] if self.word_vocab[w] is not None else 1
-                               for w in doc])
+        features = np.asarray(
+            [self.word_vocab[w] if self.word_vocab[w] is not None else 1 for w in doc]
+        )
         if self.char_vocab:
             sentence_chars = []
             for w in doc:
@@ -127,7 +129,7 @@ class NPAnnotator(object):
             padded_chars = np.zeros((len(doc_chars), max_len, self.model.max_word_len))
             for idx, d in enumerate(doc_chars):
                 d = d[:max_len]
-                padded_chars[idx, -d.shape[0]:] = d
+                padded_chars[idx, -d.shape[0] :] = d
             inputs = [inputs, padded_chars]
         np_indexes = self._infer_chunks(inputs, doc_lens)
         for s, e in np_indexes:
@@ -148,7 +150,7 @@ def get_noun_phrases(doc: Doc) -> [Span]:
     Returns:
         a list of noun phrase Span objects
     """
-    assert hasattr(doc._, 'noun_phrases'), 'no noun_phrase attributes in document'
+    assert hasattr(doc._, "noun_phrases"), "no noun_phrase attributes in document"
     return doc._.noun_phrases
 
 
@@ -160,8 +162,8 @@ def set_noun_phrases(doc: Doc, nps: [Span]) -> None:
         doc (Doc): a spacy type document
         nps ([Span]): a list of Spans
     """
-    assert hasattr(doc._, 'noun_phrases'), 'no noun_phrase attributes in document'
-    doc._.set('noun_phrases', nps)
+    assert hasattr(doc._, "noun_phrases"), "no noun_phrase attributes in document"
+    doc._.set("noun_phrases", nps)
 
 
 class _NPPostprocessor:
@@ -210,8 +212,11 @@ def _filter_repeating_nonalnum(phrase, length):
 
 
 def _filter_long_phrases(phrase, word_length, phrase_length):
-    if len(phrase) > 0 and max([len(t) for t in phrase]) > word_length \
-            and len(phrase) > phrase_length:
+    if (
+        len(phrase) > 0
+        and max([len(t) for t in phrase]) > word_length
+        and len(phrase) > phrase_length
+    ):
         return None
     return phrase
 
@@ -229,17 +234,19 @@ def _remove_non_alphanum_from_end(phrase):
 
 
 def _remove_stop_words(phrase):
-    while len(phrase) > 0 and (phrase[0].is_stop
-                               or str(phrase[0]).strip().lower() in Stopwords.get_words()):
+    while len(phrase) > 0 and (
+        phrase[0].is_stop or str(phrase[0]).strip().lower() in Stopwords.get_words()
+    ):
         phrase = phrase[1:]
-    while len(phrase) > 0 and (phrase[-1].is_stop
-                               or str(phrase[-1]).strip().lower() in Stopwords.get_words()):
+    while len(phrase) > 0 and (
+        phrase[-1].is_stop or str(phrase[-1]).strip().lower() in Stopwords.get_words()
+    ):
         phrase = phrase[:-1]
     return phrase
 
 
 def _remove_char_at_start(phrase):
-    chars = ['@', '-', '=', '.', ':', '+', '?', 'nt', '\"', '\'', '\'S', '\'s', ',']
+    chars = ["@", "-", "=", ".", ":", "+", "?", "nt", '"', "'", "'S", "'s", ","]
     if phrase and len(phrase) > 0:
         while len(phrase) > 0 and phrase[0].text in chars:
             phrase = phrase[1:]
@@ -247,7 +254,7 @@ def _remove_char_at_start(phrase):
 
 
 def _remove_char_at_end(phrase):
-    chars = [',', '(', ')', ' ', '-']
+    chars = [",", "(", ")", " ", "-"]
     if phrase:
         while len(phrase) > 0 and phrase[-1].text in chars:
             phrase = phrase[:-1]
@@ -255,8 +262,8 @@ def _remove_char_at_end(phrase):
 
 
 def _remove_pos_from_start(phrase):
-    tag_list = ['WDT', 'PRP$', ':']
-    pos_list = ['PUNCT', 'INTJ', 'NUM', 'PART', 'ADV', 'DET', 'PRON', 'VERB']
+    tag_list = ["WDT", "PRP$", ":"]
+    pos_list = ["PUNCT", "INTJ", "NUM", "PART", "ADV", "DET", "PRON", "VERB"]
     if phrase:
         while len(phrase) > 0 and (phrase[0].pos_ in pos_list or phrase[0].tag_ in tag_list):
             phrase = phrase[1:]
@@ -264,8 +271,8 @@ def _remove_pos_from_start(phrase):
 
 
 def _remove_pos_from_end(phrase):
-    tag_list = ['WDT', ':']
-    pos_list = ['DET', 'PUNCT', 'CONJ']
+    tag_list = ["WDT", ":"]
+    pos_list = ["DET", "PUNCT", "CONJ"]
     if phrase:
         while len(phrase) > 0 and (phrase[-1].pos_ in pos_list or phrase[-1].tag_ in tag_list):
             phrase = phrase[:-1]
@@ -273,7 +280,7 @@ def _remove_pos_from_end(phrase):
 
 
 def _filter_single_pos(phrase):
-    pos_list = ['VERB', 'ADJ', 'ADV']
+    pos_list = ["VERB", "ADJ", "ADV"]
     if phrase and len(phrase) == 1 and phrase[0].pos_ in pos_list:
         return None
     return phrase
@@ -283,7 +290,7 @@ def _filter_fp_nums(phrase):
     if len(phrase) > 0:
         try:
             # check for float number
-            float(phrase.text.replace(',', ''))
+            float(phrase.text.replace(",", ""))
             return None
         except ValueError:
             return phrase
@@ -297,8 +304,12 @@ def _filter_single_char(phrase):
 
 
 def _filter_empty(phrase):
-    if phrase is None or len(phrase) == 0 or len(phrase.text) == 0 \
-            or len(str(phrase.text).strip()) == 0:
+    if (
+        phrase is None
+        or len(phrase) == 0
+        or len(phrase.text) == 0
+        or len(str(phrase.text).strip()) == 0
+    ):
         return None
     return phrase
 
@@ -325,8 +336,7 @@ class SpacyNPAnnotator(object):
     Simple Spacy pipe with NP extraction annotations
     """
 
-    def __init__(self, model_path, settings_path, spacy_model='en', batch_size=32,
-                 use_cudnn=False):
+    def __init__(self, model_path, settings_path, spacy_model="en", batch_size=32, use_cudnn=False):
         _model_path = path.join(path.dirname(path.realpath(__file__)), model_path)
         validate_existing_filepath(_model_path)
         _settings_path = path.join(path.dirname(path.realpath(__file__)), settings_path)
@@ -334,11 +344,15 @@ class SpacyNPAnnotator(object):
 
         nlp = spacy.load(spacy_model)
         for p in nlp.pipe_names:
-            if p not in ['tagger']:
+            if p not in ["tagger"]:
                 nlp.remove_pipe(p)
-        nlp.add_pipe(nlp.create_pipe('sentencizer'), first=True)
-        nlp.add_pipe(NPAnnotator.load(_model_path, settings_path, batch_size=batch_size,
-                                      use_cudnn=use_cudnn), last=True)
+        nlp.add_pipe(nlp.create_pipe("sentencizer"), first=True)
+        nlp.add_pipe(
+            NPAnnotator.load(
+                _model_path, settings_path, batch_size=batch_size, use_cudnn=use_cudnn
+            ),
+            last=True,
+        )
         self.nlp = nlp
 
     def __call__(self, text: str) -> [str]:

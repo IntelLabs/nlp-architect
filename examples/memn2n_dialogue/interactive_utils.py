@@ -43,15 +43,15 @@ def interactive_loop(model, babi):
     db, names_to_idxs, kb_text = build_kb_db(babi)
 
     while True:
-        line_in = text_input('>>> ').strip().lower()
+        line_in = text_input(">>> ").strip().lower()
         if not line_in:
             line_in = "<SILENCE>"
-        if line_in in ('exit', 'quit'):
+        if line_in in ("exit", "quit"):
             break
-        if line_in == 'help':
+        if line_in == "help":
             print_help()
             continue
-        if line_in in ('restart', 'clear'):
+        if line_in in ("restart", "clear"):
             context = []
             response = None
             time_feat = 1
@@ -59,45 +59,44 @@ def interactive_loop(model, babi):
             db_results = []
             print("Memory cleared")
             continue
-        if line_in == 'vocab':
+        if line_in == "vocab":
             print_human_vocab(babi)
             continue
-        if line_in == 'show_memory':
+        if line_in == "show_memory":
             print_memory(context)
             continue
-        if line_in == 'allow_oov':
+        if line_in == "allow_oov":
             allow_oov = not allow_oov
             print("Allow OOV = {}".format(allow_oov))
             continue
-        if 'api_call' in line_in:
-            db_results = issue_api_call(
-                line_in, db, names_to_idxs, kb_text, babi)
+        if "api_call" in line_in:
+            db_results = issue_api_call(line_in, db, names_to_idxs, kb_text, babi)
 
         old_context = copy(context)
         user_utt, context, memory, cands_mat, time_feat = babi.process_interactive(
-            line_in, context, response, db_results, time_feat)
+            line_in, context, response, db_results, time_feat
+        )
 
-        if babi.word_to_index['<OOV>'] in user_utt and allow_oov is False:
-            oov_word = line_in.split(' ')[
-                list(user_utt).index(
-                    babi.word_to_index['<OOV>'])]
-            print("Sorry, \"{}\" is outside my vocabulary. ".format(oov_word)
-                  + "Please say 'allow_oov' to toggle OOV words"
-                  + ", or 'help' for more commands.")
+        if babi.word_to_index["<OOV>"] in user_utt and allow_oov is False:
+            oov_word = line_in.split(" ")[list(user_utt).index(babi.word_to_index["<OOV>"])]
+            print(
+                'Sorry, "{}" is outside my vocabulary. '.format(oov_word)
+                + "Please say 'allow_oov' to toggle OOV words"
+                + ", or 'help' for more commands."
+            )
             context = old_context
             continue
 
-        interactive_output = model.predict(np.expand_dims(memory, 0),
-                                           np.expand_dims(user_utt, 0),
-                                           np.expand_dims(cands_mat, 0))
+        interactive_output = model.predict(
+            np.expand_dims(memory, 0), np.expand_dims(user_utt, 0), np.expand_dims(cands_mat, 0)
+        )
         pred_cand_idx = interactive_output[0]
         response = babi.candidate_answers[pred_cand_idx]
 
         print(response)
 
-        if 'api_call' in response:
-            db_results = issue_api_call(
-                response, db, names_to_idxs, kb_text, babi)
+        if "api_call" in response:
+            db_results = issue_api_call(response, db, names_to_idxs, kb_text, babi)
         else:
             db_results = []
 
@@ -106,8 +105,7 @@ def print_memory(context):
     if not context:
         return
 
-    max_sent_len = max(
-        map(len, map(lambda z: reduce(lambda x, y: x + ' ' + y, z), context)))
+    max_sent_len = max(map(len, map(lambda z: reduce(lambda x, y: x + " " + y, z), context)))
 
     print("-" * max_sent_len)
     for sent in context:
@@ -117,7 +115,7 @@ def print_memory(context):
 
 def print_human_vocab(babi):
     if babi.task + 1 < 6:
-        print([x for x in babi.vocab if 'resto' not in x])
+        print([x for x in babi.vocab if "resto" not in x])
     else:
         print(babi.vocab)
 
@@ -130,38 +128,40 @@ def print_help():
         + " >> restart / clear: Restart the conversation and erase the bot's memory\n"
         + " >> vocab: Display usable vocabulary\n"
         + " >> allow_oov: Allow out of vocab words to be replaced with <OOV> token\n"
-        + " >> show_memory: Display the current contents of the bot's memory\n")
+        + " >> show_memory: Display the current contents of the bot's memory\n"
+    )
 
 
 def build_kb_db(babi):
     """
     Build a searchable database from the kb files to be used in interactive mode
     """
-    with open(babi.kb_file, 'r') as f:
+    with open(babi.kb_file, "r") as f:
         kb_text = f.readlines()
 
-    kb_text = [x.replace('\t', ' ') for x in kb_text]
+    kb_text = [x.replace("\t", " ") for x in kb_text]
 
     db = {}
 
-    property_types = set(x.split(' ')[2] for x in kb_text)
+    property_types = set(x.split(" ")[2] for x in kb_text)
 
     for ptype in property_types:
-        unique_props = set(x.split(' ')[3].strip()
-                           for x in kb_text if ptype in x.strip().split(' '))
+        unique_props = set(
+            x.split(" ")[3].strip() for x in kb_text if ptype in x.strip().split(" ")
+        )
 
-        db[ptype] = {prop: [x for idx, x in enumerate(
-            kb_text) if prop in x.strip().split(' ')] for prop in unique_props}
+        db[ptype] = {
+            prop: [x for idx, x in enumerate(kb_text) if prop in x.strip().split(" ")]
+            for prop in unique_props
+        }
         db[ptype][ptype] = kb_text
 
-    resto_names = set(x.split(' ')[1] for x in kb_text)
+    resto_names = set(x.split(" ")[1] for x in kb_text)
     names_to_idxs = {}
     for name in resto_names:
-        names_to_idxs[name] = [idx for idx, x in enumerate(
-            kb_text) if name in x.strip().split(' ')]
+        names_to_idxs[name] = [idx for idx, x in enumerate(kb_text) if name in x.strip().split(" ")]
 
-    kb_text_clean = np.array(
-        [' '.join(x.strip().split(' ')[1:]) for x in kb_text])
+    kb_text_clean = np.array([" ".join(x.strip().split(" ")[1:]) for x in kb_text])
 
     return db, names_to_idxs, kb_text_clean
 
@@ -170,22 +170,20 @@ def issue_api_call(api_call, db, names_to_idxs, kb_text, babi):
     """
     Parse the api call and use it to search the database
     """
-    desired_properties = api_call.strip().split(' ')[1:]
+    desired_properties = api_call.strip().split(" ")[1:]
 
     if babi.task + 1 < 6:
-        properties_order = ['R_cuisine', 'R_location', 'R_number', 'R_price']
+        properties_order = ["R_cuisine", "R_location", "R_number", "R_price"]
     else:
-        properties_order = ['R_cuisine', 'R_location', 'R_price']
+        properties_order = ["R_cuisine", "R_location", "R_price"]
 
     assert len(properties_order) == len(desired_properties)
 
     # Start result as all possible kb entries
-    returned_kb_idxs = set(
-        itertools.chain.from_iterable(
-            names_to_idxs.values()))
+    returned_kb_idxs = set(itertools.chain.from_iterable(names_to_idxs.values()))
 
     for ptype, prop in zip(properties_order, desired_properties):
-        kb_idxs = [names_to_idxs[x.split(' ')[1]] for x in db[ptype][prop]]
+        kb_idxs = [names_to_idxs[x.split(" ")[1]] for x in db[ptype][prop]]
         kb_idxs = list(itertools.chain.from_iterable(kb_idxs))
         # iteratively perform intersection with subset that matches query
         returned_kb_idxs = returned_kb_idxs.intersection(kb_idxs)

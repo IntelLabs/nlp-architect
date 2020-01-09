@@ -35,7 +35,7 @@ Files
 - **examples/reading_comprehension/train.py** -Implements the end to end model along with the training commands
 - **examples/reading_comprehension/utils.py**- Implements different utility functions to set up the data loader and for evaluation.
 - **examples/reading_comprehension/prepare_data.py**- Implements the pipeline to preprocess the dataset
-- **nlp_architect/models/matchlstm_ansptr.py**- Defines the end to end MatchLSTM and :py:class:`Answer_Pointer <nlp_architect.models.matchlstm_ansptr.MatchLSTM_AnswerPointe>` network for Reading Comprehension
+- **examples/reading_comprehension/matchlstm_ansptr.py**- Defines the end to end MatchLSTM and :py:class:`Answer_Pointer <nlp_architect.models.matchlstm_ansptr.MatchLSTM_AnswerPointe>` network for Reading Comprehension
 
 Dataset
 =======

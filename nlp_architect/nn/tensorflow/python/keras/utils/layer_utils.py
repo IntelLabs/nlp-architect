@@ -28,12 +28,11 @@ def save_model(model: keras.models.Model, topology: dict, filepath: str) -> None
         topology (dict): a dictionary of topology elements and their values
         filepath (str): path to save model
     """
-    with tempfile.NamedTemporaryFile(suffix='.h5', delete=True) as fd:
+    with tempfile.NamedTemporaryFile(suffix=".h5", delete=True) as fd:
         model.save_weights(fd.name)
         model_weights = fd.read()
-    data = {'model_weights': model_weights,
-            'model_topology': topology}
-    with open(filepath, 'wb') as fp:
+    data = {"model_weights": model_weights, "model_topology": topology}
+    with open(filepath, "wb") as fp:
         pickle.dump(data, fp)
 
 
@@ -45,11 +44,11 @@ def load_model(filepath, model) -> None:
         filepath (str): path to model
         model: model object to load
     """
-    with open(filepath, 'rb') as fp:
+    with open(filepath, "rb") as fp:
         model_data = pickle.load(fp)
-    topology = model_data['model_topology']
+    topology = model_data["model_topology"]
     model.build(**topology)
-    with tempfile.NamedTemporaryFile(suffix='.h5', delete=True) as fd:
-        fd.write(model_data['model_weights'])
+    with tempfile.NamedTemporaryFile(suffix=".h5", delete=True) as fd:
+        fd.write(model_data["model_weights"])
         fd.flush()
         model.model.load_weights(fd.name)

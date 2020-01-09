@@ -39,6 +39,13 @@ Solution execution
 All three stages of the solution are end-to-end executed by a dedicated UI.
 An example for running the UI is available at ``examples/absa/solution/absa_solution.py``.
 
+Install solution extra packages:
+
+.. code:: python
+
+  pip install -r solutions/absa_solution/requirements.txt
+
+
 .. code:: bash
 
     python3 examples/absa/solution/absa_solution.py

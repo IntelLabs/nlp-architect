@@ -1,0 +1,5 @@
+#!/usr/bin/env python
+from nlp_architect.cli import nlp_inference_cli
+
+if __name__ == "__main__":
+    nlp_inference_cli()

@@ -224,37 +224,47 @@
 <span class="sd">        padding_idx (int, optinal): padding number for embedding layers</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                 <span class="n">word_vocab_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-                 <span class="n">num_labels</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-                 <span class="n">word_embedding_dims</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
-                 <span class="n">char_embedding_dims</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span>
-                 <span class="n">cnn_kernel_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
-                 <span class="n">cnn_num_filters</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">128</span><span class="p">,</span>
-                 <span class="n">lstm_hidden_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
-                 <span class="n">lstm_layers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
-                 <span class="n">bidir</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-                 <span class="n">dropout</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span>
-                 <span class="n">padding_idx</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">word_vocab_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">num_labels</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">word_embedding_dims</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+        <span class="n">char_embedding_dims</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span>
+        <span class="n">cnn_kernel_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="n">cnn_num_filters</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">128</span><span class="p">,</span>
+        <span class="n">lstm_hidden_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+        <span class="n">lstm_layers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="n">bidir</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">dropout</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span>
+        <span class="n">padding_idx</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">CNNLSTM</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">word_embeddings</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span><span class="n">word_vocab_size</span><span class="p">,</span>
-                                            <span class="n">word_embedding_dims</span><span class="p">,</span>
-                                            <span class="n">padding_idx</span><span class="o">=</span><span class="n">padding_idx</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">char_embeddings</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span><span class="n">n_letters</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
-                                            <span class="n">char_embedding_dims</span><span class="p">,</span>
-                                            <span class="n">padding_idx</span><span class="o">=</span><span class="n">padding_idx</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">conv1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv1d</span><span class="p">(</span><span class="n">in_channels</span><span class="o">=</span><span class="n">char_embedding_dims</span><span class="p">,</span>
-                               <span class="n">out_channels</span><span class="o">=</span><span class="n">cnn_num_filters</span><span class="p">,</span>
-                               <span class="n">kernel_size</span><span class="o">=</span><span class="n">cnn_kernel_size</span><span class="p">,</span>
-                               <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">word_embeddings</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span>
+            <span class="n">word_vocab_size</span><span class="p">,</span> <span class="n">word_embedding_dims</span><span class="p">,</span> <span class="n">padding_idx</span><span class="o">=</span><span class="n">padding_idx</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">char_embeddings</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span>
+            <span class="n">n_letters</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">char_embedding_dims</span><span class="p">,</span> <span class="n">padding_idx</span><span class="o">=</span><span class="n">padding_idx</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conv1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv1d</span><span class="p">(</span>
+            <span class="n">in_channels</span><span class="o">=</span><span class="n">char_embedding_dims</span><span class="p">,</span>
+            <span class="n">out_channels</span><span class="o">=</span><span class="n">cnn_num_filters</span><span class="p">,</span>
+            <span class="n">kernel_size</span><span class="o">=</span><span class="n">cnn_kernel_size</span><span class="p">,</span>
+            <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">relu</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">()</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">lstm</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LSTM</span><span class="p">(</span><span class="n">input_size</span><span class="o">=</span><span class="n">word_embedding_dims</span> <span class="o">+</span> <span class="n">cnn_num_filters</span><span class="p">,</span>
-                            <span class="n">hidden_size</span><span class="o">=</span><span class="n">lstm_hidden_size</span><span class="p">,</span>
-                            <span class="n">bidirectional</span><span class="o">=</span><span class="n">bidir</span><span class="p">,</span> <span class="n">batch_first</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">num_layers</span><span class="o">=</span><span class="n">lstm_layers</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lstm</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LSTM</span><span class="p">(</span>
+            <span class="n">input_size</span><span class="o">=</span><span class="n">word_embedding_dims</span> <span class="o">+</span> <span class="n">cnn_num_filters</span><span class="p">,</span>
+            <span class="n">hidden_size</span><span class="o">=</span><span class="n">lstm_hidden_size</span><span class="p">,</span>
+            <span class="n">bidirectional</span><span class="o">=</span><span class="n">bidir</span><span class="p">,</span>
+            <span class="n">batch_first</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">num_layers</span><span class="o">=</span><span class="n">lstm_layers</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="n">dropout</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dense</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="n">lstm_hidden_size</span> <span class="o">*</span> <span class="mi">2</span> <span class="k">if</span> <span class="n">bidir</span> <span class="k">else</span> <span class="n">lstm_hidden_size</span><span class="p">,</span>
-                               <span class="n">out_features</span><span class="o">=</span><span class="n">num_labels</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dense</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span>
+            <span class="n">in_features</span><span class="o">=</span><span class="n">lstm_hidden_size</span> <span class="o">*</span> <span class="mi">2</span> <span class="k">if</span> <span class="n">bidir</span> <span class="k">else</span> <span class="n">lstm_hidden_size</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="n">num_labels</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">num_labels</span> <span class="o">=</span> <span class="n">num_labels</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">padding_idx</span> <span class="o">=</span> <span class="n">padding_idx</span>
 
@@ -265,8 +275,9 @@
 <span class="sd">        Args:</span>
 <span class="sd">            embeddings (torch.tensor): word embedding tensor</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">word_embeddings</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Embedding</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="n">embeddings</span><span class="p">,</span> <span class="n">freeze</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                                                            <span class="n">padding_idx</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">padding_idx</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">word_embeddings</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Embedding</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span>
+            <span class="n">embeddings</span><span class="p">,</span> <span class="n">freeze</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">padding_idx</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">padding_idx</span>
+        <span class="p">)</span></div>
 
 <div class="viewcode-block" id="CNNLSTM.forward"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.nn.torch.modules.html#nlp_architect.nn.torch.modules.embedders.CNNLSTM.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">words</span><span class="p">,</span> <span class="n">word_chars</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -286,7 +297,8 @@
         <span class="n">input_size</span> <span class="o">=</span> <span class="n">char_embeds</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
         <span class="n">squashed_shape</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">input_size</span><span class="p">[</span><span class="mi">2</span><span class="p">:])</span>
         <span class="n">char_embeds_reshape</span> <span class="o">=</span> <span class="n">char_embeds</span><span class="o">.</span><span class="n">contiguous</span><span class="p">()</span><span class="o">.</span><span class="n">view</span><span class="p">(</span>
-            <span class="o">*</span><span class="n">squashed_shape</span><span class="p">)</span>  <span class="c1"># (samples * timesteps, input_size)</span>
+            <span class="o">*</span><span class="n">squashed_shape</span>
+        <span class="p">)</span>  <span class="c1"># (samples * timesteps, input_size)</span>
         <span class="n">char_embeds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv1</span><span class="p">(</span><span class="n">char_embeds_reshape</span><span class="p">)</span>
         <span class="n">char_embeds</span> <span class="o">=</span> <span class="n">char_embeds</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="n">char_embeds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">char_embeds</span><span class="p">)</span>
@@ -321,9 +333,7 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">config</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">FileNotFoundError</span>
         <span class="n">cfg</span> <span class="o">=</span> <span class="n">load_json_file</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">word_vocab_size</span><span class="o">=</span><span class="n">word_vocab_size</span><span class="p">,</span>
-                   <span class="n">num_labels</span><span class="o">=</span><span class="n">num_labels</span><span class="p">,</span>
-                   <span class="o">**</span><span class="n">cfg</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">word_vocab_size</span><span class="o">=</span><span class="n">word_vocab_size</span><span class="p">,</span> <span class="n">num_labels</span><span class="o">=</span><span class="n">num_labels</span><span class="p">,</span> <span class="o">**</span><span class="n">cfg</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="IDCNN"><a class="viewcode-back" href="../../../../../tagging/sequence_tagging.html#nlp_architect.nn.torch.modules.embedders.IDCNN">[docs]</a><span class="k">class</span> <span class="nc">IDCNN</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
@@ -348,21 +358,24 @@
 <span class="sd">        padding_idx (int, optinal): padding number for embedding layers</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                 <span class="n">word_vocab_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-                 <span class="n">num_labels</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-                 <span class="n">word_embedding_dims</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
-                 <span class="n">char_embedding_dims</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span>
-                 <span class="n">char_cnn_filters</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">128</span><span class="p">,</span>
-                 <span class="n">char_cnn_kernel_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
-                 <span class="n">cnn_kernel_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
-                 <span class="n">cnn_num_filters</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">128</span><span class="p">,</span>
-                 <span class="n">input_dropout</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span>
-                 <span class="n">word_dropout</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span>
-                 <span class="n">hidden_dropout</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span>
-                 <span class="n">blocks</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-                 <span class="n">dilations</span><span class="p">:</span> <span class="n">List</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                 <span class="n">padding_idx</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">word_vocab_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">num_labels</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">word_embedding_dims</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+        <span class="n">char_embedding_dims</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span>
+        <span class="n">char_cnn_filters</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">128</span><span class="p">,</span>
+        <span class="n">char_cnn_kernel_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="n">cnn_kernel_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="n">cnn_num_filters</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">128</span><span class="p">,</span>
+        <span class="n">input_dropout</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span>
+        <span class="n">word_dropout</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span>
+        <span class="n">hidden_dropout</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span>
+        <span class="n">blocks</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="n">dilations</span><span class="p">:</span> <span class="n">List</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">padding_idx</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">IDCNN</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">dilations</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">dilations</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
@@ -371,30 +384,43 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">padding</span> <span class="o">=</span> <span class="n">dilations</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">num_labels</span> <span class="o">=</span> <span class="n">num_labels</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">padding_idx</span> <span class="o">=</span> <span class="n">padding_idx</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">word_embeddings</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span><span class="n">word_vocab_size</span><span class="p">,</span>
-                                            <span class="n">word_embedding_dims</span><span class="p">,</span>
-                                            <span class="n">padding_idx</span><span class="o">=</span><span class="n">padding_idx</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">conv1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv1d</span><span class="p">(</span><span class="n">in_channels</span><span class="o">=</span><span class="n">word_embedding_dims</span><span class="p">,</span> <span class="n">out_channels</span><span class="o">=</span><span class="n">cnn_num_filters</span><span class="p">,</span>
-                               <span class="n">kernel_size</span><span class="o">=</span><span class="n">cnn_kernel_size</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">word_embeddings</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span>
+            <span class="n">word_vocab_size</span><span class="p">,</span> <span class="n">word_embedding_dims</span><span class="p">,</span> <span class="n">padding_idx</span><span class="o">=</span><span class="n">padding_idx</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conv1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv1d</span><span class="p">(</span>
+            <span class="n">in_channels</span><span class="o">=</span><span class="n">word_embedding_dims</span><span class="p">,</span>
+            <span class="n">out_channels</span><span class="o">=</span><span class="n">cnn_num_filters</span><span class="p">,</span>
+            <span class="n">kernel_size</span><span class="o">=</span><span class="n">cnn_kernel_size</span><span class="p">,</span>
+            <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">relu</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cnv_layers</span> <span class="o">=</span> <span class="p">[]</span>
 
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dilation</span><span class="p">)):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">cnv_layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Conv1d</span><span class="p">(</span><span class="n">in_channels</span><span class="o">=</span><span class="n">cnn_num_filters</span><span class="p">,</span>
-                                             <span class="n">out_channels</span><span class="o">=</span><span class="n">cnn_num_filters</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-                                             <span class="n">padding</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">dilation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dilation</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cnv_layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">nn</span><span class="o">.</span><span class="n">Conv1d</span><span class="p">(</span>
+                    <span class="n">in_channels</span><span class="o">=</span><span class="n">cnn_num_filters</span><span class="p">,</span>
+                    <span class="n">out_channels</span><span class="o">=</span><span class="n">cnn_num_filters</span><span class="p">,</span>
+                    <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+                    <span class="n">padding</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                    <span class="n">dilation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dilation</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cnv_layers</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">ModuleList</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cnv_layers</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dense</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span>
             <span class="n">in_features</span><span class="o">=</span><span class="p">(</span><span class="n">cnn_num_filters</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_blocks</span><span class="p">)</span> <span class="o">+</span> <span class="n">char_cnn_filters</span><span class="p">,</span>
-            <span class="n">out_features</span><span class="o">=</span><span class="n">num_labels</span><span class="p">)</span>
+            <span class="n">out_features</span><span class="o">=</span><span class="n">num_labels</span><span class="p">,</span>
+        <span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">char_embeddings</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span><span class="n">n_letters</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
-                                            <span class="n">char_embedding_dims</span><span class="p">,</span>
-                                            <span class="n">padding_idx</span><span class="o">=</span><span class="n">padding_idx</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">char_conv</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv1d</span><span class="p">(</span><span class="n">in_channels</span><span class="o">=</span><span class="n">char_embedding_dims</span><span class="p">,</span>
-                                   <span class="n">out_channels</span><span class="o">=</span><span class="n">char_cnn_filters</span><span class="p">,</span>
-                                   <span class="n">kernel_size</span><span class="o">=</span><span class="n">char_cnn_kernel_size</span><span class="p">,</span>
-                                   <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">char_embeddings</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span>
+            <span class="n">n_letters</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">char_embedding_dims</span><span class="p">,</span> <span class="n">padding_idx</span><span class="o">=</span><span class="n">padding_idx</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">char_conv</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv1d</span><span class="p">(</span>
+            <span class="n">in_channels</span><span class="o">=</span><span class="n">char_embedding_dims</span><span class="p">,</span>
+            <span class="n">out_channels</span><span class="o">=</span><span class="n">char_cnn_filters</span><span class="p">,</span>
+            <span class="n">kernel_size</span><span class="o">=</span><span class="n">char_cnn_kernel_size</span><span class="p">,</span>
+            <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">i_drop</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="n">input_dropout</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">w_drop</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="n">word_dropout</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">h_drop</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="n">hidden_dropout</span><span class="p">)</span>
@@ -459,9 +485,7 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">config</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">FileNotFoundError</span>
         <span class="n">cfg</span> <span class="o">=</span> <span class="n">load_json_file</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">word_vocab_size</span><span class="o">=</span><span class="n">word_vocab_size</span><span class="p">,</span>
-                   <span class="n">num_labels</span><span class="o">=</span><span class="n">num_labels</span><span class="p">,</span>
-                   <span class="o">**</span><span class="n">cfg</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">word_vocab_size</span><span class="o">=</span><span class="n">word_vocab_size</span><span class="p">,</span> <span class="n">num_labels</span><span class="o">=</span><span class="n">num_labels</span><span class="p">,</span> <span class="o">**</span><span class="n">cfg</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="IDCNN.load_embeddings"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.nn.torch.modules.html#nlp_architect.nn.torch.modules.embedders.IDCNN.load_embeddings">[docs]</a>    <span class="k">def</span> <span class="nf">load_embeddings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">embeddings</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -470,8 +494,9 @@
 <span class="sd">        Args:</span>
 <span class="sd">            embeddings (torch.tensor): word embedding tensor</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">word_embeddings</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Embedding</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="n">embeddings</span><span class="p">,</span> <span class="n">freeze</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                                                            <span class="n">padding_idx</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">padding_idx</span><span class="p">)</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">word_embeddings</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Embedding</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span>
+            <span class="n">embeddings</span><span class="p">,</span> <span class="n">freeze</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">padding_idx</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">padding_idx</span>
+        <span class="p">)</span></div></div>
 </pre></div>
 
            </div>

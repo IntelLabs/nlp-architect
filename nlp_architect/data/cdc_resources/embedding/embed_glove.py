@@ -26,9 +26,9 @@ logger = logging.getLogger(__name__)
 
 class GloveEmbedding(object):
     def __init__(self, glove_file):
-        logger.info('Loading Glove Online Embedding module, This my take a while...')
+        logger.info("Loading Glove Online Embedding module, This my take a while...")
         self.word_to_ix, self.word_embeddings = self.load_glove_for_vocab(glove_file)
-        logger.info('Glove Offline Embedding module lead successfully')
+        logger.info("Glove Offline Embedding module lead successfully")
 
     @staticmethod
     def load_glove_for_vocab(glove_filename):
@@ -36,7 +36,7 @@ class GloveEmbedding(object):
         embd = []
         with open(glove_filename) as glove_file:
             for line in glove_file:
-                row = line.strip().split(' ')
+                row = line.strip().split(" ")
                 word = row[0]
                 vocab.append(word)
                 embd.append(row[1:])
@@ -48,10 +48,10 @@ class GloveEmbedding(object):
 
 class GloveEmbeddingOffline(object):
     def __init__(self, embed_resources):
-        logger.info('Loading Glove Offline Embedding module')
-        with open(embed_resources, 'rb') as out:
-            self.word_to_ix, self.word_embeddings = pickle.load(out, encoding='latin1')
-        logger.info('Glove Offline Embedding module lead successfully')
+        logger.info("Loading Glove Offline Embedding module")
+        with open(embed_resources, "rb") as out:
+            self.word_to_ix, self.word_embeddings = pickle.load(out, encoding="latin1")
+        logger.info("Glove Offline Embedding module lead successfully")
 
     def get_feature_vector(self, mention: MentionDataLight):
         embed = None

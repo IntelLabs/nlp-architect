@@ -35,6 +35,13 @@ http://cseweb.ucsd.edu/~jmcauley/pdfs/sigir15.pdf
 
 
 # Train/Test
+
+Install extra packages for running the model:
+
+```bash
+pip install -r examples/requirements.txt
+```
+
 Currently, the pipeline shows a full train/test/ensemble cycle. The main pipeline can be run with the following command:
 ```
  python example_ensemble.py --file_path ./reviews_Movies_and_TV.json/

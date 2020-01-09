@@ -205,8 +205,10 @@
 <span class="kn">from</span> <span class="nn">nlp_architect.common.cdc.mention_data</span> <span class="kn">import</span> <span class="n">MentionDataLight</span>
 <span class="kn">from</span> <span class="nn">nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_pages</span> <span class="kn">import</span> <span class="n">WikipediaPages</span>
 <span class="kn">from</span> <span class="nn">nlp_architect.data.cdc_resources.relations.relation_extraction</span> <span class="kn">import</span> <span class="n">RelationExtraction</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.data.cdc_resources.relations.relation_types_enums</span> <span class="kn">import</span> <span class="n">RelationType</span><span class="p">,</span> \
-    <span class="n">WikipediaSearchMethod</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.data.cdc_resources.relations.relation_types_enums</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">RelationType</span><span class="p">,</span>
+    <span class="n">WikipediaSearchMethod</span><span class="p">,</span>
+<span class="p">)</span>
 <span class="kn">from</span> <span class="nn">nlp_architect.data.cdc_resources.wikipedia.wiki_elastic</span> <span class="kn">import</span> <span class="n">WikiElastic</span>
 <span class="kn">from</span> <span class="nn">nlp_architect.data.cdc_resources.wikipedia.wiki_offline</span> <span class="kn">import</span> <span class="n">WikiOffline</span>
 <span class="kn">from</span> <span class="nn">nlp_architect.data.cdc_resources.wikipedia.wiki_online</span> <span class="kn">import</span> <span class="n">WikiOnline</span>
@@ -216,10 +218,16 @@
 
 
 <div class="viewcode-block" id="WikipediaRelationExtraction"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.relations.html#nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction.WikipediaRelationExtraction">[docs]</a><span class="k">class</span> <span class="nc">WikipediaRelationExtraction</span><span class="p">(</span><span class="n">RelationExtraction</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="p">:</span> <span class="n">WikipediaSearchMethod</span> <span class="o">=</span> <span class="n">WikipediaSearchMethod</span><span class="o">.</span><span class="n">ONLINE</span><span class="p">,</span>
-                 <span class="n">wiki_file</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">host</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                 <span class="n">index</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">filter_pronouns</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-                 <span class="n">filter_time_data</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">method</span><span class="p">:</span> <span class="n">WikipediaSearchMethod</span> <span class="o">=</span> <span class="n">WikipediaSearchMethod</span><span class="o">.</span><span class="n">ONLINE</span><span class="p">,</span>
+        <span class="n">wiki_file</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">host</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">port</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">index</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">filter_pronouns</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">filter_time_data</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Extract Relation between two mentions according to Wikipedia knowledge</span>
 
@@ -231,7 +239,7 @@
 <span class="sd">            port (required on Elastic mode): int the Elastic search port number</span>
 <span class="sd">            index (required on Elastic mode): int the Elastic search index name</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Loading Wikipedia module&#39;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Loading Wikipedia module&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">filter_pronouns</span> <span class="o">=</span> <span class="n">filter_pronouns</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">filter_time_data</span> <span class="o">=</span> <span class="n">filter_time_data</span>
         <span class="n">connectivity</span> <span class="o">=</span> <span class="n">method</span>
@@ -241,12 +249,14 @@
             <span class="k">if</span> <span class="n">wiki_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">wiki_file</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">pywiki_impl</span> <span class="o">=</span> <span class="n">WikiOffline</span><span class="p">(</span><span class="n">wiki_file</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="s1">&#39;Wikipedia resource file not found or not in path, &#39;</span>
-                                        <span class="s1">&#39;create it or change the initialization method&#39;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span>
+                    <span class="s2">&quot;Wikipedia resource file not found or not in path, &quot;</span>
+                    <span class="s2">&quot;create it or change the initialization method&quot;</span>
+                <span class="p">)</span>
         <span class="k">elif</span> <span class="n">connectivity</span> <span class="o">==</span> <span class="n">WikipediaSearchMethod</span><span class="o">.</span><span class="n">ELASTIC</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">pywiki_impl</span> <span class="o">=</span> <span class="n">WikiElastic</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
 
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Wikipedia module lead successfully&#39;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Wikipedia module lead successfully&quot;</span><span class="p">)</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">WikipediaRelationExtraction</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
 <div class="viewcode-block" id="WikipediaRelationExtraction.get_phrase_related_pages"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.relations.html#nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction.WikipediaRelationExtraction.get_phrase_related_pages">[docs]</a>    <span class="k">def</span> <span class="nf">get_phrase_related_pages</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mention_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">WikipediaPages</span><span class="p">:</span>
@@ -268,8 +278,9 @@
 
         <span class="k">return</span> <span class="n">ret_pages</span></div>
 
-<div class="viewcode-block" id="WikipediaRelationExtraction.extract_all_relations"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.relations.html#nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction.WikipediaRelationExtraction.extract_all_relations">[docs]</a>    <span class="k">def</span> <span class="nf">extract_all_relations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mention_x</span><span class="p">:</span> <span class="n">MentionDataLight</span><span class="p">,</span>
-                              <span class="n">mention_y</span><span class="p">:</span> <span class="n">MentionDataLight</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="n">RelationType</span><span class="p">]:</span>
+<div class="viewcode-block" id="WikipediaRelationExtraction.extract_all_relations"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.relations.html#nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction.WikipediaRelationExtraction.extract_all_relations">[docs]</a>    <span class="k">def</span> <span class="nf">extract_all_relations</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">mention_x</span><span class="p">:</span> <span class="n">MentionDataLight</span><span class="p">,</span> <span class="n">mention_y</span><span class="p">:</span> <span class="n">MentionDataLight</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="n">RelationType</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Try to find if mentions has anyone or more of the relations this class support</span>
 
@@ -310,12 +321,12 @@
             <span class="n">relations</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">RelationType</span><span class="o">.</span><span class="n">WIKIPEDIA_REDIRECT_LINK</span><span class="p">)</span>
 
         <span class="n">titles1</span> <span class="o">=</span> <span class="n">pages1</span><span class="o">.</span><span class="n">get_and_set_titles</span><span class="p">()</span>
-        <span class="n">titles1</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">mention1_str</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">mention2_str</span><span class="p">)</span>
-        <span class="n">titles1</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">mention2_str</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">mention1_str</span><span class="p">)</span>
+        <span class="n">titles1</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">mention1_str</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">mention2_str</span><span class="p">)</span>
+        <span class="n">titles1</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">mention2_str</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">mention1_str</span><span class="p">)</span>
 
         <span class="n">titles2</span> <span class="o">=</span> <span class="n">pages2</span><span class="o">.</span><span class="n">get_and_set_titles</span><span class="p">()</span>
-        <span class="n">titles2</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">mention1_str</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">mention2_str</span><span class="p">)</span>
-        <span class="n">titles2</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">mention2_str</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">mention1_str</span><span class="p">)</span>
+        <span class="n">titles2</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">mention1_str</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">mention2_str</span><span class="p">)</span>
+        <span class="n">titles2</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">mention2_str</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">mention1_str</span><span class="p">)</span>
 
         <span class="n">relation_alias</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">extract_aliases</span><span class="p">(</span><span class="n">pages1</span><span class="p">,</span> <span class="n">pages2</span><span class="p">,</span> <span class="n">titles1</span><span class="p">,</span> <span class="n">titles2</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">relation_alias</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">RelationType</span><span class="o">.</span><span class="n">NO_RELATION_FOUND</span><span class="p">:</span>
@@ -338,8 +349,9 @@
 
         <span class="k">return</span> <span class="n">relations</span></div>
 
-<div class="viewcode-block" id="WikipediaRelationExtraction.extract_sub_relations"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.relations.html#nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction.WikipediaRelationExtraction.extract_sub_relations">[docs]</a>    <span class="k">def</span> <span class="nf">extract_sub_relations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mention_x</span><span class="p">:</span> <span class="n">MentionDataLight</span><span class="p">,</span> <span class="n">mention_y</span><span class="p">:</span> <span class="n">MentionDataLight</span><span class="p">,</span>
-                              <span class="n">relation</span><span class="p">:</span> <span class="n">RelationType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RelationType</span><span class="p">:</span>
+<div class="viewcode-block" id="WikipediaRelationExtraction.extract_sub_relations"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.relations.html#nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction.WikipediaRelationExtraction.extract_sub_relations">[docs]</a>    <span class="k">def</span> <span class="nf">extract_sub_relations</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">mention_x</span><span class="p">:</span> <span class="n">MentionDataLight</span><span class="p">,</span> <span class="n">mention_y</span><span class="p">:</span> <span class="n">MentionDataLight</span><span class="p">,</span> <span class="n">relation</span><span class="p">:</span> <span class="n">RelationType</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RelationType</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check if input mentions has the given relation between them</span>
 
@@ -377,12 +389,12 @@
             <span class="k">return</span> <span class="n">RelationType</span><span class="o">.</span><span class="n">NO_RELATION_FOUND</span>
 
         <span class="n">titles1</span> <span class="o">=</span> <span class="n">pages1</span><span class="o">.</span><span class="n">get_and_set_titles</span><span class="p">()</span>
-        <span class="n">titles1</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">mention1_str</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">mention2_str</span><span class="p">)</span>
-        <span class="n">titles1</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">mention2_str</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">mention1_str</span><span class="p">)</span>
+        <span class="n">titles1</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">mention1_str</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">mention2_str</span><span class="p">)</span>
+        <span class="n">titles1</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">mention2_str</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">mention1_str</span><span class="p">)</span>
 
         <span class="n">titles2</span> <span class="o">=</span> <span class="n">pages2</span><span class="o">.</span><span class="n">get_and_set_titles</span><span class="p">()</span>
-        <span class="n">titles2</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">mention1_str</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">mention2_str</span><span class="p">)</span>
-        <span class="n">titles2</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">mention2_str</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">mention1_str</span><span class="p">)</span>
+        <span class="n">titles2</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">mention1_str</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">mention2_str</span><span class="p">)</span>
+        <span class="n">titles2</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">mention2_str</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">mention1_str</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">relation</span> <span class="o">==</span> <span class="n">RelationType</span><span class="o">.</span><span class="n">WIKIPEDIA_ALIASES</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">extract_aliases</span><span class="p">(</span><span class="n">pages1</span><span class="p">,</span> <span class="n">pages2</span><span class="p">,</span> <span class="n">titles1</span><span class="p">,</span> <span class="n">titles2</span><span class="p">)</span>
@@ -398,8 +410,9 @@
         <span class="k">return</span> <span class="n">RelationType</span><span class="o">.</span><span class="n">NO_RELATION_FOUND</span></div>
 
 <div class="viewcode-block" id="WikipediaRelationExtraction.extract_be_comp"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.relations.html#nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction.WikipediaRelationExtraction.extract_be_comp">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">extract_be_comp</span><span class="p">(</span><span class="n">pages1</span><span class="p">:</span> <span class="n">WikipediaPages</span><span class="p">,</span> <span class="n">pages2</span><span class="p">:</span> <span class="n">WikipediaPages</span><span class="p">,</span> <span class="n">titles1</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
-                        <span class="n">titles2</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">RelationType</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">extract_be_comp</span><span class="p">(</span>
+        <span class="n">pages1</span><span class="p">:</span> <span class="n">WikipediaPages</span><span class="p">,</span> <span class="n">pages2</span><span class="p">:</span> <span class="n">WikipediaPages</span><span class="p">,</span> <span class="n">titles1</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">titles2</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RelationType</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check if input mentions has be-comp/is-a relation</span>
 
@@ -420,8 +433,9 @@
         <span class="k">return</span> <span class="n">relation</span></div>
 
 <div class="viewcode-block" id="WikipediaRelationExtraction.extract_parenthesis"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.relations.html#nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction.WikipediaRelationExtraction.extract_parenthesis">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">extract_parenthesis</span><span class="p">(</span><span class="n">pages1</span><span class="p">:</span> <span class="n">WikipediaPages</span><span class="p">,</span> <span class="n">pages2</span><span class="p">:</span> <span class="n">WikipediaPages</span><span class="p">,</span> <span class="n">titles1</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
-                            <span class="n">titles2</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">RelationType</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">extract_parenthesis</span><span class="p">(</span>
+        <span class="n">pages1</span><span class="p">:</span> <span class="n">WikipediaPages</span><span class="p">,</span> <span class="n">pages2</span><span class="p">:</span> <span class="n">WikipediaPages</span><span class="p">,</span> <span class="n">titles1</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">titles2</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RelationType</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check if input mentions has parenthesis relation</span>
 
@@ -442,8 +456,9 @@
         <span class="k">return</span> <span class="n">relation</span></div>
 
 <div class="viewcode-block" id="WikipediaRelationExtraction.extract_category"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.relations.html#nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction.WikipediaRelationExtraction.extract_category">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">extract_category</span><span class="p">(</span><span class="n">pages1</span><span class="p">:</span> <span class="n">WikipediaPages</span><span class="p">,</span> <span class="n">pages2</span><span class="p">:</span> <span class="n">WikipediaPages</span><span class="p">,</span> <span class="n">titles1</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
-                         <span class="n">titles2</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">RelationType</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">extract_category</span><span class="p">(</span>
+        <span class="n">pages1</span><span class="p">:</span> <span class="n">WikipediaPages</span><span class="p">,</span> <span class="n">pages2</span><span class="p">:</span> <span class="n">WikipediaPages</span><span class="p">,</span> <span class="n">titles1</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">titles2</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RelationType</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check if input mentions has category relation</span>
 
@@ -464,8 +479,9 @@
         <span class="k">return</span> <span class="n">relation</span></div>
 
 <div class="viewcode-block" id="WikipediaRelationExtraction.extract_disambig"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.relations.html#nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction.WikipediaRelationExtraction.extract_disambig">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">extract_disambig</span><span class="p">(</span><span class="n">pages1</span><span class="p">:</span> <span class="n">WikipediaPages</span><span class="p">,</span> <span class="n">pages2</span><span class="p">:</span> <span class="n">WikipediaPages</span><span class="p">,</span> <span class="n">titles1</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
-                         <span class="n">titles2</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">RelationType</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">extract_disambig</span><span class="p">(</span>
+        <span class="n">pages1</span><span class="p">:</span> <span class="n">WikipediaPages</span><span class="p">,</span> <span class="n">pages2</span><span class="p">:</span> <span class="n">WikipediaPages</span><span class="p">,</span> <span class="n">titles1</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">titles2</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RelationType</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check if input mentions has disambiguation relation</span>
 
@@ -486,8 +502,9 @@
         <span class="k">return</span> <span class="n">relation</span></div>
 
 <div class="viewcode-block" id="WikipediaRelationExtraction.extract_aliases"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.relations.html#nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction.WikipediaRelationExtraction.extract_aliases">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">extract_aliases</span><span class="p">(</span><span class="n">pages1</span><span class="p">:</span> <span class="n">WikipediaPages</span><span class="p">,</span> <span class="n">pages2</span><span class="p">:</span> <span class="n">WikipediaPages</span><span class="p">,</span> <span class="n">titles1</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
-                        <span class="n">titles2</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">RelationType</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">extract_aliases</span><span class="p">(</span>
+        <span class="n">pages1</span><span class="p">:</span> <span class="n">WikipediaPages</span><span class="p">,</span> <span class="n">pages2</span><span class="p">:</span> <span class="n">WikipediaPages</span><span class="p">,</span> <span class="n">titles1</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">titles2</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RelationType</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check if input mentions has aliases relation</span>
 
@@ -520,7 +537,7 @@
         <span class="k">for</span> <span class="n">page1</span> <span class="ow">in</span> <span class="n">pages1</span><span class="o">.</span><span class="n">pages</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">page2</span> <span class="ow">in</span> <span class="n">pages2</span><span class="o">.</span><span class="n">pages</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">page1</span><span class="o">.</span><span class="n">relations</span><span class="o">.</span><span class="n">is_part_name</span> <span class="ow">and</span> <span class="n">page2</span><span class="o">.</span><span class="n">relations</span><span class="o">.</span><span class="n">is_part_name</span><span class="p">:</span>
-                    <span class="n">pages</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pywiki_impl</span><span class="o">.</span><span class="n">get_pages</span><span class="p">(</span><span class="n">page1</span><span class="o">.</span><span class="n">orig_phrase</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">page2</span><span class="o">.</span><span class="n">orig_phrase</span><span class="p">)</span>
+                    <span class="n">pages</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pywiki_impl</span><span class="o">.</span><span class="n">get_pages</span><span class="p">(</span><span class="n">page1</span><span class="o">.</span><span class="n">orig_phrase</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">page2</span><span class="o">.</span><span class="n">orig_phrase</span><span class="p">)</span>
                     <span class="k">for</span> <span class="n">page</span> <span class="ow">in</span> <span class="n">pages</span><span class="p">:</span>
                         <span class="k">if</span> <span class="n">page</span><span class="o">.</span><span class="n">page_result</span><span class="o">.</span><span class="n">pageid</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
                             <span class="k">return</span> <span class="kc">True</span>
@@ -553,10 +570,15 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            List[RelationType]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">RelationType</span><span class="o">.</span><span class="n">WIKIPEDIA_BE_COMP</span><span class="p">,</span> <span class="n">RelationType</span><span class="o">.</span><span class="n">WIKIPEDIA_TITLE_PARENTHESIS</span><span class="p">,</span>
-                <span class="n">RelationType</span><span class="o">.</span><span class="n">WIKIPEDIA_DISAMBIGUATION</span><span class="p">,</span> <span class="n">RelationType</span><span class="o">.</span><span class="n">WIKIPEDIA_CATEGORY</span><span class="p">,</span>
-                <span class="n">RelationType</span><span class="o">.</span><span class="n">WIKIPEDIA_REDIRECT_LINK</span><span class="p">,</span> <span class="n">RelationType</span><span class="o">.</span><span class="n">WIKIPEDIA_ALIASES</span><span class="p">,</span>
-                <span class="n">RelationType</span><span class="o">.</span><span class="n">WIKIPEDIA_PART_OF_SAME_NAME</span><span class="p">]</span></div>
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="n">RelationType</span><span class="o">.</span><span class="n">WIKIPEDIA_BE_COMP</span><span class="p">,</span>
+            <span class="n">RelationType</span><span class="o">.</span><span class="n">WIKIPEDIA_TITLE_PARENTHESIS</span><span class="p">,</span>
+            <span class="n">RelationType</span><span class="o">.</span><span class="n">WIKIPEDIA_DISAMBIGUATION</span><span class="p">,</span>
+            <span class="n">RelationType</span><span class="o">.</span><span class="n">WIKIPEDIA_CATEGORY</span><span class="p">,</span>
+            <span class="n">RelationType</span><span class="o">.</span><span class="n">WIKIPEDIA_REDIRECT_LINK</span><span class="p">,</span>
+            <span class="n">RelationType</span><span class="o">.</span><span class="n">WIKIPEDIA_ALIASES</span><span class="p">,</span>
+            <span class="n">RelationType</span><span class="o">.</span><span class="n">WIKIPEDIA_PART_OF_SAME_NAME</span><span class="p">,</span>
+        <span class="p">]</span></div>
 
 <div class="viewcode-block" id="WikipediaRelationExtraction.is_both_opposite_personal_pronouns"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.relations.html#nlp_architect.data.cdc_resources.relations.wikipedia_relation_extraction.WikipediaRelationExtraction.is_both_opposite_personal_pronouns">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">is_both_opposite_personal_pronouns</span><span class="p">(</span><span class="n">phrase1</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">phrase2</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
@@ -588,8 +610,8 @@
         <span class="k">if</span> <span class="n">mention2_ner</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">mention2_ner</span> <span class="o">=</span> <span class="n">StringUtils</span><span class="o">.</span><span class="n">find_head_lemma_pos_ner</span><span class="p">(</span><span class="n">mention2</span><span class="o">.</span><span class="n">tokens_str</span><span class="p">)</span>
 
-        <span class="n">is1_time_or_data</span> <span class="o">=</span> <span class="s1">&#39;DATE&#39;</span> <span class="ow">in</span> <span class="n">mention1_ner</span> <span class="ow">or</span> <span class="s1">&#39;TIME&#39;</span> <span class="ow">in</span> <span class="n">mention1_ner</span>
-        <span class="n">is2_time_or_data</span> <span class="o">=</span> <span class="s1">&#39;DATE&#39;</span> <span class="ow">in</span> <span class="n">mention2_ner</span> <span class="ow">or</span> <span class="s1">&#39;TIME&#39;</span> <span class="ow">in</span> <span class="n">mention2_ner</span>
+        <span class="n">is1_time_or_data</span> <span class="o">=</span> <span class="s2">&quot;DATE&quot;</span> <span class="ow">in</span> <span class="n">mention1_ner</span> <span class="ow">or</span> <span class="s2">&quot;TIME&quot;</span> <span class="ow">in</span> <span class="n">mention1_ner</span>
+        <span class="n">is2_time_or_data</span> <span class="o">=</span> <span class="s2">&quot;DATE&quot;</span> <span class="ow">in</span> <span class="n">mention2_ner</span> <span class="ow">or</span> <span class="s2">&quot;TIME&quot;</span> <span class="ow">in</span> <span class="n">mention2_ner</span>
 
         <span class="n">result</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">if</span> <span class="n">is1_time_or_data</span> <span class="ow">and</span> <span class="n">is2_time_or_data</span><span class="p">:</span>

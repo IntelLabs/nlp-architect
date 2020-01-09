@@ -59,12 +59,20 @@ Reports
 Usage
 =====
 
+Requirements
+------------
+Install solution extra packages:
+
+.. code:: python
+
+  pip install -r solutions/trend_analysis/requirements.txt
+
 First stage
 -----------
 
 .. code:: python
 
-    usage: python -m nlp_architect.solutions.trend_analysis.topic_extraction [-h] [--notrain] [--url] [--single_thread]
+    usage: python solutions/trend_analysis/topic_extraction.py [-h] [--notrain] [--url] [--single_thread]
                                target_corpus ref_corpus
 
     positional arguments:
@@ -86,7 +94,7 @@ Second stage
 
 .. code:: python
 
-    usage: python -m nlp_architect.solutions.trend_analysis.trend_analysis [-h] [--top_n TOP_N] [--top_vectors TOP_VECTORS]
+    usage: python solutions/trend_analysis/trend_analysis.py [-h] [--top_n TOP_N] [--top_vectors TOP_VECTORS]
                          target_topics ref_topics
 
     positional arguments:
@@ -114,14 +122,14 @@ In order to visualize the analysis results run:
 
 .. code:: python
 
-    python -m nlp_architect.solutions.start_ui --solution trend_analysis
+    python solutions/start_ui.py --solution trend_analysis
 
 
 You can also load the UI as a server using --address and --port, for example:
 
 .. code:: python
 
-    python -m nlp_architect.solutions.start_ui --solution trend_analysis --address=12.13.14.15 --port=1010
+    python solutions/start_ui.py --solution trend_analysis --address=12.13.14.15 --port=1010
 
 and then access it through a browser: http://12.13.14.15:1010/ui
 

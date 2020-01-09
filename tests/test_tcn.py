@@ -38,12 +38,14 @@ def test_tcn_adding():
 
     adding_dataset = Adding(seq_len=seq_len, n_train=n_train, n_test=n_val)
 
-    model = TCNForAdding(seq_len, n_features, hidden_sizes, kernel_size=kernel_size,
-                         dropout=dropout)
+    model = TCNForAdding(
+        seq_len, n_features, hidden_sizes, kernel_size=kernel_size, dropout=dropout
+    )
 
     model.build_train_graph(lr, max_gradient_norm=grad_clip_value)
 
-    training_loss = model.run(adding_dataset, num_iterations=num_iterations, log_interval=1e6,
-                              result_dir=results_dir)
+    training_loss = model.run(
+        adding_dataset, num_iterations=num_iterations, log_interval=1e6, result_dir=results_dir
+    )
 
     assert training_loss < 1e-3

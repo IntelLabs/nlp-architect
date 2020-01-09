@@ -1,6 +1,6 @@
 <p align="center">
     <br>
-    <img src="https://raw.githubusercontent.com/NervanaSystems/nlp-architect/master/assets/nlp_architect_logo.png" width="400"/>
+    <img src="https://raw.githubusercontent.com/NervanaSystems/nlp-architect/master/docs-source/source/assets/nlp_architect_logo_trans.png" width="400"/>
     <br>
 <p>
 <h2 align="center">
@@ -61,7 +61,7 @@ We recommend to install NLP Architect in a new python environment, to use python
 
 ### Install using `pip`
 
-Includes only core library (for examples, tutorials and the rest clone the repo)
+Install core library only
 
 ```sh
 pip install nlp-architect
@@ -69,11 +69,22 @@ pip install nlp-architect
 
 ### Install from source (Github)
 
+Includes core library, examples, solutions and tutorials:
+
 ```sh
 git clone https://github.com/NervanaSystems/nlp-architect.git
 cd nlp-architect
 pip install -e .  # install in developer mode
 ```
+
+### Running Examples and Solutions
+
+To run provided examples and solutions please install the library with `[all]` flag which will install extra packages required. (requires installation from source)
+
+```sh
+pip install .[all]
+```
+
 
 ## Models
 

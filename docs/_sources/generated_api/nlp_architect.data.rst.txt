@@ -11,22 +11,6 @@ Subpackages
 Submodules
 ----------
 
-nlp\_architect.data.amazon\_reviews module
-------------------------------------------
-
-.. automodule:: nlp_architect.data.amazon_reviews
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-nlp\_architect.data.babi\_dialog module
----------------------------------------
-
-.. automodule:: nlp_architect.data.babi_dialog
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 nlp\_architect.data.conll module
 --------------------------------
 

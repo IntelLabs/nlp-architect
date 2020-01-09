@@ -42,8 +42,7 @@ def download_unlicensed_file(url, sourcefile, destfile, totalsz=None):
         destfile (str): save path
         totalsz (:obj:`int`, optional): total size of file
     """
-    req = requests.get(posixpath.join(url, sourcefile),
-                       stream=True)
+    req = requests.get(posixpath.join(url, sourcefile), stream=True)
 
     chunksz = 1024 ** 2
     if totalsz is None:
@@ -57,13 +56,13 @@ def download_unlicensed_file(url, sourcefile, destfile, totalsz=None):
         nchunks = totalsz // chunksz
 
     print("Downloading file to: {}".format(destfile))
-    with open(destfile, 'wb') as f:
+    with open(destfile, "wb") as f:
         for data in tqdm(req.iter_content(chunksz), total=nchunks, unit="MB", file=sys.stdout):
             f.write(data)
     print("Download Complete")
 
 
-def uncompress_file(filepath: str or os.PathLike, outpath='.'):
+def uncompress_file(filepath: str or os.PathLike, outpath="."):
     """
     Unzip a file to the same location of filepath
     uses decompressing algorithm by file extension
@@ -73,19 +72,19 @@ def uncompress_file(filepath: str or os.PathLike, outpath='.'):
         outpath (str): path to extract to
     """
     filepath = str(filepath)
-    if filepath.endswith('.gz'):
+    if filepath.endswith(".gz"):
         if os.path.isdir(outpath):
-            raise ValueError('output path for gzip must be a file')
-        with gzip.open(filepath, 'rb') as fp:
+            raise ValueError("output path for gzip must be a file")
+        with gzip.open(filepath, "rb") as fp:
             file_content = fp.read()
-        with open(outpath, 'wb') as fp:
+        with open(outpath, "wb") as fp:
             fp.write(file_content)
         return None
     # To unzip zipped model files having SHA-encoded etag and url as filename
     # raise ValueError('Unsupported archive provided. Method supports only .zip/.gz files.')
     with zipfile.ZipFile(filepath) as z:
         z.extractall(outpath)
-        return [x for x in z.namelist() if not (x.startswith('__MACOSX') or x.endswith('/'))]
+        return [x for x in z.namelist() if not (x.startswith("__MACOSX") or x.endswith("/"))]
 
 
 def zipfile_list(filepath: str or os.PathLike):
@@ -99,7 +98,7 @@ def zipfile_list(filepath: str or os.PathLike):
         String list of filenames
     """
     with zipfile.ZipFile(filepath) as z:
-        return [x for x in z.namelist() if not (x.startswith('__MACOSX') or x.endswith('/'))]
+        return [x for x in z.namelist() if not (x.startswith("__MACOSX") or x.endswith("/"))]
 
 
 def gzip_str(g_str):
@@ -113,7 +112,7 @@ def gzip_str(g_str):
         GZIP bytes data
     """
     compressed_str = io.BytesIO()
-    with gzip.GzipFile(fileobj=compressed_str, mode='w') as file_out:
+    with gzip.GzipFile(fileobj=compressed_str, mode="w") as file_out:
         file_out.write((json.dumps(g_str).encode()))
     bytes_obj = compressed_str.getvalue()
     return bytes_obj
@@ -135,10 +134,10 @@ def walk_directory(directory, verbose=False):
     for dir_path, _, filenames in os.walk(directory):
         for filename in filenames:
             file_path = os.path.join(dir_path, filename)
-            if os.path.isfile(file_path) and not filename.startswith('.'):
-                with io.open(file_path, 'r', encoding='utf-8') as file:
+            if os.path.isfile(file_path) and not filename.startswith("."):
+                with io.open(file_path, "r", encoding="utf-8") as file:
                     if verbose:
-                        print('Reading {}'.format(filename))
+                        print("Reading {}".format(filename))
                     doc_text = file.read()
                     yield filename, doc_text
 
@@ -161,21 +160,21 @@ def validate(*args):
         arg_val = arg[0]
         arg_type = (arg[1],) if isinstance(arg[1], type) else arg[1]
         if not isinstance(arg_val, arg_type):
-            raise TypeError('Expected type {}'.format(' or '.join([t.__name__ for t in arg_type])))
+            raise TypeError("Expected type {}".format(" or ".join([t.__name__ for t in arg_type])))
         if arg_val is not None and len(arg) >= 4:
-            name = 'of ' + arg[4] if len(arg) == 5 else ''
+            name = "of " + arg[4] if len(arg) == 5 else ""
             arg_min = arg[2]
             arg_max = arg[3]
-            if hasattr(arg_val, '__len__'):
-                val = 'Length'
+            if hasattr(arg_val, "__len__"):
+                val = "Length"
                 num = len(arg_val)
             else:
-                val = 'Value'
+                val = "Value"
                 num = arg_val
             if arg_min is not None and num < arg_min:
-                raise ValueError('{} {} must be greater or equal to {}'.format(val, name, arg_min))
+                raise ValueError("{} {} must be greater or equal to {}".format(val, name, arg_min))
             if arg_max is not None and num >= arg_max:
-                raise ValueError('{} {} must be less than {}'.format(val, name, arg_max))
+                raise ValueError("{} {} must be less than {}".format(val, name, arg_max))
 
 
 def validate_existing_filepath(arg):
@@ -245,7 +244,7 @@ def valid_path_append(path, *args):
 
 
 def sanitize_path(path):
-    s_path = os.path.normpath('/' + path).lstrip('/')
+    s_path = os.path.normpath("/" + path).lstrip("/")
     assert len(s_path) < 255
     return s_path
 
@@ -271,12 +270,14 @@ def check_size(min_size=None, max_size=None):
 def validate_proxy_path(arg):
     """Validates an input argument is a valid proxy path or None"""
     proxy_validation_regex = re.compile(
-        r'^(?:http|ftp)s?://'  # http:// or https://
-        r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|'
-        r'localhost|'  # localhost...
-        r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})'  # ...or ip
-        r'(?::\d+)?'  # optional port
-        r'(?:/?|[/?]\S+)$', re.IGNORECASE)
+        r"^(?:http|ftp)s?://"  # http:// or https://
+        r"(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|"
+        r"localhost|"  # localhost...
+        r"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})"  # ...or ip
+        r"(?::\d+)?"  # optional port
+        r"(?:/?|[/?]\S+)$",
+        re.IGNORECASE,
+    )
     if arg is not None and re.match(proxy_validation_regex, arg) is None:
         raise ValueError("{0} is not a valid proxy path".format(arg))
     return arg
@@ -284,8 +285,8 @@ def validate_proxy_path(arg):
 
 def validate_boolean(arg):
     """Validates an input argument of type boolean"""
-    if arg.lower() not in ['true', 'false']:
-        raise argparse.ArgumentTypeError('expected true | false argument')
+    if arg.lower() not in ["true", "false"]:
+        raise argparse.ArgumentTypeError("expected true | false argument")
     return arg.lower() == "true"
 
 
@@ -296,9 +297,9 @@ def load_json_file(file_path):
             return json.load(small_file)
     except OSError as e:
         print(e)
-        print('trying to read file in blocks')
+        print("trying to read file in blocks")
         with open(file_path) as big_file:
-            json_string = ''
+            json_string = ""
             while True:
                 block = big_file.read(64 * (1 << 20))  # Read 64 MB at a time;
                 json_string = json_string + block
@@ -315,14 +316,17 @@ def json_dumper(obj):
         return obj.__dict__
 
 
-def load_files_from_path(dir_path, extension='txt'):
+def load_files_from_path(dir_path, extension="txt"):
     """load all files from given directory (with given extension)"""
-    files = [os.path.join(dir_path, f) for f in os.listdir(dir_path)
-             if os.path.isfile(os.path.join(dir_path, f)) and f.endswith(extension)]
+    files = [
+        os.path.join(dir_path, f)
+        for f in os.listdir(dir_path)
+        if os.path.isfile(os.path.join(dir_path, f)) and f.endswith(extension)
+    ]
     files_data = []
     for f in files:
         with open(f) as fp:
-            files_data.append(' '.join(map(str.strip, fp.readlines())))
+            files_data.append(" ".join(map(str.strip, fp.readlines())))
     return files_data
 
 
@@ -332,8 +336,9 @@ def create_folder(path):
             os.makedirs(path)
 
 
-def download_unzip(url: str, sourcefile: str, unzipped_path: str or PathLike,
-                   license_msg: str = None):
+def download_unzip(
+    url: str, sourcefile: str, unzipped_path: str or PathLike, license_msg: str = None
+):
     """Downloads a zip file, extracts it to destination, deletes the zip file. If license_msg is
     supplied, user is prompted for download confirmation."""
     dest_parent = Path(unzipped_path).parent
@@ -343,7 +348,7 @@ def download_unzip(url: str, sourcefile: str, unzipped_path: str or PathLike,
             zip_path = dest_parent / sourcefile
             makedirs(dest_parent, exist_ok=True)
             download_unlicensed_file(url, sourcefile, zip_path)
-            print('Unzipping...')
+            print("Unzipping...")
             uncompress_file(zip_path, dest_parent)
             remove(zip_path)
     return unzipped_path
@@ -352,7 +357,7 @@ def download_unzip(url: str, sourcefile: str, unzipped_path: str or PathLike,
 def line_count(file):
     """Utility function for getting number of lines in a text file."""
     count = 0
-    with open(file, encoding='utf-8') as f:
+    with open(file, encoding="utf-8") as f:
         for _ in f:
             count += 1
     return count
@@ -361,11 +366,10 @@ def line_count(file):
 def prepare_output_path(output_dir: str, overwrite_output_dir: str):
     """Create output directory or throw error if exists and overwrite_output_dir is false
     """
-    if os.path.exists(output_dir) and\
-        os.listdir(output_dir) and\
-            not overwrite_output_dir:
+    if os.path.exists(output_dir) and os.listdir(output_dir) and not overwrite_output_dir:
         raise ValueError(
             "Output directory ({}) already exists and is not empty. Use --overwrite_output_dir "
-            "to overcome.".format(output_dir))
+            "to overcome.".format(output_dir)
+        )
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)

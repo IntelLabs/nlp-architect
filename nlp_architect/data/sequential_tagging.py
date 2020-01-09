@@ -14,8 +14,7 @@
 # limitations under the License.
 # ******************************************************************************
 
-from __future__ import (absolute_import, division, print_function,
-                        unicode_literals)
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import logging
 import os
@@ -24,14 +23,14 @@ from typing import List
 
 import numpy as np
 
-from nlp_architect.data.utils import (DataProcessor, InputExample,
-                                      read_column_tagged_file)
+from nlp_architect.data.utils import DataProcessor, InputExample, read_column_tagged_file
 from nlp_architect.utils.generic import pad_sentences
-from nlp_architect.utils.io import (validate_existing_directory,
-                                    validate_existing_filepath)
-from nlp_architect.utils.text import (character_vector_generator,
-                                      read_sequential_tagging_file,
-                                      word_vector_generator)
+from nlp_architect.utils.io import validate_existing_directory, validate_existing_filepath
+from nlp_architect.utils.text import (
+    character_vector_generator,
+    read_sequential_tagging_file,
+    word_vector_generator,
+)
 from nlp_architect.utils.text import Vocabulary
 
 logger = logging.getLogger(__name__)
@@ -50,33 +49,27 @@ class SequentialTaggingDataset(object):
         tag_field_no (int, optional): index of column to use a y-samples
     """
 
-    def __init__(self,
-                 train_file,
-                 test_file,
-                 max_sentence_length=30,
-                 max_word_length=20,
-                 tag_field_no=2):
-        self.files = {'train': train_file,
-                      'test': test_file}
+    def __init__(
+        self, train_file, test_file, max_sentence_length=30, max_word_length=20, tag_field_no=2
+    ):
+        self.files = {"train": train_file, "test": test_file}
         self.max_sent_len = max_sentence_length
         self.max_word_len = max_word_length
         self.tf = tag_field_no
 
-        self.vocabs = {'token': None,
-                       'char': None,   # 0=pad, 1=unk
-                       'tag': None}    # 0=pad
+        self.vocabs = {"token": None, "char": None, "tag": None}  # 0=pad, 1=unk  # 0=pad
 
         self.data = {}
 
-        sentences = self._read_file(self.files['train'])
+        sentences = self._read_file(self.files["train"])
         train_size = len(sentences)
-        sentences += self._read_file(self.files['test'])
+        sentences += self._read_file(self.files["test"])
         test_size = len(sentences) - train_size
         texts, tags = list(zip(*sentences))
 
-        texts_mat, self.vocabs['token'] = word_vector_generator(texts, lower=True, start=2)
-        tags_mat, self.vocabs['tag'] = word_vector_generator(tags, start=1)
-        chars_mat, self.vocabs['char'] = character_vector_generator(texts, start=2)
+        texts_mat, self.vocabs["token"] = word_vector_generator(texts, lower=True, start=2)
+        tags_mat, self.vocabs["tag"] = word_vector_generator(tags, start=1)
+        chars_mat, self.vocabs["char"] = character_vector_generator(texts, start=2)
 
         texts_mat = pad_sentences(texts_mat, max_length=self.max_sent_len)
         tags_mat = pad_sentences(tags_mat, max_length=self.max_sent_len)
@@ -84,50 +77,50 @@ class SequentialTaggingDataset(object):
         chars_mat = [pad_sentences(d, max_length=self.max_word_len) for d in chars_mat]
         zeros = np.zeros((len(chars_mat), self.max_sent_len, self.max_word_len))
         for idx, d in enumerate(chars_mat):
-            d = d[:self.max_sent_len]
-            zeros[idx, :d.shape[0]] = d
+            d = d[: self.max_sent_len]
+            zeros[idx, : d.shape[0]] = d
         chars_mat = zeros.astype(dtype=np.int32)
 
-        self.data['train'] = texts_mat[:train_size], chars_mat[:train_size], tags_mat[:train_size]
-        self.data['test'] = texts_mat[-test_size:], chars_mat[-test_size:], tags_mat[-test_size:]
+        self.data["train"] = texts_mat[:train_size], chars_mat[:train_size], tags_mat[:train_size]
+        self.data["test"] = texts_mat[-test_size:], chars_mat[-test_size:], tags_mat[-test_size:]
 
     @property
     def y_labels(self):
         """return y labels"""
-        return self.vocabs['tag']
+        return self.vocabs["tag"]
 
     @property
     def word_vocab(self):
         """words vocabulary"""
-        return self.vocabs['token']
+        return self.vocabs["token"]
 
     @property
     def char_vocab(self):
         """characters vocabulary"""
-        return self.vocabs['char']
+        return self.vocabs["char"]
 
     @property
     def word_vocab_size(self):
         """word vocabulary size"""
-        return len(self.vocabs['token']) + 2
+        return len(self.vocabs["token"]) + 2
 
     @property
     def char_vocab_size(self):
         """character vocabulary size"""
-        return len(self.vocabs['char']) + 2
+        return len(self.vocabs["char"]) + 2
 
     @property
     def train_set(self):
         """Get the train set"""
-        return self.data['train']
+        return self.data["train"]
 
     @property
     def test_set(self):
         """Get the test set"""
-        return self.data['test']
+        return self.data["test"]
 
     def _read_file(self, filepath):
-        with open(filepath, encoding='utf-8') as fp:
+        with open(filepath, encoding="utf-8") as fp:
             data = fp.readlines()
             data = [d.strip() for d in data]
             sentences = self._split_into_sentences(data)
@@ -139,9 +132,9 @@ class SequentialTaggingDataset(object):
         tags = []
         for line in sentence:
             fields = line.split()
-            assert len(fields) >= self.tf, 'tag field exceeds number of fields'
-            if 'CD' in fields[1]:
-                tokens.append('0')
+            assert len(fields) >= self.tf, "tag field exceeds number of fields"
+            if "CD" in fields[1]:
+                tokens.append("0")
             else:
                 tokens.append(fields[0])
             tags.append(fields[self.tf - 1])
@@ -176,25 +169,23 @@ class CONLL2000(object):
             lowercase (bool, optional): lower case sentence words
         """
 
-    dataset_files = {'train': 'train.txt',
-                     'test': 'test.txt'}
+    dataset_files = {"train": "train.txt", "test": "test.txt"}
 
-    def __init__(self,
-                 data_path,
-                 sentence_length=None,
-                 max_word_length=None,
-                 extract_chars=False,
-                 lowercase=True):
+    def __init__(
+        self,
+        data_path,
+        sentence_length=None,
+        max_word_length=None,
+        extract_chars=False,
+        lowercase=True,
+    ):
         self._validate_paths(data_path)
         self.data_path = data_path
         self.sentence_length = sentence_length
         self.use_chars = extract_chars
         self.max_word_length = max_word_length
         self.lower = lowercase
-        self.vocabs = {'word': None,
-                       'char': None,
-                       'pos': None,
-                       'chunk': None}
+        self.vocabs = {"word": None, "char": None, "pos": None, "chunk": None}
         self._data_dict = {}
 
     def _validate_paths(self, data_path):
@@ -209,8 +200,8 @@ class CONLL2000(object):
         open files and parse
         return format: list of 3-tuples (word list, POS list, chunk list)
         """
-        train_set = read_sequential_tagging_file(self.dataset_files['train'])
-        test_set = read_sequential_tagging_file(self.dataset_files['test'])
+        train_set = read_sequential_tagging_file(self.dataset_files["train"])
+        test_set = read_sequential_tagging_file(self.dataset_files["test"])
         train_data = [list(zip(*x)) for x in train_set]
         test_data = [list(zip(*x)) for x in test_set]
         return train_data, test_data
@@ -218,16 +209,16 @@ class CONLL2000(object):
     @property
     def train_set(self):
         """get the train set"""
-        if self._data_dict.get('train', None) is None:
+        if self._data_dict.get("train", None) is None:
             self._gen_data()
-        return self._data_dict.get('train')
+        return self._data_dict.get("train")
 
     @property
     def test_set(self):
         """get the test set"""
-        if self._data_dict.get('test', None) is None:
+        if self._data_dict.get("test", None) is None:
             self._gen_data()
-        return self._data_dict.get('test')
+        return self._data_dict.get("test")
 
     @staticmethod
     def _extract(x, y, n):
@@ -236,22 +227,22 @@ class CONLL2000(object):
     @property
     def word_vocab(self):
         """word Vocabulary"""
-        return self.vocabs['word']
+        return self.vocabs["word"]
 
     @property
     def char_vocab(self):
         """character Vocabulary"""
-        return self.vocabs['char']
+        return self.vocabs["char"]
 
     @property
     def pos_vocab(self):
         """pos label Vocabulary"""
-        return self.vocabs['pos']
+        return self.vocabs["pos"]
 
     @property
     def chunk_vocab(self):
         """chunk label Vocabulary"""
-        return self.vocabs['chunk']
+        return self.vocabs["chunk"]
 
     def _gen_data(self):
         train, test = self._load_data()
@@ -263,30 +254,37 @@ class CONLL2000(object):
         sentence_vecs, word_vocab = word_vector_generator(sentences, self.lower, 2)
         pos_vecs, pos_vocab = word_vector_generator(pos_tags, start=1)
         chunk_vecs, chunk_vocab = word_vector_generator(chunk_tags, start=1)
-        self.vocabs = {'word': word_vocab,  # 0=pad, 1=unk
-                       'pos': pos_vocab,  # 0=pad, 1=unk
-                       'chunk': chunk_vocab}  # 0=pad
+        self.vocabs = {
+            "word": word_vocab,  # 0=pad, 1=unk
+            "pos": pos_vocab,  # 0=pad, 1=unk
+            "chunk": chunk_vocab,
+        }  # 0=pad
         if self.sentence_length is not None:
             sentence_vecs = pad_sentences(sentence_vecs, max_length=self.sentence_length)
             chunk_vecs = pad_sentences(chunk_vecs, max_length=self.sentence_length)
             pos_vecs = pad_sentences(pos_vecs, max_length=self.sentence_length)
-        self._data_dict['train'] = sentence_vecs[:train_size], pos_vecs[:train_size], \
-            chunk_vecs[:train_size]
-        self._data_dict['test'] = sentence_vecs[-test_size:], pos_vecs[-test_size:], \
-            chunk_vecs[-test_size:]
+        self._data_dict["train"] = (
+            sentence_vecs[:train_size],
+            pos_vecs[:train_size],
+            chunk_vecs[:train_size],
+        )
+        self._data_dict["test"] = (
+            sentence_vecs[-test_size:],
+            pos_vecs[-test_size:],
+            chunk_vecs[-test_size:],
+        )
         if self.use_chars:
             chars_vecs, char_vocab = character_vector_generator(sentences, start=2)
-            self.vocabs.update({'char': char_vocab})  # 0=pad, 1=unk
+            self.vocabs.update({"char": char_vocab})  # 0=pad, 1=unk
             if self.max_word_length is not None:
-                chars_vecs = [pad_sentences(d, max_length=self.max_word_length)
-                              for d in chars_vecs]
+                chars_vecs = [pad_sentences(d, max_length=self.max_word_length) for d in chars_vecs]
                 zeros = np.zeros((len(chars_vecs), self.sentence_length, self.max_word_length))
                 for idx, d in enumerate(chars_vecs):
-                    d = d[:self.sentence_length]
-                    zeros[idx, -d.shape[0]:] = d
+                    d = d[: self.sentence_length]
+                    zeros[idx, -d.shape[0] :] = d
                 chars_vecs = zeros.astype(dtype=np.int32)
-            self._data_dict['train'] += (chars_vecs[:train_size],)
-            self._data_dict['test'] += (chars_vecs[-test_size:],)
+            self._data_dict["train"] += (chars_vecs[:train_size],)
+            self._data_dict["test"] += (chars_vecs[-test_size:],)
 
 
 class TokenClsInputExample(InputExample):
@@ -320,11 +318,16 @@ class TokenClsProcessor(DataProcessor):
 
     def _read_examples(self, data_dir, file_name, set_name):
         if not os.path.exists(data_dir + os.sep + file_name):
-            logger.error("Requested file {} in path {} for TokenClsProcess not found".format(
-                file_name, data_dir))
+            logger.error(
+                "Requested file {} in path {} for TokenClsProcess not found".format(
+                    file_name, data_dir
+                )
+            )
             return None
-        return self._create_examples(read_column_tagged_file(os.path.join(data_dir, file_name),
-                                                             tag_col=self.tag_col), set_name)
+        return self._create_examples(
+            read_column_tagged_file(os.path.join(data_dir, file_name), tag_col=self.tag_col),
+            set_name,
+        )
 
     def get_train_examples(self, filename="train.txt"):
         return self._read_examples(self.data_dir, filename, "train")
@@ -361,9 +364,10 @@ class TokenClsProcessor(DataProcessor):
         examples = []
         for i, (sentence, labels) in enumerate(lines):
             guid = "%s-%s" % (set_type, i)
-            text = ' '.join(sentence)
-            examples.append(TokenClsInputExample(guid=guid, text=text,
-                                                 tokens=sentence, label=labels))
+            text = " ".join(sentence)
+            examples.append(
+                TokenClsInputExample(guid=guid, text=text, tokens=sentence, label=labels)
+            )
         return examples
 
     def get_vocabulary(self):

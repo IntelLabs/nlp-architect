@@ -127,8 +127,6 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.data.amazon_reviews">nlp_architect.data.amazon_reviews module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.data.babi_dialog">nlp_architect.data.babi_dialog module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.data.conll">nlp_architect.data.conll module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.data.fasttext_emb">nlp_architect.data.fasttext_emb module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.data.glue_tasks">nlp_architect.data.glue_tasks module</a></li>
@@ -145,7 +143,6 @@
 <li class="toctree-l2"><a class="reference internal" href="nlp_architect.nn.html">nlp_architect.nn package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nlp_architect.pipelines.html">nlp_architect.pipelines package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nlp_architect.procedures.html">nlp_architect.procedures package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nlp_architect.solutions.html">nlp_architect.solutions package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nlp_architect.utils.html">nlp_architect.utils package</a></li>
 </ul>
 </li>
@@ -302,410 +299,6 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-nlp_architect.data.amazon_reviews">
-<span id="nlp-architect-data-amazon-reviews-module"></span><h2>nlp_architect.data.amazon_reviews module<a class="headerlink" href="#module-nlp_architect.data.amazon_reviews" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="nlp_architect.data.amazon_reviews.Amazon_Reviews">
-<em class="property">class </em><code class="descclassname">nlp_architect.data.amazon_reviews.</code><code class="descname">Amazon_Reviews</code><span class="sig-paren">(</span><em>review_file</em>, <em>run_balance=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/amazon_reviews.html#Amazon_Reviews"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.amazon_reviews.Amazon_Reviews" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Take the <a href="#id1"><span class="problematic" id="id2">*</span></a>.json file of Amazon reviews as downloaded from
-<a class="reference external" href="http://jmcauley.ucsd.edu/data/amazon/">http://jmcauley.ucsd.edu/data/amazon/</a>
-Then does data cleaning and balancing, as well as transforms the reviews 1-5 to a sentiment</p>
-<dl class="method">
-<dt id="nlp_architect.data.amazon_reviews.Amazon_Reviews.process">
-<code class="descname">process</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/amazon_reviews.html#Amazon_Reviews.process"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.amazon_reviews.Amazon_Reviews.process" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="function">
-<dt id="nlp_architect.data.amazon_reviews.review_to_sentiment">
-<code class="descclassname">nlp_architect.data.amazon_reviews.</code><code class="descname">review_to_sentiment</code><span class="sig-paren">(</span><em>review</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/amazon_reviews.html#review_to_sentiment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.amazon_reviews.review_to_sentiment" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</div>
-<div class="section" id="module-nlp_architect.data.babi_dialog">
-<span id="nlp-architect-data-babi-dialog-module"></span><h2>nlp_architect.data.babi_dialog module<a class="headerlink" href="#module-nlp_architect.data.babi_dialog" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="nlp_architect.data.babi_dialog.BABI_Dialog">
-<em class="property">class </em><code class="descclassname">nlp_architect.data.babi_dialog.</code><code class="descname">BABI_Dialog</code><span class="sig-paren">(</span><em>path='.'</em>, <em>task=1</em>, <em>oov=False</em>, <em>use_match_type=False</em>, <em>use_time=True</em>, <em>use_speaker_tag=True</em>, <em>cache_match_type=False</em>, <em>cache_vectorized=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/babi_dialog.html#BABI_Dialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.babi_dialog.BABI_Dialog" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>This class loads in the Facebook bAbI goal oriented dialog dataset and
-vectorizes them into user utterances, bot utterances, and answers.</p>
-<p>As described in: “Learning End-to-End Goal Oriented Dialog”.
-<a class="reference external" href="https://arxiv.org/abs/1605.07683">https://arxiv.org/abs/1605.07683</a>.</p>
-<p>For a particular task, the class will read both train and test files
-and combine the vocabulary.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>path</strong> (<em>str</em>) – Directory to store the dataset</li>
-<li><strong>task</strong> (<em>str</em>) – a particular task to solve (all bAbI tasks are train
-and tested separately)</li>
-<li><strong>oov</strong> (<em>bool</em><em>, </em><em>optional</em>) – Load test set with out of vocabulary entity words</li>
-<li><strong>use_match_type</strong> (<em>bool</em><em>, </em><em>optional</em>) – Flag to use match-type features</li>
-<li><strong>use_time</strong> (<em>bool</em><em>, </em><em>optional</em>) – Add time words to each memory, encoding when the
-memory was formed</li>
-<li><strong>use_speaker_tag</strong> (<em>bool</em><em>, </em><em>optional</em>) – Add speaker words to each memory
-(&lt;BOT&gt; or &lt;USER&gt;) indicating who spoke each memory.</li>
-<li><strong>cache_match_type</strong> (<em>bool</em><em>, </em><em>optional</em>) – Flag to save match-type features after processing</li>
-<li><strong>cache_vectorized</strong> (<em>bool</em><em>, </em><em>optional</em>) – Flag to save all vectorized data after processing</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-<dl class="attribute">
-<dt id="nlp_architect.data.babi_dialog.BABI_Dialog.data_dict">
-<code class="descname">data_dict</code><a class="headerlink" href="#nlp_architect.data.babi_dialog.BABI_Dialog.data_dict" title="Permalink to this definition">¶</a></dt>
-<dd><p>Dictionary containing final vectorized train, val, and test datasets</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">dict</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="nlp_architect.data.babi_dialog.BABI_Dialog.cands">
-<code class="descname">cands</code><a class="headerlink" href="#nlp_architect.data.babi_dialog.BABI_Dialog.cands" title="Permalink to this definition">¶</a></dt>
-<dd><p>Vectorized array of potential candidate answers, encoded</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">np.array</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt>
-<code class="descname">as integers, as returned by BABI_Dialog class. Shape = [num_cands, max_cand_length]</code></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="nlp_architect.data.babi_dialog.BABI_Dialog.num_cands">
-<code class="descname">num_cands</code><a class="headerlink" href="#nlp_architect.data.babi_dialog.BABI_Dialog.num_cands" title="Permalink to this definition">¶</a></dt>
-<dd><p>Number of potential candidate answers.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">int</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="nlp_architect.data.babi_dialog.BABI_Dialog.max_cand_len">
-<code class="descname">max_cand_len</code><a class="headerlink" href="#nlp_architect.data.babi_dialog.BABI_Dialog.max_cand_len" title="Permalink to this definition">¶</a></dt>
-<dd><p>Maximum length of a candidate answer sentence in number of words.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">int</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="nlp_architect.data.babi_dialog.BABI_Dialog.memory_size">
-<code class="descname">memory_size</code><a class="headerlink" href="#nlp_architect.data.babi_dialog.BABI_Dialog.memory_size" title="Permalink to this definition">¶</a></dt>
-<dd><p>Maximum number of sentences to keep in memory at any given time.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">int</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="nlp_architect.data.babi_dialog.BABI_Dialog.max_utt_len">
-<code class="descname">max_utt_len</code><a class="headerlink" href="#nlp_architect.data.babi_dialog.BABI_Dialog.max_utt_len" title="Permalink to this definition">¶</a></dt>
-<dd><p>Maximum length of any given sentence / user utterance</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">int</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="nlp_architect.data.babi_dialog.BABI_Dialog.vocab_size">
-<code class="descname">vocab_size</code><a class="headerlink" href="#nlp_architect.data.babi_dialog.BABI_Dialog.vocab_size" title="Permalink to this definition">¶</a></dt>
-<dd><p>Number of unique words in the vocabulary + 2 (0 is reserved for
-a padding symbol, and 1 is reserved for OOV)</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">int</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="nlp_architect.data.babi_dialog.BABI_Dialog.use_match_type">
-<code class="descname">use_match_type</code><a class="headerlink" href="#nlp_architect.data.babi_dialog.BABI_Dialog.use_match_type" title="Permalink to this definition">¶</a></dt>
-<dd><p>Flag to use match-type features</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">bool, optional</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="nlp_architect.data.babi_dialog.BABI_Dialog.kb_ents_to_type">
-<code class="descname">kb_ents_to_type</code><a class="headerlink" href="#nlp_architect.data.babi_dialog.BABI_Dialog.kb_ents_to_type" title="Permalink to this definition">¶</a></dt>
-<dd><p>For use with match-type features, dictionary of
-entities found in the dataset mapping to their associated match-type</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">dict, optional</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="nlp_architect.data.babi_dialog.BABI_Dialog.kb_ents_to_cand_idxs">
-<code class="descname">kb_ents_to_cand_idxs</code><a class="headerlink" href="#nlp_architect.data.babi_dialog.BABI_Dialog.kb_ents_to_cand_idxs" title="Permalink to this definition">¶</a></dt>
-<dd><p>For use with match-type features, dictionary
-mapping from each entity in the  knowledge base to the set of indicies in the
-candidate_answers array that contain that entity.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">dict, optional</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="nlp_architect.data.babi_dialog.BABI_Dialog.match_type_idxs">
-<code class="descname">match_type_idxs</code><a class="headerlink" href="#nlp_architect.data.babi_dialog.BABI_Dialog.match_type_idxs" title="Permalink to this definition">¶</a></dt>
-<dd><p>For use with match-type features, dictionary
-mapping from match-type to the associated fixed index of the candidate vector
-which indicated this match type.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">dict, optional</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="staticmethod">
-<dt id="nlp_architect.data.babi_dialog.BABI_Dialog.clean_cands">
-<em class="property">static </em><code class="descname">clean_cands</code><span class="sig-paren">(</span><em>cand</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/babi_dialog.html#BABI_Dialog.clean_cands"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.babi_dialog.BABI_Dialog.clean_cands" title="Permalink to this definition">¶</a></dt>
-<dd><p>Remove leading line number and final newline from candidate answer</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="nlp_architect.data.babi_dialog.BABI_Dialog.compute_statistics">
-<code class="descname">compute_statistics</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/babi_dialog.html#BABI_Dialog.compute_statistics"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.babi_dialog.BABI_Dialog.compute_statistics" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compute vocab, word index, and max length of stories and queries.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="nlp_architect.data.babi_dialog.BABI_Dialog.create_cands_mat">
-<code class="descname">create_cands_mat</code><span class="sig-paren">(</span><em>data_split</em>, <em>cache_match_type</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/babi_dialog.html#BABI_Dialog.create_cands_mat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.babi_dialog.BABI_Dialog.create_cands_mat" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add match type features to candidate answers for each example in the dataaset.
-Caches once complete.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="nlp_architect.data.babi_dialog.BABI_Dialog.create_match_maps">
-<code class="descname">create_match_maps</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/babi_dialog.html#BABI_Dialog.create_match_maps"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.babi_dialog.BABI_Dialog.create_match_maps" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create dictionary mapping from each entity in the knowledge base to the set of
-indicies in the candidate_answers array that contain that entity. Will be used for
-quickly adding the match type features to the candidate answers during fprop.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="nlp_architect.data.babi_dialog.BABI_Dialog.encode_match_feats">
-<code class="descname">encode_match_feats</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/babi_dialog.html#BABI_Dialog.encode_match_feats"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.babi_dialog.BABI_Dialog.encode_match_feats" title="Permalink to this definition">¶</a></dt>
-<dd><p>Replace entity names and match type names with indexes</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="nlp_architect.data.babi_dialog.BABI_Dialog.get_vocab">
-<code class="descname">get_vocab</code><span class="sig-paren">(</span><em>dialog</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/babi_dialog.html#BABI_Dialog.get_vocab"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.babi_dialog.BABI_Dialog.get_vocab" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compute vocabulary from the set of dialogs.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="nlp_architect.data.babi_dialog.BABI_Dialog.load_candidate_answers">
-<code class="descname">load_candidate_answers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/babi_dialog.html#BABI_Dialog.load_candidate_answers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.babi_dialog.BABI_Dialog.load_candidate_answers" title="Permalink to this definition">¶</a></dt>
-<dd><p>Load candidate answers from file, compute number, and store for final softmax</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="nlp_architect.data.babi_dialog.BABI_Dialog.load_data">
-<code class="descname">load_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/babi_dialog.html#BABI_Dialog.load_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.babi_dialog.BABI_Dialog.load_data" title="Permalink to this definition">¶</a></dt>
-<dd><p>Fetch and extract the Facebook bAbI-dialog dataset if not already downloaded.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">training and test filenames are returned</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">tuple</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="nlp_architect.data.babi_dialog.BABI_Dialog.load_kb">
-<code class="descname">load_kb</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/babi_dialog.html#BABI_Dialog.load_kb"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.babi_dialog.BABI_Dialog.load_kb" title="Permalink to this definition">¶</a></dt>
-<dd><p>Load knowledge base from file, parse into entities and types</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="nlp_architect.data.babi_dialog.BABI_Dialog.one_hot_vector">
-<code class="descname">one_hot_vector</code><span class="sig-paren">(</span><em>answer</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/babi_dialog.html#BABI_Dialog.one_hot_vector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.babi_dialog.BABI_Dialog.one_hot_vector" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create one-hot representation of an answer.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>answer</strong> (<em>string</em>) – The word answer.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">One-hot representation of answer.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="staticmethod">
-<dt id="nlp_architect.data.babi_dialog.BABI_Dialog.parse_dialog">
-<em class="property">static </em><code class="descname">parse_dialog</code><span class="sig-paren">(</span><em>fn</em>, <em>use_time=True</em>, <em>use_speaker_tag=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/babi_dialog.html#BABI_Dialog.parse_dialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.babi_dialog.BABI_Dialog.parse_dialog" title="Permalink to this definition">¶</a></dt>
-<dd><p>Given a dialog file, parse into user and bot utterances, adding time and speaker tags.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>fn</strong> (<em>str</em>) – Filename to parse</li>
-<li><strong>use_time</strong> (<em>bool</em><em>, </em><em>optional</em>) – Flag to append ‘time-words’ to the end of each utterance</li>
-<li><strong>use_speaker_tag</strong> (<em>bool</em><em>, </em><em>optional</em>) – Flag to append tags specifiying the speaker to
-each utterance.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="nlp_architect.data.babi_dialog.BABI_Dialog.process_interactive">
-<code class="descname">process_interactive</code><span class="sig-paren">(</span><em>line_in</em>, <em>context</em>, <em>response</em>, <em>db_results</em>, <em>time_feat</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/babi_dialog.html#BABI_Dialog.process_interactive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.babi_dialog.BABI_Dialog.process_interactive" title="Permalink to this definition">¶</a></dt>
-<dd><p>Parse a given user’s input into the same format as training, build the memory
-from the given context and previous response, update the context.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="nlp_architect.data.babi_dialog.BABI_Dialog.vectorize_cands">
-<code class="descname">vectorize_cands</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/babi_dialog.html#BABI_Dialog.vectorize_cands"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.babi_dialog.BABI_Dialog.vectorize_cands" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert candidate answer word data into vectors.</p>
-<p>If sentence length &lt; max_cand_len it is padded with 0’s</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>list of lists</em>) – list of candidate answers split into words</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">padded numpy array of word indexes forr all candidate answers</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">tuple (2d numpy array)</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="nlp_architect.data.babi_dialog.BABI_Dialog.vectorize_stories">
-<code class="descname">vectorize_stories</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/babi_dialog.html#BABI_Dialog.vectorize_stories"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.babi_dialog.BABI_Dialog.vectorize_stories" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert (memory, user_utt, answer) word data into vectors.</p>
-<p>If sentence length &lt; max_utt_len it is padded with 0’s
-If memory length &lt; memory size, it is padded with empty memorys (max_utt_len 0’s)</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>tuple</em>) – Tuple of memories, user_utt, answer word data.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Tuple of memories, memory_lengths, user_utt, answer vectors.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">tuple</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="nlp_architect.data.babi_dialog.BABI_Dialog.words_to_vector">
-<code class="descname">words_to_vector</code><span class="sig-paren">(</span><em>words</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/babi_dialog.html#BABI_Dialog.words_to_vector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.babi_dialog.BABI_Dialog.words_to_vector" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert a list of words into vector form.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>words</strong> (<em>list</em>) – List of words.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Vectorized list of words.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="function">
-<dt id="nlp_architect.data.babi_dialog.pad_sentences">
-<code class="descclassname">nlp_architect.data.babi_dialog.</code><code class="descname">pad_sentences</code><span class="sig-paren">(</span><em>sentences</em>, <em>sentence_length=0</em>, <em>pad_val=0.0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/babi_dialog.html#pad_sentences"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.babi_dialog.pad_sentences" title="Permalink to this definition">¶</a></dt>
-<dd><p>Pad all sentences to have the same length (number of words)</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="nlp_architect.data.babi_dialog.pad_stories">
-<code class="descclassname">nlp_architect.data.babi_dialog.</code><code class="descname">pad_stories</code><span class="sig-paren">(</span><em>stories</em>, <em>sentence_length</em>, <em>max_story_length</em>, <em>pad_val=0.0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/babi_dialog.html#pad_stories"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.babi_dialog.pad_stories" title="Permalink to this definition">¶</a></dt>
-<dd><p>Pad all stories to have the same number of sentences (max_story_length).</p>
-</dd></dl>
-
-</div>
 <div class="section" id="module-nlp_architect.data.conll">
 <span id="nlp-architect-data-conll-module"></span><h2>nlp_architect.data.conll module<a class="headerlink" href="#module-nlp_architect.data.conll" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
@@ -809,7 +402,7 @@ Returns a numpy array with embeddings in emb_sizexvocab_size shape</td>
 <dl class="method">
 <dt id="nlp_architect.data.glue_tasks.ColaProcessor.get_dev_examples">
 <code class="descname">get_dev_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#ColaProcessor.get_dev_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.ColaProcessor.get_dev_examples" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a collection of <a href="#id3"><span class="problematic" id="id4">`</span></a>InputExample`s for the dev set.</p>
+<dd><p>Gets a collection of <a href="#id1"><span class="problematic" id="id2">`</span></a>InputExample`s for the dev set.</p>
 </dd></dl>
 
 <dl class="method">
@@ -821,13 +414,13 @@ Returns a numpy array with embeddings in emb_sizexvocab_size shape</td>
 <dl class="method">
 <dt id="nlp_architect.data.glue_tasks.ColaProcessor.get_test_examples">
 <code class="descname">get_test_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#ColaProcessor.get_test_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.ColaProcessor.get_test_examples" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a collection of <a href="#id5"><span class="problematic" id="id6">`</span></a>InputExample`s for the test set.</p>
+<dd><p>Gets a collection of <a href="#id3"><span class="problematic" id="id4">`</span></a>InputExample`s for the test set.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="nlp_architect.data.glue_tasks.ColaProcessor.get_train_examples">
 <code class="descname">get_train_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#ColaProcessor.get_train_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.ColaProcessor.get_train_examples" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a collection of <a href="#id7"><span class="problematic" id="id8">`</span></a>InputExample`s for the train set.</p>
+<dd><p>Gets a collection of <a href="#id5"><span class="problematic" id="id6">`</span></a>InputExample`s for the train set.</p>
 </dd></dl>
 
 </dd></dl>
@@ -847,13 +440,13 @@ Returns a numpy array with embeddings in emb_sizexvocab_size shape</td>
 <dl class="method">
 <dt id="nlp_architect.data.glue_tasks.MnliMismatchedProcessor.get_dev_examples">
 <code class="descname">get_dev_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#MnliMismatchedProcessor.get_dev_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.MnliMismatchedProcessor.get_dev_examples" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a collection of <a href="#id9"><span class="problematic" id="id10">`</span></a>InputExample`s for the dev set.</p>
+<dd><p>Gets a collection of <a href="#id7"><span class="problematic" id="id8">`</span></a>InputExample`s for the dev set.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="nlp_architect.data.glue_tasks.MnliMismatchedProcessor.get_test_examples">
 <code class="descname">get_test_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#MnliMismatchedProcessor.get_test_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.MnliMismatchedProcessor.get_test_examples" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a collection of <a href="#id11"><span class="problematic" id="id12">`</span></a>InputExample`s for the test set.</p>
+<dd><p>Gets a collection of <a href="#id9"><span class="problematic" id="id10">`</span></a>InputExample`s for the test set.</p>
 </dd></dl>
 
 </dd></dl>
@@ -866,7 +459,7 @@ Returns a numpy array with embeddings in emb_sizexvocab_size shape</td>
 <dl class="method">
 <dt id="nlp_architect.data.glue_tasks.MnliProcessor.get_dev_examples">
 <code class="descname">get_dev_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#MnliProcessor.get_dev_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.MnliProcessor.get_dev_examples" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a collection of <a href="#id13"><span class="problematic" id="id14">`</span></a>InputExample`s for the dev set.</p>
+<dd><p>Gets a collection of <a href="#id11"><span class="problematic" id="id12">`</span></a>InputExample`s for the dev set.</p>
 </dd></dl>
 
 <dl class="method">
@@ -878,13 +471,13 @@ Returns a numpy array with embeddings in emb_sizexvocab_size shape</td>
 <dl class="method">
 <dt id="nlp_architect.data.glue_tasks.MnliProcessor.get_test_examples">
 <code class="descname">get_test_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#MnliProcessor.get_test_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.MnliProcessor.get_test_examples" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a collection of <a href="#id15"><span class="problematic" id="id16">`</span></a>InputExample`s for the test set.</p>
+<dd><p>Gets a collection of <a href="#id13"><span class="problematic" id="id14">`</span></a>InputExample`s for the test set.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="nlp_architect.data.glue_tasks.MnliProcessor.get_train_examples">
 <code class="descname">get_train_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#MnliProcessor.get_train_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.MnliProcessor.get_train_examples" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a collection of <a href="#id17"><span class="problematic" id="id18">`</span></a>InputExample`s for the train set.</p>
+<dd><p>Gets a collection of <a href="#id15"><span class="problematic" id="id16">`</span></a>InputExample`s for the train set.</p>
 </dd></dl>
 
 </dd></dl>
@@ -897,7 +490,7 @@ Returns a numpy array with embeddings in emb_sizexvocab_size shape</td>
 <dl class="method">
 <dt id="nlp_architect.data.glue_tasks.MrpcProcessor.get_dev_examples">
 <code class="descname">get_dev_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#MrpcProcessor.get_dev_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.MrpcProcessor.get_dev_examples" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a collection of <a href="#id19"><span class="problematic" id="id20">`</span></a>InputExample`s for the dev set.</p>
+<dd><p>Gets a collection of <a href="#id17"><span class="problematic" id="id18">`</span></a>InputExample`s for the dev set.</p>
 </dd></dl>
 
 <dl class="method">
@@ -909,13 +502,13 @@ Returns a numpy array with embeddings in emb_sizexvocab_size shape</td>
 <dl class="method">
 <dt id="nlp_architect.data.glue_tasks.MrpcProcessor.get_test_examples">
 <code class="descname">get_test_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#MrpcProcessor.get_test_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.MrpcProcessor.get_test_examples" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a collection of <a href="#id21"><span class="problematic" id="id22">`</span></a>InputExample`s for the test set.</p>
+<dd><p>Gets a collection of <a href="#id19"><span class="problematic" id="id20">`</span></a>InputExample`s for the test set.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="nlp_architect.data.glue_tasks.MrpcProcessor.get_train_examples">
 <code class="descname">get_train_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#MrpcProcessor.get_train_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.MrpcProcessor.get_train_examples" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a collection of <a href="#id23"><span class="problematic" id="id24">`</span></a>InputExample`s for the train set.</p>
+<dd><p>Gets a collection of <a href="#id21"><span class="problematic" id="id22">`</span></a>InputExample`s for the train set.</p>
 </dd></dl>
 
 </dd></dl>
@@ -928,7 +521,7 @@ Returns a numpy array with embeddings in emb_sizexvocab_size shape</td>
 <dl class="method">
 <dt id="nlp_architect.data.glue_tasks.QnliProcessor.get_dev_examples">
 <code class="descname">get_dev_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#QnliProcessor.get_dev_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.QnliProcessor.get_dev_examples" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a collection of <a href="#id25"><span class="problematic" id="id26">`</span></a>InputExample`s for the dev set.</p>
+<dd><p>Gets a collection of <a href="#id23"><span class="problematic" id="id24">`</span></a>InputExample`s for the dev set.</p>
 </dd></dl>
 
 <dl class="method">
@@ -940,13 +533,13 @@ Returns a numpy array with embeddings in emb_sizexvocab_size shape</td>
 <dl class="method">
 <dt id="nlp_architect.data.glue_tasks.QnliProcessor.get_test_examples">
 <code class="descname">get_test_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#QnliProcessor.get_test_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.QnliProcessor.get_test_examples" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a collection of <a href="#id27"><span class="problematic" id="id28">`</span></a>InputExample`s for the test set.</p>
+<dd><p>Gets a collection of <a href="#id25"><span class="problematic" id="id26">`</span></a>InputExample`s for the test set.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="nlp_architect.data.glue_tasks.QnliProcessor.get_train_examples">
 <code class="descname">get_train_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#QnliProcessor.get_train_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.QnliProcessor.get_train_examples" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a collection of <a href="#id29"><span class="problematic" id="id30">`</span></a>InputExample`s for the train set.</p>
+<dd><p>Gets a collection of <a href="#id27"><span class="problematic" id="id28">`</span></a>InputExample`s for the train set.</p>
 </dd></dl>
 
 </dd></dl>
@@ -959,7 +552,7 @@ Returns a numpy array with embeddings in emb_sizexvocab_size shape</td>
 <dl class="method">
 <dt id="nlp_architect.data.glue_tasks.QqpProcessor.get_dev_examples">
 <code class="descname">get_dev_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#QqpProcessor.get_dev_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.QqpProcessor.get_dev_examples" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a collection of <a href="#id31"><span class="problematic" id="id32">`</span></a>InputExample`s for the dev set.</p>
+<dd><p>Gets a collection of <a href="#id29"><span class="problematic" id="id30">`</span></a>InputExample`s for the dev set.</p>
 </dd></dl>
 
 <dl class="method">
@@ -971,13 +564,13 @@ Returns a numpy array with embeddings in emb_sizexvocab_size shape</td>
 <dl class="method">
 <dt id="nlp_architect.data.glue_tasks.QqpProcessor.get_test_examples">
 <code class="descname">get_test_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#QqpProcessor.get_test_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.QqpProcessor.get_test_examples" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a collection of <a href="#id33"><span class="problematic" id="id34">`</span></a>InputExample`s for the test set.</p>
+<dd><p>Gets a collection of <a href="#id31"><span class="problematic" id="id32">`</span></a>InputExample`s for the test set.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="nlp_architect.data.glue_tasks.QqpProcessor.get_train_examples">
 <code class="descname">get_train_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#QqpProcessor.get_train_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.QqpProcessor.get_train_examples" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a collection of <a href="#id35"><span class="problematic" id="id36">`</span></a>InputExample`s for the train set.</p>
+<dd><p>Gets a collection of <a href="#id33"><span class="problematic" id="id34">`</span></a>InputExample`s for the train set.</p>
 </dd></dl>
 
 </dd></dl>
@@ -990,7 +583,7 @@ Returns a numpy array with embeddings in emb_sizexvocab_size shape</td>
 <dl class="method">
 <dt id="nlp_architect.data.glue_tasks.RteProcessor.get_dev_examples">
 <code class="descname">get_dev_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#RteProcessor.get_dev_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.RteProcessor.get_dev_examples" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a collection of <a href="#id37"><span class="problematic" id="id38">`</span></a>InputExample`s for the dev set.</p>
+<dd><p>Gets a collection of <a href="#id35"><span class="problematic" id="id36">`</span></a>InputExample`s for the dev set.</p>
 </dd></dl>
 
 <dl class="method">
@@ -1002,13 +595,13 @@ Returns a numpy array with embeddings in emb_sizexvocab_size shape</td>
 <dl class="method">
 <dt id="nlp_architect.data.glue_tasks.RteProcessor.get_test_examples">
 <code class="descname">get_test_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#RteProcessor.get_test_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.RteProcessor.get_test_examples" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a collection of <a href="#id39"><span class="problematic" id="id40">`</span></a>InputExample`s for the test set.</p>
+<dd><p>Gets a collection of <a href="#id37"><span class="problematic" id="id38">`</span></a>InputExample`s for the test set.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="nlp_architect.data.glue_tasks.RteProcessor.get_train_examples">
 <code class="descname">get_train_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#RteProcessor.get_train_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.RteProcessor.get_train_examples" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a collection of <a href="#id41"><span class="problematic" id="id42">`</span></a>InputExample`s for the train set.</p>
+<dd><p>Gets a collection of <a href="#id39"><span class="problematic" id="id40">`</span></a>InputExample`s for the train set.</p>
 </dd></dl>
 
 </dd></dl>
@@ -1021,7 +614,7 @@ Returns a numpy array with embeddings in emb_sizexvocab_size shape</td>
 <dl class="method">
 <dt id="nlp_architect.data.glue_tasks.Sst2Processor.get_dev_examples">
 <code class="descname">get_dev_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#Sst2Processor.get_dev_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.Sst2Processor.get_dev_examples" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a collection of <a href="#id43"><span class="problematic" id="id44">`</span></a>InputExample`s for the dev set.</p>
+<dd><p>Gets a collection of <a href="#id41"><span class="problematic" id="id42">`</span></a>InputExample`s for the dev set.</p>
 </dd></dl>
 
 <dl class="method">
@@ -1033,13 +626,13 @@ Returns a numpy array with embeddings in emb_sizexvocab_size shape</td>
 <dl class="method">
 <dt id="nlp_architect.data.glue_tasks.Sst2Processor.get_test_examples">
 <code class="descname">get_test_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#Sst2Processor.get_test_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.Sst2Processor.get_test_examples" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a collection of <a href="#id45"><span class="problematic" id="id46">`</span></a>InputExample`s for the test set.</p>
+<dd><p>Gets a collection of <a href="#id43"><span class="problematic" id="id44">`</span></a>InputExample`s for the test set.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="nlp_architect.data.glue_tasks.Sst2Processor.get_train_examples">
 <code class="descname">get_train_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#Sst2Processor.get_train_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.Sst2Processor.get_train_examples" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a collection of <a href="#id47"><span class="problematic" id="id48">`</span></a>InputExample`s for the train set.</p>
+<dd><p>Gets a collection of <a href="#id45"><span class="problematic" id="id46">`</span></a>InputExample`s for the train set.</p>
 </dd></dl>
 
 </dd></dl>
@@ -1052,7 +645,7 @@ Returns a numpy array with embeddings in emb_sizexvocab_size shape</td>
 <dl class="method">
 <dt id="nlp_architect.data.glue_tasks.StsbProcessor.get_dev_examples">
 <code class="descname">get_dev_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#StsbProcessor.get_dev_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.StsbProcessor.get_dev_examples" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a collection of <a href="#id49"><span class="problematic" id="id50">`</span></a>InputExample`s for the dev set.</p>
+<dd><p>Gets a collection of <a href="#id47"><span class="problematic" id="id48">`</span></a>InputExample`s for the dev set.</p>
 </dd></dl>
 
 <dl class="method">
@@ -1064,13 +657,13 @@ Returns a numpy array with embeddings in emb_sizexvocab_size shape</td>
 <dl class="method">
 <dt id="nlp_architect.data.glue_tasks.StsbProcessor.get_test_examples">
 <code class="descname">get_test_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#StsbProcessor.get_test_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.StsbProcessor.get_test_examples" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a collection of <a href="#id51"><span class="problematic" id="id52">`</span></a>InputExample`s for the test set.</p>
+<dd><p>Gets a collection of <a href="#id49"><span class="problematic" id="id50">`</span></a>InputExample`s for the test set.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="nlp_architect.data.glue_tasks.StsbProcessor.get_train_examples">
 <code class="descname">get_train_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#StsbProcessor.get_train_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.StsbProcessor.get_train_examples" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a collection of <a href="#id53"><span class="problematic" id="id54">`</span></a>InputExample`s for the train set.</p>
+<dd><p>Gets a collection of <a href="#id51"><span class="problematic" id="id52">`</span></a>InputExample`s for the train set.</p>
 </dd></dl>
 
 </dd></dl>
@@ -1083,7 +676,7 @@ Returns a numpy array with embeddings in emb_sizexvocab_size shape</td>
 <dl class="method">
 <dt id="nlp_architect.data.glue_tasks.WnliProcessor.get_dev_examples">
 <code class="descname">get_dev_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#WnliProcessor.get_dev_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.WnliProcessor.get_dev_examples" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a collection of <a href="#id55"><span class="problematic" id="id56">`</span></a>InputExample`s for the dev set.</p>
+<dd><p>Gets a collection of <a href="#id53"><span class="problematic" id="id54">`</span></a>InputExample`s for the dev set.</p>
 </dd></dl>
 
 <dl class="method">
@@ -1095,13 +688,13 @@ Returns a numpy array with embeddings in emb_sizexvocab_size shape</td>
 <dl class="method">
 <dt id="nlp_architect.data.glue_tasks.WnliProcessor.get_test_examples">
 <code class="descname">get_test_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#WnliProcessor.get_test_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.WnliProcessor.get_test_examples" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a collection of <a href="#id57"><span class="problematic" id="id58">`</span></a>InputExample`s for the test set.</p>
+<dd><p>Gets a collection of <a href="#id55"><span class="problematic" id="id56">`</span></a>InputExample`s for the test set.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="nlp_architect.data.glue_tasks.WnliProcessor.get_train_examples">
 <code class="descname">get_train_examples</code><span class="sig-paren">(</span><em>data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/glue_tasks.html#WnliProcessor.get_train_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.glue_tasks.WnliProcessor.get_train_examples" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a collection of <a href="#id59"><span class="problematic" id="id60">`</span></a>InputExample`s for the train set.</p>
+<dd><p>Gets a collection of <a href="#id57"><span class="problematic" id="id58">`</span></a>InputExample`s for the train set.</p>
 </dd></dl>
 
 </dd></dl>
@@ -1370,7 +963,7 @@ by tabs &lt;token&gt;     &lt;tag_label&gt;     &lt;intent&gt;</p>
 <p>Data loader for penn tree bank dataset</p>
 <dl class="class">
 <dt id="nlp_architect.data.ptb.PTBDataLoader">
-<em class="property">class </em><code class="descclassname">nlp_architect.data.ptb.</code><code class="descname">PTBDataLoader</code><span class="sig-paren">(</span><em>word_dict</em>, <em>seq_len=100</em>, <em>data_dir='/home/peter_nlp/data'</em>, <em>dataset='WikiText-103'</em>, <em>batch_size=32</em>, <em>skip=30</em>, <em>split_type='train'</em>, <em>loop=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/ptb.html#PTBDataLoader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.ptb.PTBDataLoader" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">nlp_architect.data.ptb.</code><code class="descname">PTBDataLoader</code><span class="sig-paren">(</span><em>word_dict</em>, <em>seq_len=100</em>, <em>data_dir='/Users/pizsak/data'</em>, <em>dataset='WikiText-103'</em>, <em>batch_size=32</em>, <em>skip=30</em>, <em>split_type='train'</em>, <em>loop=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/ptb.html#PTBDataLoader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.ptb.PTBDataLoader" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Class that defines data loader</p>
 <dl class="method">
@@ -1414,7 +1007,7 @@ by tabs &lt;token&gt;     &lt;tag_label&gt;     &lt;intent&gt;</p>
 
 <dl class="class">
 <dt id="nlp_architect.data.ptb.PTBDictionary">
-<em class="property">class </em><code class="descclassname">nlp_architect.data.ptb.</code><code class="descname">PTBDictionary</code><span class="sig-paren">(</span><em>data_dir='/home/peter_nlp/data'</em>, <em>dataset='WikiText-103'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/ptb.html#PTBDictionary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.ptb.PTBDictionary" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">nlp_architect.data.ptb.</code><code class="descname">PTBDictionary</code><span class="sig-paren">(</span><em>data_dir='/Users/pizsak/data'</em>, <em>dataset='WikiText-103'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/ptb.html#PTBDictionary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.ptb.PTBDictionary" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Class for generating a dictionary of all words in the PTB corpus</p>
 <dl class="method">
@@ -1609,7 +1202,7 @@ Label dictionary is given in labels.txt file.</p>
 <dl class="method">
 <dt id="nlp_architect.data.sequential_tagging.TokenClsProcessor.get_dev_examples">
 <code class="descname">get_dev_examples</code><span class="sig-paren">(</span><em>filename='dev.txt'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/sequential_tagging.html#TokenClsProcessor.get_dev_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.sequential_tagging.TokenClsProcessor.get_dev_examples" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a collection of <a href="#id61"><span class="problematic" id="id62">`</span></a>InputExample`s for the dev set.</p>
+<dd><p>Gets a collection of <a href="#id59"><span class="problematic" id="id60">`</span></a>InputExample`s for the dev set.</p>
 </dd></dl>
 
 <dl class="method">
@@ -1626,13 +1219,13 @@ Label dictionary is given in labels.txt file.</p>
 <dl class="method">
 <dt id="nlp_architect.data.sequential_tagging.TokenClsProcessor.get_test_examples">
 <code class="descname">get_test_examples</code><span class="sig-paren">(</span><em>filename='test.txt'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/sequential_tagging.html#TokenClsProcessor.get_test_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.sequential_tagging.TokenClsProcessor.get_test_examples" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a collection of <a href="#id63"><span class="problematic" id="id64">`</span></a>InputExample`s for the test set.</p>
+<dd><p>Gets a collection of <a href="#id61"><span class="problematic" id="id62">`</span></a>InputExample`s for the test set.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="nlp_architect.data.sequential_tagging.TokenClsProcessor.get_train_examples">
 <code class="descname">get_train_examples</code><span class="sig-paren">(</span><em>filename='train.txt'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/sequential_tagging.html#TokenClsProcessor.get_train_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.sequential_tagging.TokenClsProcessor.get_train_examples" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a collection of <a href="#id65"><span class="problematic" id="id66">`</span></a>InputExample`s for the train set.</p>
+<dd><p>Gets a collection of <a href="#id63"><span class="problematic" id="id64">`</span></a>InputExample`s for the train set.</p>
 </dd></dl>
 
 <dl class="method">
@@ -1653,7 +1246,7 @@ Label dictionary is given in labels.txt file.</p>
 <dl class="method">
 <dt id="nlp_architect.data.utils.DataProcessor.get_dev_examples">
 <code class="descname">get_dev_examples</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/utils.html#DataProcessor.get_dev_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.utils.DataProcessor.get_dev_examples" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a collection of <a href="#id67"><span class="problematic" id="id68">`</span></a>InputExample`s for the dev set.</p>
+<dd><p>Gets a collection of <a href="#id65"><span class="problematic" id="id66">`</span></a>InputExample`s for the dev set.</p>
 </dd></dl>
 
 <dl class="method">
@@ -1665,13 +1258,13 @@ Label dictionary is given in labels.txt file.</p>
 <dl class="method">
 <dt id="nlp_architect.data.utils.DataProcessor.get_test_examples">
 <code class="descname">get_test_examples</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/utils.html#DataProcessor.get_test_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.utils.DataProcessor.get_test_examples" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a collection of <a href="#id69"><span class="problematic" id="id70">`</span></a>InputExample`s for the test set.</p>
+<dd><p>Gets a collection of <a href="#id67"><span class="problematic" id="id68">`</span></a>InputExample`s for the test set.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="nlp_architect.data.utils.DataProcessor.get_train_examples">
 <code class="descname">get_train_examples</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/data/utils.html#DataProcessor.get_train_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.data.utils.DataProcessor.get_train_examples" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a collection of <a href="#id71"><span class="problematic" id="id72">`</span></a>InputExample`s for the train set.</p>
+<dd><p>Gets a collection of <a href="#id69"><span class="problematic" id="id70">`</span></a>InputExample`s for the train set.</p>
 </dd></dl>
 
 </dd></dl>

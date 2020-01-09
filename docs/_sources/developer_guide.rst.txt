@@ -29,7 +29,7 @@ development packages:
 
 .. code:: bash
 
-    pip3 install -r dev-requirements.txt
+    pip3 install -U -e .[dev]
 
 
 .. include:: CONTRIBUTING.rst

@@ -42,15 +42,17 @@ class NERCRF(object):
         self.dropout = None
         self.use_cudnn = use_cudnn
 
-    def build(self,
-              word_length,
-              target_label_dims,
-              word_vocab_size,
-              char_vocab_size,
-              word_embedding_dims=100,
-              char_embedding_dims=16,
-              tagger_lstm_dims=200,
-              dropout=0.5):
+    def build(
+        self,
+        word_length,
+        target_label_dims,
+        word_vocab_size,
+        char_vocab_size,
+        word_embedding_dims=100,
+        char_embedding_dims=16,
+        tagger_lstm_dims=200,
+        dropout=0.5,
+    ):
         """
         Build a NERCRF model
 
@@ -74,48 +76,52 @@ class NERCRF(object):
         self.dropout = dropout
 
         # build word input
-        words_input = tf.keras.layers.Input(shape=(None,), name='words_input')
-        embedding_layer = tf.keras.layers.Embedding(self.word_vocab_size, self.word_embedding_dims,
-                                                    name='word_embedding')
+        words_input = tf.keras.layers.Input(shape=(None,), name="words_input")
+        embedding_layer = tf.keras.layers.Embedding(
+            self.word_vocab_size, self.word_embedding_dims, name="word_embedding"
+        )
         word_embeddings = embedding_layer(words_input)
 
         # create word character embeddings
-        word_chars_input = tf.keras.layers.Input(shape=(None, self.word_length),
-                                                 name='word_chars_input')
-        char_embedding_layer = tf.keras.layers.Embedding(self.char_vocab_size,
-                                                         self.char_embedding_dims,
-                                                         name='char_embedding')(word_chars_input)
-        char_embeddings = \
-            tf.keras.layers.TimeDistributed(
-                tf.keras.layers.Conv1D(128, 3, padding='same', activation='relu'))(
-                char_embedding_layer)
+        word_chars_input = tf.keras.layers.Input(
+            shape=(None, self.word_length), name="word_chars_input"
+        )
+        char_embedding_layer = tf.keras.layers.Embedding(
+            self.char_vocab_size, self.char_embedding_dims, name="char_embedding"
+        )(word_chars_input)
+        char_embeddings = tf.keras.layers.TimeDistributed(
+            tf.keras.layers.Conv1D(128, 3, padding="same", activation="relu")
+        )(char_embedding_layer)
         char_embeddings = tf.keras.layers.TimeDistributed(tf.keras.layers.GlobalMaxPooling1D())(
-            char_embeddings)
+            char_embeddings
+        )
 
         # create the final feature vectors
         features = tf.keras.layers.concatenate([word_embeddings, char_embeddings], axis=-1)
 
         # encode using a bi-LSTM
         features = tf.keras.layers.Dropout(self.dropout)(features)
-        bilstm = tf.keras.layers.Bidirectional(self._rnn_cell(self.tagger_lstm_dims,
-                                                              return_sequences=True))(features)
-        bilstm = tf.keras.layers.Bidirectional(self._rnn_cell(self.tagger_lstm_dims,
-                                                              return_sequences=True))(bilstm)
+        bilstm = tf.keras.layers.Bidirectional(
+            self._rnn_cell(self.tagger_lstm_dims, return_sequences=True)
+        )(features)
+        bilstm = tf.keras.layers.Bidirectional(
+            self._rnn_cell(self.tagger_lstm_dims, return_sequences=True)
+        )(bilstm)
         bilstm = tf.keras.layers.Dropout(self.dropout)(bilstm)
         bilstm = tf.keras.layers.Dense(self.target_label_dims)(bilstm)
 
         inputs = [words_input, word_chars_input]
 
-        sequence_lengths = tf.keras.layers.Input(shape=(1,), dtype='int32', name='seq_lens')
+        sequence_lengths = tf.keras.layers.Input(shape=(1,), dtype="int32", name="seq_lens")
         inputs.append(sequence_lengths)
-        crf = CRF(self.target_label_dims, name='ner_crf')
+        crf = CRF(self.target_label_dims, name="ner_crf")
         predictions = crf(inputs=bilstm, sequence_lengths=sequence_lengths)
 
         # compile the model
-        model = tf.keras.Model(inputs=inputs,
-                               outputs=predictions)
-        model.compile(loss={'ner_crf': crf.loss},
-                      optimizer=tf.keras.optimizers.Adam(0.001, clipnorm=5.))
+        model = tf.keras.Model(inputs=inputs, outputs=predictions)
+        model.compile(
+            loss={"ner_crf": crf.loss}, optimizer=tf.keras.optimizers.Adam(0.001, clipnorm=5.0)
+        )
 
         self.model = model
 
@@ -133,10 +139,11 @@ class NERCRF(object):
         Args:
             weights (numpy.ndarray): 2D matrix of word weights
         """
-        assert self.model is not None, 'Cannot assign weights, apply build() before trying to ' \
-                                       'loading embedding weights '
-        emb_layer = self.model.get_layer(name='word_embedding')
-        assert emb_layer.output_dim == weights.shape[1], 'embedding vectors shape mismatch'
+        assert self.model is not None, (
+            "Cannot assign weights, apply build() before trying to " "loading embedding weights "
+        )
+        emb_layer = self.model.get_layer(name="word_embedding")
+        assert emb_layer.output_dim == weights.shape[1], "embedding vectors shape mismatch"
         emb_layer.set_weights([weights])
 
     def fit(self, x, y, epochs=1, batch_size=1, callbacks=None, validation=None):
@@ -152,10 +159,16 @@ class NERCRF(object):
             validation(:obj:`list` of :obj:`numpy.ndarray`, optional): optional validation data
                 to be evaluated when training
         """
-        assert self.model, 'Model was not initialized'
-        self.model.fit(x, y, epochs=epochs, batch_size=batch_size, shuffle=True,
-                       validation_data=validation,
-                       callbacks=callbacks)
+        assert self.model, "Model was not initialized"
+        self.model.fit(
+            x,
+            y,
+            epochs=epochs,
+            batch_size=batch_size,
+            shuffle=True,
+            validation_data=validation,
+            callbacks=callbacks,
+        )
 
     def predict(self, x, batch_size=1):
         """
@@ -168,7 +181,7 @@ class NERCRF(object):
         Returns:
             numpy.ndarray: predicted values by the model
         """
-        assert self.model, 'Model was not initialized'
+        assert self.model, "Model was not initialized"
         return self.model.predict(x, batch_size=batch_size)
 
     def save(self, path):
@@ -179,8 +192,8 @@ class NERCRF(object):
             path (str): path to save model weights
         """
         topology = {k: v for k, v in self.__dict__.items()}
-        topology.pop('model')
-        topology.pop('use_cudnn')
+        topology.pop("model")
+        topology.pop("use_cudnn")
         save_model(self.model, topology, path)
 
     def load(self, path):

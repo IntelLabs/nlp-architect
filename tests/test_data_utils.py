@@ -22,21 +22,24 @@ from tests.utils import count_examples
 
 def test_split_dataset():
     current_dir = os.path.dirname(os.path.realpath(__file__))
-    data_dir = os.path.join(current_dir, 'fixtures/data/distillation')
-    num_of_examples = count_examples(data_dir + os.sep + 'train.txt')
+    data_dir = os.path.join(current_dir, "fixtures/data/distillation")
+    num_of_examples = count_examples(data_dir + os.sep + "train.txt")
     labeled_precentage = 0.4
     unlabeled_precentage = 0.5
     if os.path.exists(data_dir):
-        labeled_file = 'labeled.txt'
-        unlabeled_file = 'unlabeled.txt'
+        labeled_file = "labeled.txt"
+        unlabeled_file = "unlabeled.txt"
         split_column_dataset(
-            dataset=os.path.join(data_dir, 'train.txt'),
+            dataset=os.path.join(data_dir, "train.txt"),
             m=math.ceil(num_of_examples * labeled_precentage),
-            n=math.ceil(num_of_examples * unlabeled_precentage), out_folder=data_dir,
-            m_filename=labeled_file, n_filename=unlabeled_file)
+            n=math.ceil(num_of_examples * unlabeled_precentage),
+            out_folder=data_dir,
+            m_filename=labeled_file,
+            n_filename=unlabeled_file,
+        )
         check_labeled_count = count_examples(data_dir + os.sep + labeled_file)
         assert check_labeled_count == math.ceil(num_of_examples * labeled_precentage)
         check_unlabeled_count = count_examples(data_dir + os.sep + unlabeled_file)
         assert check_unlabeled_count == math.ceil(num_of_examples * unlabeled_precentage)
-        os.remove(data_dir + os.sep + 'labeled.txt')
-        os.remove(data_dir + os.sep + 'unlabeled.txt')
+        os.remove(data_dir + os.sep + "labeled.txt")
+        os.remove(data_dir + os.sep + "unlabeled.txt")

@@ -28,6 +28,7 @@ class ModelAPI:
 
         run method must return
     """
+
     default_model = None  # pre-trained model from library
 
     def __init__(self, model_path: str = None):

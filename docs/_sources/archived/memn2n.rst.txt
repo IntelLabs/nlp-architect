@@ -45,8 +45,8 @@ Question-Answering and information retrieval tasks.
 
 Files
 =====
-- **nlp_architect/data/babi_dialog.py**: Data loader :py:class:`class <nlp_architect.data.babi_dialog.BABI_Dialog>` to download data if not present and perform preprocessing.
-- **nlp_architect/models/memn2n_dialogue.py**: Implementation of :py:class:`MemN2N_Dialog <nlp_architect.models.memn2n_dialogue.MemN2N_Dialog>` class for dialogue tasks.
+- **examples/memn2n_dialog/babi_dialog.py**: Data loader :py:class:`class <nlp_architect.data.babi_dialog.BABI_Dialog>` to download data if not present and perform preprocessing.
+- **examples/memn2n_dialog/memn2n_dialogue.py**: Implementation of :py:class:`MemN2N_Dialog <nlp_architect.models.memn2n_dialogue.MemN2N_Dialog>` class for dialogue tasks.
 - **examples/memn2n_dialog/train_model.py**: Training script to load dataset and train memory network.
 - **examples/memn2n_dialog/interactive.py**: Inference script to run interactive session with a trained goal oriented dialog agent.
 - **examples/memn2n_dialog/interactive_utils.py**: Utilities to support interactive mode and simulate backend database.

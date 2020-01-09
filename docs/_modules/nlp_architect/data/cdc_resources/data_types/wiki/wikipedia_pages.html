@@ -210,7 +210,7 @@
 
 <div class="viewcode-block" id="WikipediaPages.add_page"><a class="viewcode-back" href="../../../../../../generated_api/nlp_architect.data.cdc_resources.data_types.wiki.html#nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_pages.WikipediaPages.add_page">[docs]</a>    <span class="k">def</span> <span class="nf">add_page</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">page</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pages</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">page</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">page</span><span class="o">.</span><span class="n">orig_phrase_norm</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">page</span><span class="o">.</span><span class="n">orig_phrase_norm</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">page</span><span class="o">.</span><span class="n">orig_phrase_norm</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">page</span><span class="o">.</span><span class="n">orig_phrase_norm</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">is_empty_norm_phrase</span> <span class="o">=</span> <span class="kc">False</span></div>
 
 <div class="viewcode-block" id="WikipediaPages.get_and_set_all_disambiguation"><a class="viewcode-back" href="../../../../../../generated_api/nlp_architect.data.cdc_resources.data_types.wiki.html#nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_pages.WikipediaPages.get_and_set_all_disambiguation">[docs]</a>    <span class="k">def</span> <span class="nf">get_and_set_all_disambiguation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -261,10 +261,10 @@
 <div class="viewcode-block" id="WikipediaPages.get_and_set_titles"><a class="viewcode-back" href="../../../../../../generated_api/nlp_architect.data.cdc_resources.data_types.wiki.html#nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_pages.WikipediaPages.get_and_set_titles">[docs]</a>    <span class="k">def</span> <span class="nf">get_and_set_titles</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">all_titles</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">page</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pages</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">page</span><span class="o">.</span><span class="n">orig_phrase</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">page</span><span class="o">.</span><span class="n">orig_phrase</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
                 <span class="n">all_titles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">page</span><span class="o">.</span><span class="n">orig_phrase</span><span class="p">)</span>
                 <span class="n">all_titles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">page</span><span class="o">.</span><span class="n">orig_phrase_norm</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">page</span><span class="o">.</span><span class="n">wiki_title</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">page</span><span class="o">.</span><span class="n">wiki_title</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
                 <span class="n">all_titles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">page</span><span class="o">.</span><span class="n">wiki_title</span><span class="p">)</span>
                 <span class="n">all_titles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">page</span><span class="o">.</span><span class="n">wiki_title_norm</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">set</span><span class="p">(</span><span class="n">all_titles</span><span class="p">)</span></div>
@@ -275,13 +275,13 @@
         <span class="k">for</span> <span class="n">page</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pages</span><span class="p">:</span>
             <span class="n">page_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">page</span><span class="o">.</span><span class="n">toJson</span><span class="p">())</span>
 
-        <span class="n">result_dict</span><span class="p">[</span><span class="s1">&#39;pages&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">page_list</span>
+        <span class="n">result_dict</span><span class="p">[</span><span class="s2">&quot;pages&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">page_list</span>
         <span class="k">return</span> <span class="n">result_dict</span></div>
 
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="n">result_str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="n">result_str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
         <span class="k">for</span> <span class="n">page</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pages</span><span class="p">:</span>
-            <span class="n">result_str</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">page</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span>
+            <span class="n">result_str</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">page</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span>
 
         <span class="k">return</span> <span class="n">result_str</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span></div>
 </pre></div>

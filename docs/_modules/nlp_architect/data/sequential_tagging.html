@@ -196,8 +196,7 @@
 <span class="c1"># limitations under the License.</span>
 <span class="c1"># ******************************************************************************</span>
 
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="p">(</span><span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span>
-                        <span class="n">unicode_literals</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">unicode_literals</span>
 
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">os</span>
@@ -206,14 +205,14 @@
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="kn">from</span> <span class="nn">nlp_architect.data.utils</span> <span class="kn">import</span> <span class="p">(</span><span class="n">DataProcessor</span><span class="p">,</span> <span class="n">InputExample</span><span class="p">,</span>
-                                      <span class="n">read_column_tagged_file</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.data.utils</span> <span class="kn">import</span> <span class="n">DataProcessor</span><span class="p">,</span> <span class="n">InputExample</span><span class="p">,</span> <span class="n">read_column_tagged_file</span>
 <span class="kn">from</span> <span class="nn">nlp_architect.utils.generic</span> <span class="kn">import</span> <span class="n">pad_sentences</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.utils.io</span> <span class="kn">import</span> <span class="p">(</span><span class="n">validate_existing_directory</span><span class="p">,</span>
-                                    <span class="n">validate_existing_filepath</span><span class="p">)</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.utils.text</span> <span class="kn">import</span> <span class="p">(</span><span class="n">character_vector_generator</span><span class="p">,</span>
-                                      <span class="n">read_sequential_tagging_file</span><span class="p">,</span>
-                                      <span class="n">word_vector_generator</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.utils.io</span> <span class="kn">import</span> <span class="n">validate_existing_directory</span><span class="p">,</span> <span class="n">validate_existing_filepath</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.utils.text</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">character_vector_generator</span><span class="p">,</span>
+    <span class="n">read_sequential_tagging_file</span><span class="p">,</span>
+    <span class="n">word_vector_generator</span><span class="p">,</span>
+<span class="p">)</span>
 <span class="kn">from</span> <span class="nn">nlp_architect.utils.text</span> <span class="kn">import</span> <span class="n">Vocabulary</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
@@ -232,33 +231,27 @@
 <span class="sd">        tag_field_no (int, optional): index of column to use a y-samples</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                 <span class="n">train_file</span><span class="p">,</span>
-                 <span class="n">test_file</span><span class="p">,</span>
-                 <span class="n">max_sentence_length</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
-                 <span class="n">max_word_length</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
-                 <span class="n">tag_field_no</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">files</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;train&#39;</span><span class="p">:</span> <span class="n">train_file</span><span class="p">,</span>
-                      <span class="s1">&#39;test&#39;</span><span class="p">:</span> <span class="n">test_file</span><span class="p">}</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">train_file</span><span class="p">,</span> <span class="n">test_file</span><span class="p">,</span> <span class="n">max_sentence_length</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">max_word_length</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">tag_field_no</span><span class="o">=</span><span class="mi">2</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">files</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;train&quot;</span><span class="p">:</span> <span class="n">train_file</span><span class="p">,</span> <span class="s2">&quot;test&quot;</span><span class="p">:</span> <span class="n">test_file</span><span class="p">}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">max_sent_len</span> <span class="o">=</span> <span class="n">max_sentence_length</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">max_word_len</span> <span class="o">=</span> <span class="n">max_word_length</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tf</span> <span class="o">=</span> <span class="n">tag_field_no</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">vocabs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;token&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
-                       <span class="s1">&#39;char&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>   <span class="c1"># 0=pad, 1=unk</span>
-                       <span class="s1">&#39;tag&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">}</span>    <span class="c1"># 0=pad</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vocabs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;token&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;char&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;tag&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">}</span>  <span class="c1"># 0=pad, 1=unk  # 0=pad</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
 
-        <span class="n">sentences</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_file</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">])</span>
+        <span class="n">sentences</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_file</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">])</span>
         <span class="n">train_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sentences</span><span class="p">)</span>
-        <span class="n">sentences</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_file</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">])</span>
+        <span class="n">sentences</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_file</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="p">[</span><span class="s2">&quot;test&quot;</span><span class="p">])</span>
         <span class="n">test_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sentences</span><span class="p">)</span> <span class="o">-</span> <span class="n">train_size</span>
         <span class="n">texts</span><span class="p">,</span> <span class="n">tags</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">sentences</span><span class="p">))</span>
 
-        <span class="n">texts_mat</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vocabs</span><span class="p">[</span><span class="s1">&#39;token&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">word_vector_generator</span><span class="p">(</span><span class="n">texts</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-        <span class="n">tags_mat</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vocabs</span><span class="p">[</span><span class="s1">&#39;tag&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">word_vector_generator</span><span class="p">(</span><span class="n">tags</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-        <span class="n">chars_mat</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vocabs</span><span class="p">[</span><span class="s1">&#39;char&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">character_vector_generator</span><span class="p">(</span><span class="n">texts</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">texts_mat</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vocabs</span><span class="p">[</span><span class="s2">&quot;token&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">word_vector_generator</span><span class="p">(</span><span class="n">texts</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">tags_mat</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vocabs</span><span class="p">[</span><span class="s2">&quot;tag&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">word_vector_generator</span><span class="p">(</span><span class="n">tags</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">chars_mat</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vocabs</span><span class="p">[</span><span class="s2">&quot;char&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">character_vector_generator</span><span class="p">(</span><span class="n">texts</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
         <span class="n">texts_mat</span> <span class="o">=</span> <span class="n">pad_sentences</span><span class="p">(</span><span class="n">texts_mat</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_sent_len</span><span class="p">)</span>
         <span class="n">tags_mat</span> <span class="o">=</span> <span class="n">pad_sentences</span><span class="p">(</span><span class="n">tags_mat</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_sent_len</span><span class="p">)</span>
@@ -266,50 +259,50 @@
         <span class="n">chars_mat</span> <span class="o">=</span> <span class="p">[</span><span class="n">pad_sentences</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_word_len</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">chars_mat</span><span class="p">]</span>
         <span class="n">zeros</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">chars_mat</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_sent_len</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_word_len</span><span class="p">))</span>
         <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">chars_mat</span><span class="p">):</span>
-            <span class="n">d</span> <span class="o">=</span> <span class="n">d</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">max_sent_len</span><span class="p">]</span>
-            <span class="n">zeros</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="p">:</span><span class="n">d</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">d</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="n">d</span><span class="p">[:</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_sent_len</span><span class="p">]</span>
+            <span class="n">zeros</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="p">:</span> <span class="n">d</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">d</span>
         <span class="n">chars_mat</span> <span class="o">=</span> <span class="n">zeros</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">texts_mat</span><span class="p">[:</span><span class="n">train_size</span><span class="p">],</span> <span class="n">chars_mat</span><span class="p">[:</span><span class="n">train_size</span><span class="p">],</span> <span class="n">tags_mat</span><span class="p">[:</span><span class="n">train_size</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">texts_mat</span><span class="p">[</span><span class="o">-</span><span class="n">test_size</span><span class="p">:],</span> <span class="n">chars_mat</span><span class="p">[</span><span class="o">-</span><span class="n">test_size</span><span class="p">:],</span> <span class="n">tags_mat</span><span class="p">[</span><span class="o">-</span><span class="n">test_size</span><span class="p">:]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">texts_mat</span><span class="p">[:</span><span class="n">train_size</span><span class="p">],</span> <span class="n">chars_mat</span><span class="p">[:</span><span class="n">train_size</span><span class="p">],</span> <span class="n">tags_mat</span><span class="p">[:</span><span class="n">train_size</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;test&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">texts_mat</span><span class="p">[</span><span class="o">-</span><span class="n">test_size</span><span class="p">:],</span> <span class="n">chars_mat</span><span class="p">[</span><span class="o">-</span><span class="n">test_size</span><span class="p">:],</span> <span class="n">tags_mat</span><span class="p">[</span><span class="o">-</span><span class="n">test_size</span><span class="p">:]</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">y_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;return y labels&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">vocabs</span><span class="p">[</span><span class="s1">&#39;tag&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">vocabs</span><span class="p">[</span><span class="s2">&quot;tag&quot;</span><span class="p">]</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">word_vocab</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;words vocabulary&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">vocabs</span><span class="p">[</span><span class="s1">&#39;token&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">vocabs</span><span class="p">[</span><span class="s2">&quot;token&quot;</span><span class="p">]</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">char_vocab</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;characters vocabulary&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">vocabs</span><span class="p">[</span><span class="s1">&#39;char&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">vocabs</span><span class="p">[</span><span class="s2">&quot;char&quot;</span><span class="p">]</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">word_vocab_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;word vocabulary size&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vocabs</span><span class="p">[</span><span class="s1">&#39;token&#39;</span><span class="p">])</span> <span class="o">+</span> <span class="mi">2</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vocabs</span><span class="p">[</span><span class="s2">&quot;token&quot;</span><span class="p">])</span> <span class="o">+</span> <span class="mi">2</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">char_vocab_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;character vocabulary size&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vocabs</span><span class="p">[</span><span class="s1">&#39;char&#39;</span><span class="p">])</span> <span class="o">+</span> <span class="mi">2</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vocabs</span><span class="p">[</span><span class="s2">&quot;char&quot;</span><span class="p">])</span> <span class="o">+</span> <span class="mi">2</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">train_set</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Get the train set&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">]</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">test_set</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Get the test set&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;test&quot;</span><span class="p">]</span>
 
     <span class="k">def</span> <span class="nf">_read_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">):</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
             <span class="n">data</span> <span class="o">=</span> <span class="n">fp</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
             <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">data</span><span class="p">]</span>
             <span class="n">sentences</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_split_into_sentences</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
@@ -321,9 +314,9 @@
         <span class="n">tags</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">sentence</span><span class="p">:</span>
             <span class="n">fields</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
-            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">fields</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tf</span><span class="p">,</span> <span class="s1">&#39;tag field exceeds number of fields&#39;</span>
-            <span class="k">if</span> <span class="s1">&#39;CD&#39;</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
-                <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;0&#39;</span><span class="p">)</span>
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">fields</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tf</span><span class="p">,</span> <span class="s2">&quot;tag field exceeds number of fields&quot;</span>
+            <span class="k">if</span> <span class="s2">&quot;CD&quot;</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+                <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;0&quot;</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
             <span class="n">tags</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">tf</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span>
@@ -358,25 +351,23 @@
 <span class="sd">            lowercase (bool, optional): lower case sentence words</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-    <span class="n">dataset_files</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;train&#39;</span><span class="p">:</span> <span class="s1">&#39;train.txt&#39;</span><span class="p">,</span>
-                     <span class="s1">&#39;test&#39;</span><span class="p">:</span> <span class="s1">&#39;test.txt&#39;</span><span class="p">}</span>
+    <span class="n">dataset_files</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;train&quot;</span><span class="p">:</span> <span class="s2">&quot;train.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;test&quot;</span><span class="p">:</span> <span class="s2">&quot;test.txt&quot;</span><span class="p">}</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                 <span class="n">data_path</span><span class="p">,</span>
-                 <span class="n">sentence_length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">max_word_length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">extract_chars</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                 <span class="n">lowercase</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">data_path</span><span class="p">,</span>
+        <span class="n">sentence_length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">max_word_length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">extract_chars</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">lowercase</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_validate_paths</span><span class="p">(</span><span class="n">data_path</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data_path</span> <span class="o">=</span> <span class="n">data_path</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sentence_length</span> <span class="o">=</span> <span class="n">sentence_length</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">use_chars</span> <span class="o">=</span> <span class="n">extract_chars</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">max_word_length</span> <span class="o">=</span> <span class="n">max_word_length</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lower</span> <span class="o">=</span> <span class="n">lowercase</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">vocabs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;word&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
-                       <span class="s1">&#39;char&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
-                       <span class="s1">&#39;pos&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
-                       <span class="s1">&#39;chunk&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vocabs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;word&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;char&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;pos&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;chunk&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_data_dict</span> <span class="o">=</span> <span class="p">{}</span>
 
     <span class="k">def</span> <span class="nf">_validate_paths</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_path</span><span class="p">):</span>
@@ -391,8 +382,8 @@
 <span class="sd">        open files and parse</span>
 <span class="sd">        return format: list of 3-tuples (word list, POS list, chunk list)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">train_set</span> <span class="o">=</span> <span class="n">read_sequential_tagging_file</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_files</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">])</span>
-        <span class="n">test_set</span> <span class="o">=</span> <span class="n">read_sequential_tagging_file</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_files</span><span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">])</span>
+        <span class="n">train_set</span> <span class="o">=</span> <span class="n">read_sequential_tagging_file</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_files</span><span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">])</span>
+        <span class="n">test_set</span> <span class="o">=</span> <span class="n">read_sequential_tagging_file</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_files</span><span class="p">[</span><span class="s2">&quot;test&quot;</span><span class="p">])</span>
         <span class="n">train_data</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">x</span><span class="p">))</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">train_set</span><span class="p">]</span>
         <span class="n">test_data</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">x</span><span class="p">))</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">test_set</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">train_data</span><span class="p">,</span> <span class="n">test_data</span>
@@ -400,16 +391,16 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">train_set</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;get the train set&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_gen_data</span><span class="p">()</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;train&quot;</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">test_set</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;get the test set&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;test&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_gen_data</span><span class="p">()</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;test&quot;</span><span class="p">)</span>
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_extract</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
@@ -418,22 +409,22 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">word_vocab</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;word Vocabulary&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">vocabs</span><span class="p">[</span><span class="s1">&#39;word&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">vocabs</span><span class="p">[</span><span class="s2">&quot;word&quot;</span><span class="p">]</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">char_vocab</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;character Vocabulary&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">vocabs</span><span class="p">[</span><span class="s1">&#39;char&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">vocabs</span><span class="p">[</span><span class="s2">&quot;char&quot;</span><span class="p">]</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">pos_vocab</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;pos label Vocabulary&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">vocabs</span><span class="p">[</span><span class="s1">&#39;pos&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">vocabs</span><span class="p">[</span><span class="s2">&quot;pos&quot;</span><span class="p">]</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">chunk_vocab</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;chunk label Vocabulary&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">vocabs</span><span class="p">[</span><span class="s1">&#39;chunk&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">vocabs</span><span class="p">[</span><span class="s2">&quot;chunk&quot;</span><span class="p">]</span>
 
     <span class="k">def</span> <span class="nf">_gen_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">train</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_data</span><span class="p">()</span>
@@ -445,30 +436,37 @@
         <span class="n">sentence_vecs</span><span class="p">,</span> <span class="n">word_vocab</span> <span class="o">=</span> <span class="n">word_vector_generator</span><span class="p">(</span><span class="n">sentences</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lower</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
         <span class="n">pos_vecs</span><span class="p">,</span> <span class="n">pos_vocab</span> <span class="o">=</span> <span class="n">word_vector_generator</span><span class="p">(</span><span class="n">pos_tags</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
         <span class="n">chunk_vecs</span><span class="p">,</span> <span class="n">chunk_vocab</span> <span class="o">=</span> <span class="n">word_vector_generator</span><span class="p">(</span><span class="n">chunk_tags</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">vocabs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;word&#39;</span><span class="p">:</span> <span class="n">word_vocab</span><span class="p">,</span>  <span class="c1"># 0=pad, 1=unk</span>
-                       <span class="s1">&#39;pos&#39;</span><span class="p">:</span> <span class="n">pos_vocab</span><span class="p">,</span>  <span class="c1"># 0=pad, 1=unk</span>
-                       <span class="s1">&#39;chunk&#39;</span><span class="p">:</span> <span class="n">chunk_vocab</span><span class="p">}</span>  <span class="c1"># 0=pad</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vocabs</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;word&quot;</span><span class="p">:</span> <span class="n">word_vocab</span><span class="p">,</span>  <span class="c1"># 0=pad, 1=unk</span>
+            <span class="s2">&quot;pos&quot;</span><span class="p">:</span> <span class="n">pos_vocab</span><span class="p">,</span>  <span class="c1"># 0=pad, 1=unk</span>
+            <span class="s2">&quot;chunk&quot;</span><span class="p">:</span> <span class="n">chunk_vocab</span><span class="p">,</span>
+        <span class="p">}</span>  <span class="c1"># 0=pad</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sentence_length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">sentence_vecs</span> <span class="o">=</span> <span class="n">pad_sentences</span><span class="p">(</span><span class="n">sentence_vecs</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sentence_length</span><span class="p">)</span>
             <span class="n">chunk_vecs</span> <span class="o">=</span> <span class="n">pad_sentences</span><span class="p">(</span><span class="n">chunk_vecs</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sentence_length</span><span class="p">)</span>
             <span class="n">pos_vecs</span> <span class="o">=</span> <span class="n">pad_sentences</span><span class="p">(</span><span class="n">pos_vecs</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sentence_length</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_data_dict</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sentence_vecs</span><span class="p">[:</span><span class="n">train_size</span><span class="p">],</span> <span class="n">pos_vecs</span><span class="p">[:</span><span class="n">train_size</span><span class="p">],</span> \
-            <span class="n">chunk_vecs</span><span class="p">[:</span><span class="n">train_size</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_data_dict</span><span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sentence_vecs</span><span class="p">[</span><span class="o">-</span><span class="n">test_size</span><span class="p">:],</span> <span class="n">pos_vecs</span><span class="p">[</span><span class="o">-</span><span class="n">test_size</span><span class="p">:],</span> \
-            <span class="n">chunk_vecs</span><span class="p">[</span><span class="o">-</span><span class="n">test_size</span><span class="p">:]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_dict</span><span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">sentence_vecs</span><span class="p">[:</span><span class="n">train_size</span><span class="p">],</span>
+            <span class="n">pos_vecs</span><span class="p">[:</span><span class="n">train_size</span><span class="p">],</span>
+            <span class="n">chunk_vecs</span><span class="p">[:</span><span class="n">train_size</span><span class="p">],</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_dict</span><span class="p">[</span><span class="s2">&quot;test&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">sentence_vecs</span><span class="p">[</span><span class="o">-</span><span class="n">test_size</span><span class="p">:],</span>
+            <span class="n">pos_vecs</span><span class="p">[</span><span class="o">-</span><span class="n">test_size</span><span class="p">:],</span>
+            <span class="n">chunk_vecs</span><span class="p">[</span><span class="o">-</span><span class="n">test_size</span><span class="p">:],</span>
+        <span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_chars</span><span class="p">:</span>
             <span class="n">chars_vecs</span><span class="p">,</span> <span class="n">char_vocab</span> <span class="o">=</span> <span class="n">character_vector_generator</span><span class="p">(</span><span class="n">sentences</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">vocabs</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;char&#39;</span><span class="p">:</span> <span class="n">char_vocab</span><span class="p">})</span>  <span class="c1"># 0=pad, 1=unk</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">vocabs</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;char&quot;</span><span class="p">:</span> <span class="n">char_vocab</span><span class="p">})</span>  <span class="c1"># 0=pad, 1=unk</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_word_length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">chars_vecs</span> <span class="o">=</span> <span class="p">[</span><span class="n">pad_sentences</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_word_length</span><span class="p">)</span>
-                              <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">chars_vecs</span><span class="p">]</span>
+                <span class="n">chars_vecs</span> <span class="o">=</span> <span class="p">[</span><span class="n">pad_sentences</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_word_length</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">chars_vecs</span><span class="p">]</span>
                 <span class="n">zeros</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">chars_vecs</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">sentence_length</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_word_length</span><span class="p">))</span>
                 <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">chars_vecs</span><span class="p">):</span>
-                    <span class="n">d</span> <span class="o">=</span> <span class="n">d</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">sentence_length</span><span class="p">]</span>
-                    <span class="n">zeros</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="o">-</span><span class="n">d</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:]</span> <span class="o">=</span> <span class="n">d</span>
+                    <span class="n">d</span> <span class="o">=</span> <span class="n">d</span><span class="p">[:</span> <span class="bp">self</span><span class="o">.</span><span class="n">sentence_length</span><span class="p">]</span>
+                    <span class="n">zeros</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="o">-</span><span class="n">d</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">d</span>
                 <span class="n">chars_vecs</span> <span class="o">=</span> <span class="n">zeros</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_data_dict</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="p">(</span><span class="n">chars_vecs</span><span class="p">[:</span><span class="n">train_size</span><span class="p">],)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_data_dict</span><span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="p">(</span><span class="n">chars_vecs</span><span class="p">[</span><span class="o">-</span><span class="n">test_size</span><span class="p">:],)</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_data_dict</span><span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="p">(</span><span class="n">chars_vecs</span><span class="p">[:</span><span class="n">train_size</span><span class="p">],)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_data_dict</span><span class="p">[</span><span class="s2">&quot;test&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="p">(</span><span class="n">chars_vecs</span><span class="p">[</span><span class="o">-</span><span class="n">test_size</span><span class="p">:],)</span></div>
 
 
 <div class="viewcode-block" id="TokenClsInputExample"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.sequential_tagging.TokenClsInputExample">[docs]</a><span class="k">class</span> <span class="nc">TokenClsInputExample</span><span class="p">(</span><span class="n">InputExample</span><span class="p">):</span>
@@ -502,11 +500,16 @@
 
     <span class="k">def</span> <span class="nf">_read_examples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">,</span> <span class="n">file_name</span><span class="p">,</span> <span class="n">set_name</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">data_dir</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="o">+</span> <span class="n">file_name</span><span class="p">):</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Requested file </span><span class="si">{}</span><span class="s2"> in path </span><span class="si">{}</span><span class="s2"> for TokenClsProcess not found&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                <span class="n">file_name</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">))</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                <span class="s2">&quot;Requested file </span><span class="si">{}</span><span class="s2"> in path </span><span class="si">{}</span><span class="s2"> for TokenClsProcess not found&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">file_name</span><span class="p">,</span> <span class="n">data_dir</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
             <span class="k">return</span> <span class="kc">None</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_examples</span><span class="p">(</span><span class="n">read_column_tagged_file</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">file_name</span><span class="p">),</span>
-                                                             <span class="n">tag_col</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tag_col</span><span class="p">),</span> <span class="n">set_name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_examples</span><span class="p">(</span>
+            <span class="n">read_column_tagged_file</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">file_name</span><span class="p">),</span> <span class="n">tag_col</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tag_col</span><span class="p">),</span>
+            <span class="n">set_name</span><span class="p">,</span>
+        <span class="p">)</span>
 
 <div class="viewcode-block" id="TokenClsProcessor.get_train_examples"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.sequential_tagging.TokenClsProcessor.get_train_examples">[docs]</a>    <span class="k">def</span> <span class="nf">get_train_examples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;train.txt&quot;</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_examples</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;train&quot;</span><span class="p">)</span></div>
@@ -543,9 +546,10 @@
         <span class="n">examples</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">sentence</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">lines</span><span class="p">):</span>
             <span class="n">guid</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">-</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">set_type</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
-            <span class="n">text</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">sentence</span><span class="p">)</span>
-            <span class="n">examples</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">TokenClsInputExample</span><span class="p">(</span><span class="n">guid</span><span class="o">=</span><span class="n">guid</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text</span><span class="p">,</span>
-                                                 <span class="n">tokens</span><span class="o">=</span><span class="n">sentence</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">labels</span><span class="p">))</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">sentence</span><span class="p">)</span>
+            <span class="n">examples</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">TokenClsInputExample</span><span class="p">(</span><span class="n">guid</span><span class="o">=</span><span class="n">guid</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text</span><span class="p">,</span> <span class="n">tokens</span><span class="o">=</span><span class="n">sentence</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">labels</span><span class="p">)</span>
+            <span class="p">)</span>
         <span class="k">return</span> <span class="n">examples</span>
 
 <div class="viewcode-block" id="TokenClsProcessor.get_vocabulary"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.sequential_tagging.TokenClsProcessor.get_vocabulary">[docs]</a>    <span class="k">def</span> <span class="nf">get_vocabulary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>

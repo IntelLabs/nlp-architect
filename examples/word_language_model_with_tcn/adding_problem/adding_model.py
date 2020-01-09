@@ -25,6 +25,7 @@ class TCNForAdding(TCN):
     """
     Main class that defines training graph and defines training run method for the adding problem
     """
+
     def __init__(self, *args, **kwargs):
         super(TCNForAdding, self).__init__(*args, **kwargs)
         self.input_placeholder = None
@@ -48,8 +49,9 @@ class TCNForAdding(TCN):
         Returns:
             float, Training loss of last iteration
         """
-        summary_writer = tf.summary.FileWriter(os.path.join(result_dir, "tfboard"),
-                                               tf.get_default_graph())
+        summary_writer = tf.summary.FileWriter(
+            os.path.join(result_dir, "tfboard"), tf.get_default_graph()
+        )
         saver = tf.train.Saver(max_to_keep=None)
 
         sess = tf.Session(config=tf.ConfigProto(allow_soft_placement=True))
@@ -60,22 +62,29 @@ class TCNForAdding(TCN):
 
             x_data, y_data = next(data_loader)
 
-            feed_dict = {self.input_placeholder: x_data, self.label_placeholder: y_data,
-                         self.training_mode: True}
-            _, summary_train, total_loss_i = sess.run([self.training_update_step,
-                                                       self.merged_summary_op_train,
-                                                       self.training_loss], feed_dict=feed_dict)
+            feed_dict = {
+                self.input_placeholder: x_data,
+                self.label_placeholder: y_data,
+                self.training_mode: True,
+            }
+            _, summary_train, total_loss_i = sess.run(
+                [self.training_update_step, self.merged_summary_op_train, self.training_loss],
+                feed_dict=feed_dict,
+            )
             summary_writer.add_summary(summary_train, i)
 
             if i % log_interval == 0:
                 print("Step {}: Total: {}".format(i, total_loss_i))
                 saver.save(sess, result_dir, global_step=i)
 
-                feed_dict = {self.input_placeholder: data_loader.test[0],
-                             self.label_placeholder: data_loader.test[1],
-                             self.training_mode: False}
-                val_loss, summary_val = sess.run([self.training_loss, self.merged_summary_op_val],
-                                                 feed_dict=feed_dict)
+                feed_dict = {
+                    self.input_placeholder: data_loader.test[0],
+                    self.label_placeholder: data_loader.test[1],
+                    self.training_mode: False,
+                }
+                val_loss, summary_val = sess.run(
+                    [self.training_loss, self.merged_summary_op_val], feed_dict=feed_dict
+                )
 
                 summary_writer.add_summary(summary_val, i)
 
@@ -95,16 +104,17 @@ class TCNForAdding(TCN):
             None
         """
         with tf.variable_scope("input", reuse=True):
-            self.input_placeholder = tf.placeholder(tf.float32,
-                                                    [None, self.max_len, self.n_features_in],
-                                                    name='input')
-            self.label_placeholder = tf.placeholder(tf.float32, [None, 1], name='labels')
+            self.input_placeholder = tf.placeholder(
+                tf.float32, [None, self.max_len, self.n_features_in], name="input"
+            )
+            self.label_placeholder = tf.placeholder(tf.float32, [None, 1], name="labels")
 
         self.prediction = self.build_network_graph(self.input_placeholder, last_timepoint=True)
 
         with tf.variable_scope("training"):
-            self.training_loss = tf.losses.mean_squared_error(self.label_placeholder,
-                                                              self.prediction)
+            self.training_loss = tf.losses.mean_squared_error(
+                self.label_placeholder, self.prediction
+            )
 
             summary_ops_train = [tf.summary.scalar("Training Loss", self.training_loss)]
             self.merged_summary_op_train = tf.summary.merge(summary_ops_train)
@@ -116,8 +126,9 @@ class TCNForAdding(TCN):
             params = tf.trainable_variables()
             gradients = tf.gradients(self.training_loss, params)
             if max_gradient_norm is not None:
-                clipped_gradients = [t if t is None else tf.clip_by_norm(t, max_gradient_norm)
-                                     for t in gradients]
+                clipped_gradients = [
+                    t if t is None else tf.clip_by_norm(t, max_gradient_norm) for t in gradients
+                ]
             else:
                 clipped_gradients = gradients
 
@@ -125,5 +136,6 @@ class TCNForAdding(TCN):
             update_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
             optimizer = tf.train.AdamOptimizer(lr)
             with tf.control_dependencies(update_ops):
-                self.training_update_step = optimizer.apply_gradients(zip(clipped_gradients,
-                                                                          params))
+                self.training_update_step = optimizer.apply_gradients(
+                    zip(clipped_gradients, params)
+                )

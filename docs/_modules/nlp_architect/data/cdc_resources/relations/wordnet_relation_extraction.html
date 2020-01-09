@@ -203,8 +203,10 @@
 <span class="kn">from</span> <span class="nn">nlp_architect.common.cdc.mention_data</span> <span class="kn">import</span> <span class="n">MentionDataLight</span>
 <span class="kn">from</span> <span class="nn">nlp_architect.data.cdc_resources.data_types.wn.wordnet_page</span> <span class="kn">import</span> <span class="n">WordnetPage</span>
 <span class="kn">from</span> <span class="nn">nlp_architect.data.cdc_resources.relations.relation_extraction</span> <span class="kn">import</span> <span class="n">RelationExtraction</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.data.cdc_resources.relations.relation_types_enums</span> <span class="kn">import</span> <span class="n">RelationType</span><span class="p">,</span> \
-    <span class="n">OnlineOROfflineMethod</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.data.cdc_resources.relations.relation_types_enums</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">RelationType</span><span class="p">,</span>
+    <span class="n">OnlineOROfflineMethod</span><span class="p">,</span>
+<span class="p">)</span>
 <span class="kn">from</span> <span class="nn">nlp_architect.data.cdc_resources.wordnet.wordnet_offline</span> <span class="kn">import</span> <span class="n">WordnetOffline</span>
 <span class="kn">from</span> <span class="nn">nlp_architect.data.cdc_resources.wordnet.wordnet_online</span> <span class="kn">import</span> <span class="n">WordnetOnline</span>
 <span class="kn">from</span> <span class="nn">nlp_architect.utils.string_utils</span> <span class="kn">import</span> <span class="n">StringUtils</span>
@@ -213,8 +215,9 @@
 
 
 <div class="viewcode-block" id="WordnetRelationExtraction"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.relations.html#nlp_architect.data.cdc_resources.relations.wordnet_relation_extraction.WordnetRelationExtraction">[docs]</a><span class="k">class</span> <span class="nc">WordnetRelationExtraction</span><span class="p">(</span><span class="n">RelationExtraction</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="p">:</span> <span class="n">OnlineOROfflineMethod</span> <span class="o">=</span> <span class="n">OnlineOROfflineMethod</span><span class="o">.</span><span class="n">ONLINE</span><span class="p">,</span>
-                 <span class="n">wn_file</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="p">:</span> <span class="n">OnlineOROfflineMethod</span> <span class="o">=</span> <span class="n">OnlineOROfflineMethod</span><span class="o">.</span><span class="n">ONLINE</span><span class="p">,</span> <span class="n">wn_file</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Extract Relation between two mentions according to Word Embedding cosine distance</span>
 
@@ -223,7 +226,7 @@
 <span class="sd">                a sub-set of it (default = ONLINE)</span>
 <span class="sd">            wn_file (required on OFFLINE mode): str Location of wordnet subset file to work with</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Loading Wordnet module&#39;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Loading Wordnet module&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">connectivity</span> <span class="o">=</span> <span class="n">method</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">connectivity</span> <span class="o">==</span> <span class="n">OnlineOROfflineMethod</span><span class="o">.</span><span class="n">ONLINE</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">wordnet_impl</span> <span class="o">=</span> <span class="n">WordnetOnline</span><span class="p">()</span>
@@ -231,13 +234,14 @@
             <span class="k">if</span> <span class="n">wn_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">wn_file</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">wordnet_impl</span> <span class="o">=</span> <span class="n">WordnetOffline</span><span class="p">(</span><span class="n">wn_file</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="s1">&#39;WordNet resource directory not found or not in path&#39;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="s2">&quot;WordNet resource directory not found or not in path&quot;</span><span class="p">)</span>
 
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Wordnet module lead successfully&#39;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Wordnet module lead successfully&quot;</span><span class="p">)</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">WordnetRelationExtraction</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
-<div class="viewcode-block" id="WordnetRelationExtraction.extract_all_relations"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.relations.html#nlp_architect.data.cdc_resources.relations.wordnet_relation_extraction.WordnetRelationExtraction.extract_all_relations">[docs]</a>    <span class="k">def</span> <span class="nf">extract_all_relations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mention_x</span><span class="p">:</span> <span class="n">MentionDataLight</span><span class="p">,</span>
-                              <span class="n">mention_y</span><span class="p">:</span> <span class="n">MentionDataLight</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="n">RelationType</span><span class="p">]:</span>
+<div class="viewcode-block" id="WordnetRelationExtraction.extract_all_relations"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.relations.html#nlp_architect.data.cdc_resources.relations.wordnet_relation_extraction.WordnetRelationExtraction.extract_all_relations">[docs]</a>    <span class="k">def</span> <span class="nf">extract_all_relations</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">mention_x</span><span class="p">:</span> <span class="n">MentionDataLight</span><span class="p">,</span> <span class="n">mention_y</span><span class="p">:</span> <span class="n">MentionDataLight</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="n">RelationType</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Try to find if mentions has anyone or more of the relations this class support</span>
 
@@ -254,7 +258,8 @@
         <span class="n">mention_x_str</span> <span class="o">=</span> <span class="n">mention_x</span><span class="o">.</span><span class="n">tokens_str</span>
         <span class="n">mention_y_str</span> <span class="o">=</span> <span class="n">mention_y</span><span class="o">.</span><span class="n">tokens_str</span>
         <span class="k">if</span> <span class="n">StringUtils</span><span class="o">.</span><span class="n">is_pronoun</span><span class="p">(</span><span class="n">mention_x_str</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span> <span class="ow">or</span> <span class="n">StringUtils</span><span class="o">.</span><span class="n">is_pronoun</span><span class="p">(</span>
-                <span class="n">mention_y_str</span><span class="o">.</span><span class="n">lower</span><span class="p">()):</span>
+            <span class="n">mention_y_str</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="p">):</span>
             <span class="n">relations</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">RelationType</span><span class="o">.</span><span class="n">NO_RELATION_FOUND</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">relations</span>
 
@@ -277,8 +282,9 @@
 
         <span class="k">return</span> <span class="n">relations</span></div>
 
-<div class="viewcode-block" id="WordnetRelationExtraction.extract_sub_relations"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.relations.html#nlp_architect.data.cdc_resources.relations.wordnet_relation_extraction.WordnetRelationExtraction.extract_sub_relations">[docs]</a>    <span class="k">def</span> <span class="nf">extract_sub_relations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mention_x</span><span class="p">:</span> <span class="n">MentionDataLight</span><span class="p">,</span> <span class="n">mention_y</span><span class="p">:</span> <span class="n">MentionDataLight</span><span class="p">,</span>
-                              <span class="n">relation</span><span class="p">:</span> <span class="n">RelationType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RelationType</span><span class="p">:</span>
+<div class="viewcode-block" id="WordnetRelationExtraction.extract_sub_relations"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.relations.html#nlp_architect.data.cdc_resources.relations.wordnet_relation_extraction.WordnetRelationExtraction.extract_sub_relations">[docs]</a>    <span class="k">def</span> <span class="nf">extract_sub_relations</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">mention_x</span><span class="p">:</span> <span class="n">MentionDataLight</span><span class="p">,</span> <span class="n">mention_y</span><span class="p">:</span> <span class="n">MentionDataLight</span><span class="p">,</span> <span class="n">relation</span><span class="p">:</span> <span class="n">RelationType</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RelationType</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check if input mentions has the given relation between them</span>
 
@@ -294,7 +300,8 @@
         <span class="n">mention_x_str</span> <span class="o">=</span> <span class="n">mention_x</span><span class="o">.</span><span class="n">tokens_str</span>
         <span class="n">mention_y_str</span> <span class="o">=</span> <span class="n">mention_y</span><span class="o">.</span><span class="n">tokens_str</span>
         <span class="k">if</span> <span class="n">StringUtils</span><span class="o">.</span><span class="n">is_pronoun</span><span class="p">(</span><span class="n">mention_x_str</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span> <span class="ow">or</span> <span class="n">StringUtils</span><span class="o">.</span><span class="n">is_pronoun</span><span class="p">(</span>
-                <span class="n">mention_y_str</span><span class="o">.</span><span class="n">lower</span><span class="p">()):</span>
+            <span class="n">mention_y_str</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="p">):</span>
             <span class="k">return</span> <span class="n">RelationType</span><span class="o">.</span><span class="n">NO_RELATION_FOUND</span>
 
         <span class="n">page_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wordnet_impl</span><span class="o">.</span><span class="n">get_pages</span><span class="p">(</span><span class="n">mention_x</span><span class="p">)</span>
@@ -337,8 +344,13 @@
 
         <span class="n">relation</span> <span class="o">=</span> <span class="n">RelationType</span><span class="o">.</span><span class="n">NO_RELATION_FOUND</span>
 
-        <span class="k">if</span> <span class="n">y_head</span> <span class="ow">in</span> <span class="n">x_set</span> <span class="ow">or</span> <span class="n">y_head_lemma</span> <span class="ow">in</span> <span class="n">x_set</span> <span class="ow">or</span> <span class="n">x_head</span> <span class="ow">in</span> <span class="n">y_set</span> <span class="ow">or</span> \
-                <span class="n">x_head_lemma</span> <span class="ow">in</span> <span class="n">y_set</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">x_set</span> <span class="o">&amp;</span> <span class="n">y_set</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">y_head</span> <span class="ow">in</span> <span class="n">x_set</span>
+            <span class="ow">or</span> <span class="n">y_head_lemma</span> <span class="ow">in</span> <span class="n">x_set</span>
+            <span class="ow">or</span> <span class="n">x_head</span> <span class="ow">in</span> <span class="n">y_set</span>
+            <span class="ow">or</span> <span class="n">x_head_lemma</span> <span class="ow">in</span> <span class="n">y_set</span>
+            <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">x_set</span> <span class="o">&amp;</span> <span class="n">y_set</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+        <span class="p">):</span>
             <span class="n">relation</span> <span class="o">=</span> <span class="n">RelationType</span><span class="o">.</span><span class="n">WORDNET_DERIVATIONALLY</span>
             <span class="c1"># print &#39;matched by derivation - &#39; + str(x_head)+ &#39; , &#39; + str(y_head)</span>
 
@@ -366,8 +378,11 @@
         <span class="n">y_synonyms</span> <span class="o">=</span> <span class="n">page_y</span><span class="o">.</span><span class="n">all_clean_words_synonyms</span>
 
         <span class="c1"># One word - check whether there is intersection between synsets</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">x_synonyms</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_synonyms</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> \
-                <span class="nb">len</span><span class="p">([</span><span class="n">w</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="p">(</span><span class="n">x_synonyms</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;</span> <span class="n">y_synonyms</span><span class="p">[</span><span class="mi">0</span><span class="p">])])</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="nb">len</span><span class="p">(</span><span class="n">x_synonyms</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+            <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_synonyms</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+            <span class="ow">and</span> <span class="nb">len</span><span class="p">([</span><span class="n">w</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="p">(</span><span class="n">x_synonyms</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;</span> <span class="n">y_synonyms</span><span class="p">[</span><span class="mi">0</span><span class="p">])])</span> <span class="o">&gt;</span> <span class="mi">0</span>
+        <span class="p">):</span>
             <span class="c1"># print &#39;matched by partial - &#39; + str(y) + &#39; , &#39; + str(x)</span>
             <span class="k">return</span> <span class="n">RelationType</span><span class="o">.</span><span class="n">WORDNET_PARTIAL_SYNSET_MATCH</span>
 
@@ -400,8 +415,11 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            List[RelationType]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">RelationType</span><span class="o">.</span><span class="n">WORDNET_SAME_SYNSET</span><span class="p">,</span>
-                <span class="n">RelationType</span><span class="o">.</span><span class="n">WORDNET_PARTIAL_SYNSET_MATCH</span><span class="p">,</span> <span class="n">RelationType</span><span class="o">.</span><span class="n">WORDNET_DERIVATIONALLY</span><span class="p">]</span></div></div>
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="n">RelationType</span><span class="o">.</span><span class="n">WORDNET_SAME_SYNSET</span><span class="p">,</span>
+            <span class="n">RelationType</span><span class="o">.</span><span class="n">WORDNET_PARTIAL_SYNSET_MATCH</span><span class="p">,</span>
+            <span class="n">RelationType</span><span class="o">.</span><span class="n">WORDNET_DERIVATIONALLY</span><span class="p">,</span>
+        <span class="p">]</span></div></div>
 </pre></div>
 
            </div>
