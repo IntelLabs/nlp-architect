@@ -13,6 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
+# Module adapted from https://github.com/kmkurn/pytorch-crf
 from typing import List, Optional
 
 import torch
