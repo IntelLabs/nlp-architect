@@ -2,6 +2,14 @@
 * NLP Architect Jenkinsfile
 */
 
+def createVirtualEnv(String name) {
+    sh "python3 -m venv .${name}"
+}
+ 
+def executeIn(String environment, String script) {
+    sh "source ${environment}/bin/activate && " + script
+}
+
 pipeline {
     agent {
         node {
@@ -20,23 +28,15 @@ pipeline {
         }
         stage('Build environment') {
             steps {
-                sh 'python3 -m venv .nlp_architect_env'
-                sh """
-                . .nlp_architect_env/bin/activate
-                pip3 install -U pip setuptools h5py
-                pip3 install -U -e .[all,dev]
-                python -m spacy download en
-                """
+                createVirtualEnv 'venv'
+                executeIn 'venv', 'pip3 install -U pip setuptools'
+                executeIn 'venv', 'pip3 install -U -e .[all,dev]'
+                executeIn 'venv', 'python -m spacy download en'
             }
         }
         stage('Tests') {
             steps {
-                sh """
-                . .nlp_architect_env/bin/activate
-                export LC_ALL=en_US.UTF-8
-                export LANG=en_US.UTF-8
-                pytest ./ -rs -v -n 20 --dist=loadfile --cov=nlp_architect --junit-xml=pytest_unit.xml
-                """
+                executeIn 'venv', 'pytest ./ -rs -v -n 20 --dist=loadfile --cov=nlp_architect --junit-xml=pytest_unit.xml'
             }
             post {
                 always {
@@ -51,10 +51,7 @@ pipeline {
         }
         stage('flake8') {
             steps {
-                sh """
-                . .nlp_architect_env/bin/activate
-                ./scripts/check_flake.sh
-                """
+                executeIn 'venv', './scripts/check_flake.sh'
             }
             post {
                 failure {
@@ -66,10 +63,7 @@ pipeline {
         }
         stage('Code quality') {
             steps {
-                sh """
-                . .nlp_architect_env/bin/activate
-                ./scripts/check_pylint.sh
-                """
+                executeIn 'venv', './scripts/check_pylint.sh'
             }
             post {
                 failure {
@@ -81,10 +75,7 @@ pipeline {
         }
         stage('code style') {
             steps {
-                sh """
-                . .nlp_architect_env/bin/activate
-                ./scripts/check_black.sh
-                """
+                executeIn 'venv', './scripts/check_black.sh'
             }
             post {
                 failure {
