@@ -80,7 +80,7 @@ setup(
     license="Apache 2.0",
     python_requires=">=3.6.*",
     packages=find_packages(
-        exclude=["tests.*", "tests", "server.*", "server", "examples.*", "examples"]
+        exclude=["tests.*", "tests", "server.*", "server", "examples.*", "examples", "solutions.*", "solutions"]
     ),
     install_requires=install_requirements,
     extras_require=extras,
