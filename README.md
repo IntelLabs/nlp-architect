@@ -50,7 +50,6 @@ Features:
 
   * [TensorFlow]
   * [PyTorch]
-  * [Intel-Optimized TensorFlow with MKL-DNN]
   * [Dynet]
 
 * Essential utilities for working with NLP models - Text/String pre-processing, IO, data-manipulation, metrics, embeddings.
@@ -175,7 +174,6 @@ Contact the NLP Architect development team through Github issues or
 email: nlp_architect@intel.com
 
 [documentation]:http://nlp_architect.nervanasys.com
-[Intel-Optimized TensorFlow with MKL-DNN]:https://software.intel.com/en-us/articles/intel-optimized-tensorflow-wheel-now-available
 [TensorFlow]:https://www.tensorflow.org/
 [PyTorch]:https://pytorch.org/
 [Dynet]:https://dynet.readthedocs.io/en/latest/
