@@ -2,8 +2,10 @@
 * NLP Architect Jenkinsfile
 */
 
+def virt_env = '.nlp_env'
+
 def createVirtualEnv(String name) {
-    sh "python3 -m venv .${name}"
+    sh "python3 -m venv ${name}"
 }
  
 def executeIn(String environment, String script) {
@@ -28,15 +30,15 @@ pipeline {
         }
         stage('Build environment') {
             steps {
-                createVirtualEnv 'venv'
-                executeIn 'venv', 'pip3 install -U pip setuptools'
-                executeIn 'venv', 'pip3 install -U -e .[all,dev]'
-                executeIn 'venv', 'python -m spacy download en'
+                createVirtualEnv virt_env
+                executeIn virt_env, 'pip3 install -U pip setuptools'
+                executeIn virt_env, 'pip3 install -U -e .[all,dev]'
+                executeIn virt_env, 'python -m spacy download en'
             }
         }
         stage('Tests') {
             steps {
-                executeIn 'venv', 'pytest ./ -rs -v -n 20 --dist=loadfile --cov=nlp_architect --junit-xml=pytest_unit.xml'
+                executeIn virt_env, 'pytest ./ -rs -v -n 20 --dist=loadfile --cov=nlp_architect --junit-xml=pytest_unit.xml'
             }
             post {
                 always {
@@ -51,7 +53,7 @@ pipeline {
         }
         stage('flake8') {
             steps {
-                executeIn 'venv', './scripts/check_flake.sh'
+                executeIn virt_env, './scripts/check_flake.sh'
             }
             post {
                 failure {
@@ -63,7 +65,7 @@ pipeline {
         }
         stage('Code quality') {
             steps {
-                executeIn 'venv', './scripts/check_pylint.sh'
+                executeIn virt_env, './scripts/check_pylint.sh'
             }
             post {
                 failure {
@@ -75,7 +77,7 @@ pipeline {
         }
         stage('code style') {
             steps {
-                executeIn 'venv', './scripts/check_black.sh'
+                executeIn virt_env, './scripts/check_black.sh'
             }
             post {
                 failure {
