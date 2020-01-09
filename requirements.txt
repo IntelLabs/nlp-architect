@@ -12,7 +12,6 @@ tensorflow_hub
 elasticsearch
 newspaper3k
 wordfreq
-seqeval
 pywikibot
 num2words
 hyperopt
