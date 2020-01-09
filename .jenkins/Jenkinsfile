@@ -28,11 +28,6 @@ pipeline {
                 checkout scm
             }
         }
-        stage('Fail') {
-            steps {
-                error("This will fail")
-            }
-        }
         stage('Build environment') {
             steps {
                 createVirtualEnv virt_env
