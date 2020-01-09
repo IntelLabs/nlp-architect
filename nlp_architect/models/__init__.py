@@ -22,6 +22,7 @@ logger = logging.getLogger(__name__)
 class TrainableModel(ABC):
     """Base class for a trainable model
     """
+
     def convert_to_tensors(self, *args, **kwargs):
         """convert any chosen input to valid model format of tensors
         """

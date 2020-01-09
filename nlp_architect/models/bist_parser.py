@@ -40,9 +40,13 @@ class BISTModel(object):
         options (dict): User model options.
     """
 
-    def __init__(self, activation='tanh', lstm_layers=2, lstm_dims=125, pos_dims=25):
-        validate((activation, str), (lstm_layers, int, 0, None), (lstm_dims, int, 0, 1000),
-                 (pos_dims, int, 0, 1000))
+    def __init__(self, activation="tanh", lstm_layers=2, lstm_dims=125, pos_dims=25):
+        validate(
+            (activation, str),
+            (lstm_layers, int, 0, None),
+            (lstm_dims, int, 0, 1000),
+            (pos_dims, int, 0, 1000),
+        )
         self.options = get_options_dict(activation, lstm_dims, lstm_layers, pos_dims)
         self.params = None
         self.model = None
@@ -61,19 +65,20 @@ class BISTModel(object):
         dataset = validate_existing_filepath(dataset)
         validate((epochs, int, 0, None))
 
-        print('\nRunning fit on ' + dataset + '...\n')
+        print("\nRunning fit on " + dataset + "...\n")
         words, w2i, pos, rels = utils.vocab(dataset)
         self.params = words, w2i, pos, rels, self.options
 
         from nlp_architect.models.bist.mstlstm import MSTParserLSTM
+
         self.model = MSTParserLSTM(*self.params)
 
         for epoch in range(epochs):
-            print('Starting epoch', epoch + 1)
+            print("Starting epoch", epoch + 1)
             self.model.train(dataset)
             if dev:
-                ext = dev.rindex('.')
-                res_path = dev[:ext] + '_epoch_' + str(epoch + 1) + '_pred' + dev[ext:]
+                ext = dev.rindex(".")
+                res_path = dev[:ext] + "_epoch_" + str(epoch + 1) + "_pred" + dev[ext:]
                 utils.write_conll(res_path, self.model.predict(dev))
                 utils.run_eval(dev, res_path)
 
@@ -91,11 +96,11 @@ class BISTModel(object):
         dataset = validate_existing_filepath(dataset)
         validate((evaluate, bool))
 
-        print('\nRunning predict on ' + dataset + '...\n')
+        print("\nRunning predict on " + dataset + "...\n")
         res = list(self.model.predict(conll_path=dataset))
         if evaluate:
-            ext = dataset.rindex('.')
-            pred_path = dataset[:ext] + '_pred' + dataset[ext:]
+            ext = dataset.rindex(".")
+            pred_path = dataset[:ext] + "_pred" + dataset[ext:]
             utils.write_conll(pred_path, res)
             utils.run_eval(dataset, pred_path)
         return res
@@ -111,22 +116,23 @@ class BISTModel(object):
             dependencies attached.
         """
         res = None
-        if hasattr(dataset, '__iter__'):
+        if hasattr(dataset, "__iter__"):
             res = list(self.model.predict(conll=dataset))
         return res
 
     def load(self, path):
         """Loads and initializes a BIST model from file."""
-        with open(path.parent / 'params.json') as file:
+        with open(path.parent / "params.json") as file:
             self.params = json.load(file)
 
         from nlp_architect.models.bist.mstlstm import MSTParserLSTM
+
         self.model = MSTParserLSTM(*self.params)
         self.model.model.populate(str(path))
 
     def save(self, path):
         """Saves the BIST model to file."""
         print("Saving")
-        with open(os.path.join(os.path.dirname(path), 'params.json'), 'w') as file:
+        with open(os.path.join(os.path.dirname(path), "params.json"), "w") as file:
             json.dump(self.params, file)
         self.model.model.save(path)

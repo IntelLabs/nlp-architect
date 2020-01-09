@@ -35,21 +35,24 @@ def zero_nil_slot(t):
 
 class MemN2N_Dialog(object):
     """End-To-End Memory Network."""
-    def __init__(self,
-                 batch_size,
-                 vocab_size,
-                 sentence_size,
-                 memory_size,
-                 embedding_size,
-                 num_cands,
-                 max_cand_len,
-                 hops=3,
-                 max_grad_norm=40.0,
-                 nonlin=None,
-                 initializer=tf.random_normal_initializer(stddev=0.1),
-                 optimizer=tf.train.AdamOptimizer(learning_rate=0.001, epsilon=1e-8),
-                 session=tf.Session(),
-                 name='MemN2N_Dialog'):
+
+    def __init__(
+        self,
+        batch_size,
+        vocab_size,
+        sentence_size,
+        memory_size,
+        embedding_size,
+        num_cands,
+        max_cand_len,
+        hops=3,
+        max_grad_norm=40.0,
+        nonlin=None,
+        initializer=tf.random_normal_initializer(stddev=0.1),
+        optimizer=tf.train.AdamOptimizer(learning_rate=0.001, epsilon=1e-8),
+        session=tf.Session(),
+        name="MemN2N_Dialog",
+    ):
         """Creates an End-To-End Memory Network for Goal Oriented Dialog
 
         Args:
@@ -109,10 +112,9 @@ class MemN2N_Dialog(object):
 
         # cross entropy
         logits = self._inference(self._stories, self._queries)  # (batch_size, vocab_size)
-        cross_entropy = tf.nn.softmax_cross_entropy_with_logits(logits=logits,
-                                                                labels=tf.cast(self._answers,
-                                                                               tf.float32),
-                                                                name="cross_entropy")
+        cross_entropy = tf.nn.softmax_cross_entropy_with_logits(
+            logits=logits, labels=tf.cast(self._answers, tf.float32), name="cross_entropy"
+        )
         # loss op
         cross_entropy_sum = tf.reduce_sum(cross_entropy, name="cross_entropy_sum")
 
@@ -148,23 +150,29 @@ class MemN2N_Dialog(object):
         self._stories = tf.placeholder(tf.int32, [None, None, self._sentence_size], name="stories")
         self._queries = tf.placeholder(tf.int32, [None, self._sentence_size], name="queries")
         self._answers = tf.placeholder(tf.int32, [None, self._num_cands], name="answers")
-        self._cands = tf.placeholder(tf.int32, [None, self._num_cands, self._max_cand_len],
-                                     name="candidate_answers")
+        self._cands = tf.placeholder(
+            tf.int32, [None, self._num_cands, self._max_cand_len], name="candidate_answers"
+        )
 
     def _build_vars(self):
         with tf.variable_scope(self._name):
             nil_word_slot = tf.zeros([1, self._embedding_size])
-            A = tf.concat(axis=0, values=[nil_word_slot, self._init([self._vocab_size - 1,
-                                                                     self._embedding_size])])
-            W = tf.concat(axis=0, values=[nil_word_slot, self._init([self._vocab_size - 1,
-                                                                     self._embedding_size])])
+            A = tf.concat(
+                axis=0,
+                values=[nil_word_slot, self._init([self._vocab_size - 1, self._embedding_size])],
+            )
+            W = tf.concat(
+                axis=0,
+                values=[nil_word_slot, self._init([self._vocab_size - 1, self._embedding_size])],
+            )
 
             self.LUT_A = tf.Variable(A, name="LUT_A")
             self.LUT_W = tf.Variable(W, name="LUT_W")
 
             # Dont use projection for layerwise weight sharing
-            self.R_proj = tf.Variable(self._init([self._embedding_size, self._embedding_size]),
-                                      name="R_proj")
+            self.R_proj = tf.Variable(
+                self._init([self._embedding_size, self._embedding_size]), name="R_proj"
+            )
 
         self._nil_vars = set([self.LUT_A.name, self.LUT_W.name])
 
@@ -203,9 +211,10 @@ class MemN2N_Dialog(object):
             cands_emb = tf.nn.embedding_lookup(self.LUT_W, self._cands)
             cands_emb_sum = tf.reduce_sum(cands_emb, 2)
 
-            logits = tf.reshape(tf.matmul(tf.expand_dims(u_k, 1),
-                                          tf.transpose(cands_emb_sum, [0, 2, 1])),
-                                (-1, cands_emb_sum.shape[1]))
+            logits = tf.reshape(
+                tf.matmul(tf.expand_dims(u_k, 1), tf.transpose(cands_emb_sum, [0, 2, 1])),
+                (-1, cands_emb_sum.shape[1]),
+            )
 
             return logits
 
@@ -220,8 +229,12 @@ class MemN2N_Dialog(object):
         Returns:
             loss: floating-point number, the loss computed for the batch
         """
-        feed_dict = {self._stories: stories, self._queries: queries,
-                     self._answers: answers, self._cands: cands}
+        feed_dict = {
+            self._stories: stories,
+            self._queries: queries,
+            self._answers: answers,
+            self._cands: cands,
+        }
         loss, _ = self._sess.run([self.loss_op, self.train_op], feed_dict=feed_dict)
 
         return loss

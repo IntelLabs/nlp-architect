@@ -14,6 +14,6 @@
 # limitations under the License.
 # ******************************************************************************
 CMD_REGISTRY = {
-    'train': [],
-    'inference': [],
+    "train": [],
+    "inference": [],
 }

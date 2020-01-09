@@ -51,7 +51,6 @@ def create_standard_hparams():
         vocab_prefix="",
         embed_prefix="",
         out_dir="",
-
         # Networks
         num_units=512,
         num_encoder_layers=2,
@@ -64,13 +63,11 @@ def create_standard_hparams():
         num_embeddings_partitions=0,
         num_enc_emb_partitions=0,
         num_dec_emb_partitions=0,
-
         # Attention mechanisms
         attention="scaled_luong",
         attention_architecture="standard",
         output_attention=True,
         pass_hidden_state=True,
-
         # Train
         optimizer="sgd",
         batch_size=128,
@@ -84,7 +81,6 @@ def create_standard_hparams():
         colocate_gradients_with_ops=True,
         num_train_steps=12000,
         num_sampled_softmax=0,
-
         # Data constraints
         num_buckets=5,
         max_train=0,
@@ -92,14 +88,12 @@ def create_standard_hparams():
         tgt_max_len=50,
         src_max_len_infer=0,
         tgt_max_len_infer=0,
-
         # Data format
         sos="<s>",
         eos="</s>",
         subword_option="",
         use_char_encode=False,
         check_special_token=True,
-
         # Misc
         forget_bias=1.0,
         num_gpus=1,
@@ -116,14 +110,12 @@ def create_standard_hparams():
         override_loaded_hparams=True,
         num_keep_ckpts=5,
         avg_ckpts=False,
-
         # For inference
         inference_indices=None,
         infer_batch_size=32,
         sampling_temperature=0.0,
         num_translations_per_input=1,
         infer_mode="greedy",
-
         # Language model
         language_model=False,
     )

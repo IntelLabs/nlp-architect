@@ -40,7 +40,7 @@ def load_elmo_for_vocab(mentions):
     for mention in mentions:
         elmo_embeddings.get_head_feature_vector(mention)
 
-    logger.info('Total words/contexts in vocabulary %d', len(elmo_embeddings.cache))
+    logger.info("Total words/contexts in vocabulary %d", len(elmo_embeddings.cache))
     return elmo_embeddings.cache
 
 
@@ -50,7 +50,7 @@ def elmo_dump():
     if os.path.isdir(args.mentions):
         for (dirpath, _, files) in os.walk(args.mentions):
             for file in files:
-                if file == '.DS_Store':
+                if file == ".DS_Store":
                     continue
 
                 mention_files.append(join(dirpath, file))
@@ -63,17 +63,18 @@ def elmo_dump():
 
     elmo_ecb_embeddings = load_elmo_for_vocab(mentions)
 
-    with open(out_file, 'wb') as f:
+    with open(out_file, "wb") as f:
         pickle.dump(elmo_ecb_embeddings, f)
 
-    logger.info('Saving dump to file-%s', out_file)
+    logger.info("Saving dump to file-%s", out_file)
 
 
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Create Elmo Embedding dataset only dump')
-    parser.add_argument('--mentions', type=str, help='mentions_file file', required=True)
-    parser.add_argument('--output', type=str, help='location were to create dump file',
-                        required=True)
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Create Elmo Embedding dataset only dump")
+    parser.add_argument("--mentions", type=str, help="mentions_file file", required=True)
+    parser.add_argument(
+        "--output", type=str, help="location were to create dump file", required=True
+    )
 
     args = parser.parse_args()
 
@@ -83,4 +84,4 @@ if __name__ == '__main__':
         io.validate_existing_filepath(args.mentions)
 
     elmo_dump()
-    print('Done!')
+    print("Done!")

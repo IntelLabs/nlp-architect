@@ -74,9 +74,7 @@ def unified_corpus_path(output_folder_path):
 def test_topic_extraction(input_data_path, output_folder_path):
     tar_corpus_path = os.path.join(input_data_path, "target_corpus")
     ref_corpus_path = os.path.join(input_data_path, "reference_corpus")
-    topic_ex_main(
-        tar_corpus_path, ref_corpus_path, single_thread=True, no_train=False, url=False
-    )
+    topic_ex_main(tar_corpus_path, ref_corpus_path, single_thread=True, no_train=False, url=False)
     assert os.path.isfile(path.join(ta_path, "reference_corpus.csv"))
     assert os.path.isfile(path.join(ta_path, "target_corpus.csv"))
     assert os.path.isfile(os.path.join(output_folder_path, "W2V_Models/model.bin"))
@@ -86,10 +84,7 @@ def test_trend_analysis(filter_data_path, graph_data_path):
     target_corpus_path = path.join(ta_path, "target_corpus.csv")
     reference_corpus_path = path.join(ta_path, "reference_corpus.csv")
     trend_analyze(
-        target_corpus_path,
-        reference_corpus_path,
-        target_corpus_path,
-        reference_corpus_path,
+        target_corpus_path, reference_corpus_path, target_corpus_path, reference_corpus_path,
     )
     assert os.path.isfile(filter_data_path)
     assert os.path.isfile(graph_data_path)

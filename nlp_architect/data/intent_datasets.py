@@ -22,8 +22,12 @@ import sys
 
 import numpy as np
 from nlp_architect.utils.generic import pad_sentences
-from nlp_architect.utils.text import SpacyInstance, Vocabulary, character_vector_generator, \
-    word_vector_generator
+from nlp_architect.utils.text import (
+    SpacyInstance,
+    Vocabulary,
+    character_vector_generator,
+    word_vector_generator,
+)
 
 
 class IntentDataset(object):
@@ -62,18 +66,22 @@ class IntentDataset(object):
         chars_vectors = [pad_sentences(d, max_length=self.word_len) for d in chars_vectors]
         zeros = np.zeros((len(chars_vectors), self.sentence_len, self.word_len))
         for idx, d in enumerate(chars_vectors):
-            d = d[:self.sentence_len]
-            zeros[idx, :d.shape[0]] = d
+            d = d[: self.sentence_len]
+            zeros[idx, : d.shape[0]] = d
         chars_vectors = zeros.astype(dtype=np.int32)
 
-        self.vecs['train'] = [text_vectors[:train_size],
-                              chars_vectors[:train_size],
-                              i[:train_size],
-                              tag_vectors[:train_size]]
-        self.vecs['test'] = [text_vectors[-test_size:],
-                             chars_vectors[-test_size:],
-                             i[-test_size:],
-                             tag_vectors[-test_size:]]
+        self.vecs["train"] = [
+            text_vectors[:train_size],
+            chars_vectors[:train_size],
+            i[:train_size],
+            tag_vectors[:train_size],
+        ]
+        self.vecs["test"] = [
+            text_vectors[-test_size:],
+            chars_vectors[-test_size:],
+            i[-test_size:],
+            tag_vectors[-test_size:],
+        ]
 
     @property
     def word_vocab_size(self):
@@ -118,12 +126,12 @@ class IntentDataset(object):
     @property
     def train_set(self):
         """:obj:`tuple` of :obj:`numpy.ndarray`: train set"""
-        return self.vecs['train']
+        return self.vecs["train"]
 
     @property
     def test_set(self):
         """:obj:`tuple` of :obj:`numpy.ndarray`: test set"""
-        return self.vecs['test']
+        return self.vecs["test"]
 
 
 class TabularIntentDataset(IntentDataset):
@@ -141,12 +149,14 @@ class TabularIntentDataset(IntentDataset):
         sentence_length (int): max sentence length
         word_length (int): max word length
     """
-    files = ['train', 'test']
+
+    files = ["train", "test"]
 
     def __init__(self, train_file, test_file, sentence_length=30, word_length=12):
         train_set_raw, test_set_raw = self._load_dataset(train_file, test_file)
-        super(TabularIntentDataset, self).__init__(sentence_length=sentence_length,
-                                                   word_length=word_length)
+        super(TabularIntentDataset, self).__init__(
+            sentence_length=sentence_length, word_length=word_length
+        )
 
         self._load_data(train_set_raw, test_set_raw)
 
@@ -157,7 +167,7 @@ class TabularIntentDataset(IntentDataset):
         return train, test
 
     def _read_file(self, path):
-        with open(path, encoding='utf-8', errors='ignore') as fp:
+        with open(path, encoding="utf-8", errors="ignore") as fp:
             data = fp.readlines()
         return self._split_into_sentences(data)
 
@@ -203,34 +213,34 @@ class SNIPS(IntentDataset):
             sentence_length (int, optional): max sentence length
             word_length (int, optional): max word length
     """
+
     train_files = [
-        'AddToPlaylist/train_AddToPlaylist_full.json',
-        'BookRestaurant/train_BookRestaurant_full.json',
-        'GetWeather/train_GetWeather_full.json',
-        'PlayMusic/train_PlayMusic_full.json',
-        'RateBook/train_RateBook_full.json',
-        'SearchCreativeWork/train_SearchCreativeWork_full.json',
-        'SearchScreeningEvent/train_SearchScreeningEvent_full.json'
+        "AddToPlaylist/train_AddToPlaylist_full.json",
+        "BookRestaurant/train_BookRestaurant_full.json",
+        "GetWeather/train_GetWeather_full.json",
+        "PlayMusic/train_PlayMusic_full.json",
+        "RateBook/train_RateBook_full.json",
+        "SearchCreativeWork/train_SearchCreativeWork_full.json",
+        "SearchScreeningEvent/train_SearchScreeningEvent_full.json",
     ]
     test_files = [
-        'AddToPlaylist/validate_AddToPlaylist.json',
-        'BookRestaurant/validate_BookRestaurant.json',
-        'GetWeather/validate_GetWeather.json',
-        'PlayMusic/validate_PlayMusic.json',
-        'RateBook/validate_RateBook.json',
-        'SearchCreativeWork/validate_SearchCreativeWork.json',
-        'SearchScreeningEvent/validate_SearchScreeningEvent.json'
+        "AddToPlaylist/validate_AddToPlaylist.json",
+        "BookRestaurant/validate_BookRestaurant.json",
+        "GetWeather/validate_GetWeather.json",
+        "PlayMusic/validate_PlayMusic.json",
+        "RateBook/validate_RateBook.json",
+        "SearchCreativeWork/validate_SearchCreativeWork.json",
+        "SearchScreeningEvent/validate_SearchScreeningEvent.json",
     ]
-    files = ['train', 'test']
+    files = ["train", "test"]
 
     def __init__(self, path, sentence_length=30, word_length=12):
         if path is None or not os.path.isdir(path):
-            print('invalid path for SNIPS dataset loader')
+            print("invalid path for SNIPS dataset loader")
             sys.exit(0)
         self.dataset_root = path
         train_set_raw, test_set_raw = self._load_dataset()
-        super(SNIPS, self).__init__(sentence_length=sentence_length,
-                                    word_length=word_length)
+        super(SNIPS, self).__init__(sentence_length=sentence_length, word_length=word_length)
         self._load_data(train_set_raw, test_set_raw)
 
     def _load_dataset(self):
@@ -246,33 +256,33 @@ class SNIPS(IntentDataset):
         for f in sorted(files):
             fname = os.path.join(self.dataset_root, f)
             intent = f.split(os.sep)[0]
-            with open(fname, encoding='utf-8', errors='ignore') as fp:
+            with open(fname, encoding="utf-8", errors="ignore") as fp:
                 fdata = json.load(fp)
-            entries = self._parse_json([d['data'] for d in fdata[intent]])
+            entries = self._parse_json([d["data"] for d in fdata[intent]])
             data[intent] = entries
         return data
 
     def _parse_json(self, data):
-        tok = SpacyInstance(disable=['tagger', 'ner', 'parser', 'vectors', 'textcat'])
+        tok = SpacyInstance(disable=["tagger", "ner", "parser", "vectors", "textcat"])
         sentences = []
         for s in data:
             tokens = []
             tags = []
             for t in s:
-                new_tokens = tok.tokenize(t['text'].strip())
+                new_tokens = tok.tokenize(t["text"].strip())
                 tokens += new_tokens
-                ent = t.get('entity', None)
+                ent = t.get("entity", None)
                 if ent is not None:
                     tags += self._create_tags(ent, len(new_tokens))
                 else:
-                    tags += ['O'] * len(new_tokens)
+                    tags += ["O"] * len(new_tokens)
             sentences.append((tokens, tags))
         return sentences
 
     @staticmethod
     def _create_tags(tag, length):
-        labels = ['B-' + tag]
+        labels = ["B-" + tag]
         if length > 1:
             for _ in range(length - 1):
-                labels.append('I-' + tag)
+                labels.append("I-" + tag)
         return labels

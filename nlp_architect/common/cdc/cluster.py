@@ -59,7 +59,7 @@ class Cluster(object):
         Returns:
             A generated cluster unique Id created from cluster mentions ids
         """
-        return '$'.join([mention.mention_id for mention in self.mentions])
+        return "$".join([mention.mention_id for mention in self.mentions])
 
 
 class Clusters(object):

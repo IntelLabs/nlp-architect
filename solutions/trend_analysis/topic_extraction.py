@@ -24,6 +24,13 @@ import sys
 from multiprocessing import Pool
 from os import makedirs, path
 
+from nlp_architect import LIBRARY_OUT
+from nlp_architect.utils.embedding import FasttextEmbeddingsModel
+from nlp_architect.utils.io import validate_existing_directory
+from nlp_architect.utils.text import SpacyInstance
+
+from .np_scorer import NPScorer
+
 logger = logging.getLogger(__name__)
 
 try:
@@ -35,12 +42,6 @@ except (AttributeError, ImportError):
     )
     sys.exit()
 
-from nlp_architect import LIBRARY_OUT
-from nlp_architect.utils.embedding import FasttextEmbeddingsModel
-from nlp_architect.utils.io import validate_existing_directory
-from nlp_architect.utils.text import SpacyInstance
-
-from .np_scorer import NPScorer
 
 logger = logging.getLogger(__name__)
 data_dir = str(LIBRARY_OUT / "trend-analysis-data")

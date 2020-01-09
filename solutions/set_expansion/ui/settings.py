@@ -14,6 +14,6 @@
 # limitations under the License.
 # ******************************************************************************
 
-expand_host = 'localhost'
+expand_host = "localhost"
 expand_port = 1234
 grouping = False

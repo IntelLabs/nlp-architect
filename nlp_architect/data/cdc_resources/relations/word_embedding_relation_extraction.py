@@ -21,21 +21,32 @@ from typing import List, Set
 from scipy.spatial.distance import cosine as cos
 
 from nlp_architect.common.cdc.mention_data import MentionDataLight
-from nlp_architect.data.cdc_resources.embedding.embed_elmo import ElmoEmbedding, \
-    ElmoEmbeddingOffline
-from nlp_architect.data.cdc_resources.embedding.embed_glove import GloveEmbedding, \
-    GloveEmbeddingOffline
+from nlp_architect.data.cdc_resources.embedding.embed_elmo import (
+    ElmoEmbedding,
+    ElmoEmbeddingOffline,
+)
+from nlp_architect.data.cdc_resources.embedding.embed_glove import (
+    GloveEmbedding,
+    GloveEmbeddingOffline,
+)
 from nlp_architect.data.cdc_resources.relations.relation_extraction import RelationExtraction
-from nlp_architect.data.cdc_resources.relations.relation_types_enums import EmbeddingMethod, \
-    RelationType
+from nlp_architect.data.cdc_resources.relations.relation_types_enums import (
+    EmbeddingMethod,
+    RelationType,
+)
 from nlp_architect.utils.string_utils import StringUtils
 
 logger = logging.getLogger(__name__)
 
 
 class WordEmbeddingRelationExtraction(RelationExtraction):
-    def __init__(self, method: EmbeddingMethod = EmbeddingMethod.GLOVE,
-                 glove_file: str = None, elmo_file: str = None, cos_accepted_dist: float = 0.7):
+    def __init__(
+        self,
+        method: EmbeddingMethod = EmbeddingMethod.GLOVE,
+        glove_file: str = None,
+        elmo_file: str = None,
+        cos_accepted_dist: float = 0.7,
+    ):
         """
         Extract Relation between two mentions according to Word Embedding cosine distance
 
@@ -61,15 +72,18 @@ class WordEmbeddingRelationExtraction(RelationExtraction):
         self.accepted_dist = cos_accepted_dist
         super(WordEmbeddingRelationExtraction, self).__init__()
 
-    def extract_all_relations(self, mention_x: MentionDataLight,
-                              mention_y: MentionDataLight) -> Set[RelationType]:
+    def extract_all_relations(
+        self, mention_x: MentionDataLight, mention_y: MentionDataLight
+    ) -> Set[RelationType]:
         ret_ = set()
-        ret_.add(self.extract_sub_relations(mention_x, mention_y,
-                                            RelationType.WORD_EMBEDDING_MATCH))
+        ret_.add(
+            self.extract_sub_relations(mention_x, mention_y, RelationType.WORD_EMBEDDING_MATCH)
+        )
         return ret_
 
-    def extract_sub_relations(self, mention_x: MentionDataLight, mention_y: MentionDataLight,
-                              relation: RelationType) -> RelationType:
+    def extract_sub_relations(
+        self, mention_x: MentionDataLight, mention_y: MentionDataLight, relation: RelationType
+    ) -> RelationType:
         """
         Check if input mentions has the given relation between them
 
@@ -87,8 +101,9 @@ class WordEmbeddingRelationExtraction(RelationExtraction):
 
         mention_x_str = mention_x.tokens_str
         mention_y_str = mention_y.tokens_str
-        if StringUtils.is_pronoun(mention_x_str.lower()) or \
-                StringUtils.is_pronoun(mention_y_str.lower()):
+        if StringUtils.is_pronoun(mention_x_str.lower()) or StringUtils.is_pronoun(
+            mention_y_str.lower()
+        ):
             if not self.contextual:
                 return RelationType.NO_RELATION_FOUND
 

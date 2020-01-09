@@ -261,4 +261,3 @@ with tf.Session(config=run_config) as sess:
         model.inference_mode(
             sess, dev, [vocab_dict, vocab_rev], num_examples=args.num_examples, dropout=1.0
         )
-

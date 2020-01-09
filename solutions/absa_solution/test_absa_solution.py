@@ -25,26 +25,29 @@ from .sentiment_solution import SentimentSolution, SENTIMENT_OUT
 
 
 def test_solution(generate_new=False):
-    lexicons_dir = Path(LIBRARY_ROOT) / 'examples' / 'absa'
-    expected_dir = Path(LIBRARY_ROOT) / 'tests' / 'fixtures' / 'data' / 'absa_solution'
-    data_url = 'https://s3-us-west-2.amazonaws.com/nlp-architect-data/tests/'
-    parsed_data = download_unzip(data_url, 'tripadvisor_test_parsed.zip',
-                                 SENTIMENT_OUT / 'test' / 'tripadvisor_test_parsed')
+    lexicons_dir = Path(LIBRARY_ROOT) / "examples" / "absa"
+    expected_dir = Path(LIBRARY_ROOT) / "tests" / "fixtures" / "data" / "absa_solution"
+    data_url = "https://s3-us-west-2.amazonaws.com/nlp-architect-data/tests/"
+    parsed_data = download_unzip(
+        data_url, "tripadvisor_test_parsed.zip", SENTIMENT_OUT / "test" / "tripadvisor_test_parsed"
+    )
 
-    predicted_stats = SentimentSolution().run(parsed_data=parsed_data,
-                                              aspect_lex=lexicons_dir / 'aspects.csv',
-                                              opinion_lex=lexicons_dir / 'opinions.csv')
+    predicted_stats = SentimentSolution().run(
+        parsed_data=parsed_data,
+        aspect_lex=lexicons_dir / "aspects.csv",
+        opinion_lex=lexicons_dir / "opinions.csv",
+    )
 
-    predicted_stats.to_csv('predicted.csv', encoding='utf-8')
-    predicted_trimmed = pd.read_csv('predicted.csv', encoding='utf-8').loc[:, 'Aspect': 'Score']
-    predicted_trimmed.loc[:, 'Score'] = np.around(predicted_trimmed.loc[:, 'Score'], 2)
-    os.remove('predicted.csv')
+    predicted_stats.to_csv("predicted.csv", encoding="utf-8")
+    predicted_trimmed = pd.read_csv("predicted.csv", encoding="utf-8").loc[:, "Aspect":"Score"]
+    predicted_trimmed.loc[:, "Score"] = np.around(predicted_trimmed.loc[:, "Score"], 2)
+    os.remove("predicted.csv")
 
     if generate_new:
-        with open('expected.csv', 'w', encoding='utf-8', newline='') as f:
+        with open("expected.csv", "w", encoding="utf-8", newline="") as f:
             predicted_trimmed.to_csv(f)
         assert False
 
     else:
-        with open(expected_dir / 'expected.csv', encoding='utf-8') as expected_fp:
+        with open(expected_dir / "expected.csv", encoding="utf-8") as expected_fp:
             assert predicted_trimmed.to_csv() == expected_fp.read()

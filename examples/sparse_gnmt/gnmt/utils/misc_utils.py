@@ -48,7 +48,7 @@ import tensorflow as tf
 
 def check_tensorflow_version():
     min_tf_version = "1.4.0-dev20171024"
-    if (version.LooseVersion(tf.__version__) < version.LooseVersion(min_tf_version)):
+    if version.LooseVersion(tf.__version__) < version.LooseVersion(min_tf_version):
         raise EnvironmentError("Tensorflow version must >= %s" % min_tf_version)
 
 
@@ -95,8 +95,7 @@ def print_hparams(hparams, skip_patterns=None, header=None):
         print_out("%s" % header)
     values = hparams.values()
     for key in sorted(values.keys()):
-        if not skip_patterns or all(
-                [skip_pattern not in key for skip_pattern in skip_patterns]):
+        if not skip_patterns or all([skip_pattern not in key for skip_pattern in skip_patterns]):
             print_out("  %s=%s" % (key, str(values[key])))
 
 
@@ -149,13 +148,14 @@ def add_summary(summary_writer, global_step, tag, value):
     summary_writer.add_summary(summary, global_step)
 
 
-def get_config_proto(log_device_placement=False, allow_soft_placement=True,
-                     num_intra_threads=0, num_inter_threads=0):
+def get_config_proto(
+    log_device_placement=False, allow_soft_placement=True, num_intra_threads=0, num_inter_threads=0
+):
     # GPU options:
     # https://www.tensorflow.org/versions/r0.10/how_tos/using_gpu/index.html
     config_proto = tf.ConfigProto(
-        log_device_placement=log_device_placement,
-        allow_soft_placement=allow_soft_placement)
+        log_device_placement=log_device_placement, allow_soft_placement=allow_soft_placement
+    )
     config_proto.gpu_options.allow_growth = True
 
     # CPU threads options
@@ -169,8 +169,9 @@ def get_config_proto(log_device_placement=False, allow_soft_placement=True,
 
 def format_text(words):
     """Convert a sequence words into sentence."""
-    if (not hasattr(words, "__len__")  # for numpy array
-            and not isinstance(words, collections.Iterable)):
+    if not hasattr(words, "__len__") and not isinstance(  # for numpy array
+        words, collections.Iterable
+    ):
         words = [words]
     return b" ".join(words)
 
@@ -194,5 +195,9 @@ def format_bpe_text(symbols, delimiter=b"@@"):
 
 def format_spm_text(symbols):
     """Decode a text in SPM (https://github.com/google/sentencepiece) format."""
-    return u"".join(format_text(symbols).decode("utf-8").split()).replace(
-        u"\u2581", u" ").strip().encode("utf-8")
+    return (
+        "".join(format_text(symbols).decode("utf-8").split())
+        .replace("\u2581", " ")
+        .strip()
+        .encode("utf-8")
+    )

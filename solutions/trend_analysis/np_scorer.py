@@ -24,29 +24,29 @@ from nlp_architect.utils.io import download_unlicensed_file
 from nlp_architect.utils.text import SpacyInstance
 from .scoring_utils import TextSpanScoring
 
-nlp_chunker_url = 'https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/chunker/'
-chunker_model_dat_file = 'model_info.dat.params'
-chunker_model_file = 'model.h5'
-chunker_local_path = str(LIBRARY_OUT / 'chunker-pretrained')
+nlp_chunker_url = "https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/chunker/"
+chunker_model_dat_file = "model_info.dat.params"
+chunker_model_file = "model.h5"
+chunker_local_path = str(LIBRARY_OUT / "chunker-pretrained")
 logger = logging.getLogger(__name__)
 
 
 class NPScorer(object):
     def __init__(self, parser=None):
         if parser is None:
-            self.nlp = SpacyInstance(
-                disable=['ner', 'parser', 'vectors', 'textcat']).parser
+            self.nlp = SpacyInstance(disable=["ner", "parser", "vectors", "textcat"]).parser
         else:
             self.nlp = parser
 
-        self.nlp.add_pipe(self.nlp.create_pipe('sentencizer'), first=True)
+        self.nlp.add_pipe(self.nlp.create_pipe("sentencizer"), first=True)
         _path_to_model = path.join(chunker_local_path, chunker_model_file)
         if not path.exists(chunker_local_path):
             makedirs(chunker_local_path)
         if not path.exists(_path_to_model):
             logger.info(
-                'The pre-trained model to be downloaded for NLP Architect word'
-                ' chunker model is licensed under Apache 2.0')
+                "The pre-trained model to be downloaded for NLP Architect word"
+                " chunker model is licensed under Apache 2.0"
+            )
             download_unlicensed_file(nlp_chunker_url, chunker_model_file, _path_to_model)
         _path_to_params = path.join(chunker_local_path, chunker_model_dat_file)
         if not path.exists(_path_to_params):
@@ -55,9 +55,9 @@ class NPScorer(object):
 
     def score_documents(self, texts: list, limit=-1, return_all=False, min_tf=5):
         documents = []
-        assert len(texts) > 0, 'texts should contain at least 1 document'
-        assert min_tf > 0, 'min_tf should be at least 1'
-        with tqdm(total=len(texts), desc='documents scoring progress', unit='docs') as pbar:
+        assert len(texts) > 0, "texts should contain at least 1 document"
+        assert min_tf > 0, "min_tf should be at least 1"
+        with tqdm(total=len(texts), desc="documents scoring progress", unit="docs") as pbar:
             for doc in self.nlp.pipe(texts, n_threads=-1):
                 if len(doc) > 0:
                     documents.append(doc)
@@ -108,8 +108,7 @@ class NPScorer(object):
             for phrases in tf.keys():
                 final_list.append(([p for p in phrases], tf[phrases], cv[phrases], fr[phrases]))
             return final_list
-        merged_list = scorer.interpolate_scores([tfidf_scored_list, cvalue_scored_list],
-                                                [0.5, 0.5])
+        merged_list = scorer.interpolate_scores([tfidf_scored_list, cvalue_scored_list], [0.5, 0.5])
         merged_list = scorer.multiply_scores([merged_list, freq_scored_list])
         merged_list = scorer.normalize_minmax(merged_list)
         final_list = []

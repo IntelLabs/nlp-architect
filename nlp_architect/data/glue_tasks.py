@@ -60,7 +60,8 @@ class MrpcProcessor(DataProcessor):
             if set_type in ["train", "dev"]:
                 label = line[0]
                 examples.append(
-                    SequenceClsInputExample(guid=guid, text=text_a, text_b=text_b, label=label))
+                    SequenceClsInputExample(guid=guid, text=text_a, text_b=text_b, label=label)
+                )
             else:
                 examples.append(SequenceClsInputExample(guid=guid, text=text_a, text_b=text_b))
         return examples
@@ -73,12 +74,14 @@ class MnliProcessor(DataProcessor):
         return self._create_examples(read_tsv(os.path.join(data_dir, "train.tsv")), "train")
 
     def get_dev_examples(self, data_dir):
-        return self._create_examples(read_tsv(os.path.join(data_dir, "dev_matched.tsv")),
-                                     "dev_matched")
+        return self._create_examples(
+            read_tsv(os.path.join(data_dir, "dev_matched.tsv")), "dev_matched"
+        )
 
     def get_test_examples(self, data_dir):
-        return self._create_examples(read_tsv(os.path.join(data_dir, "test_matched.tsv")),
-                                     "test_matched")
+        return self._create_examples(
+            read_tsv(os.path.join(data_dir, "test_matched.tsv")), "test_matched"
+        )
 
     def get_labels(self):
         return ["contradiction", "entailment", "neutral"]
@@ -95,7 +98,8 @@ class MnliProcessor(DataProcessor):
             if set_type in ["train", "dev_matched"]:
                 label = line[-1]
                 examples.append(
-                    SequenceClsInputExample(guid=guid, text=text_a, text_b=text_b, label=label))
+                    SequenceClsInputExample(guid=guid, text=text_a, text_b=text_b, label=label)
+                )
             else:
                 examples.append(SequenceClsInputExample(guid=guid, text=text_a, text_b=text_b))
         return examples
@@ -105,12 +109,14 @@ class MnliMismatchedProcessor(MnliProcessor):
     """Processor for the MultiNLI Mismatched data set (GLUE version)."""
 
     def get_dev_examples(self, data_dir):
-        return self._create_examples(read_tsv(os.path.join(data_dir, "dev_mismatched.tsv")),
-                                     "dev_matched")
+        return self._create_examples(
+            read_tsv(os.path.join(data_dir, "dev_mismatched.tsv")), "dev_matched"
+        )
 
     def get_test_examples(self, data_dir):
-        return self._create_examples(read_tsv(os.path.join(data_dir, "test_mismatched.tsv")),
-                                     "test_mismatched")
+        return self._create_examples(
+            read_tsv(os.path.join(data_dir, "test_mismatched.tsv")), "test_mismatched"
+        )
 
 
 class ColaProcessor(DataProcessor):
@@ -139,7 +145,8 @@ class ColaProcessor(DataProcessor):
                 text_a = line[3]
                 label = line[1]
                 examples.append(
-                    SequenceClsInputExample(guid=guid, text=text_a, text_b=None, label=label))
+                    SequenceClsInputExample(guid=guid, text=text_a, text_b=None, label=label)
+                )
             else:
                 text_a = line[1]
                 examples.append(SequenceClsInputExample(guid=guid, text=text_a))
@@ -172,7 +179,8 @@ class Sst2Processor(DataProcessor):
                 text_a = line[0]
                 label = line[1]
                 examples.append(
-                    SequenceClsInputExample(guid=guid, text=text_a, text_b=None, label=label))
+                    SequenceClsInputExample(guid=guid, text=text_a, text_b=None, label=label)
+                )
             else:
                 text_a = line[1]
                 examples.append(SequenceClsInputExample(guid=guid, text=text_a))
@@ -206,7 +214,8 @@ class StsbProcessor(DataProcessor):
             if set_type in ["train", "dev"]:
                 label = line[-1]
                 examples.append(
-                    SequenceClsInputExample(guid=guid, text=text_a, text_b=text_b, label=label))
+                    SequenceClsInputExample(guid=guid, text=text_a, text_b=text_b, label=label)
+                )
             else:
                 examples.append(SequenceClsInputExample(guid=guid, text=text_a, text_b=text_b))
         return examples
@@ -242,7 +251,8 @@ class QqpProcessor(DataProcessor):
                 except IndexError:
                     continue
                 examples.append(
-                    SequenceClsInputExample(guid=guid, text=text_a, text_b=text_b, label=label))
+                    SequenceClsInputExample(guid=guid, text=text_a, text_b=text_b, label=label)
+                )
             else:
                 try:
                     text_a = line[1]
@@ -280,7 +290,8 @@ class QnliProcessor(DataProcessor):
             if set_type in ["train", "dev"]:
                 label = line[-1]
                 examples.append(
-                    SequenceClsInputExample(guid=guid, text=text_a, text_b=text_b, label=label))
+                    SequenceClsInputExample(guid=guid, text=text_a, text_b=text_b, label=label)
+                )
             else:
                 examples.append(SequenceClsInputExample(guid=guid, text=text_a, text_b=text_b))
         return examples
@@ -313,7 +324,8 @@ class RteProcessor(DataProcessor):
             if set_type in ["train", "dev"]:
                 label = line[-1]
                 examples.append(
-                    SequenceClsInputExample(guid=guid, text=text_a, text_b=text_b, label=label))
+                    SequenceClsInputExample(guid=guid, text=text_a, text_b=text_b, label=label)
+                )
             else:
                 examples.append(SequenceClsInputExample(guid=guid, text=text_a, text_b=text_b))
         return examples
@@ -346,19 +358,30 @@ class WnliProcessor(DataProcessor):
             if set_type in ["train", "dev"]:
                 label = line[-1]
                 examples.append(
-                    SequenceClsInputExample(guid=guid, text=text_a, text_b=text_b, label=label))
+                    SequenceClsInputExample(guid=guid, text=text_a, text_b=text_b, label=label)
+                )
             else:
                 examples.append(SequenceClsInputExample(guid=guid, text=text_a, text_b=text_b))
         return examples
 
 
-def convert_examples_to_features(examples, label_list, max_seq_length,
-                                 tokenizer, output_mode,
-                                 cls_token_at_end=False, pad_on_left=False,
-                                 cls_token='[CLS]', sep_token='[SEP]', pad_token=0,
-                                 sequence_a_segment_id=0, sequence_b_segment_id=1,
-                                 cls_token_segment_id=1, pad_token_segment_id=0,
-                                 mask_padding_with_zero=True):
+def convert_examples_to_features(
+    examples,
+    label_list,
+    max_seq_length,
+    tokenizer,
+    output_mode,
+    cls_token_at_end=False,
+    pad_on_left=False,
+    cls_token="[CLS]",
+    sep_token="[SEP]",
+    pad_token=0,
+    sequence_a_segment_id=0,
+    sequence_b_segment_id=1,
+    cls_token_segment_id=1,
+    pad_token_segment_id=0,
+    mask_padding_with_zero=True,
+):
     """ Loads a data file into a list of `InputBatch`s
         `cls_token_at_end` define the location of the CLS token:
             - False (Default, BERT/XLM pattern): [CLS] + A + [SEP] + B + [SEP]
@@ -386,7 +409,7 @@ def convert_examples_to_features(examples, label_list, max_seq_length,
         else:
             # Account for [CLS] and [SEP] with "- 2"
             if len(tokens_a) > max_seq_length - 2:
-                tokens_a = tokens_a[:(max_seq_length - 2)]
+                tokens_a = tokens_a[: (max_seq_length - 2)]
 
         # The convention in BERT is:
         # (a) For sequence pairs:
@@ -448,10 +471,14 @@ def convert_examples_to_features(examples, label_list, max_seq_length,
         else:
             raise KeyError(output_mode)
 
-        features.append(InputFeatures(input_ids=input_ids,
-                                      input_mask=input_mask,
-                                      segment_ids=segment_ids,
-                                      label_id=label_id))
+        features.append(
+            InputFeatures(
+                input_ids=input_ids,
+                input_mask=input_mask,
+                segment_ids=segment_ids,
+                label_id=label_id,
+            )
+        )
     return features
 
 
@@ -524,7 +551,6 @@ def get_glue_task(task_name: str, data_dir: str = None):
         raise ValueError("Task not found: {}".format(task_name))
     task_processor = processors[task_name]()
     if data_dir is None:
-        data_dir = os.path.join(
-            os.environ["GLUE_DIR"], DEFAULT_FOLDER_NAMES[task_name])
+        data_dir = os.path.join(os.environ["GLUE_DIR"], DEFAULT_FOLDER_NAMES[task_name])
     task_type = output_modes[task_name]
     return Task(task_name, task_processor, data_dir, task_type)

@@ -33,12 +33,12 @@ class WithinDocCoref(RelationExtraction):
         Args:
             wd_file (required): str Location of within doc co-reference mentions file
         """
-        logger.info('Loading Within doc resource')
+        logger.info("Loading Within doc resource")
         if wd_file is not None and os.path.isfile(wd_file):
             wd_mentions_json = load_json_file(wd_file)
             self.within_doc_coref_chain = self.arrange_resource(wd_mentions_json)
         else:
-            raise FileNotFoundError('Within-doc resource file not found or not in path')
+            raise FileNotFoundError("Within-doc resource file not found or not in path")
         super(WithinDocCoref, self).__init__()
 
     @staticmethod
@@ -50,19 +50,22 @@ class WithinDocCoref(RelationExtraction):
             for i in range(0, len(mention_tokens)):
                 doc_id = mention_data.doc_id
                 sent_id = mention_data.sent_id
-                token_map_key = MentionData.static_gen_token_unique_id(doc_id, sent_id,
-                                                                       mention_tokens[i])
+                token_map_key = MentionData.static_gen_token_unique_id(
+                    doc_id, sent_id, mention_tokens[i]
+                )
                 document_tokens_dict[token_map_key] = mention_data.coref_chain
         return document_tokens_dict
 
-    def extract_all_relations(self, mention_x: MentionData,
-                              mention_y: MentionData) -> Set[RelationType]:
+    def extract_all_relations(
+        self, mention_x: MentionData, mention_y: MentionData
+    ) -> Set[RelationType]:
         ret_ = set()
         ret_.add(self.extract_sub_relations(mention_x, mention_y, RelationType.WITHIN_DOC_COREF))
         return ret_
 
-    def extract_sub_relations(self, mention_x: MentionData, mention_y: MentionData,
-                              relation: RelationType) -> RelationType:
+    def extract_sub_relations(
+        self, mention_x: MentionData, mention_y: MentionData, relation: RelationType
+    ) -> RelationType:
         """
         Check if input mentions has the given relation between them
 
@@ -85,7 +88,7 @@ class WithinDocCoref(RelationExtraction):
             if not ment_x_coref_chain or not ment_y_coref_chain:
                 return RelationType.NO_RELATION_FOUND
 
-            if '-' in ment_x_coref_chain or '-' in ment_y_coref_chain:
+            if "-" in ment_x_coref_chain or "-" in ment_y_coref_chain:
                 return RelationType.NO_RELATION_FOUND
 
             if set(ment_x_coref_chain) == set(ment_y_coref_chain):
@@ -97,15 +100,15 @@ class WithinDocCoref(RelationExtraction):
         tokens = mention.tokens_number
         within_coref_token = []
         for token_id in tokens:
-            token_x_id = MentionData.static_gen_token_unique_id(str(mention.doc_id),
-                                                                str(mention.sent_id),
-                                                                str(token_id))
+            token_x_id = MentionData.static_gen_token_unique_id(
+                str(mention.doc_id), str(mention.sent_id), str(token_id)
+            )
             if token_x_id in self.within_doc_coref_chain:
                 token_coref_chain = self.within_doc_coref_chain[token_x_id]
                 if token_coref_chain:
                     within_coref_token.append(token_coref_chain)
             else:
-                within_coref_token.append('-')
+                within_coref_token.append("-")
                 break
 
         return within_coref_token
@@ -115,7 +118,7 @@ class WithinDocCoref(RelationExtraction):
 
     @staticmethod
     def create_ment_id(mention_x: MentionData, mention_y: MentionData) -> str:
-        return '_'.join([mention_x.get_mention_id(), mention_y.get_mention_id()])
+        return "_".join([mention_x.get_mention_id(), mention_y.get_mention_id()])
 
     @staticmethod
     def get_supported_relations() -> List[RelationType]:

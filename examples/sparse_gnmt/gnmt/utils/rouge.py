@@ -47,7 +47,7 @@ def _get_ngrams(n, text):
     text_length = len(text)
     max_index_ngram_start = text_length - n
     for i in range(max_index_ngram_start + 1):
-        ngram_set.add(tuple(text[i:i + n]))
+        ngram_set.add(tuple(text[i : i + n]))
     return ngram_set
 
 
@@ -323,8 +323,7 @@ def rouge_l_summary_level(evaluated_sentences, reference_sentences):
 
     union_lcs_sum_across_all_references = 0
     for ref_s in reference_sentences:
-        union_lcs_sum_across_all_references += _union_lcs(evaluated_sentences,
-                                                          ref_s)
+        union_lcs_sum_across_all_references += _union_lcs(evaluated_sentences, ref_s)
     return _f_p_r_lcs(union_lcs_sum_across_all_references, m, n)
 
 

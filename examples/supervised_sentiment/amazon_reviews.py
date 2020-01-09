@@ -36,22 +36,18 @@ import pandas as pd
 
 from nlp_architect.utils.generic import normalize, balance
 
-good_columns = [
-    "overall",
-    "reviewText",
-    "summary"
-]
+good_columns = ["overall", "reviewText", "summary"]
 
 
 def review_to_sentiment(review):
     # Review is coming in as overall (the rating, reviewText, and summary)
     # this then cleans the summary and review and gives it a positive or negative value
     norm_text = normalize(review[2] + " " + review[1])
-    review_sent = ['neutral', norm_text]
+    review_sent = ["neutral", norm_text]
     if review[0] > 3:
-        review_sent = ['positive', norm_text]
+        review_sent = ["positive", norm_text]
     elif review[0] < 3:
-        review_sent = ['negative', norm_text]
+        review_sent = ["negative", norm_text]
 
     return review_sent
 
@@ -62,13 +58,14 @@ class Amazon_Reviews(object):
     http://jmcauley.ucsd.edu/data/amazon/
     Then does data cleaning and balancing, as well as transforms the reviews 1-5 to a sentiment
     """
+
     def __init__(self, review_file, run_balance=True):
         self.run_balance = run_balance
 
         print("Parsing and processing json file")
         data = []
 
-        with open(review_file, 'r') as f:
+        with open(review_file, "r") as f:
             for line in f:
                 data_line = json.loads(line)
                 selected_row = []
@@ -78,23 +75,23 @@ class Amazon_Reviews(object):
                 data.append(review_to_sentiment(selected_row))
 
         # Not sure how to easily balance outside of pandas...but should replace eventually
-        self.amazon = pd.DataFrame(data, columns=['Sentiment', 'clean_text'])
-        self.all_text = self.amazon['clean_text']
-        self.labels_0 = pd.get_dummies(self.amazon['Sentiment'])
+        self.amazon = pd.DataFrame(data, columns=["Sentiment", "clean_text"])
+        self.all_text = self.amazon["clean_text"]
+        self.labels_0 = pd.get_dummies(self.amazon["Sentiment"])
         self.labels = self.labels_0.values
-        self.text = self.amazon['clean_text'].values
+        self.text = self.amazon["clean_text"].values
 
     def process(self):
-        self.amazon = self.amazon[self.amazon['Sentiment'].isin(['positive', 'negative'])]
+        self.amazon = self.amazon[self.amazon["Sentiment"].isin(["positive", "negative"])]
 
         if self.run_balance:
             # balance it out
             self.amazon = balance(self.amazon)
 
         print("Sample Data")
-        print(self.amazon[['Sentiment', 'clean_text']].head())
+        print(self.amazon[["Sentiment", "clean_text"]].head())
 
         # mapping of the labels with dummies (has headers)
-        self.labels_0 = pd.get_dummies(self.amazon['Sentiment'])
+        self.labels_0 = pd.get_dummies(self.amazon["Sentiment"])
         self.labels = self.labels_0.values
-        self.text = self.amazon['clean_text'].values
+        self.text = self.amazon["clean_text"].values

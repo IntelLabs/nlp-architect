@@ -244,4 +244,3 @@ class ComputedRelationExtraction(RelationExtraction):
             RelationType.FUZZY_HEAD_FIT,
             RelationType.SAME_HEAD_LEMMA,
         ]
-

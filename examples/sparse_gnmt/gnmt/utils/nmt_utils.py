@@ -44,18 +44,20 @@ from . import misc_utils as utils, evaluation_utils
 __all__ = ["decode_and_evaluate", "get_translation"]
 
 
-def decode_and_evaluate(name,
-                        model,
-                        sess,
-                        trans_file,
-                        ref_file,
-                        metrics,
-                        subword_option,
-                        beam_width,
-                        tgt_eos,
-                        num_translations_per_input=1,
-                        decode=True,
-                        infer_mode="greedy"):
+def decode_and_evaluate(
+    name,
+    model,
+    sess,
+    trans_file,
+    ref_file,
+    metrics,
+    subword_option,
+    beam_width,
+    tgt_eos,
+    num_translations_per_input=1,
+    decode=True,
+    infer_mode="greedy",
+):
     """Decode a test set and compute a score according to the evaluation task."""
     # Decode
     if decode:
@@ -63,8 +65,7 @@ def decode_and_evaluate(name,
 
         start_time = time.time()
         num_sentences = 0
-        with codecs.getwriter("utf-8")(
-                tf.gfile.GFile(trans_file, mode="wb")) as trans_f:
+        with codecs.getwriter("utf-8")(tf.gfile.GFile(trans_file, mode="wb")) as trans_f:
             trans_f.write("")  # Write empty string to ensure file is created.
 
             if infer_mode == "greedy":
@@ -87,12 +88,15 @@ def decode_and_evaluate(name,
                                 nmt_outputs[beam_id],
                                 sent_id,
                                 tgt_eos=tgt_eos,
-                                subword_option=subword_option)
+                                subword_option=subword_option,
+                            )
                             trans_f.write((translation + b"\n").decode("utf-8"))
                 except tf.errors.OutOfRangeError:
                     utils.print_time(
-                        "  done, num sentences %d, num translations per input %d" %
-                        (num_sentences, num_translations_per_input), start_time)
+                        "  done, num sentences %d, num translations per input %d"
+                        % (num_sentences, num_translations_per_input),
+                        start_time,
+                    )
                     break
 
     # Evaluation
@@ -100,10 +104,8 @@ def decode_and_evaluate(name,
     if ref_file and tf.gfile.Exists(trans_file):
         for metric in metrics:
             score = evaluation_utils.evaluate(
-                ref_file,
-                trans_file,
-                metric,
-                subword_option=subword_option)
+                ref_file, trans_file, metric, subword_option=subword_option
+            )
             evaluation_scores[metric] = score
             utils.print_out("  %s %s: %.1f" % (metric, name, score))
 
@@ -119,7 +121,7 @@ def get_translation(nmt_outputs, sent_id, tgt_eos, subword_option):
 
     # If there is an eos symbol in outputs, cut them at that point.
     if tgt_eos and tgt_eos in output:
-        output = output[:output.index(tgt_eos)]
+        output = output[: output.index(tgt_eos)]
 
     if subword_option == "bpe":  # BPE
         translation = utils.format_bpe_text(output)

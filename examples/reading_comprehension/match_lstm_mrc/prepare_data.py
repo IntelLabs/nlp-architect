@@ -28,7 +28,7 @@ PAD = "<pad>"
 SOS = "<sos>"
 UNK = "<unk>"
 START_VOCAB = [PAD, SOS, UNK]
-tokenizer = SpacyInstance(disable=['tagger', 'ner', 'parser', 'vectors', 'textcat'])
+tokenizer = SpacyInstance(disable=["tagger", "ner", "parser", "vectors", "textcat"])
 
 
 def create_vocabulary(data_list):
@@ -55,16 +55,16 @@ def create_token_map(para, para_tokens):
     Function to generate mapping between tokens and indices
     """
     token_map = {}
-    char_append = ''
+    char_append = ""
     para_token_idx = 0
     for char_idx, char in enumerate(para):
-        if char != u' ':
-            current_para_token = (para_tokens[para_token_idx])
+        if char != " ":
+            current_para_token = para_tokens[para_token_idx]
             char_append += char
             if char_append == current_para_token:
                 token_map[char_idx - len(char_append) + 1] = [char_append, para_token_idx]
                 para_token_idx += 1
-                char_append = ''
+                char_append = ""
 
     return token_map
 
@@ -109,8 +109,9 @@ def tokenize_sentence(line):
     """
     Function to tokenize  sentence
     """
-    tokenized_words = [word.replace("``", '"').replace("''", '"')
-                       for word in tokenizer.tokenize(line)]
+    tokenized_words = [
+        word.replace("``", '"').replace("''", '"') for word in tokenizer.tokenize(line)
+    ]
     return list(map(lambda x: str(x), tokenized_words))
 
 
@@ -122,33 +123,31 @@ def extract_data_from_files(json_data):
     data_ques = []
     data_answer = []
     line_skipped = 0
-    for article_id in range(len(json_data['data'])):
-        sub_paragraphs = json_data['data'][article_id]['paragraphs']
+    for article_id in range(len(json_data["data"])):
+        sub_paragraphs = json_data["data"][article_id]["paragraphs"]
         for para_id in range(len(sub_paragraphs)):
 
-            req_para = sub_paragraphs[para_id]['context']
+            req_para = sub_paragraphs[para_id]["context"]
             req_para = req_para.replace("''", '" ').replace("``", '" ')
             para_tokens = tokenize_sentence(req_para)
             answer_map = create_token_map(req_para, para_tokens)
 
-            questions = sub_paragraphs[para_id]['qas']
+            questions = sub_paragraphs[para_id]["qas"]
             for ques_id in range(len(questions)):
 
-                req_question = questions[ques_id]['question']
+                req_question = questions[ques_id]["question"]
                 question_tokens = tokenize_sentence(req_question)
 
                 for ans_id in range(1):
-                    answer_text = questions[ques_id]['answers'][ans_id]['text']
-                    answer_start = questions[ques_id][
-                        'answers'][ans_id]['answer_start']
+                    answer_text = questions[ques_id]["answers"][ans_id]["text"]
+                    answer_start = questions[ques_id]["answers"][ans_id]["answer_start"]
                     answer_end = answer_start + len(answer_text)
                     text_tokens = tokenize_sentence(answer_text)
                     last_word_answer = len(text_tokens[-1])
                     try:
                         a_start_idx = answer_map[answer_start][1]
 
-                        a_end_idx = answer_map[
-                            answer_end - last_word_answer][1]
+                        a_end_idx = answer_map[answer_end - last_word_answer][1]
 
                         data_para.append(para_tokens)
                         data_ques.append(question_tokens)
@@ -167,11 +166,11 @@ def write_to_file(file_dict, path_to_save):
 
     for f_name in file_dict:
         if f_name == "vocab.dat":
-            with open(os.path.join(path_to_save + f_name), 'w') as target_file:
+            with open(os.path.join(path_to_save + f_name), "w") as target_file:
                 for word in file_dict[f_name]:
                     target_file.write(str(word) + "\n")
         else:
-            with open(os.path.join(path_to_save + f_name), 'w') as target_file:
+            with open(os.path.join(path_to_save + f_name), "w") as target_file:
                 for line in file_dict[f_name]:
                     target_file.write(" ".join([str(tok) for tok in line]) + "\n")
 
@@ -193,17 +192,23 @@ def get_ids_list(data_list, vocab):
     return ids_list
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 
     # parse the command line arguments
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--data_path', help='enter path where training data and the \
-                        glove embeddings were downloaded',
-                        type=validate_existing_directory)
+    parser.add_argument(
+        "--data_path",
+        help="enter path where training data and the \
+                        glove embeddings were downloaded",
+        type=validate_existing_directory,
+    )
 
-    parser.add_argument('--no_preprocess_glove', action="store_true",
-                        help='Chose whether or not to preprocess glove embeddings')
+    parser.add_argument(
+        "--no_preprocess_glove",
+        action="store_true",
+        help="Chose whether or not to preprocess glove embeddings",
+    )
 
     parser.set_defaults()
     args = parser.parse_args()
@@ -232,7 +237,7 @@ if __name__ == '__main__':
     with open(dev_filename) as dev_file:
         dev_data = json.load(dev_file)
 
-    print('Extracting data from json files')
+    print("Extracting data from json files")
     # Extract training data from raw files
     train_para, train_question, train_ans = extract_data_from_files(train_data)
     # Extract dev data from raw dataset
@@ -254,13 +259,15 @@ if __name__ == '__main__':
     dev_para_ids = get_ids_list(dev_para, vocab_dict)
     dev_question_ids = get_ids_list(dev_question, vocab_dict)
 
-    final_data_dict = {sep + "train.ids.context": train_para_ids,
-                       sep + "train.ids.question": train_question_ids,
-                       sep + "dev.ids.context": dev_para_ids,
-                       sep + "dev.ids.question": dev_question_ids,
-                       sep + "vocab.dat": vocab_list,
-                       sep + "train.span": train_ans,
-                       sep + "dev.span": dev_ans}
+    final_data_dict = {
+        sep + "train.ids.context": train_para_ids,
+        sep + "train.ids.question": train_question_ids,
+        sep + "dev.ids.context": dev_para_ids,
+        sep + "dev.ids.question": dev_question_ids,
+        sep + "vocab.dat": vocab_list,
+        sep + "train.span": train_ans,
+        sep + "dev.span": dev_ans,
+    }
 
     print("writing data to files")
     write_to_file(final_data_dict, data_path)

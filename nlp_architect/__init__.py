@@ -17,13 +17,13 @@ from os import path
 from pathlib import Path
 import logging
 
-logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s', level=logging.INFO)
-logger = logging.getLogger(__name__) 
+logging.basicConfig(format="%(asctime)s %(levelname)s %(message)s", level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 LIBRARY_PATH = Path(path.realpath(__file__)).parent
 LIBRARY_ROOT = LIBRARY_PATH.parent
-LIBRARY_OUT = Path(Path.home()) / 'nlp-architect' / 'cache'
-LIBRARY_DATASETS = LIBRARY_ROOT / 'datasets'
+LIBRARY_OUT = Path(Path.home()) / "nlp-architect" / "cache"
+LIBRARY_DATASETS = LIBRARY_ROOT / "datasets"
 
 try:
     # Capirca uses Google's abseil-py library, which uses a Google-specific
@@ -41,7 +41,7 @@ try:
     logging.root.removeHandler(absl.logging._absl_handler)
     # https://github.com/abseil/abseil-py/issues/102
     absl.logging._warn_preinit_stderr = False
-    absl.logging.set_verbosity('info')
-    absl.logging.set_stderrthreshold('info')
+    absl.logging.set_verbosity("info")
+    absl.logging.set_stderrthreshold("info")
 except Exception:
     pass

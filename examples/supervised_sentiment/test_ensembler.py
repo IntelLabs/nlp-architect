@@ -21,9 +21,7 @@ from .ensembler import simple_ensembler
 def test_ensembler():
     a = np.asarray([[1, 2, 3], [1, 2, 3], [1, 2, 3]])
     b = np.asarray([[0, 0, 0], [1, 1, 1], [2, 2, 2]])
-    w = [.25, 0.75]
-    correct_answer = np.asarray([[0.25, 0.5, 0.75],
-                                [1.0, 1.25, 1.5],
-                                [1.75, 2.0, 2.25]])
+    w = [0.25, 0.75]
+    correct_answer = np.asarray([[0.25, 0.5, 0.75], [1.0, 1.25, 1.5], [1.75, 2.0, 2.25]])
 
     assert simple_ensembler([a, b], w).all() == correct_answer.all()

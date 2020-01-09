@@ -74,7 +74,7 @@ class EventSievesConfiguration(SievesConfiguration):
             (RelationType.WIKIPEDIA_BE_COMP, 0.1),
             (RelationType.WIKIPEDIA_CATEGORY, 0.1),
             (RelationType.VERBOCEAN_MATCH, 0.1),
-            (RelationType.WORDNET_DERIVATIONALLY, 1.0)
+            (RelationType.WORDNET_DERIVATIONALLY, 1.0),
         ]
 
 
@@ -98,5 +98,5 @@ class EntitySievesConfiguration(SievesConfiguration):
             (RelationType.WIKIPEDIA_BE_COMP, 0.1),
             (RelationType.WIKIPEDIA_TITLE_PARENTHESIS, 0.1),
             (RelationType.WORDNET_SAME_SYNSET, 1.0),
-            (RelationType.REFERENT_DICT, 0.5)
+            (RelationType.REFERENT_DICT, 0.5),
         ]

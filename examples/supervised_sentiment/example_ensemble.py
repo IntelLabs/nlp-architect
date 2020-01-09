@@ -35,6 +35,7 @@ import argparse
 import numpy as np
 from sklearn.metrics import classification_report
 from sklearn.model_selection import train_test_split
+
 # pylint: disable=no-name-in-module
 from tensorflow.python.keras.preprocessing.sequence import pad_sequences
 from tensorflow.python.keras.preprocessing.text import Tokenizer
@@ -57,11 +58,12 @@ def ensemble_models(data, args):
     data.process()
     dense_out = len(data.labels[0])
     # split for all models
-    X_train_, X_test_, Y_train, Y_test = train_test_split(data.text, data.labels,
-                                                          test_size=0.20, random_state=42)
+    X_train_, X_test_, Y_train, Y_test = train_test_split(
+        data.text, data.labels, test_size=0.20, random_state=42
+    )
 
     # Prep data for the LSTM model
-    tokenizer = Tokenizer(num_words=max_fatures, split=' ')
+    tokenizer = Tokenizer(num_words=max_fatures, split=" ")
     tokenizer.fit_on_texts(X_train_)
     X_train = tokenizer.texts_to_sequences(X_train_)
     X_train = pad_sequences(X_train, maxlen=max_len)
@@ -70,9 +72,15 @@ def ensemble_models(data, args):
 
     # Train the LSTM model
     lstm_model = simple_lstm(max_fatures, dense_out, X_train.shape[1], embed_dim, lstm_out)
-    model_hist = lstm_model.fit(X_train, Y_train, epochs=args.epochs, batch_size=batch_size,
-                                verbose=1, validation_data=(X_test, Y_test))
-    lstm_acc = model_hist.history['acc'][-1]
+    model_hist = lstm_model.fit(
+        X_train,
+        Y_train,
+        epochs=args.epochs,
+        batch_size=batch_size,
+        verbose=1,
+        validation_data=(X_test, Y_test),
+    )
+    lstm_acc = model_hist.history["acc"][-1]
     print("LSTM model accuracy ", lstm_acc)
 
     # And make predictions using the LSTM model
@@ -84,9 +92,15 @@ def ensemble_models(data, args):
 
     # And train the one-hot CNN classifier
     model_cnn = one_hot_cnn(dense_out, max_len)
-    model_hist_cnn = model_cnn.fit(X_train_cnn, Y_train, batch_size=batch_size, epochs=args.epochs,
-                                   verbose=1, validation_data=(X_test_cnn, Y_test))
-    cnn_acc = model_hist_cnn.history['acc'][-1]
+    model_hist_cnn = model_cnn.fit(
+        X_train_cnn,
+        Y_train,
+        batch_size=batch_size,
+        epochs=args.epochs,
+        verbose=1,
+        validation_data=(X_test_cnn, Y_test),
+    )
+    cnn_acc = model_hist_cnn.history["acc"][-1]
     print("CNN model accuracy: ", cnn_acc)
 
     # And make predictions
@@ -99,30 +113,40 @@ def ensemble_models(data, args):
     print("Ensembling with weights: ")
     for na in norm_accuracies:
         print(na)
-    ensembled_predictions = simple_ensembler([lstm_predictions, one_hot_cnn_predictions],
-                                             norm_accuracies)
+    ensembled_predictions = simple_ensembler(
+        [lstm_predictions, one_hot_cnn_predictions], norm_accuracies
+    )
     final_preds = np.argmax(ensembled_predictions, axis=1)
 
     # Get the final accuracy
-    print(classification_report(np.argmax(Y_test, axis=1), final_preds,
-                                target_names=data.labels_0.columns.values))
+    print(
+        classification_report(
+            np.argmax(Y_test, axis=1), final_preds, target_names=data.labels_0.columns.values
+        )
+    )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('--file_path', type=str, default='./',
-                        help='file_path where the files to parse are located')
-    parser.add_argument('--data_type', type=str, default='amazon',
-                        choices=['amazon'],
-                        help='dataset source')
-    parser.add_argument('--epochs', type=int, default=10,
-                        help='Number of epochs for both models', action=check_size(1, 20000))
+    parser.add_argument(
+        "--file_path", type=str, default="./", help="file_path where the files to parse are located"
+    )
+    parser.add_argument(
+        "--data_type", type=str, default="amazon", choices=["amazon"], help="dataset source"
+    )
+    parser.add_argument(
+        "--epochs",
+        type=int,
+        default=10,
+        help="Number of epochs for both models",
+        action=check_size(1, 20000),
+    )
     args_in = parser.parse_args()
 
     # Check file path
     if args_in.file_path:
         validate_existing_filepath(args_in.file_path)
 
-    if args_in.data_type == 'amazon':
+    if args_in.data_type == "amazon":
         data_in = Amazon_Reviews(args_in.file_path)
     ensemble_models(data_in, args_in)

@@ -48,12 +48,10 @@ def evaluate(ref_file, trans_file, metric, subword_option=None):
     """Pick a metric and evaluate depending on task."""
     # BLEU scores for translation task
     if metric.lower() == "bleu":
-        evaluation_score = _bleu(ref_file, trans_file,
-                                 subword_option=subword_option)
+        evaluation_score = _bleu(ref_file, trans_file, subword_option=subword_option)
     # ROUGE scores for summarization tasks
     elif metric.lower() == "rouge":
-        evaluation_score = _rouge(ref_file, trans_file,
-                                  subword_option=subword_option)
+        evaluation_score = _rouge(ref_file, trans_file, subword_option=subword_option)
     elif metric.lower() == "accuracy":
         evaluation_score = _accuracy(ref_file, trans_file)
     elif metric.lower() == "word_accuracy":
@@ -74,7 +72,7 @@ def _clean(sentence, subword_option):
 
     # SPM
     elif subword_option == "spm":
-        sentence = u"".join(sentence.split()).replace(u"\u2581", u" ").lstrip()
+        sentence = "".join(sentence.split()).replace("\u2581", " ").lstrip()
 
     return sentence
 
@@ -88,8 +86,7 @@ def _bleu(ref_file, trans_file, subword_option=None):
     ref_files = [ref_file]
     reference_text = []
     for reference_filename in ref_files:
-        with codecs.getreader("utf-8")(
-                tf.gfile.GFile(reference_filename, "rb")) as fh:
+        with codecs.getreader("utf-8")(tf.gfile.GFile(reference_filename, "rb")) as fh:
             reference_text.append(fh.readlines())
 
     per_segment_references = []
@@ -108,7 +105,8 @@ def _bleu(ref_file, trans_file, subword_option=None):
 
     # bleu_score, precisions, bp, ratio, translation_length, reference_length
     bleu_score, _, _, _, _, _ = bleu.compute_bleu(
-        per_segment_references, translations, max_order, smooth)
+        per_segment_references, translations, max_order, smooth
+    )
     return 100 * bleu_score
 
 
@@ -121,8 +119,7 @@ def _rouge(ref_file, summarization_file, subword_option=None):
             references.append(_clean(line, subword_option))
 
     hypotheses = []
-    with codecs.getreader("utf-8")(
-            tf.gfile.GFile(summarization_file, "rb")) as fh:
+    with codecs.getreader("utf-8")(tf.gfile.GFile(summarization_file, "rb")) as fh:
         for line in fh:
             hypotheses.append(_clean(line, subword_option=None))
 
@@ -151,7 +148,7 @@ def _word_accuracy(label_file, pred_file):
 
     with codecs.getreader("utf-8")(tf.gfile.GFile(label_file, "r")) as label_fh:
         with codecs.getreader("utf-8")(tf.gfile.GFile(pred_file, "r")) as pred_fh:
-            total_acc, total_count = 0., 0.
+            total_acc, total_count = 0.0, 0.0
             for sentence in label_fh:
                 labels = sentence.strip().split(" ")
                 preds = pred_fh.readline().strip().split(" ")
@@ -185,8 +182,8 @@ def _moses_bleu(multi_bleu_script, tgt_test, trans_file, subword_option=None):
         if not os.path.exists(despm_tgt_test):
             subprocess.call("cp %s %s" % (tgt_test, despm_tgt_test))
             subprocess.call("sed s/ //g %s" % (despm_tgt_test))
-            subprocess.call(u"sed s/^\u2581/g %s" % (despm_tgt_test))
-            subprocess.call(u"sed s/\u2581/ /g %s" % (despm_tgt_test))
+            subprocess.call("sed s/^\u2581/g %s" % (despm_tgt_test))
+            subprocess.call("sed s/\u2581/ /g %s" % (despm_tgt_test))
         tgt_test = despm_tgt_test
     cmd = "%s %s < %s" % (multi_bleu_script, tgt_test, trans_file)
 

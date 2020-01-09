@@ -22,8 +22,8 @@ import sys
 SOLUTIONS_PATH = path.dirname(path.realpath(__file__))
 
 solution_uis = {
-    'set_expansion': path.join(SOLUTIONS_PATH, 'set_expansion', 'ui'),
-    'trend_analysis': path.join(SOLUTIONS_PATH, 'trend_analysis', 'ui_main.py')
+    "set_expansion": path.join(SOLUTIONS_PATH, "set_expansion", "ui"),
+    "trend_analysis": path.join(SOLUTIONS_PATH, "trend_analysis", "ui_main.py"),
 }
 
 
@@ -35,25 +35,28 @@ def check_if_ip(ip_str):
         return False
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('--solution', type=str, choices=['set_expansion', 'trend_analysis'],
-                        help='Solution UI to initialize')
-    parser.add_argument('--address', type=str, default='',
-                        help='IP address to use for UI server ')
-    parser.add_argument('--port', type=int, default=1010,
-                        help='Port number')
-    parser.add_argument('--no_shell', action='store_true',
-                        help="not running through shell interface")
+    parser.add_argument(
+        "--solution",
+        type=str,
+        choices=["set_expansion", "trend_analysis"],
+        help="Solution UI to initialize",
+    )
+    parser.add_argument("--address", type=str, default="", help="IP address to use for UI server ")
+    parser.add_argument("--port", type=int, default=1010, help="Port number")
+    parser.add_argument(
+        "--no_shell", action="store_true", help="not running through shell interface"
+    )
     args = parser.parse_args()
     if args.address and not check_if_ip(args.address):
-        print('given address is not in a valid ip address format')
+        print("given address is not in a valid ip address format")
         sys.exit()
 
-    cmd_str = 'bokeh serve --show {} --port {}'.format(solution_uis[args.solution], args.port)
+    cmd_str = "bokeh serve --show {} --port {}".format(solution_uis[args.solution], args.port)
     if args.address:
-        cmd_str += ' --address={} ' \
-                   '--allow-websocket-origin={}:{}'.\
-            format(args.address, args.address, args.port)
+        cmd_str += " --address={} " "--allow-websocket-origin={}:{}".format(
+            args.address, args.address, args.port
+        )
 
     run(cmd_str, shell=not args.no_shell, check=True)

@@ -80,10 +80,9 @@ def _string_to_bytes(text, max_length):
     A tf.int32 tensor of the byte encoded text.
   """
     byte_ids = tf.to_int32(tf.decode_raw(text, tf.uint8))
-    byte_ids = byte_ids[:max_length - 2]
+    byte_ids = byte_ids[: max_length - 2]
     padding = tf.fill([max_length - tf.shape(byte_ids)[0] - 2], PAD_CHAR_ID)
-    byte_ids = tf.concat(
-        [[BOW_CHAR_ID], byte_ids, [EOW_CHAR_ID], padding], axis=0)
+    byte_ids = tf.concat([[BOW_CHAR_ID], byte_ids, [EOW_CHAR_ID], padding], axis=0)
     tf.logging.info(byte_ids)
 
     byte_ids = tf.reshape(byte_ids, [max_length])
@@ -111,7 +110,8 @@ def tokens_to_bytes(tokens):
             fn=lambda x: _string_to_bytes(x, max_length=bytes_per_word),
             elems=tokens_flat,
             dtype=tf.int32,
-            back_prop=False)
+            back_prop=False,
+        )
         tf.logging.info(as_bytes_flat)
         as_bytes = tf.reshape(as_bytes_flat, [shape[0], bytes_per_word])
     return as_bytes
@@ -127,8 +127,7 @@ def load_vocab(vocab_file):
     return vocab, vocab_size
 
 
-def check_vocab(vocab_file, out_dir, check_special_token=True, sos=None,
-                eos=None, unk=None):
+def check_vocab(vocab_file, out_dir, check_special_token=True, sos=None, eos=None, unk=None):
     """Check if vocab_file doesn't exist, create from corpus_file."""
     if tf.gfile.Exists(vocab_file):
         utils.print_out("# Vocab file %s exists" % vocab_file)
@@ -144,14 +143,14 @@ def check_vocab(vocab_file, out_dir, check_special_token=True, sos=None,
                 eos = EOS
             assert len(vocab) >= 3
             if vocab[0] != unk or vocab[1] != sos or vocab[2] != eos:
-                utils.print_out("The first 3 vocab words [%s, %s, %s]"
-                                " are not [%s, %s, %s]" %
-                                (vocab[0], vocab[1], vocab[2], unk, sos, eos))
+                utils.print_out(
+                    "The first 3 vocab words [%s, %s, %s]"
+                    " are not [%s, %s, %s]" % (vocab[0], vocab[1], vocab[2], unk, sos, eos)
+                )
                 vocab = [unk, sos, eos] + vocab
                 vocab_size += 3
                 new_vocab_file = os.path.join(out_dir, os.path.basename(vocab_file))
-                with codecs.getwriter("utf-8")(
-                        tf.gfile.GFile(new_vocab_file, "wb")) as f:
+                with codecs.getwriter("utf-8")(tf.gfile.GFile(new_vocab_file, "wb")) as f:
                     for word in vocab:
                         f.write("%s\n" % word)
                 vocab_file = new_vocab_file
@@ -164,13 +163,11 @@ def check_vocab(vocab_file, out_dir, check_special_token=True, sos=None,
 
 def create_vocab_tables(src_vocab_file, tgt_vocab_file, share_vocab):
     """Creates vocab tables for src_vocab_file and tgt_vocab_file."""
-    src_vocab_table = lookup_ops.index_table_from_file(
-        src_vocab_file, default_value=UNK_ID)
+    src_vocab_table = lookup_ops.index_table_from_file(src_vocab_file, default_value=UNK_ID)
     if share_vocab:
         tgt_vocab_table = src_vocab_table
     else:
-        tgt_vocab_table = lookup_ops.index_table_from_file(
-            tgt_vocab_file, default_value=UNK_ID)
+        tgt_vocab_table = lookup_ops.index_table_from_file(tgt_vocab_file, default_value=UNK_ID)
     return src_vocab_table, tgt_vocab_table
 
 
@@ -208,8 +205,7 @@ def load_embed_txt(embed_file):
             emb_dict[word] = vec
             if emb_size:
                 if emb_size != len(vec):
-                    utils.print_out(
-                        "Ignoring %s since embeding size is inconsistent." % word)
+                    utils.print_out("Ignoring %s since embeding size is inconsistent." % word)
                     del emb_dict[word]
             else:
                 emb_size = len(vec)

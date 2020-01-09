@@ -23,8 +23,10 @@ from typing import Set, List
 from nlp_architect.common.cdc.mention_data import MentionDataLight
 from nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_pages import WikipediaPages
 from nlp_architect.data.cdc_resources.relations.relation_extraction import RelationExtraction
-from nlp_architect.data.cdc_resources.relations.relation_types_enums import RelationType, \
-    WikipediaSearchMethod
+from nlp_architect.data.cdc_resources.relations.relation_types_enums import (
+    RelationType,
+    WikipediaSearchMethod,
+)
 from nlp_architect.data.cdc_resources.wikipedia.wiki_elastic import WikiElastic
 from nlp_architect.data.cdc_resources.wikipedia.wiki_offline import WikiOffline
 from nlp_architect.data.cdc_resources.wikipedia.wiki_online import WikiOnline
@@ -34,10 +36,16 @@ logger = logging.getLogger(__name__)
 
 
 class WikipediaRelationExtraction(RelationExtraction):
-    def __init__(self, method: WikipediaSearchMethod = WikipediaSearchMethod.ONLINE,
-                 wiki_file: str = None, host: str = None, port: int = None,
-                 index: str = None, filter_pronouns: bool = True,
-                 filter_time_data: bool = True) -> None:
+    def __init__(
+        self,
+        method: WikipediaSearchMethod = WikipediaSearchMethod.ONLINE,
+        wiki_file: str = None,
+        host: str = None,
+        port: int = None,
+        index: str = None,
+        filter_pronouns: bool = True,
+        filter_time_data: bool = True,
+    ) -> None:
         """
         Extract Relation between two mentions according to Wikipedia knowledge
 
@@ -49,7 +57,7 @@ class WikipediaRelationExtraction(RelationExtraction):
             port (required on Elastic mode): int the Elastic search port number
             index (required on Elastic mode): int the Elastic search index name
         """
-        logger.info('Loading Wikipedia module')
+        logger.info("Loading Wikipedia module")
         self.filter_pronouns = filter_pronouns
         self.filter_time_data = filter_time_data
         connectivity = method
@@ -59,12 +67,14 @@ class WikipediaRelationExtraction(RelationExtraction):
             if wiki_file is not None and os.path.isdir(wiki_file):
                 self.pywiki_impl = WikiOffline(wiki_file)
             else:
-                raise FileNotFoundError('Wikipedia resource file not found or not in path, '
-                                        'create it or change the initialization method')
+                raise FileNotFoundError(
+                    "Wikipedia resource file not found or not in path, "
+                    "create it or change the initialization method"
+                )
         elif connectivity == WikipediaSearchMethod.ELASTIC:
             self.pywiki_impl = WikiElastic(host, port, index)
 
-        logger.info('Wikipedia module lead successfully')
+        logger.info("Wikipedia module lead successfully")
         super(WikipediaRelationExtraction, self).__init__()
 
     def get_phrase_related_pages(self, mention_str: str) -> WikipediaPages:
@@ -86,8 +96,9 @@ class WikipediaRelationExtraction(RelationExtraction):
 
         return ret_pages
 
-    def extract_all_relations(self, mention_x: MentionDataLight,
-                              mention_y: MentionDataLight) -> Set[RelationType]:
+    def extract_all_relations(
+        self, mention_x: MentionDataLight, mention_y: MentionDataLight
+    ) -> Set[RelationType]:
         """
         Try to find if mentions has anyone or more of the relations this class support
 
@@ -128,12 +139,12 @@ class WikipediaRelationExtraction(RelationExtraction):
             relations.add(RelationType.WIKIPEDIA_REDIRECT_LINK)
 
         titles1 = pages1.get_and_set_titles()
-        titles1.add(mention1_str + ' ' + mention2_str)
-        titles1.add(mention2_str + ' ' + mention1_str)
+        titles1.add(mention1_str + " " + mention2_str)
+        titles1.add(mention2_str + " " + mention1_str)
 
         titles2 = pages2.get_and_set_titles()
-        titles2.add(mention1_str + ' ' + mention2_str)
-        titles2.add(mention2_str + ' ' + mention1_str)
+        titles2.add(mention1_str + " " + mention2_str)
+        titles2.add(mention2_str + " " + mention1_str)
 
         relation_alias = self.extract_aliases(pages1, pages2, titles1, titles2)
         if relation_alias is not RelationType.NO_RELATION_FOUND:
@@ -156,8 +167,9 @@ class WikipediaRelationExtraction(RelationExtraction):
 
         return relations
 
-    def extract_sub_relations(self, mention_x: MentionDataLight, mention_y: MentionDataLight,
-                              relation: RelationType) -> RelationType:
+    def extract_sub_relations(
+        self, mention_x: MentionDataLight, mention_y: MentionDataLight, relation: RelationType
+    ) -> RelationType:
         """
         Check if input mentions has the given relation between them
 
@@ -195,12 +207,12 @@ class WikipediaRelationExtraction(RelationExtraction):
             return RelationType.NO_RELATION_FOUND
 
         titles1 = pages1.get_and_set_titles()
-        titles1.add(mention1_str + ' ' + mention2_str)
-        titles1.add(mention2_str + ' ' + mention1_str)
+        titles1.add(mention1_str + " " + mention2_str)
+        titles1.add(mention2_str + " " + mention1_str)
 
         titles2 = pages2.get_and_set_titles()
-        titles2.add(mention1_str + ' ' + mention2_str)
-        titles2.add(mention2_str + ' ' + mention1_str)
+        titles2.add(mention1_str + " " + mention2_str)
+        titles2.add(mention2_str + " " + mention1_str)
 
         if relation == RelationType.WIKIPEDIA_ALIASES:
             return self.extract_aliases(pages1, pages2, titles1, titles2)
@@ -216,8 +228,9 @@ class WikipediaRelationExtraction(RelationExtraction):
         return RelationType.NO_RELATION_FOUND
 
     @staticmethod
-    def extract_be_comp(pages1: WikipediaPages, pages2: WikipediaPages, titles1: Set[str],
-                        titles2: Set[str]) -> RelationType:
+    def extract_be_comp(
+        pages1: WikipediaPages, pages2: WikipediaPages, titles1: Set[str], titles2: Set[str]
+    ) -> RelationType:
         """
         Check if input mentions has be-comp/is-a relation
 
@@ -238,8 +251,9 @@ class WikipediaRelationExtraction(RelationExtraction):
         return relation
 
     @staticmethod
-    def extract_parenthesis(pages1: WikipediaPages, pages2: WikipediaPages, titles1: Set[str],
-                            titles2: Set[str]) -> RelationType:
+    def extract_parenthesis(
+        pages1: WikipediaPages, pages2: WikipediaPages, titles1: Set[str], titles2: Set[str]
+    ) -> RelationType:
         """
         Check if input mentions has parenthesis relation
 
@@ -260,8 +274,9 @@ class WikipediaRelationExtraction(RelationExtraction):
         return relation
 
     @staticmethod
-    def extract_category(pages1: WikipediaPages, pages2: WikipediaPages, titles1: Set[str],
-                         titles2: Set[str]) -> RelationType:
+    def extract_category(
+        pages1: WikipediaPages, pages2: WikipediaPages, titles1: Set[str], titles2: Set[str]
+    ) -> RelationType:
         """
         Check if input mentions has category relation
 
@@ -282,8 +297,9 @@ class WikipediaRelationExtraction(RelationExtraction):
         return relation
 
     @staticmethod
-    def extract_disambig(pages1: WikipediaPages, pages2: WikipediaPages, titles1: Set[str],
-                         titles2: Set[str]) -> RelationType:
+    def extract_disambig(
+        pages1: WikipediaPages, pages2: WikipediaPages, titles1: Set[str], titles2: Set[str]
+    ) -> RelationType:
         """
         Check if input mentions has disambiguation relation
 
@@ -304,8 +320,9 @@ class WikipediaRelationExtraction(RelationExtraction):
         return relation
 
     @staticmethod
-    def extract_aliases(pages1: WikipediaPages, pages2: WikipediaPages, titles1: Set[str],
-                        titles2: Set[str]) -> RelationType:
+    def extract_aliases(
+        pages1: WikipediaPages, pages2: WikipediaPages, titles1: Set[str], titles2: Set[str]
+    ) -> RelationType:
         """
         Check if input mentions has aliases relation
 
@@ -338,7 +355,7 @@ class WikipediaRelationExtraction(RelationExtraction):
         for page1 in pages1.pages:
             for page2 in pages2.pages:
                 if page1.relations.is_part_name and page2.relations.is_part_name:
-                    pages = self.pywiki_impl.get_pages(page1.orig_phrase + ' ' + page2.orig_phrase)
+                    pages = self.pywiki_impl.get_pages(page1.orig_phrase + " " + page2.orig_phrase)
                     for page in pages:
                         if page.page_result.pageid != 0:
                             return True
@@ -371,10 +388,15 @@ class WikipediaRelationExtraction(RelationExtraction):
         Returns:
             List[RelationType]
         """
-        return [RelationType.WIKIPEDIA_BE_COMP, RelationType.WIKIPEDIA_TITLE_PARENTHESIS,
-                RelationType.WIKIPEDIA_DISAMBIGUATION, RelationType.WIKIPEDIA_CATEGORY,
-                RelationType.WIKIPEDIA_REDIRECT_LINK, RelationType.WIKIPEDIA_ALIASES,
-                RelationType.WIKIPEDIA_PART_OF_SAME_NAME]
+        return [
+            RelationType.WIKIPEDIA_BE_COMP,
+            RelationType.WIKIPEDIA_TITLE_PARENTHESIS,
+            RelationType.WIKIPEDIA_DISAMBIGUATION,
+            RelationType.WIKIPEDIA_CATEGORY,
+            RelationType.WIKIPEDIA_REDIRECT_LINK,
+            RelationType.WIKIPEDIA_ALIASES,
+            RelationType.WIKIPEDIA_PART_OF_SAME_NAME,
+        ]
 
     @staticmethod
     def is_both_opposite_personal_pronouns(phrase1: str, phrase2: str) -> bool:
@@ -406,8 +428,8 @@ class WikipediaRelationExtraction(RelationExtraction):
         if mention2_ner is None:
             _, _, _, mention2_ner = StringUtils.find_head_lemma_pos_ner(mention2.tokens_str)
 
-        is1_time_or_data = 'DATE' in mention1_ner or 'TIME' in mention1_ner
-        is2_time_or_data = 'DATE' in mention2_ner or 'TIME' in mention2_ner
+        is1_time_or_data = "DATE" in mention1_ner or "TIME" in mention1_ner
+        is2_time_or_data = "DATE" in mention2_ner or "TIME" in mention2_ner
 
         result = False
         if is1_time_or_data and is2_time_or_data:

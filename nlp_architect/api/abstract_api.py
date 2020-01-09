@@ -17,13 +17,14 @@
 from abc import abstractmethod
 
 
-Not_Implemented = 'Not Implemented'
+Not_Implemented = "Not Implemented"
 
 
 class AbstractApi:
     """
     Abstract class for API's to the server
     """
+
     @abstractmethod
     def load_model(self):
         raise Not_Implemented

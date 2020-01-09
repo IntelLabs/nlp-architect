@@ -25,16 +25,23 @@ from tqdm import tqdm
 
 from nlp_architect import LIBRARY_OUT
 from nlp_architect.common.core_nlp_doc import CoreNLPDoc
-from nlp_architect.models.absa.inference.data_types import TermType, \
-    SentimentDocEncoder, SentimentDoc
-from nlp_architect.models.absa.inference.inference \
-    import SentimentInference
+from nlp_architect.models.absa.inference.data_types import (
+    TermType,
+    SentimentDocEncoder,
+    SentimentDoc,
+)
+from nlp_architect.models.absa.inference.inference import SentimentInference
 from nlp_architect.models.absa.utils import load_opinion_lex
-from nlp_architect.utils.io import walk_directory, validate_existing_filepath, \
-    validate_existing_directory, validate_existing_path, line_count
+from nlp_architect.utils.io import (
+    walk_directory,
+    validate_existing_filepath,
+    validate_existing_directory,
+    validate_existing_path,
+    line_count,
+)
 from .utils import Anonymiser, _ui_format
 
-SENTIMENT_OUT = LIBRARY_OUT / 'absa_solution'
+SENTIMENT_OUT = LIBRARY_OUT / "absa_solution"
 
 
 class SentimentSolution(object):
@@ -50,40 +57,49 @@ class SentimentSolution(object):
         self.max_events = max_events
         SENTIMENT_OUT.mkdir(parents=True, exist_ok=True)
 
-    def run(self, aspect_lex: PathLike = None, opinion_lex: PathLike = None,
-            data: PathLike = None, parsed_data: PathLike = None,
-            inference_results: PathLike = None) -> Optional[pd.DataFrame]:
+    def run(
+        self,
+        aspect_lex: PathLike = None,
+        opinion_lex: PathLike = None,
+        data: PathLike = None,
+        parsed_data: PathLike = None,
+        inference_results: PathLike = None,
+    ) -> Optional[pd.DataFrame]:
 
         opinions = load_opinion_lex(opinion_lex)
         if not opinions:
-            raise ValueError('Empty opinion lexicon!')
-        aspects = pd.read_csv(aspect_lex, header=None, encoding='utf-8')[0]
+            raise ValueError("Empty opinion lexicon!")
+        aspects = pd.read_csv(aspect_lex, header=None, encoding="utf-8")[0]
         if aspects.empty:
-            raise ValueError('Empty aspect lexicon!')
+            raise ValueError("Empty aspect lexicon!")
         if inference_results:
-            with open(inference_results, encoding='utf-8') as f:
+            with open(inference_results, encoding="utf-8") as f:
                 results = json.loads(f.read(), object_hook=SentimentDoc.decoder)
         elif data or parsed_data:
             inference = SentimentInference(aspect_lex, opinions, parse=False)
             parse = None
             if not parsed_data:  # source data is raw text, need to parse
                 from nlp_architect.pipelines.spacy_bist import SpacyBISTParser
+
                 parse = SpacyBISTParser().parse
 
             results = {}
-            print('Running inference on data files... (Iterating data files)')
+            print("Running inference on data files... (Iterating data files)")
             data_source = parsed_data if parsed_data else data
             for file, doc in self._iterate_docs(data_source):
-                parsed_doc = parse(doc) if parse \
-                    else json.loads(doc, object_hook=CoreNLPDoc.decoder)
+                parsed_doc = (
+                    parse(doc) if parse else json.loads(doc, object_hook=CoreNLPDoc.decoder)
+                )
                 sentiment_doc = inference.run(parsed_doc=parsed_doc)
                 if sentiment_doc:
                     results[file] = sentiment_doc
-            with open(SENTIMENT_OUT / 'inference_results.json', 'w', encoding='utf-8') as f:
+            with open(SENTIMENT_OUT / "inference_results.json", "w", encoding="utf-8") as f:
                 json.dump(results, f, cls=SentimentDocEncoder, indent=4, sort_keys=True)
         else:
-            print('No input given. Please supply one of: '
-                  'data directory, parsed data directory, or inference results.')
+            print(
+                "No input given. Please supply one of: "
+                "data directory, parsed data directory, or inference results."
+            )
             return None
 
         print("\nComputing statistics...")
@@ -97,7 +113,7 @@ class SentimentSolution(object):
             for file, doc_text in tqdm(list(walk_directory(data))):
                 yield file, doc_text
         else:
-            with open(data, encoding='utf-8') as f:
+            with open(data, encoding="utf-8") as f:
                 for i, doc_text in tqdm(enumerate(f), total=line_count(data)):
                     yield str(i + 1), doc_text
 
@@ -105,10 +121,11 @@ class SentimentSolution(object):
         """Aggregates counts for each aspect-polarity pairs, with separate counts for in-domain
          only events.
         """
-        index = pd.MultiIndex.from_product([aspects, ['POS', 'NEG'], [False, True]],
-                                           names=['Aspect', 'Polarity', 'inDomain'])
-        stats = pd.DataFrame(columns=['Quantity', 'Score'], index=index)
-        stats[['Quantity', 'Score']] = stats[['Quantity', 'Score']].fillna(0)
+        index = pd.MultiIndex.from_product(
+            [aspects, ["POS", "NEG"], [False, True]], names=["Aspect", "Polarity", "inDomain"]
+        )
+        stats = pd.DataFrame(columns=["Quantity", "Score"], index=index)
+        stats[["Quantity", "Score"]] = stats[["Quantity", "Score"]].fillna(0)
         stats = stats.sort_index()
         scores = stats.copy()
 
@@ -132,11 +149,19 @@ class SentimentSolution(object):
             stats.loc[key, 2:] = stats.loc[key][2:][np.argsort(scores.loc[key][2:])].tolist()
         return stats
 
-    def _add_sentence(self, sent_ui: str, stats: pd.DataFrame, scores: pd.DataFrame, key: tuple,
-                      in_domain: bool, count: int, score: int) -> int:
+    def _add_sentence(
+        self,
+        sent_ui: str,
+        stats: pd.DataFrame,
+        scores: pd.DataFrame,
+        key: tuple,
+        in_domain: bool,
+        count: int,
+        score: int,
+    ) -> int:
         """Utility function for adding event sentence to output."""
         sent_ui = self.anonymiser.run(sent_ui) if self.anonymiser else sent_ui
-        sent_key = key + (in_domain,), 'Sent_' + str(count)
+        sent_key = key + (in_domain,), "Sent_" + str(count)
         stats.at[sent_key] = sent_ui
         scores.at[sent_key] = -abs(score)
         return count
@@ -145,33 +170,34 @@ class SentimentSolution(object):
     def _add_event(df: pd.DataFrame, key: tuple, in_domain: bool, score: int) -> int:
         """Utility function for incrementing event counts."""
         key = key + (in_domain,)
-        count = int(df.loc[key, 'Quantity']) + 1
-        df.loc[key, 'Quantity'] = count
-        df.loc[key, 'Score'] += score
+        count = int(df.loc[key, "Quantity"]) + 1
+        df.loc[key, "Quantity"] = count
+        df.loc[key, "Score"] += score
         return count
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description='Aspect-Based Sentiment Analysis')
-    parser.add_argument('--data', type=validate_existing_path,
-                        help='Path to data')
-    parser.add_argument('--aspects', type=validate_existing_filepath,
-                        help='Path to aspect lexicon', required=True)
-    parser.add_argument('--opinions', type=validate_existing_filepath,
-                        help='Path to opinion lexicon', required=True)
-    parser.add_argument('--parsed', type=validate_existing_directory,
-                        help='Path to parsed data')
-    parser.add_argument('--res', type=validate_existing_filepath,
-                        help='Path to inference results')
+    parser = argparse.ArgumentParser(description="Aspect-Based Sentiment Analysis")
+    parser.add_argument("--data", type=validate_existing_path, help="Path to data")
+    parser.add_argument(
+        "--aspects", type=validate_existing_filepath, help="Path to aspect lexicon", required=True
+    )
+    parser.add_argument(
+        "--opinions", type=validate_existing_filepath, help="Path to opinion lexicon", required=True
+    )
+    parser.add_argument("--parsed", type=validate_existing_directory, help="Path to parsed data")
+    parser.add_argument("--res", type=validate_existing_filepath, help="Path to inference results")
     args = parser.parse_args()
 
     solution = SentimentSolution()
-    solution.run(data=args.data,
-                 parsed_data=args.parsed,
-                 inference_results=args.res,
-                 aspect_lex=args.aspects,
-                 opinion_lex=args.opinions)
+    solution.run(
+        data=args.data,
+        parsed_data=args.parsed,
+        inference_results=args.res,
+        aspect_lex=args.aspects,
+        opinion_lex=args.opinions,
+    )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

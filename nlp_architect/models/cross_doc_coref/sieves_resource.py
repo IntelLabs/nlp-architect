@@ -14,26 +14,29 @@
 # limitations under the License.
 # ******************************************************************************
 from nlp_architect import LIBRARY_ROOT
-from nlp_architect.data.cdc_resources.relations.relation_types_enums import \
-    WikipediaSearchMethod, OnlineOROfflineMethod, EmbeddingMethod
+from nlp_architect.data.cdc_resources.relations.relation_types_enums import (
+    WikipediaSearchMethod,
+    OnlineOROfflineMethod,
+    EmbeddingMethod,
+)
 
 
 class SievesResources(object):
     def __init__(self):
         """Cross Document co-reference sieve system resources configuration class"""
 
-        self.__eval_output_dir = str(LIBRARY_ROOT / 'datasets' / 'cdc' / 'test_predict')
+        self.__eval_output_dir = str(LIBRARY_ROOT / "datasets" / "cdc" / "test_predict")
 
-        self.__elastic_index = 'enwiki_v2'
-        self.__elastic_host = 'localhost'
+        self.__elastic_index = "enwiki_v2"
+        self.__elastic_host = "localhost"
         self.__elastic_port = 9200
-        self.__wiki_folder = str(LIBRARY_ROOT / 'dumps'  'wikipedia')
-        self.__wd_file = str(LIBRARY_ROOT / 'dump' / 'within_doc_core' / 'ecb_wd_coref_proc.json')
-        self.__wn_folder = str(LIBRARY_ROOT / 'dump' / 'wordnet')
-        self.__elmo_file = str(LIBRARY_ROOT / 'dump' / 'embedde' / 'ecb_all_with_stop_elmo.pickle')
-        self.__glove_file = str(LIBRARY_ROOT / 'dump' / 'embedde' / 'ecb_all_embed_glove.pickle')
-        self.__referent_dict_file = str(LIBRARY_ROOT / 'dataset' / 'coref.dict1.tsv')
-        self.__vo_dict_file = str(LIBRARY_ROOT / 'dataset' / 'verbocean.unrefined.2004-05-20.txt')
+        self.__wiki_folder = str(LIBRARY_ROOT / "dumps" "wikipedia")
+        self.__wd_file = str(LIBRARY_ROOT / "dump" / "within_doc_core" / "ecb_wd_coref_proc.json")
+        self.__wn_folder = str(LIBRARY_ROOT / "dump" / "wordnet")
+        self.__elmo_file = str(LIBRARY_ROOT / "dump" / "embedde" / "ecb_all_with_stop_elmo.pickle")
+        self.__glove_file = str(LIBRARY_ROOT / "dump" / "embedde" / "ecb_all_embed_glove.pickle")
+        self.__referent_dict_file = str(LIBRARY_ROOT / "dataset" / "coref.dict1.tsv")
+        self.__vo_dict_file = str(LIBRARY_ROOT / "dataset" / "verbocean.unrefined.2004-05-20.txt")
 
         self.__wiki_search_method = WikipediaSearchMethod.ONLINE
         self.__wn_search_method = OnlineOROfflineMethod.ONLINE

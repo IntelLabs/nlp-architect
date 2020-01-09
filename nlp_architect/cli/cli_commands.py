@@ -22,73 +22,67 @@ from nlp_architect.version import NLP_ARCHITECT_VERSION
 
 
 def nlp_train_cli():
-    prog_name = 'nlp-train'
-    desc = 'NLP Architect Train CLI [{}]'.format(NLP_ARCHITECT_VERSION)
+    prog_name = "nlp-train"
+    desc = "NLP Architect Train CLI [{}]".format(NLP_ARCHITECT_VERSION)
     parser = argparse.ArgumentParser(description=desc, prog=prog_name)
-    parser.add_argument('-v', '--version', action='version',
-                        version='%(prog)s v{}'.format(NLP_ARCHITECT_VERSION))
+    parser.add_argument(
+        "-v", "--version", action="version", version="%(prog)s v{}".format(NLP_ARCHITECT_VERSION)
+    )
     parser.set_defaults(func=lambda _: parser.print_help())
-    subparsers = parser.add_subparsers(title='Models', metavar='')
-    for model in CMD_REGISTRY['train']:
-        sp = subparsers.add_parser(model['name'],
-                                   description=model['description'],
-                                   help=model['description'])
-        model['arg_adder'](sp)
-        sp.set_defaults(func=model['fn'])
-    
+    subparsers = parser.add_subparsers(title="Models", metavar="")
+    for model in CMD_REGISTRY["train"]:
+        sp = subparsers.add_parser(
+            model["name"], description=model["description"], help=model["description"]
+        )
+        model["arg_adder"](sp)
+        sp.set_defaults(func=model["fn"])
+
     args = parser.parse_args()
-    if hasattr(args, 'func'):
+    if hasattr(args, "func"):
         args.func(args)
     else:
         parser.print_help()
 
+
 def nlp_inference_cli():
-    prog_name = 'nlp-inference'
-    desc = 'NLP Architect Inference CLI [{}]'.format(NLP_ARCHITECT_VERSION)
+    prog_name = "nlp-inference"
+    desc = "NLP Architect Inference CLI [{}]".format(NLP_ARCHITECT_VERSION)
     parser = argparse.ArgumentParser(description=desc, prog=prog_name)
-    parser.add_argument('-v', '--version', action='version',
-                        version='%(prog)s v{}'.format(NLP_ARCHITECT_VERSION))
+    parser.add_argument(
+        "-v", "--version", action="version", version="%(prog)s v{}".format(NLP_ARCHITECT_VERSION)
+    )
     parser.set_defaults(func=lambda _: parser.print_help())
-    subparsers = parser.add_subparsers(title='Models', metavar='')
-    for model in CMD_REGISTRY['inference']:
-        sp = subparsers.add_parser(model['name'],
-                                   description=model['description'],
-                                   help=model['description'])
-        model['arg_adder'](sp)
-        sp.set_defaults(func=model['fn'])
-    
+    subparsers = parser.add_subparsers(title="Models", metavar="")
+    for model in CMD_REGISTRY["inference"]:
+        sp = subparsers.add_parser(
+            model["name"], description=model["description"], help=model["description"]
+        )
+        model["arg_adder"](sp)
+        sp.set_defaults(func=model["fn"])
+
     args = parser.parse_args()
-    if hasattr(args, 'func'):
+    if hasattr(args, "func"):
         args.func(args)
     else:
         parser.print_help()
 
 
 def generic_cmd(cmd_name: str, subtitle: str, description: str, subparsers: _SubParsersAction):
-    parser = subparsers.add_parser(cmd_name,
-                                   description=description,
-                                   help=description)
+    parser = subparsers.add_parser(cmd_name, description=description, help=description)
 
-    subsubparsers = parser.add_subparsers(title=subtitle,
-                                          metavar='')
+    subsubparsers = parser.add_subparsers(title=subtitle, metavar="")
     for model in CMD_REGISTRY[cmd_name]:
-        sp = subsubparsers.add_parser(model['name'],
-                                      description=model['description'],
-                                      help=model['description'])
-        model['arg_adder'](sp)
-        sp.set_defaults(func=model['fn'])
+        sp = subsubparsers.add_parser(
+            model["name"], description=model["description"], help=model["description"]
+        )
+        model["arg_adder"](sp)
+        sp.set_defaults(func=model["fn"])
     parser.set_defaults(func=lambda _: parser.print_help())
 
 
 def cli_train_cmd(subparsers: _SubParsersAction):
-    generic_cmd('train',
-                'Available models',
-                'Train a model from the library',
-                subparsers)
+    generic_cmd("train", "Available models", "Train a model from the library", subparsers)
 
 
 def cli_run_cmd(subparsers: _SubParsersAction):
-    generic_cmd('run',
-                'Available models',
-                'Run a model from the library',
-                subparsers)
+    generic_cmd("run", "Available models", "Run a model from the library", subparsers)

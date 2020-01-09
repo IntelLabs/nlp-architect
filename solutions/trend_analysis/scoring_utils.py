@@ -38,6 +38,7 @@ logger = logging.getLogger(__name__)
 
 # if _has_wordfreq:
 
+
 class TextSpanScoring:
     """
     Text spans scoring class.
@@ -88,18 +89,15 @@ class TextSpanScoring:
                 if p not in phrases_and_scores:
                     tf = self.index.tf(p)
                     df = self.index.df(p)
-                    phrases_and_scores[p] = (tf + 1) * math.log(
-                        1 + num_of_docs / df
-                    )
+                    phrases_and_scores[p] = (tf + 1) * math.log(1 + num_of_docs / df)
         if len(phrases_and_scores) > 0:
-            return self._maybe_group_and_sort(
-                group_similar_spans, phrases_and_scores
-            )
+            return self._maybe_group_and_sort(group_similar_spans, phrases_and_scores)
         return []
 
     def get_freq_scores(self, group_similar_spans=True):
         try:
             from wordfreq import zipf_frequency
+
             _has_wordfreq = True
         except (AttributeError, ImportError):
             logger.error(
@@ -107,7 +105,7 @@ class TextSpanScoring:
                 + "for example: pip install nlp_architect[all]"
             )
             _has_wordfreq = False
-        
+
         if _has_wordfreq:
             phrases_and_scores = {}
             for _, noun_phrases in zip(self.documents, self.doc_text_spans):
@@ -118,9 +116,7 @@ class TextSpanScoring:
         return None
 
     def group_spans(self, phrases):
-        pid_phrase_scores = [
-            {"k": self.index.get_pid(p), "v": (p, s)} for p, s in phrases.items()
-        ]
+        pid_phrase_scores = [{"k": self.index.get_pid(p), "v": (p, s)} for p, s in phrases.items()]
         phrase_groups = []
         for _, group in itertools.groupby(
             sorted(pid_phrase_scores, key=lambda x: x["k"]), lambda x: x["k"]
@@ -202,20 +198,14 @@ class TextSpanScoring:
                     - 1.0
                     / len(sub_phrase_pids)
                     * sum(
-                        [
-                            self.index.tf(list(self.index.get_phrase(p))[0])
-                            for p in sub_phrase_pids
-                        ]
+                        [self.index.tf(list(self.index.get_phrase(p))[0]) for p in sub_phrase_pids]
                     )
                 )
             else:
                 score = math.log2(1 + len(phrase)) * self.index.tf(phrase)
             phrase_scores[phrase] = score
         for phrase in phrase_scores:
-            score = [
-                phrase_scores[p]
-                for p in self.index.get_phrase(self.index.get_pid(phrase))
-            ]
+            score = [phrase_scores[p] for p in self.index.get_phrase(self.index.get_pid(phrase))]
             phrase_scores[phrase] = sum(score) / len(score)
         return self._maybe_group_and_sort(group_similar_spans, phrase_scores)
 
@@ -231,6 +221,7 @@ class TextSpanScoring:
             for ref in phrase_list_dicts:
                 interp_scores[p] *= ref[p]
         return sorted(interp_scores.items(), key=lambda x: x[1], reverse=True)
+
 
 class CorpusIndex:
     """

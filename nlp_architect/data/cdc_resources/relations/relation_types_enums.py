@@ -18,21 +18,21 @@ from enum import Enum
 
 
 class EmbeddingMethod(Enum):
-    GLOVE = 'glove'
-    GLOVE_OFFLINE = 'glove_offline'
-    ELMO = 'elmo'
-    ELMO_OFFLINE = 'elmo_offline'
+    GLOVE = "glove"
+    GLOVE_OFFLINE = "glove_offline"
+    ELMO = "elmo"
+    ELMO_OFFLINE = "elmo_offline"
 
 
 class WikipediaSearchMethod(Enum):
-    ONLINE = 'online'
-    OFFLINE = 'offline'
-    ELASTIC = 'elastic'
+    ONLINE = "online"
+    OFFLINE = "offline"
+    ELASTIC = "elastic"
 
 
 class OnlineOROfflineMethod(Enum):
-    ONLINE = 'online'
-    OFFLINE = 'offline'
+    ONLINE = "online"
+    OFFLINE = "offline"
 
 
 class RelationType(Enum):

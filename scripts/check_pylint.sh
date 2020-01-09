@@ -11,7 +11,6 @@ function check_rc {
 }
 
 echo "Running pylint check"
-check_rc 1
 pylint -j 10 examples tests nlp_architect --rcfile=pylintrc --score=n
 check_rc 4
 echo ""

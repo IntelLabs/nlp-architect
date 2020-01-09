@@ -32,16 +32,26 @@ from nlp_architect.utils.embedding import FasttextEmbeddingsModel
 from nlp_architect.utils.io import check_size, validate_existing_filepath
 from nlp_architect.utils.text import simple_normalizer
 
-directory = str(LIBRARY_OUT / 'trend-analysis-data')
+directory = str(LIBRARY_OUT / "trend-analysis-data")
 logger = logging.getLogger(__name__)
-target_topics_path = path.join(directory, 'target_topics.csv')
-ref_topics_path = path.join(directory, 'ref_topics.csv')
-target_scores_path = path.join(directory, 'target_scores.csv')
-ref_scores_path = path.join(directory, 'ref_scores.csv')
+target_topics_path = path.join(directory, "target_topics.csv")
+ref_topics_path = path.join(directory, "ref_topics.csv")
+target_scores_path = path.join(directory, "target_scores.csv")
+ref_scores_path = path.join(directory, "ref_scores.csv")
 
 
-def analyze(target_data, ref_data, tar_header, ref_header, top_n=10000, top_n_vectors=500,
-            re_analysis=False, tfidf_w=0.5, cval_w=0.5, lm_w=0):
+def analyze(
+    target_data,
+    ref_data,
+    tar_header,
+    ref_header,
+    top_n=10000,
+    top_n_vectors=500,
+    re_analysis=False,
+    tfidf_w=0.5,
+    cval_w=0.5,
+    lm_w=0,
+):
     """
     Compare a topics list of a target data to a topics list of a reference data
     and extract hot topics, trends and clusters. Topic lists can be generated
@@ -73,9 +83,9 @@ def analyze(target_data, ref_data, tar_header, ref_header, top_n=10000, top_n_ve
         calc_scores(target_data, tfidf_w, cval_w, lm_w, target_scores_path)
         calc_scores(ref_data, tfidf_w, cval_w, lm_w, ref_scores_path)
         # unify all topics:
-        with open(ref_data, encoding='utf-8', errors='ignore') as f:
+        with open(ref_data, encoding="utf-8", errors="ignore") as f:
             topics1 = sum(1 for _ in f)
-        with open(target_data, encoding='utf-8', errors='ignore') as f:
+        with open(target_data, encoding="utf-8", errors="ignore") as f:
             topics2 = sum(1 for _ in f)
         sum_topics = topics1 + topics2
         logger.info("sum of all topics= %s", str(sum_topics))
@@ -83,143 +93,189 @@ def analyze(target_data, ref_data, tar_header, ref_header, top_n=10000, top_n_ve
         merge_phrases(target_scores_path, False, hash2group, rep2rank, top_n, sum_topics)
         logger.info("Total number of evaluated topics: %s", str(len(rep2rank)))
         all_topics_sorted = sorted(rep2rank, key=rep2rank.get)
-        top_n_scatter = len(
-            all_topics_sorted) if top_n_vectors is None else top_n_vectors
+        top_n_scatter = len(all_topics_sorted) if top_n_vectors is None else top_n_vectors
         # compute 2D space clusters if model exists:
-        w2v_loc = path.join(directory, 'W2V_Models/model.bin')
+        w2v_loc = path.join(directory, "W2V_Models/model.bin")
         if os.path.isfile(w2v_loc):
             scatter_group = all_topics_sorted[0:top_n_scatter]
-            np_scat, x_scat, y_scat, in_model_count =\
-                compute_scatter_subwords(scatter_group, w2v_loc)
+            np_scat, x_scat, y_scat, in_model_count = compute_scatter_subwords(
+                scatter_group, w2v_loc
+            )
             if np_scat is not None and x_scat is not None:
                 create_clusters = True
                 for j in range(len(np_scat)):
-                    hash2group[simple_normalizer(np_scat[j])] += (x_scat[j],
-                                                                  y_scat[j])
+                    hash2group[simple_normalizer(np_scat[j])] += (x_scat[j], y_scat[j])
         # prepare reports data:
-        groups_r = list(
-            filter(lambda x: x[2] == 0 or x[2] == 2, hash2group.values()))
-        groups_t = list(
-            filter(lambda x: x[2] == 1 or x[2] == 2, hash2group.values()))
-        trends = list(
-            filter(lambda x: x[2] == 2, hash2group.values()))  # all trends
-        groups_r_sorted = sorted(
-            groups_r, key=operator.itemgetter(1), reverse=True)
-        groups_t_sorted = sorted(
-            groups_t, key=operator.itemgetter(3), reverse=True)
-        trends_sorted = sorted(
-            trends, key=operator.itemgetter(6), reverse=True)  # sort by t_score
+        groups_r = list(filter(lambda x: x[2] == 0 or x[2] == 2, hash2group.values()))
+        groups_t = list(filter(lambda x: x[2] == 1 or x[2] == 2, hash2group.values()))
+        trends = list(filter(lambda x: x[2] == 2, hash2group.values()))  # all trends
+        groups_r_sorted = sorted(groups_r, key=operator.itemgetter(1), reverse=True)
+        groups_t_sorted = sorted(groups_t, key=operator.itemgetter(3), reverse=True)
+        trends_sorted = sorted(trends, key=operator.itemgetter(6), reverse=True)  # sort by t_score
 
         # save results:
-        save_report_data(hash2group, groups_r_sorted, groups_t_sorted,
-                         trends_sorted, all_topics_sorted, create_clusters,
-                         tar_header, ref_header, tfidf_w, cval_w, lm_w,
-                         in_model_count, top_n_scatter)
-        logger.info('Done analysis.')
+        save_report_data(
+            hash2group,
+            groups_r_sorted,
+            groups_t_sorted,
+            trends_sorted,
+            all_topics_sorted,
+            create_clusters,
+            tar_header,
+            ref_header,
+            tfidf_w,
+            cval_w,
+            lm_w,
+            in_model_count,
+            top_n_scatter,
+        )
+        logger.info("Done analysis.")
     except Exception as e:
         logger.error(str(e))
 
 
-def save_report_data(hash2group, groups_r_sorted, groups_t_sorted,
-                     trends_sorted, all_topics_sorted, create_clusters,
-                     target_header, ref_header, tfidf_w, cval_w, freq_w,
-                     in_model_count, top_n_scatter):
-    filter_output = path.join(directory, 'filter_phrases.csv')
-    data_output = path.join(directory, 'graph_data.csv')
-    logger.info('writing results to: %s and: %s ', str(data_output), str(filter_output))
+def save_report_data(
+    hash2group,
+    groups_r_sorted,
+    groups_t_sorted,
+    trends_sorted,
+    all_topics_sorted,
+    create_clusters,
+    target_header,
+    ref_header,
+    tfidf_w,
+    cval_w,
+    freq_w,
+    in_model_count,
+    top_n_scatter,
+):
+    filter_output = path.join(directory, "filter_phrases.csv")
+    data_output = path.join(directory, "graph_data.csv")
+    logger.info("writing results to: %s and: %s ", str(data_output), str(filter_output))
 
     reports_column = [
-        'Top Topics (' + ref_header + ')',
-        'Top Topics (' + target_header + ')',
-        'Hot Trends',
-        'Cold Trends',
-        'Custom Trends'
+        "Top Topics (" + ref_header + ")",
+        "Top Topics (" + target_header + ")",
+        "Hot Trends",
+        "Cold Trends",
+        "Custom Trends",
     ]
     if create_clusters:
-        reports_column.extend([
-            'Trend Clustering',
-            'Topic Clustering (' + ref_header + ')',
-            'Topic Clustering (' + target_header + ')'
-        ])
+        reports_column.extend(
+            [
+                "Trend Clustering",
+                "Topic Clustering (" + ref_header + ")",
+                "Topic Clustering (" + target_header + ")",
+            ]
+        )
     headers = [
-        'reports',
-        'ref_topic', 'ref_imp', 'x_ref', 'y_ref',
-        'tar_topic', 'tar_imp', 'x_tar', 'y_tar',
-        'trends', 'change', 't_score', 'x_tre', 'y_tre', 'weights',
-        'in_w2v_model_count', 'top_n_scatter'
+        "reports",
+        "ref_topic",
+        "ref_imp",
+        "x_ref",
+        "y_ref",
+        "tar_topic",
+        "tar_imp",
+        "x_tar",
+        "y_tar",
+        "trends",
+        "change",
+        "t_score",
+        "x_tre",
+        "y_tre",
+        "weights",
+        "in_w2v_model_count",
+        "top_n_scatter",
     ]
-    filter_headers = [
-        'topics',
-        'valid',
-        'custom'
-    ]
+    filter_headers = ["topics", "valid", "custom"]
     weights = [tfidf_w, cval_w, freq_w]
 
-    with open(data_output, 'wt', encoding='utf-8') as data_file:
-        with open(filter_output, 'wt', encoding='utf-8') as filter_file:
-            data_writer = csv.writer(data_file, delimiter=',')
-            filter_writer = csv.writer(filter_file, delimiter=',')
+    with open(data_output, "wt", encoding="utf-8") as data_file:
+        with open(filter_output, "wt", encoding="utf-8") as filter_file:
+            data_writer = csv.writer(data_file, delimiter=",")
+            filter_writer = csv.writer(filter_file, delimiter=",")
             data_writer.writerow(headers)
             filter_writer.writerow(filter_headers)
             for i in range(len(hash2group.keys())):
                 try:
                     new_row = ()
-                    new_row += (reports_column[i],) if i < len(
-                        reports_column) else ('',)
+                    new_row += (reports_column[i],) if i < len(reports_column) else ("",)
                     if i < len(groups_r_sorted):
-                        new_row += (
-                            groups_r_sorted[i][0], groups_r_sorted[i][1])
+                        new_row += (groups_r_sorted[i][0], groups_r_sorted[i][1])
                         # 'only b' type tuple
                         if groups_r_sorted[i][2] == 0:
                             new_row += (
-                                groups_r_sorted[i][-2],
-                                groups_r_sorted[i][-1]) if len(
-                                groups_r_sorted[i]) > 4 else (-1, -1)
+                                (groups_r_sorted[i][-2], groups_r_sorted[i][-1])
+                                if len(groups_r_sorted[i]) > 4
+                                else (-1, -1)
+                            )
                         else:  # 'trend' type tuple
                             new_row += (
-                                groups_r_sorted[i][-2],
-                                groups_r_sorted[i][-1]) if len(
-                                groups_r_sorted[i]) > 7 else (-1, -1)
+                                (groups_r_sorted[i][-2], groups_r_sorted[i][-1])
+                                if len(groups_r_sorted[i]) > 7
+                                else (-1, -1)
+                            )
                     else:
-                        new_row += ('', '', '', '')
+                        new_row += ("", "", "", "")
                     if len(groups_t_sorted) > i:
-                        new_row += (
-                            groups_t_sorted[i][0], groups_t_sorted[i][3])
+                        new_row += (groups_t_sorted[i][0], groups_t_sorted[i][3])
                         # 'only a' type tuple
                         if groups_t_sorted[i][2] == 1:
-                            new_row += (groups_t_sorted[i][-2],
-                                        groups_t_sorted[i][-1]) if len(
-                                groups_t_sorted[i]) > 5 else (-1, -1)
+                            new_row += (
+                                (groups_t_sorted[i][-2], groups_t_sorted[i][-1])
+                                if len(groups_t_sorted[i]) > 5
+                                else (-1, -1)
+                            )
                         else:
-                            new_row += (groups_t_sorted[i][-2],
-                                        groups_t_sorted[i][-1]) if len(
-                                groups_t_sorted[i]) > 7 else (-1, -1)
+                            new_row += (
+                                (groups_t_sorted[i][-2], groups_t_sorted[i][-1])
+                                if len(groups_t_sorted[i]) > 7
+                                else (-1, -1)
+                            )
                     else:
-                        new_row += ('', '', '', '')
+                        new_row += ("", "", "", "")
                     if len(trends_sorted) > i:
+                        new_row += (trends_sorted[i][0], trends_sorted[i][4], trends_sorted[i][6])
                         new_row += (
-                            trends_sorted[i][0], trends_sorted[i][4], trends_sorted[i][6])
-                        new_row += (
-                            trends_sorted[i][-2],
-                            trends_sorted[i][-1]) if len(
-                            trends_sorted[i]) > 7 else (-1, -1)
+                            (trends_sorted[i][-2], trends_sorted[i][-1])
+                            if len(trends_sorted[i]) > 7
+                            else (-1, -1)
+                        )
                     else:
-                        new_row += ('', '', '', '')
-                    new_row += (weights[i],) if i < len(
-                        weights) else ('',)
-                    new_row += (in_model_count, top_n_scatter) if i == 0 else ('',)
+                        new_row += ("", "", "", "")
+                    new_row += (weights[i],) if i < len(weights) else ("",)
+                    new_row += (in_model_count, top_n_scatter) if i == 0 else ("",)
                     data_writer.writerow(new_row)
                     filter_row = (all_topics_sorted[i], 1, 0)
                     filter_writer.writerow(filter_row)
                 except Exception as e:
                     logger.error(
-                        "Error while writing analysis results. "
-                        "iteration #: %s. Error: %s", str(i), str(e))
+                        "Error while writing analysis results. " "iteration #: %s. Error: %s",
+                        str(i),
+                        str(e),
+                    )
             if len(hash2group.keys()) < len(reports_column):
                 for i in range(len(hash2group.keys()), len(reports_column)):
                     new_row = ()
-                    new_row += (reports_column[i], '', '', '', '', '', '', '',
-                                '', '', '', '', '', '', '', '', '')
+                    new_row += (
+                        reports_column[i],
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                    )
                     data_writer.writerow(new_row)
 
 
@@ -252,16 +308,15 @@ def compute_scatter_subwords(top_groups, w2v_loc):
                 in_ctr += 1
             logger.info("topics found in model out of %s: %s.", str(len(top_groups)), str(in_ctr))
             if len(np_indices) == 0:
-                logger.error('no vectors extracted')
+                logger.error("no vectors extracted")
                 return None, None, None, 0
-            logger.info('computing TSNE embedding...')
-            tsne = TSNE(n_components=2, random_state=0, method='exact')
+            logger.info("computing TSNE embedding...")
+            tsne = TSNE(n_components=2, random_state=0, method="exact")
             numpy.set_printoptions(suppress=True)
             x_tsne = tsne.fit_transform(x_feature)
-            df = pd.DataFrame(
-                x_tsne, index=np_indices, columns=['x', 'y'])
-            return np_indices, df['x'], df['y'], in_ctr
-        logger.error('no model found for cumputing scatter, skipping step.')
+            df = pd.DataFrame(x_tsne, index=np_indices, columns=["x", "y"])
+            return np_indices, df["x"], df["y"], in_ctr
+        logger.error("no model found for cumputing scatter, skipping step.")
         return None, None, None, 0
     except Exception as e:
         logger.error(str(e))
@@ -279,10 +334,15 @@ def calc_scores(scores_file, tfidf_w, cval_w, lm_w, output_path):
         lm_w (Float): the Language-Model weight for the final score calculation
         output_path: A path for the output file of final scores (String)
     """
-    logger.info("calculating scores for file: %s with: tfidf_w=%s, cval_w=%s,"
-                " freq_w=%s", scores_file, str(tfidf_w), str(cval_w), str(lm_w))
-    with open(scores_file, encoding='utf-8', errors='ignore') as csv_file:
-        lines = csv.reader((x.replace('\0', '') for x in csv_file), delimiter=',')
+    logger.info(
+        "calculating scores for file: %s with: tfidf_w=%s, cval_w=%s," " freq_w=%s",
+        scores_file,
+        str(tfidf_w),
+        str(cval_w),
+        str(lm_w),
+    )
+    with open(scores_file, encoding="utf-8", errors="ignore") as csv_file:
+        lines = csv.reader((x.replace("\0", "") for x in csv_file), delimiter=",")
         final_list = []
         for group, tfidf, cval, freq in lines:
             score = (float(tfidf) * tfidf_w) + (float(cval) * cval_w) + (float(freq) * lm_w)
@@ -299,9 +359,9 @@ def save_scores_list(scores, file_path):
         scores: A list of topics (groups) with scores
         file_path: The output file path
     """
-    logger.info('saving np extraction results to: %s', file_path)
-    with open(file_path, 'wt', encoding='utf-8', newline='') as csv_file:
-        writer = csv.writer(csv_file, delimiter=',')
+    logger.info("saving np extraction results to: %s", file_path)
+    with open(file_path, "wt", encoding="utf-8", newline="") as csv_file:
+        writer = csv.writer(csv_file, delimiter=",")
         ctr = 0
         for topics, imp in scores:
             try:
@@ -309,8 +369,11 @@ def save_scores_list(scores, file_path):
                 writer.writerow(row)
                 ctr += 1
             except Exception as e:
-                logger.error("Error while writing scores to file. iteration #: %s. Error: %s", str(
-                    ctr), str(e))
+                logger.error(
+                    "Error while writing scores to file. iteration #: %s. Error: %s",
+                    str(ctr),
+                    str(e),
+                )
 
 
 def merge_phrases(data, is_ref_data, hash2group, rep2rank, top_n, topics_count):
@@ -325,14 +388,14 @@ def merge_phrases(data, is_ref_data, hash2group, rep2rank, top_n, topics_count):
         top_n (int): Limit the analysis to only the top N phrases of each list
         topics_count (int): The total sum of all topics extracted from both corpora
     """
-    logger.info('merge and compare groups for data: %s', str(data))
+    logger.info("merge and compare groups for data: %s", str(data))
     ctr = 0
     if not Path(data).exists():
-        logger.error('invalid csv file: %s', str(data))
+        logger.error("invalid csv file: %s", str(data))
         sys.exit()
     try:
-        with open(data, encoding='utf-8', errors='ignore') as csv_file:
-            topics = csv.reader(csv_file, delimiter=',')
+        with open(data, encoding="utf-8", errors="ignore") as csv_file:
+            topics = csv.reader(csv_file, delimiter=",")
             for group, imp in topics:
                 if ctr == top_n:
                     break
@@ -361,13 +424,19 @@ def merge_phrases(data, is_ref_data, hash2group, rep2rank, top_n, topics_count):
                             change = float(imp) - float(data_b[1])
                             t_score = (topics_count - (old_rank + rank)) * abs(change)
                             hash2group[hash_id] = (
-                                old_rep, float(data_b[1]), 2, imp, change,
-                                abs(change), t_score)  # trend phrase
+                                old_rep,
+                                float(data_b[1]),
+                                2,
+                                imp,
+                                change,
+                                abs(change),
+                                t_score,
+                            )  # trend phrase
                     ctr += 1
                 except Exception as e:
-                    logger.error('bad line: %s. Error: %s', str(ctr), str(e))
+                    logger.error("bad line: %s. Error: %s", str(ctr), str(e))
     except Exception as e:
-        logger.error('Error: %s. Is %s a valid csv file?', str(e), str(data))
+        logger.error("Error: %s. Is %s a valid csv file?", str(e), str(data))
         sys.exit()
 
 
@@ -381,22 +450,44 @@ def clean_group(phrase_group):
     Returns:
         The shortest phrase in the group (String)
     """
-    text = [x.lstrip() for x in phrase_group.split(';')]
+    text = [x.lstrip() for x in phrase_group.split(";")]
     return min(text, key=len)
 
 
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser(prog='trend_analysis.py')
-    parser.add_argument('target_topics', metavar='target_topics', type=validate_existing_filepath,
-                        help='a path to a csv topic-list extracted from the '
-                             'target corpus')
-    parser.add_argument('ref_topics', metavar='ref_topics', type=validate_existing_filepath,
-                        help='a path to a csv topic-list extracted from the '
-                             'reference corpus')
-    parser.add_argument('--top_n', type=int, action=check_size(0, 100000), default=10000,
-                        help='compare only top N topics (default: 10000)')
-    parser.add_argument('--top_vectors', type=int, action=check_size(0, 100000), default=500,
-                        help='include only top N vectors in the scatter graph (default: 500)')
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(prog="trend_analysis.py")
+    parser.add_argument(
+        "target_topics",
+        metavar="target_topics",
+        type=validate_existing_filepath,
+        help="a path to a csv topic-list extracted from the " "target corpus",
+    )
+    parser.add_argument(
+        "ref_topics",
+        metavar="ref_topics",
+        type=validate_existing_filepath,
+        help="a path to a csv topic-list extracted from the " "reference corpus",
+    )
+    parser.add_argument(
+        "--top_n",
+        type=int,
+        action=check_size(0, 100000),
+        default=10000,
+        help="compare only top N topics (default: 10000)",
+    )
+    parser.add_argument(
+        "--top_vectors",
+        type=int,
+        action=check_size(0, 100000),
+        default=500,
+        help="include only top N vectors in the scatter graph (default: 500)",
+    )
     args = parser.parse_args()
-    analyze(args.target_topics, args.ref_topics, args.target_topics,
-            args.ref_topics, args.top_n, args.top_vectors)
+    analyze(
+        args.target_topics,
+        args.ref_topics,
+        args.target_topics,
+        args.ref_topics,
+        args.top_n,
+        args.top_vectors,
+    )

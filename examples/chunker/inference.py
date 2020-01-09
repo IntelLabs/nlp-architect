@@ -31,8 +31,9 @@ from nlp_architect.utils.text import SpacyInstance
 def vectorize(docs, w_vocab, c_vocab):
     data = []
     for doc in docs:
-        words = np.asarray([w_vocab[w.lower()] if w_vocab[w.lower()] is not None else 1
-                            for w in doc]).reshape(1, -1)
+        words = np.asarray(
+            [w_vocab[w.lower()] if w_vocab[w.lower()] is not None else 1 for w in doc]
+        ).reshape(1, -1)
         if c_vocab is not None:
             sentence_chars = []
             for w in doc:
@@ -51,24 +52,36 @@ def vectorize(docs, w_vocab, c_vocab):
 def build_annotation(documents, annotations):
     for d, i in zip(documents, annotations):
         for w, c in zip(d, i):
-            print('{}\t{}'.format(w, c))
-        print('')
+            print("{}\t{}".format(w, c))
+        print("")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # read input args and validate
     parser = argparse.ArgumentParser()
-    parser.add_argument('--input_file', type=validate_existing_filepath, required=True,
-                        help='Input texts file path (samples to pass for inference)')
-    parser.add_argument('--model_name', default='chunker_model', type=str,
-                        required=True, help='Model name (used for saving the model)')
-    parser.add_argument('-b', type=int, action=check_size(1, 9999), default=1,
-                        help='inference batch size')
+    parser.add_argument(
+        "--input_file",
+        type=validate_existing_filepath,
+        required=True,
+        help="Input texts file path (samples to pass for inference)",
+    )
+    parser.add_argument(
+        "--model_name",
+        default="chunker_model",
+        type=str,
+        required=True,
+        help="Model name (used for saving the model)",
+    )
+    parser.add_argument(
+        "-b", type=int, action=check_size(1, 9999), default=1, help="inference batch size"
+    )
     args = parser.parse_args()
-    model_path = path.join(path.dirname(path.realpath(__file__)),
-                           '{}.h5'.format(str(args.model_name)))
-    settings_path = path.join(path.dirname(path.realpath(__file__)),
-                              '{}.params'.format(str(args.model_name)))
+    model_path = path.join(
+        path.dirname(path.realpath(__file__)), "{}.h5".format(str(args.model_name))
+    )
+    settings_path = path.join(
+        path.dirname(path.realpath(__file__)), "{}.params".format(str(args.model_name))
+    )
     validate_existing_filepath(model_path)
     validate_existing_filepath(settings_path)
 
@@ -76,14 +89,14 @@ if __name__ == '__main__':
     model = SequenceChunker()
     model.load(model_path)
     word_length = model.max_word_len
-    with open(settings_path, 'rb') as fp:
+    with open(settings_path, "rb") as fp:
         model_params = pickle.load(fp)
-        word_vocab = model_params['word_vocab']
-        chunk_vocab = model_params['chunk_vocab']
-        char_vocab = model_params.get('char_vocab', None)
+        word_vocab = model_params["word_vocab"]
+        chunk_vocab = model_params["chunk_vocab"]
+        char_vocab = model_params.get("char_vocab", None)
 
     # parse documents and get tokens
-    nlp = SpacyInstance(disable=['tagger', 'ner', 'parser', 'vectors', 'textcat'])
+    nlp = SpacyInstance(disable=["tagger", "ner", "parser", "vectors", "textcat"])
     with open(args.input_file) as fp:
         document_texts = [nlp.tokenize(t.strip()) for t in fp.readlines()]
 

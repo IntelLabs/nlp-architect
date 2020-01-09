@@ -22,6 +22,7 @@ from nlp_architect.models.absa.inference.data_types import SentimentDoc, Sentime
 
 class Anonymiser(object):
     """Abstract class for anonymiser algorithm, intended for privacy keeping."""
+
     @abstractmethod
     def run(self, text):
         pass
@@ -36,7 +37,7 @@ class TweetAnonymiser(Anonymiser):
     @staticmethod
     def _init_entity_dict(lexicon_path):
         ret = {}
-        with open(lexicon_path, encoding='utf-8') as f:
+        with open(lexicon_path, encoding="utf-8") as f:
             for row in csv.reader(f):
                 ret[row[0]] = [_ for _ in row[1:] if _]
         return ret
@@ -45,22 +46,28 @@ class TweetAnonymiser(Anonymiser):
         for anonymised, entities in self.entity_dict.items():
             for entity in entities:
                 text = re.sub(entity, anonymised, text, flags=re.IGNORECASE)
-        text = ' '.join(["@other_entity" if (word.startswith('@') and word[1:]
-                                             not in self.entity_dict.keys())
-                         else word for word in text.split()])
+        text = " ".join(
+            [
+                "@other_entity"
+                if (word.startswith("@") and word[1:] not in self.entity_dict.keys())
+                else word
+                for word in text.split()
+            ]
+        )
         return text
 
 
 def _ui_format(sent: SentimentSentence, doc: SentimentDoc) -> str:
     """Get sentence as HTML with 4 classes: aspects, opinions, negations and intensifiers."""
-    text = doc.doc_text[sent.start: sent.end + 1]
+    text = doc.doc_text[sent.start : sent.end + 1]
     seen = set()
     for term in sorted([t for e in sent.events for t in e], key=lambda t: t.start)[::-1]:
         if term.start not in seen:
             seen.add(term.start)
             start = term.start - sent.start
             end = start + term.len
-            label = term.type.value + '_' + term.polarity.value
-            text = ''.join((text[:start], '<span class="', label, '">', text[start: end],
-                            '</span>', text[end:]))
+            label = term.type.value + "_" + term.polarity.value
+            text = "".join(
+                (text[:start], '<span class="', label, '">', text[start:end], "</span>", text[end:])
+            )
     return text

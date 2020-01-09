@@ -19,22 +19,27 @@ import os
 from os import path
 
 import pytest
-from nlp_architect.pipelines.spacy_np_annotator import NPAnnotator, \
-    get_noun_phrases, SpacyNPAnnotator
+from nlp_architect.pipelines.spacy_np_annotator import (
+    NPAnnotator,
+    get_noun_phrases,
+    SpacyNPAnnotator,
+)
 from nlp_architect.utils.io import download_unlicensed_file
 from nlp_architect.utils.text import SpacyInstance, try_to_load_spacy
 
-MODEL_URL = 'https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/chunker/'
-MODEL_FILE = 'model.h5'
-MODEL_INFO = 'model_info.dat.params'
-local_models_path = path.join(path.dirname(path.realpath(__file__)), 'fixtures/data/chunker')
+MODEL_URL = "https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/chunker/"
+MODEL_FILE = "model.h5"
+MODEL_INFO = "model_info.dat.params"
+local_models_path = path.join(path.dirname(path.realpath(__file__)), "fixtures/data/chunker")
 
-if not try_to_load_spacy('en'):
-    pytest.skip("\n\nSkipping test_spacy_np_annotator.py. Reason: 'spacy en' model not installed."
-                "Please see https://spacy.io/models/ for installation instructions.\n"
-                "The terms and conditions of the data set and/or model license apply.\n"
-                "Intel does not grant any rights to the data and/or model files.\n",
-                allow_module_level=True)
+if not try_to_load_spacy("en"):
+    pytest.skip(
+        "\n\nSkipping test_spacy_np_annotator.py. Reason: 'spacy en' model not installed."
+        "Please see https://spacy.io/models/ for installation instructions.\n"
+        "The terms and conditions of the data set and/or model license apply.\n"
+        "Intel does not grant any rights to the data and/or model files.\n",
+        allow_module_level=True,
+    )
 
 
 def check_dir():
@@ -74,12 +79,13 @@ def test_np_annotator_load(model_path, settings_path):
     assert NPAnnotator.load(model_path, settings_path)
 
 
-@pytest.mark.parametrize('text', ['The quick brown fox jumped over the lazy dog. '
-                                  'The quick fox jumped.'])
-@pytest.mark.parametrize('phrases', [['lazy dog']])
+@pytest.mark.parametrize(
+    "text", ["The quick brown fox jumped over the lazy dog. " "The quick fox jumped."]
+)
+@pytest.mark.parametrize("phrases", [["lazy dog"]])
 def test_np_annotator_linked(model_path, settings_path, text, phrases):
-    annotator = SpacyInstance(model='en', disable=['textcat', 'ner', 'parser']).parser
-    annotator.add_pipe(annotator.create_pipe('sentencizer'), first=True)
+    annotator = SpacyInstance(model="en", disable=["textcat", "ner", "parser"]).parser
+    annotator.add_pipe(annotator.create_pipe("sentencizer"), first=True)
     annotator.add_pipe(NPAnnotator.load(model_path, settings_path), last=True)
     doc = annotator(text)
     noun_phrases = [p.text for p in get_noun_phrases(doc)]
@@ -87,11 +93,12 @@ def test_np_annotator_linked(model_path, settings_path, text, phrases):
         assert p in noun_phrases
 
 
-@pytest.mark.parametrize('text', ['The quick brown fox jumped over the lazy dog. '
-                                  'The quick fox jumped.'])
-@pytest.mark.parametrize('phrases', [['lazy dog']])
+@pytest.mark.parametrize(
+    "text", ["The quick brown fox jumped over the lazy dog. " "The quick fox jumped."]
+)
+@pytest.mark.parametrize("phrases", [["lazy dog"]])
 def test_spacy_np_annotator(model_path, settings_path, text, phrases):
-    annotator = SpacyNPAnnotator(model_path, settings_path, spacy_model='en', batch_size=32)
+    annotator = SpacyNPAnnotator(model_path, settings_path, spacy_model="en", batch_size=32)
     spans = annotator(text)
     for p in phrases:
         assert p in spans

@@ -26,6 +26,7 @@ from typing import List, Tuple
 
 class InputExample(ABC):
     """Base class for a single training/dev/test example """
+
     def __init__(self, guid: str, text, label=None):
         self.guid = guid
         self.text = text
@@ -60,6 +61,7 @@ class Task:
         data_dir (str): path to the data source
         task_type (str): the task type (classification/regression/tagging)
     """
+
     def __init__(self, name: str, processor: DataProcessor, data_dir: str, task_type: str):
         self.name = name
         self.processor = processor
@@ -86,7 +88,7 @@ def read_tsv(input_file, quotechar=None):
         lines = []
         for line in reader:
             if sys.version_info[0] == 2:
-                line = list(str(cell, 'utf-8') for cell in line)  # noqa: F821
+                line = list(str(cell, "utf-8") for cell in line)  # noqa: F821
             lines.append(line)
         return lines
 
@@ -122,7 +124,7 @@ def write_column_tagged_file(filename: str, data: List[Tuple]):
     file_dir = "{}".format(os.sep).join(filename.split(os.sep)[:-1])
     if not os.path.exists(file_dir):
         raise FileNotFoundError
-    with open(filename, 'w', encoding='utf-8') as fw:
+    with open(filename, "w", encoding="utf-8") as fw:
         for sen in data:
             cols = len(sen)
             items = len(sen[0])
@@ -138,9 +140,10 @@ def sample_label_unlabeled(samples: List[InputExample], no_labeled: int, no_unla
     (used for semi-supervised models)
     """
     num_of_examples = len(samples)
-    assert no_labeled > 0 and no_unlabeled > 0, 'Must provide no_samples > 0'
-    assert num_of_examples >= no_labeled + no_unlabeled,\
-        'num of total samples smaller than requested sub sets'
+    assert no_labeled > 0 and no_unlabeled > 0, "Must provide no_samples > 0"
+    assert (
+        num_of_examples >= no_labeled + no_unlabeled
+    ), "num of total samples smaller than requested sub sets"
     all_indices = list(range(num_of_examples))
     labeled_indices = random.sample(all_indices, no_labeled)
     remaining_indices = list(set(all_indices).difference(set(labeled_indices)))
@@ -151,7 +154,14 @@ def sample_label_unlabeled(samples: List[InputExample], no_labeled: int, no_unla
 
 
 def split_column_dataset(
-        first_count: int, second_count: int, out_folder, dataset, first_filename, second_filename, tag_col=-1):
+    first_count: int,
+    second_count: int,
+    out_folder,
+    dataset,
+    first_filename,
+    second_filename,
+    tag_col=-1,
+):
     """
     Splits a single column tagged dataset into two files according to the amount of examples
     requested to be included in each file.
