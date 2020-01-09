@@ -33,7 +33,7 @@ The attention mechanism connects between the encoder's bi-directional LSTM layer
 
 The GNMT model was adapted from the model shown in *Neural Machine Translation (seq2seq) Tutorial* [2]_ and from its repository_.
 
-The Sparse model implementation can be found in :py:class:`GNMTModel <nlp_architect.models.gnmt_model.GNMTModel>` and offers several options to build the GNMT model.
+The Sparse model implementation can be found in :py:class:`GNMTModel <examples.sparse_gnmt.gnmt_model.GNMTModel>` and offers several options to build the GNMT model.
 
 Sparsity - Pruning GNMT
 =======================
@@ -91,7 +91,7 @@ You can use these models to `Run Inference using our Pre-Trained Models`_ and ev
 
 Running Modalities
 ==================
-Below are simple examples for training 90% sparse :py:class:`GNMTModel <nlp_architect.models.gnmt_model.GNMTModel>` model, running inference using a pre-trained/trained model, quantizing a model to 8bit Integer and running inference using a quantized model. Before inference, the int8 weights of the sparse and quantized model are de-quantize back to fp32.
+Below are simple examples for training 90% sparse :py:class:`GNMTModel <examples.sparse_gnmt.gnmt_model.GNMTModel>` model, running inference using a pre-trained/trained model, quantizing a model to 8bit Integer and running inference using a quantized model. Before inference, the int8 weights of the sparse and quantized model are de-quantize back to fp32.
 
 Training
 --------

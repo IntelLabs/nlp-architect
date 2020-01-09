@@ -221,9 +221,9 @@ The larger idea behind these models is to allow ensemble learning with other sup
 <div class="section" id="files">
 <h3>Files<a class="headerlink" href="#files" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li><strong>nlp_architect/models/supervised_sentiment.py</strong>: Sentiment analysis models - currently an LSTM and a one-hot CNN</li>
-<li><strong>nlp_architect/data/amazon_reviews.py</strong>: Code which will download and process the Amazon datasets described below</li>
-<li><strong>nlp_architect/utils/ensembler.py</strong>: Contains the ensemble learning algorithm(s)</li>
+<li><strong>examples/supervised_sentiment/supervised_sentiment.py</strong>: Sentiment analysis models - currently an LSTM and a one-hot CNN</li>
+<li><strong>examples/supervised_sentiment/amazon_reviews.py</strong>: Code which will download and process the Amazon datasets described below</li>
+<li><strong>examples/supervised_sentiment/ensembler.py</strong>: Contains the ensemble learning algorithm(s)</li>
 <li><strong>examples/supervised_sentiment/example_ensemble.py</strong>: An example of how the sentiment models can be trained and ensembled.</li>
 <li><strong>examples/supervised_sentiment/optimize_example.py</strong>: An example of using an hyperparameter optimizer with the simple LSTM model.</li>
 </ul>
@@ -257,6 +257,10 @@ The “summary” or title of the review is concatenated with the review text an
 <h3>Running Modalities<a class="headerlink" href="#running-modalities" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="ensemble-train-test">
 <h4>Ensemble Train/Test<a class="headerlink" href="#ensemble-train-test" title="Permalink to this headline">¶</a></h4>
+<p>Install extra packages for running the model:</p>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">examples</span><span class="o">/</span><span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+</div>
 <p>Currently, the pipeline shows a full train/test/ensemble cycle. The main pipeline can be run with the following command:</p>
 <div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">examples</span><span class="o">/</span><span class="n">supervised_sentiment</span><span class="o">/</span><span class="n">example_ensemble</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">file_path</span> <span class="o">./</span><span class="n">reviews_Movies_and_TV</span><span class="o">.</span><span class="n">json</span><span class="o">/</span>
 </pre></div>

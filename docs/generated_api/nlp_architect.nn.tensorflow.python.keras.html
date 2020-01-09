@@ -135,7 +135,6 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="nlp_architect.pipelines.html">nlp_architect.pipelines package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nlp_architect.procedures.html">nlp_architect.procedures package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nlp_architect.solutions.html">nlp_architect.solutions package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nlp_architect.utils.html">nlp_architect.utils package</a></li>
 </ul>
 </li>
@@ -260,7 +259,24 @@ Prints Conlleval F1 score on the end of each epoch.</p>
 <dl class="method">
 <dt id="nlp_architect.nn.tensorflow.python.keras.callbacks.ConllCallback.on_epoch_end">
 <code class="descname">on_epoch_end</code><span class="sig-paren">(</span><em>epoch</em>, <em>logs=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/nn/tensorflow/python/keras/callbacks.html#ConllCallback.on_epoch_end"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.nn.tensorflow.python.keras.callbacks.ConllCallback.on_epoch_end" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Called at the end of an epoch.</p>
+<p>Subclasses should override for any actions to run. This function should only
+be called during TRAIN mode.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>epoch</strong> – integer, index of epoch.</li>
+<li><strong>logs</strong> – dict, metric results for this training epoch, and for the
+validation epoch if validation is performed. Validation result keys
+are prefixed with <cite>val_</cite>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </dd></dl>
 

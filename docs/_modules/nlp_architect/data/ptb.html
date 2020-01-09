@@ -203,24 +203,31 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">urllib.request</span>
 
-<span class="n">LICENSE_URL</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;PTB&#39;</span><span class="p">:</span> <span class="s2">&quot;http://www.fit.vutbr.cz/~imikolov/rnnlm/&quot;</span><span class="p">,</span>
-               <span class="s1">&#39;WikiText-103&#39;</span><span class="p">:</span> <span class="s2">&quot;https://einstein.ai/research/the-wikitext-long-term-dependency-&quot;</span>
-                               <span class="s2">&quot;language-modeling-dataset&quot;</span><span class="p">}</span>
+<span class="n">LICENSE_URL</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;PTB&quot;</span><span class="p">:</span> <span class="s2">&quot;http://www.fit.vutbr.cz/~imikolov/rnnlm/&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;WikiText-103&quot;</span><span class="p">:</span> <span class="s2">&quot;https://einstein.ai/research/the-wikitext-long-term-dependency-&quot;</span>
+    <span class="s2">&quot;language-modeling-dataset&quot;</span><span class="p">,</span>
+<span class="p">}</span>
 
-<span class="n">SOURCE_URL</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;PTB&#39;</span><span class="p">:</span> <span class="s2">&quot;http://www.fit.vutbr.cz/~imikolov/rnnlm/simple-examples.tgz&quot;</span><span class="p">,</span>
-              <span class="s1">&#39;WikiText-103&#39;</span><span class="p">:</span> <span class="s2">&quot;https://s3.amazonaws.com/research.metamind.io/wikitext/&quot;</span>
-                              <span class="o">+</span> <span class="s2">&quot;wikitext-103-v1.zip&quot;</span><span class="p">}</span>
-<span class="n">FILENAME</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;PTB&#39;</span><span class="p">:</span> <span class="s2">&quot;simple-examples&quot;</span><span class="p">,</span> <span class="s1">&#39;WikiText-103&#39;</span><span class="p">:</span> <span class="s2">&quot;wikitext-103&quot;</span><span class="p">}</span>
-<span class="n">EXTENSION</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;PTB&#39;</span><span class="p">:</span> <span class="s2">&quot;tgz&quot;</span><span class="p">,</span> <span class="s1">&#39;WikiText-103&#39;</span><span class="p">:</span> <span class="s2">&quot;zip&quot;</span><span class="p">}</span>
-<span class="n">FILES</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;PTB&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s2">&quot;data/ptb.&quot;</span> <span class="o">+</span> <span class="n">x</span> <span class="o">+</span> <span class="s2">&quot;.txt&quot;</span><span class="p">,</span>
-         <span class="s1">&#39;WikiText-103&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s2">&quot;wiki.&quot;</span> <span class="o">+</span> <span class="n">x</span> <span class="o">+</span> <span class="s2">&quot;.tokens&quot;</span><span class="p">}</span>
+<span class="n">SOURCE_URL</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;PTB&quot;</span><span class="p">:</span> <span class="s2">&quot;http://www.fit.vutbr.cz/~imikolov/rnnlm/simple-examples.tgz&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;WikiText-103&quot;</span><span class="p">:</span> <span class="s2">&quot;https://s3.amazonaws.com/research.metamind.io/wikitext/&quot;</span>
+    <span class="o">+</span> <span class="s2">&quot;wikitext-103-v1.zip&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">FILENAME</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;PTB&quot;</span><span class="p">:</span> <span class="s2">&quot;simple-examples&quot;</span><span class="p">,</span> <span class="s2">&quot;WikiText-103&quot;</span><span class="p">:</span> <span class="s2">&quot;wikitext-103&quot;</span><span class="p">}</span>
+<span class="n">EXTENSION</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;PTB&quot;</span><span class="p">:</span> <span class="s2">&quot;tgz&quot;</span><span class="p">,</span> <span class="s2">&quot;WikiText-103&quot;</span><span class="p">:</span> <span class="s2">&quot;zip&quot;</span><span class="p">}</span>
+<span class="n">FILES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;PTB&quot;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s2">&quot;data/ptb.&quot;</span> <span class="o">+</span> <span class="n">x</span> <span class="o">+</span> <span class="s2">&quot;.txt&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;WikiText-103&quot;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s2">&quot;wiki.&quot;</span> <span class="o">+</span> <span class="n">x</span> <span class="o">+</span> <span class="s2">&quot;.tokens&quot;</span><span class="p">,</span>
+<span class="p">}</span>
 
 
 <div class="viewcode-block" id="PTBDictionary"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.ptb.PTBDictionary">[docs]</a><span class="k">class</span> <span class="nc">PTBDictionary</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Class for generating a dictionary of all words in the PTB corpus</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s1">&#39;~/data&#39;</span><span class="p">),</span> <span class="n">dataset</span><span class="o">=</span><span class="s1">&#39;WikiText-103&#39;</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~/data&quot;</span><span class="p">),</span> <span class="n">dataset</span><span class="o">=</span><span class="s2">&quot;WikiText-103&quot;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize class</span>
 <span class="sd">        Args:</span>
@@ -237,8 +244,8 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">load_dictionary</span><span class="p">()</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Loaded dictionary of words of size </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">idx2word</span><span class="p">)))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">sos_symbol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">word2idx</span><span class="p">[</span><span class="s1">&#39;&lt;sos&gt;&#39;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">eos_symbol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">word2idx</span><span class="p">[</span><span class="s1">&#39;&lt;eos&gt;&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sos_symbol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">word2idx</span><span class="p">[</span><span class="s2">&quot;&lt;sos&gt;&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eos_symbol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">word2idx</span><span class="p">[</span><span class="s2">&quot;&lt;eos&gt;&quot;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">save_dictionary</span><span class="p">()</span>
 
 <div class="viewcode-block" id="PTBDictionary.add_word"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.ptb.PTBDictionary.add_word">[docs]</a>    <span class="k">def</span> <span class="nf">add_word</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">):</span>
@@ -262,13 +269,14 @@
 <span class="sd">            None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">split_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="s2">&quot;test&quot;</span><span class="p">,</span> <span class="s2">&quot;valid&quot;</span><span class="p">]:</span>
-            <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">FILENAME</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">],</span>
-                                <span class="n">FILES</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">](</span><span class="n">split_type</span><span class="p">))</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">FILENAME</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">],</span> <span class="n">FILES</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">](</span><span class="n">split_type</span><span class="p">)</span>
+            <span class="p">)</span>
             <span class="c1"># Add words to the dictionary</span>
-            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
                 <span class="n">tokens</span> <span class="o">=</span> <span class="mi">0</span>
                 <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">fp</span><span class="p">:</span>
-                    <span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;&lt;sos&gt;&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;&lt;eos&gt;&#39;</span><span class="p">]</span>
+                    <span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&lt;sos&gt;&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;&lt;eos&gt;&quot;</span><span class="p">]</span>
                     <span class="n">tokens</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
                     <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span><span class="p">:</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">add_word</span><span class="p">(</span><span class="n">word</span><span class="p">)</span></div>
@@ -292,29 +300,42 @@
 <span class="sd">            None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filepath</span><span class="p">):</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> was not found in the directory: </span><span class="si">{}</span><span class="s1">, looking for compressed version&#39;</span>
-                  <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">FILENAME</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">filepath</span><span class="p">))</span>
-            <span class="n">full_filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">work_directory</span><span class="p">,</span>
-                                         <span class="n">FILENAME</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="n">EXTENSION</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">])</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> was not found in the directory: </span><span class="si">{}</span><span class="s2">, looking for compressed version&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">FILENAME</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">filepath</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">full_filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                <span class="n">work_directory</span><span class="p">,</span> <span class="n">FILENAME</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="n">EXTENSION</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">]</span>
+            <span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">full_filepath</span><span class="p">):</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Did not find data&#39;</span><span class="p">)</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;PTB can be downloaded from http://www.fit.vutbr.cz/~imikolov/rnnlm/ </span><span class="se">\n</span><span class="s1">&#39;</span>
-                      <span class="s1">&#39;wikitext can be downloaded from&#39;</span>
-                      <span class="s1">&#39; https://einstein.ai/research/the-wikitext-long-term-dependency-language&#39;</span>
-                      <span class="s1">&#39;-modeling-dataset&#39;</span><span class="p">)</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">The terms and conditions of the data set license apply. Intel does not &#39;</span>
-                      <span class="s1">&#39;grant any rights to the data files or database</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
-                <span class="n">response</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">To download data from </span><span class="si">{}</span><span class="s1">, please enter YES: &#39;</span>
-                                 <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">LICENSE_URL</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">]))</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Did not find data&quot;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span>
+                    <span class="s2">&quot;PTB can be downloaded from http://www.fit.vutbr.cz/~imikolov/rnnlm/ </span><span class="se">\n</span><span class="s2">&quot;</span>
+                    <span class="s2">&quot;wikitext can be downloaded from&quot;</span>
+                    <span class="s2">&quot; https://einstein.ai/research/the-wikitext-long-term-dependency-language&quot;</span>
+                    <span class="s2">&quot;-modeling-dataset&quot;</span>
+                <span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span>
+                    <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">The terms and conditions of the data set license apply. Intel does not &quot;</span>
+                    <span class="s2">&quot;grant any rights to the data files or database</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+                <span class="n">response</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span>
+                    <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">To download data from </span><span class="si">{}</span><span class="s2">, please enter YES: &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                        <span class="n">LICENSE_URL</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">]</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
                 <span class="n">res</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-                <span class="k">if</span> <span class="n">res</span> <span class="o">==</span> <span class="s2">&quot;yes&quot;</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">res</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">res</span> <span class="o">==</span> <span class="s1">&#39;y&#39;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">res</span> <span class="o">==</span> <span class="s2">&quot;yes&quot;</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">res</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">res</span> <span class="o">==</span> <span class="s2">&quot;y&quot;</span><span class="p">):</span>
                     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Downloading...&quot;</span><span class="p">)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_download_data</span><span class="p">(</span><span class="n">work_directory</span><span class="p">)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_uncompress_data</span><span class="p">(</span><span class="n">work_directory</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Download declined. Response received </span><span class="si">{}</span><span class="s1"> != YES|Y. &#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">res</span><span class="p">))</span>
-                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Please download the model manually from the links above &#39;</span>
-                          <span class="s1">&#39;and place in directory: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">work_directory</span><span class="p">))</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Download declined. Response received </span><span class="si">{}</span><span class="s2"> != YES|Y. &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">res</span><span class="p">))</span>
+                    <span class="nb">print</span><span class="p">(</span>
+                        <span class="s2">&quot;Please download the model manually from the links above &quot;</span>
+                        <span class="s2">&quot;and place in directory: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">work_directory</span><span class="p">)</span>
+                    <span class="p">)</span>
                     <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_uncompress_data</span><span class="p">(</span><span class="n">work_directory</span><span class="p">)</span>
@@ -331,38 +352,55 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">work_directory</span><span class="p">):</span>
             <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">work_directory</span><span class="p">)</span>
 
-        <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;User-Agent&#39;</span><span class="p">:</span> <span class="s1">&#39;Mozilla/5.0&#39;</span><span class="p">}</span>
+        <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;User-Agent&quot;</span><span class="p">:</span> <span class="s2">&quot;Mozilla/5.0&quot;</span><span class="p">}</span>
 
-        <span class="n">full_filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">work_directory</span><span class="p">,</span> <span class="n">FILENAME</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span>
-                                     <span class="o">+</span> <span class="n">EXTENSION</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">])</span>
+        <span class="n">full_filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="n">work_directory</span><span class="p">,</span> <span class="n">FILENAME</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="n">EXTENSION</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">]</span>
+        <span class="p">)</span>
         <span class="n">req</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="n">SOURCE_URL</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">],</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
         <span class="n">data_handle</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">full_filepath</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
             <span class="n">fp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data_handle</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Successfully downloaded data to </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">full_filepath</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Successfully downloaded data to </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">full_filepath</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">_uncompress_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">work_directory</span><span class="p">):</span>
-        <span class="n">full_filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">work_directory</span><span class="p">,</span>
-                                     <span class="n">FILENAME</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="n">EXTENSION</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">])</span>
+        <span class="n">full_filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="n">work_directory</span><span class="p">,</span> <span class="n">FILENAME</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="n">EXTENSION</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">]</span>
+        <span class="p">)</span>
         <span class="k">if</span> <span class="n">EXTENSION</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;tgz&quot;</span><span class="p">:</span>
             <span class="kn">import</span> <span class="nn">tarfile</span>
+
             <span class="k">with</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">full_filepath</span><span class="p">,</span> <span class="s2">&quot;r:gz&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">tar</span><span class="p">:</span>
                 <span class="n">tar</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">work_directory</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">EXTENSION</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;zip&quot;</span><span class="p">:</span>
             <span class="kn">import</span> <span class="nn">zipfile</span>
-            <span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">full_filepath</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">zip_handle</span><span class="p">:</span>
+
+            <span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">full_filepath</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">zip_handle</span><span class="p">:</span>
                 <span class="n">zip_handle</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="n">work_directory</span><span class="p">)</span>
 
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Successfully unzipped data to </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">work_directory</span><span class="p">,</span>
-                                                                     <span class="n">FILENAME</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">])))</span></div>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;Successfully unzipped data to </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">work_directory</span><span class="p">,</span> <span class="n">FILENAME</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">])</span>
+            <span class="p">)</span>
+        <span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="PTBDataLoader"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.ptb.PTBDataLoader">[docs]</a><span class="k">class</span> <span class="nc">PTBDataLoader</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Class that defines data loader</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word_dict</span><span class="p">,</span> <span class="n">seq_len</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">data_dir</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s1">&#39;~/data&#39;</span><span class="p">),</span>
-                 <span class="n">dataset</span><span class="o">=</span><span class="s1">&#39;WikiText-103&#39;</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">skip</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">split_type</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="n">loop</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">word_dict</span><span class="p">,</span>
+        <span class="n">seq_len</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+        <span class="n">data_dir</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~/data&quot;</span><span class="p">),</span>
+        <span class="n">dataset</span><span class="o">=</span><span class="s2">&quot;WikiText-103&quot;</span><span class="p">,</span>
+        <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>
+        <span class="n">skip</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
+        <span class="n">split_type</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">,</span>
+        <span class="n">loop</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize class</span>
 <span class="sd">        Args:</span>
@@ -384,10 +422,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">word2idx</span> <span class="o">=</span> <span class="n">word_dict</span><span class="o">.</span><span class="n">word2idx</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">idx2word</span> <span class="o">=</span> <span class="n">word_dict</span><span class="o">.</span><span class="n">idx2word</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_series</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">FILENAME</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">],</span>
-                                                  <span class="n">FILES</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">](</span><span class="n">split_type</span><span class="p">)))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">random_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">seq_len</span><span class="p">,</span>
-                                                            <span class="bp">self</span><span class="o">.</span><span class="n">skip</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_series</span><span class="p">(</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">FILENAME</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">],</span> <span class="n">FILES</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">](</span><span class="n">split_type</span><span class="p">))</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">random_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">seq_len</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">skip</span><span class="p">)</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_train</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">random_index</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span> <span class="o">=</span> <span class="n">batch_size</span>
@@ -406,8 +446,9 @@
 <span class="sd">            None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sample_count</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">random_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">seq_len</span><span class="p">,</span>
-                                                            <span class="bp">self</span><span class="o">.</span><span class="n">skip</span><span class="p">))</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">random_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">seq_len</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">skip</span><span class="p">)</span>
+        <span class="p">)</span></div>
 
 <div class="viewcode-block" id="PTBDataLoader.get_batch"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.ptb.PTBDataLoader.get_batch">[docs]</a>    <span class="k">def</span> <span class="nf">get_batch</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -425,8 +466,8 @@
         <span class="n">batch_y</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span><span class="p">):</span>
             <span class="n">c_i</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">random_index</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">sample_count</span><span class="p">])</span>
-            <span class="n">batch_x</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">c_i</span><span class="p">:</span><span class="n">c_i</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">seq_len</span><span class="p">])</span>
-            <span class="n">batch_y</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">c_i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span><span class="n">c_i</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">seq_len</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
+            <span class="n">batch_x</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">c_i</span> <span class="p">:</span> <span class="n">c_i</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">seq_len</span><span class="p">])</span>
+            <span class="n">batch_y</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">c_i</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:</span> <span class="n">c_i</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">seq_len</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">sample_count</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="n">batch</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">batch_x</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">batch_y</span><span class="p">))</span>
 
@@ -442,10 +483,10 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Tokenize file content</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
             <span class="n">ids</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">fp</span><span class="p">:</span>
-                <span class="n">words</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;&lt;eos&gt;&#39;</span><span class="p">]</span>
+                <span class="n">words</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;&lt;eos&gt;&quot;</span><span class="p">]</span>
                 <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span><span class="p">:</span>
                     <span class="n">ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">word2idx</span><span class="p">[</span><span class="n">word</span><span class="p">])</span>
 

@@ -27,14 +27,6 @@ nlp\_architect.utils.embedding module
     :undoc-members:
     :show-inheritance:
 
-nlp\_architect.utils.ensembler module
--------------------------------------
-
-.. automodule:: nlp_architect.utils.ensembler
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 nlp\_architect.utils.file\_cache module
 ---------------------------------------
 
@@ -63,14 +55,6 @@ nlp\_architect.utils.metrics module
 -----------------------------------
 
 .. automodule:: nlp_architect.utils.metrics
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-nlp\_architect.utils.mrc\_utils module
---------------------------------------
-
-.. automodule:: nlp_architect.utils.mrc_utils
     :members:
     :undoc-members:
     :show-inheritance:

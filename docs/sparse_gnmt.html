@@ -214,7 +214,7 @@
 The decoder consists of an embedding layer followed by 4 uni-directional LSTM layers and a linear Softmax layer.
 The attention mechanism connects between the encoder’s bi-directional LSTM layer to all of the decoder’s LSTM layers.</p>
 <p>The GNMT model was adapted from the model shown in <em>Neural Machine Translation (seq2seq) Tutorial</em> <a class="footnote-reference" href="#id8" id="id3">[2]</a> and from its <a class="reference external" href="https://github.com/tensorflow/nmt">repository</a>.</p>
-<p>The Sparse model implementation can be found in <a class="reference internal" href="generated_api/nlp_architect.models.html#nlp_architect.models.gnmt_model.GNMTModel" title="nlp_architect.models.gnmt_model.GNMTModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">GNMTModel</span></code></a> and offers several options to build the GNMT model.</p>
+<p>The Sparse model implementation can be found in <code class="xref py py-class docutils literal notranslate"><span class="pre">GNMTModel</span></code> and offers several options to build the GNMT model.</p>
 </div>
 <div class="section" id="sparsity-pruning-gnmt">
 <h2>Sparsity - Pruning GNMT<a class="headerlink" href="#sparsity-pruning-gnmt" title="Permalink to this headline">¶</a></h2>
@@ -302,7 +302,7 @@ You can use these models to <a class="reference internal" href="#run-inference-u
 </div>
 <div class="section" id="running-modalities">
 <h2>Running Modalities<a class="headerlink" href="#running-modalities" title="Permalink to this headline">¶</a></h2>
-<p>Below are simple examples for training 90% sparse <a class="reference internal" href="generated_api/nlp_architect.models.html#nlp_architect.models.gnmt_model.GNMTModel" title="nlp_architect.models.gnmt_model.GNMTModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">GNMTModel</span></code></a> model, running inference using a pre-trained/trained model, quantizing a model to 8bit Integer and running inference using a quantized model. Before inference, the int8 weights of the sparse and quantized model are de-quantize back to fp32.</p>
+<p>Below are simple examples for training 90% sparse <code class="xref py py-class docutils literal notranslate"><span class="pre">GNMTModel</span></code> model, running inference using a pre-trained/trained model, quantizing a model to 8bit Integer and running inference using a quantized model. Before inference, the int8 weights of the sparse and quantized model are de-quantize back to fp32.</p>
 <div class="section" id="training">
 <h3>Training<a class="headerlink" href="#training" title="Permalink to this headline">¶</a></h3>
 <p>Train a German to English GNMT model with 90% sparsity using the WMT16 dataset:</p>

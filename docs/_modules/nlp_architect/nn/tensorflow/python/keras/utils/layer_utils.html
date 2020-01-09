@@ -210,12 +210,11 @@
 <span class="sd">        topology (dict): a dictionary of topology elements and their values</span>
 <span class="sd">        filepath (str): path to save model</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">with</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;.h5&#39;</span><span class="p">,</span> <span class="n">delete</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;.h5&quot;</span><span class="p">,</span> <span class="n">delete</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
         <span class="n">model</span><span class="o">.</span><span class="n">save_weights</span><span class="p">(</span><span class="n">fd</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
         <span class="n">model_weights</span> <span class="o">=</span> <span class="n">fd</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;model_weights&#39;</span><span class="p">:</span> <span class="n">model_weights</span><span class="p">,</span>
-            <span class="s1">&#39;model_topology&#39;</span><span class="p">:</span> <span class="n">topology</span><span class="p">}</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;model_weights&quot;</span><span class="p">:</span> <span class="n">model_weights</span><span class="p">,</span> <span class="s2">&quot;model_topology&quot;</span><span class="p">:</span> <span class="n">topology</span><span class="p">}</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
         <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">fp</span><span class="p">)</span></div>
 
 
@@ -227,12 +226,12 @@
 <span class="sd">        filepath (str): path to model</span>
 <span class="sd">        model: model object to load</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
         <span class="n">model_data</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fp</span><span class="p">)</span>
-    <span class="n">topology</span> <span class="o">=</span> <span class="n">model_data</span><span class="p">[</span><span class="s1">&#39;model_topology&#39;</span><span class="p">]</span>
+    <span class="n">topology</span> <span class="o">=</span> <span class="n">model_data</span><span class="p">[</span><span class="s2">&quot;model_topology&quot;</span><span class="p">]</span>
     <span class="n">model</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="o">**</span><span class="n">topology</span><span class="p">)</span>
-    <span class="k">with</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;.h5&#39;</span><span class="p">,</span> <span class="n">delete</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
-        <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">model_data</span><span class="p">[</span><span class="s1">&#39;model_weights&#39;</span><span class="p">])</span>
+    <span class="k">with</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;.h5&quot;</span><span class="p">,</span> <span class="n">delete</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
+        <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">model_data</span><span class="p">[</span><span class="s2">&quot;model_weights&quot;</span><span class="p">])</span>
         <span class="n">fd</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
         <span class="n">model</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">load_weights</span><span class="p">(</span><span class="n">fd</span><span class="o">.</span><span class="n">name</span><span class="p">)</span></div>
 </pre></div>

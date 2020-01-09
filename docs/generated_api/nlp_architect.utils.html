@@ -41,7 +41,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="nlp_architect.utils.resources package" href="nlp_architect.utils.resources.html" />
-    <link rel="prev" title="nlp_architect.solutions.trend_analysis.ui package" href="nlp_architect.solutions.trend_analysis.ui.html" /> 
+    <link rel="prev" title="nlp_architect.procedures.transformers package" href="nlp_architect.procedures.transformers.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -127,7 +127,6 @@
 <li class="toctree-l2"><a class="reference internal" href="nlp_architect.nn.html">nlp_architect.nn package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nlp_architect.pipelines.html">nlp_architect.pipelines package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nlp_architect.procedures.html">nlp_architect.procedures package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nlp_architect.solutions.html">nlp_architect.solutions package</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">nlp_architect.utils package</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="nlp_architect.utils.resources.html">nlp_architect.utils.resources package</a></li>
@@ -136,12 +135,10 @@
 <li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.utils.ansi2html">nlp_architect.utils.ansi2html module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.utils.embedding">nlp_architect.utils.embedding module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.utils.ensembler">nlp_architect.utils.ensembler module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.utils.file_cache">nlp_architect.utils.file_cache module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.utils.generic">nlp_architect.utils.generic module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.utils.io">nlp_architect.utils.io module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.utils.metrics">nlp_architect.utils.metrics module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.utils.mrc_utils">nlp_architect.utils.mrc_utils module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.utils.string_utils">nlp_architect.utils.string_utils module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.utils.testing">nlp_architect.utils.testing module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.utils.text">nlp_architect.utils.text module</a></li>
@@ -382,33 +379,6 @@ int: detected word embedding vector size</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</div>
-<div class="section" id="module-nlp_architect.utils.ensembler">
-<span id="nlp-architect-utils-ensembler-module"></span><h2>nlp_architect.utils.ensembler module<a class="headerlink" href="#module-nlp_architect.utils.ensembler" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
-<dt id="nlp_architect.utils.ensembler.simple_ensembler">
-<code class="descclassname">nlp_architect.utils.ensembler.</code><code class="descname">simple_ensembler</code><span class="sig-paren">(</span><em>np_arrays</em>, <em>weights</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/utils/ensembler.html#simple_ensembler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.utils.ensembler.simple_ensembler" title="Permalink to this definition">¶</a></dt>
-<dd><p>Simple ensembler takes a list of n by m numpy array predictions and a weight list
-The predictions should be n by m. n is the number of elements and m is the number of classes</p>
-<p>Modified from the default LookupTable implementation to support multiple axis lookups.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>vocab_size</strong> (<em>int</em>) – the vocabulary size</li>
-<li><strong>embed_dim</strong> (<em>int</em>) – the size of embedding vector</li>
-<li><strong>init</strong> (<em>Initializor</em>) – initialization function</li>
-<li><strong>update</strong> (<em>bool</em>) – if the word vectors get updated through training</li>
-<li><strong>pad_idx</strong> (<em>int</em>) – by knowing the pad value, the update will make sure always
-have the vector representing pad value to be 0s.</li>
-</ul>
 </td>
 </tr>
 </tbody>
@@ -844,58 +814,6 @@ for returning.</li>
 <dt id="nlp_architect.utils.metrics.tagging">
 <code class="descclassname">nlp_architect.utils.metrics.</code><code class="descname">tagging</code><span class="sig-paren">(</span><em>preds</em>, <em>labels</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/utils/metrics.html#tagging"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.utils.metrics.tagging" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
-
-</div>
-<div class="section" id="module-nlp_architect.utils.mrc_utils">
-<span id="nlp-architect-utils-mrc-utils-module"></span><h2>nlp_architect.utils.mrc_utils module<a class="headerlink" href="#module-nlp_architect.utils.mrc_utils" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
-<dt id="nlp_architect.utils.mrc_utils.create_data_dict">
-<code class="descclassname">nlp_architect.utils.mrc_utils.</code><code class="descname">create_data_dict</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/utils/mrc_utils.html#create_data_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.utils.mrc_utils.create_data_dict" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function to convert data to dictionary format</p>
-<p>data: train/dev data as a list</p>
-<p>a dictionary containing dev/train data</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="nlp_architect.utils.mrc_utils.create_squad_training">
-<code class="descclassname">nlp_architect.utils.mrc_utils.</code><code class="descname">create_squad_training</code><span class="sig-paren">(</span><em>paras_file</em>, <em>ques_file</em>, <em>answer_file</em>, <em>data_train_len=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/utils/mrc_utils.html#create_squad_training"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.utils.mrc_utils.create_squad_training" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function to read data from preprocessed files and return
-data in the form of a list</p>
-<p>paras_file: File name for preprocessed paragraphs
-ques_file: File name for preprocessed questions
-answer_file: File name for preprocessed answer spans
-vocab_file:  File name for preprocessed vocab
-data_train_len= length of train dataset to use</p>
-<p>appended list for train/dev dataset</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="nlp_architect.utils.mrc_utils.get_data_array_squad">
-<code class="descclassname">nlp_architect.utils.mrc_utils.</code><code class="descname">get_data_array_squad</code><span class="sig-paren">(</span><em>params_dict</em>, <em>data_train</em>, <em>set_val='train'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/utils/mrc_utils.html#get_data_array_squad"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.utils.mrc_utils.get_data_array_squad" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function to pad all sentences and restrict to max length defined by user</p>
-<p>params_dict: dictionary containing all input parameters
-data_train: list containing the training/dev data_train
-set_val: indicates id its a training set or dev set</p>
-<p>Returns a list of tuples with padded sentences and masks</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="nlp_architect.utils.mrc_utils.get_qids">
-<code class="descclassname">nlp_architect.utils.mrc_utils.</code><code class="descname">get_qids</code><span class="sig-paren">(</span><em>args</em>, <em>q_id_path</em>, <em>data_dev</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/utils/mrc_utils.html#get_qids"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.utils.mrc_utils.get_qids" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function to create a list of question_ids in dev set</p>
-<p>q_id_path: path to question_ids file
-data_dev: development set</p>
-<p>list of question ids</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="nlp_architect.utils.mrc_utils.max_values_squad">
-<code class="descclassname">nlp_architect.utils.mrc_utils.</code><code class="descname">max_values_squad</code><span class="sig-paren">(</span><em>data_train</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/utils/mrc_utils.html#max_values_squad"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.utils.mrc_utils.max_values_squad" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function to compute the maximum length of sentences in
-paragraphs and questions</p>
-<p>data_train: list containing the entire dataset</p>
-<p>maximum length of question and paragraph</p>
-</dd></dl>
 
 </div>
 <div class="section" id="module-nlp_architect.utils.string_utils">

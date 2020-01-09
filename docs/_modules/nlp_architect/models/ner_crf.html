@@ -226,15 +226,17 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">use_cudnn</span> <span class="o">=</span> <span class="n">use_cudnn</span>
 
-<div class="viewcode-block" id="NERCRF.build"><a class="viewcode-back" href="../../../generated_api/nlp_architect.models.html#nlp_architect.models.ner_crf.NERCRF.build">[docs]</a>    <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-              <span class="n">word_length</span><span class="p">,</span>
-              <span class="n">target_label_dims</span><span class="p">,</span>
-              <span class="n">word_vocab_size</span><span class="p">,</span>
-              <span class="n">char_vocab_size</span><span class="p">,</span>
-              <span class="n">word_embedding_dims</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
-              <span class="n">char_embedding_dims</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span>
-              <span class="n">tagger_lstm_dims</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
-              <span class="n">dropout</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
+<div class="viewcode-block" id="NERCRF.build"><a class="viewcode-back" href="../../../generated_api/nlp_architect.models.html#nlp_architect.models.ner_crf.NERCRF.build">[docs]</a>    <span class="k">def</span> <span class="nf">build</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">word_length</span><span class="p">,</span>
+        <span class="n">target_label_dims</span><span class="p">,</span>
+        <span class="n">word_vocab_size</span><span class="p">,</span>
+        <span class="n">char_vocab_size</span><span class="p">,</span>
+        <span class="n">word_embedding_dims</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+        <span class="n">char_embedding_dims</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span>
+        <span class="n">tagger_lstm_dims</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
+        <span class="n">dropout</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Build a NERCRF model</span>
 
@@ -258,48 +260,52 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span> <span class="o">=</span> <span class="n">dropout</span>
 
         <span class="c1"># build word input</span>
-        <span class="n">words_input</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;words_input&#39;</span><span class="p">)</span>
-        <span class="n">embedding_layer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">word_vocab_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">word_embedding_dims</span><span class="p">,</span>
-                                                    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;word_embedding&#39;</span><span class="p">)</span>
+        <span class="n">words_input</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;words_input&quot;</span><span class="p">)</span>
+        <span class="n">embedding_layer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">word_vocab_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">word_embedding_dims</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;word_embedding&quot;</span>
+        <span class="p">)</span>
         <span class="n">word_embeddings</span> <span class="o">=</span> <span class="n">embedding_layer</span><span class="p">(</span><span class="n">words_input</span><span class="p">)</span>
 
         <span class="c1"># create word character embeddings</span>
-        <span class="n">word_chars_input</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">word_length</span><span class="p">),</span>
-                                                 <span class="n">name</span><span class="o">=</span><span class="s1">&#39;word_chars_input&#39;</span><span class="p">)</span>
-        <span class="n">char_embedding_layer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">char_vocab_size</span><span class="p">,</span>
-                                                         <span class="bp">self</span><span class="o">.</span><span class="n">char_embedding_dims</span><span class="p">,</span>
-                                                         <span class="n">name</span><span class="o">=</span><span class="s1">&#39;char_embedding&#39;</span><span class="p">)(</span><span class="n">word_chars_input</span><span class="p">)</span>
-        <span class="n">char_embeddings</span> <span class="o">=</span> \
-            <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">TimeDistributed</span><span class="p">(</span>
-                <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Conv1D</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">))(</span>
-                <span class="n">char_embedding_layer</span><span class="p">)</span>
+        <span class="n">word_chars_input</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span>
+            <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">word_length</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;word_chars_input&quot;</span>
+        <span class="p">)</span>
+        <span class="n">char_embedding_layer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">char_vocab_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">char_embedding_dims</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;char_embedding&quot;</span>
+        <span class="p">)(</span><span class="n">word_chars_input</span><span class="p">)</span>
+        <span class="n">char_embeddings</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">TimeDistributed</span><span class="p">(</span>
+            <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Conv1D</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="s2">&quot;same&quot;</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s2">&quot;relu&quot;</span><span class="p">)</span>
+        <span class="p">)(</span><span class="n">char_embedding_layer</span><span class="p">)</span>
         <span class="n">char_embeddings</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">TimeDistributed</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">GlobalMaxPooling1D</span><span class="p">())(</span>
-            <span class="n">char_embeddings</span><span class="p">)</span>
+            <span class="n">char_embeddings</span>
+        <span class="p">)</span>
 
         <span class="c1"># create the final feature vectors</span>
         <span class="n">features</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">word_embeddings</span><span class="p">,</span> <span class="n">char_embeddings</span><span class="p">],</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
 
         <span class="c1"># encode using a bi-LSTM</span>
         <span class="n">features</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dropout</span><span class="p">)(</span><span class="n">features</span><span class="p">)</span>
-        <span class="n">bilstm</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Bidirectional</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_rnn_cell</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tagger_lstm_dims</span><span class="p">,</span>
-                                                              <span class="n">return_sequences</span><span class="o">=</span><span class="kc">True</span><span class="p">))(</span><span class="n">features</span><span class="p">)</span>
-        <span class="n">bilstm</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Bidirectional</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_rnn_cell</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tagger_lstm_dims</span><span class="p">,</span>
-                                                              <span class="n">return_sequences</span><span class="o">=</span><span class="kc">True</span><span class="p">))(</span><span class="n">bilstm</span><span class="p">)</span>
+        <span class="n">bilstm</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Bidirectional</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_rnn_cell</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tagger_lstm_dims</span><span class="p">,</span> <span class="n">return_sequences</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="p">)(</span><span class="n">features</span><span class="p">)</span>
+        <span class="n">bilstm</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Bidirectional</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_rnn_cell</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tagger_lstm_dims</span><span class="p">,</span> <span class="n">return_sequences</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="p">)(</span><span class="n">bilstm</span><span class="p">)</span>
         <span class="n">bilstm</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dropout</span><span class="p">)(</span><span class="n">bilstm</span><span class="p">)</span>
         <span class="n">bilstm</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">target_label_dims</span><span class="p">)(</span><span class="n">bilstm</span><span class="p">)</span>
 
         <span class="n">inputs</span> <span class="o">=</span> <span class="p">[</span><span class="n">words_input</span><span class="p">,</span> <span class="n">word_chars_input</span><span class="p">]</span>
 
-        <span class="n">sequence_lengths</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;int32&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;seq_lens&#39;</span><span class="p">)</span>
+        <span class="n">sequence_lengths</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;int32&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;seq_lens&quot;</span><span class="p">)</span>
         <span class="n">inputs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sequence_lengths</span><span class="p">)</span>
-        <span class="n">crf</span> <span class="o">=</span> <span class="n">CRF</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">target_label_dims</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ner_crf&#39;</span><span class="p">)</span>
+        <span class="n">crf</span> <span class="o">=</span> <span class="n">CRF</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">target_label_dims</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;ner_crf&quot;</span><span class="p">)</span>
         <span class="n">predictions</span> <span class="o">=</span> <span class="n">crf</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">bilstm</span><span class="p">,</span> <span class="n">sequence_lengths</span><span class="o">=</span><span class="n">sequence_lengths</span><span class="p">)</span>
 
         <span class="c1"># compile the model</span>
-        <span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">,</span>
-                               <span class="n">outputs</span><span class="o">=</span><span class="n">predictions</span><span class="p">)</span>
-        <span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;ner_crf&#39;</span><span class="p">:</span> <span class="n">crf</span><span class="o">.</span><span class="n">loss</span><span class="p">},</span>
-                      <span class="n">optimizer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="mf">0.001</span><span class="p">,</span> <span class="n">clipnorm</span><span class="o">=</span><span class="mf">5.</span><span class="p">))</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="n">predictions</span><span class="p">)</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
+            <span class="n">loss</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;ner_crf&quot;</span><span class="p">:</span> <span class="n">crf</span><span class="o">.</span><span class="n">loss</span><span class="p">},</span> <span class="n">optimizer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="mf">0.001</span><span class="p">,</span> <span class="n">clipnorm</span><span class="o">=</span><span class="mf">5.0</span><span class="p">)</span>
+        <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span></div>
 
@@ -317,10 +323,11 @@
 <span class="sd">        Args:</span>
 <span class="sd">            weights (numpy.ndarray): 2D matrix of word weights</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;Cannot assign weights, apply build() before trying to &#39;</span> \
-                                       <span class="s1">&#39;loading embedding weights &#39;</span>
-        <span class="n">emb_layer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">get_layer</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;word_embedding&#39;</span><span class="p">)</span>
-        <span class="k">assert</span> <span class="n">emb_layer</span><span class="o">.</span><span class="n">output_dim</span> <span class="o">==</span> <span class="n">weights</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;embedding vectors shape mismatch&#39;</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="p">(</span>
+            <span class="s2">&quot;Cannot assign weights, apply build() before trying to &quot;</span> <span class="s2">&quot;loading embedding weights &quot;</span>
+        <span class="p">)</span>
+        <span class="n">emb_layer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">get_layer</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;word_embedding&quot;</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">emb_layer</span><span class="o">.</span><span class="n">output_dim</span> <span class="o">==</span> <span class="n">weights</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;embedding vectors shape mismatch&quot;</span>
         <span class="n">emb_layer</span><span class="o">.</span><span class="n">set_weights</span><span class="p">([</span><span class="n">weights</span><span class="p">])</span></div>
 
 <div class="viewcode-block" id="NERCRF.fit"><a class="viewcode-back" href="../../../generated_api/nlp_architect.models.html#nlp_architect.models.ner_crf.NERCRF.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">callbacks</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">validation</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -336,10 +343,16 @@
 <span class="sd">            validation(:obj:`list` of :obj:`numpy.ndarray`, optional): optional validation data</span>
 <span class="sd">                to be evaluated when training</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="s1">&#39;Model was not initialized&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                       <span class="n">validation_data</span><span class="o">=</span><span class="n">validation</span><span class="p">,</span>
-                       <span class="n">callbacks</span><span class="o">=</span><span class="n">callbacks</span><span class="p">)</span></div>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;Model was not initialized&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+            <span class="n">x</span><span class="p">,</span>
+            <span class="n">y</span><span class="p">,</span>
+            <span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span><span class="p">,</span>
+            <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span>
+            <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">validation_data</span><span class="o">=</span><span class="n">validation</span><span class="p">,</span>
+            <span class="n">callbacks</span><span class="o">=</span><span class="n">callbacks</span><span class="p">,</span>
+        <span class="p">)</span></div>
 
 <div class="viewcode-block" id="NERCRF.predict"><a class="viewcode-back" href="../../../generated_api/nlp_architect.models.html#nlp_architect.models.ner_crf.NERCRF.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -352,7 +365,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            numpy.ndarray: predicted values by the model</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="s1">&#39;Model was not initialized&#39;</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;Model was not initialized&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="NERCRF.save"><a class="viewcode-back" href="../../../generated_api/nlp_architect.models.html#nlp_architect.models.ner_crf.NERCRF.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
@@ -363,8 +376,8 @@
 <span class="sd">            path (str): path to save model weights</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">topology</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
-        <span class="n">topology</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;model&#39;</span><span class="p">)</span>
-        <span class="n">topology</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;use_cudnn&#39;</span><span class="p">)</span>
+        <span class="n">topology</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;model&quot;</span><span class="p">)</span>
+        <span class="n">topology</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;use_cudnn&quot;</span><span class="p">)</span>
         <span class="n">save_model</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">topology</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="NERCRF.load"><a class="viewcode-back" href="../../../generated_api/nlp_architect.models.html#nlp_architect.models.ner_crf.NERCRF.load">[docs]</a>    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>

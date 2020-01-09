@@ -208,6 +208,7 @@
 
 <div class="viewcode-block" id="InputExample"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.utils.InputExample">[docs]</a><span class="k">class</span> <span class="nc">InputExample</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Base class for a single training/dev/test example &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">guid</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">guid</span> <span class="o">=</span> <span class="n">guid</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">text</span>
@@ -242,6 +243,7 @@
 <span class="sd">        data_dir (str): path to the data source</span>
 <span class="sd">        task_type (str): the task type (classification/regression/tagging)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">processor</span><span class="p">:</span> <span class="n">DataProcessor</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">task_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">processor</span> <span class="o">=</span> <span class="n">processor</span>
@@ -268,7 +270,7 @@
         <span class="n">lines</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-                <span class="n">line</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">cell</span><span class="p">,</span> <span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">cell</span> <span class="ow">in</span> <span class="n">line</span><span class="p">)</span>  <span class="c1"># noqa: F821</span>
+                <span class="n">line</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">cell</span><span class="p">,</span> <span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">cell</span> <span class="ow">in</span> <span class="n">line</span><span class="p">)</span>  <span class="c1"># noqa: F821</span>
             <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">lines</span></div>
 
@@ -304,7 +306,7 @@
     <span class="n">file_dir</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="p">)</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">filename</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">file_dir</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">FileNotFoundError</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fw</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fw</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">sen</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
             <span class="n">cols</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sen</span><span class="p">)</span>
             <span class="n">items</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sen</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
@@ -320,9 +322,10 @@
 <span class="sd">    (used for semi-supervised models)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">num_of_examples</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">samples</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">no_labeled</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">no_unlabeled</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Must provide no_samples &gt; 0&#39;</span>
-    <span class="k">assert</span> <span class="n">num_of_examples</span> <span class="o">&gt;=</span> <span class="n">no_labeled</span> <span class="o">+</span> <span class="n">no_unlabeled</span><span class="p">,</span>\
-        <span class="s1">&#39;num of total samples smaller than requested sub sets&#39;</span>
+    <span class="k">assert</span> <span class="n">no_labeled</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">no_unlabeled</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;Must provide no_samples &gt; 0&quot;</span>
+    <span class="k">assert</span> <span class="p">(</span>
+        <span class="n">num_of_examples</span> <span class="o">&gt;=</span> <span class="n">no_labeled</span> <span class="o">+</span> <span class="n">no_unlabeled</span>
+    <span class="p">),</span> <span class="s2">&quot;num of total samples smaller than requested sub sets&quot;</span>
     <span class="n">all_indices</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">num_of_examples</span><span class="p">))</span>
     <span class="n">labeled_indices</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">all_indices</span><span class="p">,</span> <span class="n">no_labeled</span><span class="p">)</span>
     <span class="n">remaining_indices</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">all_indices</span><span class="p">)</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">labeled_indices</span><span class="p">)))</span>
@@ -333,7 +336,14 @@
 
 
 <div class="viewcode-block" id="split_column_dataset"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.utils.split_column_dataset">[docs]</a><span class="k">def</span> <span class="nf">split_column_dataset</span><span class="p">(</span>
-        <span class="n">first_count</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">second_count</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">out_folder</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">first_filename</span><span class="p">,</span> <span class="n">second_filename</span><span class="p">,</span> <span class="n">tag_col</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">first_count</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">second_count</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">out_folder</span><span class="p">,</span>
+    <span class="n">dataset</span><span class="p">,</span>
+    <span class="n">first_filename</span><span class="p">,</span>
+    <span class="n">second_filename</span><span class="p">,</span>
+    <span class="n">tag_col</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+<span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Splits a single column tagged dataset into two files according to the amount of examples</span>
 <span class="sd">    requested to be included in each file.</span>
