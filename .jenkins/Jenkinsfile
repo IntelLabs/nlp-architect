@@ -63,7 +63,7 @@ pipeline {
                 }
             }
         }
-        stage('Code quality') {
+        stage('pylint') {
             steps {
                 executeIn virt_env, './scripts/check_pylint.sh'
             }
@@ -75,7 +75,7 @@ pipeline {
                 }
             }
         }
-        stage('code style') {
+        stage('Code Style') {
             steps {
                 executeIn virt_env, 'black --check --line-length 100 --target-version py36 examples nlp_architect solutions tests'
             }
