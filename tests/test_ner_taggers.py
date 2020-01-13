@@ -1,28 +1,29 @@
 import argparse
 import os
-import pytest
 import tempfile
 import shutil
+import torch
+import pytest
 from nlp_architect.procedures import TrainTagger
 from nlp_architect.nn.torch.modules.embedders import IDCNN, CNNLSTM
-import torch
 
-current_dir = os.path.dirname(os.path.realpath(__file__))
-data_dir = os.path.join(current_dir, 'fixtures/conll_sample')
-output_dir = tempfile.mkdtemp()
-parser = argparse.ArgumentParser()
-train_procedure = TrainTagger()
-train_procedure.add_arguments(parser)
-embeddings_path = None
-batch_size = 128
-learning_rate = 0.0008
-epochs = 1
-train_filename = 'data.txt'
+
+CURRENT_DIR = os.path.dirname(os.path.realpath(__file__))
+DATA_DIR = os.path.join(CURRENT_DIR, 'fixtures/conll_sample')
+OUTPUT_DIR = tempfile.mkdtemp()
+PARSER = argparse.ArgumentParser()
+TRAIN_PROCEDURE = TrainTagger()
+TRAIN_PROCEDURE.add_arguments(PARSER)
+EMBEDDINGS_PATH = None
+BATCH_SIZE = 128
+LEARNING_RATE = 0.0008
+EPOCHS = 1
+TRAIN_FILENAME = 'data.txt'
 
 
 def test_taggers():
-    words= torch.tensor([[1,2,3,4,5,0,0,0]], dtype=torch.long) # (1,8)
-    word_chars= torch.tensor([[[1,2,0],
+    words = torch.tensor([[1,2,3,4,5,0,0,0]], dtype=torch.long) # (1,8)
+    word_chars = torch.tensor([[[1,2,0],
                             [3,0,0],
                             [4,5,0],
                             [5,4,3],
@@ -30,9 +31,9 @@ def test_taggers():
                             [0,0,0],
                             [0,0,0],
                             [0,0,0]]], dtype=torch.long) # (1, 8, 3)
-    shapes= torch.tensor([[1,2,3,3,3,0,0,0]], dtype=torch.long) # (1,8)
-    mask= torch.tensor([[1,1,1,1,1,0,0,0]], dtype=torch.long) # (1,8)
-    labels= torch.tensor([[1,1,3,4,1,0,0,0]], dtype=torch.long) # (1,8)
+    shapes = torch.tensor([[1,2,3,3,3,0,0,0]], dtype=torch.long) # (1,8)
+    mask = torch.tensor([[1,1,1,1,1,0,0,0]], dtype=torch.long) # (1,8)
+    labels = torch.tensor([[1,1,3,4,1,0,0,0]], dtype=torch.long) # (1,8)
 
     word_vocab_size = 5
     label_vocab_size = 4
@@ -49,7 +50,7 @@ def test_taggers():
 
     idcnn_logits = idcnn_model(**inputs)
     assert idcnn_logits.shape == expected_output_shape
-    lstm_logits = idcnn_model(**inputs)
+    lstm_logits = lstm_model(**inputs)
     assert lstm_logits.shape == expected_output_shape
 
 
@@ -57,52 +58,51 @@ def test_tagging_procedure_sanity():
 
     # run idcnn softmax
     model_type = 'id-cnn'
-    idcnn_softmax_args = parser.parse_args(
+    idcnn_softmax_args = PARSER.parse_args(
             [
-                '--data_dir', data_dir, '--output_dir', output_dir,
-                '--embedding_file', embeddings_path, '-b', str(batch_size),
-                '--lr', str(learning_rate), '-e', str(epochs), '--train_filename', train_filename,
-                '--dev_filename', train_filename, '--test_filename', train_filename, '--model_type', model_type,
+                '--data_dir', DATA_DIR, '--output_dir', OUTPUT_DIR,
+                '--embedding_file', EMBEDDINGS_PATH, '-b', str(BATCH_SIZE),
+                '--lr', str(LEARNING_RATE), '-e', str(EPOCHS), '--TRAIN_FILENAME', TRAIN_FILENAME,
+                '--dev_filename', TRAIN_FILENAME, '--test_filename', TRAIN_FILENAME, '--model_type', model_type,
                 '--overwrite_output_dir'
             ])
-    train_procedure.run_procedure(idcnn_softmax_args)
+    TRAIN_PROCEDURE.run_procedure(idcnn_softmax_args)
 
     # run idcnn crf
-    idcnn_crf_args = parser.parse_args(
+    idcnn_crf_args = PARSER.parse_args(
             [
-                '--data_dir', data_dir, '--output_dir', output_dir,
-                '--embedding_file', embeddings_path, '-b', str(batch_size),
-                '--lr', str(learning_rate), '-e', str(epochs), '--train_filename', train_filename,
-                '--dev_filename', train_filename, '--test_filename', train_filename, '--model_type', model_type,
+                '--data_dir', DATA_DIR, '--output_dir', OUTPUT_DIR,
+                '--embedding_file', EMBEDDINGS_PATH, '-b', str(BATCH_SIZE),
+                '--lr', str(LEARNING_RATE), '-e', str(EPOCHS), '--TRAIN_FILENAME', TRAIN_FILENAME,
+                '--dev_filename', TRAIN_FILENAME, '--test_filename', TRAIN_FILENAME, '--model_type', model_type,
                 '--use_crf', '--overwrite_output_dir'
             ])
-    train_procedure.run_procedure(idcnn_crf_args)
+    TRAIN_PROCEDURE.run_procedure(idcnn_crf_args)
 
 
     # run lstm softmax 
     model_type = 'cnn-lstm'
-    lstm_softmax_args = parser.parse_args(
+    lstm_softmax_args = PARSER.parse_args(
             [
-                '--data_dir', data_dir, '--output_dir', output_dir,
-                '--embedding_file', embeddings_path, '-b', str(batch_size),
-                '--lr', str(learning_rate), '-e', str(epochs), '--train_filename', train_filename,
-                '--dev_filename', train_filename, '--test_filename', train_filename, '--model_type', model_type,
+                '--data_dir', DATA_DIR, '--output_dir', OUTPUT_DIR,
+                '--embedding_file', EMBEDDINGS_PATH, '-b', str(BATCH_SIZE),
+                '--lr', str(LEARNING_RATE), '-e', str(EPOCHS), '--TRAIN_FILENAME', TRAIN_FILENAME,
+                '--dev_filename', TRAIN_FILENAME, '--test_filename', TRAIN_FILENAME, '--model_type', model_type,
                 '--overwrite_output_dir'
             ])
-    train_procedure.run_procedure(lstm_softmax_args)    
+    TRAIN_PROCEDURE.run_procedure(lstm_softmax_args)    
 
     # run lstm crf 
-    lstm_crf_args = parser.parse_args(
+    lstm_crf_args = PARSER.parse_args(
             [
-                '--data_dir', data_dir, '--output_dir', output_dir,
-                '--embedding_file', embeddings_path, '-b', str(batch_size),
-                '--lr', str(learning_rate), '-e', str(epochs), '--train_filename', train_filename,
-                '--dev_filename', train_filename, '--test_filename', train_filename, '--model_type', model_type,
+                '--data_dir', DATA_DIR, '--output_dir', OUTPUT_DIR,
+                '--embedding_file', EMBEDDINGS_PATH, '-b', str(BATCH_SIZE),
+                '--lr', str(LEARNING_RATE), '-e', str(EPOCHS), '--TRAIN_FILENAME', TRAIN_FILENAME,
+                '--dev_filename', TRAIN_FILENAME, '--test_filename', TRAIN_FILENAME, '--model_type', model_type,
                 '--use_crf', '--overwrite_output_dir'
             ])
-    train_procedure.run_procedure(lstm_crf_args)    
+    TRAIN_PROCEDURE.run_procedure(lstm_crf_args)    
 
     # remove output files
-    shutil.rmtree(output_dir)
-
+    shutil.rmtree(OUTPUT_DIR)
     assert True
