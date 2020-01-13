@@ -151,6 +151,13 @@ def add_parse_args(parser: argparse.ArgumentParser):
                         help='idcnn dropout penalty')
     parser.add_argument('--ignore_token', type=str, default="",
                         help='a token to ignore when processing the data')
+    parser.add_argument('--train_filename', type=str, default="train.txt",
+                        help='filename of training dataset')
+    parser.add_argument('--dev_filename', type=str, default="dev.txt",
+                        help='filename of development dataset')
+    parser.add_argument('--test_filename', type=str, default="test.txt",
+                        help='filename of test dataset')
+
 
 
 MODEL_TYPE = {
@@ -166,10 +173,10 @@ def do_training(args):
     args.seed = set_seed(args.seed, n_gpus)
     # prepare data
     processor = TokenClsProcessor(args.data_dir, tag_col=args.tag_col, ignore_token=args.ignore_token)
-    train_ex = processor.get_train_examples()
-    dev_ex = processor.get_dev_examples()
-    test_ex = processor.get_test_examples()
-    vocab = processor.get_vocabulary()
+    train_ex = processor.get_train_examples(filename=args.train_filename)
+    dev_ex = processor.get_dev_examples(filename=args.dev_filename)
+    test_ex = processor.get_test_examples(filename=args.test_filename)
+    vocab = processor.get_vocabulary(train_ex + dev_ex + test_ex)
     vocab_size = len(vocab) + 1
     num_labels = len(processor.get_labels()) + 1
     # create an embedder
@@ -239,10 +246,10 @@ def do_kd_training(args):
     args.seed = set_seed(args.seed, n_gpus)
     # prepare data
     processor = TokenClsProcessor(args.data_dir, tag_col=args.tag_col)
-    train_ex = processor.get_train_examples()
-    dev_ex = processor.get_dev_examples()
-    test_ex = processor.get_test_examples()
-    vocab = processor.get_vocabulary()
+    train_ex = processor.get_train_examples(filename=args.train_filename)
+    dev_ex = processor.get_dev_examples(filename=args.dev_filename)
+    test_ex = processor.get_test_examples(filename=args.test_filename)
+    vocab = processor.get_vocabulary(train_ex + dev_ex + test_ex)
     vocab_size = len(vocab) + 1
     num_labels = len(processor.get_labels()) + 1
     # create an embedder
@@ -323,9 +330,9 @@ def do_kd_pseudo_training(args):
     processor = TokenClsProcessor(args.data_dir, tag_col=args.tag_col)
     train_labeled_ex = processor.get_train_examples(filename=args.labeled_train_file)
     train_unlabeled_ex = processor.get_train_examples(filename=args.unlabeled_train_file)
-    dev_ex = processor.get_dev_examples()
-    test_ex = processor.get_test_examples()
-    vocab = processor.get_vocabulary()
+    dev_ex = processor.get_dev_examples(args.dev_file_name)
+    test_ex = processor.get_test_examples(args.test_file_name)
+    vocab = processor.get_vocabulary(train_labeled_ex + train_unlabeled_ex + dev_ex + test_ex)
     vocab_size = len(vocab) + 1
     num_labels = len(processor.get_labels()) + 1
     # create an embedder

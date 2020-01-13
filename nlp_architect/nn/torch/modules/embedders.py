@@ -54,8 +54,9 @@ class CNNLSTM(nn.Module):
                  dropout: float = 0.5,
                  padding_idx: int = 0):
         super(CNNLSTM, self).__init__()
+        self.word_embedding_dim = word_embedding_dims
         self.word_embeddings = nn.Embedding(word_vocab_size,
-                                            word_embedding_dims,
+                                            self.word_embedding_dim,
                                             padding_idx=padding_idx)
         self.char_embeddings = nn.Embedding(n_letters + 1,
                                             char_embedding_dims,
@@ -158,7 +159,7 @@ class IDCNN(nn.Module):
         cnn_kernel_size (int, optional): CNN embedder kernel size
         cnn_num_filters (int, optional): CNN embedder number of filters
         input_dropout (float, optional): input dropout rate
-        word_dropout (float, optional): pre embedder dropout rate
+        middle_dropout (float, optional): pre embedder dropout rate
         hidden_dropout (float, optional): pre classifier dropout rate
         blocks (int, optinal): number of blocks
         dilations (List, optinal): List of dilations per CNN layer
@@ -179,7 +180,6 @@ class IDCNN(nn.Module):
                  input_dropout: float = 0.35,
                  middle_dropout: float = 0,
                  hidden_dropout: float = 0.15,
-                 word_dropout: float = 0.85,
                  blocks: int = 1,
                  dilations: List = None,
                  padding_word: int = 1,
@@ -226,7 +226,6 @@ class IDCNN(nn.Module):
         self.i_drop = nn.Dropout(input_dropout)
         self.m_drop = nn.Dropout(middle_dropout)
         self.h_drop = nn.Dropout(hidden_dropout)
-        self.word_dropout = word_dropout
 
     def forward(self, words, word_chars, shapes, no_dropout=False, **kwargs):
         """

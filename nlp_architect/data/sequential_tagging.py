@@ -336,6 +336,7 @@ class TokenClsProcessor(DataProcessor):
     def get_test_examples(self, filename="test.txt"):
         return self._read_examples(self.data_dir, filename, "test")
 
+
     # pylint: disable=arguments-differ
     def get_labels(self):
         if self.labels is not None:
@@ -367,8 +368,7 @@ class TokenClsProcessor(DataProcessor):
                                                  tokens=sentence, label=labels))
         return examples
 
-    def get_vocabulary(self):
-        examples = self.get_train_examples() + self.get_dev_examples() + self.get_test_examples()
+    def get_vocabulary(self, examples: TokenClsInputExample = None):
         vocab = Vocabulary(start=1)
         for e in examples:
             for t in e.tokens:

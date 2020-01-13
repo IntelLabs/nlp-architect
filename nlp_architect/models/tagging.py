@@ -31,6 +31,7 @@ from nlp_architect.data.sequential_tagging import TokenClsInputExample
 from nlp_architect.models import TrainableModel
 from nlp_architect.nn.torch.layers import CRF
 from nlp_architect.nn.torch.distillation import TeacherStudentDistill
+from nlp_architect.nn.torch.modules.embedders import IDCNN
 from nlp_architect.utils.metrics import tagging
 from nlp_architect.utils.text import Vocabulary, char_to_id
 
@@ -210,7 +211,8 @@ class NeuralTagger(TrainableModel):
               save_path: str = None,
               distiller: TeacherStudentDistill = None,
               log_file: str = None,
-              drop_penalty: float = 0):
+              drop_penalty: float = 0,
+              word_dropout: float = 0):
         """
         Train a tagging model
 
@@ -240,6 +242,7 @@ class NeuralTagger(TrainableModel):
         logger.info("  Total batch size = %d", train_batch_size)
         global_step = 0
         best_dev = 0
+        test = 0
         self.model.zero_grad()
         epoch_it = trange(epochs, desc="Epoch")
         for _ in epoch_it:
@@ -255,11 +258,12 @@ class NeuralTagger(TrainableModel):
                 inputs = self.batch_mapper(batch)
                 
                 # apply word dropout to the input
-                tokens = inputs['words']
-                tokens = np.array(tokens.detach().cpu())
-                word_probs = np.random.random(tokens.shape)
-                drop_indices = np.where((word_probs > self.model.module.word_dropout) & (tokens != 0)) # ignore padding indices
-                inputs['words'][drop_indices[0], drop_indices[1]] = self.word_vocab.oov_id
+                if word_dropout != 0:
+                    tokens = inputs['words']
+                    tokens = np.array(tokens.detach().cpu())
+                    word_probs = np.random.random(tokens.shape)
+                    drop_indices = np.where((word_probs > word_dropout) & (tokens != 0)) # ignore padding indices
+                    inputs['words'][drop_indices[0], drop_indices[1]] = self.word_vocab.oov_id
 
                 logits = self.model(**inputs)
 
@@ -272,10 +276,11 @@ class NeuralTagger(TrainableModel):
                     loss = loss.mean()
 
                 # add dropout penalty
-                logits_no_drop = self.model(**inputs, no_dropout=True)
-                sub = logits.sub(logits_no_drop)
-                drop_loss = torch.div(torch.sum(torch.pow(sub,2)) , 2)
-                loss += drop_penalty * drop_loss
+                if isinstance(self.model.module, IDCNN):
+                    logits_no_drop = self.model(**inputs, no_dropout=True)
+                    sub = logits.sub(logits_no_drop)
+                    drop_loss = torch.div(torch.sum(torch.pow(sub,2)) , 2)
+                    loss += drop_penalty * drop_loss
 
                 # add distillation loss if activated
                 if distiller:
@@ -301,6 +306,7 @@ class NeuralTagger(TrainableModel):
                             f.write('best dev= ' + str(best_dev) + ', test= ' + str(test))
                 if save_path is not None and global_step % save_steps == 0:
                     self.save_model(save_path)
+        print("Best result: Dev=" + str(best_dev) + ', Test= ' + str(test))
 
     def train_pseudo(
             self, labeled_data_set: DataLoader,
