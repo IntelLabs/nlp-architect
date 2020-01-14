@@ -149,6 +149,8 @@ def add_parse_args(parser: argparse.ArgumentParser):
                         help="whether to use bilou format evaluation")
     parser.add_argument('--drop_penalty', type=float, default=1e-4,
                         help='idcnn dropout penalty')
+    parser.add_argument('--word_dropout', type=float, default=0,
+                        help='word dropout rate for input tokens')                   
     parser.add_argument('--ignore_token', type=str, default="",
                         help='a token to ignore when processing the data')
     parser.add_argument('--train_filename', type=str, default="train.txt",
@@ -235,7 +237,8 @@ def do_training(args):
                      save_path=args.output_dir,
                      optimizer=opt if opt is not None else None,
                      log_file=args.log_file,
-                     drop_penalty=args.drop_penalty)
+                     drop_penalty=args.drop_penalty,
+                     word_dropout=args.word_dropout)
     classifier.save_model(args.output_dir)
 
 

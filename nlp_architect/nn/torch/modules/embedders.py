@@ -186,9 +186,9 @@ class IDCNN(nn.Module):
                  use_chars: bool = False):
         super(IDCNN, self).__init__()
         if dilations is None:
-            dilations = [1, 2, 3, 4]
+            dilations = [1, 2, 1]
         self.num_blocks = blocks
-        self.dilation = [1, 2, 3, 4]
+        self.dilation = dilations
         self.use_chars = use_chars
         self.num_labels = num_labels
         self.embed_pad_idx = embedding_pad_idx

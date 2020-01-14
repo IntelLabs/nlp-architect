@@ -62,7 +62,7 @@ def test_tagging_procedure_sanity():
             [
                 '--data_dir', DATA_DIR, '--output_dir', OUTPUT_DIR,
                 '--embedding_file', EMBEDDINGS_PATH, '-b', str(BATCH_SIZE),
-                '--lr', str(LEARNING_RATE), '-e', str(EPOCHS), '--TRAIN_FILENAME', TRAIN_FILENAME,
+                '--lr', str(LEARNING_RATE), '-e', str(EPOCHS), '--train_filename', TRAIN_FILENAME,
                 '--dev_filename', TRAIN_FILENAME, '--test_filename', TRAIN_FILENAME, '--model_type', model_type,
                 '--overwrite_output_dir'
             ])
@@ -73,7 +73,7 @@ def test_tagging_procedure_sanity():
             [
                 '--data_dir', DATA_DIR, '--output_dir', OUTPUT_DIR,
                 '--embedding_file', EMBEDDINGS_PATH, '-b', str(BATCH_SIZE),
-                '--lr', str(LEARNING_RATE), '-e', str(EPOCHS), '--TRAIN_FILENAME', TRAIN_FILENAME,
+                '--lr', str(LEARNING_RATE), '-e', str(EPOCHS), '--train_filename', TRAIN_FILENAME,
                 '--dev_filename', TRAIN_FILENAME, '--test_filename', TRAIN_FILENAME, '--model_type', model_type,
                 '--use_crf', '--overwrite_output_dir'
             ])
@@ -86,7 +86,7 @@ def test_tagging_procedure_sanity():
             [
                 '--data_dir', DATA_DIR, '--output_dir', OUTPUT_DIR,
                 '--embedding_file', EMBEDDINGS_PATH, '-b', str(BATCH_SIZE),
-                '--lr', str(LEARNING_RATE), '-e', str(EPOCHS), '--TRAIN_FILENAME', TRAIN_FILENAME,
+                '--lr', str(LEARNING_RATE), '-e', str(EPOCHS), '--train_filename', TRAIN_FILENAME,
                 '--dev_filename', TRAIN_FILENAME, '--test_filename', TRAIN_FILENAME, '--model_type', model_type,
                 '--overwrite_output_dir'
             ])
@@ -97,7 +97,7 @@ def test_tagging_procedure_sanity():
             [
                 '--data_dir', DATA_DIR, '--output_dir', OUTPUT_DIR,
                 '--embedding_file', EMBEDDINGS_PATH, '-b', str(BATCH_SIZE),
-                '--lr', str(LEARNING_RATE), '-e', str(EPOCHS), '--TRAIN_FILENAME', TRAIN_FILENAME,
+                '--lr', str(LEARNING_RATE), '-e', str(EPOCHS), '--train_filename', TRAIN_FILENAME,
                 '--dev_filename', TRAIN_FILENAME, '--test_filename', TRAIN_FILENAME, '--model_type', model_type,
                 '--use_crf', '--overwrite_output_dir'
             ])

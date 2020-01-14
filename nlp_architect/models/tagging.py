@@ -242,7 +242,7 @@ class NeuralTagger(TrainableModel):
         logger.info("  Total batch size = %d", train_batch_size)
         global_step = 0
         best_dev = 0
-        test = 0
+        dev_test = 0
         self.model.zero_grad()
         epoch_it = trange(epochs, desc="Epoch")
         for _ in epoch_it:
@@ -272,11 +272,11 @@ class NeuralTagger(TrainableModel):
                 else:
                     loss_fn = CrossEntropyLoss(ignore_index=0)
                     loss = loss_fn(logits.view(-1, self.num_labels), inputs['labels'].view(-1))
-                if self.n_gpus > 1:
-                    loss = loss.mean()
+                
 
-                # add dropout penalty
-                if isinstance(self.model.module, IDCNN):
+                # add dropout penalty loss
+                module = self.model.module if self.n_gpus > 1 else self.model
+                if isinstance(module, IDCNN):
                     logits_no_drop = self.model(**inputs, no_dropout=True)
                     sub = logits.sub(logits_no_drop)
                     drop_loss = torch.div(torch.sum(torch.pow(sub,2)) , 2)
@@ -286,11 +286,12 @@ class NeuralTagger(TrainableModel):
                 if distiller:
                     loss = distiller.distill_loss(loss, logits, t_logits)
 
+                if self.n_gpus > 1:
+                    loss = loss.mean()
                 loss.backward()
                 torch.nn.utils.clip_grad_norm_(self.model.parameters(), max_grad_norm)
 
                 optimizer.step()
-                # self.model.zero_grad()
                 optimizer.zero_grad()
                 global_step += 1
                 avg_loss += loss.item()
@@ -302,11 +303,12 @@ class NeuralTagger(TrainableModel):
                     test = self._get_eval(test_data_set, "test")
                     if dev > best_dev:
                         best_dev = dev
+                        dev_test = test
                         with open(log_file, 'a+') as f:
                             f.write('best dev= ' + str(best_dev) + ', test= ' + str(test))
                 if save_path is not None and global_step % save_steps == 0:
                     self.save_model(save_path)
-        print("Best result: Dev=" + str(best_dev) + ', Test= ' + str(test))
+        print("Best result: Dev=" + str(best_dev) + ', Test= ' + str(dev_test))
 
     def train_pseudo(
             self, labeled_data_set: DataLoader,
