@@ -282,12 +282,14 @@ class NeuralTagger(TrainableModel):
                     drop_loss = torch.div(torch.sum(torch.pow(sub,2)) , 2)
                     loss += drop_penalty * drop_loss
 
+                if self.n_gpus > 1:
+                    loss = loss.mean()
+                    
                 # add distillation loss if activated
                 if distiller:
                     loss = distiller.distill_loss(loss, logits, t_logits)
 
-                if self.n_gpus > 1:
-                    loss = loss.mean()
+                
                 loss.backward()
                 torch.nn.utils.clip_grad_norm_(self.model.parameters(), max_grad_norm)
 

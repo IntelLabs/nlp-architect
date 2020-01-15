@@ -49,6 +49,10 @@ class TransformerTokenClsTrain(Procedure):
         create_base_args(parser, model_types=TransformerTokenClassifier.MODEL_CLASS.keys())
         parser.add_argument('--train_file_name', type=str, default="train.txt",
                             help='File name of the training dataset')
+        parser.add_argument("--bilou", action='store_true',
+                        help="whether to use bilou format evaluation")
+        parser.add_argument('--ignore_token', type=str, default="",
+                        help='a token to ignore when processing the data')
 
     @staticmethod
     def run_procedure(args):
@@ -76,8 +80,7 @@ def do_training(args):
     # Set seed
     args.seed = set_seed(args.seed, n_gpus)
     # prepare data
-    processor = TokenClsProcessor(args.data_dir)
-
+    processor = TokenClsProcessor(args.data_dir, ignore_token=args.ignore_token)
     classifier = TransformerTokenClassifier(model_type=args.model_type,
                                             model_name_or_path=args.model_name_or_path,
                                             labels=processor.get_labels(),
@@ -86,7 +89,8 @@ def do_training(args):
                                             do_lower_case=args.do_lower_case,
                                             output_path=args.output_dir,
                                             device=device,
-                                            n_gpus=n_gpus)
+                                            n_gpus=n_gpus,
+                                            bilou=args.bilou)
 
     train_ex = processor.get_train_examples(filename=args.train_file_name)
     if train_ex is None:

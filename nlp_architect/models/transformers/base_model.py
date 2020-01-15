@@ -25,7 +25,6 @@ from transformers import (AdamW, BertConfig, BertTokenizer, RobertaConfig,
                           RobertaTokenizer, XLMConfig, XLMTokenizer,
                           XLNetConfig, XLNetTokenizer,
                           get_linear_schedule_with_warmup)
-
 from nlp_architect.models import TrainableModel
 from nlp_architect.models.transformers.quantized_bert import \
     QuantizedBertConfig
@@ -272,10 +271,14 @@ class TransformerBase(TrainableModel):
         logger.info("  Total optimization steps = %d", t_total)
 
         global_step = 0
+        best_dev = 0
+        dev_test = 0
+        set_test = False
         tr_loss, logging_loss = 0.0, 0.0
         self.model.zero_grad()
         train_iterator = trange(num_train_epochs, desc="Epoch")
-        for _ in train_iterator:
+        for epoch, _ in enumerate(train_iterator):
+            print('****** Epoch: ' + str(epoch))
             epoch_iterator = tqdm(data_set, desc="Train iteration")
             for step, batch in enumerate(epoch_iterator):
                 self.model.train()
@@ -301,14 +304,23 @@ class TransformerBase(TrainableModel):
 
                     if logging_steps > 0 and global_step % logging_steps == 0:
                         # Log metrics and run evaluation on dev/test
-                        for ds in [dev_data_set, test_data_set]:
+                        for i, ds in enumerate([dev_data_set, test_data_set]):
                             if ds is None:  # got no data loader
                                 continue
                             if isinstance(ds, DataLoader):
                                 ds = [ds]
                             for d in ds:
                                 logits, label_ids = self._evaluate(d)
-                                self.evaluate_predictions(logits, label_ids)
+                                f1 = self.evaluate_predictions(logits, label_ids)
+                                if i==0 and f1 > best_dev: # dev set
+                                    best_dev = f1
+                                    set_test = True
+                                    best_model_path = os.path.join(self.output_path, 'best_dev')
+                                    self.save_model(best_model_path)
+                                elif set_test:
+                                    dev_test = f1
+                                    set_test = False
+                        print("\n\nBest dev=" + str(best_dev) + ", test=" + str(dev_test) +'\n')
                         logger.info('lr = {}'.format(self.scheduler.get_lr()[0]))
                         logger.info('loss = {}'.format((tr_loss - logging_loss) / logging_steps))
                         logging_loss = tr_loss

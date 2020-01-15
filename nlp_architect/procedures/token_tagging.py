@@ -202,7 +202,7 @@ def do_training(args):
                               labels=processor.get_labels(),
                               use_crf=args.use_crf,
                               device=device, n_gpus=n_gpus,
-                              bilou_format = args.bilou)
+                              bilou_format=args.bilou)
 
     train_batch_size = args.b * max(1, n_gpus)
 
@@ -266,7 +266,7 @@ def do_kd_training(args):
 
     # load external word embeddings if present
     if args.embedding_file is not None:
-        emb_dict = load_embedding_file(args.embedding_file)
+        emb_dict = load_embedding_file(args.embedding_file, dim=embedder_model.word_embedding_dim)
         emb_mat = get_embedding_matrix(emb_dict, vocab)
         emb_mat = torch.tensor(emb_mat, dtype=torch.float)
         embedder_model.load_embeddings(emb_mat)
@@ -275,7 +275,8 @@ def do_kd_training(args):
                               word_vocab=vocab,
                               labels=processor.get_labels(),
                               use_crf=args.use_crf,
-                              device=device, n_gpus=n_gpus)
+                              device=device, n_gpus=n_gpus,
+                              bilou_format=args.bilou)
 
     train_batch_size = args.b * max(1, n_gpus)
     train_dataset = classifier.convert_to_tensors(train_ex,
@@ -285,7 +286,9 @@ def do_kd_training(args):
     teacher = TransformerTokenClassifier.load_model(model_path=args.teacher_model_path,
                                                     model_type=args.teacher_model_type)
     teacher.to(device, n_gpus)
-    teacher_dataset = teacher.convert_to_tensors(train_ex, args.max_sentence_length, False)
+    teacher_dataset = teacher.convert_to_tensors(train_ex,
+                                                  max_seq_length=args.max_sentence_length,
+                                                  include_labels=False)
 
     train_dataset = ParallelDataset(train_dataset, teacher_dataset)
 
@@ -320,7 +323,10 @@ def do_kd_training(args):
                      save_steps=args.save_steps,
                      save_path=args.output_dir,
                      optimizer=opt if opt is not None else None,
-                     distiller=distiller)
+                     distiller=distiller,
+                     log_file=args.log_file,
+                     drop_penalty=args.drop_penalty,
+                     word_dropout=args.word_dropout)
     classifier.save_model(args.output_dir)
 
 
