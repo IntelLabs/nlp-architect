@@ -243,7 +243,8 @@ class TransformerBase(TrainableModel):
                num_train_epochs: int = 3,
                max_grad_norm: float = 1.0,
                logging_steps: int = 50,
-               save_steps: int = 100):
+               save_steps: int = 100,
+               training_args = None):
         """Run model training
             batch_mapper: a function that maps a batch into parameters that the model
                           expects in the forward method (for use with custom heads and models).
@@ -316,7 +317,7 @@ class TransformerBase(TrainableModel):
                                     best_dev = f1
                                     set_test = True
                                     best_model_path = os.path.join(self.output_path, 'best_dev')
-                                    self.save_model(best_model_path)
+                                    self.save_model(best_model_path, args=training_args)
                                 elif set_test:
                                     dev_test = f1
                                     set_test = False

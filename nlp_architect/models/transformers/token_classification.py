@@ -225,7 +225,8 @@ class TransformerTokenClassifier(TransformerBase):
               num_train_epochs: int = 3,
               max_grad_norm: float = 1.0,
               logging_steps: int = 50,
-              save_steps: int = 100):
+              save_steps: int = 100,
+              training_args: bool = None):
         """
         Run model training
 
@@ -254,7 +255,8 @@ class TransformerTokenClassifier(TransformerBase):
                     num_train_epochs,
                     max_grad_norm,
                     logging_steps=logging_steps,
-                    save_steps=save_steps)
+                    save_steps=save_steps,
+                    training_args=training_args)
 
     def _batch_mapper(self, batch):
         mapping = {'input_ids': batch[0],

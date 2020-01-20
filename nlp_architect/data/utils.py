@@ -161,19 +161,20 @@ def split_column_dataset(
     """
     Splits a single column tagged dataset into two files according to the amount of examples
     requested to be included in each file.
-    split1_count (int) : the amount of examples to include in the first split file
-    split2_count (int) : the amount of examples to include in the second split file
+    first_count (int) : the amount of examples to include in the first split file
+    second_count (int) : the amount of examples to include in the second split file
     out_folder (str) : the folder in which the result files will be stored
     dataset (str) : the path to the original data file
-    split1_filename (str) : the name of the first split file
-    split2_filename (str) : the name of the second split file
+    first_filename (str) : the name of the first split file
+    second_filename (str) : the name of the second split file
     tag_col (int) : the index of the tag column
     """
     lines = read_column_tagged_file(dataset, tag_col=tag_col)
     num_of_examples = len(lines)
-    assert first_count + second_count <= num_of_examples and first_count > 0 and second_count > 0
+    assert first_count + second_count <= num_of_examples and first_count > 0
     selected_lines = random.sample(lines, first_count + second_count)
     first_data = selected_lines[:first_count]
     second_data = selected_lines[first_count:]
     write_column_tagged_file(out_folder + os.sep + first_filename, first_data)
-    write_column_tagged_file(out_folder + os.sep + second_filename, second_data)
+    if second_count != 0:
+        write_column_tagged_file(out_folder + os.sep + second_filename, second_data)

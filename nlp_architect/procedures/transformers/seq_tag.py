@@ -138,7 +138,8 @@ def do_training(args):
                      num_train_epochs=args.num_train_epochs,
                      max_grad_norm=args.max_grad_norm,
                      logging_steps=args.logging_steps,
-                     save_steps=args.save_steps)
+                     save_steps=args.save_steps,
+                     training_args=args)
     classifier.save_model(args.output_dir, args=args)
 
 
