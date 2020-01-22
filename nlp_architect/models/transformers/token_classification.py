@@ -193,13 +193,12 @@ class TransformerTokenClassifier(TransformerBase):
     }
 
     def __init__(
-            self, model_type: str, labels: List[str] = None, bilou: bool = False,
+            self, model_type: str, labels: List[str] = None,
             *args, load_quantized=False, **kwargs):
         assert model_type in self.MODEL_CLASS.keys(), "unsupported model type"
         self.labels = labels
         self.num_labels = len(labels) + 1  # +1 for padding label
         self.labels_id_map = {k: v for k, v in enumerate(self.labels, 1)}
-        self.bilou_format = bilou
 
         super(TransformerTokenClassifier, self).__init__(model_type,
                                                          labels=self.labels,
@@ -226,7 +225,8 @@ class TransformerTokenClassifier(TransformerBase):
               max_grad_norm: float = 1.0,
               logging_steps: int = 50,
               save_steps: int = 100,
-              training_args: bool = None):
+              training_args: bool = None,
+              log_file: str = None):
         """
         Run model training
 
@@ -256,7 +256,8 @@ class TransformerTokenClassifier(TransformerBase):
                     max_grad_norm,
                     logging_steps=logging_steps,
                     save_steps=save_steps,
-                    training_args=training_args)
+                    training_args=training_args,
+                    log_file=log_file)
 
     def _batch_mapper(self, batch):
         mapping = {'input_ids': batch[0],
@@ -282,19 +283,19 @@ class TransformerTokenClassifier(TransformerBase):
         logits = torch.argmax(F.log_softmax(active_logits, dim=1), dim=1)
         logits = logits.detach().cpu().numpy()
         out_label_ids = active_labels.detach().cpu().numpy()
-        _, _, f1 = self.extract_labels(out_label_ids, self.labels_id_map, logits, self.bilou_format)
+        _, _, f1 = self.extract_labels(out_label_ids, self.labels_id_map, logits)
         logger.info("Results on evaluation set: F1 = {}".format(f1))
         return f1
 
     @staticmethod
-    def extract_labels(label_ids, label_map, logits, bilou=False):
+    def extract_labels(label_ids, label_map, logits):
         y_true = []
         y_pred = []
         for p, y in zip(logits, label_ids):
             y_pred.append(label_map.get(p, 'O'))
             y_true.append(label_map.get(y, 'O'))
         assert len(y_true) == len(y_pred)
-        return tagging(y_pred, y_true, bilou)
+        return tagging(y_pred, y_true)
 
     def convert_to_tensors(self,
                            examples: List[TokenClsInputExample],

@@ -53,7 +53,7 @@ class NeuralTagger(TrainableModel):
     """
 
     def __init__(self, embedder_model, word_vocab: Vocabulary, labels: List[str] = None,
-                 use_crf: bool = False, device: str = 'cpu', n_gpus=0, bilou_format = False):
+                 use_crf: bool = False, device: str = 'cpu', n_gpus=0):
         super(NeuralTagger, self).__init__()
         self.model = embedder_model
         self.labels = labels
@@ -66,19 +66,7 @@ class NeuralTagger(TrainableModel):
             self.crf = CRF(self.num_labels, batch_first=True)
         self.device = device
         self.n_gpus = n_gpus
-        self.bilou_format = bilou_format
         self.to(self.device, self.n_gpus)
-
-
-    def get_shape(self, string):
-        if all(c.isupper() for c in string):
-            return 1 #"AA"
-        if string[0].isupper():
-            return 2 #"Aa"
-        if any(c for c in string if c.isupper()):
-            return 3 #"aAa"
-        else:
-            return 4 #"a"
 
 
     def convert_to_tensors(self,
@@ -112,7 +100,7 @@ class NeuralTagger(TrainableModel):
             word_chars = []
             for word in example.tokens:
                 word_chars.append([char_to_id(c) for c in word])
-            word_shapes = [self.get_shape(t) for t in example.tokens]
+            word_shapes = [s for s in example.shapes]
 
             # cut up to max length
             word_tokens = word_tokens[:max_seq_length]
@@ -212,7 +200,6 @@ class NeuralTagger(TrainableModel):
               save_path: str = None,
               distiller: TeacherStudentDistill = None,
               log_file: str = None,
-              drop_penalty: float = 0,
               word_dropout: float = 0):
         """
         Train a tagging model
@@ -298,18 +285,19 @@ class NeuralTagger(TrainableModel):
                         loss += loss_fn(ul_logits.view(-1, self.num_labels), t_pseudo_labels.view(-1))
                 
 
-                # add dropout penalty loss
+                # add dropout penalty loss for idcnn training
                 module = self.model.module if self.n_gpus > 1 else self.model
-                if isinstance(module, IDCNN) and drop_penalty != 0:
-                    logits_no_drop = self.model(**inputs, no_dropout=True)
-                    sub = logits.sub(logits_no_drop)
-                    drop_loss = torch.div(torch.sum(torch.pow(sub,2)) , 2)
-                    loss += drop_penalty * drop_loss
-                    if do_pseudo:
-                        ul_logits_no_drop = self.model(**ul_inputs, no_dropout=True)
-                        sub = logits.sub(ul_logits_no_drop)
-                        ul_drop_loss = torch.div(torch.sum(torch.pow(sub,2)) , 2)
-                        loss += drop_penalty * ul_drop_loss
+                if isinstance(module, IDCNN):
+                    if module.drop_penalty != 0:
+                        logits_no_drop = self.model(**inputs, no_dropout=True)
+                        sub = logits.sub(logits_no_drop)
+                        drop_loss = torch.div(torch.sum(torch.pow(sub,2)) , 2)
+                        loss += module.drop_penalty * drop_loss
+                        if do_pseudo:
+                            ul_logits_no_drop = self.model(**ul_inputs, no_dropout=True)
+                            sub = logits.sub(ul_logits_no_drop)
+                            ul_drop_loss = torch.div(torch.sum(torch.pow(sub,2)) , 2)
+                            loss += module.drop_penalty * ul_drop_loss
 
                 if self.n_gpus > 1:
                     loss = loss.mean()
@@ -337,8 +325,9 @@ class NeuralTagger(TrainableModel):
                     if dev > best_dev:
                         best_dev = dev
                         dev_test = test
-                        with open(log_file, 'a+') as f:
-                            f.write('best dev= ' + str(best_dev) + ', test= ' + str(test))
+                        if log_file is not None:
+                            with open(log_file, 'a+') as f:
+                                f.write('best dev= ' + str(best_dev) + ', test= ' + str(test))
                 if save_steps != 0 and save_path is not None and global_step % save_steps == 0:
                     self.save_model(save_path)
         print("Best result: Dev=" + str(best_dev) + ', Test= ' + str(dev_test))
@@ -435,7 +424,7 @@ class NeuralTagger(TrainableModel):
             logits = logits.detach().cpu().numpy()
         out_label_ids = active_labels.detach().cpu().numpy()
         y_true, y_pred = self.extract_labels(out_label_ids, logits)
-        p, r, f1 = tagging(y_pred, y_true, self.bilou_format)
+        p, r, f1 = tagging(y_pred, y_true)
         return {"p": p, "r": r, "f1": f1}
 
     def extract_labels(self, label_ids, logits):

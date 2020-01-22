@@ -143,10 +143,6 @@ def add_parse_args(parser: argparse.ArgumentParser):
                         help="Avoid using CUDA when available")
     parser.add_argument('--log_file', type=str, default="log_file",
                             help='log path for evaluation output')
-    parser.add_argument("--bilou", action='store_true',
-                        help="whether to use bilou format evaluation")
-    parser.add_argument('--drop_penalty', type=float, default=1e-4,
-                        help='idcnn dropout penalty')
     parser.add_argument('--word_dropout', type=float, default=0,
                         help='word dropout rate for input tokens')                   
     parser.add_argument('--ignore_token', type=str, default="",
@@ -199,8 +195,7 @@ def do_training(args):
                               word_vocab=vocab,
                               labels=processor.get_labels(),
                               use_crf=args.use_crf,
-                              device=device, n_gpus=n_gpus,
-                              bilou_format=args.bilou)
+                              device=device, n_gpus=n_gpus)
 
     train_batch_size = args.b * max(1, n_gpus)
 
@@ -235,7 +230,6 @@ def do_training(args):
                      save_path=args.output_dir,
                      optimizer=opt if opt is not None else None,
                      log_file=args.log_file,
-                     drop_penalty=args.drop_penalty,
                      word_dropout=args.word_dropout)
     classifier.save_model(args.output_dir)
 
@@ -273,8 +267,7 @@ def do_kd_training(args):
                               word_vocab=vocab,
                               labels=processor.get_labels(),
                               use_crf=args.use_crf,
-                              device=device, n_gpus=n_gpus,
-                              bilou_format=args.bilou)
+                              device=device, n_gpus=n_gpus)
 
     train_batch_size = args.b * max(1, n_gpus)
     train_dataset = classifier.convert_to_tensors(train_ex,
@@ -292,8 +285,7 @@ def do_kd_training(args):
                                                         do_lower_case=t_args.do_lower_case,
                                                         output_path=t_args.output_dir,
                                                         device=t_device,
-                                                        n_gpus=t_n_gpus,
-                                                        bilou=t_args.bilou)
+                                                        n_gpus=t_n_gpus)
     else:
         teacher = TransformerTokenClassifier.load_model(
         model_path=args.teacher_model_path,
@@ -338,7 +330,6 @@ def do_kd_training(args):
                      optimizer=opt if opt is not None else None,
                      distiller=distiller,
                      log_file=args.log_file,
-                     drop_penalty=args.drop_penalty,
                      word_dropout=args.word_dropout)
     classifier.save_model(args.output_dir)
 
@@ -377,8 +368,7 @@ def do_kd_pseudo_training(args):
                               word_vocab=vocab,
                               labels=processor.get_labels(),
                               use_crf=args.use_crf,
-                              device=device, n_gpus=n_gpus,
-                              bilou_format=args.bilou)
+                              device=device, n_gpus=n_gpus)
 
     train_batch_size = args.b * max(1, n_gpus)
     train_batch_size_ul = args.b_ul * max(1, n_gpus)
@@ -408,8 +398,7 @@ def do_kd_pseudo_training(args):
                                                         do_lower_case=t_args.do_lower_case,
                                                         output_path=t_args.output_dir,
                                                         device=t_device,
-                                                        n_gpus=t_n_gpus,
-                                                        bilou=t_args.bilou)
+                                                        n_gpus=t_n_gpus)
     else:
         teacher = TransformerTokenClassifier.load_model(
         model_path=args.teacher_model_path,
@@ -467,7 +456,6 @@ def do_kd_pseudo_training(args):
                      optimizer=opt if opt is not None else None,
                      log_file=args.log_file,
                      distiller=distiller,
-                     drop_penalty=args.drop_penalty,
                      word_dropout=args.word_dropout)
 
     classifier.save_model(args.output_dir)

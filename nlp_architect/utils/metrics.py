@@ -1,18 +1,3 @@
-# ******************************************************************************
-# Copyright 2017-2018 Intel Corporation
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-# ******************************************************************************
 
 ##
 # This file contains code from 
@@ -119,10 +104,10 @@ def pearson_and_spearman(preds, labels):
     }
 
 
-def tagging(preds, labels, bilou_format = False):
-    p = precision_score(labels, preds, bilou_format)
-    r = recall_score(labels, preds, bilou_format)
-    f1 = f1_score(labels, preds, bilou_format)
+def tagging(preds, labels):
+    p = precision_score(labels, preds)
+    r = recall_score(labels, preds)
+    f1 = f1_score(labels, preds)
     return p, r, f1
 
 
@@ -145,7 +130,7 @@ from collections import defaultdict
 import numpy as np
 
 
-def get_entities(seq, suffix=False, bilou_format=False):
+def get_entities(seq, suffix=False):
     """Gets entities from sequence.
 
     Args:
@@ -176,9 +161,9 @@ def get_entities(seq, suffix=False, bilou_format=False):
             tag = chunk[0]
             type_ = chunk.split('-')[-1]
 
-        if end_of_chunk(prev_tag, tag, prev_type, type_, bilou_format):
+        if end_of_chunk(prev_tag, tag, prev_type, type_):
             chunks.append((prev_type, begin_offset, i-1))
-        if start_of_chunk(prev_tag, tag, prev_type, type_, bilou_format):
+        if start_of_chunk(prev_tag, tag, prev_type, type_):
             begin_offset = i
         prev_tag = tag
         prev_type = type_
@@ -186,7 +171,7 @@ def get_entities(seq, suffix=False, bilou_format=False):
     return chunks
 
 
-def end_of_chunk(prev_tag, tag, prev_type, type_, bilou_format = False):
+def end_of_chunk(prev_tag, tag, prev_type, type_):
     """Checks if a chunk ended between the previous and current word.
 
     Args:
@@ -200,17 +185,14 @@ def end_of_chunk(prev_tag, tag, prev_type, type_, bilou_format = False):
     """
     chunk_end = False
 
-    end_tag = 'L' if bilou_format else 'E'
-    start_tag = 'U' if bilou_format else 'S'
-
-    if prev_tag == end_tag : chunk_end = True
-    if prev_tag == start_tag : chunk_end = True
+    if prev_tag == 'L' or 'E' : chunk_end = True
+    if prev_tag == 'U' or 'S' : chunk_end = True
 
     if prev_tag == 'B' and tag == 'B': chunk_end = True
-    if prev_tag == 'B' and tag == start_tag: chunk_end = True
+    if prev_tag == 'B' and tag == 'U' or 'S': chunk_end = True
     if prev_tag == 'B' and tag == 'O': chunk_end = True
     if prev_tag == 'I' and tag == 'B': chunk_end = True
-    if prev_tag == 'I' and tag == start_tag: chunk_end = True
+    if prev_tag == 'I' and tag == 'U' or 'S': chunk_end = True
     if prev_tag == 'I' and tag == 'O': chunk_end = True
 
     if prev_tag != 'O' and prev_tag != '.' and prev_type != type_:
@@ -219,7 +201,7 @@ def end_of_chunk(prev_tag, tag, prev_type, type_, bilou_format = False):
     return chunk_end
 
 
-def start_of_chunk(prev_tag, tag, prev_type, type_, bilou_format = False):
+def start_of_chunk(prev_tag, tag, prev_type, type_):
     """Checks if a chunk started between the previous and current word.
 
     Args:
@@ -233,17 +215,14 @@ def start_of_chunk(prev_tag, tag, prev_type, type_, bilou_format = False):
     """
     chunk_start = False
 
-    end_tag = 'L' if bilou_format else 'E'
-    start_tag = 'U' if bilou_format else 'S'
-
     if tag == 'B': chunk_start = True
-    if tag == start_tag: chunk_start = True
+    if tag == ('U' or 'S'): chunk_start = True
 
-    if prev_tag == end_tag and tag == end_tag: chunk_start = True
-    if prev_tag == end_tag and tag == 'I': chunk_start = True
-    if prev_tag == start_tag and tag == end_tag: chunk_start = True
-    if prev_tag == start_tag and tag == 'I': chunk_start = True
-    if prev_tag == 'O' and tag == end_tag: chunk_start = True
+    if prev_tag == ('L' or 'E') and tag == ('L' or 'E'): chunk_start = True
+    if prev_tag == ('L' or 'E') and tag == 'I': chunk_start = True
+    if prev_tag == ('U' or 'S') and tag == ('L' or 'E'): chunk_start = True
+    if prev_tag == ('U' or 'S') and tag == 'I': chunk_start = True
+    if prev_tag == 'O' and tag == ('L' or 'E'): chunk_start = True
     if prev_tag == 'O' and tag == 'I': chunk_start = True
 
     if tag != 'O' and tag != '.' and prev_type != type_:
@@ -252,7 +231,7 @@ def start_of_chunk(prev_tag, tag, prev_type, type_, bilou_format = False):
     return chunk_start
 
 
-def f1_score(y_true, y_pred, bilou_format=False, average='micro', suffix=False):
+def f1_score(y_true, y_pred, average='micro', suffix=False):
     """Compute the F1 score.
 
     The F1 score can be interpreted as a weighted average of the precision and
@@ -276,8 +255,8 @@ def f1_score(y_true, y_pred, bilou_format=False, average='micro', suffix=False):
         >>> f1_score(y_true, y_pred)
         0.50
     """
-    true_entities = set(get_entities(y_true, suffix, bilou_format))
-    pred_entities = set(get_entities(y_pred, suffix, bilou_format))
+    true_entities = set(get_entities(y_true, suffix))
+    pred_entities = set(get_entities(y_pred, suffix))
 
     nb_correct = len(true_entities & pred_entities)
     nb_pred = len(pred_entities)
@@ -323,7 +302,7 @@ def accuracy_score(y_true, y_pred):
     return score
 
 
-def precision_score(y_true, y_pred, bilou_format=False, average='micro', suffix=False):
+def precision_score(y_true, y_pred, average='micro', suffix=False):
     """Compute the precision.
 
     The precision is the ratio ``tp / (tp + fp)`` where ``tp`` is the number of
@@ -346,8 +325,8 @@ def precision_score(y_true, y_pred, bilou_format=False, average='micro', suffix=
         >>> precision_score(y_true, y_pred)
         0.50
     """
-    true_entities = set(get_entities(y_true, suffix, bilou_format))
-    pred_entities = set(get_entities(y_pred, suffix, bilou_format))
+    true_entities = set(get_entities(y_true, suffix))
+    pred_entities = set(get_entities(y_pred, suffix))
 
     nb_correct = len(true_entities & pred_entities)
     nb_pred = len(pred_entities)
@@ -357,7 +336,7 @@ def precision_score(y_true, y_pred, bilou_format=False, average='micro', suffix=
     return score
 
 
-def recall_score(y_true, y_pred, bilou_format=False, average='micro', suffix=False):
+def recall_score(y_true, y_pred, average='micro', suffix=False):
     """Compute the recall.
 
     The recall is the ratio ``tp / (tp + fn)`` where ``tp`` is the number of
@@ -380,8 +359,8 @@ def recall_score(y_true, y_pred, bilou_format=False, average='micro', suffix=Fal
         >>> recall_score(y_true, y_pred)
         0.50
     """
-    true_entities = set(get_entities(y_true, suffix, bilou_format))
-    pred_entities = set(get_entities(y_pred, suffix, bilou_format))
+    true_entities = set(get_entities(y_true, suffix))
+    pred_entities = set(get_entities(y_pred, suffix))
 
     nb_correct = len(true_entities & pred_entities)
     nb_true = len(true_entities)

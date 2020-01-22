@@ -82,7 +82,7 @@ def fill_embedding_mat(src_mat, src_lex, emb_lex, emb_size):
 
 
 def get_embedding_matrix(embeddings: dict, vocab: Vocabulary,
-                         embedding_size: int = None) -> np.ndarray:
+                         embedding_size: int = None, lowercase_only: bool = False) -> np.ndarray:
     """
     Generate a matrix of word embeddings given a vocabulary
 
@@ -100,9 +100,12 @@ def get_embedding_matrix(embeddings: dict, vocab: Vocabulary,
     else:
         mat = np.zeros((len(vocab), emb_size))
     for word, wid in vocab.vocab.items():
-        vec = embeddings.get(word, None)
-        if vec is None:
+        if lowercase_only:
             vec = embeddings.get(word.lower(), None)
+        else:
+            vec = embeddings.get(word, None)
+            if vec is None:
+                vec = embeddings.get(word.lower(), None)
         if vec is not None:
             mat[wid] = vec
     return mat

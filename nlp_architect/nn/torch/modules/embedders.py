@@ -183,13 +183,15 @@ class IDCNN(nn.Module):
                  blocks: int = 1,
                  dilations: List = None,
                  embedding_pad_idx: int = 0,
-                 use_chars: bool = False):
+                 use_chars: bool = False,
+                 drop_penalty: float = 1e-4):
         super(IDCNN, self).__init__()
         if dilations is None:
             dilations = [1, 2, 1]
         self.num_blocks = blocks
         self.dilation = dilations
         self.use_chars = use_chars
+        self.drop_penalty = drop_penalty
         self.num_labels = num_labels
         self.embed_pad_idx = embedding_pad_idx
         self.word_embedding_dim = word_embedding_dims

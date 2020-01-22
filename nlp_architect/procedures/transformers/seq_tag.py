@@ -49,10 +49,11 @@ class TransformerTokenClsTrain(Procedure):
         create_base_args(parser, model_types=TransformerTokenClassifier.MODEL_CLASS.keys())
         parser.add_argument('--train_file_name', type=str, default="train.txt",
                             help='File name of the training dataset')
-        parser.add_argument("--bilou", action='store_true',
-                        help="whether to use bilou format evaluation")
         parser.add_argument('--ignore_token', type=str, default="",
                         help='a token to ignore when processing the data')
+        parser.add_argument('--log_file', type=str, default="log_file",
+                            help='log path for evaluation output')
+
 
     @staticmethod
     def run_procedure(args):
@@ -89,8 +90,7 @@ def do_training(args):
                                             do_lower_case=args.do_lower_case,
                                             output_path=args.output_dir,
                                             device=device,
-                                            n_gpus=n_gpus,
-                                            bilou=args.bilou)
+                                            n_gpus=n_gpus)
 
     train_ex = processor.get_train_examples(filename=args.train_file_name)
     if train_ex is None:
@@ -139,7 +139,8 @@ def do_training(args):
                      max_grad_norm=args.max_grad_norm,
                      logging_steps=args.logging_steps,
                      save_steps=args.save_steps,
-                     training_args=args)
+                     training_args=args,
+                     log_file=args.log_file)
     classifier.save_model(args.output_dir, args=args)
 
 
