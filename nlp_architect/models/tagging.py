@@ -287,8 +287,7 @@ class NeuralTagger(TrainableModel):
 
                 # add dropout penalty loss for idcnn training
                 module = self.model.module if self.n_gpus > 1 else self.model
-                if isinstance(module, IDCNN):
-                    if module.drop_penalty != 0:
+                if isinstance(module, IDCNN) and module.drop_penalty != 0:
                         logits_no_drop = self.model(**inputs, no_dropout=True)
                         sub = logits.sub(logits_no_drop)
                         drop_loss = torch.div(torch.sum(torch.pow(sub,2)) , 2)

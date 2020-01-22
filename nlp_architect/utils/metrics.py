@@ -1,3 +1,18 @@
+# ******************************************************************************
+# Copyright 2017-2018 Intel Corporation
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ******************************************************************************
 
 ##
 # This file contains code from 
@@ -185,14 +200,17 @@ def end_of_chunk(prev_tag, tag, prev_type, type_):
     """
     chunk_end = False
 
-    if prev_tag == 'L' or 'E' : chunk_end = True
-    if prev_tag == 'U' or 'S' : chunk_end = True
+    end_tag = ('L', 'E')
+    start_tag = ('U', 'S')
+
+    if prev_tag in end_tag : chunk_end = True
+    if prev_tag in start_tag : chunk_end = True
 
     if prev_tag == 'B' and tag == 'B': chunk_end = True
-    if prev_tag == 'B' and tag == 'U' or 'S': chunk_end = True
+    if prev_tag == 'B' and tag in start_tag: chunk_end = True
     if prev_tag == 'B' and tag == 'O': chunk_end = True
     if prev_tag == 'I' and tag == 'B': chunk_end = True
-    if prev_tag == 'I' and tag == 'U' or 'S': chunk_end = True
+    if prev_tag == 'I' and tag in start_tag: chunk_end = True
     if prev_tag == 'I' and tag == 'O': chunk_end = True
 
     if prev_tag != 'O' and prev_tag != '.' and prev_type != type_:
@@ -215,14 +233,17 @@ def start_of_chunk(prev_tag, tag, prev_type, type_):
     """
     chunk_start = False
 
-    if tag == 'B': chunk_start = True
-    if tag == ('U' or 'S'): chunk_start = True
+    end_tag = ('L', 'E')
+    start_tag = ('U', 'S')
 
-    if prev_tag == ('L' or 'E') and tag == ('L' or 'E'): chunk_start = True
-    if prev_tag == ('L' or 'E') and tag == 'I': chunk_start = True
-    if prev_tag == ('U' or 'S') and tag == ('L' or 'E'): chunk_start = True
-    if prev_tag == ('U' or 'S') and tag == 'I': chunk_start = True
-    if prev_tag == 'O' and tag == ('L' or 'E'): chunk_start = True
+    if tag == 'B': chunk_start = True
+    if tag in start_tag: chunk_start = True
+
+    if prev_tag in end_tag and tag in end_tag: chunk_start = True
+    if prev_tag in end_tag and tag == 'I': chunk_start = True
+    if prev_tag in start_tag and tag in end_tag: chunk_start = True
+    if prev_tag in start_tag and tag == 'I': chunk_start = True
+    if prev_tag == 'O' and tag in end_tag: chunk_start = True
     if prev_tag == 'O' and tag == 'I': chunk_start = True
 
     if tag != 'O' and tag != '.' and prev_type != type_:

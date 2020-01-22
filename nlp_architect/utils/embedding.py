@@ -99,15 +99,18 @@ def get_embedding_matrix(embeddings: dict, vocab: Vocabulary,
         mat = np.zeros((embedding_size, emb_size))
     else:
         mat = np.zeros((len(vocab), emb_size))
-    for word, wid in vocab.vocab.items():
-        if lowercase_only:
+    if lowercase_only:
+        for word, wid in vocab.vocab.items():
             vec = embeddings.get(word.lower(), None)
-        else:
+            if vec is not None:
+                mat[wid] = vec
+    else:
+        for word, wid in vocab.vocab.items():
             vec = embeddings.get(word, None)
             if vec is None:
                 vec = embeddings.get(word.lower(), None)
-        if vec is not None:
-            mat[wid] = vec
+            if vec is not None:
+                mat[wid] = vec
     return mat
 
 
