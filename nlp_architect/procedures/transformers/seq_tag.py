@@ -51,8 +51,8 @@ class TransformerTokenClsTrain(Procedure):
                             help='File name of the training dataset')
         parser.add_argument('--ignore_token', type=str, default="",
                         help='a token to ignore when processing the data')
-        parser.add_argument('--log_file', type=str, default="log_file",
-                            help='log path for evaluation output')
+        parser.add_argument('--best_dev_file', type=str, default="best_dev.txt",
+                            help='file path for best evaluation output')
 
 
     @staticmethod
@@ -140,7 +140,7 @@ def do_training(args):
                      logging_steps=args.logging_steps,
                      save_steps=args.save_steps,
                      training_args=args,
-                     log_file=args.log_file)
+                     best_result_file=args.best_result_file)
     classifier.save_model(args.output_dir, args=args)
 
 

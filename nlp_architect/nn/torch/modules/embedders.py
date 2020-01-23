@@ -153,17 +153,21 @@ class IDCNN(nn.Module):
         word_vocab_size (int): word vocabulary size
         num_labels (int): number of labels (classifier)
         word_embedding_dims (int, optional): word embedding dims
+        shape_vocab_size (int, optional): shape vocabulary size
+        shape_embedding_dims (int, optional): shape embedding dims
         char_embedding_dims (int, optional): character embedding dims
         char_cnn_filters (int, optional): character CNN kernel size
         char_cnn_kernel_size (int, optional): character CNN number of filters
         cnn_kernel_size (int, optional): CNN embedder kernel size
         cnn_num_filters (int, optional): CNN embedder number of filters
-        input_dropout (float, optional): input dropout rate
-        middle_dropout (float, optional): pre embedder dropout rate
-        hidden_dropout (float, optional): pre classifier dropout rate
+        input_dropout (float, optional): input layer (embedding) dropout rate
+        middle_dropout (float, optional): middle layer dropout rate
+        hidden_dropout (float, optional): hidden layer dropout rate
         blocks (int, optinal): number of blocks
         dilations (List, optinal): List of dilations per CNN layer
-        padding_idx (int, optinal): padding number for embedding layers
+        embedding_pad_idx (int, optional): padding number for embedding layers
+        use_chars (bool, optional): whether to use char embedding, defaults to False
+        drop_penalty (float, optional): penalty for dropout regularization
 
     """
     def __init__(self,
@@ -235,6 +239,7 @@ class IDCNN(nn.Module):
         Args:
             words (torch.tensor): words
             word_chars (torch.tensor): word character tensors
+            shapes (torch.tensor): words shapes
 
         Returns:
             torch.tensor: logits of model

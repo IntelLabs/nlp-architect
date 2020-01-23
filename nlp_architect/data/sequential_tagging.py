@@ -292,12 +292,13 @@ class CONLL2000(object):
 class TokenClsInputExample(InputExample):
     """A single training/test example for simple sequence token classification."""
 
-    def __init__(self, guid: str, text: str, tokens: List[str], shapes: List[int], label: List[str] = None):
+    def __init__(self, guid: str, text: str, tokens: List[str], shapes: List[int] = None, label: List[str] = None):
         """Constructs a SequenceClassInputExample.
         Args:
             guid: Unique id for the example.
             text: string. The untokenized text of the sequence.
             tokens (List[str]): The list of tokens.
+            shapes (List[str]): List of tokens shapes.
             label (List[str], optional): The tags of the tokens.
         """
         super(TokenClsInputExample, self).__init__(guid, text, label)

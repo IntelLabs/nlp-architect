@@ -199,14 +199,18 @@ class NeuralTagger(TrainableModel):
               save_steps: int = 100,
               save_path: str = None,
               distiller: TeacherStudentDistill = None,
-              log_file: str = None,
+              best_result_file: str = None,
               word_dropout: float = 0):
         """
         Train a tagging model
 
         Args:
-            train_data_set (DataLoader): train examples dataloader. If distiller object is
-            provided train examples should contain a tuple of student/teacher data examples.
+            train_data_set (DataLoader): train examples dataloader. 
+                - If distiller object is provided train examples should contain a tuple of
+                  student/teacher data examples.
+                - If in addition unlabeled data is available (pseudo-labeling training) then
+                  a tuple of student_labeled/teacher_labeled/student_unlabeled/teacher_unlabeled
+                  is expected.
             dev_data_set (DataLoader, optional): dev examples dataloader. Defaults to None.
             test_data_set (DataLoader, optional): test examples dataloader. Defaults to None.
             epochs (int, optional): num of epochs to train. Defaults to 3.
@@ -218,6 +222,8 @@ class NeuralTagger(TrainableModel):
             save_path (str, optional): model output path. Defaults to None.
             distiller (TeacherStudentDistill, optional): KD model for training the model using
             a teacher model. Defaults to None.
+            best_result_file (str, optional): path to save best dev results when it's updated.
+            word_dropout (float, optional): whole-word (-> oov) dropout rate. Defaults to 0.
         """
         if optimizer is None:
             optimizer = self.get_optimizer()
@@ -271,7 +277,6 @@ class NeuralTagger(TrainableModel):
                 logits = self.model(**inputs)
                 if do_pseudo:
                     ul_logits = self.model(**ul_inputs)
-                    # active_positions = data_set.tensors[-1].view(len(data_set), -1) != 0.0 # TODO- should we mask?
                     t_pseudo_labels = torch.argmax(F.log_softmax(t_ul_logits, dim=2), dim=2)
 
                 if self.use_crf:
@@ -285,7 +290,7 @@ class NeuralTagger(TrainableModel):
                         loss += loss_fn(ul_logits.view(-1, self.num_labels), t_pseudo_labels.view(-1))
                 
 
-                # add dropout penalty loss for idcnn training
+                # for idcnn training - add dropout penalty loss
                 module = self.model.module if self.n_gpus > 1 else self.model
                 if isinstance(module, IDCNN) and module.drop_penalty != 0:
                         logits_no_drop = self.model(**inputs, no_dropout=True)
@@ -324,12 +329,12 @@ class NeuralTagger(TrainableModel):
                     if dev > best_dev:
                         best_dev = dev
                         dev_test = test
-                        if log_file is not None:
-                            with open(log_file, 'a+') as f:
-                                f.write('best dev= ' + str(best_dev) + ', test= ' + str(test))
+                        if best_result_file is not None:
+                            with open(best_result_file, 'a+') as f:
+                                f.write('best dev= ' + str(best_dev) + ', test= ' + str(test) + '\n')
                 if save_steps != 0 and save_path is not None and global_step % save_steps == 0:
                     self.save_model(save_path)
-        print("Best result: Dev=" + str(best_dev) + ', Test= ' + str(dev_test))
+        logger.info("Best result: Dev=%s, Test=%s",str(best_dev), str(dev_test))
 
 
     def _get_eval(self, ds, set_name):

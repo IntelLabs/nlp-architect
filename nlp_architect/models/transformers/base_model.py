@@ -244,8 +244,8 @@ class TransformerBase(TrainableModel):
                max_grad_norm: float = 1.0,
                logging_steps: int = 50,
                save_steps: int = 100,
-               training_args = None,
-               log_file: str = None):
+               training_args: str = None,
+               best_result_file: str = None):
         """Run model training
             batch_mapper: a function that maps a batch into parameters that the model
                           expects in the forward method (for use with custom heads and models).
@@ -322,10 +322,10 @@ class TransformerBase(TrainableModel):
                                 elif set_test:
                                     dev_test = f1
                                     set_test = False
-                        if log_file is not None:
-                            with open(log_file, 'a+') as f:
-                                f.write('best dev= ' + str(best_dev) + ', test= ' + str(dev_test))
-                        print("\n\nBest dev=" + str(best_dev) + ", test=" + str(dev_test) +'\n')
+                                    if best_result_file is not None:
+                                        with open(best_result_file, 'a+') as f:
+                                            f.write('best dev= ' + str(best_dev) + ', test= ' + str(dev_test))
+                        logger.info("\n\nBest dev=%s. test=%s\n", str(best_dev), str(dev_test))
                         logger.info('lr = {}'.format(self.scheduler.get_lr()[0]))
                         logger.info('loss = {}'.format((tr_loss - logging_loss) / logging_steps))
                         logging_loss = tr_loss

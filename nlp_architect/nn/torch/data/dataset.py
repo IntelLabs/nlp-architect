@@ -28,12 +28,13 @@ class ParallelDataset(torch.utils.data.Dataset):
 
 
 class ConcatTensorDataset(torch.utils.data.Dataset):
-    r"""Dataset wrapping tensors.
+    r"""Dataset as a concatenation of multiple TensorDataset datasets.
 
     Each sample will be retrieved by indexing tensors along the first dimension.
 
     Arguments:
-        *tensors (Tensor): tensors that have the same size of the first dimension.
+        dataset (TensorDataset): dataset to which rest datasets will be concatinated.
+        datasets (List[TensorDataset]): datasets to concat to the dataset.
     """
 
     def __init__(self, dataset: torch.utils.data.TensorDataset, datasets: List[torch.utils.data.TensorDataset]):

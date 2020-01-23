@@ -97,7 +97,7 @@ def read_column_tagged_file(filename: str, tag_col: int = -1, ignore_line: str =
     Args:
         filename (str): input file path
         tag_col (int): the column contains the labels
-        ignore_line (str): a str token to exclude its line from parsing 
+        ignore_line (str): a str token to exclude
     return format :
     [ ['token', 'TAG'], ['token', 'TAG2'],... ]
     """

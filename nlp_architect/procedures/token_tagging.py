@@ -141,8 +141,8 @@ def add_parse_args(parser: argparse.ArgumentParser):
                         help="Overwrite the content of the output directory")
     parser.add_argument("--no_cuda", action='store_true',
                         help="Avoid using CUDA when available")
-    parser.add_argument('--log_file', type=str, default="log_file",
-                            help='log path for evaluation output')
+    parser.add_argument('--best_result_file', type=str, default="best_dev.txt",
+                            help='file path for best evaluation output')
     parser.add_argument('--word_dropout', type=float, default=0,
                         help='word dropout rate for input tokens')                   
     parser.add_argument('--ignore_token', type=str, default="",
@@ -229,7 +229,7 @@ def do_training(args):
                      save_steps=args.save_steps,
                      save_path=args.output_dir,
                      optimizer=opt if opt is not None else None,
-                     log_file=args.log_file,
+                     best_result_file=args.best_result_file,
                      word_dropout=args.word_dropout)
     classifier.save_model(args.output_dir)
 
@@ -329,7 +329,7 @@ def do_kd_training(args):
                      save_path=args.output_dir,
                      optimizer=opt if opt is not None else None,
                      distiller=distiller,
-                     log_file=args.log_file,
+                     best_result_file=args.best_result_file,
                      word_dropout=args.word_dropout)
     classifier.save_model(args.output_dir)
 
@@ -454,7 +454,7 @@ def do_kd_pseudo_training(args):
                      save_steps=args.save_steps,
                      save_path=args.output_dir,
                      optimizer=opt if opt is not None else None,
-                     log_file=args.log_file,
+                     best_result_file=args.best_result_file,
                      distiller=distiller,
                      word_dropout=args.word_dropout)
 

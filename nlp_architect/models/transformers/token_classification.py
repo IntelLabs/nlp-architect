@@ -226,7 +226,7 @@ class TransformerTokenClassifier(TransformerBase):
               logging_steps: int = 50,
               save_steps: int = 100,
               training_args: bool = None,
-              log_file: str = None):
+              best_result_file: str = None):
         """
         Run model training
 
@@ -245,6 +245,8 @@ class TransformerTokenClassifier(TransformerBase):
             max_grad_norm (float, optional): max gradient norm. Defaults to 1.0.
             logging_steps (int, optional): number of steps between logging. Defaults to 50.
             save_steps (int, optional): number of steps between model save. Defaults to 100.
+            training_args(bool, optional): model args. Defaults to None.
+            best_result_file (str, optional): path to save best dev results when it's updated.
         """
         self._train(train_data_set,
                     dev_data_set,
@@ -257,7 +259,7 @@ class TransformerTokenClassifier(TransformerBase):
                     logging_steps=logging_steps,
                     save_steps=save_steps,
                     training_args=training_args,
-                    log_file=log_file)
+                    best_result_file=best_result_file)
 
     def _batch_mapper(self, batch):
         mapping = {'input_ids': batch[0],
