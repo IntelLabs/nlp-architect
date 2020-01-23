@@ -50,10 +50,9 @@ class TransformerTokenClsTrain(Procedure):
         parser.add_argument('--train_file_name', type=str, default="train.txt",
                             help='File name of the training dataset')
         parser.add_argument('--ignore_token', type=str, default="",
-                        help='a token to ignore when processing the data')
+                            help='a token to ignore when processing the data')
         parser.add_argument('--best_dev_file', type=str, default="best_dev.txt",
                             help='file path for best evaluation output')
-
 
     @staticmethod
     def run_procedure(args):

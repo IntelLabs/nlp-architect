@@ -453,7 +453,11 @@ class TransformerTokenClassifier(TransformerBase):
                                           valid_ids=valid_tokens))
         return features
 
-    def inference(self, examples: List[TokenClsInputExample], max_seq_length: int, batch_size: int = 64):
+    def inference(
+            self,
+            examples: List[TokenClsInputExample],
+            max_seq_length: int,
+            batch_size: int = 64):
         """
         Run inference on given examples
 

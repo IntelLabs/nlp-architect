@@ -142,9 +142,9 @@ def add_parse_args(parser: argparse.ArgumentParser):
     parser.add_argument("--no_cuda", action='store_true',
                         help="Avoid using CUDA when available")
     parser.add_argument('--best_result_file', type=str, default="best_dev.txt",
-                            help='file path for best evaluation output')
+                        help='file path for best evaluation output')
     parser.add_argument('--word_dropout', type=float, default=0,
-                        help='word dropout rate for input tokens')                   
+                        help='word dropout rate for input tokens')
     parser.add_argument('--ignore_token', type=str, default="",
                         help='a token to ignore when processing the data')
     parser.add_argument('--train_filename', type=str, default="train.txt",
@@ -153,7 +153,6 @@ def add_parse_args(parser: argparse.ArgumentParser):
                         help='filename of development dataset')
     parser.add_argument('--test_filename', type=str, default="test.txt",
                         help='filename of test dataset')
-
 
 
 MODEL_TYPE = {
@@ -168,7 +167,8 @@ def do_training(args):
     # Set seed
     args.seed = set_seed(args.seed, n_gpus)
     # prepare data
-    processor = TokenClsProcessor(args.data_dir, tag_col=args.tag_col, ignore_token=args.ignore_token)
+    processor = TokenClsProcessor(
+        args.data_dir, tag_col=args.tag_col, ignore_token=args.ignore_token)
     train_ex = processor.get_train_examples(filename=args.train_filename)
     dev_ex = processor.get_dev_examples(filename=args.dev_filename)
     test_ex = processor.get_test_examples(filename=args.test_filename)
@@ -240,7 +240,8 @@ def do_kd_training(args):
     # Set seed
     args.seed = set_seed(args.seed, n_gpus)
     # prepare data
-    processor = TokenClsProcessor(args.data_dir, tag_col=args.tag_col, ignore_token=args.ignore_token)
+    processor = TokenClsProcessor(
+        args.data_dir, tag_col=args.tag_col, ignore_token=args.ignore_token)
     train_ex = processor.get_train_examples(filename=args.train_filename)
     dev_ex = processor.get_dev_examples(filename=args.dev_filename)
     test_ex = processor.get_test_examples(filename=args.test_filename)
@@ -288,12 +289,11 @@ def do_kd_training(args):
                                                         n_gpus=t_n_gpus)
     else:
         teacher = TransformerTokenClassifier.load_model(
-        model_path=args.teacher_model_path,
-        model_type=args.teacher_model_type)
+            model_path=args.teacher_model_path,
+            model_type=args.teacher_model_type)
         teacher.to(device, n_gpus)
-    teacher_dataset = teacher.convert_to_tensors(train_ex,
-                                                  max_seq_length=args.max_sentence_length,
-                                                  include_labels=False)
+    teacher_dataset = teacher.convert_to_tensors(
+        train_ex, max_seq_length=args.max_sentence_length, include_labels=False)
 
     train_dataset = ParallelDataset(train_dataset, teacher_dataset)
 
@@ -340,7 +340,8 @@ def do_kd_pseudo_training(args):
     # Set seed
     args.seed = set_seed(args.seed, n_gpus)
     # prepare data
-    processor = TokenClsProcessor(args.data_dir, tag_col=args.tag_col, ignore_token=args.ignore_token)
+    processor = TokenClsProcessor(
+        args.data_dir, tag_col=args.tag_col, ignore_token=args.ignore_token)
     train_labeled_ex = processor.get_train_examples(filename=args.train_filename)
     train_unlabeled_ex = processor.get_train_examples(filename=args.unlabeled_filename)
     dev_ex = processor.get_dev_examples(filename=args.dev_filename)
@@ -371,7 +372,6 @@ def do_kd_pseudo_training(args):
                               device=device, n_gpus=n_gpus)
 
     train_batch_size = args.b * max(1, n_gpus)
-    train_batch_size_ul = args.b_ul * max(1, n_gpus)
     train_labeled_dataset = classifier.convert_to_tensors(
         train_labeled_ex, max_seq_length=args.max_sentence_length,
         max_word_length=args.max_word_length)
@@ -379,7 +379,10 @@ def do_kd_pseudo_training(args):
         train_unlabeled_ex, max_seq_length=args.max_sentence_length,
         max_word_length=args.max_word_length, include_labels=False)
     # match sizes of labeled/unlabeled train data for parallel batching
-    larger_ds, smaller_ds = (train_labeled_dataset, train_unlabeled_dataset) if len(train_labeled_dataset) > len(train_unlabeled_dataset) else (train_unlabeled_dataset, train_labeled_dataset)
+    larger_ds, smaller_ds = (
+        train_labeled_dataset, train_unlabeled_dataset) \
+        if len(train_labeled_dataset) > len(train_unlabeled_dataset) \
+        else (train_unlabeled_dataset, train_labeled_dataset)
     concat_smaller_ds = smaller_ds
     while len(concat_smaller_ds) < len(larger_ds):
         concat_smaller_ds = ConcatTensorDataset(concat_smaller_ds, [smaller_ds])
@@ -401,8 +404,8 @@ def do_kd_pseudo_training(args):
                                                         n_gpus=t_n_gpus)
     else:
         teacher = TransformerTokenClassifier.load_model(
-        model_path=args.teacher_model_path,
-        model_type=args.teacher_model_type)
+            model_path=args.teacher_model_path,
+            model_type=args.teacher_model_type)
         teacher.to(device, n_gpus)
     teacher_labeled_dataset = teacher.convert_to_tensors(
         train_labeled_ex, args.max_sentence_length)
@@ -411,7 +414,8 @@ def do_kd_pseudo_training(args):
 
     # match sizes of labeled/unlabeled teacher train data for parallel batching
     larger_ds, smaller_ds = (teacher_labeled_dataset, teacher_unlabeled_dataset) if \
-        len(teacher_labeled_dataset) > len(teacher_unlabeled_dataset) else (teacher_unlabeled_dataset, teacher_labeled_dataset)
+        len(teacher_labeled_dataset) > len(teacher_unlabeled_dataset) else \
+        (teacher_unlabeled_dataset, teacher_labeled_dataset)
     concat_smaller_ds = smaller_ds
     while len(concat_smaller_ds) < len(larger_ds):
         concat_smaller_ds = ConcatTensorDataset(concat_smaller_ds, [smaller_ds])
@@ -420,11 +424,13 @@ def do_kd_pseudo_training(args):
     else:
         teacher_labeled_dataset = concat_smaller_ds
 
-    train_all_dataset = ParallelDataset(train_labeled_dataset, teacher_labeled_dataset, train_unlabeled_dataset, teacher_unlabeled_dataset)
+    train_all_dataset = ParallelDataset(
+        train_labeled_dataset, teacher_labeled_dataset, train_unlabeled_dataset,
+        teacher_unlabeled_dataset)
     train_all_sampler = RandomSampler(train_all_dataset)
     # this way must use same batch size for both labeled/unlabeled sets
-    train_all_dl = DataLoader(train_all_dataset, sampler=train_all_sampler,
-        batch_size=train_batch_size)
+    train_all_dl = DataLoader(
+        train_all_dataset, sampler=train_all_sampler, batch_size=train_batch_size)
 
     if dev_ex is not None:
         dev_dataset = classifier.convert_to_tensors(dev_ex,
@@ -446,7 +452,7 @@ def do_kd_pseudo_training(args):
 
     distiller = TeacherStudentDistill(teacher, args.kd_temp, args.kd_dist_w, args.kd_student_w,
                                       args.kd_loss_fn)
-  
+
     classifier.train(train_all_dl, dev_dl, test_dl,
                      epochs=args.e,
                      batch_size=args.b,

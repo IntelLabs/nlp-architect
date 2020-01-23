@@ -64,7 +64,7 @@ class CNNLSTM(nn.Module):
         self.conv1 = nn.Conv1d(in_channels=char_embedding_dims,
                                out_channels=cnn_num_filters,
                                kernel_size=cnn_kernel_size,
-                               padding=int(cnn_kernel_size/2))
+                               padding=int(cnn_kernel_size / 2))
         self.relu = nn.ReLU()
 
         self.lstm = nn.LSTM(input_size=word_embedding_dims + cnn_num_filters,
@@ -202,32 +202,38 @@ class IDCNN(nn.Module):
         self.word_embeddings = nn.Embedding(word_vocab_size,
                                             self.word_embedding_dim,
                                             padding_idx=self.embed_pad_idx)
-        self.shape_embeddings = nn.Embedding(shape_vocab_size+1,
-                                            shape_embedding_dims,
-                                            padding_idx=self.embed_pad_idx)
-        padding_word = int(cnn_kernel_size/2)
+        self.shape_embeddings = nn.Embedding(
+            shape_vocab_size + 1, shape_embedding_dims, padding_idx=self.embed_pad_idx)
+        padding_word = int(cnn_kernel_size / 2)
         self.char_filters = char_cnn_filters if use_chars else 0
-        self.conv0 = nn.Conv1d(in_channels=word_embedding_dims+shape_embedding_dims+self.char_filters, out_channels=cnn_num_filters,
-                               kernel_size=cnn_kernel_size, padding=padding_word)
+        self.conv0 = nn.Conv1d(
+            in_channels=word_embedding_dims + shape_embedding_dims + self.char_filters,
+            out_channels=cnn_num_filters,
+            kernel_size=cnn_kernel_size,
+            padding=padding_word)
         self.cnv_layers = []
         for i in range(len(self.dilation)):
-            self.cnv_layers.append(nn.Conv1d(in_channels=cnn_num_filters,
-                                             out_channels=cnn_num_filters, kernel_size=cnn_kernel_size,
-                                             padding=padding_word * self.dilation[i], dilation=self.dilation[i]))
+            self.cnv_layers.append(nn.Conv1d(
+                in_channels=cnn_num_filters,
+                out_channels=cnn_num_filters,
+                kernel_size=cnn_kernel_size,
+                padding=padding_word * self.dilation[i],
+                dilation=self.dilation[i]))
         self.cnv_layers = nn.ModuleList(self.cnv_layers)
         self.dense = nn.Linear(
             in_features=(cnn_num_filters * self.num_blocks),
             out_features=num_labels)
 
         if use_chars:
-            padding_char = int(char_cnn_kernel_size/2)
+            padding_char = int(char_cnn_kernel_size / 2)
             self.char_embeddings = nn.Embedding(n_letters + 1,
                                                 char_embedding_dims,
                                                 padding_idx=self.embed_pad_idx)
-            self.char_conv = nn.Conv1d(in_channels=char_embedding_dims,
-                                    out_channels=self.char_filters,
-                                    kernel_size=char_cnn_kernel_size,
-                                    padding=padding_char)
+            self.char_conv = nn.Conv1d(
+                in_channels=char_embedding_dims,
+                out_channels=self.char_filters,
+                kernel_size=char_cnn_kernel_size,
+                padding=padding_char)
         self.i_drop = nn.Dropout(input_dropout)
         self.m_drop = nn.Dropout(middle_dropout)
         self.h_drop = nn.Dropout(hidden_dropout)
@@ -265,7 +271,6 @@ class IDCNN(nn.Module):
             char_features = char_embeds.contiguous().view(new_size)
             input_features.append(char_features)
 
-
         features = torch.cat(input_features, 2)
         if not no_dropout:
             features = self.i_drop(features)
@@ -279,23 +284,23 @@ class IDCNN(nn.Module):
             for j in range(len(self.cnv_layers)):
                 conv_layer = self.cnv_layers[j](conv_layer)
                 conv_layer = F.relu(conv_layer)
-                if j == len(self.cnv_layers) - 1: # currently use only last layer
+                if j == len(self.cnv_layers) - 1:  # currently use only last layer
                     conv_outputs.append(conv_layer)
             layers_concat = torch.cat(conv_outputs, 1)
             if not no_dropout:
-                conv_layer = self.m_drop(layers_concat) # for next block iteration
+                conv_layer = self.m_drop(layers_concat)  # for next block iteration
             else:
                 conv_layer = layers_concat
 
-            layers_concat = layers_concat.squeeze(2).permute(0, 2, 1) # for final block scores
+            layers_concat = layers_concat.squeeze(2).permute(0, 2, 1)  # for final block scores
             if not no_dropout:
                 block_output = self.h_drop(layers_concat)
             else:
                 block_output = layers_concat
             scores = self.dense(block_output)
             block_scores.append(scores)
-            logits = block_scores[-1] # currently use only last block
-        
+            logits = block_scores[-1]  # currently use only last block
+
         return logits
 
     @classmethod

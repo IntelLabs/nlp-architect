@@ -292,7 +292,12 @@ class CONLL2000(object):
 class TokenClsInputExample(InputExample):
     """A single training/test example for simple sequence token classification."""
 
-    def __init__(self, guid: str, text: str, tokens: List[str], shapes: List[int] = None, label: List[str] = None):
+    def __init__(
+            self, guid: str,
+            text: str,
+            tokens: List[str],
+            shapes: List[int] = None,
+            label: List[str] = None):
         """Constructs a SequenceClassInputExample.
         Args:
             guid: Unique id for the example.
@@ -313,7 +318,7 @@ class TokenClsProcessor(DataProcessor):
     Label dictionary is given in labels.txt file.
     """
 
-    def __init__(self, data_dir, tag_col: int = -1, ignore_token = None):
+    def __init__(self, data_dir, tag_col: int = -1, ignore_token=None):
         if not os.path.exists(data_dir):
             raise FileNotFoundError
         self.data_dir = data_dir
@@ -326,8 +331,12 @@ class TokenClsProcessor(DataProcessor):
             logger.error("Requested file {} in path {} for TokenClsProcess not found".format(
                 file_name, data_dir))
             return None
-        return self._create_examples(read_column_tagged_file(os.path.join(data_dir, file_name),
-                                                             tag_col=self.tag_col, ignore_line=self.ignore_token), set_name)
+        return self._create_examples(
+            read_column_tagged_file(
+                os.path.join(data_dir, file_name),
+                tag_col=self.tag_col,
+                ignore_line=self.ignore_token),
+            set_name)
 
     def get_train_examples(self, filename="train.txt"):
         return self._read_examples(self.data_dir, filename, "train")
@@ -337,7 +346,6 @@ class TokenClsProcessor(DataProcessor):
 
     def get_test_examples(self, filename="test.txt"):
         return self._read_examples(self.data_dir, filename, "test")
-
 
     # pylint: disable=arguments-differ
     def get_labels(self):
@@ -362,13 +370,12 @@ class TokenClsProcessor(DataProcessor):
     @staticmethod
     def _get_shape(string):
         if all(c.isupper() for c in string):
-            return 1 #"AA"
+            return 1  # "AA"
         if string[0].isupper():
-            return 2 #"Aa"
+            return 2  # "Aa"
         if any(c for c in string if c.isupper()):
-            return 3 #"aAa"
-        else:
-            return 4 #"a"
+            return 3  # "aAa"
+        return 4  # "a"
 
     @classmethod
     def _create_examples(cls, lines, set_type):
@@ -388,5 +395,3 @@ class TokenClsProcessor(DataProcessor):
             for t in e.tokens:
                 vocab.add(t)
         return vocab
-
-    

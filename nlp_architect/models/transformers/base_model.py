@@ -314,7 +314,7 @@ class TransformerBase(TrainableModel):
                             for d in ds:
                                 logits, label_ids = self._evaluate(d)
                                 f1 = self.evaluate_predictions(logits, label_ids)
-                                if i==0 and f1 > best_dev: # dev set
+                                if i == 0 and f1 > best_dev:  # dev set
                                     best_dev = f1
                                     set_test = True
                                     best_model_path = os.path.join(self.output_path, 'best_dev')
@@ -324,7 +324,9 @@ class TransformerBase(TrainableModel):
                                     set_test = False
                                     if best_result_file is not None:
                                         with open(best_result_file, 'a+') as f:
-                                            f.write('best dev= ' + str(best_dev) + ', test= ' + str(dev_test))
+                                            f.write(
+                                                'best dev= ' + str(best_dev)
+                                                + ', test= ' + str(dev_test))
                         logger.info("\n\nBest dev=%s. test=%s\n", str(best_dev), str(dev_test))
                         logger.info('lr = {}'.format(self.scheduler.get_lr()[0]))
                         logger.info('loss = {}'.format((tr_loss - logging_loss) / logging_steps))

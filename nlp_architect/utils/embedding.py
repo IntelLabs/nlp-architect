@@ -50,13 +50,12 @@ def load_word_embeddings(file_path, vocab=None):
             line_fields = line.split()
             if len(line_fields) < 5:
                 continue
-            else:
-                if line[0] == ' ':
-                    word_vectors[' '] = np.asarray(line_fields, dtype='float32')
-                elif vocab is None or line_fields[0] in vocab:
-                    word_vectors[line_fields[0]] = np.asarray(line_fields[1:], dtype='float32')
-                    if size is None:
-                        size = len(line_fields[1:])
+            if line[0] == ' ':
+                word_vectors[' '] = np.asarray(line_fields, dtype='float32')
+            elif vocab is None or line_fields[0] in vocab:
+                word_vectors[line_fields[0]] = np.asarray(line_fields[1:], dtype='float32')
+                if size is None:
+                    size = len(line_fields[1:])
     return word_vectors, size
 
 
@@ -128,8 +127,7 @@ def load_embedding_file(filename: str, dim: int = None) -> dict:
     df = pd.read_csv(filename, sep=" ", quoting=3, header=None, index_col=0)
     if dim is not None:
         return {key: val.values[:dim] for key, val in df.T.items()}
-    else:
-        return {key: val.values for key, val in df.T.items()}
+    return {key: val.values for key, val in df.T.items()}
 
 
 # pylint: disable=not-context-manager

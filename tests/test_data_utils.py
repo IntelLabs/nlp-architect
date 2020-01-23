@@ -31,9 +31,9 @@ def test_split_dataset():
         unlabeled_file = 'unlabeled.txt'
         split_column_dataset(
             dataset=os.path.join(data_dir, 'train.txt'),
-            m=math.ceil(num_of_examples * labeled_precentage),
-            n=math.ceil(num_of_examples * unlabeled_precentage), out_folder=data_dir,
-            m_filename=labeled_file, n_filename=unlabeled_file)
+            first_count=math.ceil(num_of_examples * labeled_precentage),
+            second_count=math.ceil(num_of_examples * unlabeled_precentage), out_folder=data_dir,
+            first_filename=labeled_file, second_filename=unlabeled_file)
         check_labeled_count = count_examples(data_dir + os.sep + labeled_file)
         assert check_labeled_count == math.ceil(num_of_examples * labeled_precentage)
         check_unlabeled_count = count_examples(data_dir + os.sep + unlabeled_file)

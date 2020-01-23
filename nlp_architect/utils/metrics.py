@@ -15,7 +15,7 @@
 # ******************************************************************************
 
 ##
-# This file contains code from 
+# This file contains code from
 #  (https://github.com/chakki-works/seqeval/tree/master/seqeval/metrics)
 #
 # The code was changed to support BILOU format evaluation
@@ -47,6 +47,8 @@ from __future__ import (absolute_import, division, print_function,
 
 from scipy.stats import pearsonr, spearmanr
 from sklearn.metrics import f1_score as classification_f1_score
+from collections import defaultdict
+import numpy as np
 
 
 def get_conll_scores(predictions, y, y_lex, unk='O'):
@@ -126,23 +128,17 @@ def tagging(preds, labels):
     return p, r, f1
 
 
-## 
-# The below code is taken and changed from package chakki-works/seqeval (seqeval/metrics/sequence_labeling.py)
-# The code was changed to support BILOU format evaluation
 ##
-
-
+# The below code is taken and changed from package chakki-works/seqeval
+# (seqeval/metrics/sequence_labeling.py) The code was changed to support
+# BILOU format evaluation
+##
 
 
 """Metrics to assess performance on sequence labeling task given prediction
 Functions named as ``*_score`` return a scalar value to maximize: the higher
 the better
 """
-
-
-from collections import defaultdict
-
-import numpy as np
 
 
 def get_entities(seq, suffix=False):
@@ -177,7 +173,7 @@ def get_entities(seq, suffix=False):
             type_ = chunk.split('-')[-1]
 
         if end_of_chunk(prev_tag, tag, prev_type, type_):
-            chunks.append((prev_type, begin_offset, i-1))
+            chunks.append((prev_type, begin_offset, i - 1))
         if start_of_chunk(prev_tag, tag, prev_type, type_):
             begin_offset = i
         prev_tag = tag
@@ -203,15 +199,23 @@ def end_of_chunk(prev_tag, tag, prev_type, type_):
     end_tag = ('L', 'E')
     start_tag = ('U', 'S')
 
-    if prev_tag in end_tag : chunk_end = True
-    if prev_tag in start_tag : chunk_end = True
+    if prev_tag in end_tag:
+        chunk_end = True
+    if prev_tag in start_tag:
+        chunk_end = True
 
-    if prev_tag == 'B' and tag == 'B': chunk_end = True
-    if prev_tag == 'B' and tag in start_tag: chunk_end = True
-    if prev_tag == 'B' and tag == 'O': chunk_end = True
-    if prev_tag == 'I' and tag == 'B': chunk_end = True
-    if prev_tag == 'I' and tag in start_tag: chunk_end = True
-    if prev_tag == 'I' and tag == 'O': chunk_end = True
+    if prev_tag == 'B' and tag == 'B':
+        chunk_end = True
+    if prev_tag == 'B' and tag in start_tag:
+        chunk_end = True
+    if prev_tag == 'B' and tag == 'O':
+        chunk_end = True
+    if prev_tag == 'I' and tag == 'B':
+        chunk_end = True
+    if prev_tag == 'I' and tag in start_tag:
+        chunk_end = True
+    if prev_tag == 'I' and tag == 'O':
+        chunk_end = True
 
     if prev_tag != 'O' and prev_tag != '.' and prev_type != type_:
         chunk_end = True
@@ -236,15 +240,23 @@ def start_of_chunk(prev_tag, tag, prev_type, type_):
     end_tag = ('L', 'E')
     start_tag = ('U', 'S')
 
-    if tag == 'B': chunk_start = True
-    if tag in start_tag: chunk_start = True
+    if tag == 'B':
+        chunk_start = True
+    if tag in start_tag:
+        chunk_start = True
 
-    if prev_tag in end_tag and tag in end_tag: chunk_start = True
-    if prev_tag in end_tag and tag == 'I': chunk_start = True
-    if prev_tag in start_tag and tag in end_tag: chunk_start = True
-    if prev_tag in start_tag and tag == 'I': chunk_start = True
-    if prev_tag == 'O' and tag in end_tag: chunk_start = True
-    if prev_tag == 'O' and tag == 'I': chunk_start = True
+    if prev_tag in end_tag and tag in end_tag:
+        chunk_start = True
+    if prev_tag in end_tag and tag == 'I':
+        chunk_start = True
+    if prev_tag in start_tag and tag in end_tag:
+        chunk_start = True
+    if prev_tag in start_tag and tag == 'I':
+        chunk_start = True
+    if prev_tag == 'O' and tag in end_tag:
+        chunk_start = True
+    if prev_tag == 'O' and tag == 'I':
+        chunk_start = True
 
     if tag != 'O' and tag != '.' and prev_type != type_:
         chunk_start = True
@@ -252,7 +264,7 @@ def start_of_chunk(prev_tag, tag, prev_type, type_):
     return chunk_start
 
 
-def f1_score(y_true, y_pred, average='micro', suffix=False):
+def f1_score(y_true, y_pred, suffix=False):
     """Compute the F1 score.
 
     The F1 score can be interpreted as a weighted average of the precision and
@@ -272,7 +284,8 @@ def f1_score(y_true, y_pred, average='micro', suffix=False):
     Example:
         >>> from seqeval.metrics import f1_score
         >>> y_true = [['O', 'O', 'O', 'B-MISC', 'I-MISC', 'I-MISC', 'O'], ['B-PER', 'I-PER', 'O']]
-        >>> y_pred = [['O', 'O', 'B-MISC', 'I-MISC', 'I-MISC', 'I-MISC', 'O'], ['B-PER', 'I-PER', 'O']]
+        >>> y_pred = [['O', 'O', 'B-MISC', 'I-MISC', 'I-MISC', 'I-MISC', 'O'],
+        >>> ['B-PER', 'I-PER', 'O']]
         >>> f1_score(y_true, y_pred)
         0.50
     """
@@ -307,7 +320,8 @@ def accuracy_score(y_true, y_pred):
     Example:
         >>> from seqeval.metrics import accuracy_score
         >>> y_true = [['O', 'O', 'O', 'B-MISC', 'I-MISC', 'I-MISC', 'O'], ['B-PER', 'I-PER', 'O']]
-        >>> y_pred = [['O', 'O', 'B-MISC', 'I-MISC', 'I-MISC', 'I-MISC', 'O'], ['B-PER', 'I-PER', 'O']]
+        >>> y_pred = [['O', 'O', 'B-MISC', 'I-MISC', 'I-MISC', 'I-MISC', 'O'],
+        >>> ['B-PER', 'I-PER', 'O']]
         >>> accuracy_score(y_true, y_pred)
         0.80
     """
@@ -315,7 +329,7 @@ def accuracy_score(y_true, y_pred):
         y_true = [item for sublist in y_true for item in sublist]
         y_pred = [item for sublist in y_pred for item in sublist]
 
-    nb_correct = sum(y_t==y_p for y_t, y_p in zip(y_true, y_pred))
+    nb_correct = sum(y_t == y_p for y_t, y_p in zip(y_true, y_pred))
     nb_true = len(y_true)
 
     score = nb_correct / nb_true
@@ -323,7 +337,7 @@ def accuracy_score(y_true, y_pred):
     return score
 
 
-def precision_score(y_true, y_pred, average='micro', suffix=False):
+def precision_score(y_true, y_pred, suffix=False):
     """Compute the precision.
 
     The precision is the ratio ``tp / (tp + fp)`` where ``tp`` is the number of
@@ -342,7 +356,8 @@ def precision_score(y_true, y_pred, average='micro', suffix=False):
     Example:
         >>> from seqeval.metrics import precision_score
         >>> y_true = [['O', 'O', 'O', 'B-MISC', 'I-MISC', 'I-MISC', 'O'], ['B-PER', 'I-PER', 'O']]
-        >>> y_pred = [['O', 'O', 'B-MISC', 'I-MISC', 'I-MISC', 'I-MISC', 'O'], ['B-PER', 'I-PER', 'O']]
+        >>> y_pred = [['O', 'O', 'B-MISC', 'I-MISC', 'I-MISC', 'I-MISC', 'O'],
+        >>> ['B-PER', 'I-PER', 'O']]
         >>> precision_score(y_true, y_pred)
         0.50
     """
@@ -357,7 +372,7 @@ def precision_score(y_true, y_pred, average='micro', suffix=False):
     return score
 
 
-def recall_score(y_true, y_pred, average='micro', suffix=False):
+def recall_score(y_true, y_pred, suffix=False):
     """Compute the recall.
 
     The recall is the ratio ``tp / (tp + fn)`` where ``tp`` is the number of
@@ -376,7 +391,8 @@ def recall_score(y_true, y_pred, average='micro', suffix=False):
     Example:
         >>> from seqeval.metrics import recall_score
         >>> y_true = [['O', 'O', 'O', 'B-MISC', 'I-MISC', 'I-MISC', 'O'], ['B-PER', 'I-PER', 'O']]
-        >>> y_pred = [['O', 'O', 'B-MISC', 'I-MISC', 'I-MISC', 'I-MISC', 'O'], ['B-PER', 'I-PER', 'O']]
+        >>> y_pred = [['O', 'O', 'B-MISC', 'I-MISC', 'I-MISC', 'I-MISC', 'O'],
+        >>> ['B-PER', 'I-PER', 'O']]
         >>> recall_score(y_true, y_pred)
         0.50
     """
@@ -438,7 +454,8 @@ def classification_report(y_true, y_pred, digits=2, suffix=False):
     Examples:
         >>> from seqeval.metrics import classification_report
         >>> y_true = [['O', 'O', 'O', 'B-MISC', 'I-MISC', 'I-MISC', 'O'], ['B-PER', 'I-PER', 'O']]
-        >>> y_pred = [['O', 'O', 'B-MISC', 'I-MISC', 'I-MISC', 'I-MISC', 'O'], ['B-PER', 'I-PER', 'O']]
+        >>> y_pred = [['O', 'O', 'B-MISC', 'I-MISC', 'I-MISC', 'I-MISC', 'O'],
+        >>> ['B-PER', 'I-PER', 'O']]
         >>> print(classification_report(y_true, y_pred))
                      precision    recall  f1-score   support
         <BLANKLINE>
@@ -507,4 +524,5 @@ def classification_report(y_true, y_pred, digits=2, suffix=False):
 
     return report
 
-#### up to here code from seqeval/metrics/sequence_labeling.py (https://github.com/chakki-works/seqeval/tree/master/seqeval/metrics)
+# up to here code from seqeval/metrics/sequence_labeling.py
+# (https://github.com/chakki-works/seqeval/tree/master/seqeval/metrics)

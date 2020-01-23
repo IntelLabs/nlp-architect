@@ -16,6 +16,7 @@
 import torch
 from typing import List
 
+
 class ParallelDataset(torch.utils.data.Dataset):
     def __init__(self, *datasets):
         self.datasets = datasets
@@ -37,7 +38,10 @@ class ConcatTensorDataset(torch.utils.data.Dataset):
         datasets (List[TensorDataset]): datasets to concat to the dataset.
     """
 
-    def __init__(self, dataset: torch.utils.data.TensorDataset, datasets: List[torch.utils.data.TensorDataset]):
+    def __init__(
+            self,
+            dataset: torch.utils.data.TensorDataset,
+            datasets: List[torch.utils.data.TensorDataset]):
         tensors = dataset.tensors
         for ds in datasets:
             concat_tensors = []
