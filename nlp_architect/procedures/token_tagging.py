@@ -110,8 +110,6 @@ def add_parse_args(parser: argparse.ArgumentParser):
                         help="Embedder model configuration file")
     parser.add_argument('-b', type=int, default=10,
                         help='Batch size')
-    parser.add_argument('-b_ul', type=int, default=10,
-                        help='Batch size of unlabeled data')
     parser.add_argument('-e', type=int, default=155,
                         help='Number of epochs')
     parser.add_argument("--data_dir", default=None, type=str, required=True,
