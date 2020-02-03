@@ -19,8 +19,7 @@ import os
 import torch
 from torch.utils.data import DataLoader, RandomSampler, SequentialSampler
 
-from nlp_architect.data.sequential_tagging import (TokenClsInputExample,
-                                                   TokenClsProcessor)
+from nlp_architect.data.sequential_tagging import TokenClsInputExample, TokenClsProcessor
 from nlp_architect.data.utils import write_column_tagged_file
 from nlp_architect.models.tagging import NeuralTagger
 from nlp_architect.nn.torch.modules.embedders import IDCNN, CNNLSTM
@@ -28,16 +27,14 @@ from nlp_architect.nn.torch import setup_backend, set_seed
 from nlp_architect.nn.torch.distillation import TeacherStudentDistill
 from nlp_architect.procedures.procedure import Procedure
 from nlp_architect.procedures.registry import register_train_cmd, register_inference_cmd
-from nlp_architect.utils.embedding import (get_embedding_matrix,
-                                           load_embedding_file)
+from nlp_architect.utils.embedding import get_embedding_matrix, load_embedding_file
 from nlp_architect.utils.io import prepare_output_path
 from nlp_architect.utils.text import SpacyInstance
 from nlp_architect.nn.torch.data.dataset import ParallelDataset, ConcatTensorDataset
 from nlp_architect.models.transformers import TransformerTokenClassifier
 
 
-@register_train_cmd(name='tagger',
-                    description='Train a neural tagger')
+@register_train_cmd(name="tagger", description="Train a neural tagger")
 class TrainTagger(Procedure):
     @staticmethod
     def add_arguments(parser: argparse.ArgumentParser):
@@ -48,9 +45,11 @@ class TrainTagger(Procedure):
         do_training(args)
 
 
-@register_train_cmd(name='tagger_kd',
-                    description='Train a neural tagger using Knowledge Distillation'
-                                ' and a Transformer teacher model')
+@register_train_cmd(
+    name="tagger_kd",
+    description="Train a neural tagger using Knowledge Distillation"
+    " and a Transformer teacher model",
+)
 class TrainTaggerKD(Procedure):
     @staticmethod
     def add_arguments(parser: argparse.ArgumentParser):
@@ -62,9 +61,11 @@ class TrainTaggerKD(Procedure):
         do_kd_training(args)
 
 
-@register_train_cmd(name='tagger_kd_pseudo',
-                    description='Train a neural tagger using Knowledge Distillation'
-                                ' and a Transformer teacher model + pseudo-labeling')
+@register_train_cmd(
+    name="tagger_kd_pseudo",
+    description="Train a neural tagger using Knowledge Distillation"
+    " and a Transformer teacher model + pseudo-labeling",
+)
 class TrainTaggerKDPseudo(Procedure):
     @staticmethod
     def add_arguments(parser: argparse.ArgumentParser):
@@ -78,24 +79,35 @@ class TrainTaggerKDPseudo(Procedure):
         do_kd_pseudo_training(args)
 
 
-@register_inference_cmd(name='tagger',
-                        description='Run a neural tagger model')
+@register_inference_cmd(name="tagger", description="Run a neural tagger model")
 class RunTagger(Procedure):
     @staticmethod
     def add_arguments(parser: argparse.ArgumentParser):
-        parser.add_argument("--data_file", default=None, type=str,
-                            required=True,
-                            help="The data file containing data for inference")
-        parser.add_argument('--model_dir', type=str, required=True,
-                            help='Path to trained model directory')
-        parser.add_argument('--output_dir', type=str, required=True,
-                            help='Output directory where the model will be saved')
-        parser.add_argument('--overwrite_output_dir', action='store_true',
-                            help="Overwrite the content of the output directory")
-        parser.add_argument("--no_cuda", action='store_true',
-                            help="Avoid using CUDA when available")
-        parser.add_argument('-b', type=int, default=100,
-                            help='Batch size')
+        parser.add_argument(
+            "--data_file",
+            default=None,
+            type=str,
+            required=True,
+            help="The data file containing data for inference",
+        )
+        parser.add_argument(
+            "--model_dir", type=str, required=True, help="Path to trained model directory"
+        )
+        parser.add_argument(
+            "--output_dir",
+            type=str,
+            required=True,
+            help="Output directory where the model will be saved",
+        )
+        parser.add_argument(
+            "--overwrite_output_dir",
+            action="store_true",
+            help="Overwrite the content of the output directory",
+        )
+        parser.add_argument(
+            "--no_cuda", action="store_true", help="Avoid using CUDA when available"
+        )
+        parser.add_argument("-b", type=int, default=100, help="Batch size")
 
     @staticmethod
     def run_procedure(args):
@@ -176,9 +188,7 @@ def do_training(args):
     # create an embedder
     embedder_cls = MODEL_TYPE[args.model_type]
     if args.config_file is not None:
-        embedder_model = embedder_cls.from_config(vocab_size,
-                                                  num_labels,
-                                                  args.config_file)
+        embedder_model = embedder_cls.from_config(vocab_size, num_labels, args.config_file)
     else:
         embedder_model = embedder_cls(vocab_size, num_labels)
 
@@ -189,35 +199,35 @@ def do_training(args):
         emb_mat = torch.tensor(emb_mat, dtype=torch.float)
         embedder_model.load_embeddings(emb_mat)
 
-    classifier = NeuralTagger(embedder_model,
-                              word_vocab=vocab,
-                              labels=processor.get_labels(),
-                              use_crf=args.use_crf,
-                              device=device, n_gpus=n_gpus)
+    classifier = NeuralTagger(
+        embedder_model,
+        word_vocab=vocab,
+        labels=processor.get_labels(),
+        use_crf=args.use_crf,
+        device=device,
+        n_gpus=n_gpus,
+    )
 
     train_batch_size = args.b * max(1, n_gpus)
 
-    train_dataset = classifier.convert_to_tensors(train_ex,
-                                                  max_seq_length=args.max_sentence_length,
-                                                  max_word_length=args.max_word_length)
+    train_dataset = classifier.convert_to_tensors(
+        train_ex, max_seq_length=args.max_sentence_length, max_word_length=args.max_word_length
+    )
     train_sampler = RandomSampler(train_dataset)
-    train_dl = DataLoader(train_dataset, sampler=train_sampler,
-                          batch_size=train_batch_size)
+    train_dl = DataLoader(train_dataset, sampler=train_sampler, batch_size=train_batch_size)
     if dev_ex is not None:
-        dev_dataset = classifier.convert_to_tensors(dev_ex,
-                                                    max_seq_length=args.max_sentence_length,
-                                                    max_word_length=args.max_word_length)
+        dev_dataset = classifier.convert_to_tensors(
+            dev_ex, max_seq_length=args.max_sentence_length, max_word_length=args.max_word_length
+        )
         dev_sampler = SequentialSampler(dev_dataset)
-        dev_dl = DataLoader(dev_dataset, sampler=dev_sampler,
-                            batch_size=args.b)
+        dev_dl = DataLoader(dev_dataset, sampler=dev_sampler, batch_size=args.b)
 
     if test_ex is not None:
-        test_dataset = classifier.convert_to_tensors(test_ex,
-                                                     max_seq_length=args.max_sentence_length,
-                                                     max_word_length=args.max_word_length)
+        test_dataset = classifier.convert_to_tensors(
+            test_ex, max_seq_length=args.max_sentence_length, max_word_length=args.max_word_length
+        )
         test_sampler = SequentialSampler(test_dataset)
-        test_dl = DataLoader(test_dataset, sampler=test_sampler,
-                             batch_size=args.b)
+        test_dl = DataLoader(test_dataset, sampler=test_sampler, batch_size=args.b)
     if args.lr is not None:
         opt = classifier.get_optimizer(lr=args.lr)
     classifier.train(train_dl, dev_dl, test_dl,
@@ -249,9 +259,7 @@ def do_kd_training(args):
     # create an embedder
     embedder_cls = MODEL_TYPE[args.model_type]
     if args.config_file is not None:
-        embedder_model = embedder_cls.from_config(vocab_size,
-                                                  num_labels,
-                                                  args.config_file)
+        embedder_model = embedder_cls.from_config(vocab_size, num_labels, args.config_file)
     else:
         embedder_model = embedder_cls(vocab_size, num_labels)
 
@@ -262,16 +270,19 @@ def do_kd_training(args):
         emb_mat = torch.tensor(emb_mat, dtype=torch.float)
         embedder_model.load_embeddings(emb_mat)
 
-    classifier = NeuralTagger(embedder_model,
-                              word_vocab=vocab,
-                              labels=processor.get_labels(),
-                              use_crf=args.use_crf,
-                              device=device, n_gpus=n_gpus)
+    classifier = NeuralTagger(
+        embedder_model,
+        word_vocab=vocab,
+        labels=processor.get_labels(),
+        use_crf=args.use_crf,
+        device=device,
+        n_gpus=n_gpus,
+    )
 
     train_batch_size = args.b * max(1, n_gpus)
-    train_dataset = classifier.convert_to_tensors(train_ex,
-                                                  max_seq_length=args.max_sentence_length,
-                                                  max_word_length=args.max_word_length)
+    train_dataset = classifier.convert_to_tensors(
+        train_ex, max_seq_length=args.max_sentence_length, max_word_length=args.max_word_length
+    )
 
 # load saved teacher args if exist
     if os.path.exists(args.teacher_model_path + os.sep + 'training_args.bin'):
@@ -296,24 +307,21 @@ def do_kd_training(args):
     train_dataset = ParallelDataset(train_dataset, teacher_dataset)
 
     train_sampler = RandomSampler(train_dataset)
-    train_dl = DataLoader(train_dataset, sampler=train_sampler,
-                          batch_size=train_batch_size)
+    train_dl = DataLoader(train_dataset, sampler=train_sampler, batch_size=train_batch_size)
 
     if dev_ex is not None:
-        dev_dataset = classifier.convert_to_tensors(dev_ex,
-                                                    max_seq_length=args.max_sentence_length,
-                                                    max_word_length=args.max_word_length)
+        dev_dataset = classifier.convert_to_tensors(
+            dev_ex, max_seq_length=args.max_sentence_length, max_word_length=args.max_word_length
+        )
         dev_sampler = SequentialSampler(dev_dataset)
-        dev_dl = DataLoader(dev_dataset, sampler=dev_sampler,
-                            batch_size=args.b)
+        dev_dl = DataLoader(dev_dataset, sampler=dev_sampler, batch_size=args.b)
 
     if test_ex is not None:
-        test_dataset = classifier.convert_to_tensors(test_ex,
-                                                     max_seq_length=args.max_sentence_length,
-                                                     max_word_length=args.max_word_length)
+        test_dataset = classifier.convert_to_tensors(
+            test_ex, max_seq_length=args.max_sentence_length, max_word_length=args.max_word_length
+        )
         test_sampler = SequentialSampler(test_dataset)
-        test_dl = DataLoader(test_dataset, sampler=test_sampler,
-                             batch_size=args.b)
+        test_dl = DataLoader(test_dataset, sampler=test_sampler, batch_size=args.b)
     if args.lr is not None:
         opt = classifier.get_optimizer(lr=args.lr)
 
@@ -350,9 +358,7 @@ def do_kd_pseudo_training(args):
     # create an embedder
     embedder_cls = MODEL_TYPE[args.model_type]
     if args.config_file is not None:
-        embedder_model = embedder_cls.from_config(vocab_size,
-                                                  num_labels,
-                                                  args.config_file)
+        embedder_model = embedder_cls.from_config(vocab_size, num_labels, args.config_file)
     else:
         embedder_model = embedder_cls(vocab_size, num_labels)
 
@@ -363,16 +369,21 @@ def do_kd_pseudo_training(args):
         emb_mat = torch.tensor(emb_mat, dtype=torch.float)
         embedder_model.load_embeddings(emb_mat)
 
-    classifier = NeuralTagger(embedder_model,
-                              word_vocab=vocab,
-                              labels=processor.get_labels(),
-                              use_crf=args.use_crf,
-                              device=device, n_gpus=n_gpus)
+    classifier = NeuralTagger(
+        embedder_model,
+        word_vocab=vocab,
+        labels=processor.get_labels(),
+        use_crf=args.use_crf,
+        device=device,
+        n_gpus=n_gpus,
+    )
 
     train_batch_size = args.b * max(1, n_gpus)
     train_labeled_dataset = classifier.convert_to_tensors(
-        train_labeled_ex, max_seq_length=args.max_sentence_length,
-        max_word_length=args.max_word_length)
+        train_labeled_ex,
+        max_seq_length=args.max_sentence_length,
+        max_word_length=args.max_word_length,
+    )
     train_unlabeled_dataset = classifier.convert_to_tensors(
         train_unlabeled_ex, max_seq_length=args.max_sentence_length,
         max_word_length=args.max_word_length, include_labels=False)
@@ -431,20 +442,18 @@ def do_kd_pseudo_training(args):
         train_all_dataset, sampler=train_all_sampler, batch_size=train_batch_size)
 
     if dev_ex is not None:
-        dev_dataset = classifier.convert_to_tensors(dev_ex,
-                                                    max_seq_length=args.max_sentence_length,
-                                                    max_word_length=args.max_word_length)
+        dev_dataset = classifier.convert_to_tensors(
+            dev_ex, max_seq_length=args.max_sentence_length, max_word_length=args.max_word_length
+        )
         dev_sampler = SequentialSampler(dev_dataset)
-        dev_dl = DataLoader(dev_dataset, sampler=dev_sampler,
-                            batch_size=args.b)
+        dev_dl = DataLoader(dev_dataset, sampler=dev_sampler, batch_size=args.b)
 
     if test_ex is not None:
-        test_dataset = classifier.convert_to_tensors(test_ex,
-                                                     max_seq_length=args.max_sentence_length,
-                                                     max_word_length=args.max_word_length)
+        test_dataset = classifier.convert_to_tensors(
+            test_ex, max_seq_length=args.max_sentence_length, max_word_length=args.max_word_length
+        )
         test_sampler = SequentialSampler(test_dataset)
-        test_dl = DataLoader(test_dataset, sampler=test_sampler,
-                             batch_size=args.b)
+        test_dl = DataLoader(test_dataset, sampler=test_sampler, batch_size=args.b)
     if args.lr is not None:
         opt = classifier.get_optimizer(lr=args.lr)
 

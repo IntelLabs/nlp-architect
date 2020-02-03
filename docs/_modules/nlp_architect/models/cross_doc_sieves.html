@@ -203,8 +203,9 @@
 <span class="kn">from</span> <span class="nn">nlp_architect.common.cdc.cluster</span> <span class="kn">import</span> <span class="n">Clusters</span>
 <span class="kn">from</span> <span class="nn">nlp_architect.common.cdc.topics</span> <span class="kn">import</span> <span class="n">Topics</span>
 <span class="kn">from</span> <span class="nn">nlp_architect.models.cross_doc_coref.system.sieves.run_sieve_system</span> <span class="kn">import</span> <span class="n">get_run_system</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.models.cross_doc_coref.system.sieves_container_init</span> <span class="kn">import</span> \
-    <span class="n">SievesContainerInitialization</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.models.cross_doc_coref.system.sieves_container_init</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">SievesContainerInitialization</span><span class="p">,</span>
+<span class="p">)</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
@@ -220,7 +221,7 @@
 <span class="sd">        Clusters: List of clusters and mentions with predicted cross doc coref within each topic</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">return</span> <span class="n">_run_coref</span><span class="p">(</span><span class="n">topics</span><span class="p">,</span> <span class="n">resources</span><span class="p">,</span> <span class="s1">&#39;event&#39;</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">_run_coref</span><span class="p">(</span><span class="n">topics</span><span class="p">,</span> <span class="n">resources</span><span class="p">,</span> <span class="s2">&quot;event&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="run_entity_coref"><a class="viewcode-back" href="../../../generated_api/nlp_architect.models.html#nlp_architect.models.cross_doc_sieves.run_entity_coref">[docs]</a><span class="k">def</span> <span class="nf">run_entity_coref</span><span class="p">(</span><span class="n">topics</span><span class="p">:</span> <span class="n">Topics</span><span class="p">,</span> <span class="n">resources</span><span class="p">:</span> <span class="n">SievesContainerInitialization</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Clusters</span><span class="p">]:</span>
@@ -233,11 +234,12 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        Clusters: List of topics and mentions with predicted cross doc coref within each topic</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">_run_coref</span><span class="p">(</span><span class="n">topics</span><span class="p">,</span> <span class="n">resources</span><span class="p">,</span> <span class="s1">&#39;entity&#39;</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">_run_coref</span><span class="p">(</span><span class="n">topics</span><span class="p">,</span> <span class="n">resources</span><span class="p">,</span> <span class="s2">&quot;entity&quot;</span><span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">_run_coref</span><span class="p">(</span><span class="n">topics</span><span class="p">:</span> <span class="n">Topics</span><span class="p">,</span> <span class="n">resources</span><span class="p">:</span> <span class="n">SievesContainerInitialization</span><span class="p">,</span>
-               <span class="n">eval_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Clusters</span><span class="p">]:</span>
+<span class="k">def</span> <span class="nf">_run_coref</span><span class="p">(</span>
+    <span class="n">topics</span><span class="p">:</span> <span class="n">Topics</span><span class="p">,</span> <span class="n">resources</span><span class="p">:</span> <span class="n">SievesContainerInitialization</span><span class="p">,</span> <span class="n">eval_type</span><span class="p">:</span> <span class="nb">str</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Clusters</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Running Cross Document Coref on Entity mentions</span>
 <span class="sd">    Args:</span>

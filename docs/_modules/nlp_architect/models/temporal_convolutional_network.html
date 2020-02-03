@@ -201,6 +201,7 @@
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
 <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+
 <span class="c1"># pylint: disable=no-name-in-module</span>
 <span class="kn">from</span> <span class="nn">tensorflow.python.framework</span> <span class="kn">import</span> <span class="n">tensor_shape</span>
 <span class="kn">from</span> <span class="nn">tensorflow.python.keras.layers</span> <span class="kn">import</span> <span class="n">Wrapper</span>
@@ -249,16 +250,18 @@
 <span class="sd">      ValueError: If `Layer` does not contain a `kernel` of weights</span>
 <span class="sd">      NotImplementedError: If `data_init` is True and running graph execution</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">layer</span><span class="p">,</span> <span class="n">data_init</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">layer</span><span class="p">,</span> <span class="n">Layer</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s1">&#39;Please initialize `WeightNorm` layer with a &#39;</span>
-                <span class="s1">&#39;`Layer` instance. You passed: </span><span class="si">{input}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="n">layer</span><span class="p">))</span>
+                <span class="s2">&quot;Please initialize `WeightNorm` layer with a &quot;</span>
+                <span class="s2">&quot;`Layer` instance. You passed: </span><span class="si">{input}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="n">layer</span><span class="p">)</span>
+            <span class="p">)</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">context</span><span class="o">.</span><span class="n">executing_eagerly</span><span class="p">()</span> <span class="ow">and</span> <span class="n">data_init</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
-                <span class="s1">&#39;Data dependent variable initialization is not available for &#39;</span>
-                <span class="s1">&#39;graph execution&#39;</span><span class="p">)</span>
+                <span class="s2">&quot;Data dependent variable initialization is not available for &quot;</span> <span class="s2">&quot;graph execution&quot;</span>
+            <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">initialized</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">if</span> <span class="n">data_init</span><span class="p">:</span>
@@ -267,19 +270,21 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">layer_depth</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">norm_axes</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">WeightNorm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">layer</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_track_checkpointable</span><span class="p">(</span><span class="n">layer</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;layer&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_track_trackable</span><span class="p">(</span><span class="n">layer</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;layer&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_compute_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Generate weights by combining the direction of weight vector</span>
 <span class="sd">         with it&#39;s norm &quot;&quot;&quot;</span>
-        <span class="k">with</span> <span class="n">variable_scope</span><span class="o">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="s1">&#39;compute_weights&#39;</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">layer</span><span class="o">.</span><span class="n">kernel</span> <span class="o">=</span> <span class="n">nn_impl</span><span class="o">.</span><span class="n">l2_normalize</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">layer</span><span class="o">.</span><span class="n">v</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">norm_axes</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer</span><span class="o">.</span><span class="n">g</span>
+        <span class="k">with</span> <span class="n">variable_scope</span><span class="o">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="s2">&quot;compute_weights&quot;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">layer</span><span class="o">.</span><span class="n">kernel</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">nn_impl</span><span class="o">.</span><span class="n">l2_normalize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layer</span><span class="o">.</span><span class="n">v</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">norm_axes</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer</span><span class="o">.</span><span class="n">g</span>
+            <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_init_norm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">weights</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Set the norm of the weight vector&quot;&quot;&quot;</span>
         <span class="kn">from</span> <span class="nn">tensorflow.python.ops.linalg_ops</span> <span class="kn">import</span> <span class="n">norm</span>
-        <span class="k">with</span> <span class="n">variable_scope</span><span class="o">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="s1">&#39;init_norm&#39;</span><span class="p">):</span>
+
+        <span class="k">with</span> <span class="n">variable_scope</span><span class="o">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="s2">&quot;init_norm&quot;</span><span class="p">):</span>
             <span class="c1"># pylint: disable=no-member</span>
             <span class="n">flat</span> <span class="o">=</span> <span class="n">array_ops</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer_depth</span><span class="p">])</span>
             <span class="c1"># pylint: disable=no-member</span>
@@ -290,17 +295,17 @@
         <span class="kn">from</span> <span class="nn">tensorflow.python.ops.nn</span> <span class="kn">import</span> <span class="n">moments</span>
         <span class="kn">from</span> <span class="nn">tensorflow.python.ops.math_ops</span> <span class="kn">import</span> <span class="n">sqrt</span>
 
-        <span class="k">with</span> <span class="n">variable_scope</span><span class="o">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="s1">&#39;data_dep_init&#39;</span><span class="p">):</span>
+        <span class="k">with</span> <span class="n">variable_scope</span><span class="o">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="s2">&quot;data_dep_init&quot;</span><span class="p">):</span>
             <span class="c1"># Generate data dependent init values</span>
             <span class="n">activation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer</span><span class="o">.</span><span class="n">activation</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">layer</span><span class="o">.</span><span class="n">activation</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="n">x_init</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
             <span class="n">m_init</span><span class="p">,</span> <span class="n">v_init</span> <span class="o">=</span> <span class="n">moments</span><span class="p">(</span><span class="n">x_init</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">norm_axes</span><span class="p">)</span>
-            <span class="n">scale_init</span> <span class="o">=</span> <span class="mf">1.</span> <span class="o">/</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">v_init</span> <span class="o">+</span> <span class="mf">1e-10</span><span class="p">)</span>
+            <span class="n">scale_init</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">v_init</span> <span class="o">+</span> <span class="mf">1e-10</span><span class="p">)</span>
 
         <span class="c1"># Assign data dependent init values</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">layer</span><span class="o">.</span><span class="n">g</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer</span><span class="o">.</span><span class="n">g</span> <span class="o">*</span> <span class="n">scale_init</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">layer</span><span class="o">.</span><span class="n">bias</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">m_init</span> <span class="o">*</span> <span class="n">scale_init</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">layer</span><span class="o">.</span><span class="n">bias</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">m_init</span> <span class="o">*</span> <span class="n">scale_init</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">layer</span><span class="o">.</span><span class="n">activation</span> <span class="o">=</span> <span class="n">activation</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">initialized</span> <span class="o">=</span> <span class="kc">True</span>
 
@@ -314,10 +319,9 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">layer</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">input_shape</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">layer</span><span class="o">.</span><span class="n">built</span> <span class="o">=</span> <span class="kc">False</span>
 
-            <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layer</span><span class="p">,</span> <span class="s1">&#39;kernel&#39;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layer</span><span class="p">,</span> <span class="s2">&quot;kernel&quot;</span><span class="p">):</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                    <span class="s1">&#39;`WeightNorm` must wrap a layer that&#39;</span>
-                    <span class="s1">&#39; contains a `kernel` for weights&#39;</span>
+                    <span class="s2">&quot;`WeightNorm` must wrap a layer that&quot;</span> <span class="s2">&quot; contains a `kernel` for weights&quot;</span>
                 <span class="p">)</span>
 
             <span class="c1"># The kernel&#39;s filter or unit dimension is -1</span>
@@ -328,12 +332,12 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">layer</span><span class="o">.</span><span class="n">g</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer</span><span class="o">.</span><span class="n">add_variable</span><span class="p">(</span>
                 <span class="n">name</span><span class="o">=</span><span class="s2">&quot;g&quot;</span><span class="p">,</span>
                 <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layer_depth</span><span class="p">,),</span>
-                <span class="n">initializer</span><span class="o">=</span><span class="n">initializers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;ones&#39;</span><span class="p">),</span>
+                <span class="n">initializer</span><span class="o">=</span><span class="n">initializers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ones&quot;</span><span class="p">),</span>
                 <span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">layer</span><span class="o">.</span><span class="n">kernel</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span>
-                <span class="n">trainable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="n">trainable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="p">)</span>
 
-            <span class="k">with</span> <span class="n">ops</span><span class="o">.</span><span class="n">control_dependencies</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">layer</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">_init_norm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layer</span><span class="o">.</span><span class="n">v</span><span class="p">))]):</span>
+            <span class="k">with</span> <span class="n">ops</span><span class="o">.</span><span class="n">control_dependencies</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">layer</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_init_norm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layer</span><span class="o">.</span><span class="n">v</span><span class="p">))]):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_compute_weights</span><span class="p">()</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">layer</span><span class="o">.</span><span class="n">built</span> <span class="o">=</span> <span class="kc">True</span>
@@ -353,8 +357,7 @@
         <span class="k">return</span> <span class="n">output</span></div>
 
 <div class="viewcode-block" id="WeightNorm.compute_output_shape"><a class="viewcode-back" href="../../../generated_api/nlp_architect.models.html#nlp_architect.models.temporal_convolutional_network.WeightNorm.compute_output_shape">[docs]</a>    <span class="k">def</span> <span class="nf">compute_output_shape</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">tensor_shape</span><span class="o">.</span><span class="n">TensorShape</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">layer</span><span class="o">.</span><span class="n">compute_output_shape</span><span class="p">(</span><span class="n">input_shape</span><span class="p">)</span><span class="o">.</span><span class="n">as_list</span><span class="p">())</span></div></div>
+        <span class="k">return</span> <span class="n">tensor_shape</span><span class="o">.</span><span class="n">TensorShape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layer</span><span class="o">.</span><span class="n">compute_output_shape</span><span class="p">(</span><span class="n">input_shape</span><span class="p">)</span><span class="o">.</span><span class="n">as_list</span><span class="p">())</span></div></div>
 
 
 <div class="viewcode-block" id="TCN"><a class="viewcode-back" href="../../../generated_api/nlp_architect.models.html#nlp_architect.models.temporal_convolutional_network.TCN">[docs]</a><span class="k">class</span> <span class="nc">TCN</span><span class="p">:</span>
@@ -362,6 +365,7 @@
 <span class="sd">    This class defines core TCN architecture.</span>
 <span class="sd">    This is only the base class, training strategy is not implemented.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">max_len</span><span class="p">,</span> <span class="n">n_features_in</span><span class="p">,</span> <span class="n">hidden_sizes</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">dropout</span><span class="o">=</span><span class="mf">0.2</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        To use this class,</span>
@@ -386,16 +390,20 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">n_hidden_layers</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hidden_sizes</span><span class="p">)</span>
         <span class="n">receptive_field_len</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculate_receptive_field</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">receptive_field_len</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_len</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Warning! receptive field of the TCN: &quot;</span>
-                  <span class="s2">&quot;</span><span class="si">%d</span><span class="s2"> is less than the input sequence length: </span><span class="si">%d</span><span class="s2">.&quot;</span>
-                  <span class="o">%</span> <span class="p">(</span><span class="n">receptive_field_len</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_len</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="s2">&quot;Warning! receptive field of the TCN: &quot;</span>
+                <span class="s2">&quot;</span><span class="si">%d</span><span class="s2"> is less than the input sequence length: </span><span class="si">%d</span><span class="s2">.&quot;</span>
+                <span class="o">%</span> <span class="p">(</span><span class="n">receptive_field_len</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_len</span><span class="p">)</span>
+            <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Receptive field of the TCN: </span><span class="si">%d</span><span class="s2">, input sequence length: </span><span class="si">%d</span><span class="s2">.&quot;</span>
-                  <span class="o">%</span> <span class="p">(</span><span class="n">receptive_field_len</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_len</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="s2">&quot;Receptive field of the TCN: </span><span class="si">%d</span><span class="s2">, input sequence length: </span><span class="si">%d</span><span class="s2">.&quot;</span>
+                <span class="o">%</span> <span class="p">(</span><span class="n">receptive_field_len</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_len</span><span class="p">)</span>
+            <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">layer_activations</span> <span class="o">=</span> <span class="p">[]</span>
 
         <span class="c1"># toggle this for train/inference mode</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">training_mode</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">bool</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;training_mode&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">training_mode</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">bool</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;training_mode&quot;</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">sequence_output</span> <span class="o">=</span> <span class="kc">None</span>
 
@@ -424,8 +432,13 @@
                 <span class="n">in_channels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_features_in</span> <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">hidden_sizes</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
                 <span class="n">out_channels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hidden_sizes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
                 <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="s2">&quot;residual_block_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)):</span>
-                    <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_residual_block</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">in_channels</span><span class="p">,</span> <span class="n">out_channels</span><span class="p">,</span> <span class="n">dilation_size</span><span class="p">,</span>
-                                             <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">kernel_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">dilation_size</span><span class="p">)</span>
+                    <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_residual_block</span><span class="p">(</span>
+                        <span class="n">x</span><span class="p">,</span>
+                        <span class="n">in_channels</span><span class="p">,</span>
+                        <span class="n">out_channels</span><span class="p">,</span>
+                        <span class="n">dilation_size</span><span class="p">,</span>
+                        <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">kernel_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">dilation_size</span><span class="p">,</span>
+                    <span class="p">)</span>
                     <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">layer_activations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">sequence_output</span> <span class="o">=</span> <span class="n">x</span>
@@ -436,11 +449,14 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="c1"># last time point size (batch_size, hidden_sizes_encoder)</span>
                 <span class="n">width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sequence_output</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
-                <span class="n">lt</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">slice</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sequence_output</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">width</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-                                         <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-                <span class="n">prediction</span> <span class="o">=</span> \
-                    <span class="n">tf</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">kernel_initializer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">initializers</span><span class="o">.</span><span class="n">random_normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">),</span>
-                                    <span class="n">bias_initializer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">initializers</span><span class="o">.</span><span class="n">random_normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">))(</span><span class="n">lt</span><span class="p">)</span>
+                <span class="n">lt</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span>
+                    <span class="n">tf</span><span class="o">.</span><span class="n">slice</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sequence_output</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">width</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span>
+                <span class="p">)</span>
+                <span class="n">prediction</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span>
+                    <span class="mi">1</span><span class="p">,</span>
+                    <span class="n">kernel_initializer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">initializers</span><span class="o">.</span><span class="n">random_normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">),</span>
+                    <span class="n">bias_initializer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">initializers</span><span class="o">.</span><span class="n">random_normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">),</span>
+                <span class="p">)(</span><span class="n">lt</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">prediction</span></div>
 
@@ -465,10 +481,16 @@
 
         <span class="c1"># sidepath</span>
         <span class="k">if</span> <span class="n">in_channels</span> <span class="o">!=</span> <span class="n">out_channels</span><span class="p">:</span>
-            <span class="n">x_side</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Conv1D</span><span class="p">(</span><span class="n">filters</span><span class="o">=</span><span class="n">out_channels</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">,</span>
-                                      <span class="n">strides</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dilation_rate</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-                                      <span class="n">kernel_initializer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">initializers</span><span class="o">.</span><span class="n">random_normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">),</span>
-                                      <span class="n">bias_initializer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">initializers</span><span class="o">.</span><span class="n">random_normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">))(</span><span class="n">xin</span><span class="p">)</span>
+            <span class="n">x_side</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Conv1D</span><span class="p">(</span>
+                <span class="n">filters</span><span class="o">=</span><span class="n">out_channels</span><span class="p">,</span>
+                <span class="n">kernel_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                <span class="n">padding</span><span class="o">=</span><span class="s2">&quot;same&quot;</span><span class="p">,</span>
+                <span class="n">strides</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                <span class="n">activation</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                <span class="n">dilation_rate</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                <span class="n">kernel_initializer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">initializers</span><span class="o">.</span><span class="n">random_normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">),</span>
+                <span class="n">bias_initializer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">initializers</span><span class="o">.</span><span class="n">random_normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">),</span>
+            <span class="p">)(</span><span class="n">xin</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">x_side</span> <span class="o">=</span> <span class="n">xin</span>
 
@@ -495,8 +517,12 @@
 
         <span class="c1"># dropout</span>
         <span class="n">batch_size</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">x</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">dropout</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dropout</span><span class="p">,</span> <span class="n">noise_shape</span><span class="o">=</span><span class="p">[</span><span class="n">batch_size</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">out_channels</span><span class="p">],</span>
-                              <span class="n">training</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">training_mode</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">dropout</span><span class="p">(</span>
+            <span class="n">x</span><span class="p">,</span>
+            <span class="n">rate</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dropout</span><span class="p">,</span>
+            <span class="n">noise_shape</span><span class="o">=</span><span class="p">[</span><span class="n">batch_size</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">out_channels</span><span class="p">],</span>
+            <span class="n">training</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">training_mode</span><span class="p">,</span>
+        <span class="p">)</span>
 
         <span class="k">return</span> <span class="n">x</span>
 
@@ -516,11 +542,19 @@
         <span class="n">input_width</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
         <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="s2">&quot;dilated_causal_conv&quot;</span><span class="p">):</span>
             <span class="c1"># define dilated convolution layer with left side padding</span>
-            <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="n">padding</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]),</span> <span class="s1">&#39;CONSTANT&#39;</span><span class="p">)</span>
-            <span class="n">x</span> <span class="o">=</span> <span class="n">WeightNorm</span><span class="p">(</span><span class="n">Conv1D</span><span class="p">(</span><span class="n">filters</span><span class="o">=</span><span class="n">n_filters</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">kernel_size</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;valid&#39;</span><span class="p">,</span>
-                                  <span class="n">strides</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dilation_rate</span><span class="o">=</span><span class="n">dilation</span><span class="p">,</span>
-                                  <span class="n">kernel_initializer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">initializers</span><span class="o">.</span><span class="n">random_normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">),</span>
-                                  <span class="n">bias_initializer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">initializers</span><span class="o">.</span><span class="n">random_normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)))(</span><span class="n">x</span><span class="p">)</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="n">padding</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]),</span> <span class="s2">&quot;CONSTANT&quot;</span><span class="p">)</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">WeightNorm</span><span class="p">(</span>
+                <span class="n">Conv1D</span><span class="p">(</span>
+                    <span class="n">filters</span><span class="o">=</span><span class="n">n_filters</span><span class="p">,</span>
+                    <span class="n">kernel_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">kernel_size</span><span class="p">,</span>
+                    <span class="n">padding</span><span class="o">=</span><span class="s2">&quot;valid&quot;</span><span class="p">,</span>
+                    <span class="n">strides</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                    <span class="n">activation</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                    <span class="n">dilation_rate</span><span class="o">=</span><span class="n">dilation</span><span class="p">,</span>
+                    <span class="n">kernel_initializer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">initializers</span><span class="o">.</span><span class="n">random_normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">),</span>
+                    <span class="n">bias_initializer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">initializers</span><span class="o">.</span><span class="n">random_normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">),</span>
+                <span class="p">)</span>
+            <span class="p">)(</span><span class="n">x</span><span class="p">)</span>
 
         <span class="k">assert</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="n">input_width</span>
 
@@ -544,6 +578,7 @@
 <span class="sd">    Class that contains the common layers for language modeling -</span>
 <span class="sd">            word embeddings and projection layer</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize class</span>
@@ -552,8 +587,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">num_words</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_features_in</span> <span class="o">=</span> <span class="kc">None</span>
 
-<div class="viewcode-block" id="CommonLayers.define_input_layer"><a class="viewcode-back" href="../../../generated_api/nlp_architect.models.html#nlp_architect.models.temporal_convolutional_network.CommonLayers.define_input_layer">[docs]</a>    <span class="k">def</span> <span class="nf">define_input_layer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_placeholder_tokens</span><span class="p">,</span> <span class="n">word_embeddings</span><span class="p">,</span>
-                           <span class="n">embeddings_trainable</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="CommonLayers.define_input_layer"><a class="viewcode-back" href="../../../generated_api/nlp_architect.models.html#nlp_architect.models.temporal_convolutional_network.CommonLayers.define_input_layer">[docs]</a>    <span class="k">def</span> <span class="nf">define_input_layer</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">input_placeholder_tokens</span><span class="p">,</span> <span class="n">word_embeddings</span><span class="p">,</span> <span class="n">embeddings_trainable</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Define the input word embedding layer</span>
 <span class="sd">        Args:</span>
@@ -564,20 +600,22 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            Embeddings corresponding to the data in input placeholder</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s1">&#39;/cpu:0&#39;</span><span class="p">):</span>
+        <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;/cpu:0&quot;</span><span class="p">):</span>
             <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="s2">&quot;embedding_layer&quot;</span><span class="p">,</span> <span class="n">reuse</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
                 <span class="k">if</span> <span class="n">word_embeddings</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">initializer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">initializers</span><span class="o">.</span><span class="n">random_normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">initializer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant_initializer</span><span class="p">(</span><span class="n">word_embeddings</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">word_embeddings_tf</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s2">&quot;embedding_table&quot;</span><span class="p">,</span>
-                                                          <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">num_words</span><span class="p">,</span>
-                                                                 <span class="bp">self</span><span class="o">.</span><span class="n">n_features_in</span><span class="p">],</span>
-                                                          <span class="n">initializer</span><span class="o">=</span><span class="n">initializer</span><span class="p">,</span>
-                                                          <span class="n">trainable</span><span class="o">=</span><span class="n">embeddings_trainable</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">word_embeddings_tf</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span>
+                    <span class="s2">&quot;embedding_table&quot;</span><span class="p">,</span>
+                    <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">num_words</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_features_in</span><span class="p">],</span>
+                    <span class="n">initializer</span><span class="o">=</span><span class="n">initializer</span><span class="p">,</span>
+                    <span class="n">trainable</span><span class="o">=</span><span class="n">embeddings_trainable</span><span class="p">,</span>
+                <span class="p">)</span>
 
-                <span class="n">input_embeddings</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">embedding_lookup</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">word_embeddings_tf</span><span class="p">,</span>
-                                                          <span class="n">input_placeholder_tokens</span><span class="p">)</span>
+                <span class="n">input_embeddings</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">embedding_lookup</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">word_embeddings_tf</span><span class="p">,</span> <span class="n">input_placeholder_tokens</span>
+                <span class="p">)</span>
         <span class="k">return</span> <span class="n">input_embeddings</span></div>
 
 <div class="viewcode-block" id="CommonLayers.define_projection_layer"><a class="viewcode-back" href="../../../generated_api/nlp_architect.models.html#nlp_architect.models.temporal_convolutional_network.CommonLayers.define_projection_layer">[docs]</a>    <span class="k">def</span> <span class="nf">define_projection_layer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prediction</span><span class="p">,</span> <span class="n">tied_weights</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
@@ -590,12 +628,12 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            Probability distribution over vocabulary</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s1">&#39;/cpu:0&#39;</span><span class="p">):</span>
+        <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;/cpu:0&quot;</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">tied_weights</span><span class="p">:</span>
                 <span class="c1"># tie projection layer and embedding layer</span>
                 <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="s2">&quot;embedding_layer&quot;</span><span class="p">,</span> <span class="n">reuse</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">AUTO_REUSE</span><span class="p">):</span>
                     <span class="n">softmax_w</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">matrix_transpose</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">word_embeddings_tf</span><span class="p">)</span>
-                    <span class="n">softmax_b</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s1">&#39;softmax_b&#39;</span><span class="p">,</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">num_words</span><span class="p">])</span>
+                    <span class="n">softmax_b</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s2">&quot;softmax_b&quot;</span><span class="p">,</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">num_words</span><span class="p">])</span>
                     <span class="n">_</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">k</span> <span class="o">=</span> <span class="n">prediction</span><span class="o">.</span><span class="n">shape</span><span class="o">.</span><span class="n">as_list</span><span class="p">()</span>
                     <span class="n">prediction_reshaped</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">prediction</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">k</span><span class="p">])</span>
                     <span class="n">mult_out</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">bias_add</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">prediction_reshaped</span><span class="p">,</span> <span class="n">softmax_w</span><span class="p">),</span> <span class="n">softmax_b</span><span class="p">)</span>

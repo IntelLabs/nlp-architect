@@ -242,7 +242,8 @@
             <span class="k">if</span> <span class="n">set_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="s2">&quot;dev&quot;</span><span class="p">]:</span>
                 <span class="n">label</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
                 <span class="n">examples</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                    <span class="n">SequenceClsInputExample</span><span class="p">(</span><span class="n">guid</span><span class="o">=</span><span class="n">guid</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text_a</span><span class="p">,</span> <span class="n">text_b</span><span class="o">=</span><span class="n">text_b</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">))</span>
+                    <span class="n">SequenceClsInputExample</span><span class="p">(</span><span class="n">guid</span><span class="o">=</span><span class="n">guid</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text_a</span><span class="p">,</span> <span class="n">text_b</span><span class="o">=</span><span class="n">text_b</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
+                <span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">examples</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">SequenceClsInputExample</span><span class="p">(</span><span class="n">guid</span><span class="o">=</span><span class="n">guid</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text_a</span><span class="p">,</span> <span class="n">text_b</span><span class="o">=</span><span class="n">text_b</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">examples</span></div>
@@ -255,12 +256,14 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_examples</span><span class="p">(</span><span class="n">read_tsv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;train.tsv&quot;</span><span class="p">)),</span> <span class="s2">&quot;train&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="MnliProcessor.get_dev_examples"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.MnliProcessor.get_dev_examples">[docs]</a>    <span class="k">def</span> <span class="nf">get_dev_examples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_examples</span><span class="p">(</span><span class="n">read_tsv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;dev_matched.tsv&quot;</span><span class="p">)),</span>
-                                     <span class="s2">&quot;dev_matched&quot;</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_examples</span><span class="p">(</span>
+            <span class="n">read_tsv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;dev_matched.tsv&quot;</span><span class="p">)),</span> <span class="s2">&quot;dev_matched&quot;</span>
+        <span class="p">)</span></div>
 
 <div class="viewcode-block" id="MnliProcessor.get_test_examples"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.MnliProcessor.get_test_examples">[docs]</a>    <span class="k">def</span> <span class="nf">get_test_examples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_examples</span><span class="p">(</span><span class="n">read_tsv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;test_matched.tsv&quot;</span><span class="p">)),</span>
-                                     <span class="s2">&quot;test_matched&quot;</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_examples</span><span class="p">(</span>
+            <span class="n">read_tsv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;test_matched.tsv&quot;</span><span class="p">)),</span> <span class="s2">&quot;test_matched&quot;</span>
+        <span class="p">)</span></div>
 
 <div class="viewcode-block" id="MnliProcessor.get_labels"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.MnliProcessor.get_labels">[docs]</a>    <span class="k">def</span> <span class="nf">get_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;contradiction&quot;</span><span class="p">,</span> <span class="s2">&quot;entailment&quot;</span><span class="p">,</span> <span class="s2">&quot;neutral&quot;</span><span class="p">]</span></div>
@@ -277,7 +280,8 @@
             <span class="k">if</span> <span class="n">set_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="s2">&quot;dev_matched&quot;</span><span class="p">]:</span>
                 <span class="n">label</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
                 <span class="n">examples</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                    <span class="n">SequenceClsInputExample</span><span class="p">(</span><span class="n">guid</span><span class="o">=</span><span class="n">guid</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text_a</span><span class="p">,</span> <span class="n">text_b</span><span class="o">=</span><span class="n">text_b</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">))</span>
+                    <span class="n">SequenceClsInputExample</span><span class="p">(</span><span class="n">guid</span><span class="o">=</span><span class="n">guid</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text_a</span><span class="p">,</span> <span class="n">text_b</span><span class="o">=</span><span class="n">text_b</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
+                <span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">examples</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">SequenceClsInputExample</span><span class="p">(</span><span class="n">guid</span><span class="o">=</span><span class="n">guid</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text_a</span><span class="p">,</span> <span class="n">text_b</span><span class="o">=</span><span class="n">text_b</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">examples</span></div>
@@ -287,12 +291,14 @@
     <span class="sd">&quot;&quot;&quot;Processor for the MultiNLI Mismatched data set (GLUE version).&quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="MnliMismatchedProcessor.get_dev_examples"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.MnliMismatchedProcessor.get_dev_examples">[docs]</a>    <span class="k">def</span> <span class="nf">get_dev_examples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_examples</span><span class="p">(</span><span class="n">read_tsv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;dev_mismatched.tsv&quot;</span><span class="p">)),</span>
-                                     <span class="s2">&quot;dev_matched&quot;</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_examples</span><span class="p">(</span>
+            <span class="n">read_tsv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;dev_mismatched.tsv&quot;</span><span class="p">)),</span> <span class="s2">&quot;dev_matched&quot;</span>
+        <span class="p">)</span></div>
 
 <div class="viewcode-block" id="MnliMismatchedProcessor.get_test_examples"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.MnliMismatchedProcessor.get_test_examples">[docs]</a>    <span class="k">def</span> <span class="nf">get_test_examples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_examples</span><span class="p">(</span><span class="n">read_tsv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;test_mismatched.tsv&quot;</span><span class="p">)),</span>
-                                     <span class="s2">&quot;test_mismatched&quot;</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_examples</span><span class="p">(</span>
+            <span class="n">read_tsv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;test_mismatched.tsv&quot;</span><span class="p">)),</span> <span class="s2">&quot;test_mismatched&quot;</span>
+        <span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="ColaProcessor"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.ColaProcessor">[docs]</a><span class="k">class</span> <span class="nc">ColaProcessor</span><span class="p">(</span><span class="n">DataProcessor</span><span class="p">):</span>
@@ -321,7 +327,8 @@
                 <span class="n">text_a</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
                 <span class="n">label</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
                 <span class="n">examples</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                    <span class="n">SequenceClsInputExample</span><span class="p">(</span><span class="n">guid</span><span class="o">=</span><span class="n">guid</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text_a</span><span class="p">,</span> <span class="n">text_b</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">))</span>
+                    <span class="n">SequenceClsInputExample</span><span class="p">(</span><span class="n">guid</span><span class="o">=</span><span class="n">guid</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text_a</span><span class="p">,</span> <span class="n">text_b</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
+                <span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">text_a</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
                 <span class="n">examples</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">SequenceClsInputExample</span><span class="p">(</span><span class="n">guid</span><span class="o">=</span><span class="n">guid</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text_a</span><span class="p">))</span>
@@ -354,7 +361,8 @@
                 <span class="n">text_a</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
                 <span class="n">label</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
                 <span class="n">examples</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                    <span class="n">SequenceClsInputExample</span><span class="p">(</span><span class="n">guid</span><span class="o">=</span><span class="n">guid</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text_a</span><span class="p">,</span> <span class="n">text_b</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">))</span>
+                    <span class="n">SequenceClsInputExample</span><span class="p">(</span><span class="n">guid</span><span class="o">=</span><span class="n">guid</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text_a</span><span class="p">,</span> <span class="n">text_b</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
+                <span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">text_a</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
                 <span class="n">examples</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">SequenceClsInputExample</span><span class="p">(</span><span class="n">guid</span><span class="o">=</span><span class="n">guid</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text_a</span><span class="p">))</span>
@@ -388,7 +396,8 @@
             <span class="k">if</span> <span class="n">set_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="s2">&quot;dev&quot;</span><span class="p">]:</span>
                 <span class="n">label</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
                 <span class="n">examples</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                    <span class="n">SequenceClsInputExample</span><span class="p">(</span><span class="n">guid</span><span class="o">=</span><span class="n">guid</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text_a</span><span class="p">,</span> <span class="n">text_b</span><span class="o">=</span><span class="n">text_b</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">))</span>
+                    <span class="n">SequenceClsInputExample</span><span class="p">(</span><span class="n">guid</span><span class="o">=</span><span class="n">guid</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text_a</span><span class="p">,</span> <span class="n">text_b</span><span class="o">=</span><span class="n">text_b</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
+                <span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">examples</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">SequenceClsInputExample</span><span class="p">(</span><span class="n">guid</span><span class="o">=</span><span class="n">guid</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text_a</span><span class="p">,</span> <span class="n">text_b</span><span class="o">=</span><span class="n">text_b</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">examples</span></div>
@@ -424,7 +433,8 @@
                 <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
                     <span class="k">continue</span>
                 <span class="n">examples</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                    <span class="n">SequenceClsInputExample</span><span class="p">(</span><span class="n">guid</span><span class="o">=</span><span class="n">guid</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text_a</span><span class="p">,</span> <span class="n">text_b</span><span class="o">=</span><span class="n">text_b</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">))</span>
+                    <span class="n">SequenceClsInputExample</span><span class="p">(</span><span class="n">guid</span><span class="o">=</span><span class="n">guid</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text_a</span><span class="p">,</span> <span class="n">text_b</span><span class="o">=</span><span class="n">text_b</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
+                <span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="n">text_a</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
@@ -462,7 +472,8 @@
             <span class="k">if</span> <span class="n">set_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="s2">&quot;dev&quot;</span><span class="p">]:</span>
                 <span class="n">label</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
                 <span class="n">examples</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                    <span class="n">SequenceClsInputExample</span><span class="p">(</span><span class="n">guid</span><span class="o">=</span><span class="n">guid</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text_a</span><span class="p">,</span> <span class="n">text_b</span><span class="o">=</span><span class="n">text_b</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">))</span>
+                    <span class="n">SequenceClsInputExample</span><span class="p">(</span><span class="n">guid</span><span class="o">=</span><span class="n">guid</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text_a</span><span class="p">,</span> <span class="n">text_b</span><span class="o">=</span><span class="n">text_b</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
+                <span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">examples</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">SequenceClsInputExample</span><span class="p">(</span><span class="n">guid</span><span class="o">=</span><span class="n">guid</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text_a</span><span class="p">,</span> <span class="n">text_b</span><span class="o">=</span><span class="n">text_b</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">examples</span></div>
@@ -495,7 +506,8 @@
             <span class="k">if</span> <span class="n">set_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="s2">&quot;dev&quot;</span><span class="p">]:</span>
                 <span class="n">label</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
                 <span class="n">examples</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                    <span class="n">SequenceClsInputExample</span><span class="p">(</span><span class="n">guid</span><span class="o">=</span><span class="n">guid</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text_a</span><span class="p">,</span> <span class="n">text_b</span><span class="o">=</span><span class="n">text_b</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">))</span>
+                    <span class="n">SequenceClsInputExample</span><span class="p">(</span><span class="n">guid</span><span class="o">=</span><span class="n">guid</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text_a</span><span class="p">,</span> <span class="n">text_b</span><span class="o">=</span><span class="n">text_b</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
+                <span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">examples</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">SequenceClsInputExample</span><span class="p">(</span><span class="n">guid</span><span class="o">=</span><span class="n">guid</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text_a</span><span class="p">,</span> <span class="n">text_b</span><span class="o">=</span><span class="n">text_b</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">examples</span></div>
@@ -528,19 +540,30 @@
             <span class="k">if</span> <span class="n">set_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="s2">&quot;dev&quot;</span><span class="p">]:</span>
                 <span class="n">label</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
                 <span class="n">examples</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                    <span class="n">SequenceClsInputExample</span><span class="p">(</span><span class="n">guid</span><span class="o">=</span><span class="n">guid</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text_a</span><span class="p">,</span> <span class="n">text_b</span><span class="o">=</span><span class="n">text_b</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">))</span>
+                    <span class="n">SequenceClsInputExample</span><span class="p">(</span><span class="n">guid</span><span class="o">=</span><span class="n">guid</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text_a</span><span class="p">,</span> <span class="n">text_b</span><span class="o">=</span><span class="n">text_b</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
+                <span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">examples</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">SequenceClsInputExample</span><span class="p">(</span><span class="n">guid</span><span class="o">=</span><span class="n">guid</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text_a</span><span class="p">,</span> <span class="n">text_b</span><span class="o">=</span><span class="n">text_b</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">examples</span></div>
 
 
-<div class="viewcode-block" id="convert_examples_to_features"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.convert_examples_to_features">[docs]</a><span class="k">def</span> <span class="nf">convert_examples_to_features</span><span class="p">(</span><span class="n">examples</span><span class="p">,</span> <span class="n">label_list</span><span class="p">,</span> <span class="n">max_seq_length</span><span class="p">,</span>
-                                 <span class="n">tokenizer</span><span class="p">,</span> <span class="n">output_mode</span><span class="p">,</span>
-                                 <span class="n">cls_token_at_end</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">pad_on_left</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                                 <span class="n">cls_token</span><span class="o">=</span><span class="s1">&#39;[CLS]&#39;</span><span class="p">,</span> <span class="n">sep_token</span><span class="o">=</span><span class="s1">&#39;[SEP]&#39;</span><span class="p">,</span> <span class="n">pad_token</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-                                 <span class="n">sequence_a_segment_id</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sequence_b_segment_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-                                 <span class="n">cls_token_segment_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">pad_token_segment_id</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-                                 <span class="n">mask_padding_with_zero</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="convert_examples_to_features"><a class="viewcode-back" href="../../../generated_api/nlp_architect.data.html#nlp_architect.data.glue_tasks.convert_examples_to_features">[docs]</a><span class="k">def</span> <span class="nf">convert_examples_to_features</span><span class="p">(</span>
+    <span class="n">examples</span><span class="p">,</span>
+    <span class="n">label_list</span><span class="p">,</span>
+    <span class="n">max_seq_length</span><span class="p">,</span>
+    <span class="n">tokenizer</span><span class="p">,</span>
+    <span class="n">output_mode</span><span class="p">,</span>
+    <span class="n">cls_token_at_end</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">pad_on_left</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">cls_token</span><span class="o">=</span><span class="s2">&quot;[CLS]&quot;</span><span class="p">,</span>
+    <span class="n">sep_token</span><span class="o">=</span><span class="s2">&quot;[SEP]&quot;</span><span class="p">,</span>
+    <span class="n">pad_token</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="n">sequence_a_segment_id</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="n">sequence_b_segment_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">cls_token_segment_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">pad_token_segment_id</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="n">mask_padding_with_zero</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Loads a data file into a list of `InputBatch`s</span>
 <span class="sd">        `cls_token_at_end` define the location of the CLS token:</span>
 <span class="sd">            - False (Default, BERT/XLM pattern): [CLS] + A + [SEP] + B + [SEP]</span>
@@ -568,7 +591,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># Account for [CLS] and [SEP] with &quot;- 2&quot;</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokens_a</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">max_seq_length</span> <span class="o">-</span> <span class="mi">2</span><span class="p">:</span>
-                <span class="n">tokens_a</span> <span class="o">=</span> <span class="n">tokens_a</span><span class="p">[:(</span><span class="n">max_seq_length</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)]</span>
+                <span class="n">tokens_a</span> <span class="o">=</span> <span class="n">tokens_a</span><span class="p">[:</span> <span class="p">(</span><span class="n">max_seq_length</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)]</span>
 
         <span class="c1"># The convention in BERT is:</span>
         <span class="c1"># (a) For sequence pairs:</span>
@@ -630,10 +653,14 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="n">output_mode</span><span class="p">)</span>
 
-        <span class="n">features</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">InputFeatures</span><span class="p">(</span><span class="n">input_ids</span><span class="o">=</span><span class="n">input_ids</span><span class="p">,</span>
-                                      <span class="n">input_mask</span><span class="o">=</span><span class="n">input_mask</span><span class="p">,</span>
-                                      <span class="n">segment_ids</span><span class="o">=</span><span class="n">segment_ids</span><span class="p">,</span>
-                                      <span class="n">label_id</span><span class="o">=</span><span class="n">label_id</span><span class="p">))</span>
+        <span class="n">features</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="n">InputFeatures</span><span class="p">(</span>
+                <span class="n">input_ids</span><span class="o">=</span><span class="n">input_ids</span><span class="p">,</span>
+                <span class="n">input_mask</span><span class="o">=</span><span class="n">input_mask</span><span class="p">,</span>
+                <span class="n">segment_ids</span><span class="o">=</span><span class="n">segment_ids</span><span class="p">,</span>
+                <span class="n">label_id</span><span class="o">=</span><span class="n">label_id</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
     <span class="k">return</span> <span class="n">features</span></div>
 
 
@@ -706,8 +733,7 @@
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Task not found: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">task_name</span><span class="p">))</span>
     <span class="n">task_processor</span> <span class="o">=</span> <span class="n">processors</span><span class="p">[</span><span class="n">task_name</span><span class="p">]()</span>
     <span class="k">if</span> <span class="n">data_dir</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">data_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;GLUE_DIR&quot;</span><span class="p">],</span> <span class="n">DEFAULT_FOLDER_NAMES</span><span class="p">[</span><span class="n">task_name</span><span class="p">])</span>
+        <span class="n">data_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;GLUE_DIR&quot;</span><span class="p">],</span> <span class="n">DEFAULT_FOLDER_NAMES</span><span class="p">[</span><span class="n">task_name</span><span class="p">])</span>
     <span class="n">task_type</span> <span class="o">=</span> <span class="n">output_modes</span><span class="p">[</span><span class="n">task_name</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">Task</span><span class="p">(</span><span class="n">task_name</span><span class="p">,</span> <span class="n">task_processor</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">,</span> <span class="n">task_type</span><span class="p">)</span></div>
 </pre></div>

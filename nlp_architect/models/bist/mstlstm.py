@@ -25,8 +25,20 @@ import time
 from collections import namedtuple
 from operator import itemgetter
 
-from dynet import ParameterCollection, AdamTrainer, LSTMBuilder, tanh, logistic, rectify, cmult, \
-    SimpleRNNBuilder, concatenate, np, renew_cg, esum
+from dynet import (
+    ParameterCollection,
+    AdamTrainer,
+    LSTMBuilder,
+    tanh,
+    logistic,
+    rectify,
+    cmult,
+    SimpleRNNBuilder,
+    concatenate,
+    np,
+    renew_cg,
+    esum,
+)
 
 from nlp_architect.data.conll import ConllEntry
 from nlp_architect.models.bist import decoder
@@ -49,14 +61,18 @@ class MSTParserLSTM(object):
 
     def __init__(self, vocab, w2i, pos, rels, options):
         if isinstance(options, dict):
-            options = _dict_to_obj(options, 'Values')
+            options = _dict_to_obj(options, "Values")
 
         self.model = ParameterCollection()
         random.seed(1)
         self.trainer = AdamTrainer(self.model)
 
-        self.activations = {'tanh': tanh, 'sigmoid': logistic, 'relu': rectify,
-                            'tanh3': (lambda x: tanh(cmult(cmult(x, x), x)))}
+        self.activations = {
+            "tanh": tanh,
+            "sigmoid": logistic,
+            "relu": rectify,
+            "tanh3": (lambda x: tanh(cmult(cmult(x, x), x))),
+        }
         self.activation = self.activations[options.activation]
 
         self.blstm_flag = options.blstmFlag
@@ -76,26 +92,33 @@ class MSTParserLSTM(object):
         self.irels = rels
 
         if self.bibi_flag:
-            self.builders = [LSTMBuilder(1, self.wdims + self.pdims, self.ldims, self.model),
-                             LSTMBuilder(1, self.wdims + self.pdims, self.ldims, self.model)]
-            self.bbuilders = [LSTMBuilder(1, self.ldims * 2, self.ldims, self.model),
-                              LSTMBuilder(1, self.ldims * 2, self.ldims, self.model)]
+            self.builders = [
+                LSTMBuilder(1, self.wdims + self.pdims, self.ldims, self.model),
+                LSTMBuilder(1, self.wdims + self.pdims, self.ldims, self.model),
+            ]
+            self.bbuilders = [
+                LSTMBuilder(1, self.ldims * 2, self.ldims, self.model),
+                LSTMBuilder(1, self.ldims * 2, self.ldims, self.model),
+            ]
         elif self.layers > 0:
-            self.builders = \
-                [LSTMBuilder(self.layers, self.wdims + self.pdims, self.ldims, self.model),
-                 LSTMBuilder(self.layers, self.wdims + self.pdims, self.ldims, self.model)]
+            self.builders = [
+                LSTMBuilder(self.layers, self.wdims + self.pdims, self.ldims, self.model),
+                LSTMBuilder(self.layers, self.wdims + self.pdims, self.ldims, self.model),
+            ]
         else:
-            self.builders = [SimpleRNNBuilder(1, self.wdims + self.pdims, self.ldims, self.model),
-                             SimpleRNNBuilder(1, self.wdims + self.pdims, self.ldims, self.model)]
+            self.builders = [
+                SimpleRNNBuilder(1, self.wdims + self.pdims, self.ldims, self.model),
+                SimpleRNNBuilder(1, self.wdims + self.pdims, self.ldims, self.model),
+            ]
 
         self.hidden_units = options.hidden_units
         self.hidden2_units = options.hidden2_units
 
-        self.vocab['*PAD*'] = 1
-        self.pos['*PAD*'] = 1
+        self.vocab["*PAD*"] = 1
+        self.pos["*PAD*"] = 1
 
-        self.vocab['*INITIAL*'] = 2
-        self.pos['*INITIAL*'] = 2
+        self.vocab["*INITIAL*"] = 2
+        self.pos["*INITIAL*"] = 2
 
         self.wlookup = self.model.add_lookup_parameters((len(vocab) + 3, self.wdims))
         self.plookup = self.model.add_lookup_parameters((len(pos) + 3, self.pdims))
@@ -109,7 +132,8 @@ class MSTParserLSTM(object):
         self.hid2_bias = self.model.add_parameters((self.hidden2_units))
 
         self.out_layer = self.model.add_parameters(
-            (1, self.hidden2_units if self.hidden2_units > 0 else self.hidden_units))
+            (1, self.hidden2_units if self.hidden2_units > 0 else self.hidden_units)
+        )
 
         if self.labels_flag:
             self.rhid_layer_foh = self.model.add_parameters((self.hidden_units, 2 * self.ldims))
@@ -118,34 +142,42 @@ class MSTParserLSTM(object):
             self.rhid2_layer = self.model.add_parameters((self.hidden2_units, self.hidden_units))
             self.rhid2_bias = self.model.add_parameters((self.hidden2_units))
             self.rout_layer = self.model.add_parameters(
-                (len(self.irels),
-                 self.hidden2_units if self.hidden2_units > 0 else self.hidden_units))
+                (
+                    len(self.irels),
+                    self.hidden2_units if self.hidden2_units > 0 else self.hidden_units,
+                )
+            )
             self.rout_bias = self.model.add_parameters((len(self.irels)))
 
     def _get_expr(self, sentence, i, j):
         # pylint: disable=missing-docstring
         if sentence[i].headfov is None:
             sentence[i].headfov = self.hid_layer_foh.expr() * concatenate(
-                [sentence[i].lstms[0], sentence[i].lstms[1]])
+                [sentence[i].lstms[0], sentence[i].lstms[1]]
+            )
         if sentence[j].modfov is None:
             sentence[j].modfov = self.hid_layer_fom.expr() * concatenate(
-                [sentence[j].lstms[0], sentence[j].lstms[1]])
+                [sentence[j].lstms[0], sentence[j].lstms[1]]
+            )
 
         if self.hidden2_units > 0:
-            output = \
-                self.out_layer.expr() * self.activation(
-                    self.hid2_bias.expr() + self.hid2_layer.expr() * self.activation(
-                        sentence[i].headfov + sentence[j].modfov
-                        + self.hid_bias.expr()))  # + self.outBias
+            output = self.out_layer.expr() * self.activation(
+                self.hid2_bias.expr()
+                + self.hid2_layer.expr()
+                * self.activation(sentence[i].headfov + sentence[j].modfov + self.hid_bias.expr())
+            )  # + self.outBias
         else:
             output = self.out_layer.expr() * self.activation(
-                sentence[i].headfov + sentence[j].modfov + self.hid_bias.expr())  # + self.outBias
+                sentence[i].headfov + sentence[j].modfov + self.hid_bias.expr()
+            )  # + self.outBias
         return output
 
     def _evaluate(self, sentence):
         # pylint: disable=missing-docstring
-        exprs = [[self._get_expr(sentence, i, j) for j in range(len(sentence))]
-                 for i in range(len(sentence))]
+        exprs = [
+            [self._get_expr(sentence, i, j) for j in range(len(sentence))]
+            for i in range(len(sentence))
+        ]
         scores = np.array([[output.scalar_value() for output in exprsRow] for exprsRow in exprs])
         return scores, exprs
 
@@ -153,20 +185,33 @@ class MSTParserLSTM(object):
         # pylint: disable=missing-docstring
         if sentence[i].rheadfov is None:
             sentence[i].rheadfov = self.rhid_layer_foh.expr() * concatenate(
-                [sentence[i].lstms[0], sentence[i].lstms[1]])
+                [sentence[i].lstms[0], sentence[i].lstms[1]]
+            )
         if sentence[j].rmodfov is None:
             sentence[j].rmodfov = self.rhid_layer_fom.expr() * concatenate(
-                [sentence[j].lstms[0], sentence[j].lstms[1]])
+                [sentence[j].lstms[0], sentence[j].lstms[1]]
+            )
 
         if self.hidden2_units > 0:
-            output = self.rout_layer.expr() * self.activation(
-                self.rhid2_bias.expr() + self.rhid2_layer.expr()
-                * self.activation(sentence[i].rheadfov + sentence[j].rmodfov
-                                  + self.rhid_bias.expr())) + self.rout_bias.expr()
+            output = (
+                self.rout_layer.expr()
+                * self.activation(
+                    self.rhid2_bias.expr()
+                    + self.rhid2_layer.expr()
+                    * self.activation(
+                        sentence[i].rheadfov + sentence[j].rmodfov + self.rhid_bias.expr()
+                    )
+                )
+                + self.rout_bias.expr()
+            )
         else:
-            output = self.rout_layer.expr() * self.activation(
-                sentence[i].rheadfov + sentence[j].rmodfov
-                + self.rhid_bias.expr()) + self.rout_bias.expr()
+            output = (
+                self.rout_layer.expr()
+                * self.activation(
+                    sentence[i].rheadfov + sentence[j].rmodfov + self.rhid_bias.expr()
+                )
+                + self.rout_bias.expr()
+            )
         return output.value(), output
 
     def predict(self, conll_path=None, conll=None):
@@ -175,16 +220,14 @@ class MSTParserLSTM(object):
             conll = read_conll(conll_path)
 
         for sentence in conll:
-            conll_sentence = [entry for entry in sentence if
-                              isinstance(entry, ConllEntry)]
+            conll_sentence = [entry for entry in sentence if isinstance(entry, ConllEntry)]
 
             for entry in conll_sentence:
-                wordvec = self.wlookup[int(
-                    self.vocab.get(entry.norm, 0))] if self.wdims > 0 else None
-                posvec = self.plookup[
-                    int(self.pos[entry.pos])] if self.pdims > 0 else None
-                entry.vec = concatenate(
-                    [_f for _f in [wordvec, posvec, None] if _f])
+                wordvec = (
+                    self.wlookup[int(self.vocab.get(entry.norm, 0))] if self.wdims > 0 else None
+                )
+                posvec = self.plookup[int(self.pos[entry.pos])] if self.pdims > 0 else None
+                entry.vec = concatenate([_f for _f in [wordvec, posvec, None] if _f])
 
                 entry.lstms = [entry.vec, entry.vec]
                 entry.headfov = None
@@ -223,15 +266,16 @@ class MSTParserLSTM(object):
 
             for entry, head in zip(conll_sentence, heads):
                 entry.pred_parent_id = head
-                entry.pred_relation = '_'
+                entry.pred_relation = "_"
 
             dump = False
 
             if self.labels_flag:
                 for modifier, head in enumerate(heads[1:]):
                     scores, _ = self._evaluate_label(conll_sentence, head, modifier + 1)
-                    conll_sentence[modifier + 1].pred_relation = \
-                        self.irels[max(enumerate(scores), key=itemgetter(1))[0]]
+                    conll_sentence[modifier + 1].pred_relation = self.irels[
+                        max(enumerate(scores), key=itemgetter(1))[0]
+                    ]
 
             renew_cg()
             if not dump:
@@ -254,9 +298,16 @@ class MSTParserLSTM(object):
 
         for sentence in shuffled_data:
             if i_sentence % 100 == 0 and i_sentence != 0:
-                print('Processing sentence number:', i_sentence, 'Loss:',
-                      eloss / etotal, 'Errors:',
-                      (float(eerrors)) / etotal, 'Time', time.time() - start)
+                print(
+                    "Processing sentence number:",
+                    i_sentence,
+                    "Loss:",
+                    eloss / etotal,
+                    "Errors:",
+                    (float(eerrors)) / etotal,
+                    "Time",
+                    time.time() - start,
+                )
                 start = time.time()
                 eerrors = 0
                 eloss = 0.0
@@ -266,9 +317,12 @@ class MSTParserLSTM(object):
 
             for entry in conll_sentence:
                 c = float(self.words_count.get(entry.norm, 0))
-                drop_flag = (random.random() < (c / (0.25 + c)))
-                wordvec = self.wlookup[int(self.vocab.get(entry.norm, 0)) if drop_flag else 0] \
-                    if self.wdims > 0 else None
+                drop_flag = random.random() < (c / (0.25 + c))
+                wordvec = (
+                    self.wlookup[int(self.vocab.get(entry.norm, 0)) if drop_flag else 0]
+                    if self.wdims > 0
+                    else None
+                )
                 posvec = self.plookup[int(self.pos[entry.pos])] if self.pdims > 0 else None
 
                 entry.vec = concatenate([_f for _f in [wordvec, posvec, None] if _f])
@@ -313,16 +367,25 @@ class MSTParserLSTM(object):
                 for modifier, head in enumerate(gold[1:]):
                     rscores, rexprs = self._evaluate_label(conll_sentence, head, modifier + 1)
                     gold_label_ind = self.rels[conll_sentence[modifier + 1].relation]
-                    wrong_label_ind = max(((label, scr) for label, scr in enumerate(rscores)
-                                           if label != gold_label_ind), key=itemgetter(1))[0]
+                    wrong_label_ind = max(
+                        (
+                            (label, scr)
+                            for label, scr in enumerate(rscores)
+                            if label != gold_label_ind
+                        ),
+                        key=itemgetter(1),
+                    )[0]
                     if rscores[gold_label_ind] < rscores[wrong_label_ind] + 1:
                         lerrs.append(rexprs[wrong_label_ind] - rexprs[gold_label_ind])
 
             e = sum([1 for h, g in zip(heads[1:], gold[1:]) if h != g])
             eerrors += e
             if e > 0:
-                loss = [(exprs[h][i] - exprs[g][i]) for i, (h, g) in
-                        enumerate(zip(heads, gold)) if h != g]  # * (1.0/float(e))
+                loss = [
+                    (exprs[h][i] - exprs[g][i])
+                    for i, (h, g) in enumerate(zip(heads, gold))
+                    if h != g
+                ]  # * (1.0/float(e))
                 eloss += e
                 mloss += e
                 errs.extend(loss)
@@ -331,7 +394,7 @@ class MSTParserLSTM(object):
 
             if i_sentence % 1 == 0 or errs > 0 or lerrs:
                 if errs or lerrs:
-                    eerrs = (esum(errs + lerrs))  # * (1.0/(float(len(errs))))
+                    eerrs = esum(errs + lerrs)  # * (1.0/(float(len(errs))))
                     eerrs.scalar_value()
                     eerrs.backward()
                     self.trainer.update()
@@ -343,7 +406,7 @@ class MSTParserLSTM(object):
             i_sentence += 1
 
         if errs:
-            eerrs = (esum(errs + lerrs))  # * (1.0/(float(len(errs))))
+            eerrs = esum(errs + lerrs)  # * (1.0/(float(len(errs))))
             eerrs.scalar_value()
             eerrs.backward()
             self.trainer.update()
@@ -360,6 +423,6 @@ class MSTParserLSTM(object):
         self.model.populate(filename)
 
 
-def _dict_to_obj(dic, name='Object'):
+def _dict_to_obj(dic, name="Object"):
     """Return an object form of a dictionary."""
     return namedtuple(name, dic.keys())(*dic.values())

@@ -210,7 +210,7 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wordnet_dump</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">wordnet_dump</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">dump</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_dump</span><span class="p">(</span><span class="n">wordnet_dump</span><span class="p">)</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Wikipedia dump loaded successfully!&#39;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Wikipedia dump loaded successfully!&quot;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="WordnetOffline.get_pages"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.wordnet.html#nlp_architect.data.cdc_resources.wordnet.wordnet_offline.WordnetOffline.get_pages">[docs]</a>    <span class="k">def</span> <span class="nf">get_pages</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mention</span><span class="p">):</span>
         <span class="n">page</span> <span class="o">=</span> <span class="kc">None</span>
@@ -239,25 +239,31 @@
 <div class="viewcode-block" id="WordnetOffline.extract_json_values"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.wordnet.html#nlp_architect.data.cdc_resources.wordnet.wordnet_offline.WordnetOffline.extract_json_values">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">extract_json_values</span><span class="p">(</span><span class="n">json_page</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">json_page</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">orig_phrase</span> <span class="o">=</span> <span class="n">json_page</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;orig_phrase&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-            <span class="n">clean_phrase</span> <span class="o">=</span> <span class="n">json_page</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;clean_phrase&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-            <span class="n">head</span> <span class="o">=</span> <span class="n">json_page</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;head&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-            <span class="n">head_lemma</span> <span class="o">=</span> <span class="n">json_page</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;head_lemma&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-            <span class="n">head_synonyms</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">json_page</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;head_synonyms&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
-            <span class="n">head_lemma_synonyms</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">json_page</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;head_lemma_synonyms&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
-            <span class="n">head_derivationally</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">json_page</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;head_derivationally&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
-            <span class="n">head_lemma_derivationally</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">json_page</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;head_lemma_derivationally&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
+            <span class="n">orig_phrase</span> <span class="o">=</span> <span class="n">json_page</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;orig_phrase&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">clean_phrase</span> <span class="o">=</span> <span class="n">json_page</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;clean_phrase&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">head</span> <span class="o">=</span> <span class="n">json_page</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;head&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">head_lemma</span> <span class="o">=</span> <span class="n">json_page</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;head_lemma&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">head_synonyms</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">json_page</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;head_synonyms&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
+            <span class="n">head_lemma_synonyms</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">json_page</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;head_lemma_synonyms&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
+            <span class="n">head_derivationally</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">json_page</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;head_derivationally&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
+            <span class="n">head_lemma_derivationally</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">json_page</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;head_lemma_derivationally&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
 
-            <span class="n">all_clean_words_synonyms</span> <span class="o">=</span> <span class="n">json_page</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;all_clean_words_synonyms&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">all_clean_words_synonyms</span> <span class="o">=</span> <span class="n">json_page</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;all_clean_words_synonyms&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
             <span class="n">all_as_set_list</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="k">for</span> <span class="n">list_</span> <span class="ow">in</span> <span class="n">all_clean_words_synonyms</span><span class="p">:</span>
                 <span class="n">all_as_set_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">list_</span><span class="p">))</span>
 
-            <span class="n">wordnet_page</span> <span class="o">=</span> <span class="n">WordnetPage</span><span class="p">(</span><span class="n">orig_phrase</span><span class="p">,</span> <span class="n">clean_phrase</span><span class="p">,</span> <span class="n">head</span><span class="p">,</span>
-                                       <span class="n">head_lemma</span><span class="p">,</span> <span class="n">head_synonyms</span><span class="p">,</span>
-                                       <span class="n">head_lemma_synonyms</span><span class="p">,</span> <span class="n">head_derivationally</span><span class="p">,</span>
-                                       <span class="n">head_lemma_derivationally</span><span class="p">,</span>
-                                       <span class="n">all_as_set_list</span><span class="p">)</span>
+            <span class="n">wordnet_page</span> <span class="o">=</span> <span class="n">WordnetPage</span><span class="p">(</span>
+                <span class="n">orig_phrase</span><span class="p">,</span>
+                <span class="n">clean_phrase</span><span class="p">,</span>
+                <span class="n">head</span><span class="p">,</span>
+                <span class="n">head_lemma</span><span class="p">,</span>
+                <span class="n">head_synonyms</span><span class="p">,</span>
+                <span class="n">head_lemma_synonyms</span><span class="p">,</span>
+                <span class="n">head_derivationally</span><span class="p">,</span>
+                <span class="n">head_lemma_derivationally</span><span class="p">,</span>
+                <span class="n">all_as_set_list</span><span class="p">,</span>
+            <span class="p">)</span>
             <span class="k">return</span> <span class="n">wordnet_page</span>
 
         <span class="k">return</span> <span class="kc">None</span></div></div>

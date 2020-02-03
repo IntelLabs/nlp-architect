@@ -36,8 +36,11 @@ def _download_pretrained_rerank_model(rerank_model_full_path):
     if not path.isfile(rerank_model_full_path):
         makedirs(rerank_model_dir, exist_ok=True)
         print("dowloading pre-trained reranking model..")
-        download_unlicensed_file('https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/'
-                                 'absa/', 'rerank_model.h5', rerank_model_full_path)
+        download_unlicensed_file(
+            "https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/" "absa/",
+            "rerank_model.h5",
+            rerank_model_full_path,
+        )
     return rerank_model_full_path
 
 
@@ -46,15 +49,19 @@ def _walk_directory(directory: Union[str, PathLike]):
     for dir_path, _, filenames in walk(directory):
         for filename in filenames:
             file_path = join(dir_path, filename)
-            if isfile(file_path) and not filename.startswith('.'):
-                with open(file_path, encoding='utf-8') as file:
+            if isfile(file_path) and not filename.startswith("."):
+                with open(file_path, encoding="utf-8") as file:
                     doc_text = file.read()
                     yield filename, doc_text
 
 
-def parse_docs(parser: SpacyBISTParser, docs: Union[str, PathLike],
-               out_dir: Union[str, PathLike] = None,
-               show_tok=True, show_doc=True):
+def parse_docs(
+    parser: SpacyBISTParser,
+    docs: Union[str, PathLike],
+    out_dir: Union[str, PathLike] = None,
+    show_tok=True,
+    show_doc=True,
+):
     """Parse raw documents in the form of text files in a directory or lines in a text file.
 
     Args:
@@ -76,8 +83,13 @@ def parse_docs(parser: SpacyBISTParser, docs: Union[str, PathLike],
     return parsed_docs, total_parsed
 
 
-def parse_txt(parser: SpacyBISTParser, txt_path: Union[str, PathLike],
-              out_dir: Union[str, PathLike] = None, show_tok=True, show_doc=True):
+def parse_txt(
+    parser: SpacyBISTParser,
+    txt_path: Union[str, PathLike],
+    out_dir: Union[str, PathLike] = None,
+    show_tok=True,
+    show_doc=True,
+):
     """Parse raw documents in the form of lines in a text file.
 
     Args:
@@ -90,21 +102,26 @@ def parse_txt(parser: SpacyBISTParser, txt_path: Union[str, PathLike],
     Yields:
         CoreNLPDoc: the annotated document.
     """
-    with open(txt_path, encoding='utf-8') as f:
+    with open(txt_path, encoding="utf-8") as f:
         if out_dir:
-            print('Writing parsed documents to {}'.format(out_dir))
+            print("Writing parsed documents to {}".format(out_dir))
         for i, doc_text in enumerate(tqdm(f, total=line_count(txt_path), file=sys.stdout)):
-            parsed_doc = parser.parse(doc_text.rstrip('\n'), show_tok, show_doc)
+            parsed_doc = parser.parse(doc_text.rstrip("\n"), show_tok, show_doc)
 
             if out_dir:
-                out_path = Path(out_dir) / (str(i + 1) + '.json')
-                with open(out_path, 'w', encoding='utf-8') as doc_file:
+                out_path = Path(out_dir) / (str(i + 1) + ".json")
+                with open(out_path, "w", encoding="utf-8") as doc_file:
                     doc_file.write(parsed_doc.pretty_json())
             yield parsed_doc
 
 
-def parse_dir(parser, input_dir: Union[str, PathLike], out_dir: Union[str, PathLike] = None,
-              show_tok=True, show_doc=True):
+def parse_dir(
+    parser,
+    input_dir: Union[str, PathLike],
+    out_dir: Union[str, PathLike] = None,
+    show_tok=True,
+    show_doc=True,
+):
     """Parse a directory of raw text documents, one by one.
 
     Args:
@@ -118,13 +135,13 @@ def parse_dir(parser, input_dir: Union[str, PathLike], out_dir: Union[str, PathL
         CoreNLPDoc: the annotated document.
     """
     if out_dir:
-        print('Writing parsed documents to {}'.format(out_dir))
+        print("Writing parsed documents to {}".format(out_dir))
     for filename, file_contents in tqdm(list(_walk_directory(input_dir)), file=sys.stdout):
         parsed_doc = parser.parse(file_contents, show_tok, show_doc)
 
         if out_dir:
-            out_path = Path(out_dir) / (filename + '.json')
-            with open(out_path, 'w', encoding='utf-8') as file:
+            out_path = Path(out_dir) / (filename + ".json")
+            with open(out_path, "w", encoding="utf-8") as file:
                 file.write(parsed_doc.pretty_json())
         yield parsed_doc
 
@@ -136,15 +153,17 @@ def _read_lexicon_from_csv(lexicon_path: Union[str, PathLike]) -> dict:
         Dictionary of LexiconElements, each LexiconElement presents a row.
     """
     lexicon = {}
-    with open(INFERENCE_LEXICONS / lexicon_path, newline='', encoding="utf-8") as csv_file:
-        reader = csv.reader(csv_file, delimiter=',', quotechar='|')
+    with open(INFERENCE_LEXICONS / lexicon_path, newline="", encoding="utf-8") as csv_file:
+        reader = csv.reader(csv_file, delimiter=",", quotechar="|")
         for row in reader:
             try:
-                lexicon[row[0]] = LexiconElement(term=row[0], score=row[1], polarity=None,
-                                                 is_acquired=None, position=row[2])
+                lexicon[row[0]] = LexiconElement(
+                    term=row[0], score=row[1], polarity=None, is_acquired=None, position=row[2]
+                )
             except Exception:
-                lexicon[row[0]] = LexiconElement(term=row[0], score=row[1], polarity=None,
-                                                 is_acquired=None, position=None)
+                lexicon[row[0]] = LexiconElement(
+                    term=row[0], score=row[1], polarity=None, is_acquired=None, position=None
+                )
     return lexicon
 
 
@@ -155,18 +174,20 @@ def load_opinion_lex(file_name: Union[str, PathLike]) -> dict:
         Dictionary of LexiconElements, each LexiconElement presents a row.
     """
     lexicon = {}
-    with open(file_name, newline='', encoding="utf-8") as csvfile:
-        reader = csv.reader(csvfile, delimiter=',', quotechar='|')
+    with open(file_name, newline="", encoding="utf-8") as csvfile:
+        reader = csv.reader(csvfile, delimiter=",", quotechar="|")
         next(reader)
         for row in reader:
             term, score, polarity, is_acquired = row[0], row[1], row[2], row[3]
             score = float(score)
             # ignore terms with low score
             if score >= 0.5 and polarity in (Polarity.POS.value, Polarity.NEG.value):
-                lexicon[term] = \
-                    LexiconElement(term.lower(),
-                                   score if polarity == Polarity.POS.value else -score, polarity,
-                                   is_acquired)
+                lexicon[term] = LexiconElement(
+                    term.lower(),
+                    score if polarity == Polarity.POS.value else -score,
+                    polarity,
+                    is_acquired,
+                )
     return lexicon
 
 
@@ -176,8 +197,8 @@ def _load_aspect_lexicon(file_name: Union[str, PathLike]):
     Returns: Dictionary of LexiconElements, each LexiconElement presents a row.
     """
     lexicon = []
-    with open(file_name, newline='', encoding="utf-8-sig") as csv_file:
-        reader = csv.reader(csv_file, delimiter=',', quotechar='|')
+    with open(file_name, newline="", encoding="utf-8-sig") as csv_file:
+        reader = csv.reader(csv_file, delimiter=",", quotechar="|")
         next(reader)
         for row in reader:
             lexicon.append(LexiconElement(row))
@@ -192,8 +213,8 @@ def _load_parsed_docs_from_dir(directory: Union[str, PathLike]):
     """
     res = {}
     for file_name in listdir(directory):
-        if file_name.endswith('.txt') or file_name.endswith('.json'):
-            with open(Path(directory) / file_name, encoding='utf-8') as f:
+        if file_name.endswith(".txt") or file_name.endswith(".json"):
+            with open(Path(directory) / file_name, encoding="utf-8") as f:
                 content = f.read()
                 res[file_name] = json.loads(content, object_hook=CoreNLPDoc.decoder)
     return res
@@ -206,8 +227,8 @@ def _write_table(table: list, filename: Union[str, PathLike]):
         table (list): table to be printed, as list of lists
         filename (str or Pathlike): file name
     """
-    with open(filename, 'w', newline='', encoding='utf-8') as f:
-        writer = csv.writer(f, delimiter=',')
+    with open(filename, "w", newline="", encoding="utf-8") as f:
+        writer = csv.writer(f, delimiter=",")
         for row in table:
             writer.writerow(row)
 
@@ -250,8 +271,7 @@ def _write_generic_sentiment_terms(dictionary: dict, file_name: Union[str, PathL
     """Write generic sentiment terms as csv to file system."""
     generic_terms = [["Term", "Score", "Polarity"]]
     for generic_term in dictionary.values():
-        generic_terms.append(
-            [str(generic_term), "1.0", generic_term.polarity.name])
+        generic_terms.append([str(generic_term), "1.0", generic_term.polarity.name])
     _write_table(generic_terms, file_name)
 
 
@@ -262,7 +282,7 @@ def _load_lex_as_list_from_csv(file_name: Union[str, PathLike]):
         file_name (str or PathLike): input csv file name
     """
     lexicon_table = []
-    with open(file_name, 'r', encoding='utf-8-sig') as f:
+    with open(file_name, "r", encoding="utf-8-sig") as f:
         reader = csv.DictReader(f, skipinitialspace=True)
 
         if reader is None:
@@ -270,7 +290,7 @@ def _load_lex_as_list_from_csv(file_name: Union[str, PathLike]):
             return lexicon_table
 
         for row in reader:
-            term = row['Term'].strip()
+            term = row["Term"].strip()
             lexicon_table.append(term)
 
         return lexicon_table
@@ -282,11 +302,11 @@ def read_generic_lex_from_file(file_name: Union[str, PathLike]):
     Args:
         file_name (str or PathLike): name of csv file
     """
-    with open(file_name, encoding='utf-8-sig') as f:
+    with open(file_name, encoding="utf-8-sig") as f:
         reader = csv.DictReader(f)
         dict_list = {}
         for row in reader:
-            if row["UsedForAcquisition"] == 'Y':
+            if row["UsedForAcquisition"] == "Y":
                 key_term = row["Term"] if len(row) > 0 else ""
                 terms = []
                 if len(row) > 0:
@@ -302,33 +322,34 @@ def _read_generic_lex_for_similarity(file_name: Union[str, PathLike]):
     Args:
         file_name (str or PathLike): name of csv file
     """
-    with open(file_name, encoding='utf-8-sig') as f:
+    with open(file_name, encoding="utf-8-sig") as f:
         reader = csv.DictReader(f)
         dict_list = {}
         for row in reader:
-            if row["UsedForReranking"] == 'Y':
+            if row["UsedForReranking"] == "Y":
                 key_term = row["Term"] if len(row) > 0 else ""
                 polarity = row["Polarity"]
                 dict_list[key_term] = polarity
     return dict_list
 
 
-def _write_aspect_lex(parsed_data: Union[str, PathLike], generated_aspect_lex: dict,
-                      out_dir: Path):
+def _write_aspect_lex(parsed_data: Union[str, PathLike], generated_aspect_lex: dict, out_dir: Path):
     parsed_docs = _load_parsed_docs_from_dir(parsed_data)
     aspect_dict = {}
     max_examples = 20
-    label = 'AS'
+    label = "AS"
     for doc in parsed_docs.values():
         for sent_text, _ in doc.sent_iter():
 
             for term, lemma in generated_aspect_lex.items():
                 if term in sent_text.lower():
-                    _find_aspect_in_sentence(term, lemma, sent_text, aspect_dict, label,
-                                             max_examples, False)
-                if lemma != '' and lemma in sent_text.lower():
-                    _find_aspect_in_sentence(term, lemma, sent_text, aspect_dict, label,
-                                             max_examples, True)
+                    _find_aspect_in_sentence(
+                        term, lemma, sent_text, aspect_dict, label, max_examples, False
+                    )
+                if lemma != "" and lemma in sent_text.lower():
+                    _find_aspect_in_sentence(
+                        term, lemma, sent_text, aspect_dict, label, max_examples, True
+                    )
 
     # write aspect lex to file
     header_row = ["Term", "Alias1", "Alias2", "Alias3"]
@@ -337,31 +358,39 @@ def _write_aspect_lex(parsed_data: Union[str, PathLike], generated_aspect_lex: d
     aspect_table = [header_row]
 
     for [term, lemma], sentences in aspect_dict.items():
-        term_row = [term, lemma, '', '']
+        term_row = [term, lemma, "", ""]
         for sent in sentences:
             term_row.append(sent)
         aspect_table.append(term_row)
 
     out_dir.mkdir(parents=True, exist_ok=True)
-    out_file_path = out_dir / 'generated_aspect_lex.csv'
+    out_file_path = out_dir / "generated_aspect_lex.csv"
     _write_table(aspect_table, out_file_path)
-    print('Aspect lexicon written to {}'.format(out_file_path))
+    print("Aspect lexicon written to {}".format(out_file_path))
 
 
-def _find_aspect_in_sentence(term, lemma, sent_text, aspect_dict, label, max_examples,
-                             found_lemma):
+def _find_aspect_in_sentence(term, lemma, sent_text, aspect_dict, label, max_examples, found_lemma):
     search_term = term
     if found_lemma:
         search_term = lemma
 
     start_idx = sent_text.lower().find(search_term)
     end_idx = start_idx + len(search_term)
-    if (start_idx - 1 > 0 and sent_text[start_idx - 1] == ' ') and (
-            end_idx < len(sent_text) and sent_text[end_idx] == ' '):
+    if (start_idx - 1 > 0 and sent_text[start_idx - 1] == " ") and (
+        end_idx < len(sent_text) and sent_text[end_idx] == " "
+    ):
 
-        sent_text_html = ''.join(
-            (sent_text[:start_idx], '<span class="', label, '">', sent_text[start_idx: end_idx],
-             '</span>', sent_text[end_idx:]))
+        sent_text_html = "".join(
+            (
+                sent_text[:start_idx],
+                '<span class="',
+                label,
+                '">',
+                sent_text[start_idx:end_idx],
+                "</span>",
+                sent_text[end_idx:],
+            )
+        )
 
         if (term, lemma) in aspect_dict:
             if len(aspect_dict[term, lemma]) < max_examples:
@@ -375,16 +404,17 @@ def _write_opinion_lex(parsed_data, generated_opinion_lex_reranked, out_dir):
     parsed_docs = _load_parsed_docs_from_dir(parsed_data)
     opinion_dict = {}
     max_examples = 20
-    label = 'OP'
+    label = "OP"
     for doc in parsed_docs.values():
         for sent_text, _ in doc.sent_iter():
 
             for term, terms_params in generated_opinion_lex_reranked.items():
                 is_acquired = terms_params[2]
-                if is_acquired == 'Y':
+                if is_acquired == "Y":
                     if term in sent_text.lower():
-                        _find_opinion_in_sentence(term, terms_params, sent_text, opinion_dict,
-                                                  label, max_examples)
+                        _find_opinion_in_sentence(
+                            term, terms_params, sent_text, opinion_dict, label, max_examples
+                        )
                 else:
                     opinion_dict[term] = list(terms_params)
 
@@ -401,9 +431,9 @@ def _write_opinion_lex(parsed_data, generated_opinion_lex_reranked, out_dir):
         opinion_table.append(term_row)
 
     out_dir.mkdir(parents=True, exist_ok=True)
-    out_file_path = out_dir / 'generated_opinion_lex_reranked.csv'
+    out_file_path = out_dir / "generated_opinion_lex_reranked.csv"
     _write_table(opinion_table, out_file_path)
-    print('Reranked opinion lexicon written to {}'.format(out_file_path))
+    print("Reranked opinion lexicon written to {}".format(out_file_path))
 
 
 def _find_opinion_in_sentence(term, terms_params, sent_text, opinion_dict, label, max_examples):
@@ -411,12 +441,21 @@ def _find_opinion_in_sentence(term, terms_params, sent_text, opinion_dict, label
     start_idx = sent_text.lower().find(term)
     end_idx = start_idx + len(term)
 
-    if (start_idx - 1 > 0 and sent_text[start_idx - 1] == ' ') and (
-            end_idx < len(sent_text) and sent_text[end_idx] == ' '):
+    if (start_idx - 1 > 0 and sent_text[start_idx - 1] == " ") and (
+        end_idx < len(sent_text) and sent_text[end_idx] == " "
+    ):
 
-        sent_text_html = ''.join(
-            (sent_text[:start_idx], '<span class="', label, '">', sent_text[start_idx: end_idx],
-             '</span>', sent_text[end_idx:]))
+        sent_text_html = "".join(
+            (
+                sent_text[:start_idx],
+                '<span class="',
+                label,
+                '">',
+                sent_text[start_idx:end_idx],
+                "</span>",
+                sent_text[end_idx:],
+            )
+        )
 
         if term in opinion_dict:
             if len(opinion_dict[term]) < max_examples:

@@ -14,16 +14,16 @@
 # limitations under the License.
 # ******************************************************************************
 
-MAJOR_V, MINOR_V, PATCH_V, STAGE = 0, 5, 2, ''
+MAJOR_V, MINOR_V, PATCH_V, STAGE = 0, 5, 3, ""
 
 
 def nlp_architect_version():
     if PATCH_V != 0:
-        v = '{}.{}.{}'.format(MAJOR_V, MINOR_V, PATCH_V)
+        v = "{}.{}.{}".format(MAJOR_V, MINOR_V, PATCH_V)
     else:
-        v = '{}.{}'.format(MAJOR_V, MINOR_V)
+        v = "{}.{}".format(MAJOR_V, MINOR_V)
     if len(STAGE) != 0:
-        v += '.{}'.format(STAGE)
+        v += ".{}".format(STAGE)
     return v
 
 

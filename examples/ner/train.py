@@ -31,38 +31,64 @@ from nlp_architect.utils.metrics import get_conll_scores
 
 def read_input_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('-b', type=int, default=10,
-                        help='Batch size')
-    parser.add_argument('-e', type=int, default=10,
-                        help='Number of epochs')
-    parser.add_argument('--train_file', type=validate_existing_filepath, required=True,
-                        help='Train file (sequential tagging dataset format)')
-    parser.add_argument('--test_file', type=validate_existing_filepath, required=True,
-                        help='Test file (sequential tagging dataset format)')
-    parser.add_argument('--tag_num', type=int, default=2,
-                        help='Entity labels tab number in train/test files')
-    parser.add_argument('--sentence_length', type=int, default=50,
-                        help='Max sentence length')
-    parser.add_argument('--word_length', type=int, default=12,
-                        help='Max word length in characters')
-    parser.add_argument('--word_embedding_dims', type=int, default=100,
-                        help='Word features embedding dimension size')
-    parser.add_argument('--character_embedding_dims', type=int, default=25,
-                        help='Character features embedding dimension size')
-    parser.add_argument('--char_features_lstm_dims', type=int, default=25,
-                        help='Character feature extractor LSTM dimension size')
-    parser.add_argument('--entity_tagger_lstm_dims', type=int, default=100,
-                        help='Entity tagger LSTM dimension size')
-    parser.add_argument('--dropout', type=float, default=0.2,
-                        help='Dropout rate')
-    parser.add_argument('--embedding_model', type=validate_existing_filepath,
-                        help='Path to external word embedding model file')
-    parser.add_argument('--model_path', type=str, default='model.h5',
-                        help='Path for saving model weights')
-    parser.add_argument('--model_info_path', type=str, default='model_info.dat',
-                        help='Path for saving model topology')
-    parser.add_argument('--use_cudnn', default=False, action='store_true',
-                        help='use CUDNN based LSTM cells')
+    parser.add_argument("-b", type=int, default=10, help="Batch size")
+    parser.add_argument("-e", type=int, default=10, help="Number of epochs")
+    parser.add_argument(
+        "--train_file",
+        type=validate_existing_filepath,
+        required=True,
+        help="Train file (sequential tagging dataset format)",
+    )
+    parser.add_argument(
+        "--test_file",
+        type=validate_existing_filepath,
+        required=True,
+        help="Test file (sequential tagging dataset format)",
+    )
+    parser.add_argument(
+        "--tag_num", type=int, default=2, help="Entity labels tab number in train/test files"
+    )
+    parser.add_argument("--sentence_length", type=int, default=50, help="Max sentence length")
+    parser.add_argument("--word_length", type=int, default=12, help="Max word length in characters")
+    parser.add_argument(
+        "--word_embedding_dims",
+        type=int,
+        default=100,
+        help="Word features embedding dimension size",
+    )
+    parser.add_argument(
+        "--character_embedding_dims",
+        type=int,
+        default=25,
+        help="Character features embedding dimension size",
+    )
+    parser.add_argument(
+        "--char_features_lstm_dims",
+        type=int,
+        default=25,
+        help="Character feature extractor LSTM dimension size",
+    )
+    parser.add_argument(
+        "--entity_tagger_lstm_dims", type=int, default=100, help="Entity tagger LSTM dimension size"
+    )
+    parser.add_argument("--dropout", type=float, default=0.2, help="Dropout rate")
+    parser.add_argument(
+        "--embedding_model",
+        type=validate_existing_filepath,
+        help="Path to external word embedding model file",
+    )
+    parser.add_argument(
+        "--model_path", type=str, default="model.h5", help="Path for saving model weights"
+    )
+    parser.add_argument(
+        "--model_info_path",
+        type=str,
+        default="model_info.dat",
+        help="Path for saving model topology",
+    )
+    parser.add_argument(
+        "--use_cudnn", default=False, action="store_true", help="use CUDNN based LSTM cells"
+    )
     input_args = parser.parse_args()
     validate_input_args(input_args)
     return input_args
@@ -81,20 +107,24 @@ def validate_input_args(input_args):
     validate((input_args.dropout, float, 0, 1))
     model_path = path.join(path.dirname(path.realpath(__file__)), str(input_args.model_path))
     validate_parent_exists(model_path)
-    model_info_path = path.join(path.dirname(path.realpath(__file__)),
-                                str(input_args.model_info_path))
+    model_info_path = path.join(
+        path.dirname(path.realpath(__file__)), str(input_args.model_info_path)
+    )
     validate_parent_exists(model_info_path)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # parse the input
     args = read_input_args()
 
     # load dataset and parameters
-    dataset = SequentialTaggingDataset(args.train_file, args.test_file,
-                                       max_sentence_length=args.sentence_length,
-                                       max_word_length=args.word_length,
-                                       tag_field_no=args.tag_num)
+    dataset = SequentialTaggingDataset(
+        args.train_file,
+        args.test_file,
+        max_sentence_length=args.sentence_length,
+        max_word_length=args.word_length,
+        tag_field_no=args.tag_num,
+    )
 
     # get the train and test data sets
     x_train, x_char_train, y_train = dataset.train_set
@@ -109,14 +139,16 @@ if __name__ == '__main__':
 
     ner_model = NERCRF(use_cudnn=args.use_cudnn)
     # pylint: disable=unexpected-keyword-arg
-    ner_model.build(args.word_length,
-                    num_y_labels,
-                    vocabulary_size,
-                    char_vocabulary_size,
-                    word_embedding_dims=args.word_embedding_dims,
-                    char_embedding_dims=args.character_embedding_dims,
-                    tagger_lstm_dims=args.entity_tagger_lstm_dims,
-                    dropout=args.dropout)
+    ner_model.build(
+        args.word_length,
+        num_y_labels,
+        vocabulary_size,
+        char_vocabulary_size,
+        word_embedding_dims=args.word_embedding_dims,
+        char_embedding_dims=args.character_embedding_dims,
+        tagger_lstm_dims=args.entity_tagger_lstm_dims,
+        dropout=args.dropout,
+    )
 
     # initialize word embedding if external model selected
     if args.embedding_model is not None:
@@ -130,21 +162,23 @@ if __name__ == '__main__':
     train_inputs.append(np.sum(np.not_equal(x_train, 0), axis=-1).reshape((-1, 1)))
     test_inputs.append(np.sum(np.not_equal(x_test, 0), axis=-1).reshape((-1, 1)))
 
-    conll_cb = ConllCallback(test_inputs, y_test, dataset.y_labels.vocab,
-                             batch_size=args.b)
-    ner_model.fit(x=train_inputs, y=y_train,
-                  batch_size=args.b,
-                  epochs=args.e,
-                  callbacks=[conll_cb],
-                  validation=(test_inputs, y_test))
+    conll_cb = ConllCallback(test_inputs, y_test, dataset.y_labels.vocab, batch_size=args.b)
+    ner_model.fit(
+        x=train_inputs,
+        y=y_train,
+        batch_size=args.b,
+        epochs=args.e,
+        callbacks=[conll_cb],
+        validation=(test_inputs, y_test),
+    )
 
     # saving model
     ner_model.save(args.model_path)
-    with open(args.model_info_path, 'wb') as fp:
+    with open(args.model_info_path, "wb") as fp:
         info = {
-            'y_vocab': dataset.y_labels.vocab,
-            'word_vocab': dataset.word_vocab.vocab,
-            'char_vocab': dataset.char_vocab.vocab
+            "y_vocab": dataset.y_labels.vocab,
+            "word_vocab": dataset.word_vocab.vocab,
+            "char_vocab": dataset.char_vocab.vocab,
         }
         pickle.dump(info, fp)
 

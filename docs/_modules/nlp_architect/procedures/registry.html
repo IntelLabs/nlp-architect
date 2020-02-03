@@ -203,25 +203,29 @@
 <div class="viewcode-block" id="register_cmd"><a class="viewcode-back" href="../../../generated_api/nlp_architect.procedures.html#nlp_architect.procedures.registry.register_cmd">[docs]</a><span class="k">def</span> <span class="nf">register_cmd</span><span class="p">(</span><span class="n">registry</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">description</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">register_cmd_fn</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">issubclass</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">Procedure</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Registered class must be subclassed from Procedure&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Registered class must be subclassed from Procedure&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">registry</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Cannot register duplicate model </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot register duplicate model </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
         <span class="n">run_fn</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">run_procedure</span>
         <span class="n">arg_adder_fn</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">add_arguments</span>
-        <span class="n">new_cmd</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
-                   <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="n">description</span><span class="p">,</span>
-                   <span class="s1">&#39;fn&#39;</span><span class="p">:</span> <span class="n">run_fn</span><span class="p">,</span>
-                   <span class="s1">&#39;arg_adder&#39;</span><span class="p">:</span> <span class="n">arg_adder_fn</span><span class="p">}</span>
+        <span class="n">new_cmd</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
+            <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="n">description</span><span class="p">,</span>
+            <span class="s2">&quot;fn&quot;</span><span class="p">:</span> <span class="n">run_fn</span><span class="p">,</span>
+            <span class="s2">&quot;arg_adder&quot;</span><span class="p">:</span> <span class="n">arg_adder_fn</span><span class="p">,</span>
+        <span class="p">}</span>
         <span class="n">registry</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_cmd</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">cls</span>
+
     <span class="k">return</span> <span class="n">register_cmd_fn</span></div>
 
 
 <div class="viewcode-block" id="register_train_cmd"><a class="viewcode-back" href="../../../generated_api/nlp_architect.procedures.html#nlp_architect.procedures.registry.register_train_cmd">[docs]</a><span class="k">def</span> <span class="nf">register_train_cmd</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">description</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">register_cmd</span><span class="p">(</span><span class="n">CMD_REGISTRY</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">],</span> <span class="n">name</span><span class="p">,</span> <span class="n">description</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">register_cmd</span><span class="p">(</span><span class="n">CMD_REGISTRY</span><span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">],</span> <span class="n">name</span><span class="p">,</span> <span class="n">description</span><span class="p">)</span></div>
+
 
 <div class="viewcode-block" id="register_inference_cmd"><a class="viewcode-back" href="../../../generated_api/nlp_architect.procedures.html#nlp_architect.procedures.registry.register_inference_cmd">[docs]</a><span class="k">def</span> <span class="nf">register_inference_cmd</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">description</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">register_cmd</span><span class="p">(</span><span class="n">CMD_REGISTRY</span><span class="p">[</span><span class="s1">&#39;inference&#39;</span><span class="p">],</span> <span class="n">name</span><span class="p">,</span> <span class="n">description</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">register_cmd</span><span class="p">(</span><span class="n">CMD_REGISTRY</span><span class="p">[</span><span class="s2">&quot;inference&quot;</span><span class="p">],</span> <span class="n">name</span><span class="p">,</span> <span class="n">description</span><span class="p">)</span></div>
 </pre></div>
 
            </div>

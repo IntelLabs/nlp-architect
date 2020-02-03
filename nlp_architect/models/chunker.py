@@ -45,16 +45,18 @@ class SequenceTagger(object):
         self.model = None
         self.use_cudnn = use_cudnn
 
-    def build(self,
-              vocabulary_size,
-              num_pos_labels,
-              num_chunk_labels,
-              char_vocab_size=None,
-              max_word_len=25,
-              feature_size=100,
-              dropout=0.5,
-              classifier='softmax',
-              optimizer=None):
+    def build(
+        self,
+        vocabulary_size,
+        num_pos_labels,
+        num_chunk_labels,
+        char_vocab_size=None,
+        max_word_len=25,
+        feature_size=100,
+        dropout=0.5,
+        classifier="softmax",
+        optimizer=None,
+    ):
         """
         Build a chunker/POS model
 
@@ -81,8 +83,9 @@ class SequenceTagger(object):
         self.dropout = dropout
         self.classifier = classifier
 
-        word_emb_layer = tf.keras.layers.Embedding(self.vocabulary_size, self.feature_size,
-                                                   name='embedding', mask_zero=False)
+        word_emb_layer = tf.keras.layers.Embedding(
+            self.vocabulary_size, self.feature_size, name="embedding", mask_zero=False
+        )
         word_input = tf.keras.layers.Input(shape=(None,))
         word_embedding = word_emb_layer(word_input)
         input_src = word_input
@@ -91,55 +94,57 @@ class SequenceTagger(object):
         # add char input if present
         if self.char_vocab_size is not None:
             char_input = tf.keras.layers.Input(shape=(None, self.max_word_len))
-            char_emb_layer = tf.keras.layers.Embedding(self.char_vocab_size, 30,
-                                                       name='char_embedding',
-                                                       mask_zero=False)
+            char_emb_layer = tf.keras.layers.Embedding(
+                self.char_vocab_size, 30, name="char_embedding", mask_zero=False
+            )
             char_embedding = char_emb_layer(char_input)
             char_embedding = tf.keras.layers.TimeDistributed(
-                tf.keras.layers.Conv1D(30, 3, padding='same'))(char_embedding)
+                tf.keras.layers.Conv1D(30, 3, padding="same")
+            )(char_embedding)
             char_embedding = tf.keras.layers.TimeDistributed(tf.keras.layers.GlobalMaxPooling1D())(
-                char_embedding)
+                char_embedding
+            )
 
             input_src = [input_src, char_input]
             features = tf.keras.layers.concatenate([word_embedding, char_embedding])
 
-        rnn_layer_1 = tf.keras.layers.Bidirectional(self._rnn_cell(return_sequences=True))(
-            features)
+        rnn_layer_1 = tf.keras.layers.Bidirectional(self._rnn_cell(return_sequences=True))(features)
         rnn_layer_2 = tf.keras.layers.Bidirectional(self._rnn_cell(return_sequences=True))(
-            rnn_layer_1)
+            rnn_layer_1
+        )
         rnn_layer_3 = tf.keras.layers.Bidirectional(self._rnn_cell(return_sequences=True))(
-            rnn_layer_2)
+            rnn_layer_2
+        )
 
         # outputs
-        pos_out = tf.keras.layers.Dense(self.num_pos_labels, activation='softmax',
-                                        name='pos_output')(rnn_layer_1)
-        losses = {'pos_output': 'categorical_crossentropy'}
-        metrics = {'pos_output': 'categorical_accuracy'}
+        pos_out = tf.keras.layers.Dense(
+            self.num_pos_labels, activation="softmax", name="pos_output"
+        )(rnn_layer_1)
+        losses = {"pos_output": "categorical_crossentropy"}
+        metrics = {"pos_output": "categorical_accuracy"}
 
-        if 'crf' in self.classifier:
-            with tf.device('/cpu:0'):
-                chunk_crf = CRF(self.num_chunk_labels, name='chunk_crf')
+        if "crf" in self.classifier:
+            with tf.device("/cpu:0"):
+                chunk_crf = CRF(self.num_chunk_labels, name="chunk_crf")
                 rnn_layer_3_dense = tf.keras.layers.Dense(self.num_chunk_labels)(
-                    tf.keras.layers.Dropout(self.dropout)(rnn_layer_3))
+                    tf.keras.layers.Dropout(self.dropout)(rnn_layer_3)
+                )
                 chunks_out = chunk_crf(rnn_layer_3_dense)
-                losses['chunk_crf'] = chunk_crf.loss
-                metrics['chunk_crf'] = chunk_crf.viterbi_accuracy
+                losses["chunk_crf"] = chunk_crf.loss
+                metrics["chunk_crf"] = chunk_crf.viterbi_accuracy
         else:
             chunks_out = tf.keras.layers.TimeDistributed(
-                tf.keras.layers.Dense(self.num_chunk_labels,
-                                      activation='softmax'),
-                name='chunk_out')(rnn_layer_3)
-            losses['chunk_out'] = 'categorical_crossentropy'
-            metrics['chunk_out'] = 'categorical_accuracy'
+                tf.keras.layers.Dense(self.num_chunk_labels, activation="softmax"), name="chunk_out"
+            )(rnn_layer_3)
+            losses["chunk_out"] = "categorical_crossentropy"
+            metrics["chunk_out"] = "categorical_accuracy"
 
         model = tf.keras.Model(input_src, [pos_out, chunks_out])
         if optimizer is None:
-            self.optimizer = tf.keras.optimizers.Adam(0.001, clipnorm=5.)
+            self.optimizer = tf.keras.optimizers.Adam(0.001, clipnorm=5.0)
         else:
             self.optimizer = optimizer
-        model.compile(optimizer=self.optimizer,
-                      loss=losses,
-                      metrics=metrics)
+        model.compile(optimizer=self.optimizer, loss=losses, metrics=metrics)
         self.model = model
 
     def load_embedding_weights(self, weights):
@@ -149,10 +154,11 @@ class SequenceTagger(object):
         Args:
             weights (numpy.ndarray): 2D matrix of word weights
         """
-        assert self.model is not None, 'Cannot assign weights, apply build() before trying to ' \
-                                       'loading embedding weights '
-        emb_layer = self.model.get_layer(name='embedding')
-        assert emb_layer.output_dim == weights.shape[1], 'embedding vectors shape mismatch'
+        assert self.model is not None, (
+            "Cannot assign weights, apply build() before trying to " "loading embedding weights "
+        )
+        emb_layer = self.model.get_layer(name="embedding")
+        assert emb_layer.output_dim == weights.shape[1], "embedding vectors shape mismatch"
         emb_layer.set_weights([weights])
 
     def _rnn_cell(self, **kwargs):
@@ -174,8 +180,14 @@ class SequenceTagger(object):
             validation_data (optional): x and y samples to validate at the end of the epoch
             callbacks (optional): additional callbacks to run with fitting
         """
-        self.model.fit(x=x, y=y, batch_size=batch_size, epochs=epochs,
-                       validation_data=validation_data, callbacks=callbacks)
+        self.model.fit(
+            x=x,
+            y=y,
+            batch_size=batch_size,
+            epochs=epochs,
+            validation_data=validation_data,
+            callbacks=callbacks,
+        )
 
     def predict(self, x, batch_size=1):
         """
@@ -198,9 +210,9 @@ class SequenceTagger(object):
             filepath (str): file name to save model
         """
         topology = {k: v for k, v in self.__dict__.items()}
-        topology.pop('model')
-        topology.pop('optimizer')
-        topology.pop('use_cudnn')
+        topology.pop("model")
+        topology.pop("optimizer")
+        topology.pop("use_cudnn")
         save_model(self.model, topology, filepath)
 
     def load(self, filepath):

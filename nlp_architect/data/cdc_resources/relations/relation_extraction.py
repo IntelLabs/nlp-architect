@@ -23,8 +23,9 @@ class RelationExtraction(object):
     def __init__(self):
         pass
 
-    def extract_relation(self, mention_x: MentionDataLight, mention_y: MentionDataLight,
-                         relation: RelationType) -> RelationType:
+    def extract_relation(
+        self, mention_x: MentionDataLight, mention_y: MentionDataLight, relation: RelationType
+    ) -> RelationType:
         """
         Base Class Check if Sub class support given relation before executing the sub class
 
@@ -42,8 +43,9 @@ class RelationExtraction(object):
             ret_relation = self.extract_sub_relations(mention_x, mention_y, relation)
         return ret_relation
 
-    def extract_sub_relations(self, mention_x: MentionDataLight, mention_y: MentionDataLight,
-                              relation: RelationType) -> RelationType:
+    def extract_sub_relations(
+        self, mention_x: MentionDataLight, mention_y: MentionDataLight, relation: RelationType
+    ) -> RelationType:
         raise NotImplementedError
 
     @staticmethod

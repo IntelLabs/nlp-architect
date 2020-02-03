@@ -89,7 +89,7 @@ import sys
 # CoNLL-U column names
 ID, FORM, LEMMA, UPOS, XPOS, FEATS, HEAD, DEPREL, DEPS, MISC = list(range(10))
 
-WEIGHTS = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'weights.clas')
+WEIGHTS = os.path.join(os.path.abspath(os.path.dirname(__file__)), "weights.clas")
 
 
 # UD Error is used when raising exceptions in this module
@@ -142,7 +142,7 @@ def load_conllu(file):
             # if root).
             self.parent = None
             # Let's ignore language-specific deprel subtypes.
-            self.columns[DEPREL] = columns[DEPREL].split(':')[0]
+            self.columns[DEPREL] = columns[DEPREL].split(":")[0]
 
     ud = UDRepresentation()
 
@@ -171,8 +171,8 @@ def load_conllu(file):
                     head = int(word.columns[HEAD])
                     if head > len(ud.words) - sentence_start:
                         raise UDError(
-                            "HEAD '{}' points outside of the sentence".format(
-                                word.columns[HEAD]))
+                            "HEAD '{}' points outside of the sentence".format(word.columns[HEAD])
+                        )
                     if head:
                         parent = ud.words[sentence_start + head - 1]
                         word.parent = "remapping"
@@ -183,8 +183,7 @@ def load_conllu(file):
                 process_word(word)
 
             # Check there is a single root node
-            if len([word for word in ud.words[sentence_start:] if
-                    word.parent is None]) != 1:
+            if len([word for word in ud.words[sentence_start:] if word.parent is None]) != 1:
                 raise UDError("There are multiple roots in a sentence")
 
             # End the sentence
@@ -196,8 +195,8 @@ def load_conllu(file):
         columns = line.split("\t")
         if len(columns) != 10:
             raise UDError(
-                "The CoNLL-U line does not contain 10 tab-separated columns: "
-                "'{}'".format(line))
+                "The CoNLL-U line does not contain 10 tab-separated columns: " "'{}'".format(line)
+            )
 
         # Skip empty nodes
         if "." in columns[ID]:
@@ -219,8 +218,7 @@ def load_conllu(file):
             try:
                 start, end = list(map(int, columns[ID].split("-")))
             except Exception:
-                raise UDError("Cannot parse multi-word token ID '{}'".format(
-                    columns[ID]))
+                raise UDError("Cannot parse multi-word token ID '{}'".format(columns[ID]))
 
             for _ in range(start, end + 1):
                 word_line = file.readline().rstrip("\r\n")
@@ -228,9 +226,9 @@ def load_conllu(file):
                 if len(word_columns) != 10:
                     raise UDError(
                         "The CoNLL-U line does not contain 10 tab-separated "
-                        "columns: '{}'".format(word_line))
-                ud.words.append(
-                    UDWord(ud.tokens[-1], word_columns, is_multiword=True))
+                        "columns: '{}'".format(word_line)
+                    )
+                ud.words.append(UDWord(ud.tokens[-1], word_columns, is_multiword=True))
         # Basic tokens/words
         else:
             try:
@@ -238,10 +236,10 @@ def load_conllu(file):
             except Exception:
                 raise UDError("Cannot parse word ID '{}'".format(columns[ID]))
             if word_id != len(ud.words) - sentence_start + 1:
-                raise UDError("Incorrect word ID '{}' for word '{}', expected"
-                              " '{}'".format(columns[ID], columns[FORM],
-                                             len(ud.words)
-                                             - sentence_start + 1))
+                raise UDError(
+                    "Incorrect word ID '{}' for word '{}', expected"
+                    " '{}'".format(columns[ID], columns[FORM], len(ud.words) - sentence_start + 1)
+                )
 
             try:
                 head_id = int(columns[HEAD])
@@ -263,14 +261,13 @@ def evaluate(gold_ud, system_ud, deprel_weights=None):
     # pylint: disable=too-many-locals
     class Score:
         # pylint: disable=too-few-public-methods
-        def __init__(self, gold_total, system_total, correct,
-                     aligned_total=None):
+        def __init__(self, gold_total, system_total, correct, aligned_total=None):
             self.precision = correct / system_total if system_total else 0.0
             self.recall = correct / gold_total if gold_total else 0.0
-            self.f1 = 2 * correct / (system_total + gold_total) \
-                if system_total + gold_total else 0.0
-            self.aligned_accuracy = \
-                correct / aligned_total if aligned_total else aligned_total
+            self.f1 = (
+                2 * correct / (system_total + gold_total) if system_total + gold_total else 0.0
+            )
+            self.aligned_accuracy = correct / aligned_total if aligned_total else aligned_total
 
     class AlignmentWord:
         # pylint: disable=too-few-public-methods
@@ -300,11 +297,14 @@ def evaluate(gold_ud, system_ud, deprel_weights=None):
             # to parent system nodes, or by None if no gold words is aligned to
             # the parent.
             for words in self.matched_words:
-                words.gold_parent = words.gold_word.parent if \
-                    words.gold_word.parent is not None else 0
-                words.system_parent_gold_aligned = self.matched_words_map.get(
-                    words.system_word.parent, None) \
-                    if words.system_word.parent is not None else 0
+                words.gold_parent = (
+                    words.gold_word.parent if words.gold_word.parent is not None else 0
+                )
+                words.system_parent_gold_aligned = (
+                    self.matched_words_map.get(words.system_word.parent, None)
+                    if words.system_word.parent is not None
+                    else 0
+                )
 
     def lower(text):
         if sys.version_info < (3, 0) and isinstance(text, str):
@@ -343,8 +343,8 @@ def evaluate(gold_ud, system_ud, deprel_weights=None):
 
         for words in alignment.matched_words:
             if key_fn(words.gold_word, words.gold_parent) == key_fn(
-                    words.system_word,
-                    words.system_parent_gold_aligned):
+                words.system_word, words.system_parent_gold_aligned
+            ):
                 correct += weight_fn(words.gold_word)
 
         return Score(gold, system, correct, aligned)
@@ -368,21 +368,26 @@ def evaluate(gold_ud, system_ud, deprel_weights=None):
         # Initialize multiword_span_end characters index.
         if gold_words[gi].is_multiword:
             multiword_span_end = gold_words[gi].span.end
-            if not system_words[si].is_multiword and system_words[si].span.start < \
-                    gold_words[gi].span.start:
+            if (
+                not system_words[si].is_multiword
+                and system_words[si].span.start < gold_words[gi].span.start
+            ):
                 si += 1
         else:  # if system_words[si].is_multiword
             multiword_span_end = system_words[si].span.end
-            if not gold_words[gi].is_multiword and gold_words[gi].span.start < \
-                    system_words[si].span.start:
+            if (
+                not gold_words[gi].is_multiword
+                and gold_words[gi].span.start < system_words[si].span.start
+            ):
                 gi += 1
         gs, ss = gi, si
 
         # Find the end of the multiword span
         # (so both gi and si are pointing to the word following the multiword
         # span end).
-        while not beyond_end(gold_words, gi, multiword_span_end) or \
-                not beyond_end(system_words, si, multiword_span_end):
+        while not beyond_end(gold_words, gi, multiword_span_end) or not beyond_end(
+            system_words, si, multiword_span_end
+        ):
             gold_start = gold_words[gi].span.start
             sys_start = system_words[si].span.start
             if gi < len(gold_words) and (si >= len(system_words) or gold_start <= sys_start):
@@ -399,14 +404,13 @@ def evaluate(gold_ud, system_ud, deprel_weights=None):
         for g in reversed(list(range(gi - gs))):
             for s in reversed(list(range(si - ss))):
                 if lower(gold_words[gs + g].columns[FORM]) == lower(
-                        system_words[ss + s].columns[FORM]):
-                    lcs[g][s] = 1 + (lcs[g + 1][s + 1] if
-                                     g + 1 < gi - gs and s + 1 < si - ss
-                                     else 0)
-                lcs[g][s] = max(lcs[g][s],
-                                lcs[g + 1][s] if g + 1 < gi - gs else 0)
-                lcs[g][s] = max(lcs[g][s],
-                                lcs[g][s + 1] if s + 1 < si - ss else 0)
+                    system_words[ss + s].columns[FORM]
+                ):
+                    lcs[g][s] = 1 + (
+                        lcs[g + 1][s + 1] if g + 1 < gi - gs and s + 1 < si - ss else 0
+                    )
+                lcs[g][s] = max(lcs[g][s], lcs[g + 1][s] if g + 1 < gi - gs else 0)
+                lcs[g][s] = max(lcs[g][s], lcs[g][s + 1] if s + 1 < si - ss else 0)
         return lcs
 
     def align_words(gold_words, system_words):
@@ -417,8 +421,7 @@ def evaluate(gold_ud, system_ud, deprel_weights=None):
             if gold_words[gi].is_multiword or system_words[si].is_multiword:
                 # A: Multi-word tokens => align via LCS within the whole
                 # "multiword span".
-                gs, ss, gi, si = find_multiword_span(gold_words, system_words,
-                                                     gi, si)
+                gs, ss, gi, si = find_multiword_span(gold_words, system_words, gi, si)
 
                 if si > ss and gi > gs:
                     lcs = compute_lcs(gold_words, system_words, gi, si, gs, ss)
@@ -427,24 +430,22 @@ def evaluate(gold_ud, system_ud, deprel_weights=None):
                     s, g = 0, 0
                     while g < gi - gs and s < si - ss:
                         if lower(gold_words[gs + g].columns[FORM]) == lower(
-                                system_words[ss + s].columns[FORM]):
-                            alignment.append_aligned_words(gold_words[gs + g],
-                                                           system_words[
-                                                               ss + s])
+                            system_words[ss + s].columns[FORM]
+                        ):
+                            alignment.append_aligned_words(gold_words[gs + g], system_words[ss + s])
                             g += 1
                             s += 1
-                        elif lcs[g][s] == (
-                                lcs[g + 1][s] if g + 1 < gi - gs else 0):
+                        elif lcs[g][s] == (lcs[g + 1][s] if g + 1 < gi - gs else 0):
                             g += 1
                         else:
                             s += 1
             else:
                 # B: No multi-word token => align according to spans.
                 if (gold_words[gi].span.start, gold_words[gi].span.end) == (
-                        system_words[si].span.start,
-                        system_words[si].span.end):
-                    alignment.append_aligned_words(gold_words[gi],
-                                                   system_words[si])
+                    system_words[si].span.start,
+                    system_words[si].span.end,
+                ):
+                    alignment.append_aligned_words(gold_words[gi], system_words[si])
                     gi += 1
                     si += 1
                 elif gold_words[gi].span.start <= system_words[si].span.start:
@@ -464,11 +465,10 @@ def evaluate(gold_ud, system_ud, deprel_weights=None):
 
         raise UDError(
             "The concatenation of tokens in gold file and in system file "
-            "differ!\n"
-            + "First 20 differing characters in gold file: '{}' and system file:"
+            "differ!\n" + "First 20 differing characters in gold file: '{}' and system file:"
             " '{}'".format(
-                "".join(gold_ud.characters[index:index + 20]),
-                "".join(system_ud.characters[index:index + 20])
+                "".join(gold_ud.characters[index : index + 20]),
+                "".join(system_ud.characters[index : index + 20]),
             )
         )
 
@@ -482,24 +482,24 @@ def evaluate(gold_ud, system_ud, deprel_weights=None):
         "Words": alignment_score(alignment, None),
         "UPOS": alignment_score(alignment, lambda w, parent: w.columns[UPOS]),
         "XPOS": alignment_score(alignment, lambda w, parent: w.columns[XPOS]),
-        "Feats": alignment_score(alignment,
-                                 lambda w, parent: w.columns[FEATS]),
-        "AllTags": alignment_score(alignment, lambda w, parent: (
-            w.columns[UPOS], w.columns[XPOS], w.columns[FEATS])),
-        "Lemmas": alignment_score(alignment,
-                                  lambda w, parent: w.columns[LEMMA]),
+        "Feats": alignment_score(alignment, lambda w, parent: w.columns[FEATS]),
+        "AllTags": alignment_score(
+            alignment, lambda w, parent: (w.columns[UPOS], w.columns[XPOS], w.columns[FEATS])
+        ),
+        "Lemmas": alignment_score(alignment, lambda w, parent: w.columns[LEMMA]),
         "UAS": alignment_score(alignment, lambda w, parent: parent),
-        "LAS": alignment_score(alignment,
-                               lambda w, parent: (parent, w.columns[DEPREL])),
+        "LAS": alignment_score(alignment, lambda w, parent: (parent, w.columns[DEPREL])),
     }
 
     # Add WeightedLAS if weights are given
     if deprel_weights is not None:
+
         def weighted_las(word):
             return deprel_weights.get(word.columns[DEPREL], 1.0)
 
-        result["WeightedLAS"] = alignment_score(alignment, lambda w, parent: (
-            parent, w.columns[DEPREL]), weighted_las)
+        result["WeightedLAS"] = alignment_score(
+            alignment, lambda w, parent: (parent, w.columns[DEPREL]), weighted_las
+        )
 
     return result
 
@@ -519,8 +519,8 @@ def load_deprel_weights(weights_file):
             if len(columns) != 2:
                 raise ValueError(
                     "Expected two columns in the UD Relations weights file on line"
-                    " '{}'".format(
-                        line))
+                    " '{}'".format(line)
+                )
 
             deprel_weights[columns[0]] = float(columns[1])
 
@@ -528,8 +528,9 @@ def load_deprel_weights(weights_file):
 
 
 def load_conllu_file(path):
-    with open(path, mode="r", **({"encoding": "utf-8"} if sys.version_info >= (3, 0) else {})) \
-            as _file:
+    with open(
+        path, mode="r", **({"encoding": "utf-8"} if sys.version_info >= (3, 0) else {})
+    ) as _file:
         return load_conllu(_file)
 
 
@@ -553,23 +554,37 @@ def run_conllu_eval(gold_file, test_file, weights_file=WEIGHTS, verbose=True):
     evaluation = evaluate_wrapper(gold_file, test_file, weights_file)
 
     # Write the evaluation to file
-    with open(test_file[:test_file.rindex('.')] + '_eval.txt', 'w') as out_file:
+    with open(test_file[: test_file.rindex(".")] + "_eval.txt", "w") as out_file:
         if not verbose:
-            out_file.write("LAS F1 Score: {:.2f}".format(100 * evaluation["LAS"].f1) + '\n')
+            out_file.write("LAS F1 Score: {:.2f}".format(100 * evaluation["LAS"].f1) + "\n")
         else:
-            metrics = ["Tokens", "Sentences", "Words", "UPOS", "XPOS", "Feats",
-                       "AllTags", "Lemmas", "UAS", "LAS"]
+            metrics = [
+                "Tokens",
+                "Sentences",
+                "Words",
+                "UPOS",
+                "XPOS",
+                "Feats",
+                "AllTags",
+                "Lemmas",
+                "UAS",
+                "LAS",
+            ]
             if weights_file is not None:
                 metrics.append("WeightedLAS")
 
-            out_file.write("Metrics    | Precision |    Recall |  F1 Score | AligndAcc" + '\n')
-            out_file.write("-----------+-----------+-----------+-----------+-----------" + '\n')
+            out_file.write("Metrics    | Precision |    Recall |  F1 Score | AligndAcc" + "\n")
+            out_file.write("-----------+-----------+-----------+-----------+-----------" + "\n")
             for metric in metrics:
-                out_file.write("{:11}|{:10.2f} |{:10.2f} |{:10.2f} |{}".format(
-                    metric,
-                    100 * evaluation[metric].precision,
-                    100 * evaluation[metric].recall,
-                    100 * evaluation[metric].f1,
-                    "{:10.2f}".format(100 * evaluation[metric].aligned_accuracy)
-                    if evaluation[metric].aligned_accuracy is not None else ""
-                ) + '\n')
+                out_file.write(
+                    "{:11}|{:10.2f} |{:10.2f} |{:10.2f} |{}".format(
+                        metric,
+                        100 * evaluation[metric].precision,
+                        100 * evaluation[metric].recall,
+                        100 * evaluation[metric].f1,
+                        "{:10.2f}".format(100 * evaluation[metric].aligned_accuracy)
+                        if evaluation[metric].aligned_accuracy is not None
+                        else "",
+                    )
+                    + "\n"
+                )

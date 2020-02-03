@@ -26,8 +26,11 @@ import feature_extraction as fe
 import numpy
 from tqdm import tqdm
 
-from nlp_architect.utils.io import validate_existing_filepath, validate_parent_exists, \
-    validate_proxy_path
+from nlp_architect.utils.io import (
+    validate_existing_filepath,
+    validate_parent_exists,
+    validate_proxy_path,
+)
 
 wordnet = None
 wikidata = None
@@ -132,8 +135,8 @@ def write_to_csv(output, np_feature_vectors, np_dic, np_list):
         np_dic (dict): dict, keys: the noun phrase, value: the features
         np_list (list): features list
     """
-    with open(output, 'w', encoding='utf-8') as out_file:
-        writer = csv.writer(out_file, delimiter=',', quotechar='"')
+    with open(output, "w", encoding="utf-8") as out_file:
+        writer = csv.writer(out_file, delimiter=",", quotechar='"')
         print("prepared data CSV file is saved in {0}".format(output))
         for i, _ in enumerate(np_feature_vectors):
             np_vector = np_feature_vectors[i]
@@ -170,8 +173,9 @@ def prepare_data(data_file, output_file, word2vec_file, http_proxy=None, https_p
         np_dic[row[0]] = row[1]
         np_list.append(row[0])
     p = Pool(10)
-    np_feature_vectors = list(tqdm(p.imap(build_feature_vector, np_list),
-                                   total=len(np_list)))  # , desc="np feature extraction status"))
+    np_feature_vectors = list(
+        tqdm(p.imap(build_feature_vector, np_list), total=len(np_list))
+    )  # , desc="np feature extraction status"))
     write_to_csv(output_file, np_feature_vectors, np_dic, np_list)
 
 
@@ -189,8 +193,8 @@ def read_csv_file_data(input_path):
     if not os.path.isabs(input_path):
         # handle case using default value\relative paths
         input_path = os.path.join(os.path.dirname(__file__), input_path)
-    with open(input_path, 'r', encoding='utf-8-sig') as input_file:
-        reader = csv.reader((line.replace('\0', '') for line in input_file))
+    with open(input_path, "r", encoding="utf-8-sig") as input_file:
+        reader = csv.reader((line.replace("\0", "") for line in input_file))
         reader_list = list(reader)
     return reader_list
 
@@ -253,7 +257,7 @@ class NpSemanticSegData:
         Y_labels_vec = []
         cntr = 0
         for line in reader_list:
-            X_features = numpy.array(line[:self.feature_vec_dim])
+            X_features = numpy.array(line[: self.feature_vec_dim])
             X_feature_matrix[cntr, :] = X_features
 
             if self.is_y_labels:
@@ -263,10 +267,10 @@ class NpSemanticSegData:
 
         len_train = int(math.floor(num_feats * self.train_to_test_ratio))
 
-        X_train = X_feature_matrix[0:len_train - 1]
+        X_train = X_feature_matrix[0 : len_train - 1]
         y_train = None
         if self.is_y_labels:
-            y_train = Y_labels_vec[0:len_train - 1]
+            y_train = Y_labels_vec[0 : len_train - 1]
             y_train = numpy.array(y_train, dtype=numpy.int32)
 
         X_test = X_feature_matrix[len_train:]
@@ -284,38 +288,38 @@ class NpSemanticSegData:
             dict: dict with train set & test_set (each is dict with X and y)
         """
         X_train, y_train, X_test, y_test = self.load_data_from_file()
-        data_set = {'train': {'X': X_train, 'y': y_train}, 'test': {'X': X_test, 'y': y_test}}
+        data_set = {"train": {"X": X_train, "y": y_train}, "test": {"X": X_test, "y": y_test}}
         return data_set
 
     @property
     def train_set(self):
         """dict(:obj:`numpy.ndarray`): train set (X & y)"""
-        return self.data_set['train']
+        return self.data_set["train"]
 
     @property
     def train_set_x(self):
         """dict(:obj:`numpy.ndarray`): train set (X)"""
-        return self.data_set['train']['X']
+        return self.data_set["train"]["X"]
 
     @property
     def train_set_y(self):
         """dict(:obj:`numpy.ndarray`): train set (y)"""
-        return self.data_set['train']['y']
+        return self.data_set["train"]["y"]
 
     @property
     def test_set(self):
         """dict(:obj:`numpy.ndarray`): test set (X & y)"""
-        return self.data_set['test']
+        return self.data_set["test"]
 
     @property
     def test_set_x(self):
         """dict(:obj:`numpy.ndarray`): test set (X)"""
-        return self.data_set['test']['X']
+        return self.data_set["test"]["X"]
 
     @property
     def test_set_y(self):
         """dict(:obj:`numpy.ndarray`): test set (y)"""
-        return self.data_set['test']['y']
+        return self.data_set["test"]["y"]
 
 
 def absolute_path(input_path):
@@ -337,18 +341,26 @@ def absolute_path(input_path):
 
 if __name__ == "__main__":
     # parse the command line arguments
-    parser = argparse.ArgumentParser(
-        description='Prepare data')
-    parser.add_argument('--data', type=validate_existing_filepath,
-                        help='path the CSV file where the raw dataset is saved')
-    parser.add_argument('--output', type=validate_parent_exists,
-                        help='path the CSV file where the prepared dataset will be saved')
-    parser.add_argument('--w2v_path', type=validate_existing_filepath,
-                        help='path to the word embedding\'s model')
-    parser.add_argument('--http_proxy', help='system\'s http proxy',
-                        type=validate_proxy_path, default=None)
-    parser.add_argument('--https_proxy', help='system\'s https proxy',
-                        type=validate_proxy_path, default=None)
+    parser = argparse.ArgumentParser(description="Prepare data")
+    parser.add_argument(
+        "--data",
+        type=validate_existing_filepath,
+        help="path the CSV file where the raw dataset is saved",
+    )
+    parser.add_argument(
+        "--output",
+        type=validate_parent_exists,
+        help="path the CSV file where the prepared dataset will be saved",
+    )
+    parser.add_argument(
+        "--w2v_path", type=validate_existing_filepath, help="path to the word embedding's model"
+    )
+    parser.add_argument(
+        "--http_proxy", help="system's http proxy", type=validate_proxy_path, default=None
+    )
+    parser.add_argument(
+        "--https_proxy", help="system's https proxy", type=validate_proxy_path, default=None
+    )
     args = parser.parse_args()
     data_path = absolute_path(args.data)
     word2vec_path = args.w2v_path

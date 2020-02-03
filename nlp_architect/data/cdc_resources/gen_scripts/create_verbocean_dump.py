@@ -17,20 +17,21 @@ import argparse
 import json
 import logging
 
-from nlp_architect.data.cdc_resources.relations.verbocean_relation_extraction import \
-    VerboceanRelationExtraction
+from nlp_architect.data.cdc_resources.relations.verbocean_relation_extraction import (
+    VerboceanRelationExtraction,
+)
 from nlp_architect.models.cross_doc_coref.system.cdc_utils import load_mentions_vocab_from_files
 from nlp_architect.utils import io
 
 logger = logging.getLogger(__name__)
 
-parser = argparse.ArgumentParser(description='Create Verb-Ocean dataset only dump')
+parser = argparse.ArgumentParser(description="Create Verb-Ocean dataset only dump")
 
-parser.add_argument('--vo', type=str, help='Verb Ocean file', required=True)
+parser.add_argument("--vo", type=str, help="Verb Ocean file", required=True)
 
-parser.add_argument('--mentions', type=str, help='dataset mentions', required=True)
+parser.add_argument("--mentions", type=str, help="dataset mentions", required=True)
 
-parser.add_argument('--output', type=str, help='location were to create dump file', required=True)
+parser.add_argument("--output", type=str, help="location were to create dump file", required=True)
 
 args = parser.parse_args()
 
@@ -46,15 +47,15 @@ def vo_dump():
         if word in vo:
             vo_for_vocab[word] = vo[word]
 
-    logger.info('Found %d words from vocabulary', len(vo_for_vocab.keys()))
-    logger.info('Preparing to save refDict output file')
+    logger.info("Found %d words from vocabulary", len(vo_for_vocab.keys()))
+    logger.info("Preparing to save refDict output file")
 
-    with open(out_file, 'w') as f:
+    with open(out_file, "w") as f:
         json.dump(vo_for_vocab, f)
-    logger.info('Done saved to-%s', out_file)
+    logger.info("Done saved to-%s", out_file)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     io.validate_existing_filepath(args.mentions)
     io.validate_existing_filepath(args.output)
     io.validate_existing_filepath(args.vo)

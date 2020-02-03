@@ -197,6 +197,7 @@
 <span class="c1"># See the License for the specific language governing permissions and</span>
 <span class="c1"># limitations under the License.</span>
 <span class="c1"># ******************************************************************************</span>
+<span class="c1"># Module adapted from https://github.com/kmkurn/pytorch-crf</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
 
 <span class="kn">import</span> <span class="nn">torch</span>
@@ -228,7 +229,7 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_tags</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">batch_first</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">num_tags</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;invalid number of tags: </span><span class="si">{num_tags}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;invalid number of tags: </span><span class="si">{num_tags}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">num_tags</span> <span class="o">=</span> <span class="n">num_tags</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">batch_first</span> <span class="o">=</span> <span class="n">batch_first</span>
@@ -248,14 +249,14 @@
         <span class="n">nn</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">uniform_</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">transitions</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{self.__class__.__name__}</span><span class="s1">(num_tags=</span><span class="si">{self.num_tags}</span><span class="s1">)&#39;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{self.__class__.__name__}</span><span class="s2">(num_tags=</span><span class="si">{self.num_tags}</span><span class="s2">)&quot;</span>
 
 <div class="viewcode-block" id="CRF.forward"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.nn.torch.layers.html#nlp_architect.nn.torch.layers.crf.CRF.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span>
-            <span class="n">emissions</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>
-            <span class="n">tags</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">LongTensor</span><span class="p">,</span>
-            <span class="n">mask</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">ByteTensor</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="n">reduction</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;sum&#39;</span><span class="p">,</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">emissions</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>
+        <span class="n">tags</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">LongTensor</span><span class="p">,</span>
+        <span class="n">mask</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">ByteTensor</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">reduction</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;sum&quot;</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Compute the conditional log likelihood of a sequence of tags given emission scores.</span>
 <span class="sd">        Args:</span>
@@ -276,8 +277,8 @@
 <span class="sd">            reduction is ``none``, ``()`` otherwise.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_validate</span><span class="p">(</span><span class="n">emissions</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="n">tags</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">mask</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">reduction</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="s1">&#39;sum&#39;</span><span class="p">,</span> <span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="s1">&#39;token_mean&#39;</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;invalid reduction: </span><span class="si">{reduction}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">reduction</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;none&quot;</span><span class="p">,</span> <span class="s2">&quot;sum&quot;</span><span class="p">,</span> <span class="s2">&quot;mean&quot;</span><span class="p">,</span> <span class="s2">&quot;token_mean&quot;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;invalid reduction: </span><span class="si">{reduction}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">mask</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">mask</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">tags</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
 
@@ -293,17 +294,18 @@
         <span class="c1"># shape: (batch_size,)</span>
         <span class="n">llh</span> <span class="o">=</span> <span class="n">numerator</span> <span class="o">-</span> <span class="n">denominator</span>
 
-        <span class="k">if</span> <span class="n">reduction</span> <span class="o">==</span> <span class="s1">&#39;none&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">reduction</span> <span class="o">==</span> <span class="s2">&quot;none&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">llh</span>
-        <span class="k">if</span> <span class="n">reduction</span> <span class="o">==</span> <span class="s1">&#39;sum&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">reduction</span> <span class="o">==</span> <span class="s2">&quot;sum&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">llh</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">reduction</span> <span class="o">==</span> <span class="s1">&#39;mean&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">reduction</span> <span class="o">==</span> <span class="s2">&quot;mean&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">llh</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-        <span class="k">assert</span> <span class="n">reduction</span> <span class="o">==</span> <span class="s1">&#39;token_mean&#39;</span>
+        <span class="k">assert</span> <span class="n">reduction</span> <span class="o">==</span> <span class="s2">&quot;token_mean&quot;</span>
         <span class="k">return</span> <span class="n">llh</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="n">mask</span><span class="o">.</span><span class="n">float</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="CRF.decode"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.nn.torch.layers.html#nlp_architect.nn.torch.layers.crf.CRF.decode">[docs]</a>    <span class="k">def</span> <span class="nf">decode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">emissions</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>
-               <span class="n">mask</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">ByteTensor</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
+<div class="viewcode-block" id="CRF.decode"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.nn.torch.layers.html#nlp_architect.nn.torch.layers.crf.CRF.decode">[docs]</a>    <span class="k">def</span> <span class="nf">decode</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">emissions</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">mask</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">ByteTensor</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
         <span class="sd">&quot;&quot;&quot;Find the most likely tag sequence using Viterbi algorithm.</span>
 <span class="sd">        Args:</span>
 <span class="sd">            emissions (`~torch.Tensor`): Emission score tensor of size</span>
@@ -325,36 +327,40 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_viterbi_decode</span><span class="p">(</span><span class="n">emissions</span><span class="p">,</span> <span class="n">mask</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">_validate</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span>
-            <span class="n">emissions</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>
-            <span class="n">tags</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">LongTensor</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="n">mask</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">ByteTensor</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">emissions</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>
+        <span class="n">tags</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">LongTensor</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">mask</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">ByteTensor</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">emissions</span><span class="o">.</span><span class="n">dim</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;emissions must have dimension of 3, got {emissions.dim()}&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;emissions must have dimension of 3, got {emissions.dim()}&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">emissions</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_tags</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s1">&#39;expected last dimension of emissions is </span><span class="si">{self.num_tags}</span><span class="s1">, &#39;</span>
-                <span class="sa">f</span><span class="s1">&#39;got {emissions.size(2)}&#39;</span><span class="p">)</span>
+                <span class="sa">f</span><span class="s2">&quot;expected last dimension of emissions is </span><span class="si">{self.num_tags}</span><span class="s2">, &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;got {emissions.size(2)}&quot;</span>
+            <span class="p">)</span>
 
         <span class="k">if</span> <span class="n">tags</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">emissions</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span> <span class="o">!=</span> <span class="n">tags</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                    <span class="s1">&#39;the first two dimensions of emissions and tags must match, &#39;</span>
-                    <span class="sa">f</span><span class="s1">&#39;got {tuple(emissions.shape[:2])} and {tuple(tags.shape)}&#39;</span><span class="p">)</span>
+                    <span class="s2">&quot;the first two dimensions of emissions and tags must match, &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;got {tuple(emissions.shape[:2])} and {tuple(tags.shape)}&quot;</span>
+                <span class="p">)</span>
 
         <span class="k">if</span> <span class="n">mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">emissions</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span> <span class="o">!=</span> <span class="n">mask</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                    <span class="s1">&#39;the first two dimensions of emissions and mask must match, &#39;</span>
-                    <span class="sa">f</span><span class="s1">&#39;got {tuple(emissions.shape[:2])} and {tuple(mask.shape)}&#39;</span><span class="p">)</span>
+                    <span class="s2">&quot;the first two dimensions of emissions and mask must match, &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;got {tuple(emissions.shape[:2])} and {tuple(mask.shape)}&quot;</span>
+                <span class="p">)</span>
             <span class="n">no_empty_seq</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">batch_first</span> <span class="ow">and</span> <span class="n">mask</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
             <span class="n">no_empty_seq_bf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">batch_first</span> <span class="ow">and</span> <span class="n">mask</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">no_empty_seq</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">no_empty_seq_bf</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;mask of the first timestep must all be on&#39;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;mask of the first timestep must all be on&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_compute_score</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span> <span class="n">emissions</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">tags</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">LongTensor</span><span class="p">,</span>
-            <span class="n">mask</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">ByteTensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">emissions</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">tags</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">LongTensor</span><span class="p">,</span> <span class="n">mask</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">ByteTensor</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
         <span class="c1"># emissions: (seq_length, batch_size, num_tags)</span>
         <span class="c1"># tags: (seq_length, batch_size)</span>
         <span class="c1"># mask: (seq_length, batch_size)</span>
@@ -391,8 +397,7 @@
 
         <span class="k">return</span> <span class="n">score</span>
 
-    <span class="k">def</span> <span class="nf">_compute_normalizer</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span> <span class="n">emissions</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">mask</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">ByteTensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">_compute_normalizer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">emissions</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">mask</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">ByteTensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
         <span class="c1"># emissions: (seq_length, batch_size, num_tags)</span>
         <span class="c1"># mask: (seq_length, batch_size)</span>
         <span class="k">assert</span> <span class="n">emissions</span><span class="o">.</span><span class="n">dim</span><span class="p">()</span> <span class="o">==</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">mask</span><span class="o">.</span><span class="n">dim</span><span class="p">()</span> <span class="o">==</span> <span class="mi">2</span>
@@ -442,8 +447,9 @@
         <span class="c1"># shape: (batch_size,)</span>
         <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">logsumexp</span><span class="p">(</span><span class="n">score</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_viterbi_decode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">emissions</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">,</span>
-                        <span class="n">mask</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">ByteTensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
+    <span class="k">def</span> <span class="nf">_viterbi_decode</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">emissions</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">,</span> <span class="n">mask</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">ByteTensor</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
         <span class="c1"># emissions: (seq_length, batch_size, num_tags)</span>
         <span class="c1"># mask: (seq_length, batch_size)</span>
         <span class="k">assert</span> <span class="n">emissions</span><span class="o">.</span><span class="n">dim</span><span class="p">()</span> <span class="o">==</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">mask</span><span class="o">.</span><span class="n">dim</span><span class="p">()</span> <span class="o">==</span> <span class="mi">2</span>
@@ -509,7 +515,7 @@
 
             <span class="c1"># We trace back where the best last tag comes from, append that to our best tag</span>
             <span class="c1"># sequence, and trace it back again, and so on</span>
-            <span class="k">for</span> <span class="n">hist</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">history</span><span class="p">[:</span><span class="n">seq_ends</span><span class="p">[</span><span class="n">idx</span><span class="p">]]):</span>
+            <span class="k">for</span> <span class="n">hist</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">history</span><span class="p">[:</span> <span class="n">seq_ends</span><span class="p">[</span><span class="n">idx</span><span class="p">]]):</span>
                 <span class="n">best_last_tag</span> <span class="o">=</span> <span class="n">hist</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="n">best_tags</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
                 <span class="n">best_tags</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">best_last_tag</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
 

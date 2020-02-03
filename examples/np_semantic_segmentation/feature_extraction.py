@@ -54,9 +54,9 @@ class Wikidata:
         self.headers = headers
         proxies = {}
         if http_proxy:
-            proxies['http'] = http_proxy
+            proxies["http"] = http_proxy
         if https_proxy:
-            proxies['https'] = https_proxy
+            proxies["https"] = https_proxy
         self.proxies = proxies
 
     def find_wikidata_existence(self, candidates):
@@ -84,18 +84,24 @@ class Wikidata:
         Returns:
             bool: True if exist in Wikidata for phrase, else False
         """
-        chr_url = """https://query.wikidata.org/sparql?query=
+        chr_url = (
+            """https://query.wikidata.org/sparql?query=
                         SELECT ?item ?lable
                         WHERE
                         {
-                            ?item ?label '""" + phrase + """'@en .
+                            ?item ?label '"""
+            + phrase
+            + """'@en .
             SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
                         }
                         &format = JSON"""
+        )
         r = requests.get(chr_url, headers=self.headers, proxies=self.proxies)
-        empty_result = b'{\n  "head" : {\n    "vars" : [ "item",' \
-                       b' "lable" ]\n  },\n  ' \
-                       b'"results" : {\n    "bindings" : [ ]\n  }\n}'
+        empty_result = (
+            b'{\n  "head" : {\n    "vars" : [ "item",'
+            b' "lable" ]\n  },\n  '
+            b'"results" : {\n    "bindings" : [ ]\n  }\n}'
+        )
         if r.status_code == 200 and empty_result != r.content:
             return True
         return False
@@ -121,7 +127,8 @@ class Word2Vec:
             the Word2Vec model
         """
         word_embeddings_model = KeyedVectors.load_word2vec_format(
-            self.word2vec_model_path, binary=True)
+            self.word2vec_model_path, binary=True
+        )
         if not word_embeddings_model:
             return None
         return word_embeddings_model
@@ -174,12 +181,13 @@ class Wordnet:
 
     def __init__(self):
         try:
-            nltk.data.find('corpora/wordnet')
+            nltk.data.find("corpora/wordnet")
         except LookupError:
-            if license_prompt('WordNet data set', 'http://www.nltk.org/nltk_data/') is False:
-                raise Exception("can't continue data prepare process "
-                                "without downloading WordNet dataset")
-            nltk.download('wordnet')
+            if license_prompt("WordNet data set", "http://www.nltk.org/nltk_data/") is False:
+                raise Exception(
+                    "can't continue data prepare process " "without downloading WordNet dataset"
+                )
+            nltk.download("wordnet")
         self.wordnet = wn
 
     def find_wordnet_existence(self, candidates):

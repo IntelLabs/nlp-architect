@@ -20,10 +20,19 @@ from typing import Union
 
 from nlp_architect.common.core_nlp_doc import CoreNLPDoc
 from nlp_architect.models.absa import INFERENCE_OUT
-from nlp_architect.models.absa.inference.data_types import Term, TermType, Polarity, SentimentDoc,\
-    SentimentSentence, LexiconElement
-from nlp_architect.models.absa.utils import _read_lexicon_from_csv, load_opinion_lex, \
-    _load_aspect_lexicon
+from nlp_architect.models.absa.inference.data_types import (
+    Term,
+    TermType,
+    Polarity,
+    SentimentDoc,
+    SentimentSentence,
+    LexiconElement,
+)
+from nlp_architect.models.absa.utils import (
+    _read_lexicon_from_csv,
+    load_opinion_lex,
+    _load_aspect_lexicon,
+)
 
 INTENSIFIER_FACTOR = 0.3
 VERB_POS = {"VB", "VBD", "VBG", "VBN", "VBP", "VBZ"}
@@ -39,19 +48,25 @@ class SentimentInference(object):
         negation_lex (dict): Pre-defined negation lexicon.
     """
 
-    def __init__(self, aspect_lex: Union[str, PathLike], opinion_lex: Union[str, PathLike, dict],
-                 parse: bool = True):
+    def __init__(
+        self,
+        aspect_lex: Union[str, PathLike],
+        opinion_lex: Union[str, PathLike, dict],
+        parse: bool = True,
+    ):
         """Inits SentimentInference with given aspect and opinion lexicons."""
         INFERENCE_OUT.mkdir(parents=True, exist_ok=True)
-        self.opinion_lex = \
+        self.opinion_lex = (
             opinion_lex if type(opinion_lex) is dict else load_opinion_lex(Path(opinion_lex))
+        )
         self.aspect_lex = _load_aspect_lexicon(Path(aspect_lex))
-        self.intensifier_lex = _read_lexicon_from_csv('IntensifiersLex.csv')
-        self.negation_lex = _read_lexicon_from_csv('NegationSentLex.csv')
+        self.intensifier_lex = _read_lexicon_from_csv("IntensifiersLex.csv")
+        self.negation_lex = _read_lexicon_from_csv("NegationSentLex.csv")
 
         if parse:
             from nlp_architect.pipelines.spacy_bist import SpacyBISTParser
-            self.parser = SpacyBISTParser(spacy_model='en')
+
+            self.parser = SpacyBISTParser(spacy_model="en")
         else:
             self.parser = None
 
@@ -80,8 +95,12 @@ class SentimentInference(object):
                 if not sentiment_doc:
                     sentiment_doc = SentimentDoc(parsed_doc.doc_text)
                 sentiment_doc.sentences.append(
-                    SentimentSentence(sentence[0]['start'],
-                                      sentence[-1]['start'] + sentence[-1]['len'] - 1, events))
+                    SentimentSentence(
+                        sentence[0]["start"],
+                        sentence[-1]["start"] + sentence[-1]["len"] - 1,
+                        events,
+                    )
+                )
         return sentiment_doc
 
     def _extract_intensifier_terms(self, toks, sentiment_index, polarity, sentence):
@@ -91,8 +110,16 @@ class SentimentInference(object):
         for intens_i, intens in [(i, x) for i, x in enumerate(toks) if x in self.intensifier_lex]:
             if math.fabs(sentiment_index - intens_i) == 1:
                 score = self.intensifier_lex[intens].score
-                terms.append(Term(intens, TermType.INTENSIFIER, polarity, score,
-                                  sentence[intens_i]['start'], sentence[intens_i]['len']))
+                terms.append(
+                    Term(
+                        intens,
+                        TermType.INTENSIFIER,
+                        polarity,
+                        score,
+                        sentence[intens_i]["start"],
+                        sentence[intens_i]["len"],
+                    )
+                )
                 count += abs(score + float(INTENSIFIER_FACTOR))
         return count if count != 0 else 1, terms
 
@@ -109,19 +136,25 @@ class SentimentInference(object):
         """
         sign = 1
         terms = []
-        gov_op_i = sentence[op_i]['gov']
-        dep_op_indices = [sentence.index(x) for x in sentence if x['gov'] == op_i]
+        gov_op_i = sentence[op_i]["gov"]
+        dep_op_indices = [sentence.index(x) for x in sentence if x["gov"] == op_i]
         for neg_i, negation in [(i, x) for i, x in enumerate(toks) if x in self.negation_lex]:
             position = self.negation_lex[negation].position
             dist = op_i - neg_i
-            before = position == 'before' and (dist == 1 or neg_i in dep_op_indices)
-            after = position == 'after' and (dist == -1 or neg_i == gov_op_i)
-            both = position == 'both' and dist in (1, -1)
+            before = position == "before" and (dist == 1 or neg_i in dep_op_indices)
+            after = position == "after" and (dist == -1 or neg_i == gov_op_i)
+            both = position == "both" and dist in (1, -1)
             if before or after or both:
-                terms.append(Term(negation, TermType.NEGATION, Polarity.NEG,
-                                  self.negation_lex[negation].score,
-                                  sentence[toks.index(negation)]['start'],
-                                  sentence[toks.index(negation)]['len']))
+                terms.append(
+                    Term(
+                        negation,
+                        TermType.NEGATION,
+                        Polarity.NEG,
+                        self.negation_lex[negation].score,
+                        sentence[toks.index(negation)]["start"],
+                        sentence[toks.index(negation)]["len"],
+                    )
+                )
                 sign *= self.negation_lex[negation].score
         return terms, sign
 
@@ -133,9 +166,9 @@ class SentimentInference(object):
         aspect_key = aspect_row.term[0]
         for aspect_index_range in real_aspect_indices:
             for word_index in aspect_index_range:
-                sent_aspect_pair, event = \
-                    self._detect_opinion_aspect_events(word_index, parsed_sentence, aspect_key,
-                                                       aspect_index_range)
+                sent_aspect_pair, event = self._detect_opinion_aspect_events(
+                    word_index, parsed_sentence, aspect_key, aspect_index_range
+                )
                 if sent_aspect_pair:
                     break
         return sent_aspect_pair, event
@@ -153,8 +186,7 @@ class SentimentInference(object):
             cur_tkn["start"] = parsed_sentence[index_range[0]]["start"]
             cur_tkn["len"] = len(parsed_sentence[index_range[0]]["text"])
             for i in index_range[1:]:
-                cur_tkn["len"] = int(cur_tkn["len"]) + len(
-                    parsed_sentence[i]["text"]) + 1
+                cur_tkn["len"] = int(cur_tkn["len"]) + len(parsed_sentence[i]["text"]) + 1
         return cur_tkn
 
     def _detect_opinion_aspect_events(self, aspect_index, parsed_sent, aspect_key, index_range):
@@ -171,61 +203,82 @@ class SentimentInference(object):
         """
         all_pairs, events = [], []
         sentence_text_list = [x["text"] for x in parsed_sent]
-        sentence_text = ' '.join(sentence_text_list)
+        sentence_text = " ".join(sentence_text_list)
         for tok_i, tok in enumerate(parsed_sent):
             aspect_op_pair = []
             terms = []
-            gov_i = tok['gov']
+            gov_i = tok["gov"]
             gov = parsed_sent[gov_i]
-            gov_text = gov['text']
-            tok_text = tok['text']
+            gov_text = gov["text"]
+            tok_text = tok["text"]
 
             # 1st order rules
             # Is cur_tkn an aspect and gov an opinion?
             if tok_i == aspect_index:
                 if gov_text.lower() in self.opinion_lex:
                     aspect_op_pair.append(
-                        (self._modify_for_multiple_word(tok, parsed_sent, index_range), gov))
+                        (self._modify_for_multiple_word(tok, parsed_sent, index_range), gov)
+                    )
 
             # Is gov an aspect and cur_tkn an opinion?
             if gov_i == aspect_index and tok_text.lower() in self.opinion_lex:
                 aspect_op_pair.append(
-                    (self._modify_for_multiple_word(gov, parsed_sent, index_range), tok))
+                    (self._modify_for_multiple_word(gov, parsed_sent, index_range), tok)
+                )
 
             # If not found, try 2nd order rules
             if not aspect_op_pair and tok_i == aspect_index:
                 # 2nd order rule #1
                 for op_t in parsed_sent:
-                    if op_t['gov'] == gov_i and op_t['text'].lower() in self.opinion_lex:
+                    if op_t["gov"] == gov_i and op_t["text"].lower() in self.opinion_lex:
                         aspect_op_pair.append(
-                            (self._modify_for_multiple_word(tok, parsed_sent, index_range), op_t))
+                            (self._modify_for_multiple_word(tok, parsed_sent, index_range), op_t)
+                        )
 
                 # 2nd order rule #2
-                gov_gov = parsed_sent[parsed_sent[gov_i]['gov']]
-                if gov_gov['text'].lower() in self.opinion_lex:
+                gov_gov = parsed_sent[parsed_sent[gov_i]["gov"]]
+                if gov_gov["text"].lower() in self.opinion_lex:
                     aspect_op_pair.append(
-                        (self._modify_for_multiple_word(tok, parsed_sent, index_range), gov_gov))
+                        (self._modify_for_multiple_word(tok, parsed_sent, index_range), gov_gov)
+                    )
 
             # if aspect_tok found
             for aspect, opinion in aspect_op_pair:
                 op_tok_i = parsed_sent.index(opinion)
-                score = self.opinion_lex[opinion['text'].lower()].score
-                neg_terms, sign = self._extract_neg_terms(sentence_text_list, op_tok_i,
-                                                          parsed_sent)
+                score = self.opinion_lex[opinion["text"].lower()].score
+                neg_terms, sign = self._extract_neg_terms(sentence_text_list, op_tok_i, parsed_sent)
                 polarity = Polarity.POS if score * sign > 0 else Polarity.NEG
                 intensifier_score, intensifier_terms = self._extract_intensifier_terms(
-                    sentence_text_list, op_tok_i, polarity, parsed_sent)
+                    sentence_text_list, op_tok_i, polarity, parsed_sent
+                )
                 over_all_score = score * sign * intensifier_score
-                terms.append(Term(aspect_key, TermType.ASPECT, polarity, over_all_score,
-                                  aspect['start'], aspect['len']))
-                terms.append(Term(opinion['text'], TermType.OPINION, polarity, over_all_score,
-                                  opinion['start'], opinion['len']))
+                terms.append(
+                    Term(
+                        aspect_key,
+                        TermType.ASPECT,
+                        polarity,
+                        over_all_score,
+                        aspect["start"],
+                        aspect["len"],
+                    )
+                )
+                terms.append(
+                    Term(
+                        opinion["text"],
+                        TermType.OPINION,
+                        polarity,
+                        over_all_score,
+                        opinion["start"],
+                        opinion["len"],
+                    )
+                )
                 if len(neg_terms) > 0:
                     terms = terms + neg_terms
                 if len(intensifier_terms) > 0:
                     terms = terms + intensifier_terms
-                all_pairs.append([aspect_key, opinion['text'], over_all_score, polarity,
-                                  sentence_text])
+                all_pairs.append(
+                    [aspect_key, opinion["text"], over_all_score, polarity, sentence_text]
+                )
                 events.append(terms)
         return all_pairs, events
 
@@ -233,8 +286,9 @@ class SentimentInference(object):
 def _sentence_contains_after(sentence, index, phrase):
     """Returns sentence contains phrase after given index."""
     for i in range(len(phrase)):
-        if len(sentence) <= index + i or phrase[i].lower() not in \
-                {sentence[index + i][field].lower() for field in ('text', 'lemma')}:
+        if len(sentence) <= index + i or phrase[i].lower() not in {
+            sentence[index + i][field].lower() for field in ("text", "lemma")
+        }:
             return False
     return True
 
@@ -246,8 +300,9 @@ def _consolidate_aspects(aspect_row, sentence):
         aspect_row: List of aspect terms which belong to the same aspect-group.
     """
     indices = []
-    aspect_phrases: list = \
-        sorted([phrase.split(' ') for phrase in aspect_row], key=len, reverse=True)
+    aspect_phrases: list = sorted(
+        [phrase.split(" ") for phrase in aspect_row], key=len, reverse=True
+    )
     appeared = set()
     for tok_i in range(len(sentence)):
         for aspect_phrase in aspect_phrases:

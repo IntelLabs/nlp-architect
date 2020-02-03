@@ -14,8 +14,12 @@
 # limitations under the License.
 # ******************************************************************************
 from nlp_architect.models.absa.inference.data_types import Polarity
-from nlp_architect.models.absa.train.data_types import CandidateTerm, \
-    RelCategory, DepRelationTerm, POS
+from nlp_architect.models.absa.train.data_types import (
+    CandidateTerm,
+    RelCategory,
+    DepRelationTerm,
+    POS,
+)
 
 
 def rule_1(dep_rel, gov_entry, dep_entry, text):
@@ -28,10 +32,13 @@ def rule_1(dep_rel, gov_entry, dep_entry, text):
         text (str): Sentence text.
     """
     candidate = None
-    (anchor_entry, anchor, related) = (gov_entry, dep_rel.gov, dep_rel.dep) \
-        if gov_entry else (dep_entry, dep_rel.dep, dep_rel.gov)
+    (anchor_entry, anchor, related) = (
+        (gov_entry, dep_rel.gov, dep_rel.dep)
+        if gov_entry
+        else (dep_entry, dep_rel.dep, dep_rel.gov)
+    )
 
-    if related.norm_pos == POS.ADJ and dep_rel.rel.startswith('conj'):
+    if related.norm_pos == POS.ADJ and dep_rel.rel.startswith("conj"):
         polarity = anchor_entry.polarity
         candidate = CandidateTerm(related, anchor, text, polarity)
     return candidate
@@ -48,8 +55,11 @@ def rule_2(dep_rel, relation_list, dep_entry, text):
     """
     candidate = None
     for curr_rt in relation_list:
-        if (curr_rt.gov, curr_rt.rel, curr_rt.dep.norm_pos) == \
-                (dep_rel.gov, dep_rel.rel, POS.ADJ) and curr_rt.dep != dep_rel.dep:
+        if (curr_rt.gov, curr_rt.rel, curr_rt.dep.norm_pos) == (
+            dep_rel.gov,
+            dep_rel.rel,
+            POS.ADJ,
+        ) and curr_rt.dep != dep_rel.dep:
             candidate = CandidateTerm(curr_rt.dep, dep_rel.dep, text, dep_entry.polarity)
     return candidate
 
@@ -80,9 +90,13 @@ def rule_4(dep_rel, relation_list, text):
     """
     candidate = None
     for curr_rt in relation_list:
-        if curr_rt.gov == dep_rel.gov and curr_rt.dep != dep_rel.dep and \
-                curr_rt.dep.norm_pos == POS.NN and is_subj_obj_or_mod(curr_rt) and \
-                is_subj_obj_or_mod(dep_rel):
+        if (
+            curr_rt.gov == dep_rel.gov
+            and curr_rt.dep != dep_rel.dep
+            and curr_rt.dep.norm_pos == POS.NN
+            and is_subj_obj_or_mod(curr_rt)
+            and is_subj_obj_or_mod(dep_rel)
+        ):
             aspect = expand_aspect(curr_rt.dep, relation_list)
             candidate = CandidateTerm(aspect, dep_rel.dep, text, Polarity.UNK)
     return candidate
@@ -110,7 +124,7 @@ def rule_6(dep_rel, relation_list, text):
         text (str): Sentence text.
     """
     candidate = None
-    if dep_rel.rel in ('conj_and', 'conj_but'):
+    if dep_rel.rel in ("conj_and", "conj_but"):
         aspect = expand_aspect(dep_rel.dep, relation_list)
         candidate = CandidateTerm(aspect, dep_rel.gov, text, Polarity.UNK)
     return candidate
@@ -123,20 +137,24 @@ def is_subj_obj_or_mod(rt):
 def expand_aspect(in_aspect_token, relation_list):
     """Expand aspect by Looking for a noun word that it's gov is the aspect. if it has (noun)
     compound relation add it to aspect."""
-    aspect = DepRelationTerm(text=in_aspect_token.text, lemma=in_aspect_token.lemma,
-                             pos=in_aspect_token.pos, ner=in_aspect_token.ner,
-                             idx=in_aspect_token.idx)
+    aspect = DepRelationTerm(
+        text=in_aspect_token.text,
+        lemma=in_aspect_token.lemma,
+        pos=in_aspect_token.pos,
+        ner=in_aspect_token.ner,
+        idx=in_aspect_token.idx,
+    )
     for rel in relation_list:
-        if (rel.rel == 'compound') and (rel.gov.idx == aspect.idx):
+        if (rel.rel == "compound") and (rel.gov.idx == aspect.idx):
             diff_positive = aspect.idx - len(rel.dep.text) - 1 - rel.dep.idx
             diff_negative = rel.dep.idx - len(aspect.text) - 1 - aspect.idx
             if diff_positive == 0:
-                aspect.text = rel.dep.text + ' ' + aspect.text
-                aspect.lemma = rel.dep.text + ' ' + aspect.lemma
+                aspect.text = rel.dep.text + " " + aspect.text
+                aspect.lemma = rel.dep.text + " " + aspect.lemma
                 aspect.idx = rel.dep.idx
             if diff_negative == 0:
-                aspect.text = aspect.text + ' ' + rel.dep.text
-                aspect.lemma = aspect.lemma + ' ' + rel.dep.lemma
+                aspect.text = aspect.text + " " + rel.dep.text
+                aspect.lemma = aspect.lemma + " " + rel.dep.lemma
 
     aspect.text = aspect.text.lower()
     aspect.lemma = aspect.lemma.lower()

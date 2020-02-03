@@ -206,25 +206,32 @@
 <div class="viewcode-block" id="WordnetOnline"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.wordnet.html#nlp_architect.data.cdc_resources.wordnet.wordnet_online.WordnetOnline">[docs]</a><span class="k">class</span> <span class="nc">WordnetOnline</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cache</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
-        <span class="n">nltk</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;wordnet&#39;</span><span class="p">)</span>
+        <span class="n">nltk</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s2">&quot;wordnet&quot;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="WordnetOnline.get_pages"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.wordnet.html#nlp_architect.data.cdc_resources.wordnet.wordnet_online.WordnetOnline.get_pages">[docs]</a>    <span class="k">def</span> <span class="nf">get_pages</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mention</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">mention</span><span class="o">.</span><span class="n">tokens_str</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="p">[</span><span class="n">mention</span><span class="o">.</span><span class="n">tokens_str</span><span class="p">]</span>
 
         <span class="n">head_synonyms</span><span class="p">,</span> <span class="n">head_names_derivationally</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">extract_synonyms_and_derivation</span><span class="p">(</span>
-            <span class="n">mention</span><span class="o">.</span><span class="n">mention_head</span><span class="p">)</span>
+            <span class="n">mention</span><span class="o">.</span><span class="n">mention_head</span>
+        <span class="p">)</span>
         <span class="n">head_lemma_synonyms</span><span class="p">,</span> <span class="n">head_lemma_derivationally</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">extract_synonyms_and_derivation</span><span class="p">(</span>
-            <span class="n">mention</span><span class="o">.</span><span class="n">mention_head_lemma</span><span class="p">)</span>
+            <span class="n">mention</span><span class="o">.</span><span class="n">mention_head_lemma</span>
+        <span class="p">)</span>
         <span class="n">clean_phrase</span> <span class="o">=</span> <span class="n">StringUtils</span><span class="o">.</span><span class="n">normalize_str</span><span class="p">(</span><span class="n">mention</span><span class="o">.</span><span class="n">tokens_str</span><span class="p">)</span>
         <span class="n">all_clean_words_synonyms</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_clean_words_synonyms</span><span class="p">(</span><span class="n">clean_phrase</span><span class="p">)</span>
 
-        <span class="n">wordnet_page</span> <span class="o">=</span> <span class="n">WordnetPage</span><span class="p">(</span><span class="n">mention</span><span class="o">.</span><span class="n">tokens_str</span><span class="p">,</span> <span class="n">clean_phrase</span><span class="p">,</span> <span class="n">mention</span><span class="o">.</span><span class="n">mention_head</span><span class="p">,</span>
-                                   <span class="n">mention</span><span class="o">.</span><span class="n">mention_head_lemma</span><span class="p">,</span>
-                                   <span class="n">head_synonyms</span><span class="p">,</span>
-                                   <span class="n">head_lemma_synonyms</span><span class="p">,</span> <span class="n">head_names_derivationally</span><span class="p">,</span>
-                                   <span class="n">head_lemma_derivationally</span><span class="p">,</span>
-                                   <span class="n">all_clean_words_synonyms</span><span class="p">)</span>
+        <span class="n">wordnet_page</span> <span class="o">=</span> <span class="n">WordnetPage</span><span class="p">(</span>
+            <span class="n">mention</span><span class="o">.</span><span class="n">tokens_str</span><span class="p">,</span>
+            <span class="n">clean_phrase</span><span class="p">,</span>
+            <span class="n">mention</span><span class="o">.</span><span class="n">mention_head</span><span class="p">,</span>
+            <span class="n">mention</span><span class="o">.</span><span class="n">mention_head_lemma</span><span class="p">,</span>
+            <span class="n">head_synonyms</span><span class="p">,</span>
+            <span class="n">head_lemma_synonyms</span><span class="p">,</span>
+            <span class="n">head_names_derivationally</span><span class="p">,</span>
+            <span class="n">head_lemma_derivationally</span><span class="p">,</span>
+            <span class="n">all_clean_words_synonyms</span><span class="p">,</span>
+        <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="p">[</span><span class="n">mention</span><span class="o">.</span><span class="n">tokens_str</span><span class="p">]</span> <span class="o">=</span> <span class="n">wordnet_page</span>
         <span class="k">return</span> <span class="n">wordnet_page</span></div>
@@ -235,23 +242,34 @@
         <span class="n">derivationally_related_forms</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">synset</span> <span class="ow">in</span> <span class="n">wn</span><span class="o">.</span><span class="n">synsets</span><span class="p">(</span><span class="n">word</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">lemma</span> <span class="ow">in</span> <span class="n">synset</span><span class="o">.</span><span class="n">lemmas</span><span class="p">():</span>
-                <span class="n">lemma_name</span> <span class="o">=</span> <span class="n">lemma</span><span class="o">.</span><span class="n">name</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">)</span>
+                <span class="n">lemma_name</span> <span class="o">=</span> <span class="n">lemma</span><span class="o">.</span><span class="n">name</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">StringUtils</span><span class="o">.</span><span class="n">is_stop</span><span class="p">(</span><span class="n">lemma_name</span><span class="o">.</span><span class="n">lower</span><span class="p">()):</span>
                     <span class="n">lemma_names</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">lemma_name</span><span class="p">)</span>
 
                 <span class="n">derivationally_related_forms</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
-                    <span class="p">[</span><span class="n">l</span><span class="o">.</span><span class="n">name</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">lemma</span><span class="o">.</span><span class="n">derivationally_related_forms</span><span class="p">()</span>
-                     <span class="k">if</span> <span class="ow">not</span> <span class="n">StringUtils</span><span class="o">.</span><span class="n">is_stop</span><span class="p">(</span><span class="n">l</span><span class="o">.</span><span class="n">name</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">())])</span>
+                    <span class="p">[</span>
+                        <span class="n">l</span><span class="o">.</span><span class="n">name</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
+                        <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">lemma</span><span class="o">.</span><span class="n">derivationally_related_forms</span><span class="p">()</span>
+                        <span class="k">if</span> <span class="ow">not</span> <span class="n">StringUtils</span><span class="o">.</span><span class="n">is_stop</span><span class="p">(</span><span class="n">l</span><span class="o">.</span><span class="n">name</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
+                    <span class="p">]</span>
+                <span class="p">)</span>
 
         <span class="k">return</span> <span class="n">lemma_names</span><span class="p">,</span> <span class="n">derivationally_related_forms</span></div>
 
 <div class="viewcode-block" id="WordnetOnline.all_clean_words_synonyms"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.wordnet.html#nlp_architect.data.cdc_resources.wordnet.wordnet_online.WordnetOnline.all_clean_words_synonyms">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">all_clean_words_synonyms</span><span class="p">(</span><span class="n">clean_phrase</span><span class="p">):</span>
         <span class="n">words</span> <span class="o">=</span> <span class="n">clean_phrase</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
-        <span class="k">return</span> <span class="p">[</span><span class="nb">set</span><span class="p">([</span><span class="n">lemma</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">)</span>
-                     <span class="k">for</span> <span class="n">synset</span> <span class="ow">in</span> <span class="n">wn</span><span class="o">.</span><span class="n">synsets</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
-                     <span class="k">for</span> <span class="n">lemma</span> <span class="ow">in</span> <span class="n">synset</span><span class="o">.</span><span class="n">lemma_names</span><span class="p">()</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">StringUtils</span><span class="o">.</span><span class="n">is_stop</span><span class="p">(</span><span class="n">lemma</span><span class="o">.</span><span class="n">lower</span><span class="p">())])</span>
-                <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">words</span><span class="p">]</span></div></div>
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="nb">set</span><span class="p">(</span>
+                <span class="p">[</span>
+                    <span class="n">lemma</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">synset</span> <span class="ow">in</span> <span class="n">wn</span><span class="o">.</span><span class="n">synsets</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">lemma</span> <span class="ow">in</span> <span class="n">synset</span><span class="o">.</span><span class="n">lemma_names</span><span class="p">()</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">StringUtils</span><span class="o">.</span><span class="n">is_stop</span><span class="p">(</span><span class="n">lemma</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
+                <span class="p">]</span>
+            <span class="p">)</span>
+            <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">words</span>
+        <span class="p">]</span></div></div>
 </pre></div>
 
            </div>

@@ -19,8 +19,9 @@ from typing import List
 from nlp_architect.common.cdc.cluster import Clusters
 from nlp_architect.common.cdc.topics import Topics
 from nlp_architect.models.cross_doc_coref.system.sieves.run_sieve_system import get_run_system
-from nlp_architect.models.cross_doc_coref.system.sieves_container_init import \
-    SievesContainerInitialization
+from nlp_architect.models.cross_doc_coref.system.sieves_container_init import (
+    SievesContainerInitialization,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -36,7 +37,7 @@ def run_event_coref(topics: Topics, resources: SievesContainerInitialization) ->
         Clusters: List of clusters and mentions with predicted cross doc coref within each topic
     """
 
-    return _run_coref(topics, resources, 'event')
+    return _run_coref(topics, resources, "event")
 
 
 def run_entity_coref(topics: Topics, resources: SievesContainerInitialization) -> List[Clusters]:
@@ -49,11 +50,12 @@ def run_entity_coref(topics: Topics, resources: SievesContainerInitialization) -
     Returns:
         Clusters: List of topics and mentions with predicted cross doc coref within each topic
     """
-    return _run_coref(topics, resources, 'entity')
+    return _run_coref(topics, resources, "entity")
 
 
-def _run_coref(topics: Topics, resources: SievesContainerInitialization,
-               eval_type: str) -> List[Clusters]:
+def _run_coref(
+    topics: Topics, resources: SievesContainerInitialization, eval_type: str
+) -> List[Clusters]:
     """
     Running Cross Document Coref on Entity mentions
     Args:

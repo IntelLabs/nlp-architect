@@ -226,10 +226,16 @@
 <span class="sd">            validation(:obj:`list` of :obj:`numpy.ndarray`, optional): optional validation data</span>
 <span class="sd">                to be evaluated when training</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="s1">&#39;Model was not initialized&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                       <span class="n">validation_data</span><span class="o">=</span><span class="n">validation</span><span class="p">,</span>
-                       <span class="n">callbacks</span><span class="o">=</span><span class="n">callbacks</span><span class="p">)</span></div>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;Model was not initialized&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+            <span class="n">x</span><span class="p">,</span>
+            <span class="n">y</span><span class="p">,</span>
+            <span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span><span class="p">,</span>
+            <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span>
+            <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">validation_data</span><span class="o">=</span><span class="n">validation</span><span class="p">,</span>
+            <span class="n">callbacks</span><span class="o">=</span><span class="n">callbacks</span><span class="p">,</span>
+        <span class="p">)</span></div>
 
 <div class="viewcode-block" id="IntentExtractionModel.predict"><a class="viewcode-back" href="../../../generated_api/nlp_architect.models.html#nlp_architect.models.intent_extraction.IntentExtractionModel.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -242,7 +248,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            numpy.ndarray: predicted values by the model</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="s1">&#39;Model was not initialized&#39;</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;Model was not initialized&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="IntentExtractionModel.save"><a class="viewcode-back" href="../../../generated_api/nlp_architect.models.html#nlp_architect.models.intent_extraction.IntentExtractionModel.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">exclude</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -253,9 +259,9 @@
 <span class="sd">            path (str): path to save model</span>
 <span class="sd">            exclude (list, optional): a list of object fields to exclude when saving</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="s1">&#39;Model was not initialized&#39;</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;Model was not initialized&quot;</span>
         <span class="n">topology</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
-        <span class="n">topology</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;model&#39;</span><span class="p">)</span>
+        <span class="n">topology</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;model&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">exclude</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">exclude</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">exclude</span><span class="p">:</span>
                 <span class="n">topology</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
@@ -278,14 +284,16 @@
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_create_input_embed</span><span class="p">(</span><span class="n">sentence_len</span><span class="p">,</span> <span class="n">is_extern_emb</span><span class="p">,</span> <span class="n">token_emb_size</span><span class="p">,</span> <span class="n">vocab_size</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">is_extern_emb</span><span class="p">:</span>
-            <span class="n">in_layer</span> <span class="o">=</span> <span class="n">e_layer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">sentence_len</span><span class="p">,</span> <span class="n">token_emb_size</span><span class="p">,),</span>
-                                                       <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;tokens_input&#39;</span><span class="p">)</span>
+            <span class="n">in_layer</span> <span class="o">=</span> <span class="n">e_layer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span>
+                <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">sentence_len</span><span class="p">,</span> <span class="n">token_emb_size</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float32&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;tokens_input&quot;</span>
+            <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">in_layer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">sentence_len</span><span class="p">,),</span>
-                                             <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;int32&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;tokens_input&#39;</span><span class="p">)</span>
-            <span class="n">e_layer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span><span class="n">vocab_size</span><span class="p">,</span> <span class="n">token_emb_size</span><span class="p">,</span>
-                                                <span class="n">input_length</span><span class="o">=</span><span class="n">sentence_len</span><span class="p">,</span>
-                                                <span class="n">name</span><span class="o">=</span><span class="s1">&#39;embedding_layer&#39;</span><span class="p">)(</span><span class="n">in_layer</span><span class="p">)</span>
+            <span class="n">in_layer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span>
+                <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">sentence_len</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;int32&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;tokens_input&quot;</span>
+            <span class="p">)</span>
+            <span class="n">e_layer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span>
+                <span class="n">vocab_size</span><span class="p">,</span> <span class="n">token_emb_size</span><span class="p">,</span> <span class="n">input_length</span><span class="o">=</span><span class="n">sentence_len</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;embedding_layer&quot;</span>
+            <span class="p">)(</span><span class="n">in_layer</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">in_layer</span><span class="p">,</span> <span class="n">e_layer</span>
 
 <div class="viewcode-block" id="IntentExtractionModel.load_embedding_weights"><a class="viewcode-back" href="../../../generated_api/nlp_architect.models.html#nlp_architect.models.intent_extraction.IntentExtractionModel.load_embedding_weights">[docs]</a>    <span class="k">def</span> <span class="nf">load_embedding_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">weights</span><span class="p">):</span>
@@ -295,10 +303,11 @@
 <span class="sd">        Args:</span>
 <span class="sd">            weights (numpy.ndarray): 2D matrix of word weights</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;Cannot assign weights, apply build() before trying to &#39;</span> \
-                                       <span class="s1">&#39;loading embedding weights &#39;</span>
-        <span class="n">emb_layer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">get_layer</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;word_embedding&#39;</span><span class="p">)</span>
-        <span class="k">assert</span> <span class="n">emb_layer</span><span class="o">.</span><span class="n">output_dim</span> <span class="o">==</span> <span class="n">weights</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;embedding vectors shape mismatch&#39;</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="p">(</span>
+            <span class="s2">&quot;Cannot assign weights, apply build() before trying to &quot;</span> <span class="s2">&quot;loading embedding weights &quot;</span>
+        <span class="p">)</span>
+        <span class="n">emb_layer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">get_layer</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;word_embedding&quot;</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">emb_layer</span><span class="o">.</span><span class="n">output_dim</span> <span class="o">==</span> <span class="n">weights</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;embedding vectors shape mismatch&quot;</span>
         <span class="n">emb_layer</span><span class="o">.</span><span class="n">set_weights</span><span class="p">([</span><span class="n">weights</span><span class="p">])</span></div></div>
 
 
@@ -325,17 +334,19 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">use_cudnn</span> <span class="o">=</span> <span class="n">use_cudnn</span>
 
-<div class="viewcode-block" id="MultiTaskIntentModel.build"><a class="viewcode-back" href="../../../generated_api/nlp_architect.models.html#nlp_architect.models.intent_extraction.MultiTaskIntentModel.build">[docs]</a>    <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-              <span class="n">word_length</span><span class="p">,</span>
-              <span class="n">num_labels</span><span class="p">,</span>
-              <span class="n">num_intent_labels</span><span class="p">,</span>
-              <span class="n">word_vocab_size</span><span class="p">,</span>
-              <span class="n">char_vocab_size</span><span class="p">,</span>
-              <span class="n">word_emb_dims</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
-              <span class="n">char_emb_dims</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
-              <span class="n">char_lstm_dims</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
-              <span class="n">tagger_lstm_dims</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
-              <span class="n">dropout</span><span class="o">=</span><span class="mf">0.2</span><span class="p">):</span>
+<div class="viewcode-block" id="MultiTaskIntentModel.build"><a class="viewcode-back" href="../../../generated_api/nlp_architect.models.html#nlp_architect.models.intent_extraction.MultiTaskIntentModel.build">[docs]</a>    <span class="k">def</span> <span class="nf">build</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">word_length</span><span class="p">,</span>
+        <span class="n">num_labels</span><span class="p">,</span>
+        <span class="n">num_intent_labels</span><span class="p">,</span>
+        <span class="n">word_vocab_size</span><span class="p">,</span>
+        <span class="n">char_vocab_size</span><span class="p">,</span>
+        <span class="n">word_emb_dims</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+        <span class="n">char_emb_dims</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
+        <span class="n">char_lstm_dims</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
+        <span class="n">tagger_lstm_dims</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+        <span class="n">dropout</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Build a model</span>
 
@@ -362,66 +373,74 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">tagger_lstm_dims</span> <span class="o">=</span> <span class="n">tagger_lstm_dims</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span> <span class="o">=</span> <span class="n">dropout</span>
 
-        <span class="n">words_input</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;words_input&#39;</span><span class="p">)</span>
-        <span class="n">embedding_layer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">word_vocab_size</span><span class="p">,</span>
-                                                    <span class="bp">self</span><span class="o">.</span><span class="n">word_emb_dims</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;word_embedding&#39;</span><span class="p">)</span>
+        <span class="n">words_input</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;words_input&quot;</span><span class="p">)</span>
+        <span class="n">embedding_layer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">word_vocab_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">word_emb_dims</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;word_embedding&quot;</span>
+        <span class="p">)</span>
         <span class="n">word_embeddings</span> <span class="o">=</span> <span class="n">embedding_layer</span><span class="p">(</span><span class="n">words_input</span><span class="p">)</span>
         <span class="n">word_embeddings</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dropout</span><span class="p">)(</span><span class="n">word_embeddings</span><span class="p">)</span>
 
         <span class="c1"># create word character input and embeddings layer</span>
-        <span class="n">word_chars_input</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">word_length</span><span class="p">),</span>
-                                                 <span class="n">name</span><span class="o">=</span><span class="s1">&#39;word_chars_input&#39;</span><span class="p">)</span>
-        <span class="n">char_embedding_layer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">char_vocab_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">char_emb_dims</span><span class="p">,</span>
-                                                         <span class="n">input_length</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">word_length</span><span class="p">,</span>
-                                                         <span class="n">name</span><span class="o">=</span><span class="s1">&#39;char_embedding&#39;</span><span class="p">)</span>
+        <span class="n">word_chars_input</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span>
+            <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">word_length</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;word_chars_input&quot;</span>
+        <span class="p">)</span>
+        <span class="n">char_embedding_layer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">char_vocab_size</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">char_emb_dims</span><span class="p">,</span>
+            <span class="n">input_length</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">word_length</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;char_embedding&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="c1"># apply embedding to each word</span>
         <span class="n">char_embeddings</span> <span class="o">=</span> <span class="n">char_embedding_layer</span><span class="p">(</span><span class="n">word_chars_input</span><span class="p">)</span>
         <span class="c1"># feed dense char vectors into BiLSTM</span>
         <span class="n">char_embeddings</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">TimeDistributed</span><span class="p">(</span>
-            <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Bidirectional</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_rnn_cell</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">char_lstm_dims</span><span class="p">)))(</span><span class="n">char_embeddings</span><span class="p">)</span>
+            <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Bidirectional</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_rnn_cell</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">char_lstm_dims</span><span class="p">))</span>
+        <span class="p">)(</span><span class="n">char_embeddings</span><span class="p">)</span>
         <span class="n">char_embeddings</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dropout</span><span class="p">)(</span><span class="n">char_embeddings</span><span class="p">)</span>
 
         <span class="c1"># first BiLSTM layer (used for intent classification)</span>
         <span class="n">first_bilstm_layer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Bidirectional</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_rnn_cell</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tagger_lstm_dims</span><span class="p">,</span> <span class="n">return_sequences</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">return_state</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_rnn_cell</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tagger_lstm_dims</span><span class="p">,</span> <span class="n">return_sequences</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">return_state</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="p">)</span>
         <span class="n">first_lstm_out</span> <span class="o">=</span> <span class="n">first_bilstm_layer</span><span class="p">(</span><span class="n">word_embeddings</span><span class="p">)</span>
 
         <span class="n">lstm_y_sequence</span> <span class="o">=</span> <span class="n">first_lstm_out</span><span class="p">[:</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># save y states of the LSTM layer</span>
         <span class="n">states</span> <span class="o">=</span> <span class="n">first_lstm_out</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
         <span class="n">hf</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">hb</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">states</span>  <span class="c1"># extract last hidden states</span>
         <span class="n">h_state</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">hf</span><span class="p">,</span> <span class="n">hb</span><span class="p">],</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
-        <span class="n">intents</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_intent_labels</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;softmax&#39;</span><span class="p">,</span>
-                                        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;intent_classifier_output&#39;</span><span class="p">)(</span><span class="n">h_state</span><span class="p">)</span>
+        <span class="n">intents</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">num_intent_labels</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s2">&quot;softmax&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;intent_classifier_output&quot;</span>
+        <span class="p">)(</span><span class="n">h_state</span><span class="p">)</span>
 
         <span class="c1"># create the 2nd feature vectors</span>
-        <span class="n">combined_features</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">lstm_y_sequence</span><span class="p">,</span> <span class="n">char_embeddings</span><span class="p">],</span>
-                                                        <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">combined_features</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">lstm_y_sequence</span><span class="p">,</span> <span class="n">char_embeddings</span><span class="p">],</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
 
         <span class="c1"># 2nd BiLSTM layer for label classification</span>
-        <span class="n">second_bilstm_layer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Bidirectional</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_rnn_cell</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tagger_lstm_dims</span><span class="p">,</span>
-                                                                           <span class="n">return_sequences</span><span class="o">=</span><span class="kc">True</span><span class="p">))(</span>
-            <span class="n">combined_features</span><span class="p">)</span>
+        <span class="n">second_bilstm_layer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Bidirectional</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_rnn_cell</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tagger_lstm_dims</span><span class="p">,</span> <span class="n">return_sequences</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="p">)(</span><span class="n">combined_features</span><span class="p">)</span>
         <span class="n">second_bilstm_layer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dropout</span><span class="p">)(</span><span class="n">second_bilstm_layer</span><span class="p">)</span>
         <span class="n">bilstm_out</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_labels</span><span class="p">)(</span><span class="n">second_bilstm_layer</span><span class="p">)</span>
 
         <span class="c1"># feed BiLSTM vectors into CRF</span>
-        <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s1">&#39;/cpu:0&#39;</span><span class="p">):</span>
-            <span class="n">crf</span> <span class="o">=</span> <span class="n">CRF</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_labels</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;intent_slot_crf&#39;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;/cpu:0&quot;</span><span class="p">):</span>
+            <span class="n">crf</span> <span class="o">=</span> <span class="n">CRF</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_labels</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;intent_slot_crf&quot;</span><span class="p">)</span>
             <span class="n">labels</span> <span class="o">=</span> <span class="n">crf</span><span class="p">(</span><span class="n">bilstm_out</span><span class="p">)</span>
 
         <span class="c1"># compile the model</span>
-        <span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="p">[</span><span class="n">words_input</span><span class="p">,</span> <span class="n">word_chars_input</span><span class="p">],</span>
-                               <span class="n">outputs</span><span class="o">=</span><span class="p">[</span><span class="n">intents</span><span class="p">,</span> <span class="n">labels</span><span class="p">])</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="p">[</span><span class="n">words_input</span><span class="p">,</span> <span class="n">word_chars_input</span><span class="p">],</span> <span class="n">outputs</span><span class="o">=</span><span class="p">[</span><span class="n">intents</span><span class="p">,</span> <span class="n">labels</span><span class="p">])</span>
 
         <span class="c1"># define losses and metrics</span>
-        <span class="n">loss_f</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;intent_classifier_output&#39;</span><span class="p">:</span> <span class="s1">&#39;categorical_crossentropy&#39;</span><span class="p">,</span>
-                  <span class="s1">&#39;intent_slot_crf&#39;</span><span class="p">:</span> <span class="n">crf</span><span class="o">.</span><span class="n">loss</span><span class="p">}</span>
-        <span class="n">metrics</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;intent_classifier_output&#39;</span><span class="p">:</span> <span class="s1">&#39;categorical_accuracy&#39;</span><span class="p">,</span>
-                   <span class="s1">&#39;intent_slot_crf&#39;</span><span class="p">:</span> <span class="n">crf</span><span class="o">.</span><span class="n">viterbi_accuracy</span><span class="p">}</span>
+        <span class="n">loss_f</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;intent_classifier_output&quot;</span><span class="p">:</span> <span class="s2">&quot;categorical_crossentropy&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;intent_slot_crf&quot;</span><span class="p">:</span> <span class="n">crf</span><span class="o">.</span><span class="n">loss</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="n">metrics</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;intent_classifier_output&quot;</span><span class="p">:</span> <span class="s2">&quot;categorical_accuracy&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;intent_slot_crf&quot;</span><span class="p">:</span> <span class="n">crf</span><span class="o">.</span><span class="n">viterbi_accuracy</span><span class="p">,</span>
+        <span class="p">}</span>
 
-        <span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="n">loss_f</span><span class="p">,</span>
-                      <span class="n">optimizer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">AdamOptimizer</span><span class="p">(),</span>
-                      <span class="n">metrics</span><span class="o">=</span><span class="n">metrics</span><span class="p">)</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="n">loss_f</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">AdamOptimizer</span><span class="p">(),</span> <span class="n">metrics</span><span class="o">=</span><span class="n">metrics</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span></div>
 
     <span class="k">def</span> <span class="nf">_rnn_cell</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">units</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -439,7 +458,7 @@
 <span class="sd">        Args:</span>
 <span class="sd">            path (str): path to save model</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;use_cudnn&#39;</span><span class="p">])</span></div></div>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;use_cudnn&quot;</span><span class="p">])</span></div></div>
 
 
 <div class="viewcode-block" id="Seq2SeqIntentModel"><a class="viewcode-back" href="../../../generated_api/nlp_architect.models.html#nlp_architect.models.intent_extraction.Seq2SeqIntentModel">[docs]</a><span class="k">class</span> <span class="nc">Seq2SeqIntentModel</span><span class="p">(</span><span class="n">IntentExtractionModel</span><span class="p">):</span>
@@ -459,15 +478,17 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">encoder_dropout</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">decoder_dropout</span> <span class="o">=</span> <span class="kc">None</span>
 
-<div class="viewcode-block" id="Seq2SeqIntentModel.build"><a class="viewcode-back" href="../../../generated_api/nlp_architect.models.html#nlp_architect.models.intent_extraction.Seq2SeqIntentModel.build">[docs]</a>    <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-              <span class="n">vocab_size</span><span class="p">,</span>
-              <span class="n">tag_labels</span><span class="p">,</span>
-              <span class="n">token_emb_size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
-              <span class="n">encoder_depth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-              <span class="n">decoder_depth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-              <span class="n">lstm_hidden_size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
-              <span class="n">encoder_dropout</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
-              <span class="n">decoder_dropout</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
+<div class="viewcode-block" id="Seq2SeqIntentModel.build"><a class="viewcode-back" href="../../../generated_api/nlp_architect.models.html#nlp_architect.models.intent_extraction.Seq2SeqIntentModel.build">[docs]</a>    <span class="k">def</span> <span class="nf">build</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">vocab_size</span><span class="p">,</span>
+        <span class="n">tag_labels</span><span class="p">,</span>
+        <span class="n">token_emb_size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+        <span class="n">encoder_depth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">decoder_depth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">lstm_hidden_size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+        <span class="n">encoder_dropout</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+        <span class="n">decoder_dropout</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Build the model</span>
 
@@ -490,40 +511,44 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">encoder_dropout</span> <span class="o">=</span> <span class="n">encoder_dropout</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">decoder_dropout</span> <span class="o">=</span> <span class="n">decoder_dropout</span>
 
-        <span class="n">words_input</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;words_input&#39;</span><span class="p">)</span>
-        <span class="n">emb_layer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vocab_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">token_emb_size</span><span class="p">,</span>
-                                              <span class="n">name</span><span class="o">=</span><span class="s1">&#39;word_embedding&#39;</span><span class="p">)</span>
+        <span class="n">words_input</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;words_input&quot;</span><span class="p">)</span>
+        <span class="n">emb_layer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">vocab_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">token_emb_size</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;word_embedding&quot;</span>
+        <span class="p">)</span>
         <span class="n">benc_in</span> <span class="o">=</span> <span class="n">emb_layer</span><span class="p">(</span><span class="n">words_input</span><span class="p">)</span>
 
-        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoder_depth</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Encoder depth must be &gt; 0&#39;</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoder_depth</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;Encoder depth must be &gt; 0&quot;</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">encoder_depth</span><span class="p">):</span>
-            <span class="n">bencoder</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">LSTM</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lstm_hidden_size</span><span class="p">,</span> <span class="n">return_sequences</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                                            <span class="n">return_state</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                                            <span class="n">go_backwards</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">dropout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">encoder_dropout</span><span class="p">,</span>
-                                            <span class="n">name</span><span class="o">=</span><span class="s1">&#39;encoder_blstm_</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">))(</span><span class="n">benc_in</span><span class="p">)</span>
+            <span class="n">bencoder</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">LSTM</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">lstm_hidden_size</span><span class="p">,</span>
+                <span class="n">return_sequences</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">return_state</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">go_backwards</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">dropout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">encoder_dropout</span><span class="p">,</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;encoder_blstm_</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">),</span>
+            <span class="p">)(</span><span class="n">benc_in</span><span class="p">)</span>
             <span class="n">benc_in</span> <span class="o">=</span> <span class="n">bencoder</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">b_states</span> <span class="o">=</span> <span class="n">bencoder</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
         <span class="n">benc_h</span><span class="p">,</span> <span class="n">bene_c</span> <span class="o">=</span> <span class="n">b_states</span>
 
         <span class="n">decoder_inputs</span> <span class="o">=</span> <span class="n">benc_in</span>
-        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">decoder_depth</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Decoder depth must be &gt; 0&#39;</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">decoder_depth</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;Decoder depth must be &gt; 0&quot;</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">decoder_depth</span><span class="p">):</span>
-            <span class="n">decoder</span> <span class="o">=</span> \
-                <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">LSTM</span><span class="p">(</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">lstm_hidden_size</span><span class="p">,</span>
-                    <span class="n">return_sequences</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;decoder_lstm_</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">))(</span><span class="n">decoder_inputs</span><span class="p">,</span> <span class="n">initial_state</span><span class="o">=</span><span class="p">[</span><span class="n">benc_h</span><span class="p">,</span>
-                                                                                     <span class="n">bene_c</span><span class="p">])</span>
+            <span class="n">decoder</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">LSTM</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">lstm_hidden_size</span><span class="p">,</span> <span class="n">return_sequences</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;decoder_lstm_</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="p">)(</span><span class="n">decoder_inputs</span><span class="p">,</span> <span class="n">initial_state</span><span class="o">=</span><span class="p">[</span><span class="n">benc_h</span><span class="p">,</span> <span class="n">bene_c</span><span class="p">])</span>
             <span class="n">decoder_inputs</span> <span class="o">=</span> <span class="n">decoder</span>
         <span class="n">decoder_outputs</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">decoder_dropout</span><span class="p">)(</span><span class="n">decoder</span><span class="p">)</span>
         <span class="n">decoder_predictions</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">TimeDistributed</span><span class="p">(</span>
-            <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tag_labels</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;softmax&#39;</span><span class="p">),</span>
-            <span class="n">name</span><span class="o">=</span><span class="s1">&#39;decoder_classifier&#39;</span><span class="p">)(</span><span class="n">decoder_outputs</span><span class="p">)</span>
+            <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tag_labels</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s2">&quot;softmax&quot;</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;decoder_classifier&quot;</span>
+        <span class="p">)(</span><span class="n">decoder_outputs</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">words_input</span><span class="p">,</span> <span class="n">decoder_predictions</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">AdamOptimizer</span><span class="p">(),</span>
-                           <span class="n">loss</span><span class="o">=</span><span class="s1">&#39;categorical_crossentropy&#39;</span><span class="p">,</span>
-                           <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;categorical_accuracy&#39;</span><span class="p">])</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
+            <span class="n">optimizer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">AdamOptimizer</span><span class="p">(),</span>
+            <span class="n">loss</span><span class="o">=</span><span class="s2">&quot;categorical_crossentropy&quot;</span><span class="p">,</span>
+            <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;categorical_accuracy&quot;</span><span class="p">],</span>
+        <span class="p">)</span></div></div>
 </pre></div>
 
            </div>

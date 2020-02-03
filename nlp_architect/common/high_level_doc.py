@@ -13,8 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
-from __future__ import unicode_literals, print_function, division, \
-    absolute_import
+from __future__ import unicode_literals, print_function, division, absolute_import
 import json
 
 
@@ -28,6 +27,7 @@ class HighLevelDoc:
         self.spans (list(dict)): list of span dict, each span_dict is structured as follows:
             { 'end': (int), 'start': (int), 'type': (str) string of annotation }
     """
+
     def __init__(self):
         self.doc_text = None
         self.annotation_set = []

@@ -52,8 +52,15 @@ class NeuralTagger(TrainableModel):
         n_gpus (int, optional): number of gpus. Default to 0.
     """
 
-    def __init__(self, embedder_model, word_vocab: Vocabulary, labels: List[str] = None,
-                 use_crf: bool = False, device: str = 'cpu', n_gpus=0):
+    def __init__(
+        self,
+        embedder_model,
+        word_vocab: Vocabulary,
+        labels: List[str] = None,
+        use_crf: bool = False,
+        device: str = "cpu",
+        n_gpus=0,
+    ):
         super(NeuralTagger, self).__init__()
         self.model = embedder_model
         self.labels = labels
@@ -68,13 +75,15 @@ class NeuralTagger(TrainableModel):
         self.n_gpus = n_gpus
         self.to(self.device, self.n_gpus)
 
-    def convert_to_tensors(self,
-                           examples: List[TokenClsInputExample],
-                           max_seq_length: int = 128,
-                           max_word_length: int = 12,
-                           pad_id: int = 0,
-                           labels_pad_id: int = 0,
-                           include_labels: bool = True) -> TensorDataset:
+    def convert_to_tensors(
+        self,
+        examples: List[TokenClsInputExample],
+        max_seq_length: int = 128,
+        max_word_length: int = 12,
+        pad_id: int = 0,
+        labels_pad_id: int = 0,
+        include_labels: bool = True,
+    ) -> TensorDataset:
         """
         Convert examples to valid tagger dataset
 
@@ -123,7 +132,8 @@ class NeuralTagger(TrainableModel):
             # pad word vectors
             for i in range(len(word_chars)):
                 word_char_ids.append(
-                    word_chars[i] + ([pad_id] * (max_word_length - len(word_chars[i]))))
+                    word_chars[i] + ([pad_id] * (max_word_length - len(word_chars[i])))
+                )
 
             # pad word vectors with remaining zero vectors
             for _ in range(padding_length):
@@ -231,8 +241,7 @@ class NeuralTagger(TrainableModel):
         logger.info("***** Running training *****")
         logger.info("  Num examples = %d", len(train_data_set.dataset))
         logger.info("  Num Epochs = %d", epochs)
-        logger.info("  Instantaneous batch size per GPU/CPU = %d",
-                    batch_size)
+        logger.info("  Instantaneous batch size per GPU/CPU = %d", batch_size)
         logger.info("  Total batch size = %d", train_batch_size)
         global_step = 0
         best_dev = 0
@@ -347,11 +356,11 @@ class NeuralTagger(TrainableModel):
         if ds is not None:
             logits, out_label_ids = self.evaluate(ds)
             res = self.evaluate_predictions(logits, out_label_ids)
-            logger.info(" {} set F1 = {}".format(set_name, res['f1']))
-            return res['f1']
+            logger.info(" {} set F1 = {}".format(set_name, res["f1"]))
+            return res["f1"]
         return None
 
-    def to(self, device='cpu', n_gpus=0):
+    def to(self, device="cpu", n_gpus=0):
         """
         Put model on given device
 
@@ -391,15 +400,17 @@ class NeuralTagger(TrainableModel):
                 inputs = self.batch_mapper(batch)
                 logits = self.model(**inputs)
             model_output = logits.detach().cpu()
-            model_out_label_ids = inputs['labels'].detach().cpu(
-            ) if 'labels' in inputs else None
+            model_out_label_ids = inputs["labels"].detach().cpu() if "labels" in inputs else None
             if preds is None:
                 preds = model_output
                 out_label_ids = model_out_label_ids
             else:
                 preds = torch.cat((preds, model_output), dim=0)
-                out_label_ids = torch.cat((out_label_ids, model_out_label_ids),
-                                          dim=0) if out_label_ids is not None else None
+                out_label_ids = (
+                    torch.cat((out_label_ids, model_out_label_ids), dim=0)
+                    if out_label_ids is not None
+                    else None
+                )
         output = (preds,)
         if out_label_ids is not None:
             output = output + (out_label_ids,)
@@ -428,8 +439,7 @@ class NeuralTagger(TrainableModel):
             logits = decode_fn(logits.to(self.device), mask=decode_ap.to(self.device))
             logits = [l for ll in logits for l in ll]
         else:
-            active_logits = logits.view(-1, len(self.label_id_str) + 1)[
-                active_positions]
+            active_logits = logits.view(-1, len(self.label_id_str) + 1)[active_positions]
             logits = torch.argmax(F.log_softmax(active_logits, dim=1), dim=1)
             logits = logits.detach().cpu().numpy()
         out_label_ids = active_labels.detach().cpu().numpy()
@@ -442,8 +452,8 @@ class NeuralTagger(TrainableModel):
         y_true = []
         y_pred = []
         for p, y in zip(logits, label_ids):
-            y_pred.append(label_map.get(p, 'O'))
-            y_true.append(label_map.get(y, 'O'))
+            y_pred.append(label_map.get(p, "O"))
+            y_true.append(label_map.get(y, "O"))
         assert len(y_true) == len(y_pred)
         return (y_true, y_pred)
 
@@ -466,12 +476,11 @@ class NeuralTagger(TrainableModel):
         logits = torch.argmax(F.log_softmax(logits[0], dim=2), dim=2)
         res_ids = []
         for i in range(logits.size()[0]):
-            res_ids.append(
-                logits[i][active_positions[i]].detach().cpu().numpy())
+            res_ids.append(logits[i][active_positions[i]].detach().cpu().numpy())
         output = []
         for tag_ids, ex in zip(res_ids, examples):
             tokens = ex.tokens
-            tags = [self.label_id_str.get(t, 'O') for t in tag_ids]
+            tags = [self.label_id_str.get(t, "O") for t in tag_ids]
             output.append((tokens, tags))
         return output
 
@@ -482,14 +491,13 @@ class NeuralTagger(TrainableModel):
         Args:
             output_dir (str): output directory
         """
-        torch.save(self.model, os.path.join(output_dir, 'model.bin'))
+        torch.save(self.model, os.path.join(output_dir, "model.bin"))
         if self.use_crf:
-            torch.save(self.crf, os.path.join(output_dir, 'crf.bin'))
-        with io.open(output_dir + os.sep + 'labels.txt', 'w',
-                     encoding='utf-8') as fw:
+            torch.save(self.crf, os.path.join(output_dir, "crf.bin"))
+        with io.open(output_dir + os.sep + "labels.txt", "w", encoding="utf-8") as fw:
             for l in self.labels:
-                fw.write('{}\n'.format(l))
-        with io.open(output_dir + os.sep + 'w_vocab.dat', 'wb') as fw:
+                fw.write("{}\n".format(l))
+        with io.open(output_dir + os.sep + "w_vocab.dat", "wb") as fw:
             pickle.dump(self.word_vocab, fw)
 
     @classmethod
@@ -505,18 +513,18 @@ class NeuralTagger(TrainableModel):
         # Load a trained model and vocabulary from given path
         if not os.path.exists(model_path):
             raise FileNotFoundError
-        with io.open(model_path + os.sep + 'labels.txt') as fp:
+        with io.open(model_path + os.sep + "labels.txt") as fp:
             labels = [l.strip() for l in fp.readlines()]
 
-        with io.open(model_path + os.sep + 'w_vocab.dat', 'rb') as fp:
+        with io.open(model_path + os.sep + "w_vocab.dat", "rb") as fp:
             w_vocab = pickle.load(fp)
         # load model.bin into
-        model_file_path = model_path + os.sep + 'model.bin'
+        model_file_path = model_path + os.sep + "model.bin"
         if not os.path.exists(model_file_path):
             raise FileNotFoundError
         model = torch.load(model_file_path)
         new_class = cls(model, w_vocab, labels)
-        crf_file_path = model_path + os.sep + 'crf.bin'
+        crf_file_path = model_path + os.sep + "crf.bin"
         if os.path.exists(crf_file_path):
             new_class.use_crf = True
             new_class.crf = torch.load(crf_file_path)

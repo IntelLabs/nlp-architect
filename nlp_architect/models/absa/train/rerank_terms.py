@@ -25,6 +25,7 @@ from nlp_architect.models.absa import TRAIN_OUT, TRAIN_LEXICONS, GENERIC_OP_LEX,
 
 from scipy.spatial.distance import cosine
 from sklearn.model_selection import StratifiedKFold
+
 # pylint: disable=import-error
 from tensorflow.keras.layers import Dense, Dropout
 from tensorflow.keras.models import Sequential, load_model
@@ -33,25 +34,26 @@ from nlp_architect.utils.embedding import load_word_embeddings
 
 
 class RerankTerms(object):
-    model_dir = TRAIN_OUT / 'reranking_model'
-    train_rerank_data_path = TRAIN_LEXICONS / 'RerankTrainingData.csv'
+    model_dir = TRAIN_OUT / "reranking_model"
+    train_rerank_data_path = TRAIN_LEXICONS / "RerankTrainingData.csv"
     PREDICTION_THRESHOLD = 0.7
 
-    def __init__(self, vector_cache=True, rerank_model: PathLike = None,
-                 emb_model_path: PathLike = None):
+    def __init__(
+        self, vector_cache=True, rerank_model: PathLike = None, emb_model_path: PathLike = None
+    ):
         # model and training params
         self.embeddings_len = 300
-        self.activation_1 = 'relu'
-        self.activation_2 = 'relu'
-        self.activation_3 = 'sigmoid'
-        self.loss = 'binary_crossentropy'
-        self.optimizer = 'rmsprop'
+        self.activation_1 = "relu"
+        self.activation_2 = "relu"
+        self.activation_3 = "sigmoid"
+        self.loss = "binary_crossentropy"
+        self.optimizer = "rmsprop"
 
         self.epochs_and_batch_size = [(10, 2)]
         self.seeds = [3]
         self.threshold = 0.5
 
-        self.sim_lexicon = TRAIN_LEXICONS / 'RerankSentSimLex.csv'
+        self.sim_lexicon = TRAIN_LEXICONS / "RerankSentSimLex.csv"
         self.generic_lexicon = GENERIC_OP_LEX
 
         self.vector_cache = vector_cache
@@ -113,7 +115,7 @@ class RerankTerms(object):
         pos_all = []
 
         for term in terms:
-            polarity_sim_dic = {'NEG': [], 'POS': []}
+            polarity_sim_dic = {"NEG": [], "POS": []}
             for generic_term, polarity in generic_terms.items():
 
                 sim_score = self.calc_cosine_similarity(term, generic_term, embedding_dict)
@@ -123,8 +125,8 @@ class RerankTerms(object):
                 else:
                     polarity_sim_dic[polarity].append(float(0))
 
-            neg_all.append(polarity_sim_dic['NEG'])
-            pos_all.append(polarity_sim_dic['POS'])
+            neg_all.append(polarity_sim_dic["NEG"])
+            pos_all.append(polarity_sim_dic["POS"])
 
         return neg_all, pos_all
 
@@ -141,11 +143,11 @@ class RerankTerms(object):
             polarities: opinion polarity per term
 
         """
-        print('Loading training data from {} ...'.format(filename))
+        print("Loading training data from {} ...".format(filename))
 
-        table = np.genfromtxt(filename, delimiter=',', skip_header=1, dtype=str)
+        table = np.genfromtxt(filename, delimiter=",", skip_header=1, dtype=str)
         if table.size == 0:
-            raise ValueError('Error: Term file is empty, no terms to re-rank.')
+            raise ValueError("Error: Term file is empty, no terms to re-rank.")
 
         try:
             terms = table[:, 1]
@@ -156,10 +158,11 @@ class RerankTerms(object):
 
         if len(terms) != len(polarities):
             raise ValueError(
-                'Count of opinion terms is different than the count of loaded polarities.')
+                "Count of opinion terms is different than the count of loaded polarities."
+            )
         polarities = {terms[i]: polarities[i] for i in range(len(terms))}
 
-        print(str(terms.shape[0]) + ' features loaded from CSV file')
+        print(str(terms.shape[0]) + " features loaded from CSV file")
         return terms, polarities
 
     @staticmethod
@@ -175,11 +178,11 @@ class RerankTerms(object):
             terms: candidate terms
             polarities: opinion polarity per term
         """
-        print('Loading basic features from {} ...'.format(filename))
+        print("Loading basic features from {} ...".format(filename))
 
-        table = np.genfromtxt(filename, delimiter=',', skip_header=1, dtype=str)
+        table = np.genfromtxt(filename, delimiter=",", skip_header=1, dtype=str)
         if table.size == 0:
-            raise ValueError('Error: Terms file is empty, no terms to re-rank.')
+            raise ValueError("Error: Terms file is empty, no terms to re-rank.")
 
         try:
             terms = table[:, 1]
@@ -189,7 +192,7 @@ class RerankTerms(object):
         y = table[:, 0].astype(int)
         polarities = None
 
-        print(str(terms.shape[0]) + ' features loaded from CSV file')
+        print(str(terms.shape[0]) + " features loaded from CSV file")
         return y, terms, polarities
 
     @staticmethod
@@ -218,10 +221,11 @@ class RerankTerms(object):
         pos_min = np.min(pos, axis=1, keepdims=True)
         pos_max = np.max(pos, axis=1, keepdims=True)
 
-        print('\nAdding polarity similarity features...')
+        print("\nAdding polarity similarity features...")
 
         res_x = np.concatenate(
-            (neg_avg, neg_std, neg_min, neg_max, pos_avg, pos_std, pos_min, pos_max, x), 1)
+            (neg_avg, neg_std, neg_min, neg_max, pos_avg, pos_std, pos_min, pos_max, x), 1
+        )
 
         return res_x
 
@@ -297,9 +301,9 @@ class RerankTerms(object):
 
         for i, term in enumerate(terms):
             if np.average(pos[i]) <= np.average(neg[i]):
-                polarities[term] = 'POS'
+                polarities[term] = "POS"
             else:
-                polarities[term] = 'NEG'
+                polarities[term] = "NEG"
 
         return polarities
 
@@ -309,7 +313,7 @@ class RerankTerms(object):
         # generate unified list of candidate terms and generic terms
         terms_list = [term for term in terms]
         for term in generic_terms.keys():
-            terms_list.append(term.strip('\'"'))
+            terms_list.append(term.strip("'\""))
 
         print("\nLoading embedding model...\n")
         embedding_dict, _ = load_word_embeddings(self.emb_model_path, terms_list)
@@ -369,7 +373,7 @@ class RerankTerms(object):
         mlp_model.add(Dense(64, activation=self.activation_2))
         mlp_model.add(Dropout(0.5))
         mlp_model.add(Dense(1, activation=self.activation_3))
-        mlp_model.compile(metrics=['accuracy'], loss=self.loss, optimizer=self.optimizer)
+        mlp_model.compile(metrics=["accuracy"], loss=self.loss, optimizer=self.optimizer)
 
         return mlp_model
 
@@ -393,17 +397,19 @@ class RerankTerms(object):
             if not np.isnan(prediction[0]) and prediction[0] > self.PREDICTION_THRESHOLD:
                 reranked_lex[terms[i]] = (prediction[0], polarities[terms[i]])
 
-        final_concat_opinion_lex = \
-            self._generate_concat_reranked_lex(reranked_lex, generic_opinion_terms)
+        final_concat_opinion_lex = self._generate_concat_reranked_lex(
+            reranked_lex, generic_opinion_terms
+        )
         return final_concat_opinion_lex
 
     def rerank_train(self):
         """Class for training a reranking model."""
-        x, y, _, _, _ = \
-            self.load_terms_and_y_labels_and_generate_features(self.train_rerank_data_path)
+        x, y, _, _, _ = self.load_terms_and_y_labels_and_generate_features(
+            self.train_rerank_data_path
+        )
 
         try:
-            print('\nModel training...')
+            print("\nModel training...")
             model = self.generate_model(x.shape[1])
             e = self.epochs_and_batch_size[0][0]
             b = self.epochs_and_batch_size[0][1]
@@ -411,8 +417,8 @@ class RerankTerms(object):
             model.fit(x, y, epochs=e, batch_size=b, verbose=0)
             RerankTerms.model_dir.mkdir(parents=True, exist_ok=True)
 
-            model.save(str(RerankTerms.model_dir) + '/rerank_model.h5')
-            print('\nSaved model to: ' + str(RerankTerms.model_dir) + '/rerank_model.h5')
+            model.save(str(RerankTerms.model_dir) + "/rerank_model.h5")
+            print("\nSaved model to: " + str(RerankTerms.model_dir) + "/rerank_model.h5")
 
         except ZeroDivisionError:
             print("Division by zero, skipping test")
@@ -420,8 +426,9 @@ class RerankTerms(object):
     def cross_validation_training(self, verbose=False):
         """Perform k fold cross validation and evaluate the results."""
         final_report = {}
-        x, y, y_vector, terms, _ = \
-            self.load_terms_and_y_labels_and_generate_features(self.train_rerank_data_path)
+        x, y, y_vector, terms, _ = self.load_terms_and_y_labels_and_generate_features(
+            self.train_rerank_data_path
+        )
 
         for seed in self.seeds:
             np.random.seed(seed)
@@ -437,11 +444,17 @@ class RerankTerms(object):
 
                     for i, (train, test) in enumerate(k_fold.split(x, y)):
                         model = self.generate_model(x.shape[1])
-                        model.fit(x[train], y_vector[train], epochs=epochs, batch_size=batch_size,
-                                  verbose=0)
+                        model.fit(
+                            x[train],
+                            y_vector[train],
+                            epochs=epochs,
+                            batch_size=batch_size,
+                            verbose=0,
+                        )
 
-                        measures, report = self.evaluate(model, x[test], y_vector[test],
-                                                         terms[test])
+                        measures, report = self.evaluate(
+                            model, x[test], y_vector[test], terms[test]
+                        )
                         final_report.update(report)
 
                         precision, recall, f1 = measures
@@ -453,7 +466,7 @@ class RerankTerms(object):
                             print("Fold " + str(i + 1) + ":")
                             self.print_evaluation_results(precision, recall, f1)
 
-                    print('\nSummary:')
+                    print("\nSummary:")
                     self.print_evaluation_results(precision_scores, recall_scores, f1_scores)
 
                 except ZeroDivisionError:
@@ -469,11 +482,30 @@ class RerankTerms(object):
             epochs(int): num of epochs
             seed(int): seed
         """
-        print('\nModel Parameters: act_1= ' + self.activation_1 + ', act_2= ' + self.activation_2
-              + ', act_3= ' + self.activation_3 + ', loss= ' + self.loss + ', optimizer= '
-              + self.optimizer + '\nseed= ' + str(seed) + ', epochs= ' + str(epochs)
-              + ', batch_size= ' + str(batch_size) + ', threshold= ' + str(self.threshold)
-              + ', use_complete_w2v= ' + ', sim_lexicon= ' + str(self.sim_lexicon) + '\n')
+        print(
+            "\nModel Parameters: act_1= "
+            + self.activation_1
+            + ", act_2= "
+            + self.activation_2
+            + ", act_3= "
+            + self.activation_3
+            + ", loss= "
+            + self.loss
+            + ", optimizer= "
+            + self.optimizer
+            + "\nseed= "
+            + str(seed)
+            + ", epochs= "
+            + str(epochs)
+            + ", batch_size= "
+            + str(batch_size)
+            + ", threshold= "
+            + str(self.threshold)
+            + ", use_complete_w2v= "
+            + ", sim_lexicon= "
+            + str(self.sim_lexicon)
+            + "\n"
+        )
 
     def print_evaluation_results(self, precision, recall, f1):
         """Print evaluation results.
@@ -484,11 +516,13 @@ class RerankTerms(object):
             f1(list of float): f measure
         """
         print()
-        self.print_measure('Precision', precision)
-        self.print_measure('Recall', recall)
-        self.print_measure('F-measure', f1)
-        print('-------------------------------------------------------------------------'
-              '------------------------------')
+        self.print_measure("Precision", precision)
+        self.print_measure("Recall", recall)
+        self.print_measure("F-measure", f1)
+        print(
+            "-------------------------------------------------------------------------"
+            "------------------------------"
+        )
 
     @staticmethod
     def print_measure(measure, value):
@@ -498,53 +532,54 @@ class RerankTerms(object):
             measure(str): measure type
             value(list of float): value
         """
-        print(measure + ': {:.2f}%'.format(np.mean(value)), end='')
+        print(measure + ": {:.2f}%".format(np.mean(value)), end="")
         if not np.isscalar(value):
-            print(" (+/- {:.2f}%)".format(np.std(value)), end='')
+            print(" (+/- {:.2f}%)".format(np.std(value)), end="")
         print()
 
     @staticmethod
     def _generate_concat_reranked_lex(acquired_opinion_lex, generic_opinion_lex_file):
-        print('Loading generic sentiment terms from {}...'.format(generic_opinion_lex_file))
-        generics_table = np.genfromtxt(generic_opinion_lex_file, delimiter=',', skip_header=1,
-                                       dtype=str)
-        print(str(generics_table.shape[0]) + ' generic sentiment terms loaded')
+        print("Loading generic sentiment terms from {}...".format(generic_opinion_lex_file))
+        generics_table = np.genfromtxt(
+            generic_opinion_lex_file, delimiter=",", skip_header=1, dtype=str
+        )
+        print(str(generics_table.shape[0]) + " generic sentiment terms loaded")
 
         concat_opinion_dict = {}
 
         for key, value in acquired_opinion_lex.items():
-            concat_opinion_dict[key] = (value[0], value[1], 'Y')
+            concat_opinion_dict[key] = (value[0], value[1], "Y")
         for row in generics_table:
-            concat_opinion_dict[row[0]] = (row[2], row[1], 'N')
+            concat_opinion_dict[row[0]] = (row[2], row[1], "N")
 
         return concat_opinion_dict
 
     @staticmethod
     def _write_prediction_results(concat_opinion_dict, out_override):
         out_dir = Path(out_override) if out_override else LEXICONS_OUT
-        out_path = out_dir / 'generated_opinion_lex_reranked.csv'
-        with open(out_path, 'w') as csv_file:
+        out_path = out_dir / "generated_opinion_lex_reranked.csv"
+        with open(out_path, "w") as csv_file:
             writer = csv.writer(csv_file)
-            writer.writerow(['Term', 'Score', 'Polarity', 'isAcquired'])
+            writer.writerow(["Term", "Score", "Polarity", "isAcquired"])
             for key, value in concat_opinion_dict.items():
                 writer.writerow([key, value[0], value[1], value[2]])
-        print('Reranked opinion lexicon written to {}'.format(out_path))
+        print("Reranked opinion lexicon written to {}".format(out_path))
 
     @staticmethod
     def write_evaluation_report(report_dic):
         RerankTerms.model_dir.mkdir(parents=True, exist_ok=True)
-        out_path = RerankTerms.model_dir / 'rerank_classifier_results.csv'
-        with open(out_path, 'w', encoding='utf-8') as csv_file:
+        out_path = RerankTerms.model_dir / "rerank_classifier_results.csv"
+        with open(out_path, "w", encoding="utf-8") as csv_file:
             writer = csv.writer(csv_file)
-            writer.writerow(['term', 'score', 'y_pred', 'y_true'])
+            writer.writerow(["term", "score", "y_pred", "y_true"])
             for key, value in report_dic.items():
                 writer.writerow([key, value[0], value[1], value[2]])
-        print('Report written to {}' + str(out_path))
+        print("Report written to {}" + str(out_path))
 
     @staticmethod
     def load_word_vectors_dict():
         try:
-            with open(RerankTerms.model_dir / 'word_vectors_dict.pickle', 'rb') as f:
+            with open(RerankTerms.model_dir / "word_vectors_dict.pickle", "rb") as f:
                 ret = pickle.load(f)
         except OSError:
             ret = {}

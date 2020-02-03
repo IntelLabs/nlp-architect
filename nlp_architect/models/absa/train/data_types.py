@@ -33,7 +33,7 @@ class OpinionTerm:
         self.polarity = polarity
 
     def __str__(self):
-        return ' '.join(self.terms)
+        return " ".join(self.terms)
 
 
 class AspectTerm(object):
@@ -55,7 +55,7 @@ class AspectTerm(object):
         self.pos = pos
 
     def __str__(self):
-        return ' '.join(self.terms)
+        return " ".join(self.terms)
 
     def __eq__(self, other):
         """
@@ -95,18 +95,22 @@ class CandidateTerm(object):
         self.term_polarity = candidate_term_polarity
 
     def __str__(self):
-        return ' '.join(self.term)
+        return " ".join(self.term)
 
     def __eq__(self, other):
         if other is None or self.__class__ != other.__class__:
             return False
         if self.term != other.term if self.term is not None else other.term is not None:
             return False
-        if self.source_term != other.source_term if self.source_term is not None else \
-                other.source_term is not None:
+        if (
+            self.source_term != other.source_term
+            if self.source_term is not None
+            else other.source_term is not None
+        ):
             return False
-        return self.sentence == other.sentence if self.sentence is not None else \
-            other.sentence is None
+        return (
+            self.sentence == other.sentence if self.sentence is not None else other.sentence is None
+        )
 
     def __ne__(self, other):
         return not self == other
@@ -124,15 +128,15 @@ class DepRelation(object):
     def __init__(self, gov=None, dep=None, rel=None):
         self.gov = gov
         self.dep = dep
-        rel_split = rel.split(':')
+        rel_split = rel.split(":")
         self.rel = rel_split[0]
         self.subtype = rel_split[1] if len(rel_split) > 1 else None
 
 
 class RelCategory(Enum):
-    SUBJ = {'nsubj', 'nsubjpass', 'csubj', 'csubjpass'}
-    MOD = {'amod', 'acl', 'advcl', 'appos', 'neg', 'nmod'}
-    OBJ = {'dobj', 'iobj'}
+    SUBJ = {"nsubj", "nsubjpass", "csubj", "csubjpass"}
+    MOD = {"amod", "acl", "advcl", "appos", "neg", "nmod"}
+    OBJ = {"dobj", "iobj"}
 
 
 class DepRelationTerm(object):
@@ -178,14 +182,13 @@ class QualifiedTerm(object):
         self.term_polarity = term_polarity
 
     def as_string_list(self):
-        return [' '.join(self.term), str(self.frequency),
-                self.term_polarity.name]
+        return [" ".join(self.term), str(self.frequency), self.term_polarity.name]
 
     def as_string_list_aspect(self):
-        return [' '.join(self.term)]
+        return [" ".join(self.term)]
 
     def as_string_list_aspect_debug(self):
-        return [str(self.frequency), ' '.join(self.term), ' '.join(self.lemma)]
+        return [str(self.frequency), " ".join(self.term), " ".join(self.lemma)]
 
 
 def load_lex_as_dict_from_csv(file_name: str or PathLike):
@@ -195,15 +198,15 @@ def load_lex_as_dict_from_csv(file_name: str or PathLike):
         file_name: the csv file name
     """
     lexicon_map = {}
-    with open(file_name, encoding='utf-8') as f:
+    with open(file_name, encoding="utf-8") as f:
         reader = csv.DictReader(f, skipinitialspace=True)
         if reader is None:
             print("file name is None")
             return lexicon_map
         next(reader)
         for row in reader:
-            term = row['Term']
-            pos = row['POS subtype']
+            term = row["Term"]
+            pos = row["POS subtype"]
 
             lexicon_map[term] = pos
     return lexicon_map
@@ -211,6 +214,7 @@ def load_lex_as_dict_from_csv(file_name: str or PathLike):
 
 class POS(Enum):
     """Part-of-speech labels."""
+
     ADJ = 1
     ADV = 2
     AUX = 3
@@ -259,7 +263,7 @@ class POS(Enum):
     OTHER = 45
 
 
-PRONOUNS_LIST = load_lex_as_dict_from_csv(TRAIN_LEXICONS / 'PronounsLex.csv')
+PRONOUNS_LIST = load_lex_as_dict_from_csv(TRAIN_LEXICONS / "PronounsLex.csv")
 
 
 def normalize_pos(word, in_pos):
@@ -334,10 +338,22 @@ class LoadAspectStopLists(object):
         negation_lex (dict): negation terms lexicon
     """
 
-    def __init__(self, generic_opinion_lex, determiners_lex, general_adjectives_lex,
-                 generic_quantifiers_lex, geographical_adjectives_lex, intensifiers_lex,
-                 time_adjective_lex, ordinal_numbers_lex, prepositions_lex, pronouns_lex,
-                 colors_lex, negation_lex, auxiliaries_lex):
+    def __init__(
+        self,
+        generic_opinion_lex,
+        determiners_lex,
+        general_adjectives_lex,
+        generic_quantifiers_lex,
+        geographical_adjectives_lex,
+        intensifiers_lex,
+        time_adjective_lex,
+        ordinal_numbers_lex,
+        prepositions_lex,
+        pronouns_lex,
+        colors_lex,
+        negation_lex,
+        auxiliaries_lex,
+    ):
         self.generic_opinion_lex = generic_opinion_lex
         self.determiners_lex = determiners_lex
         self.general_adjectives_lex = general_adjectives_lex
@@ -374,9 +390,19 @@ class LoadOpinionStopLists(object):
         negation_lex (dict): negation terms lexicon
     """
 
-    def __init__(self, determiners_lex, general_adjectives_lex, generic_quantifiers_lex,
-                 geographical_adjectives_lex, intensifiers_lex, time_adjective_lex,
-                 ordinal_numbers_lex, prepositions_lex, colors_lex, negation_lex):
+    def __init__(
+        self,
+        determiners_lex,
+        general_adjectives_lex,
+        generic_quantifiers_lex,
+        geographical_adjectives_lex,
+        intensifiers_lex,
+        time_adjective_lex,
+        ordinal_numbers_lex,
+        prepositions_lex,
+        colors_lex,
+        negation_lex,
+    ):
         self.determiners_lex = determiners_lex
         self.general_adjectives_lex = general_adjectives_lex
         self.generic_quantifiers_lex = generic_quantifiers_lex

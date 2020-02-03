@@ -23,6 +23,7 @@ class Adding:
     """
     Iterator class that generates data and provides batches for training
     """
+
     def __init__(self, seq_len=200, n_train=50000, n_test=1000, batch_size=32):
         """
         Initialize class
@@ -61,8 +62,10 @@ class Adding:
         if self.sample_count + self.batch_size > self.n_train:
             self.sample_count = 0
 
-        batch = (self.train[0][self.sample_count: self.sample_count + self.batch_size],
-                 self.train[1][self.sample_count: self.sample_count + self.batch_size])
+        batch = (
+            self.train[0][self.sample_count : self.sample_count + self.batch_size],
+            self.train[1][self.sample_count : self.sample_count + self.batch_size],
+        )
         self.sample_count += self.batch_size
         return batch
 

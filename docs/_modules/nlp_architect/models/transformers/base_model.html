@@ -205,25 +205,37 @@
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span>
 <span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span><span class="p">,</span> <span class="n">trange</span>
-<span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="p">(</span><span class="n">AdamW</span><span class="p">,</span> <span class="n">BertConfig</span><span class="p">,</span> <span class="n">BertTokenizer</span><span class="p">,</span> <span class="n">RobertaConfig</span><span class="p">,</span>
-                          <span class="n">RobertaTokenizer</span><span class="p">,</span> <span class="n">XLMConfig</span><span class="p">,</span> <span class="n">XLMTokenizer</span><span class="p">,</span>
-                          <span class="n">XLNetConfig</span><span class="p">,</span> <span class="n">XLNetTokenizer</span><span class="p">,</span>
-                          <span class="n">get_linear_schedule_with_warmup</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">AdamW</span><span class="p">,</span>
+    <span class="n">BertConfig</span><span class="p">,</span>
+    <span class="n">BertTokenizer</span><span class="p">,</span>
+    <span class="n">RobertaConfig</span><span class="p">,</span>
+    <span class="n">RobertaTokenizer</span><span class="p">,</span>
+    <span class="n">XLMConfig</span><span class="p">,</span>
+    <span class="n">XLMTokenizer</span><span class="p">,</span>
+    <span class="n">XLNetConfig</span><span class="p">,</span>
+    <span class="n">XLNetTokenizer</span><span class="p">,</span>
+    <span class="n">get_linear_schedule_with_warmup</span><span class="p">,</span>
+<span class="p">)</span>
 
 <span class="kn">from</span> <span class="nn">nlp_architect.models</span> <span class="kn">import</span> <span class="n">TrainableModel</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.models.transformers.quantized_bert</span> <span class="kn">import</span> \
-    <span class="n">QuantizedBertConfig</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.models.transformers.quantized_bert</span> <span class="kn">import</span> <span class="n">QuantizedBertConfig</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
-<span class="n">ALL_MODELS</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">((</span><span class="nb">tuple</span><span class="p">(</span><span class="n">conf</span><span class="o">.</span><span class="n">pretrained_config_archive_map</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
-                  <span class="k">for</span> <span class="n">conf</span> <span class="ow">in</span> <span class="p">(</span><span class="n">BertConfig</span><span class="p">,</span> <span class="n">XLNetConfig</span><span class="p">,</span> <span class="n">XLMConfig</span><span class="p">)),</span> <span class="p">())</span>
+<span class="n">ALL_MODELS</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span>
+    <span class="p">(</span>
+        <span class="nb">tuple</span><span class="p">(</span><span class="n">conf</span><span class="o">.</span><span class="n">pretrained_config_archive_map</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="k">for</span> <span class="n">conf</span> <span class="ow">in</span> <span class="p">(</span><span class="n">BertConfig</span><span class="p">,</span> <span class="n">XLNetConfig</span><span class="p">,</span> <span class="n">XLMConfig</span><span class="p">)</span>
+    <span class="p">),</span>
+    <span class="p">(),</span>
+<span class="p">)</span>
 
 
 <div class="viewcode-block" id="get_models"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.transformers.html#nlp_architect.models.transformers.base_model.get_models">[docs]</a><span class="k">def</span> <span class="nf">get_models</span><span class="p">(</span><span class="n">models</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]):</span>
     <span class="k">if</span> <span class="n">models</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">m</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">ALL_MODELS</span> <span class="k">if</span> <span class="n">m</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="n">models</span><span class="p">]</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">m</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">ALL_MODELS</span> <span class="k">if</span> <span class="n">m</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="n">models</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">ALL_MODELS</span></div>
 
 
@@ -231,18 +243,28 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Transformers base model (for working with pytorch-transformers models)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="n">MODEL_CONFIGURATIONS</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s1">&#39;bert&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">BertConfig</span><span class="p">,</span> <span class="n">BertTokenizer</span><span class="p">),</span>
-        <span class="s1">&#39;quant_bert&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">QuantizedBertConfig</span><span class="p">,</span> <span class="n">BertTokenizer</span><span class="p">),</span>
-        <span class="s1">&#39;xlnet&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">XLNetConfig</span><span class="p">,</span> <span class="n">XLNetTokenizer</span><span class="p">),</span>
-        <span class="s1">&#39;xlm&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">XLMConfig</span><span class="p">,</span> <span class="n">XLMTokenizer</span><span class="p">),</span>
-        <span class="s1">&#39;roberta&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">RobertaConfig</span><span class="p">,</span> <span class="n">RobertaTokenizer</span><span class="p">)</span>
+        <span class="s2">&quot;bert&quot;</span><span class="p">:</span> <span class="p">(</span><span class="n">BertConfig</span><span class="p">,</span> <span class="n">BertTokenizer</span><span class="p">),</span>
+        <span class="s2">&quot;quant_bert&quot;</span><span class="p">:</span> <span class="p">(</span><span class="n">QuantizedBertConfig</span><span class="p">,</span> <span class="n">BertTokenizer</span><span class="p">),</span>
+        <span class="s2">&quot;xlnet&quot;</span><span class="p">:</span> <span class="p">(</span><span class="n">XLNetConfig</span><span class="p">,</span> <span class="n">XLNetTokenizer</span><span class="p">),</span>
+        <span class="s2">&quot;xlm&quot;</span><span class="p">:</span> <span class="p">(</span><span class="n">XLMConfig</span><span class="p">,</span> <span class="n">XLMTokenizer</span><span class="p">),</span>
+        <span class="s2">&quot;roberta&quot;</span><span class="p">:</span> <span class="p">(</span><span class="n">RobertaConfig</span><span class="p">,</span> <span class="n">RobertaTokenizer</span><span class="p">),</span>
     <span class="p">}</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">model_name_or_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">labels</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                 <span class="n">num_labels</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">config_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">tokenizer_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">do_lower_case</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">output_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">device</span><span class="o">=</span><span class="s1">&#39;cpu&#39;</span><span class="p">,</span> <span class="n">n_gpus</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">model_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">model_name_or_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">labels</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">num_labels</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">config_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">tokenizer_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">do_lower_case</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">output_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">device</span><span class="o">=</span><span class="s2">&quot;cpu&quot;</span><span class="p">,</span>
+        <span class="n">n_gpus</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Transformers base model (for working with pytorch-transformers models)</span>
 
@@ -268,7 +290,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">num_labels</span> <span class="o">=</span> <span class="n">num_labels</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">do_lower_case</span> <span class="o">=</span> <span class="n">do_lower_case</span>
         <span class="k">if</span> <span class="n">output_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">output_path</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="s1">&#39;output_path is not found&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="s2">&quot;output_path is not found&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">output_path</span> <span class="o">=</span> <span class="n">output_path</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">model_class</span> <span class="o">=</span> <span class="kc">None</span>
@@ -288,7 +310,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_optimizer</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_scheduler</span> <span class="o">=</span> <span class="kc">None</span>
 
-<div class="viewcode-block" id="TransformerBase.to"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.transformers.html#nlp_architect.models.transformers.base_model.TransformerBase.to">[docs]</a>    <span class="k">def</span> <span class="nf">to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="s1">&#39;cpu&#39;</span><span class="p">,</span> <span class="n">n_gpus</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<div class="viewcode-block" id="TransformerBase.to"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.transformers.html#nlp_architect.models.transformers.base_model.TransformerBase.to">[docs]</a>    <span class="k">def</span> <span class="nf">to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="s2">&quot;cpu&quot;</span><span class="p">,</span> <span class="n">n_gpus</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">n_gpus</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
@@ -312,35 +334,48 @@
     <span class="k">def</span> <span class="nf">scheduler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sch</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_scheduler</span> <span class="o">=</span> <span class="n">sch</span>
 
-<div class="viewcode-block" id="TransformerBase.setup_default_optimizer"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.transformers.html#nlp_architect.models.transformers.base_model.TransformerBase.setup_default_optimizer">[docs]</a>    <span class="k">def</span> <span class="nf">setup_default_optimizer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                                <span class="n">weight_decay</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
-                                <span class="n">learning_rate</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">5e-5</span><span class="p">,</span>
-                                <span class="n">adam_epsilon</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-8</span><span class="p">,</span>
-                                <span class="n">warmup_steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
-                                <span class="n">total_steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
+<div class="viewcode-block" id="TransformerBase.setup_default_optimizer"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.transformers.html#nlp_architect.models.transformers.base_model.TransformerBase.setup_default_optimizer">[docs]</a>    <span class="k">def</span> <span class="nf">setup_default_optimizer</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">weight_decay</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+        <span class="n">learning_rate</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">5e-5</span><span class="p">,</span>
+        <span class="n">adam_epsilon</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-8</span><span class="p">,</span>
+        <span class="n">warmup_steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="n">total_steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="c1"># Prepare optimizer and schedule (linear warmup and decay)</span>
-        <span class="n">no_decay</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;bias&#39;</span><span class="p">,</span> <span class="s1">&#39;LayerNorm.weight&#39;</span><span class="p">]</span>
+        <span class="n">no_decay</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;bias&quot;</span><span class="p">,</span> <span class="s2">&quot;LayerNorm.weight&quot;</span><span class="p">]</span>
         <span class="n">optimizer_grouped_parameters</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="p">{</span><span class="s1">&#39;params&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">named_parameters</span><span class="p">()</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span>
-                <span class="n">nd</span> <span class="ow">in</span> <span class="n">n</span> <span class="k">for</span> <span class="n">nd</span> <span class="ow">in</span> <span class="n">no_decay</span><span class="p">)],</span> <span class="s1">&#39;weight_decay&#39;</span><span class="p">:</span> <span class="n">weight_decay</span><span class="p">},</span>
-            <span class="p">{</span><span class="s1">&#39;params&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">named_parameters</span><span class="p">()</span> <span class="k">if</span> <span class="nb">any</span><span class="p">(</span>
-                <span class="n">nd</span> <span class="ow">in</span> <span class="n">n</span> <span class="k">for</span> <span class="n">nd</span> <span class="ow">in</span> <span class="n">no_decay</span><span class="p">)],</span> <span class="s1">&#39;weight_decay&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">}</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;params&quot;</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="n">p</span>
+                    <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">named_parameters</span><span class="p">()</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="n">nd</span> <span class="ow">in</span> <span class="n">n</span> <span class="k">for</span> <span class="n">nd</span> <span class="ow">in</span> <span class="n">no_decay</span><span class="p">)</span>
+                <span class="p">],</span>
+                <span class="s2">&quot;weight_decay&quot;</span><span class="p">:</span> <span class="n">weight_decay</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;params&quot;</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="n">p</span> <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">named_parameters</span><span class="p">()</span> <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">nd</span> <span class="ow">in</span> <span class="n">n</span> <span class="k">for</span> <span class="n">nd</span> <span class="ow">in</span> <span class="n">no_decay</span><span class="p">)</span>
+                <span class="p">],</span>
+                <span class="s2">&quot;weight_decay&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+            <span class="p">},</span>
         <span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span> <span class="o">=</span> <span class="n">AdamW</span><span class="p">(</span><span class="n">optimizer_grouped_parameters</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="n">learning_rate</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="n">adam_epsilon</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">scheduler</span> <span class="o">=</span> <span class="n">get_linear_schedule_with_warmup</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span><span class="p">,</span>
-                                                         <span class="n">num_warmup_steps</span><span class="o">=</span><span class="n">warmup_steps</span><span class="p">,</span>
-                                                         <span class="n">num_training_steps</span><span class="o">=</span><span class="n">total_steps</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scheduler</span> <span class="o">=</span> <span class="n">get_linear_schedule_with_warmup</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span><span class="p">,</span> <span class="n">num_warmup_steps</span><span class="o">=</span><span class="n">warmup_steps</span><span class="p">,</span> <span class="n">num_training_steps</span><span class="o">=</span><span class="n">total_steps</span>
+        <span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">_load_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config_class</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="n">config_name</span> <span class="k">if</span> <span class="n">config_name</span>
-                                                   <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_name_or_path</span><span class="p">,</span>
-                                                   <span class="n">num_labels</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_labels</span><span class="p">)</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config_class</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span>
+            <span class="n">config_name</span> <span class="k">if</span> <span class="n">config_name</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_name_or_path</span><span class="p">,</span> <span class="n">num_labels</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_labels</span>
+        <span class="p">)</span>
         <span class="k">return</span> <span class="n">config</span>
 
     <span class="k">def</span> <span class="nf">_load_tokenizer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tokenizer_name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">tokenizer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokenizer_class</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span>
-            <span class="n">tokenizer_name</span> <span class="k">if</span> <span class="n">tokenizer_name</span>
-            <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_name_or_path</span><span class="p">,</span> <span class="n">do_lower_case</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">do_lower_case</span><span class="p">)</span>
+            <span class="n">tokenizer_name</span> <span class="k">if</span> <span class="n">tokenizer_name</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_name_or_path</span><span class="p">,</span>
+            <span class="n">do_lower_case</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">do_lower_case</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="k">return</span> <span class="n">tokenizer</span>
 
 <div class="viewcode-block" id="TransformerBase.save_model"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.transformers.html#nlp_architect.models.transformers.base_model.TransformerBase.save_model">[docs]</a>    <span class="k">def</span> <span class="nf">save_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">save_checkpoint</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -357,16 +392,16 @@
             <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">output_dir</span><span class="p">)</span>
 
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Saving model checkpoint to </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">)</span>
-        <span class="n">model_to_save</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">module</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="s1">&#39;module&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span>
+        <span class="n">model_to_save</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">module</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;module&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span>
         <span class="n">model_to_save</span><span class="o">.</span><span class="n">save_pretrained</span><span class="p">(</span><span class="n">output_dir</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">save_checkpoint</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">save_pretrained</span><span class="p">(</span><span class="n">output_dir</span><span class="p">)</span>
-            <span class="k">with</span> <span class="n">io</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">output_dir</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="o">+</span> <span class="s1">&#39;labels.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fw</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">io</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">output_dir</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="o">+</span> <span class="s2">&quot;labels.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fw</span><span class="p">:</span>
                 <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">:</span>
-                    <span class="n">fw</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">l</span><span class="p">))</span>
+                    <span class="n">fw</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">l</span><span class="p">))</span>
             <span class="k">if</span> <span class="n">args</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="s1">&#39;training_args.bin&#39;</span><span class="p">))</span></div>
+                <span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="s2">&quot;training_args.bin&quot;</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="TransformerBase.load_model"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.transformers.html#nlp_architect.models.transformers.base_model.TransformerBase.load_model">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">load_model</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">model_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">model_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -383,16 +418,16 @@
         <span class="c1"># Load a trained model and vocabulary from given path</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">model_path</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">FileNotFoundError</span>
-        <span class="k">with</span> <span class="n">io</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">model_path</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="o">+</span> <span class="s1">&#39;labels.txt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">io</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">model_path</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="o">+</span> <span class="s2">&quot;labels.txt&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
             <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">l</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">fp</span><span class="o">.</span><span class="n">readlines</span><span class="p">()]</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
-            <span class="n">model_type</span><span class="o">=</span><span class="n">model_type</span><span class="p">,</span> <span class="n">model_name_or_path</span><span class="o">=</span><span class="n">model_path</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+            <span class="n">model_type</span><span class="o">=</span><span class="n">model_type</span><span class="p">,</span> <span class="n">model_name_or_path</span><span class="o">=</span><span class="n">model_path</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">)</span></div>
 
 <div class="viewcode-block" id="TransformerBase.get_train_steps_epochs"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.transformers.html#nlp_architect.models.transformers.base_model.TransformerBase.get_train_steps_epochs">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">get_train_steps_epochs</span><span class="p">(</span><span class="n">max_steps</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-                               <span class="n">num_train_epochs</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-                               <span class="n">gradient_accumulation_steps</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-                               <span class="n">num_samples</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_train_steps_epochs</span><span class="p">(</span>
+        <span class="n">max_steps</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_train_epochs</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">gradient_accumulation_steps</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_samples</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        get train steps and epochs</span>
 
@@ -418,17 +453,19 @@
         <span class="n">outputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="o">**</span><span class="n">inputs</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">outputs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span></div>
 
-    <span class="k">def</span> <span class="nf">_train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-               <span class="n">data_set</span><span class="p">:</span> <span class="n">DataLoader</span><span class="p">,</span>
-               <span class="n">dev_data_set</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">DataLoader</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">DataLoader</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-               <span class="n">test_data_set</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">DataLoader</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">DataLoader</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-               <span class="n">gradient_accumulation_steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-               <span class="n">per_gpu_train_batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">8</span><span class="p">,</span>
-               <span class="n">max_steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-               <span class="n">num_train_epochs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
-               <span class="n">max_grad_norm</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
-               <span class="n">logging_steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
-               <span class="n">save_steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_train</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">data_set</span><span class="p">:</span> <span class="n">DataLoader</span><span class="p">,</span>
+        <span class="n">dev_data_set</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">DataLoader</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">DataLoader</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">test_data_set</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">DataLoader</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">DataLoader</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">gradient_accumulation_steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="n">per_gpu_train_batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">8</span><span class="p">,</span>
+        <span class="n">max_steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">num_train_epochs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="n">max_grad_norm</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+        <span class="n">logging_steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
+        <span class="n">save_steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Run model training</span>
 <span class="sd">            batch_mapper: a function that maps a batch into parameters that the model</span>
 <span class="sd">                          expects in the forward method (for use with custom heads and models).</span>
@@ -437,10 +474,9 @@
 <span class="sd">                          with the model as a parameter.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">t_total</span><span class="p">,</span> <span class="n">num_train_epochs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_train_steps_epochs</span><span class="p">(</span><span class="n">max_steps</span><span class="p">,</span>
-                                                                <span class="n">num_train_epochs</span><span class="p">,</span>
-                                                                <span class="n">gradient_accumulation_steps</span><span class="p">,</span>
-                                                                <span class="nb">len</span><span class="p">(</span><span class="n">data_set</span><span class="p">))</span>
+        <span class="n">t_total</span><span class="p">,</span> <span class="n">num_train_epochs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_train_steps_epochs</span><span class="p">(</span>
+            <span class="n">max_steps</span><span class="p">,</span> <span class="n">num_train_epochs</span><span class="p">,</span> <span class="n">gradient_accumulation_steps</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data_set</span><span class="p">)</span>
+        <span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">scheduler</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Loading default optimizer and scheduler&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">setup_default_optimizer</span><span class="p">(</span><span class="n">total_steps</span><span class="o">=</span><span class="n">t_total</span><span class="p">)</span>
@@ -450,8 +486,10 @@
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;  Num examples = </span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data_set</span><span class="o">.</span><span class="n">dataset</span><span class="p">))</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;  Num Epochs = </span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">num_train_epochs</span><span class="p">)</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;  Instantaneous batch size per GPU/CPU = </span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">per_gpu_train_batch_size</span><span class="p">)</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;  Total train batch size (w. parallel, distributed &amp; accumulation) = </span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">,</span>
-                    <span class="n">train_batch_size</span> <span class="o">*</span> <span class="n">gradient_accumulation_steps</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s2">&quot;  Total train batch size (w. parallel, distributed &amp; accumulation) = </span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="n">train_batch_size</span> <span class="o">*</span> <span class="n">gradient_accumulation_steps</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;  Gradient Accumulation steps = </span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">gradient_accumulation_steps</span><span class="p">)</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;  Total optimization steps = </span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">t_total</span><span class="p">)</span>
 
@@ -493,14 +531,15 @@
                             <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">ds</span><span class="p">:</span>
                                 <span class="n">logits</span><span class="p">,</span> <span class="n">label_ids</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_evaluate</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
                                 <span class="bp">self</span><span class="o">.</span><span class="n">evaluate_predictions</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">label_ids</span><span class="p">)</span>
-                        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;lr = </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scheduler</span><span class="o">.</span><span class="n">get_lr</span><span class="p">()[</span><span class="mi">0</span><span class="p">]))</span>
-                        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;loss = </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">((</span><span class="n">tr_loss</span> <span class="o">-</span> <span class="n">logging_loss</span><span class="p">)</span> <span class="o">/</span> <span class="n">logging_steps</span><span class="p">))</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;lr = </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scheduler</span><span class="o">.</span><span class="n">get_lr</span><span class="p">()[</span><span class="mi">0</span><span class="p">]))</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;loss = </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">((</span><span class="n">tr_loss</span> <span class="o">-</span> <span class="n">logging_loss</span><span class="p">)</span> <span class="o">/</span> <span class="n">logging_steps</span><span class="p">))</span>
                         <span class="n">logging_loss</span> <span class="o">=</span> <span class="n">tr_loss</span>
 
                     <span class="k">if</span> <span class="n">save_steps</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">global_step</span> <span class="o">%</span> <span class="n">save_steps</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                         <span class="c1"># Save model checkpoint</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">save_model_checkpoint</span><span class="p">(</span><span class="n">output_path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">output_path</span><span class="p">,</span>
-                                                   <span class="n">name</span><span class="o">=</span><span class="s1">&#39;checkpoint-</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">global_step</span><span class="p">))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">save_model_checkpoint</span><span class="p">(</span>
+                            <span class="n">output_path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">output_path</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;checkpoint-</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">global_step</span><span class="p">)</span>
+                        <span class="p">)</span>
 
                 <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="n">max_steps</span> <span class="o">&lt;</span> <span class="n">global_step</span><span class="p">:</span>
                     <span class="n">epoch_iterator</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
@@ -525,39 +564,46 @@
             <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
                 <span class="n">inputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_batch_mapper</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
                 <span class="n">outputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="o">**</span><span class="n">inputs</span><span class="p">)</span>
-                <span class="k">if</span> <span class="s1">&#39;labels&#39;</span> <span class="ow">in</span> <span class="n">inputs</span><span class="p">:</span>
+                <span class="k">if</span> <span class="s2">&quot;labels&quot;</span> <span class="ow">in</span> <span class="n">inputs</span><span class="p">:</span>
                     <span class="n">tmp_eval_loss</span><span class="p">,</span> <span class="n">logits</span> <span class="o">=</span> <span class="n">outputs</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
                     <span class="n">eval_loss</span> <span class="o">+=</span> <span class="n">tmp_eval_loss</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">logits</span> <span class="o">=</span> <span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
             <span class="n">nb_eval_steps</span> <span class="o">+=</span> <span class="mi">1</span>
             <span class="n">model_output</span> <span class="o">=</span> <span class="n">logits</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span>
-            <span class="n">model_out_label_ids</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;labels&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">cpu</span><span class="p">(</span>
-            <span class="p">)</span> <span class="k">if</span> <span class="s1">&#39;labels&#39;</span> <span class="ow">in</span> <span class="n">inputs</span> <span class="k">else</span> <span class="kc">None</span>
+            <span class="n">model_out_label_ids</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">[</span><span class="s2">&quot;labels&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span> <span class="k">if</span> <span class="s2">&quot;labels&quot;</span> <span class="ow">in</span> <span class="n">inputs</span> <span class="k">else</span> <span class="kc">None</span>
             <span class="k">if</span> <span class="n">preds</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">preds</span> <span class="o">=</span> <span class="n">model_output</span>
                 <span class="n">out_label_ids</span> <span class="o">=</span> <span class="n">model_out_label_ids</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">preds</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">((</span><span class="n">preds</span><span class="p">,</span> <span class="n">model_output</span><span class="p">),</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-                <span class="n">out_label_ids</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">((</span><span class="n">out_label_ids</span><span class="p">,</span> <span class="n">model_out_label_ids</span><span class="p">),</span>
-                                          <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">if</span> <span class="n">out_label_ids</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
+                <span class="n">out_label_ids</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">((</span><span class="n">out_label_ids</span><span class="p">,</span> <span class="n">model_out_label_ids</span><span class="p">),</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">out_label_ids</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                    <span class="k">else</span> <span class="kc">None</span>
+                <span class="p">)</span>
         <span class="k">if</span> <span class="n">out_label_ids</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">preds</span>
         <span class="k">return</span> <span class="n">preds</span><span class="p">,</span> <span class="n">out_label_ids</span>
 
     <span class="k">def</span> <span class="nf">_batch_mapper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">):</span>
-        <span class="n">mapping</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;input_ids&#39;</span><span class="p">:</span> <span class="n">batch</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-                   <span class="s1">&#39;attention_mask&#39;</span><span class="p">:</span> <span class="n">batch</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
-                   <span class="c1"># XLM don&#39;t use segment_ids</span>
-                   <span class="s1">&#39;token_type_ids&#39;</span><span class="p">:</span> <span class="n">batch</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;bert&#39;</span><span class="p">,</span> <span class="s1">&#39;quant_bert&#39;</span><span class="p">,</span> <span class="s1">&#39;xlnet&#39;</span><span class="p">]</span>
-                   <span class="k">else</span> <span class="kc">None</span><span class="p">}</span>
+        <span class="n">mapping</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;input_ids&quot;</span><span class="p">:</span> <span class="n">batch</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+            <span class="s2">&quot;attention_mask&quot;</span><span class="p">:</span> <span class="n">batch</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+            <span class="c1"># XLM don&#39;t use segment_ids</span>
+            <span class="s2">&quot;token_type_ids&quot;</span><span class="p">:</span> <span class="n">batch</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;bert&quot;</span><span class="p">,</span> <span class="s2">&quot;quant_bert&quot;</span><span class="p">,</span> <span class="s2">&quot;xlnet&quot;</span><span class="p">]</span>
+            <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="p">}</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
-            <span class="n">mapping</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;labels&#39;</span><span class="p">:</span> <span class="n">batch</span><span class="p">[</span><span class="mi">3</span><span class="p">]})</span>
+            <span class="n">mapping</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;labels&quot;</span><span class="p">:</span> <span class="n">batch</span><span class="p">[</span><span class="mi">3</span><span class="p">]})</span>
         <span class="k">return</span> <span class="n">mapping</span>
 
 <div class="viewcode-block" id="TransformerBase.evaluate_predictions"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.transformers.html#nlp_architect.models.transformers.base_model.TransformerBase.evaluate_predictions">[docs]</a>    <span class="k">def</span> <span class="nf">evaluate_predictions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">logits</span><span class="p">,</span> <span class="n">label_ids</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;evaluate_predictions method must be implemented in order to&#39;</span>
-                                  <span class="s1">&#39;be used for dev/test set evaluation&#39;</span><span class="p">)</span></div>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+            <span class="s2">&quot;evaluate_predictions method must be implemented in order to&quot;</span>
+            <span class="s2">&quot;be used for dev/test set evaluation&quot;</span>
+        <span class="p">)</span></div>
 
 <div class="viewcode-block" id="TransformerBase.save_model_checkpoint"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.transformers.html#nlp_architect.models.transformers.base_model.TransformerBase.save_model_checkpoint">[docs]</a>    <span class="k">def</span> <span class="nf">save_model_checkpoint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>

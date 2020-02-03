@@ -48,17 +48,14 @@ class FastTextEmb:
         link = "https://github.com/facebookresearch/fastText/blob/master/pretrained-vectors.md"
         if not os.path.exists(filepath):
             if license_prompt(filepath, link, self.path):
-                print(
-                    "Downloading FastText embeddings for " + self.language + " to " + filepath)
+                print("Downloading FastText embeddings for " + self.language + " to " + filepath)
                 urllib.request.urlretrieve(self.url, filepath)
                 statinfo = os.stat(filepath)
-                print(
-                    "Sucessfully downloaded", filename, statinfo.st_size, "bytes")
+                print("Sucessfully downloaded", filename, statinfo.st_size, "bytes")
             else:
                 exit()
         else:
-            print(
-                "Found FastText embeddings for " + self.language + " at " + filepath)
+            print("Found FastText embeddings for " + self.language + " at " + filepath)
         return filepath
 
     def read_embeddings(self, filepath):
@@ -73,12 +70,12 @@ class FastTextEmb:
                     assert self.emb_dim == int(split_line[1])
                 # Rest of line are word, word_vec format
                 else:
-                    word, vector = line.rstrip().split(' ', 1)
-                    vector = np.fromstring(vector, sep=' ')
+                    word, vector = line.rstrip().split(" ", 1)
+                    vector = np.fromstring(vector, sep=" ")
                     # If norm is zero fill with 0.01
                     if np.linalg.norm(vector) == 0:
                         vector[0] = 0.01
-                    assert vector.shape == (self.emb_dim, ), i
+                    assert vector.shape == (self.emb_dim,), i
                     # Assign a token
                     word2id[word] = len(word2id)
                     word_vec.append(vector[None])
@@ -114,10 +111,10 @@ def get_eval_data(eval_path, src_lang, tgt_lang):
     Returns:
         Path to where cross lingual dictionaries are downloaded
     """
-    eval_url = 'https://s3.amazonaws.com/arrival/dictionaries/'
+    eval_url = "https://s3.amazonaws.com/arrival/dictionaries/"
     link = "https://github.com/facebookresearch/MUSE#ground-truth-bilingual-dictionaries"
-    src_path = os.path.join(eval_path, '%s-%s.5000-6500.txt' % (src_lang, tgt_lang))
-    filename = src_lang + '-' + tgt_lang + '.5000-6500.txt'
+    src_path = os.path.join(eval_path, "%s-%s.5000-6500.txt" % (src_lang, tgt_lang))
+    filename = src_lang + "-" + tgt_lang + ".5000-6500.txt"
     if not os.path.exists(src_path):
         if license_prompt(src_path, link, src_path):
             os.system("mkdir -p " + eval_path)
@@ -174,8 +171,7 @@ class Dictionary:
         y.check_valid()
         if len(self.id2word) != len(y):
             return False
-        return self.lang == y.lang and all(
-            self.id2word[i] == y[i] for i in range(len(y)))
+        return self.lang == y.lang and all(self.id2word[i] == y[i] for i in range(len(y)))
 
     def check_valid(self):
         """

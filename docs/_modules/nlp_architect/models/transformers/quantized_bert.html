@@ -208,28 +208,40 @@
 
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
-<span class="kn">from</span> <span class="nn">transformers.modeling_bert</span> <span class="kn">import</span> <span class="p">(</span><span class="n">ACT2FN</span><span class="p">,</span> <span class="n">BertAttention</span><span class="p">,</span> <span class="n">BertConfig</span><span class="p">,</span>
-                                        <span class="n">BertEmbeddings</span><span class="p">,</span> <span class="n">BertEncoder</span><span class="p">,</span>
-                                        <span class="n">BertForQuestionAnswering</span><span class="p">,</span>
-                                        <span class="n">BertForSequenceClassification</span><span class="p">,</span>
-                                        <span class="n">BertForTokenClassification</span><span class="p">,</span>
-                                        <span class="n">BertIntermediate</span><span class="p">,</span> <span class="n">BertLayer</span><span class="p">,</span>
-                                        <span class="n">BertLayerNorm</span><span class="p">,</span> <span class="n">BertModel</span><span class="p">,</span> <span class="n">BertOutput</span><span class="p">,</span>
-                                        <span class="n">BertPooler</span><span class="p">,</span> <span class="n">BertPreTrainedModel</span><span class="p">,</span>
-                                        <span class="n">BertSelfAttention</span><span class="p">,</span> <span class="n">BertSelfOutput</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">transformers.modeling_bert</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">ACT2FN</span><span class="p">,</span>
+    <span class="n">BertAttention</span><span class="p">,</span>
+    <span class="n">BertConfig</span><span class="p">,</span>
+    <span class="n">BertEmbeddings</span><span class="p">,</span>
+    <span class="n">BertEncoder</span><span class="p">,</span>
+    <span class="n">BertForQuestionAnswering</span><span class="p">,</span>
+    <span class="n">BertForSequenceClassification</span><span class="p">,</span>
+    <span class="n">BertForTokenClassification</span><span class="p">,</span>
+    <span class="n">BertIntermediate</span><span class="p">,</span>
+    <span class="n">BertLayer</span><span class="p">,</span>
+    <span class="n">BertLayerNorm</span><span class="p">,</span>
+    <span class="n">BertModel</span><span class="p">,</span>
+    <span class="n">BertOutput</span><span class="p">,</span>
+    <span class="n">BertPooler</span><span class="p">,</span>
+    <span class="n">BertPreTrainedModel</span><span class="p">,</span>
+    <span class="n">BertSelfAttention</span><span class="p">,</span>
+    <span class="n">BertSelfOutput</span><span class="p">,</span>
+<span class="p">)</span>
 
-<span class="kn">from</span> <span class="nn">nlp_architect.nn.torch.quantization</span> <span class="kn">import</span> <span class="p">(</span><span class="n">QuantizationConfig</span><span class="p">,</span>
-                                                 <span class="n">QuantizedEmbedding</span><span class="p">,</span>
-                                                 <span class="n">QuantizedLayer</span><span class="p">,</span>
-                                                 <span class="n">QuantizedLinear</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.nn.torch.quantization</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">QuantizationConfig</span><span class="p">,</span>
+    <span class="n">QuantizedEmbedding</span><span class="p">,</span>
+    <span class="n">QuantizedLayer</span><span class="p">,</span>
+    <span class="n">QuantizedLinear</span><span class="p">,</span>
+<span class="p">)</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 <span class="n">QUANT_WEIGHTS_NAME</span> <span class="o">=</span> <span class="s2">&quot;quant_pytorch_model.bin&quot;</span>
 
 <span class="n">QUANT_BERT_PRETRAINED_CONFIG_ARCHIVE_MAP</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;bert-base-uncased&#39;</span><span class="p">:</span> <span class="s2">&quot;https://nlp-architect-data.s3-us-west-2.amazonaws.com/models/transformers/bert-base-uncased.json&quot;</span><span class="p">,</span>  <span class="c1"># noqa: E501</span>
-    <span class="s1">&#39;bert-large-uncased&#39;</span><span class="p">:</span> <span class="s2">&quot;https://nlp-architect-data.s3-us-west-2.amazonaws.com/models/transformers/bert-large-uncased.json&quot;</span><span class="p">,</span>  <span class="c1"># noqa: E501</span>
+    <span class="s2">&quot;bert-base-uncased&quot;</span><span class="p">:</span> <span class="s2">&quot;https://nlp-architect-data.s3-us-west-2.amazonaws.com/models/transformers/bert-base-uncased.json&quot;</span><span class="p">,</span>  <span class="c1"># noqa: E501</span>
+    <span class="s2">&quot;bert-large-uncased&quot;</span><span class="p">:</span> <span class="s2">&quot;https://nlp-architect-data.s3-us-west-2.amazonaws.com/models/transformers/bert-large-uncased.json&quot;</span><span class="p">,</span>  <span class="c1"># noqa: E501</span>
 <span class="p">}</span>
 
 
@@ -265,11 +277,14 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">BertEmbeddings</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">word_embeddings</span> <span class="o">=</span> <span class="n">quantized_embedding_setup</span><span class="p">(</span>
-            <span class="n">config</span><span class="p">,</span> <span class="s1">&#39;word_embeddings&#39;</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">vocab_size</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">padding_idx</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">config</span><span class="p">,</span> <span class="s2">&quot;word_embeddings&quot;</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">vocab_size</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">padding_idx</span><span class="o">=</span><span class="mi">0</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">position_embeddings</span> <span class="o">=</span> <span class="n">quantized_embedding_setup</span><span class="p">(</span>
-            <span class="n">config</span><span class="p">,</span> <span class="s1">&#39;position_embeddings&#39;</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">max_position_embeddings</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">)</span>
+            <span class="n">config</span><span class="p">,</span> <span class="s2">&quot;position_embeddings&quot;</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">max_position_embeddings</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">hidden_size</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">token_type_embeddings</span> <span class="o">=</span> <span class="n">quantized_embedding_setup</span><span class="p">(</span>
-            <span class="n">config</span><span class="p">,</span> <span class="s1">&#39;token_type_embeddings&#39;</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">type_vocab_size</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">)</span>
+            <span class="n">config</span><span class="p">,</span> <span class="s2">&quot;token_type_embeddings&quot;</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">type_vocab_size</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">hidden_size</span>
+        <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">LayerNorm</span> <span class="o">=</span> <span class="n">BertLayerNorm</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">layer_norm_eps</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">hidden_dropout_prob</span><span class="p">)</span></div>
@@ -281,7 +296,8 @@
         <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">hidden_size</span> <span class="o">%</span> <span class="n">config</span><span class="o">.</span><span class="n">num_attention_heads</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                 <span class="s2">&quot;The hidden size (</span><span class="si">%d</span><span class="s2">) is not a multiple of the number of attention &quot;</span>
-                <span class="s2">&quot;heads (</span><span class="si">%d</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">num_attention_heads</span><span class="p">))</span>
+                <span class="s2">&quot;heads (</span><span class="si">%d</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">num_attention_heads</span><span class="p">)</span>
+            <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">output_attentions</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">output_attentions</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">num_attention_heads</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">num_attention_heads</span>
@@ -289,11 +305,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">all_head_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_attention_heads</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">attention_head_size</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">query</span> <span class="o">=</span> <span class="n">quantized_linear_setup</span><span class="p">(</span>
-            <span class="n">config</span><span class="p">,</span> <span class="s1">&#39;attention_query&#39;</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_head_size</span><span class="p">)</span>
+            <span class="n">config</span><span class="p">,</span> <span class="s2">&quot;attention_query&quot;</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_head_size</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">key</span> <span class="o">=</span> <span class="n">quantized_linear_setup</span><span class="p">(</span>
-            <span class="n">config</span><span class="p">,</span> <span class="s1">&#39;attention_key&#39;</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_head_size</span><span class="p">)</span>
+            <span class="n">config</span><span class="p">,</span> <span class="s2">&quot;attention_key&quot;</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_head_size</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">quantized_linear_setup</span><span class="p">(</span>
-            <span class="n">config</span><span class="p">,</span> <span class="s1">&#39;attention_value&#39;</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_head_size</span><span class="p">)</span>
+            <span class="n">config</span><span class="p">,</span> <span class="s2">&quot;attention_value&quot;</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_head_size</span>
+        <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">attention_probs_dropout_prob</span><span class="p">)</span></div>
 
@@ -302,7 +321,8 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">BertSelfOutput</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dense</span> <span class="o">=</span> <span class="n">quantized_linear_setup</span><span class="p">(</span>
-            <span class="n">config</span><span class="p">,</span> <span class="s1">&#39;attention_output&#39;</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">)</span>
+            <span class="n">config</span><span class="p">,</span> <span class="s2">&quot;attention_output&quot;</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">hidden_size</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">LayerNorm</span> <span class="o">=</span> <span class="n">BertLayerNorm</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">layer_norm_eps</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">hidden_dropout_prob</span><span class="p">)</span></div>
 
@@ -321,10 +341,11 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">BertIntermediate</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dense</span> <span class="o">=</span> <span class="n">quantized_linear_setup</span><span class="p">(</span>
-            <span class="n">config</span><span class="p">,</span> <span class="s2">&quot;ffn_intermediate&quot;</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">intermediate_size</span><span class="p">)</span>
-        <span class="k">if</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">hidden_act</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
-                <span class="ow">or</span> <span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">hidden_act</span><span class="p">,</span>
-                <span class="nb">str</span><span class="p">))):</span>  <span class="c1"># noqa: F821</span>
+            <span class="n">config</span><span class="p">,</span> <span class="s2">&quot;ffn_intermediate&quot;</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">intermediate_size</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">hidden_act</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">hidden_act</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+        <span class="p">):</span>  <span class="c1"># noqa: F821</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">intermediate_act_fn</span> <span class="o">=</span> <span class="n">ACT2FN</span><span class="p">[</span><span class="n">config</span><span class="o">.</span><span class="n">hidden_act</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">intermediate_act_fn</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">hidden_act</span></div>
@@ -334,7 +355,8 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">BertOutput</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dense</span> <span class="o">=</span> <span class="n">quantized_linear_setup</span><span class="p">(</span>
-            <span class="n">config</span><span class="p">,</span> <span class="s2">&quot;ffn_output&quot;</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">intermediate_size</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">)</span>
+            <span class="n">config</span><span class="p">,</span> <span class="s2">&quot;ffn_output&quot;</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">intermediate_size</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">hidden_size</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">LayerNorm</span> <span class="o">=</span> <span class="n">BertLayerNorm</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">layer_norm_eps</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">hidden_dropout_prob</span><span class="p">)</span></div>
 
@@ -343,6 +365,10 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">BertLayer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">attention</span> <span class="o">=</span> <span class="n">QuantizedBertAttention</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_decoder</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">is_decoder</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_decoder</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Using QuantizedBertLayer as decoder was not tested.&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">crossattention</span> <span class="o">=</span> <span class="n">QuantizedBertAttention</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">intermediate</span> <span class="o">=</span> <span class="n">QuantizedBertIntermediate</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">output</span> <span class="o">=</span> <span class="n">QuantizedBertOutput</span><span class="p">(</span><span class="n">config</span><span class="p">)</span></div>
 
@@ -352,15 +378,17 @@
         <span class="nb">super</span><span class="p">(</span><span class="n">BertEncoder</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">output_attentions</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">output_attentions</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">output_hidden_states</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">output_hidden_states</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">layer</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">ModuleList</span><span class="p">([</span><span class="n">QuantizedBertLayer</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
-                                    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">num_hidden_layers</span><span class="p">)])</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">layer</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">ModuleList</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">QuantizedBertLayer</span><span class="p">(</span><span class="n">config</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">num_hidden_layers</span><span class="p">)]</span>
+        <span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="QuantizedBertPooler"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.transformers.html#nlp_architect.models.transformers.quantized_bert.QuantizedBertPooler">[docs]</a><span class="k">class</span> <span class="nc">QuantizedBertPooler</span><span class="p">(</span><span class="n">BertPooler</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">BertPooler</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dense</span> <span class="o">=</span> <span class="n">quantized_linear_setup</span><span class="p">(</span>
-            <span class="n">config</span><span class="p">,</span> <span class="s2">&quot;pooler&quot;</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">)</span>
+            <span class="n">config</span><span class="p">,</span> <span class="s2">&quot;pooler&quot;</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">hidden_size</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">activation</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Tanh</span><span class="p">()</span></div>
 
 
@@ -384,13 +412,14 @@
         <span class="sd">&quot;&quot;&quot;load trained model from 8bit model&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">from_8bit</span><span class="p">:</span>
             <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="n">pretrained_model_name_or_path</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="n">config</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;config&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-        <span class="n">output_loading_info</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;output_loading_info&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;config&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">output_loading_info</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;output_loading_info&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
 
         <span class="c1"># Load config</span>
         <span class="k">if</span> <span class="n">config</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">config</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">config_class</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span>
-                <span class="n">pretrained_model_name_or_path</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+                <span class="n">pretrained_model_name_or_path</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+            <span class="p">)</span>
 
         <span class="c1"># Load model</span>
         <span class="n">model_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pretrained_model_name_or_path</span><span class="p">,</span> <span class="n">QUANT_WEIGHTS_NAME</span><span class="p">)</span>
@@ -401,7 +430,7 @@
         <span class="c1"># checkpoint which are None by Default</span>
         <span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
         <span class="c1"># Get state dict of model</span>
-        <span class="n">state_dict</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">model_file</span><span class="p">,</span> <span class="n">map_location</span><span class="o">=</span><span class="s1">&#39;cpu&#39;</span><span class="p">)</span>
+        <span class="n">state_dict</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">model_file</span><span class="p">,</span> <span class="n">map_location</span><span class="o">=</span><span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;loading weights file </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">model_file</span><span class="p">))</span>
 
         <span class="c1"># Load from a PyTorch state_dict</span>
@@ -409,47 +438,61 @@
         <span class="n">unexpected_keys</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">error_msgs</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="c1"># copy state_dict so _load_from_state_dict can modify it</span>
-        <span class="n">metadata</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">state_dict</span><span class="p">,</span> <span class="s1">&#39;_metadata&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">state_dict</span><span class="p">,</span> <span class="s2">&quot;_metadata&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="n">state_dict</span> <span class="o">=</span> <span class="n">state_dict</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">metadata</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">state_dict</span><span class="o">.</span><span class="n">_metadata</span> <span class="o">=</span> <span class="n">metadata</span>
 
-        <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
             <span class="n">local_metadata</span> <span class="o">=</span> <span class="p">{}</span> <span class="k">if</span> <span class="n">metadata</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">prefix</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">{})</span>
             <span class="n">module</span><span class="o">.</span><span class="n">_load_from_state_dict</span><span class="p">(</span>
-                <span class="n">state_dict</span><span class="p">,</span> <span class="n">prefix</span><span class="p">,</span> <span class="n">local_metadata</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">missing_keys</span><span class="p">,</span>
-                <span class="n">unexpected_keys</span><span class="p">,</span> <span class="n">error_msgs</span><span class="p">)</span>
+                <span class="n">state_dict</span><span class="p">,</span> <span class="n">prefix</span><span class="p">,</span> <span class="n">local_metadata</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">missing_keys</span><span class="p">,</span> <span class="n">unexpected_keys</span><span class="p">,</span> <span class="n">error_msgs</span>
+            <span class="p">)</span>
             <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">module</span><span class="o">.</span><span class="n">_modules</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 <span class="k">if</span> <span class="n">child</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="n">load</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="n">prefix</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span><span class="p">)</span>
+                    <span class="n">load</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="n">prefix</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span><span class="p">)</span>
 
         <span class="c1"># Make sure we are able to load base models as well as derived models (with heads)</span>
-        <span class="n">start_prefix</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="n">start_prefix</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
         <span class="n">model_to_load</span> <span class="o">=</span> <span class="n">model</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">base_model_prefix</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">any</span><span class="p">(</span>
-                <span class="n">s</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">base_model_prefix</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">state_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
-            <span class="n">start_prefix</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">base_model_prefix</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span>
+            <span class="n">s</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">base_model_prefix</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">state_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+        <span class="p">):</span>
+            <span class="n">start_prefix</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">base_model_prefix</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span>
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">base_model_prefix</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span>
-                <span class="n">s</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">base_model_prefix</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">state_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+            <span class="n">s</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">base_model_prefix</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">state_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+        <span class="p">):</span>
             <span class="n">model_to_load</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">base_model_prefix</span><span class="p">)</span>
 
         <span class="n">load</span><span class="p">(</span><span class="n">model_to_load</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="n">start_prefix</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">missing_keys</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Weights of </span><span class="si">{}</span><span class="s2"> not initialized from pretrained model: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                <span class="n">model</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">missing_keys</span><span class="p">))</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                <span class="s2">&quot;Weights of </span><span class="si">{}</span><span class="s2"> not initialized from pretrained model: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">model</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">missing_keys</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">unexpected_keys</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Weights from pretrained model not used in </span><span class="si">{}</span><span class="s2">: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                <span class="n">model</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">unexpected_keys</span><span class="p">))</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                <span class="s2">&quot;Weights from pretrained model not used in </span><span class="si">{}</span><span class="s2">: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">model</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">unexpected_keys</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">error_msgs</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;Error(s) in loading state_dict for </span><span class="si">{}</span><span class="s1">:</span><span class="se">\n\t</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                               <span class="n">model</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">error_msgs</span><span class="p">)))</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                <span class="s2">&quot;Error(s) in loading state_dict for </span><span class="si">{}</span><span class="s2">:</span><span class="se">\n\t</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">model</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">error_msgs</span><span class="p">)</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
 
-        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s1">&#39;tie_weights&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;tie_weights&quot;</span><span class="p">):</span>
             <span class="n">model</span><span class="o">.</span><span class="n">tie_weights</span><span class="p">()</span>  <span class="c1"># make sure word embedding weights are still tied</span>
 
         <span class="k">if</span> <span class="n">output_loading_info</span><span class="p">:</span>
-            <span class="n">loading_info</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;missing_keys&quot;</span><span class="p">:</span> <span class="n">missing_keys</span><span class="p">,</span>
-                            <span class="s2">&quot;unexpected_keys&quot;</span><span class="p">:</span> <span class="n">unexpected_keys</span><span class="p">,</span> <span class="s2">&quot;error_msgs&quot;</span><span class="p">:</span> <span class="n">error_msgs</span><span class="p">}</span>
+            <span class="n">loading_info</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;missing_keys&quot;</span><span class="p">:</span> <span class="n">missing_keys</span><span class="p">,</span>
+                <span class="s2">&quot;unexpected_keys&quot;</span><span class="p">:</span> <span class="n">unexpected_keys</span><span class="p">,</span>
+                <span class="s2">&quot;error_msgs&quot;</span><span class="p">:</span> <span class="n">error_msgs</span><span class="p">,</span>
+            <span class="p">}</span>
             <span class="k">return</span> <span class="n">model</span><span class="p">,</span> <span class="n">loading_info</span>
 
         <span class="k">return</span> <span class="n">model</span></div>
@@ -458,7 +501,7 @@
         <span class="sd">&quot;&quot;&quot;save trained model in 8bit&quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">save_pretrained</span><span class="p">(</span><span class="n">save_directory</span><span class="p">)</span>
         <span class="c1"># Only save the model it-self if we are using distributed training</span>
-        <span class="n">model_to_save</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">module</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;module&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="bp">self</span>
+        <span class="n">model_to_save</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">module</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;module&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="bp">self</span>
         <span class="n">model_to_save</span><span class="o">.</span><span class="n">toggle_8bit</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">output_model_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">save_directory</span><span class="p">,</span> <span class="n">QUANT_WEIGHTS_NAME</span><span class="p">)</span>
         <span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">model_to_save</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span> <span class="n">output_model_file</span><span class="p">)</span>
@@ -468,6 +511,7 @@
         <span class="k">def</span> <span class="nf">_toggle_8bit</span><span class="p">(</span><span class="n">module</span><span class="p">):</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">QuantizedLayer</span><span class="p">):</span>
                 <span class="n">module</span><span class="o">.</span><span class="n">mode_8bit</span> <span class="o">=</span> <span class="n">mode</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">_toggle_8bit</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">mode</span><span class="p">:</span>
             <span class="n">training</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">training</span>
@@ -488,8 +532,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">init_weights</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="QuantizedBertForSequenceClassification"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.transformers.html#nlp_architect.models.transformers.quantized_bert.QuantizedBertForSequenceClassification">[docs]</a><span class="k">class</span> <span class="nc">QuantizedBertForSequenceClassification</span><span class="p">(</span><span class="n">QuantizedBertPreTrainedModel</span><span class="p">,</span>
-                                             <span class="n">BertForSequenceClassification</span><span class="p">):</span>
+<div class="viewcode-block" id="QuantizedBertForSequenceClassification"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.transformers.html#nlp_architect.models.transformers.quantized_bert.QuantizedBertForSequenceClassification">[docs]</a><span class="k">class</span> <span class="nc">QuantizedBertForSequenceClassification</span><span class="p">(</span>
+    <span class="n">QuantizedBertPreTrainedModel</span><span class="p">,</span> <span class="n">BertForSequenceClassification</span>
+<span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
         <span class="c1"># we only want BertForQuestionAnswering init to run to avoid unnecessary</span>
         <span class="c1"># initializations</span>
@@ -499,7 +544,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">bert</span> <span class="o">=</span> <span class="n">QuantizedBertModel</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">hidden_dropout_prob</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">classifier</span> <span class="o">=</span> <span class="n">quantized_linear_setup</span><span class="p">(</span>
-            <span class="n">config</span><span class="p">,</span> <span class="s2">&quot;head&quot;</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">num_labels</span><span class="p">)</span>
+            <span class="n">config</span><span class="p">,</span> <span class="s2">&quot;head&quot;</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">num_labels</span>
+        <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">init_weights</span><span class="p">)</span></div>
 
@@ -513,13 +559,13 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">bert</span> <span class="o">=</span> <span class="n">QuantizedBertModel</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">qa_outputs</span> <span class="o">=</span> <span class="n">quantized_linear_setup</span><span class="p">(</span>
-            <span class="n">config</span><span class="p">,</span> <span class="s2">&quot;head&quot;</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">num_labels</span><span class="p">)</span>
+            <span class="n">config</span><span class="p">,</span> <span class="s2">&quot;head&quot;</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">num_labels</span>
+        <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">init_weights</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="QuantizedBertForTokenClassification"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.transformers.html#nlp_architect.models.transformers.quantized_bert.QuantizedBertForTokenClassification">[docs]</a><span class="k">class</span> <span class="nc">QuantizedBertForTokenClassification</span><span class="p">(</span><span class="n">QuantizedBertPreTrainedModel</span><span class="p">,</span>
-                                          <span class="n">BertForTokenClassification</span><span class="p">):</span>
+<div class="viewcode-block" id="QuantizedBertForTokenClassification"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.models.transformers.html#nlp_architect.models.transformers.quantized_bert.QuantizedBertForTokenClassification">[docs]</a><span class="k">class</span> <span class="nc">QuantizedBertForTokenClassification</span><span class="p">(</span><span class="n">QuantizedBertPreTrainedModel</span><span class="p">,</span> <span class="n">BertForTokenClassification</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">BertForTokenClassification</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">num_labels</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">num_labels</span>
@@ -527,7 +573,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">bert</span> <span class="o">=</span> <span class="n">QuantizedBertModel</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">hidden_dropout_prob</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">classifier</span> <span class="o">=</span> <span class="n">quantized_linear_setup</span><span class="p">(</span>
-            <span class="n">config</span><span class="p">,</span> <span class="s2">&quot;head&quot;</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">num_labels</span><span class="p">)</span>
+            <span class="n">config</span><span class="p">,</span> <span class="s2">&quot;head&quot;</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">num_labels</span>
+        <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">init_weights</span><span class="p">)</span></div>
 </pre></div>

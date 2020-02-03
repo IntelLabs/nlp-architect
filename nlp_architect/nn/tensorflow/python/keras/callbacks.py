@@ -48,4 +48,4 @@ class ConllCallback(tf.keras.callbacks.Callback):
         predictions = self.model.predict(self.x, batch_size=self.bsz)
         stats = get_conll_scores(predictions, self.y, self.y_vocab)
         print()
-        print('Conll eval: \n{}'.format(stats))
+        print("Conll eval: \n{}".format(stats))

@@ -187,14 +187,14 @@ class SpacyInstance:
         display_prompt (bool, optional): flag to display/skip license prompt
     """
 
-    def __init__(self, model='en', disable=None, display_prompt=True):
+    def __init__(self, model="en", disable=None, display_prompt=True):
         if disable is None:
             disable = []
         try:
             self._parser = spacy.load(model, disable=disable)
         except OSError:
-            url = 'https://spacy.io/models'
-            if display_prompt and license_prompt('Spacy {} model'.format(model), url) is False:
+            url = "https://spacy.io/models"
+            if display_prompt and license_prompt("Spacy {} model".format(model), url) is False:
                 sys.exit(0)
             spacy_download(model)
             self._parser = spacy.load(model, disable=disable)
@@ -221,21 +221,20 @@ class SpacyInstance:
 stemmer = EnglishStemmer()
 lemmatizer = WordNetLemmatizer()
 spacy_lemmatizer = Lemmatizer(LEMMA_INDEX, LEMMA_EXC, LEMMA_RULES)
-p = re.compile(r'[ \-,;.@&_]')
+p = re.compile(r"[ \-,;.@&_]")
 
 
 class Stopwords(object):
     """
     Stop words list class.
     """
+
     stop_words = []
 
     @staticmethod
     def get_words():
         if not Stopwords.stop_words:
-            sw_path = path.join(path.dirname(path.realpath(__file__)),
-                                'resources',
-                                'stopwords.txt')
+            sw_path = path.join(path.dirname(path.realpath(__file__)), "resources", "stopwords.txt")
             with open(sw_path) as fp:
                 stop_words = []
                 for w in fp:
@@ -249,12 +248,9 @@ def simple_normalizer(text):
     Simple text normalizer. Runs each token of a phrase thru wordnet lemmatizer
     and a stemmer.
     """
-    if not str(text).isupper() or \
-            not str(text).endswith('S') or \
-            not len(text.split()) == 1:
+    if not str(text).isupper() or not str(text).endswith("S") or not len(text.split()) == 1:
         tokens = list(filter(lambda x: len(x) != 0, p.split(text.strip())))
-        text = ' '.join([stemmer.stem(lemmatizer.lemmatize(t))
-                         for t in tokens])
+        text = " ".join([stemmer.stem(lemmatizer.lemmatize(t)) for t in tokens])
     return text
 
 
@@ -267,17 +263,13 @@ def spacy_normalizer(text, lemma=None):
         lemma(string): lemma of the given text. in this case only stemmer will
         run.
     """
-    if not str(text).isupper() or \
-            not str(text).endswith('S') or \
-            not len(text.split()) == 1:
+    if not str(text).isupper() or not str(text).endswith("S") or not len(text.split()) == 1:
         tokens = list(filter(lambda x: len(x) != 0, p.split(text.strip())))
         if lemma:
-            lemma = lemma.split(' ')
-            text = ' '.join([stemmer.stem(l)
-                             for l in lemma])
+            lemma = lemma.split(" ")
+            text = " ".join([stemmer.stem(l) for l in lemma])
         else:
-            text = ' '.join([stemmer.stem(spacy_lemmatizer(t, u'NOUN')[0])
-                             for t in tokens])
+            text = " ".join([stemmer.stem(spacy_lemmatizer(t, "NOUN")[0]) for t in tokens])
     return text
 
 
@@ -294,7 +286,7 @@ def read_sequential_tagging_file(file_path, ignore_line_patterns=None):
         list of list of tuples
     """
     if ignore_line_patterns:
-        assert isinstance(ignore_line_patterns, list), 'ignore_line_patterns must be a list'
+        assert isinstance(ignore_line_patterns, list), "ignore_line_patterns must be a list"
 
     def _split_into_sentences(file_lines):
         sentences = []
@@ -309,7 +301,7 @@ def read_sequential_tagging_file(file_path, ignore_line_patterns=None):
             sentences.append(s)
         return sentences
 
-    with open(file_path, encoding='utf-8') as fp:
+    with open(file_path, encoding="utf-8") as fp:
         data = fp.readlines()
         data = [d.strip() for d in data]
         if ignore_line_patterns:
@@ -387,17 +379,17 @@ def extract_nps(annotation_list, text=None):
     Returns:
         list of start/end markers of noun phrases, if text is provided a list of noun phrase texts
     """
-    np_starts = [i for i in range(len(annotation_list)) if annotation_list[i] == 'B-NP']
+    np_starts = [i for i in range(len(annotation_list)) if annotation_list[i] == "B-NP"]
     np_markers = []
     for s in np_starts:
         i = 1
-        while s + i < len(annotation_list) and annotation_list[s + i] == 'I-NP':
+        while s + i < len(annotation_list) and annotation_list[s + i] == "I-NP":
             i += 1
         np_markers.append((s, s + i))
     return_markers = np_markers
     if text:
-        assert len(text) == len(annotation_list), 'annotations/text length mismatch'
-        return_markers = [' '.join(text[s:e]) for s, e in np_markers]
+        assert len(text) == len(annotation_list), "annotations/text length mismatch"
+        return_markers = [" ".join(text[s:e]) for s, e in np_markers]
     return return_markers
 
 
@@ -414,7 +406,7 @@ def bio_to_spans(text: List[str], tags: List[str]) -> List[Tuple[int, int, str]]
     pointer = 0
     starts = []
     for i, t, in enumerate(tags):
-        if t.startswith('B-'):
+        if t.startswith("B-"):
             starts.append((i, pointer))
         pointer += len(text[i]) + 1
 
@@ -423,7 +415,7 @@ def bio_to_spans(text: List[str], tags: List[str]) -> List[Tuple[int, int, str]]
         label_str = tags[s_i][2:]
         e = 0
         e_char = len(text[s_i + e])
-        while len(tags) > s_i + e + 1 and tags[s_i + e + 1].startswith('I-'):
+        while len(tags) > s_i + e + 1 and tags[s_i + e + 1].startswith("I-"):
             e += 1
             e_char += 1 + len(text[s_i + e])
         spans.append((s_char, s_char + e_char, label_str))

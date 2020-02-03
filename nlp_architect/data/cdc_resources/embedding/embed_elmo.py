@@ -28,14 +28,14 @@ logger = logging.getLogger(__name__)
 
 class ElmoEmbedding(object):
     def __init__(self):
-        logger.info('Loading Elmo Embedding module')
+        logger.info("Loading Elmo Embedding module")
         self.embeder = ELMoEmbedderTFHUB()
         self.cache = dict()
-        logger.info('Elmo Embedding module lead successfully')
+        logger.info("Elmo Embedding module lead successfully")
 
     def get_head_feature_vector(self, mention: MentionDataLight):
         if mention.mention_context is not None and mention.mention_context:
-            sentence = ' '.join(mention.mention_context)
+            sentence = " ".join(mention.mention_context)
             return self.apply_get_from_cache(sentence, True, mention.tokens_number)
 
         sentence = mention.tokens_str
@@ -71,7 +71,7 @@ class ElmoEmbedding(object):
     @staticmethod
     def get_mention_vec_from_sent(sent_vec, indexs):
         if len(indexs) > 1:
-            elmo_ret_vec = np.mean(sent_vec[indexs[0]: indexs[-1] + 1], axis=0)
+            elmo_ret_vec = np.mean(sent_vec[indexs[0] : indexs[-1] + 1], axis=0)
         else:
             elmo_ret_vec = sent_vec[indexs[0]]
 
@@ -80,24 +80,23 @@ class ElmoEmbedding(object):
 
 class ElmoEmbeddingOffline(object):
     def __init__(self, dump_file):
-        logger.info('Loading Elmo Offline Embedding module')
+        logger.info("Loading Elmo Offline Embedding module")
 
         if dump_file is not None:
-            with open(dump_file, 'rb') as out:
+            with open(dump_file, "rb") as out:
                 self.embeder = pickle.load(out)
         else:
-            logger.warning('Elmo Offline without loaded embeder!')
+            logger.warning("Elmo Offline without loaded embeder!")
 
-        logger.info('Elmo Offline Embedding module lead successfully')
+        logger.info("Elmo Offline Embedding module lead successfully")
 
     def get_head_feature_vector(self, mention: MentionDataLight):
         embed = None
         if mention.mention_context is not None and mention.mention_context:
-            sentence = ' '.join(mention.mention_context)
+            sentence = " ".join(mention.mention_context)
             if sentence in self.embeder:
                 elmo_full_vec = self.embeder[sentence]
-                return ElmoEmbedding.get_mention_vec_from_sent(
-                    elmo_full_vec, mention.tokens_number)
+                return ElmoEmbedding.get_mention_vec_from_sent(elmo_full_vec, mention.tokens_number)
 
         sentence = mention.tokens_str
         if sentence in self.embeder:

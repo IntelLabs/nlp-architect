@@ -197,9 +197,8 @@
 <span class="c1"># ******************************************************************************</span>
 <span class="kn">import</span> <span class="nn">difflib</span>
 <span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Set</span><span class="p">,</span> <span class="n">List</span>
-
-<span class="kn">from</span> <span class="nn">num2words</span> <span class="kn">import</span> <span class="n">num2words</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Set</span>
 
 <span class="kn">from</span> <span class="nn">nlp_architect.common.cdc.mention_data</span> <span class="kn">import</span> <span class="n">MentionDataLight</span>
 <span class="kn">from</span> <span class="nn">nlp_architect.data.cdc_resources.relations.relation_extraction</span> <span class="kn">import</span> <span class="n">RelationExtraction</span>
@@ -213,8 +212,10 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Extract Relation between two mentions according to computation and rule based algorithms</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-<div class="viewcode-block" id="ComputedRelationExtraction.extract_all_relations"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.relations.html#nlp_architect.data.cdc_resources.relations.computed_relation_extraction.ComputedRelationExtraction.extract_all_relations">[docs]</a>    <span class="k">def</span> <span class="nf">extract_all_relations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mention_x</span><span class="p">:</span> <span class="n">MentionDataLight</span><span class="p">,</span>
-                              <span class="n">mention_y</span><span class="p">:</span> <span class="n">MentionDataLight</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="n">RelationType</span><span class="p">]:</span>
+
+<div class="viewcode-block" id="ComputedRelationExtraction.extract_all_relations"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.relations.html#nlp_architect.data.cdc_resources.relations.computed_relation_extraction.ComputedRelationExtraction.extract_all_relations">[docs]</a>    <span class="k">def</span> <span class="nf">extract_all_relations</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">mention_x</span><span class="p">:</span> <span class="n">MentionDataLight</span><span class="p">,</span> <span class="n">mention_y</span><span class="p">:</span> <span class="n">MentionDataLight</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="n">RelationType</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Try to find if mentions has anyone or more of the relations this class support</span>
 
@@ -232,7 +233,8 @@
         <span class="n">mention_y_str</span> <span class="o">=</span> <span class="n">mention_y</span><span class="o">.</span><span class="n">tokens_str</span>
 
         <span class="k">if</span> <span class="n">StringUtils</span><span class="o">.</span><span class="n">is_pronoun</span><span class="p">(</span><span class="n">mention_x_str</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span> <span class="ow">or</span> <span class="n">StringUtils</span><span class="o">.</span><span class="n">is_pronoun</span><span class="p">(</span>
-                <span class="n">mention_y_str</span><span class="o">.</span><span class="n">lower</span><span class="p">()):</span>
+            <span class="n">mention_y_str</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="p">):</span>
             <span class="n">relations</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">RelationType</span><span class="o">.</span><span class="n">NO_RELATION_FOUND</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">relations</span>
 
@@ -254,8 +256,9 @@
 
         <span class="k">return</span> <span class="n">relations</span></div>
 
-<div class="viewcode-block" id="ComputedRelationExtraction.extract_sub_relations"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.relations.html#nlp_architect.data.cdc_resources.relations.computed_relation_extraction.ComputedRelationExtraction.extract_sub_relations">[docs]</a>    <span class="k">def</span> <span class="nf">extract_sub_relations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mention_x</span><span class="p">:</span> <span class="n">MentionDataLight</span><span class="p">,</span> <span class="n">mention_y</span><span class="p">:</span> <span class="n">MentionDataLight</span><span class="p">,</span>
-                              <span class="n">relation</span><span class="p">:</span> <span class="n">RelationType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RelationType</span><span class="p">:</span>
+<div class="viewcode-block" id="ComputedRelationExtraction.extract_sub_relations"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.relations.html#nlp_architect.data.cdc_resources.relations.computed_relation_extraction.ComputedRelationExtraction.extract_sub_relations">[docs]</a>    <span class="k">def</span> <span class="nf">extract_sub_relations</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">mention_x</span><span class="p">:</span> <span class="n">MentionDataLight</span><span class="p">,</span> <span class="n">mention_y</span><span class="p">:</span> <span class="n">MentionDataLight</span><span class="p">,</span> <span class="n">relation</span><span class="p">:</span> <span class="n">RelationType</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RelationType</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check if input mentions has the given relation between them</span>
 
@@ -272,7 +275,8 @@
         <span class="n">mention_y_str</span> <span class="o">=</span> <span class="n">mention_y</span><span class="o">.</span><span class="n">tokens_str</span>
 
         <span class="k">if</span> <span class="n">StringUtils</span><span class="o">.</span><span class="n">is_pronoun</span><span class="p">(</span><span class="n">mention_x_str</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span> <span class="ow">or</span> <span class="n">StringUtils</span><span class="o">.</span><span class="n">is_pronoun</span><span class="p">(</span>
-                <span class="n">mention_y_str</span><span class="o">.</span><span class="n">lower</span><span class="p">()):</span>
+            <span class="n">mention_y_str</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="p">):</span>
             <span class="k">return</span> <span class="n">RelationType</span><span class="o">.</span><span class="n">NO_RELATION_FOUND</span>
 
         <span class="k">if</span> <span class="n">relation</span> <span class="o">==</span> <span class="n">RelationType</span><span class="o">.</span><span class="n">EXACT_STRING</span><span class="p">:</span>
@@ -289,8 +293,9 @@
         <span class="k">return</span> <span class="n">RelationType</span><span class="o">.</span><span class="n">NO_RELATION_FOUND</span></div>
 
 <div class="viewcode-block" id="ComputedRelationExtraction.extract_same_head_lemma"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.relations.html#nlp_architect.data.cdc_resources.relations.computed_relation_extraction.ComputedRelationExtraction.extract_same_head_lemma">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">extract_same_head_lemma</span><span class="p">(</span><span class="n">mention_x</span><span class="p">:</span> <span class="n">MentionDataLight</span><span class="p">,</span>
-                                <span class="n">mention_y</span><span class="p">:</span> <span class="n">MentionDataLight</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RelationType</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">extract_same_head_lemma</span><span class="p">(</span>
+        <span class="n">mention_x</span><span class="p">:</span> <span class="n">MentionDataLight</span><span class="p">,</span> <span class="n">mention_y</span><span class="p">:</span> <span class="n">MentionDataLight</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RelationType</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check if input mentions has same head lemma relation</span>
 
@@ -301,18 +306,21 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            RelationType.SAME_HEAD_LEMMA or RelationType.NO_RELATION_FOUND</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">StringUtils</span><span class="o">.</span><span class="n">is_preposition</span><span class="p">(</span><span class="n">mention_x</span><span class="o">.</span><span class="n">mention_head_lemma</span><span class="p">)</span> <span class="ow">or</span> \
-                <span class="n">StringUtils</span><span class="o">.</span><span class="n">is_preposition</span><span class="p">(</span><span class="n">mention_y</span><span class="o">.</span><span class="n">mention_head_lemma</span><span class="p">)</span> <span class="ow">or</span> \
-                <span class="n">StringUtils</span><span class="o">.</span><span class="n">is_determiner</span><span class="p">(</span><span class="n">mention_x</span><span class="o">.</span><span class="n">mention_head_lemma</span><span class="p">)</span> <span class="ow">or</span> \
-                <span class="n">StringUtils</span><span class="o">.</span><span class="n">is_determiner</span><span class="p">(</span><span class="n">mention_y</span><span class="o">.</span><span class="n">mention_head_lemma</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">StringUtils</span><span class="o">.</span><span class="n">is_preposition</span><span class="p">(</span><span class="n">mention_x</span><span class="o">.</span><span class="n">mention_head_lemma</span><span class="p">)</span>
+            <span class="ow">or</span> <span class="n">StringUtils</span><span class="o">.</span><span class="n">is_preposition</span><span class="p">(</span><span class="n">mention_y</span><span class="o">.</span><span class="n">mention_head_lemma</span><span class="p">)</span>
+            <span class="ow">or</span> <span class="n">StringUtils</span><span class="o">.</span><span class="n">is_determiner</span><span class="p">(</span><span class="n">mention_x</span><span class="o">.</span><span class="n">mention_head_lemma</span><span class="p">)</span>
+            <span class="ow">or</span> <span class="n">StringUtils</span><span class="o">.</span><span class="n">is_determiner</span><span class="p">(</span><span class="n">mention_y</span><span class="o">.</span><span class="n">mention_head_lemma</span><span class="p">)</span>
+        <span class="p">):</span>
             <span class="k">return</span> <span class="n">RelationType</span><span class="o">.</span><span class="n">NO_RELATION_FOUND</span>
         <span class="k">if</span> <span class="n">mention_x</span><span class="o">.</span><span class="n">mention_head_lemma</span> <span class="o">==</span> <span class="n">mention_y</span><span class="o">.</span><span class="n">mention_head_lemma</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">RelationType</span><span class="o">.</span><span class="n">SAME_HEAD_LEMMA</span>
         <span class="k">return</span> <span class="n">RelationType</span><span class="o">.</span><span class="n">NO_RELATION_FOUND</span></div>
 
 <div class="viewcode-block" id="ComputedRelationExtraction.extract_fuzzy_head_fit"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.relations.html#nlp_architect.data.cdc_resources.relations.computed_relation_extraction.ComputedRelationExtraction.extract_fuzzy_head_fit">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">extract_fuzzy_head_fit</span><span class="p">(</span><span class="n">mention_x</span><span class="p">:</span> <span class="n">MentionDataLight</span><span class="p">,</span>
-                               <span class="n">mention_y</span><span class="p">:</span> <span class="n">MentionDataLight</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RelationType</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">extract_fuzzy_head_fit</span><span class="p">(</span>
+        <span class="n">mention_x</span><span class="p">:</span> <span class="n">MentionDataLight</span><span class="p">,</span> <span class="n">mention_y</span><span class="p">:</span> <span class="n">MentionDataLight</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RelationType</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check if input mentions has fuzzy head fit relation</span>
 
@@ -323,20 +331,19 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            RelationType.FUZZY_HEAD_FIT or RelationType.NO_RELATION_FOUND</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">StringUtils</span><span class="o">.</span><span class="n">is_preposition</span><span class="p">(</span><span class="n">mention_x</span><span class="o">.</span><span class="n">mention_head_lemma</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span> <span class="ow">or</span> \
-                <span class="n">StringUtils</span><span class="o">.</span><span class="n">is_preposition</span><span class="p">(</span><span class="n">mention_y</span><span class="o">.</span><span class="n">mention_head_lemma</span><span class="o">.</span><span class="n">lower</span><span class="p">()):</span>
+        <span class="k">if</span> <span class="n">StringUtils</span><span class="o">.</span><span class="n">is_preposition</span><span class="p">(</span>
+            <span class="n">mention_x</span><span class="o">.</span><span class="n">mention_head_lemma</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="p">)</span> <span class="ow">or</span> <span class="n">StringUtils</span><span class="o">.</span><span class="n">is_preposition</span><span class="p">(</span><span class="n">mention_y</span><span class="o">.</span><span class="n">mention_head_lemma</span><span class="o">.</span><span class="n">lower</span><span class="p">()):</span>
             <span class="k">return</span> <span class="n">RelationType</span><span class="o">.</span><span class="n">NO_RELATION_FOUND</span>
 
         <span class="n">mention_y_tokens</span> <span class="o">=</span> <span class="n">mention_y</span><span class="o">.</span><span class="n">tokens_str</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
         <span class="n">mention_x_tokens</span> <span class="o">=</span> <span class="n">mention_x</span><span class="o">.</span><span class="n">tokens_str</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">mention_x</span><span class="o">.</span><span class="n">mention_head</span> <span class="ow">in</span> <span class="n">mention_y_tokens</span> <span class="ow">or</span> \
-                <span class="n">mention_y</span><span class="o">.</span><span class="n">mention_head</span> <span class="ow">in</span> <span class="n">mention_x_tokens</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">mention_x</span><span class="o">.</span><span class="n">mention_head</span> <span class="ow">in</span> <span class="n">mention_y_tokens</span> <span class="ow">or</span> <span class="n">mention_y</span><span class="o">.</span><span class="n">mention_head</span> <span class="ow">in</span> <span class="n">mention_x_tokens</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">RelationType</span><span class="o">.</span><span class="n">FUZZY_HEAD_FIT</span>
         <span class="k">return</span> <span class="n">RelationType</span><span class="o">.</span><span class="n">NO_RELATION_FOUND</span></div>
 
 <div class="viewcode-block" id="ComputedRelationExtraction.extract_fuzzy_fit"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.relations.html#nlp_architect.data.cdc_resources.relations.computed_relation_extraction.ComputedRelationExtraction.extract_fuzzy_fit">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">extract_fuzzy_fit</span><span class="p">(</span><span class="n">mention_x</span><span class="p">:</span> <span class="n">MentionDataLight</span><span class="p">,</span>
-                          <span class="n">mention_y</span><span class="p">:</span> <span class="n">MentionDataLight</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RelationType</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">extract_fuzzy_fit</span><span class="p">(</span><span class="n">mention_x</span><span class="p">:</span> <span class="n">MentionDataLight</span><span class="p">,</span> <span class="n">mention_y</span><span class="p">:</span> <span class="n">MentionDataLight</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RelationType</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check if input mentions has fuzzy fit relation</span>
 
@@ -347,6 +354,15 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            RelationType.FUZZY_FIT or RelationType.NO_RELATION_FOUND</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">num2words</span> <span class="kn">import</span> <span class="n">num2words</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">ImportError</span><span class="p">):</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                <span class="s2">&quot;num2words is not installed, please install nlp_architect with [all] package. &quot;</span>
+                <span class="o">+</span> <span class="s2">&quot;for example: pip install nlp_architect[all]&quot;</span>
+            <span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+
         <span class="n">relation</span> <span class="o">=</span> <span class="n">RelationType</span><span class="o">.</span><span class="n">NO_RELATION_FOUND</span>
         <span class="n">mention1_str</span> <span class="o">=</span> <span class="n">mention_x</span><span class="o">.</span><span class="n">tokens_str</span>
         <span class="n">mention2_str</span> <span class="o">=</span> <span class="n">mention_y</span><span class="o">.</span><span class="n">tokens_str</span>
@@ -355,20 +371,24 @@
             <span class="k">return</span> <span class="n">relation</span>
 
         <span class="c1"># Convert numbers to words</span>
-        <span class="n">x_words</span> <span class="o">=</span> <span class="p">[</span><span class="n">num2words</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">w</span><span class="p">))</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">w</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span> <span class="k">else</span> <span class="n">w</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span>
-                   <span class="n">mention1_str</span><span class="o">.</span><span class="n">split</span><span class="p">()]</span>
-        <span class="n">y_words</span> <span class="o">=</span> <span class="p">[</span><span class="n">num2words</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">w</span><span class="p">))</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">w</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span> <span class="k">else</span> <span class="n">w</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span>
-                   <span class="n">mention2_str</span><span class="o">.</span><span class="n">split</span><span class="p">()]</span>
+        <span class="n">x_words</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">num2words</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">w</span><span class="p">))</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">w</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span> <span class="k">else</span> <span class="n">w</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">mention1_str</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+        <span class="p">]</span>
+        <span class="n">y_words</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">num2words</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">w</span><span class="p">))</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">w</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span> <span class="k">else</span> <span class="n">w</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">mention2_str</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+        <span class="p">]</span>
 
-        <span class="n">fuzzy_result</span> <span class="o">=</span> <span class="n">difflib</span><span class="o">.</span><span class="n">SequenceMatcher</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">x_words</span><span class="p">),</span>
-                                               <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">y_words</span><span class="p">))</span><span class="o">.</span><span class="n">ratio</span><span class="p">()</span> <span class="o">*</span> <span class="mi">100</span> <span class="o">&gt;=</span> <span class="mi">85</span>
+        <span class="n">fuzzy_result</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">difflib</span><span class="o">.</span><span class="n">SequenceMatcher</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">x_words</span><span class="p">),</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">y_words</span><span class="p">))</span><span class="o">.</span><span class="n">ratio</span><span class="p">()</span> <span class="o">*</span> <span class="mi">100</span> <span class="o">&gt;=</span> <span class="mi">85</span>
+        <span class="p">)</span>
         <span class="k">if</span> <span class="n">fuzzy_result</span><span class="p">:</span>
             <span class="n">relation</span> <span class="o">=</span> <span class="n">RelationType</span><span class="o">.</span><span class="n">FUZZY_FIT</span>
         <span class="k">return</span> <span class="n">relation</span></div>
 
 <div class="viewcode-block" id="ComputedRelationExtraction.extract_exact_string"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.relations.html#nlp_architect.data.cdc_resources.relations.computed_relation_extraction.ComputedRelationExtraction.extract_exact_string">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">extract_exact_string</span><span class="p">(</span><span class="n">mention_x</span><span class="p">:</span> <span class="n">MentionDataLight</span><span class="p">,</span>
-                             <span class="n">mention_y</span><span class="p">:</span> <span class="n">MentionDataLight</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RelationType</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">extract_exact_string</span><span class="p">(</span>
+        <span class="n">mention_x</span><span class="p">:</span> <span class="n">MentionDataLight</span><span class="p">,</span> <span class="n">mention_y</span><span class="p">:</span> <span class="n">MentionDataLight</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RelationType</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check if input mentions has exact string relation</span>
 
@@ -382,8 +402,9 @@
         <span class="n">relation</span> <span class="o">=</span> <span class="n">RelationType</span><span class="o">.</span><span class="n">NO_RELATION_FOUND</span>
         <span class="n">mention1_str</span> <span class="o">=</span> <span class="n">mention_x</span><span class="o">.</span><span class="n">tokens_str</span>
         <span class="n">mention2_str</span> <span class="o">=</span> <span class="n">mention_y</span><span class="o">.</span><span class="n">tokens_str</span>
-        <span class="k">if</span> <span class="n">StringUtils</span><span class="o">.</span><span class="n">is_preposition</span><span class="p">(</span><span class="n">mention1_str</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span> <span class="ow">or</span> \
-                <span class="n">StringUtils</span><span class="o">.</span><span class="n">is_preposition</span><span class="p">(</span><span class="n">mention2_str</span><span class="o">.</span><span class="n">lower</span><span class="p">()):</span>
+        <span class="k">if</span> <span class="n">StringUtils</span><span class="o">.</span><span class="n">is_preposition</span><span class="p">(</span><span class="n">mention1_str</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span> <span class="ow">or</span> <span class="n">StringUtils</span><span class="o">.</span><span class="n">is_preposition</span><span class="p">(</span>
+            <span class="n">mention2_str</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="p">):</span>
             <span class="k">return</span> <span class="n">relation</span>
 
         <span class="k">if</span> <span class="n">mention1_str</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="n">mention2_str</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
@@ -399,8 +420,12 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            List[RelationType]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">RelationType</span><span class="o">.</span><span class="n">EXACT_STRING</span><span class="p">,</span> <span class="n">RelationType</span><span class="o">.</span><span class="n">FUZZY_FIT</span><span class="p">,</span> <span class="n">RelationType</span><span class="o">.</span><span class="n">FUZZY_HEAD_FIT</span><span class="p">,</span>
-                <span class="n">RelationType</span><span class="o">.</span><span class="n">SAME_HEAD_LEMMA</span><span class="p">]</span></div></div>
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="n">RelationType</span><span class="o">.</span><span class="n">EXACT_STRING</span><span class="p">,</span>
+            <span class="n">RelationType</span><span class="o">.</span><span class="n">FUZZY_FIT</span><span class="p">,</span>
+            <span class="n">RelationType</span><span class="o">.</span><span class="n">FUZZY_HEAD_FIT</span><span class="p">,</span>
+            <span class="n">RelationType</span><span class="o">.</span><span class="n">SAME_HEAD_LEMMA</span><span class="p">,</span>
+        <span class="p">]</span></div></div>
 </pre></div>
 
            </div>

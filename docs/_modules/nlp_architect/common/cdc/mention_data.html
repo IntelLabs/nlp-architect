@@ -203,9 +203,15 @@
 
 
 <div class="viewcode-block" id="MentionDataLight"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.common.cdc.html#nlp_architect.common.cdc.mention_data.MentionDataLight">[docs]</a><span class="k">class</span> <span class="nc">MentionDataLight</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tokens_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">mention_context</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">mention_head</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                 <span class="n">mention_head_lemma</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">mention_pos</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                 <span class="n">mention_ner</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">tokens_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">mention_context</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">mention_head</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">mention_head_lemma</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">mention_pos</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">mention_ner</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Object represent a mention with only text values</span>
 <span class="sd">        Args:</span>
@@ -216,8 +222,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">tokens_str</span> <span class="o">=</span> <span class="n">tokens_str</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mention_context</span> <span class="o">=</span> <span class="n">mention_context</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">mention_head</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">mention_head_lemma</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mention_head</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mention_head_lemma</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mention_head_pos</span><span class="p">,</span> \
-                <span class="bp">self</span><span class="o">.</span><span class="n">mention_ner</span> <span class="o">=</span> <span class="n">StringUtils</span><span class="o">.</span><span class="n">find_head_lemma_pos_ner</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">tokens_str</span><span class="p">))</span>
+            <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">mention_head</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">mention_head_lemma</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">mention_head_pos</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">mention_ner</span><span class="p">,</span>
+            <span class="p">)</span> <span class="o">=</span> <span class="n">StringUtils</span><span class="o">.</span><span class="n">find_head_lemma_pos_ner</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">tokens_str</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mention_head</span> <span class="o">=</span> <span class="n">mention_head</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mention_head_lemma</span> <span class="o">=</span> <span class="n">mention_head_lemma</span>
@@ -226,12 +236,26 @@
 
 
 <div class="viewcode-block" id="MentionData"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.common.cdc.html#nlp_architect.common.cdc.mention_data.MentionData">[docs]</a><span class="k">class</span> <span class="nc">MentionData</span><span class="p">(</span><span class="n">MentionDataLight</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">topic_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">doc_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">sent_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">tokens_numbers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
-                 <span class="n">tokens_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">mention_context</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">mention_head</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-                 <span class="n">mention_head_lemma</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">coref_chain</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">mention_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;NA&#39;</span><span class="p">,</span>
-                 <span class="n">is_continuous</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">is_singleton</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">score</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span>
-                 <span class="n">predicted_coref_chain</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">mention_pos</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                 <span class="n">mention_ner</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">mention_index</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">topic_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">doc_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">sent_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">tokens_numbers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+        <span class="n">tokens_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">mention_context</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+        <span class="n">mention_head</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">mention_head_lemma</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">coref_chain</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">mention_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;NA&quot;</span><span class="p">,</span>
+        <span class="n">is_continuous</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">is_singleton</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">score</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span>
+        <span class="n">predicted_coref_chain</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">mention_pos</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">mention_ner</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">mention_index</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Object represent a mention</span>
 
@@ -251,9 +275,9 @@
 <span class="sd">            mention_ner: str</span>
 <span class="sd">            mention_index: in case order is of value (default = -1)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">MentionData</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">tokens_str</span><span class="p">,</span> <span class="n">mention_context</span><span class="p">,</span> <span class="n">mention_head</span><span class="p">,</span>
-                                          <span class="n">mention_head_lemma</span><span class="p">,</span> <span class="n">mention_pos</span><span class="p">,</span>
-                                          <span class="n">mention_ner</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MentionData</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">tokens_str</span><span class="p">,</span> <span class="n">mention_context</span><span class="p">,</span> <span class="n">mention_head</span><span class="p">,</span> <span class="n">mention_head_lemma</span><span class="p">,</span> <span class="n">mention_pos</span><span class="p">,</span> <span class="n">mention_ner</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">topic_id</span> <span class="o">=</span> <span class="n">topic_id</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">doc_id</span> <span class="o">=</span> <span class="n">doc_id</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sent_id</span> <span class="o">=</span> <span class="n">sent_id</span>
@@ -294,65 +318,82 @@
             <span class="n">mention_ner</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="n">mention_index</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
 
-            <span class="n">mention_text</span> <span class="o">=</span> <span class="n">mention_line</span><span class="p">[</span><span class="s1">&#39;tokens_str&#39;</span><span class="p">]</span>
+            <span class="n">mention_text</span> <span class="o">=</span> <span class="n">mention_line</span><span class="p">[</span><span class="s2">&quot;tokens_str&quot;</span><span class="p">]</span>
 
-            <span class="k">if</span> <span class="s1">&#39;topic_id&#39;</span> <span class="ow">in</span> <span class="n">mention_line</span><span class="p">:</span>
-                <span class="n">topic_id</span> <span class="o">=</span> <span class="n">mention_line</span><span class="p">[</span><span class="s1">&#39;topic_id&#39;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="s2">&quot;topic_id&quot;</span> <span class="ow">in</span> <span class="n">mention_line</span><span class="p">:</span>
+                <span class="n">topic_id</span> <span class="o">=</span> <span class="n">mention_line</span><span class="p">[</span><span class="s2">&quot;topic_id&quot;</span><span class="p">]</span>
 
-            <span class="k">if</span> <span class="s1">&#39;coref_chain&#39;</span> <span class="ow">in</span> <span class="n">mention_line</span><span class="p">:</span>
-                <span class="n">coref_chain</span> <span class="o">=</span> <span class="n">mention_line</span><span class="p">[</span><span class="s1">&#39;coref_chain&#39;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="s2">&quot;coref_chain&quot;</span> <span class="ow">in</span> <span class="n">mention_line</span><span class="p">:</span>
+                <span class="n">coref_chain</span> <span class="o">=</span> <span class="n">mention_line</span><span class="p">[</span><span class="s2">&quot;coref_chain&quot;</span><span class="p">]</span>
 
-            <span class="k">if</span> <span class="s1">&#39;doc_id&#39;</span> <span class="ow">in</span> <span class="n">mention_line</span><span class="p">:</span>
-                <span class="n">doc_id</span> <span class="o">=</span> <span class="n">mention_line</span><span class="p">[</span><span class="s1">&#39;doc_id&#39;</span><span class="p">]</span>
-                <span class="k">if</span> <span class="s1">&#39;.xml&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">doc_id</span><span class="p">:</span>
-                    <span class="n">doc_id</span> <span class="o">=</span> <span class="n">doc_id</span> <span class="o">+</span> <span class="s1">&#39;.xml&#39;</span>
+            <span class="k">if</span> <span class="s2">&quot;doc_id&quot;</span> <span class="ow">in</span> <span class="n">mention_line</span><span class="p">:</span>
+                <span class="n">doc_id</span> <span class="o">=</span> <span class="n">mention_line</span><span class="p">[</span><span class="s2">&quot;doc_id&quot;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="s2">&quot;.xml&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">doc_id</span><span class="p">:</span>
+                    <span class="n">doc_id</span> <span class="o">=</span> <span class="n">doc_id</span> <span class="o">+</span> <span class="s2">&quot;.xml&quot;</span>
 
-            <span class="k">if</span> <span class="s1">&#39;sent_id&#39;</span> <span class="ow">in</span> <span class="n">mention_line</span><span class="p">:</span>
-                <span class="n">sent_id</span> <span class="o">=</span> <span class="n">mention_line</span><span class="p">[</span><span class="s1">&#39;sent_id&#39;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="s2">&quot;sent_id&quot;</span> <span class="ow">in</span> <span class="n">mention_line</span><span class="p">:</span>
+                <span class="n">sent_id</span> <span class="o">=</span> <span class="n">mention_line</span><span class="p">[</span><span class="s2">&quot;sent_id&quot;</span><span class="p">]</span>
 
-            <span class="k">if</span> <span class="s1">&#39;tokens_number&#39;</span> <span class="ow">in</span> <span class="n">mention_line</span><span class="p">:</span>
-                <span class="n">tokens_numbers</span> <span class="o">=</span> <span class="n">mention_line</span><span class="p">[</span><span class="s1">&#39;tokens_number&#39;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="s2">&quot;tokens_number&quot;</span> <span class="ow">in</span> <span class="n">mention_line</span><span class="p">:</span>
+                <span class="n">tokens_numbers</span> <span class="o">=</span> <span class="n">mention_line</span><span class="p">[</span><span class="s2">&quot;tokens_number&quot;</span><span class="p">]</span>
 
-            <span class="k">if</span> <span class="s1">&#39;mention_context&#39;</span> <span class="ow">in</span> <span class="n">mention_line</span><span class="p">:</span>
-                <span class="n">mention_context</span> <span class="o">=</span> <span class="n">mention_line</span><span class="p">[</span><span class="s1">&#39;mention_context&#39;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="s2">&quot;mention_context&quot;</span> <span class="ow">in</span> <span class="n">mention_line</span><span class="p">:</span>
+                <span class="n">mention_context</span> <span class="o">=</span> <span class="n">mention_line</span><span class="p">[</span><span class="s2">&quot;mention_context&quot;</span><span class="p">]</span>
 
-            <span class="k">if</span> <span class="s1">&#39;mention_head&#39;</span> <span class="ow">in</span> <span class="n">mention_line</span> <span class="ow">and</span> <span class="s1">&#39;mention_head_lemma&#39;</span> <span class="ow">in</span> <span class="n">mention_line</span><span class="p">:</span>
-                <span class="n">mention_head</span> <span class="o">=</span> <span class="n">mention_line</span><span class="p">[</span><span class="s1">&#39;mention_head&#39;</span><span class="p">]</span>
-                <span class="n">mention_head_lemma</span> <span class="o">=</span> <span class="n">mention_line</span><span class="p">[</span><span class="s1">&#39;mention_head_lemma&#39;</span><span class="p">]</span>
-                <span class="k">if</span> <span class="s1">&#39;mention_head_pos&#39;</span> <span class="ow">in</span> <span class="n">mention_line</span><span class="p">:</span>
-                    <span class="n">mention_pos</span> <span class="o">=</span> <span class="n">mention_line</span><span class="p">[</span><span class="s1">&#39;mention_head_pos&#39;</span><span class="p">]</span>
-                <span class="k">if</span> <span class="s1">&#39;mention_ner&#39;</span> <span class="ow">in</span> <span class="n">mention_line</span><span class="p">:</span>
-                    <span class="n">mention_ner</span> <span class="o">=</span> <span class="n">mention_line</span><span class="p">[</span><span class="s1">&#39;mention_ner&#39;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="s2">&quot;mention_head&quot;</span> <span class="ow">in</span> <span class="n">mention_line</span> <span class="ow">and</span> <span class="s2">&quot;mention_head_lemma&quot;</span> <span class="ow">in</span> <span class="n">mention_line</span><span class="p">:</span>
+                <span class="n">mention_head</span> <span class="o">=</span> <span class="n">mention_line</span><span class="p">[</span><span class="s2">&quot;mention_head&quot;</span><span class="p">]</span>
+                <span class="n">mention_head_lemma</span> <span class="o">=</span> <span class="n">mention_line</span><span class="p">[</span><span class="s2">&quot;mention_head_lemma&quot;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="s2">&quot;mention_head_pos&quot;</span> <span class="ow">in</span> <span class="n">mention_line</span><span class="p">:</span>
+                    <span class="n">mention_pos</span> <span class="o">=</span> <span class="n">mention_line</span><span class="p">[</span><span class="s2">&quot;mention_head_pos&quot;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="s2">&quot;mention_ner&quot;</span> <span class="ow">in</span> <span class="n">mention_line</span><span class="p">:</span>
+                    <span class="n">mention_ner</span> <span class="o">=</span> <span class="n">mention_line</span><span class="p">[</span><span class="s2">&quot;mention_ner&quot;</span><span class="p">]</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">mention_head</span><span class="p">,</span> <span class="n">mention_head_lemma</span><span class="p">,</span> <span class="n">mention_pos</span><span class="p">,</span> \
-                    <span class="n">mention_ner</span> <span class="o">=</span> <span class="n">StringUtils</span><span class="o">.</span><span class="n">find_head_lemma_pos_ner</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">mention_text</span><span class="p">))</span>
+                <span class="p">(</span>
+                    <span class="n">mention_head</span><span class="p">,</span>
+                    <span class="n">mention_head_lemma</span><span class="p">,</span>
+                    <span class="n">mention_pos</span><span class="p">,</span>
+                    <span class="n">mention_ner</span><span class="p">,</span>
+                <span class="p">)</span> <span class="o">=</span> <span class="n">StringUtils</span><span class="o">.</span><span class="n">find_head_lemma_pos_ner</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">mention_text</span><span class="p">))</span>
 
-            <span class="k">if</span> <span class="s1">&#39;mention_type&#39;</span> <span class="ow">in</span> <span class="n">mention_line</span><span class="p">:</span>
-                <span class="n">mention_type</span> <span class="o">=</span> <span class="n">mention_line</span><span class="p">[</span><span class="s1">&#39;mention_type&#39;</span><span class="p">]</span>
-            <span class="k">if</span> <span class="s1">&#39;score&#39;</span> <span class="ow">in</span> <span class="n">mention_line</span><span class="p">:</span>
-                <span class="n">score</span> <span class="o">=</span> <span class="n">mention_line</span><span class="p">[</span><span class="s1">&#39;score&#39;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="s2">&quot;mention_type&quot;</span> <span class="ow">in</span> <span class="n">mention_line</span><span class="p">:</span>
+                <span class="n">mention_type</span> <span class="o">=</span> <span class="n">mention_line</span><span class="p">[</span><span class="s2">&quot;mention_type&quot;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="s2">&quot;score&quot;</span> <span class="ow">in</span> <span class="n">mention_line</span><span class="p">:</span>
+                <span class="n">score</span> <span class="o">=</span> <span class="n">mention_line</span><span class="p">[</span><span class="s2">&quot;score&quot;</span><span class="p">]</span>
 
-            <span class="k">if</span> <span class="s1">&#39;is_continuous&#39;</span> <span class="ow">in</span> <span class="n">mention_line</span><span class="p">:</span>
-                <span class="n">is_continue</span> <span class="o">=</span> <span class="n">mention_line</span><span class="p">[</span><span class="s1">&#39;is_continuous&#39;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="s2">&quot;is_continuous&quot;</span> <span class="ow">in</span> <span class="n">mention_line</span><span class="p">:</span>
+                <span class="n">is_continue</span> <span class="o">=</span> <span class="n">mention_line</span><span class="p">[</span><span class="s2">&quot;is_continuous&quot;</span><span class="p">]</span>
 
-            <span class="k">if</span> <span class="s1">&#39;is_singleton&#39;</span> <span class="ow">in</span> <span class="n">mention_line</span><span class="p">:</span>
-                <span class="n">is_singleton</span> <span class="o">=</span> <span class="n">mention_line</span><span class="p">[</span><span class="s1">&#39;is_singleton&#39;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="s2">&quot;is_singleton&quot;</span> <span class="ow">in</span> <span class="n">mention_line</span><span class="p">:</span>
+                <span class="n">is_singleton</span> <span class="o">=</span> <span class="n">mention_line</span><span class="p">[</span><span class="s2">&quot;is_singleton&quot;</span><span class="p">]</span>
 
-            <span class="k">if</span> <span class="s1">&#39;predicted_coref_chain&#39;</span> <span class="ow">in</span> <span class="n">mention_line</span><span class="p">:</span>
-                <span class="n">predicted_coref_chain</span> <span class="o">=</span> <span class="n">mention_line</span><span class="p">[</span><span class="s1">&#39;predicted_coref_chain&#39;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="s2">&quot;predicted_coref_chain&quot;</span> <span class="ow">in</span> <span class="n">mention_line</span><span class="p">:</span>
+                <span class="n">predicted_coref_chain</span> <span class="o">=</span> <span class="n">mention_line</span><span class="p">[</span><span class="s2">&quot;predicted_coref_chain&quot;</span><span class="p">]</span>
 
-            <span class="k">if</span> <span class="s1">&#39;mention_index&#39;</span> <span class="ow">in</span> <span class="n">mention_line</span><span class="p">:</span>
-                <span class="n">mention_index</span> <span class="o">=</span> <span class="n">mention_line</span><span class="p">[</span><span class="s1">&#39;mention_index&#39;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="s2">&quot;mention_index&quot;</span> <span class="ow">in</span> <span class="n">mention_line</span><span class="p">:</span>
+                <span class="n">mention_index</span> <span class="o">=</span> <span class="n">mention_line</span><span class="p">[</span><span class="s2">&quot;mention_index&quot;</span><span class="p">]</span>
 
-            <span class="n">mention_data</span> <span class="o">=</span> <span class="n">MentionData</span><span class="p">(</span><span class="n">topic_id</span><span class="p">,</span> <span class="n">doc_id</span><span class="p">,</span> <span class="n">sent_id</span><span class="p">,</span> <span class="n">tokens_numbers</span><span class="p">,</span> <span class="n">mention_text</span><span class="p">,</span>
-                                       <span class="n">mention_context</span><span class="p">,</span>
-                                       <span class="n">mention_head</span><span class="p">,</span> <span class="n">mention_head_lemma</span><span class="p">,</span>
-                                       <span class="n">coref_chain</span><span class="p">,</span> <span class="n">mention_type</span><span class="p">,</span> <span class="n">is_continue</span><span class="p">,</span> <span class="n">is_singleton</span><span class="p">,</span> <span class="n">score</span><span class="p">,</span>
-                                       <span class="n">predicted_coref_chain</span><span class="p">,</span> <span class="n">mention_pos</span><span class="p">,</span> <span class="n">mention_ner</span><span class="p">,</span>
-                                       <span class="n">mention_index</span><span class="p">)</span>
+            <span class="n">mention_data</span> <span class="o">=</span> <span class="n">MentionData</span><span class="p">(</span>
+                <span class="n">topic_id</span><span class="p">,</span>
+                <span class="n">doc_id</span><span class="p">,</span>
+                <span class="n">sent_id</span><span class="p">,</span>
+                <span class="n">tokens_numbers</span><span class="p">,</span>
+                <span class="n">mention_text</span><span class="p">,</span>
+                <span class="n">mention_context</span><span class="p">,</span>
+                <span class="n">mention_head</span><span class="p">,</span>
+                <span class="n">mention_head_lemma</span><span class="p">,</span>
+                <span class="n">coref_chain</span><span class="p">,</span>
+                <span class="n">mention_type</span><span class="p">,</span>
+                <span class="n">is_continue</span><span class="p">,</span>
+                <span class="n">is_singleton</span><span class="p">,</span>
+                <span class="n">score</span><span class="p">,</span>
+                <span class="n">predicted_coref_chain</span><span class="p">,</span>
+                <span class="n">mention_pos</span><span class="p">,</span>
+                <span class="n">mention_ner</span><span class="p">,</span>
+                <span class="n">mention_index</span><span class="p">,</span>
+            <span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Unexpected error:&#39;</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;failed reading json line-&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">mention_line</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Unexpected error:&quot;</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;failed reading json line-&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">mention_line</span><span class="p">))</span>
 
         <span class="k">return</span> <span class="n">mention_data</span></div>
 
@@ -382,9 +423,9 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">doc_id</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">sent_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokens_number</span><span class="p">:</span>
             <span class="n">tokens_ids</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">doc_id</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sent_id</span><span class="p">)]</span>
             <span class="n">tokens_ids</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">token_id</span><span class="p">)</span> <span class="k">for</span> <span class="n">token_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokens_number</span><span class="p">])</span>
-            <span class="k">return</span> <span class="s1">&#39;_&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tokens_ids</span><span class="p">)</span>
+            <span class="k">return</span> <span class="s2">&quot;_&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tokens_ids</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="s1">&#39;_&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tokens_str</span><span class="o">.</span><span class="n">split</span><span class="p">())</span></div>
+        <span class="k">return</span> <span class="s2">&quot;_&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tokens_str</span><span class="o">.</span><span class="n">split</span><span class="p">())</span></div>
 
 <div class="viewcode-block" id="MentionData.get_mention_id"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.common.cdc.html#nlp_architect.common.cdc.mention_data.MentionData.get_mention_id">[docs]</a>    <span class="k">def</span> <span class="nf">get_mention_id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">mention_id</span><span class="p">:</span>
@@ -393,7 +434,7 @@
 
 <div class="viewcode-block" id="MentionData.static_gen_token_unique_id"><a class="viewcode-back" href="../../../../generated_api/nlp_architect.common.cdc.html#nlp_architect.common.cdc.mention_data.MentionData.static_gen_token_unique_id">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">static_gen_token_unique_id</span><span class="p">(</span><span class="n">doc_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">sent_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">token_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s1">&#39;_&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">doc_id</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">sent_id</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">token_id</span><span class="p">)])</span></div></div>
+        <span class="k">return</span> <span class="s2">&quot;_&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">doc_id</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">sent_id</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">token_id</span><span class="p">)])</span></div></div>
 </pre></div>
 
            </div>

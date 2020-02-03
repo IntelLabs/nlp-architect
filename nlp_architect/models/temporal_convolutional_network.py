@@ -17,6 +17,7 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 import tensorflow as tf
+
 # pylint: disable=no-name-in-module
 from tensorflow.python.framework import tensor_shape
 from tensorflow.python.keras.layers import Wrapper
@@ -65,16 +66,18 @@ class WeightNorm(Wrapper):
       ValueError: If `Layer` does not contain a `kernel` of weights
       NotImplementedError: If `data_init` is True and running graph execution
     """
+
     def __init__(self, layer, data_init=False, **kwargs):
         if not isinstance(layer, Layer):
             raise ValueError(
-                'Please initialize `WeightNorm` layer with a '
-                '`Layer` instance. You passed: {input}'.format(input=layer))
+                "Please initialize `WeightNorm` layer with a "
+                "`Layer` instance. You passed: {input}".format(input=layer)
+            )
 
         if not context.executing_eagerly() and data_init:
             raise NotImplementedError(
-                'Data dependent variable initialization is not available for '
-                'graph execution')
+                "Data dependent variable initialization is not available for " "graph execution"
+            )
 
         self.initialized = True
         if data_init:
@@ -83,19 +86,21 @@ class WeightNorm(Wrapper):
         self.layer_depth = None
         self.norm_axes = None
         super(WeightNorm, self).__init__(layer, **kwargs)
-        self._track_checkpointable(layer, name='layer')
+        self._track_trackable(layer, name="layer")
 
     def _compute_weights(self):
         """Generate weights by combining the direction of weight vector
          with it's norm """
-        with variable_scope.variable_scope('compute_weights'):
-            self.layer.kernel = nn_impl.l2_normalize(
-                self.layer.v, axis=self.norm_axes) * self.layer.g
+        with variable_scope.variable_scope("compute_weights"):
+            self.layer.kernel = (
+                nn_impl.l2_normalize(self.layer.v, axis=self.norm_axes) * self.layer.g
+            )
 
     def _init_norm(self, weights):
         """Set the norm of the weight vector"""
         from tensorflow.python.ops.linalg_ops import norm
-        with variable_scope.variable_scope('init_norm'):
+
+        with variable_scope.variable_scope("init_norm"):
             # pylint: disable=no-member
             flat = array_ops.reshape(weights, [-1, self.layer_depth])
             # pylint: disable=no-member
@@ -106,17 +111,17 @@ class WeightNorm(Wrapper):
         from tensorflow.python.ops.nn import moments
         from tensorflow.python.ops.math_ops import sqrt
 
-        with variable_scope.variable_scope('data_dep_init'):
+        with variable_scope.variable_scope("data_dep_init"):
             # Generate data dependent init values
             activation = self.layer.activation
             self.layer.activation = None
             x_init = self.layer.call(inputs)
             m_init, v_init = moments(x_init, self.norm_axes)
-            scale_init = 1. / sqrt(v_init + 1e-10)
+            scale_init = 1.0 / sqrt(v_init + 1e-10)
 
         # Assign data dependent init values
         self.layer.g = self.layer.g * scale_init
-        self.layer.bias = (-1 * m_init * scale_init)
+        self.layer.bias = -1 * m_init * scale_init
         self.layer.activation = activation
         self.initialized = True
 
@@ -130,10 +135,9 @@ class WeightNorm(Wrapper):
             self.layer.build(input_shape)
             self.layer.built = False
 
-            if not hasattr(self.layer, 'kernel'):
+            if not hasattr(self.layer, "kernel"):
                 raise ValueError(
-                    '`WeightNorm` must wrap a layer that'
-                    ' contains a `kernel` for weights'
+                    "`WeightNorm` must wrap a layer that" " contains a `kernel` for weights"
                 )
 
             # The kernel's filter or unit dimension is -1
@@ -144,12 +148,12 @@ class WeightNorm(Wrapper):
             self.layer.g = self.layer.add_variable(
                 name="g",
                 shape=(self.layer_depth,),
-                initializer=initializers.get('ones'),
+                initializer=initializers.get("ones"),
                 dtype=self.layer.kernel.dtype,
-                trainable=True)
+                trainable=True,
+            )
 
-            with ops.control_dependencies([self.layer.g.assign(
-                    self._init_norm(self.layer.v))]):
+            with ops.control_dependencies([self.layer.g.assign(self._init_norm(self.layer.v))]):
                 self._compute_weights()
 
             self.layer.built = True
@@ -169,8 +173,7 @@ class WeightNorm(Wrapper):
         return output
 
     def compute_output_shape(self, input_shape):
-        return tensor_shape.TensorShape(
-            self.layer.compute_output_shape(input_shape).as_list())
+        return tensor_shape.TensorShape(self.layer.compute_output_shape(input_shape).as_list())
 
 
 class TCN:
@@ -178,6 +181,7 @@ class TCN:
     This class defines core TCN architecture.
     This is only the base class, training strategy is not implemented.
     """
+
     def __init__(self, max_len, n_features_in, hidden_sizes, kernel_size=7, dropout=0.2):
         """
         To use this class,
@@ -202,16 +206,20 @@ class TCN:
         self.n_hidden_layers = len(self.hidden_sizes)
         receptive_field_len = self.calculate_receptive_field()
         if receptive_field_len < self.max_len:
-            print("Warning! receptive field of the TCN: "
-                  "%d is less than the input sequence length: %d."
-                  % (receptive_field_len, self.max_len))
+            print(
+                "Warning! receptive field of the TCN: "
+                "%d is less than the input sequence length: %d."
+                % (receptive_field_len, self.max_len)
+            )
         else:
-            print("Receptive field of the TCN: %d, input sequence length: %d."
-                  % (receptive_field_len, self.max_len))
+            print(
+                "Receptive field of the TCN: %d, input sequence length: %d."
+                % (receptive_field_len, self.max_len)
+            )
         self.layer_activations = []
 
         # toggle this for train/inference mode
-        self.training_mode = tf.placeholder(tf.bool, name='training_mode')
+        self.training_mode = tf.placeholder(tf.bool, name="training_mode")
 
         self.sequence_output = None
 
@@ -240,8 +248,13 @@ class TCN:
                 in_channels = self.n_features_in if i == 0 else self.hidden_sizes[i - 1]
                 out_channels = self.hidden_sizes[i]
                 with tf.variable_scope("residual_block_" + str(i)):
-                    x = self._residual_block(x, in_channels, out_channels, dilation_size,
-                                             (self.kernel_size - 1) * dilation_size)
+                    x = self._residual_block(
+                        x,
+                        in_channels,
+                        out_channels,
+                        dilation_size,
+                        (self.kernel_size - 1) * dilation_size,
+                    )
                     x = tf.nn.relu(x)
                 self.layer_activations.append(x)
             self.sequence_output = x
@@ -252,11 +265,14 @@ class TCN:
             else:
                 # last time point size (batch_size, hidden_sizes_encoder)
                 width = self.sequence_output.shape[1].value
-                lt = tf.squeeze(tf.slice(self.sequence_output, [0, width - 1, 0],
-                                         [-1, 1, -1]), axis=1)
-                prediction = \
-                    tf.layers.Dense(1, kernel_initializer=tf.initializers.random_normal(0, 0.01),
-                                    bias_initializer=tf.initializers.random_normal(0, 0.01))(lt)
+                lt = tf.squeeze(
+                    tf.slice(self.sequence_output, [0, width - 1, 0], [-1, 1, -1]), axis=1
+                )
+                prediction = tf.layers.Dense(
+                    1,
+                    kernel_initializer=tf.initializers.random_normal(0, 0.01),
+                    bias_initializer=tf.initializers.random_normal(0, 0.01),
+                )(lt)
 
         return prediction
 
@@ -281,10 +297,16 @@ class TCN:
 
         # sidepath
         if in_channels != out_channels:
-            x_side = tf.layers.Conv1D(filters=out_channels, kernel_size=1, padding='same',
-                                      strides=1, activation=None, dilation_rate=1,
-                                      kernel_initializer=tf.initializers.random_normal(0, 0.01),
-                                      bias_initializer=tf.initializers.random_normal(0, 0.01))(xin)
+            x_side = tf.layers.Conv1D(
+                filters=out_channels,
+                kernel_size=1,
+                padding="same",
+                strides=1,
+                activation=None,
+                dilation_rate=1,
+                kernel_initializer=tf.initializers.random_normal(0, 0.01),
+                bias_initializer=tf.initializers.random_normal(0, 0.01),
+            )(xin)
         else:
             x_side = xin
 
@@ -311,8 +333,12 @@ class TCN:
 
         # dropout
         batch_size = tf.shape(x)[0]
-        x = tf.layers.dropout(x, rate=self.dropout, noise_shape=[batch_size, 1, out_channels],
-                              training=self.training_mode)
+        x = tf.layers.dropout(
+            x,
+            rate=self.dropout,
+            noise_shape=[batch_size, 1, out_channels],
+            training=self.training_mode,
+        )
 
         return x
 
@@ -332,11 +358,19 @@ class TCN:
         input_width = x.shape[1].value
         with tf.variable_scope("dilated_causal_conv"):
             # define dilated convolution layer with left side padding
-            x = tf.pad(x, tf.constant([[0, 0], [padding, 0], [0, 0]]), 'CONSTANT')
-            x = WeightNorm(Conv1D(filters=n_filters, kernel_size=self.kernel_size, padding='valid',
-                                  strides=1, activation=None, dilation_rate=dilation,
-                                  kernel_initializer=tf.initializers.random_normal(0, 0.01),
-                                  bias_initializer=tf.initializers.random_normal(0, 0.01)))(x)
+            x = tf.pad(x, tf.constant([[0, 0], [padding, 0], [0, 0]]), "CONSTANT")
+            x = WeightNorm(
+                Conv1D(
+                    filters=n_filters,
+                    kernel_size=self.kernel_size,
+                    padding="valid",
+                    strides=1,
+                    activation=None,
+                    dilation_rate=dilation,
+                    kernel_initializer=tf.initializers.random_normal(0, 0.01),
+                    bias_initializer=tf.initializers.random_normal(0, 0.01),
+                )
+            )(x)
 
         assert x.shape[1].value == input_width
 
@@ -360,6 +394,7 @@ class CommonLayers:
     Class that contains the common layers for language modeling -
             word embeddings and projection layer
     """
+
     def __init__(self):
         """
         Initialize class
@@ -368,8 +403,9 @@ class CommonLayers:
         self.num_words = None
         self.n_features_in = None
 
-    def define_input_layer(self, input_placeholder_tokens, word_embeddings,
-                           embeddings_trainable=True):
+    def define_input_layer(
+        self, input_placeholder_tokens, word_embeddings, embeddings_trainable=True
+    ):
         """
         Define the input word embedding layer
         Args:
@@ -380,20 +416,22 @@ class CommonLayers:
         Returns:
             Embeddings corresponding to the data in input placeholder
         """
-        with tf.device('/cpu:0'):
+        with tf.device("/cpu:0"):
             with tf.variable_scope("embedding_layer", reuse=False):
                 if word_embeddings is None:
                     initializer = tf.initializers.random_normal(0, 0.01)
                 else:
                     initializer = tf.constant_initializer(word_embeddings)
-                self.word_embeddings_tf = tf.get_variable("embedding_table",
-                                                          shape=[self.num_words,
-                                                                 self.n_features_in],
-                                                          initializer=initializer,
-                                                          trainable=embeddings_trainable)
+                self.word_embeddings_tf = tf.get_variable(
+                    "embedding_table",
+                    shape=[self.num_words, self.n_features_in],
+                    initializer=initializer,
+                    trainable=embeddings_trainable,
+                )
 
-                input_embeddings = tf.nn.embedding_lookup(self.word_embeddings_tf,
-                                                          input_placeholder_tokens)
+                input_embeddings = tf.nn.embedding_lookup(
+                    self.word_embeddings_tf, input_placeholder_tokens
+                )
         return input_embeddings
 
     def define_projection_layer(self, prediction, tied_weights=True):
@@ -406,12 +444,12 @@ class CommonLayers:
         Returns:
             Probability distribution over vocabulary
         """
-        with tf.device('/cpu:0'):
+        with tf.device("/cpu:0"):
             if tied_weights:
                 # tie projection layer and embedding layer
                 with tf.variable_scope("embedding_layer", reuse=tf.AUTO_REUSE):
                     softmax_w = tf.matrix_transpose(self.word_embeddings_tf)
-                    softmax_b = tf.get_variable('softmax_b', [self.num_words])
+                    softmax_b = tf.get_variable("softmax_b", [self.num_words])
                     _, l, k = prediction.shape.as_list()
                     prediction_reshaped = tf.reshape(prediction, [-1, k])
                     mult_out = tf.nn.bias_add(tf.matmul(prediction_reshaped, softmax_w), softmax_b)

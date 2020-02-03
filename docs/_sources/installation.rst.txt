@@ -42,8 +42,8 @@ Before installing the library make sure you has the most recent packages listed 
     For specific installation of backends of Tensorflow or PyTorch (CPU/MKL/GPU) we recommend installing NLP Architect and then installing the desired backend DL framework.
 
 
-Prerequisites
--------------
+Prerequisites (creating virtual env)
+------------------------------------
 
 Make sure ``pip`` and ``setuptools`` and ``venv`` are up to date before installing.
 
@@ -51,8 +51,11 @@ Make sure ``pip`` and ``setuptools`` and ``venv`` are up to date before installi
 
     pip3 install -U pip setuptools venv
 
-We recommend installing NLP Architect in a virtual environment to self-contain
-the work done using the library.
+.. note::
+
+    We recommend installing NLP Architect in a virtual environment to self-contain
+    the work done using the library.
+    Users can use any virtual environment (pip, conda, etc.) 
 
 To create and activate a new virtual environment (or skip this step and use the wizard below):
 
@@ -76,6 +79,17 @@ Install from source
     git clone https://github.com/NervanaSystems/nlp-architect.git
     cd nlp-architect
     pip install -e .
+
+
+Running Examples and Solutions
+==============================
+
+To run provided examples and solutions please install the library with [all] flag which will install extra packages required. (requires installation from source)
+
+.. code:: bash
+
+    pip install .[all]
+
 
 Updating NLP Architect
 ======================

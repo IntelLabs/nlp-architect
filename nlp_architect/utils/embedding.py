@@ -13,17 +13,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
-from __future__ import (absolute_import, division, print_function,
-                        unicode_literals)
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import logging
 import os
+import sys
 from typing import List
 
 import numpy as np
-import pandas as pd
-import tensorflow as tf
-import tensorflow_hub as hub
+
 from gensim.models import FastText
 
 from nlp_architect.utils.text import Vocabulary
@@ -43,19 +41,20 @@ def load_word_embeddings(file_path, vocab=None):
         list: a dictionary of numpy.ndarray vectors
         int: detected word embedding vector size
     """
-    with open(file_path, encoding='utf-8') as fp:
+    with open(file_path, encoding="utf-8") as fp:
         word_vectors = {}
         size = None
         for line in fp:
             line_fields = line.split()
             if len(line_fields) < 5:
                 continue
-            if line[0] == ' ':
-                word_vectors[' '] = np.asarray(line_fields, dtype='float32')
-            elif vocab is None or line_fields[0] in vocab:
-                word_vectors[line_fields[0]] = np.asarray(line_fields[1:], dtype='float32')
-                if size is None:
-                    size = len(line_fields[1:])
+            else:
+                if line[0] == " ":
+                    word_vectors[" "] = np.asarray(line_fields, dtype="float32")
+                elif vocab is None or line_fields[0] in vocab:
+                    word_vectors[line_fields[0]] = np.asarray(line_fields[1:], dtype="float32")
+                    if size is None:
+                        size = len(line_fields[1:])
     return word_vectors, size
 
 
@@ -124,40 +123,53 @@ def load_embedding_file(filename: str, dim: int = None) -> dict:
     """
     if filename is not None and os.path.exists(filename):
         logger.info("Loading external word embeddings from {}".format(filename))
-    df = pd.read_csv(filename, sep=" ", quoting=3, header=None, index_col=0)
-    if dim is not None:
-        return {key: val.values[:dim] for key, val in df.T.items()}
-    return {key: val.values for key, val in df.T.items()}
+    embedding_dict = {}
+    with open(filename, encoding="utf-8") as fp:
+        for line in fp:
+            split_line = line.split()
+            word = split_line[0]
+            vec = np.array([float(val) for val in split_line[1:]])
+            embedding_dict[word] = vec
+    return embedding_dict
 
 
 # pylint: disable=not-context-manager
 class ELMoEmbedderTFHUB(object):
     def __init__(self):
+        try:
+            import tensorflow as tf
+            import tensorflow_hub as hub
+        except (AttributeError, ImportError):
+            logger.error(
+                "tensorflow_hub is not installed, "
+                + "please install nlp_architect with [all] package. "
+                + "for example: pip install nlp_architect[all]"
+            )
+            sys.exit()
+
         self.g = tf.Graph()
 
         with self.g.as_default():
-            text_input = tf.placeholder(dtype=tf.string)
-            text_input_size = tf.placeholder(dtype=tf.int32)
-            print('Loading Tensorflow hub ELMo model, '
-                  'might take a while on first load (downloading from web)')
-            self.elmo = hub.Module("https://tfhub.dev/google/elmo/2", trainable=False)
-            self.inputs = {
-                'tokens': text_input,
-                'sequence_len': text_input_size
-            }
-            self.embedding = self.elmo(inputs=self.inputs,
-                                       signature='tokens',
-                                       as_dict=True)['elmo']
+            text_input = tf.compat.v1.placeholder(dtype=tf.string)
+            text_input_size = tf.compat.v1.placeholder(dtype=tf.int32)
+            print(
+                "Loading Tensorflow hub ELMo model, "
+                "might take a while on first load (model is downloaded from web)"
+            )
+            self.elmo = hub.Module("https://tfhub.dev/google/elmo/3", trainable=False)
+            self.inputs = {"tokens": text_input, "sequence_len": text_input_size}
+            self.embedding = self.elmo(inputs=self.inputs, signature="tokens", as_dict=True)["elmo"]
 
-            sess = tf.Session(graph=self.g)
-            sess.run(tf.global_variables_initializer())
-            sess.run(tf.tables_initializer())
+            sess = tf.compat.v1.Session(graph=self.g)
+            sess.run(tf.compat.v1.global_variables_initializer())
+            sess.run(tf.compat.v1.tables_initializer())
             self.s = sess
 
     def get_vector(self, tokens):
-        vec = self.s.run(self.embedding,
-                         feed_dict={self.inputs['tokens']: [tokens],
-                                    self.inputs['sequence_len']: [len(tokens)]})
+        vec = self.s.run(
+            self.embedding,
+            feed_dict={self.inputs["tokens"]: [tokens], self.inputs["sequence_len"]: [len(tokens)]},
+        )
         return np.squeeze(vec, axis=0)
 
 

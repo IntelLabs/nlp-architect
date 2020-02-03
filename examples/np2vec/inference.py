@@ -15,7 +15,6 @@
 # ******************************************************************************
 import argparse
 import logging
-import sys
 
 from nlp_architect.models.np2vec import NP2vec
 from nlp_architect.utils.io import validate_existing_filepath, check_size
@@ -25,43 +24,48 @@ logger = logging.getLogger(__name__)
 if __name__ == "__main__":
     arg_parser = argparse.ArgumentParser()
     arg_parser.add_argument(
-        '--np2vec_model_file',
-        default='conll2000.train.model',
-        help='path to the file with the np2vec model to load.',
-        type=validate_existing_filepath)
+        "--np2vec_model_file",
+        default="conll2000.train.model",
+        help="path to the file with the np2vec model to load.",
+        type=validate_existing_filepath,
+    )
     arg_parser.add_argument(
-        '--binary',
-        help='boolean indicating whether the model to load has been stored in binary '
-        'format.',
-        action='store_true')
+        "--binary",
+        help="boolean indicating whether the model to load has been stored in binary " "format.",
+        action="store_true",
+    )
     arg_parser.add_argument(
-        '--word_ngrams',
+        "--word_ngrams",
         default=0,
         type=int,
         choices=[0, 1],
-        help='If 0, the model to load stores word information. If 1, the model to load stores '
-        'subword (ngrams) information; note that subword information is relevant only to '
-        'fasttext models.')
+        help="If 0, the model to load stores word information. If 1, the model to load stores "
+        "subword (ngrams) information; note that subword information is relevant only to "
+        "fasttext models.",
+    )
     arg_parser.add_argument(
-        '--mark_char',
-        default='_',
+        "--mark_char",
+        default="_",
         type=str,
         action=check_size(1, 2),
-        help='special character that marks word separator and NP suffix.')
+        help="special character that marks word separator and NP suffix.",
+    )
     arg_parser.add_argument(
-        '--np',
-        default='Intel Corp.',
+        "--np",
+        default="Intel Corp.",
         type=str,
         action=check_size(min_size=1),
         required=True,
-        help='NP to print its word vector.')
+        help="NP to print its word vector.",
+    )
 
     args = arg_parser.parse_args()
 
     np2vec_model = NP2vec.load(
-        args.np2vec_model_file,
-        binary=args.binary,
-        word_ngrams=args.word_ngrams)
+        args.np2vec_model_file, binary=args.binary, word_ngrams=args.word_ngrams
+    )
 
-    print("word vector for the NP \'" + args.np + "\':", np2vec_model[args.mark_char.join(
-        args.np.split()) + args.mark_char])
+    print(
+        "word vector for the NP '" + args.np + "':",
+        np2vec_model[args.mark_char.join(args.np.split()) + args.mark_char],
+    )

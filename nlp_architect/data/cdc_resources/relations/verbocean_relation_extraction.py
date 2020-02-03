@@ -20,8 +20,10 @@ from typing import Dict, Set
 
 from nlp_architect.common.cdc.mention_data import MentionDataLight
 from nlp_architect.data.cdc_resources.relations.relation_extraction import RelationExtraction
-from nlp_architect.data.cdc_resources.relations.relation_types_enums import RelationType, \
-    OnlineOROfflineMethod
+from nlp_architect.data.cdc_resources.relations.relation_types_enums import (
+    RelationType,
+    OnlineOROfflineMethod,
+)
 from nlp_architect.utils.io import load_json_file
 from nlp_architect.utils.string_utils import StringUtils
 
@@ -29,8 +31,9 @@ logger = logging.getLogger(__name__)
 
 
 class VerboceanRelationExtraction(RelationExtraction):
-    def __init__(self, method: OnlineOROfflineMethod = OnlineOROfflineMethod.ONLINE,
-                 vo_file: str = None):
+    def __init__(
+        self, method: OnlineOROfflineMethod = OnlineOROfflineMethod.ONLINE, vo_file: str = None
+    ):
         """
         Extract Relation between two mentions according to VerbOcean knowledge
 
@@ -39,25 +42,27 @@ class VerboceanRelationExtraction(RelationExtraction):
                 a sub-set of it (default = ONLINE)
             vo_file (required): str Location of VerbOcean file to work with
         """
-        logger.info('Loading Verb Ocean module')
+        logger.info("Loading Verb Ocean module")
         if vo_file is not None and os.path.isfile(vo_file):
             if method == OnlineOROfflineMethod.OFFLINE:
                 self.vo = load_json_file(vo_file)
             elif method == OnlineOROfflineMethod.ONLINE:
                 self.vo = self.load_verbocean_file(vo_file)
-            logger.info('Verb Ocean module lead successfully')
+            logger.info("Verb Ocean module lead successfully")
         else:
-            raise FileNotFoundError('VerbOcean file not found or not in path..')
+            raise FileNotFoundError("VerbOcean file not found or not in path..")
         super(VerboceanRelationExtraction, self).__init__()
 
-    def extract_all_relations(self, mention_x: MentionDataLight,
-                              mention_y: MentionDataLight) -> Set[RelationType]:
+    def extract_all_relations(
+        self, mention_x: MentionDataLight, mention_y: MentionDataLight
+    ) -> Set[RelationType]:
         ret_ = set()
         ret_.add(self.extract_sub_relations(mention_x, mention_y, RelationType.VERBOCEAN_MATCH))
         return ret_
 
-    def extract_sub_relations(self, mention_x: MentionDataLight, mention_y: MentionDataLight,
-                              relation: RelationType) -> RelationType:
+    def extract_sub_relations(
+        self, mention_x: MentionDataLight, mention_y: MentionDataLight, relation: RelationType
+    ) -> RelationType:
         """
         Check if input mentions has the given relation between them
 
@@ -76,7 +81,8 @@ class VerboceanRelationExtraction(RelationExtraction):
         mention_x_str = mention_x.tokens_str
         mention_y_str = mention_y.tokens_str
         if StringUtils.is_pronoun(mention_x_str.lower()) or StringUtils.is_pronoun(
-                mention_y_str.lower()):
+            mention_y_str.lower()
+        ):
             return RelationType.NO_RELATION_FOUND
 
         if self.is_verbocean_relation(mention_x, mention_y):
@@ -84,8 +90,9 @@ class VerboceanRelationExtraction(RelationExtraction):
 
         return RelationType.NO_RELATION_FOUND
 
-    def is_verbocean_relation(self, mention_x: MentionDataLight,
-                              mention_y: MentionDataLight) -> bool:
+    def is_verbocean_relation(
+        self, mention_x: MentionDataLight, mention_y: MentionDataLight
+    ) -> bool:
         """
         Check if input mentions has VerbOcean relation between them
 

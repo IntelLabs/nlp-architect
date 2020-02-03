@@ -22,6 +22,7 @@ class BistParserApi(AbstractApi):
     """
     Bist Parser API
     """
+
     def __init__(self):
         self.model = None
 

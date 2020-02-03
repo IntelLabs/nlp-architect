@@ -43,6 +43,14 @@ From source
 
     For specific installation of backends of Tensorflow or PyTorch (CPU/MKL/GPU) we recommend installing NLP Architect and then installing the desired package of framework.
 
+Running Examples and Solutions
+------------------------------
+To run provided examples and solutions please install the library with [all] flag which will install extra packages required. (requires installation from source)
+
+.. code:: bash
+
+    pip install .[all]
+
 Usage
 -----
 
@@ -66,8 +74,6 @@ NLP Architect has the following packages:
 | `nlp_architect.pipelines` | End-to-end NLP apps                                   |
 +---------------------------+-------------------------------------------------------+
 | `nlp_architect.procedures`| Procedure scripts                                     |
-+---------------------------+-------------------------------------------------------+
-| `nlp_architect.solutions` | Solution applications                                 |
 +---------------------------+-------------------------------------------------------+
 | `nlp_architect.utils`     | Misc. I/O, metric, pre-processing and text utilities  |
 +---------------------------+-------------------------------------------------------+
