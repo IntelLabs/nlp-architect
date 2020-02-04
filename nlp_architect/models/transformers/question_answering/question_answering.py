@@ -32,7 +32,7 @@ from transformers import (BertForQuestionAnswering,
                           RobertaConfig,
                           RobertaModel)
 from nlp_architect.models.transformers.quantized_bert import QuantizedBertForQuestionAnswering
-from nlp_architect.data.utils_squad import whitespace_tokenize
+from nlp_architect.utils.text import whitespace_tokenize
 from nlp_architect.models.transformers.base_model import TransformerBase
 from nlp_architect.data.utils_squad import (SquadExample,
                                             RawResult,
@@ -262,7 +262,8 @@ class TransformerQuestionAnswering(TransformerBase):
                     train_batch_size * gradient_accumulation_steps)
         logger.info("  Gradient Accumulation steps = %d", gradient_accumulation_steps)
         logger.info("  Total optimization steps = %d", t_total)
-
+        dev_filename = 'dev-v2.0.json' if self.version_2_with_negative else 'dev-v1.1.json'
+        dev_file = os.path.join(data_dir, dev_filename)
         global_step = 0
         tr_loss, logging_loss = 0.0, 0.0
         self.model.zero_grad()
@@ -307,7 +308,7 @@ class TransformerQuestionAnswering(TransformerBase):
                             pred_file, odds_file = self.compute_predictions(
                                 examples=dev_examples, features=dev_features,
                                 eval_results=eval_results, prefix=global_step)
-                            results = self.evaluate_predictions(data_dir, pred_file, odds_file)
+                            results = self.evaluate_predictions(dev_file, pred_file, odds_file)
                             for key, value in results.items():
                                 logger.info('eval_%s: %s.', str(key), str(value))
                         logger.info('lr = %s', str(self.scheduler.get_lr()[0]))
@@ -394,11 +395,10 @@ class TransformerQuestionAnswering(TransformerBase):
                 self.version_2_with_negative, self.null_score_diff_threshold)
         return output_prediction_file, output_null_log_odds_file
 
-    def evaluate_predictions(self, data_dir, output_prediction_file, output_null_log_odds_file):
-        file_name = 'dev-v2.0.json' if self.version_2_with_negative else 'dev-v1.1.json'
-        dev_file = os.path.join(data_dir, file_name)
+    def evaluate_predictions(self, data_file, output_prediction_file, output_null_log_odds_file):
+        
         evaluate_options = EVAL_OPTS(
-            data_file=dev_file,
+            data_file=data_file,
             pred_file=output_prediction_file,
             na_prob_file=output_null_log_odds_file)
         results = evaluation_script(evaluate_options)
@@ -420,8 +420,9 @@ class TransformerQuestionAnswering(TransformerBase):
         inf_sampler = SequentialSampler(data_set)
         inf_dataloader = DataLoader(data_set, sampler=inf_sampler, batch_size=batch_size)
         logits = self._evaluate(inf_dataloader, features)
-        self.compute_predictions(
+        return self.compute_predictions(
             examples=examples, features=features, eval_results=logits, prefix='inf')
+
 
     @classmethod
     def load_model(
@@ -454,28 +455,6 @@ class TransformerQuestionAnswering(TransformerBase):
             null_score_diff_threshold=null_score_diff_threshold,
             max_query_length=max_query_length,
             *args, **kwargs)
-
-    def save_model(self, output_dir: str, save_checkpoint: bool = False, args=None):
-        """
-        Save model/tokenizer/arguments to given output directory
-
-        Args:
-            output_dir (str): path to output directory
-            save_checkpoint (bool, optional): save as checkpoint. Defaults to False.
-            args ([type], optional): arguments object to save. Defaults to None.
-        """
-        # Create output directory if needed
-        if not os.path.exists(output_dir):
-            os.makedirs(output_dir)
-
-        logger.info("Saving model checkpoint to %s", output_dir)
-        model_to_save = self.model.module if hasattr(self.model, 'module') else self.model
-        model_to_save.save_pretrained(output_dir)
-        if not save_checkpoint:
-            if self.tokenizer is not None:
-                self.tokenizer.save_pretrained(output_dir)
-            if args is not None:
-                torch.save(args, os.path.join(output_dir, 'training_args.bin'))
 
 
 def read_squad_examples(input_file, is_training, version_2_with_negative):

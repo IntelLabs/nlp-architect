@@ -22,7 +22,7 @@ from torch.utils.data import DataLoader, RandomSampler, SequentialSampler
 from nlp_architect.data.question_answering import QuestionAnsweringProcessor
 from nlp_architect.nn.torch import setup_backend, set_seed
 from nlp_architect.procedures.procedure import Procedure
-from nlp_architect.procedures.registry import (register_run_cmd,
+from nlp_architect.procedures.registry import (register_inference_cmd,
                                                register_train_cmd)
 from nlp_architect.procedures.transformers.base import (create_base_args,
                                                         inference_args,
@@ -62,6 +62,13 @@ class TransformerQuestionAnsweringTrain(Procedure):
         parser.add_argument(
             "--null_score_diff_threshold", type=float, default=0.0, help="If null_score "
             + "- best_non_null is greater than the threshold predict null.")
+        # parser.add_argument(
+        #     "--max_seq_length", default=384, type=int, help="The maximum total input sequence "
+        #     + "length after WordPiece tokenization. Sequences "
+        #     "longer than this will be truncated, and sequences shorter than this will be padded.")
+        parser.add_argument(
+            "--doc_stride", default=128, type=int, help="When splitting up a long document into "
+            + "chunks, how much stride to take between chunks.")
 
         train_args(parser, models_family=TransformerQuestionAnswering.MODEL_CLASS.keys())
         create_base_args(parser, model_types=TransformerQuestionAnswering.MODEL_CLASS.keys())
@@ -71,7 +78,7 @@ class TransformerQuestionAnsweringTrain(Procedure):
         do_training(args)
 
 
-@register_run_cmd(name='transformer_qa',
+@register_inference_cmd(name='transformer_qa',
                   description='Run a BERT/XLNet model with question answering head')
 class TransformerQuestionAnsweringRun(Procedure):
     @staticmethod
@@ -135,14 +142,14 @@ def do_training(args):
     train_batch_size = args.per_gpu_train_batch_size * max(1, n_gpus)
 
     train_dataset = classifier.convert_to_tensors(
-        train_ex, evaluate=False, max_seq_length=args.max_seq_length)
+        train_ex, evaluate=False, max_seq_length=args.max_seq_length, doc_stride=args.doc_stride)
     train_sampler = RandomSampler(train_dataset)
     train_dl = DataLoader(train_dataset, sampler=train_sampler,
                           batch_size=train_batch_size)
     dev_dl = None
     if dev_ex is not None:
         dev_dataset, dev_feat = classifier.convert_to_tensors(
-            dev_ex, evaluate=True, max_seq_length=args.max_seq_length)
+            dev_ex, evaluate=True, max_seq_length=args.max_seq_length, doc_stride=args.doc_stride)
         dev_sampler = SequentialSampler(dev_dataset)
         dev_dl = DataLoader(dev_dataset, sampler=dev_sampler,
                             batch_size=args.per_gpu_eval_batch_size)
@@ -187,7 +194,11 @@ def do_inference(args):
         load_quantized=args.load_quantized_model
     )
     classifier.to(device, n_gpus)
-    classifier.inference(inference_examples, args.max_seq_length, args.batch_size)
+    pred_file, odds_file = classifier.inference(inference_examples, args.max_seq_length, args.batch_size)
+    results = classifier.evaluate_predictions(args.data_file, pred_file, odds_file)
+    for key, value in results.items():
+        logger.info('eval_%s: %s.', str(key), str(value))
+    
 
 
 def process_inference_input(input_file, version_2_with_negative):
