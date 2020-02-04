@@ -29,7 +29,7 @@ class ParallelDataset(torch.utils.data.Dataset):
 
 
 class ConcatTensorDataset(torch.utils.data.Dataset):
-    r"""Dataset as a concatenation of multiple TensorDataset datasets.
+    r"""Dataset as a concatenation of multiple TensorDataset datasets with same number of tensors.
 
     Each sample will be retrieved by indexing tensors along the first dimension.
 
@@ -48,6 +48,39 @@ class ConcatTensorDataset(torch.utils.data.Dataset):
             for i, t in enumerate(ds.tensors):
                 concat_tensors.append(torch.cat((tensors[i], t), 0))
             tensors = concat_tensors
+        assert all(tensors[0].size(0) == tensor.size(0) for tensor in tensors)
+        self.tensors = tensors
+
+    def __getitem__(self, index):
+        return tuple(tensor[index] for tensor in self.tensors)
+
+    def __len__(self):
+        return self.tensors[0].size(0)
+
+
+class CombinedTensorDataset(torch.utils.data.Dataset):
+    r"""Dataset as a concatenation of tensor datasets with different number of 
+        tensors (labeled dataset/ unlabeled dataset). Labels of unlabeled dataset will
+        be represented as a tensor of zeros.
+
+        Each sample will be retrieved by indexing tensors along the first dimension.
+
+        Arguments:
+            datasets (List[TensorDataset]): datasets to concat.
+    """
+
+    def __init__(
+            self,
+            datasets: List[torch.utils.data.TensorDataset]):
+        max_ds_len = max([len(ds.tensors) for ds in datasets])
+        tensors = ()
+        # match tensors count
+        for ds in datasets:
+            if len(ds.tensors) < max_ds_len: # no labels
+                ds.tensors += (torch.tensor(torch.zeros(ds.tensors[0].shape), dtype=int),)
+        # concat
+        for i in range(max_ds_len):
+            tensors += (torch.cat([ds.tensors[i] for ds in datasets], dim=0),)
         assert all(tensors[0].size(0) == tensor.size(0) for tensor in tensors)
         self.tensors = tensors
 

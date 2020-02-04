@@ -32,7 +32,7 @@ from nlp_architect.utils.embedding import (get_embedding_matrix,
                                            load_embedding_file)
 from nlp_architect.utils.io import prepare_output_path
 from nlp_architect.utils.text import SpacyInstance
-from nlp_architect.nn.torch.data.dataset import ParallelDataset, ConcatTensorDataset
+from nlp_architect.nn.torch.data.dataset import ParallelDataset, ConcatTensorDataset, CombinedTensorDataset
 from nlp_architect.models.transformers import TransformerTokenClassifier
 
 
@@ -72,6 +72,8 @@ class TrainTaggerKDPseudo(Procedure):
         TeacherStudentDistill.add_args(parser)
         parser.add_argument("--unlabeled_filename", default="unlabeled.txt", type=str,
                             help="The file name containing the unlabeled training examples")
+        parser.add_argument('--parallel_batching', action='store_true',
+                            help="sample labeled/unlabeled batch in parallel")
 
     @staticmethod
     def run_procedure(args):
@@ -376,18 +378,26 @@ def do_kd_pseudo_training(args):
     train_unlabeled_dataset = classifier.convert_to_tensors(
         train_unlabeled_ex, max_seq_length=args.max_sentence_length,
         max_word_length=args.max_word_length, include_labels=False)
-    # match sizes of labeled/unlabeled train data for parallel batching
-    larger_ds, smaller_ds = (
-        train_labeled_dataset, train_unlabeled_dataset) \
-        if len(train_labeled_dataset) > len(train_unlabeled_dataset) \
-        else (train_unlabeled_dataset, train_labeled_dataset)
-    concat_smaller_ds = smaller_ds
-    while len(concat_smaller_ds) < len(larger_ds):
-        concat_smaller_ds = ConcatTensorDataset(concat_smaller_ds, [smaller_ds])
-    if len(concat_smaller_ds[0]) == 4:
-        train_unlabeled_dataset = concat_smaller_ds
+    
+    
+    if args.parallel_batching:
+        # # concat labeled+unlabeled dataset
+        # train_dataset = ConcatTensorDataset(train_labeled_dataset, [train_unlabeled_dataset])
+        # match sizes of labeled/unlabeled train data for parallel batching
+        larger_ds, smaller_ds = (
+            train_labeled_dataset, train_unlabeled_dataset) \
+            if len(train_labeled_dataset) > len(train_unlabeled_dataset) \
+            else (train_unlabeled_dataset, train_labeled_dataset)
+        concat_smaller_ds = smaller_ds
+        while len(concat_smaller_ds) < len(larger_ds):
+            concat_smaller_ds = ConcatTensorDataset(concat_smaller_ds, [smaller_ds])
+        if len(concat_smaller_ds[0]) == 4:
+            train_unlabeled_dataset = concat_smaller_ds
+        else:
+            train_labeled_dataset = concat_smaller_ds
     else:
-        train_labeled_dataset = concat_smaller_ds
+        train_dataset = CombinedTensorDataset([train_labeled_dataset, train_unlabeled_dataset])
+
     # load saved teacher args if exist
     if os.path.exists(args.teacher_model_path + os.sep + 'training_args.bin'):
         t_args = torch.load(args.teacher_model_path + os.sep + 'training_args.bin')
@@ -405,30 +415,44 @@ def do_kd_pseudo_training(args):
             model_path=args.teacher_model_path,
             model_type=args.teacher_model_type)
         teacher.to(device, n_gpus)
+
     teacher_labeled_dataset = teacher.convert_to_tensors(
         train_labeled_ex, args.max_sentence_length)
     teacher_unlabeled_dataset = teacher.convert_to_tensors(
         train_unlabeled_ex, args.max_sentence_length, False)
 
-    # match sizes of labeled/unlabeled teacher train data for parallel batching
-    larger_ds, smaller_ds = (teacher_labeled_dataset, teacher_unlabeled_dataset) if \
-        len(teacher_labeled_dataset) > len(teacher_unlabeled_dataset) else \
-        (teacher_unlabeled_dataset, teacher_labeled_dataset)
-    concat_smaller_ds = smaller_ds
-    while len(concat_smaller_ds) < len(larger_ds):
-        concat_smaller_ds = ConcatTensorDataset(concat_smaller_ds, [smaller_ds])
-    if len(concat_smaller_ds[0]) == 4:
-        teacher_unlabeled_dataset = concat_smaller_ds
-    else:
-        teacher_labeled_dataset = concat_smaller_ds
+    
+    if args.parallel_batching:
+        # # concat teacher labeled+unlabeled dataset
+        # teacher_dataset = ConcatTensorDataset(teacher_labeled_dataset, [teacher_unlabeled_dataset])
+        # match sizes of labeled/unlabeled teacher train data for parallel batching
+        larger_ds, smaller_ds = (teacher_labeled_dataset, teacher_unlabeled_dataset) if \
+            len(teacher_labeled_dataset) > len(teacher_unlabeled_dataset) else \
+            (teacher_unlabeled_dataset, teacher_labeled_dataset)
+        concat_smaller_ds = smaller_ds
+        while len(concat_smaller_ds) < len(larger_ds):
+            concat_smaller_ds = ConcatTensorDataset(concat_smaller_ds, [smaller_ds])
+        if len(concat_smaller_ds[0]) == 4:
+            teacher_unlabeled_dataset = concat_smaller_ds
+        else:
+            teacher_labeled_dataset = concat_smaller_ds
+        
+        train_all_dataset = ParallelDataset(
+            train_labeled_dataset, teacher_labeled_dataset, train_unlabeled_dataset,
+            teacher_unlabeled_dataset)
 
-    train_all_dataset = ParallelDataset(
-        train_labeled_dataset, teacher_labeled_dataset, train_unlabeled_dataset,
-        teacher_unlabeled_dataset)
-    train_all_sampler = RandomSampler(train_all_dataset)
-    # this way must use same batch size for both labeled/unlabeled sets
-    train_all_dl = DataLoader(
-        train_all_dataset, sampler=train_all_sampler, batch_size=train_batch_size)
+        train_all_sampler = RandomSampler(train_all_dataset)
+        # this way must use same batch size for both labeled/unlabeled sets
+        train_dl = DataLoader(
+            train_all_dataset, sampler=train_all_sampler, batch_size=train_batch_size)
+
+    else:
+        teacher_dataset = CombinedTensorDataset([teacher_labeled_dataset, teacher_unlabeled_dataset])
+
+        train_dataset = ParallelDataset(train_dataset, teacher_dataset)
+        train_sampler = RandomSampler(train_dataset)
+        train_dl = DataLoader(
+            train_dataset, sampler=train_sampler, batch_size=train_batch_size)
 
     if dev_ex is not None:
         dev_dataset = classifier.convert_to_tensors(dev_ex,
@@ -451,7 +475,7 @@ def do_kd_pseudo_training(args):
     distiller = TeacherStudentDistill(teacher, args.kd_temp, args.kd_dist_w, args.kd_student_w,
                                       args.kd_loss_fn)
 
-    classifier.train(train_all_dl, dev_dl, test_dl,
+    classifier.train(train_dl, dev_dl, test_dl,
                      epochs=args.e,
                      batch_size=args.b,
                      logging_steps=args.logging_steps,

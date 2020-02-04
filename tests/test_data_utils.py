@@ -16,8 +16,24 @@
 
 import math
 import os
+import torch
 from nlp_architect.data.utils import split_column_dataset
 from tests.utils import count_examples
+from nlp_architect.nn.torch.data.dataset import CombinedTensorDataset
+from torch.utils.data import TensorDataset
+
+
+def test_concat_dataset():
+    token_ids = torch.tensor([[1, 2, 3], [4, 5, 6], [7, 8, 9]], dtype=torch.long)
+    label_ids = torch.tensor([[1, 2, 3], [4, 5, 6], [7, 8, 9]], dtype=torch.long)
+    labeled_dataset = TensorDataset(token_ids, label_ids)
+    unlabeled_dataset = TensorDataset(token_ids)
+    concat_dataset = CombinedTensorDataset([labeled_dataset, unlabeled_dataset])
+    expected_tokens = torch.tensor([[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 2, 3], [4, 5, 6], [7, 8, 9]], dtype=torch.long)
+    expected_labels = torch.tensor([[1, 2, 3], [4, 5, 6], [7, 8, 9], [0, 0, 0], [0, 0, 0], [0, 0, 0]], dtype=torch.long)
+    assert torch.equal(concat_dataset.tensors[0], expected_tokens)
+    assert torch.equal(concat_dataset.tensors[1], expected_labels)
+
 
 
 def test_split_dataset():

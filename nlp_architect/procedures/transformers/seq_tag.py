@@ -139,7 +139,7 @@ def do_training(args):
                      logging_steps=args.logging_steps,
                      save_steps=args.save_steps,
                      training_args=args,
-                     best_result_file=args.best_result_file)
+                     best_result_file=args.best_dev_file)
     classifier.save_model(args.output_dir, args=args)
 
 
