@@ -57,6 +57,7 @@ class CNNLSTM(nn.Module):
         padding_idx: int = 0,
     ):
         super(CNNLSTM, self).__init__()
+        self.word_embedding_dim = word_embedding_dims
         self.word_embeddings = nn.Embedding(
             word_vocab_size, word_embedding_dims, padding_idx=padding_idx
         )
@@ -206,13 +207,13 @@ class IDCNN(nn.Module):
         self.use_chars = use_chars
         self.drop_penalty = drop_penalty
         self.num_labels = num_labels
-        self.embed_pad_idx = embedding_pad_idx
+        self.padding_idx = embedding_pad_idx
         self.word_embedding_dim = word_embedding_dims
         self.word_embeddings = nn.Embedding(word_vocab_size,
                                             self.word_embedding_dim,
-                                            padding_idx=self.embed_pad_idx)
+                                            padding_idx=self.padding_idx)
         self.shape_embeddings = nn.Embedding(
-            shape_vocab_size + 1, shape_embedding_dims, padding_idx=self.embed_pad_idx)
+            shape_vocab_size + 1, shape_embedding_dims, padding_idx=self.padding_idx)
         padding_word = int(cnn_kernel_size / 2)
         self.char_filters = char_cnn_filters if use_chars else 0
         self.conv0 = nn.Conv1d(
@@ -237,7 +238,7 @@ class IDCNN(nn.Module):
             padding_char = int(char_cnn_kernel_size / 2)
             self.char_embeddings = nn.Embedding(n_letters + 1,
                                                 char_embedding_dims,
-                                                padding_idx=self.embed_pad_idx)
+                                                padding_idx=self.padding_idx)
             self.char_conv = nn.Conv1d(
                 in_channels=char_embedding_dims,
                 out_channels=self.char_filters,
