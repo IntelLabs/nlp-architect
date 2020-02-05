@@ -232,9 +232,9 @@
     <span class="k">return</span> <span class="n">OpinionTerm</span><span class="p">(</span><span class="n">new_term</span><span class="p">,</span> <span class="n">new_term_polarity</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="generate_final_aspect_candidates_list"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.models.absa.train.html#nlp_architect.models.absa.train.generate_lexicons.generate_final_aspect_candidates_list">[docs]</a><span class="k">def</span> <span class="nf">generate_final_aspect_candidates_list</span><span class="p">(</span><span class="n">aspect_candidate_list_raw</span><span class="p">,</span>
-                                          <span class="n">final_aspect_candidates_list</span><span class="p">,</span>
-                                          <span class="n">frequency_threshold</span><span class="p">):</span>
+<div class="viewcode-block" id="generate_final_aspect_candidates_list"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.models.absa.train.html#nlp_architect.models.absa.train.generate_lexicons.generate_final_aspect_candidates_list">[docs]</a><span class="k">def</span> <span class="nf">generate_final_aspect_candidates_list</span><span class="p">(</span>
+    <span class="n">aspect_candidate_list_raw</span><span class="p">,</span> <span class="n">final_aspect_candidates_list</span><span class="p">,</span> <span class="n">frequency_threshold</span>
+<span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Generate final aspect candidates list from map.</span>
 
 <span class="sd">    Args:</span>
@@ -247,15 +247,16 @@
     <span class="k">for</span> <span class="n">extracted_term_list</span> <span class="ow">in</span> <span class="n">aspect_candidate_list_raw</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">extracted_term_list</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">frequency_threshold</span><span class="p">:</span>
             <span class="n">term</span> <span class="o">=</span> <span class="n">extracted_term_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="n">qualified_term</span> <span class="o">=</span> <span class="n">QualifiedTerm</span><span class="p">(</span><span class="n">term</span><span class="o">.</span><span class="n">term</span><span class="p">,</span> <span class="n">term</span><span class="o">.</span><span class="n">lemma</span><span class="p">,</span> <span class="n">term</span><span class="o">.</span><span class="n">pos</span><span class="p">,</span>
-                                           <span class="nb">len</span><span class="p">(</span><span class="n">extracted_term_list</span><span class="p">),</span> <span class="n">term_polarity</span><span class="p">)</span>
+            <span class="n">qualified_term</span> <span class="o">=</span> <span class="n">QualifiedTerm</span><span class="p">(</span>
+                <span class="n">term</span><span class="o">.</span><span class="n">term</span><span class="p">,</span> <span class="n">term</span><span class="o">.</span><span class="n">lemma</span><span class="p">,</span> <span class="n">term</span><span class="o">.</span><span class="n">pos</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">extracted_term_list</span><span class="p">),</span> <span class="n">term_polarity</span>
+            <span class="p">)</span>
             <span class="n">final_aspect_candidates_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">qualified_term</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">final_aspect_candidates_list</span></div>
 
 
-<div class="viewcode-block" id="generate_final_opinion_candidates_list"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.models.absa.train.html#nlp_architect.models.absa.train.generate_lexicons.generate_final_opinion_candidates_list">[docs]</a><span class="k">def</span> <span class="nf">generate_final_opinion_candidates_list</span><span class="p">(</span><span class="n">opinion_candidate_list_raw</span><span class="p">,</span>
-                                           <span class="n">final_opinion_candidates_list</span><span class="p">,</span>
-                                           <span class="n">frequency_threshold</span><span class="p">):</span>
+<div class="viewcode-block" id="generate_final_opinion_candidates_list"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.models.absa.train.html#nlp_architect.models.absa.train.generate_lexicons.generate_final_opinion_candidates_list">[docs]</a><span class="k">def</span> <span class="nf">generate_final_opinion_candidates_list</span><span class="p">(</span>
+    <span class="n">opinion_candidate_list_raw</span><span class="p">,</span> <span class="n">final_opinion_candidates_list</span><span class="p">,</span> <span class="n">frequency_threshold</span>
+<span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Generate final opinion candidates list from raw opinion candidate list.</span>
 
 <span class="sd">    Args:</span>
@@ -284,8 +285,9 @@
                 <span class="n">term_polarity</span> <span class="o">=</span> <span class="n">Polarity</span><span class="o">.</span><span class="n">NEG</span>
 
             <span class="n">term</span> <span class="o">=</span> <span class="n">extracted_term_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="n">qualified_term</span> <span class="o">=</span> <span class="n">QualifiedTerm</span><span class="p">(</span><span class="n">term</span><span class="o">.</span><span class="n">term</span><span class="p">,</span> <span class="n">term</span><span class="o">.</span><span class="n">term</span><span class="p">,</span> <span class="n">term</span><span class="o">.</span><span class="n">pos</span><span class="p">,</span>
-                                           <span class="nb">len</span><span class="p">(</span><span class="n">extracted_term_list</span><span class="p">),</span> <span class="n">term_polarity</span><span class="p">)</span>
+            <span class="n">qualified_term</span> <span class="o">=</span> <span class="n">QualifiedTerm</span><span class="p">(</span>
+                <span class="n">term</span><span class="o">.</span><span class="n">term</span><span class="p">,</span> <span class="n">term</span><span class="o">.</span><span class="n">term</span><span class="p">,</span> <span class="n">term</span><span class="o">.</span><span class="n">pos</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">extracted_term_list</span><span class="p">),</span> <span class="n">term_polarity</span>
+            <span class="p">)</span>
             <span class="n">final_opinion_candidates_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">qualified_term</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">final_opinion_candidates_list</span></div>
 </pre></div>

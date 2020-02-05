@@ -208,8 +208,9 @@
 
 
 <div class="viewcode-block" id="SieveClusterMerger"><a class="viewcode-back" href="../../../../../../generated_api/nlp_architect.models.cross_doc_coref.system.sieves.html#nlp_architect.models.cross_doc_coref.system.sieves.sieves.SieveClusterMerger">[docs]</a><span class="k">class</span> <span class="nc">SieveClusterMerger</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">excepted_relation</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">RelationType</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span>
-                 <span class="n">relation_extractor</span><span class="p">:</span> <span class="n">RelationExtraction</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">excepted_relation</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">RelationType</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="n">relation_extractor</span><span class="p">:</span> <span class="n">RelationExtraction</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Args:</span>
 <span class="sd">            excepted_relation: tuple with relation to run in sieve,</span>
@@ -220,8 +221,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span> <span class="o">=</span> <span class="n">excepted_relation</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">relation_extractor</span> <span class="o">=</span> <span class="n">relation_extractor</span>
 
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;init Sieve, for relation-</span><span class="si">%s</span><span class="s1"> with threshold=</span><span class="si">%.1f</span><span class="s1">&#39;</span><span class="p">,</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">excepted_relation</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s2">&quot;init Sieve, for relation-</span><span class="si">%s</span><span class="s2"> with threshold=</span><span class="si">%.1f</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">excepted_relation</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span><span class="p">,</span>
+        <span class="p">)</span>
 
 <div class="viewcode-block" id="SieveClusterMerger.run_sieve"><a class="viewcode-back" href="../../../../../../generated_api/nlp_architect.models.cross_doc_coref.system.sieves.html#nlp_architect.models.cross_doc_coref.system.sieves.sieves.SieveClusterMerger.run_sieve">[docs]</a>    <span class="k">def</span> <span class="nf">run_sieve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cluster_i</span><span class="p">:</span> <span class="n">Cluster</span><span class="p">,</span> <span class="n">cluster_j</span><span class="p">:</span> <span class="n">Cluster</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -236,7 +240,8 @@
         <span class="k">for</span> <span class="n">mention_i</span> <span class="ow">in</span> <span class="n">cluster_i</span><span class="o">.</span><span class="n">mentions</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">mention_j</span> <span class="ow">in</span> <span class="n">cluster_j</span><span class="o">.</span><span class="n">mentions</span><span class="p">:</span>
                 <span class="n">match_result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">relation_extractor</span><span class="o">.</span><span class="n">extract_sub_relations</span><span class="p">(</span>
-                    <span class="n">mention_i</span><span class="p">,</span> <span class="n">mention_j</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">excepted_relation</span><span class="p">)</span>
+                    <span class="n">mention_i</span><span class="p">,</span> <span class="n">mention_j</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">excepted_relation</span>
+                <span class="p">)</span>
                 <span class="k">if</span> <span class="n">match_result</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">excepted_relation</span><span class="p">:</span>
                     <span class="n">matches</span> <span class="o">+=</span> <span class="mi">1</span>
 

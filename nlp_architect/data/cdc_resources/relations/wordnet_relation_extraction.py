@@ -21,8 +21,10 @@ from typing import Set, List
 from nlp_architect.common.cdc.mention_data import MentionDataLight
 from nlp_architect.data.cdc_resources.data_types.wn.wordnet_page import WordnetPage
 from nlp_architect.data.cdc_resources.relations.relation_extraction import RelationExtraction
-from nlp_architect.data.cdc_resources.relations.relation_types_enums import RelationType, \
-    OnlineOROfflineMethod
+from nlp_architect.data.cdc_resources.relations.relation_types_enums import (
+    RelationType,
+    OnlineOROfflineMethod,
+)
 from nlp_architect.data.cdc_resources.wordnet.wordnet_offline import WordnetOffline
 from nlp_architect.data.cdc_resources.wordnet.wordnet_online import WordnetOnline
 from nlp_architect.utils.string_utils import StringUtils
@@ -31,8 +33,9 @@ logger = logging.getLogger(__name__)
 
 
 class WordnetRelationExtraction(RelationExtraction):
-    def __init__(self, method: OnlineOROfflineMethod = OnlineOROfflineMethod.ONLINE,
-                 wn_file: str = None):
+    def __init__(
+        self, method: OnlineOROfflineMethod = OnlineOROfflineMethod.ONLINE, wn_file: str = None
+    ):
         """
         Extract Relation between two mentions according to Word Embedding cosine distance
 
@@ -41,7 +44,7 @@ class WordnetRelationExtraction(RelationExtraction):
                 a sub-set of it (default = ONLINE)
             wn_file (required on OFFLINE mode): str Location of wordnet subset file to work with
         """
-        logger.info('Loading Wordnet module')
+        logger.info("Loading Wordnet module")
         self.connectivity = method
         if self.connectivity == OnlineOROfflineMethod.ONLINE:
             self.wordnet_impl = WordnetOnline()
@@ -49,13 +52,14 @@ class WordnetRelationExtraction(RelationExtraction):
             if wn_file is not None and os.path.isdir(wn_file):
                 self.wordnet_impl = WordnetOffline(wn_file)
             else:
-                raise FileNotFoundError('WordNet resource directory not found or not in path')
+                raise FileNotFoundError("WordNet resource directory not found or not in path")
 
-        logger.info('Wordnet module lead successfully')
+        logger.info("Wordnet module lead successfully")
         super(WordnetRelationExtraction, self).__init__()
 
-    def extract_all_relations(self, mention_x: MentionDataLight,
-                              mention_y: MentionDataLight) -> Set[RelationType]:
+    def extract_all_relations(
+        self, mention_x: MentionDataLight, mention_y: MentionDataLight
+    ) -> Set[RelationType]:
         """
         Try to find if mentions has anyone or more of the relations this class support
 
@@ -72,7 +76,8 @@ class WordnetRelationExtraction(RelationExtraction):
         mention_x_str = mention_x.tokens_str
         mention_y_str = mention_y.tokens_str
         if StringUtils.is_pronoun(mention_x_str.lower()) or StringUtils.is_pronoun(
-                mention_y_str.lower()):
+            mention_y_str.lower()
+        ):
             relations.add(RelationType.NO_RELATION_FOUND)
             return relations
 
@@ -95,8 +100,9 @@ class WordnetRelationExtraction(RelationExtraction):
 
         return relations
 
-    def extract_sub_relations(self, mention_x: MentionDataLight, mention_y: MentionDataLight,
-                              relation: RelationType) -> RelationType:
+    def extract_sub_relations(
+        self, mention_x: MentionDataLight, mention_y: MentionDataLight, relation: RelationType
+    ) -> RelationType:
         """
         Check if input mentions has the given relation between them
 
@@ -112,7 +118,8 @@ class WordnetRelationExtraction(RelationExtraction):
         mention_x_str = mention_x.tokens_str
         mention_y_str = mention_y.tokens_str
         if StringUtils.is_pronoun(mention_x_str.lower()) or StringUtils.is_pronoun(
-                mention_y_str.lower()):
+            mention_y_str.lower()
+        ):
             return RelationType.NO_RELATION_FOUND
 
         page_x = self.wordnet_impl.get_pages(mention_x)
@@ -155,8 +162,13 @@ class WordnetRelationExtraction(RelationExtraction):
 
         relation = RelationType.NO_RELATION_FOUND
 
-        if y_head in x_set or y_head_lemma in x_set or x_head in y_set or \
-                x_head_lemma in y_set or len(x_set & y_set) > 0:
+        if (
+            y_head in x_set
+            or y_head_lemma in x_set
+            or x_head in y_set
+            or x_head_lemma in y_set
+            or len(x_set & y_set) > 0
+        ):
             relation = RelationType.WORDNET_DERIVATIONALLY
             # print 'matched by derivation - ' + str(x_head)+ ' , ' + str(y_head)
 
@@ -184,8 +196,11 @@ class WordnetRelationExtraction(RelationExtraction):
         y_synonyms = page_y.all_clean_words_synonyms
 
         # One word - check whether there is intersection between synsets
-        if len(x_synonyms) == 1 and len(y_synonyms) == 1 and \
-                len([w for w in (x_synonyms[0] & y_synonyms[0])]) > 0:
+        if (
+            len(x_synonyms) == 1
+            and len(y_synonyms) == 1
+            and len([w for w in (x_synonyms[0] & y_synonyms[0])]) > 0
+        ):
             # print 'matched by partial - ' + str(y) + ' , ' + str(x)
             return RelationType.WORDNET_PARTIAL_SYNSET_MATCH
 
@@ -218,5 +233,8 @@ class WordnetRelationExtraction(RelationExtraction):
         Returns:
             List[RelationType]
         """
-        return [RelationType.WORDNET_SAME_SYNSET,
-                RelationType.WORDNET_PARTIAL_SYNSET_MATCH, RelationType.WORDNET_DERIVATIONALLY]
+        return [
+            RelationType.WORDNET_SAME_SYNSET,
+            RelationType.WORDNET_PARTIAL_SYNSET_MATCH,
+            RelationType.WORDNET_DERIVATIONALLY,
+        ]

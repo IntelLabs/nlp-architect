@@ -232,27 +232,28 @@
     <span class="c1"># pylint: disable-msg=too-many-locals</span>
     <span class="c1"># pylint: disable-msg=too-many-branches</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>  <span class="c1"># noqa: C901</span>
-            <span class="bp">self</span><span class="p">,</span>
-            <span class="n">corpus</span><span class="p">,</span>
-            <span class="n">corpus_format</span><span class="o">=</span><span class="s1">&#39;txt&#39;</span><span class="p">,</span>
-            <span class="n">mark_char</span><span class="o">=</span><span class="s1">&#39;_&#39;</span><span class="p">,</span>
-            <span class="n">word_embedding_type</span><span class="o">=</span><span class="s1">&#39;word2vec&#39;</span><span class="p">,</span>
-            <span class="n">sg</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-            <span class="n">size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
-            <span class="n">window</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
-            <span class="n">alpha</span><span class="o">=</span><span class="mf">0.025</span><span class="p">,</span>
-            <span class="n">min_alpha</span><span class="o">=</span><span class="mf">0.0001</span><span class="p">,</span>
-            <span class="n">min_count</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
-            <span class="n">sample</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">,</span>
-            <span class="n">workers</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
-            <span class="n">hs</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-            <span class="n">negative</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span>
-            <span class="n">cbow_mean</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-            <span class="n">iterations</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span>
-            <span class="n">min_n</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-            <span class="n">max_n</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span>
-            <span class="n">word_ngrams</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-            <span class="n">prune_non_np</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">corpus</span><span class="p">,</span>
+        <span class="n">corpus_format</span><span class="o">=</span><span class="s2">&quot;txt&quot;</span><span class="p">,</span>
+        <span class="n">mark_char</span><span class="o">=</span><span class="s2">&quot;_&quot;</span><span class="p">,</span>
+        <span class="n">word_embedding_type</span><span class="o">=</span><span class="s2">&quot;word2vec&quot;</span><span class="p">,</span>
+        <span class="n">sg</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+        <span class="n">window</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+        <span class="n">alpha</span><span class="o">=</span><span class="mf">0.025</span><span class="p">,</span>
+        <span class="n">min_alpha</span><span class="o">=</span><span class="mf">0.0001</span><span class="p">,</span>
+        <span class="n">min_count</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+        <span class="n">sample</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">,</span>
+        <span class="n">workers</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+        <span class="n">hs</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">negative</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span>
+        <span class="n">cbow_mean</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">iterations</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span>
+        <span class="n">min_n</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+        <span class="n">max_n</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span>
+        <span class="n">word_ngrams</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">prune_non_np</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize np2vec model and train it.</span>
 
@@ -321,21 +322,21 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">word_ngrams</span> <span class="o">=</span> <span class="n">word_ngrams</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">prune_non_np</span> <span class="o">=</span> <span class="n">prune_non_np</span>
 
-        <span class="k">if</span> <span class="n">corpus_format</span> <span class="o">==</span> <span class="s1">&#39;txt&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">corpus_format</span> <span class="o">==</span> <span class="s2">&quot;txt&quot;</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_sentences</span> <span class="o">=</span> <span class="n">LineSentence</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">corpus_format</span> <span class="o">==</span> <span class="s1">&#39;json&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">corpus_format</span> <span class="o">==</span> <span class="s2">&quot;json&quot;</span><span class="p">:</span>
             <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span> <span class="k">as</span> <span class="n">json_data</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_sentences</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">json_data</span><span class="p">)</span>
         <span class="c1"># pylint: disable-msg=too-many-nested-blocks</span>
-        <span class="k">elif</span> <span class="n">corpus_format</span> <span class="o">==</span> <span class="s1">&#39;conll2000&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">corpus_format</span> <span class="o">==</span> <span class="s2">&quot;conll2000&quot;</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_sentences</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
                 <span class="k">for</span> <span class="n">chunked_sent</span> <span class="ow">in</span> <span class="n">conll2000</span><span class="o">.</span><span class="n">chunked_sents</span><span class="p">(</span><span class="n">corpus</span><span class="p">):</span>
                     <span class="n">tokens</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
                     <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">chunked_sent</span><span class="p">:</span>
                         <span class="c1"># pylint: disable-msg=protected-access</span>
-                        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">chunk</span><span class="p">,</span> <span class="s1">&#39;_label&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">chunk</span><span class="o">.</span><span class="n">_label</span> <span class="o">==</span> <span class="s1">&#39;NP&#39;</span><span class="p">:</span>
-                            <span class="n">s</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+                        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">chunk</span><span class="p">,</span> <span class="s2">&quot;_label&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">chunk</span><span class="o">.</span><span class="n">_label</span> <span class="o">==</span> <span class="s2">&quot;NP&quot;</span><span class="p">:</span>
+                            <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
                             <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">chunk</span><span class="p">:</span>
                                 <span class="n">s</span> <span class="o">+=</span> <span class="n">w</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">mark_char</span>
                             <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
@@ -348,25 +349,26 @@
                         <span class="bp">self</span><span class="o">.</span><span class="n">_sentences</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
             <span class="c1"># pylint: disable-msg=broad-except</span>
             <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Conll2000 dataset is missing. See downloading details in the &#39;</span>
-                      <span class="s1">&#39;README file&#39;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Conll2000 dataset is missing. See downloading details in the &quot;</span> <span class="s2">&quot;README file&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;invalid corpus format: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">corpus_format</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;invalid corpus format: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">corpus_format</span><span class="p">)</span>
             <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">word_embedding_type</span> <span class="o">==</span> <span class="s1">&#39;fasttext&#39;</span> <span class="ow">and</span> <span class="n">word_ngrams</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">word_embedding_type</span> <span class="o">==</span> <span class="s2">&quot;fasttext&quot;</span> <span class="ow">and</span> <span class="n">word_ngrams</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="c1"># remove the marking character at the end for subword fasttext model training</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_sentences</span> <span class="o">=</span> <span class="p">[[</span><span class="n">w</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_marked</span><span class="p">(</span><span class="n">w</span><span class="p">)</span> <span class="k">else</span> <span class="n">w</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">sentence</span><span class="p">]</span>
-                               <span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sentences</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_sentences</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="p">[</span><span class="n">w</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_marked</span><span class="p">(</span><span class="n">w</span><span class="p">)</span> <span class="k">else</span> <span class="n">w</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">sentence</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sentences</span>
+            <span class="p">]</span>
 
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;training np2vec model&#39;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;training np2vec model&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_train</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">_train</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Train the np2vec model.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">word_embedding_type</span> <span class="o">==</span> <span class="s1">&#39;word2vec&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">word_embedding_type</span> <span class="o">==</span> <span class="s2">&quot;word2vec&quot;</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">Word2Vec</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_sentences</span><span class="p">,</span>
                 <span class="n">sg</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sg</span><span class="p">,</span>
@@ -380,9 +382,10 @@
                 <span class="n">hs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hs</span><span class="p">,</span>
                 <span class="n">negative</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">negative</span><span class="p">,</span>
                 <span class="n">cbow_mean</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cbow_mean</span><span class="p">,</span>
-                <span class="nb">iter</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">iter</span><span class="p">)</span>
+                <span class="nb">iter</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">iter</span><span class="p">,</span>
+            <span class="p">)</span>
 
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">word_embedding_type</span> <span class="o">==</span> <span class="s1">&#39;fasttext&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">word_embedding_type</span> <span class="o">==</span> <span class="s2">&quot;fasttext&quot;</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">FastText</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_sentences</span><span class="p">,</span>
                 <span class="n">sg</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sg</span><span class="p">,</span>
@@ -399,12 +402,13 @@
                 <span class="nb">iter</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">iter</span><span class="p">,</span>
                 <span class="n">min_n</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">min_n</span><span class="p">,</span>
                 <span class="n">max_n</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_n</span><span class="p">,</span>
-                <span class="n">word_ngrams</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">word_ngrams</span><span class="p">)</span>
+                <span class="n">word_ngrams</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">word_ngrams</span><span class="p">,</span>
+            <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;invalid word embedding type: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">word_embedding_type</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;invalid word embedding type: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">word_embedding_type</span><span class="p">)</span>
             <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
-<div class="viewcode-block" id="NP2vec.save"><a class="viewcode-back" href="../../../generated_api/nlp_architect.models.html#nlp_architect.models.np2vec.NP2vec.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">np2vec_model_file</span><span class="o">=</span><span class="s1">&#39;np2vec.model&#39;</span><span class="p">,</span> <span class="n">binary</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">word2vec_format</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="NP2vec.save"><a class="viewcode-back" href="../../../generated_api/nlp_architect.models.html#nlp_architect.models.np2vec.NP2vec.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">np2vec_model_file</span><span class="o">=</span><span class="s2">&quot;np2vec.model&quot;</span><span class="p">,</span> <span class="n">binary</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">word2vec_format</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Save the np2vec model.</span>
 
@@ -414,18 +418,19 @@
 <span class="sd">            word2vec_format(bool): boolean indicating whether to save the model in original</span>
 <span class="sd">            word2vec format.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">word_embedding_type</span> <span class="o">==</span> <span class="s1">&#39;fasttext&#39;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">word_ngrams</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">word_embedding_type</span> <span class="o">==</span> <span class="s2">&quot;fasttext&quot;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">word_ngrams</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">binary</span><span class="p">:</span>
                 <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
                     <span class="s2">&quot;if word_embedding_type is fasttext and word_ngrams is 1, &quot;</span>
-                    <span class="s2">&quot;binary should be set to True.&quot;</span><span class="p">)</span>
+                    <span class="s2">&quot;binary should be set to True.&quot;</span>
+                <span class="p">)</span>
                 <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
             <span class="c1"># not relevant to prune fasttext subword model</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">np2vec_model_file</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># prune non NP terms</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">prune_non_np</span><span class="p">:</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;pruning np2vec model&#39;</span><span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;pruning np2vec model&quot;</span><span class="p">)</span>
                 <span class="n">total_vec</span> <span class="o">=</span> <span class="mi">0</span>
                 <span class="n">vector_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">vector_size</span>
                 <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">wv</span><span class="o">.</span><span class="n">vocab</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
@@ -433,29 +438,30 @@
                         <span class="n">total_vec</span> <span class="o">+=</span> <span class="mi">1</span>
                 <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
                     <span class="s2">&quot;storing </span><span class="si">%s</span><span class="s2">x</span><span class="si">%s</span><span class="s2"> projection weights for NP&#39;s into </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
-                    <span class="n">total_vec</span><span class="p">,</span> <span class="n">vector_size</span><span class="p">,</span> <span class="n">np2vec_model_file</span><span class="p">)</span>
-                <span class="k">with</span> <span class="n">smart_open</span><span class="p">(</span><span class="n">np2vec_model_file</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fout</span><span class="p">:</span>
+                    <span class="n">total_vec</span><span class="p">,</span>
+                    <span class="n">vector_size</span><span class="p">,</span>
+                    <span class="n">np2vec_model_file</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="k">with</span> <span class="n">smart_open</span><span class="p">(</span><span class="n">np2vec_model_file</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fout</span><span class="p">:</span>
                     <span class="n">fout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">to_utf8</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">total_vec</span><span class="p">,</span> <span class="n">vector_size</span><span class="p">)))</span>
                     <span class="c1"># store NP vectors in sorted order: most frequent NP&#39;s at the top</span>
                     <span class="k">for</span> <span class="n">word</span><span class="p">,</span> <span class="n">vocab</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span>
-                            <span class="n">iteritems</span><span class="p">(</span>
-                                <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">wv</span><span class="o">.</span><span class="n">vocab</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">item</span><span class="p">:</span> <span class="o">-</span><span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">):</span>
+                        <span class="n">iteritems</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">wv</span><span class="o">.</span><span class="n">vocab</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">item</span><span class="p">:</span> <span class="o">-</span><span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">count</span>
+                    <span class="p">):</span>
                         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_marked</span><span class="p">(</span><span class="n">word</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">word</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># discard empty marked np&#39;s</span>
                             <span class="n">embedding_vec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">wv</span><span class="o">.</span><span class="n">syn0</span><span class="p">[</span><span class="n">vocab</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
                             <span class="k">if</span> <span class="n">binary</span><span class="p">:</span>
-                                <span class="n">fout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
-                                    <span class="n">utils</span><span class="o">.</span><span class="n">to_utf8</span><span class="p">(</span><span class="n">word</span><span class="p">)</span> <span class="o">+</span> <span class="sa">b</span><span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">embedding_vec</span><span class="o">.</span><span class="n">tostring</span><span class="p">())</span>
+                                <span class="n">fout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">to_utf8</span><span class="p">(</span><span class="n">word</span><span class="p">)</span> <span class="o">+</span> <span class="sa">b</span><span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">embedding_vec</span><span class="o">.</span><span class="n">tostring</span><span class="p">())</span>
                             <span class="k">else</span><span class="p">:</span>
                                 <span class="n">fout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
                                     <span class="n">utils</span><span class="o">.</span><span class="n">to_utf8</span><span class="p">(</span>
-                                        <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span>
-                                        <span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
-                                            <span class="s2">&quot;</span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span>
-                                            <span class="n">val</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">embedding_vec</span><span class="p">))))</span>
+                                        <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span>
+                                        <span class="o">%</span> <span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">val</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">embedding_vec</span><span class="p">))</span>
+                                    <span class="p">)</span>
+                                <span class="p">)</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">word2vec_format</span><span class="p">:</span>
                     <span class="c1"># pylint: disable=attribute-defined-outside-init</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">KeyedVectors</span><span class="o">.</span><span class="n">load_word2vec_format</span><span class="p">(</span><span class="n">np2vec_model_file</span><span class="p">,</span>
-                                                                   <span class="n">binary</span><span class="o">=</span><span class="n">binary</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">KeyedVectors</span><span class="o">.</span><span class="n">load_word2vec_format</span><span class="p">(</span><span class="n">np2vec_model_file</span><span class="p">,</span> <span class="n">binary</span><span class="o">=</span><span class="n">binary</span><span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">word2vec_format</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">np2vec_model_file</span><span class="p">)</span></div>
 
@@ -478,10 +484,10 @@
         <span class="k">if</span> <span class="n">word_ngrams</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">word2vec_format</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">KeyedVectors</span><span class="o">.</span><span class="n">load_word2vec_format</span><span class="p">(</span><span class="n">np2vec_model_file</span><span class="p">,</span> <span class="n">binary</span><span class="o">=</span><span class="n">binary</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">KeyedVectors</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">np2vec_model_file</span><span class="p">,</span> <span class="n">mmap</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">KeyedVectors</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">np2vec_model_file</span><span class="p">,</span> <span class="n">mmap</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">word_ngrams</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">FastText</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">np2vec_model_file</span><span class="p">)</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;invalid value for </span><span class="se">\&#39;</span><span class="s1">word_ngrams</span><span class="se">\&#39;</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;invalid value for &#39;word_ngrams&#39;&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">None</span></div></div>
 </pre></div>
 

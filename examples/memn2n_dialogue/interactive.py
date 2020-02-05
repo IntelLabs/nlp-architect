@@ -43,53 +43,24 @@ import os
 import tensorflow as tf
 from interactive_utils import interactive_loop
 
-from nlp_architect.data.babi_dialog import BABI_Dialog
-from nlp_architect.models.memn2n_dialogue import MemN2N_Dialog
+from examples.memn2n_dialogue.babi_dialog import BABI_Dialog
+from examples.memn2n_dialogue.memn2n_dialogue import MemN2N_Dialog
 from nlp_architect.utils.io import validate_parent_exists, validate
 
 # parse the command line arguments
-tf.flags.DEFINE_integer(
-    'task',
-    1,
-    'the task ID to train/test on from bAbI-dialog dataset (1-6)')
-tf.flags.DEFINE_integer(
-    'emb_size',
-    20,
-    'Size of the word-embedding used in the model.')
-tf.flags.DEFINE_integer(
-    'nhops',
-    3,
-    'Number of memory hops in the network')
-tf.flags.DEFINE_boolean(
-    'use_match_type',
-    False,
-    'use match type features')
-tf.flags.DEFINE_boolean(
-    'cache_match_type',
-    False,
-    'cache match type answers')
-tf.flags.DEFINE_boolean(
-    'cache_vectorized',
-    False,
-    'cache vectorized data')
-tf.flags.DEFINE_boolean(
-    'use_oov',
-    False,
-    'use OOV test set')
-tf.flags.DEFINE_string(
-    'data_dir',
-    'data/',
-    'File to save model weights to.')
-tf.flags.DEFINE_string(
-    'weights_save_path',
-    'saved_tf/',
-    'File to save model weights to.')
+tf.flags.DEFINE_integer("task", 1, "the task ID to train/test on from bAbI-dialog dataset (1-6)")
+tf.flags.DEFINE_integer("emb_size", 20, "Size of the word-embedding used in the model.")
+tf.flags.DEFINE_integer("nhops", 3, "Number of memory hops in the network")
+tf.flags.DEFINE_boolean("use_match_type", False, "use match type features")
+tf.flags.DEFINE_boolean("cache_match_type", False, "cache match type answers")
+tf.flags.DEFINE_boolean("cache_vectorized", False, "cache vectorized data")
+tf.flags.DEFINE_boolean("use_oov", False, "use OOV test set")
+tf.flags.DEFINE_string("data_dir", "data/", "File to save model weights to.")
+tf.flags.DEFINE_string("weights_save_path", "saved_tf/", "File to save model weights to.")
 FLAGS = tf.flags.FLAGS
 
 
-validate((FLAGS.task, int, 1, 7),
-         (FLAGS.nhops, int, 1, 100),
-         (FLAGS.emb_size, int, 1, 10000))
+validate((FLAGS.task, int, 1, 7), (FLAGS.nhops, int, 1, 100), (FLAGS.emb_size, int, 1, 10000))
 
 # Validate inputs
 current_dir = os.path.dirname(os.path.realpath(__file__))
@@ -104,7 +75,8 @@ babi = BABI_Dialog(
     oov=FLAGS.use_oov,
     use_match_type=FLAGS.use_match_type,
     cache_match_type=FLAGS.cache_match_type,
-    cache_vectorized=FLAGS.cache_vectorized)
+    cache_vectorized=FLAGS.cache_vectorized,
+)
 
 with tf.Session() as sess:
     memn2n = MemN2N_Dialog(
@@ -117,7 +89,8 @@ with tf.Session() as sess:
         babi.max_cand_len,
         hops=FLAGS.nhops,
         max_grad_norm=40.0,
-        session=sess)
+        session=sess,
+    )
 
     if os.path.exists(weights_save_path):
         print("Loading weights from {}".format(weights_save_path))

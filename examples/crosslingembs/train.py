@@ -33,36 +33,87 @@ if __name__ == "__main__":
 
     # Parsing arguments for model parameters
     parser = argparse.ArgumentParser()
-    parser.add_argument("--emb_dim", type=int, default=300,
-                        help="Embedding Dimensions", action=check_size(1, 1024))
-    parser.add_argument("--vocab_size", type=int, default=200000,
-                        help="Vocabulary Size", action=check_size(1, 1000000))
-    parser.add_argument("--lr", type=float, default=0.1, help="Learning Rate",
-                        action=check_size(0.00001, 2.0))
-    parser.add_argument("--beta", type=float, default=0.001, help="Beta for W orthogornaliztion",
-                        action=check_size(0.0000001, 5.0))
-    parser.add_argument("--smooth_val", type=float, default=0.1, help="Label smoother for\
-                        discriminator", action=check_size(0.0001, 0.2))
-    parser.add_argument("--batch_size", type=int, default=32,
-                        help="Batch size", action=check_size(8, 1024))
-    parser.add_argument("--epochs", type=int, default=5,
-                        help="Number of epochs to run", action=check_size(1, 20))
-    parser.add_argument("--iters_epoch", type=int, default=1000000, help="Iterations to run\
-                        each epoch", action=check_size(1, 2000000))
-    parser.add_argument("--disc_runs", type=int, default=5, help="Number of times\
-                        discriminator is run each iteration", action=check_size(1, 20))
-    parser.add_argument("--most_freq", type=int, default=75000, help="Number of words to\
-                        show discriminator", action=check_size(1, 1000000))
-    parser.add_argument("--src_lang", type=str, default="en", help="Source Language",
-                        action=check_size(1, 3))
-    parser.add_argument("--tgt_lang", type=str, default="fr", help="Target Language",
-                        action=check_size(1, 3))
-    parser.add_argument("--data_dir", default=None, help="Data path for training and\
-                        and evaluation data", type=validate_existing_directory)
-    parser.add_argument("--eval_dir", default=None, help="Path for eval words",
-                        type=validate_existing_directory)
-    parser.add_argument("--weight_dir", default=None, help="path to save mapping\
-                        weights", type=validate_parent_exists)
+    parser.add_argument(
+        "--emb_dim", type=int, default=300, help="Embedding Dimensions", action=check_size(1, 1024)
+    )
+    parser.add_argument(
+        "--vocab_size",
+        type=int,
+        default=200000,
+        help="Vocabulary Size",
+        action=check_size(1, 1000000),
+    )
+    parser.add_argument(
+        "--lr", type=float, default=0.1, help="Learning Rate", action=check_size(0.00001, 2.0)
+    )
+    parser.add_argument(
+        "--beta",
+        type=float,
+        default=0.001,
+        help="Beta for W orthogornaliztion",
+        action=check_size(0.0000001, 5.0),
+    )
+    parser.add_argument(
+        "--smooth_val",
+        type=float,
+        default=0.1,
+        help="Label smoother for\
+                        discriminator",
+        action=check_size(0.0001, 0.2),
+    )
+    parser.add_argument(
+        "--batch_size", type=int, default=32, help="Batch size", action=check_size(8, 1024)
+    )
+    parser.add_argument(
+        "--epochs", type=int, default=5, help="Number of epochs to run", action=check_size(1, 20)
+    )
+    parser.add_argument(
+        "--iters_epoch",
+        type=int,
+        default=1000000,
+        help="Iterations to run\
+                        each epoch",
+        action=check_size(1, 2000000),
+    )
+    parser.add_argument(
+        "--disc_runs",
+        type=int,
+        default=5,
+        help="Number of times\
+                        discriminator is run each iteration",
+        action=check_size(1, 20),
+    )
+    parser.add_argument(
+        "--most_freq",
+        type=int,
+        default=75000,
+        help="Number of words to\
+                        show discriminator",
+        action=check_size(1, 1000000),
+    )
+    parser.add_argument(
+        "--src_lang", type=str, default="en", help="Source Language", action=check_size(1, 3)
+    )
+    parser.add_argument(
+        "--tgt_lang", type=str, default="fr", help="Target Language", action=check_size(1, 3)
+    )
+    parser.add_argument(
+        "--data_dir",
+        default=None,
+        help="Data path for training and\
+                        and evaluation data",
+        type=validate_existing_directory,
+    )
+    parser.add_argument(
+        "--eval_dir", default=None, help="Path for eval words", type=validate_existing_directory
+    )
+    parser.add_argument(
+        "--weight_dir",
+        default=None,
+        help="path to save mapping\
+                        weights",
+        type=validate_parent_exists,
+    )
     hparams = parser.parse_args()
     # Load Source Embeddings
     src = FastTextEmb(hparams.data_dir, hparams.src_lang, hparams.vocab_size)
@@ -79,9 +130,17 @@ if __name__ == "__main__":
     tgt_vec_eval = copy.deepcopy(tgt_vec)
 
     # Evaluator instance
-    eval_model = evaluate.Evaluate(train_model.generator.W, src_vec_eval, tgt_vec_eval,
-                                   src_dict, tgt_dict, hparams.src_lang, hparams.tgt_lang,
-                                   hparams.eval_dir, hparams.vocab_size)
+    eval_model = evaluate.Evaluate(
+        train_model.generator.W,
+        src_vec_eval,
+        tgt_vec_eval,
+        src_dict,
+        tgt_dict,
+        hparams.src_lang,
+        hparams.tgt_lang,
+        hparams.eval_dir,
+        hparams.vocab_size,
+    )
 
     # Tensorflow session
     with tf.Session() as sess:

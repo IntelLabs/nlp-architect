@@ -26,9 +26,9 @@ The larger idea behind these models is to allow ensemble learning with other sup
 Files
 =====
 
-- **nlp_architect/models/supervised_sentiment.py**: Sentiment analysis models - currently an LSTM and a one-hot CNN
-- **nlp_architect/data/amazon_reviews.py**: Code which will download and process the Amazon datasets described below
-- **nlp_architect/utils/ensembler.py**: Contains the ensemble learning algorithm(s)
+- **examples/supervised_sentiment/supervised_sentiment.py**: Sentiment analysis models - currently an LSTM and a one-hot CNN
+- **examples/supervised_sentiment/amazon_reviews.py**: Code which will download and process the Amazon datasets described below
+- **examples/supervised_sentiment/ensembler.py**: Contains the ensemble learning algorithm(s)
 - **examples/supervised_sentiment/example_ensemble.py**: An example of how the sentiment models can be trained and ensembled.
 - **examples/supervised_sentiment/optimize_example.py**: An example of using an hyperparameter optimizer with the simple LSTM model.
 
@@ -63,6 +63,12 @@ Running Modalities
 ==================
 Ensemble Train/Test
 -------------------
+Install extra packages for running the model:
+
+.. code:: python
+
+  pip install -r examples/requirements.txt
+
 Currently, the pipeline shows a full train/test/ensemble cycle. The main pipeline can be run with the following command:
 
 .. code:: python

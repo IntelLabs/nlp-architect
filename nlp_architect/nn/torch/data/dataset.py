@@ -39,9 +39,10 @@ class ConcatTensorDataset(torch.utils.data.Dataset):
     """
 
     def __init__(
-            self,
-            dataset: torch.utils.data.TensorDataset,
-            datasets: List[torch.utils.data.TensorDataset]):
+        self,
+        dataset: torch.utils.data.TensorDataset,
+        datasets: List[torch.utils.data.TensorDataset],
+    ):
         tensors = dataset.tensors
         for ds in datasets:
             concat_tensors = []

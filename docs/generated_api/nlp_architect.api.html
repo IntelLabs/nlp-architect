@@ -124,7 +124,6 @@
 <li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.api.base">nlp_architect.api.base module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.api.bist_parser_api">nlp_architect.api.bist_parser_api module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.api.intent_extraction_api">nlp_architect.api.intent_extraction_api module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.api.machine_comprehension_api">nlp_architect.api.machine_comprehension_api module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.api.ner_api">nlp_architect.api.ner_api module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-nlp_architect.api">Module contents</a></li>
 </ul>
@@ -137,7 +136,6 @@
 <li class="toctree-l2"><a class="reference internal" href="nlp_architect.nn.html">nlp_architect.nn package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nlp_architect.pipelines.html">nlp_architect.pipelines package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nlp_architect.procedures.html">nlp_architect.procedures package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nlp_architect.solutions.html">nlp_architect.solutions package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nlp_architect.utils.html">nlp_architect.utils package</a></li>
 </ul>
 </li>
@@ -323,17 +321,17 @@ Implementing classes must provide a default model and/or a path to a model</p>
 
 <dl class="attribute">
 <dt id="nlp_architect.api.intent_extraction_api.IntentExtractionApi.model_dir">
-<code class="descname">model_dir</code><em class="property"> = '/home/peter_nlp/nlp-architect/cache/intent-pretrained'</em><a class="headerlink" href="#nlp_architect.api.intent_extraction_api.IntentExtractionApi.model_dir" title="Permalink to this definition">¶</a></dt>
+<code class="descname">model_dir</code><em class="property"> = '/Users/pizsak/nlp-architect/cache/intent-pretrained'</em><a class="headerlink" href="#nlp_architect.api.intent_extraction_api.IntentExtractionApi.model_dir" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="nlp_architect.api.intent_extraction_api.IntentExtractionApi.pretrained_model">
-<code class="descname">pretrained_model</code><em class="property"> = '/home/peter_nlp/nlp-architect/cache/intent-pretrained/model.h5'</em><a class="headerlink" href="#nlp_architect.api.intent_extraction_api.IntentExtractionApi.pretrained_model" title="Permalink to this definition">¶</a></dt>
+<code class="descname">pretrained_model</code><em class="property"> = '/Users/pizsak/nlp-architect/cache/intent-pretrained/model.h5'</em><a class="headerlink" href="#nlp_architect.api.intent_extraction_api.IntentExtractionApi.pretrained_model" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="nlp_architect.api.intent_extraction_api.IntentExtractionApi.pretrained_model_info">
-<code class="descname">pretrained_model_info</code><em class="property"> = '/home/peter_nlp/nlp-architect/cache/intent-pretrained/model_info.dat'</em><a class="headerlink" href="#nlp_architect.api.intent_extraction_api.IntentExtractionApi.pretrained_model_info" title="Permalink to this definition">¶</a></dt>
+<code class="descname">pretrained_model_info</code><em class="property"> = '/Users/pizsak/nlp-architect/cache/intent-pretrained/model_info.dat'</em><a class="headerlink" href="#nlp_architect.api.intent_extraction_api.IntentExtractionApi.pretrained_model_info" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -344,71 +342,6 @@ Implementing classes must provide a default model and/or a path to a model</p>
 <dl class="method">
 <dt id="nlp_architect.api.intent_extraction_api.IntentExtractionApi.vectorize">
 <code class="descname">vectorize</code><span class="sig-paren">(</span><em>doc</em>, <em>vocab</em>, <em>char_vocab=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/api/intent_extraction_api.html#IntentExtractionApi.vectorize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.api.intent_extraction_api.IntentExtractionApi.vectorize" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-</div>
-<div class="section" id="module-nlp_architect.api.machine_comprehension_api">
-<span id="nlp-architect-api-machine-comprehension-api-module"></span><h2>nlp_architect.api.machine_comprehension_api module<a class="headerlink" href="#module-nlp_architect.api.machine_comprehension_api" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="nlp_architect.api.machine_comprehension_api.MachineComprehensionApi">
-<em class="property">class </em><code class="descclassname">nlp_architect.api.machine_comprehension_api.</code><code class="descname">MachineComprehensionApi</code><span class="sig-paren">(</span><em>prompt=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/api/machine_comprehension_api.html#MachineComprehensionApi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.api.machine_comprehension_api.MachineComprehensionApi" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#nlp_architect.api.abstract_api.AbstractApi" title="nlp_architect.api.abstract_api.AbstractApi"><code class="xref py py-class docutils literal notranslate"><span class="pre">nlp_architect.api.abstract_api.AbstractApi</span></code></a></p>
-<p>Machine Comprehension API</p>
-<dl class="attribute">
-<dt id="nlp_architect.api.machine_comprehension_api.MachineComprehensionApi.data_dir">
-<code class="descname">data_dir</code><em class="property"> = '/home/peter_nlp/nlp-architect/cache/mrc-pretrained/mrc_data'</em><a class="headerlink" href="#nlp_architect.api.machine_comprehension_api.MachineComprehensionApi.data_dir" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="nlp_architect.api.machine_comprehension_api.MachineComprehensionApi.data_path">
-<code class="descname">data_path</code><em class="property"> = '/home/peter_nlp/nlp-architect/cache/mrc-pretrained/mrc_data/data'</em><a class="headerlink" href="#nlp_architect.api.machine_comprehension_api.MachineComprehensionApi.data_path" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="nlp_architect.api.machine_comprehension_api.MachineComprehensionApi.dir">
-<code class="descname">dir</code><em class="property"> = '/home/peter_nlp/nlp-architect/cache/mrc-pretrained'</em><a class="headerlink" href="#nlp_architect.api.machine_comprehension_api.MachineComprehensionApi.dir" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="nlp_architect.api.machine_comprehension_api.MachineComprehensionApi.download_model">
-<code class="descname">download_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/api/machine_comprehension_api.html#MachineComprehensionApi.download_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.api.machine_comprehension_api.MachineComprehensionApi.download_model" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="nlp_architect.api.machine_comprehension_api.MachineComprehensionApi.get_paragraphs">
-<code class="descname">get_paragraphs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/api/machine_comprehension_api.html#MachineComprehensionApi.get_paragraphs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.api.machine_comprehension_api.MachineComprehensionApi.get_paragraphs" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="nlp_architect.api.machine_comprehension_api.MachineComprehensionApi.inference">
-<code class="descname">inference</code><span class="sig-paren">(</span><em>doc</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/api/machine_comprehension_api.html#MachineComprehensionApi.inference"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.api.machine_comprehension_api.MachineComprehensionApi.inference" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="nlp_architect.api.machine_comprehension_api.MachineComprehensionApi.load_model">
-<code class="descname">load_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/api/machine_comprehension_api.html#MachineComprehensionApi.load_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.api.machine_comprehension_api.MachineComprehensionApi.load_model" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="nlp_architect.api.machine_comprehension_api.MachineComprehensionApi.model_dir">
-<code class="descname">model_dir</code><em class="property"> = '/home/peter_nlp/nlp-architect/cache/mrc-pretrained/mrc_trained_model'</em><a class="headerlink" href="#nlp_architect.api.machine_comprehension_api.MachineComprehensionApi.model_dir" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="nlp_architect.api.machine_comprehension_api.MachineComprehensionApi.model_path">
-<code class="descname">model_path</code><em class="property"> = '/home/peter_nlp/nlp-architect/cache/mrc-pretrained/mrc_trained_model/trained_model'</em><a class="headerlink" href="#nlp_architect.api.machine_comprehension_api.MachineComprehensionApi.model_path" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="staticmethod">
-<dt id="nlp_architect.api.machine_comprehension_api.MachineComprehensionApi.paragraphs">
-<em class="property">static </em><code class="descname">paragraphs</code><span class="sig-paren">(</span><em>valid</em>, <em>vocab_tuple</em>, <em>num_examples</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/api/machine_comprehension_api.html#MachineComprehensionApi.paragraphs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.api.machine_comprehension_api.MachineComprehensionApi.paragraphs" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="staticmethod">
-<dt id="nlp_architect.api.machine_comprehension_api.MachineComprehensionApi.questions">
-<em class="property">static </em><code class="descname">questions</code><span class="sig-paren">(</span><em>valid</em>, <em>vocab_tuple</em>, <em>num_examples</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/api/machine_comprehension_api.html#MachineComprehensionApi.questions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.api.machine_comprehension_api.MachineComprehensionApi.questions" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -433,17 +366,17 @@ Implementing classes must provide a default model and/or a path to a model</p>
 
 <dl class="attribute">
 <dt id="nlp_architect.api.ner_api.NerApi.model_dir">
-<code class="descname">model_dir</code><em class="property"> = '/home/peter_nlp/nlp-architect/cache/ner-pretrained'</em><a class="headerlink" href="#nlp_architect.api.ner_api.NerApi.model_dir" title="Permalink to this definition">¶</a></dt>
+<code class="descname">model_dir</code><em class="property"> = '/Users/pizsak/nlp-architect/cache/ner-pretrained'</em><a class="headerlink" href="#nlp_architect.api.ner_api.NerApi.model_dir" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="nlp_architect.api.ner_api.NerApi.pretrained_model">
-<code class="descname">pretrained_model</code><em class="property"> = '/home/peter_nlp/nlp-architect/cache/ner-pretrained/model_v4.h5'</em><a class="headerlink" href="#nlp_architect.api.ner_api.NerApi.pretrained_model" title="Permalink to this definition">¶</a></dt>
+<code class="descname">pretrained_model</code><em class="property"> = '/Users/pizsak/nlp-architect/cache/ner-pretrained/model_v4.h5'</em><a class="headerlink" href="#nlp_architect.api.ner_api.NerApi.pretrained_model" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="nlp_architect.api.ner_api.NerApi.pretrained_model_info">
-<code class="descname">pretrained_model_info</code><em class="property"> = '/home/peter_nlp/nlp-architect/cache/ner-pretrained/model_info_v4.dat'</em><a class="headerlink" href="#nlp_architect.api.ner_api.NerApi.pretrained_model_info" title="Permalink to this definition">¶</a></dt>
+<code class="descname">pretrained_model_info</code><em class="property"> = '/Users/pizsak/nlp-architect/cache/ner-pretrained/model_info_v4.dat'</em><a class="headerlink" href="#nlp_architect.api.ner_api.NerApi.pretrained_model_info" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="staticmethod">

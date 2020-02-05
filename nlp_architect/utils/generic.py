@@ -13,8 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
-from __future__ import (absolute_import, division, print_function,
-                        unicode_literals)
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import re
 
@@ -22,10 +21,9 @@ import numpy as np
 
 
 # pylint: disable=invalid-unary-operand-type
-def pad_sentences(sequences: np.ndarray,
-                  max_length: int = None,
-                  padding_value: int = 0,
-                  padding_style='post') -> np.ndarray:
+def pad_sentences(
+    sequences: np.ndarray, max_length: int = None, padding_value: int = 0, padding_style="post"
+) -> np.ndarray:
     """
     Pad input sequences up to max_length
     values are aligned to the right
@@ -44,22 +42,22 @@ def pad_sentences(sequences: np.ndarray,
         try:
             sequences = np.asarray(sequences)
         except ValueError:
-            print('cannot convert sequences into numpy array')
-    assert hasattr(sequences, 'shape')
+            print("cannot convert sequences into numpy array")
+    assert hasattr(sequences, "shape")
     if len(sequences) < 1:
         return sequences
     if max_length is None:
         max_length = np.max([len(s) for s in sequences])
     elif max_length < 1:
-        raise ValueError('max sequence length must be > 0')
+        raise ValueError("max sequence length must be > 0")
     if max_length < 1:
         return sequences
-    padded_sequences = (np.ones((len(sequences), max_length), dtype=np.int32) * padding_value)
+    padded_sequences = np.ones((len(sequences), max_length), dtype=np.int32) * padding_value
     for i, sent in enumerate(sequences):
-        if padding_style == 'post':
+        if padding_style == "post":
             trunc = sent[-max_length:]
-            padded_sequences[i, :len(trunc)] = trunc
-        elif padding_style == 'pre':
+            padded_sequences[i, : len(trunc)] = trunc
+        elif padding_style == "pre":
             trunc = sent[:max_length]
             padded_sequences[i, -trunc:] = trunc
     return padded_sequences.astype(dtype=np.int32)
@@ -120,25 +118,31 @@ def add_offset(mat: np.ndarray, offset: int = 1) -> np.ndarray:
 
 def license_prompt(model_name, model_website, dataset_dir=None):
     if dataset_dir:
-        print('\n\n***\n{} was not found in the directory: {}'.format(model_name, dataset_dir))
+        print("\n\n***\n{} was not found in the directory: {}".format(model_name, dataset_dir))
     else:
-        print('\n\n***\n\n{} was not found on local installation'.format(model_name))
-    print('{} can be downloaded from {}'.format(model_name, model_website))
-    print('The terms and conditions of the data set license apply. Intel does not '
-          'grant any rights to the data files or database\n')
-    response = input('To download \'{}\' from {}, please enter YES: '.
-                     format(model_name, model_website))
+        print("\n\n***\n\n{} was not found on local installation".format(model_name))
+    print("{} can be downloaded from {}".format(model_name, model_website))
+    print(
+        "The terms and conditions of the data set license apply. Intel does not "
+        "grant any rights to the data files or database\n"
+    )
+    response = input(
+        "To download '{}' from {}, please enter YES: ".format(model_name, model_website)
+    )
     res = response.lower().strip()
-    if res == "yes" or (len(res) == 1 and res == 'y'):
-        print('Downloading {}...'.format(model_name))
+    if res == "yes" or (len(res) == 1 and res == "y"):
+        print("Downloading {}...".format(model_name))
         responded_yes = True
     else:
-        print('Download declined. Response received {} != YES|Y. '.format(res))
+        print("Download declined. Response received {} != YES|Y. ".format(res))
         if dataset_dir:
-            print('Please download the model manually from {} and place in the directory: {}'
-                  .format(model_website, dataset_dir))
+            print(
+                "Please download the model manually from {} and place in the directory: {}".format(
+                    model_website, dataset_dir
+                )
+            )
         else:
-            print('Please download the model manually from {}'.format(model_website))
+            print("Please download the model manually from {}".format(model_website))
         responded_yes = False
     return responded_yes
 
@@ -148,19 +152,26 @@ zhang_lecun_vocab = list("abcdefghijklmnopqrstuvwxyz0123456789-,;.!?:’/\\|_@#$
 vocab_hash = {b: a for a, b in enumerate(zhang_lecun_vocab)}
 
 
-def normalize(txt, vocab=None, replace_char=' ',
-              max_length=300, pad_out=True,
-              to_lower=True, reverse=False,
-              truncate_left=False, encoding=None):
+def normalize(
+    txt,
+    vocab=None,
+    replace_char=" ",
+    max_length=300,
+    pad_out=True,
+    to_lower=True,
+    reverse=False,
+    truncate_left=False,
+    encoding=None,
+):
 
     # remove html
     # This will keep characters and other symbols
     txt = txt.split()
     # Remove HTML
-    txt = [re.sub(r'http:.*', '', r) for r in txt]
-    txt = [re.sub(r'https:.*', '', r) for r in txt]
+    txt = [re.sub(r"http:.*", "", r) for r in txt]
+    txt = [re.sub(r"https:.*", "", r) for r in txt]
 
-    txt = (" ".join(txt))
+    txt = " ".join(txt)
 
     # Remove punctuation
     txt = re.sub("[.,!]", " ", txt)
@@ -181,7 +192,7 @@ def normalize(txt, vocab=None, replace_char=' ',
         txt = txt[::-1]
     # replace chars
     if vocab is not None:
-        txt = ''.join([c if c in vocab else replace_char for c in txt])
+        txt = "".join([c if c in vocab else replace_char for c in txt])
     # re-encode text
     if encoding is not None:
         txt = txt.encode(encoding, errors="ignore")
@@ -207,12 +218,12 @@ def to_one_hot(txt, vocab=vocab_hash):
 
 def balance(df):
     print("Balancing the classes")
-    type_counts = df['Sentiment'].value_counts()
+    type_counts = df["Sentiment"].value_counts()
     min_count = min(type_counts.values)
 
     balanced_df = None
     for key in type_counts.keys():
-        df_sub = df[df['Sentiment'] == key].sample(n=min_count, replace=False)
+        df_sub = df[df["Sentiment"] == key].sample(n=min_count, replace=False)
         if balanced_df is not None:
             balanced_df = balanced_df.append(df_sub)
         else:

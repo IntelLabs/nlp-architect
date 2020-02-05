@@ -23,16 +23,16 @@ from nlp_architect.utils.text import SpacyInstance
 
 CURRENT_DIR = os.path.dirname(os.path.realpath(__file__))
 
-STOP_WORDS_FILE = os.path.join(CURRENT_DIR, 'resources/stop_words_en.json')
-PRONOUN_FILE = os.path.join(CURRENT_DIR, 'resources/pronoun_en.json')
-PREPOSITION_FILE = os.path.join(CURRENT_DIR, 'resources/preposition_en.json')
-DETERMINERS_FILE = os.path.join(CURRENT_DIR, 'resources/determiners_en.json')
+STOP_WORDS_FILE = os.path.join(CURRENT_DIR, "resources/stop_words_en.json")
+PRONOUN_FILE = os.path.join(CURRENT_DIR, "resources/pronoun_en.json")
+PREPOSITION_FILE = os.path.join(CURRENT_DIR, "resources/preposition_en.json")
+DETERMINERS_FILE = os.path.join(CURRENT_DIR, "resources/determiners_en.json")
 
-DISAMBIGUATION_CATEGORY = ['disambig', 'disambiguation']
+DISAMBIGUATION_CATEGORY = ["disambig", "disambiguation"]
 
 
 class StringUtils:
-    spacy_no_parser = SpacyInstance(disable=['parser'])
+    spacy_no_parser = SpacyInstance(disable=["parser"])
     spacy_parser = SpacyInstance()
     stop_words = []
     pronouns = []
@@ -53,8 +53,9 @@ class StringUtils:
 
     @staticmethod
     def normalize_str(in_str: str) -> str:
-        str_clean = re.sub('[' + string.punctuation + string.whitespace + ']', ' ',
-                           in_str).strip().lower()
+        str_clean = (
+            re.sub("[" + string.punctuation + string.whitespace + "]", " ", in_str).strip().lower()
+        )
         if isinstance(str_clean, str):
             str_clean = str(str_clean)
 
@@ -66,7 +67,7 @@ class StringUtils:
             if not StringUtils.is_pronoun(lemma) and not StringUtils.is_stop(lemma):
                 ret_clean.append(token.lemma_)
 
-        return ' '.join(ret_clean)
+        return " ".join(ret_clean)
 
     @staticmethod
     def is_pronoun(in_str: str) -> bool:
@@ -106,7 +107,7 @@ class StringUtils:
         ret_list = []
         for _str in str_list:
             normalize_str = StringUtils.normalize_str(_str)
-            if normalize_str != '':
+            if normalize_str != "":
                 ret_list.append(normalize_str)
         return ret_list
 

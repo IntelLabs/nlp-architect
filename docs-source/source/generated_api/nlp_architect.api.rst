@@ -36,14 +36,6 @@ nlp\_architect.api.intent\_extraction\_api module
     :undoc-members:
     :show-inheritance:
 
-nlp\_architect.api.machine\_comprehension\_api module
------------------------------------------------------
-
-.. automodule:: nlp_architect.api.machine_comprehension_api
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 nlp\_architect.api.ner\_api module
 ----------------------------------
 

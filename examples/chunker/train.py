@@ -26,51 +26,81 @@ from nlp_architect.nn.tensorflow.python.keras.callbacks import ConllCallback
 from nlp_architect.data.sequential_tagging import CONLL2000
 from nlp_architect.models.chunker import SequenceChunker
 from nlp_architect.utils.embedding import load_word_embeddings, get_embedding_matrix
-from nlp_architect.utils.io import validate_existing_filepath, validate_parent_exists, validate, \
-    validate_existing_directory
+from nlp_architect.utils.io import (
+    validate_existing_filepath,
+    validate_parent_exists,
+    validate,
+    validate_existing_directory,
+)
 from nlp_architect.utils.metrics import get_conll_scores
 
 
 def create_argument_parser():
     _parser = argparse.ArgumentParser()
-    _parser.add_argument('--data_dir', type=validate_existing_directory,
-                         help='Path to directory containing CONLL2000 files')
-    _parser.add_argument('--embedding_model', type=validate_existing_filepath,
-                         help='Word embedding model path (GloVe/Fasttext/textual)')
-    _parser.add_argument('--sentence_length', default=50, type=int,
-                         help='Maximum sentence length')
-    _parser.add_argument('--char_features', default=False, action='store_true',
-                         help='use word character features in addition to words')
-    _parser.add_argument('--max_word_length', type=int, default=12,
-                         help='maximum number of character in one word '
-                              '(if --char_features is enabled)')
-    _parser.add_argument('--feature_size', default=100, type=int,
-                         help='Feature vector size (in embedding and LSTM layers)')
-    _parser.add_argument('--use_cudnn', default=False, action='store_true',
-                         help='use CUDNN based LSTM cells')
-    _parser.add_argument('--classifier', default='crf', choices=['crf', 'softmax'], type=str,
-                         help='classifier to use in last layer')
-    _parser.add_argument('-b', default=10, type=int,
-                         help='batch size')
-    _parser.add_argument('-e', default=10, type=int,
-                         help='number of epochs run fit model')
-    _parser.add_argument('--model_name', default='chunker_model', type=str,
-                         help='Model name (used for saving the model)')
+    _parser.add_argument(
+        "--data_dir",
+        type=validate_existing_directory,
+        help="Path to directory containing CONLL2000 files",
+    )
+    _parser.add_argument(
+        "--embedding_model",
+        type=validate_existing_filepath,
+        help="Word embedding model path (GloVe/Fasttext/textual)",
+    )
+    _parser.add_argument("--sentence_length", default=50, type=int, help="Maximum sentence length")
+    _parser.add_argument(
+        "--char_features",
+        default=False,
+        action="store_true",
+        help="use word character features in addition to words",
+    )
+    _parser.add_argument(
+        "--max_word_length",
+        type=int,
+        default=12,
+        help="maximum number of character in one word " "(if --char_features is enabled)",
+    )
+    _parser.add_argument(
+        "--feature_size",
+        default=100,
+        type=int,
+        help="Feature vector size (in embedding and LSTM layers)",
+    )
+    _parser.add_argument(
+        "--use_cudnn", default=False, action="store_true", help="use CUDNN based LSTM cells"
+    )
+    _parser.add_argument(
+        "--classifier",
+        default="crf",
+        choices=["crf", "softmax"],
+        type=str,
+        help="classifier to use in last layer",
+    )
+    _parser.add_argument("-b", default=10, type=int, help="batch size")
+    _parser.add_argument("-e", default=10, type=int, help="number of epochs run fit model")
+    _parser.add_argument(
+        "--model_name",
+        default="chunker_model",
+        type=str,
+        help="Model name (used for saving the model)",
+    )
     return _parser
 
 
 def _save_model():
-    model_params = {'word_vocab': dataset.word_vocab,
-                    'pos_vocab': dataset.pos_vocab,
-                    'chunk_vocab': dataset.chunk_vocab}
+    model_params = {
+        "word_vocab": dataset.word_vocab,
+        "pos_vocab": dataset.pos_vocab,
+        "chunk_vocab": dataset.chunk_vocab,
+    }
     if args.char_features is True:
-        model_params.update({'char_vocab': dataset.char_vocab})
-    with open(settings_path, 'wb') as fp:
+        model_params.update({"char_vocab": dataset.char_vocab})
+    with open(settings_path, "wb") as fp:
         pickle.dump(model_params, fp)
     model.save(model_path)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # read input args and validate
     parser = create_argument_parser()
     args = parser.parse_args()
@@ -78,17 +108,21 @@ if __name__ == '__main__':
     validate((args.feature_size, int, 1, 10000))
     validate((args.b, int, 1, 100000))
     validate((args.e, int, 1, 100000))
-    model_path = path.join(path.dirname(path.realpath(__file__)),
-                           '{}.h5'.format(str(args.model_name)))
-    settings_path = path.join(path.dirname(path.realpath(__file__)),
-                              '{}.params'.format(str(args.model_name)))
+    model_path = path.join(
+        path.dirname(path.realpath(__file__)), "{}.h5".format(str(args.model_name))
+    )
+    settings_path = path.join(
+        path.dirname(path.realpath(__file__)), "{}.params".format(str(args.model_name))
+    )
     validate_parent_exists(model_path)
 
     # load dataset and get tokens/chunks/pos tags
-    dataset = CONLL2000(data_path=args.data_dir,
-                        sentence_length=args.sentence_length,
-                        extract_chars=args.char_features,
-                        max_word_length=args.max_word_length)
+    dataset = CONLL2000(
+        data_path=args.data_dir,
+        sentence_length=args.sentence_length,
+        extract_chars=args.char_features,
+        max_word_length=args.max_word_length,
+    )
     train_set = dataset.train_set
     test_set = dataset.test_set
     words_train, pos_train, chunk_train = train_set[:3]
@@ -111,13 +145,15 @@ if __name__ == '__main__':
 
     # build model with input parameters
     model = SequenceChunker(use_cudnn=args.use_cudnn)
-    model.build(word_vocab_size,
-                pos_labels,
-                chunk_labels,
-                char_vocab_size=char_vocab_size,
-                max_word_len=args.max_word_length,
-                feature_size=args.feature_size,
-                classifier=args.classifier)
+    model.build(
+        word_vocab_size,
+        pos_labels,
+        chunk_labels,
+        char_vocab_size=char_vocab_size,
+        max_word_len=args.max_word_length,
+        feature_size=args.feature_size,
+        classifier=args.classifier,
+    )
 
     # initialize word embedding if external model selected
     if args.embedding_model is not None:
@@ -134,11 +170,15 @@ if __name__ == '__main__':
         test_features = words_test
     train_labels = [pos_train, chunk_train]
     test_labels = [pos_test, chunk_test]
-    chunk_f1_cb = ConllCallback(test_features, chunk_test, dataset.chunk_vocab.vocab,
-                                batch_size=64)
-    model.fit(train_features, train_labels, epochs=args.e, batch_size=args.b,
-              validation_data=(test_features, test_labels),
-              callbacks=[chunk_f1_cb])
+    chunk_f1_cb = ConllCallback(test_features, chunk_test, dataset.chunk_vocab.vocab, batch_size=64)
+    model.fit(
+        train_features,
+        train_labels,
+        epochs=args.e,
+        batch_size=args.b,
+        validation_data=(test_features, test_labels),
+        callbacks=[chunk_f1_cb],
+    )
 
     # save model
     _save_model()

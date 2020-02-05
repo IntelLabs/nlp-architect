@@ -20,29 +20,38 @@ import torch
 from torch.nn import CrossEntropyLoss, Dropout, Linear
 from torch.nn import functional as F
 from torch.utils.data import DataLoader, SequentialSampler, TensorDataset
-from transformers import (ROBERTA_PRETRAINED_MODEL_ARCHIVE_MAP,
-                          BertForTokenClassification, BertPreTrainedModel,
-                          RobertaConfig, RobertaModel, XLNetModel,
-                          XLNetPreTrainedModel)
+from transformers import (
+    ROBERTA_PRETRAINED_MODEL_ARCHIVE_MAP,
+    BertForTokenClassification,
+    BertPreTrainedModel,
+    RobertaConfig,
+    RobertaModel,
+    XLNetModel,
+    XLNetPreTrainedModel,
+)
 
 from nlp_architect.data.sequential_tagging import TokenClsInputExample
-from nlp_architect.models.transformers.base_model import (InputFeatures,
-                                                          TransformerBase)
-from nlp_architect.models.transformers.quantized_bert import \
-    QuantizedBertForTokenClassification
+from nlp_architect.models.transformers.base_model import InputFeatures, TransformerBase
+from nlp_architect.models.transformers.quantized_bert import QuantizedBertForTokenClassification
 from nlp_architect.utils.metrics import tagging
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
 
-def _bert_token_tagging_head_fw(bert, input_ids, token_type_ids=None, attention_mask=None,
-                                labels=None, position_ids=None, head_mask=None, valid_ids=None):
+def _bert_token_tagging_head_fw(
+    bert,
+    input_ids,
+    token_type_ids=None,
+    attention_mask=None,
+    labels=None,
+    position_ids=None,
+    head_mask=None,
+    valid_ids=None,
+):
     outputs = bert.bert(
-        input_ids,
-        token_type_ids=token_type_ids,
-        attention_mask=attention_mask,
-        head_mask=head_mask)
+        input_ids, token_type_ids=token_type_ids, attention_mask=attention_mask, head_mask=head_mask
+    )
     sequence_output = outputs[0]
     sequence_output = bert.dropout(sequence_output)
     logits = bert.classifier(sequence_output)
@@ -53,7 +62,10 @@ def _bert_token_tagging_head_fw(bert, input_ids, token_type_ids=None, attention_
         active_labels = labels.view(-1)[active_positions]
         active_logits = logits.view(-1, bert.num_labels)[active_positions]
         loss = loss_fct(active_logits, active_labels)
-        return (loss, logits,)
+        return (
+            loss,
+            logits,
+        )
     return (logits,)
 
 
@@ -66,12 +78,26 @@ class BertTokenClassificationHead(BertForTokenClassification):
        the tokenizer, as in NER task the 'X' label).
     """
 
-    def forward(self, input_ids, token_type_ids=None, attention_mask=None, labels=None,
-                position_ids=None, head_mask=None, valid_ids=None):
-        return _bert_token_tagging_head_fw(self, input_ids, token_type_ids=token_type_ids,
-                                           attention_mask=attention_mask, labels=labels,
-                                           position_ids=position_ids, head_mask=head_mask,
-                                           valid_ids=valid_ids)
+    def forward(
+        self,
+        input_ids,
+        token_type_ids=None,
+        attention_mask=None,
+        labels=None,
+        position_ids=None,
+        head_mask=None,
+        valid_ids=None,
+    ):
+        return _bert_token_tagging_head_fw(
+            self,
+            input_ids,
+            token_type_ids=token_type_ids,
+            attention_mask=attention_mask,
+            labels=labels,
+            position_ids=position_ids,
+            head_mask=head_mask,
+            valid_ids=valid_ids,
+        )
 
 
 class QuantizedBertForTokenClassificationHead(QuantizedBertForTokenClassification):
@@ -83,12 +109,26 @@ class QuantizedBertForTokenClassificationHead(QuantizedBertForTokenClassificatio
        the tokenizer, as in NER task the 'X' label).
     """
 
-    def forward(self, input_ids, token_type_ids=None, attention_mask=None, labels=None,
-                position_ids=None, head_mask=None, valid_ids=None):
-        return _bert_token_tagging_head_fw(self, input_ids, token_type_ids=token_type_ids,
-                                           attention_mask=attention_mask, labels=labels,
-                                           position_ids=position_ids, head_mask=head_mask,
-                                           valid_ids=valid_ids)
+    def forward(
+        self,
+        input_ids,
+        token_type_ids=None,
+        attention_mask=None,
+        labels=None,
+        position_ids=None,
+        head_mask=None,
+        valid_ids=None,
+    ):
+        return _bert_token_tagging_head_fw(
+            self,
+            input_ids,
+            token_type_ids=token_type_ids,
+            attention_mask=attention_mask,
+            labels=labels,
+            position_ids=position_ids,
+            head_mask=head_mask,
+            valid_ids=valid_ids,
+        )
 
 
 class XLNetTokenClassificationHead(XLNetPreTrainedModel):
@@ -110,13 +150,29 @@ class XLNetTokenClassificationHead(XLNetPreTrainedModel):
 
         self.apply(self.init_weights)
 
-    def forward(self, input_ids, token_type_ids=None, input_mask=None, attention_mask=None,
-                mems=None, perm_mask=None, target_mapping=None,
-                labels=None, head_mask=None, valid_ids=None):
+    def forward(
+        self,
+        input_ids,
+        token_type_ids=None,
+        input_mask=None,
+        attention_mask=None,
+        mems=None,
+        perm_mask=None,
+        target_mapping=None,
+        labels=None,
+        head_mask=None,
+        valid_ids=None,
+    ):
         transformer_outputs = self.transformer(
-            input_ids, token_type_ids=token_type_ids, input_mask=input_mask,
-            attention_mask=attention_mask, mems=mems, perm_mask=perm_mask,
-            target_mapping=target_mapping, head_mask=head_mask)
+            input_ids,
+            token_type_ids=token_type_ids,
+            input_mask=input_mask,
+            attention_mask=attention_mask,
+            mems=mems,
+            perm_mask=perm_mask,
+            target_mapping=target_mapping,
+            head_mask=head_mask,
+        )
         sequence_output = transformer_outputs[0]
         output = self.dropout(sequence_output)
         logits = self.logits_proj(output)
@@ -127,7 +183,10 @@ class XLNetTokenClassificationHead(XLNetPreTrainedModel):
             active_labels = labels.view(-1)[active_positions]
             active_logits = logits.view(-1, self.num_labels)[active_positions]
             loss = loss_fct(active_logits, active_labels)
-            return (loss, logits,)
+            return (
+                loss,
+                logits,
+            )
         return (logits,)
 
 
@@ -139,6 +198,7 @@ class RobertaForTokenClassificationHead(BertPreTrainedModel):
        for valid tokens (e.g., ignores additional word piece tokens generated by
        the tokenizer, as in NER task the 'X' label).
     """
+
     config_class = RobertaConfig
     pretrained_model_archive_map = ROBERTA_PRETRAINED_MODEL_ARCHIVE_MAP
     base_model_prefix = "roberta"
@@ -153,14 +213,24 @@ class RobertaForTokenClassificationHead(BertPreTrainedModel):
 
         self.init_weights()
 
-    def forward(self, input_ids, attention_mask=None, token_type_ids=None,
-                position_ids=None, head_mask=None, labels=None, valid_ids=None):
+    def forward(
+        self,
+        input_ids,
+        attention_mask=None,
+        token_type_ids=None,
+        position_ids=None,
+        head_mask=None,
+        labels=None,
+        valid_ids=None,
+    ):
 
-        outputs = self.roberta(input_ids,
-                               attention_mask=attention_mask,
-                               token_type_ids=token_type_ids,
-                               position_ids=position_ids,
-                               head_mask=head_mask)
+        outputs = self.roberta(
+            input_ids,
+            attention_mask=attention_mask,
+            token_type_ids=token_type_ids,
+            position_ids=position_ids,
+            head_mask=head_mask,
+        )
 
         sequence_output = outputs[0]
 
@@ -173,7 +243,10 @@ class RobertaForTokenClassificationHead(BertPreTrainedModel):
             active_labels = labels.view(-1)[active_positions]
             active_logits = logits.view(-1, self.num_labels)[active_positions]
             loss = loss_fct(active_logits, active_labels)
-            return (loss, logits,)
+            return (
+                loss,
+                logits,
+            )
         return (logits,)
 
 
@@ -185,48 +258,57 @@ class TransformerTokenClassifier(TransformerBase):
         model_type(str): model family (classifier head), choose between bert/quant_bert/xlnet
         labels (List[str], optional): list of tag labels
     """
+
     MODEL_CLASS = {
-        'bert': BertTokenClassificationHead,
-        'quant_bert': QuantizedBertForTokenClassificationHead,
-        'xlnet': XLNetTokenClassificationHead,
-        'roberta': RobertaForTokenClassificationHead,
+        "bert": BertTokenClassificationHead,
+        "quant_bert": QuantizedBertForTokenClassificationHead,
+        "xlnet": XLNetTokenClassificationHead,
+        "roberta": RobertaForTokenClassificationHead,
     }
 
     def __init__(
-            self, model_type: str, labels: List[str] = None,
-            *args, load_quantized=False, **kwargs):
+        self, model_type: str, labels: List[str] = None, *args, load_quantized=False, **kwargs
+    ):
         assert model_type in self.MODEL_CLASS.keys(), "unsupported model type"
         self.labels = labels
         self.num_labels = len(labels) + 1  # +1 for padding label
         self.labels_id_map = {k: v for k, v in enumerate(self.labels, 1)}
 
-        super(TransformerTokenClassifier, self).__init__(model_type,
-                                                         labels=self.labels,
-                                                         num_labels=self.num_labels, *args,
-                                                         **kwargs)
+        super(TransformerTokenClassifier, self).__init__(
+            model_type, labels=self.labels, num_labels=self.num_labels, *args, **kwargs
+        )
 
         self.model_class = self.MODEL_CLASS[model_type]
-        if model_type == 'quant_bert' and load_quantized:
-            self.model = self.model_class.from_pretrained(self.model_name_or_path, from_tf=bool(
-                '.ckpt' in self.model_name_or_path), config=self.config, from_8bit=load_quantized)
+        if model_type == "quant_bert" and load_quantized:
+            self.model = self.model_class.from_pretrained(
+                self.model_name_or_path,
+                from_tf=bool(".ckpt" in self.model_name_or_path),
+                config=self.config,
+                from_8bit=load_quantized,
+            )
         else:
-            self.model = self.model_class.from_pretrained(self.model_name_or_path, from_tf=bool(
-                '.ckpt' in self.model_name_or_path), config=self.config)
+            self.model = self.model_class.from_pretrained(
+                self.model_name_or_path,
+                from_tf=bool(".ckpt" in self.model_name_or_path),
+                config=self.config,
+            )
         self.to(self.device, self.n_gpus)
 
-    def train(self,
-              train_data_set: DataLoader,
-              dev_data_set: Union[DataLoader, List[DataLoader]] = None,
-              test_data_set: Union[DataLoader, List[DataLoader]] = None,
-              gradient_accumulation_steps: int = 1,
-              per_gpu_train_batch_size: int = 8,
-              max_steps: int = -1,
-              num_train_epochs: int = 3,
-              max_grad_norm: float = 1.0,
-              logging_steps: int = 50,
-              save_steps: int = 100,
-              training_args: bool = None,
-              best_result_file: str = None):
+    def train(
+        self,
+        train_data_set: DataLoader,
+        dev_data_set: Union[DataLoader, List[DataLoader]] = None,
+        test_data_set: Union[DataLoader, List[DataLoader]] = None,
+        gradient_accumulation_steps: int = 1,
+        per_gpu_train_batch_size: int = 8,
+        max_steps: int = -1,
+        num_train_epochs: int = 3,
+        max_grad_norm: float = 1.0,
+        logging_steps: int = 50,
+        save_steps: int = 100,
+        training_args: bool = None,
+        best_result_file: str = None,
+    ):
         """
         Run model training
 
@@ -248,27 +330,31 @@ class TransformerTokenClassifier(TransformerBase):
             training_args(bool, optional): model args. Defaults to None.
             best_result_file (str, optional): path to save best dev results when it's updated.
         """
-        self._train(train_data_set,
-                    dev_data_set,
-                    test_data_set,
-                    gradient_accumulation_steps,
-                    per_gpu_train_batch_size,
-                    max_steps,
-                    num_train_epochs,
-                    max_grad_norm,
-                    logging_steps=logging_steps,
-                    save_steps=save_steps,
-                    training_args=training_args,
-                    best_result_file=best_result_file)
+        self._train(
+            train_data_set,
+            dev_data_set,
+            test_data_set,
+            gradient_accumulation_steps,
+            per_gpu_train_batch_size,
+            max_steps,
+            num_train_epochs,
+            max_grad_norm,
+            logging_steps=logging_steps,
+            save_steps=save_steps,
+            training_args=training_args,
+            best_result_file=best_result_file,
+        )
 
     def _batch_mapper(self, batch):
-        mapping = {'input_ids': batch[0],
-                   'attention_mask': batch[1],
-                   # XLM don't use segment_ids
-                   'token_type_ids': batch[2],
-                   'valid_ids': batch[3]}
+        mapping = {
+            "input_ids": batch[0],
+            "attention_mask": batch[1],
+            # XLM don't use segment_ids
+            "token_type_ids": batch[2],
+            "valid_ids": batch[3],
+        }
         if len(batch) > 4:
-            mapping.update({'labels': batch[4]})
+            mapping.update({"labels": batch[4]})
         return mapping
 
     def evaluate_predictions(self, logits, label_ids):
@@ -294,15 +380,17 @@ class TransformerTokenClassifier(TransformerBase):
         y_true = []
         y_pred = []
         for p, y in zip(logits, label_ids):
-            y_pred.append(label_map.get(p, 'O'))
-            y_true.append(label_map.get(y, 'O'))
+            y_pred.append(label_map.get(p, "O"))
+            y_true.append(label_map.get(y, "O"))
         assert len(y_true) == len(y_pred)
         return tagging(y_pred, y_true)
 
-    def convert_to_tensors(self,
-                           examples: List[TokenClsInputExample],
-                           max_seq_length: int = 128,
-                           include_labels: bool = True) -> TensorDataset:
+    def convert_to_tensors(
+        self,
+        examples: List[TokenClsInputExample],
+        max_seq_length: int = 128,
+        include_labels: bool = True,
+    ) -> TensorDataset:
         """
         Convert examples to tensor dataset
 
@@ -315,21 +403,21 @@ class TransformerTokenClassifier(TransformerBase):
             TensorDataset:
         """
         features = self._convert_examples_to_features(
-            examples, max_seq_length, self.tokenizer, include_labels,
+            examples,
+            max_seq_length,
+            self.tokenizer,
+            include_labels,
             # xlnet has a cls token at the end
-            cls_token_at_end=bool(
-                self.model_type in [
-                    'xlnet']), cls_token=self.tokenizer.cls_token,
-            cls_token_segment_id=2 if self.model_type in[
-                'xlnet'] else 0, sep_token=self.tokenizer.sep_token,
-            sep_token_extra=bool(self.model_type in ['roberta']),
+            cls_token_at_end=bool(self.model_type in ["xlnet"]),
+            cls_token=self.tokenizer.cls_token,
+            cls_token_segment_id=2 if self.model_type in ["xlnet"] else 0,
+            sep_token=self.tokenizer.sep_token,
+            sep_token_extra=bool(self.model_type in ["roberta"]),
             # pad on the left for xlnet
-            pad_on_left=bool(
-                self.model_type in ['xlnet']), pad_token=self.tokenizer.convert_tokens_to_ids(
-                    [
-                        self.tokenizer.pad_token
-                    ])[0],
-            pad_token_segment_id=4 if self.model_type in ['xlnet'] else 0)
+            pad_on_left=bool(self.model_type in ["xlnet"]),
+            pad_token=self.tokenizer.convert_tokens_to_ids([self.tokenizer.pad_token])[0],
+            pad_token_segment_id=4 if self.model_type in ["xlnet"] else 0,
+        )
         # Convert to Tensors and build dataset
         all_input_ids = torch.tensor([f.input_ids for f in features], dtype=torch.long)
         all_input_mask = torch.tensor([f.input_mask for f in features], dtype=torch.long)
@@ -338,24 +426,30 @@ class TransformerTokenClassifier(TransformerBase):
 
         if include_labels:
             all_label_ids = torch.tensor([f.label_id for f in features], dtype=torch.long)
-            dataset = TensorDataset(all_input_ids, all_input_mask, all_segment_ids,
-                                    all_valid_ids, all_label_ids)
+            dataset = TensorDataset(
+                all_input_ids, all_input_mask, all_segment_ids, all_valid_ids, all_label_ids
+            )
         else:
-            dataset = TensorDataset(all_input_ids, all_input_mask, all_segment_ids,
-                                    all_valid_ids)
+            dataset = TensorDataset(all_input_ids, all_input_mask, all_segment_ids, all_valid_ids)
         return dataset
 
-    def _convert_examples_to_features(self,
-                                      examples: List[TokenClsInputExample],
-                                      max_seq_length,
-                                      tokenizer,
-                                      include_labels=True,
-                                      cls_token_at_end=False, pad_on_left=False,
-                                      cls_token='[CLS]', sep_token='[SEP]', pad_token=0,
-                                      sequence_segment_id=0,
-                                      sep_token_extra=0,
-                                      cls_token_segment_id=1, pad_token_segment_id=0,
-                                      mask_padding_with_zero=True):
+    def _convert_examples_to_features(
+        self,
+        examples: List[TokenClsInputExample],
+        max_seq_length,
+        tokenizer,
+        include_labels=True,
+        cls_token_at_end=False,
+        pad_on_left=False,
+        cls_token="[CLS]",
+        sep_token="[SEP]",
+        pad_token=0,
+        sequence_segment_id=0,
+        sep_token_extra=0,
+        cls_token_segment_id=1,
+        pad_token_segment_id=0,
+        mask_padding_with_zero=True,
+    ):
         """ Loads a data file into a list of `InputBatch`s
             `cls_token_at_end` define the location of the CLS token:
                 - False (Default, BERT/XLM pattern): [CLS] + A + [SEP] + B + [SEP]
@@ -389,10 +483,10 @@ class TransformerTokenClassifier(TransformerBase):
 
             # truncate by max_seq_length
             special_tokens_count = 3 if sep_token_extra else 2
-            tokens = tokens[:(max_seq_length - special_tokens_count)]
-            valid_tokens = valid_tokens[:(max_seq_length - special_tokens_count)]
+            tokens = tokens[: (max_seq_length - special_tokens_count)]
+            valid_tokens = valid_tokens[: (max_seq_length - special_tokens_count)]
             if include_labels:
-                labels = labels[:(max_seq_length - special_tokens_count)]
+                labels = labels[: (max_seq_length - special_tokens_count)]
 
             tokens += [sep_token]
             if include_labels:
@@ -446,18 +540,20 @@ class TransformerTokenClassifier(TransformerBase):
             if include_labels:
                 assert len(labels) == max_seq_length
 
-            features.append(InputFeatures(input_ids=input_ids,
-                                          input_mask=input_mask,
-                                          segment_ids=segment_ids,
-                                          label_id=labels,
-                                          valid_ids=valid_tokens))
+            features.append(
+                InputFeatures(
+                    input_ids=input_ids,
+                    input_mask=input_mask,
+                    segment_ids=segment_ids,
+                    label_id=labels,
+                    valid_ids=valid_tokens,
+                )
+            )
         return features
 
     def inference(
-            self,
-            examples: List[TokenClsInputExample],
-            max_seq_length: int,
-            batch_size: int = 64):
+        self, examples: List[TokenClsInputExample], max_seq_length: int, batch_size: int = 64
+    ):
         """
         Run inference on given examples
 
@@ -469,7 +565,8 @@ class TransformerTokenClassifier(TransformerBase):
             logits
         """
         data_set = self.convert_to_tensors(
-            examples, max_seq_length=max_seq_length, include_labels=False)
+            examples, max_seq_length=max_seq_length, include_labels=False
+        )
         inf_sampler = SequentialSampler(data_set)
         inf_dataloader = DataLoader(data_set, sampler=inf_sampler, batch_size=batch_size)
         logits = self._evaluate(inf_dataloader)
@@ -481,6 +578,6 @@ class TransformerTokenClassifier(TransformerBase):
         output = []
         for tag_ids, ex in zip(res_ids, examples):
             tokens = ex.tokens
-            tags = [self.labels_id_map.get(t, 'O') for t in tag_ids]
+            tags = [self.labels_id_map.get(t, "O") for t in tag_ids]
             output.append((tokens, tags))
         return output

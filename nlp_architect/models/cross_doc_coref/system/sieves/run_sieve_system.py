@@ -20,8 +20,9 @@ import time
 from nlp_architect.common.cdc.cluster import Clusters
 from nlp_architect.common.cdc.topics import Topic
 from nlp_architect.models.cross_doc_coref.system.sieves.sieves import SieveClusterMerger
-from nlp_architect.models.cross_doc_coref.system.sieves_container_init import \
-    SievesContainerInitialization
+from nlp_architect.models.cross_doc_coref.system.sieves_container_init import (
+    SievesContainerInitialization,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -31,7 +32,7 @@ class RunSystemsSuper(object):
         self.sieves = []
         self.results_dict = dict()
         self.results_ordered = []
-        logger.info('loading topic %s, total mentions: %d', topic.topic_id, len(topic.mentions))
+        logger.info("loading topic %s, total mentions: %d", topic.topic_id, len(topic.mentions))
         self.clusters = Clusters(topic.topic_id, topic.mentions)
 
     @staticmethod
@@ -73,8 +74,12 @@ class RunSystemsSuper(object):
 
             end = time.time()
             took = end - start
-            logger.info('Total of %d clusters merged using method: %s, took: %.4f sec',
-                        merge_count, str(sieve.excepted_relation), took)
+            logger.info(
+                "Total of %d clusters merged using method: %s, took: %.4f sec",
+                merge_count,
+                str(sieve.excepted_relation),
+                took,
+            )
 
         return self.clusters
 
@@ -85,22 +90,24 @@ class RunSystemsSuper(object):
 class RunSystemsEntity(RunSystemsSuper):
     def __init__(self, topic: Topic, resources):
         super(RunSystemsEntity, self).__init__(topic)
-        self.sieves = self.set_sieves_from_config(resources.entity_config,
-                                                  resources.get_module_from_relation)
+        self.sieves = self.set_sieves_from_config(
+            resources.entity_config, resources.get_module_from_relation
+        )
 
 
 class RunSystemsEvent(RunSystemsSuper):
     def __init__(self, topic, resources):
         super(RunSystemsEvent, self).__init__(topic)
-        self.sieves = self.set_sieves_from_config(resources.event_config,
-                                                  resources.get_module_from_relation)
+        self.sieves = self.set_sieves_from_config(
+            resources.event_config, resources.get_module_from_relation
+        )
 
 
 # pylint: disable=no-else-return
 def get_run_system(topic: Topic, resource: SievesContainerInitialization, eval_type: str):
-    if eval_type.lower() == 'entity':
+    if eval_type.lower() == "entity":
         return RunSystemsEntity(topic, resource)
-    if eval_type.lower() == 'event':
+    if eval_type.lower() == "event":
         return RunSystemsEvent(topic, resource)
     else:
-        raise AttributeError(eval_type + ' Not supported!')
+        raise AttributeError(eval_type + " Not supported!")

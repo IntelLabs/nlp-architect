@@ -41,38 +41,48 @@ class CNNLSTM(nn.Module):
         padding_idx (int, optinal): padding number for embedding layers
 
     """
-    def __init__(self,
-                 word_vocab_size: int,
-                 num_labels: int,
-                 word_embedding_dims: int = 100,
-                 char_embedding_dims: int = 16,
-                 cnn_kernel_size: int = 3,
-                 cnn_num_filters: int = 128,
-                 lstm_hidden_size: int = 100,
-                 lstm_layers: int = 2,
-                 bidir: bool = True,
-                 dropout: float = 0.5,
-                 padding_idx: int = 0):
+
+    def __init__(
+        self,
+        word_vocab_size: int,
+        num_labels: int,
+        word_embedding_dims: int = 100,
+        char_embedding_dims: int = 16,
+        cnn_kernel_size: int = 3,
+        cnn_num_filters: int = 128,
+        lstm_hidden_size: int = 100,
+        lstm_layers: int = 2,
+        bidir: bool = True,
+        dropout: float = 0.5,
+        padding_idx: int = 0,
+    ):
         super(CNNLSTM, self).__init__()
         self.word_embedding_dim = word_embedding_dims
-        self.word_embeddings = nn.Embedding(word_vocab_size,
-                                            self.word_embedding_dim,
-                                            padding_idx=padding_idx)
-        self.char_embeddings = nn.Embedding(n_letters + 1,
-                                            char_embedding_dims,
-                                            padding_idx=padding_idx)
-        self.conv1 = nn.Conv1d(in_channels=char_embedding_dims,
-                               out_channels=cnn_num_filters,
-                               kernel_size=cnn_kernel_size,
-                               padding=int(cnn_kernel_size / 2))
+        self.word_embeddings = nn.Embedding(
+            word_vocab_size, word_embedding_dims, padding_idx=padding_idx
+        )
+        self.char_embeddings = nn.Embedding(
+            n_letters + 1, char_embedding_dims, padding_idx=padding_idx
+        )
+        self.conv1 = nn.Conv1d(
+            in_channels=char_embedding_dims,
+            out_channels=cnn_num_filters,
+            kernel_size=cnn_kernel_size,
+            padding=int(cnn_kernel_size / 2),
+        )
         self.relu = nn.ReLU()
 
-        self.lstm = nn.LSTM(input_size=word_embedding_dims + cnn_num_filters,
-                            hidden_size=lstm_hidden_size,
-                            bidirectional=bidir, batch_first=True, num_layers=lstm_layers)
+        self.lstm = nn.LSTM(
+            input_size=word_embedding_dims + cnn_num_filters,
+            hidden_size=lstm_hidden_size,
+            bidirectional=bidir,
+            batch_first=True,
+            num_layers=lstm_layers,
+        )
         self.dropout = nn.Dropout(dropout)
-        self.dense = nn.Linear(in_features=lstm_hidden_size * 2 if bidir else lstm_hidden_size,
-                               out_features=num_labels)
+        self.dense = nn.Linear(
+            in_features=lstm_hidden_size * 2 if bidir else lstm_hidden_size, out_features=num_labels
+        )
         self.num_labels = num_labels
         self.padding_idx = padding_idx
 
@@ -83,8 +93,9 @@ class CNNLSTM(nn.Module):
         Args:
             embeddings (torch.tensor): word embedding tensor
         """
-        self.word_embeddings = nn.Embedding.from_pretrained(embeddings, freeze=False,
-                                                            padding_idx=self.padding_idx)
+        self.word_embeddings = nn.Embedding.from_pretrained(
+            embeddings, freeze=False, padding_idx=self.padding_idx
+        )
 
     def forward(self, words, word_chars, **kwargs):
         """
@@ -104,7 +115,8 @@ class CNNLSTM(nn.Module):
         input_size = char_embeds.size()
         squashed_shape = [-1] + list(input_size[2:])
         char_embeds_reshape = char_embeds.contiguous().view(
-            *squashed_shape)  # (samples * timesteps, input_size)
+            *squashed_shape
+        )  # (samples * timesteps, input_size)
         char_embeds = self.conv1(char_embeds_reshape)
         char_embeds = char_embeds.permute(0, 2, 1)
         char_embeds = self.relu(char_embeds)
@@ -139,9 +151,7 @@ class CNNLSTM(nn.Module):
         if not os.path.exists(config):
             raise FileNotFoundError
         cfg = load_json_file(config)
-        return cls(word_vocab_size=word_vocab_size,
-                   num_labels=num_labels,
-                   **cfg)
+        return cls(word_vocab_size=word_vocab_size, num_labels=num_labels, **cfg)
 
 
 class IDCNN(nn.Module):
@@ -170,25 +180,28 @@ class IDCNN(nn.Module):
         drop_penalty (float, optional): penalty for dropout regularization
 
     """
-    def __init__(self,
-                 word_vocab_size: int,
-                 num_labels: int,
-                 word_embedding_dims: int = 100,
-                 shape_vocab_size: int = 4,
-                 shape_embedding_dims: int = 5,
-                 char_embedding_dims: int = 16,
-                 char_cnn_filters: int = 128,
-                 char_cnn_kernel_size: int = 3,
-                 cnn_kernel_size: int = 3,
-                 cnn_num_filters: int = 128,
-                 input_dropout: float = 0.35,
-                 middle_dropout: float = 0,
-                 hidden_dropout: float = 0.15,
-                 blocks: int = 1,
-                 dilations: List = None,
-                 embedding_pad_idx: int = 0,
-                 use_chars: bool = False,
-                 drop_penalty: float = 1e-4):
+
+    def __init__(
+        self,
+        word_vocab_size: int,
+        num_labels: int,
+        word_embedding_dims: int = 100,
+        shape_vocab_size: int = 4,
+        shape_embedding_dims: int = 5,
+        char_embedding_dims: int = 16,
+        char_cnn_filters: int = 128,
+        char_cnn_kernel_size: int = 3,
+        cnn_kernel_size: int = 3,
+        cnn_num_filters: int = 128,
+        input_dropout: float = 0.35,
+        middle_dropout: float = 0,
+        hidden_dropout: float = 0.15,
+        blocks: int = 1,
+        dilations: List = None,
+        embedding_pad_idx: int = 0,
+        use_chars: bool = False,
+        drop_penalty: float = 1e-4,
+    ):
         super(IDCNN, self).__init__()
         if dilations is None:
             dilations = [1, 2, 1]
@@ -197,43 +210,49 @@ class IDCNN(nn.Module):
         self.use_chars = use_chars
         self.drop_penalty = drop_penalty
         self.num_labels = num_labels
-        self.embed_pad_idx = embedding_pad_idx
+        self.padding_idx = embedding_pad_idx
         self.word_embedding_dim = word_embedding_dims
-        self.word_embeddings = nn.Embedding(word_vocab_size,
-                                            self.word_embedding_dim,
-                                            padding_idx=self.embed_pad_idx)
+        self.word_embeddings = nn.Embedding(
+            word_vocab_size, self.word_embedding_dim, padding_idx=self.padding_idx
+        )
         self.shape_embeddings = nn.Embedding(
-            shape_vocab_size + 1, shape_embedding_dims, padding_idx=self.embed_pad_idx)
+            shape_vocab_size + 1, shape_embedding_dims, padding_idx=self.padding_idx
+        )
         padding_word = int(cnn_kernel_size / 2)
         self.char_filters = char_cnn_filters if use_chars else 0
         self.conv0 = nn.Conv1d(
             in_channels=word_embedding_dims + shape_embedding_dims + self.char_filters,
             out_channels=cnn_num_filters,
             kernel_size=cnn_kernel_size,
-            padding=padding_word)
+            padding=padding_word,
+        )
         self.cnv_layers = []
         for i in range(len(self.dilation)):
-            self.cnv_layers.append(nn.Conv1d(
-                in_channels=cnn_num_filters,
-                out_channels=cnn_num_filters,
-                kernel_size=cnn_kernel_size,
-                padding=padding_word * self.dilation[i],
-                dilation=self.dilation[i]))
+            self.cnv_layers.append(
+                nn.Conv1d(
+                    in_channels=cnn_num_filters,
+                    out_channels=cnn_num_filters,
+                    kernel_size=cnn_kernel_size,
+                    padding=padding_word * self.dilation[i],
+                    dilation=self.dilation[i],
+                )
+            )
         self.cnv_layers = nn.ModuleList(self.cnv_layers)
         self.dense = nn.Linear(
-            in_features=(cnn_num_filters * self.num_blocks),
-            out_features=num_labels)
+            in_features=(cnn_num_filters * self.num_blocks), out_features=num_labels
+        )
 
         if use_chars:
             padding_char = int(char_cnn_kernel_size / 2)
-            self.char_embeddings = nn.Embedding(n_letters + 1,
-                                                char_embedding_dims,
-                                                padding_idx=self.embed_pad_idx)
+            self.char_embeddings = nn.Embedding(
+                n_letters + 1, char_embedding_dims, padding_idx=self.padding_idx
+            )
             self.char_conv = nn.Conv1d(
                 in_channels=char_embedding_dims,
                 out_channels=self.char_filters,
                 kernel_size=char_cnn_kernel_size,
-                padding=padding_char)
+                padding=padding_char,
+            )
         self.i_drop = nn.Dropout(input_dropout)
         self.m_drop = nn.Dropout(middle_dropout)
         self.h_drop = nn.Dropout(hidden_dropout)
@@ -320,9 +339,7 @@ class IDCNN(nn.Module):
         if not os.path.exists(config):
             raise FileNotFoundError
         cfg = load_json_file(config)
-        return cls(word_vocab_size=word_vocab_size,
-                   num_labels=num_labels,
-                   **cfg)
+        return cls(word_vocab_size=word_vocab_size, num_labels=num_labels, **cfg)
 
     def load_embeddings(self, embeddings):
         """
@@ -331,5 +348,6 @@ class IDCNN(nn.Module):
         Args:
             embeddings (torch.tensor): word embedding tensor
         """
-        self.word_embeddings = nn.Embedding.from_pretrained(embeddings, freeze=False,
-                                                            padding_idx=self.embed_pad_idx)
+        self.word_embeddings = nn.Embedding.from_pretrained(
+            embeddings, freeze=False, padding_idx=self.padding_idx
+        )

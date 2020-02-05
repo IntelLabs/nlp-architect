@@ -21,24 +21,37 @@ from typing import List, Union
 import torch
 from torch.utils.data import DataLoader
 from tqdm import tqdm, trange
-from transformers import (AdamW, BertConfig, BertTokenizer, RobertaConfig,
-                          RobertaTokenizer, XLMConfig, XLMTokenizer,
-                          XLNetConfig, XLNetTokenizer,
-                          get_linear_schedule_with_warmup)
+from transformers import (
+    AdamW,
+    BertConfig,
+    BertTokenizer,
+    RobertaConfig,
+    RobertaTokenizer,
+    XLMConfig,
+    XLMTokenizer,
+    XLNetConfig,
+    XLNetTokenizer,
+    get_linear_schedule_with_warmup,
+)
+
 from nlp_architect.models import TrainableModel
-from nlp_architect.models.transformers.quantized_bert import \
-    QuantizedBertConfig
+from nlp_architect.models.transformers.quantized_bert import QuantizedBertConfig
 
 logger = logging.getLogger(__name__)
 
 
-ALL_MODELS = sum((tuple(conf.pretrained_config_archive_map.keys())
-                  for conf in (BertConfig, XLNetConfig, XLMConfig)), ())
+ALL_MODELS = sum(
+    (
+        tuple(conf.pretrained_config_archive_map.keys())
+        for conf in (BertConfig, XLNetConfig, XLMConfig)
+    ),
+    (),
+)
 
 
 def get_models(models: List[str]):
     if models is not None:
-        return [m for m in ALL_MODELS if m.split('-')[0] in models]
+        return [m for m in ALL_MODELS if m.split("-")[0] in models]
     return ALL_MODELS
 
 
@@ -46,18 +59,28 @@ class TransformerBase(TrainableModel):
     """
     Transformers base model (for working with pytorch-transformers models)
     """
+
     MODEL_CONFIGURATIONS = {
-        'bert': (BertConfig, BertTokenizer),
-        'quant_bert': (QuantizedBertConfig, BertTokenizer),
-        'xlnet': (XLNetConfig, XLNetTokenizer),
-        'xlm': (XLMConfig, XLMTokenizer),
-        'roberta': (RobertaConfig, RobertaTokenizer)
+        "bert": (BertConfig, BertTokenizer),
+        "quant_bert": (QuantizedBertConfig, BertTokenizer),
+        "xlnet": (XLNetConfig, XLNetTokenizer),
+        "xlm": (XLMConfig, XLMTokenizer),
+        "roberta": (RobertaConfig, RobertaTokenizer),
     }
 
-    def __init__(self, model_type: str, model_name_or_path: str, labels: List[str] = None,
-                 num_labels: int = None, config_name=None,
-                 tokenizer_name=None, do_lower_case=False, output_path=None,
-                 device='cpu', n_gpus=0):
+    def __init__(
+        self,
+        model_type: str,
+        model_name_or_path: str,
+        labels: List[str] = None,
+        num_labels: int = None,
+        config_name=None,
+        tokenizer_name=None,
+        do_lower_case=False,
+        output_path=None,
+        device="cpu",
+        n_gpus=0,
+    ):
         """
         Transformers base model (for working with pytorch-transformers models)
 
@@ -83,7 +106,7 @@ class TransformerBase(TrainableModel):
         self.num_labels = num_labels
         self.do_lower_case = do_lower_case
         if output_path is not None and not os.path.exists(output_path):
-            raise FileNotFoundError('output_path is not found')
+            raise FileNotFoundError("output_path is not found")
         self.output_path = output_path
 
         self.model_class = None
@@ -103,7 +126,7 @@ class TransformerBase(TrainableModel):
         self._optimizer = None
         self._scheduler = None
 
-    def to(self, device='cpu', n_gpus=0):
+    def to(self, device="cpu", n_gpus=0):
         if self.model is not None:
             self.model.to(device)
             if n_gpus > 1:
@@ -127,35 +150,48 @@ class TransformerBase(TrainableModel):
     def scheduler(self, sch):
         self._scheduler = sch
 
-    def setup_default_optimizer(self,
-                                weight_decay: float = 0.0,
-                                learning_rate: float = 5e-5,
-                                adam_epsilon: float = 1e-8,
-                                warmup_steps: int = 0,
-                                total_steps: int = 0):
+    def setup_default_optimizer(
+        self,
+        weight_decay: float = 0.0,
+        learning_rate: float = 5e-5,
+        adam_epsilon: float = 1e-8,
+        warmup_steps: int = 0,
+        total_steps: int = 0,
+    ):
         # Prepare optimizer and schedule (linear warmup and decay)
-        no_decay = ['bias', 'LayerNorm.weight']
+        no_decay = ["bias", "LayerNorm.weight"]
         optimizer_grouped_parameters = [
-            {'params': [p for n, p in self.model.named_parameters() if not any(
-                nd in n for nd in no_decay)], 'weight_decay': weight_decay},
-            {'params': [p for n, p in self.model.named_parameters() if any(
-                nd in n for nd in no_decay)], 'weight_decay': 0.0}
+            {
+                "params": [
+                    p
+                    for n, p in self.model.named_parameters()
+                    if not any(nd in n for nd in no_decay)
+                ],
+                "weight_decay": weight_decay,
+            },
+            {
+                "params": [
+                    p for n, p in self.model.named_parameters() if any(nd in n for nd in no_decay)
+                ],
+                "weight_decay": 0.0,
+            },
         ]
         self.optimizer = AdamW(optimizer_grouped_parameters, lr=learning_rate, eps=adam_epsilon)
-        self.scheduler = get_linear_schedule_with_warmup(self.optimizer,
-                                                         num_warmup_steps=warmup_steps,
-                                                         num_training_steps=total_steps)
+        self.scheduler = get_linear_schedule_with_warmup(
+            self.optimizer, num_warmup_steps=warmup_steps, num_training_steps=total_steps
+        )
 
     def _load_config(self, config_name=None):
-        config = self.config_class.from_pretrained(config_name if config_name
-                                                   else self.model_name_or_path,
-                                                   num_labels=self.num_labels)
+        config = self.config_class.from_pretrained(
+            config_name if config_name else self.model_name_or_path, num_labels=self.num_labels
+        )
         return config
 
     def _load_tokenizer(self, tokenizer_name=None):
         tokenizer = self.tokenizer_class.from_pretrained(
-            tokenizer_name if tokenizer_name
-            else self.model_name_or_path, do_lower_case=self.do_lower_case)
+            tokenizer_name if tokenizer_name else self.model_name_or_path,
+            do_lower_case=self.do_lower_case,
+        )
         return tokenizer
 
     def save_model(self, output_dir: str, save_checkpoint: bool = False, args=None):
@@ -172,16 +208,16 @@ class TransformerBase(TrainableModel):
             os.makedirs(output_dir)
 
         logger.info("Saving model checkpoint to %s", output_dir)
-        model_to_save = self.model.module if hasattr(self.model, 'module') else self.model
+        model_to_save = self.model.module if hasattr(self.model, "module") else self.model
         model_to_save.save_pretrained(output_dir)
         if not save_checkpoint:
             if self.tokenizer is not None:
                 self.tokenizer.save_pretrained(output_dir)
-            with io.open(output_dir + os.sep + 'labels.txt', 'w', encoding='utf-8') as fw:
+            with io.open(output_dir + os.sep + "labels.txt", "w", encoding="utf-8") as fw:
                 for l in self.labels:
-                    fw.write('{}\n'.format(l))
+                    fw.write("{}\n".format(l))
             if args is not None:
-                torch.save(args, os.path.join(output_dir, 'training_args.bin'))
+                torch.save(args, os.path.join(output_dir, "training_args.bin"))
 
     @classmethod
     def load_model(cls, model_path: str, model_type: str, *args, **kwargs):
@@ -198,16 +234,16 @@ class TransformerBase(TrainableModel):
         # Load a trained model and vocabulary from given path
         if not os.path.exists(model_path):
             raise FileNotFoundError
-        with io.open(model_path + os.sep + 'labels.txt') as fp:
+        with io.open(model_path + os.sep + "labels.txt") as fp:
             labels = [l.strip() for l in fp.readlines()]
         return cls(
-            model_type=model_type, model_name_or_path=model_path, labels=labels, *args, **kwargs)
+            model_type=model_type, model_name_or_path=model_path, labels=labels, *args, **kwargs
+        )
 
     @staticmethod
-    def get_train_steps_epochs(max_steps: int,
-                               num_train_epochs: int,
-                               gradient_accumulation_steps: int,
-                               num_samples: int):
+    def get_train_steps_epochs(
+        max_steps: int, num_train_epochs: int, gradient_accumulation_steps: int, num_samples: int
+    ):
         """
         get train steps and epochs
 
@@ -233,19 +269,21 @@ class TransformerBase(TrainableModel):
         outputs = self.model(**inputs)
         return outputs[-1]
 
-    def _train(self,
-               data_set: DataLoader,
-               dev_data_set: Union[DataLoader, List[DataLoader]] = None,
-               test_data_set: Union[DataLoader, List[DataLoader]] = None,
-               gradient_accumulation_steps: int = 1,
-               per_gpu_train_batch_size: int = 8,
-               max_steps: int = -1,
-               num_train_epochs: int = 3,
-               max_grad_norm: float = 1.0,
-               logging_steps: int = 50,
-               save_steps: int = 100,
-               training_args: str = None,
-               best_result_file: str = None):
+    def _train(
+        self,
+        data_set: DataLoader,
+        dev_data_set: Union[DataLoader, List[DataLoader]] = None,
+        test_data_set: Union[DataLoader, List[DataLoader]] = None,
+        gradient_accumulation_steps: int = 1,
+        per_gpu_train_batch_size: int = 8,
+        max_steps: int = -1,
+        num_train_epochs: int = 3,
+        max_grad_norm: float = 1.0,
+        logging_steps: int = 50,
+        save_steps: int = 100,
+        training_args: str = None,
+        best_result_file: str = None,
+    ):
         """Run model training
             batch_mapper: a function that maps a batch into parameters that the model
                           expects in the forward method (for use with custom heads and models).
@@ -254,10 +292,9 @@ class TransformerBase(TrainableModel):
                           with the model as a parameter.
 
         """
-        t_total, num_train_epochs = self.get_train_steps_epochs(max_steps,
-                                                                num_train_epochs,
-                                                                gradient_accumulation_steps,
-                                                                len(data_set))
+        t_total, num_train_epochs = self.get_train_steps_epochs(
+            max_steps, num_train_epochs, gradient_accumulation_steps, len(data_set)
+        )
         if self.optimizer is None and self.scheduler is None:
             logger.info("Loading default optimizer and scheduler")
             self.setup_default_optimizer(total_steps=t_total)
@@ -267,8 +304,10 @@ class TransformerBase(TrainableModel):
         logger.info("  Num examples = %d", len(data_set.dataset))
         logger.info("  Num Epochs = %d", num_train_epochs)
         logger.info("  Instantaneous batch size per GPU/CPU = %d", per_gpu_train_batch_size)
-        logger.info("  Total train batch size (w. parallel, distributed & accumulation) = %d",
-                    train_batch_size * gradient_accumulation_steps)
+        logger.info(
+            "  Total train batch size (w. parallel, distributed & accumulation) = %d",
+            train_batch_size * gradient_accumulation_steps,
+        )
         logger.info("  Gradient Accumulation steps = %d", gradient_accumulation_steps)
         logger.info("  Total optimization steps = %d", t_total)
 
@@ -280,7 +319,7 @@ class TransformerBase(TrainableModel):
         self.model.zero_grad()
         train_iterator = trange(num_train_epochs, desc="Epoch")
         for epoch, _ in enumerate(train_iterator):
-            print('****** Epoch: ' + str(epoch))
+            print("****** Epoch: " + str(epoch))
             epoch_iterator = tqdm(data_set, desc="Train iteration")
             for step, batch in enumerate(epoch_iterator):
                 self.model.train()
@@ -317,25 +356,29 @@ class TransformerBase(TrainableModel):
                                 if i == 0 and f1 > best_dev:  # dev set
                                     best_dev = f1
                                     set_test = True
-                                    best_model_path = os.path.join(self.output_path, 'best_dev')
+                                    best_model_path = os.path.join(self.output_path, "best_dev")
                                     self.save_model(best_model_path, args=training_args)
                                 elif set_test:
                                     dev_test = f1
                                     set_test = False
                                     if best_result_file is not None:
-                                        with open(best_result_file, 'a+') as f:
+                                        with open(best_result_file, "a+") as f:
                                             f.write(
-                                                'best dev= ' + str(best_dev)
-                                                + ', test= ' + str(dev_test))
+                                                "best dev= "
+                                                + str(best_dev)
+                                                + ", test= "
+                                                + str(dev_test)
+                                            )
                         logger.info("\n\nBest dev=%s. test=%s\n", str(best_dev), str(dev_test))
-                        logger.info('lr = {}'.format(self.scheduler.get_lr()[0]))
-                        logger.info('loss = {}'.format((tr_loss - logging_loss) / logging_steps))
+                        logger.info("lr = {}".format(self.scheduler.get_lr()[0]))
+                        logger.info("loss = {}".format((tr_loss - logging_loss) / logging_steps))
                         logging_loss = tr_loss
 
                     if save_steps > 0 and global_step % save_steps == 0:
                         # Save model checkpoint
-                        self.save_model_checkpoint(output_path=self.output_path,
-                                                   name='checkpoint-{}'.format(global_step))
+                        self.save_model_checkpoint(
+                            output_path=self.output_path, name="checkpoint-{}".format(global_step)
+                        )
 
                 if 0 < max_steps < global_step:
                     epoch_iterator.close()
@@ -360,39 +403,46 @@ class TransformerBase(TrainableModel):
             with torch.no_grad():
                 inputs = self._batch_mapper(batch)
                 outputs = self.model(**inputs)
-                if 'labels' in inputs:
+                if "labels" in inputs:
                     tmp_eval_loss, logits = outputs[:2]
                     eval_loss += tmp_eval_loss.mean().item()
                 else:
                     logits = outputs[0]
             nb_eval_steps += 1
             model_output = logits.detach().cpu()
-            model_out_label_ids = inputs['labels'].detach().cpu(
-            ) if 'labels' in inputs else None
+            model_out_label_ids = inputs["labels"].detach().cpu() if "labels" in inputs else None
             if preds is None:
                 preds = model_output
                 out_label_ids = model_out_label_ids
             else:
                 preds = torch.cat((preds, model_output), dim=0)
-                out_label_ids = torch.cat((out_label_ids, model_out_label_ids),
-                                          dim=0) if out_label_ids is not None else None
+                out_label_ids = (
+                    torch.cat((out_label_ids, model_out_label_ids), dim=0)
+                    if out_label_ids is not None
+                    else None
+                )
         if out_label_ids is None:
             return preds
         return preds, out_label_ids
 
     def _batch_mapper(self, batch):
-        mapping = {'input_ids': batch[0],
-                   'attention_mask': batch[1],
-                   # XLM don't use segment_ids
-                   'token_type_ids': batch[2] if self.model_type in ['bert', 'quant_bert', 'xlnet']
-                   else None}
+        mapping = {
+            "input_ids": batch[0],
+            "attention_mask": batch[1],
+            # XLM don't use segment_ids
+            "token_type_ids": batch[2]
+            if self.model_type in ["bert", "quant_bert", "xlnet"]
+            else None,
+        }
         if len(batch) == 4:
-            mapping.update({'labels': batch[3]})
+            mapping.update({"labels": batch[3]})
         return mapping
 
     def evaluate_predictions(self, logits, label_ids):
-        raise NotImplementedError('evaluate_predictions method must be implemented in order to'
-                                  'be used for dev/test set evaluation')
+        raise NotImplementedError(
+            "evaluate_predictions method must be implemented in order to"
+            "be used for dev/test set evaluation"
+        )
 
     def save_model_checkpoint(self, output_path: str, name: str):
         """

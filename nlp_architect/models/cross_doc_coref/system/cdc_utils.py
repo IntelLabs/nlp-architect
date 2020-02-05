@@ -36,14 +36,14 @@ def write_clusters_to_file(clusters: Clusters, topic_id: str, file_obj) -> None:
         file_obj: file object
     """
     i = 0
-    file_obj.write('Topic - ' + topic_id + '\n')
+    file_obj.write("Topic - " + topic_id + "\n")
     for cluster in clusters.clusters_list:
         i += 1
-        file_obj.write('cluster #' + str(i) + '\n')
+        file_obj.write("cluster #" + str(i) + "\n")
         mentions_list = []
         for mention in cluster.mentions:
             mentions_list.append((mention.tokens_str, mention.predicted_coref_chain))
-        file_obj.write(str(mentions_list) + '\n')
+        file_obj.write(str(mentions_list) + "\n")
 
 
 def extract_vocab(mentions: List[MentionData], filter_stop_words: bool) -> List[str]:
@@ -77,7 +77,7 @@ def extract_vocab(mentions: List[MentionData], filter_stop_words: bool) -> List[
 
 
 def load_mentions_vocab_from_files(mentions_files, filter_stop_words=False):
-    logger.info('Loading mentions files...')
+    logger.info("Loading mentions files...")
     mentions = []
     for _file in mentions_files:
         mentions.extend(MentionData.read_mentions_json_to_mentions_data_list(_file))
@@ -87,23 +87,23 @@ def load_mentions_vocab_from_files(mentions_files, filter_stop_words=False):
 
 def load_mentions_vocab(mentions, filter_stop_words=False):
     vocab = extract_vocab(mentions, filter_stop_words)
-    logger.info('Done loading mentions files...')
+    logger.info("Done loading mentions files...")
     return vocab
 
 
 def write_event_coref_scorer_results(topics_list: List[Topic], output_file: str) -> None:
-    with open(os.path.join(output_file, 'cd_event_pred_clusters_spans.txt'), 'w') as output:
+    with open(os.path.join(output_file, "cd_event_pred_clusters_spans.txt"), "w") as output:
         write_topics(topics_list, output)
 
 
 def write_entity_coref_scorer_results(topics_list: List[Topic], output_file: str) -> None:
-    with open(os.path.join(output_file, 'cd_entity_pred_clusters_spans.txt'), 'w') as output:
+    with open(os.path.join(output_file, "cd_entity_pred_clusters_spans.txt"), "w") as output:
         write_topics(topics_list, output)
 
 
 def write_topics(topics_list: List[Topic], output) -> None:
-    output.write('#begin document (ECB+/ecbplus_all); part 000\n')
+    output.write("#begin document (ECB+/ecbplus_all); part 000\n")
     for topic in topics_list:
         for mention in topic.mentions:
-            output.write('ECB+/ecbplus_all\t' + '(' + str(mention.predicted_coref_chain) + ')\n')
-    output.write('#end document')
+            output.write("ECB+/ecbplus_all\t" + "(" + str(mention.predicted_coref_chain) + ")\n")
+    output.write("#end document")

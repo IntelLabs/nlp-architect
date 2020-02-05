@@ -47,12 +47,12 @@ class Topics(object):
 
     def load_mentions_from_file(self, mentions_file_path: str) -> List[Topic]:
         start_data_load = time.time()
-        logger.info('Loading mentions from-%s', mentions_file_path)
+        logger.info("Loading mentions from-%s", mentions_file_path)
         mentions = load_json_file(mentions_file_path)
         topics = self.order_mentions_by_topics(mentions)
         end_data_load = time.time()
         took_load = end_data_load - start_data_load
-        logger.info('Mentions file-%s, took:%.4f sec to load', mentions_file_path, took_load)
+        logger.info("Mentions file-%s, took:%.4f sec to load", mentions_file_path, took_load)
         return topics
 
     def order_mentions_by_topics(self, mentions: str) -> List[Topic]:

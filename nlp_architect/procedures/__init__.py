@@ -14,8 +14,9 @@
 # limitations under the License.
 # ******************************************************************************
 # flake8: noqa
-from nlp_architect.procedures.transformers.glue import (TransformerGlueRun,
-                                                        TransformerGlueTrain)
+from nlp_architect.procedures.transformers.glue import TransformerGlueRun, TransformerGlueTrain
 from nlp_architect.procedures.transformers.seq_tag import (
-    TransformerTokenClsRun, TransformerTokenClsTrain)
+    TransformerTokenClsRun,
+    TransformerTokenClsTrain,
+)
 from nlp_architect.procedures.token_tagging import TrainTagger, TrainTaggerKD, RunTagger

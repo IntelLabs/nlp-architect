@@ -215,12 +215,12 @@
 <span class="sd">        Args:</span>
 <span class="sd">            wd_file (required): str Location of within doc co-reference mentions file</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Loading Within doc resource&#39;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Loading Within doc resource&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">wd_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">wd_file</span><span class="p">):</span>
             <span class="n">wd_mentions_json</span> <span class="o">=</span> <span class="n">load_json_file</span><span class="p">(</span><span class="n">wd_file</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">within_doc_coref_chain</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">arrange_resource</span><span class="p">(</span><span class="n">wd_mentions_json</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="s1">&#39;Within-doc resource file not found or not in path&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="s2">&quot;Within-doc resource file not found or not in path&quot;</span><span class="p">)</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">WithinDocCoref</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
 <div class="viewcode-block" id="WithinDocCoref.arrange_resource"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.relations.html#nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref.arrange_resource">[docs]</a>    <span class="nd">@staticmethod</span>
@@ -232,19 +232,22 @@
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">mention_tokens</span><span class="p">)):</span>
                 <span class="n">doc_id</span> <span class="o">=</span> <span class="n">mention_data</span><span class="o">.</span><span class="n">doc_id</span>
                 <span class="n">sent_id</span> <span class="o">=</span> <span class="n">mention_data</span><span class="o">.</span><span class="n">sent_id</span>
-                <span class="n">token_map_key</span> <span class="o">=</span> <span class="n">MentionData</span><span class="o">.</span><span class="n">static_gen_token_unique_id</span><span class="p">(</span><span class="n">doc_id</span><span class="p">,</span> <span class="n">sent_id</span><span class="p">,</span>
-                                                                       <span class="n">mention_tokens</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+                <span class="n">token_map_key</span> <span class="o">=</span> <span class="n">MentionData</span><span class="o">.</span><span class="n">static_gen_token_unique_id</span><span class="p">(</span>
+                    <span class="n">doc_id</span><span class="p">,</span> <span class="n">sent_id</span><span class="p">,</span> <span class="n">mention_tokens</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="p">)</span>
                 <span class="n">document_tokens_dict</span><span class="p">[</span><span class="n">token_map_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">mention_data</span><span class="o">.</span><span class="n">coref_chain</span>
         <span class="k">return</span> <span class="n">document_tokens_dict</span></div>
 
-<div class="viewcode-block" id="WithinDocCoref.extract_all_relations"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.relations.html#nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref.extract_all_relations">[docs]</a>    <span class="k">def</span> <span class="nf">extract_all_relations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mention_x</span><span class="p">:</span> <span class="n">MentionData</span><span class="p">,</span>
-                              <span class="n">mention_y</span><span class="p">:</span> <span class="n">MentionData</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="n">RelationType</span><span class="p">]:</span>
+<div class="viewcode-block" id="WithinDocCoref.extract_all_relations"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.relations.html#nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref.extract_all_relations">[docs]</a>    <span class="k">def</span> <span class="nf">extract_all_relations</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">mention_x</span><span class="p">:</span> <span class="n">MentionData</span><span class="p">,</span> <span class="n">mention_y</span><span class="p">:</span> <span class="n">MentionData</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="n">RelationType</span><span class="p">]:</span>
         <span class="n">ret_</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
         <span class="n">ret_</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">extract_sub_relations</span><span class="p">(</span><span class="n">mention_x</span><span class="p">,</span> <span class="n">mention_y</span><span class="p">,</span> <span class="n">RelationType</span><span class="o">.</span><span class="n">WITHIN_DOC_COREF</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">ret_</span></div>
 
-<div class="viewcode-block" id="WithinDocCoref.extract_sub_relations"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.relations.html#nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref.extract_sub_relations">[docs]</a>    <span class="k">def</span> <span class="nf">extract_sub_relations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mention_x</span><span class="p">:</span> <span class="n">MentionData</span><span class="p">,</span> <span class="n">mention_y</span><span class="p">:</span> <span class="n">MentionData</span><span class="p">,</span>
-                              <span class="n">relation</span><span class="p">:</span> <span class="n">RelationType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RelationType</span><span class="p">:</span>
+<div class="viewcode-block" id="WithinDocCoref.extract_sub_relations"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.relations.html#nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref.extract_sub_relations">[docs]</a>    <span class="k">def</span> <span class="nf">extract_sub_relations</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">mention_x</span><span class="p">:</span> <span class="n">MentionData</span><span class="p">,</span> <span class="n">mention_y</span><span class="p">:</span> <span class="n">MentionData</span><span class="p">,</span> <span class="n">relation</span><span class="p">:</span> <span class="n">RelationType</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RelationType</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check if input mentions has the given relation between them</span>
 
@@ -267,7 +270,7 @@
             <span class="k">if</span> <span class="ow">not</span> <span class="n">ment_x_coref_chain</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">ment_y_coref_chain</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">RelationType</span><span class="o">.</span><span class="n">NO_RELATION_FOUND</span>
 
-            <span class="k">if</span> <span class="s1">&#39;-&#39;</span> <span class="ow">in</span> <span class="n">ment_x_coref_chain</span> <span class="ow">or</span> <span class="s1">&#39;-&#39;</span> <span class="ow">in</span> <span class="n">ment_y_coref_chain</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s2">&quot;-&quot;</span> <span class="ow">in</span> <span class="n">ment_x_coref_chain</span> <span class="ow">or</span> <span class="s2">&quot;-&quot;</span> <span class="ow">in</span> <span class="n">ment_y_coref_chain</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">RelationType</span><span class="o">.</span><span class="n">NO_RELATION_FOUND</span>
 
             <span class="k">if</span> <span class="nb">set</span><span class="p">(</span><span class="n">ment_x_coref_chain</span><span class="p">)</span> <span class="o">==</span> <span class="nb">set</span><span class="p">(</span><span class="n">ment_y_coref_chain</span><span class="p">):</span>
@@ -279,15 +282,15 @@
         <span class="n">tokens</span> <span class="o">=</span> <span class="n">mention</span><span class="o">.</span><span class="n">tokens_number</span>
         <span class="n">within_coref_token</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">token_id</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
-            <span class="n">token_x_id</span> <span class="o">=</span> <span class="n">MentionData</span><span class="o">.</span><span class="n">static_gen_token_unique_id</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">mention</span><span class="o">.</span><span class="n">doc_id</span><span class="p">),</span>
-                                                                <span class="nb">str</span><span class="p">(</span><span class="n">mention</span><span class="o">.</span><span class="n">sent_id</span><span class="p">),</span>
-                                                                <span class="nb">str</span><span class="p">(</span><span class="n">token_id</span><span class="p">))</span>
+            <span class="n">token_x_id</span> <span class="o">=</span> <span class="n">MentionData</span><span class="o">.</span><span class="n">static_gen_token_unique_id</span><span class="p">(</span>
+                <span class="nb">str</span><span class="p">(</span><span class="n">mention</span><span class="o">.</span><span class="n">doc_id</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">mention</span><span class="o">.</span><span class="n">sent_id</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">token_id</span><span class="p">)</span>
+            <span class="p">)</span>
             <span class="k">if</span> <span class="n">token_x_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">within_doc_coref_chain</span><span class="p">:</span>
                 <span class="n">token_coref_chain</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">within_doc_coref_chain</span><span class="p">[</span><span class="n">token_x_id</span><span class="p">]</span>
                 <span class="k">if</span> <span class="n">token_coref_chain</span><span class="p">:</span>
                     <span class="n">within_coref_token</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token_coref_chain</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">within_coref_token</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)</span>
+                <span class="n">within_coref_token</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">)</span>
                 <span class="k">break</span>
 
         <span class="k">return</span> <span class="n">within_coref_token</span></div>
@@ -297,7 +300,7 @@
 
 <div class="viewcode-block" id="WithinDocCoref.create_ment_id"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.relations.html#nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref.create_ment_id">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">create_ment_id</span><span class="p">(</span><span class="n">mention_x</span><span class="p">:</span> <span class="n">MentionData</span><span class="p">,</span> <span class="n">mention_y</span><span class="p">:</span> <span class="n">MentionData</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s1">&#39;_&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">mention_x</span><span class="o">.</span><span class="n">get_mention_id</span><span class="p">(),</span> <span class="n">mention_y</span><span class="o">.</span><span class="n">get_mention_id</span><span class="p">()])</span></div>
+        <span class="k">return</span> <span class="s2">&quot;_&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">mention_x</span><span class="o">.</span><span class="n">get_mention_id</span><span class="p">(),</span> <span class="n">mention_y</span><span class="o">.</span><span class="n">get_mention_id</span><span class="p">()])</span></div>
 
 <div class="viewcode-block" id="WithinDocCoref.get_supported_relations"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.relations.html#nlp_architect.data.cdc_resources.relations.within_doc_coref_extraction.WithinDocCoref.get_supported_relations">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">get_supported_relations</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">RelationType</span><span class="p">]:</span>

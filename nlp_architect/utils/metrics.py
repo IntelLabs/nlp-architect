@@ -13,7 +13,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
-
 ##
 # This file contains code from
 #  (https://github.com/chakki-works/seqeval/tree/master/seqeval/metrics)
@@ -42,8 +41,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from __future__ import (absolute_import, division, print_function,
-                        unicode_literals)
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 from scipy.stats import pearsonr, spearmanr
 from sklearn.metrics import f1_score as classification_f1_score
@@ -51,7 +49,7 @@ from collections import defaultdict
 import numpy as np
 
 
-def get_conll_scores(predictions, y, y_lex, unk='O'):
+def get_conll_scores(predictions, y, y_lex, unk="O"):
     """Get Conll style scores (precision, recall, f1)
     """
     if isinstance(predictions, list):
@@ -72,7 +70,7 @@ def get_conll_scores(predictions, y, y_lex, unk='O'):
             except KeyError:
                 pass
         test_pval = [unk] * len(test_yval)
-        for e, i in enumerate(list(test_p[n])[:len(test_pval)]):
+        for e, i in enumerate(list(test_p[n])[: len(test_pval)]):
             try:
                 test_pval[e] = y_lex[i]
             except KeyError:
@@ -92,9 +90,7 @@ def accuracy(preds, labels):
     """return simple accuracy in expected dict format
     """
     acc = simple_accuracy(preds, labels)
-    return {
-        "acc": acc
-    }
+    return {"acc": acc}
 
 
 def acc_and_f1(preds, labels):
@@ -158,19 +154,19 @@ def get_entities(seq, suffix=False):
     """
     # for nested list
     if any(isinstance(s, list) for s in seq):
-        seq = [item for sublist in seq for item in sublist + ['O']]
+        seq = [item for sublist in seq for item in sublist + ["O"]]
 
-    prev_tag = 'O'
-    prev_type = ''
+    prev_tag = "O"
+    prev_type = ""
     begin_offset = 0
     chunks = []
-    for i, chunk in enumerate(seq + ['O']):
+    for i, chunk in enumerate(seq + ["O"]):
         if suffix:
             tag = chunk[-1]
-            type_ = chunk.split('-')[0]
+            type_ = chunk.split("-")[0]
         else:
             tag = chunk[0]
-            type_ = chunk.split('-')[-1]
+            type_ = chunk.split("-")[-1]
 
         if end_of_chunk(prev_tag, tag, prev_type, type_):
             chunks.append((prev_type, begin_offset, i - 1))
@@ -196,28 +192,28 @@ def end_of_chunk(prev_tag, tag, prev_type, type_):
     """
     chunk_end = False
 
-    end_tag = ('L', 'E')
-    start_tag = ('U', 'S')
+    end_tag = ("L", "E")
+    start_tag = ("U", "S")
 
     if prev_tag in end_tag:
         chunk_end = True
     if prev_tag in start_tag:
         chunk_end = True
 
-    if prev_tag == 'B' and tag == 'B':
+    if prev_tag == "B" and tag == "B":
         chunk_end = True
-    if prev_tag == 'B' and tag in start_tag:
+    if prev_tag == "B" and tag in start_tag:
         chunk_end = True
-    if prev_tag == 'B' and tag == 'O':
+    if prev_tag == "B" and tag == "O":
         chunk_end = True
-    if prev_tag == 'I' and tag == 'B':
+    if prev_tag == "I" and tag == "B":
         chunk_end = True
-    if prev_tag == 'I' and tag in start_tag:
+    if prev_tag == "I" and tag in start_tag:
         chunk_end = True
-    if prev_tag == 'I' and tag == 'O':
+    if prev_tag == "I" and tag == "O":
         chunk_end = True
 
-    if prev_tag != 'O' and prev_tag != '.' and prev_type != type_:
+    if prev_tag != "O" and prev_tag != "." and prev_type != type_:
         chunk_end = True
 
     return chunk_end
@@ -237,28 +233,28 @@ def start_of_chunk(prev_tag, tag, prev_type, type_):
     """
     chunk_start = False
 
-    end_tag = ('L', 'E')
-    start_tag = ('U', 'S')
+    end_tag = ("L", "E")
+    start_tag = ("U", "S")
 
-    if tag == 'B':
+    if tag == "B":
         chunk_start = True
     if tag in start_tag:
         chunk_start = True
 
     if prev_tag in end_tag and tag in end_tag:
         chunk_start = True
-    if prev_tag in end_tag and tag == 'I':
+    if prev_tag in end_tag and tag == "I":
         chunk_start = True
     if prev_tag in start_tag and tag in end_tag:
         chunk_start = True
-    if prev_tag in start_tag and tag == 'I':
+    if prev_tag in start_tag and tag == "I":
         chunk_start = True
-    if prev_tag == 'O' and tag in end_tag:
+    if prev_tag == "O" and tag in end_tag:
         chunk_start = True
-    if prev_tag == 'O' and tag == 'I':
+    if prev_tag == "O" and tag == "I":
         chunk_start = True
 
-    if tag != 'O' and tag != '.' and prev_type != type_:
+    if tag != "O" and tag != "." and prev_type != type_:
         chunk_start = True
 
     return chunk_start
@@ -429,13 +425,12 @@ def performance_measure(y_true, y_pred):
     if any(isinstance(s, list) for s in y_true):
         y_true = [item for sublist in y_true for item in sublist]
         y_pred = [item for sublist in y_pred for item in sublist]
-    performace_dict['TP'] = sum(y_t == y_p for y_t, y_p in zip(y_true, y_pred)
-                                if ((y_t != 'O') or (y_p != 'O')))
-    performace_dict['FP'] = sum(y_t != y_p for y_t, y_p in zip(y_true, y_pred))
-    performace_dict['FN'] = sum(((y_t != 'O') and (y_p == 'O'))
-                                for y_t, y_p in zip(y_true, y_pred))
-    performace_dict['TN'] = sum((y_t == y_p == 'O')
-                                for y_t, y_p in zip(y_true, y_pred))
+    performace_dict["TP"] = sum(
+        y_t == y_p for y_t, y_p in zip(y_true, y_pred) if ((y_t != "O") or (y_p != "O"))
+    )
+    performace_dict["FP"] = sum(y_t != y_p for y_t, y_p in zip(y_true, y_pred))
+    performace_dict["FN"] = sum(((y_t != "O") and (y_p == "O")) for y_t, y_p in zip(y_true, y_pred))
+    performace_dict["TN"] = sum((y_t == y_p == "O") for y_t, y_p in zip(y_true, y_pred))
 
     return performace_dict
 
@@ -478,15 +473,15 @@ def classification_report(y_true, y_pred, digits=2, suffix=False):
     for e in pred_entities:
         d2[e[0]].add((e[1], e[2]))
 
-    last_line_heading = 'macro avg'
+    last_line_heading = "macro avg"
     width = max(name_width, len(last_line_heading), digits)
 
     headers = ["precision", "recall", "f1-score", "support"]
-    head_fmt = u'{:>{width}s} ' + u' {:>9}' * len(headers)
-    report = head_fmt.format(u'', *headers, width=width)
-    report += u'\n\n'
+    head_fmt = "{:>{width}s} " + " {:>9}" * len(headers)
+    report = head_fmt.format("", *headers, width=width)
+    report += "\n\n"
 
-    row_fmt = u'{:>{width}s} ' + u' {:>9.{digits}f}' * 3 + u' {:>9}\n'
+    row_fmt = "{:>{width}s} " + " {:>9.{digits}f}" * 3 + " {:>9}\n"
 
     ps, rs, f1s, s = [], [], [], []
     for type_name, true_entities in d1.items():
@@ -506,23 +501,30 @@ def classification_report(y_true, y_pred, digits=2, suffix=False):
         f1s.append(f1)
         s.append(nb_true)
 
-    report += u'\n'
+    report += "\n"
 
     # compute averages
-    report += row_fmt.format('micro avg',
-                             precision_score(y_true, y_pred, suffix=suffix),
-                             recall_score(y_true, y_pred, suffix=suffix),
-                             f1_score(y_true, y_pred, suffix=suffix),
-                             np.sum(s),
-                             width=width, digits=digits)
-    report += row_fmt.format(last_line_heading,
-                             np.average(ps, weights=s),
-                             np.average(rs, weights=s),
-                             np.average(f1s, weights=s),
-                             np.sum(s),
-                             width=width, digits=digits)
+    report += row_fmt.format(
+        "micro avg",
+        precision_score(y_true, y_pred, suffix=suffix),
+        recall_score(y_true, y_pred, suffix=suffix),
+        f1_score(y_true, y_pred, suffix=suffix),
+        np.sum(s),
+        width=width,
+        digits=digits,
+    )
+    report += row_fmt.format(
+        last_line_heading,
+        np.average(ps, weights=s),
+        np.average(rs, weights=s),
+        np.average(f1s, weights=s),
+        np.sum(s),
+        width=width,
+        digits=digits,
+    )
 
     return report
+
 
 # up to here code from seqeval/metrics/sequence_labeling.py
 # (https://github.com/chakki-works/seqeval/tree/master/seqeval/metrics)

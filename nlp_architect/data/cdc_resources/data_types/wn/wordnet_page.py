@@ -17,10 +17,18 @@ from typing import Set, Dict
 
 
 class WordnetPage(object):
-    def __init__(self, orig_phrase: str, clean_phrase: str, head: str, head_lemma: str,
-                 head_synonyms: Set[str], head_lemma_synonyms: Set[str],
-                 head_derivationally: Set[str], head_lemma_derivationally: Set[str],
-                 all_clean_words_synonyms: Set[str]) -> None:
+    def __init__(
+        self,
+        orig_phrase: str,
+        clean_phrase: str,
+        head: str,
+        head_lemma: str,
+        head_synonyms: Set[str],
+        head_lemma_synonyms: Set[str],
+        head_derivationally: Set[str],
+        head_lemma_derivationally: Set[str],
+        all_clean_words_synonyms: Set[str],
+    ) -> None:
         """
         Object represent a Wikipedia Page and extracted fields.
 
@@ -46,26 +54,29 @@ class WordnetPage(object):
         self.all_clean_words_synonyms = all_clean_words_synonyms
 
     def __eq__(self, other):
-        return self.orig_phrase == other.orig_phrase and self.head == other.head and \
-            self.head_lemma == other.head_lemma
+        return (
+            self.orig_phrase == other.orig_phrase
+            and self.head == other.head
+            and self.head_lemma == other.head_lemma
+        )
 
     def __hash__(self):
         return hash(self.orig_phrase) + hash(self.head) + hash(self.head_lemma)
 
     def toJson(self) -> Dict:
         result_dict = dict()
-        result_dict['orig_phrase'] = self.orig_phrase
-        result_dict['clean_phrase'] = self.clean_phrase
-        result_dict['head'] = self.head
-        result_dict['head_lemma'] = self.head_lemma
-        result_dict['head_synonyms'] = list(self.head_synonyms)
-        result_dict['head_lemma_synonyms'] = list(self.head_lemma_synonyms)
-        result_dict['head_derivationally'] = list(self.head_derivationally)
-        result_dict['head_lemma_derivationally'] = list(self.head_lemma_derivationally)
+        result_dict["orig_phrase"] = self.orig_phrase
+        result_dict["clean_phrase"] = self.clean_phrase
+        result_dict["head"] = self.head
+        result_dict["head_lemma"] = self.head_lemma
+        result_dict["head_synonyms"] = list(self.head_synonyms)
+        result_dict["head_lemma_synonyms"] = list(self.head_lemma_synonyms)
+        result_dict["head_derivationally"] = list(self.head_derivationally)
+        result_dict["head_lemma_derivationally"] = list(self.head_lemma_derivationally)
         if self.all_clean_words_synonyms is not None:
             all_as_list = []
             for set_ in self.all_clean_words_synonyms:
                 all_as_list.append(list(set_))
-            result_dict['all_clean_words_synonyms'] = all_as_list
+            result_dict["all_clean_words_synonyms"] = all_as_list
 
         return result_dict

@@ -26,6 +26,7 @@ class TCNForLM(TCN, CommonLayers):
     """
     Main class that defines training graph and defines training run method for language modeling
     """
+
     def __init__(self, *args, **kwargs):
         super(TCNForLM, self).__init__(*args, **kwargs)
         self.num_words = None
@@ -45,8 +46,9 @@ class TCNForLM(TCN, CommonLayers):
         self.training_update_step = None
 
     # pylint: disable=arguments-differ
-    def run(self, data_loaders, lr, num_iterations=100, log_interval=100, result_dir="./",
-            ckpt=None):
+    def run(
+        self, data_loaders, lr, num_iterations=100, log_interval=100, result_dir="./", ckpt=None
+    ):
         """
         Args:
             data_loaders: dict, keys are "train", "valid", "test",
@@ -61,8 +63,9 @@ class TCNForLM(TCN, CommonLayers):
             None
         """
 
-        summary_writer = tf.summary.FileWriter(os.path.join(result_dir, "tfboard"),
-                                               tf.get_default_graph())
+        summary_writer = tf.summary.FileWriter(
+            os.path.join(result_dir, "tfboard"), tf.get_default_graph()
+        )
         saver = tf.train.Saver(max_to_keep=None)
 
         sess = tf.Session(config=tf.ConfigProto(allow_soft_placement=True))
@@ -77,13 +80,16 @@ class TCNForLM(TCN, CommonLayers):
 
             x_data, y_data = next(data_loaders["train"])
 
-            feed_dict = {self.input_placeholder_tokens: x_data,
-                         self.label_placeholder_tokens: y_data, self.training_mode: True,
-                         self.learning_rate: lr}
-            _, summary_train, total_loss_i = sess.run([self.training_update_step,
-                                                       self.merged_summary_op_train,
-                                                       self.training_loss],
-                                                      feed_dict=feed_dict)
+            feed_dict = {
+                self.input_placeholder_tokens: x_data,
+                self.label_placeholder_tokens: y_data,
+                self.training_mode: True,
+                self.learning_rate: lr,
+            }
+            _, summary_train, total_loss_i = sess.run(
+                [self.training_update_step, self.merged_summary_op_train, self.training_loss],
+                feed_dict=feed_dict,
+            )
 
             summary_writer.add_summary(summary_train, i)
 
@@ -97,18 +103,22 @@ class TCNForLM(TCN, CommonLayers):
                     data_loaders[split_type].reset()
                     count = 0
                     for x_data_test, y_data_test in data_loaders[split_type]:
-                        feed_dict = {self.input_placeholder_tokens: x_data_test,
-                                     self.label_placeholder_tokens: y_data_test,
-                                     self.training_mode: False}
+                        feed_dict = {
+                            self.input_placeholder_tokens: x_data_test,
+                            self.label_placeholder_tokens: y_data_test,
+                            self.training_mode: False,
+                        }
                         val_loss[split_type] += sess.run(self.training_loss, feed_dict=feed_dict)
                         count += 1
 
                     val_loss[split_type] = val_loss[split_type] / count
 
-                summary_val = sess.run(self.merged_summary_op_val,
-                                       feed_dict={self.validation_loss: val_loss["valid"]})
-                summary_test = sess.run(self.merged_summary_op_test,
-                                        feed_dict={self.test_loss: val_loss["test"]})
+                summary_val = sess.run(
+                    self.merged_summary_op_val, feed_dict={self.validation_loss: val_loss["valid"]}
+                )
+                summary_test = sess.run(
+                    self.merged_summary_op_test, feed_dict={self.test_loss: val_loss["test"]}
+                )
 
                 summary_writer.add_summary(summary_val, i)
                 summary_writer.add_summary(summary_test, i)
@@ -118,7 +128,7 @@ class TCNForLM(TCN, CommonLayers):
                 all_vloss.append(val_loss["valid"])
 
                 if i > 3 * log_interval and val_loss["valid"] >= max(all_vloss[-5:]):
-                    lr = lr / 2.
+                    lr = lr / 2.0
 
     def run_inference(self, ckpt, num_samples=10, sos=0, eos=1):
         """
@@ -141,8 +151,9 @@ class TCNForLM(TCN, CommonLayers):
         return results
 
     # pylint: disable=arguments-differ
-    def build_train_graph(self, num_words=20000, word_embeddings=None, max_gradient_norm=None,
-                          em_dropout=0.4):
+    def build_train_graph(
+        self, num_words=20000, word_embeddings=None, max_gradient_norm=None, em_dropout=0.4
+    ):
         """
         Method that builds the graph for training
         Args:
@@ -156,21 +167,22 @@ class TCNForLM(TCN, CommonLayers):
         """
         self.num_words = num_words
         with tf.variable_scope("input", reuse=True):
-            self.input_placeholder_tokens = tf.placeholder(tf.int32, [None, self.max_len],
-                                                           name='input_tokens')
-            self.label_placeholder_tokens = tf.placeholder(tf.int32, [None, self.max_len],
-                                                           name='input_tokens_shifted')
-            self.learning_rate = tf.placeholder(tf.float32, shape=(), name='learning_rate')
+            self.input_placeholder_tokens = tf.placeholder(
+                tf.int32, [None, self.max_len], name="input_tokens"
+            )
+            self.label_placeholder_tokens = tf.placeholder(
+                tf.int32, [None, self.max_len], name="input_tokens_shifted"
+            )
+            self.learning_rate = tf.placeholder(tf.float32, shape=(), name="learning_rate")
 
-        self.input_embeddings = self.define_input_layer(self.input_placeholder_tokens,
-                                                        word_embeddings,
-                                                        embeddings_trainable=True)
+        self.input_embeddings = self.define_input_layer(
+            self.input_placeholder_tokens, word_embeddings, embeddings_trainable=True
+        )
 
-        input_embeddings_dropped = tf.layers.dropout(self.input_embeddings,
-                                                     rate=em_dropout,
-                                                     training=self.training_mode)
-        self.prediction = self.build_network_graph(input_embeddings_dropped,
-                                                   last_timepoint=False)
+        input_embeddings_dropped = tf.layers.dropout(
+            self.input_embeddings, rate=em_dropout, training=self.training_mode
+        )
+        self.prediction = self.build_network_graph(input_embeddings_dropped, last_timepoint=False)
 
         if self.prediction.shape[-1] != self.n_features_in:
             print("Not tying weights")
@@ -178,33 +190,40 @@ class TCNForLM(TCN, CommonLayers):
         else:
             print("Tying weights")
             tied_weights = True
-        self.projection_out = self.define_projection_layer(self.prediction,
-                                                           tied_weights=tied_weights)
+        self.projection_out = self.define_projection_layer(
+            self.prediction, tied_weights=tied_weights
+        )
         self.gen_seq_prob = tf.nn.softmax(self.projection_out)
 
         with tf.variable_scope("training"):
             params = tf.trainable_variables()
 
             soft_ce = tf.nn.sparse_softmax_cross_entropy_with_logits(
-                labels=self.label_placeholder_tokens, logits=self.projection_out)
-            ce_last_tokens = tf.slice(soft_ce, [0, int(self.max_len / 2)],
-                                      [-1, int(self.max_len / 2)])
+                labels=self.label_placeholder_tokens, logits=self.projection_out
+            )
+            ce_last_tokens = tf.slice(
+                soft_ce, [0, int(self.max_len / 2)], [-1, int(self.max_len / 2)]
+            )
             self.training_loss = tf.reduce_mean(ce_last_tokens)
 
-            summary_ops_train = [tf.summary.scalar("Training Loss", self.training_loss),
-                                 tf.summary.scalar("Training perplexity",
-                                                   tf.exp(self.training_loss))]
+            summary_ops_train = [
+                tf.summary.scalar("Training Loss", self.training_loss),
+                tf.summary.scalar("Training perplexity", tf.exp(self.training_loss)),
+            ]
             self.merged_summary_op_train = tf.summary.merge(summary_ops_train)
 
             self.validation_loss = tf.placeholder(tf.float32, shape=())
-            summary_ops_val = [tf.summary.scalar("Validation Loss", self.validation_loss),
-                               tf.summary.scalar("Validation perplexity",
-                                                 tf.exp(self.validation_loss))]
+            summary_ops_val = [
+                tf.summary.scalar("Validation Loss", self.validation_loss),
+                tf.summary.scalar("Validation perplexity", tf.exp(self.validation_loss)),
+            ]
             self.merged_summary_op_val = tf.summary.merge(summary_ops_val)
 
             self.test_loss = tf.placeholder(tf.float32, shape=())
-            summary_ops_test = [tf.summary.scalar("Test Loss", self.test_loss),
-                                tf.summary.scalar("Test perplexity", tf.exp(self.test_loss))]
+            summary_ops_test = [
+                tf.summary.scalar("Test Loss", self.test_loss),
+                tf.summary.scalar("Test perplexity", tf.exp(self.test_loss)),
+            ]
             self.merged_summary_op_test = tf.summary.merge(summary_ops_test)
 
             # Calculate and clip gradients
@@ -225,8 +244,9 @@ class TCNForLM(TCN, CommonLayers):
 
             optimizer = tf.train.GradientDescentOptimizer(learning_rate=self.learning_rate)
             with tf.control_dependencies(update_ops):
-                self.training_update_step = optimizer.apply_gradients(zip(clipped_gradients,
-                                                                          params))
+                self.training_update_step = optimizer.apply_gradients(
+                    zip(clipped_gradients, params)
+                )
 
     def sample_sequence(self, sess, num_samples=10, sos=0, eos=1):
         """
@@ -247,8 +267,10 @@ class TCNForLM(TCN, CommonLayers):
             count = 0
             elem = sos
             while (elem != eos) and (count <= self.max_len * 10):
-                feed_dict = {self.input_placeholder_tokens: input_sequence,
-                             self.training_mode: False}
+                feed_dict = {
+                    self.input_placeholder_tokens: input_sequence,
+                    self.training_mode: False,
+                }
                 gen_seq_prob_value = sess.run(self.gen_seq_prob, feed_dict=feed_dict)
                 prob = gen_seq_prob_value[0, -1, :].astype(np.float64)
                 prob = prob / sum(prob)

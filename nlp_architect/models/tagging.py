@@ -52,8 +52,15 @@ class NeuralTagger(TrainableModel):
         n_gpus (int, optional): number of gpus. Default to 0.
     """
 
-    def __init__(self, embedder_model, word_vocab: Vocabulary, labels: List[str] = None,
-                 use_crf: bool = False, device: str = 'cpu', n_gpus=0):
+    def __init__(
+        self,
+        embedder_model,
+        word_vocab: Vocabulary,
+        labels: List[str] = None,
+        use_crf: bool = False,
+        device: str = "cpu",
+        n_gpus=0,
+    ):
         super(NeuralTagger, self).__init__()
         self.model = embedder_model
         self.labels = labels
@@ -68,13 +75,15 @@ class NeuralTagger(TrainableModel):
         self.n_gpus = n_gpus
         self.to(self.device, self.n_gpus)
 
-    def convert_to_tensors(self,
-                           examples: List[TokenClsInputExample],
-                           max_seq_length: int = 128,
-                           max_word_length: int = 12,
-                           pad_id: int = 0,
-                           labels_pad_id: int = 0,
-                           include_labels: bool = True) -> TensorDataset:
+    def convert_to_tensors(
+        self,
+        examples: List[TokenClsInputExample],
+        max_seq_length: int = 128,
+        max_word_length: int = 12,
+        pad_id: int = 0,
+        labels_pad_id: int = 0,
+        include_labels: bool = True,
+    ) -> TensorDataset:
         """
         Convert examples to valid tagger dataset
 
@@ -123,7 +132,8 @@ class NeuralTagger(TrainableModel):
             # pad word vectors
             for i in range(len(word_chars)):
                 word_char_ids.append(
-                    word_chars[i] + ([pad_id] * (max_word_length - len(word_chars[i]))))
+                    word_chars[i] + ([pad_id] * (max_word_length - len(word_chars[i])))
+                )
 
             # pad word vectors with remaining zero vectors
             for _ in range(padding_length):
@@ -137,11 +147,15 @@ class NeuralTagger(TrainableModel):
             for i in range(len(word_char_ids)):
                 assert len(word_char_ids[i]) == max_word_length
 
-            features.append(InputFeatures(input_ids,
-                                          word_char_ids,
-                                          shape_ids,
-                                          mask=mask,
-                                          label_id=label_ids if include_labels else None))
+            features.append(
+                InputFeatures(
+                    input_ids,
+                    word_char_ids,
+                    shape_ids,
+                    mask=mask,
+                    label_id=label_ids if include_labels else None,
+                )
+            )
 
         # Convert to Tensors and build dataset
         all_input_ids = torch.tensor([f.input_ids for f in features], dtype=torch.long)
@@ -152,10 +166,10 @@ class NeuralTagger(TrainableModel):
         if include_labels:
             all_label_ids = torch.tensor([f.label_id for f in features], dtype=torch.long)
             dataset = TensorDataset(
-                all_input_ids, all_char_ids, all_shape_ids, masks, all_label_ids)
+                all_input_ids, all_char_ids, all_shape_ids, masks, all_label_ids
+            )
         else:
-            dataset = TensorDataset(
-                all_input_ids, all_char_ids, all_shape_ids, masks)
+            dataset = TensorDataset(all_input_ids, all_char_ids, all_shape_ids, masks)
         return dataset
 
     def get_optimizer(self, opt_fn=None, lr: int = 0.001):
@@ -180,13 +194,11 @@ class NeuralTagger(TrainableModel):
         """
         Map batch to correct input names
         """
-        mapping = {'words': batch[0],
-                   'word_chars': batch[1],
-                   'shapes': batch[2],
-                   'mask': batch[3]}
+        mapping = {"words": batch[0], "word_chars": batch[1], "shapes": batch[2], "mask": batch[3]}
         if len(batch) == 5:
-            mapping.update({'labels': batch[4]})
+            mapping.update({"labels": batch[4]})
         return mapping
+
 
     # def train(self, train_data_set: DataLoader,
     #           dev_data_set: DataLoader = None,
@@ -329,19 +341,23 @@ class NeuralTagger(TrainableModel):
     #                 self.save_model(save_path)
     #     logger.info("Best result: Dev=%s, Test=%s", str(best_dev), str(dev_test))
 
-    def train(self, train_data_set: DataLoader,
-              dev_data_set: DataLoader = None,
-              test_data_set: DataLoader = None,
-              epochs: int = 3,
-              batch_size: int = 8,
-              optimizer=None,
-              max_grad_norm: float = 5.0,
-              logging_steps: int = 50,
-              save_steps: int = 100,
-              save_path: str = None,
-              distiller: TeacherStudentDistill = None,
-              best_result_file: str = None,
-              word_dropout: float = 0):
+    def train(
+        self,
+        train_data_set: DataLoader,
+        dev_data_set: DataLoader = None,
+        test_data_set: DataLoader = None,
+        epochs: int = 3,
+        batch_size: int = 8,
+        optimizer=None,
+        max_grad_norm: float = 5.0,
+        logging_steps: int = 50,
+        save_steps: int = 100,
+        save_path: str = None,
+        distiller: TeacherStudentDistill = None,
+        best_result_file: str = None,
+        word_dropout: float = 0,
+    ):
+
         """
         Train a tagging model
 
@@ -372,16 +388,18 @@ class NeuralTagger(TrainableModel):
         logger.info("***** Running training *****")
         logger.info("  Num examples = %d", len(train_data_set.dataset))
         logger.info("  Num Epochs = %d", epochs)
-        logger.info("  Instantaneous batch size per GPU/CPU = %d",
-                    batch_size)
+        logger.info("  Instantaneous batch size per GPU/CPU = %d", batch_size)
         logger.info("  Total batch size = %d", train_batch_size)
         global_step = 0
         best_dev = 0
         dev_test = 0
         self.model.zero_grad()
         epoch_it = trange(epochs, desc="Epoch")
-        do_pseudo = (len(train_data_set.dataset.datasets) == 4) if \
-            hasattr(train_data_set.dataset, 'datasets') else False
+        do_pseudo = (
+            (len(train_data_set.dataset.datasets) == 4)
+            if hasattr(train_data_set.dataset, "datasets")
+            else False
+        )
         for _ in epoch_it:
             step_it = tqdm(train_data_set, desc="Train iteration")
             avg_loss = 0
@@ -404,21 +422,23 @@ class NeuralTagger(TrainableModel):
 
                 # apply word dropout to the input
                 if word_dropout != 0:
-                    tokens = inputs['words']
+                    tokens = inputs["words"]
                     tokens = np.array(tokens.detach().cpu())
                     word_probs = np.random.random(tokens.shape)
                     drop_indices = np.where(
-                        (word_probs > word_dropout) & (tokens != 0))  # ignore padding indices
-                    inputs['words'][drop_indices[0], drop_indices[1]] = self.word_vocab.oov_id
+                        (word_probs > word_dropout) & (tokens != 0)
+                    )  # ignore padding indices
+                    inputs["words"][drop_indices[0], drop_indices[1]] = self.word_vocab.oov_id
                     if do_pseudo:
-                        ul_tokens = ul_inputs['words']
+                        ul_tokens = ul_inputs["words"]
                         ul_tokens = np.array(ul_tokens.detach().cpu())
                         ul_word_probs = np.random.random(ul_tokens.shape)
                         ul_drop_indices = np.where(
-                            (ul_word_probs > word_dropout) & (
-                                ul_tokens != 0))  # ignore padding indices
-                        ul_inputs['words'][
-                            ul_drop_indices[0], ul_drop_indices[1]] = self.word_vocab.oov_id
+                            (ul_word_probs > word_dropout) & (ul_tokens != 0)
+                        )  # ignore padding indices
+                        ul_inputs["words"][
+                            ul_drop_indices[0], ul_drop_indices[1]
+                        ] = self.word_vocab.oov_id
 
                 logits = self.model(**inputs)
                 if do_pseudo:
@@ -426,16 +446,19 @@ class NeuralTagger(TrainableModel):
                     t_pseudo_labels = torch.argmax(F.log_softmax(t_ul_logits, dim=2), dim=2)
 
                 if self.use_crf:
-                    loss = -1.0 * self.crf(logits, inputs['labels'], mask=inputs['mask'] != 0.0)
+                    loss = -1.0 * self.crf(logits, inputs["labels"], mask=inputs["mask"] != 0.0)
                     if do_pseudo:
-                        ul_loss = -1.0 * self.crf(
-                            ul_logits, t_pseudo_labels, mask=ul_inputs['mask'] != 0.0)
+                        loss += -1.0 * self.crf(
+                            ul_logits, t_pseudo_labels, mask=ul_inputs["mask"] != 0.0
+                        )
                 else:
                     loss_fn = CrossEntropyLoss(ignore_index=0)
-                    loss = loss_fn(logits.view(-1, self.num_labels), inputs['labels'].view(-1))
+                    loss = loss_fn(logits.view(-1, self.num_labels), inputs["labels"].view(-1))
                     if do_pseudo:
-                        ul_loss = loss_fn(
-                            ul_logits.view(-1, self.num_labels), t_pseudo_labels.view(-1))
+
+                        loss += loss_fn(
+                            ul_logits.view(-1, self.num_labels), t_pseudo_labels.view(-1)
+                        )
 
                 # for idcnn training - add dropout penalty loss
                 module = self.model.module if self.n_gpus > 1 else self.model
@@ -472,19 +495,20 @@ class NeuralTagger(TrainableModel):
                 if global_step % logging_steps == 0:
                     if step != 0:
                         logger.info(
-                            " global_step = %s, average loss = %s", global_step, avg_loss / step)
+                            " global_step = %s, average loss = %s", global_step, avg_loss / step
+                        )
                     dev = self._get_eval(dev_data_set, "dev")
                     test = self._get_eval(test_data_set, "test")
                     if dev > best_dev:
                         best_dev = dev
                         dev_test = test
                         if best_result_file is not None:
-                            with open(best_result_file, 'a+') as f:
+                            with open(best_result_file, "a+") as f:
                                 f.write(
-                                    'best dev= ' + str(best_dev) + ', test= ' + str(test) + 
-                                    ', loss= ' + str(avg_loss / step) + '\n')
-                if save_steps != 0 and save_path is not None and \
-                        global_step % save_steps == 0:
+
+                                    "best dev= " + str(best_dev) + ", test= " + str(test) + "\n"
+                                )
+                if save_steps != 0 and save_path is not None and global_step % save_steps == 0:
                     self.save_model(save_path)
         logger.info("Best result: Dev=%s, Test=%s", str(best_dev), str(dev_test))
 
@@ -493,11 +517,11 @@ class NeuralTagger(TrainableModel):
         if ds is not None:
             logits, out_label_ids = self.evaluate(ds)
             res = self.evaluate_predictions(logits, out_label_ids)
-            logger.info(" {} set F1 = {}".format(set_name, res['f1']))
-            return res['f1']
+            logger.info(" {} set F1 = {}".format(set_name, res["f1"]))
+            return res["f1"]
         return None
 
-    def to(self, device='cpu', n_gpus=0):
+    def to(self, device="cpu", n_gpus=0):
         """
         Put model on given device
 
@@ -537,15 +561,17 @@ class NeuralTagger(TrainableModel):
                 inputs = self.batch_mapper(batch)
                 logits = self.model(**inputs)
             model_output = logits.detach().cpu()
-            model_out_label_ids = inputs['labels'].detach().cpu(
-            ) if 'labels' in inputs else None
+            model_out_label_ids = inputs["labels"].detach().cpu() if "labels" in inputs else None
             if preds is None:
                 preds = model_output
                 out_label_ids = model_out_label_ids
             else:
                 preds = torch.cat((preds, model_output), dim=0)
-                out_label_ids = torch.cat((out_label_ids, model_out_label_ids),
-                                          dim=0) if out_label_ids is not None else None
+                out_label_ids = (
+                    torch.cat((out_label_ids, model_out_label_ids), dim=0)
+                    if out_label_ids is not None
+                    else None
+                )
         output = (preds,)
         if out_label_ids is not None:
             output = output + (out_label_ids,)
@@ -574,8 +600,7 @@ class NeuralTagger(TrainableModel):
             logits = decode_fn(logits.to(self.device), mask=decode_ap.to(self.device))
             logits = [l for ll in logits for l in ll]
         else:
-            active_logits = logits.view(-1, len(self.label_id_str) + 1)[
-                active_positions]
+            active_logits = logits.view(-1, len(self.label_id_str) + 1)[active_positions]
             logits = torch.argmax(F.log_softmax(active_logits, dim=1), dim=1)
             logits = logits.detach().cpu().numpy()
         out_label_ids = active_labels.detach().cpu().numpy()
@@ -588,8 +613,8 @@ class NeuralTagger(TrainableModel):
         y_true = []
         y_pred = []
         for p, y in zip(logits, label_ids):
-            y_pred.append(label_map.get(p, 'O'))
-            y_true.append(label_map.get(y, 'O'))
+            y_pred.append(label_map.get(p, "O"))
+            y_true.append(label_map.get(y, "O"))
         assert len(y_true) == len(y_pred)
         return (y_true, y_pred)
 
@@ -612,12 +637,11 @@ class NeuralTagger(TrainableModel):
         logits = torch.argmax(F.log_softmax(logits[0], dim=2), dim=2)
         res_ids = []
         for i in range(logits.size()[0]):
-            res_ids.append(
-                logits[i][active_positions[i]].detach().cpu().numpy())
+            res_ids.append(logits[i][active_positions[i]].detach().cpu().numpy())
         output = []
         for tag_ids, ex in zip(res_ids, examples):
             tokens = ex.tokens
-            tags = [self.label_id_str.get(t, 'O') for t in tag_ids]
+            tags = [self.label_id_str.get(t, "O") for t in tag_ids]
             output.append((tokens, tags))
         return output
 
@@ -628,14 +652,13 @@ class NeuralTagger(TrainableModel):
         Args:
             output_dir (str): output directory
         """
-        torch.save(self.model, os.path.join(output_dir, 'model.bin'))
+        torch.save(self.model, os.path.join(output_dir, "model.bin"))
         if self.use_crf:
-            torch.save(self.crf, os.path.join(output_dir, 'crf.bin'))
-        with io.open(output_dir + os.sep + 'labels.txt', 'w',
-                     encoding='utf-8') as fw:
+            torch.save(self.crf, os.path.join(output_dir, "crf.bin"))
+        with io.open(output_dir + os.sep + "labels.txt", "w", encoding="utf-8") as fw:
             for l in self.labels:
-                fw.write('{}\n'.format(l))
-        with io.open(output_dir + os.sep + 'w_vocab.dat', 'wb') as fw:
+                fw.write("{}\n".format(l))
+        with io.open(output_dir + os.sep + "w_vocab.dat", "wb") as fw:
             pickle.dump(self.word_vocab, fw)
 
     @classmethod
@@ -651,18 +674,18 @@ class NeuralTagger(TrainableModel):
         # Load a trained model and vocabulary from given path
         if not os.path.exists(model_path):
             raise FileNotFoundError
-        with io.open(model_path + os.sep + 'labels.txt') as fp:
+        with io.open(model_path + os.sep + "labels.txt") as fp:
             labels = [l.strip() for l in fp.readlines()]
 
-        with io.open(model_path + os.sep + 'w_vocab.dat', 'rb') as fp:
+        with io.open(model_path + os.sep + "w_vocab.dat", "rb") as fp:
             w_vocab = pickle.load(fp)
         # load model.bin into
-        model_file_path = model_path + os.sep + 'model.bin'
+        model_file_path = model_path + os.sep + "model.bin"
         if not os.path.exists(model_file_path):
             raise FileNotFoundError
         model = torch.load(model_file_path)
         new_class = cls(model, w_vocab, labels)
-        crf_file_path = model_path + os.sep + 'crf.bin'
+        crf_file_path = model_path + os.sep + "crf.bin"
         if os.path.exists(crf_file_path):
             new_class.use_crf = True
             new_class.crf = torch.load(crf_file_path)

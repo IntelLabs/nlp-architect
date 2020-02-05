@@ -14,39 +14,49 @@
 # limitations under the License.
 # ******************************************************************************
 
-import os
 import logging
+import os
 import re
+import sys
 
 from nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_page import WikipediaPage
-from nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_page_extracted_relations import \
-    WikipediaPageExtractedRelations
-from nlp_architect.data.cdc_resources.wikipedia.wiki_search_page_result import \
-    WikipediaSearchPageResult
+from nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_page_extracted_relations import (
+    WikipediaPageExtractedRelations,
+)
+from nlp_architect.data.cdc_resources.wikipedia.wiki_search_page_result import (
+    WikipediaSearchPageResult,
+)
 from nlp_architect.utils.text import SpacyInstance
 
-os.environ['PYWIKIBOT_NO_USER_CONFIG'] = '1'
+os.environ["PYWIKIBOT_NO_USER_CONFIG"] = "1"
 
-DISAMBIGUATE_PAGE = ['wikimedia disambiguation page', 'wikipedia disambiguation page']
-NAME_DESCRIPTIONS = ['given name', 'first name', 'family name']
+DISAMBIGUATE_PAGE = ["wikimedia disambiguation page", "wikipedia disambiguation page"]
+NAME_DESCRIPTIONS = ["given name", "first name", "family name"]
 
 logger = logging.getLogger(__name__)
 
 
 class WikiOnline(object):
     def __init__(self):
-        import pywikibot
+        try:
+            import pywikibot
+        except (AttributeError, ImportError):
+            logger.error(
+                "pywikibot is not installed, please install nlp_architect with [all] package. "
+                + "for example: pip install nlp_architect[all]"
+            )
+            sys.exit()
         self.spacy = SpacyInstance()
         self.pywikibot = pywikibot
         self.cache = dict()
-        self.site = pywikibot.Site('en', 'wikipedia')  # The site we want to run our bot on
+        self.site = pywikibot.Site("en", "wikipedia")  # The site we want to run our bot on
 
     def get_pages(self, phrase):
         if phrase in self.cache:
             return self.cache[phrase]
 
         ret_pages = set()
-        word_clean = phrase.replace('-', ' ')
+        word_clean = phrase.replace("-", " ")
         word_lower = word_clean.lower()
         word_upper = word_clean.upper()
         word_title = word_clean.title()
@@ -81,7 +91,7 @@ class WikiOnline(object):
 
         ret_page = WikipediaPage(phrase, None, page_title, None, 0, pageid, description, relations)
 
-        logger.debug('Page: {}. Extracted successfully'.format(ret_page))
+        logger.debug("Page: {}. Extracted successfully".format(ret_page))
 
         return ret_page
 
@@ -89,7 +99,8 @@ class WikiOnline(object):
         if page is not None:
             try:
                 item = self.pywikibot.ItemPage.fromPage(
-                    page)  # this can be used for any page object
+                    page
+                )  # this can be used for any page object
                 item.get()  # need to call it to access any data.
                 return item
             except (self.pywikibot.NoPage, AttributeError, TypeError, NameError):
@@ -105,8 +116,8 @@ class WikiOnline(object):
     @staticmethod
     def get_aliases(item):
         if item is not None and item.aliases is not None:
-            if 'en' in item.aliases:
-                aliases = item.aliases['en']
+            if "en" in item.aliases:
+                aliases = item.aliases["en"]
                 return aliases
 
         return None
@@ -116,9 +127,9 @@ class WikiOnline(object):
         description = {}
         if item is not None:
             item_desc = item.get()
-            if 'desctiptions' in item_desc and 'en' in item_desc['descriptions']:
+            if "desctiptions" in item_desc and "en" in item_desc["descriptions"]:
                 dict([("age", 25)])
-                description['descriptions'] = dict([('en', item_desc['descriptions']['en'])])
+                description["descriptions"] = dict([("en", item_desc["descriptions"]["en"])])
 
         return description
 
@@ -126,10 +137,10 @@ class WikiOnline(object):
     def is_disambiguation_page(item):
         if item is not None:
             dic = item.get()
-            if dic is not None and 'descriptions' in dic:
-                desc = dic['descriptions']
-                if desc is not None and 'en' in desc:
-                    return desc['en'].lower()in DISAMBIGUATE_PAGE
+            if dic is not None and "descriptions" in dic:
+                desc = dic["descriptions"]
+                if desc is not None and "en" in desc:
+                    return desc["en"].lower() in DISAMBIGUATE_PAGE
 
         return False
 
@@ -141,10 +152,10 @@ class WikiOnline(object):
                     return True
             else:
                 dic = item.get()
-                if dic is not None and 'descriptions' in dic:
-                    desc = dic['descriptions']
-                    if desc is not None and 'en' in desc:
-                        if [s for s in NAME_DESCRIPTIONS if s in desc['en'].lower()]:
+                if dic is not None and "descriptions" in dic:
+                    desc = dic["descriptions"]
+                    if desc is not None and "en" in desc:
+                        if [s for s in NAME_DESCRIPTIONS if s in desc["en"].lower()]:
                             return True
         return False
 
@@ -152,7 +163,7 @@ class WikiOnline(object):
     def extract_be_comp(self, text):
         first_sentence_start_index = text.index("'''")
         if first_sentence_start_index >= 0:
-            last_temp_index = text.find('\n', first_sentence_start_index)
+            last_temp_index = text.find("\n", first_sentence_start_index)
         if last_temp_index == -1:
             last_temp_index = len(text)
 
@@ -162,12 +173,12 @@ class WikiOnline(object):
         elif last_temp_index == len(text):
             return None, None
 
-        first_paragraph_clean = re.sub(r'\([^)]*\)', '', first_paragraph)
-        first_paragraph_clean = re.sub(r'<[^>]*>', '', first_paragraph_clean)
-        first_paragraph_clean = re.sub(r'{[^}]*}', '', first_paragraph_clean)
-        first_paragraph_clean = re.sub(r'\[\[[^]]*\]\]', '', first_paragraph_clean)
-        first_paragraph_clean = re.sub(r'[\']', '', first_paragraph_clean)
-        first_paragraph_clean = re.sub(r'&nbsp;', ' ', first_paragraph_clean)
+        first_paragraph_clean = re.sub(r"\([^)]*\)", "", first_paragraph)
+        first_paragraph_clean = re.sub(r"<[^>]*>", "", first_paragraph_clean)
+        first_paragraph_clean = re.sub(r"{[^}]*}", "", first_paragraph_clean)
+        first_paragraph_clean = re.sub(r"\[\[[^]]*\]\]", "", first_paragraph_clean)
+        first_paragraph_clean = re.sub(r"[\']", "", first_paragraph_clean)
+        first_paragraph_clean = re.sub(r"&nbsp;", " ", first_paragraph_clean)
 
         return self.extract_be_comp_relations(first_paragraph_clean)
 
@@ -183,26 +194,26 @@ class WikiOnline(object):
                 relation = token.dep_
                 governor = token.head.text
                 governor_lemma = token.head.lemma_
-                if relation == 'acl':
+                if relation == "acl":
                     break
-                if relation == 'punct' and target == '.':
+                if relation == "punct" and target == ".":
                     break
-                elif relation == 'cop':
+                elif relation == "cop":
                     be_comp.add(governor)
                     be_comp_norm.add(governor_lemma)
-                elif relation == 'nsubj':
+                elif relation == "nsubj":
                     be_comp.add(target)
                     be_comp_norm.add(target_lemma)
-                elif relation == 'dep':
+                elif relation == "dep":
                     be_comp.add(governor)
                     be_comp_norm.add(governor_lemma)
-                elif relation == 'compound':
-                    be_comp.add(target + ' ' + governor)
-                    be_comp_norm.add(target_lemma + ' ' + governor_lemma)
-                elif relation == 'amod':
-                    be_comp.add(target + ' ' + governor)
-                    be_comp_norm.add(target_lemma + ' ' + governor_lemma)
-                elif relation in ['conj', 'appos']:
+                elif relation == "compound":
+                    be_comp.add(target + " " + governor)
+                    be_comp_norm.add(target_lemma + " " + governor_lemma)
+                elif relation == "amod":
+                    be_comp.add(target + " " + governor)
+                    be_comp_norm.add(target_lemma + " " + governor_lemma)
+                elif relation in ["conj", "appos"]:
                     be_comp.add(target)
                     be_comp_norm.add(target_lemma)
 
@@ -211,25 +222,25 @@ class WikiOnline(object):
     @staticmethod
     def extract_be_a_index(sentence):
         result = None
-        if 'is a' in sentence:
+        if "is a" in sentence:
             result = sentence.index("is a")
-        elif 'are a' in sentence:
+        elif "are a" in sentence:
             result = sentence.index("are a")
-        elif 'was a' in sentence:
+        elif "was a" in sentence:
             result = sentence.index("was a")
-        elif 'were a' in sentence:
+        elif "were a" in sentence:
             result = sentence.index("were a")
-        elif 'be a' in sentence:
+        elif "be a" in sentence:
             result = sentence.index("be a")
-        elif 'is the' in sentence:
+        elif "is the" in sentence:
             result = sentence.index("is the")
-        elif 'are the' in sentence:
+        elif "are the" in sentence:
             result = sentence.index("are the")
-        elif 'was the' in sentence:
+        elif "was the" in sentence:
             result = sentence.index("was the")
-        elif 'were the' in sentence:
+        elif "were the" in sentence:
             result = sentence.index("were the")
-        elif 'be the' in sentence:
+        elif "be the" in sentence:
             result = sentence.index("be the")
 
         return result

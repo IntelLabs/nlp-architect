@@ -25,7 +25,6 @@ import tensorflow as tf
 
 
 class Discriminator:
-
     def __init__(self, input_data, Y, lr_ph):
         self.input_data = input_data
         self.lr_ph = lr_ph
@@ -46,12 +45,21 @@ class Discriminator:
         with tf.variable_scope("Discriminator", reuse=tf.AUTO_REUSE):
             w_init = tf.contrib.layers.xavier_initializer()
             noisy_input = tf.nn.dropout(self.input_data, self.do_ph, name="DO1")
-            fc1 = tf.layers.dense(noisy_input, self.hid_dim, kernel_initializer=w_init,
-                                  activation=tf.nn.leaky_relu, name="Dense1")
-            fc2 = tf.layers.dense(fc1, self.hid_dim, kernel_initializer=w_init,
-                                  activation=tf.nn.leaky_relu, name="Dense2")
-            self.prediction = tf.layers.dense(fc2, 1, kernel_initializer=w_init,
-                                              name="Dense_Sig")
+            fc1 = tf.layers.dense(
+                noisy_input,
+                self.hid_dim,
+                kernel_initializer=w_init,
+                activation=tf.nn.leaky_relu,
+                name="Dense1",
+            )
+            fc2 = tf.layers.dense(
+                fc1,
+                self.hid_dim,
+                kernel_initializer=w_init,
+                activation=tf.nn.leaky_relu,
+                name="Dense2",
+            )
+            self.prediction = tf.layers.dense(fc2, 1, kernel_initializer=w_init, name="Dense_Sig")
 
     def build_train_graph(self, disc_pred):
         """
@@ -71,7 +79,6 @@ class Discriminator:
 
 
 class Generator:
-
     def __init__(self, src_ten, tgt_ten, emb_dim, batch_size, smooth_val, lr_ph, beta, vocab_size):
         self.src_ten = src_ten
         self.tgt_ten = tgt_ten
@@ -108,8 +115,8 @@ class Generator:
             # Set target for discriminator
             Y = np.zeros(shape=(2 * self.batch_size, 1), dtype=np.float32)
             # Label smoothing
-            Y[:self.batch_size] = 1 - self.smooth_val
-            Y[self.batch_size:] = self.smooth_val
+            Y[: self.batch_size] = 1 - self.smooth_val
+            Y[self.batch_size :] = self.smooth_val
             # Convert to tensor
             self.Y = tf.convert_to_tensor(Y, name="Y")
 
@@ -123,8 +130,7 @@ class Generator:
         # Variables in Mapper scope
         map_vars = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, "Generator/Mapper")
         # Binary Cross entropy
-        map_entropy = tf.nn.sigmoid_cross_entropy_with_logits(
-            logits=disc_pred, labels=(1 - self.Y))
+        map_entropy = tf.nn.sigmoid_cross_entropy_with_logits(logits=disc_pred, labels=(1 - self.Y))
         # Cost
         map_cost = tf.reduce_mean(map_entropy)
         map_opt = tf.train.GradientDescentOptimizer(self.lr_ph)
@@ -200,8 +206,16 @@ class WordTranslator:
         """
         Builds inference graph for the GAN
         """
-        self.generator = Generator(self.src_ten, self.tgt_ten, self.emb_dim, self.batch_size,
-                                   self.smooth_val, self.lr_ph, self.beta, self.vocab_size)
+        self.generator = Generator(
+            self.src_ten,
+            self.tgt_ten,
+            self.emb_dim,
+            self.batch_size,
+            self.smooth_val,
+            self.lr_ph,
+            self.beta,
+            self.vocab_size,
+        )
         self.discriminator = Discriminator(self.generator.X, self.generator.Y, self.lr_ph)
 
     def _build_train_graph(self):
@@ -218,8 +232,13 @@ class WordTranslator:
         """
         if iters > 0 and iters % 500 == 0:
             mean_cost = str(sum(disc_cost_acc) / len(disc_cost_acc))
-            print(str(int(n_words_proc / (time.time() - tic))) + " Samples/Sec - Iter "
-                  + str(iters) + " Discriminator Cost: " + mean_cost)
+            print(
+                str(int(n_words_proc / (time.time() - tic)))
+                + " Samples/Sec - Iter "
+                + str(iters)
+                + " Discriminator Cost: "
+                + mean_cost
+            )
             # Reset instrumentation
             del disc_cost_acc
             disc_cost_acc = []
@@ -238,10 +257,12 @@ class WordTranslator:
         # Generate random ids to look up
         src_ids = np.random.choice(self.vocab_size, self.batch_size, replace=False)
         tgt_ids = np.random.choice(self.vocab_size, self.batch_size, replace=False)
-        train_dict = {self.generator.src_ph: src_ids,
-                      self.generator.tgt_ph: tgt_ids,
-                      self.discriminator.do_ph: 1.0,
-                      self.lr_ph: local_lr}
+        train_dict = {
+            self.generator.src_ph: src_ids,
+            self.generator.tgt_ph: tgt_ids,
+            self.discriminator.do_ph: 1.0,
+            self.lr_ph: local_lr,
+        }
         sess.run(self.generator.map_opt, feed_dict=train_dict)
         # Run orthogonalize
         sess.run(self.generator.assign_weight)
@@ -257,12 +278,15 @@ class WordTranslator:
         # Generate random ids to look up
         src_ids = np.random.choice(self.most_freq, self.batch_size, replace=False)
         tgt_ids = np.random.choice(self.most_freq, self.batch_size, replace=False)
-        train_dict = {self.generator.src_ph: src_ids,
-                      self.generator.tgt_ph: tgt_ids,
-                      self.discriminator.do_ph: 0.9,
-                      self.lr_ph: local_lr}
-        return sess.run([self.discriminator.disc_cost, self.discriminator.disc_opt],
-                        feed_dict=train_dict)
+        train_dict = {
+            self.generator.src_ph: src_ids,
+            self.generator.tgt_ph: tgt_ids,
+            self.discriminator.do_ph: 0.9,
+            self.lr_ph: local_lr,
+        }
+        return sess.run(
+            [self.discriminator.disc_cost, self.discriminator.disc_opt], feed_dict=train_dict
+        )
 
     def run(self, sess, local_lr):
         """
@@ -296,8 +320,11 @@ class WordTranslator:
         print("Dropping learning rate to " + str(new_lr) + " from " + str(local_lr))
         if drop_lr:
             new_lr = new_lr / 2.0
-            print("Dividing learning rate by 2 as validation criterion\
-                   decreased. New lr is " + str(new_lr))
+            print(
+                "Dividing learning rate by 2 as validation criterion\
+                   decreased. New lr is "
+                + str(new_lr)
+            )
         return new_lr
 
     def save_model(self, save_model, sess):
@@ -321,11 +348,11 @@ class WordTranslator:
             final_pairs(ndarray): Array of pairs which are mutual neighbors
         """
         print("Applying solution of Procrustes problem to get better mapping...")
-        proc_dict = {self.generator.src_ph: final_pairs[:, 0],
-                     self.generator.tgt_ph: final_pairs[:, 1]}
-        A, B = sess.run([self.generator.src_emb,
-                         self.generator.tgt_emb],
-                        feed_dict=proc_dict)
+        proc_dict = {
+            self.generator.src_ph: final_pairs[:, 0],
+            self.generator.tgt_ph: final_pairs[:, 1],
+        }
+        A, B = sess.run([self.generator.src_emb, self.generator.tgt_emb], feed_dict=proc_dict)
         # pylint: disable=no-member
         R = scipy.linalg.orthogonal_procrustes(A, B)
         sess.run(tf.assign(self.generator.W, R[0]))
@@ -341,18 +368,19 @@ class WordTranslator:
         batch_size = 512
         for i in range(0, self.vocab_size, batch_size):
             sids = [x for x in range(i, min(i + batch_size, self.vocab_size))]
-            src_emb_x.append(sess.run(self.generator.mapWX,
-                                      feed_dict={self.generator.src_ph: sids}))
+            src_emb_x.append(
+                sess.run(self.generator.mapWX, feed_dict={self.generator.src_ph: sids})
+            )
         src_emb_x = np.concatenate(src_emb_x)
         print("Writing cross-lingual embeddings to file...")
         src_path = os.path.join(self.save_dir, "vectors-%s.txt" % self.slang)
         tgt_path = os.path.join(self.save_dir, "vectors-%s.txt" % self.tlang)
         with io.open(src_path, "w", encoding="utf-8") as f:
-            f.write(u"%i %i\n" % src_emb_x.shape)
+            f.write("%i %i\n" % src_emb_x.shape)
             for i in range(len(src_dict)):
-                f.write(u"%s %s\n" % (src_dict[i], " ".join('%.5f' % x for x in src_emb_x[i])))
+                f.write("%s %s\n" % (src_dict[i], " ".join("%.5f" % x for x in src_emb_x[i])))
 
         with io.open(tgt_path, "w", encoding="utf-8") as f:
-            f.write(u"%i %i\n" % tgt_vec.shape)
+            f.write("%i %i\n" % tgt_vec.shape)
             for i in range(len(tgt_dict)):
-                f.write(u"%s %s\n" % (tgt_dict[i], " ".join('%.5f' % x for x in tgt_vec[i])))
+                f.write("%s %s\n" % (tgt_dict[i], " ".join("%.5f" % x for x in tgt_vec[i])))

@@ -15,9 +15,8 @@
 # ******************************************************************************
 import difflib
 import logging
-from typing import Set, List
-
-from num2words import num2words
+import sys
+from typing import List, Set
 
 from nlp_architect.common.cdc.mention_data import MentionDataLight
 from nlp_architect.data.cdc_resources.relations.relation_extraction import RelationExtraction
@@ -31,8 +30,10 @@ class ComputedRelationExtraction(RelationExtraction):
     """
     Extract Relation between two mentions according to computation and rule based algorithms
     """
-    def extract_all_relations(self, mention_x: MentionDataLight,
-                              mention_y: MentionDataLight) -> Set[RelationType]:
+
+    def extract_all_relations(
+        self, mention_x: MentionDataLight, mention_y: MentionDataLight
+    ) -> Set[RelationType]:
         """
         Try to find if mentions has anyone or more of the relations this class support
 
@@ -50,7 +51,8 @@ class ComputedRelationExtraction(RelationExtraction):
         mention_y_str = mention_y.tokens_str
 
         if StringUtils.is_pronoun(mention_x_str.lower()) or StringUtils.is_pronoun(
-                mention_y_str.lower()):
+            mention_y_str.lower()
+        ):
             relations.add(RelationType.NO_RELATION_FOUND)
             return relations
 
@@ -72,8 +74,9 @@ class ComputedRelationExtraction(RelationExtraction):
 
         return relations
 
-    def extract_sub_relations(self, mention_x: MentionDataLight, mention_y: MentionDataLight,
-                              relation: RelationType) -> RelationType:
+    def extract_sub_relations(
+        self, mention_x: MentionDataLight, mention_y: MentionDataLight, relation: RelationType
+    ) -> RelationType:
         """
         Check if input mentions has the given relation between them
 
@@ -90,7 +93,8 @@ class ComputedRelationExtraction(RelationExtraction):
         mention_y_str = mention_y.tokens_str
 
         if StringUtils.is_pronoun(mention_x_str.lower()) or StringUtils.is_pronoun(
-                mention_y_str.lower()):
+            mention_y_str.lower()
+        ):
             return RelationType.NO_RELATION_FOUND
 
         if relation == RelationType.EXACT_STRING:
@@ -107,8 +111,9 @@ class ComputedRelationExtraction(RelationExtraction):
         return RelationType.NO_RELATION_FOUND
 
     @staticmethod
-    def extract_same_head_lemma(mention_x: MentionDataLight,
-                                mention_y: MentionDataLight) -> RelationType:
+    def extract_same_head_lemma(
+        mention_x: MentionDataLight, mention_y: MentionDataLight
+    ) -> RelationType:
         """
         Check if input mentions has same head lemma relation
 
@@ -119,18 +124,21 @@ class ComputedRelationExtraction(RelationExtraction):
         Returns:
             RelationType.SAME_HEAD_LEMMA or RelationType.NO_RELATION_FOUND
         """
-        if StringUtils.is_preposition(mention_x.mention_head_lemma) or \
-                StringUtils.is_preposition(mention_y.mention_head_lemma) or \
-                StringUtils.is_determiner(mention_x.mention_head_lemma) or \
-                StringUtils.is_determiner(mention_y.mention_head_lemma):
+        if (
+            StringUtils.is_preposition(mention_x.mention_head_lemma)
+            or StringUtils.is_preposition(mention_y.mention_head_lemma)
+            or StringUtils.is_determiner(mention_x.mention_head_lemma)
+            or StringUtils.is_determiner(mention_y.mention_head_lemma)
+        ):
             return RelationType.NO_RELATION_FOUND
         if mention_x.mention_head_lemma == mention_y.mention_head_lemma:
             return RelationType.SAME_HEAD_LEMMA
         return RelationType.NO_RELATION_FOUND
 
     @staticmethod
-    def extract_fuzzy_head_fit(mention_x: MentionDataLight,
-                               mention_y: MentionDataLight) -> RelationType:
+    def extract_fuzzy_head_fit(
+        mention_x: MentionDataLight, mention_y: MentionDataLight
+    ) -> RelationType:
         """
         Check if input mentions has fuzzy head fit relation
 
@@ -141,20 +149,19 @@ class ComputedRelationExtraction(RelationExtraction):
         Returns:
             RelationType.FUZZY_HEAD_FIT or RelationType.NO_RELATION_FOUND
         """
-        if StringUtils.is_preposition(mention_x.mention_head_lemma.lower()) or \
-                StringUtils.is_preposition(mention_y.mention_head_lemma.lower()):
+        if StringUtils.is_preposition(
+            mention_x.mention_head_lemma.lower()
+        ) or StringUtils.is_preposition(mention_y.mention_head_lemma.lower()):
             return RelationType.NO_RELATION_FOUND
 
         mention_y_tokens = mention_y.tokens_str.split()
         mention_x_tokens = mention_x.tokens_str.split()
-        if mention_x.mention_head in mention_y_tokens or \
-                mention_y.mention_head in mention_x_tokens:
+        if mention_x.mention_head in mention_y_tokens or mention_y.mention_head in mention_x_tokens:
             return RelationType.FUZZY_HEAD_FIT
         return RelationType.NO_RELATION_FOUND
 
     @staticmethod
-    def extract_fuzzy_fit(mention_x: MentionDataLight,
-                          mention_y: MentionDataLight) -> RelationType:
+    def extract_fuzzy_fit(mention_x: MentionDataLight, mention_y: MentionDataLight) -> RelationType:
         """
         Check if input mentions has fuzzy fit relation
 
@@ -165,6 +172,15 @@ class ComputedRelationExtraction(RelationExtraction):
         Returns:
             RelationType.FUZZY_FIT or RelationType.NO_RELATION_FOUND
         """
+        try:
+            from num2words import num2words
+        except (AttributeError, ImportError):
+            logger.error(
+                "num2words is not installed, please install nlp_architect with [all] package. "
+                + "for example: pip install nlp_architect[all]"
+            )
+            sys.exit()
+
         relation = RelationType.NO_RELATION_FOUND
         mention1_str = mention_x.tokens_str
         mention2_str = mention_y.tokens_str
@@ -173,20 +189,24 @@ class ComputedRelationExtraction(RelationExtraction):
             return relation
 
         # Convert numbers to words
-        x_words = [num2words(int(w)).replace('-', ' ') if w.isdigit() else w for w in
-                   mention1_str.split()]
-        y_words = [num2words(int(w)).replace('-', ' ') if w.isdigit() else w for w in
-                   mention2_str.split()]
+        x_words = [
+            num2words(int(w)).replace("-", " ") if w.isdigit() else w for w in mention1_str.split()
+        ]
+        y_words = [
+            num2words(int(w)).replace("-", " ") if w.isdigit() else w for w in mention2_str.split()
+        ]
 
-        fuzzy_result = difflib.SequenceMatcher(None, ' '.join(x_words),
-                                               ' '.join(y_words)).ratio() * 100 >= 85
+        fuzzy_result = (
+            difflib.SequenceMatcher(None, " ".join(x_words), " ".join(y_words)).ratio() * 100 >= 85
+        )
         if fuzzy_result:
             relation = RelationType.FUZZY_FIT
         return relation
 
     @staticmethod
-    def extract_exact_string(mention_x: MentionDataLight,
-                             mention_y: MentionDataLight) -> RelationType:
+    def extract_exact_string(
+        mention_x: MentionDataLight, mention_y: MentionDataLight
+    ) -> RelationType:
         """
         Check if input mentions has exact string relation
 
@@ -200,8 +220,9 @@ class ComputedRelationExtraction(RelationExtraction):
         relation = RelationType.NO_RELATION_FOUND
         mention1_str = mention_x.tokens_str
         mention2_str = mention_y.tokens_str
-        if StringUtils.is_preposition(mention1_str.lower()) or \
-                StringUtils.is_preposition(mention2_str.lower()):
+        if StringUtils.is_preposition(mention1_str.lower()) or StringUtils.is_preposition(
+            mention2_str.lower()
+        ):
             return relation
 
         if mention1_str.lower() == mention2_str.lower():
@@ -217,5 +238,9 @@ class ComputedRelationExtraction(RelationExtraction):
         Returns:
             List[RelationType]
         """
-        return [RelationType.EXACT_STRING, RelationType.FUZZY_FIT, RelationType.FUZZY_HEAD_FIT,
-                RelationType.SAME_HEAD_LEMMA]
+        return [
+            RelationType.EXACT_STRING,
+            RelationType.FUZZY_FIT,
+            RelationType.FUZZY_HEAD_FIT,
+            RelationType.SAME_HEAD_LEMMA,
+        ]

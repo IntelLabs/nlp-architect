@@ -48,9 +48,9 @@ def set_opinion_term_polarity(terms_list):
     return OpinionTerm(new_term, new_term_polarity)
 
 
-def generate_final_aspect_candidates_list(aspect_candidate_list_raw,
-                                          final_aspect_candidates_list,
-                                          frequency_threshold):
+def generate_final_aspect_candidates_list(
+    aspect_candidate_list_raw, final_aspect_candidates_list, frequency_threshold
+):
     """Generate final aspect candidates list from map.
 
     Args:
@@ -63,15 +63,16 @@ def generate_final_aspect_candidates_list(aspect_candidate_list_raw,
     for extracted_term_list in aspect_candidate_list_raw.values():
         if len(extracted_term_list) >= frequency_threshold:
             term = extracted_term_list[0]
-            qualified_term = QualifiedTerm(term.term, term.lemma, term.pos,
-                                           len(extracted_term_list), term_polarity)
+            qualified_term = QualifiedTerm(
+                term.term, term.lemma, term.pos, len(extracted_term_list), term_polarity
+            )
             final_aspect_candidates_list.append(qualified_term)
     return final_aspect_candidates_list
 
 
-def generate_final_opinion_candidates_list(opinion_candidate_list_raw,
-                                           final_opinion_candidates_list,
-                                           frequency_threshold):
+def generate_final_opinion_candidates_list(
+    opinion_candidate_list_raw, final_opinion_candidates_list, frequency_threshold
+):
     """Generate final opinion candidates list from raw opinion candidate list.
 
     Args:
@@ -100,7 +101,8 @@ def generate_final_opinion_candidates_list(opinion_candidate_list_raw,
                 term_polarity = Polarity.NEG
 
             term = extracted_term_list[0]
-            qualified_term = QualifiedTerm(term.term, term.term, term.pos,
-                                           len(extracted_term_list), term_polarity)
+            qualified_term = QualifiedTerm(
+                term.term, term.term, term.pos, len(extracted_term_list), term_polarity
+            )
             final_opinion_candidates_list.append(qualified_term)
     return final_opinion_candidates_list

@@ -2,6 +2,16 @@
 * NLP Architect Jenkinsfile
 */
 
+def virt_env = '.nlp_env'
+
+def createVirtualEnv(String name) {
+    sh "python3 -m venv ${name}"
+}
+ 
+def executeIn(String environment, String script) {
+    sh ". ${environment}/bin/activate && " + script
+}
+
 pipeline {
     agent {
         node {
@@ -20,67 +30,59 @@ pipeline {
         }
         stage('Build environment') {
             steps {
-                sh 'python3 -m venv .nlp_architect_env'
-                sh """
-                . .nlp_architect_env/bin/activate
-                pip3 install -U pip setuptools h5py
-                pip3 install -r requirements.txt
-                pip3 install -r dev-requirements.txt
-                pip3 install -e .
-                python -m spacy download en
-                """
+                createVirtualEnv virt_env
+                executeIn virt_env, 'pip3 install -U pip setuptools'
+                executeIn virt_env, 'pip3 install -U -e .[all,dev]'
+                executeIn virt_env, 'python -m spacy download en'
             }
         }
-        stage('Validation') {
-            parallel {
-                stage('Tests') {
-                    steps {
-                        sh """
-                        . .nlp_architect_env/bin/activate
-                        export LC_ALL=en_US.UTF-8
-                        export LANG=en_US.UTF-8
-                        pytest ./tests -rs -vv --cov=nlp_architect --junit-xml=pytest_unit.xml
-                        """
-                    }
-                    post {
-                        always {
-                            junit 'pytest_unit.xml'
-                        }
-                        failure {
-                            script {
-                                currentBuild.result = 'FAILURE'
-                            }
-                        }
+        stage('Tests') {
+            steps {
+                executeIn virt_env, 'pytest ./ -rs -v -n 20 --dist=loadfile --cov=nlp_architect --junit-xml=pytest_unit.xml'
+            }
+            post {
+                always {
+                    junit 'pytest_unit.xml'
+                }
+                failure {
+                    script {
+                        currentBuild.result = 'FAILURE'
                     }
                 }
-                stage('flake8') {
-                    steps {
-                        sh """
-                        . .nlp_architect_env/bin/activate
-                        ./scripts/check_flake.sh
-                        """
-                    }
-                    post {
-                        failure {
-                            script {
-                                currentBuild.result = 'FAILURE'
-                            }
-                        }
+            }
+        }
+        stage('flake8') {
+            steps {
+                executeIn virt_env, 'flake8 examples nlp_architect tests solutions --config setup.cfg'
+            }
+            post {
+                failure {
+                    script {
+                        currentBuild.result = 'FAILURE'
                     }
                 }
-                stage('pylint') {
-                    steps {
-                        sh """
-                        . .nlp_architect_env/bin/activate
-                        ./scripts/check_pylint.sh
-                        """
+            }
+        }
+        stage('pylint') {
+            steps {
+                executeIn virt_env, './scripts/check_pylint.sh'
+            }
+            post {
+                failure {
+                    script {
+                        currentBuild.result = 'FAILURE'
                     }
-                    post {
-                        failure {
-                            script {
-                                currentBuild.result = 'FAILURE'
-                            }
-                        }
+                }
+            }
+        }
+        stage('Code Style') {
+            steps {
+                executeIn virt_env, 'black --check --line-length 100 --target-version py36 examples nlp_architect solutions tests'
+            }
+            post {
+                failure {
+                    script {
+                        currentBuild.result = 'FAILURE'
                     }
                 }
             }

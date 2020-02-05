@@ -41,7 +41,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="nlp_architect.nlp package" href="nlp_architect.nlp.html" />
-    <link rel="prev" title="nlp_architect.models.gnmt.utils package" href="nlp_architect.models.gnmt.utils.html" /> 
+    <link rel="prev" title="nlp_architect.models.cross_doc_coref.system.sieves package" href="nlp_architect.models.cross_doc_coref.system.sieves.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -127,7 +127,6 @@
 <li class="toctree-l4"><a class="reference internal" href="nlp_architect.models.absa.html">nlp_architect.models.absa package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nlp_architect.models.bist.html">nlp_architect.models.bist package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nlp_architect.models.cross_doc_coref.html">nlp_architect.models.cross_doc_coref package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="nlp_architect.models.gnmt.html">nlp_architect.models.gnmt package</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">nlp_architect.models.transformers package</a></li>
 </ul>
 </li>
@@ -136,16 +135,12 @@
 <li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.chunker">nlp_architect.models.chunker module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.cross_doc_sieves">nlp_architect.models.cross_doc_sieves module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.crossling_emb">nlp_architect.models.crossling_emb module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.gnmt_model">nlp_architect.models.gnmt_model module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.intent_extraction">nlp_architect.models.intent_extraction module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.matchlstm_ansptr">nlp_architect.models.matchlstm_ansptr module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.memn2n_dialogue">nlp_architect.models.memn2n_dialogue module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.most_common_word_sense">nlp_architect.models.most_common_word_sense module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.ner_crf">nlp_architect.models.ner_crf module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.np2vec">nlp_architect.models.np2vec module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.np_semantic_segmentation">nlp_architect.models.np_semantic_segmentation module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.pretrained_models">nlp_architect.models.pretrained_models module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.supervised_sentiment">nlp_architect.models.supervised_sentiment module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.tagging">nlp_architect.models.tagging module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models.temporal_convolutional_network">nlp_architect.models.temporal_convolutional_network module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="nlp_architect.models.html#module-nlp_architect.models">Module contents</a></li>
@@ -155,7 +150,6 @@
 <li class="toctree-l2"><a class="reference internal" href="nlp_architect.nn.html">nlp_architect.nn package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nlp_architect.pipelines.html">nlp_architect.pipelines package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nlp_architect.procedures.html">nlp_architect.procedures package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nlp_architect.solutions.html">nlp_architect.solutions package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nlp_architect.utils.html">nlp_architect.utils package</a></li>
 </ul>
 </li>
@@ -392,7 +386,7 @@
 
 <dl class="class">
 <dt id="nlp_architect.models.transformers.quantized_bert.QuantizedBertConfig">
-<em class="property">class </em><code class="descclassname">nlp_architect.models.transformers.quantized_bert.</code><code class="descname">QuantizedBertConfig</code><span class="sig-paren">(</span><em>vocab_size_or_config_json_file=30522</em>, <em>hidden_size=768</em>, <em>num_hidden_layers=12</em>, <em>num_attention_heads=12</em>, <em>intermediate_size=3072</em>, <em>hidden_act='gelu'</em>, <em>hidden_dropout_prob=0.1</em>, <em>attention_probs_dropout_prob=0.1</em>, <em>max_position_embeddings=512</em>, <em>type_vocab_size=2</em>, <em>initializer_range=0.02</em>, <em>layer_norm_eps=1e-12</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/transformers/quantized_bert.html#QuantizedBertConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.transformers.quantized_bert.QuantizedBertConfig" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">nlp_architect.models.transformers.quantized_bert.</code><code class="descname">QuantizedBertConfig</code><span class="sig-paren">(</span><em>vocab_size=30522</em>, <em>hidden_size=768</em>, <em>num_hidden_layers=12</em>, <em>num_attention_heads=12</em>, <em>intermediate_size=3072</em>, <em>hidden_act='gelu'</em>, <em>hidden_dropout_prob=0.1</em>, <em>attention_probs_dropout_prob=0.1</em>, <em>max_position_embeddings=512</em>, <em>type_vocab_size=2</em>, <em>initializer_range=0.02</em>, <em>layer_norm_eps=1e-12</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/transformers/quantized_bert.html#QuantizedBertConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.transformers.quantized_bert.QuantizedBertConfig" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">transformers.configuration_bert.BertConfig</span></code></p>
 <dl class="attribute">
 <dt id="nlp_architect.models.transformers.quantized_bert.QuantizedBertConfig.pretrained_config_archive_map">

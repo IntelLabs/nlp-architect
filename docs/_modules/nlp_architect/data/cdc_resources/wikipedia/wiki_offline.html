@@ -201,10 +201,12 @@
 <span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">join</span><span class="p">,</span> <span class="n">isfile</span>
 
 <span class="kn">from</span> <span class="nn">nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_page</span> <span class="kn">import</span> <span class="n">WikipediaPage</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_page_extracted_relations</span> <span class="kn">import</span> \
-    <span class="n">WikipediaPageExtractedRelations</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.data.cdc_resources.wikipedia.wiki_search_page_result</span> <span class="kn">import</span> \
-    <span class="n">WikipediaSearchPageResult</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_page_extracted_relations</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">WikipediaPageExtractedRelations</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.data.cdc_resources.wikipedia.wiki_search_page_result</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">WikipediaSearchPageResult</span><span class="p">,</span>
+<span class="p">)</span>
 <span class="kn">from</span> <span class="nn">nlp_architect.utils.io</span> <span class="kn">import</span> <span class="n">load_json_file</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
@@ -214,7 +216,7 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wikidump</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">wikidump</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">dump</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_dump</span><span class="p">(</span><span class="n">wikidump</span><span class="p">)</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Wikipedia dump loaded successfully!&#39;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Wikipedia dump loaded successfully!&quot;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="WikiOffline.get_pages"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.data.cdc_resources.wikipedia.html#nlp_architect.data.cdc_resources.wikipedia.wiki_offline.WikiOffline.get_pages">[docs]</a>    <span class="k">def</span> <span class="nf">get_pages</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">phrase</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">phrase</span> <span class="ow">and</span> <span class="n">phrase</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dump</span><span class="p">:</span>
@@ -228,39 +230,52 @@
     <span class="k">def</span> <span class="nf">extract_json_values</span><span class="p">(</span><span class="n">json_pages</span><span class="p">):</span>
         <span class="n">pages</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">json_page</span> <span class="ow">in</span> <span class="n">json_pages</span><span class="p">:</span>
-            <span class="n">description</span> <span class="o">=</span> <span class="n">json_page</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;description&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-            <span class="n">pageid</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">json_page</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;pageid&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
-            <span class="n">orig_phrase</span> <span class="o">=</span> <span class="n">json_page</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;orig_phrase&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-            <span class="n">orig_phrase_norm</span> <span class="o">=</span> <span class="n">json_page</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;orig_phrase_norm&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-            <span class="n">wiki_title</span> <span class="o">=</span> <span class="n">json_page</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;wiki_title&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-            <span class="n">wiki_title_norm</span> <span class="o">=</span> <span class="n">json_page</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;wiki_title_norm&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">description</span> <span class="o">=</span> <span class="n">json_page</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;description&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">pageid</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">json_page</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;pageid&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+            <span class="n">orig_phrase</span> <span class="o">=</span> <span class="n">json_page</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;orig_phrase&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">orig_phrase_norm</span> <span class="o">=</span> <span class="n">json_page</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;orig_phrase_norm&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">wiki_title</span> <span class="o">=</span> <span class="n">json_page</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;wiki_title&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">wiki_title_norm</span> <span class="o">=</span> <span class="n">json_page</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;wiki_title_norm&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 
-            <span class="n">relations_json</span> <span class="o">=</span> <span class="n">json_page</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;relations&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-            <span class="n">rel_is_part_name</span> <span class="o">=</span> <span class="n">relations_json</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;isPartName&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-            <span class="n">rel_is_disambiguation</span> <span class="o">=</span> <span class="n">relations_json</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;isDisambiguation&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-            <span class="n">rel_disambiguation</span> <span class="o">=</span> <span class="n">relations_json</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;disambiguationLinks&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-            <span class="n">rel_disambiguation_norm</span> <span class="o">=</span> <span class="n">relations_json</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;disambiguationLinksNorm&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-            <span class="n">rel_parenthesis</span> <span class="o">=</span> <span class="n">relations_json</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;titleParenthesis&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-            <span class="n">rel_parenthesis_norm</span> <span class="o">=</span> <span class="n">relations_json</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;titleParenthesisNorm&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-            <span class="n">rel_categories</span> <span class="o">=</span> <span class="n">relations_json</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;categories&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-            <span class="n">rel_categories_norm</span> <span class="o">=</span> <span class="n">relations_json</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;categoriesNorm&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-            <span class="n">rel_be_comp</span> <span class="o">=</span> <span class="n">relations_json</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;beCompRelations&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-            <span class="n">rel_be_comp_norm</span> <span class="o">=</span> <span class="n">relations_json</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;beCompRelationsNorm&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-            <span class="n">rel_aliases</span> <span class="o">=</span> <span class="n">relations_json</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;aliases&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-            <span class="n">rel_aliases_norm</span> <span class="o">=</span> <span class="n">relations_json</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;aliasesNorm&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">relations_json</span> <span class="o">=</span> <span class="n">json_page</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;relations&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">rel_is_part_name</span> <span class="o">=</span> <span class="n">relations_json</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;isPartName&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">rel_is_disambiguation</span> <span class="o">=</span> <span class="n">relations_json</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;isDisambiguation&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">rel_disambiguation</span> <span class="o">=</span> <span class="n">relations_json</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;disambiguationLinks&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">rel_disambiguation_norm</span> <span class="o">=</span> <span class="n">relations_json</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;disambiguationLinksNorm&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">rel_parenthesis</span> <span class="o">=</span> <span class="n">relations_json</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;titleParenthesis&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">rel_parenthesis_norm</span> <span class="o">=</span> <span class="n">relations_json</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;titleParenthesisNorm&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">rel_categories</span> <span class="o">=</span> <span class="n">relations_json</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;categories&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">rel_categories_norm</span> <span class="o">=</span> <span class="n">relations_json</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;categoriesNorm&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">rel_be_comp</span> <span class="o">=</span> <span class="n">relations_json</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;beCompRelations&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">rel_be_comp_norm</span> <span class="o">=</span> <span class="n">relations_json</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;beCompRelationsNorm&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">rel_aliases</span> <span class="o">=</span> <span class="n">relations_json</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;aliases&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">rel_aliases_norm</span> <span class="o">=</span> <span class="n">relations_json</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;aliasesNorm&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 
-            <span class="n">relations</span> <span class="o">=</span> <span class="n">WikipediaPageExtractedRelations</span><span class="p">(</span><span class="n">rel_is_part_name</span><span class="p">,</span> <span class="n">rel_is_disambiguation</span><span class="p">,</span>
-                                                        <span class="n">rel_parenthesis</span><span class="p">,</span>
-                                                        <span class="n">rel_disambiguation</span><span class="p">,</span>
-                                                        <span class="n">rel_categories</span><span class="p">,</span> <span class="n">rel_aliases</span><span class="p">,</span> <span class="n">rel_be_comp</span><span class="p">,</span>
-                                                        <span class="n">rel_disambiguation_norm</span><span class="p">,</span>
-                                                        <span class="n">rel_categories_norm</span><span class="p">,</span> <span class="n">rel_aliases_norm</span><span class="p">,</span>
-                                                        <span class="n">rel_parenthesis_norm</span><span class="p">,</span>
-                                                        <span class="n">rel_be_comp_norm</span><span class="p">)</span>
+            <span class="n">relations</span> <span class="o">=</span> <span class="n">WikipediaPageExtractedRelations</span><span class="p">(</span>
+                <span class="n">rel_is_part_name</span><span class="p">,</span>
+                <span class="n">rel_is_disambiguation</span><span class="p">,</span>
+                <span class="n">rel_parenthesis</span><span class="p">,</span>
+                <span class="n">rel_disambiguation</span><span class="p">,</span>
+                <span class="n">rel_categories</span><span class="p">,</span>
+                <span class="n">rel_aliases</span><span class="p">,</span>
+                <span class="n">rel_be_comp</span><span class="p">,</span>
+                <span class="n">rel_disambiguation_norm</span><span class="p">,</span>
+                <span class="n">rel_categories_norm</span><span class="p">,</span>
+                <span class="n">rel_aliases_norm</span><span class="p">,</span>
+                <span class="n">rel_parenthesis_norm</span><span class="p">,</span>
+                <span class="n">rel_be_comp_norm</span><span class="p">,</span>
+            <span class="p">)</span>
 
-            <span class="n">page</span> <span class="o">=</span> <span class="n">WikipediaPage</span><span class="p">(</span><span class="n">orig_phrase</span><span class="p">,</span> <span class="n">orig_phrase_norm</span><span class="p">,</span> <span class="n">wiki_title</span><span class="p">,</span> <span class="n">wiki_title_norm</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
-                                 <span class="n">pageid</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span>
-                                 <span class="n">relations</span><span class="p">)</span>
+            <span class="n">page</span> <span class="o">=</span> <span class="n">WikipediaPage</span><span class="p">(</span>
+                <span class="n">orig_phrase</span><span class="p">,</span>
+                <span class="n">orig_phrase_norm</span><span class="p">,</span>
+                <span class="n">wiki_title</span><span class="p">,</span>
+                <span class="n">wiki_title_norm</span><span class="p">,</span>
+                <span class="mi">0</span><span class="p">,</span>
+                <span class="n">pageid</span><span class="p">,</span>
+                <span class="n">description</span><span class="p">,</span>
+                <span class="n">relations</span><span class="p">,</span>
+            <span class="p">)</span>
             <span class="n">pages</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">WikipediaSearchPageResult</span><span class="p">(</span><span class="n">orig_phrase</span><span class="p">,</span> <span class="n">page</span><span class="p">))</span>
 
         <span class="k">return</span> <span class="n">pages</span></div>

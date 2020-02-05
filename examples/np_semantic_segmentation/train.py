@@ -44,21 +44,23 @@ def train_mlp_classifier(dataset, model_file_path, epochs, callback_args=None):
     model.save(model_file_path)
     # set evaluation error rates
     loss, binary_accuracy, precision, recall, f1 = model.eval(dataset.test_set)
-    print('loss = %.1f%%' % (loss))
-    print('Test binary_accuracy rate = %.1f%%' % (binary_accuracy * 100))
-    print('Test precision rate = %.1f%%' % (precision * 100))
-    print('Test recall rate = %.1f%%' % (recall * 100))
-    print('Test f1 rate = %.1f%%' % (f1 * 100))
+    print("loss = %.1f%%" % (loss))
+    print("Test binary_accuracy rate = %.1f%%" % (binary_accuracy * 100))
+    print("Test precision rate = %.1f%%" % (precision * 100))
+    print("Test recall rate = %.1f%%" % (recall * 100))
+    print("Test f1 rate = %.1f%%" % (f1 * 100))
 
 
 if __name__ == "__main__":
     # parse the command line arguments
     parser = argparse.ArgumentParser()
     parser.set_defaults(epochs=200)
-    parser.add_argument('--data', type=validate_existing_filepath,
-                        help='Path to the CSV file where the prepared dataset is saved')
-    parser.add_argument('--model_path', type=validate_parent_exists,
-                        help='Path to save the model')
+    parser.add_argument(
+        "--data",
+        type=validate_existing_filepath,
+        help="Path to the CSV file where the prepared dataset is saved",
+    )
+    parser.add_argument("--model_path", type=validate_parent_exists, help="Path to save the model")
     args = parser.parse_args()
     validate((args.epochs, int, 1, 100000))
     data_path = absolute_path(args.data)

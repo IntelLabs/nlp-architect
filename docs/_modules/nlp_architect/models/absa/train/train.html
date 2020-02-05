@@ -204,48 +204,64 @@
 <span class="kn">from</span> <span class="nn">nlp_architect.models.absa</span> <span class="kn">import</span> <span class="n">TRAIN_OUT</span><span class="p">,</span> <span class="n">LEXICONS_OUT</span>
 <span class="kn">from</span> <span class="nn">nlp_architect.models.absa.train.acquire_terms</span> <span class="kn">import</span> <span class="n">AcquireTerms</span>
 <span class="kn">from</span> <span class="nn">nlp_architect.models.absa.train.rerank_terms</span> <span class="kn">import</span> <span class="n">RerankTerms</span>
-<span class="kn">from</span> <span class="nn">nlp_architect.models.absa.utils</span> <span class="kn">import</span> <span class="n">parse_docs</span><span class="p">,</span> <span class="n">_download_pretrained_rerank_model</span><span class="p">,</span> \
-    <span class="n">_write_aspect_lex</span><span class="p">,</span> <span class="n">_write_opinion_lex</span>
+<span class="kn">from</span> <span class="nn">nlp_architect.models.absa.utils</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">parse_docs</span><span class="p">,</span>
+    <span class="n">_download_pretrained_rerank_model</span><span class="p">,</span>
+    <span class="n">_write_aspect_lex</span><span class="p">,</span>
+    <span class="n">_write_opinion_lex</span><span class="p">,</span>
+<span class="p">)</span>
 <span class="kn">from</span> <span class="nn">nlp_architect.utils.io</span> <span class="kn">import</span> <span class="n">download_unzip</span>
 
-<span class="n">EMBEDDING_URL</span> <span class="o">=</span> <span class="s1">&#39;http://nlp.stanford.edu/data&#39;</span><span class="p">,</span> <span class="s1">&#39;glove.840B.300d.zip&#39;</span>
-<span class="n">EMBEDDING_PATH</span> <span class="o">=</span> <span class="n">TRAIN_OUT</span> <span class="o">/</span> <span class="s1">&#39;word_emb_unzipped&#39;</span> <span class="o">/</span> <span class="s1">&#39;glove.840B.300d.txt&#39;</span>
-<span class="n">RERANK_MODEL_DEFAULT_PATH</span> <span class="o">=</span> <span class="n">rerank_model_dir</span> <span class="o">=</span> <span class="n">TRAIN_OUT</span> <span class="o">/</span> <span class="s1">&#39;reranking_model&#39;</span> <span class="o">/</span> <span class="s1">&#39;rerank_model.h5&#39;</span>
+<span class="n">EMBEDDING_URL</span> <span class="o">=</span> <span class="s2">&quot;http://nlp.stanford.edu/data&quot;</span><span class="p">,</span> <span class="s2">&quot;glove.840B.300d.zip&quot;</span>
+<span class="n">EMBEDDING_PATH</span> <span class="o">=</span> <span class="n">TRAIN_OUT</span> <span class="o">/</span> <span class="s2">&quot;word_emb_unzipped&quot;</span> <span class="o">/</span> <span class="s2">&quot;glove.840B.300d.txt&quot;</span>
+<span class="n">RERANK_MODEL_DEFAULT_PATH</span> <span class="o">=</span> <span class="n">rerank_model_dir</span> <span class="o">=</span> <span class="n">TRAIN_OUT</span> <span class="o">/</span> <span class="s2">&quot;reranking_model&quot;</span> <span class="o">/</span> <span class="s2">&quot;rerank_model.h5&quot;</span>
 
 
 <div class="viewcode-block" id="TrainSentiment"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.models.absa.train.html#nlp_architect.models.absa.train.train.TrainSentiment">[docs]</a><span class="k">class</span> <span class="nc">TrainSentiment</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parse</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">rerank_model</span><span class="p">:</span> <span class="n">PathLike</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                 <span class="n">asp_thresh</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">op_thresh</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">max_iter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">parse</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">rerank_model</span><span class="p">:</span> <span class="n">PathLike</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">asp_thresh</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="n">op_thresh</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="n">max_iter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">acquire_lexicon</span> <span class="o">=</span> <span class="n">AcquireTerms</span><span class="p">(</span><span class="n">asp_thresh</span><span class="p">,</span> <span class="n">op_thresh</span><span class="p">,</span> <span class="n">max_iter</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">parse</span><span class="p">:</span>
             <span class="kn">from</span> <span class="nn">nlp_architect.pipelines.spacy_bist</span> <span class="kn">import</span> <span class="n">SpacyBISTParser</span>
+
             <span class="bp">self</span><span class="o">.</span><span class="n">parser</span> <span class="o">=</span> <span class="n">SpacyBISTParser</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">parser</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">rerank_model</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;using pre-trained reranking model&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;using pre-trained reranking model&quot;</span><span class="p">)</span>
             <span class="n">rerank_model</span> <span class="o">=</span> <span class="n">_download_pretrained_rerank_model</span><span class="p">(</span><span class="n">RERANK_MODEL_DEFAULT_PATH</span><span class="p">)</span>
 
         <span class="n">download_unzip</span><span class="p">(</span><span class="o">*</span><span class="n">EMBEDDING_URL</span><span class="p">,</span> <span class="n">EMBEDDING_PATH</span><span class="p">,</span> <span class="n">license_msg</span><span class="o">=</span><span class="s2">&quot;Glove word embeddings.&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">rerank</span> <span class="o">=</span> <span class="n">RerankTerms</span><span class="p">(</span><span class="n">vector_cache</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">rerank_model</span><span class="o">=</span><span class="n">rerank_model</span><span class="p">,</span>
-                                  <span class="n">emb_model_path</span><span class="o">=</span><span class="n">EMBEDDING_PATH</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rerank</span> <span class="o">=</span> <span class="n">RerankTerms</span><span class="p">(</span>
+            <span class="n">vector_cache</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">rerank_model</span><span class="o">=</span><span class="n">rerank_model</span><span class="p">,</span> <span class="n">emb_model_path</span><span class="o">=</span><span class="n">EMBEDDING_PATH</span>
+        <span class="p">)</span>
 
-<div class="viewcode-block" id="TrainSentiment.run"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.models.absa.train.html#nlp_architect.models.absa.train.train.TrainSentiment.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">PathLike</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">parsed_data</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">PathLike</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="n">out_dir</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">PathLike</span><span class="p">]</span> <span class="o">=</span> <span class="n">TRAIN_OUT</span><span class="p">):</span>
+<div class="viewcode-block" id="TrainSentiment.run"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.models.absa.train.html#nlp_architect.models.absa.train.train.TrainSentiment.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">data</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">PathLike</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">parsed_data</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">PathLike</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">out_dir</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">PathLike</span><span class="p">]</span> <span class="o">=</span> <span class="n">TRAIN_OUT</span><span class="p">,</span>
+    <span class="p">):</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">parsed_data</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">parser</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Parser not initialized (try parse=True at init)&quot;</span><span class="p">)</span>
-            <span class="n">parsed_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">out_dir</span><span class="p">)</span> <span class="o">/</span> <span class="s1">&#39;parsed&#39;</span> <span class="o">/</span> <span class="n">Path</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">stem</span>
+            <span class="n">parsed_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">out_dir</span><span class="p">)</span> <span class="o">/</span> <span class="s2">&quot;parsed&quot;</span> <span class="o">/</span> <span class="n">Path</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">stem</span>
             <span class="n">parsed_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_data</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">parsed_dir</span><span class="p">)</span>
 
         <span class="n">generated_aspect_lex</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">acquire_lexicon</span><span class="o">.</span><span class="n">acquire_lexicons</span><span class="p">(</span><span class="n">parsed_data</span><span class="p">)</span>
         <span class="n">_write_aspect_lex</span><span class="p">(</span><span class="n">parsed_data</span><span class="p">,</span> <span class="n">generated_aspect_lex</span><span class="p">,</span> <span class="n">LEXICONS_OUT</span><span class="p">)</span>
 
-        <span class="n">generated_opinion_lex_reranked</span> <span class="o">=</span> \
-            <span class="bp">self</span><span class="o">.</span><span class="n">rerank</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">AcquireTerms</span><span class="o">.</span><span class="n">acquired_opinion_terms_path</span><span class="p">,</span>
-                                <span class="n">AcquireTerms</span><span class="o">.</span><span class="n">generic_opinion_lex_path</span><span class="p">)</span>
+        <span class="n">generated_opinion_lex_reranked</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rerank</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span>
+            <span class="n">AcquireTerms</span><span class="o">.</span><span class="n">acquired_opinion_terms_path</span><span class="p">,</span> <span class="n">AcquireTerms</span><span class="o">.</span><span class="n">generic_opinion_lex_path</span>
+        <span class="p">)</span>
         <span class="n">_write_opinion_lex</span><span class="p">(</span><span class="n">parsed_data</span><span class="p">,</span> <span class="n">generated_opinion_lex_reranked</span><span class="p">,</span> <span class="n">LEXICONS_OUT</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">generated_opinion_lex_reranked</span><span class="p">,</span> <span class="n">generated_aspect_lex</span></div>
@@ -253,8 +269,10 @@
 <div class="viewcode-block" id="TrainSentiment.parse_data"><a class="viewcode-back" href="../../../../../generated_api/nlp_architect.models.absa.train.html#nlp_architect.models.absa.train.train.TrainSentiment.parse_data">[docs]</a>    <span class="k">def</span> <span class="nf">parse_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">PathLike</span> <span class="ow">or</span> <span class="n">PosixPath</span><span class="p">,</span> <span class="n">parsed_dir</span><span class="p">:</span> <span class="n">PathLike</span> <span class="ow">or</span> <span class="n">PosixPath</span><span class="p">):</span>
         <span class="n">_</span><span class="p">,</span> <span class="n">data_size</span> <span class="o">=</span> <span class="n">parse_docs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parser</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">out_dir</span><span class="o">=</span><span class="n">parsed_dir</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">data_size</span> <span class="o">&lt;</span> <span class="mi">1000</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;The data contains only </span><span class="si">{0}</span><span class="s1"> sentences. A minimum of 1000 &#39;</span>
-                             <span class="s1">&#39;sentences is required for training.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data_size</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;The data contains only </span><span class="si">{0}</span><span class="s2"> sentences. A minimum of 1000 &quot;</span>
+                <span class="s2">&quot;sentences is required for training.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data_size</span><span class="p">)</span>
+            <span class="p">)</span>
         <span class="k">return</span> <span class="n">parsed_dir</span></div></div>
 </pre></div>
 

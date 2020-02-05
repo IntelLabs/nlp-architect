@@ -19,10 +19,12 @@ from os import listdir
 from os.path import join, isfile
 
 from nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_page import WikipediaPage
-from nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_page_extracted_relations import \
-    WikipediaPageExtractedRelations
-from nlp_architect.data.cdc_resources.wikipedia.wiki_search_page_result import \
-    WikipediaSearchPageResult
+from nlp_architect.data.cdc_resources.data_types.wiki.wikipedia_page_extracted_relations import (
+    WikipediaPageExtractedRelations,
+)
+from nlp_architect.data.cdc_resources.wikipedia.wiki_search_page_result import (
+    WikipediaSearchPageResult,
+)
 from nlp_architect.utils.io import load_json_file
 
 logger = logging.getLogger(__name__)
@@ -32,7 +34,7 @@ class WikiOffline(object):
     def __init__(self, wikidump):
         if wikidump:
             self.dump = self.load_dump(wikidump)
-            logger.info('Wikipedia dump loaded successfully!')
+            logger.info("Wikipedia dump loaded successfully!")
 
     def get_pages(self, phrase):
         if phrase and phrase in self.dump:
@@ -46,39 +48,52 @@ class WikiOffline(object):
     def extract_json_values(json_pages):
         pages = set()
         for json_page in json_pages:
-            description = json_page.get('description', None)
-            pageid = int(json_page.get('pageid', 0))
-            orig_phrase = json_page.get('orig_phrase', None)
-            orig_phrase_norm = json_page.get('orig_phrase_norm', None)
-            wiki_title = json_page.get('wiki_title', None)
-            wiki_title_norm = json_page.get('wiki_title_norm', None)
+            description = json_page.get("description", None)
+            pageid = int(json_page.get("pageid", 0))
+            orig_phrase = json_page.get("orig_phrase", None)
+            orig_phrase_norm = json_page.get("orig_phrase_norm", None)
+            wiki_title = json_page.get("wiki_title", None)
+            wiki_title_norm = json_page.get("wiki_title_norm", None)
 
-            relations_json = json_page.get('relations', None)
-            rel_is_part_name = relations_json.get('isPartName', None)
-            rel_is_disambiguation = relations_json.get('isDisambiguation', None)
-            rel_disambiguation = relations_json.get('disambiguationLinks', None)
-            rel_disambiguation_norm = relations_json.get('disambiguationLinksNorm', None)
-            rel_parenthesis = relations_json.get('titleParenthesis', None)
-            rel_parenthesis_norm = relations_json.get('titleParenthesisNorm', None)
-            rel_categories = relations_json.get('categories', None)
-            rel_categories_norm = relations_json.get('categoriesNorm', None)
-            rel_be_comp = relations_json.get('beCompRelations', None)
-            rel_be_comp_norm = relations_json.get('beCompRelationsNorm', None)
-            rel_aliases = relations_json.get('aliases', None)
-            rel_aliases_norm = relations_json.get('aliasesNorm', None)
+            relations_json = json_page.get("relations", None)
+            rel_is_part_name = relations_json.get("isPartName", None)
+            rel_is_disambiguation = relations_json.get("isDisambiguation", None)
+            rel_disambiguation = relations_json.get("disambiguationLinks", None)
+            rel_disambiguation_norm = relations_json.get("disambiguationLinksNorm", None)
+            rel_parenthesis = relations_json.get("titleParenthesis", None)
+            rel_parenthesis_norm = relations_json.get("titleParenthesisNorm", None)
+            rel_categories = relations_json.get("categories", None)
+            rel_categories_norm = relations_json.get("categoriesNorm", None)
+            rel_be_comp = relations_json.get("beCompRelations", None)
+            rel_be_comp_norm = relations_json.get("beCompRelationsNorm", None)
+            rel_aliases = relations_json.get("aliases", None)
+            rel_aliases_norm = relations_json.get("aliasesNorm", None)
 
-            relations = WikipediaPageExtractedRelations(rel_is_part_name, rel_is_disambiguation,
-                                                        rel_parenthesis,
-                                                        rel_disambiguation,
-                                                        rel_categories, rel_aliases, rel_be_comp,
-                                                        rel_disambiguation_norm,
-                                                        rel_categories_norm, rel_aliases_norm,
-                                                        rel_parenthesis_norm,
-                                                        rel_be_comp_norm)
+            relations = WikipediaPageExtractedRelations(
+                rel_is_part_name,
+                rel_is_disambiguation,
+                rel_parenthesis,
+                rel_disambiguation,
+                rel_categories,
+                rel_aliases,
+                rel_be_comp,
+                rel_disambiguation_norm,
+                rel_categories_norm,
+                rel_aliases_norm,
+                rel_parenthesis_norm,
+                rel_be_comp_norm,
+            )
 
-            page = WikipediaPage(orig_phrase, orig_phrase_norm, wiki_title, wiki_title_norm, 0,
-                                 pageid, description,
-                                 relations)
+            page = WikipediaPage(
+                orig_phrase,
+                orig_phrase_norm,
+                wiki_title,
+                wiki_title_norm,
+                0,
+                pageid,
+                description,
+                relations,
+            )
             pages.add(WikipediaSearchPageResult(orig_phrase, page))
 
         return pages

@@ -9,7 +9,6 @@ Subpackages
     nlp_architect.models.absa
     nlp_architect.models.bist
     nlp_architect.models.cross_doc_coref
-    nlp_architect.models.gnmt
     nlp_architect.models.transformers
 
 Submodules
@@ -47,34 +46,10 @@ nlp\_architect.models.crossling\_emb module
     :undoc-members:
     :show-inheritance:
 
-nlp\_architect.models.gnmt\_model module
-----------------------------------------
-
-.. automodule:: nlp_architect.models.gnmt_model
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 nlp\_architect.models.intent\_extraction module
 -----------------------------------------------
 
 .. automodule:: nlp_architect.models.intent_extraction
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-nlp\_architect.models.matchlstm\_ansptr module
-----------------------------------------------
-
-.. automodule:: nlp_architect.models.matchlstm_ansptr
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-nlp\_architect.models.memn2n\_dialogue module
----------------------------------------------
-
-.. automodule:: nlp_architect.models.memn2n_dialogue
     :members:
     :undoc-members:
     :show-inheritance:
@@ -115,14 +90,6 @@ nlp\_architect.models.pretrained\_models module
 -----------------------------------------------
 
 .. automodule:: nlp_architect.models.pretrained_models
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-nlp\_architect.models.supervised\_sentiment module
---------------------------------------------------
-
-.. automodule:: nlp_architect.models.supervised_sentiment
     :members:
     :undoc-members:
     :show-inheritance:

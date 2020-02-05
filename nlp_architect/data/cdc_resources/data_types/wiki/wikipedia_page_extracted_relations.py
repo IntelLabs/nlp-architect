@@ -19,20 +19,27 @@ from typing import Set, Dict
 
 from nlp_architect.utils.string_utils import StringUtils
 
-PART_NAME_CATEGORIES = ['name', 'given name', 'surname']
-DISAMBIGUATION_TITLE = '(disambiguation)'
-DISAMBIGUATION_CATEGORY = ['disambig', 'disambiguation']
+PART_NAME_CATEGORIES = ["name", "given name", "surname"]
+DISAMBIGUATION_TITLE = "(disambiguation)"
+DISAMBIGUATION_CATEGORY = ["disambig", "disambiguation"]
 
 
 class WikipediaPageExtractedRelations(object):
-    def __init__(self, is_part_name: bool = False, is_disambiguation: bool = False,
-                 parenthesis: Set[str] = None,
-                 disambiguation_links: Set[str] = None, categories: Set[str] = None,
-                 aliases: Set[str] = None,
-                 be_comp: Set[str] = None,
-                 disambiguation_links_norm: Set[str] = None, categories_norm: Set[str] = None,
-                 aliases_norm: Set[str] = None,
-                 title_parenthesis_norm: Set[str] = None, be_comp_norm: Set[str] = None) -> None:
+    def __init__(
+        self,
+        is_part_name: bool = False,
+        is_disambiguation: bool = False,
+        parenthesis: Set[str] = None,
+        disambiguation_links: Set[str] = None,
+        categories: Set[str] = None,
+        aliases: Set[str] = None,
+        be_comp: Set[str] = None,
+        disambiguation_links_norm: Set[str] = None,
+        categories_norm: Set[str] = None,
+        aliases_norm: Set[str] = None,
+        title_parenthesis_norm: Set[str] = None,
+        be_comp_norm: Set[str] = None,
+    ) -> None:
         """
         Object represent a Wikipedia Relations Schema
 
@@ -77,7 +84,7 @@ class WikipediaPageExtractedRelations(object):
         ext_links = set()
         title_parenthesis = set()
 
-        text_lines = text.split('\n')
+        text_lines = text.split("\n")
         for line in text_lines:
             cat_links = self.extract_categories(line)
             if not self.is_part_name:
@@ -99,45 +106,55 @@ class WikipediaPageExtractedRelations(object):
             self.title_parenthesis_norm = StringUtils.normalize_string_list(title_parenthesis)
 
     def __str__(self) -> str:
-        return str(self.is_disambiguation) + ', ' + str(self.is_part_name) + ', ' + \
-            str(self.disambiguation_links) + ', ' + str(self.be_comp) + ', ' + str(
-            self.title_parenthesis) + ', ' + str(self.categories)
+        return (
+            str(self.is_disambiguation)
+            + ", "
+            + str(self.is_part_name)
+            + ", "
+            + str(self.disambiguation_links)
+            + ", "
+            + str(self.be_comp)
+            + ", "
+            + str(self.title_parenthesis)
+            + ", "
+            + str(self.categories)
+        )
 
     def toJson(self) -> Dict:
         result_dict = dict()
-        result_dict['isPartName'] = self.is_part_name
-        result_dict['isDisambiguation'] = self.is_disambiguation
+        result_dict["isPartName"] = self.is_part_name
+        result_dict["isDisambiguation"] = self.is_disambiguation
 
         if self.disambiguation_links is not None:
-            result_dict['disambiguationLinks'] = list(self.disambiguation_links)
-            result_dict['disambiguationLinksNorm'] = list(self.disambiguation_links_norm)
+            result_dict["disambiguationLinks"] = list(self.disambiguation_links)
+            result_dict["disambiguationLinksNorm"] = list(self.disambiguation_links_norm)
         if self.categories is not None:
-            result_dict['categories'] = list(self.categories)
-            result_dict['categoriesNorm'] = list(self.categories_norm)
+            result_dict["categories"] = list(self.categories)
+            result_dict["categoriesNorm"] = list(self.categories_norm)
         if self.aliases is not None:
-            result_dict['aliases'] = list(self.aliases)
+            result_dict["aliases"] = list(self.aliases)
         if self.title_parenthesis is not None:
-            result_dict['titleParenthesis'] = list(self.title_parenthesis)
-            result_dict['titleParenthesisNorm'] = list(self.title_parenthesis_norm)
+            result_dict["titleParenthesis"] = list(self.title_parenthesis)
+            result_dict["titleParenthesisNorm"] = list(self.title_parenthesis_norm)
         if self.be_comp_norm is not None:
-            result_dict['beCompRelations'] = list(self.be_comp)
-            result_dict['beCompRelationsNorm'] = list(self.be_comp_norm)
+            result_dict["beCompRelations"] = list(self.be_comp)
+            result_dict["beCompRelationsNorm"] = list(self.be_comp_norm)
 
         return result_dict
 
     @staticmethod
     def extract_categories(line: str) -> Set[str]:
         categories = set()
-        category_form1 = re.findall(r'\[\[Category:(.*)\]\]', line)
+        category_form1 = re.findall(r"\[\[Category:(.*)\]\]", line)
         for cat in category_form1:
             if DISAMBIGUATION_TITLE in cat:
-                cat = cat.replace(DISAMBIGUATION_TITLE, '')
+                cat = cat.replace(DISAMBIGUATION_TITLE, "")
             categories.add(cat)
 
-        prog = re.search('^{{(disambig.*|Disambig.*)}}$', line)
+        prog = re.search("^{{(disambig.*|Disambig.*)}}$", line)
         if prog is not None:
             category_form2 = prog.group(1)
-            cats = category_form2.split('|')
+            cats = category_form2.split("|")
             categories.update(cats)
 
         return categories
@@ -146,22 +163,25 @@ class WikipediaPageExtractedRelations(object):
     def extract_links_and_parenthesis(line: str):
         links = set()
         parenthesis_links = set()
-        ext_links = re.findall(r'\[\[(.*)\]\]', line)
+        ext_links = re.findall(r"\[\[(.*)\]\]", line)
         for link in ext_links:
-            split_link = link.split('|')
+            split_link = link.split("|")
             for s_link in split_link:
                 parenthesis_clean = None
-                matcher = re.match(r'(.*)\s?\((.*)\)', s_link)
+                matcher = re.match(r"(.*)\s?\((.*)\)", s_link)
                 if matcher:
                     s_link = matcher.group(1)
                     parenthesis_match = matcher.group(2)
-                    if parenthesis_match.lower() != 'disambiguation':
+                    if parenthesis_match.lower() != "disambiguation":
                         parenthesis_clean = re.sub(
-                            '[' + string.punctuation + string.whitespace + ']', ' ',
-                            parenthesis_match).strip()
+                            "[" + string.punctuation + string.whitespace + "]",
+                            " ",
+                            parenthesis_match,
+                        ).strip()
 
-                s_link_clean = re.sub('[' + string.punctuation + string.whitespace + ']', ' ',
-                                      s_link).strip()
+                s_link_clean = re.sub(
+                    "[" + string.punctuation + string.whitespace + "]", " ", s_link
+                ).strip()
                 if parenthesis_clean is not None and DISAMBIGUATION_TITLE not in parenthesis_clean:
                     parenthesis_links.add(parenthesis_clean)
 
@@ -173,21 +193,21 @@ class WikipediaPageExtractedRelations(object):
     def is_name_part(line: str) -> bool:
         line = line.lower()
         val = False
-        if WikipediaPageExtractedRelations.find_in_line(line, '===as surname==='):
+        if WikipediaPageExtractedRelations.find_in_line(line, "===as surname==="):
             val = True
-        elif WikipediaPageExtractedRelations.find_in_line(line, '===as given name==='):
+        elif WikipediaPageExtractedRelations.find_in_line(line, "===as given name==="):
             val = True
-        elif WikipediaPageExtractedRelations.find_in_line(line, '===given names==='):
+        elif WikipediaPageExtractedRelations.find_in_line(line, "===given names==="):
             val = True
-        elif WikipediaPageExtractedRelations.find_in_line(line, '==as a surname=='):
+        elif WikipediaPageExtractedRelations.find_in_line(line, "==as a surname=="):
             val = True
-        elif WikipediaPageExtractedRelations.find_in_line(line, '==people with the surname=='):
+        elif WikipediaPageExtractedRelations.find_in_line(line, "==people with the surname=="):
             val = True
-        elif WikipediaPageExtractedRelations.find_in_line(line, '==family name and surname=='):
+        elif WikipediaPageExtractedRelations.find_in_line(line, "==family name and surname=="):
             val = True
-        elif WikipediaPageExtractedRelations.find_in_line(line, 'category:given names'):
+        elif WikipediaPageExtractedRelations.find_in_line(line, "category:given names"):
             val = True
-        elif WikipediaPageExtractedRelations.find_in_line(line, '{{given name}}'):
+        elif WikipediaPageExtractedRelations.find_in_line(line, "{{given name}}"):
             val = True
         return val
 

@@ -46,7 +46,7 @@ def classify_collocation(test_set, model_file_path, num_epochs, callback_args=No
     loaded_model.load(model_file_path)
     print("Model loaded")
     # arrange the data
-    return loaded_model.get_outputs(test_set['X'])
+    return loaded_model.get_outputs(test_set["X"])
 
 
 def print_evaluation(y_test, predictions):
@@ -78,8 +78,10 @@ def print_evaluation(y_test, predictions):
     acc = 100 * ((tp + tn) / len(predictions))
     prec = 100 * (tp / (tp + fp))
     rec = 100 * (tp / (tp + fn))
-    print("Model statistics:\naccuracy: {0:.2f}\nprecision: {1:.2f}"
-          "\nrecall: {2:.2f}\n".format(acc, prec, rec))
+    print(
+        "Model statistics:\naccuracy: {0:.2f}\nprecision: {1:.2f}"
+        "\nrecall: {2:.2f}\n".format(acc, prec, rec)
+    )
 
 
 def write_results(predictions, output):
@@ -92,8 +94,8 @@ def write_results(predictions, output):
             the model's predictions
     """
     results_list = [round(p[0]) for p in predictions.tolist()]
-    with open(output, 'w', encoding='utf-8') as out_file:
-        writer = csv.writer(out_file, delimiter=',', quotechar='"')
+    with open(output, "w", encoding="utf-8") as out_file:
+        writer = csv.writer(out_file, delimiter=",", quotechar='"')
         for result in results_list:
             writer.writerow([result])
     print("Results of inference saved in {0}".format(output))
@@ -103,15 +105,21 @@ if __name__ == "__main__":
     # parse the command line arguments
     parser = argparse.ArgumentParser()
     parser.set_defaults(epochs=200)
-    parser.add_argument('--data', help='prepared data CSV file path',
-                        type=validate_existing_filepath)
-    parser.add_argument('--model', help='path to the trained model file',
-                        type=validate_existing_filepath)
-    parser.add_argument('--print_stats', action='store_true', default=False,
-                        help='print evaluation stats for the model predictions - if '
-                             'your data has tagging')
-    parser.add_argument('--output', help='path to location for inference output file',
-                        type=validate_parent_exists)
+    parser.add_argument(
+        "--data", help="prepared data CSV file path", type=validate_existing_filepath
+    )
+    parser.add_argument(
+        "--model", help="path to the trained model file", type=validate_existing_filepath
+    )
+    parser.add_argument(
+        "--print_stats",
+        action="store_true",
+        default=False,
+        help="print evaluation stats for the model predictions - if " "your data has tagging",
+    )
+    parser.add_argument(
+        "--output", help="path to location for inference output file", type=validate_parent_exists
+    )
     args = parser.parse_args()
     data_path = absolute_path(args.data)
     model_path = absolute_path(args.model)

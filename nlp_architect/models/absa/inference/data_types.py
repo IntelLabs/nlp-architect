@@ -19,8 +19,14 @@ from json import JSONEncoder
 
 
 class LexiconElement(object):
-    def __init__(self, term: list, score: str or float = None, polarity: str = None,
-                 is_acquired: str = None, position: str = None):
+    def __init__(
+        self,
+        term: list,
+        score: str or float = None,
+        polarity: str = None,
+        is_acquired: str = None,
+        position: str = None,
+    ):
         self.term = term
         self.polarity = polarity
         try:
@@ -55,21 +61,22 @@ class LexiconElement(object):
 
 
 class TermType(Enum):
-    OPINION = 'OP'
-    ASPECT = 'AS'
-    NEGATION = 'NEG'
-    INTENSIFIER = 'INT'
+    OPINION = "OP"
+    ASPECT = "AS"
+    NEGATION = "NEG"
+    INTENSIFIER = "INT"
 
 
 class Polarity(Enum):
-    POS = 'POS'
-    NEG = 'NEG'
-    UNK = 'UNK'
+    POS = "POS"
+    NEG = "NEG"
+    UNK = "UNK"
 
 
 class Term(object):
-    def __init__(self, text: str, kind: TermType, polarity: Polarity, score: float, start: int,
-                 length: int):
+    def __init__(
+        self, text: str, kind: TermType, polarity: Polarity, score: float, start: int, length: int
+    ):
         self._text = text
         self._type = kind
         self._polarity = polarity
@@ -119,10 +126,20 @@ class Term(object):
         self._polarity = val
 
     def __str__(self):
-        return "text: " + self._text + " type: " + str(self._type) + " pol: " + \
-               str(self._polarity) + " score: " + str(self._score) + " start: " + \
-               str(self._start) + " len: " + \
-               str(self._len)
+        return (
+            "text: "
+            + self._text
+            + " type: "
+            + str(self._type)
+            + " pol: "
+            + str(self._polarity)
+            + " score: "
+            + str(self._score)
+            + " start: "
+            + str(self._start)
+            + " len: "
+            + str(self._len)
+        )
 
 
 class SentimentDoc(object):
@@ -160,19 +177,23 @@ class SentimentDoc(object):
         :return: decoded Sentence object
         """
         # SentimentDoc
-        if '_doc_text' in obj and '_sentences' in obj:
-            return SentimentDoc(obj['_doc_text'], obj['_sentences'])
+        if "_doc_text" in obj and "_sentences" in obj:
+            return SentimentDoc(obj["_doc_text"], obj["_sentences"])
 
         # SentimentSentence
-        if all((attr in obj for attr in ('_start', '_end', '_events'))):
-            return SentimentSentence(obj['_start'], obj['_end'], obj['_events'])
+        if all((attr in obj for attr in ("_start", "_end", "_events"))):
+            return SentimentSentence(obj["_start"], obj["_end"], obj["_events"])
 
         # Term
-        if all(attr in obj for attr in
-               ('_text', '_type', '_score', '_polarity', '_start', '_len')):
-            return Term(obj['_text'], TermType[obj['_type']],
-                        Polarity[obj['_polarity']], obj['_score'], obj['_start'],
-                        obj['_len'])
+        if all(attr in obj for attr in ("_text", "_type", "_score", "_polarity", "_start", "_len")):
+            return Term(
+                obj["_text"],
+                TermType[obj["_type"]],
+                Polarity[obj["_polarity"]],
+                obj["_score"],
+                obj["_start"],
+                obj["_len"],
+            )
         return obj
 
     def __repr__(self):
@@ -246,14 +267,14 @@ class SentimentDocEncoder(JSONEncoder):
     def default(self, o):  # pylint: disable=E0202
         try:
             if isinstance(o, Enum):
-                return getattr(o, '_name_')
-            if hasattr(o, '__dict__'):
+                return getattr(o, "_name_")
+            if hasattr(o, "__dict__"):
                 return vars(o)
-            if hasattr(o, '__slots__'):
+            if hasattr(o, "__slots__"):
                 ret = {slot: getattr(o, slot) for slot in o.__slots__}
                 for cls in type(o).mro():
                     spr = super(cls, o)
-                    if not hasattr(spr, '__slots__'):
+                    if not hasattr(spr, "__slots__"):
                         break
                     for slot in spr.__slots__:
                         ret[slot] = getattr(o, slot)

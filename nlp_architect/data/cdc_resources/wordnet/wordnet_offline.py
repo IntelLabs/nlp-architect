@@ -28,7 +28,7 @@ class WordnetOffline(object):
     def __init__(self, wordnet_dump):
         if wordnet_dump:
             self.dump = self.load_dump(wordnet_dump)
-            logger.info('Wikipedia dump loaded successfully!')
+            logger.info("Wikipedia dump loaded successfully!")
 
     def get_pages(self, mention):
         page = None
@@ -57,25 +57,31 @@ class WordnetOffline(object):
     @staticmethod
     def extract_json_values(json_page):
         if json_page is not None:
-            orig_phrase = json_page.get('orig_phrase', None)
-            clean_phrase = json_page.get('clean_phrase', None)
-            head = json_page.get('head', None)
-            head_lemma = json_page.get('head_lemma', None)
-            head_synonyms = set(json_page.get('head_synonyms', None))
-            head_lemma_synonyms = set(json_page.get('head_lemma_synonyms', None))
-            head_derivationally = set(json_page.get('head_derivationally', None))
-            head_lemma_derivationally = set(json_page.get('head_lemma_derivationally', None))
+            orig_phrase = json_page.get("orig_phrase", None)
+            clean_phrase = json_page.get("clean_phrase", None)
+            head = json_page.get("head", None)
+            head_lemma = json_page.get("head_lemma", None)
+            head_synonyms = set(json_page.get("head_synonyms", None))
+            head_lemma_synonyms = set(json_page.get("head_lemma_synonyms", None))
+            head_derivationally = set(json_page.get("head_derivationally", None))
+            head_lemma_derivationally = set(json_page.get("head_lemma_derivationally", None))
 
-            all_clean_words_synonyms = json_page.get('all_clean_words_synonyms', None)
+            all_clean_words_synonyms = json_page.get("all_clean_words_synonyms", None)
             all_as_set_list = []
             for list_ in all_clean_words_synonyms:
                 all_as_set_list.append(set(list_))
 
-            wordnet_page = WordnetPage(orig_phrase, clean_phrase, head,
-                                       head_lemma, head_synonyms,
-                                       head_lemma_synonyms, head_derivationally,
-                                       head_lemma_derivationally,
-                                       all_as_set_list)
+            wordnet_page = WordnetPage(
+                orig_phrase,
+                clean_phrase,
+                head,
+                head_lemma,
+                head_synonyms,
+                head_lemma_synonyms,
+                head_derivationally,
+                head_lemma_derivationally,
+                all_as_set_list,
+            )
             return wordnet_page
 
         return None

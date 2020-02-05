@@ -28,7 +28,7 @@ class WikipediaPages(object):
 
     def add_page(self, page):
         self.pages.add(page)
-        if page.orig_phrase_norm is not None and page.orig_phrase_norm != '':
+        if page.orig_phrase_norm is not None and page.orig_phrase_norm != "":
             self.is_empty_norm_phrase = False
 
     def get_and_set_all_disambiguation(self):
@@ -79,10 +79,10 @@ class WikipediaPages(object):
     def get_and_set_titles(self):
         all_titles = []
         for page in self.pages:
-            if page.orig_phrase != '':
+            if page.orig_phrase != "":
                 all_titles.append(page.orig_phrase)
                 all_titles.append(page.orig_phrase_norm)
-            if page.wiki_title != '':
+            if page.wiki_title != "":
                 all_titles.append(page.wiki_title)
                 all_titles.append(page.wiki_title_norm)
         return set(all_titles)
@@ -93,12 +93,12 @@ class WikipediaPages(object):
         for page in self.pages:
             page_list.append(page.toJson())
 
-        result_dict['pages'] = page_list
+        result_dict["pages"] = page_list
         return result_dict
 
     def __str__(self) -> str:
-        result_str = ''
+        result_str = ""
         for page in self.pages:
-            result_str += str(page) + ', '
+            result_str += str(page) + ", "
 
         return result_str.strip()

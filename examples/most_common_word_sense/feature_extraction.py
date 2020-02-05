@@ -23,20 +23,20 @@ from numpy.linalg import norm
 from nlp_architect.utils.generic import license_prompt
 
 try:
-    nltk.data.find('taggers/averaged_perceptron_tagger')
+    nltk.data.find("taggers/averaged_perceptron_tagger")
 except LookupError:
-    if license_prompt('Averaged Perceptron Tagger', 'http://www.nltk.org/nltk_data/') is False:
-        raise Exception("can't continue data prepare process "
-                        "without downloading averaged_perceptron_tagger")
-    nltk.download('averaged_perceptron_tagger')
+    if license_prompt("Averaged Perceptron Tagger", "http://www.nltk.org/nltk_data/") is False:
+        raise Exception(
+            "can't continue data prepare process " "without downloading averaged_perceptron_tagger"
+        )
+    nltk.download("averaged_perceptron_tagger")
 
 try:
-    nltk.data.find('tokenizers/punkt')
+    nltk.data.find("tokenizers/punkt")
 except LookupError:
-    if license_prompt('Punkt model', 'http://www.nltk.org/nltk_data/') is False:
-        raise Exception("can't continue data prepare process "
-                        "without downloading punkt")
-    nltk.download('punkt')
+    if license_prompt("Punkt model", "http://www.nltk.org/nltk_data/") is False:
+        raise Exception("can't continue data prepare process " "without downloading punkt")
+    nltk.download("punkt")
 
 
 def extract_features_envelope(target_word, definition, hyps_vec, model_w2v):
@@ -66,15 +66,22 @@ def extract_features_envelope(target_word, definition, hyps_vec, model_w2v):
     # calculate target word to definition similarity and definition similarity CBOW
     definition_words = extract_meaningful_words_from_sentence(definition)
     definition_sim = calc_word_to_sentence_sim_w2v(target_word, definition_words, model_w2v, 0)
-    definition_sentence_emb_cbow, definition_sim_cbow = \
-        calc_word_to_sentence_dist_cbow(target_word, definition_words, model_w2v)
+    definition_sentence_emb_cbow, definition_sim_cbow = calc_word_to_sentence_dist_cbow(
+        target_word, definition_words, model_w2v
+    )
 
     # calculate hypernyms similarity
     hyps_vec = convert_string_to_list_of_words(hyps_vec)
     hyps_sim = calc_word_to_sentence_sim_w2v(target_word, hyps_vec, model_w2v, 2)
 
-    return [valid_w2v_flag, definition_sim_cbow, definition_sim, hyps_sim, target_word_emb,
-            definition_sentence_emb_cbow]
+    return [
+        valid_w2v_flag,
+        definition_sim_cbow,
+        definition_sim,
+        hyps_sim,
+        target_word_emb,
+        definition_sentence_emb_cbow,
+    ]
 
 
 def extract_meaningful_words_from_sentence(sentence):
@@ -88,15 +95,15 @@ def extract_meaningful_words_from_sentence(sentence):
         list(str): vector of meaningful words
 
     """
-    sentence = re.sub(r'[-+.^:,\[\]()]', '', str(sentence))
+    sentence = re.sub(r"[-+.^:,\[\]()]", "", str(sentence))
 
     tokens = nltk.word_tokenize(sentence)
     pos_tags = nltk.pos_tag(tokens)
     words_vec = []
     cntr = 0
     for word, tag in pos_tags:
-        if tag.startswith('NN') | tag.startswith('VB'):
-            if not bool(re.search(r'\d', word)):  # disqualify words does not contain digits
+        if tag.startswith("NN") | tag.startswith("VB"):
+            if not bool(re.search(r"\d", word)):  # disqualify words does not contain digits
                 words_vec.insert(cntr, word)
                 cntr += 1
 
@@ -114,7 +121,7 @@ def convert_string_to_list_of_words(string_list_of_words):
         list(str): vector of words
 
     """
-    string_list_of_words = re.sub(r'[-+.^:,\[\]()]', '', str(string_list_of_words))
+    string_list_of_words = re.sub(r"[-+.^:,\[\]()]", "", str(string_list_of_words))
     tokens = nltk.word_tokenize(string_list_of_words)
 
     words_vec = []
@@ -387,7 +394,7 @@ def get_synonyms(synset):
     synonym_list = []
     i = 0
     for synonym in synset.lemma_names():
-        synonym_list.insert(i, synonym.replace('_', ' '))
+        synonym_list.insert(i, synonym.replace("_", " "))
         i = i + 1
 
     return synonym_list

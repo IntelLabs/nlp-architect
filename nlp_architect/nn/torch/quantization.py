@@ -48,7 +48,7 @@ def get_scale(bits, threshold):
 
 def calc_max_quant_value(bits):
     """Calculate the maximum symmetric quantized value according to number of bits"""
-    return 2**(bits - 1) - 1
+    return 2 ** (bits - 1) - 1
 
 
 def quantize(input, scale, bits):
@@ -91,20 +91,21 @@ _fake_quantize = FakeLinearQuantizationWithSTE.apply
 
 class QuantizedLayer(ABC):
     """Quantized Layer interface"""
+
     CONFIG_ATTRIBUTES = ["weight_bits", "start_step", "mode"]
     REPR_ATTRIBUTES = ["mode", "weight_bits"]
 
-    def __init__(self, *args, weight_bits=8, start_step=0, mode='none', **kwargs):
+    def __init__(self, *args, weight_bits=8, start_step=0, mode="none", **kwargs):
         if weight_bits < 2:
             raise ValueError(f"weight_bits={weight_bits} must be higher than 1 ")
         super().__init__(*args, **kwargs)
         self.weight_bits = weight_bits
         self.mode = QuantizationMode[mode.upper()]
         self.start_step = start_step
-        self.register_buffer('_step', torch.zeros(1))
+        self.register_buffer("_step", torch.zeros(1))
         # buffers for inference
-        self.register_buffer('quantized_weight', None)
-        self.register_buffer('_weight_scale', None)
+        self.register_buffer("quantized_weight", None)
+        self.register_buffer("_weight_scale", None)
         # handle import and export in 8bit
         self.mode_8bit = False
         self._imported_from_quantized = False
@@ -143,8 +144,11 @@ class QuantizedLayer(ABC):
 
     @property
     def weight_scale(self):
-        return get_dynamic_scale(
-            self.weight, self.weight_bits) if self.training else self._weight_scale
+        return (
+            get_dynamic_scale(self.weight, self.weight_bits)
+            if self.training
+            else self._weight_scale
+        )
 
     def train(self, mode=True):
         """handle transition between quantized model and simulated quantization"""
@@ -153,7 +157,8 @@ class QuantizedLayer(ABC):
                 if self._imported_from_quantized:
                     raise RuntimeError(
                         "Model imported from quantized checkpoint cannot be moved to \
-                            training mode")
+                            training mode"
+                    )
                 self._train()
             else:
                 self._eval()
@@ -167,19 +172,21 @@ class QuantizedLayer(ABC):
         """function to be called by self.train(mode=False), or eval() which modifies modules\
              attributes according to the model"""
         self._weight_scale = self.weight_scale
-        self.quantized_weight = quantize(
-            self.weight, self.weight_scale, self.weight_bits)
+        self.quantized_weight = quantize(self.weight, self.weight_scale, self.weight_bits)
 
-    def _load_from_state_dict(self, state_dict, prefix, local_metadata, strict,
-                              missing_keys, unexpected_keys, error_msgs):
+    def _load_from_state_dict(
+        self, state_dict, prefix, local_metadata, strict, missing_keys, unexpected_keys, error_msgs
+    ):
         """check if model is loaded from quantized checkpoint or regular checkpoint"""
-        super()._load_from_state_dict(state_dict, prefix, local_metadata, strict,
-                                      missing_keys, unexpected_keys, error_msgs)
-        if state_dict.get(prefix + 'quantized_weight', None) is not None:
+        super()._load_from_state_dict(
+            state_dict, prefix, local_metadata, strict, missing_keys, unexpected_keys, error_msgs
+        )
+        if state_dict.get(prefix + "quantized_weight", None) is not None:
             if self.training:
                 raise RuntimeError(
                     "Can't load quantized model in training mode, first change model's \
-                         to evaluation and then load the saved model")
+                         to evaluation and then load the saved model"
+                )
             self._imported_from_quantized = True
 
     @staticmethod
@@ -187,13 +194,12 @@ class QuantizedLayer(ABC):
         """hook to be registered to module when exporting the model to 8bit, can be overrided\
              to customize to layer behaviour"""
         if module.mode_8bit and module.mode != QuantizationMode.NONE:
-            state_dict.pop(prefix + 'weight', None)
-            state_dict.pop(prefix + '_step', None)
-            state_dict[
-                prefix + 'quantized_weight'] = state_dict[prefix + 'quantized_weight'].char()
+            state_dict.pop(prefix + "weight", None)
+            state_dict.pop(prefix + "_step", None)
+            state_dict[prefix + "quantized_weight"] = state_dict[prefix + "quantized_weight"].char()
         else:
-            state_dict.pop(prefix + 'quantized_weight', None)
-            state_dict.pop(prefix + '_weight_scale', None)
+            state_dict.pop(prefix + "quantized_weight", None)
+            state_dict.pop(prefix + "_weight_scale", None)
 
     def extra_repr(self):
         s = ""
@@ -204,28 +210,36 @@ class QuantizedLayer(ABC):
 
 class QuantizedLinear(QuantizedLayer, nn.Linear):
     """Linear layer with quantization aware training capability"""
-    CONFIG_ATTRIBUTES = QuantizedLayer.CONFIG_ATTRIBUTES + \
-        ["activation_bits", "requantize_output", "ema_decay"]
-    REPR_ATTRIBUTES = QuantizedLayer.REPR_ATTRIBUTES + \
-        ["activation_bits", "accumulation_bits", "ema_decay", "requantize_output"]
+
+    CONFIG_ATTRIBUTES = QuantizedLayer.CONFIG_ATTRIBUTES + [
+        "activation_bits",
+        "requantize_output",
+        "ema_decay",
+    ]
+    REPR_ATTRIBUTES = QuantizedLayer.REPR_ATTRIBUTES + [
+        "activation_bits",
+        "accumulation_bits",
+        "ema_decay",
+        "requantize_output",
+    ]
 
     def __init__(
-            self, *args, activation_bits=8, requantize_output=True, ema_decay=0.9999, **kwargs):
+        self, *args, activation_bits=8, requantize_output=True, ema_decay=0.9999, **kwargs
+    ):
         super().__init__(*args, **kwargs)
         if activation_bits < 2:
-            raise ValueError(
-                f"activation_bits={activation_bits} must be higher than 1 ")
+            raise ValueError(f"activation_bits={activation_bits} must be higher than 1 ")
         self.activation_bits = activation_bits
         self.accumulation_bits = 32
         self.ema_decay = ema_decay
         self.requantize_output = requantize_output
-        self.register_buffer('input_thresh', torch.zeros(1))
+        self.register_buffer("input_thresh", torch.zeros(1))
         if self.requantize_output:
-            self.register_buffer('output_thresh', torch.zeros(1))
+            self.register_buffer("output_thresh", torch.zeros(1))
         # real quantization
-        if kwargs.get('bias', True):
-            self.register_buffer('_quantized_bias', None)
-            self.register_buffer('bias_scale', None)
+        if kwargs.get("bias", True):
+            self.register_buffer("_quantized_bias", None)
+            self.register_buffer("bias_scale", None)
 
     def training_quantized_forward(self, input):
         """fake quantized forward, fake quantizes weights and activations,
@@ -235,13 +249,15 @@ class QuantizedLinear(QuantizedLayer, nn.Linear):
         if self.mode == QuantizationMode.EMA:
             self._update_ema(self.input_thresh, input.detach())
         input_scale = self._get_input_scale(input)
-        out = F.linear(_fake_quantize(input, input_scale, self.activation_bits),
-                       self.fake_quantized_weight, self.bias)
+        out = F.linear(
+            _fake_quantize(input, input_scale, self.activation_bits),
+            self.fake_quantized_weight,
+            self.bias,
+        )
         if self.requantize_output:
             if self.mode == QuantizationMode.EMA:
                 self._update_ema(self.output_thresh, out.detach())
-            out = _fake_quantize(
-                out, self._get_output_scale(out), self.activation_bits)
+            out = _fake_quantize(out, self._get_output_scale(out), self.activation_bits)
         return out
 
     def inference_quantized_forward(self, input):
@@ -251,8 +267,7 @@ class QuantizedLinear(QuantizedLayer, nn.Linear):
         input_scale = self._get_input_scale(input)
         self.bias_scale = self.weight_scale * input_scale
         quantized_input = quantize(input, input_scale, self.activation_bits)
-        out = F.linear(quantized_input, self.quantized_weight,
-                       self.quantized_bias)
+        out = F.linear(quantized_input, self.quantized_weight, self.quantized_bias)
         # TODO(ofir) fuse the operation of requantization with dequantiz
         out = dequantize(out, self.bias_scale)
         if self.requantize_output:
@@ -273,16 +288,17 @@ class QuantizedLinear(QuantizedLayer, nn.Linear):
         super()._state_dict_hook(module, state_dict, prefix, local_metadata)
         if module.mode_8bit:
             if module.mode == QuantizationMode.EMA:
-                state_dict.pop(prefix + 'bias', None)
+                state_dict.pop(prefix + "bias", None)
                 try:
-                    state_dict[prefix + '_quantized_bias'] = state_dict[
-                        prefix + '_quantized_bias'].int()
+                    state_dict[prefix + "_quantized_bias"] = state_dict[
+                        prefix + "_quantized_bias"
+                    ].int()
                 except KeyError:
                     # in case there is no bias dont do anything
                     pass
         else:
-            state_dict.pop(prefix + '_quantized_bias', None)
-            state_dict.pop(prefix + 'bias_scale', None)
+            state_dict.pop(prefix + "_quantized_bias", None)
+            state_dict.pop(prefix + "bias_scale", None)
 
     @property
     def quantized_bias(self):
@@ -331,25 +347,38 @@ class QuantizedEmbedding(QuantizedLayer, nn.Embedding):
         """Return quantized embeddings"""
         assert self.training, "should only be called when training"
         return F.embedding(
-            input, self.fake_quantized_weight, self.padding_idx, self.max_norm,
-            self.norm_type, self.scale_grad_by_freq, self.sparse)
+            input,
+            self.fake_quantized_weight,
+            self.padding_idx,
+            self.max_norm,
+            self.norm_type,
+            self.scale_grad_by_freq,
+            self.sparse,
+        )
 
     def inference_quantized_forward(self, input):
         """forward to be used during inference"""
         assert not self.training, "should only be called when not training"
-        q_embeddings = F.embedding(input, self.quantized_weight, self.padding_idx,
-                                   self.max_norm, self.norm_type,
-                                   self.scale_grad_by_freq, self.sparse)
+        q_embeddings = F.embedding(
+            input,
+            self.quantized_weight,
+            self.padding_idx,
+            self.max_norm,
+            self.norm_type,
+            self.scale_grad_by_freq,
+            self.sparse,
+        )
         return dequantize(q_embeddings, self.weight_scale)
 
 
 class QuantizationConfig(Config):
     """Quantization Configuration Object"""
+
     ATTRIBUTES = {
         "activation_bits": 8,
         "weight_bits": 8,
         "mode": "none",
         "start_step": 0,
         "ema_decay": 0.9999,
-        "requantize_output": True
+        "requantize_output": True,
     }

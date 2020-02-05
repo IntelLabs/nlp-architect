@@ -21,27 +21,29 @@ from nlp_architect.models.absa.inference.inference import SentimentInference
 
 def main() -> list:
     parent_dir = Path(path.realpath(__file__)).parent.parent
-    inference = SentimentInference(parent_dir / 'aspects.csv', parent_dir / 'opinions.csv')
+    inference = SentimentInference(parent_dir / "aspects.csv", parent_dir / "opinions.csv")
 
-    print('\n' + '=' * 40 + '\n' + 'Running inference on examples from sample test set:\n')
+    print("\n" + "=" * 40 + "\n" + "Running inference on examples from sample test set:\n")
 
-    docs = ["The food was very fresh and flavoursome the service was very attentive. Would go back"
-            " to this restaurant if visiting London again.",
-            "The food was wonderful and fresh, I really enjoyed it and will definitely go back. "
-            "Staff were friendly.",
-            "The ambiance is charming. Uncharacteristically, the service was DREADFUL. When we"
-            " wanted to pay our bill at the end of the evening, our waitress was nowhere to be "
-            "found..."]
+    docs = [
+        "The food was very fresh and flavoursome the service was very attentive. Would go back"
+        " to this restaurant if visiting London again.",
+        "The food was wonderful and fresh, I really enjoyed it and will definitely go back. "
+        "Staff were friendly.",
+        "The ambiance is charming. Uncharacteristically, the service was DREADFUL. When we"
+        " wanted to pay our bill at the end of the evening, our waitress was nowhere to be "
+        "found...",
+    ]
 
     sentiment_docs = []
 
     for doc_raw in docs:
-        print('Raw Document: \n{}'.format(doc_raw))
+        print("Raw Document: \n{}".format(doc_raw))
         sentiment_doc = inference.run(doc=doc_raw)
         sentiment_docs.append(sentiment_doc)
-        print('SentimentDocument: \n{}\n'.format(sentiment_doc) + '=' * 40 + '\n')
+        print("SentimentDocument: \n{}\n".format(sentiment_doc) + "=" * 40 + "\n")
     return sentiment_docs
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

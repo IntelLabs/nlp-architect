@@ -19,10 +19,12 @@ import numpy as np
 from nlp_architect.utils.embedding import FasttextEmbeddingsModel
 from nlp_architect.utils.testing import NLPArchitectTestCase
 
-texts = ['The quick brown fox jumped over the fence',
-         'NLP Architect is an open source library',
-         'NLP Architect is made by Intel AI',
-         'python is the scripting language used in NLP Architect']
+texts = [
+    "The quick brown fox jumped over the fence",
+    "NLP Architect is an open source library",
+    "NLP Architect is made by Intel AI",
+    "python is the scripting language used in NLP Architect",
+]
 
 
 class TestFasttextEmbeddingModel(NLPArchitectTestCase):
@@ -30,14 +32,14 @@ class TestFasttextEmbeddingModel(NLPArchitectTestCase):
         super().setUp()
         self.data = [t.split() for t in texts]
         self.model = FasttextEmbeddingsModel()
-        self.file_path = str(self.TEST_DIR / 'fasttext_emb_model')
+        self.file_path = str(self.TEST_DIR / "fasttext_emb_model")
 
     def test_train(self):
         self.model.train(self.data, epochs=50)
         assert self.model
 
     def test_query(self):
-        wv = self.model['NLP']
+        wv = self.model["NLP"]
         assert wv is not None
         assert isinstance(wv, np.ndarray)
 
@@ -46,4 +48,4 @@ class TestFasttextEmbeddingModel(NLPArchitectTestCase):
         self.model.save(self.file_path)
         new_model = FasttextEmbeddingsModel.load(self.file_path)
         assert new_model is not None
-        assert isinstance(new_model['word'], np.ndarray)
+        assert isinstance(new_model["word"], np.ndarray)

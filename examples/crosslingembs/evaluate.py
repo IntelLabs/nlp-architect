@@ -26,8 +26,9 @@ class Evaluate:
     Class for evaluating the performance of mapping W
     """
 
-    def __init__(self, W, src_vec, tgt_vec, src_dico, tgt_dico, src_lang,
-                 tgt_lang, eval_path, vocab_size):
+    def __init__(
+        self, W, src_vec, tgt_vec, src_dico, tgt_dico, src_lang, tgt_lang, eval_path, vocab_size
+    ):
         self.W = W
         self.src_ten = src_vec
         self.tgt_ten = tgt_vec
@@ -71,7 +72,7 @@ class Evaluate:
         not_found_L2 = 0
 
         # Open the file and check if src and tgt word exists in the vocab
-        with open(dict_path, 'r') as f:
+        with open(dict_path, "r") as f:
             for _, line in enumerate(f):
                 word1, word2 = line.rstrip().split()
                 if word1 in self.src_dico and word2 in self.tgt_dico:
@@ -80,11 +81,18 @@ class Evaluate:
                     not_found_all += 1
                     not_found_L1 += int(word1 not in self.src_dico)
                     not_found_L2 += int(word2 not in self.tgt_dico)
-        print("Found %i pairs of words in the dictionary (%i unique). "
-              " %i other pairs contained at least one unknown word "
-              " (%i in src_lang, %i in tgt_lang)"
-              % (len(pairs), len(set([x for x, _ in pairs])), not_found_all,
-                 not_found_L1, not_found_L2))
+        print(
+            "Found %i pairs of words in the dictionary (%i unique). "
+            " %i other pairs contained at least one unknown word "
+            " (%i in src_lang, %i in tgt_lang)"
+            % (
+                len(pairs),
+                len(set([x for x, _ in pairs])),
+                not_found_all,
+                not_found_L1,
+                not_found_L2,
+            )
+        )
         src_ind = [pairs[x][0] for x in range(len(pairs))]
         tgt_ind = [pairs[x][1] for x in range(len(pairs))]
         self.src_ind = np.asarray(src_ind)
@@ -170,17 +178,11 @@ class Evaluate:
         """
         # Graph for calculating only score
         scores_s2t = self.build_eval_graph(
-            "ScoreS2T",
-            self.src_ten,
-            self.tgt_ten,
-            en_knn=False,
-            en_mean=False)
+            "ScoreS2T", self.src_ten, self.tgt_ten, en_knn=False, en_mean=False
+        )
         scores_t2s = self.build_eval_graph(
-            "ScoreT2S",
-            self.tgt_ten,
-            self.src_ten,
-            en_knn=False,
-            en_mean=False)
+            "ScoreT2S", self.tgt_ten, self.src_ten, en_knn=False, en_mean=False
+        )
         # Graphs for calculating average between source and target
         avg1_s2t = self.build_eval_graph("Avg1", self.src_ten, self.tgt_ten, knn=10)
         avg2_s2t = self.build_eval_graph("Avg2", self.tgt_ten, self.src_ten, knn=10)
@@ -192,14 +194,15 @@ class Evaluate:
         csls_mean_score = self.build_sim_graph("SimGraph")
 
         # Dictionary
-        csls_graphs = {"ScoreGraph": scores_s2t,
-                       "ScoreG_T2S": scores_t2s,
-                       "Avg1S2T": avg1_s2t,
-                       "Avg2S2T": avg2_s2t,
-                       "Top100": top100_matches,
-                       "Top2": top2_matches,
-                       "CSLS_Criteria": csls_mean_score
-                       }
+        csls_graphs = {
+            "ScoreGraph": scores_s2t,
+            "ScoreG_T2S": scores_t2s,
+            "Avg1S2T": avg1_s2t,
+            "Avg2S2T": avg2_s2t,
+            "Top100": top100_matches,
+            "Top2": top2_matches,
+            "CSLS_Criteria": csls_mean_score,
+        }
         return csls_graphs
 
     def calc_nn_acc(self, sess, batch_size=512):
@@ -215,8 +218,7 @@ class Evaluate:
         # Loop through all the eval dataset
         for i in range(0, eval_size, batch_size):
             src_ids = [self.src_ind[x] for x in range(i, min(i + batch_size, eval_size))]
-            eval_dict = {self.src_ph: src_ids,
-                         self.tgt_ph: self.tgt_ids}
+            eval_dict = {self.src_ph: src_ids, self.tgt_ph: self.tgt_ids}
             matches = sess.run(self.eval_nn, feed_dict=eval_dict)
             top_matches.append(matches[1])
         top_matches = np.concatenate(top_matches)
@@ -241,8 +243,7 @@ class Evaluate:
             for i, src_id in enumerate(self.src_ind):
                 matching[src_id] = min(matching.get(src_id, 0) + one_matching[i], 1)
             precision_at_k = 100 * np.mean(list(matching.values()))
-            print("%i source words  - Precision at k = %i: %f" %
-                  (len(matching), k, precision_at_k))
+            print("%i source words  - Precision at k = %i: %f" % (len(matching), k, precision_at_k))
 
     def calc_csls_score(self, sess, batch_size=512):
         """
@@ -258,8 +259,7 @@ class Evaluate:
         # Calculate scores
         for i in range(0, eval_size, batch_size):
             score_src_ids = [self.src_ind[x] for x in range(i, min(i + batch_size, eval_size))]
-            eval_dict = {self.src_ph: score_src_ids,
-                         self.tgt_ph: self.tgt_ids}
+            eval_dict = {self.src_ph: score_src_ids, self.tgt_ph: self.tgt_ids}
             score_val.append(sess.run(self.csls_subgraphs["ScoreGraph"], feed_dict=eval_dict))
         score_val = np.concatenate(score_val)
         return score_val
@@ -279,8 +279,7 @@ class Evaluate:
         # Calculate Average
         for i in range(0, self.vocab_size, batch_size):
             avg_src_ids = [x for x in range(i, min(i + batch_size, self.vocab_size))]
-            avg1_dict = {self.src_ph: avg_src_ids,
-                         self.tgt_ph: self.tgt_ids}
+            avg1_dict = {self.src_ph: avg_src_ids, self.tgt_ph: self.tgt_ids}
             avg1_val.append(sess.run(self.csls_subgraphs["Avg1S2T"], feed_dict=avg1_dict))
             avg2_val.append(sess.run(self.csls_subgraphs["Avg2S2T"], feed_dict=avg1_dict))
         avg1_val = np.concatenate(avg1_val)
@@ -301,8 +300,9 @@ class Evaluate:
         # Calculate top matches
         for i in range(0, len(self.src_ind), batch_size):
             scores = [csls_scores[x] for x in range(i, min(i + batch_size, len(self.src_ind)))]
-            top_matches_val = sess.run(self.csls_subgraphs["Top100"],
-                                       feed_dict={self.score_ph: scores})[1]
+            top_matches_val = sess.run(
+                self.csls_subgraphs["Top100"], feed_dict={self.score_ph: scores}
+            )[1]
             top_matches.append(top_matches_val)
         top_matches = np.concatenate(top_matches)
         print("Accuracy using CSLS is")
@@ -316,8 +316,7 @@ class Evaluate:
             sess(tf.session): Tensorflow session
         """
         good_pairs = self.generate_dictionary(sess)
-        eval_dict = {self.src_ph: good_pairs[0],
-                     self.tgt_ph: good_pairs[1]}
+        eval_dict = {self.src_ph: good_pairs[0], self.tgt_ph: good_pairs[1]}
         cos_mean = sess.run(self.csls_subgraphs["CSLS_Criteria"], feed_dict=eval_dict)
         print("CSLS Score is " + str(cos_mean))
 
@@ -350,24 +349,23 @@ class Evaluate:
         all_targets = []
         for i in range(0, self.max_dict_size, batch_size):
             src_ids = [x for x in range(i, min(i + batch_size, self.max_dict_size))]
-            dict_dict = {self.src_ph: src_ids,
-                         self.tgt_ph: self.tgt_ids}
+            dict_dict = {self.src_ph: src_ids, self.tgt_ph: self.tgt_ids}
             if swap_score:
                 temp_score = sess.run(self.csls_subgraphs["ScoreG_T2S"], feed_dict=dict_dict)
             else:
                 temp_score = sess.run(self.csls_subgraphs["ScoreGraph"], feed_dict=dict_dict)
             batch_score = 2 * temp_score - (avg1[src_ids][:, None] + avg2[None, :])
             top_matches = sess.run(
-                self.csls_subgraphs["Top2"], feed_dict={
-                    self.score_ph: batch_score})
+                self.csls_subgraphs["Top2"], feed_dict={self.score_ph: batch_score}
+            )
             all_scores.append(top_matches[0])
             all_targets.append(top_matches[1])
         all_scores = np.concatenate(all_scores)
         all_targets = np.concatenate(all_targets)
-        all_pairs = np.concatenate([
-            np.arange(0, self.max_dict_size, dtype=np.int64)[:, None],
-            all_targets[:, 0][:, None]
-        ], 1)
+        all_pairs = np.concatenate(
+            [np.arange(0, self.max_dict_size, dtype=np.int64)[:, None], all_targets[:, 0][:, None]],
+            1,
+        )
 
         # Scores with high confidence will have large difference between first two guesses
         diff = all_scores[:, 0] - all_scores[:, 1]
@@ -380,7 +378,7 @@ class Evaluate:
         all_pairs = all_pairs[selected]
 
         # Make sure size is less than max_dict
-        all_pairs = all_pairs[:self.max_dict_size]
+        all_pairs = all_pairs[: self.max_dict_size]
         return all_pairs
 
     def generate_dictionary(self, sess, dict_type="S2T"):
