@@ -294,19 +294,21 @@ class TransformerTokenClassifier(TransformerBase):
             )
         self.to(self.device, self.n_gpus)
 
-    def train(self,
-              train_data_set: DataLoader,
-              dev_data_set: Union[DataLoader, List[DataLoader]] = None,
-              test_data_set: Union[DataLoader, List[DataLoader]] = None,
-              gradient_accumulation_steps: int = 1,
-              per_gpu_train_batch_size: int = 8,
-              max_steps: int = -1,
-              num_train_epochs: int = 3,
-              max_grad_norm: float = 1.0,
-              logging_steps: int = 50,
-              save_steps: int = 100,
-              training_args: bool = None,
-              best_result_file: str = None):
+    def train(
+        self,
+        train_data_set: DataLoader,
+        dev_data_set: Union[DataLoader, List[DataLoader]] = None,
+        test_data_set: Union[DataLoader, List[DataLoader]] = None,
+        gradient_accumulation_steps: int = 1,
+        per_gpu_train_batch_size: int = 8,
+        max_steps: int = -1,
+        num_train_epochs: int = 3,
+        max_grad_norm: float = 1.0,
+        logging_steps: int = 50,
+        save_steps: int = 100,
+        training_args: bool = None,
+        best_result_file: str = None,
+    ):
         """
         Run model training
 
@@ -328,18 +330,20 @@ class TransformerTokenClassifier(TransformerBase):
             training_args(bool, optional): model args. Defaults to None.
             best_result_file (str, optional): path to save best dev results when it's updated.
         """
-        self._train(train_data_set,
-                    dev_data_set,
-                    test_data_set,
-                    gradient_accumulation_steps,
-                    per_gpu_train_batch_size,
-                    max_steps,
-                    num_train_epochs,
-                    max_grad_norm,
-                    logging_steps=logging_steps,
-                    save_steps=save_steps,
-                    training_args=training_args,
-                    best_result_file=best_result_file)
+        self._train(
+            train_data_set,
+            dev_data_set,
+            test_data_set,
+            gradient_accumulation_steps,
+            per_gpu_train_batch_size,
+            max_steps,
+            num_train_epochs,
+            max_grad_norm,
+            logging_steps=logging_steps,
+            save_steps=save_steps,
+            training_args=training_args,
+            best_result_file=best_result_file,
+        )
 
     def _batch_mapper(self, batch):
         mapping = {
@@ -548,10 +552,8 @@ class TransformerTokenClassifier(TransformerBase):
         return features
 
     def inference(
-            self,
-            examples: List[TokenClsInputExample],
-            max_seq_length: int,
-            batch_size: int = 64):
+        self, examples: List[TokenClsInputExample], max_seq_length: int, batch_size: int = 64
+    ):
         """
         Run inference on given examples
 

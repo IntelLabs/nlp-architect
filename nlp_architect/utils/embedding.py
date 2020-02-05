@@ -48,13 +48,12 @@ def load_word_embeddings(file_path, vocab=None):
             line_fields = line.split()
             if len(line_fields) < 5:
                 continue
-            else:
-                if line[0] == " ":
-                    word_vectors[" "] = np.asarray(line_fields, dtype="float32")
-                elif vocab is None or line_fields[0] in vocab:
-                    word_vectors[line_fields[0]] = np.asarray(line_fields[1:], dtype="float32")
-                    if size is None:
-                        size = len(line_fields[1:])
+            if line[0] == " ":
+                word_vectors[" "] = np.asarray(line_fields, dtype="float32")
+            elif vocab is None or line_fields[0] in vocab:
+                word_vectors[line_fields[0]] = np.asarray(line_fields[1:], dtype="float32")
+                if size is None:
+                    size = len(line_fields[1:])
     return word_vectors, size
 
 
@@ -79,8 +78,9 @@ def fill_embedding_mat(src_mat, src_lex, emb_lex, emb_size):
     return emb_mat
 
 
-def get_embedding_matrix(embeddings: dict, vocab: Vocabulary,
-                         embedding_size: int = None, lowercase_only: bool = False) -> np.ndarray:
+def get_embedding_matrix(
+    embeddings: dict, vocab: Vocabulary, embedding_size: int = None, lowercase_only: bool = False
+) -> np.ndarray:
     """
     Generate a matrix of word embeddings given a vocabulary
 

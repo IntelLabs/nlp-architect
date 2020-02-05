@@ -49,12 +49,24 @@ class TransformerTokenClsTrain(Procedure):
         )
         train_args(parser, models_family=TransformerTokenClassifier.MODEL_CLASS.keys())
         create_base_args(parser, model_types=TransformerTokenClassifier.MODEL_CLASS.keys())
-        parser.add_argument('--train_file_name', type=str, default="train.txt",
-                            help='File name of the training dataset')
-        parser.add_argument('--ignore_token', type=str, default="",
-                            help='a token to ignore when processing the data')
-        parser.add_argument('--best_dev_file', type=str, default="best_dev.txt",
-                            help='file path for best evaluation output')
+        parser.add_argument(
+            "--train_file_name",
+            type=str,
+            default="train.txt",
+            help="File name of the training dataset",
+        )
+        parser.add_argument(
+            "--ignore_token",
+            type=str,
+            default="",
+            help="a token to ignore when processing the data",
+        )
+        parser.add_argument(
+            "--best_dev_file",
+            type=str,
+            default="best_dev.txt",
+            help="file path for best evaluation output",
+        )
 
     @staticmethod
     def run_procedure(args):
@@ -140,16 +152,20 @@ def do_training(args):
         warmup_steps=args.warmup_steps,
         total_steps=total_steps,
     )
-    classifier.train(train_dl, dev_dl, test_dl,
-                     gradient_accumulation_steps=args.gradient_accumulation_steps,
-                     per_gpu_train_batch_size=args.per_gpu_train_batch_size,
-                     max_steps=args.max_steps,
-                     num_train_epochs=args.num_train_epochs,
-                     max_grad_norm=args.max_grad_norm,
-                     logging_steps=args.logging_steps,
-                     save_steps=args.save_steps,
-                     training_args=args,
-                     best_result_file=args.best_result_file)
+    classifier.train(
+        train_dl,
+        dev_dl,
+        test_dl,
+        gradient_accumulation_steps=args.gradient_accumulation_steps,
+        per_gpu_train_batch_size=args.per_gpu_train_batch_size,
+        max_steps=args.max_steps,
+        num_train_epochs=args.num_train_epochs,
+        max_grad_norm=args.max_grad_norm,
+        logging_steps=args.logging_steps,
+        save_steps=args.save_steps,
+        training_args=args,
+        best_result_file=args.best_result_file,
+    )
     classifier.save_model(args.output_dir, args=args)
 
 

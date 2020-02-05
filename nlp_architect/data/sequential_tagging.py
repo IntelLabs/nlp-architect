@@ -291,11 +291,13 @@ class TokenClsInputExample(InputExample):
     """A single training/test example for simple sequence token classification."""
 
     def __init__(
-            self, guid: str,
-            text: str,
-            tokens: List[str],
-            shapes: List[int] = None,
-            label: List[str] = None):
+        self,
+        guid: str,
+        text: str,
+        tokens: List[str],
+        shapes: List[int] = None,
+        label: List[str] = None,
+    ):
         """Constructs a SequenceClassInputExample.
         Args:
             guid: Unique id for the example.
@@ -336,8 +338,10 @@ class TokenClsProcessor(DataProcessor):
             read_column_tagged_file(
                 os.path.join(data_dir, file_name),
                 tag_col=self.tag_col,
-                ignore_line=self.ignore_token),
-            set_name)
+                ignore_line=self.ignore_token,
+            ),
+            set_name,
+        )
 
     def get_train_examples(self, filename="train.txt"):
         return self._read_examples(self.data_dir, filename, "train")
@@ -386,8 +390,11 @@ class TokenClsProcessor(DataProcessor):
             guid = "%s-%s" % (set_type, i)
             text = " ".join(sentence)
             shapes = [cls._get_shape(w) for w in sentence]
-            examples.append(TokenClsInputExample(guid=guid, text=text,
-                                                 tokens=sentence, label=labels, shapes=shapes))
+            examples.append(
+                TokenClsInputExample(
+                    guid=guid, text=text, tokens=sentence, label=labels, shapes=shapes
+                )
+            )
         return examples
 
     def get_vocabulary(self, examples: TokenClsInputExample = None):

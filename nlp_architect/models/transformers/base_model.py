@@ -269,19 +269,21 @@ class TransformerBase(TrainableModel):
         outputs = self.model(**inputs)
         return outputs[-1]
 
-    def _train(self,
-               data_set: DataLoader,
-               dev_data_set: Union[DataLoader, List[DataLoader]] = None,
-               test_data_set: Union[DataLoader, List[DataLoader]] = None,
-               gradient_accumulation_steps: int = 1,
-               per_gpu_train_batch_size: int = 8,
-               max_steps: int = -1,
-               num_train_epochs: int = 3,
-               max_grad_norm: float = 1.0,
-               logging_steps: int = 50,
-               save_steps: int = 100,
-               training_args: str = None,
-               best_result_file: str = None):
+    def _train(
+        self,
+        data_set: DataLoader,
+        dev_data_set: Union[DataLoader, List[DataLoader]] = None,
+        test_data_set: Union[DataLoader, List[DataLoader]] = None,
+        gradient_accumulation_steps: int = 1,
+        per_gpu_train_batch_size: int = 8,
+        max_steps: int = -1,
+        num_train_epochs: int = 3,
+        max_grad_norm: float = 1.0,
+        logging_steps: int = 50,
+        save_steps: int = 100,
+        training_args: str = None,
+        best_result_file: str = None,
+    ):
         """Run model training
             batch_mapper: a function that maps a batch into parameters that the model
                           expects in the forward method (for use with custom heads and models).
@@ -317,7 +319,7 @@ class TransformerBase(TrainableModel):
         self.model.zero_grad()
         train_iterator = trange(num_train_epochs, desc="Epoch")
         for epoch, _ in enumerate(train_iterator):
-            print('****** Epoch: ' + str(epoch))
+            print("****** Epoch: " + str(epoch))
             epoch_iterator = tqdm(data_set, desc="Train iteration")
             for step, batch in enumerate(epoch_iterator):
                 self.model.train()
@@ -354,19 +356,22 @@ class TransformerBase(TrainableModel):
                                 if i == 0 and f1 > best_dev:  # dev set
                                     best_dev = f1
                                     set_test = True
-                                    best_model_path = os.path.join(self.output_path, 'best_dev')
+                                    best_model_path = os.path.join(self.output_path, "best_dev")
                                     self.save_model(best_model_path, args=training_args)
                                 elif set_test:
                                     dev_test = f1
                                     set_test = False
                                     if best_result_file is not None:
-                                        with open(best_result_file, 'a+') as f:
+                                        with open(best_result_file, "a+") as f:
                                             f.write(
-                                                'best dev= ' + str(best_dev)
-                                                + ', test= ' + str(dev_test))
+                                                "best dev= "
+                                                + str(best_dev)
+                                                + ", test= "
+                                                + str(dev_test)
+                                            )
                         logger.info("\n\nBest dev=%s. test=%s\n", str(best_dev), str(dev_test))
-                        logger.info('lr = {}'.format(self.scheduler.get_lr()[0]))
-                        logger.info('loss = {}'.format((tr_loss - logging_loss) / logging_steps))
+                        logger.info("lr = {}".format(self.scheduler.get_lr()[0]))
+                        logger.info("loss = {}".format((tr_loss - logging_loss) / logging_steps))
                         logging_loss = tr_loss
 
                     if save_steps > 0 and global_step % save_steps == 0:

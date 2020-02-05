@@ -71,8 +71,12 @@ class TrainTaggerKDPseudo(Procedure):
     def add_arguments(parser: argparse.ArgumentParser):
         add_parse_args(parser)
         TeacherStudentDistill.add_args(parser)
-        parser.add_argument("--unlabeled_filename", default="unlabeled.txt", type=str,
-                            help="The file name containing the unlabeled training examples")
+        parser.add_argument(
+            "--unlabeled_filename",
+            default="unlabeled.txt",
+            type=str,
+            help="The file name containing the unlabeled training examples",
+        )
 
     @staticmethod
     def run_procedure(args):
@@ -115,60 +119,78 @@ class RunTagger(Procedure):
 
 
 def add_parse_args(parser: argparse.ArgumentParser):
-    parser.add_argument("--model_type", default='cnn-lstm', type=str,
-                        choices=list(MODEL_TYPE.keys()),
-                        help="model type to use for this tagger")
-    parser.add_argument("--config_file", type=str,
-                        help="Embedder model configuration file")
-    parser.add_argument('-b', type=int, default=10,
-                        help='Batch size')
-    parser.add_argument('-e', type=int, default=155,
-                        help='Number of epochs')
-    parser.add_argument("--data_dir", default=None, type=str, required=True,
-                        help="The input data dir. Should contain dataset files to be parsed by "
-                             "the dataloaders.")
-    parser.add_argument('--tag_col', type=int, default=-1,
-                        help='Entity labels tab number in train/test files')
-    parser.add_argument('--max_sentence_length', type=int, default=50,
-                        help='Max sentence length')
-    parser.add_argument('--max_word_length', type=int, default=12,
-                        help='Max word length in characters')
-    parser.add_argument('--use_crf', action='store_true',
-                        help="Use CRF classifier instead of Softmax")
-    parser.add_argument('--lr', type=float, default=0.001,
-                        help='Learning rate for optimizer (Adam)')
-    parser.add_argument('--embedding_file',
-                        help='Path to external word embedding model file')
-    parser.add_argument('--output_dir', type=str, required=True,
-                        help='Output directory where the model will be saved')
-    parser.add_argument('--seed', type=int, default=42,
-                        help="random seed for initialization")
-    parser.add_argument('--logging_steps', type=int, default=50,
-                        help="Log every X updates steps.")
-    parser.add_argument('--save_steps', type=int, default=500,
-                        help="Save model every X updates steps.")
-    parser.add_argument('--overwrite_output_dir', action='store_true',
-                        help="Overwrite the content of the output directory")
-    parser.add_argument("--no_cuda", action='store_true',
-                        help="Avoid using CUDA when available")
-    parser.add_argument('--best_result_file', type=str, default="best_dev.txt",
-                        help='file path for best evaluation output')
-    parser.add_argument('--word_dropout', type=float, default=0,
-                        help='word dropout rate for input tokens')
-    parser.add_argument('--ignore_token', type=str, default="",
-                        help='a token to ignore when processing the data')
-    parser.add_argument('--train_filename', type=str, default="train.txt",
-                        help='filename of training dataset')
-    parser.add_argument('--dev_filename', type=str, default="dev.txt",
-                        help='filename of development dataset')
-    parser.add_argument('--test_filename', type=str, default="test.txt",
-                        help='filename of test dataset')
+    parser.add_argument(
+        "--model_type",
+        default="cnn-lstm",
+        type=str,
+        choices=list(MODEL_TYPE.keys()),
+        help="model type to use for this tagger",
+    )
+    parser.add_argument("--config_file", type=str, help="Embedder model configuration file")
+    parser.add_argument("-b", type=int, default=10, help="Batch size")
+    parser.add_argument("-e", type=int, default=155, help="Number of epochs")
+    parser.add_argument(
+        "--data_dir",
+        default=None,
+        type=str,
+        required=True,
+        help="The input data dir. Should contain dataset files to be parsed by " "the dataloaders.",
+    )
+    parser.add_argument(
+        "--tag_col", type=int, default=-1, help="Entity labels tab number in train/test files"
+    )
+    parser.add_argument("--max_sentence_length", type=int, default=50, help="Max sentence length")
+    parser.add_argument(
+        "--max_word_length", type=int, default=12, help="Max word length in characters"
+    )
+    parser.add_argument(
+        "--use_crf", action="store_true", help="Use CRF classifier instead of Softmax"
+    )
+    parser.add_argument(
+        "--lr", type=float, default=0.001, help="Learning rate for optimizer (Adam)"
+    )
+    parser.add_argument("--embedding_file", help="Path to external word embedding model file")
+    parser.add_argument(
+        "--output_dir",
+        type=str,
+        required=True,
+        help="Output directory where the model will be saved",
+    )
+    parser.add_argument("--seed", type=int, default=42, help="random seed for initialization")
+    parser.add_argument("--logging_steps", type=int, default=50, help="Log every X updates steps.")
+    parser.add_argument(
+        "--save_steps", type=int, default=500, help="Save model every X updates steps."
+    )
+    parser.add_argument(
+        "--overwrite_output_dir",
+        action="store_true",
+        help="Overwrite the content of the output directory",
+    )
+    parser.add_argument("--no_cuda", action="store_true", help="Avoid using CUDA when available")
+    parser.add_argument(
+        "--best_result_file",
+        type=str,
+        default="best_dev.txt",
+        help="file path for best evaluation output",
+    )
+    parser.add_argument(
+        "--word_dropout", type=float, default=0, help="word dropout rate for input tokens"
+    )
+    parser.add_argument(
+        "--ignore_token", type=str, default="", help="a token to ignore when processing the data"
+    )
+    parser.add_argument(
+        "--train_filename", type=str, default="train.txt", help="filename of training dataset"
+    )
+    parser.add_argument(
+        "--dev_filename", type=str, default="dev.txt", help="filename of development dataset"
+    )
+    parser.add_argument(
+        "--test_filename", type=str, default="test.txt", help="filename of test dataset"
+    )
 
 
-MODEL_TYPE = {
-    "cnn-lstm": CNNLSTM,
-    "id-cnn": IDCNN
-}
+MODEL_TYPE = {"cnn-lstm": CNNLSTM, "id-cnn": IDCNN}
 
 
 def do_training(args):
@@ -178,7 +200,8 @@ def do_training(args):
     args.seed = set_seed(args.seed, n_gpus)
     # prepare data
     processor = TokenClsProcessor(
-        args.data_dir, tag_col=args.tag_col, ignore_token=args.ignore_token)
+        args.data_dir, tag_col=args.tag_col, ignore_token=args.ignore_token
+    )
     train_ex = processor.get_train_examples(filename=args.train_filename)
     dev_ex = processor.get_dev_examples(filename=args.dev_filename)
     test_ex = processor.get_test_examples(filename=args.test_filename)
@@ -230,15 +253,19 @@ def do_training(args):
         test_dl = DataLoader(test_dataset, sampler=test_sampler, batch_size=args.b)
     if args.lr is not None:
         opt = classifier.get_optimizer(lr=args.lr)
-    classifier.train(train_dl, dev_dl, test_dl,
-                     epochs=args.e,
-                     batch_size=args.b,
-                     logging_steps=args.logging_steps,
-                     save_steps=args.save_steps,
-                     save_path=args.output_dir,
-                     optimizer=opt if opt is not None else None,
-                     best_result_file=args.best_result_file,
-                     word_dropout=args.word_dropout)
+    classifier.train(
+        train_dl,
+        dev_dl,
+        test_dl,
+        epochs=args.e,
+        batch_size=args.b,
+        logging_steps=args.logging_steps,
+        save_steps=args.save_steps,
+        save_path=args.output_dir,
+        optimizer=opt if opt is not None else None,
+        best_result_file=args.best_result_file,
+        word_dropout=args.word_dropout,
+    )
     classifier.save_model(args.output_dir)
 
 
@@ -249,7 +276,8 @@ def do_kd_training(args):
     args.seed = set_seed(args.seed, n_gpus)
     # prepare data
     processor = TokenClsProcessor(
-        args.data_dir, tag_col=args.tag_col, ignore_token=args.ignore_token)
+        args.data_dir, tag_col=args.tag_col, ignore_token=args.ignore_token
+    )
     train_ex = processor.get_train_examples(filename=args.train_filename)
     dev_ex = processor.get_dev_examples(filename=args.dev_filename)
     test_ex = processor.get_test_examples(filename=args.test_filename)
@@ -284,25 +312,28 @@ def do_kd_training(args):
         train_ex, max_seq_length=args.max_sentence_length, max_word_length=args.max_word_length
     )
 
-# load saved teacher args if exist
-    if os.path.exists(args.teacher_model_path + os.sep + 'training_args.bin'):
-        t_args = torch.load(args.teacher_model_path + os.sep + 'training_args.bin')
+    # load saved teacher args if exist
+    if os.path.exists(args.teacher_model_path + os.sep + "training_args.bin"):
+        t_args = torch.load(args.teacher_model_path + os.sep + "training_args.bin")
         t_device, t_n_gpus = setup_backend(t_args.no_cuda)
-        teacher = TransformerTokenClassifier.load_model(model_path=args.teacher_model_path,
-                                                        model_type=args.teacher_model_type,
-                                                        config_name=t_args.config_name,
-                                                        tokenizer_name=t_args.tokenizer_name,
-                                                        do_lower_case=t_args.do_lower_case,
-                                                        output_path=t_args.output_dir,
-                                                        device=t_device,
-                                                        n_gpus=t_n_gpus)
-    else:
         teacher = TransformerTokenClassifier.load_model(
             model_path=args.teacher_model_path,
-            model_type=args.teacher_model_type)
+            model_type=args.teacher_model_type,
+            config_name=t_args.config_name,
+            tokenizer_name=t_args.tokenizer_name,
+            do_lower_case=t_args.do_lower_case,
+            output_path=t_args.output_dir,
+            device=t_device,
+            n_gpus=t_n_gpus,
+        )
+    else:
+        teacher = TransformerTokenClassifier.load_model(
+            model_path=args.teacher_model_path, model_type=args.teacher_model_type
+        )
         teacher.to(device, n_gpus)
     teacher_dataset = teacher.convert_to_tensors(
-        train_ex, max_seq_length=args.max_sentence_length, include_labels=False)
+        train_ex, max_seq_length=args.max_sentence_length, include_labels=False
+    )
 
     train_dataset = ParallelDataset(train_dataset, teacher_dataset)
 
@@ -325,18 +356,23 @@ def do_kd_training(args):
     if args.lr is not None:
         opt = classifier.get_optimizer(lr=args.lr)
 
-    distiller = TeacherStudentDistill(teacher, args.kd_temp, args.kd_dist_w, args.kd_student_w,
-                                      args.kd_loss_fn)
-    classifier.train(train_dl, dev_dl, test_dl,
-                     epochs=args.e,
-                     batch_size=args.b,
-                     logging_steps=args.logging_steps,
-                     save_steps=args.save_steps,
-                     save_path=args.output_dir,
-                     optimizer=opt if opt is not None else None,
-                     distiller=distiller,
-                     best_result_file=args.best_result_file,
-                     word_dropout=args.word_dropout)
+    distiller = TeacherStudentDistill(
+        teacher, args.kd_temp, args.kd_dist_w, args.kd_student_w, args.kd_loss_fn
+    )
+    classifier.train(
+        train_dl,
+        dev_dl,
+        test_dl,
+        epochs=args.e,
+        batch_size=args.b,
+        logging_steps=args.logging_steps,
+        save_steps=args.save_steps,
+        save_path=args.output_dir,
+        optimizer=opt if opt is not None else None,
+        distiller=distiller,
+        best_result_file=args.best_result_file,
+        word_dropout=args.word_dropout,
+    )
     classifier.save_model(args.output_dir)
 
 
@@ -347,7 +383,8 @@ def do_kd_pseudo_training(args):
     args.seed = set_seed(args.seed, n_gpus)
     # prepare data
     processor = TokenClsProcessor(
-        args.data_dir, tag_col=args.tag_col, ignore_token=args.ignore_token)
+        args.data_dir, tag_col=args.tag_col, ignore_token=args.ignore_token
+    )
     train_labeled_ex = processor.get_train_examples(filename=args.train_filename)
     train_unlabeled_ex = processor.get_train_examples(filename=args.unlabeled_filename)
     dev_ex = processor.get_dev_examples(filename=args.dev_filename)
@@ -385,13 +422,17 @@ def do_kd_pseudo_training(args):
         max_word_length=args.max_word_length,
     )
     train_unlabeled_dataset = classifier.convert_to_tensors(
-        train_unlabeled_ex, max_seq_length=args.max_sentence_length,
-        max_word_length=args.max_word_length, include_labels=False)
+        train_unlabeled_ex,
+        max_seq_length=args.max_sentence_length,
+        max_word_length=args.max_word_length,
+        include_labels=False,
+    )
     # match sizes of labeled/unlabeled train data for parallel batching
     larger_ds, smaller_ds = (
-        train_labeled_dataset, train_unlabeled_dataset) \
-        if len(train_labeled_dataset) > len(train_unlabeled_dataset) \
+        (train_labeled_dataset, train_unlabeled_dataset)
+        if len(train_labeled_dataset) > len(train_unlabeled_dataset)
         else (train_unlabeled_dataset, train_labeled_dataset)
+    )
     concat_smaller_ds = smaller_ds
     while len(concat_smaller_ds) < len(larger_ds):
         concat_smaller_ds = ConcatTensorDataset(concat_smaller_ds, [smaller_ds])
@@ -400,31 +441,35 @@ def do_kd_pseudo_training(args):
     else:
         train_labeled_dataset = concat_smaller_ds
     # load saved teacher args if exist
-    if os.path.exists(args.teacher_model_path + os.sep + 'training_args.bin'):
-        t_args = torch.load(args.teacher_model_path + os.sep + 'training_args.bin')
+    if os.path.exists(args.teacher_model_path + os.sep + "training_args.bin"):
+        t_args = torch.load(args.teacher_model_path + os.sep + "training_args.bin")
         t_device, t_n_gpus = setup_backend(t_args.no_cuda)
-        teacher = TransformerTokenClassifier.load_model(model_path=args.teacher_model_path,
-                                                        model_type=args.teacher_model_type,
-                                                        config_name=t_args.config_name,
-                                                        tokenizer_name=t_args.tokenizer_name,
-                                                        do_lower_case=t_args.do_lower_case,
-                                                        output_path=t_args.output_dir,
-                                                        device=t_device,
-                                                        n_gpus=t_n_gpus)
-    else:
         teacher = TransformerTokenClassifier.load_model(
             model_path=args.teacher_model_path,
-            model_type=args.teacher_model_type)
+            model_type=args.teacher_model_type,
+            config_name=t_args.config_name,
+            tokenizer_name=t_args.tokenizer_name,
+            do_lower_case=t_args.do_lower_case,
+            output_path=t_args.output_dir,
+            device=t_device,
+            n_gpus=t_n_gpus,
+        )
+    else:
+        teacher = TransformerTokenClassifier.load_model(
+            model_path=args.teacher_model_path, model_type=args.teacher_model_type
+        )
         teacher.to(device, n_gpus)
-    teacher_labeled_dataset = teacher.convert_to_tensors(
-        train_labeled_ex, args.max_sentence_length)
+    teacher_labeled_dataset = teacher.convert_to_tensors(train_labeled_ex, args.max_sentence_length)
     teacher_unlabeled_dataset = teacher.convert_to_tensors(
-        train_unlabeled_ex, args.max_sentence_length, False)
+        train_unlabeled_ex, args.max_sentence_length, False
+    )
 
     # match sizes of labeled/unlabeled teacher train data for parallel batching
-    larger_ds, smaller_ds = (teacher_labeled_dataset, teacher_unlabeled_dataset) if \
-        len(teacher_labeled_dataset) > len(teacher_unlabeled_dataset) else \
-        (teacher_unlabeled_dataset, teacher_labeled_dataset)
+    larger_ds, smaller_ds = (
+        (teacher_labeled_dataset, teacher_unlabeled_dataset)
+        if len(teacher_labeled_dataset) > len(teacher_unlabeled_dataset)
+        else (teacher_unlabeled_dataset, teacher_labeled_dataset)
+    )
     concat_smaller_ds = smaller_ds
     while len(concat_smaller_ds) < len(larger_ds):
         concat_smaller_ds = ConcatTensorDataset(concat_smaller_ds, [smaller_ds])
@@ -434,12 +479,16 @@ def do_kd_pseudo_training(args):
         teacher_labeled_dataset = concat_smaller_ds
 
     train_all_dataset = ParallelDataset(
-        train_labeled_dataset, teacher_labeled_dataset, train_unlabeled_dataset,
-        teacher_unlabeled_dataset)
+        train_labeled_dataset,
+        teacher_labeled_dataset,
+        train_unlabeled_dataset,
+        teacher_unlabeled_dataset,
+    )
     train_all_sampler = RandomSampler(train_all_dataset)
     # this way must use same batch size for both labeled/unlabeled sets
     train_all_dl = DataLoader(
-        train_all_dataset, sampler=train_all_sampler, batch_size=train_batch_size)
+        train_all_dataset, sampler=train_all_sampler, batch_size=train_batch_size
+    )
 
     if dev_ex is not None:
         dev_dataset = classifier.convert_to_tensors(
@@ -457,19 +506,24 @@ def do_kd_pseudo_training(args):
     if args.lr is not None:
         opt = classifier.get_optimizer(lr=args.lr)
 
-    distiller = TeacherStudentDistill(teacher, args.kd_temp, args.kd_dist_w, args.kd_student_w,
-                                      args.kd_loss_fn)
+    distiller = TeacherStudentDistill(
+        teacher, args.kd_temp, args.kd_dist_w, args.kd_student_w, args.kd_loss_fn
+    )
 
-    classifier.train(train_all_dl, dev_dl, test_dl,
-                     epochs=args.e,
-                     batch_size=args.b,
-                     logging_steps=args.logging_steps,
-                     save_steps=args.save_steps,
-                     save_path=args.output_dir,
-                     optimizer=opt if opt is not None else None,
-                     best_result_file=args.best_result_file,
-                     distiller=distiller,
-                     word_dropout=args.word_dropout)
+    classifier.train(
+        train_all_dl,
+        dev_dl,
+        test_dl,
+        epochs=args.e,
+        batch_size=args.b,
+        logging_steps=args.logging_steps,
+        save_steps=args.save_steps,
+        save_path=args.output_dir,
+        optimizer=opt if opt is not None else None,
+        best_result_file=args.best_result_file,
+        distiller=distiller,
+        word_dropout=args.word_dropout,
+    )
 
     classifier.save_model(args.output_dir)
 

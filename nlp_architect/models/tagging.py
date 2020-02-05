@@ -147,11 +147,15 @@ class NeuralTagger(TrainableModel):
             for i in range(len(word_char_ids)):
                 assert len(word_char_ids[i]) == max_word_length
 
-            features.append(InputFeatures(input_ids,
-                                          word_char_ids,
-                                          shape_ids,
-                                          mask=mask,
-                                          label_id=label_ids if include_labels else None))
+            features.append(
+                InputFeatures(
+                    input_ids,
+                    word_char_ids,
+                    shape_ids,
+                    mask=mask,
+                    label_id=label_ids if include_labels else None,
+                )
+            )
 
         # Convert to Tensors and build dataset
         all_input_ids = torch.tensor([f.input_ids for f in features], dtype=torch.long)
@@ -162,10 +166,10 @@ class NeuralTagger(TrainableModel):
         if include_labels:
             all_label_ids = torch.tensor([f.label_id for f in features], dtype=torch.long)
             dataset = TensorDataset(
-                all_input_ids, all_char_ids, all_shape_ids, masks, all_label_ids)
+                all_input_ids, all_char_ids, all_shape_ids, masks, all_label_ids
+            )
         else:
-            dataset = TensorDataset(
-                all_input_ids, all_char_ids, all_shape_ids, masks)
+            dataset = TensorDataset(all_input_ids, all_char_ids, all_shape_ids, masks)
         return dataset
 
     def get_optimizer(self, opt_fn=None, lr: int = 0.001):
@@ -190,27 +194,27 @@ class NeuralTagger(TrainableModel):
         """
         Map batch to correct input names
         """
-        mapping = {'words': batch[0],
-                   'word_chars': batch[1],
-                   'shapes': batch[2],
-                   'mask': batch[3]}
+        mapping = {"words": batch[0], "word_chars": batch[1], "shapes": batch[2], "mask": batch[3]}
         if len(batch) == 5:
-            mapping.update({'labels': batch[4]})
+            mapping.update({"labels": batch[4]})
         return mapping
 
-    def train(self, train_data_set: DataLoader,
-              dev_data_set: DataLoader = None,
-              test_data_set: DataLoader = None,
-              epochs: int = 3,
-              batch_size: int = 8,
-              optimizer=None,
-              max_grad_norm: float = 5.0,
-              logging_steps: int = 50,
-              save_steps: int = 100,
-              save_path: str = None,
-              distiller: TeacherStudentDistill = None,
-              best_result_file: str = None,
-              word_dropout: float = 0):
+    def train(
+        self,
+        train_data_set: DataLoader,
+        dev_data_set: DataLoader = None,
+        test_data_set: DataLoader = None,
+        epochs: int = 3,
+        batch_size: int = 8,
+        optimizer=None,
+        max_grad_norm: float = 5.0,
+        logging_steps: int = 50,
+        save_steps: int = 100,
+        save_path: str = None,
+        distiller: TeacherStudentDistill = None,
+        best_result_file: str = None,
+        word_dropout: float = 0,
+    ):
         """
         Train a tagging model
 
@@ -248,8 +252,11 @@ class NeuralTagger(TrainableModel):
         dev_test = 0
         self.model.zero_grad()
         epoch_it = trange(epochs, desc="Epoch")
-        do_pseudo = (len(train_data_set.dataset.datasets) == 4) if \
-            hasattr(train_data_set.dataset, 'datasets') else False
+        do_pseudo = (
+            (len(train_data_set.dataset.datasets) == 4)
+            if hasattr(train_data_set.dataset, "datasets")
+            else False
+        )
         for _ in epoch_it:
             step_it = tqdm(train_data_set, desc="Train iteration")
             avg_loss = 0
@@ -272,21 +279,23 @@ class NeuralTagger(TrainableModel):
 
                 # apply word dropout to the input
                 if word_dropout != 0:
-                    tokens = inputs['words']
+                    tokens = inputs["words"]
                     tokens = np.array(tokens.detach().cpu())
                     word_probs = np.random.random(tokens.shape)
                     drop_indices = np.where(
-                        (word_probs > word_dropout) & (tokens != 0))  # ignore padding indices
-                    inputs['words'][drop_indices[0], drop_indices[1]] = self.word_vocab.oov_id
+                        (word_probs > word_dropout) & (tokens != 0)
+                    )  # ignore padding indices
+                    inputs["words"][drop_indices[0], drop_indices[1]] = self.word_vocab.oov_id
                     if do_pseudo:
-                        ul_tokens = ul_inputs['words']
+                        ul_tokens = ul_inputs["words"]
                         ul_tokens = np.array(ul_tokens.detach().cpu())
                         ul_word_probs = np.random.random(ul_tokens.shape)
                         ul_drop_indices = np.where(
-                            (ul_word_probs > word_dropout) & (
-                                ul_tokens != 0))  # ignore padding indices
-                        ul_inputs['words'][
-                            ul_drop_indices[0], ul_drop_indices[1]] = self.word_vocab.oov_id
+                            (ul_word_probs > word_dropout) & (ul_tokens != 0)
+                        )  # ignore padding indices
+                        ul_inputs["words"][
+                            ul_drop_indices[0], ul_drop_indices[1]
+                        ] = self.word_vocab.oov_id
 
                 logits = self.model(**inputs)
                 if do_pseudo:
@@ -294,16 +303,18 @@ class NeuralTagger(TrainableModel):
                     t_pseudo_labels = torch.argmax(F.log_softmax(t_ul_logits, dim=2), dim=2)
 
                 if self.use_crf:
-                    loss = -1.0 * self.crf(logits, inputs['labels'], mask=inputs['mask'] != 0.0)
+                    loss = -1.0 * self.crf(logits, inputs["labels"], mask=inputs["mask"] != 0.0)
                     if do_pseudo:
                         loss += -1.0 * self.crf(
-                            ul_logits, t_pseudo_labels, mask=ul_inputs['mask'] != 0.0)
+                            ul_logits, t_pseudo_labels, mask=ul_inputs["mask"] != 0.0
+                        )
                 else:
                     loss_fn = CrossEntropyLoss(ignore_index=0)
-                    loss = loss_fn(logits.view(-1, self.num_labels), inputs['labels'].view(-1))
+                    loss = loss_fn(logits.view(-1, self.num_labels), inputs["labels"].view(-1))
                     if do_pseudo:
                         loss += loss_fn(
-                            ul_logits.view(-1, self.num_labels), t_pseudo_labels.view(-1))
+                            ul_logits.view(-1, self.num_labels), t_pseudo_labels.view(-1)
+                        )
 
                 # for idcnn training - add dropout penalty loss
                 module = self.model.module if self.n_gpus > 1 else self.model
@@ -337,18 +348,19 @@ class NeuralTagger(TrainableModel):
                 if global_step % logging_steps == 0:
                     if step != 0:
                         logger.info(
-                            " global_step = %s, average loss = %s", global_step, avg_loss / step)
+                            " global_step = %s, average loss = %s", global_step, avg_loss / step
+                        )
                     dev = self._get_eval(dev_data_set, "dev")
                     test = self._get_eval(test_data_set, "test")
                     if dev > best_dev:
                         best_dev = dev
                         dev_test = test
                         if best_result_file is not None:
-                            with open(best_result_file, 'a+') as f:
+                            with open(best_result_file, "a+") as f:
                                 f.write(
-                                    'best dev= ' + str(best_dev) + ', test= ' + str(test) + '\n')
-                if save_steps != 0 and save_path is not None and \
-                        global_step % save_steps == 0:
+                                    "best dev= " + str(best_dev) + ", test= " + str(test) + "\n"
+                                )
+                if save_steps != 0 and save_path is not None and global_step % save_steps == 0:
                     self.save_model(save_path)
         logger.info("Best result: Dev=%s, Test=%s", str(best_dev), str(dev_test))
 
