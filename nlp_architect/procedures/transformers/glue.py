@@ -21,9 +21,9 @@ import os
 from sklearn.metrics import matthews_corrcoef
 from torch.utils.data import DataLoader, RandomSampler, SequentialSampler
 
-from nlp_architect.data.glue_tasks import get_glue_task, processors
+from nlp_architect.data.glue_tasks import get_glue_task, get_metric_fn, processors
 from nlp_architect.models.transformers import TransformerSequenceClassifier
-from nlp_architect.nn.torch import setup_backend, set_seed
+from nlp_architect.nn.torch import set_seed, setup_backend
 from nlp_architect.procedures.procedure import Procedure
 from nlp_architect.procedures.registry import register_inference_cmd, register_train_cmd
 from nlp_architect.procedures.transformers.base import create_base_args, inference_args, train_args
@@ -168,28 +168,3 @@ def do_inference(args):
     with io.open(os.path.join(args.output_dir, "output.txt"), "w", encoding="utf-8") as fw:
         for p in preds:
             fw.write("{}\n".format(p))
-
-
-# GLUE task metrics
-def get_metric_fn(task_name):
-    if task_name == "cola":
-        return lambda p, l: {"mcc": matthews_corrcoef(p, l)}
-    if task_name == "sst-2":
-        return lambda p, l: {"acc": simple_accuracy(p, l)}
-    if task_name == "mrpc":
-        return acc_and_f1
-    if task_name == "sts-b":
-        return pearson_and_spearman
-    if task_name == "qqp":
-        return acc_and_f1
-    if task_name == "mnli":
-        return lambda p, l: {"acc": simple_accuracy(p, l)}
-    if task_name == "mnli-mm":
-        return lambda p, l: {"acc": simple_accuracy(p, l)}
-    if task_name == "qnli":
-        return lambda p, l: {"acc": simple_accuracy(p, l)}
-    if task_name == "rte":
-        return lambda p, l: {"acc": simple_accuracy(p, l)}
-    if task_name == "wnli":
-        return lambda p, l: {"acc": simple_accuracy(p, l)}
-    raise KeyError(task_name)

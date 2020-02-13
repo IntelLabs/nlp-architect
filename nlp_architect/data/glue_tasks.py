@@ -16,8 +16,11 @@
 import logging
 import os
 
+from sklearn.metrics import matthews_corrcoef
+
 from nlp_architect.data.sequence_classification import SequenceClsInputExample
 from nlp_architect.data.utils import DataProcessor, Task, read_tsv
+from nlp_architect.utils.metrics import acc_and_f1, pearson_and_spearman, simple_accuracy
 
 logger = logging.getLogger(__name__)
 
@@ -539,6 +542,31 @@ DEFAULT_FOLDER_NAMES = {
 }
 
 
+# GLUE task metrics
+def get_metric_fn(task_name):
+    if task_name == "cola":
+        return lambda p, l: {"mcc": matthews_corrcoef(p, l)}
+    if task_name == "sst-2":
+        return lambda p, l: {"acc": simple_accuracy(p, l)}
+    if task_name == "mrpc":
+        return acc_and_f1
+    if task_name == "sts-b":
+        return pearson_and_spearman
+    if task_name == "qqp":
+        return acc_and_f1
+    if task_name == "mnli":
+        return lambda p, l: {"acc": simple_accuracy(p, l)}
+    if task_name == "mnli-mm":
+        return lambda p, l: {"acc": simple_accuracy(p, l)}
+    if task_name == "qnli":
+        return lambda p, l: {"acc": simple_accuracy(p, l)}
+    if task_name == "rte":
+        return lambda p, l: {"acc": simple_accuracy(p, l)}
+    if task_name == "wnli":
+        return lambda p, l: {"acc": simple_accuracy(p, l)}
+    raise KeyError(task_name)
+
+
 def get_glue_task(task_name: str, data_dir: str = None):
     """Return a GLUE task object
     Args:
@@ -551,6 +579,9 @@ def get_glue_task(task_name: str, data_dir: str = None):
         raise ValueError("Task not found: {}".format(task_name))
     task_processor = processors[task_name]()
     if data_dir is None:
-        data_dir = os.path.join(os.environ["GLUE_DIR"], DEFAULT_FOLDER_NAMES[task_name])
+        try:
+            data_dir = os.path.join(os.environ["GLUE_DIR"], DEFAULT_FOLDER_NAMES[task_name])
+        except:
+            data_dir = None
     task_type = output_modes[task_name]
     return Task(task_name, task_processor, data_dir, task_type)
