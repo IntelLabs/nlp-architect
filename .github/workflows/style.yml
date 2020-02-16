@@ -1,0 +1,15 @@
+name: Python Style Checker
+
+on: [pull_request]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Run a one-line script
+      run: echo Hello, world!
+    - name: Python Style Checker
+      uses: andymckay/pycodestyle-action@0.1.3
