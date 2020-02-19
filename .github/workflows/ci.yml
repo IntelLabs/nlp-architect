@@ -1,0 +1,42 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-18.04, macOS-10.15]
+        python-version: [3.6, 3.7]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v1.1.1
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install dependencies
+      run: |
+        pip install -U pip setuptools h5py
+        pip3 install -U -e .[all,dev]
+        python -m spacy download en
+        python --version
+        pip --version
+        pip list
+    
+    - name: Tests
+      run: |
+          pytest ./ -rs -v -n 20 --dist=loadfile --cov=nlp_architect --junit-xml=junit/test-results-${{ runner.os }}-${{ matrix.python-version }}.xml
+
+    - name: Upload pytest test results
+      uses: actions/upload-artifact@master
+      with:
+        name: pytest-results-${{ runner.os }}-${{ matrix.python-version }}
+        path: junit/test-results-${{ runner.os }}-${{ matrix.python-version }}.xml
+      # Use always() to always run this step to publish test results when there are test failures
+      if: always()
+      
