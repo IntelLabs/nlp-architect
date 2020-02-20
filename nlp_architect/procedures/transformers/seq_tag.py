@@ -62,9 +62,9 @@ class TransformerTokenClsTrain(Procedure):
             help="a token to ignore when processing the data",
         )
         parser.add_argument(
-            "--best_dev_file",
+            "--best_result_file",
             type=str,
-            default="best_dev.txt",
+            default="best_result.txt",
             help="file path for best evaluation output",
         )
 
