@@ -18,7 +18,6 @@ import io
 import logging
 import os
 
-from sklearn.metrics import matthews_corrcoef
 from torch.utils.data import DataLoader, RandomSampler, SequentialSampler
 
 from nlp_architect.data.glue_tasks import get_glue_task, get_metric_fn, processors
@@ -28,7 +27,6 @@ from nlp_architect.procedures.procedure import Procedure
 from nlp_architect.procedures.registry import register_inference_cmd, register_train_cmd
 from nlp_architect.procedures.transformers.base import create_base_args, inference_args, train_args
 from nlp_architect.utils.io import prepare_output_path
-from nlp_architect.utils.metrics import acc_and_f1, pearson_and_spearman, simple_accuracy
 
 logger = logging.getLogger(__name__)
 

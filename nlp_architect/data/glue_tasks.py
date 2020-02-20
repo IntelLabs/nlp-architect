@@ -581,7 +581,7 @@ def get_glue_task(task_name: str, data_dir: str = None):
     if data_dir is None:
         try:
             data_dir = os.path.join(os.environ["GLUE_DIR"], DEFAULT_FOLDER_NAMES[task_name])
-        except:
+        except Exception:
             data_dir = None
     task_type = output_modes[task_name]
     return Task(task_name, task_processor, data_dir, task_type)
