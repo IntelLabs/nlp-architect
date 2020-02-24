@@ -75,6 +75,9 @@ class TrainTaggerKDPseudo(Procedure):
                             help="The file name containing the unlabeled training examples")
         parser.add_argument('--parallel_batching', action='store_true',
                             help="sample labeled/unlabeled batch in parallel")
+        parser.add_argument("--teacher_max_seq_len", type=int, default=128, help="Max sentence \
+                             length for teacher data loading")
+
 
     @staticmethod
     def run_procedure(args):
@@ -463,9 +466,9 @@ def do_kd_pseudo_training(args):
         teacher.to(device, n_gpus)
 
     teacher_labeled_dataset = teacher.convert_to_tensors(
-        train_labeled_ex, args.max_sentence_length)
+        train_labeled_ex, args.teacher_max_seq_len)
     teacher_unlabeled_dataset = teacher.convert_to_tensors(
-        train_unlabeled_ex, args.max_sentence_length, False
+        train_unlabeled_ex, args.teacher_max_seq_len, False
     )
 
     

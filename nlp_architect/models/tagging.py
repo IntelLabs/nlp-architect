@@ -18,14 +18,13 @@ import logging
 import os
 import pickle
 from typing import List
-
+import numpy as np
 import torch
 import torch.optim as optim
 from torch.nn import CrossEntropyLoss
 from torch.nn import functional as F
 from torch.utils.data import DataLoader, SequentialSampler, TensorDataset
 from tqdm import tqdm, trange
-import numpy as np
 
 from nlp_architect.data.sequential_tagging import TokenClsInputExample
 from nlp_architect.models import TrainableModel
@@ -222,9 +221,6 @@ class NeuralTagger(TrainableModel):
             train_data_set (DataLoader): train examples dataloader.
                 - If distiller object is provided train examples should contain a tuple of
                   student/teacher data examples.
-                - If in addition unlabeled data is available (pseudo-labeling training) then
-                  a tuple of student_labeled/teacher_labeled/student_unlabeled/teacher_unlabeled
-                  is expected.
             dev_data_set (DataLoader, optional): dev examples dataloader. Defaults to None.
             test_data_set (DataLoader, optional): test examples dataloader. Defaults to None.
             epochs (int, optional): num of epochs to train. Defaults to 3.
@@ -256,51 +252,44 @@ class NeuralTagger(TrainableModel):
         for _ in epoch_it:
             step_it = tqdm(train_data_set, desc="Train iteration")
             avg_loss = 0
-
             for step, batches in enumerate(step_it):
-                batch = batches
                 self.model.train()
-                if distiller:
-                    batch, t_batch = batches[:2]
-                    t_batch = tuple(t.to(self.device) for t in t_batch)
-                    t_logits = distiller.get_teacher_logits(t_batch)
-                    t_labels = torch.argmax(F.log_softmax(t_logits, dim=2), dim=2)
+
+                batch, t_batch = (batches, []) if not distiller else (batches[:2])
                 batch = tuple(t.to(self.device) for t in batch)
                 inputs = self.batch_mapper(batch)
+                logits = self.model(**inputs)
 
+                if distiller:
+                    t_batch = tuple(t.to(self.device) for t in t_batch)
+                    t_logits = distiller.get_teacher_logits(t_batch)
+                    valid_positions = t_batch[3] != 0.0
+                    valid_t_logits = torch.zeros(logits.shape)
+                    for i in range(len(logits)): # example
+                        valid_logit_i = t_logits[i][valid_positions[i]]
+                        valid_logit_iter = 0
+                        for j in range(logits.shape[1]): # tokens
+                            if inputs['mask'][i][j] != 0.0:
+                                valid_t_logits[i][j] = valid_logit_i[valid_logit_iter]
+                                valid_logit_iter += 1
+                    valid_t_logits = valid_t_logits.to(self.device)
+                    t_labels = torch.argmax(F.log_softmax(valid_t_logits, dim=1), dim=2)
+                    
                 # pseudo labeling
-                    # tokens = inputs['words']
-                    # labels = inputs['labels']
-                    # tokens = np.array(tokens.detach().cpu())
-                    # labels = np.array(labels.detach().cpu())
-                    # unlabeled_positions = np.where((tokens != 0) & (labels == 0))
-                    # inputs['labels'][unlabeled_positions[0], unlabeled_positions[1]] = t_labels[unlabeled_positions[0], unlabeled_positions[1]]
-                # if any(inputs['is_labeled']):
-                #     print()
-                for i , is_labeled in enumerate(inputs['is_labeled']):
+                for i, is_labeled in enumerate(inputs['is_labeled']):
                     if not is_labeled:
                         inputs['labels'][i] = t_labels[i]
 
-                # # apply word dropout to the input
-                # if word_dropout != 0:
-                #     tokens = inputs['words']
-                #     tokens = np.array(tokens.detach().cpu())
-                #     word_probs = np.random.random(tokens.shape)
-                #     drop_indices = np.where(
-                #         (word_probs > word_dropout) & (tokens != 0))  # ignore padding indices
-                #     inputs['words'][drop_indices[0], drop_indices[1]] = self.word_vocab.oov_id
-                #     if do_pseudo:
-                #         ul_tokens = ul_inputs['words']
-                #         ul_tokens = np.array(ul_tokens.detach().cpu())
-                #         ul_word_probs = np.random.random(ul_tokens.shape)
-                #         ul_drop_indices = np.where(
-                #             (ul_word_probs > word_dropout) & (
-                #                 ul_tokens != 0))  # ignore padding indices
-                #         ul_inputs['words'][
-                #             ul_drop_indices[0], ul_drop_indices[1]] = self.word_vocab.oov_id
+                # apply word dropout to the input
+                if word_dropout != 0:
+                    tokens = inputs['words']
+                    tokens = np.array(tokens.detach().cpu())
+                    word_probs = np.random.random(tokens.shape)
+                    drop_indices = np.where(
+                        (word_probs > word_dropout) & (tokens != 0))  # ignore padding indices
+                    inputs['words'][drop_indices[0], drop_indices[1]] = self.word_vocab.oov_id
 
-                logits = self.model(**inputs)
-
+                # loss
                 if self.use_crf:
                     loss = -1.0 * self.crf(logits, inputs['labels'], mask=inputs['mask'] != 0.0)
                 else:
@@ -320,7 +309,7 @@ class NeuralTagger(TrainableModel):
 
                 # add distillation loss if activated
                 if distiller:
-                    loss = distiller.distill_loss(loss, logits, t_logits)
+                    loss = distiller.distill_loss(loss, logits, valid_t_logits)
 
                 loss.backward()
                 torch.nn.utils.clip_grad_norm_(self.model.parameters(), max_grad_norm)
@@ -333,202 +322,16 @@ class NeuralTagger(TrainableModel):
                     if step != 0:
                         logger.info(
                             " global_step = %s, average loss = %s", global_step, avg_loss / step)
-                    dev = self._get_eval(dev_data_set, "dev")
-                    test = self._get_eval(test_data_set, "test")
-                    if dev > best_dev:
-                        best_dev = dev
-                        dev_test = test
-                        if best_result_file is not None:
-                            with open(best_result_file, 'a+') as f:
-                                f.write(
-                                    'best dev= ' + str(best_dev) + ', test= ' + str(test) + 
-                                    ', loss= ' + str(avg_loss / step) + '\n')
+                    best_dev, dev_test = self.update_best_model(dev_data_set, test_data_set, best_dev, 
+                                                                    dev_test, best_result_file, save_path=None)
                 if save_steps != 0 and save_path is not None and \
                         global_step % save_steps == 0:
                     self.save_model(save_path)
-        logger.info("Best result: Dev=%s, Test=%s", str(best_dev), str(dev_test))
+        self.update_best_model(dev_data_set, test_data_set, best_dev, dev_test, best_result_file, save_path=save_path + '/best_dev')
 
-    # def train(
-    #     self,
-    #     train_data_set: DataLoader,
-    #     dev_data_set: DataLoader = None,
-    #     test_data_set: DataLoader = None,
-    #     epochs: int = 3,
-    #     batch_size: int = 8,
-    #     optimizer=None,
-    #     max_grad_norm: float = 5.0,
-    #     logging_steps: int = 50,
-    #     save_steps: int = 100,
-    #     save_path: str = None,
-    #     distiller: TeacherStudentDistill = None,
-    #     best_result_file: str = None,
-    #     word_dropout: float = 0,
-    # ):
 
-    #     """
-    #     Train a tagging model
-
-    #     Args:
-    #         train_data_set (DataLoader): train examples dataloader.
-    #             - If distiller object is provided train examples should contain a tuple of
-    #               student/teacher data examples.
-    #             - If in addition unlabeled data is available (pseudo-labeling training) then
-    #               a tuple of student_labeled/teacher_labeled/student_unlabeled/teacher_unlabeled
-    #               is expected.
-    #         dev_data_set (DataLoader, optional): dev examples dataloader. Defaults to None.
-    #         test_data_set (DataLoader, optional): test examples dataloader. Defaults to None.
-    #         epochs (int, optional): num of epochs to train. Defaults to 3.
-    #         batch_size (int, optional): batch size. Defaults to 8.
-    #         optimizer (fn, optional): optimizer function. Defaults to default model optimizer.
-    #         max_grad_norm (float, optional): max gradient norm. Defaults to 5.0.
-    #         logging_steps (int, optional): number of steps between logging. Defaults to 50.
-    #         save_steps (int, optional): number of steps between model saves. Defaults to 100.
-    #         save_path (str, optional): model output path. Defaults to None.
-    #         distiller (TeacherStudentDistill, optional): KD model for training the model using
-    #         a teacher model. Defaults to None.
-    #         best_result_file (str, optional): path to save best dev results when it's updated.
-    #         word_dropout (float, optional): whole-word (-> oov) dropout rate. Defaults to 0.
-    #     """
-    #     if optimizer is None:
-    #         optimizer = self.get_optimizer()
-    #     train_batch_size = batch_size * max(1, self.n_gpus)
-    #     logger.info("***** Running training *****")
-    #     logger.info("  Num examples = %d", len(train_data_set.dataset))
-    #     logger.info("  Num Epochs = %d", epochs)
-    #     logger.info("  Instantaneous batch size per GPU/CPU = %d", batch_size)
-    #     logger.info("  Total batch size = %d", train_batch_size)
-    #     global_step = 0
-    #     best_dev = 0
-    #     dev_test = 0
-    #     self.model.zero_grad()
-    #     epoch_it = trange(epochs, desc="Epoch")
-    #     do_pseudo = (
-    #         (len(train_data_set.dataset.datasets) == 4)
-    #         if hasattr(train_data_set.dataset, "datasets")
-    #         else False
-    #     )
-    #     for _ in epoch_it:
-    #         step_it = tqdm(train_data_set, desc="Train iteration")
-    #         avg_loss = 0
-
-    #         for step, batches in enumerate(step_it):
-    #             batch = batches
-    #             self.model.train()
-    #             if distiller:
-    #                 batch, t_batch = batches[:2]
-    #                 t_batch = tuple(t.to(self.device) for t in t_batch)
-    #                 t_logits = distiller.get_teacher_logits(t_batch)
-    #                 if do_pseudo:
-    #                     ul_batch, t_ul_batch = batches[2:4]
-    #                     t_ul_batch = tuple(t.to(self.device) for t in t_ul_batch)
-    #                     t_ul_logits = distiller.get_teacher_logits(t_ul_batch)
-    #                     ul_batch = tuple(t.to(self.device) for t in ul_batch)
-    #                     ul_inputs = self.batch_mapper(ul_batch)
-    #             batch = tuple(t.to(self.device) for t in batch)
-    #             inputs = self.batch_mapper(batch)
-
-    #             # apply word dropout to the input
-    #             if word_dropout != 0:
-    #                 tokens = inputs["words"]
-    #                 tokens = np.array(tokens.detach().cpu())
-    #                 word_probs = np.random.random(tokens.shape)
-    #                 drop_indices = np.where(
-    #                     (word_probs > word_dropout) & (tokens != 0)
-    #                 )  # ignore padding indices
-    #                 inputs["words"][drop_indices[0], drop_indices[1]] = self.word_vocab.oov_id
-    #                 if do_pseudo:
-    #                     ul_tokens = ul_inputs["words"]
-    #                     ul_tokens = np.array(ul_tokens.detach().cpu())
-    #                     ul_word_probs = np.random.random(ul_tokens.shape)
-    #                     ul_drop_indices = np.where(
-    #                         (ul_word_probs > word_dropout) & (ul_tokens != 0)
-    #                     )  # ignore padding indices
-    #                     ul_inputs["words"][
-    #                         ul_drop_indices[0], ul_drop_indices[1]
-    #                     ] = self.word_vocab.oov_id
-
-    #             logits = self.model(**inputs)
-    #             if do_pseudo:
-    #                 ul_logits = self.model(**ul_inputs)
-    #                 t_pseudo_labels = torch.argmax(F.log_softmax(t_ul_logits, dim=2), dim=2)
-
-    #             if self.use_crf:
-    #                 loss = -1.0 * self.crf(logits, inputs["labels"], mask=inputs["mask"] != 0.0)
-    #                 if do_pseudo:
-    #                     loss += -1.0 * self.crf(
-    #                         ul_logits, t_pseudo_labels, mask=ul_inputs["mask"] != 0.0
-    #                     )
-    #             else:
-    #                 loss_fn = CrossEntropyLoss(ignore_index=0)
-    #                 loss = loss_fn(logits.view(-1, self.num_labels), inputs["labels"].view(-1))
-    #                 if do_pseudo:
-
-    #                     loss += loss_fn(
-    #                         ul_logits.view(-1, self.num_labels), t_pseudo_labels.view(-1)
-    #                     )
-
-    #             # for idcnn training - add dropout penalty loss
-    #             module = self.model.module if self.n_gpus > 1 else self.model
-    #             if isinstance(module, IDCNN) and module.drop_penalty != 0:
-    #                 logits_no_drop = self.model(**inputs, no_dropout=True)
-    #                 sub = logits.sub(logits_no_drop)
-    #                 drop_loss = torch.div(torch.sum(torch.pow(sub, 2)), 2)
-    #                 loss += module.drop_penalty * drop_loss
-    #                 # if do_pseudo:
-    #                 #     ul_logits_no_drop = self.model(**ul_inputs, no_dropout=True)
-    #                 #     sub = logits.sub(ul_logits_no_drop)
-    #                 #     ul_drop_loss = torch.div(torch.sum(torch.pow(sub, 2)), 2)
-    #                 #     loss += module.drop_penalty * ul_drop_loss
-
-    #             if self.n_gpus > 1:
-    #                 loss = loss.mean()
-    #                 if do_pseudo:
-    #                     ul_loss = ul_loss.mean()
-
-    #             # add distillation loss if activated
-    #             if distiller:
-    #                 loss = distiller.distill_loss(loss, logits, t_logits)
-    #                 if do_pseudo:
-    #                     ul_loss = distiller.distill_loss(ul_loss, ul_logits, t_ul_logits)
-    #                     loss = loss + ul_loss
-
-    #             loss.backward()
-    #             torch.nn.utils.clip_grad_norm_(self.model.parameters(), max_grad_norm)
-
-    #             optimizer.step()
-    #             optimizer.zero_grad()
-    #             global_step += 1
-    #             avg_loss += loss.item()
-    #             if global_step % logging_steps == 0:
-    #                 if step != 0:
-    #                     logger.info(
-    #                         " global_step = %s, average loss = %s", global_step, avg_loss / step
-    #                     )
-    #                 dev = self._get_eval(dev_data_set, "dev")
-    #                 test = self._get_eval(test_data_set, "test")
-    #                 if dev > best_dev:
-    #                     best_dev = dev
-    #                     dev_test = test
-    #                     if best_result_file is not None:
-    #                         with open(best_result_file, "a+") as f:
-    #                             f.write(
-
-    #                                 "best dev= " + str(best_dev) + ", test= " + str(test) + "\n"
-    #                             )
-    #             if save_steps != 0 and save_path is not None and global_step % save_steps == 0:
-    #                 self.save_model(save_path)
-    #     dev = self._get_eval(dev_data_set, "dev")
-    #     test = self._get_eval(test_data_set, "test")
-    #     if dev > best_dev:
-    #         best_dev = dev
-    #         dev_test = test
-    #         if best_result_file is not None:
-    #             with open(best_result_file, "a+") as f:
-    #                 f.write(
-
-    #                     "best dev= " + str(best_dev) + ", test= " + str(test) + "\n"
-    #                 )
-    #     logger.info("Best result: Dev=%s, Test=%s", str(best_dev), str(dev_test))
+   
+    
 
 
     def _get_eval(self, ds, set_name):
@@ -626,6 +429,26 @@ class NeuralTagger(TrainableModel):
         p, r, f1 = tagging(y_pred, y_true)
         return {"p": p, "r": r, "f1": f1}
 
+
+    def update_best_model(self, dev_data_set, test_data_set, best_dev, best_dev_test, best_result_file, save_path=None):
+        new_best_dev = best_dev
+        new_test = best_dev_test
+        dev = self._get_eval(dev_data_set, "dev")
+        test = self._get_eval(test_data_set, "test")
+        if dev > best_dev:
+            new_best_dev = dev
+            new_test = test
+            if best_result_file is not None:
+                with open(best_result_file, "a+") as f:
+                    f.write(
+                        "best dev= " + str(new_best_dev) + ", test= " + str(new_test) + "\n"
+                    )
+        logger.info("Best result: Dev=%s, Test=%s", str(new_best_dev), str(new_test))
+        if save_path is not None:
+            self.save_model(save_path)
+        return new_best_dev, new_test
+
+
     def extract_labels(self, label_ids, logits):
         label_map = self.label_id_str
         y_true = []
@@ -670,6 +493,8 @@ class NeuralTagger(TrainableModel):
         Args:
             output_dir (str): output directory
         """
+        if not os.path.exists(output_dir):
+            os.makedirs(output_dir)
         torch.save(self.model, os.path.join(output_dir, "model.bin"))
         if self.use_crf:
             torch.save(self.crf, os.path.join(output_dir, "crf.bin"))
