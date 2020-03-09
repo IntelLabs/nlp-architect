@@ -17,7 +17,7 @@ import base64
 import io
 import os
 import json
-from os.path import dirname, join
+from os.path import join
 
 import pandas as pd
 import numpy as np
@@ -44,6 +44,7 @@ from sentiment_solution import SENTIMENT_OUT, SentimentSolution
 
 SOLUTION_DIR = join(LIBRARY_PATH, 'solutions/absa_solution/')
 POLARITIES = ("POS", "NEG")
+
 
 # pylint: disable=global-variable-undefined
 def serve_absa_ui() -> None:
