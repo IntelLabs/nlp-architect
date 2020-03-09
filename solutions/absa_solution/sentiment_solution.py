@@ -39,6 +39,7 @@ from nlp_architect.utils.io import (
     validate_existing_path,
     line_count,
 )
+
 from utils import Anonymiser, _ui_format
 
 SENTIMENT_OUT = LIBRARY_OUT / "absa_solution"
