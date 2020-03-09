@@ -21,7 +21,7 @@ import pandas as pd
 
 from nlp_architect import LIBRARY_ROOT
 from nlp_architect.utils.io import download_unzip
-from sentiment_solution import SentimentSolution, SENTIMENT_OUT
+from .sentiment_solution import SentimentSolution, SENTIMENT_OUT
 
 
 def test_solution(generate_new=False):
