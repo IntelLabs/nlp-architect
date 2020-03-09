@@ -42,7 +42,7 @@ from nlp_architect.models.absa.train.train import TrainSentiment
 from nlp_architect.models.absa.inference.data_types import SentimentDoc, SentimentSentence
 from sentiment_solution import SENTIMENT_OUT, SentimentSolution
 
-SOLUTION_DIR = join(LIBRARY_PATH, 'solutions/absa_solution/')
+SOLUTION_DIR = join(LIBRARY_PATH, "solutions/absa_solution/")
 POLARITIES = ("POS", "NEG")
 
 
