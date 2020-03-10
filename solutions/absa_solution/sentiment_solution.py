@@ -32,6 +32,7 @@ from nlp_architect.models.absa.inference.data_types import (
     TermType,
     SentimentDocEncoder,
     SentimentDoc,
+    SentimentSentence,
 )
 from nlp_architect.models.absa.inference.inference import SentimentInference
 from nlp_architect.models.absa.utils import load_opinion_lex
@@ -42,7 +43,6 @@ from nlp_architect.utils.io import (
     validate_existing_path,
     line_count,
 )
-from nlp_architect.models.absa.inference.data_types import SentimentDoc, SentimentSentence
 
 SENTIMENT_OUT = LIBRARY_OUT / "absa_solution"
 
