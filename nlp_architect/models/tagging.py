@@ -249,7 +249,7 @@ class NeuralTagger(TrainableModel):
         dev_test = 0
         self.model.zero_grad()
         epoch_it = trange(epochs, desc="Epoch")
-        for _ in epoch_it:
+        for epoch in epoch_it:
             step_it = tqdm(train_data_set, desc="Train iteration")
             avg_loss = 0
             for step, batches in enumerate(step_it):
@@ -263,7 +263,7 @@ class NeuralTagger(TrainableModel):
                 if distiller:
                     t_batch = tuple(t.to(self.device) for t in t_batch)
                     t_logits = distiller.get_teacher_logits(t_batch)
-                    valid_positions = t_batch[3] != 0.0
+                    valid_positions = t_batch[3] != 0.0  # TODO: implement method to get only valid logits from the model itself
                     valid_t_logits = torch.zeros(logits.shape)
                     for i in range(len(logits)): # example
                         valid_logit_i = t_logits[i][valid_positions[i]]
@@ -322,12 +322,12 @@ class NeuralTagger(TrainableModel):
                     if step != 0:
                         logger.info(
                             " global_step = %s, average loss = %s", global_step, avg_loss / step)
-                    best_dev, dev_test = self.update_best_model(dev_data_set, test_data_set, best_dev, 
-                                                                    dev_test, best_result_file, save_path=None)
+                        best_dev, dev_test = self.update_best_model(dev_data_set, test_data_set, best_dev, 
+                                                                        dev_test, best_result_file, avg_loss / step, epoch, save_path=None)
                 if save_steps != 0 and save_path is not None and \
                         global_step % save_steps == 0:
                     self.save_model(save_path)
-        self.update_best_model(dev_data_set, test_data_set, best_dev, dev_test, best_result_file, save_path=save_path + '/best_dev')
+        self.update_best_model(dev_data_set, test_data_set, best_dev, dev_test, best_result_file, 'end_training', 'end_training', save_path=save_path + '/best_dev')
 
 
    
@@ -430,7 +430,7 @@ class NeuralTagger(TrainableModel):
         return {"p": p, "r": r, "f1": f1}
 
 
-    def update_best_model(self, dev_data_set, test_data_set, best_dev, best_dev_test, best_result_file, save_path=None):
+    def update_best_model(self, dev_data_set, test_data_set, best_dev, best_dev_test, best_result_file, loss, epoch, save_path=None):
         new_best_dev = best_dev
         new_test = best_dev_test
         dev = self._get_eval(dev_data_set, "dev")
@@ -441,7 +441,7 @@ class NeuralTagger(TrainableModel):
             if best_result_file is not None:
                 with open(best_result_file, "a+") as f:
                     f.write(
-                        "best dev= " + str(new_best_dev) + ", test= " + str(new_test) + "\n"
+                        "best dev= " + str(new_best_dev) + ", test= " + str(new_test) + ", loss= " + str(loss) + ", epoch= " + str(epoch) + "\n"
                     )
         logger.info("Best result: Dev=%s, Test=%s", str(new_best_dev), str(new_test))
         if save_path is not None:
