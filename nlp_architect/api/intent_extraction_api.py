@@ -30,7 +30,7 @@ class IntentExtractionApi(AbstractApi):
     pretrained_model_info = path.join(model_dir, "model_info.dat")
     pretrained_model = path.join(model_dir, "model.h5")
 
-    def __init__(self, prompt=True):
+    def __init__(self, prompt=False):
         self.model = None
         self.model_type = None
         self.word_vocab = None
