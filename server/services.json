@@ -2,6 +2,5 @@
   "api_folders_path" : "nlp_architect.api.",
   "bist" : {"file_name": "bist_parser_api.py", "type": "core", "spacy": true},
   "ner" : {"file_name": "ner_api.py", "type": "high_level"},
-  "machine_comprehension" : {"file_name": "machine_comprehension_api.py", "type": "high_level"},
   "intent_extraction" : {"file_name": "intent_extraction_api.py", "type": "high_level"}
 }

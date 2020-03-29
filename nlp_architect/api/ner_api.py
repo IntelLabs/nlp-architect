@@ -35,7 +35,7 @@ class NerApi(AbstractApi):
     pretrained_model = path.join(model_dir, "model_v4.h5")
     pretrained_model_info = path.join(model_dir, "model_info_v4.dat")
 
-    def __init__(self, prompt=True):
+    def __init__(self, prompt=False):
         self.model = None
         self.model_info = None
         self.word_vocab = None

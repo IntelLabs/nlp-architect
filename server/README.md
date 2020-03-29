@@ -1,7 +1,7 @@
 # NLP Architect Server
 
 ## Running the server
-1. `hug -p 8080 server/server.py # from root dir`
+1. `hug -p 8080 -f server/server.py # from root dir`
 
 ## Development
 1. Install Node.js from [here](https://nodejs.org/en/)

@@ -31,7 +31,7 @@ api.http.add_middleware(hug.middleware.CORSMiddleware(api, max_age=10))
 
 
 def prefetch_models():
-    models = ['machine_comprehension', 'bist', 'ner', 'intent_extraction']
+    models = ['bist', 'ner', 'intent_extraction']
     for model in models:
         services[model] = Service(model)
 
