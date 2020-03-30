@@ -55,6 +55,8 @@ class TrainTaggerKD(Procedure):
     def add_arguments(parser: argparse.ArgumentParser):
         add_parse_args(parser)
         TeacherStudentDistill.add_args(parser)
+        parser.add_argument("--teacher_max_seq_len", type=int, default=128, help="Max sentence \
+                             length for teacher data loading")
 
     @staticmethod
     def run_procedure(args):
@@ -333,7 +335,7 @@ def do_kd_training(args):
         )
         teacher.to(device, n_gpus)
     teacher_dataset = teacher.convert_to_tensors(
-        train_ex, max_seq_length=args.max_sentence_length, include_labels=False
+        train_ex, max_seq_length=args.teacher_max_seq_len, include_labels=False
     )
 
     train_dataset = ParallelDataset(train_dataset, teacher_dataset)

@@ -252,6 +252,7 @@ class NeuralTagger(TrainableModel):
         for epoch in epoch_it:
             step_it = tqdm(train_data_set, desc="Train iteration")
             avg_loss = 0
+            
             for step, batches in enumerate(step_it):
                 self.model.train()
 
@@ -264,22 +265,24 @@ class NeuralTagger(TrainableModel):
                     t_batch = tuple(t.to(self.device) for t in t_batch)
                     t_logits = distiller.get_teacher_logits(t_batch)
                     valid_positions = t_batch[3] != 0.0  # TODO: implement method to get only valid logits from the model itself
-                    valid_t_logits = torch.zeros(logits.shape)
-                    for i in range(len(logits)): # example
+                    valid_t_logits = {}
+                    max_seq_len = logits.shape[1]
+                    for i in range(len(logits)): # each example in batch
                         valid_logit_i = t_logits[i][valid_positions[i]]
-                        valid_logit_iter = 0
-                        for j in range(logits.shape[1]): # tokens
-                            if inputs['mask'][i][j] != 0.0:
-                                valid_t_logits[i][j] = valid_logit_i[valid_logit_iter]
-                                valid_logit_iter += 1
-                    valid_t_logits = valid_t_logits.to(self.device)
-                    t_labels = torch.argmax(F.log_softmax(valid_t_logits, dim=1), dim=2)
-                    
+                        valid_t_logits[i] = valid_logit_i if valid_logit_i.shape[0] <= max_seq_len else valid_logit_i[:][:max_seq_len] # cut to max len
+                        
+                    # prepare teacher labels for non-labeled examples
+                    t_labels_dict = {}
+                    for i in range(len(valid_t_logits.keys())):
+                        t_labels_dict[i] = torch.argmax(F.log_softmax(valid_t_logits[i], dim=-1), dim=-1)
+                
                 # pseudo labeling
                 for i, is_labeled in enumerate(inputs['is_labeled']):
                     if not is_labeled:
-                        inputs['labels'][i] = t_labels[i]
-
+                        t_labels_i = t_labels_dict[i]
+                        # add the padded teacher label:
+                        inputs['labels'][i] = torch.cat((t_labels_i, torch.zeros([max_seq_len - len(t_labels_i)], dtype=torch.long).to(self.device)), 0)
+                
                 # apply word dropout to the input
                 if word_dropout != 0:
                     tokens = inputs['words']
@@ -295,7 +298,7 @@ class NeuralTagger(TrainableModel):
                 else:
                     loss_fn = CrossEntropyLoss(ignore_index=0)
                     loss = loss_fn(logits.view(-1, self.num_labels), inputs['labels'].view(-1))
-
+                    
                 # for idcnn training - add dropout penalty loss
                 module = self.model.module if self.n_gpus > 1 else self.model
                 if isinstance(module, IDCNN) and module.drop_penalty != 0:
@@ -309,8 +312,14 @@ class NeuralTagger(TrainableModel):
 
                 # add distillation loss if activated
                 if distiller:
-                    loss = distiller.distill_loss(loss, logits, valid_t_logits)
-
+                    # filter masked student logits (no padding)
+                    valid_s_logits = {}
+                    valid_s_positions = inputs['mask'] != 0.0
+                    for i in range(len(logits)):
+                        valid_s_logit_i = logits[i][valid_s_positions[i]]
+                        valid_s_logits[i] = valid_s_logit_i
+                    loss = distiller.distill_loss_dict(loss, valid_s_logits, valid_t_logits)
+                    
                 loss.backward()
                 torch.nn.utils.clip_grad_norm_(self.model.parameters(), max_grad_norm)
 
