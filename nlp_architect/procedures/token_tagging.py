@@ -30,7 +30,11 @@ from nlp_architect.procedures.registry import register_train_cmd, register_infer
 from nlp_architect.utils.embedding import get_embedding_matrix, load_embedding_file
 from nlp_architect.utils.io import prepare_output_path
 from nlp_architect.utils.text import SpacyInstance
-from nlp_architect.nn.torch.data.dataset import ParallelDataset, ConcatTensorDataset, CombinedTensorDataset
+from nlp_architect.nn.torch.data.dataset import (
+    ParallelDataset,
+    ConcatTensorDataset,
+    CombinedTensorDataset,
+)
 from nlp_architect.models.transformers import TransformerTokenClassifier
 
 
@@ -55,8 +59,13 @@ class TrainTaggerKD(Procedure):
     def add_arguments(parser: argparse.ArgumentParser):
         add_parse_args(parser)
         TeacherStudentDistill.add_args(parser)
-        parser.add_argument("--teacher_max_seq_len", type=int, default=128, help="Max sentence \
-                             length for teacher data loading")
+        parser.add_argument(
+            "--teacher_max_seq_len",
+            type=int,
+            default=128,
+            help="Max sentence \
+                             length for teacher data loading",
+        )
 
     @staticmethod
     def run_procedure(args):
@@ -73,12 +82,24 @@ class TrainTaggerKDPseudo(Procedure):
     def add_arguments(parser: argparse.ArgumentParser):
         add_parse_args(parser)
         TeacherStudentDistill.add_args(parser)
-        parser.add_argument("--unlabeled_filename", default="unlabeled.txt", type=str,
-                            help="The file name containing the unlabeled training examples")
-        parser.add_argument('--parallel_batching', action='store_true',
-                            help="sample labeled/unlabeled batch in parallel")
-        parser.add_argument("--teacher_max_seq_len", type=int, default=128, help="Max sentence \
-                             length for teacher data loading")
+        parser.add_argument(
+            "--unlabeled_filename",
+            default="unlabeled.txt",
+            type=str,
+            help="The file name containing the unlabeled training examples",
+        )
+        parser.add_argument(
+            "--parallel_batching",
+            action="store_true",
+            help="sample labeled/unlabeled batch in parallel",
+        )
+        parser.add_argument(
+            "--teacher_max_seq_len",
+            type=int,
+            default=128,
+            help="Max sentence \
+                             length for teacher data loading",
+        )
 
     @staticmethod
     def run_procedure(args):
@@ -424,17 +445,21 @@ def do_kd_pseudo_training(args):
         max_word_length=args.max_word_length,
     )
     train_unlabeled_dataset = classifier.convert_to_tensors(
-        train_unlabeled_ex, max_seq_length=args.max_sentence_length,
-        max_word_length=args.max_word_length, include_labels=False)
+        train_unlabeled_ex,
+        max_seq_length=args.max_sentence_length,
+        max_word_length=args.max_word_length,
+        include_labels=False,
+    )
 
     if args.parallel_batching:
         # # concat labeled+unlabeled dataset
         # train_dataset = ConcatTensorDataset(train_labeled_dataset, [train_unlabeled_dataset])
         # match sizes of labeled/unlabeled train data for parallel batching
         larger_ds, smaller_ds = (
-            train_labeled_dataset, train_unlabeled_dataset) \
-            if len(train_labeled_dataset) > len(train_unlabeled_dataset) \
+            (train_labeled_dataset, train_unlabeled_dataset)
+            if len(train_labeled_dataset) > len(train_unlabeled_dataset)
             else (train_unlabeled_dataset, train_labeled_dataset)
+        )
         concat_smaller_ds = smaller_ds
         while len(concat_smaller_ds) < len(larger_ds):
             concat_smaller_ds = ConcatTensorDataset(concat_smaller_ds, [smaller_ds])
@@ -465,8 +490,7 @@ def do_kd_pseudo_training(args):
         )
         teacher.to(device, n_gpus)
 
-    teacher_labeled_dataset = teacher.convert_to_tensors(
-        train_labeled_ex, args.teacher_max_seq_len)
+    teacher_labeled_dataset = teacher.convert_to_tensors(train_labeled_ex, args.teacher_max_seq_len)
     teacher_unlabeled_dataset = teacher.convert_to_tensors(
         train_unlabeled_ex, args.teacher_max_seq_len, False
     )
@@ -475,9 +499,11 @@ def do_kd_pseudo_training(args):
         # # concat teacher labeled+unlabeled dataset
         # teacher_dataset = ConcatTensorDataset(teacher_labeled_dataset, [teacher_unlabeled_dataset])
         # match sizes of labeled/unlabeled teacher train data for parallel batching
-        larger_ds, smaller_ds = (teacher_labeled_dataset, teacher_unlabeled_dataset) if \
-            len(teacher_labeled_dataset) > len(teacher_unlabeled_dataset) else \
-            (teacher_unlabeled_dataset, teacher_labeled_dataset)
+        larger_ds, smaller_ds = (
+            (teacher_labeled_dataset, teacher_unlabeled_dataset)
+            if len(teacher_labeled_dataset) > len(teacher_unlabeled_dataset)
+            else (teacher_unlabeled_dataset, teacher_labeled_dataset)
+        )
         concat_smaller_ds = smaller_ds
         while len(concat_smaller_ds) < len(larger_ds):
             concat_smaller_ds = ConcatTensorDataset(concat_smaller_ds, [smaller_ds])
@@ -487,21 +513,26 @@ def do_kd_pseudo_training(args):
             teacher_labeled_dataset = concat_smaller_ds
 
         train_all_dataset = ParallelDataset(
-            train_labeled_dataset, teacher_labeled_dataset, train_unlabeled_dataset,
-            teacher_unlabeled_dataset)
+            train_labeled_dataset,
+            teacher_labeled_dataset,
+            train_unlabeled_dataset,
+            teacher_unlabeled_dataset,
+        )
 
         train_all_sampler = RandomSampler(train_all_dataset)
         # this way must use same batch size for both labeled/unlabeled sets
         train_dl = DataLoader(
-            train_all_dataset, sampler=train_all_sampler, batch_size=train_batch_size)
+            train_all_dataset, sampler=train_all_sampler, batch_size=train_batch_size
+        )
 
     else:
-        teacher_dataset = CombinedTensorDataset([teacher_labeled_dataset, teacher_unlabeled_dataset])
+        teacher_dataset = CombinedTensorDataset(
+            [teacher_labeled_dataset, teacher_unlabeled_dataset]
+        )
 
         train_dataset = ParallelDataset(train_dataset, teacher_dataset)
         train_sampler = RandomSampler(train_dataset)
-        train_dl = DataLoader(
-            train_dataset, sampler=train_sampler, batch_size=train_batch_size)
+        train_dl = DataLoader(train_dataset, sampler=train_sampler, batch_size=train_batch_size)
 
     if dev_ex is not None:
         dev_dataset = classifier.convert_to_tensors(
@@ -519,19 +550,24 @@ def do_kd_pseudo_training(args):
     if args.lr is not None:
         opt = classifier.get_optimizer(lr=args.lr)
 
-    distiller = TeacherStudentDistill(teacher, args.kd_temp, args.kd_dist_w, args.kd_student_w,
-                                      args.kd_loss_fn)
+    distiller = TeacherStudentDistill(
+        teacher, args.kd_temp, args.kd_dist_w, args.kd_student_w, args.kd_loss_fn
+    )
 
-    classifier.train(train_dl, dev_dl, test_dl,
-                     epochs=args.e,
-                     batch_size=args.b,
-                     logging_steps=args.logging_steps,
-                     save_steps=args.save_steps,
-                     save_path=args.output_dir,
-                     optimizer=opt if opt is not None else None,
-                     best_result_file=args.best_result_file,
-                     distiller=distiller,
-                     word_dropout=args.word_dropout)
+    classifier.train(
+        train_dl,
+        dev_dl,
+        test_dl,
+        epochs=args.e,
+        batch_size=args.b,
+        logging_steps=args.logging_steps,
+        save_steps=args.save_steps,
+        save_path=args.output_dir,
+        optimizer=opt if opt is not None else None,
+        best_result_file=args.best_result_file,
+        distiller=distiller,
+        word_dropout=args.word_dropout,
+    )
 
     classifier.save_model(args.output_dir)
 

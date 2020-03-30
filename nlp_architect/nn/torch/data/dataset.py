@@ -70,9 +70,7 @@ class CombinedTensorDataset(torch.utils.data.Dataset):
             datasets (List[TensorDataset]): datasets to concat.
     """
 
-    def __init__(
-            self,
-            datasets: List[torch.utils.data.TensorDataset]):
+    def __init__(self, datasets: List[torch.utils.data.TensorDataset]):
         max_ds_len = max([len(ds.tensors) for ds in datasets])
         tensors = ()
         # match tensors count

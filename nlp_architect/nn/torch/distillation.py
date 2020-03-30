@@ -140,7 +140,10 @@ class TeacherStudentDistill:
         for i in range(len(teacher_logits_dict.keys())):
             teacher_sm_dict[i] = F.softmax(teacher_logits_dict[i] / self.t, dim=-1)
 
-        distill_losses = [self.loss_fn(input=student_sm_dict[i], target=teacher_sm_dict[i]) for i in range(len(student_sm_dict.keys()))]
+        distill_losses = [
+            self.loss_fn(input=student_sm_dict[i], target=teacher_sm_dict[i])
+            for i in range(len(student_sm_dict.keys()))
+        ]
         distill_loss = torch.mean(torch.stack(distill_losses))
 
         return (self.loss_w * loss) + (distill_loss * self.dist_w * (self.t ** 2))

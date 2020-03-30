@@ -29,8 +29,12 @@ def test_concat_dataset():
     labeled_dataset = TensorDataset(token_ids, label_ids)
     unlabeled_dataset = TensorDataset(token_ids)
     concat_dataset = CombinedTensorDataset([labeled_dataset, unlabeled_dataset])
-    expected_tokens = torch.tensor([[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 2, 3], [4, 5, 6], [7, 8, 9]], dtype=torch.long)
-    expected_labels = torch.tensor([[1, 2, 3], [4, 5, 6], [7, 8, 9], [0, 0, 0], [0, 0, 0], [0, 0, 0]], dtype=torch.long)
+    expected_tokens = torch.tensor(
+        [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 2, 3], [4, 5, 6], [7, 8, 9]], dtype=torch.long
+    )
+    expected_labels = torch.tensor(
+        [[1, 2, 3], [4, 5, 6], [7, 8, 9], [0, 0, 0], [0, 0, 0], [0, 0, 0]], dtype=torch.long
+    )
     assert torch.equal(concat_dataset.tensors[0], expected_tokens)
     assert torch.equal(concat_dataset.tensors[1], expected_labels)
 
