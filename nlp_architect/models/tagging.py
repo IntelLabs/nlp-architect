@@ -161,7 +161,7 @@ class NeuralTagger(TrainableModel):
         all_char_ids = torch.tensor([f.char_ids for f in features], dtype=torch.long)
         all_shape_ids = torch.tensor([f.shape_ids for f in features], dtype=torch.long)
         masks = torch.tensor([f.mask for f in features], dtype=torch.long)
-        
+
         if include_labels:
             is_labeled = torch.tensor([True for f in features], dtype=torch.bool)
             all_label_ids = torch.tensor([f.label_id for f in features], dtype=torch.long)
@@ -199,7 +199,6 @@ class NeuralTagger(TrainableModel):
         if len(batch) == 6:
             mapping.update({"labels": batch[5]})
         return mapping
-
 
     def train(self, train_data_set: DataLoader,
               dev_data_set: DataLoader = None,
@@ -252,7 +251,7 @@ class NeuralTagger(TrainableModel):
         for epoch in epoch_it:
             step_it = tqdm(train_data_set, desc="Train iteration")
             avg_loss = 0
-            
+
             for step, batches in enumerate(step_it):
                 self.model.train()
 
@@ -267,22 +266,22 @@ class NeuralTagger(TrainableModel):
                     valid_positions = t_batch[3] != 0.0  # TODO: implement method to get only valid logits from the model itself
                     valid_t_logits = {}
                     max_seq_len = logits.shape[1]
-                    for i in range(len(logits)): # each example in batch
+                    for i in range(len(logits)):  # each example in batch
                         valid_logit_i = t_logits[i][valid_positions[i]]
-                        valid_t_logits[i] = valid_logit_i if valid_logit_i.shape[0] <= max_seq_len else valid_logit_i[:][:max_seq_len] # cut to max len
-                        
+                        valid_t_logits[i] = valid_logit_i if valid_logit_i.shape[0] <= max_seq_len else valid_logit_i[:][:max_seq_len]  # cut to max len
+
                     # prepare teacher labels for non-labeled examples
                     t_labels_dict = {}
                     for i in range(len(valid_t_logits.keys())):
                         t_labels_dict[i] = torch.argmax(F.log_softmax(valid_t_logits[i], dim=-1), dim=-1)
-                
+
                 # pseudo labeling
                 for i, is_labeled in enumerate(inputs['is_labeled']):
                     if not is_labeled:
                         t_labels_i = t_labels_dict[i]
                         # add the padded teacher label:
                         inputs['labels'][i] = torch.cat((t_labels_i, torch.zeros([max_seq_len - len(t_labels_i)], dtype=torch.long).to(self.device)), 0)
-                
+
                 # apply word dropout to the input
                 if word_dropout != 0:
                     tokens = inputs['words']
@@ -298,7 +297,7 @@ class NeuralTagger(TrainableModel):
                 else:
                     loss_fn = CrossEntropyLoss(ignore_index=0)
                     loss = loss_fn(logits.view(-1, self.num_labels), inputs['labels'].view(-1))
-                    
+
                 # for idcnn training - add dropout penalty loss
                 module = self.model.module if self.n_gpus > 1 else self.model
                 if isinstance(module, IDCNN) and module.drop_penalty != 0:
@@ -319,7 +318,7 @@ class NeuralTagger(TrainableModel):
                         valid_s_logit_i = logits[i][valid_s_positions[i]]
                         valid_s_logits[i] = valid_s_logit_i
                     loss = distiller.distill_loss_dict(loss, valid_s_logits, valid_t_logits)
-                    
+
                 loss.backward()
                 torch.nn.utils.clip_grad_norm_(self.model.parameters(), max_grad_norm)
 
@@ -331,17 +330,12 @@ class NeuralTagger(TrainableModel):
                     if step != 0:
                         logger.info(
                             " global_step = %s, average loss = %s", global_step, avg_loss / step)
-                        best_dev, dev_test = self.update_best_model(dev_data_set, test_data_set, best_dev, 
-                                                                        dev_test, best_result_file, avg_loss / step, epoch, save_path=None)
+                        best_dev, dev_test = self.update_best_model(dev_data_set, test_data_set, best_dev,
+                                                                    dev_test, best_result_file, avg_loss / step, epoch, save_path=None)
                 if save_steps != 0 and save_path is not None and \
                         global_step % save_steps == 0:
                     self.save_model(save_path)
         self.update_best_model(dev_data_set, test_data_set, best_dev, dev_test, best_result_file, 'end_training', 'end_training', save_path=save_path + '/best_dev')
-
-
-   
-    
-
 
     def _get_eval(self, ds, set_name):
         if ds is not None:
@@ -438,7 +432,6 @@ class NeuralTagger(TrainableModel):
         p, r, f1 = tagging(y_pred, y_true)
         return {"p": p, "r": r, "f1": f1}
 
-
     def update_best_model(self, dev_data_set, test_data_set, best_dev, best_dev_test, best_result_file, loss, epoch, save_path=None):
         new_best_dev = best_dev
         new_test = best_dev_test
@@ -456,7 +449,6 @@ class NeuralTagger(TrainableModel):
         if save_path is not None:
             self.save_model(save_path)
         return new_best_dev, new_test
-
 
     def extract_labels(self, label_ids, logits):
         label_map = self.label_id_str

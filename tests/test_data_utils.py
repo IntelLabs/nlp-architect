@@ -35,7 +35,6 @@ def test_concat_dataset():
     assert torch.equal(concat_dataset.tensors[1], expected_labels)
 
 
-
 def test_split_dataset():
     current_dir = os.path.dirname(os.path.realpath(__file__))
     data_dir = os.path.join(current_dir, "fixtures/data/distillation")

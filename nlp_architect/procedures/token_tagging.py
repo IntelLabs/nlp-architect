@@ -80,7 +80,6 @@ class TrainTaggerKDPseudo(Procedure):
         parser.add_argument("--teacher_max_seq_len", type=int, default=128, help="Max sentence \
                              length for teacher data loading")
 
-
     @staticmethod
     def run_procedure(args):
         do_kd_pseudo_training(args)
@@ -427,8 +426,7 @@ def do_kd_pseudo_training(args):
     train_unlabeled_dataset = classifier.convert_to_tensors(
         train_unlabeled_ex, max_seq_length=args.max_sentence_length,
         max_word_length=args.max_word_length, include_labels=False)
-    
-    
+
     if args.parallel_batching:
         # # concat labeled+unlabeled dataset
         # train_dataset = ConcatTensorDataset(train_labeled_dataset, [train_unlabeled_dataset])
@@ -473,7 +471,6 @@ def do_kd_pseudo_training(args):
         train_unlabeled_ex, args.teacher_max_seq_len, False
     )
 
-    
     if args.parallel_batching:
         # # concat teacher labeled+unlabeled dataset
         # teacher_dataset = ConcatTensorDataset(teacher_labeled_dataset, [teacher_unlabeled_dataset])
@@ -488,7 +485,7 @@ def do_kd_pseudo_training(args):
             teacher_unlabeled_dataset = concat_smaller_ds
         else:
             teacher_labeled_dataset = concat_smaller_ds
-        
+
         train_all_dataset = ParallelDataset(
             train_labeled_dataset, teacher_labeled_dataset, train_unlabeled_dataset,
             teacher_unlabeled_dataset)

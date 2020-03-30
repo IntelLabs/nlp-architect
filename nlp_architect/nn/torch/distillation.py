@@ -119,7 +119,6 @@ class TeacherStudentDistill:
         distill_loss = self.loss_fn(input=student_log_sm, target=teacher_log_sm)
         return (self.loss_w * loss) + (distill_loss * self.dist_w * (self.t ** 2))
 
-
     def distill_loss_dict(self, loss, student_logits_dict, teacher_logits_dict):
         """
         Add KD loss
@@ -132,7 +131,6 @@ class TeacherStudentDistill:
         Returns:
             KD loss
         """
-        
 
         student_sm_dict = {}
         for i in range(len(student_logits_dict.keys())):
@@ -144,5 +142,5 @@ class TeacherStudentDistill:
 
         distill_losses = [self.loss_fn(input=student_sm_dict[i], target=teacher_sm_dict[i]) for i in range(len(student_sm_dict.keys()))]
         distill_loss = torch.mean(torch.stack(distill_losses))
-        
+
         return (self.loss_w * loss) + (distill_loss * self.dist_w * (self.t ** 2))

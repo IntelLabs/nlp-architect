@@ -60,7 +60,7 @@ class ConcatTensorDataset(torch.utils.data.Dataset):
 
 
 class CombinedTensorDataset(torch.utils.data.Dataset):
-    r"""Dataset as a concatenation of tensor datasets with different number of 
+    r"""Dataset as a concatenation of tensor datasets with different number of
         tensors (labeled dataset/ unlabeled dataset). Labels of unlabeled dataset will
         be represented as a tensor of zeros.
 
@@ -77,7 +77,7 @@ class CombinedTensorDataset(torch.utils.data.Dataset):
         tensors = ()
         # match tensors count
         for ds in datasets:
-            if len(ds.tensors) < max_ds_len: # no labels
+            if len(ds.tensors) < max_ds_len:  # no labels
                 ds.tensors += (torch.tensor(torch.zeros(ds.tensors[0].shape), dtype=int),)
         # concat
         for i in range(max_ds_len):

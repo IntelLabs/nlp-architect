@@ -346,8 +346,8 @@ class TransformerBase(TrainableModel):
 
                     if logging_steps > 0 and global_step % logging_steps == 0:
                         # Log metrics and run evaluation on dev/test
-                        best_dev, dev_test = self.update_best_model(dev_data_set, test_data_set, best_dev, dev_test, 
-                                    training_args, best_result_file, save_path=best_model_path)
+                        best_dev, dev_test = self.update_best_model(dev_data_set, test_data_set, best_dev, dev_test,
+                                                                    training_args, best_result_file, save_path=best_model_path)
                         logger.info("lr = {}".format(self.scheduler.get_lr()[0]))
                         logger.info("loss = {}".format((tr_loss - logging_loss) / logging_steps))
                         logging_loss = tr_loss
@@ -369,9 +369,8 @@ class TransformerBase(TrainableModel):
         logger.info("lr = {}".format(self.scheduler.get_lr()[0]))
         logger.info("loss = {}".format((tr_loss - logging_loss) / logging_steps))
         # final evaluation:
-        self.update_best_model(dev_data_set, test_data_set, best_dev, dev_test, 
-                                    training_args, best_result_file, save_path=best_model_path)
-
+        self.update_best_model(dev_data_set, test_data_set, best_dev, dev_test,
+                               training_args, best_result_file, save_path=best_model_path)
 
     def update_best_model(self, dev_data_set, test_data_set, best_dev, best_dev_test, training_args, best_result_file, save_path=None):
         new_best_dev = best_dev
@@ -404,8 +403,6 @@ class TransformerBase(TrainableModel):
                             )
         logger.info("\n\nBest dev=%s. test=%s\n", str(new_best_dev), str(new_test_dev))
         return new_best_dev, new_test_dev
-        
-
 
     def _evaluate(self, data_set: DataLoader):
         logger.info("***** Running inference *****")

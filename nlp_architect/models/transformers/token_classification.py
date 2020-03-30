@@ -45,7 +45,6 @@ def _bert_token_tagging_head_fw(
     token_type_ids=None,
     attention_mask=None,
     labels=None,
-    position_ids=None,
     head_mask=None,
     valid_ids=None,
 ):
