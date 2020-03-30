@@ -13,8 +13,11 @@ A Deep Learning NLP/NLU library by <a href="https://www.intel.ai/research/">Inte
     <a href="http://nlp_architect.nervanasys.com">
         <img alt="Website" src="https://img.shields.io/website/http/nlp_architect.nervanasys.com.svg?down_color=red&down_message=offline&style=flat-square&up_message=online">
     </a>
-    <a href="https://github.com/NervanaSystems/nlp-architect/blob/master/LICENSE">
+    <a href="https://github.com/NervanaSystems/nlp-architect/releases">
         <img alt="GitHub release" src="https://img.shields.io/github/release/NervanaSystems/nlp-architect.svg?style=flat-square">
+    </a>
+    <a href="https://pepy.tech/project/nlp-architect/month">
+        <img src="https://pepy.tech/badge/nlp-architect/month">
     </a>
 </p>
 

@@ -17,7 +17,7 @@ import base64
 import io
 import os
 import json
-from os.path import dirname, join
+from os.path import join
 
 import pandas as pd
 import numpy as np
@@ -35,12 +35,14 @@ from bokeh.transform import dodge
 from bokeh.core.properties import value
 from tornado.web import StaticFileHandler
 
+from nlp_architect import LIBRARY_PATH
 from nlp_architect.models.absa import LEXICONS_OUT
 from nlp_architect.models.absa.train.acquire_terms import AcquireTerms
 from nlp_architect.models.absa.train.train import TrainSentiment
 from nlp_architect.models.absa.inference.data_types import SentimentDoc, SentimentSentence
 from sentiment_solution import SENTIMENT_OUT, SentimentSolution
 
+SOLUTION_DIR = join(LIBRARY_PATH, "solutions/absa_solution/")
 POLARITIES = ("POS", "NEG")
 
 
@@ -61,7 +63,7 @@ def serve_absa_ui() -> None:
             (
                 "/style/(.*)",
                 StaticFileHandler,
-                {"path": os.path.normpath(os.path.dirname(__file__) + "/style")},
+                {"path": os.path.normpath(join(SOLUTION_DIR, "/style"))},
             )
         ],
     )
@@ -211,7 +213,7 @@ def _create_ui_components() -> (Figure, ColumnDataSource):  # pylint: disable=to
     train_src = new_col_data_src()
     infer_src = new_col_data_src()
 
-    with open(join(dirname(__file__), "dropdown.js")) as f:
+    with open(join(SOLUTION_DIR, "dropdown.js")) as f:
         args = dict(
             clicked=lexicons_dropdown,
             asp_filter=asp_filter_src,

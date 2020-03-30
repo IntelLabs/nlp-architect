@@ -26,23 +26,29 @@ class TrainableModel(ABC):
     def convert_to_tensors(self, *args, **kwargs):
         """convert any chosen input to valid model format of tensors
         """
+        raise NotImplementedError
 
     def get_logits(self, *args, **kwargs):
         """get model logits from given input
         """
+        raise NotImplementedError
 
     def train(self, *args, **kwargs):
         """train the model
         """
+        raise NotImplementedError
 
     def inference(self, *args, **kwargs):
         """run inference
         """
+        raise NotImplementedError
 
     def save_model(self, *args, **kwargs):
         """save the model
         """
+        ...
 
     def load_model(self, *args, **kwargs):
         """load a model
         """
+        ...

@@ -30,6 +30,7 @@ class InputExample(ABC):
     def __init__(self, guid: str, text, label=None):
         self.guid = guid
         self.text = text
+        self.text_a = text  # for compatibility with trasformer library
         self.label = label
 
 
@@ -188,3 +189,30 @@ def split_column_dataset(
     write_column_tagged_file(out_folder + os.sep + first_filename, first_data)
     if second_count != 0:
         write_column_tagged_file(out_folder + os.sep + second_filename, second_data)
+
+
+def get_cached_filepath(data_dir, model_name, seq_length, task_name, set_type="train"):
+    """get cached file name
+
+    Arguments:
+        data_dir {str} -- data directory string
+        model_name {str} -- model name
+        seq_length {int} -- max sequence length
+        task_name {str} -- name of task
+
+    Keyword Arguments:
+        set_type {str} -- set type (choose from train/dev/test) (default: {"train"})
+
+    Returns:
+        str -- cached filename
+    """
+    cached_features_file = os.path.join(
+        data_dir,
+        "cached_{}_{}_{}_{}".format(
+            set_type,
+            list(filter(None, model_name.split("/"))).pop(),
+            str(seq_length),
+            str(task_name),
+        ),
+    )
+    return cached_features_file
