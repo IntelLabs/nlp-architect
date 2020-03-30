@@ -8,6 +8,12 @@ To run the docker image:
 
 `docker run -it -p 8080:8080 nlparchitect`
 
+To run the demo server (NER, Intent, Dependency parsing):
+
+`docker run --rm -p 8080:8080/tcp -p 8888:8888/tcp nlp-architect:latest hug -p 8080 -f server/serve.py`
+
+and open your browser on - http://localhost:8080
+
 To run the docker image and work with jupyter notebook:
 
 'docker run -it -p 8888:8888 nlparchitect /bin/bash'
