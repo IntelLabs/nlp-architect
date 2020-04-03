@@ -36,8 +36,9 @@ class InputFeatures(object):
 class MrpcProcessor(DataProcessor):
     """Processor for the MRPC data set (GLUE version)."""
 
-    def get_train_examples(self, data_dir):
-        return self._create_examples(read_tsv(os.path.join(data_dir, "train.tsv")), "train")
+    def get_train_examples(self, data_dir, filename):
+        train_filename = filename if filename is not None else 'train.tsv'
+        return self._create_examples(read_tsv(os.path.join(data_dir, train_filename)), "train")
 
     def get_dev_examples(self, data_dir):
         return self._create_examples(read_tsv(os.path.join(data_dir, "dev.tsv")), "dev")
@@ -70,8 +71,9 @@ class MrpcProcessor(DataProcessor):
 class MnliProcessor(DataProcessor):
     """Processor for the MultiNLI data set (GLUE version)."""
 
-    def get_train_examples(self, data_dir):
-        return self._create_examples(read_tsv(os.path.join(data_dir, "train.tsv")), "train")
+    def get_train_examples(self, data_dir, filename):
+        train_filename = filename if filename is not None else 'train.tsv'
+        return self._create_examples(read_tsv(os.path.join(data_dir, train_filename)), "train")
 
     def get_dev_examples(self, data_dir):
         return self._create_examples(
@@ -122,8 +124,9 @@ class MnliMismatchedProcessor(MnliProcessor):
 class ColaProcessor(DataProcessor):
     """Processor for the CoLA data set (GLUE version)."""
 
-    def get_train_examples(self, data_dir):
-        return self._create_examples(read_tsv(os.path.join(data_dir, "train.tsv")), "train")
+    def get_train_examples(self, data_dir, filename):
+        train_filename = filename if filename is not None else 'train.tsv'
+        return self._create_examples(read_tsv(os.path.join(data_dir, train_filename)), "train")
 
     def get_dev_examples(self, data_dir):
         return self._create_examples(read_tsv(os.path.join(data_dir, "dev.tsv")), "dev")
@@ -144,20 +147,23 @@ class ColaProcessor(DataProcessor):
             if set_type in ["train", "dev"]:
                 text_a = line[3]
                 label = line[1]
+                tokens = text_a.split(' ')
                 examples.append(
-                    SequenceClsInputExample(guid=guid, text=text_a, text_b=None, label=label)
+                    SequenceClsInputExample(guid=guid, text=text_a, tokens=tokens, text_b=None, label=label)
                 )
             else:
                 text_a = line[1]
-                examples.append(SequenceClsInputExample(guid=guid, text=text_a))
+                tokens = text_a.split(' ')
+                examples.append(SequenceClsInputExample(guid=guid, text=text_a, tokens=tokens))
         return examples
 
 
 class Sst2Processor(DataProcessor):
     """Processor for the SST-2 data set (GLUE version)."""
 
-    def get_train_examples(self, data_dir):
-        return self._create_examples(read_tsv(os.path.join(data_dir, "train.tsv")), "train")
+    def get_train_examples(self, data_dir, filename):
+        train_filename = filename if filename is not None else 'train.tsv'
+        return self._create_examples(read_tsv(os.path.join(data_dir, train_filename)), "train")
 
     def get_dev_examples(self, data_dir):
         return self._create_examples(read_tsv(os.path.join(data_dir, "dev.tsv")), "dev")
@@ -178,20 +184,22 @@ class Sst2Processor(DataProcessor):
             if set_type in ["train", "dev"]:
                 text_a = line[0]
                 label = line[1]
+                tokens = text_a.split(' ')
                 examples.append(
-                    SequenceClsInputExample(guid=guid, text=text_a, text_b=None, label=label)
+                    SequenceClsInputExample(guid=guid, text=text_a, tokens=tokens, text_b=None, label=label)
                 )
             else:
                 text_a = line[1]
-                examples.append(SequenceClsInputExample(guid=guid, text=text_a))
+                tokens = text_a.split(' ')
+                examples.append(SequenceClsInputExample(guid=guid, text=text_a, tokens=tokens))
         return examples
-
 
 class StsbProcessor(DataProcessor):
     """Processor for the STS-B data set (GLUE version)."""
 
-    def get_train_examples(self, data_dir):
-        return self._create_examples(read_tsv(os.path.join(data_dir, "train.tsv")), "train")
+    def get_train_examples(self, data_dir, filename):
+        train_filename = filename if filename is not None else 'train.tsv'
+        return self._create_examples(read_tsv(os.path.join(data_dir, train_filename)), "train")
 
     def get_dev_examples(self, data_dir):
         return self._create_examples(read_tsv(os.path.join(data_dir, "dev.tsv")), "dev")
@@ -224,8 +232,9 @@ class StsbProcessor(DataProcessor):
 class QqpProcessor(DataProcessor):
     """Processor for the QQP data set (GLUE version)."""
 
-    def get_train_examples(self, data_dir):
-        return self._create_examples(read_tsv(os.path.join(data_dir, "train.tsv")), "train")
+    def get_train_examples(self, data_dir, filename):
+        train_filename = filename if filename is not None else 'train.tsv'
+        return self._create_examples(read_tsv(os.path.join(data_dir, train_filename)), "train")
 
     def get_dev_examples(self, data_dir):
         return self._create_examples(read_tsv(os.path.join(data_dir, "dev.tsv")), "dev")
@@ -266,8 +275,9 @@ class QqpProcessor(DataProcessor):
 class QnliProcessor(DataProcessor):
     """Processor for the QNLI data set (GLUE version)."""
 
-    def get_train_examples(self, data_dir):
-        return self._create_examples(read_tsv(os.path.join(data_dir, "train.tsv")), "train")
+    def get_train_examples(self, data_dir, filename):
+        train_filename = filename if filename is not None else 'train.tsv'
+        return self._create_examples(read_tsv(os.path.join(data_dir, train_filename)), "train")
 
     def get_dev_examples(self, data_dir):
         return self._create_examples(read_tsv(os.path.join(data_dir, "dev.tsv")), "dev")
@@ -300,8 +310,9 @@ class QnliProcessor(DataProcessor):
 class RteProcessor(DataProcessor):
     """Processor for the RTE data set (GLUE version)."""
 
-    def get_train_examples(self, data_dir):
-        return self._create_examples(read_tsv(os.path.join(data_dir, "train.tsv")), "train")
+    def get_train_examples(self, data_dir, filename):
+        train_filename = filename if filename is not None else 'train.tsv'
+        return self._create_examples(read_tsv(os.path.join(data_dir, train_filename)), "train")
 
     def get_dev_examples(self, data_dir):
         return self._create_examples(read_tsv(os.path.join(data_dir, "dev.tsv")), "dev")
@@ -334,8 +345,9 @@ class RteProcessor(DataProcessor):
 class WnliProcessor(DataProcessor):
     """Processor for the WNLI data set (GLUE version)."""
 
-    def get_train_examples(self, data_dir):
-        return self._create_examples(read_tsv(os.path.join(data_dir, "train.tsv")), "train")
+    def get_train_examples(self, data_dir, filename):
+        train_filename = filename if filename is not None else 'train.tsv'
+        return self._create_examples(read_tsv(os.path.join(data_dir, train_filename)), "train")
 
     def get_dev_examples(self, data_dir):
         return self._create_examples(read_tsv(os.path.join(data_dir, "dev.tsv")), "dev")

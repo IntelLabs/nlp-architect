@@ -346,10 +346,11 @@ class TransformerBase(TrainableModel):
 
                     if logging_steps > 0 and global_step % logging_steps == 0:
                         # Log metrics and run evaluation on dev/test
+                        loss_value = (tr_loss - logging_loss) / logging_steps
                         best_dev, dev_test = self.update_best_model(dev_data_set, test_data_set, best_dev, dev_test, 
-                                    training_args, best_result_file, save_path=best_model_path)
+                                    training_args, best_result_file, loss_value, save_path=best_model_path)
                         logger.info("lr = {}".format(self.scheduler.get_lr()[0]))
-                        logger.info("loss = {}".format((tr_loss - logging_loss) / logging_steps))
+                        logger.info("loss = {}".format(loss_value))
                         logging_loss = tr_loss
 
                     if save_steps > 0 and global_step % save_steps == 0:
@@ -370,10 +371,10 @@ class TransformerBase(TrainableModel):
         logger.info("loss = {}".format((tr_loss - logging_loss) / logging_steps))
         # final evaluation:
         self.update_best_model(dev_data_set, test_data_set, best_dev, dev_test, 
-                                    training_args, best_result_file, save_path=best_model_path)
+                                    training_args, best_result_file, (tr_loss - logging_loss) / logging_steps, save_path=best_model_path)
 
 
-    def update_best_model(self, dev_data_set, test_data_set, best_dev, best_dev_test, training_args, best_result_file, save_path=None):
+    def update_best_model(self, dev_data_set, test_data_set, best_dev, best_dev_test, training_args, best_result_file, loss_value, save_path=None):
         new_best_dev = best_dev
         new_test_dev = best_dev_test
         set_test = False
@@ -385,21 +386,25 @@ class TransformerBase(TrainableModel):
                 ds = [ds]
             for d in ds:
                 logits, label_ids = self._evaluate(d)
-                f1 = self.evaluate_predictions(logits, label_ids)
-                if i == 0 and f1 > best_dev:  # dev set
-                    new_best_dev = f1
-                    set_test = True
+                res = self.evaluate_predictions(logits, label_ids)
+                if i == 0 and res > best_dev:  # dev set
+                    new_best_dev = res
                     if save_path is not None:
                         self.save_model(save_path, args=training_args)
+                    if best_result_file is not None:
+                        with open(best_result_file, "a+") as f:
+                            f.write(
+                                "\nloss= " + str(loss_value) + ", best dev= "
+                                + str(new_best_dev)
+                            )
+                    set_test = True
                 elif set_test:
-                    new_test_dev = f1
+                    new_test_dev = res
                     set_test = False
                     if best_result_file is not None:
                         with open(best_result_file, "a+") as f:
                             f.write(
-                                "best dev= "
-                                + str(new_best_dev)
-                                + ", test= "
+                                ", test= "
                                 + str(new_test_dev)
                             )
         logger.info("\n\nBest dev=%s. test=%s\n", str(new_best_dev), str(new_test_dev))

@@ -17,7 +17,7 @@
 import os
 
 
-def count_examples(file):
+def count_conll_examples(file):
     ctr = 0
     if os.path.exists(file):
         with open(file) as fp:

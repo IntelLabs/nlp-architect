@@ -23,6 +23,8 @@ from abc import ABC
 from io import open
 from typing import List, Tuple
 
+from nlp_architect.utils.text import Vocabulary
+
 
 class InputExample(ABC):
     """Base class for a single training/dev/test example """
@@ -68,8 +70,8 @@ class Task:
         self.data_dir = data_dir
         self.task_type = task_type
 
-    def get_train_examples(self):
-        return self.processor.get_train_examples(self.data_dir)
+    def get_train_examples(self, filename=None):
+        return self.processor.get_train_examples(self.data_dir, filename)
 
     def get_dev_examples(self):
         return self.processor.get_dev_examples(self.data_dir)
@@ -79,6 +81,13 @@ class Task:
 
     def get_labels(self):
         return self.processor.get_labels()
+
+    def get_vocabulary(self, examples):
+        vocab = Vocabulary(start=1)
+        for e in examples:
+            for t in e.tokens:
+                vocab.add(t)
+        return vocab
 
 
 def read_tsv(input_file, quotechar=None):

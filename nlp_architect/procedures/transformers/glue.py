@@ -42,6 +42,18 @@ class TransformerGlueTrain(Procedure):
         add_glue_args(parser)
         create_base_args(parser, model_types=TransformerSequenceClassifier.MODEL_CLASS.keys())
         train_args(parser, models_family=TransformerSequenceClassifier.MODEL_CLASS.keys())
+        parser.add_argument(
+            "--best_result_file",
+            type=str,
+            default="best_result.txt",
+            help="file path for best evaluation output",
+        )
+        parser.add_argument(
+            "--train_file_name",
+            type=str,
+            default="train.tsv",
+            help="File name of the training dataset",
+        )
 
     @staticmethod
     def run_procedure(args):
@@ -112,7 +124,7 @@ def do_training(args):
 
     train_batch_size = args.per_gpu_train_batch_size * max(1, n_gpus)
 
-    train_ex = task.get_train_examples()
+    train_ex = task.get_train_examples(filename=args.train_file_name)
     dev_ex = task.get_dev_examples()
     train_dataset = classifier.convert_to_tensors(train_ex, args.max_seq_length)
     dev_dataset = classifier.convert_to_tensors(dev_ex, args.max_seq_length)
@@ -142,6 +154,7 @@ def do_training(args):
         max_grad_norm=args.max_grad_norm,
         logging_steps=args.logging_steps,
         save_steps=args.save_steps,
+        best_result_file=args.best_result_file
     )
     classifier.save_model(args.output_dir, args=args)
 

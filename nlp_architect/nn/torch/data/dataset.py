@@ -60,30 +60,33 @@ class ConcatTensorDataset(torch.utils.data.Dataset):
 
 
 class CombinedTensorDataset(torch.utils.data.Dataset):
-    r"""Dataset as a concatenation of tensor datasets with different number of 
-        tensors (labeled dataset/ unlabeled dataset). Labels of unlabeled dataset will
-        be represented as a tensor of zeros.
+    r"""Dataset as a concatenation of labeled dataset and unlabeled dataset. Labels of unlabeled dataset will
+        be represented as zero tensors.
 
         Each sample will be retrieved by indexing tensors along the first dimension.
 
         Arguments:
-            datasets (List[TensorDataset]): datasets to concat.
+            labeled_dataset (TensorDataset): labeled dataset
+            unlabeled_datasets (TensorDataset): unlabeled dataset to concat
     """
 
     def __init__(
             self,
-            datasets: List[torch.utils.data.TensorDataset]):
-        max_ds_len = max([len(ds.tensors) for ds in datasets])
-        tensors = ()
-        # match tensors count
-        for ds in datasets:
-            if len(ds.tensors) < max_ds_len: # no labels
-                ds.tensors += (torch.tensor(torch.zeros(ds.tensors[0].shape), dtype=int),)
+            labeled_dataset: torch.utils.data.TensorDataset,
+            unlabeled_dataset: torch.utils.data.TensorDataset
+        ):
+        # max_ds_len = max([len(ds.tensors) for ds in datasets])
+        new_tensors = ()
+        # add 'zero labels' to the unlabeled dataset tensors
+        unlbld_examples_count = unlabeled_dataset.tensors[0].shape[0]
+        labeled_examples_shape = labeled_dataset.tensors[-1].shape
+        empty_labels_shape = [unlbld_examples_count] + list(labeled_examples_shape[1:]) if len(labeled_examples_shape) > 1 else [unlbld_examples_count]
+        unlabeled_dataset.tensors += (torch.tensor(torch.zeros(empty_labels_shape), dtype=int),)
         # concat
-        for i in range(max_ds_len):
-            tensors += (torch.cat([ds.tensors[i] for ds in datasets], dim=0),)
-        assert all(tensors[0].size(0) == tensor.size(0) for tensor in tensors)
-        self.tensors = tensors
+        for i in range(len(labeled_dataset.tensors)):
+            new_tensors += (torch.cat([ds.tensors[i] for ds in [labeled_dataset, unlabeled_dataset]], dim=0),)
+        assert all(new_tensors[0].size(0) == tensor.size(0) for tensor in new_tensors)
+        self.tensors = new_tensors
 
     def __getitem__(self, index):
         return tuple(tensor[index] for tensor in self.tensors)

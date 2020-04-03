@@ -14,14 +14,14 @@
 # limitations under the License.
 # ******************************************************************************
 from __future__ import absolute_import, division, print_function
-
+from typing import List
 from nlp_architect.data.utils import InputExample
 
 
 class SequenceClsInputExample(InputExample):
     """A single training/test example for simple sequence classification."""
 
-    def __init__(self, guid: str, text: str, text_b: str = None, label: str = None):
+    def __init__(self, guid: str, text: str, text_b: str = None, label: str = None, tokens: List[str] = None, tokens_b: List[str] = None):
         """Constructs a SequenceClassInputExample.
         Args:
             guid: Unique id for the example.
@@ -34,3 +34,5 @@ class SequenceClsInputExample(InputExample):
         """
         super(SequenceClsInputExample, self).__init__(guid, text, label)
         self.text_b = text_b
+        self.tokens = tokens
+        self.tokens_b = tokens_b

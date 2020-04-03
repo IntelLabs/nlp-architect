@@ -126,10 +126,13 @@ def load_embedding_file(filename: str, dim: int = None) -> dict:
     embedding_dict = {}
     with open(filename, encoding="utf-8") as fp:
         for line in fp:
-            split_line = line.split()
-            word = split_line[0]
-            vec = np.array([float(val) for val in split_line[1:]])
-            embedding_dict[word] = vec
+            try:
+                split_line = line.split()
+                word = split_line[0]
+                vec = np.array([float(val) for val in split_line[1:]])
+                embedding_dict[word] = vec
+            except Exception:
+                print(str(line))
     return embedding_dict
 
 

@@ -103,6 +103,7 @@ class TransformerSequenceClassifier(TransformerBase):
         max_grad_norm: float = 1.0,
         logging_steps: int = 50,
         save_steps: int = 100,
+        best_result_file: str = None,
     ):
         """
         Train a model
@@ -133,6 +134,7 @@ class TransformerSequenceClassifier(TransformerBase):
             max_grad_norm,
             logging_steps=logging_steps,
             save_steps=save_steps,
+            best_result_file=best_result_file
         )
 
     def evaluate_predictions(self, logits, label_ids):
@@ -155,6 +157,7 @@ class TransformerSequenceClassifier(TransformerBase):
             for key in sorted(result.keys()):
                 logger.info("  %s = %s", key, str(result[key]))
                 writer.write("%s = %s\n" % (key, str(result[key])))
+        return result[next(iter(result))]  # first value of the evaluation metric keys
 
     def convert_to_tensors(
         self,
