@@ -118,9 +118,9 @@ def pearson_and_spearman(preds, labels):
 
 
 def tagging(preds, labels):
-    p = precision_score(labels, preds)
-    r = recall_score(labels, preds)
-    f1 = f1_score(labels, preds)
+    p = sequence_precision_score(labels, preds)
+    r = sequence_recall_score(labels, preds)
+    f1 = sequence_f1_score(labels, preds)
     return p, r, f1
 
 
@@ -260,7 +260,7 @@ def start_of_chunk(prev_tag, tag, prev_type, type_):
     return chunk_start
 
 
-def f1_score(y_true, y_pred, suffix=False):
+def sequence_f1_score(y_true, y_pred, suffix=False):
     """Compute the F1 score.
 
     The F1 score can be interpreted as a weighted average of the precision and
@@ -299,7 +299,7 @@ def f1_score(y_true, y_pred, suffix=False):
     return score
 
 
-def accuracy_score(y_true, y_pred):
+def sequence_accuracy_score(y_true, y_pred):
     """Accuracy classification score.
 
     In multilabel classification, this function computes subset accuracy:
@@ -333,7 +333,7 @@ def accuracy_score(y_true, y_pred):
     return score
 
 
-def precision_score(y_true, y_pred, suffix=False):
+def sequence_precision_score(y_true, y_pred, suffix=False):
     """Compute the precision.
 
     The precision is the ratio ``tp / (tp + fp)`` where ``tp`` is the number of
@@ -368,7 +368,7 @@ def precision_score(y_true, y_pred, suffix=False):
     return score
 
 
-def recall_score(y_true, y_pred, suffix=False):
+def sequence_recall_score(y_true, y_pred, suffix=False):
     """Compute the recall.
 
     The recall is the ratio ``tp / (tp + fn)`` where ``tp`` is the number of
@@ -403,7 +403,7 @@ def recall_score(y_true, y_pred, suffix=False):
     return score
 
 
-def performance_measure(y_true, y_pred):
+def sequence_performance_measure(y_true, y_pred):
     """
     Compute the performance metrics: TP, FP, FN, TN
 
@@ -506,9 +506,9 @@ def classification_report(y_true, y_pred, digits=2, suffix=False):
     # compute averages
     report += row_fmt.format(
         "micro avg",
-        precision_score(y_true, y_pred, suffix=suffix),
-        recall_score(y_true, y_pred, suffix=suffix),
-        f1_score(y_true, y_pred, suffix=suffix),
+        sequence_precision_score(y_true, y_pred, suffix=suffix),
+        sequence_recall_score(y_true, y_pred, suffix=suffix),
+        sequence_f1_score(y_true, y_pred, suffix=suffix),
         np.sum(s),
         width=width,
         digits=digits,

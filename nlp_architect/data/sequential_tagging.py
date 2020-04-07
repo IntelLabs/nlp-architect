@@ -338,7 +338,7 @@ class TokenClsProcessor(DataProcessor):
             read_column_tagged_file(
                 os.path.join(data_dir, file_name),
                 tag_col=self.tag_col,
-                ignore_line=self.ignore_token,
+                ignore_token=self.ignore_token,
             ),
             set_name,
         )

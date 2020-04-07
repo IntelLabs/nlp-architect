@@ -126,6 +126,8 @@ class TransformerBase(TrainableModel):
         self._optimizer = None
         self._scheduler = None
 
+        self.training_args = None
+
     def to(self, device="cpu", n_gpus=0):
         if self.model is not None:
             self.model.to(device)
@@ -281,7 +283,6 @@ class TransformerBase(TrainableModel):
         max_grad_norm: float = 1.0,
         logging_steps: int = 50,
         save_steps: int = 100,
-        training_args: str = None,
         best_result_file: str = None,
     ):
         """Run model training
@@ -351,7 +352,6 @@ class TransformerBase(TrainableModel):
                             test_data_set,
                             best_dev,
                             dev_test,
-                            training_args,
                             best_result_file,
                             save_path=best_model_path,
                         )
@@ -381,7 +381,6 @@ class TransformerBase(TrainableModel):
             test_data_set,
             best_dev,
             dev_test,
-            training_args,
             best_result_file,
             save_path=best_model_path,
         )
@@ -392,7 +391,6 @@ class TransformerBase(TrainableModel):
         test_data_set,
         best_dev,
         best_dev_test,
-        training_args,
         best_result_file,
         save_path=None,
     ):
@@ -412,7 +410,7 @@ class TransformerBase(TrainableModel):
                     new_best_dev = f1
                     set_test = True
                     if save_path is not None:
-                        self.save_model(save_path, args=training_args)
+                        self.save_model(save_path, args=self.training_args)
                 elif set_test:
                     new_test_dev = f1
                     set_test = False

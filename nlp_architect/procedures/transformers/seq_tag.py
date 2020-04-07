@@ -112,6 +112,7 @@ def do_training(args):
         output_path=args.output_dir,
         device=device,
         n_gpus=n_gpus,
+        training_args=args,
     )
 
     train_ex = processor.get_train_examples(filename=args.train_file_name)
@@ -163,7 +164,6 @@ def do_training(args):
         max_grad_norm=args.max_grad_norm,
         logging_steps=args.logging_steps,
         save_steps=args.save_steps,
-        training_args=args,
         best_result_file=args.best_result_file,
     )
     classifier.save_model(args.output_dir, args=args)

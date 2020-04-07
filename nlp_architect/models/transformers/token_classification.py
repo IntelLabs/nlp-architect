@@ -93,7 +93,6 @@ class BertTokenClassificationHead(BertForTokenClassification):
             token_type_ids=token_type_ids,
             attention_mask=attention_mask,
             labels=labels,
-            position_ids=position_ids,
             head_mask=head_mask,
             valid_ids=valid_ids,
         )
@@ -124,7 +123,6 @@ class QuantizedBertForTokenClassificationHead(QuantizedBertForTokenClassificatio
             token_type_ids=token_type_ids,
             attention_mask=attention_mask,
             labels=labels,
-            position_ids=position_ids,
             head_mask=head_mask,
             valid_ids=valid_ids,
         )
@@ -266,7 +264,13 @@ class TransformerTokenClassifier(TransformerBase):
     }
 
     def __init__(
-        self, model_type: str, labels: List[str] = None, *args, load_quantized=False, **kwargs
+        self,
+        model_type: str,
+        labels: List[str] = None,
+        training_args: bool = None,
+        *args,
+        load_quantized=False,
+        **kwargs,
     ):
         assert model_type in self.MODEL_CLASS.keys(), "unsupported model type"
         self.labels = labels
@@ -291,6 +295,7 @@ class TransformerTokenClassifier(TransformerBase):
                 from_tf=bool(".ckpt" in self.model_name_or_path),
                 config=self.config,
             )
+        self.training_args = training_args
         self.to(self.device, self.n_gpus)
 
     def train(
@@ -305,7 +310,6 @@ class TransformerTokenClassifier(TransformerBase):
         max_grad_norm: float = 1.0,
         logging_steps: int = 50,
         save_steps: int = 100,
-        training_args: bool = None,
         best_result_file: str = None,
     ):
         """
@@ -326,7 +330,6 @@ class TransformerTokenClassifier(TransformerBase):
             max_grad_norm (float, optional): max gradient norm. Defaults to 1.0.
             logging_steps (int, optional): number of steps between logging. Defaults to 50.
             save_steps (int, optional): number of steps between model save. Defaults to 100.
-            training_args(bool, optional): model args. Defaults to None.
             best_result_file (str, optional): path to save best dev results when it's updated.
         """
         self._train(
@@ -340,7 +343,6 @@ class TransformerTokenClassifier(TransformerBase):
             max_grad_norm,
             logging_steps=logging_steps,
             save_steps=save_steps,
-            training_args=training_args,
             best_result_file=best_result_file,
         )
 
