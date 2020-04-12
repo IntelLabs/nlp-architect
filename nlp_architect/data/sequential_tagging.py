@@ -290,16 +290,25 @@ class CONLL2000(object):
 class TokenClsInputExample(InputExample):
     """A single training/test example for simple sequence token classification."""
 
-    def __init__(self, guid: str, text: str, tokens: List[str], label: List[str] = None):
+    def __init__(
+        self,
+        guid: str,
+        text: str,
+        tokens: List[str],
+        shapes: List[int] = None,
+        label: List[str] = None,
+    ):
         """Constructs a SequenceClassInputExample.
         Args:
             guid: Unique id for the example.
             text: string. The untokenized text of the sequence.
             tokens (List[str]): The list of tokens.
+            shapes (List[str]): List of tokens shapes.
             label (List[str], optional): The tags of the tokens.
         """
         super(TokenClsInputExample, self).__init__(guid, text, label)
         self.tokens = tokens
+        self.shapes = shapes
 
 
 class TokenClsProcessor(DataProcessor):
@@ -309,12 +318,13 @@ class TokenClsProcessor(DataProcessor):
     Label dictionary is given in labels.txt file.
     """
 
-    def __init__(self, data_dir, tag_col: int = -1):
+    def __init__(self, data_dir, tag_col: int = -1, ignore_token=None):
         if not os.path.exists(data_dir):
             raise FileNotFoundError
         self.data_dir = data_dir
         self.tag_col = tag_col
         self.labels = None
+        self.ignore_token = ignore_token
 
     def _read_examples(self, data_dir, file_name, set_name):
         if not os.path.exists(data_dir + os.sep + file_name):
@@ -325,7 +335,11 @@ class TokenClsProcessor(DataProcessor):
             )
             return None
         return self._create_examples(
-            read_column_tagged_file(os.path.join(data_dir, file_name), tag_col=self.tag_col),
+            read_column_tagged_file(
+                os.path.join(data_dir, file_name),
+                tag_col=self.tag_col,
+                ignore_token=self.ignore_token,
+            ),
             set_name,
         )
 
@@ -359,19 +373,31 @@ class TokenClsProcessor(DataProcessor):
         return "labels.txt"
 
     @staticmethod
-    def _create_examples(lines, set_type):
+    def _get_shape(string):
+        if all(c.isupper() for c in string):
+            return 1  # "AA"
+        if string[0].isupper():
+            return 2  # "Aa"
+        if any(c for c in string if c.isupper()):
+            return 3  # "aAa"
+        return 4  # "a"
+
+    @classmethod
+    def _create_examples(cls, lines, set_type):
         """See base class."""
         examples = []
         for i, (sentence, labels) in enumerate(lines):
             guid = "%s-%s" % (set_type, i)
             text = " ".join(sentence)
+            shapes = [cls._get_shape(w) for w in sentence]
             examples.append(
-                TokenClsInputExample(guid=guid, text=text, tokens=sentence, label=labels)
+                TokenClsInputExample(
+                    guid=guid, text=text, tokens=sentence, label=labels, shapes=shapes
+                )
             )
         return examples
 
-    def get_vocabulary(self):
-        examples = self.get_train_examples() + self.get_dev_examples() + self.get_test_examples()
+    def get_vocabulary(self, examples: TokenClsInputExample = None):
         vocab = Vocabulary(start=1)
         for e in examples:
             for t in e.tokens:

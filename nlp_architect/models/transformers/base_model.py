@@ -126,6 +126,8 @@ class TransformerBase(TrainableModel):
         self._optimizer = None
         self._scheduler = None
 
+        self.training_args = None
+
     def to(self, device="cpu", n_gpus=0):
         if self.model is not None:
             self.model.to(device)
@@ -281,6 +283,7 @@ class TransformerBase(TrainableModel):
         max_grad_norm: float = 1.0,
         logging_steps: int = 50,
         save_steps: int = 100,
+        best_result_file: str = None,
     ):
         """Run model training
             batch_mapper: a function that maps a batch into parameters that the model
@@ -310,10 +313,15 @@ class TransformerBase(TrainableModel):
         logger.info("  Total optimization steps = %d", t_total)
 
         global_step = 0
+        best_dev = 0
+        dev_test = 0
+        best_model_path = os.path.join(self.output_path, "best_dev")
         tr_loss, logging_loss = 0.0, 0.0
         self.model.zero_grad()
         train_iterator = trange(num_train_epochs, desc="Epoch")
-        for _ in train_iterator:
+
+        for epoch, _ in enumerate(train_iterator):
+            print("****** Epoch: " + str(epoch))
             epoch_iterator = tqdm(data_set, desc="Train iteration")
             for step, batch in enumerate(epoch_iterator):
                 self.model.train()
@@ -339,14 +347,14 @@ class TransformerBase(TrainableModel):
 
                     if logging_steps > 0 and global_step % logging_steps == 0:
                         # Log metrics and run evaluation on dev/test
-                        for ds in [dev_data_set, test_data_set]:
-                            if ds is None:  # got no data loader
-                                continue
-                            if isinstance(ds, DataLoader):
-                                ds = [ds]
-                            for d in ds:
-                                logits, label_ids = self._evaluate(d)
-                                self.evaluate_predictions(logits, label_ids)
+                        best_dev, dev_test = self.update_best_model(
+                            dev_data_set,
+                            test_data_set,
+                            best_dev,
+                            dev_test,
+                            best_result_file,
+                            save_path=best_model_path,
+                        )
                         logger.info("lr = {}".format(self.scheduler.get_lr()[0]))
                         logger.info("loss = {}".format((tr_loss - logging_loss) / logging_steps))
                         logging_loss = tr_loss
@@ -365,6 +373,54 @@ class TransformerBase(TrainableModel):
                 break
 
         logger.info(" global_step = %s, average loss = %s", global_step, tr_loss)
+        logger.info("lr = {}".format(self.scheduler.get_lr()[0]))
+        logger.info("loss = {}".format((tr_loss - logging_loss) / logging_steps))
+        # final evaluation:
+        self.update_best_model(
+            dev_data_set,
+            test_data_set,
+            best_dev,
+            dev_test,
+            best_result_file,
+            save_path=best_model_path,
+        )
+
+    def update_best_model(
+        self,
+        dev_data_set,
+        test_data_set,
+        best_dev,
+        best_dev_test,
+        best_result_file,
+        save_path=None,
+    ):
+        new_best_dev = best_dev
+        new_test_dev = best_dev_test
+        set_test = False
+
+        for i, ds in enumerate([dev_data_set, test_data_set]):
+            if ds is None:  # got no data loader
+                continue
+            if isinstance(ds, DataLoader):
+                ds = [ds]
+            for d in ds:
+                logits, label_ids = self._evaluate(d)
+                f1 = self.evaluate_predictions(logits, label_ids)
+                if i == 0 and f1 > best_dev:  # dev set
+                    new_best_dev = f1
+                    set_test = True
+                    if save_path is not None:
+                        self.save_model(save_path, args=self.training_args)
+                elif set_test:
+                    new_test_dev = f1
+                    set_test = False
+                    if best_result_file is not None:
+                        with open(best_result_file, "a+") as f:
+                            f.write(
+                                "best dev= " + str(new_best_dev) + ", test= " + str(new_test_dev)
+                            )
+        logger.info("\n\nBest dev=%s. test=%s\n", str(new_best_dev), str(new_test_dev))
+        return new_best_dev, new_test_dev
 
     def _evaluate(self, data_set: DataLoader):
         logger.info("***** Running inference *****")

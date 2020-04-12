@@ -55,6 +55,18 @@ class TransformerTokenClsTrain(Procedure):
             default="train.txt",
             help="File name of the training dataset",
         )
+        parser.add_argument(
+            "--ignore_token",
+            type=str,
+            default="",
+            help="a token to ignore when processing the data",
+        )
+        parser.add_argument(
+            "--best_result_file",
+            type=str,
+            default="best_result.txt",
+            help="file path for best evaluation output",
+        )
 
     @staticmethod
     def run_procedure(args):
@@ -88,7 +100,7 @@ def do_training(args):
     # Set seed
     args.seed = set_seed(args.seed, n_gpus)
     # prepare data
-    processor = TokenClsProcessor(args.data_dir)
+    processor = TokenClsProcessor(args.data_dir, ignore_token=args.ignore_token)
 
     classifier = TransformerTokenClassifier(
         model_type=args.model_type,
@@ -100,6 +112,7 @@ def do_training(args):
         output_path=args.output_dir,
         device=device,
         n_gpus=n_gpus,
+        training_args=args,
     )
 
     train_ex = processor.get_train_examples(filename=args.train_file_name)
@@ -151,6 +164,7 @@ def do_training(args):
         max_grad_norm=args.max_grad_norm,
         logging_steps=args.logging_steps,
         save_steps=args.save_steps,
+        best_result_file=args.best_result_file,
     )
     classifier.save_model(args.output_dir, args=args)
 

@@ -16,8 +16,27 @@
 
 import math
 import os
+import torch
 from nlp_architect.data.utils import split_column_dataset
 from tests.utils import count_examples
+from nlp_architect.nn.torch.data.dataset import CombinedTensorDataset
+from torch.utils.data import TensorDataset
+
+
+def test_concat_dataset():
+    token_ids = torch.tensor([[1, 2, 3], [4, 5, 6], [7, 8, 9]], dtype=torch.long)
+    label_ids = torch.tensor([[1, 2, 3], [4, 5, 6], [7, 8, 9]], dtype=torch.long)
+    labeled_dataset = TensorDataset(token_ids, label_ids)
+    unlabeled_dataset = TensorDataset(token_ids)
+    concat_dataset = CombinedTensorDataset([labeled_dataset, unlabeled_dataset])
+    expected_tokens = torch.tensor(
+        [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 2, 3], [4, 5, 6], [7, 8, 9]], dtype=torch.long
+    )
+    expected_labels = torch.tensor(
+        [[1, 2, 3], [4, 5, 6], [7, 8, 9], [0, 0, 0], [0, 0, 0], [0, 0, 0]], dtype=torch.long
+    )
+    assert torch.equal(concat_dataset.tensors[0], expected_tokens)
+    assert torch.equal(concat_dataset.tensors[1], expected_labels)
 
 
 def test_split_dataset():
@@ -31,11 +50,11 @@ def test_split_dataset():
         unlabeled_file = "unlabeled.txt"
         split_column_dataset(
             dataset=os.path.join(data_dir, "train.txt"),
-            m=math.ceil(num_of_examples * labeled_precentage),
-            n=math.ceil(num_of_examples * unlabeled_precentage),
+            first_count=math.ceil(num_of_examples * labeled_precentage),
+            second_count=math.ceil(num_of_examples * unlabeled_precentage),
             out_folder=data_dir,
-            m_filename=labeled_file,
-            n_filename=unlabeled_file,
+            first_filename=labeled_file,
+            second_filename=unlabeled_file,
         )
         check_labeled_count = count_examples(data_dir + os.sep + labeled_file)
         assert check_labeled_count == math.ceil(num_of_examples * labeled_precentage)

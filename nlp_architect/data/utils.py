@@ -94,9 +94,13 @@ def read_tsv(input_file, quotechar=None):
         return lines
 
 
-def read_column_tagged_file(filename: str, tag_col: int = -1):
+def read_column_tagged_file(filename: str, tag_col: int = -1, ignore_token: str = None):
     """Reads column tagged (CONLL) style file (tab separated and token per line)
     tag_col is the column number to use as tag of the token (defualts to the last in line)
+    Args:
+        filename (str): input file path
+        tag_col (int): the column contains the labels
+        ignore_token (str): a str token to exclude
     return format :
     [ ['token', 'TAG'], ['token', 'TAG2'],... ]
     """
@@ -113,8 +117,10 @@ def read_column_tagged_file(filename: str, tag_col: int = -1):
                     labels = []
                 continue
             splits = line.split()
-            sentence.append(splits[0])
-            labels.append(splits[tag_col])
+            token = splits[0]
+            if token != ignore_token:
+                sentence.append(token)
+                labels.append(splits[tag_col])
 
     if len(sentence) > 0:
         data.append((sentence, labels))
@@ -166,22 +172,23 @@ def split_column_dataset(
     """
     Splits a single column tagged dataset into two files according to the amount of examples
     requested to be included in each file.
-    split1_count (int) : the amount of examples to include in the first split file
-    split2_count (int) : the amount of examples to include in the second split file
+    first_count (int) : the amount of examples to include in the first split file
+    second_count (int) : the amount of examples to include in the second split file
     out_folder (str) : the folder in which the result files will be stored
     dataset (str) : the path to the original data file
-    split1_filename (str) : the name of the first split file
-    split2_filename (str) : the name of the second split file
+    first_filename (str) : the name of the first split file
+    second_filename (str) : the name of the second split file
     tag_col (int) : the index of the tag column
     """
     lines = read_column_tagged_file(dataset, tag_col=tag_col)
     num_of_examples = len(lines)
-    assert first_count + second_count <= num_of_examples and first_count > 0 and second_count > 0
+    assert first_count + second_count <= num_of_examples and first_count > 0
     selected_lines = random.sample(lines, first_count + second_count)
     first_data = selected_lines[:first_count]
     second_data = selected_lines[first_count:]
     write_column_tagged_file(out_folder + os.sep + first_filename, first_data)
-    write_column_tagged_file(out_folder + os.sep + second_filename, second_data)
+    if second_count != 0:
+        write_column_tagged_file(out_folder + os.sep + second_filename, second_data)
 
 
 def get_cached_filepath(data_dir, model_name, seq_length, task_name, set_type="train"):

@@ -48,13 +48,12 @@ def load_word_embeddings(file_path, vocab=None):
             line_fields = line.split()
             if len(line_fields) < 5:
                 continue
-            else:
-                if line[0] == " ":
-                    word_vectors[" "] = np.asarray(line_fields, dtype="float32")
-                elif vocab is None or line_fields[0] in vocab:
-                    word_vectors[line_fields[0]] = np.asarray(line_fields[1:], dtype="float32")
-                    if size is None:
-                        size = len(line_fields[1:])
+            if line[0] == " ":
+                word_vectors[" "] = np.asarray(line_fields, dtype="float32")
+            elif vocab is None or line_fields[0] in vocab:
+                word_vectors[line_fields[0]] = np.asarray(line_fields[1:], dtype="float32")
+                if size is None:
+                    size = len(line_fields[1:])
     return word_vectors, size
 
 
@@ -80,7 +79,7 @@ def fill_embedding_mat(src_mat, src_lex, emb_lex, emb_size):
 
 
 def get_embedding_matrix(
-    embeddings: dict, vocab: Vocabulary, embedding_size: int = None
+    embeddings: dict, vocab: Vocabulary, embedding_size: int = None, lowercase_only: bool = False
 ) -> np.ndarray:
     """
     Generate a matrix of word embeddings given a vocabulary
@@ -98,14 +97,22 @@ def get_embedding_matrix(
         mat = np.zeros((embedding_size, emb_size))
     else:
         mat = np.zeros((len(vocab), emb_size))
-    for word, wid in vocab.vocab.items():
-        vec = embeddings.get(word.lower(), None)
-        if vec is not None:
-            mat[wid] = vec
+    if lowercase_only:
+        for word, wid in vocab.vocab.items():
+            vec = embeddings.get(word.lower(), None)
+            if vec is not None:
+                mat[wid] = vec
+    else:
+        for word, wid in vocab.vocab.items():
+            vec = embeddings.get(word, None)
+            if vec is None:
+                vec = embeddings.get(word.lower(), None)
+            if vec is not None:
+                mat[wid] = vec
     return mat
 
 
-def load_embedding_file(filename: str) -> dict:
+def load_embedding_file(filename: str, dim: int = None) -> dict:
     """Load a word embedding file
 
     Args:

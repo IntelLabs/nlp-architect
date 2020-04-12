@@ -15,7 +15,7 @@
 # ******************************************************************************
 import argparse
 import logging
-
+import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
@@ -117,4 +117,33 @@ class TeacherStudentDistill:
         student_log_sm = F.log_softmax(student_logits / self.t, dim=-1)
         teacher_log_sm = F.softmax(teacher_logits / self.t, dim=-1)
         distill_loss = self.loss_fn(input=student_log_sm, target=teacher_log_sm)
-        return self.loss_w * loss + distill_loss * self.dist_w * (self.t ** 2)
+        return (self.loss_w * loss) + (distill_loss * self.dist_w * (self.t ** 2))
+
+    def distill_loss_dict(self, loss, student_logits_dict, teacher_logits_dict):
+        """
+        Add KD loss
+
+        Args:
+            loss: student loss
+            student_logits: student model logits
+            teacher_logits: teacher model logits
+
+        Returns:
+            KD loss
+        """
+
+        student_sm_dict = {}
+        for i in range(len(student_logits_dict.keys())):
+            student_sm_dict[i] = F.log_softmax(student_logits_dict[i] / self.t, dim=-1)
+
+        teacher_sm_dict = {}
+        for i in range(len(teacher_logits_dict.keys())):
+            teacher_sm_dict[i] = F.softmax(teacher_logits_dict[i] / self.t, dim=-1)
+
+        distill_losses = [
+            self.loss_fn(input=student_sm_dict[i], target=teacher_sm_dict[i])
+            for i in range(len(student_sm_dict.keys()))
+        ]
+        distill_loss = torch.mean(torch.stack(distill_losses))
+
+        return (self.loss_w * loss) + (distill_loss * self.dist_w * (self.t ** 2))
