@@ -34,7 +34,6 @@ from bokeh.server.server import Server
 from bokeh.transform import dodge
 from bokeh.core.properties import value
 from tornado.web import StaticFileHandler
-
 from nlp_architect import LIBRARY_ROOT
 from nlp_architect.models.absa import LEXICONS_OUT
 from nlp_architect.models.absa.train.acquire_terms import AcquireTerms
@@ -43,7 +42,6 @@ from nlp_architect.models.absa.inference.data_types import SentimentDoc, Sentime
 from sentiment_solution import SENTIMENT_OUT, SentimentSolution
 
 SOLUTION_DIR = join(LIBRARY_ROOT, "solutions/absa_solution/")
-
 POLARITIES = ("POS", "NEG")
 
 
@@ -60,13 +58,7 @@ def serve_absa_ui() -> None:
     server = Server(
         {"/": _doc_modifier},
         websocket_max_message_size=5000 * 1024 * 1024,
-        extra_patterns=[
-            (
-                "/style/(.*)",
-                StaticFileHandler,
-                {"path": SOLUTION_DIR + "/style"},
-            )
-        ],
+        extra_patterns=[("/style/(.*)", StaticFileHandler, {"path": SOLUTION_DIR + "/style"},)],
     )
     server.start()
     server.io_loop.add_callback(server.show, "/")
@@ -312,7 +304,7 @@ def _create_ui_components() -> (Figure, ColumnDataSource):  # pylint: disable=to
             file_name = train_src.data["file_name"][0]
             raw_data_path = SENTIMENT_OUT / file_name
             train_data.to_csv(raw_data_path, header=False)
-            print(f"Running_SentimentTraining on data...")
+            print("Running_SentimentTraining on data...")
             train.run(data=raw_data_path)
         else:
             f_contents = train_src.data["file_contents"]
@@ -322,7 +314,7 @@ def _create_ui_components() -> (Figure, ColumnDataSource):  # pylint: disable=to
                 os.makedirs(raw_data_path)
             for f_content, f_name in zip(f_contents, f_names):
                 read_parsed_files(f_content, f_name)
-            print(f"Running_SentimentTraining on data...")
+            print("Running_SentimentTraining on data...")
             train.run(parsed_data=raw_data_path)
 
         text_status.value = "Lexicon extraction completed"
@@ -388,7 +380,7 @@ def _create_ui_components() -> (Figure, ColumnDataSource):  # pylint: disable=to
             file_name = infer_src.data["file_name"][0]
             raw_data_path = SENTIMENT_OUT / file_name
             infer_data.to_csv(raw_data_path, header=False)
-            print(f"Running_SentimentInference on data...")
+            print("Running_SentimentInference on data...")
             text_status.value = "Running classification on data..."
             stats = solution.run(
                 data=raw_data_path,
@@ -403,7 +395,7 @@ def _create_ui_components() -> (Figure, ColumnDataSource):  # pylint: disable=to
                 os.makedirs(raw_data_path)
             for f_content, f_name in zip(f_contents, f_names):
                 read_parsed_files(f_content, f_name)
-            print(f"Running_SentimentInference on data...")
+            print("Running_SentimentInference on data...")
             text_status.value = "Running classification on data..."
             stats = solution.run(
                 parsed_data=raw_data_path,
