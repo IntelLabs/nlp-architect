@@ -37,7 +37,7 @@ everything = [
     "newspaper3k",
     "pywikibot",
     "num2words",
-    "bokeh",
+    "bokeh==1.2.0",
     "pandas",
     "hyperopt",
     "termcolor",
