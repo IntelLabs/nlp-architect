@@ -364,7 +364,7 @@ class TokenClsProcessor(DataProcessor):
 
         self.labels = []
         with open(f_path, encoding="utf-8") as fp:
-            self.labels = [l.strip() for l in fp.readlines()]
+            self.labels = [line.strip() for line in fp.readlines()]
 
         return self.labels
 

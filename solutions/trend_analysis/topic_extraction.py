@@ -231,7 +231,7 @@ def train_w2v_model(data):
         data: A path to the training data (String)
     """
     with open(data, encoding="utf-8") as fp:
-        texts = [l.split() for l in fp.readlines()]
+        texts = [line.split() for line in fp.readlines()]
     logger.info("Fasttext embeddings training...")
     try:
         model = FasttextEmbeddingsModel(size=100, min_count=1, skipgram=True)

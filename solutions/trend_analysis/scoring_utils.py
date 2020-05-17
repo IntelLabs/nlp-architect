@@ -163,9 +163,9 @@ class TextSpanScoring:
         else:
             assert len(weights) == len(phrase_lists)
 
-        list_sizes = [len(l) for l in phrase_lists]
-        for l in list_sizes:
-            assert len(phrase_lists[0]) == l, "list sizes not equal"
+        list_sizes = [len(lst) for lst in phrase_lists]
+        for lsize in list_sizes:
+            assert len(phrase_lists[0]) == lsize, "list sizes not equal"
 
         phrase_list_dicts = []
         for lst in phrase_lists:

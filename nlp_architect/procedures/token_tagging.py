@@ -585,7 +585,7 @@ def do_inference(args):
 
 def process_inference_input(input_file):
     with io.open(input_file) as fp:
-        texts = [l.strip() for l in fp.readlines()]
+        texts = [line.strip() for line in fp.readlines()]
     tokenizer = SpacyInstance(disable=["tagger", "parser", "ner"])
     examples = []
     for i, t in enumerate(texts):

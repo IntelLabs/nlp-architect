@@ -105,7 +105,7 @@ if __name__ == "__main__":
     document_annotations = []
     for vec in doc_vecs:
         doc_chunks = model.predict(vec, batch_size=args.b)
-        chunk_a = [chunk_vocab.id_to_word(l) for l in doc_chunks.argmax(2).flatten()]
+        chunk_a = [chunk_vocab.id_to_word(cid) for cid in doc_chunks.argmax(2).flatten()]
         document_annotations.append(chunk_a)
 
     # print document text and annotations

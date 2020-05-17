@@ -66,9 +66,9 @@ class WordnetOnline(object):
 
                 derivationally_related_forms.update(
                     [
-                        l.name().replace("_", " ")
-                        for l in lemma.derivationally_related_forms()
-                        if not StringUtils.is_stop(l.name().lower())
+                        lem.name().replace("_", " ")
+                        for lem in lemma.derivationally_related_forms()
+                        if not StringUtils.is_stop(lem.name().lower())
                     ]
                 )
 

@@ -103,7 +103,7 @@ class NeuralTagger(TrainableModel):
             word_tokens = [self.word_vocab[t] for t in example.tokens]
             labels = []
             if include_labels:
-                labels = [self.label_str_id.get(l) for l in example.label]
+                labels = [self.label_str_id.get(label) for label in example.label]
             word_chars = []
             for word in example.tokens:
                 word_chars.append([char_to_id(c) for c in word])
@@ -464,7 +464,7 @@ class NeuralTagger(TrainableModel):
             else:
                 decode_fn = self.crf.decode
             logits = decode_fn(logits.to(self.device), mask=decode_ap.to(self.device))
-            logits = [l for ll in logits for l in ll]
+            logits = [lll for ll in logits for lll in ll]
         else:
             active_logits = logits.view(-1, len(self.label_id_str) + 1)[active_positions]
             logits = torch.argmax(F.log_softmax(active_logits, dim=1), dim=1)
@@ -560,8 +560,8 @@ class NeuralTagger(TrainableModel):
         if self.use_crf:
             torch.save(self.crf, os.path.join(output_dir, "crf.bin"))
         with io.open(output_dir + os.sep + "labels.txt", "w", encoding="utf-8") as fw:
-            for l in self.labels:
-                fw.write("{}\n".format(l))
+            for lbl in self.labels:
+                fw.write("{}\n".format(lbl))
         with io.open(output_dir + os.sep + "w_vocab.dat", "wb") as fw:
             pickle.dump(self.word_vocab, fw)
 
@@ -579,7 +579,7 @@ class NeuralTagger(TrainableModel):
         if not os.path.exists(model_path):
             raise FileNotFoundError
         with io.open(model_path + os.sep + "labels.txt") as fp:
-            labels = [l.strip() for l in fp.readlines()]
+            labels = [lines.strip() for lines in fp.readlines()]
 
         with io.open(model_path + os.sep + "w_vocab.dat", "rb") as fp:
             w_vocab = pickle.load(fp)

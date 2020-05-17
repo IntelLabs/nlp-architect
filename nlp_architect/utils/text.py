@@ -267,7 +267,7 @@ def spacy_normalizer(text, lemma=None):
         tokens = list(filter(lambda x: len(x) != 0, p.split(text.strip())))
         if lemma:
             lemma = lemma.split(" ")
-            text = " ".join([stemmer.stem(l) for l in lemma])
+            text = " ".join([stemmer.stem(lem) for lem in lemma])
         else:
             text = " ".join([stemmer.stem(spacy_lemmatizer(t, "NOUN")[0]) for t in tokens])
     return text
