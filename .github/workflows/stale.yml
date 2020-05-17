@@ -1,0 +1,21 @@
+name: Mark stale issues and pull requests
+
+on:
+  schedule:
+  - cron: "0 0 * * *"
+
+jobs:
+  stale:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/stale@v3.0.0
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        # The message to post on the issue when tagging it. If none provided, will not mark issues stale.
+        stale-issue-message: "Issue marked as stale, closing." # optional
+        # The number of days old an issue can be before marking it stale.
+        days-before-stale: 60 # optional, default is 60
+        # The number of days to wait to close an issue or pull request after it being marked stale. Set to -1 to never close stale issues.
+        days-before-close: 30 # optional, default is 7
