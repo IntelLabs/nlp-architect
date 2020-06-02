@@ -19,3 +19,4 @@ jobs:
         days-before-stale: 60 # optional, default is 60
         # The number of days to wait to close an issue or pull request after it being marked stale. Set to -1 to never close stale issues.
         days-before-close: 30 # optional, default is 7
+        only-labels: "[bug,wontfix,duplicate]"
