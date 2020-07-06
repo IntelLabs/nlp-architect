@@ -10,7 +10,6 @@ from seqeval.metrics import f1_score, precision_score, recall_score
 from torch.nn import CrossEntropyLoss
 from torch.utils.data import DataLoader, TensorDataset
 import absa_utils
-import argparse
 from argparse import Namespace
 import random
 from pathlib import Path
@@ -31,7 +30,7 @@ from transformers import (
 
 logger = logging.getLogger(__name__)
 
-def set_seed(args: argparse.Namespace):
+def set_seed(args):
     random.seed(args.seed)
     np.random.seed(args.seed)
     torch.manual_seed(args.seed)
@@ -39,7 +38,7 @@ def set_seed(args: argparse.Namespace):
         torch.cuda.manual_seed_all(args.seed)
 
 class BertForToken(pl.LightningModule):
-    def __init__(self, hparams: argparse.Namespace, config=None,
+    def __init__(self, hparams, config=None,
                 tokenizer=None, model=None, **config_kwargs):
         """Initialize a model, tokenizer and config."""
         super().__init__()
@@ -280,7 +279,7 @@ class LoggingCallback(pl.Callback):
 
 def generic_trainer(
     model: BertForToken,
-    args: argparse.Namespace,
+    args,
     early_stopping_callback=False,
     tr_logger=True,  # can pass WandbLogger() here
     extra_callbacks=None,
