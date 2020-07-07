@@ -11,11 +11,9 @@ from torch.nn import CrossEntropyLoss
 from torch.utils.data import DataLoader, TensorDataset
 import absa_utils
 from argparse import Namespace
-import random
 from pathlib import Path
 from typing import Any, Dict
 from sys import argv
-
 # pylint: disable=attribute-defined-outside-init
 
 from transformers import (
@@ -29,13 +27,6 @@ from transformers import (
 )
 
 logger = logging.getLogger(__name__)
-
-def set_seed(args):
-    random.seed(args.seed)
-    np.random.seed(args.seed)
-    torch.manual_seed(args.seed)
-    if args.gpus > 0:
-        torch.cuda.manual_seed_all(args.seed)
 
 class BertForToken(pl.LightningModule):
     def __init__(self, hparams, config=None,
@@ -209,8 +200,6 @@ class BertForToken(pl.LightningModule):
         optimizer.step()
         optimizer.zero_grad()
         self.lr_scheduler.step()  # By default, PL will only step every epoch.
-        lrs = {f"lr_group_{i}": lr for i, lr in enumerate(self.lr_scheduler.get_lr())}
-        self.logger.log_metrics(lrs)
 
     def test_step(self, batch, batch_nb):
         return self.validation_step(batch, batch_nb)
@@ -279,9 +268,6 @@ class LoggingCallback(pl.Callback):
 
 
 def generic_trainer(model: BertForToken, args, gpus=None):
-    # init model
-    set_seed(args)
-
     Path(model.hparams.output_dir).mkdir(exist_ok=True)
     checkpoint_callback = pl.callbacks.ModelCheckpoint(
         filepath=args.output_dir, prefix="checkpoint", monitor="val_loss", mode="min", save_top_k=1
@@ -297,7 +283,7 @@ def generic_trainer(model: BertForToken, args, gpus=None):
         max_epochs=args.max_epochs,
         gradient_clip_val=args.gradient_clip_val,
         checkpoint_callback=checkpoint_callback,
-        callbacks=[LoggingCallback()],
+        callbacks=[LoggingCallback(), pl.callbacks.LearningRateLogger()],
         fast_dev_run=args.fast_dev_run,
         val_check_interval=args.val_check_interval,
         weights_summary=None,
@@ -314,7 +300,8 @@ def load_config(name):
 # pylint: disable=no-member
 def main(config_yaml):
     config = load_config(config_yaml)
-    
+    pl.seed_everything(config.seed)
+
     model = BertForToken(config)
     trainer = generic_trainer(model, config)
 
