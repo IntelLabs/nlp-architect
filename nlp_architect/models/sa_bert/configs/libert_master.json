@@ -1,0 +1,18 @@
+[
+    {
+        "model": "libert",
+        "per_gpu_train_batch_size": 8,
+        "max_seq_length": 64,
+        "split_count": 3,
+        "seed_count": 1,
+        "lr": [5e-05],
+        "op_labels": true,
+        "parse_probs": [true],
+        "replace_final": [false],
+        "relation": "",
+        "label_sets": {"ASP": {"1": "O", "4": "O", "5": "O", "2": "B-ASP", "3": "I-ASP"}, 
+                        "OP": {"1": "O", "2": "O", "3": "O", "4": "B-OP", "5": "I-OP"}},
+        "settings": ["restaurants_to_laptops"],
+        "num_train_epochs": 15
+    }
+]

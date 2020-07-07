@@ -1,8 +1,8 @@
 The	O
 bread	B-ASP
 is	O
-top	O
-notch	O
+top	B-OP
+notch	I-OP
 as	O
 well	O
 .	O
@@ -16,7 +16,7 @@ have	O
 one	O
 of	O
 the	O
-fastest	O
+fastest	B-OP
 delivery	B-ASP
 times	I-ASP
 in	O
@@ -27,9 +27,9 @@ city	O
 Food	B-ASP
 is	O
 always	O
-fresh	O
+fresh	B-OP
 and	O
-hot	O
+hot	B-OP
 -	O
 ready	O
 to	O
@@ -43,13 +43,13 @@ that	O
 the	O
 coffee	B-ASP
 is	O
-OUTSTANDING	O
+OUTSTANDING	B-OP
 ?	O
 
 Certainly	O
 not	O
 the	O
-best	O
+best	B-OP
 sushi	B-ASP
 in	O
 New	O
@@ -60,20 +60,20 @@ however	O
 it	O
 is	O
 always	O
-fresh	O
+fresh	B-OP
 ,	O
 and	O
 the	O
 place	B-ASP
 is	O
 very	O
-clean	O
+clean	B-OP
 ,	O
-sterile	O
+sterile	B-OP
 .	O
 
 I	O
-trust	O
+trust	B-OP
 the	O
 people	B-ASP
 at	O
@@ -82,7 +82,7 @@ Sushi	O
 ,	O
 it	O
 never	O
-disappoints	O
+disappoints	B-OP
 .	O
 
 Straight-forward	O
@@ -91,22 +91,22 @@ no	O
 surprises	O
 ,	O
 very	O
-decent	O
+decent	B-OP
 Japanese	B-ASP
 food	I-ASP
 .	O
 
-BEST	O
+BEST	B-OP
 spicy	O
 tuna	O
 roll	O
 ,	O
-great	O
+great	B-OP
 asian	B-ASP
 salad	I-ASP
 .	O
 
-Try	O
+Try	B-OP
 the	O
 rose	B-ASP
 roll	I-ASP
@@ -118,7 +118,7 @@ menu	B-ASP
 .	O
 
 I	O
-love	O
+love	B-OP
 the	O
 drinks	B-ASP
 ,	O
@@ -132,7 +132,7 @@ food	B-ASP
 is	O
 also	O
 VERY	O
-good	O
+good	B-OP
 .	O
 
 In	O
@@ -146,15 +146,15 @@ Nicoise	B-ASP
 salad	I-ASP
 and	O
 was	O
-barely	O
-eatable	O
+barely	B-OP
+eatable	I-OP
 .	O
 
 While	O
 there	O
 's	O
 a	O
-decent	O
+decent	B-OP
 menu	B-ASP
 ,	O
 it	O
@@ -180,7 +180,7 @@ we	O
 sailed	O
 ,	O
 the	O
-top-notch	O
+top-notch	B-OP
 food	B-ASP
 and	O
 live	B-ASP
@@ -189,19 +189,19 @@ sold	O
 us	O
 on	O
 a	O
-unforgettable	O
+unforgettable	B-OP
 evening	O
 .	O
 
 Our	O
 waiter	B-ASP
 was	O
-horrible	O
+horrible	B-OP
 ;	O
 so	O
-rude	O
+rude	B-OP
 and	O
-disinterested	O
+disinterested	B-OP
 .	O
 
 The	O
@@ -214,9 +214,9 @@ down	O
 
 menu	B-ASP
 -	O
-uneventful	O
+uneventful	B-OP
 ,	O
-small	O
+small	B-OP
 .	O
 
 Anytime	O
@@ -235,25 +235,25 @@ to	O
 Sushi	O
 Rose	O
 for	O
-fresh	O
+fresh	B-OP
 sushi	B-ASP
 and	O
-great	O
+great	B-OP
 portions	B-ASP
 all	O
 at	O
 a	O
-reasonable	O
+reasonable	B-OP
 price	B-ASP
 .	O
 
-Great	O
+Great	B-OP
 food	B-ASP
 but	O
 the	O
 service	B-ASP
 was	O
-dreadful	O
+dreadful	B-OP
 !	O
 
 The	O
@@ -265,7 +265,7 @@ that	O
 came	O
 out	O
 were	O
-mediocre	O
+mediocre	B-OP
 .	O
 
 the	O
@@ -290,7 +290,7 @@ we	O
 were	O
 met	O
 by	O
-friendly	O
+friendly	B-OP
 staff	B-ASP
 memebers	I-ASP
 ,	O
@@ -303,7 +303,7 @@ Chelsea	O
 Piers	O
 made	O
 it	O
-easy	O
+easy	B-OP
 for	O
 us	O
 to	O
@@ -314,7 +314,7 @@ boat	O
 .	O
 
 We	O
-enjoyed	O
+enjoyed	B-OP
 ourselves	O
 thoroughly	O
 and	O
@@ -330,11 +330,11 @@ desserts	B-ASP
 Desserts	B-ASP
 are	O
 almost	O
-incredible	O
+incredible	B-OP
 :	O
 my	O
 personal	O
-favorite	O
+favorite	B-OP
 is	O
 their	O
 Tart	B-ASP
@@ -354,7 +354,7 @@ because	O
 it	O
 is	O
 definitely	O
-better	O
+better	B-OP
 than	O
 other	O
 places	O
@@ -380,21 +380,21 @@ night	O
 and	O
 everything	O
 was	O
-great	O
+great	B-OP
 .	O
 
 The	O
 food	B-ASP
 was	O
 extremely	O
-tasty	O
+tasty	B-OP
 ,	O
-creatively	O
-presented	O
+creatively	B-OP
+presented	I-OP
 and	O
 the	O
 wine	B-ASP
-excellent	O
+excellent	B-OP
 .	O
 
 WE	O
@@ -410,8 +410,8 @@ AFTERNOON	O
 
 WE	O
 WERE	O
-PLEASANTLY	O
-SURPRISED	O
+PLEASANTLY	B-OP
+SURPRISED	I-OP
 WITH	O
 OUR	O
 CHOICE	O
@@ -422,7 +422,7 @@ LASAGNA	B-ASP
 WAS	O
 PROBABLY	O
 THE	O
-BEST	O
+BEST	B-OP
 I	O
 HAVE	O
 TASTED	O
@@ -432,10 +432,10 @@ Harumi	O
 Sushi	O
 has	O
 the	O
-freshest	O
+freshest	B-OP
 and	O
-most	O
-delicious	O
+most	B-OP
+delicious	I-OP
 array	B-ASP
 of	I-ASP
 sushi	I-ASP
@@ -445,20 +445,20 @@ NYC	O
 
 I	O
 highly	O
-recommend	O
+recommend	B-OP
 it	O
 for	O
 not	O
 just	O
 its	O
-superb	O
+superb	B-OP
 cuisine	B-ASP
 ,	O
 but	O
 also	O
 for	O
 its	O
-friendly	O
+friendly	B-OP
 owners	B-ASP
 and	O
 staff	B-ASP
@@ -469,26 +469,26 @@ you	O
 're	O
 craving	O
 some	O
-serious	O
+serious	B-OP
 indian	B-ASP
 food	I-ASP
 and	O
 desire	O
 a	O
-cozy	O
+cozy	B-OP
 ambiance	B-ASP
 ,	O
 this	O
 is	O
 quite	O
 and	O
-exquisite	O
+exquisite	B-OP
 choice	O
 .	O
 
 I	O
 definitely	O
-enjoyed	O
+enjoyed	B-OP
 the	O
 food	B-ASP
 as	O
@@ -499,24 +499,24 @@ have	O
 always	O
 had	O
 a	O
-great	O
+great	B-OP
 time	O
 here	O
 .	O
 
 It	O
 was	O
-pleasantly	O
-uncrowded	O
+pleasantly	B-OP
+uncrowded	I-OP
 ,	O
 the	O
 service	B-ASP
 was	O
-delightful	O
+delightful	B-OP
 ,	O
 the	O
 garden	B-ASP
-adorable	O
+adorable	B-OP
 ,	O
 the	O
 food	B-ASP
@@ -527,14 +527,14 @@ to	O
 entrees	B-ASP
 )	O
 was	O
-delectable	O
+delectable	B-OP
 .	O
 
 You	O
 will	O
 be	O
 very	O
-happy	O
+happy	B-OP
 with	O
 the	O
 experience	O
@@ -544,19 +544,19 @@ The	O
 food	B-ASP
 is	O
 surprisingly	O
-good	O
+good	B-OP
 ,	O
 and	O
 the	O
 decor	B-ASP
 is	O
-nice	O
+nice	B-OP
 .	O
 
 How	O
-pretentious	O
+pretentious	B-OP
 and	O
-inappropriate	O
+inappropriate	B-OP
 for	O
 MJ	O
 Grill	O
@@ -572,7 +572,7 @@ dinners	B-ASP
 !	O
 
 Two	O
-wasted	O
+wasted	B-OP
 steaks	B-ASP
 --	O
 what	O
@@ -587,7 +587,7 @@ be	O
 a	O
 bit	O
 more	O
-friendly	O
+friendly	B-OP
 .	O
 
 I	O
@@ -603,17 +603,17 @@ the	O
 meatball	B-ASP
 parm	I-ASP
 is	O
-good	O
+good	B-OP
 .	O
 
 If	O
 you	O
 want	O
-good	O
-tasting	O
+good	B-OP
+tasting	I-OP
 ,	O
-well	O
-seasoned	O
+well	B-OP
+seasoned	I-OP
 latin	B-ASP
 food	I-ASP
 eat	O
@@ -636,7 +636,7 @@ truffles	I-ASP
 -	O
 it	O
 was	O
-incredible	O
+incredible	B-OP
 .	O
 
 Also	O
@@ -645,10 +645,10 @@ the	O
 staff	B-ASP
 is	O
 very	O
-attentive	O
+attentive	B-OP
 and	O
 really	O
-personable	O
+personable	B-OP
 .	O
 
 Overall	O
@@ -656,14 +656,14 @@ Overall	O
 this	O
 is	O
 a	O
-great	O
+great	B-OP
 new	O
 restaurant	O
 that	O
 has	O
 been	O
 consistently	O
-good	O
+good	B-OP
 every	O
 time	O
 I	O
@@ -682,20 +682,20 @@ mouth	O
 
 Had	O
 a	O
-great	O
+great	B-OP
 experience	O
 at	O
 Trio	O
 ...	O
 staff	B-ASP
 was	O
-pleasant	O
+pleasant	B-OP
 ;	O
 food	B-ASP
 was	O
-tasty	O
+tasty	B-OP
 and	O
-large	O
+large	B-OP
 in	O
 portion	B-ASP
 size	I-ASP
@@ -703,7 +703,7 @@ size	I-ASP
 I	O
 would	O
 highly	O
-recommend	O
+recommend	B-OP
 the	O
 portobello/gorgonzola/sausage	B-ASP
 appetizer	I-ASP
@@ -729,18 +729,18 @@ parmigiana	I-ASP
 The	O
 food	B-ASP
 is	O
-good	O
+good	B-OP
 ,	O
 the	O
 teriyaki	B-ASP
 I	O
-recommend	O
+recommend	B-OP
 .	O
 
 Meal	B-ASP
 was	O
 very	O
-expensive	O
+expensive	B-OP
 for	O
 what	O
 you	O
@@ -760,11 +760,11 @@ soy	I-ASP
 cheese	I-ASP
 !	O
 
-Good	O
+Good	B-OP
 food	B-ASP
 at	O
 the	O
-right	O
+right	B-OP
 price	B-ASP
 ,	O
 what	O
@@ -776,7 +776,7 @@ for	O
 .	O
 
 We	O
-love	O
+love	B-OP
 it	O
 ,	O
 and	O
@@ -810,19 +810,19 @@ place	O
 The	O
 food	B-ASP
 is	O
-top	O
-notch	O
+top	B-OP
+notch	I-OP
 ,	O
 the	O
 service	B-ASP
 is	O
-attentive	O
+attentive	B-OP
 ,	O
 and	O
 the	O
 atmosphere	B-ASP
 is	O
-great	O
+great	B-OP
 .	O
 
 I	O
@@ -854,20 +854,20 @@ dissapointed	O
 me	O
 .	O
 
-Great	O
+Great	B-OP
 food	B-ASP
 ,	O
-great	O
+great	B-OP
 waitstaff	B-ASP
 ,	O
-great	O
+great	B-OP
 atmosphere	B-ASP
 ,	O
 and	O
-best	O
+best	B-OP
 of	O
 all	O
-GREAT	O
+GREAT	B-OP
 beer	B-ASP
 !	O
 
@@ -878,7 +878,7 @@ one	O
 of	O
 my	O
 most	O
-favorite	O
+favorite	B-OP
 restaurants	O
 in	O
 the	O
@@ -886,21 +886,21 @@ area	O
 the	O
 food	B-ASP
 is	O
-inexpensive	O
+inexpensive	B-OP
 but	O
 very	O
-good	O
+good	B-OP
 (	O
 kimono	B-ASP
 shrimp	I-ASP
 special	I-ASP
 was	O
-excellent	O
+excellent	B-OP
 )	O
 and	O
 has	O
 a	O
-great	O
+great	B-OP
 atmosphere	B-ASP
 .	O
 
@@ -928,21 +928,21 @@ Peasant	O
 has	O
 been	O
 our	O
-favorite	O
+favorite	B-OP
 !	O
 
 The	O
 whole	O
 experience	O
 was	O
-satisfying	O
+satisfying	B-OP
 .	O
 
 However	O
 ,	O
 it	O
 was	O
-worth	O
+worth	B-OP
 the	O
 visit	O
 .	O
@@ -950,20 +950,20 @@ visit	O
 The	O
 menu	B-ASP
 is	O
-interesting	O
+interesting	B-OP
 and	O
 quite	O
-reasonably	O
+reasonably	B-OP
 priced	B-ASP
 .	O
 
 The	O
 food	B-ASP
 was	O
-delicious	O
+delicious	B-OP
 and	O
 clearly	O
-fresh	O
+fresh	B-OP
 ingredients	B-ASP
 were	O
 used	O
@@ -979,7 +979,7 @@ food	B-ASP
 was	O
 n't	O
 cooked	O
-fresh	O
+fresh	B-OP
 ;	O
 it	O
 was	O
@@ -994,17 +994,17 @@ reheated	O
 
 Appetizer	B-ASP
 are	O
-excellent	O
+excellent	B-OP
 here	O
 ;	O
 you	O
 can	O
 make	O
 a	O
-great	O
+great	B-OP
 (	O
 and	O
-inexpensive	O
+inexpensive	B-OP
 )	O
 meal	B-ASP
 out	O
@@ -1017,7 +1017,7 @@ spicy	B-ASP
 mussels	I-ASP
 are	O
 a	O
-highlight	O
+highlight	B-OP
 .	O
 
 Also	O
@@ -1026,7 +1026,7 @@ the	O
 Onion	B-ASP
 Rings	I-ASP
 --	O
-best	O
+best	B-OP
 we	O
 've	O
 ever	O
@@ -1050,31 +1050,31 @@ foodies	O
 ,	O
 we	O
 were	O
-utterly	O
-disappointed	O
+utterly	B-OP
+disappointed	I-OP
 with	O
 the	O
 food	B-ASP
 .	O
 
-Huge	O
+Huge	B-OP
 portions	B-ASP
 ,	O
-great	O
+great	B-OP
 and	O
-attentive	O
+attentive	B-OP
 service	B-ASP
 ,	O
 and	O
 pretty	O
-good	O
+good	B-OP
 prices	B-ASP
 .	O
 
 I	O
 was	O
 highly	O
-disappointed	O
+disappointed	B-OP
 by	O
 their	O
 service	B-ASP
@@ -1095,9 +1095,9 @@ manager	B-ASP
 ,	O
 but	O
 the	O
-intensity	O
-of	O
-rudeness	O
+intensity	B-OP
+of	I-OP
+rudeness	I-OP
 from	O
 them	O
 just	O
@@ -1108,13 +1108,13 @@ up	O
 The	O
 food	B-ASP
 is	O
-great	O
+great	B-OP
 and	O
 the	O
 milkshakes	B-ASP
 are	O
 even	O
-better	O
+better	B-OP
 !	O
 
 Stay	O
@@ -1142,7 +1142,7 @@ mushroom	B-ASP
 barley	I-ASP
 soup	I-ASP
 is	O
-amazing	O
+amazing	B-OP
 .	O
 
 On	O
@@ -1171,16 +1171,16 @@ the	O
 food	B-ASP
 was	O
 very	O
-good	O
+good	B-OP
 and	O
 the	O
 staff	B-ASP
 was	O
-friendly	O
+friendly	B-OP
 ,	O
-courteous	O
+courteous	B-OP
 and	O
-efficient	O
+efficient	B-OP
 .	O
 
 Their	O
@@ -1189,7 +1189,7 @@ here	O
 is	O
 also	O
 absolutely	O
-delicious	O
+delicious	B-OP
 .	O
 
 This	O
@@ -1215,22 +1215,22 @@ years	O
 While	O
 it	O
 was	O
-large	O
+large	B-OP
 and	O
 a	O
 bit	O
-noisy	O
+noisy	B-OP
 ,	O
 the	O
 drinks	B-ASP
 were	O
-fantastic	O
+fantastic	B-OP
 ,	O
 and	O
 the	O
 food	B-ASP
 was	O
-superb	O
+superb	B-OP
 .	O
 
 One	O
@@ -1245,13 +1245,13 @@ can	O
 be	O
 a	O
 trifle	O
-harsh	O
+harsh	B-OP
 .	O
 
 I	O
 was	O
 n't	O
-impressed	O
+impressed	B-OP
 and	O
 it	O
 was	O
@@ -1264,7 +1264,7 @@ food	B-ASP
 was	O
 almost	O
 always	O
-EXCELLENT	O
+EXCELLENT	B-OP
 .	O
 
 I	O
@@ -1277,7 +1277,7 @@ taste	B-ASP
 .	O
 
 A	O
-nice	O
+nice	B-OP
 space	O
 ,	O
 as	O
@@ -1300,7 +1300,7 @@ cuisine	O
 make	O
 Mare	O
 a	O
-great	O
+great	B-OP
 choice	O
 for	O
 seafood	B-ASP
@@ -1326,9 +1326,9 @@ they	O
 really	O
 provide	O
 a	O
-relaxing	O
+relaxing	B-OP
 ,	O
-laid-back	O
+laid-back	B-OP
 atmosphere	B-ASP
 .	O
 
@@ -1358,9 +1358,9 @@ subway	O
 The	O
 Management	B-ASP
 was	O
-less	O
-than	O
-accomodating	O
+less	B-OP
+than	I-OP
+accomodating	I-OP
 .	O
 
 The	O
@@ -1368,21 +1368,21 @@ ambience	B-ASP
 is	O
 also	O
 more	O
-laid-back	O
+laid-back	B-OP
 and	O
-relaxed	O
+relaxed	B-OP
 .	O
 
 the	O
 teas	B-ASP
 are	O
-great	O
+great	B-OP
 and	O
 all	O
 the	O
 sweets	B-ASP
 are	O
-homemade	O
+homemade	B-OP
 .	O
 
 mojitos	B-ASP
@@ -1391,7 +1391,7 @@ the	O
 service	B-ASP
 are	O
 the	O
-best	O
+best	B-OP
 part	O
 in	O
 there	O
@@ -1408,48 +1408,48 @@ lemon-dressed	B-ASP
 cobb	I-ASP
 ,	O
 are	O
-classic	O
-successes	O
+classic	B-OP
+successes	I-OP
 .	O
 
 this	O
 restaurant	O
 is	O
 absolutely	O
-beautiful	O
+beautiful	B-OP
 .	O
 
 The	O
 design	B-ASP
 is	O
 very	O
-intimate	O
+intimate	B-OP
 and	O
-romantic	O
+romantic	B-OP
 .	O
 
 The	O
 food	B-ASP
 was	O
-wonderful	O
+wonderful	B-OP
 and	O
-imaginative	O
+imaginative	B-OP
 .	O
 
 The	O
 staff	B-ASP
 is	O
 very	O
-sharp	O
+sharp	B-OP
 and	O
 they	O
 look	O
-good	O
+good	B-OP
 too	O
 .	O
 
 The	O
-worst	O
+worst	B-OP
 though	O
 was	O
 the	O
@@ -1458,12 +1458,12 @@ taste	B-ASP
 
 They	O
 were	O
-dry	O
+dry	B-OP
 ,	O
-stale	O
+stale	B-OP
 and	O
 pretty	O
-flavorless	O
+flavorless	B-OP
 .	O
 
 The	O
@@ -1471,17 +1471,17 @@ fajita	B-ASP
 we	O
 tried	O
 was	O
-tasteless	O
+tasteless	B-OP
 and	O
-burned	O
+burned	B-OP
 and	O
 the	O
 mole	B-ASP
 sauce	I-ASP
 was	O
 way	O
-too	O
-sweet	O
+too	B-OP
+sweet	I-OP
 .	O
 
 Stay	O
@@ -1493,30 +1493,30 @@ and	O
 you	O
 'll	O
 be	O
-fine	O
+fine	B-OP
 .	O
 
 The	O
 atmosphere	B-ASP
 is	O
-warm	O
+warm	B-OP
 ,	O
-comfortable	O
+comfortable	B-OP
 ,	O
-artsy	O
+artsy	B-OP
 and	O
-sexy	O
+sexy	B-OP
 .	O
 
 The	O
 food	B-ASP
 is	O
-great	O
+great	B-OP
 (	O
-big	O
+big	B-OP
 selection	B-ASP
 ,	O
-reasonable	O
+reasonable	B-OP
 prices	B-ASP
 )	O
 and	O
@@ -1524,7 +1524,7 @@ the	O
 drinks	B-ASP
 are	O
 really	O
-good	O
+good	B-OP
 .	O
 
 The	O
@@ -1548,7 +1548,7 @@ come	O
 ,	O
 but	O
 the	O
-cute	O
+cute	B-OP
 waiters	B-ASP
 '	O
 jokes	O
@@ -1565,7 +1565,7 @@ importantly	O
 ,	O
 it	O
 is	O
-reasonably	O
+reasonably	B-OP
 priced	B-ASP
 .	O
 
@@ -1574,7 +1574,7 @@ selection	B-ASP
 of	I-ASP
 food	I-ASP
 is	O
-excellent	O
+excellent	B-OP
 (	O
 I	O
 'm	O
@@ -1592,7 +1592,7 @@ and	O
 the	O
 atmosphere	B-ASP
 is	O
-great	O
+great	B-OP
 .	O
 
 Only	O
@@ -1606,21 +1606,21 @@ dessert	B-ASP
 ,	O
 it	O
 was	O
-overpriced	O
+overpriced	B-OP
 and	O
 fell	O
-short	O
+short	B-OP
 on	O
 taste	B-ASP
 .	O
 
 Food	B-ASP
 was	O
-decent	O
+decent	B-OP
 ,	O
 but	O
 not	O
-great	O
+great	B-OP
 .	O
 
 I	O
@@ -1650,7 +1650,7 @@ you	O
 're	O
 in	O
 the	O
-perfect	O
+perfect	B-OP
 place	O
 .	O
 
@@ -1679,10 +1679,10 @@ delight	O
 complete	O
 with	O
 a	O
-quaint	O
+quaint	B-OP
 bar	B-ASP
 and	O
-good	O
+good	B-OP
 food	B-ASP
 .	O
 
@@ -1702,7 +1702,7 @@ this	O
 has	O
 been	O
 the	O
-best	O
+best	B-OP
 I	O
 've	O
 eaten	O
@@ -1714,7 +1714,7 @@ The	O
 waiters	B-ASP
 ALWAYS	O
 look	O
-angry	O
+angry	B-OP
 and	O
 even	O
 ignore	O
@@ -1727,11 +1727,11 @@ the	O
 atmosphere	B-ASP
 is	O
 very	O
-nice	O
+nice	B-OP
 ,	O
 and	O
 a	O
-welcome	O
+welcome	B-OP
 escape	O
 from	O
 the	O
@@ -1748,10 +1748,10 @@ they	O
 're	O
 a	O
 bit	O
-more	O
-expensive	O
-then	O
-typical	O
+more	B-OP
+expensive	I-OP
+then	I-OP
+typical	I-OP
 ,	O
 but	O
 then	O
@@ -1764,7 +1764,7 @@ food	B-ASP
 .	O
 
 Not	O
-terrible	O
+terrible	B-OP
 ,	O
 but	O
 not	O
@@ -1789,9 +1789,9 @@ and	O
 salads	B-ASP
 were	O
 all	O
-fresh	O
+fresh	B-OP
 ,	O
-tasty	O
+tasty	B-OP
 and	O
 the	O
 mango	B-ASP
@@ -1800,17 +1800,17 @@ at	O
 $	O
 9	O
 was	O
-WELL	O
-WORTH	O
+WELL	B-OP
+WORTH	I-OP
 the	O
 money	O
 .	O
 
 It	O
 was	O
-delicious	O
+delicious	B-OP
 and	O
-large	O
+large	B-OP
 !	O
 
 Anywhere	O
@@ -1830,15 +1830,15 @@ service	B-ASP
 we	O
 experienced	O
 was	O
-friendly	O
+friendly	B-OP
 and	O
-good	O
+good	B-OP
 .	O
 
 Our	O
 waiter	B-ASP
 was	O
-friendly	O
+friendly	B-OP
 and	O
 it	O
 is	O
@@ -1849,7 +1849,7 @@ he	O
 didnt	O
 have	O
 a	O
-supportive	O
+supportive	B-OP
 staff	B-ASP
 to	O
 work	O
@@ -1864,7 +1864,7 @@ was	O
 seated	O
 at	O
 was	O
-uncomfortable	O
+uncomfortable	B-OP
 .	O
 
 As	O
@@ -1886,7 +1886,7 @@ were	O
 .	O
 
 An	O
-excellent	O
+excellent	B-OP
 choice	O
 in	O
 midtown	O
@@ -1896,7 +1896,7 @@ Service	B-ASP
 was	O
 among	O
 the	O
-best	O
+best	B-OP
 I	O
 have	O
 ever	O
@@ -1909,23 +1909,23 @@ The	O
 fettucino	B-ASP
 alfredo	I-ASP
 was	O
-amazing	O
+amazing	B-OP
 .	O
 
 The	O
 food	B-ASP
 was	O
 very	O
-good	O
+good	B-OP
 and	O
 I	O
 was	O
-pleasantly	O
-surprised	O
+pleasantly	B-OP
+surprised	I-OP
 to	O
 see	O
 so	O
-many	O
+many	B-OP
 vegan	B-ASP
 options	I-ASP
 .	O
@@ -1984,9 +1984,9 @@ food	B-ASP
 and	O
 service	B-ASP
 are	O
-right	O
-on	O
-target	O
+right	B-OP
+on	I-OP
+target	I-OP
 .	O
 
 Everything	O
@@ -2003,21 +2003,21 @@ the	O
 hamburger	B-ASP
 were	O
 done	O
-well	O
+well	B-OP
 and	O
 very	O
-tasty	O
+tasty	B-OP
 .	O
 
 The	O
 waiters	B-ASP
 were	O
 very	O
-professional	O
+professional	B-OP
 ,	O
-courteous	O
+courteous	B-OP
 and	O
-attentive	O
+attentive	B-OP
 .	O
 
 My	O
@@ -2029,7 +2029,7 @@ here	O
 last	O
 night	O
 and	O
-LOVED	O
+LOVED	B-OP
 it	O
 !	O
 
@@ -2037,15 +2037,15 @@ The	O
 falafal	B-ASP
 was	O
 rather	O
-over	O
-cooked	O
+over	B-OP
+cooked	I-OP
 and	O
-dried	O
+dried	B-OP
 but	O
 the	O
 chicken	B-ASP
 was	O
-fine	O
+fine	B-OP
 .	O
 
 I	O
@@ -2059,7 +2059,7 @@ shrimp	I-ASP
 it	O
 's	O
 insanely	O
-good	O
+good	B-OP
 .	O
 
 We	O
@@ -2068,13 +2068,13 @@ there	O
 and	O
 we	O
 really	O
-enjoy	O
+enjoy	B-OP
 the	O
 food	B-ASP
 ,	O
 was	O
 areally	O
-great	O
+great	B-OP
 food	B-ASP
 ,	O
 and	O
@@ -2082,7 +2082,7 @@ the	O
 service	B-ASP
 was	O
 really	O
-good	O
+good	B-OP
 .	O
 
 Desserts	B-ASP
@@ -2097,21 +2097,21 @@ was	O
 starving	O
 and	O
 the	O
-small	O
+small	B-OP
 portions	B-ASP
 were	O
 driving	O
 me	O
-crazy	O
+crazy	B-OP
 !	O
 
 The	O
 wait	B-ASP
 staff	I-ASP
 was	O
-loud	O
+loud	B-OP
 and	O
-inconsiderate	O
+inconsiderate	B-OP
 .	O
 
 However	O
@@ -2122,7 +2122,7 @@ and	O
 service	B-ASP
 and	O
 dramatically	O
-lacking	O
+lacking	B-OP
 .	O
 
 The	O
@@ -2131,7 +2131,7 @@ is	O
 cut	O
 in	O
 blocks	O
-bigger	O
+bigger	B-OP
 than	O
 my	O
 cell	O
@@ -2141,15 +2141,15 @@ phone	O
 The	O
 service	B-ASP
 is	O
-great	O
+great	B-OP
 ,	O
 my	O
 soup	B-ASP
 always	O
 arrives	O
-nice	O
+nice	B-OP
 and	O
-hot	O
+hot	B-OP
 .	O
 
 It	O
@@ -2161,7 +2161,7 @@ I	O
 forgot	O
 just	O
 how	O
-delicious	O
+delicious	B-OP
 crepes	B-ASP
 can	O
 be	O
@@ -2182,7 +2182,7 @@ apple	B-ASP
 tart	I-ASP
 --	O
 are	O
-good	O
+good	B-OP
 enough	O
 on	O
 their	O
@@ -2191,7 +2191,7 @@ to	O
 make	O
 the	O
 restaurant	O
-worth	O
+worth	B-OP
 the	O
 trip	O
 .	O
@@ -2218,7 +2218,7 @@ weekend	O
 i	O
 had	O
 a	O
-delicious	O
+delicious	B-OP
 shrimp	B-ASP
 creole	I-ASP
 .	O
@@ -2228,7 +2228,7 @@ chicken	B-ASP
 dinner	I-ASP
 was	O
 real	O
-good	O
+good	B-OP
 .	O
 
 Beware	O
@@ -2272,7 +2272,7 @@ but	O
 the	O
 food	B-ASP
 was	O
-delicious	O
+delicious	B-OP
 .	O
 
 Try	O
@@ -2291,14 +2291,14 @@ rice	I-ASP
 
 The	O
 only	O
-drawback	O
+drawback	B-OP
 is	O
 that	O
 it	O
 's	O
 a	O
 little	O
-pricey	O
+pricey	B-OP
 .	O
 
 Everything	O
@@ -2306,7 +2306,7 @@ about	O
 this	O
 place	O
 was	O
-wonderful	O
+wonderful	B-OP
 .	O
 
 The	O
@@ -2315,7 +2315,7 @@ salad	I-ASP
 is	O
 a	O
 personal	O
-fave	O
+fave	B-OP
 .	O
 
 And	O
@@ -2326,11 +2326,11 @@ BBQ	I-ASP
 rib	I-ASP
 tips	I-ASP
 are	O
-yummy	O
+yummy	B-OP
 !	O
 
 The	O
-BEST	O
+BEST	B-OP
 Chinese	B-ASP
 food	I-ASP
 Uptown	O
@@ -2346,46 +2346,46 @@ backwards	O
 to	O
 make	O
 everyone	O
-happy	O
+happy	B-OP
 .	O
 
 The	O
 atmosphere	B-ASP
 is	O
-attractive	O
+attractive	B-OP
 ,	O
 but	O
 a	O
 little	O
-uncomfortable	O
+uncomfortable	B-OP
 .	O
 
 The	O
 staff	B-ASP
 is	O
 very	O
-friendly	O
+friendly	B-OP
 .	O
 
 Waiters	B-ASP
 are	O
 very	O
-friendly	O
+friendly	B-OP
 and	O
 the	O
 pasta	B-ASP
 is	O
-out	O
-of	O
-this	O
-world	O
+out	B-OP
+of	I-OP
+this	I-OP
+world	I-OP
 .	O
 
-Great	O
+Great	B-OP
 wine	B-ASP
 list	I-ASP
 and	O
-great	O
+great	B-OP
 cocktail	B-ASP
 menu	I-ASP
 .	O
@@ -2394,32 +2394,32 @@ The	O
 crab	B-ASP
 cakes	I-ASP
 are	O
-delicious	O
+delicious	B-OP
 and	O
 the	O
 BBQ	B-ASP
 rib	I-ASP
 was	O
-perfect	O
+perfect	B-OP
 .	O
 
 The	O
 food	B-ASP
 is	O
-wonderful	O
+wonderful	B-OP
 ,	O
-artfully	O
+artfully	B-OP
 done	O
 and	O
 simply	O
-delicious	O
+delicious	B-OP
 .	O
 
 Tiny	O
 restaurant	O
 with	O
 very	O
-fast	O
+fast	B-OP
 service	B-ASP
 .	O
 
@@ -2455,19 +2455,19 @@ always	O
 been	O
 given	O
 the	O
-highest	O
+highest	B-OP
 service	B-ASP
 and	O
 often	O
-free	O
+free	B-OP
 desserts	B-ASP
 .	O
 
 A	O
-beautiful	O
+beautiful	B-OP
 atmosphere	B-ASP
 ,	O
-perfect	O
+perfect	B-OP
 for	O
 drinks	B-ASP
 and/or	O
@@ -2489,7 +2489,7 @@ the	O
 They	O
 make	O
 the	O
-best	O
+best	B-OP
 pizza	B-ASP
 in	O
 New	O
@@ -2519,14 +2519,14 @@ the	O
 service	B-ASP
 was	O
 very	O
-comforting	O
+comforting	B-OP
 and	O
 the	O
 food	B-ASP
 was	O
-better	O
-than	O
-average	O
+better	B-OP
+than	I-OP
+average	I-OP
 ,	O
 but	O
 what	O
@@ -2536,9 +2536,9 @@ out	O
 was	O
 such	O
 a	O
-dynamic	O
+dynamic	B-OP
 and	O
-extensive	O
+extensive	B-OP
 beer	B-ASP
 list	I-ASP
 .	O
@@ -2601,7 +2601,7 @@ overlooked	O
 the	O
 service	B-ASP
 is	O
-excellent	O
+excellent	B-OP
 .	O
 
 this	O
@@ -2611,7 +2611,7 @@ is	O
 one	O
 of	O
 the	O
-worst	O
+worst	B-OP
 hotdogs	B-ASP
 i	O
 have	O
@@ -2623,7 +2623,7 @@ The	O
 staff	B-ASP
 is	O
 unbelievably	O
-friendly	O
+friendly	B-OP
 ,	O
 and	O
 I	O
@@ -2634,18 +2634,18 @@ Saag	B-ASP
 gosht	I-ASP
 ...	O
 so	O
-good	O
+good	B-OP
 .	O
 
 I	O
 also	O
-recommend	O
+recommend	B-OP
 the	O
 garlic	B-ASP
 knots	I-ASP
 .	O
 
-Best	O
+Best	B-OP
 Indian	B-ASP
 food	I-ASP
 I	O
@@ -2665,14 +2665,14 @@ This	O
 place	O
 has	O
 the	O
-best	O
+best	B-OP
 pizza	B-ASP
 .	O
 
 Culinaria	O
 is	O
 a	O
-welcome	O
+welcome	B-OP
 addition	O
 to	O
 the	O
@@ -2680,7 +2680,7 @@ Garment	O
 district	O
 -	O
 far	O
-better	O
+better	B-OP
 than	O
 any	O
 restaurant	O
@@ -2697,7 +2697,7 @@ sometimes	O
 a	O
 little	O
 too	O
-heavy	O
+heavy	B-OP
 for	O
 my	O
 taste	O
@@ -2706,10 +2706,10 @@ taste	O
 The	O
 service	B-ASP
 is	O
-excellent	O
+excellent	B-OP
 and	O
 always	O
-informative	O
+informative	B-OP
 without	O
 an	O
 air	O
@@ -2721,13 +2721,13 @@ and	O
 staff	B-ASP
 go	O
 to	O
-great	O
+great	B-OP
 lengths	O
 to	O
 make	O
 you	O
 feel	O
-comfortable	O
+comfortable	B-OP
 .	O
 
 I	O
@@ -2742,31 +2742,31 @@ The	O
 sushi	B-ASP
 is	O
 always	O
-fresh	O
+fresh	B-OP
 and	O
-yummy	O
+yummy	B-OP
 and	O
 the	O
 menu	B-ASP
 is	O
 pretty	O
-varied	O
+varied	B-OP
 .	O
 
 The	O
 food	B-ASP
 was	O
-great	O
+great	B-OP
 -	O
 sushi	B-ASP
 was	O
-good	O
+good	B-OP
 ,	O
 but	O
 the	O
 cooked	B-ASP
 food	I-ASP
-amazed	O
+amazed	B-OP
 us	O
 .	O
 
@@ -2774,24 +2774,24 @@ their	O
 dinner	B-ASP
 specials	I-ASP
 are	O
-fantastic	O
+fantastic	B-OP
 .	O
 
-Delish	O
+Delish	B-OP
 and	O
 made	O
 to	O
 your	O
-liking	O
+liking	B-OP
 !	O
 
-Great	O
+Great	B-OP
 food	B-ASP
 ,	O
-great	O
+great	B-OP
 drinks	B-ASP
 ,	O
-nice	O
+nice	B-OP
 dining	B-ASP
 atmosphere	I-ASP
 .	O
@@ -2825,10 +2825,10 @@ restaurants	O
 Food	B-ASP
 portion	I-ASP
 was	O
-SMALL	O
+SMALL	B-OP
 and	O
-below	O
-average	O
+below	B-OP
+average	I-OP
 .	O
 
 Do	O
@@ -2863,7 +2863,7 @@ in	O
 one	O
 of	O
 those	O
-comfortable	O
+comfortable	B-OP
 chairs	B-ASP
 .	O
 
@@ -2873,7 +2873,7 @@ the	O
 neighborhood	O
 seem	O
 to	O
-love	O
+love	B-OP
 it	O
 ,	O
 too	O
@@ -2884,7 +2884,7 @@ conclusion	O
 ,	O
 THIS	O
 PLACE	O
-SUCKS	O
+SUCKS	B-OP
 !!!	O
 
 My	O
@@ -2910,7 +2910,7 @@ of	O
 the	O
 only	O
 places	O
-worthy	O
+worthy	B-OP
 of	O
 going	O
 in	O
@@ -2944,7 +2944,7 @@ you	O
 Not	O
 at	O
 all	O
-impressed	O
+impressed	B-OP
 .	O
 
 The	O
@@ -2954,26 +2954,26 @@ the	O
 managers	B-ASP
 are	O
 really	O
-nice	O
+nice	B-OP
 and	O
 the	O
 decor	B-ASP
 is	O
 very	O
-comfy	O
+comfy	B-OP
 and	O
-laid-back	O
+laid-back	B-OP
 ,	O
 all	O
 the	O
 while	O
 being	O
-trendy	O
+trendy	B-OP
 .	O
 
 For	O
 a	O
-savory	O
+savory	B-OP
 take	O
 on	O
 the	O
@@ -2996,16 +2996,16 @@ has	O
 it	O
 all	O
 -	O
-great	O
+great	B-OP
 drinks	B-ASP
 ,	O
-cool	O
+cool	B-OP
 atmosphere	B-ASP
 ,	O
-excellent	O
+excellent	B-OP
 service	B-ASP
 and	O
-delicious	O
+delicious	B-OP
 food	B-ASP
 .	O
 
@@ -3020,24 +3020,24 @@ shrimp	I-ASP
 appetizer	I-ASP
 )	I-ASP
 is	O
-divine	O
+divine	B-OP
 .	O
 
 Finally	O
 ,	O
 I	O
 got	O
-sick	O
-of	O
+sick	B-OP
+of	I-OP
 the	O
-bad	O
+bad	B-OP
 service	B-ASP
 ,	O
-obnoxious	O
+obnoxious	B-OP
 smirks	O
 ,	O
 and	O
-snotty	O
+snotty	B-OP
 back	O
 talk	O
 .	O
@@ -3062,7 +3062,7 @@ coin	O
 ,	O
 but	O
 completely	O
-worth	O
+worth	B-OP
 it	O
 ,	O
 especially	O
@@ -3080,16 +3080,16 @@ ordered	O
 lamb	B-ASP
 which	O
 was	O
-perfectly	O
-cooked	O
+perfectly	B-OP
+cooked	I-OP
 and	O
 tasted	O
-awesome	O
+awesome	B-OP
 .	O
 
 i	O
 especially	O
-like	O
+like	B-OP
 their	O
 soft	B-ASP
 shell	I-ASP
@@ -3104,7 +3104,7 @@ you	O
 're	O
 looking	O
 for	O
-authentic	O
+authentic	B-OP
 hong	B-ASP
 kong-style	I-ASP
 food	I-ASP
@@ -3133,9 +3133,9 @@ the	O
 UES	O
 .	O
 
-good	O
+good	B-OP
 food	B-ASP
-good	O
+good	B-OP
 wine	B-ASP
 that	O
 's	O
@@ -3143,7 +3143,7 @@ it	O
 .	O
 
 A	O
-nice	O
+nice	B-OP
 find	O
 in	O
 the	O
@@ -3154,9 +3154,9 @@ The	O
 staff	B-ASP
 was	O
 extremely	O
-friendly	O
+friendly	B-OP
 and	O
-pleasant	O
+pleasant	B-OP
 .	O
 
 And	O
@@ -3214,15 +3214,15 @@ their	O
 kitchen	B-ASP
 food	I-ASP
 is	O
-delicious	O
+delicious	B-OP
 ,	O
 their	O
 Sushi	B-ASP
 is	O
-out	O
-of	O
-this	O
-world	O
+out	B-OP
+of	I-OP
+this	I-OP
+world	I-OP
 .	O
 
 There	O
@@ -3255,28 +3255,28 @@ coats	O
 
 everything	O
 is	O
-scrumptious	O
+scrumptious	B-OP
 ,	O
 from	O
 the	O
-excellent	O
+excellent	B-OP
 service	B-ASP
 by	O
-cute	O
+cute	B-OP
 waitresses	B-ASP
 ,	O
 to	O
 the	O
 extremely	O
-lush	O
+lush	B-OP
 atmosphere	B-ASP
 .	O
 
 It	O
 's	O
-traditional	O
+traditional	B-OP
 ,	O
-simple	O
+simple	B-OP
 italian	B-ASP
 food	I-ASP
 .	O
@@ -3300,13 +3300,13 @@ The	O
 food	B-ASP
 is	O
 all-around	O
-good	O
+good	B-OP
 ,	O
 with	O
 the	O
 rolls	B-ASP
 usually	O
-excellent	O
+excellent	B-OP
 and	O
 the	O
 sushi/sashimi	B-ASP
@@ -3325,7 +3325,7 @@ is	O
 cut	O
 a	O
 little	O
-thinly	O
+thinly	B-OP
 .	O
 
 Bay	O
@@ -3375,13 +3375,13 @@ money	O
 In	O
 addition	O
 to	O
-great	O
+great	B-OP
 hot	B-ASP
 dogs	I-ASP
 ,	O
 DOTP	O
 has	O
-wonderful	O
+wonderful	B-OP
 breakfast	B-ASP
 sandwiches	I-ASP
 that	O
@@ -3390,7 +3390,7 @@ feature	O
 in	O
 addition	O
 to	O
-great	O
+great	B-OP
 things	O
 like	O
 tator	B-ASP
@@ -3400,7 +3400,7 @@ English	B-ASP
 muffins	I-ASP
 ,	O
 a	O
-delicious	O
+delicious	B-OP
 NJ-based	O
 pork	O
 product	O
@@ -3434,11 +3434,11 @@ happened	O
 because	O
 of	O
 a	O
-graceless	O
+graceless	B-OP
 manager	B-ASP
 and	O
 a	O
-rude	O
+rude	B-OP
 bartender	B-ASP
 who	O
 had	O
@@ -3463,7 +3463,7 @@ only	O
 is	O
 the	O
 service	B-ASP
-great	O
+great	B-OP
 ,	O
 but	O
 forming	O
@@ -3473,16 +3473,16 @@ a	O
 table	O
 is	O
 so	O
-easy	O
+easy	B-OP
 beacuse	O
 the	O
 atmosphere	B-ASP
 can	O
 be	O
 both	O
-romantic	O
+romantic	B-OP
 and	O
-comfortable	O
+comfortable	B-OP
 .	O
 
 When	O
@@ -3498,7 +3498,7 @@ chillis	I-ASP
 ,	O
 definitely	O
 not	O
-edible	O
+edible	B-OP
 by	O
 a	O
 human	O
@@ -3506,7 +3506,7 @@ human	O
 
 The	O
 absolute	O
-worst	O
+worst	B-OP
 service	B-ASP
 I	O
 've	O
@@ -3516,8 +3516,8 @@ and	O
 the	O
 food	B-ASP
 was	O
-below	O
-average	O
+below	B-OP
+average	I-OP
 (	O
 when	O
 they	O
@@ -3551,7 +3551,7 @@ are	O
 by	O
 far	O
 the	O
-BEST	O
+BEST	B-OP
 past	O
 in	O
 New	O
@@ -3574,7 +3574,7 @@ performance	O
 Everything	O
 is	O
 very	O
-cheap	O
+cheap	B-OP
 .	O
 
 Be	O
@@ -3595,23 +3595,23 @@ concoctions	I-ASP
 The	O
 food	B-ASP
 is	O
-great	O
+great	B-OP
 and	O
 the	O
 prices	B-ASP
 are	O
-reasonable	O
+reasonable	B-OP
 .	O
 
 The	O
 place	B-ASP
 is	O
-clean	O
+clean	B-OP
 ,	O
 and	O
 if	O
 you	O
-like	O
+like	B-OP
 soul	B-ASP
 food	I-ASP
 ,	O
@@ -3684,12 +3684,12 @@ They	O
 have	O
 a	O
 very	O
-good	O
+good	B-OP
 chicken	B-ASP
 with	I-ASP
 avocado	I-ASP
 and	O
-good	O
+good	B-OP
 tuna	B-ASP
 as	O
 well	O
@@ -3711,15 +3711,15 @@ But	O
 the	O
 meals	B-ASP
 were	O
-terrible	O
+terrible	B-OP
 .	O
 
 My	O
 chicken	B-ASP
 was	O
 completely	O
-dried	O
-out	O
+dried	B-OP
+out	I-OP
 and	O
 on	O
 the	O
@@ -3731,7 +3731,7 @@ sauce	B-ASP
 was	O
 not	O
 very	O
-flavorful	O
+flavorful	B-OP
 .	O
 
 Malted	B-ASP
@@ -3750,7 +3750,7 @@ of	O
 anything	O
 so	O
 ridiculously	O
-wonderful	O
+wonderful	B-OP
 ?	O
 
 just	O
@@ -3774,19 +3774,19 @@ publications	O
 .	O
 
 Way	O
-too	O
-much	O
+too	B-OP
+much	I-OP
 money	O
 for	O
 such	O
 a	O
-terrible	O
+terrible	B-OP
 meal	B-ASP
 .	O
 
 Would	O
 not	O
-recommend	O
+recommend	B-OP
 anyone	O
 to	O
 go	O
@@ -3798,14 +3798,14 @@ the	O
 service	B-ASP
 is	O
 absolutely	O
-horrible	O
+horrible	B-OP
 .	O
 
 A	O
 con	O
 was	O
 the	O
-slow	O
+slow	B-OP
 bar	B-ASP
 service	I-ASP
 .	O
@@ -3814,8 +3814,8 @@ Dessert	B-ASP
 was	O
 also	O
 to	O
-die	O
-for	O
+die	B-OP
+for	I-OP
 !	O
 
 BTW	O
@@ -3824,11 +3824,11 @@ the	O
 service	B-ASP
 is	O
 very	O
-good	O
+good	B-OP
 .	O
 
 We	O
-loved	O
+loved	B-OP
 it	O
 and	O
 will	O
@@ -3849,7 +3849,7 @@ again	O
 had	O
 a	O
 very	O
-nice	O
+nice	B-OP
 experience	O
 .	O
 
@@ -3865,7 +3865,7 @@ ginger	I-ASP
 .	O
 
 The	O
-unattractive	O
+unattractive	B-OP
 lighting	B-ASP
 made	O
 me	O
@@ -3876,13 +3876,13 @@ gag	O
 the	O
 food	B-ASP
 was	O
-overpriced	O
+overpriced	B-OP
 ,	O
 there	O
 was	O
 the	O
 most	O
-awful	O
+awful	B-OP
 disco	B-ASP
 pop	I-ASP
 duo	I-ASP
@@ -3910,7 +3910,7 @@ again	O
 This	O
 is	O
 the	O
-best	O
+best	B-OP
 Italian	O
 restaurant	O
 in	O
@@ -3921,7 +3921,7 @@ city	O
 it	O
 is	O
 a	O
-cozy	O
+cozy	B-OP
 place	B-ASP
 to	O
 go	O
@@ -3936,7 +3936,7 @@ The	O
 service	B-ASP
 is	O
 always	O
-great	O
+great	B-OP
 ,	O
 and	O
 the	O
@@ -3973,7 +3973,7 @@ out	O
 here	O
 .	O
 
-Horrible	O
+Horrible	B-OP
 experience	O
 -	O
 stay	O
@@ -3998,10 +3998,10 @@ often	O
 the	O
 food	B-ASP
 is	O
-delicious	O
+delicious	B-OP
 and	O
 highly	O
-recommended	O
+recommended	B-OP
 .	O
 
 When	O
@@ -4059,10 +4059,10 @@ the	O
 city	O
 .	O
 
-Over	O
-priced	O
+Over	B-OP
+priced	I-OP
 ,	O
-overrated	O
+overrated	B-OP
 ....	O
 stay	O
 away	O
@@ -4100,7 +4100,7 @@ say	O
 is	O
 they	O
 are	O
-fantastic	O
+fantastic	B-OP
 .	O
 
 Dieters	O
@@ -4117,9 +4117,9 @@ platters	I-ASP
 So	O
 for	O
 a	O
-filling	O
+filling	B-OP
 and	O
-healthy	O
+healthy	B-OP
 meal	B-ASP
 give	O
 it	O
@@ -4184,7 +4184,7 @@ living	O
 I	O
 'm	O
 very	O
-fussy	O
+fussy	B-OP
 about	O
 the	O
 food	B-ASP
@@ -4197,7 +4197,7 @@ restaurants	O
 The	O
 service	B-ASP
 was	O
-outstanding	O
+outstanding	B-OP
 .	O
 
 I	O
@@ -4226,7 +4226,7 @@ theater	O
 
 We	O
 always	O
-enjoy	O
+enjoy	B-OP
 the	O
 pizza	B-ASP
 .	O
@@ -4235,7 +4235,7 @@ The	O
 service	B-ASP
 is	O
 pretty	O
-good	O
+good	B-OP
 .	O
 
 I	O
@@ -4266,13 +4266,13 @@ Yum	O
 the	O
 chicken	B-ASP
 is	O
-great	O
+great	B-OP
 here	O
 .	O
 
 I	O
 highly	O
-recommend	O
+recommend	B-OP
 this	O
 restaurant	O
 !!	O
@@ -4285,14 +4285,14 @@ about	O
 Trio	O
 to	O
 your	O
-liking	O
+liking	B-OP
 !	O
 
 This	O
 place	O
 was	O
 the	O
-worst	O
+worst	B-OP
 .	O
 
 I	O
@@ -4306,7 +4306,7 @@ week	O
 This	O
 is	O
 a	O
-nice	O
+nice	B-OP
 sushi	O
 restaurant	O
 in	O
@@ -4329,7 +4329,7 @@ The	O
 food	B-ASP
 here	O
 was	O
-great	O
+great	B-OP
 ,	O
 a	O
 treat	O
@@ -4347,9 +4347,9 @@ owner	I-ASP
 and	O
 servers	B-ASP
 are	O
-personable	O
+personable	B-OP
 and	O
-caring	O
+caring	B-OP
 .	O
 
 I	O
@@ -4381,9 +4381,9 @@ atmosphere	B-ASP
 ...	O
 the	O
 incrediby	O
-kind	O
+kind	B-OP
 and	O
-gracious	O
+gracious	B-OP
 hostess	B-ASP
 .	O
 
@@ -4400,12 +4400,12 @@ The	O
 food	B-ASP
 is	O
 very	O
-good	O
+good	B-OP
 and	O
 the	O
 service	B-ASP
 is	O
-great	O
+great	B-OP
 .	O
 
 I	O
@@ -4459,11 +4459,11 @@ make	O
 our	O
 dining	B-ASP
 experience	I-ASP
-miserable	O
+miserable	B-OP
 ?	O
 
 Too	O
-bad	O
+bad	B-OP
 ,	O
 has	O
 a	O
@@ -4476,7 +4476,7 @@ This	O
 place	O
 has	O
 the	O
-best	O
+best	B-OP
 Indian	B-ASP
 food	I-ASP
 in	O
@@ -4491,9 +4491,9 @@ The	O
 waiters	B-ASP
 are	O
 very	O
-friendly	O
+friendly	B-OP
 and	O
-helpful	O
+helpful	B-OP
 and	O
 if	O
 you	O
@@ -4504,15 +4504,15 @@ remember	O
 you	O
 .	O
 
-Intimate	O
+Intimate	B-OP
 but	O
-charming	O
+charming	B-OP
 interior	B-ASP
 with	O
 extremely	O
-friendly	O
+friendly	B-OP
 and	O
-attentive	O
+attentive	B-OP
 service	B-ASP
 .	O
 
@@ -4520,7 +4520,7 @@ The	O
 food	B-ASP
 was	O
 as	O
-creative	O
+creative	B-OP
 as	O
 the	O
 decor	B-ASP
@@ -4558,7 +4558,7 @@ Siam	O
 Square	O
 was	O
 very	O
-pleasant	O
+pleasant	B-OP
 .	O
 
 I	O
@@ -4576,18 +4576,18 @@ everytime	O
 I	O
 am	O
 very	O
-satisfied	O
+satisfied	B-OP
 overall	O
 .	O
 
 The	O
 menu	B-ASP
 is	O
-great	O
+great	B-OP
 ,	O
 with	O
 a	O
-good	O
+good	B-OP
 selection	B-ASP
 ,	O
 and	O
@@ -4598,7 +4598,7 @@ have	O
 tried	O
 is	O
 absolutely	O
-delicious	O
+delicious	B-OP
 .	O
 
 We	O
@@ -4612,12 +4612,12 @@ Caminos	O
 and	O
 it	O
 was	O
-wonderful	O
+wonderful	B-OP
 .	O
 
 My	O
 personal	O
-favorite	O
+favorite	B-OP
 is	O
 Nick	O
 and	O
@@ -4628,23 +4628,23 @@ Joe	O
 The	O
 sauce	B-ASP
 is	O
-zesty	O
+zesty	B-OP
 and	O
-flavorful	O
+flavorful	B-OP
 and	O
 the	O
 crust	B-ASP
 is	O
-nice	O
+nice	B-OP
 and	O
-crispy	O
+crispy	B-OP
 .	O
 
 This	O
 place	O
 has	O
 the	O
-best	O
+best	B-OP
 sushi	B-ASP
 in	O
 the	O
@@ -4654,7 +4654,7 @@ city	O
 They	O
 have	O
 an	O
-excellent	O
+excellent	B-OP
 selection	B-ASP
 (	O
 the	O
@@ -4663,7 +4663,7 @@ with	I-ASP
 crab	I-ASP
 are	O
 really	O
-great	O
+great	B-OP
 )	O
 .	O
 
@@ -4683,17 +4683,17 @@ servers	B-ASP
 )	O
 is	O
 so	O
-helpful	O
+helpful	B-OP
 .	O
 
 And	O
 the	O
 food	B-ASP
 is	O
-fantastic	O
+fantastic	B-OP
 .	O
 
-Favourites	O
+Favourites	B-OP
 include	O
 :	O
 potato	B-ASP
@@ -4705,13 +4705,13 @@ lamb	B-ASP
 .	O
 
 Another	O
-great	O
+great	B-OP
 thing	O
 about	O
 Glechik-everything	O
 is	O
 very	O
-cheap	O
+cheap	B-OP
 !	O
 
 Unfortunately	O
@@ -4749,7 +4749,7 @@ sandwiches	B-ASP
 are	O
 the	O
 real	O
-star	O
+star	B-OP
 here	O
 .	O
 
@@ -4765,7 +4765,7 @@ quality	O
 port	B-ASP
 provides	O
 the	O
-perfect	O
+perfect	B-OP
 Iberian	O
 ending	O
 .	O
@@ -4779,7 +4779,7 @@ and	O
 I	O
 had	O
 these	O
-wonderful	O
+wonderful	B-OP
 blueberry	B-ASP
 pancakes	I-ASP
 .	O
@@ -4787,7 +4787,7 @@ pancakes	I-ASP
 We	O
 were	O
 so	O
-happy	O
+happy	B-OP
 with	O
 our	O
 food	B-ASP
@@ -4795,7 +4795,7 @@ and	O
 were	O
 even	O
 more	O
-thrilled	O
+thrilled	B-OP
 when	O
 we	O
 saw	O
@@ -4828,7 +4828,7 @@ All	O
 toppings	B-ASP
 are	O
 so	O
-fresh	O
+fresh	B-OP
 you	O
 'd	O
 think	O
@@ -4843,7 +4843,7 @@ the	O
 crust	B-ASP
 is	O
 so	O
-perfect	O
+perfect	B-OP
 ,	O
 that	O
 one	O
@@ -4859,7 +4859,7 @@ made	O
 Quartino	O
 is	O
 my	O
-favoriate	O
+favoriate	B-OP
 resturant	O
 in	O
 NYC	O
@@ -4869,11 +4869,11 @@ We	O
 've	O
 always	O
 gotten	O
-amazing	O
+amazing	B-OP
 service	B-ASP
 and	O
 we	O
-love	O
+love	B-OP
 the	O
 food	B-ASP
 .	O
@@ -4881,9 +4881,9 @@ food	B-ASP
 The	O
 waitstaff	B-ASP
 is	O
-solicitous	O
+solicitous	B-OP
 and	O
-friendly	O
+friendly	B-OP
 and	O
 always	O
 seems	O
@@ -4896,7 +4896,7 @@ and	O
 the	O
 food	B-ASP
 is	O
-wonderful	O
+wonderful	B-OP
 ,	O
 if	O
 not	O
@@ -4907,7 +4907,7 @@ creative	O
 I	O
 'm	O
 in	O
-love	O
+love	B-OP
 with	O
 the	O
 lobster	B-ASP
@@ -4956,14 +4956,14 @@ art	O
 festival	O
 and	O
 thoroughly	O
-enjoyed	O
+enjoyed	B-OP
 our	O
 meal	B-ASP
 .	O
 
 Service	B-ASP
 is	O
-excellent	O
+excellent	B-OP
 ,	O
 no	O
 wait	O
@@ -4984,7 +4984,7 @@ the	O
 food	B-ASP
 is	O
 n't	O
-cheap	O
+cheap	B-OP
 at	O
 all	O
 compared	O
@@ -5008,10 +5008,10 @@ leave	O
 Coffee	B-ASP
 is	O
 a	O
-better	O
+better	B-OP
 deal	O
 than	O
-overpriced	O
+overpriced	B-OP
 Cosi	B-ASP
 sandwiches	I-ASP
 .	O
@@ -5030,7 +5030,7 @@ or	O
 leave	O
 ?	O
 
-great	O
+great	B-OP
 neighbhorhood	O
 spot	O
 .	O
@@ -5040,7 +5040,7 @@ V	O
 's	O
 is	O
 a	O
-great	O
+great	B-OP
 place	O
 to	O
 take	O
@@ -5068,15 +5068,15 @@ it	O
 's	O
 a	O
 pretty	O
-solid	O
+solid	B-OP
 one	O
 for	O
 its	O
-modest	O
+modest	B-OP
 prices	B-ASP
 ,	O
 and	O
-worth	O
+worth	B-OP
 repeat	O
 visits	O
 .	O
@@ -5085,17 +5085,17 @@ The	O
 food	B-ASP
 is	O
 so	O
-good	O
+good	B-OP
 and	O
 so	O
-popular	O
+popular	B-OP
 that	O
 waiting	B-ASP
 can	O
 really	O
 be	O
 a	O
-nightmare	O
+nightmare	B-OP
 .	O
 
 Here	O
@@ -5136,7 +5136,7 @@ the	O
 restaurant	O
 is	O
 very	O
-cramped	O
+cramped	B-OP
 ,	O
 but	O
 it	O
@@ -5161,7 +5161,7 @@ think	O
 this	O
 a	O
 a	O
-wonderful	O
+wonderful	B-OP
 place	O
 .	O
 
@@ -5173,7 +5173,7 @@ place	B-ASP
 seemed	O
 to	O
 have	O
-great	O
+great	B-OP
 ambience	B-ASP
 .	O
 
@@ -5233,7 +5233,7 @@ hungry	O
 people	O
 there	O
 is	O
-plenty	O
+plenty	B-OP
 of	O
 food	B-ASP
 left	O
@@ -5263,7 +5263,7 @@ not	O
 be	O
 everyone	O
 's	O
-favorite	O
+favorite	B-OP
 ,	O
 but	O
 it	O
@@ -5275,7 +5275,7 @@ The	O
 help	O
 was	O
 extremely	O
-nice	O
+nice	B-OP
 and	O
 did	O
 not	O
@@ -5288,9 +5288,9 @@ they	O
 somehow	O
 made	O
 a	O
-dry	O
+dry	B-OP
 and	O
-burnt	O
+burnt	B-OP
 crust	B-ASP
 ,	O
 around	O
@@ -5304,7 +5304,7 @@ inside	O
 It	O
 's	O
 just	O
-good	O
+good	B-OP
 food	B-ASP
 ,	O
 nothing	O
@@ -5331,7 +5331,7 @@ LIKE	O
 BUT	O
 WE	O
 WERE	O
-PLEASED	O
+PLEASED	B-OP
 WITH	O
 OUR	O
 CHOICE	O
@@ -5351,12 +5351,12 @@ hype	O
 
 It	O
 's	O
-cute	O
+cute	B-OP
 and	O
-simple	O
+simple	B-OP
 and	O
 I	O
-loved	O
+loved	B-OP
 it	O
 .	O
 
@@ -5373,14 +5373,14 @@ dinner	B-ASP
 and	O
 had	O
 a	O
-wonderful	O
+wonderful	B-OP
 experience	O
 .	O
 
 THE	O
 SERVICE	B-ASP
 IS	O
-PERFECT	O
+PERFECT	B-OP
 TOO	O
 NOTHING	O
 WRONG	O
@@ -5421,8 +5421,8 @@ back	O
 because	O
 it	O
 was	O
-not	O
-cooked	O
+not	B-OP
+cooked	I-OP
 to	O
 order	O
 .	O
@@ -5471,21 +5471,21 @@ The	O
 service	B-ASP
 is	O
 really	O
-fast	O
+fast	B-OP
 and	O
-friendly	O
+friendly	B-OP
 ,	O
 and	O
 the	O
 value	B-ASP
 is	O
-great	O
+great	B-OP
 .	O
 
 We	O
 were	O
 very	O
-impressed	O
+impressed	B-OP
 with	O
 the	O
 food	B-ASP
@@ -5503,7 +5503,7 @@ soup	I-ASP
 
 Casablanca	O
 servces	O
-delicious	O
+delicious	B-OP
 falafel	B-ASP
 ,	O
 tabouleh	B-ASP
@@ -5518,7 +5518,7 @@ which	O
 are	O
 all	O
 very	O
-inexpensive	O
+inexpensive	B-OP
 .	O
 
 Even	O
@@ -5541,14 +5541,14 @@ pizza	B-ASP
 's	I-ASP
 are	O
 made	O
-fresh	O
+fresh	B-OP
 ,	O
-crispy	O
+crispy	B-OP
 ,	O
 and	O
-ready	O
-to	O
-serve	O
+ready	B-OP
+to	I-OP
+serve	I-OP
 .	O
 
 There	O
@@ -5564,14 +5564,14 @@ area	O
 and	O
 I	O
 wholheartedly	O
-recommend	O
+recommend	B-OP
 this	O
 one	O
 .	O
 
 Staff	B-ASP
 is	O
-accomodating	O
+accomodating	B-OP
 make	O
 sure	O
 you	O
@@ -5594,7 +5594,7 @@ the	O
 ruff	O
 is	O
 definitely	O
-worth	O
+worth	B-OP
 my	O
 10-minute	O
 walk	O
@@ -5629,7 +5629,7 @@ Palate	O
 is	O
 easily	O
 my	O
-favorite	O
+favorite	B-OP
 .	O
 
 Don	O
@@ -5639,15 +5639,15 @@ is	O
 one	O
 of	O
 my	O
-favorite	O
+favorite	B-OP
 restaurants	O
 .	O
 
-Reasonably	O
+Reasonably	B-OP
 priced	O
 with	O
 very	O
-fresh	O
+fresh	B-OP
 sushi	B-ASP
 .	O
 
@@ -5665,13 +5665,13 @@ of	O
 the	O
 apetizers	B-ASP
 are	O
-good	O
+good	B-OP
 and	O
 the	O
 Sangria	B-ASP
 is	O
 very	O
-good	O
+good	B-OP
 .	O
 
 Cantinetta	O
@@ -5700,7 +5700,7 @@ that	O
 the	O
 service	B-ASP
 was	O
-prompt	O
+prompt	B-OP
 ,	O
 we	O
 got	O
@@ -5712,14 +5712,14 @@ the	O
 server	B-ASP
 was	O
 very	O
-friendly	O
+friendly	B-OP
 .	O
 
 The	O
 staff	B-ASP
 greeted	O
 me	O
-warmly	O
+warmly	B-OP
 at	O
 the	O
 door	O
@@ -5727,12 +5727,12 @@ and	O
 I	O
 was	O
 seated	O
-promptly	O
+promptly	B-OP
 and	O
 the	O
 food	B-ASP
 was	O
-excellent	O
+excellent	B-OP
 .	O
 
 Whether	O
@@ -5750,7 +5750,7 @@ subjective	O
 .	O
 
 Really	O
-nice	O
+nice	B-OP
 restaurant	O
 to	O
 go	O
@@ -5767,7 +5767,7 @@ Service	B-ASP
 is	O
 usually	O
 pretty	O
-good	O
+good	B-OP
 .	O
 
 Host	B-ASP
@@ -5775,7 +5775,7 @@ and	O
 Hostess	B-ASP
 was	O
 quite	O
-rude	O
+rude	B-OP
 .	O
 
 You	O
@@ -5804,7 +5804,7 @@ wait	B-ASP
 staff	I-ASP
 is	O
 very	O
-friendly	O
+friendly	B-OP
 ,	O
 if	O
 your	O
@@ -5820,12 +5820,12 @@ Leon	O
 last	O
 weekend	O
 was	O
-great	O
+great	B-OP
 -	O
 .	O
 
 I	O
-recommend	O
+recommend	B-OP
 any	O
 of	O
 their	O
@@ -5837,9 +5837,9 @@ The	O
 foie	B-ASP
 gras	I-ASP
 was	O
-sweet	O
+sweet	B-OP
 and	O
-luscious	O
+luscious	B-OP
 .	O
 
 The	O
@@ -5862,7 +5862,7 @@ their	O
 mac	B-ASP
 cheese	I-ASP
 was	O
-YUMMY	O
+YUMMY	B-OP
 !	O
 
 their	O
@@ -5878,7 +5878,7 @@ jazz	B-ASP
 singer	I-ASP
 had	O
 a	O
-nice	O
+nice	B-OP
 voice	O
 +	O
 she	O
@@ -5927,11 +5927,11 @@ area	O
 They	O
 have	O
 very	O
-quick	O
+quick	B-OP
 service	B-ASP
 which	O
 is	O
-great	O
+great	B-OP
 when	O
 you	O
 do	O
@@ -5944,7 +5944,7 @@ time	O
 The	O
 food	B-ASP
 is	O
-average	O
+average	B-OP
 :	O
 breakfast	B-ASP
 food	I-ASP
@@ -5961,7 +5961,7 @@ etc	O
 I	O
 WAS	O
 HIGHLY	O
-DISAPPOINTED	O
+DISAPPOINTED	B-OP
 BY	O
 THE	O
 FOOD	B-ASP
@@ -5982,8 +5982,8 @@ THE	O
 CRABCAKES	B-ASP
 ARE	O
 WAY	O
-OVER	O
-SALTED	O
+OVER	B-OP
+SALTED	I-OP
 AND	O
 DO	O
 N'T	O
@@ -5993,7 +5993,7 @@ STARTED	O
 ON	O
 THE	O
 VERY	O
-GREASY	O
+GREASY	B-OP
 MAC	B-ASP
 AND	I-ASP
 CHEESE	I-ASP
@@ -6002,13 +6002,13 @@ CHEESE	I-ASP
 The	O
 staff	B-ASP
 is	O
-arrogant	O
+arrogant	B-OP
 ,	O
 the	O
 prices	B-ASP
 are	O
 way	O
-high	O
+high	B-OP
 for	O
 Brooklyn	O
 .	O
@@ -6016,7 +6016,7 @@ Brooklyn	O
 This	O
 place	O
 is	O
-average	O
+average	B-OP
 ...	O
 at	O
 best	O
@@ -6025,8 +6025,8 @@ best	O
 the	O
 service	B-ASP
 is	O
-prompt	O
-friendly	O
+prompt	B-OP
+friendly	B-OP
 .	O
 
 Whatever	O
@@ -6045,8 +6045,8 @@ This	O
 is	O
 literally	O
 a	O
-hot	O
-spot	O
+hot	B-OP
+spot	I-OP
 when	O
 it	O
 comes	O
@@ -6061,16 +6061,16 @@ bar	I-ASP
 scene	I-ASP
 is	O
 very	O
-cool	O
+cool	B-OP
 and	O
-chill	O
+chill	B-OP
 ...	O
 
 The	O
 food	B-ASP
 was	O
 definitely	O
-good	O
+good	B-OP
 ,	O
 but	O
 when	O
@@ -6117,7 +6117,7 @@ birthday	O
 and	O
 I	O
 always	O
-enjoy	O
+enjoy	B-OP
 myself	O
 .	O
 
@@ -6131,10 +6131,10 @@ you	O
 will	O
 not	O
 be	O
-disappointed	O
+disappointed	B-OP
 .	O
 
-Great	O
+Great	B-OP
 beer	B-ASP
 selection	I-ASP
 too	O
@@ -6173,7 +6173,7 @@ too	O
 negative	O
 but	O
 be	O
-wary	O
+wary	B-OP
 of	O
 the	O
 delivary	B-ASP
@@ -6196,7 +6196,7 @@ to	O
 be	O
 just	O
 as	O
-good	O
+good	B-OP
 as	O
 its	O
 owner	B-ASP
@@ -6205,9 +6205,9 @@ Da	O
 Silvano	O
 ,	O
 just	O
-much	O
-less	O
-expensive	O
+much	B-OP
+less	I-OP
+expensive	I-OP
 .	O
 
 They	O
@@ -6219,31 +6219,31 @@ all	O
 kinds	O
 --	O
 I	O
-recommend	O
+recommend	B-OP
 the	O
 gnocchi	B-ASP
 --	O
-yum	O
+yum	B-OP
 !	O
 
 My	O
 vegetable	B-ASP
 risotto	I-ASP
 was	O
-burnt	O
+burnt	B-OP
 ,	O
 and	O
 infused	O
 totally	O
 in	O
 a	O
-burnt	O
+burnt	B-OP
 flavor	B-ASP
 .	O
 
 What	O
 a	O
-pleasant	O
+pleasant	B-OP
 surprise	O
 !	O
 
@@ -6276,7 +6276,7 @@ dinner	B-ASP
 here	O
 is	O
 never	O
-disappointing	O
+disappointing	B-OP
 ,	O
 even	O
 if	O
@@ -6285,9 +6285,9 @@ prices	B-ASP
 are	O
 a	O
 bit	O
-over	O
-the	O
-top	O
+over	B-OP
+the	I-OP
+top	I-OP
 .	O
 
 Not	O
@@ -6295,7 +6295,7 @@ only	O
 did	O
 they	O
 have	O
-amazing	O
+amazing	B-OP
 ,	O
 sandwiches	B-ASP
 ,	O
@@ -6309,10 +6309,10 @@ their	O
 homemade	B-ASP
 sorbets	I-ASP
 are	O
-out	O
-of	O
-this	O
-world	O
+out	B-OP
+of	I-OP
+this	I-OP
+world	I-OP
 !	O
 
 the	O
@@ -6320,32 +6320,32 @@ homemade	B-ASP
 Guacamole	I-ASP
 ,	O
 the	O
-unbelievable	O
+unbelievable	B-OP
 entree	B-ASP
 ,	O
 and	O
 thee	O
 most	O
-amazing	O
+amazing	B-OP
 deserts	B-ASP
 .	O
 
 The	O
 sushi	B-ASP
 is	O
-reasonably	O
+reasonably	B-OP
 priced	B-ASP
 and	O
-fresh	O
+fresh	B-OP
 .	O
 
 It	O
 's	O
-no-fuss	O
+no-fuss	B-OP
 ,	O
-fast	O
+fast	B-OP
 and	O
-delicious	O
+delicious	B-OP
 .	O
 
 Save	O
@@ -6356,8 +6356,8 @@ deserts	B-ASP
 they	O
 're	O
 to	O
-die	O
-for	O
+die	B-OP
+for	I-OP
 .	O
 
 Best	O
@@ -6380,14 +6380,14 @@ traditional	B-ASP
 Italian	I-ASP
 items	I-ASP
 are	O
-great	O
+great	B-OP
 -	O
-cheap	O
+cheap	B-OP
 and	O
 served	O
 in	O
 a	O
-cozy	O
+cozy	B-OP
 setting	B-ASP
 .	O
 
@@ -6409,7 +6409,7 @@ sure	O
 to	O
 be	O
 extremely	O
-happy	O
+happy	B-OP
 .	O
 
 last	O
@@ -6425,13 +6425,13 @@ friend	O
 
 It	O
 was	O
-delish	O
+delish	B-OP
 and	O
 I	O
 did	O
 n't	O
 feel	O
-bad	O
+bad	B-OP
 eating	O
 it	O
 .	O
@@ -6475,14 +6475,14 @@ service	B-ASP
 was	O
 a	O
 bit	O
-slow	O
+slow	B-OP
 and	O
 the	O
 portions	B-ASP
 are	O
 a	O
 bit	O
-small	O
+small	B-OP
 so	O
 if	O
 you	O
@@ -6536,7 +6536,7 @@ destination	O
 
 i	O
 would	O
-recommend	O
+recommend	B-OP
 Jewel	O
 Bako	O
 if	O
@@ -6564,11 +6564,11 @@ The	O
 ambiance	B-ASP
 was	O
 pretty	O
-cool	O
+cool	B-OP
 ,	O
 but	O
 not	O
-worth	O
+worth	B-OP
 the	O
 hassle	O
 .	O
@@ -6605,7 +6605,7 @@ Nidos	O
 one	O
 of	O
 the	O
-best	O
+best	B-OP
 restaurants	O
 in	O
 New	O
@@ -6619,13 +6619,13 @@ to	O
 ,	O
 has	O
 a	O
-great	O
+great	B-OP
 variety	O
 of	O
-tasty	O
+tasty	B-OP
 ,	O
-mouth	O
-watering	O
+mouth	B-OP
+watering	I-OP
 pizza	B-ASP
 's	I-ASP
 .	O
@@ -6634,7 +6634,7 @@ The	O
 service	B-ASP
 was	O
 pretty	O
-poor	O
+poor	B-OP
 all	O
 around	O
 ,	O
@@ -6642,8 +6642,8 @@ the	O
 food	B-ASP
 was	O
 well	O
-below	O
-average	O
+below	B-OP
+average	I-OP
 relative	O
 to	O
 the	O
@@ -6681,14 +6681,14 @@ as	O
 possible	O
 for	O
 the	O
-GREAT	O
-cheap	O
+GREAT	B-OP
+cheap	B-OP
 food	B-ASP
 and	O
 to	O
 pay	O
 the	O
-friendly	O
+friendly	B-OP
 staff	B-ASP
 a	O
 visit	O
@@ -6736,12 +6736,12 @@ looking	O
 to	O
 taste	O
 some	O
-great	O
+great	B-OP
 Indian	B-ASP
 food	I-ASP
 and	O
 want	O
-good	O
+good	B-OP
 service	B-ASP
 ,	O
 definitely	O
@@ -6797,7 +6797,7 @@ and	O
 I	O
 left	O
 feeling	O
-satisfied	O
+satisfied	B-OP
 (	O
 not	O
 stuffed	O
@@ -6805,13 +6805,13 @@ stuffed	O
 and	O
 it	O
 felt	O
-good	O
+good	B-OP
 to	O
 know	O
 we	O
 had	O
 a	O
-healthy	O
+healthy	B-OP
 lunch	B-ASP
 .	O
 
@@ -6874,8 +6874,8 @@ of	I-ASP
 the	I-ASP
 meat	I-ASP
 was	O
-on	O
-par	O
+on	B-OP
+par	I-OP
 with	O
 your	O
 local	O
@@ -6907,7 +6907,7 @@ back	O
 .	O
 
 I	O
-recommend	O
+recommend	B-OP
 the	O
 black	B-ASP
 roasted	I-ASP
@@ -6916,7 +6916,7 @@ codfish	I-ASP
 it	O
 was	O
 the	O
-best	O
+best	B-OP
 dish	B-ASP
 of	O
 the	O
@@ -6943,7 +6943,7 @@ time	O
 we	O
 were	O
 so	O
-annoyed	O
+annoyed	B-OP
 with	O
 the	O
 waiter	B-ASP
@@ -6968,7 +6968,7 @@ here	O
 was	O
 nothing	O
 but	O
-dark	O
+dark	B-OP
 chicken	O
 that	O
 had	O
@@ -6982,7 +6982,7 @@ warmed	O
 up	O
 in	O
 a	O
-microwave	O
+microwave	B-OP
 taste	B-ASP
 .	O
 
@@ -6991,7 +6991,7 @@ busy	O
 hrs	O
 ,	O
 i	O
-recommend	O
+recommend	B-OP
 that	O
 you	O
 make	O
@@ -7011,7 +7011,7 @@ money	O
 
 it	O
 's	O
-good	O
+good	B-OP
 but	O
 ,	O
 like	O
@@ -7020,7 +7020,7 @@ movie	O
 is	O
 never	O
 as	O
-good	O
+good	B-OP
 as	O
 the	O
 book	O
@@ -7035,7 +7035,7 @@ it	O
 was	O
 a	O
 very	O
-warm	O
+warm	B-OP
 experience	O
 .	O
 
@@ -7050,7 +7050,7 @@ and	O
 I	O
 was	O
 so	O
-impressed	O
+impressed	B-OP
 .	O
 
 now	O
@@ -7060,19 +7060,19 @@ sushi	O
 ,	O
 sushi	B-ASP
 is	O
-OK	O
+OK	B-OP
 .	O
 
 The	O
 food	B-ASP
 is	O
 also	O
-outstanding	O
+outstanding	B-OP
 and	O
 is	O
 served	B-ASP
 quite	O
-quickly	O
+quickly	B-OP
 .	O
 
 I	O
@@ -7093,7 +7093,7 @@ it	O
 's	O
 not	O
 a	O
-cheap	O
+cheap	B-OP
 night	O
 out	O
 ...	O
@@ -7101,7 +7101,7 @@ but	O
 it	O
 's	O
 SO	O
-worth	O
+worth	B-OP
 it	O
 .	O
 
@@ -7126,20 +7126,20 @@ are	O
 all	O
 handled	O
 with	O
-delicate	O
+delicate	B-OP
 care	O
 .	O
 
 The	O
 food	B-ASP
 is	O
-delicious	O
+delicious	B-OP
 and	O
 the	O
 bar	B-ASP
 has	O
 a	O
-great	O
+great	B-OP
 vibe	B-ASP
 .	O
 
@@ -7164,7 +7164,7 @@ music	B-ASP
 
 It	O
 's	O
-nice	O
+nice	B-OP
 to	O
 find	O
 a	O
@@ -7182,18 +7182,18 @@ Brooklyn	O
 )	O
 .	O
 
-Simple	O
-healthy	O
-unglamorous	O
+Simple	B-OP
+healthy	B-OP
+unglamorous	B-OP
 food	B-ASP
-cheap	O
+cheap	B-OP
 .	O
 
 It	O
 was	O
 such	O
 a	O
-fantastic	O
+fantastic	B-OP
 dining	B-ASP
 experience	I-ASP
 ,	O
@@ -7214,32 +7214,32 @@ the	O
 food	B-ASP
 still	O
 is	O
-good	O
+good	B-OP
 and	O
 the	O
 service	B-ASP
 is	O
-quick	O
+quick	B-OP
 and	O
-attentative	O
+attentative	B-OP
 even	O
 though	O
 its	O
 usually	O
 very	O
-busy	O
+busy	B-OP
 .	O
 
 The	O
 place	B-ASP
 is	O
 absolutely	O
-adorable	O
+adorable	B-OP
 and	O
 the	O
 food	B-ASP
 is	O
-delicious	O
+delicious	B-OP
 .	O
 
 I	O
@@ -7258,7 +7258,7 @@ Shrimp	I-ASP
 I	O
 've	O
 had	O
-better	O
+better	B-OP
 Japanese	B-ASP
 food	I-ASP
 at	O
@@ -7273,7 +7273,7 @@ staff	B-ASP
 members	I-ASP
 are	O
 extremely	O
-friendly	O
+friendly	B-OP
 and	O
 even	O
 replaced	O
@@ -7287,7 +7287,7 @@ it	O
 outside	O
 .	O
 
-Cool	O
+Cool	B-OP
 atmosphere	B-ASP
 but	O
 such	O
@@ -7300,7 +7300,7 @@ The	O
 Sashimi	B-ASP
 portion	I-ASP
 are	O
-big	O
+big	B-OP
 enough	O
 to	O
 appease	O
@@ -7329,25 +7329,25 @@ pizza	I-ASP
 made	O
 with	O
 really	O
-fresh	O
+fresh	B-OP
 and	O
-yummy	O
+yummy	B-OP
 ingredients	B-ASP
 .	O
 
 Had	O
 a	O
-lovely	O
+lovely	B-OP
 dinner	B-ASP
 in	O
 this	O
-dedicated	O
+dedicated	B-OP
 seafood	O
 joint	O
 ,	O
 food	B-ASP
 was	O
-well-prepared	O
+well-prepared	B-OP
 and	O
 -	O
 presented	O
@@ -7355,9 +7355,9 @@ and	O
 the	O
 service	B-ASP
 was	O
-pleasant	O
+pleasant	B-OP
 and	O
-prompt	O
+prompt	B-OP
 .	O
 
 the	O
@@ -7368,15 +7368,15 @@ cake	B-ASP
 ,	O
 it	O
 was	O
-fluffy	O
+fluffy	B-OP
 ,	O
 not	O
-ultra	O
-sweet	O
+ultra	B-OP
+sweet	I-OP
 ,	O
-creamy	O
+creamy	B-OP
 and	O
-light	O
+light	B-OP
 .	O
 
 Finally	O
@@ -7391,11 +7391,11 @@ time	O
 ,	O
 to	O
 buy	O
-expensive	O
+expensive	B-OP
 slices	O
 from	O
 a	O
-harried	O
+harried	B-OP
 staff	B-ASP
 .	O
 
@@ -7411,7 +7411,7 @@ we	O
 were	O
 essentially	O
 being	O
-ignored	O
+ignored	B-OP
 by	O
 the	O
 wait	B-ASP
@@ -7433,9 +7433,9 @@ The	O
 wine	B-ASP
 list	I-ASP
 is	O
-extensive	O
+extensive	B-OP
 ,	O
-well	O
+well	B-OP
 priced	B-ASP
 and	O
 covers	O
@@ -7449,9 +7449,9 @@ here	O
 if	O
 you	O
 want	O
-fresh	O
+fresh	B-OP
 and	O
-tasty	O
+tasty	B-OP
 salads	B-ASP
 of	O
 any	O
@@ -7466,30 +7466,30 @@ about	O
 this	O
 place	O
 is	O
-adorable	O
+adorable	B-OP
 -	O
 even	O
 the	O
 bathroom	B-ASP
 !	O
 
-Speedy	O
+Speedy	B-OP
 delivers	B-ASP
 ,	O
-great	O
+great	B-OP
 food	B-ASP
 ,	O
-decent	O
+decent	B-OP
 prices	B-ASP
 ,	O
 and	O
-friendly	O
+friendly	B-OP
 service	B-ASP
 combine	O
 to	O
 ensure	O
 an	O
-enjoyable	O
+enjoyable	B-OP
 repast	B-ASP
 .	O
 
@@ -7520,7 +7520,7 @@ VISIT	O
 AND	O
 WANTED	O
 AN	O
-AUTHENTIC	O
+AUTHENTIC	B-OP
 ITALIAN	B-ASP
 MEAL	I-ASP
 .	O
@@ -7556,7 +7556,7 @@ year	O
 but	O
 it	O
 was	O
-worth	O
+worth	B-OP
 the	O
 wait	O
 .	O
@@ -7571,8 +7571,8 @@ rare	O
 steak	B-ASP
 .	O
 
-Generously	O
-garnished	O
+Generously	B-OP
+garnished	I-OP
 ,	O
 organic	B-ASP
 grilled	I-ASP
@@ -7580,7 +7580,7 @@ burgers	I-ASP
 are	O
 the	O
 most	O
-popular	O
+popular	B-OP
 dish	B-ASP
 ,	O
 but	O
@@ -7603,13 +7603,13 @@ and	I-ASP
 walnuts	I-ASP
 --	O
 are	O
-equally	O
-scrumptious	O
+equally	B-OP
+scrumptious	I-OP
 .	O
 
 Probably	O
 my	O
-worst	O
+worst	B-OP
 dining	B-ASP
 experience	I-ASP
 in	O
@@ -7638,14 +7638,14 @@ red	O
 velvet	O
 )	O
 :	O
-Great	O
+Great	B-OP
 texture	B-ASP
 ,	O
-soft	O
+soft	B-OP
 and	O
-velvety	O
+velvety	B-OP
 ,	O
-nice	O
+nice	B-OP
 hint	B-ASP
 of	I-ASP
 cocoa	I-ASP
@@ -7672,13 +7672,13 @@ is	O
 heatlhy	O
 ,	O
 but	O
-full	O
-of	O
+full	B-OP
+of	I-OP
 flavor	B-ASP
 .	O
 
 The	O
-lack	O
+lack	B-OP
 of	O
 AC	B-ASP
 and	O
@@ -7710,7 +7710,7 @@ off	O
 .	O
 
 I	O
-love	O
+love	B-OP
 the	O
 Little	O
 Pie	O
@@ -7738,7 +7738,7 @@ location	O
 due	O
 to	O
 their	O
-RUDE	O
+RUDE	B-OP
 service	B-ASP
 from	O
 two	O
@@ -7760,7 +7760,7 @@ it	O
 not	O
 in	O
 a	O
-convenient	O
+convenient	B-OP
 location	B-ASP
 but	O
 is	O
@@ -7797,9 +7797,9 @@ mostly	O
 deep-fried	O
 --	O
 is	O
-simple	O
+simple	B-OP
 and	O
-satisfying	O
+satisfying	B-OP
 .	O
 
 We	O
@@ -7827,8 +7827,8 @@ Glechik	O
 might	O
 be	O
 way	O
-too	O
-tiny	O
+too	B-OP
+tiny	I-OP
 for	O
 a	O
 restaurant	O
@@ -7839,26 +7839,26 @@ standards	O
 but	O
 it	O
 is	O
-cozy	O
+cozy	B-OP
 and	O
 the	O
 food	B-ASP
 is	O
 simply	O
-GREAT	O
+GREAT	B-OP
 .	O
 
 The	O
 food	B-ASP
 was	O
-excellent	O
+excellent	B-OP
 -	O
-authentic	O
+authentic	B-OP
 Italian	B-ASP
 cuisine	I-ASP
 made	O
 absolutely	O
-fresh	O
+fresh	B-OP
 .	O
 
 At	O
@@ -7913,7 +7913,7 @@ not-crowded	O
 place	B-ASP
 ,	O
 with	O
-great	O
+great	B-OP
 food	B-ASP
 and	O
 service	B-ASP
@@ -7929,7 +7929,7 @@ coffee	B-ASP
 which	O
 is	O
 way	O
-better	O
+better	B-OP
 than	O
 Starbucks	O
 or	O
@@ -7958,7 +7958,7 @@ it	O
 .	O
 
 Somewhat	O
-disappointing	O
+disappointing	B-OP
 wine	B-ASP
 list	I-ASP
 (	O
@@ -7970,7 +7970,7 @@ vintages	B-ASP
 Both	O
 were	O
 very	O
-good	O
+good	B-OP
 ,	O
 but	O
 nothing	O
@@ -7988,7 +7988,7 @@ your	O
 looking	O
 for	O
 nasty	O
-high	O
+high	B-OP
 priced	B-ASP
 food	B-ASP
 with	O
@@ -7997,7 +7997,7 @@ dash	O
 of	O
 ghetto	O
 scenery	B-ASP
-cheap	O
+cheap	B-OP
 BX	O
 A$	O
 $	O
@@ -8019,23 +8019,23 @@ ok	O
 -	O
 at	O
 least	O
-better	O
+better	B-OP
 than	O
 big	B-ASP
 mac	I-ASP
 !	O
 
-Perfectly	O
+Perfectly	B-OP
 al	O
 dente	O
 pasta	B-ASP
 ,	O
 not	O
-drowned	O
-in	O
+drowned	B-OP
+in	I-OP
 sauce	B-ASP
 --	O
-generous	O
+generous	B-OP
 portions	B-ASP
 .	O
 
@@ -8061,13 +8061,13 @@ area	O
 
 Service	B-ASP
 was	O
-awful	O
+awful	B-OP
 -	O
 mostly	O
 because	O
 staff	B-ASP
 were	O
-overwhelmed	O
+overwhelmed	B-OP
 on	O
 a	O
 Saturday	O
@@ -8078,7 +8078,7 @@ To	O
 the	O
 owners	B-ASP
 ;	O
-good	O
+good	B-OP
 job	O
 guys	O
 ,	O
@@ -8094,24 +8094,24 @@ the	O
 owner	B-ASP
 is	O
 simply	O
-lovely	O
+lovely	B-OP
 and	O
-friendly	O
+friendly	B-OP
 .	O
 
 This	O
 little	O
 place	B-ASP
 is	O
-wonderfully	O
-warm	O
-welcoming	O
+wonderfully	B-OP
+warm	I-OP
+welcoming	I-OP
 .	O
 
-perfect	O
+perfect	B-OP
 for	O
 a	O
-quick	O
+quick	B-OP
 meal	B-ASP
 .	O
 
@@ -8126,7 +8126,7 @@ yet	O
 it	O
 is	O
 a	O
-great	O
+great	B-OP
 place	B-ASP
 to	O
 watch	O
@@ -8137,14 +8137,14 @@ events	O
 The	O
 service	B-ASP
 was	O
-great	O
+great	B-OP
 ,	O
 and	O
 they	O
 have	O
 a	O
 whole	O
-great	O
+great	B-OP
 deal	O
 for	O
 birthdays	O
@@ -8161,7 +8161,7 @@ the	O
 food	B-ASP
 is	O
 as	O
-authentic	O
+authentic	B-OP
 as	O
 it	O
 gets	O
@@ -8193,10 +8193,10 @@ visited	O
 Kar	O
 .	O
 
-Good	O
+Good	B-OP
 for	O
 a	O
-quick	O
+quick	B-OP
 sushi	B-ASP
 lunch	I-ASP
 .	O
@@ -8215,8 +8215,8 @@ patio	I-ASP
 The	O
 service	B-ASP
 was	O
-dreadfully	O
-slow	O
+dreadfully	B-OP
+slow	I-OP
 (	O
 the	O
 place	O
@@ -8242,7 +8242,7 @@ Saturday	O
 and	O
 had	O
 a	O
-excellent	O
+excellent	B-OP
 meal	B-ASP
 of	O
 consisting	O
@@ -8295,7 +8295,7 @@ there	O
 .	O
 
 I	O
-reccomend	O
+reccomend	B-OP
 the	O
 fried	B-ASP
 pork	I-ASP
@@ -8315,7 +8315,7 @@ You	O
 will	O
 not	O
 be	O
-dissapointed	O
+dissapointed	B-OP
 by	O
 any	O
 of	O
@@ -8335,7 +8335,7 @@ the	I-ASP
 kalmata	I-ASP
 dip	I-ASP
 were	O
-terrific	O
+terrific	B-OP
 !	O
 
 Would	O
@@ -8384,7 +8384,7 @@ of	I-ASP
 wines	I-ASP
 covers	O
 a	O
-wide	O
+wide	B-OP
 variety	O
 without	O
 being	O
@@ -8422,7 +8422,7 @@ They	O
 also	O
 have	O
 a	O
-great	O
+great	B-OP
 assortment	B-ASP
 of	I-ASP
 wraps	I-ASP
@@ -8483,13 +8483,13 @@ and	O
 all	O
 of	O
 it	O
-delicious	O
+delicious	B-OP
 .	O
 
-Disappointingly	O
+Disappointingly	B-OP
 ,	O
 their	O
-wonderful	O
+wonderful	B-OP
 Saketini	B-ASP
 has	O
 been	O
@@ -8539,7 +8539,7 @@ for	O
 some	O
 of	O
 those	O
-exotic	O
+exotic	B-OP
 martinis	B-ASP
 on	O
 the	O
@@ -8556,7 +8556,7 @@ path	O
 but	O
 are	O
 certainly	O
-worth	O
+worth	B-OP
 the	O
 trip	O
 .	O
@@ -8592,7 +8592,7 @@ happy	B-ASP
 hour	I-ASP
 is	O
 so	O
-cheap	O
+cheap	B-OP
 ,	O
 but	O
 that	O
@@ -8641,7 +8641,7 @@ on	O
 avenue	O
 it	O
 is	O
-nice	O
+nice	B-OP
 to	O
 have	O
 one	O
@@ -8649,7 +8649,7 @@ that	O
 is	O
 a	O
 step	O
-above	O
+above	B-OP
 in	O
 quaility	B-ASP
 and	O
@@ -8673,12 +8673,12 @@ there	O
 space	B-ASP
 for	O
 its	O
-quick	O
+quick	B-OP
 ,	O
-tasty	O
+tasty	B-OP
 treats	O
 at	O
-dirt-cheap	O
+dirt-cheap	B-OP
 prices	B-ASP
 .	O
 
@@ -8692,12 +8692,12 @@ is	O
 typical	O
 French	O
 but	O
-varied	O
+varied	B-OP
 .	O
 
 It	O
 gets	O
-crowded	O
+crowded	B-OP
 at	O
 lunchtime	O
 but	O
@@ -8715,7 +8715,7 @@ works	O
 there	O
 is	O
 so	O
-nice	O
+nice	B-OP
 .	O
 
 but	O
@@ -8726,13 +8726,13 @@ value	B-ASP
 it	O
 was	O
 a	O
-great	O
-affordable	O
+great	B-OP
+affordable	B-OP
 spot	O
 to	O
-enjoy	O
+enjoy	B-OP
 a	O
-fun	O
+fun	B-OP
 night	O
 out	O
 with	O
@@ -8762,7 +8762,7 @@ with	O
 Temple	O
 's	O
 entire	O
-positive	O
+positive	B-OP
 attitude	O
 about	O
 the	O
@@ -8774,8 +8774,8 @@ their	O
 customers	O
 and	O
 deliver	O
-top	O
-quality	O
+top	B-OP
+quality	I-OP
 food	B-ASP
 .	O
 
@@ -8799,7 +8799,7 @@ came	O
 
 It	O
 was	O
-good	O
+good	B-OP
 ,	O
 but	O
 none	O
@@ -8814,7 +8814,7 @@ Overall	O
 this	O
 is	O
 a	O
-nice	O
+nice	B-OP
 place	B-ASP
 to	O
 take	O
@@ -8829,16 +8829,16 @@ and	O
 the	O
 service	B-ASP
 is	O
-excellent	O
+excellent	B-OP
 .	O
 
 Food	B-ASP
 is	O
-excellent	O
+excellent	B-OP
 quality	O
 for	O
 a	O
-good	O
+good	B-OP
 restaurant	O
 price	B-ASP
 .	O
@@ -8852,7 +8852,7 @@ there	O
 seemed	O
 to	O
 be	O
-annoyed	O
+annoyed	B-OP
 .	O
 
 for	O
@@ -8878,7 +8878,7 @@ dessert	B-ASP
 The	O
 space	B-ASP
 is	O
-traditional	O
+traditional	B-OP
 in	O
 feel	O
 .	O
@@ -8906,7 +8906,7 @@ reservations	B-ASP
 the	O
 food	B-ASP
 was	O
-mediocre	O
+mediocre	B-OP
 to	O
 be	O
 kind	O
@@ -8914,9 +8914,9 @@ kind	O
 the	O
 interior	B-ASP
 is	O
-small	O
+small	B-OP
 and	O
-average	O
+average	B-OP
 -	O
 the	O
 owners	B-ASP
@@ -8927,9 +8927,9 @@ of	O
 unpleasantries	O
 -	O
 so	O
-rude	O
+rude	B-OP
 and	O
-snotty	O
+snotty	B-OP
 i	O
 actually	O
 let	O
@@ -8941,13 +8941,13 @@ whilst	O
 dining	B-ASP
 .	O
 
-Good	O
+Good	B-OP
 service	B-ASP
 ,	O
-great	O
+great	B-OP
 food	B-ASP
 ,	O
-good	O
+good	B-OP
 value	B-ASP
 ,	O
 and	O
@@ -8990,17 +8990,17 @@ past	O
 the	O
 service	B-ASP
 was	O
-average	O
+average	B-OP
 and	O
 the	O
 food	B-ASP
-inconsistant	O
+inconsistant	B-OP
 .	O
 
 The	O
 music	B-ASP
 was	O
-fascinating	O
+fascinating	B-OP
 ,	O
 but	O
 left	O
@@ -9012,7 +9012,7 @@ and	O
 the	O
 bartender	B-ASP
 made	O
-superb	O
+superb	B-OP
 drinks	B-ASP
 .	O
 
@@ -9029,7 +9029,7 @@ and	O
 add	O
 on	O
 a	O
-refreshing	O
+refreshing	B-OP
 ice	B-ASP
 drink	I-ASP
 for	O
@@ -9058,7 +9058,7 @@ the	O
 bill	B-ASP
 .	O
 
-Creative	O
+Creative	B-OP
 dishes	B-ASP
 like	O
 king	B-ASP
@@ -9078,7 +9078,7 @@ a	I-ASP
 rosemary-orange	I-ASP
 sauce	I-ASP
 are	O
-unexpected	O
+unexpected	B-OP
 elements	O
 on	O
 an	O
@@ -9105,7 +9105,7 @@ with	O
 asterisks	O
 )	O
 are	O
-tried-and-true	O
+tried-and-true	B-OP
 recipes	B-ASP
 ,	O
 such	O
@@ -9140,7 +9140,7 @@ $	O
 +	O
 ,	O
 are	O
-delectable	O
+delectable	B-OP
 .	O
 
 I	O
@@ -9157,8 +9157,8 @@ all	O
 I	O
 got	O
 was	O
-marginally	O
-so-so	O
+marginally	B-OP
+so-so	I-OP
 food	B-ASP
 served	O
 in	O
@@ -9168,11 +9168,11 @@ that	O
 was	O
 just	O
 so	O
-freezing	O
+freezing	B-OP
 we	O
 could	O
 n't	O
-enjoy	O
+enjoy	B-OP
 eating	O
 .	O
 
@@ -9221,25 +9221,25 @@ we	O
 had	O
 a	O
 very	O
-nice	O
+nice	B-OP
 dinner	B-ASP
 ,	O
 but	O
-nothing	O
-amazing	O
+nothing	B-OP
+amazing	I-OP
 .	O
 
-Best	O
+Best	B-OP
 Chinese	O
 on	O
 the	O
 Upper	O
 East	O
 ,	O
-prompt	O
+prompt	B-OP
 delivery	B-ASP
 ,	O
-good	O
+good	B-OP
 value	B-ASP
 .	O
 
@@ -9256,7 +9256,7 @@ which	O
 is	O
 actually	O
 pretty	O
-good	O
+good	B-OP
 .	O
 
 i	O
@@ -9277,13 +9277,13 @@ greeted	O
 by	O
 a	O
 very	O
-rude	O
+rude	B-OP
 hostess	B-ASP
 .	O
 
 It	O
 's	O
-worthwhile	O
+worthwhile	B-OP
 to	O
 take	O
 a	O
@@ -9293,7 +9293,7 @@ Chelsea	O
 just	O
 for	O
 an	O
-awesome	O
+awesome	B-OP
 dinner	B-ASP
 at	O
 My	O
@@ -9305,7 +9305,7 @@ only	O
 is	O
 the	O
 food	B-ASP
-authentic	O
+authentic	B-OP
 ,	O
 but	O
 the	O
@@ -9313,13 +9313,13 @@ staff	B-ASP
 here	O
 are	O
 practically	O
-off-the-boat	O
+off-the-boat	B-OP
 ,	O
 they	O
 are	O
-young	O
+young	B-OP
 and	O
-hip	O
+hip	B-OP
 and	O
 know	O
 what	O
@@ -9337,14 +9337,14 @@ wine	B-ASP
 
 It	O
 has	O
-good	O
+good	B-OP
 music	B-ASP
 ,	O
-nice	O
+nice	B-OP
 tapas	B-ASP
 ,	O
 an	O
-interesting	O
+interesting	B-OP
 selection	B-ASP
 of	I-ASP
 wines	I-ASP
@@ -9363,10 +9363,10 @@ clientele	B-ASP
 The	O
 food	B-ASP
 is	O
-great	O
+great	B-OP
 ,	O
 I	O
-love	O
+love	B-OP
 their	O
 dumplings	B-ASP
 ,	O
@@ -9416,7 +9416,7 @@ that	O
 make	O
 this	O
 a	O
-fun	O
+fun	B-OP
 place	B-ASP
 to	O
 be	O
@@ -9429,7 +9429,7 @@ duck	B-ASP
 confitte	I-ASP
 was	O
 very	O
-solid	O
+solid	B-OP
 as	O
 well	O
 ,	O
@@ -9446,17 +9446,17 @@ The	O
 wine	B-ASP
 list	I-ASP
 was	O
-superb	O
+superb	B-OP
 ,	O
 our	O
 tapas	B-ASP
-delightful	O
+delightful	B-OP
 ,	O
 and	O
 the	O
-quiet	O
+quiet	B-OP
 atmosphere	B-ASP
-perfect	O
+perfect	B-OP
 for	O
 good	O
 conversation	O
@@ -9484,9 +9484,9 @@ locations	O
 and	O
 I	O
 always	O
-love	O
+love	B-OP
 ,	O
-love	O
+love	B-OP
 the	O
 food	B-ASP
 ,	O
@@ -9494,13 +9494,13 @@ the	O
 service	B-ASP
 is	O
 always	O
-wonderful	O
+wonderful	B-OP
 and	O
 the	O
 prices	B-ASP
 are	O
 really	O
-reasonable	O
+reasonable	B-OP
 .	O
 
 Not	O
@@ -9515,12 +9515,12 @@ food	B-ASP
 here	O
 is	O
 always	O
-delicious	O
+delicious	B-OP
 .	O
 
 Had	O
 a	O
-great	O
+great	B-OP
 meal	B-ASP
 there	O
 this	O
@@ -9545,7 +9545,7 @@ food	B-ASP
 and	O
 service	B-ASP
 was	O
-amazing	O
+amazing	B-OP
 .	O
 
 the	O
@@ -9555,14 +9555,14 @@ offers	O
 a	O
 variety	O
 of	O
-great	O
+great	B-OP
 entrees	B-ASP
 ,	O
 including	O
-fresh	O
+fresh	B-OP
 seafood	B-ASP
 and	O
-huge	O
+huge	B-OP
 steaks	B-ASP
 ,	O
 there	O
@@ -9579,7 +9579,7 @@ This	O
 place	O
 has	O
 the	O
-strangest	O
+strangest	B-OP
 menu	B-ASP
 and	O
 the	O
@@ -9589,27 +9589,27 @@ too	O
 hard	O
 to	O
 make	O
-fancy	O
+fancy	B-OP
 food	B-ASP
 .	O
 
 The	O
 appetizers	B-ASP
 are	O
-ok	O
+ok	B-OP
 ,	O
 but	O
 the	O
 service	B-ASP
 is	O
-slow	O
+slow	B-OP
 .	O
 
 the	O
 food	B-ASP
 -	O
 not	O
-worth	O
+worth	B-OP
 the	O
 price	B-ASP
 .	O
@@ -9627,7 +9627,7 @@ waitress	B-ASP
 brings	O
 out	O
 the	O
-wrong	O
+wrong	B-OP
 entree	B-ASP
 ,	O
 then	O
@@ -9662,7 +9662,7 @@ The	O
 prices	B-ASP
 are	O
 not	O
-terrible	O
+terrible	B-OP
 .	O
 
 15	O
@@ -9682,7 +9682,7 @@ appetizer	I-ASP
 came	O
 with	O
 a	O
-generous	O
+generous	B-OP
 portion	B-ASP
 of	I-ASP
 foie	I-ASP
@@ -9706,7 +9706,7 @@ meal	B-ASP
 
 Food	B-ASP
 is	O
-excellent	O
+excellent	B-OP
 and	O
 they	O
 also	O
@@ -9716,7 +9716,7 @@ and	O
 plaintains	B-ASP
 which	O
 are	O
-good	O
+good	B-OP
 for	O
 an	O
 afternoon	B-ASP
@@ -9733,11 +9733,11 @@ and	O
 pasta	B-ASP
 specials	I-ASP
 were	O
-amazing	O
+amazing	B-OP
 .	O
 
 All-time	O
-favorites	O
+favorites	B-OP
 include	O
 the	O
 Big	B-ASP
@@ -9767,13 +9767,13 @@ available	O
 
 Although	O
 somewhat	O
-loud	O
+loud	B-OP
 ,	O
 the	O
 noise	B-ASP
 was	O
-minimally	O
-intrusive	O
+minimally	B-OP
+intrusive	I-OP
 .	O
 
 It	O
@@ -9801,7 +9801,7 @@ for	O
 
 Tables	B-ASP
 are	O
-close	O
+close	B-OP
 ,	O
 so	O
 you	O
@@ -9848,7 +9848,7 @@ that	O
 there	O
 's	O
 a	O
-great	O
+great	B-OP
 scene	B-ASP
 .	O
 
@@ -9985,14 +9985,14 @@ in	O
 luck	O
 with	O
 the	O
-extraordinary	O
+extraordinary	B-OP
 veggie	B-ASP
 burger	I-ASP
 ,	O
 made	O
 from	O
 a	O
-distinctive	O
+distinctive	B-OP
 blend	O
 of	O
 chickpeas	B-ASP
@@ -10012,12 +10012,12 @@ times	O
 the	O
 restaurant	O
 is	O
-overcrowded	O
+overcrowded	B-OP
 and	O
 tables	B-ASP
 are	O
-uncomfortably	O
-close	O
+uncomfortably	B-OP
+close	I-OP
 .	O
 
 The	O
@@ -10094,8 +10094,8 @@ these	O
 are	O
 real	O
 ,	O
-full	O
-sized	O
+full	B-OP
+sized	I-OP
 patties	B-ASP
 .	O
 
@@ -10103,10 +10103,10 @@ There	O
 restaurant	O
 is	O
 very	O
-casual	O
+casual	B-OP
 ,	O
 but	O
-perfect	O
+perfect	B-OP
 for	O
 lunch	B-ASP
 ,	O
@@ -10117,16 +10117,16 @@ service	I-ASP
 is	O
 always	O
 very	O
-fast	O
+fast	B-OP
 .	O
 
 Chinatown	O
 definitely	O
 has	O
-better	O
+better	B-OP
 quality	B-ASP
 with	O
-cheaper	O
+cheaper	B-OP
 prices	B-ASP
 .	O
 
@@ -10149,7 +10149,7 @@ it	O
 's	O
 goodbye	O
 Little	O
-RUDE	O
+RUDE	B-OP
 Pie	O
 Company	O
 .	O
@@ -10181,8 +10181,8 @@ the	O
 specials	B-ASP
 ,	O
 and	O
-stay	O
-away	O
+stay	B-OP
+away	I-OP
 from	O
 the	O
 salmon	B-ASP
@@ -10192,7 +10192,7 @@ The	O
 pastas	B-ASP
 were	O
 pretty	O
-good	O
+good	B-OP
 .	O
 
 Atmosphere	B-ASP
@@ -10218,17 +10218,17 @@ wait	B-ASP
 staff	I-ASP
 was	O
 very	O
-attentive	O
+attentive	B-OP
 and	O
-polite	O
+polite	B-OP
 .	O
 
-Great	O
+Great	B-OP
 restaurant	O
 ,	O
 and	O
 even	O
-greater	O
+greater	B-OP
 food	B-ASP
 !	O
 
@@ -10236,13 +10236,13 @@ The	O
 dishes	B-ASP
 are	O
 remarkably	O
-tasty	O
+tasty	B-OP
 and	O
 such	O
 a	O
-cozy	O
+cozy	B-OP
 and	O
-intimate	O
+intimate	B-OP
 place	B-ASP
 !	O
 
@@ -10257,7 +10257,7 @@ desserts	B-ASP
 )	O
 
 I	O
-love	O
+love	B-OP
 the	O
 simplicity	O
 and	O
@@ -10274,14 +10274,14 @@ well	O
 the	O
 staff	B-ASP
 was	O
-freindly	O
+freindly	B-OP
 and	O
-knowledgable	O
+knowledgable	B-OP
 .	O
 
 Service	B-ASP
 was	O
-good	O
+good	B-OP
 and	O
 so	O
 was	O
@@ -10304,7 +10304,7 @@ the	O
 fish	B-ASP
 was	O
 very	O
-average	O
+average	B-OP
 .	O
 
 We	O
@@ -10316,33 +10316,33 @@ and	O
 found	O
 Maison	O
 very	O
-nice	O
+nice	B-OP
 .	O
 
 The	O
 food	B-ASP
 was	O
-good	O
+good	B-OP
 ,	O
 the	O
 service	B-ASP
-prompt	O
+prompt	B-OP
 ,	O
 and	O
 the	O
 price	B-ASP
 very	O
-reasonable	O
+reasonable	B-OP
 .	O
 
-Wonderful	O
+Wonderful	B-OP
 menu	B-ASP
 ,	O
-warm	O
-inviting	O
+warm	B-OP
+inviting	B-OP
 ambiance	B-ASP
 ,	O
-great	O
+great	B-OP
 service	B-ASP
 the	O
 FOOD	B-ASP
@@ -10352,14 +10352,14 @@ coming	O
 back	O
 !	O
 
-Great	O
+Great	B-OP
 food	B-ASP
 ,	O
-good	O
+good	B-OP
 wine	B-ASP
 and	O
 an	O
-excellent	O
+excellent	B-OP
 host	B-ASP
 .	O
 
@@ -10374,7 +10374,7 @@ coworker	O
 
 Pizzas	B-ASP
 were	O
-excellent	O
+excellent	B-OP
 in	O
 addition	O
 to	O
@@ -10404,7 +10404,7 @@ The	O
 caeser	B-ASP
 salad	I-ASP
 was	O
-great	O
+great	B-OP
 .	O
 
 The	O
@@ -10412,50 +10412,50 @@ fried	B-ASP
 calamari	I-ASP
 was	O
 even	O
-better	O
+better	B-OP
 !	O
 
 The	O
 atmosphere	B-ASP
 was	O
-nice	O
+nice	B-OP
 but	O
 it	O
 was	O
 a	O
 little	O
 too	O
-dark	O
+dark	B-OP
 .	O
 
 The	O
 food	B-ASP
 was	O
-good	O
+good	B-OP
 overall	O
 .	O
 
 The	O
 food	B-ASP
 was	O
-outstanding	O
+outstanding	B-OP
 and	O
 the	O
 service	B-ASP
 was	O
-tops	O
+tops	B-OP
 .	O
 
 The	O
 portions	B-ASP
 are	O
 very	O
-large	O
+large	B-OP
 and	O
 the	O
 service	B-ASP
 is	O
-fantastic	O
+fantastic	B-OP
 !!	O
 
 I	O
@@ -10465,31 +10465,31 @@ chicken	B-ASP
 milanese	I-ASP
 .	O
 
-excellent	O
+excellent	B-OP
 tapas	B-ASP
 at	O
-great	O
+great	B-OP
 prices	B-ASP
 ,	O
-romantic	O
+romantic	B-OP
 ,	O
-small	O
+small	B-OP
 but	O
 not	O
-overly	O
-crowed	O
+overly	B-OP
+crowed	I-OP
 ,	O
-excellent	O
+excellent	B-OP
 
 The	O
 service	B-ASP
 is	O
 a	O
 quite	O
-slow	O
+slow	B-OP
 ,	O
 but	O
-friendly	O
+friendly	B-OP
 .	O
 
 The	O
@@ -10497,44 +10497,44 @@ chocolate	B-ASP
 raspberry	I-ASP
 cake	I-ASP
 is	O
-heavenly	O
+heavenly	B-OP
 -	O
 not	O
-too	O
-sweet	O
+too	B-OP
+sweet	I-OP
 ,	O
 but	O
-full	O
-of	O
+full	B-OP
+of	I-OP
 flavor	B-ASP
 .	O
 
 Our	O
 waiter	B-ASP
 was	O
-helpful	O
+helpful	B-OP
 and	O
-charming	O
+charming	B-OP
 ,	O
 the	O
 food	B-ASP
 was	O
-perfect	O
+perfect	B-OP
 ,	O
 and	O
 the	O
 wine	B-ASP
 was	O
-good	O
+good	B-OP
 ,	O
 too	O
 .	O
 
 Alias	O
 is	O
-warm	O
+warm	B-OP
 and	O
-cozy	O
+cozy	B-OP
 and	O
 you	O
 do	O
@@ -10555,18 +10555,18 @@ HAVE	O
 NEVER	O
 HAD	O
 A	O
-BAD	O
+BAD	B-OP
 MEAL	B-ASP
 (	O
 OR	O
-BAD	O
+BAD	B-OP
 SERVICE	B-ASP
 )	O
 @	O
 PIGALLE	O
 .	O
 
-Best	O
+Best	B-OP
 hot	B-ASP
 dogs	I-ASP
 in	O
@@ -10600,7 +10600,7 @@ business	O
 I	O
 would	O
 not	O
-recommend	O
+recommend	B-OP
 MEET	O
 at	O
 all	O
@@ -10632,26 +10632,26 @@ celebration	O
 The	O
 restaurant	O
 was	O
-quiet	O
+quiet	B-OP
 and	O
-intimate	O
+intimate	B-OP
 .	O
 
 The	O
 service	B-ASP
 was	O
 very	O
-attentive	O
+attentive	B-OP
 and	O
 very	O
-generous	O
+generous	B-OP
 .	O
 
 We	O
 had	O
 tons	O
 of	O
-great	O
+great	B-OP
 food	B-ASP
 ,	O
 wine	B-ASP
@@ -10661,7 +10661,7 @@ desserts	B-ASP
 .	O
 
 Really	O
-Lovely	O
+Lovely	B-OP
 dining	B-ASP
 experience	I-ASP
 in	O
@@ -10692,12 +10692,12 @@ really	O
 is	O
 n't	O
 very	O
-good	O
+good	B-OP
 and	O
 the	O
 service	B-ASP
 is	O
-terrible	O
+terrible	B-OP
 .	O
 
 Maybe	O
@@ -10720,7 +10720,7 @@ but	O
 I	O
 can	O
 not	O
-recommend	O
+recommend	B-OP
 Dumont	O
 .	O
 
@@ -10730,7 +10730,7 @@ do	O
 they	O
 have	O
 the	O
-best	O
+best	B-OP
 escargot	B-ASP
 in	O
 town	O
@@ -10802,13 +10802,13 @@ and	O
 ambiance	B-ASP
 was	O
 really	O
-romantic	O
+romantic	B-OP
 .	O
 
 This	O
 is	O
 the	O
-best	O
+best	B-OP
 unknown	O
 restaurant	O
 in	O
@@ -10824,7 +10824,7 @@ in	O
 and	O
 sample	O
 the	O
-greatest	O
+greatest	B-OP
 french	B-ASP
 food	I-ASP
 west	O
@@ -10857,7 +10857,7 @@ I	O
 can	O
 eat	O
 ,	O
-enjoy	O
+enjoy	B-OP
 and	O
 not	O
 suffer	O
@@ -10871,7 +10871,7 @@ later	O
 
 All	O
 are	O
-GREAT	O
+GREAT	B-OP
 -	O
 poori	B-ASP
 ,	O
@@ -10879,7 +10879,7 @@ naan	B-ASP
 ,	O
 paratha	B-ASP
 all	O
-FRESH	O
+FRESH	B-OP
 .	O
 
 Try	O
@@ -10891,14 +10891,14 @@ breads	I-ASP
 This	O
 place	O
 has	O
-beautiful	O
+beautiful	B-OP
 sushi	B-ASP
 ,	O
 and	O
 it	O
 's	O
-delicious	O
-CHEAP	O
+delicious	B-OP
+CHEAP	B-OP
 .	O
 
 It	O
@@ -10911,11 +10911,11 @@ Korean	B-ASP
 dishes	I-ASP
 that	O
 are	O
-affordable	O
+affordable	B-OP
 and	O
 just	O
 as	O
-yummy	O
+yummy	B-OP
 .	O
 
 I	O
@@ -10936,14 +10936,14 @@ only	O
 was	O
 the	O
 waiter	B-ASP
-efficient	O
+efficient	B-OP
 and	O
-courteous	O
+courteous	B-OP
 ,	O
 but	O
 also	O
 extremely	O
-helpful	O
+helpful	B-OP
 .	O
 
 It	O
@@ -10961,7 +10961,7 @@ appetite	O
 I	O
 would	O
 not	O
-reccomend	O
+reccomend	B-OP
 this	O
 to	O
 anyone	O
@@ -10979,22 +10979,22 @@ again	O
 This	O
 place	B-ASP
 is	O
-classy	O
+classy	B-OP
 ,	O
-chic	O
+chic	B-OP
 ,	O
 the	O
 service	B-ASP
 is	O
-warm	O
+warm	B-OP
 and	O
-hospitable	O
+hospitable	B-OP
 ,	O
 and	O
 the	O
 food	B-ASP
 is	O
-outstanding	O
+outstanding	B-OP
 .	O
 
 I	O
@@ -11011,13 +11011,13 @@ magazine	O
 It	O
 's	O
 a	O
-great	O
+great	B-OP
 find	O
 in	O
 Astoria	O
 .	O
 
-Great	O
+Great	B-OP
 burgers	B-ASP
 ,	O
 grilled	B-ASP
@@ -11036,12 +11036,12 @@ Calf	B-ASP
 liver	I-ASP
 are	O
 my	O
-favorites	O
+favorites	B-OP
 !	O
 
 Sushi	B-ASP
 so	O
-fresh	O
+fresh	B-OP
 that	O
 it	O
 crunches	O
@@ -11125,7 +11125,7 @@ only	O
 was	O
 the	O
 sushi	B-ASP
-fresh	O
+fresh	B-OP
 ,	O
 they	O
 also	O
@@ -11143,18 +11143,18 @@ and	O
 we	O
 all	O
 left	O
-happy	O
+happy	B-OP
 (	O
 try	O
 the	O
 duck	B-ASP
 !	O
 
-good	O
+good	B-OP
 variety	B-ASP
 but	O
-nothing	O
-surprising	O
+nothing	B-OP
+surprising	I-OP
 .	O
 
 After	O
@@ -11210,7 +11210,7 @@ quiet	O
 because	O
 it	O
 's	O
-awful	O
+awful	B-OP
 .	O
 
 No	O
@@ -11269,9 +11269,9 @@ menu	B-ASP
 that	O
 includes	O
 a	O
-cool	O
+cool	B-OP
 ,	O
-ultra-thick	O
+ultra-thick	B-OP
 chocolate	B-ASP
 Frosty	I-ASP
 .	O
@@ -11297,7 +11297,7 @@ the	O
 menu	B-ASP
 .	O
 
-Good	O
+Good	B-OP
 cake	O
 BUT	O
 :	O
@@ -11305,7 +11305,7 @@ it	O
 was	O
 not	O
 the	O
-best	O
+best	B-OP
 cake	B-ASP
 i	O
 've	O
@@ -11315,7 +11315,7 @@ had	O
 and	O
 definately	O
 not	O
-worth	O
+worth	B-OP
 standing	O
 outside	O
 on	O
@@ -11326,9 +11326,9 @@ herded	O
 like	O
 cattle	O
 by	O
-indifferent	O
+indifferent	B-OP
 and	O
-overworked	O
+overworked	B-OP
 employees	B-ASP
 .	O
 
@@ -11358,10 +11358,10 @@ to	O
 India	O
 is	O
 most	O
-evident	O
+evident	B-OP
 in	O
 the	O
-delectable	O
+delectable	B-OP
 roti	B-ASP
 canai	I-ASP
 appetizer	I-ASP
@@ -11382,10 +11382,10 @@ mango	B-ASP
 chicken	I-ASP
 offers	O
 a	O
-surprisingly	O
-sophisticated	O
+surprisingly	B-OP
+sophisticated	I-OP
 ,	O
-fresh	O
+fresh	B-OP
 take	O
 on	O
 sweet-and-sour	O
@@ -11423,7 +11423,7 @@ say	O
 the	O
 place	O
 was	O
-awesome	O
+awesome	B-OP
 .	O
 
 The	O
@@ -11437,7 +11437,7 @@ a	O
 starter	B-ASP
 tasted	O
 somewhat	O
-thin	O
+thin	B-OP
 .	O
 
 We	O
@@ -11469,13 +11469,13 @@ a	O
 peg	O
 or	O
 two	O
-below	O
+below	B-OP
 the	O
 quality	B-ASP
 of	I-ASP
 food	I-ASP
 (	O
-horrible	O
+horrible	B-OP
 bartenders	B-ASP
 )	O
 ,	O
@@ -11489,16 +11489,16 @@ most	O
 part	O
 ,	O
 are	O
-rowdy	O
+rowdy	B-OP
 ,	O
-loud-mouthed	O
+loud-mouthed	B-OP
 commuters	O
 (	O
 this	O
 could	O
 explain	O
 the	O
-bad	O
+bad	B-OP
 attitudes	O
 from	O
 the	O
@@ -11528,7 +11528,7 @@ stop	O
 by	O
 for	O
 a	O
-great	O
+great	B-OP
 meal	B-ASP
 .	O
 
@@ -11563,7 +11563,7 @@ all	O
 in	O
 all	O
 a	O
-great	O
+great	B-OP
 sushi	O
 place	O
 !	O
@@ -11600,20 +11600,20 @@ adventure	O
 .	O
 
 Although	O
-small	O
+small	B-OP
 ,	O
 it	O
 has	O
-beautiful	O
+beautiful	B-OP
 ambience	B-ASP
 ,	O
-excellent	O
+excellent	B-OP
 food	B-ASP
 (	O
 the	O
 catfish	B-ASP
 is	O
-delicious	O
+delicious	B-OP
 -	O
 if	O
 ya	O
@@ -11626,7 +11626,7 @@ lil	O
 salty	O
 )	O
 and	O
-attentive	O
+attentive	B-OP
 service	B-ASP
 .	O
 
@@ -11680,7 +11680,7 @@ items	O
 the	O
 place	O
 does	O
-best	O
+best	B-OP
 ,	O
 brisket	B-ASP
 ,	O
@@ -11691,10 +11691,10 @@ wings	B-ASP
 cajun	B-ASP
 shrimp	I-ASP
 is	O
-good	O
+good	B-OP
 ,	O
 not	O
-great	O
+great	B-OP
 .	O
 
 Hip	O
@@ -11706,9 +11706,9 @@ Ludlow	O
 add	O
 to	O
 the	O
-artsy	O
+artsy	B-OP
 ,	O
-laid-back	O
+laid-back	B-OP
 atmosphere	B-ASP
 at	O
 this	O
@@ -11764,7 +11764,7 @@ only	O
 is	O
 this	O
 the	O
-best	O
+best	B-OP
 Thai	O
 restaurant	O
 I	O
@@ -11780,7 +11780,7 @@ as	O
 one	O
 of	O
 my	O
-favorite	O
+favorite	B-OP
 places	O
 to	O
 dine	O
@@ -11802,12 +11802,12 @@ review	O
 My	O
 Chelsea	O
 's	O
-impressive	O
+impressive	B-OP
 and	O
-creative	O
+creative	B-OP
 menu	B-ASP
 includes	O
-modern	O
+modern	B-OP
 ,	O
 Westernized	O
 Japanese	B-ASP
@@ -11853,11 +11853,11 @@ few	O
 His	O
 food	B-ASP
 is	O
-excellent	O
+excellent	B-OP
 (	O
 and	O
 not	O
-expensive	O
+expensive	B-OP
 by	O
 NYC	O
 standards	O
@@ -11880,9 +11880,9 @@ to	O
 The	O
 food	B-ASP
 is	O
-consistant	O
+consistant	B-OP
 and	O
-good	O
+good	B-OP
 but	O
 how	O
 it	O
@@ -11901,7 +11901,7 @@ The	O
 pasta	B-ASP
 primavera	I-ASP
 was	O
-outstanding	O
+outstanding	B-OP
 as	O
 well	O
 ,	O
@@ -11919,11 +11919,11 @@ wrong	O
 -	O
 sushi	B-ASP
 was	O
-good	O
+good	B-OP
 ,	O
 just	O
 not	O
-fantastic	O
+fantastic	B-OP
 .	O
 
 Being	O
@@ -11944,7 +11944,7 @@ serves	O
 one	O
 of	O
 the	O
-best	O
+best	B-OP
 (	O
 I	O
 hope	O
@@ -11979,7 +11979,7 @@ the	O
 bridge	O
 for	O
 the	O
-best	O
+best	B-OP
 pizza	B-ASP
 ....	O
 Hanx	O
@@ -11994,7 +11994,7 @@ and	O
 the	O
 food	B-ASP
 was	O
-great	O
+great	B-OP
 .	O
 
 We	O
@@ -12011,7 +12011,7 @@ restaurant	O
 and	O
 had	O
 a	O
-great	O
+great	B-OP
 experience	O
 ,	O
 from	O
@@ -12024,7 +12024,7 @@ menu	I-ASP
 .	O
 
 Highly	O
-recommended	O
+recommended	B-OP
 ...	O
 As	O
 stated	O
@@ -12051,7 +12051,7 @@ it	O
 seems	O
 a	O
 very	O
-relaxing	O
+relaxing	B-OP
 place	B-ASP
 ;	O
 also	O
@@ -12059,22 +12059,22 @@ also	O
 the	O
 bar	B-ASP
 looks	O
-nice	O
+nice	B-OP
 .	O
 
 The	O
 ambiance	B-ASP
 was	O
-fine	O
+fine	B-OP
 ,	O
 a	O
 little	O
-loud	O
+loud	B-OP
 but	O
 still	O
-nice	O
+nice	B-OP
 and	O
-romantic	O
+romantic	B-OP
 .	O
 
 but	O
@@ -12085,16 +12085,16 @@ mignon	O
 was	O
 not	O
 very	O
-good	O
+good	B-OP
 at	O
 all	O
 cocktail	B-ASP
 hour	I-ASP
 includes	O
-free	O
+free	B-OP
 appetizers	O
 (	O
-nice	O
+nice	B-OP
 non-sushi	O
 selection	O
 )	O
@@ -12131,7 +12131,7 @@ Can	O
 be	O
 a	O
 bit	O
-busy	O
+busy	B-OP
 around	O
 peak	O
 times	O
@@ -12161,11 +12161,11 @@ and	O
 came	O
 across	O
 this	O
-great	O
+great	B-OP
 little	O
 place	O
 with	O
-awesome	O
+awesome	B-OP
 chicken	B-ASP
 tacos	I-ASP
 and	O
@@ -12173,7 +12173,7 @@ Hibiscus	B-ASP
 lemonade	I-ASP
 .	O
 
-good	O
+good	B-OP
 place	B-ASP
 to	O
 hang	O
@@ -12187,10 +12187,10 @@ or	O
 to	O
 grab	O
 a	O
-simple	O
+simple	B-OP
 soup	B-ASP
 or	O
-classic	O
+classic	B-OP
 french	B-ASP
 dish	I-ASP
 over	O
@@ -12201,7 +12201,7 @@ wine	I-ASP
 .	O
 
 Very	O
-nice	O
+nice	B-OP
 touch	O
 that	O
 very	O
@@ -12218,16 +12218,16 @@ is	O
 just	O
 something	O
 so	O
-great	O
+great	B-OP
 about	O
 being	O
 outdoors	O
 ,	O
 in	O
-great	O
+great	B-OP
 landscaping	O
 ,	O
-enjoying	O
+enjoying	B-OP
 a	O
 casual	B-ASP
 drink	I-ASP
@@ -12237,13 +12237,13 @@ going	O
 to	O
 this	O
 place	O
-worthwhile	O
+worthwhile	B-OP
 .	O
 
 We	O
 were	O
 seated	O
-promptly	O
+promptly	B-OP
 in	O
 close	O
 proximity	O
@@ -12284,7 +12284,7 @@ A	O
 plus	O
 was	O
 the	O
-good	O
+good	B-OP
 mix	O
 of	O
 people	O
@@ -12294,7 +12294,7 @@ twenties	O
 that	O
 provided	O
 for	O
-great	O
+great	B-OP
 eye-candy	O
 while	O
 I	O
@@ -12332,7 +12332,7 @@ shrimp	I-ASP
 )	I-ASP
 were	O
 quite	O
-good	O
+good	B-OP
 .	O
 
 It	O
@@ -12354,7 +12354,7 @@ good	O
 book	O
 .	O
 
-Slow	O
+Slow	B-OP
 service	B-ASP
 ,	O
 but	O
@@ -12378,10 +12378,10 @@ notices	O
 The	O
 sauce	O
 is	O
-excellent	O
+excellent	B-OP
 (	O
 very	O
-fresh	O
+fresh	B-OP
 )	O
 with	O
 dabs	B-ASP
@@ -12398,7 +12398,7 @@ bother	O
 the	O
 drinks	B-ASP
 were	O
-awful	O
+awful	B-OP
 ,	O
 but	O
 it	O
@@ -12413,7 +12413,7 @@ really	O
 made	O
 this	O
 the	O
-worst	O
+worst	B-OP
 experience	O
 at	O
 dining	B-ASP
@@ -12424,7 +12424,7 @@ room	B-ASP
 is	O
 a	O
 little	O
-plain	O
+plain	B-OP
 ,	O
 but	O
 it	O
@@ -12458,7 +12458,7 @@ of	O
 restaurant	O
 week	O
 were	O
-great	O
+great	B-OP
 .	O
 
 A	O
@@ -12470,9 +12470,9 @@ area	O
 makes	O
 for	O
 a	O
-private	O
+private	B-OP
 ,	O
-comfortable	O
+comfortable	B-OP
 space	B-ASP
 to	O
 study	O
@@ -12502,17 +12502,17 @@ female	I-ASP
 ]	I-ASP
 servers	I-ASP
 are	O
-cute	O
+cute	B-OP
 too	O
 ,	O
 which	O
 is	O
 always	O
-nice	O
+nice	B-OP
 .	O
 
 The	O
-best	O
+best	B-OP
 dessert	B-ASP
 ,	O
 a	O
@@ -12548,7 +12548,7 @@ their	O
 calamari	B-ASP
 is	O
 a	O
-winner	O
+winner	B-OP
 .	O
 
 Satay	O
@@ -12556,7 +12556,7 @@ is	O
 one	O
 of	O
 those	O
-favorite	O
+favorite	B-OP
 haunts	O
 on	O
 Washington	O
@@ -12603,14 +12603,14 @@ renovated	O
 ,	O
 it	O
 looks	O
-great	O
+great	B-OP
 .	O
 
 The	O
 room	B-ASP
 is	O
 a	O
-gorgeous	O
+gorgeous	B-OP
 ,	O
 bi-level	B-ASP
 space	I-ASP
@@ -12618,7 +12618,7 @@ and	O
 the	O
 long	B-ASP
 bar	I-ASP
-perfect	O
+perfect	B-OP
 for	O
 a	O
 drink	B-ASP
@@ -12648,12 +12648,12 @@ complaints	O
 their	O
 appetizer	B-ASP
 selection	I-ASP
-stinks	O
+stinks	B-OP
 ,	O
 it	O
 would	O
 be	O
-nice	O
+nice	B-OP
 to	O
 get	O
 some	O
@@ -12679,7 +12679,7 @@ memorable	O
 
 It	O
 is	O
-bland	O
+bland	B-OP
 and	O
 nothing	O
 extrodinary	O
@@ -12688,7 +12688,7 @@ extrodinary	O
 I	O
 was	O
 especially	O
-impressed	O
+impressed	B-OP
 during	O
 the	O
 bday	O
@@ -12714,9 +12714,9 @@ as	O
 well	O
 as	O
 offering	O
-prompt	O
+prompt	B-OP
 and	O
-friendly	O
+friendly	B-OP
 service	B-ASP
 to	O
 a	O
@@ -12731,7 +12731,7 @@ and	I-ASP
 falafel	I-ASP
 platters	I-ASP
 were	O
-nondescript	O
+nondescript	B-OP
 combinations	O
 with	O
 fresh	B-ASP
@@ -12790,7 +12790,7 @@ with	O
 the	O
 waiters	B-ASP
 '	O
-bad	O
+bad	B-OP
 manners	O
 ,	O
 knowing	O
@@ -12805,7 +12805,7 @@ easy	O
 The	O
 service	B-ASP
 is	O
-great	O
+great	B-OP
 (	O
 maybe	O
 even	O
@@ -12822,14 +12822,14 @@ attention	O
 the	O
 desserts	B-ASP
 are	O
-excellent	O
+excellent	B-OP
 and	O
 the	O
 coffee	B-ASP
 is	O
 so	O
 very	O
-good	O
+good	B-OP
 ...	O
 
 We	O
@@ -12879,8 +12879,8 @@ bread	I-ASP
 and	O
 are	O
 to	O
-die	O
-for	O
+die	B-OP
+for	I-OP
 .	O
 
 While	O
@@ -12889,7 +12889,7 @@ smoothies	B-ASP
 are	O
 a	O
 little	O
-big	O
+big	B-OP
 for	O
 me	O
 ,	O
@@ -12898,7 +12898,7 @@ fresh	B-ASP
 juices	I-ASP
 are	O
 the	O
-best	O
+best	B-OP
 I	O
 have	O
 ever	O
@@ -12909,14 +12909,14 @@ The	O
 food	B-ASP
 is	O
 just	O
-OKAY	O
+OKAY	B-OP
 ,	O
 and	O
 it	O
 's	O
 almost	O
 not	O
-worth	O
+worth	B-OP
 going	O
 unless	O
 you	O
@@ -12933,16 +12933,16 @@ dish	B-ASP
 that	O
 's	O
 really	O
-good	O
+good	B-OP
 .	O
 
 The	O
 guac	B-ASP
 is	O
-fresh	O
+fresh	B-OP
 ,	O
 yet	O
-lacking	O
+lacking	B-OP
 flavor	O
 ,	O
 we	O
@@ -12962,7 +12962,7 @@ menu	O
 has	O
 a	O
 few	O
-creative	O
+creative	B-OP
 items	O
 ,	O
 they	O
@@ -12987,7 +12987,7 @@ prices	B-ASP
 the	O
 staff	B-ASP
 is	O
-friendly	O
+friendly	B-OP
 most	O
 of	O
 the	O
@@ -13038,19 +13038,19 @@ the	O
 food	B-ASP
 is	O
 so	O
-good	O
+good	B-OP
 !	O
 
 If	O
 you	O
-like	O
+like	B-OP
 seafood	B-ASP
 and/or	O
 Greek	B-ASP
 food	I-ASP
 you	O
 will	O
-love	O
+love	B-OP
 this	O
 place	O
 though	O
@@ -13098,23 +13098,23 @@ can	O
 they	O
 survive	O
 serving	O
-mediocre	O
+mediocre	B-OP
 food	B-ASP
 at	O
-exorbitant	O
+exorbitant	B-OP
 prices	B-ASP
 ?!	O
 
 The	O
 food	O
 was	O
-mediocre	O
+mediocre	B-OP
 and	O
 the	O
 service	B-ASP
 was	O
-severely	O
-slow	O
+severely	B-OP
+slow	I-OP
 .	O
 
 i	O
@@ -13129,7 +13129,7 @@ occasion	O
 the	O
 food	B-ASP
 is	O
-mediocre	O
+mediocre	B-OP
 for	O
 the	O
 prices	B-ASP
@@ -13198,7 +13198,7 @@ at	O
 by	O
 the	O
 unbelievably	O
-rude	O
+rude	B-OP
 waiter	B-ASP
 .	O
 
@@ -13224,18 +13224,18 @@ milk	I-ASP
 Weekends	O
 can	O
 get	O
-crowded	O
+crowded	B-OP
 ,	O
 but	O
 still	O
 highly	O
-recommended	O
+recommended	B-OP
 .	O
 
 It	O
 gets	O
 very	O
-crowded	O
+crowded	B-OP
 so	O
 I	O
 would	O
@@ -13247,7 +13247,7 @@ their	O
 early	O
 .	O
 
-Sweet	O
+Sweet	B-OP
 Irish	O
 bartender	B-ASP
 is	O
@@ -13296,7 +13296,7 @@ eat	O
 .	O
 
 Its	O
-good	O
+good	B-OP
 to	O
 go	O
 there	O
@@ -13327,7 +13327,7 @@ the	O
 service	B-ASP
 is	O
 so	O
-bad	O
+bad	B-OP
 .	O
 
 Anyway	O
@@ -13335,14 +13335,14 @@ Anyway	O
 the	O
 owner	B-ASP
 was	O
-fake	O
+fake	B-OP
 .	O
 
 Owner	B-ASP
 is	O
-pleasant	O
+pleasant	B-OP
 and	O
-entertaining	O
+entertaining	B-OP
 .	O
 
 I	O
@@ -13377,7 +13377,7 @@ the	O
 restaurant	O
 itself	O
 is	O
-nice	O
+nice	B-OP
 ,	O
 I	O
 prefer	O
@@ -13410,7 +13410,7 @@ and	O
 garlic	O
 )	O
 taste	O
-excellent	O
+excellent	B-OP
 when	O
 on	O
 warm	B-ASP

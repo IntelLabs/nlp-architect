@@ -181,6 +181,7 @@ class BertForToken(pl.LightningModule):
         ret, _, _ = self._eval_end(outputs)
         logs = ret["log"]
         # `val_loss` is the key returned by `self._eval_end()` but actually refers to `test_loss`
+        self.logger.experiment.log()
         return {"avg_test_loss": logs["val_loss"], "log": logs, "progress_bar": logs}
 
     def load_hf_checkpoint(self, *args, **kwargs):

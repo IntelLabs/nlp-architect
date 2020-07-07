@@ -1,7 +1,0 @@
-Decent	B-OP
-wine	B-ASP
-at	O
-reasonable	O
-prices	O
-.	O
-

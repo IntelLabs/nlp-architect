@@ -2,7 +2,7 @@ Boot	B-ASP
 time	I-ASP
 is	O
 super	O
-fast	O
+fast	B-OP
 ,	O
 around	O
 anywhere	O
@@ -37,18 +37,18 @@ in	O
 resume	O
 this	O
 computer	O
-rocks	O
+rocks	B-OP
 !	O
 
 Set	B-ASP
 up	I-ASP
 was	O
-easy	O
+easy	B-OP
 .	O
 
 Did	O
 not	O
-enjoy	O
+enjoy	B-OP
 the	O
 new	O
 Windows	B-ASP
@@ -105,7 +105,7 @@ days	O
 )	O
 and	O
 the	O
-lousy	O
+lousy	B-OP
 internal	B-ASP
 speakers	I-ASP
 ,	O
@@ -134,7 +134,7 @@ price	B-ASP
 tag	I-ASP
 .	O
 
-excellent	O
+excellent	B-OP
 in	O
 every	O
 way	O
@@ -152,24 +152,24 @@ included	O
 
 It	O
 's	O
-fast	O
+fast	B-OP
 ,	O
-light	O
+light	B-OP
 ,	O
 and	O
-simple	O
+simple	B-OP
 to	O
 use	B-ASP
 .	O
 
 Works	B-ASP
-well	O
+well	B-OP
 ,	O
 and	O
 I	O
 am	O
 extremely	O
-happy	O
+happy	B-OP
 to	O
 be	O
 back	O
@@ -195,9 +195,9 @@ Sure	O
 it	O
 's	O
 not	O
-light	O
+light	B-OP
 and	O
-slim	O
+slim	B-OP
 but	O
 the	O
 features	B-ASP
@@ -211,19 +211,19 @@ it	O
 
 I	O
 am	O
-pleased	O
+pleased	B-OP
 with	O
 the	O
-fast	O
+fast	B-OP
 log	B-ASP
 on	I-ASP
 ,	O
-speedy	O
+speedy	B-OP
 WiFi	B-ASP
 connection	I-ASP
 and	O
 the	O
-long	O
+long	B-OP
 battery	B-ASP
 life	I-ASP
 (	O
@@ -254,7 +254,7 @@ my	O
 business	O
 )	O
 very	O
-difficult	O
+difficult	B-OP
 to	O
 maintain	O
 .	O
@@ -275,14 +275,14 @@ Mini	O
 is	O
 priced	B-ASP
 just	O
-right	O
+right	B-OP
 .	O
 
-Small	O
+Small	B-OP
 and	O
 still	O
 VERY	O
-powerful	O
+powerful	B-OP
 .	O
 
 I	O
@@ -316,10 +316,10 @@ BestBuy	O
 !	O
 
 Super	O
-light	O
+light	B-OP
 ,	O
 super	O
-sexy	O
+sexy	B-OP
 and	O
 everything	O
 just	O
@@ -339,7 +339,7 @@ pad	I-ASP
 was	O
 not	O
 very	O
-good	O
+good	B-OP
 for	O
 me	O
 ,	O
@@ -361,7 +361,7 @@ computer	O
 was	O
 a	O
 bit	O
-defective	O
+defective	B-OP
 .	O
 
 And	O
@@ -382,10 +382,10 @@ one	O
 It	O
 is	O
 super	O
-fast	O
+fast	B-OP
 and	O
 has	O
-outstanding	O
+outstanding	B-OP
 graphics	B-ASP
 .	O
 
@@ -396,10 +396,10 @@ lion	I-ASP
 is	O
 just	O
 too	O
-slow	O
+slow	B-OP
 .	O
 
-Strong	O
+Strong	B-OP
 build	O
 though	O
 which	O
@@ -414,7 +414,7 @@ The	O
 battery	B-ASP
 life	I-ASP
 is	O
-excellent	O
+excellent	B-OP
 -	O
 6-7	O
 hours	O
@@ -441,7 +441,7 @@ already	O
 and	O
 it	O
 works	B-ASP
-perfectly	O
+perfectly	B-OP
 .	O
 
 I	O
@@ -466,7 +466,7 @@ but	O
 I	O
 am	O
 really	O
-liking	O
+liking	B-OP
 Windows	B-ASP
 8	I-ASP
 .	O
@@ -475,7 +475,7 @@ The	O
 baterry	B-ASP
 is	O
 very	O
-longer	O
+longer	B-OP
 .	O
 
 And	O
@@ -496,12 +496,12 @@ all	O
 Its	O
 size	B-ASP
 is	O
-ideal	O
+ideal	B-OP
 and	O
 the	O
 weight	B-ASP
 is	O
-acceptable	O
+acceptable	B-OP
 .	O
 
 I	O
@@ -509,7 +509,7 @@ know	O
 Apples	O
 are	O
 more	O
-expensive	O
+expensive	B-OP
 than	O
 PCs	O
 ,	O
@@ -518,7 +518,7 @@ he	O
 thinks	O
 it	O
 is	O
-worth	O
+worth	B-OP
 every	O
 penny	O
 .	O
@@ -531,7 +531,7 @@ a	O
 workhorse	O
 ...	O
 and	O
-quiet	O
+quiet	B-OP
 as	O
 can	O
 be	O
@@ -561,7 +561,7 @@ that	O
 I	O
 am	O
 fully	O
-satisfied	O
+satisfied	B-OP
 with	O
 the	O
 performance	B-ASP
@@ -595,7 +595,7 @@ so	O
 much	O
 for	O
 the	O
-great	O
+great	B-OP
 item	O
 .	O
 
@@ -619,7 +619,7 @@ side	O
 
 It	O
 's	O
-annoying	O
+annoying	B-OP
 very	O
 much	O
 and	O
@@ -658,15 +658,15 @@ problems	O
 It	O
 has	O
 so	O
-much	O
-more	O
+much	B-OP
+more	I-OP
 speed	B-ASP
 and	O
 the	O
 screen	B-ASP
 is	O
 very	O
-sharp	O
+sharp	B-OP
 .	O
 
 As	O
@@ -698,19 +698,19 @@ and	O
 the	O
 price	B-ASP
 was	O
-great	O
+great	B-OP
 !	O
 
 It	O
 's	O
 not	O
-inexpensive	O
+inexpensive	B-OP
 but	O
 the	O
 Hardware	B-ASP
 performance	I-ASP
 is	O
-impressive	O
+impressive	B-OP
 for	O
 a	O
 computer	O
@@ -720,7 +720,7 @@ small	O
 
 It	O
 is	O
-better	O
+better	B-OP
 than	O
 my	O
 old	O
@@ -731,7 +731,7 @@ laptop	O
 This	O
 thing	O
 is	O
-awesome	O
+awesome	B-OP
 ,	O
 everything	O
 always	O
@@ -740,14 +740,14 @@ works	B-ASP
 everything	O
 is	O
 always	O
-easy	O
+easy	B-OP
 to	O
 set	B-ASP
 up	I-ASP
 ,	O
 everything	O
 is	O
-compatible	O
+compatible	B-OP
 ,	O
 its	O
 literally	O
@@ -769,8 +769,8 @@ heartbeat	O
 !	O
 
 Keyboard	B-ASP
-responds	O
-well	O
+responds	B-OP
+well	I-OP
 to	O
 presses	O
 .	O
@@ -794,7 +794,7 @@ Lastly	O
 Windows	B-ASP
 8	I-ASP
 is	O
-annoying	O
+annoying	B-OP
 .	O
 
 A	O
@@ -810,9 +810,9 @@ unforgivable	O
 
 I	O
 just	O
-fell	O
-in	O
-love	O
+fell	B-OP
+in	I-OP
+love	I-OP
 with	O
 this	O
 thing	O
@@ -821,9 +821,9 @@ thing	O
 Everything	O
 is	O
 so	O
-easy	O
+easy	B-OP
 and	O
-intuitive	O
+intuitive	B-OP
 to	O
 setup	B-ASP
 or	O
@@ -853,12 +853,12 @@ This	O
 laptop	O
 is	O
 a	O
-great	O
+great	B-OP
 buy	O
 .	O
 
 Biggest	O
-complaint	O
+complaint	B-OP
 is	O
 Windows	B-ASP
 8	I-ASP
@@ -873,7 +873,7 @@ seems	O
 kind	O
 of	O
 ...	O
-limited	O
+limited	B-OP
 .	O
 
 It	O
@@ -921,12 +921,12 @@ more	O
 +	O
 plus	O
 a	O
-wide	O
+wide	B-OP
 screen	B-ASP
 and	O
 more	O
 than	O
-roomy	O
+roomy	B-OP
 keyboard	B-ASP
 .	O
 
@@ -944,10 +944,10 @@ is	O
 by	O
 far	O
 the	O
-best	O
+best	B-OP
 !	O
 
-Amazing	O
+Amazing	B-OP
 Performance	B-ASP
 for	O
 anything	O
@@ -984,7 +984,7 @@ box	O
 I	O
 noticed	O
 how	O
-small	O
+small	B-OP
 it	O
 was	O
 and	O
@@ -1002,7 +1002,7 @@ receiver	O
 was	O
 full	O
 of	O
-superlatives	O
+superlatives	B-OP
 for	O
 the	O
 quality	B-ASP
@@ -1013,7 +1013,7 @@ performance	B-ASP
 I	O
 was	O
 extremely	O
-happy	O
+happy	B-OP
 with	O
 the	O
 OS	B-ASP
@@ -1043,7 +1043,7 @@ The	O
 new	O
 MBP	O
 offers	O
-great	O
+great	B-OP
 portability	B-ASP
 and	O
 gives	O
@@ -1066,7 +1066,7 @@ in	O
 months	O
 .	O
 
-Great	O
+Great	B-OP
 purchase	O
 and	O
 I	O
@@ -1095,7 +1095,7 @@ be	O
 the	O
 first	O
 to	O
-recommend	O
+recommend	B-OP
 an	O
 Air	O
 for	O
@@ -1129,10 +1129,10 @@ Office	I-ASP
 for	I-ASP
 Mac	I-ASP
 is	O
-wonderful	O
+wonderful	B-OP
 ,	O
-well	O
-worth	O
+well	B-OP
+worth	I-OP
 it	O
 .	O
 
@@ -1160,7 +1160,7 @@ Mini	O
 is	O
 a	O
 huge	O
-disappointment	O
+disappointment	B-OP
 .	O
 
 There	O
@@ -1190,11 +1190,11 @@ do	O
 n't	O
 just	O
 look	B-ASP
-good	O
+good	B-OP
 ;	O
 they	O
 deliver	O
-excellent	O
+excellent	B-OP
 performance	B-ASP
 .	O
 
@@ -1216,7 +1216,7 @@ kind	O
 .	O
 .	O
 I	O
-love	O
+love	B-OP
 the	O
 lit	B-ASP
 up	I-ASP
@@ -1228,9 +1228,9 @@ display	I-ASP
 this	O
 thing	O
 is	O
-Fast	O
+Fast	B-OP
 and	O
-clear	O
+clear	B-OP
 as	O
 can	O
 be	O
@@ -1239,7 +1239,7 @@ be	O
 The	O
 product	O
 is	O
-prefect	O
+prefect	B-OP
 for	O
 everyone	O
 .	O
@@ -1249,8 +1249,8 @@ Mountain	B-ASP
 Lion	I-ASP
 OS	I-ASP
 is	O
-not	O
-hard	O
+not	B-OP
+hard	I-OP
 to	O
 figure	O
 out	O
@@ -1272,7 +1272,7 @@ that	O
 OSX	B-ASP
 is	O
 "	O
-FAST	O
+FAST	B-OP
 "	O
 .	O
 
@@ -1290,7 +1290,7 @@ it	O
 is	O
 .	O
 
-Enjoy	O
+Enjoy	B-OP
 using	O
 Microsoft	B-ASP
 Office	I-ASP
@@ -1311,7 +1311,7 @@ problems	O
 ,	O
 I	O
 'm	O
-happy	O
+happy	B-OP
 with	O
 this	O
 purchase	O
@@ -1327,10 +1327,10 @@ anywhere	O
 else	O
 .	O
 
-Incredible	O
+Incredible	B-OP
 graphics	B-ASP
 and	O
-brilliant	O
+brilliant	B-OP
 colors	B-ASP
 .	O
 
@@ -1375,7 +1375,7 @@ Built-in	B-ASP
 apps	I-ASP
 are	O
 purely	O
-amazing	O
+amazing	B-OP
 .	O
 
 Cons	O
@@ -1395,14 +1395,14 @@ gestures	O
 this	O
 operating	B-ASP
 system	I-ASP
-beats	O
+beats	B-OP
 Windows	B-ASP
 easily	O
 .	O
 
 I	O
 really	O
-like	O
+like	B-OP
 the	O
 size	B-ASP
 and	O
@@ -1420,10 +1420,10 @@ is	O
 by	O
 far	O
 thee	O
-best	O
+best	B-OP
 ,	O
 most	O
-reliable	O
+reliable	B-OP
 computer	O
 I	O
 could	O
@@ -1464,9 +1464,9 @@ AppleCare	B-ASP
 
 It	O
 's	O
-light	O
+light	B-OP
 and	O
-easy	O
+easy	B-OP
 to	O
 transport	B-ASP
 .	O
@@ -1480,19 +1480,19 @@ how	O
 to	O
 use	O
 the	O
-poorly	O
-designed	O
+poorly	B-OP
+designed	I-OP
 Windows	B-ASP
 8	I-ASP
 Set-Up	I-ASP
 you	O
 may	O
 feel	O
-frustrated	O
+frustrated	B-OP
 .	O
 
 Very	O
-powerful	O
+powerful	B-OP
 especially	O
 for	O
 the	O
@@ -1608,17 +1608,17 @@ Overall	O
 it	O
 's	O
 an	O
-amazing	O
+amazing	B-OP
 product	O
 ,	O
-5	O
-stars	O
+5	B-OP
+stars	I-OP
 !	O
 
 It	O
 is	O
 very	O
-easy	O
+easy	B-OP
 to	O
 integrate	B-ASP
 bluetooth	I-ASP
@@ -1630,19 +1630,19 @@ devices	I-ASP
 are	O
 recognized	O
 almost	O
-instantly	O
+instantly	B-OP
 .	O
 
 He	O
 's	O
-thrilled	O
+thrilled	B-OP
 with	O
 his	O
 new	O
 laptop	O
 .	O
 
-Amazing	O
+Amazing	B-OP
 product	O
 as	O
 you	O
@@ -1652,8 +1652,8 @@ from	O
 Apple	O
 .	O
 
-Nothing	O
-wrong	O
+Nothing	B-OP
+wrong	I-OP
 with	O
 this	O
 computer	O
@@ -1678,7 +1678,7 @@ Intel4000	B-ASP
 graphic	I-ASP
 chip	I-ASP
 seems	O
-underpowered	O
+underpowered	B-OP
 (	O
 to	O
 me	O
@@ -1731,7 +1731,7 @@ no	O
 complaints	O
 .	O
 
-LOVE	O
+LOVE	B-OP
 IT	O
 I	O
 've	O
@@ -1778,15 +1778,15 @@ laptop	O
 will	O
 make	O
 it	O
-worth	O
+worth	B-OP
 the	O
 money	O
 .	O
 
-Well	O
+Well	B-OP
 designed	B-ASP
 and	O
-fast	O
+fast	B-OP
 .	O
 
 And	O
@@ -1809,10 +1809,10 @@ wrong	O
 this	O
 computer	O
 is	O
-UNBELIEVABLE	O
-amazing	O
+UNBELIEVABLE	B-OP
+amazing	B-OP
 and	O
-easy	O
+easy	B-OP
 to	O
 use	B-ASP
 .	O
@@ -1822,7 +1822,7 @@ as	O
 posted	O
 plus	O
 a	O
-great	O
+great	B-OP
 value	B-ASP
 .	O
 
@@ -1830,7 +1830,7 @@ The	O
 specs	B-ASP
 are	O
 pretty	O
-good	O
+good	B-OP
 too	O
 .	O
 
@@ -1875,15 +1875,15 @@ but	O
 I	O
 really	O
 do	O
-love	O
+love	B-OP
 it	O
 and	O
 I	O
 'm	O
-happy	O
+happy	B-OP
 it	O
 was	O
-economical	O
+economical	B-OP
 and	O
 I	O
 'm	O
@@ -1914,7 +1914,7 @@ obvious	O
 
 Apple	O
 is	O
-unmatched	O
+unmatched	B-OP
 in	O
 product	B-ASP
 quality	I-ASP
@@ -1939,17 +1939,17 @@ laptop	O
 It	O
 makes	O
 a	O
-great	O
+great	B-OP
 gift	O
 .	O
 
 It	O
 is	O
 a	O
-great	O
+great	B-OP
 size	B-ASP
 and	O
-amazing	O
+amazing	B-OP
 windows	B-ASP
 8	I-ASP
 included	O
@@ -1957,22 +1957,22 @@ included	O
 
 I	O
 would	O
-recommend	O
+recommend	B-OP
 to	O
 any	O
 one	O
 lloking	O
 for	O
 a	O
-first	O
-class	O
+first	B-OP
+class	I-OP
 computer	O
 !	O
 
 I	O
 do	O
 not	O
-like	O
+like	B-OP
 too	O
 much	O
 Windows	B-ASP
@@ -1983,7 +1983,7 @@ Startup	B-ASP
 times	I-ASP
 are	O
 incredibly	O
-long	O
+long	B-OP
 :	O
 over	O
 two	O
@@ -2015,25 +2015,25 @@ macbook	O
 pro	O
 is	O
 really	O
-responsive	O
+responsive	B-OP
 .	O
 
 Also	O
-stunning	O
+stunning	B-OP
 colors	B-ASP
 and	O
-speedy	O
+speedy	B-OP
 
 it	O
 is	O
 really	O
-expensive	O
+expensive	B-OP
 though	O
 .	O
 
-great	O
+great	B-OP
 price	B-ASP
-free	O
+free	B-OP
 shipping	B-ASP
 what	O
 else	O
@@ -2046,7 +2046,7 @@ for	O
 This	O
 mouse	B-ASP
 is	O
-terrific	O
+terrific	B-OP
 .	O
 
 I	O
@@ -2056,7 +2056,7 @@ say	O
 it	O
 is	O
 much	O
-better	O
+better	B-OP
 than	O
 I	O
 expected	O
@@ -2080,7 +2080,7 @@ more	O
 It	O
 is	O
 really	O
-thick	O
+thick	B-OP
 around	O
 the	O
 battery	B-ASP
@@ -2092,7 +2092,7 @@ windows	B-ASP
 works	O
 like	O
 a	O
-charm	O
+charm	B-OP
 .	O
 
 And	O
@@ -2106,17 +2106,17 @@ it	O
 .	O
 
 :)	O
-Great	O
+Great	B-OP
 product	O
 ,	O
-great	O
+great	B-OP
 price	B-ASP
 ,	O
-great	O
+great	B-OP
 delivery	B-ASP
 ,	O
 and	O
-great	O
+great	B-OP
 service	B-ASP
 .	O
 
@@ -2124,26 +2124,26 @@ service	B-ASP
 It	O
 arrived	O
 so	O
-fast	O
+fast	B-OP
 and	O
 customer	B-ASP
 service	I-ASP
 was	O
-great	O
+great	B-OP
 .	O
 
 tried	O
 windows	B-ASP
 8	I-ASP
 and	O
-hated	O
+hated	B-OP
 it	O
 !!!	O
 
 The	O
 price	B-ASP
 is	O
-higher	O
+higher	B-OP
 than	O
 most	O
 lab	O
@@ -2164,7 +2164,7 @@ for	O
 which	O
 is	O
 a	O
-great	O
+great	B-OP
 computer	O
 .	O
 
@@ -2186,14 +2186,14 @@ Set	B-ASP
 up	I-ASP
 was	O
 a	O
-breeze	O
+breeze	B-OP
 .	O
 
 But	O
 I	O
 do	O
 NOT	O
-like	O
+like	B-OP
 Win8	B-ASP
 .	O
 
@@ -2216,7 +2216,7 @@ by	O
 far	O
 the	O
 most	O
-superior	O
+superior	B-OP
 machine	O
 I	O
 have	O
@@ -2277,12 +2277,12 @@ the	O
 price	B-ASP
 ,	O
 the	O
-overbearing	O
+overbearing	B-OP
 restrictions	O
 of	O
 OSX	B-ASP
 and	O
-lack	O
+lack	B-OP
 of	O
 support	B-ASP
 for	I-ASP
@@ -2305,7 +2305,7 @@ bad	O
 boy	O
 is	O
 very	O
-nice	O
+nice	B-OP
 .	O
 
 Seems	O
@@ -2324,7 +2324,7 @@ attention	O
 .	O
 
 Very	O
-nice	O
+nice	B-OP
 so	O
 far	O
 .	O
@@ -2333,7 +2333,7 @@ You	O
 wo	O
 n't	O
 be	O
-disappointed	O
+disappointed	B-OP
 .	O
 
 The	O
@@ -2350,11 +2350,11 @@ price	B-ASP
 ,	O
 but	O
 totally	O
-worth	O
+worth	B-OP
 it	O
 for	O
 a	O
-good	O
+good	B-OP
 piece	O
 of	O
 mind	O
@@ -2368,7 +2368,7 @@ to	O
 be	O
 :	O
 Exceptionally	O
-easy	O
+easy	B-OP
 to	O
 set	B-ASP
 up	I-ASP
@@ -2400,9 +2400,9 @@ it	O
 The	O
 sound	B-ASP
 is	O
-nice	O
+nice	B-OP
 and	O
-loud	O
+loud	B-OP
 ;	O
 I	O
 do	O
@@ -2418,7 +2418,7 @@ anything	O
 It	O
 is	O
 very	O
-slim	O
+slim	B-OP
 ,	O
 the	O
 track	B-ASP
@@ -2426,7 +2426,7 @@ pad	I-ASP
 is	O
 very	O
 much	O
-impressed	O
+impressed	B-OP
 with	O
 me	O
 .	O
@@ -2449,7 +2449,7 @@ just	O
 retired	O
 .	O
 
-Great	O
+Great	B-OP
 things	O
 come	O
 in	O
@@ -2492,7 +2492,7 @@ The	O
 settings	B-ASP
 are	O
 not	O
-user-friendly	O
+user-friendly	B-OP
 either	O
 .	O
 
@@ -2516,13 +2516,13 @@ them	O
 were	O
 either	O
 too	O
-big	O
+big	B-OP
 ,	O
 too	O
-noisy	O
+noisy	B-OP
 and	O
 too	O
-slow	O
+slow	B-OP
 after	O
 2	O
 years	O
@@ -2541,7 +2541,7 @@ new	O
 i	O
 'm	O
 very	O
-impress	O
+impress	B-OP
 .	O
 
 Thank	O
@@ -2550,15 +2550,15 @@ for	O
 OpenOffice	B-ASP
 !	O
 
-Awesome	O
+Awesome	B-OP
 form	B-ASP
 factor	I-ASP
 ,	O
-great	O
+great	B-OP
 battery	B-ASP
 life	I-ASP
 ,	O
-wonderful	O
+wonderful	B-OP
 UX	B-ASP
 .	O
 
@@ -2574,7 +2574,7 @@ to	O
 this	O
 has	O
 been	O
-amazing	O
+amazing	B-OP
 and	O
 (	O
 aside	O
@@ -2585,7 +2585,7 @@ reasons	O
 )	O
 I	O
 am	O
-astounded	O
+astounded	B-OP
 that	O
 I	O
 had	O
@@ -2597,15 +2597,15 @@ sooner	O
 .	O
 
 Its	O
-perfect	O
+perfect	B-OP
 ,	O
 not	O
 much	O
-heavy	O
+heavy	B-OP
 .	O
 
 i	O
-love	O
+love	B-OP
 the	O
 keyboard	B-ASP
 and	O
@@ -2620,8 +2620,8 @@ not	O
 to	O
 be	O
 very	O
-user	O
-friendly	O
+user	B-OP
+friendly	I-OP
 .	O
 
 It	O
@@ -2641,7 +2641,7 @@ However	O
 there	O
 are	O
 MAJOR	O
-issues	O
+issues	B-OP
 with	O
 the	O
 touchpad	B-ASP
@@ -2650,7 +2650,7 @@ render	O
 the	O
 device	O
 nearly	O
-useless	O
+useless	B-OP
 .	O
 
 What	O
@@ -2696,7 +2696,7 @@ Mavericks	B-ASP
 and	O
 I	O
 am	O
-impressed	O
+impressed	B-OP
 with	O
 everything	O
 about	O
@@ -2708,7 +2708,7 @@ So	O
 this	O
 is	O
 very	O
-good	O
+good	B-OP
 commputer	O
 and	O
 i	O
@@ -2748,7 +2748,7 @@ $	O
 
 Not	O
 as	O
-fast	O
+fast	B-OP
 as	O
 I	O
 would	O
@@ -2780,8 +2780,8 @@ this	O
 computer	O
 !	O
 
-Nothing	O
-bad	O
+Nothing	B-OP
+bad	I-OP
 to	O
 say	O
 about	O
@@ -2790,18 +2790,18 @@ it	O
 
 It	O
 s	O
-heavy	O
+heavy	B-OP
 for	O
 Mac	O
 book	O
 but	O
 is	O
-good	O
+good	B-OP
 .	O
 
 thanks	O
 for	O
-great	O
+great	B-OP
 service	B-ASP
 and	O
 shipping	B-ASP
@@ -2842,7 +2842,7 @@ The	O
 performance	B-ASP
 seems	O
 quite	O
-good	O
+good	B-OP
 ,	O
 and	O
 built-in	B-ASP
@@ -2850,7 +2850,7 @@ applications	I-ASP
 like	O
 iPhoto	B-ASP
 work	O
-great	O
+great	B-OP
 with	O
 my	O
 phone	O
@@ -2866,7 +2866,7 @@ the	O
 Macbook	O
 Pro	O
 seem	O
-slow	O
+slow	B-OP
 .	O
 
 I	O
@@ -2884,7 +2884,7 @@ SSD	I-ASP
 which	O
 I	O
 highly	O
-recommend	O
+recommend	B-OP
 .	O
 
 I	O
@@ -2923,13 +2923,13 @@ it	O
 I	O
 wanted	O
 a	O
-simple	O
+simple	B-OP
 ,	O
-reliable	O
+reliable	B-OP
 laptop	O
 .	O
 
-Cheaper	O
+Cheaper	B-OP
 than	O
 buying	O
 it	O
@@ -2958,7 +2958,7 @@ computer	O
 .	O
 
 Extremely	O
-disappointed	O
+disappointed	B-OP
 with	O
 the	O
 way	O
@@ -3008,7 +3008,7 @@ been	O
 falling	O
 due	O
 to	O
-lack	O
+lack	B-OP
 of	O
 sales	O
 .	O
@@ -3038,7 +3038,7 @@ go	O
 It	O
 is	O
 also	O
-fast	O
+fast	B-OP
 as	O
 can	O
 be	O
@@ -3050,8 +3050,8 @@ you	O
 pay	O
 for	O
 ...	O
-well	O
-worth	O
+well	B-OP
+worth	I-OP
 the	O
 investment	O
 
@@ -3072,7 +3072,7 @@ everything	O
 
 Overall	O
 very	O
-impressed	O
+impressed	B-OP
 ,	O
 Thank	O
 you	O
@@ -3086,7 +3086,7 @@ Yes	O
 that	O
 's	O
 a	O
-good	O
+good	B-OP
 thing	O
 ,	O
 but	O
@@ -3096,12 +3096,12 @@ made	O
 from	O
 aluminum	B-ASP
 that	O
-scratches	O
-easily	O
+scratches	B-OP
+easily	I-OP
 .	O
 
 Very	O
-fast	O
+fast	B-OP
 for	O
 my	O
 needs	O
@@ -3121,7 +3121,7 @@ Dell	O
 laptop	O
 .	O
 
-Quick	O
+Quick	B-OP
 and	O
 has	O
 built	B-ASP
@@ -3191,7 +3191,7 @@ the	O
 Mac	O
 Book	O
 were	O
-dirty	O
+dirty	B-OP
 .	O
 
 So	O
@@ -3234,7 +3234,7 @@ problems	O
 have	O
 been	O
 so	O
-bad	O
+bad	B-OP
 ,	O
 i	O
 ca	O
@@ -3254,13 +3254,13 @@ TOPS	O
 It	O
 's	O
 so	O
-nice	O
+nice	B-OP
 that	O
 the	O
 battery	B-ASP
 last	O
 so	O
-long	O
+long	B-OP
 and	O
 that	O
 this	O
@@ -3277,7 +3277,7 @@ that	O
 they	O
 are	O
 the	O
-best	O
+best	B-OP
 out	O
 on	O
 the	O
@@ -3329,11 +3329,11 @@ point	O
 this	O
 is	O
 quite	O
-smooth	O
+smooth	B-OP
 as	O
 well	O
 as	O
-heavy	O
+heavy	B-OP
 and	O
 can	O
 easily	O
@@ -3347,7 +3347,7 @@ My	O
 laptop	O
 is	O
 so	O
-light	O
+light	B-OP
 that	O
 I	O
 can	O
@@ -3384,9 +3384,9 @@ anything	O
 and	O
 is	O
 very	O
-fast	O
+fast	B-OP
 and	O
-stylish	O
+stylish	B-OP
 .	O
 
 Finally	O
@@ -3437,14 +3437,14 @@ MacBook	O
 
 It	O
 feels	O
-cheap	O
+cheap	B-OP
 ,	O
 the	O
 keyboard	B-ASP
 is	O
 not	O
 very	O
-sensitive	O
+sensitive	B-OP
 .	O
 
 That	O
@@ -3463,20 +3463,20 @@ note	O
 that	O
 sometimes	O
 it	O
-crashes	O
+crashes	B-OP
 ,	O
 and	O
 the	O
 sound	B-ASP
 quality	I-ASP
 isnt	O
-superb	O
+superb	B-OP
 .	O
 
 It	O
 is	O
 very	O
-easy	O
+easy	B-OP
 to	O
 navigate	B-ASP
 even	O
@@ -3516,7 +3516,7 @@ to	O
 ,	O
 has	O
 a	O
-wonderful	O
+wonderful	B-OP
 battery	B-ASP
 life	I-ASP
 and	O
@@ -3527,7 +3527,7 @@ be	O
 happier	O
 .	O
 
-Great	O
+Great	B-OP
 Performance	B-ASP
 and	O
 Quality	B-ASP
@@ -3596,7 +3596,7 @@ one	O
 it	O
 does	O
 get	O
-hot	O
+hot	B-OP
 when	O
 using	O
 on	O
@@ -3821,7 +3821,7 @@ years	O
 Its	O
 a	O
 pretty	O
-decent	O
+decent	B-OP
 computer	O
 .	O
 
@@ -3840,7 +3840,7 @@ The	O
 new	O
 os	B-ASP
 is	O
-great	O
+great	B-OP
 on	O
 my	O
 macbook	O
@@ -3849,13 +3849,13 @@ pro	O
 
 It	O
 was	O
-fast	O
+fast	B-OP
 ,	O
 and	O
 it	O
 was	O
 "	O
-different	O
+different	B-OP
 "	O
 .	O
 
@@ -3863,11 +3863,11 @@ I	O
 had	O
 a	O
 little	O
-problem	O
+problem	B-OP
 adjusting	O
 to	O
 the	O
-small	O
+small	B-OP
 screen	B-ASP
 but	O
 works	O
@@ -3890,7 +3890,7 @@ first	O
 Mac	O
 and	O
 am	O
-glad	O
+glad	B-OP
 I	O
 did	O
 .	O
@@ -3909,10 +3909,10 @@ anticipated	O
 System	B-ASP
 is	O
 running	O
-great	O
+great	B-OP
 .	O
 
-Easy	O
+Easy	B-OP
 to	O
 customize	B-ASP
 setting	I-ASP
@@ -3973,7 +3973,7 @@ how	O
 much	O
 more	O
 I	O
-enjoy	O
+enjoy	B-OP
 my	O
 computer	O
 tasks	O
@@ -3995,10 +3995,10 @@ and	O
 the	O
 price	B-ASP
 was	O
-good	O
+good	B-OP
 ,	O
 working	B-ASP
-well	O
+well	B-OP
 so	O
 far	O
 .	O
@@ -4048,21 +4048,21 @@ this	O
 computer	O
 into	O
 a	O
-super	O
+super	B-OP
 iPad	O
 .	O
 
 I	O
 am	O
 very	O
-happy	O
+happy	B-OP
 with	O
 my	O
 first	O
 Mac	O
 .	O
 
-Easy	O
+Easy	B-OP
 to	O
 set	B-ASP
 up	I-ASP
@@ -4075,14 +4075,14 @@ ca	O
 n't	O
 believe	O
 how	O
-quiet	O
+quiet	B-OP
 the	O
 hard	B-ASP
 drive	I-ASP
 is	O
 and	O
 how	O
-quick	O
+quick	B-OP
 this	O
 thing	O
 boots	B-ASP
@@ -4105,9 +4105,9 @@ mac	O
 The	O
 machine	O
 is	O
-speedy	O
+speedy	B-OP
 and	O
-efficient	O
+efficient	B-OP
 .	O
 
 I	O
@@ -4116,7 +4116,7 @@ this	O
 is	O
 about	O
 as	O
-good	O
+good	B-OP
 as	O
 it	O
 gets	O
@@ -4153,7 +4153,7 @@ for	O
 and	O
 it	O
 works	B-ASP
-great	O
+great	B-OP
 .	O
 
 Having	O
@@ -4162,15 +4162,15 @@ Mac	O
 certainly	O
 makes	O
 life	O
-easier	O
+easier	B-OP
 .	O
 
 It	O
 's	O
 so	O
-quick	O
+quick	B-OP
 and	O
-responsive	O
+responsive	B-OP
 that	O
 it	O
 makes	O
@@ -4200,7 +4200,7 @@ while	O
 
 It	O
 works	B-ASP
-fine	O
+fine	B-OP
 ,	O
 and	O
 all	O
@@ -4210,7 +4210,7 @@ seems	O
 to	O
 run	O
 pretty	O
-well	O
+well	B-OP
 .	O
 
 For	O
@@ -4219,7 +4219,7 @@ purpose	O
 ,	O
 it	O
 's	O
-great	O
+great	B-OP
 .	O
 
 Could	O
@@ -4316,13 +4316,13 @@ that	O
 was	O
 quite	O
 ,	O
-fast	O
+fast	B-OP
 ,	O
 and	O
 that	O
 had	O
 overall	O
-great	O
+great	B-OP
 performance	B-ASP
 .	O
 
@@ -4343,7 +4343,7 @@ say	O
 is	O
 I	O
 am	O
-impressed	O
+impressed	B-OP
 .	O
 
 It	O
@@ -4363,7 +4363,7 @@ expected	O
 Harddrive	B-ASP
 was	O
 in	O
-poor	O
+poor	B-OP
 condition	O
 ,	O
 had	O
@@ -4378,7 +4378,7 @@ switch	I-ASP
 is	O
 a	O
 bit	O
-obscure	O
+obscure	B-OP
 in	O
 the	O
 rear	O
@@ -4388,7 +4388,7 @@ corner	O
 It	O
 's	O
 a	O
-nice	O
+nice	B-OP
 little	O
 gadget	O
 .	O
@@ -4399,7 +4399,7 @@ complaint	O
 is	O
 the	O
 total	O
-lack	O
+lack	B-OP
 of	O
 instructions	B-ASP
 that	O
@@ -4419,7 +4419,7 @@ computer	O
 would	O
 not	O
 be	O
-good	O
+good	B-OP
 enough	O
 for	O
 would	O
@@ -4433,7 +4433,7 @@ Intel	I-ASP
 4000	I-ASP
 graphics	I-ASP
 work	O
-well	O
+well	B-OP
 for	O
 other	O
 tasks	O
@@ -4486,13 +4486,13 @@ editing	I-ASP
 )	O
 and	O
 its	O
-reliable	O
+reliable	B-OP
 .	O
 
 It	O
 is	O
 the	O
-best	O
+best	B-OP
 all	O
 around	O
 Mac	O
@@ -4500,16 +4500,16 @@ Mac	O
 
 Screen	B-ASP
 is	O
-bright	O
+bright	B-OP
 and	O
-gorgeous	O
+gorgeous	B-OP
 .	O
 
 Also	O
 is	O
-portable	O
+portable	B-OP
 and	O
-reliable	O
+reliable	B-OP
 .	O
 
 The	O
@@ -4545,7 +4545,7 @@ but	O
 I	O
 am	O
 very	O
-satisfied	O
+satisfied	B-OP
 .	O
 
 If	O
@@ -4576,11 +4576,11 @@ applications	B-ASP
 
 It	O
 is	O
-robust	O
+robust	B-OP
 ,	O
 with	O
 a	O
-friendly	O
+friendly	B-OP
 use	B-ASP
 as	O
 all	O
@@ -4602,14 +4602,14 @@ okay	O
 it	O
 's	O
 incredibly	O
-fast	O
+fast	B-OP
 .	O
 
 It	O
 is	O
-fast	O
+fast	B-OP
 and	O
-easy	O
+easy	B-OP
 to	O
 use	B-ASP
 .	O
@@ -4617,7 +4617,7 @@ use	B-ASP
 This	O
 was	O
 absolutely	O
-annoying	O
+annoying	B-OP
 !	O
 
 And	O
@@ -4631,9 +4631,9 @@ an	O
 i5	B-ASP
 processor	I-ASP
 definitely	O
-speeds	O
-things	O
-up	O
+speeds	B-OP
+things	I-OP
+up	I-OP
 
 But	O
 for	O
@@ -4655,7 +4655,7 @@ PC	O
 this	O
 is	O
 a	O
-good	O
+good	B-OP
 foot	O
 in	O
 the	O
@@ -4674,7 +4674,7 @@ but	O
 this	O
 computer	O
 is	O
-intuitive	O
+intuitive	B-OP
 and	O
 its	O
 built	B-ASP
@@ -4682,7 +4682,7 @@ in	I-ASP
 features	I-ASP
 are	O
 a	O
-great	O
+great	B-OP
 help	O
 
 and	O
@@ -4692,14 +4692,14 @@ in	O
 my	O
 briefcase	O
 with	O
-ease	O
+ease	B-OP
 
-Nice	O
+Nice	B-OP
 screen	B-ASP
 ,	O
 keyboard	B-ASP
 works	O
-great	O
+great	B-OP
 !	O
 
 Still	O
@@ -4711,19 +4711,19 @@ for	O
 
 I	O
 was	O
-amazed	O
+amazed	B-OP
 at	O
 how	O
-fast	O
+fast	B-OP
 the	O
 delivery	B-ASP
 was	O
 .	O
 
-Good	O
+Good	B-OP
 computer	O
 and	O
-fast	O
+fast	B-OP
 .	O
 
 I	O
@@ -4741,7 +4741,7 @@ RAM	I-ASP
 The	O
 memory	B-ASP
 was	O
-gone	O
+gone	B-OP
 and	O
 it	O
 was	O
@@ -4764,12 +4764,12 @@ go	O
 
 It	O
 works	B-ASP
-great	O
+great	B-OP
 and	O
 I	O
 am	O
 so	O
-happy	O
+happy	B-OP
 I	O
 bought	O
 it	O
@@ -4785,7 +4785,7 @@ that	O
 I	O
 was	O
 highly	O
-reluctant	O
+reluctant	B-OP
 to	O
 spend	O
 so	O
@@ -4797,18 +4797,18 @@ laptop	O
 .	O
 
 I	O
-like	O
+like	B-OP
 the	O
 design	B-ASP
 and	O
-ease	O
+ease	B-OP
 of	O
 use	O
 with	O
 the	O
 keyboard	B-ASP
 ,	O
-plenty	O
+plenty	B-OP
 of	O
 ports	B-ASP
 .	O
@@ -4831,7 +4831,7 @@ needs	O
 ,	O
 it	O
 's	O
-perfect	O
+perfect	B-OP
 .	O
 
 it	O
@@ -4844,7 +4844,7 @@ and	O
 the	O
 service	B-ASP
 was	O
-great	O
+great	B-OP
 .	O
 
 I	O
@@ -4860,7 +4860,7 @@ and	O
 this	O
 was	O
 a	O
-great	O
+great	B-OP
 upgrade	O
 !	O
 
@@ -4868,7 +4868,7 @@ Web	B-ASP
 browsing	I-ASP
 is	O
 very	O
-quick	O
+quick	B-OP
 with	O
 Safari	B-ASP
 browser	I-ASP
@@ -4885,7 +4885,7 @@ decision	O
 .	O
 
 I	O
-like	O
+like	B-OP
 the	O
 lighted	B-ASP
 screen	I-ASP
@@ -4895,11 +4895,11 @@ night	O
 
 It	O
 's	O
-great	O
+great	B-OP
 to	O
 have	O
 a	O
-solid	O
+solid	B-OP
 Mac	O
 in	O
 the	O
@@ -4910,13 +4910,13 @@ room	O
 It	O
 is	O
 really	O
-easy	O
+easy	B-OP
 to	O
 use	B-ASP
 and	O
 it	O
 is	O
-quick	O
+quick	B-OP
 to	O
 start	B-ASP
 up	I-ASP
@@ -4929,25 +4929,25 @@ with	O
 the	O
 crashes	O
 and	O
-slow	O
+slow	B-OP
 operation	B-ASP
 and	O
 restarts	O
 .	O
 
 Very	O
-light	O
+light	B-OP
 and	O
-easily	O
-maneuverable	O
+easily	B-OP
+maneuverable	I-OP
 .	O
 
 USB3	B-ASP
 Peripherals	I-ASP
 are	O
 noticably	O
-less	O
-expensive	O
+less	B-OP
+expensive	I-OP
 than	O
 the	O
 ThunderBolt	B-ASP
@@ -5000,13 +5000,13 @@ purchase	O
 
 It	O
 's	O
-fast	O
+fast	B-OP
 ,	O
-light	O
+light	B-OP
 ,	O
 and	O
 is	O
-perfect	O
+perfect	B-OP
 for	O
 media	B-ASP
 editing	I-ASP
@@ -5057,7 +5057,7 @@ user	B-ASP
 experience	I-ASP
 is	O
 very	O
-elegant	O
+elegant	B-OP
 .	O
 
 I	O
@@ -5066,7 +5066,7 @@ months	O
 looking	O
 for	O
 a	O
-good	O
+good	B-OP
 laptop	O
 for	O
 me	O
@@ -5086,10 +5086,10 @@ free	O
 Thanks	O
 for	O
 the	O
-fast	O
+fast	B-OP
 shipment	B-ASP
 and	O
-great	O
+great	B-OP
 price	B-ASP
 .	O
 
@@ -5106,7 +5106,7 @@ response	I-ASP
 .	O
 
 The	O
-smaller	O
+smaller	B-OP
 size	B-ASP
 was	O
 a	O
@@ -5118,7 +5118,7 @@ restrictions	O
 .	O
 
 I	O
-blame	O
+blame	B-OP
 the	O
 Mac	B-ASP
 OS	I-ASP
@@ -5158,17 +5158,17 @@ etc	O
 
 It	O
 's	O
-small	O
+small	B-OP
 but	O
-powerful	O
+powerful	B-OP
 ,	O
-light	O
+light	B-OP
 but	O
-strong	O
+strong	B-OP
 ,	O
-elegant	O
+elegant	B-OP
 and	O
-beautiful	O
+beautiful	B-OP
 ...	O
 In	O
 resume	O
@@ -5180,7 +5180,7 @@ Mac	O
 !	O
 
 I	O
-like	O
+like	B-OP
 the	O
 operating	B-ASP
 system	I-ASP
@@ -5199,7 +5199,7 @@ ago	O
 .	O
 
 I	O
-love	O
+love	B-OP
 the	O
 form	B-ASP
 factor	I-ASP
@@ -5223,7 +5223,7 @@ review	O
 
 It	O
 's	O
-fast	O
+fast	B-OP
 at	O
 loading	B-ASP
 the	I-ASP
@@ -5232,9 +5232,9 @@ internet	I-ASP
 
 So	O
 much	O
-faster	O
+faster	B-OP
 and	O
-sleeker	O
+sleeker	B-OP
 looking	B-ASP
 .	O
 
@@ -5282,7 +5282,7 @@ them	O
 and	O
 they	O
 are	O
-GREAT	O
+GREAT	B-OP
 !	O
 
 First	O
@@ -5291,7 +5291,7 @@ off	O
 I	O
 really	O
 do	O
-like	O
+like	B-OP
 my	O
 MBP	O
 ...	O
@@ -5303,7 +5303,7 @@ OS	B-ASP
 it	O
 is	O
 pretty	O
-easy	O
+easy	B-OP
 to	O
 get	O
 around	O
@@ -5313,7 +5313,7 @@ the	O
 overall	B-ASP
 build	I-ASP
 is	O
-great	O
+great	B-OP
 ...	O
 eg	O
 the	O
@@ -5322,7 +5322,7 @@ is	O
 one	O
 of	O
 the	O
-best	O
+best	B-OP
 to	O
 type	O
 on	O
@@ -5345,7 +5345,7 @@ it	O
 's	O
 a	O
 terribly	O
-great	O
+great	B-OP
 machine	O
 .	O
 
@@ -5354,7 +5354,7 @@ is	O
 made	O
 of	O
 such	O
-solid	O
+solid	B-OP
 construction	B-ASP
 and	O
 since	O
@@ -5379,7 +5379,7 @@ bit	O
 .	O
 
 I	O
-love	O
+love	B-OP
 this	O
 piece	O
 of	O
@@ -5405,13 +5405,13 @@ Pro	O
 .	O
 
 Very	O
-nice	O
+nice	B-OP
 unibody	B-ASP
 construction	I-ASP
 .	O
 
 Very	O
-disappointed	O
+disappointed	B-OP
 with	O
 Apple	O
 .	O
@@ -5420,16 +5420,16 @@ This	O
 Macbook	O
 Pro	O
 is	O
-fast	O
+fast	B-OP
 ,	O
-powerful	O
+powerful	B-OP
 ,	O
 and	O
 runs	B-ASP
 super	O
-quiet	O
+quiet	B-OP
 and	O
-cool	O
+cool	B-OP
 .	O
 
 ***	O
@@ -5450,7 +5450,7 @@ issue	O
 
 It	O
 's	O
-ok	O
+ok	B-OP
 but	O
 does	O
 n't	O
@@ -5494,7 +5494,7 @@ It	O
 really	O
 is	O
 very	O
-light	O
+light	B-OP
 compared	O
 to	O
 other	O
@@ -5508,7 +5508,7 @@ brand	O
 new	O
 and	O
 works	B-ASP
-perfectly	O
+perfectly	B-OP
 .	O
 
 This	O
@@ -5539,8 +5539,8 @@ anything	O
 MY	O
 TRACKPAD	B-ASP
 IS	O
-NOT	O
-WORKING	O
+NOT	B-OP
+WORKING	I-OP
 .	O
 
 I	O
@@ -5585,23 +5585,23 @@ It	O
 looks	O
 and	O
 feels	O
-solid	O
+solid	B-OP
 ,	O
 with	O
 a	O
-flawless	O
+flawless	B-OP
 finish	B-ASP
 .	O
 
 Its	O
-worth	O
+worth	B-OP
 every	O
 Penny	O
 .	O
 
 Price	B-ASP
 was	O
-higher	O
+higher	B-OP
 when	O
 purchased	O
 on	O
@@ -5623,7 +5623,7 @@ product	O
 This	O
 was	O
 a	O
-great	O
+great	B-OP
 deal	O
 for	O
 a	O
@@ -5662,7 +5662,7 @@ sorry	O
 The	O
 configuration	B-ASP
 is	O
-perfect	O
+perfect	B-OP
 for	O
 my	O
 needs	O
@@ -5673,7 +5673,7 @@ the	O
 speakers	B-ASP
 is	O
 the	O
-worst	O
+worst	B-OP
 ever	O
 .	O
 
@@ -5692,7 +5692,7 @@ checked	O
 
 Its	O
 the	O
-best	O
+best	B-OP
 ,	O
 its	O
 got	O
@@ -5700,11 +5700,11 @@ the	O
 looks	B-ASP
 ,	O
 super	O
-easy	O
+easy	B-OP
 to	O
 use	B-ASP
 and	O
-love	O
+love	B-OP
 all	O
 you	O
 can	O
@@ -5718,14 +5718,14 @@ trackpad	B-ASP
 
 It	O
 's	O
-fast	O
+fast	B-OP
 ,	O
-quiet	O
+quiet	B-OP
 ,	O
 incredibly	O
-small	O
+small	B-OP
 and	O
-affordable	O
+affordable	B-OP
 compared	O
 to	O
 other	O
@@ -5736,9 +5736,9 @@ models	O
 Web	B-ASP
 surfuring	I-ASP
 is	O
-smooth	O
+smooth	B-OP
 and	O
-seamless	O
+seamless	B-OP
 .	O
 
 It	O
@@ -5757,7 +5757,7 @@ mac	O
 I	O
 'm	O
 overall	O
-pleased	O
+pleased	B-OP
 with	O
 the	O
 interface	B-ASP
@@ -5799,16 +5799,16 @@ This	O
 item	O
 is	O
 a	O
-beautiful	O
+beautiful	B-OP
 piece	O
 ,	O
 it	O
 works	B-ASP
-well	O
+well	B-OP
 ,	O
 it	O
 is	O
-easy	O
+easy	B-OP
 to	O
 carry	B-ASP
 and	O
@@ -5836,13 +5836,13 @@ hardware	O
 (	O
 keyboard	O
 )	O
-issues	O
+issues	B-OP
 ,	O
 relatively	O
-slow	O
+slow	B-OP
 performance	B-ASP
 and	O
-shortening	O
+shortening	B-OP
 battery	B-ASP
 lifetime	I-ASP
 .	O
@@ -5869,7 +5869,7 @@ you	O
 .	O
 
 Runs	B-ASP
-good	O
+good	B-OP
 and	O
 does	O
 the	O
@@ -5884,12 +5884,12 @@ that	O
 
 It	O
 's	O
-silent	O
+silent	B-OP
 and	O
 has	O
 a	O
 very	O
-small	O
+small	B-OP
 footprint	B-ASP
 on	O
 my	O
@@ -5898,9 +5898,9 @@ desk	O
 
 I	O
 have	O
-nothing	O
-to	O
-regret	O
+nothing	B-OP
+to	I-OP
+regret	I-OP
 from	O
 this	O
 new	O
@@ -5911,14 +5911,14 @@ The	O
 exterior	B-ASP
 is	O
 absolutely	O
-gorgeous	O
+gorgeous	B-OP
 .	O
 
 Have	O
 one	O
 myself	O
 and	O
-Love	O
+Love	B-OP
 it	O
 !	O
 
@@ -5926,7 +5926,7 @@ It	O
 has	O
 a	O
 very	O
-high	O
+high	B-OP
 performance	B-ASP
 ,	O
 just	O
@@ -5940,7 +5940,7 @@ for	O
 This	O
 is	O
 especially	O
-disheartening	O
+disheartening	B-OP
 when	O
 Apple	O
 prides	O
@@ -5967,7 +5967,7 @@ old	O
 stock	O
 or	O
 a	O
-defective	O
+defective	B-OP
 design	O
 involving	O
 the	O
@@ -6072,7 +6072,7 @@ lid	B-ASP
 It	O
 is	O
 the	O
-perfect	O
+perfect	B-OP
 size	B-ASP
 and	O
 speed	B-ASP
@@ -6083,7 +6083,7 @@ me	O
 I	O
 am	O
 so	O
-addict	O
+addict	B-OP
 to	O
 this	O
 laptop	O
@@ -6093,7 +6093,7 @@ THE	O
 CUSTOMER	B-ASP
 SERVICE	I-ASP
 IS	O
-TERRIFIC	O
+TERRIFIC	B-OP
 !!	O
 
 Trashed	O
@@ -6125,7 +6125,7 @@ machine	O
 ,	O
 which	O
 performed	B-ASP
-admirably	O
+admirably	B-OP
 ,	O
 but	O
 having	O
@@ -6162,7 +6162,7 @@ had	O
 been	O
 slowly	O
 developing	O
-problems	O
+problems	B-OP
 ever	O
 since	O
 I	O
@@ -6183,13 +6183,13 @@ have	O
 any	O
 scratches	O
 ,	O
-ZERO	O
+ZERO	B-OP
 battery	B-ASP
 cycle	I-ASP
 count	I-ASP
 (	O
 pretty	O
-surprised	O
+surprised	B-OP
 )	O
 ,	O
 and	O
@@ -6200,7 +6200,7 @@ seemed	O
 to	O
 be	O
 working	O
-perfectly	O
+perfectly	B-OP
 .	O
 
 After	O
@@ -6234,7 +6234,7 @@ could	O
 n't	O
 be	O
 more	O
-pleased	O
+pleased	B-OP
 .	O
 
 And	O
@@ -6261,14 +6261,14 @@ needed	O
 a	O
 laptop	O
 with	O
-big	O
+big	B-OP
 storage	B-ASP
 ,	O
 a	O
-nice	O
+nice	B-OP
 screen	B-ASP
 and	O
-fast	O
+fast	B-OP
 so	O
 I	O
 can	O
@@ -6289,7 +6289,7 @@ but	O
 this	O
 laptop	O
 is	O
-lacking	O
+lacking	B-OP
 in	O
 speaker	B-ASP
 quality	I-ASP
@@ -6306,7 +6306,7 @@ laptop	O
 It	O
 is	O
 much	O
-better	O
+better	B-OP
 than	O
 the	O
 Acer	O
@@ -6318,9 +6318,9 @@ before	O
 
 Shipped	B-ASP
 very	O
-quickly	O
+quickly	B-OP
 and	O
-safely	O
+safely	B-OP
 .	O
 
 I	O
@@ -6349,26 +6349,26 @@ The	O
 thunderbolt	B-ASP
 port	I-ASP
 is	O
-awesome	O
+awesome	B-OP
 !	O
 
-User	O
-friendly	O
+User	B-OP
+friendly	I-OP
 ,	O
-fast	O
+fast	B-OP
 and	O
-high	O
-tech	O
+high	B-OP
+tech	I-OP
 It	O
 is	O
-amazing	O
+amazing	B-OP
 !	O
 
 The	O
 performance	B-ASP
 is	O
 definitely	O
-superior	O
+superior	B-OP
 to	O
 any	O
 computer	O
@@ -6383,7 +6383,7 @@ on	O
 
 It	O
 's	O
-great	O
+great	B-OP
 for	O
 streaming	B-ASP
 video	I-ASP
@@ -6396,12 +6396,12 @@ uses	I-ASP
 Apple	O
 did	O
 a	O
-great	O
+great	B-OP
 job	O
 .	O
 
 I	O
-like	O
+like	B-OP
 the	O
 design	B-ASP
 and	O
@@ -6431,10 +6431,10 @@ office	I-ASP
 It	O
 is	O
 extremely	O
-fast	O
+fast	B-OP
 and	O
 very	O
-compact	O
+compact	B-OP
 .	O
 
 I	O
@@ -6476,7 +6476,7 @@ mac	O
 mini	O
 after	O
 being	O
-disappointed	O
+disappointed	B-OP
 with	O
 spec	B-ASP
 of	O
@@ -6494,13 +6494,13 @@ and	O
 it	O
 's	O
 extremely	O
-user	O
-friendly	O
+user	B-OP
+friendly	I-OP
 ,	O
 so	O
 I	O
 would	O
-recommend	O
+recommend	B-OP
 it	O
 for	O
 new	O
@@ -6517,22 +6517,22 @@ looking	O
 for	O
 a	O
 more	O
-efficient	O
+efficient	B-OP
 way	O
 to	O
 do	O
 things	O
 
 Its	O
-fast	O
+fast	B-OP
 ,	O
-easy	O
+easy	B-OP
 to	O
 use	B-ASP
 and	O
 it	O
 looks	B-ASP
-great	O
+great	B-OP
 .	O
 
 (	O
@@ -6583,7 +6583,7 @@ the	O
 details	O
 of	O
 this	O
-marvelous	O
+marvelous	B-OP
 computer	O
 on	O
 wikipedia	O
@@ -6593,7 +6593,7 @@ Performance	B-ASP
 is	O
 much	O
 much	O
-better	O
+better	B-OP
 on	O
 the	O
 Pro	O
@@ -6679,7 +6679,7 @@ The	O
 only	O
 thing	O
 I	O
-dislike	O
+dislike	B-OP
 is	O
 the	O
 touchpad	B-ASP
@@ -6689,7 +6689,7 @@ of	O
 the	O
 times	O
 its	O
-unresponsive	O
+unresponsive	B-OP
 and	O
 does	O
 things	O
@@ -6701,7 +6701,7 @@ too	O
 ,	O
 I	O
 would	O
-recommend	O
+recommend	B-OP
 using	O
 a	O
 mouse	B-ASP
@@ -6714,7 +6714,7 @@ Yeah	O
 it	O
 's	O
 super	O
-expensive	O
+expensive	B-OP
 .	O
 
 The	O
@@ -6723,7 +6723,7 @@ mini	O
 is	O
 about	O
 8x	O
-smaller	O
+smaller	B-OP
 than	O
 my	O
 old	O
@@ -6736,14 +6736,14 @@ bonus	O
 and	O
 runs	B-ASP
 very	O
-quiet	O
+quiet	B-OP
 ,	O
 actually	O
 the	O
 fans	B-ASP
 are	O
 n't	O
-audible	O
+audible	B-OP
 unlike	O
 my	O
 old	O
@@ -6774,7 +6774,7 @@ supposed	O
 to	O
 which	O
 is	O
-great	O
+great	B-OP
 .	O
 
 I	O
@@ -6805,9 +6805,9 @@ ecosystem	I-ASP
 It	O
 's	O
 absolutely	O
-wonderful	O
+wonderful	B-OP
 and	O
-worth	O
+worth	B-OP
 the	O
 price	B-ASP
 !	O
@@ -6815,7 +6815,7 @@ price	B-ASP
 It	O
 's	O
 a	O
-good	O
+good	B-OP
 fix	O
 ,	O
 in	O
@@ -6829,14 +6829,14 @@ please	O
 with	O
 the	O
 products	O
-ease	O
+ease	B-OP
 of	O
 use	B-ASP
 ;	O
-out	O
-of	O
-the	O
-box	O
+out	B-OP
+of	I-OP
+the	I-OP
+box	I-OP
 ready	O
 ;	O
 appearance	B-ASP
@@ -6897,10 +6897,10 @@ fanboy	O
 its	O
 by	O
 far	O
-faster	O
+faster	B-OP
 and	O
-more	O
-stable	O
+more	B-OP
+stable	I-OP
 then	O
 my	O
 PC	O
@@ -6950,14 +6950,14 @@ easier	O
 and	O
 I	O
 'm	O
-glad	O
+glad	B-OP
 that	O
 I	O
 did	O
 it	O
 .	O
 
-Perfect	O
+Perfect	B-OP
 for	O
 all	O
 my	O
@@ -6996,7 +6996,7 @@ person	O
 ,	O
 I	O
 'm	O
-glad	O
+glad	B-OP
 I	O
 finally	O
 got	O
@@ -7039,7 +7039,7 @@ think	O
 that	O
 was	O
 a	O
-great	O
+great	B-OP
 decision	O
 to	O
 buy	O
@@ -7047,18 +7047,18 @@ buy	O
 The	O
 OS	B-ASP
 is	O
-fast	O
+fast	B-OP
 and	O
-fluid	O
+fluid	B-OP
 ,	O
 everything	O
 is	O
-organized	O
+organized	B-OP
 and	O
 it	O
 's	O
 just	O
-beautiful	O
+beautiful	B-OP
 .	O
 
 It	O
@@ -7067,7 +7067,7 @@ make	O
 life	O
 so	O
 much	O
-easier	O
+easier	B-OP
 next	O
 semester	O
 ,	O
@@ -7134,12 +7134,12 @@ so	O
 far	O
 it	O
 's	O
-amazing	O
+amazing	B-OP
 !	O
 
 They	O
 are	O
-simpler	O
+simpler	B-OP
 to	O
 use	B-ASP
 .	O
@@ -7160,7 +7160,7 @@ It	O
 's	O
 also	O
 very	O
-pricey	O
+pricey	B-OP
 but	O
 you	O
 just	O
@@ -7200,13 +7200,13 @@ computer	O
 
 !	O
 so	O
-nice	O
+nice	B-OP
 .	O
 .	O
-stable	O
+stable	B-OP
 .	O
 .	O
-fast	O
+fast	B-OP
 .	O
 .	O
 now	O
@@ -7217,7 +7217,7 @@ SSD	B-ASP
 !	O
 
 I	O
-love	O
+love	B-OP
 apple	O
 but	O
 unlike	O
@@ -7257,7 +7257,7 @@ buys	O
 It	O
 is	O
 a	O
-great	O
+great	B-OP
 computer	O
 for	O
 that	O
@@ -7268,7 +7268,7 @@ to	O
 say	O
 I	O
 'm	O
-happy	O
+happy	B-OP
 I	O
 switched	O
 .	O
@@ -7303,7 +7303,7 @@ saga	O
 
 Overall	O
 a	O
-nice	O
+nice	B-OP
 computer	O
 .	O
 
@@ -7338,7 +7338,7 @@ it	O
 .	O
 
 I	O
-love	O
+love	B-OP
 the	O
 quick	O
 start	B-ASP
@@ -7376,13 +7376,13 @@ mac	O
 continues	O
 to	O
 function	B-ASP
-properly	O
+properly	B-OP
 .	O
 
 Graphics	B-ASP
 are	O
 much	O
-improved	O
+improved	B-OP
 .	O
 
 Here	O
@@ -7392,7 +7392,7 @@ things	O
 that	O
 made	O
 me	O
-confident	O
+confident	B-OP
 with	O
 my	O
 purchase	O
@@ -7422,7 +7422,7 @@ version	O
 It	O
 provides	O
 much	O
-more	O
+more	B-OP
 flexibility	B-ASP
 for	I-ASP
 connectivity	I-ASP
@@ -7470,7 +7470,7 @@ and	O
 I	O
 'm	O
 finally	O
-glad	O
+glad	B-OP
 to	O
 have	O
 joined	O
@@ -7482,7 +7482,7 @@ revolution	O
 Mac	B-ASP
 tutorials	I-ASP
 do	O
-help	O
+help	B-OP
 .	O
 
 When	O
@@ -7503,7 +7503,7 @@ technical	B-ASP
 support	I-ASP
 was	O
 not	O
-helpful	O
+helpful	B-OP
 as	O
 well	O
 .	O
@@ -7534,13 +7534,13 @@ that	O
 i	O
 do	O
 n't	O
-love	O
+love	B-OP
 ,	O
 apple	O
 always	O
 makes	O
 a	O
-great	O
+great	B-OP
 product	O
 .	O
 
@@ -7585,13 +7585,13 @@ It	O
 all	O
 a	O
 bit	O
-magical	O
+magical	B-OP
 .	O
 
 Logic	B-ASP
 board	I-ASP
-utterly	O
-fried	O
+utterly	B-OP
+fried	I-OP
 ,	O
 cried	O
 ,	O
@@ -7605,13 +7605,13 @@ died	O
 It	O
 is	O
 BLAZING	O
-fast	O
+fast	B-OP
 !	O
 
 The	O
 sound	B-ASP
 was	O
-crappy	O
+crappy	B-OP
 even	O
 when	O
 you	O
@@ -7662,17 +7662,17 @@ OSX	B-ASP
 Lion	I-ASP
 is	O
 a	O
-great	O
+great	B-OP
 performer	O
 .	O
 .	O
 extremely	O
-fast	O
+fast	B-OP
 and	O
-reliable	O
+reliable	B-OP
 .	O
 
-Best	O
+Best	B-OP
 commuter	O
 I	O
 have	O
@@ -7712,7 +7712,7 @@ to	O
 have	O
 an	O
 application	B-ASP
-crash	O
+crash	B-OP
 within	O
 the	O
 first	O
@@ -7730,7 +7730,7 @@ pro	O
 physical	B-ASP
 form	I-ASP
 is	O
-wonderful	O
+wonderful	B-OP
 .	O
 
 I	O
@@ -7759,11 +7759,11 @@ Mini	O
 
 Not	O
 super	O
-light	O
+light	B-OP
 but	O
 still	O
 a	O
-good	O
+good	B-OP
 one	O
 .	O
 
@@ -7781,7 +7781,7 @@ late	O
 and	O
 for	O
 a	O
-good	O
+good	B-OP
 reason	O
 .	O
 
@@ -7793,7 +7793,7 @@ does	O
 feel	O
 lot	O
 more	O
-solid	O
+solid	B-OP
 than	O
 Apple	O
 's	O
@@ -7813,11 +7813,11 @@ replacement	O
 
 It	O
 was	O
-wonderful	O
+wonderful	B-OP
 deal	O
 for	O
 the	O
-wonderful	O
+wonderful	B-OP
 product	O
 .	O
 
@@ -7834,9 +7834,9 @@ life	O
 
 3D	B-ASP
 rendering	I-ASP
-slows	O
-it	O
-down	O
+slows	B-OP
+it	I-OP
+down	I-OP
 considerably	O
 .	O
 
@@ -7856,7 +7856,7 @@ wife	O
 
 I	O
 am	O
-pleased	O
+pleased	B-OP
 to	O
 report	O
 that	O
@@ -7865,7 +7865,7 @@ is	O
 one	O
 of	O
 the	O
-best	O
+best	B-OP
 presents	O
 I	O
 have	O
@@ -7882,17 +7882,17 @@ this	O
 computer	O
 ,	O
 something	O
-failed	O
+failed	B-OP
 on	O
 it	O
 .	O
 
-fast	O
+fast	B-OP
 ,	O
-great	O
+great	B-OP
 screen	B-ASP
 ,	O
-beautiful	O
+beautiful	B-OP
 apps	B-ASP
 for	O
 a	O
@@ -8021,9 +8021,9 @@ all	O
 put	O
 together	O
 in	O
-neat	O
+neat	B-OP
 and	O
-nice	O
+nice	B-OP
 package	B-ASP
 .	O
 
@@ -8042,7 +8042,7 @@ that	O
 is	O
 my	O
 only	O
-complaint	O
+complaint	B-OP
 .	O
 
 Within	O
@@ -8122,7 +8122,7 @@ My	O
 life	O
 has	O
 been	O
-enriched	O
+enriched	B-OP
 since	O
 I	O
 have	O
@@ -8149,7 +8149,7 @@ GO	O
 It	O
 is	O
 pretty	O
-snappy	O
+snappy	B-OP
 and	O
 starts	B-ASP
 up	I-ASP
@@ -8159,7 +8159,7 @@ about	O
 seconds	O
 which	O
 is	O
-good	O
+good	B-OP
 enough	O
 for	O
 me	O
@@ -8182,7 +8182,7 @@ things	O
 So	O
 noise	O
 is	O
-reduced	O
+reduced	B-OP
 at	O
 least	O
 50	O
@@ -8192,7 +8192,7 @@ the	O
 heat	B-ASP
 is	O
 much	O
-better	O
+better	B-OP
 ,	O
 now	O
 it	O
@@ -8236,7 +8236,7 @@ problem	O
 
 My	O
 one	O
-complaint	O
+complaint	B-OP
 is	O
 that	O
 there	O
@@ -8274,7 +8274,7 @@ and	O
 I	O
 'm	O
 really	O
-happy	O
+happy	B-OP
 with	O
 the	O
 move	O
@@ -8385,10 +8385,10 @@ yet	O
 
 Not	O
 too	O
-expense	O
+expense	B-OP
 and	O
 has	O
-enough	O
+enough	B-OP
 storage	B-ASP
 for	O
 most	O
@@ -8401,7 +8401,7 @@ ports	B-ASP
 I	O
 am	O
 very	O
-satisfied	O
+satisfied	B-OP
 with	O
 the	O
 mini	O
@@ -8412,10 +8412,10 @@ audio	B-ASP
 volume	I-ASP
 is	O
 quite	O
-low	O
+low	B-OP
 and	O
 virtually	O
-unusable	O
+unusable	B-OP
 in	O
 a	O
 room	O
@@ -8482,10 +8482,10 @@ rising	O
 
 It	O
 is	O
-lightweight	O
+lightweight	B-OP
 and	O
 the	O
-perfect	O
+perfect	B-OP
 size	B-ASP
 to	O
 carry	O
@@ -8533,7 +8533,7 @@ stars	O
 Very	O
 Very	O
 Highly	O
-Recommended	O
+Recommended	B-OP
 .	O
 
 ?	O
@@ -8568,7 +8568,7 @@ ya	O
 because	O
 it	O
 's	O
-expensive	O
+expensive	B-OP
 .	O
 
 I	O
@@ -8586,7 +8586,7 @@ Macbook	O
 Pro	O
 is	O
 the	O
-premier	O
+premier	B-OP
 choice	O
 for	O
 college	O
@@ -8601,20 +8601,20 @@ the	O
 MBP	O
 ,	O
 are	O
-beautiful	O
+beautiful	B-OP
 ,	O
-sleek	O
+sleek	B-OP
 and	O
-clever	O
+clever	B-OP
 .	O
 
 The	O
 MBP	O
 is	O
-beautiful	O
+beautiful	B-OP
 has	O
 many	O
-wonderful	O
+wonderful	B-OP
 capabilities	B-ASP
 .	O
 
@@ -8635,10 +8635,10 @@ settings	B-ASP
 
 Runs	B-ASP
 very	O
-smoothly	O
+smoothly	B-OP
 .	O
 
-Perfect	O
+Perfect	B-OP
 --	O
 thanks	O
 so	O
@@ -8647,9 +8647,9 @@ so	O
 Also	O
 ,	O
 it	O
-hardly	O
-ever	O
-crashes	O
+hardly	B-OP
+ever	I-OP
+crashes	I-OP
 .	O
 
 I	O
@@ -8672,8 +8672,8 @@ attack	O
 .	O
 
 Boot-up	B-ASP
-slowed	O
-significantly	O
+slowed	B-OP
+significantly	I-OP
 after	O
 all	O
 Windows	B-ASP
@@ -8729,7 +8729,7 @@ important	O
 that	O
 it	O
 was	O
-powerful	O
+powerful	B-OP
 enough	O
 to	O
 do	O
@@ -8772,7 +8772,7 @@ Mini	O
 Mac	O
 it	O
 was	O
-easy	O
+easy	B-OP
 to	O
 setup	B-ASP
 and	O
@@ -8820,16 +8820,16 @@ MACHINE	O
 
 It	O
 's	O
-shiny	O
+shiny	B-OP
 and	O
 it	O
 's	O
-pretty	O
+pretty	B-OP
 .	O
 
 Runs	B-ASP
 real	O
-quick	O
+quick	B-OP
 .	O
 
 All	O
@@ -8838,7 +8838,7 @@ above	O
 aside	O
 this	O
 machine	O
-ROCKS	O
+ROCKS	B-OP
 !	O
 
 Buy	O
@@ -8858,7 +8858,7 @@ Since	O
 the	O
 machine	O
 's	O
-slim	O
+slim	B-OP
 profile	B-ASP
 is	O
 critical	O
@@ -8926,10 +8926,10 @@ card	I-ASP
 reader	I-ASP
 is	O
 slightly	O
-recessed	O
+recessed	B-OP
 and	O
-upside	O
-down	O
+upside	B-OP
+down	I-OP
 (	O
 the	O
 nail	B-ASP
@@ -8962,7 +8962,7 @@ its	O
 not	O
 .	O
 
-Soft	O
+Soft	B-OP
 touch	B-ASP
 ,	O
 anodized	B-ASP
@@ -8976,10 +8976,10 @@ no	O
 flaws	O
 .	O
 
-Simple	O
+Simple	B-OP
 details	O
 ,	O
-crafted	O
+crafted	B-OP
 aluminium	B-ASP
 and	O
 real	O
@@ -9012,7 +9012,7 @@ and	O
 it	O
 has	O
 that	O
-nice	O
+nice	B-OP
 brushed	O
 aluminum	B-ASP
 .	O
@@ -9073,7 +9073,7 @@ The	O
 Dell	O
 Inspiron	O
 is	O
-fast	O
+fast	B-OP
 and	O
 has	O
 a	O
@@ -9112,7 +9112,7 @@ MacBook	O
 Pro	O
 is	O
 a	O
-great	O
+great	B-OP
 product	O
 which	O
 can	O
@@ -9152,7 +9152,7 @@ this	O
 machine	O
 is	O
 the	O
-fastest	O
+fastest	B-OP
 I	O
 have	O
 ever	O
@@ -9183,7 +9183,7 @@ and	O
 it	O
 took	O
 a	O
-good	O
+good	B-OP
 two	O
 hours	O
 .	O
@@ -9192,7 +9192,7 @@ Customization	B-ASP
 on	O
 mac	O
 is	O
-impossible	O
+impossible	B-OP
 .	O
 
 I	O
@@ -9250,11 +9250,11 @@ click	I-ASP
 button	I-ASP
 is	O
 surprisingly	O
-intuitive	O
+intuitive	B-OP
 .	O
 
 Far	O
-superior	O
+superior	B-OP
 to	O
 my	O
 MacBook	O
@@ -9263,13 +9263,13 @@ MacBook	O
 The	O
 SuperDrive	B-ASP
 is	O
-quiet	O
+quiet	B-OP
 .	O
 
 It	O
 was	O
 quite	O
-easy	O
+easy	B-OP
 .	O
 
 The	O
@@ -9312,7 +9312,7 @@ The	O
 battery	B-ASP
 was	O
 completely	O
-dead	O
+dead	B-OP
 ,	O
 in	O
 fact	O
@@ -9338,7 +9338,7 @@ exception	O
 
 if	O
 yo	O
-like	O
+like	B-OP
 practicality	B-ASP
 this	O
 is	O
@@ -9351,7 +9351,7 @@ you	O
 The	O
 OS	B-ASP
 is	O
-great	O
+great	B-OP
 .	O
 
 I	O
@@ -9387,10 +9387,10 @@ Price	B-ASP
 is	O
 a	O
 bit	O
-ridiculous	O
+ridiculous	B-OP
 ,	O
 kinda	O
-heavy	O
+heavy	B-OP
 .	O
 
 If	O
@@ -9403,13 +9403,13 @@ then	O
 I	O
 am	O
 completely	O
-happy	O
+happy	B-OP
 
 10/10	O
-five	O
-stars	O
+five	B-OP
+stars	I-OP
 would	O
-recommend	O
+recommend	B-OP
 .	O
 
 The	O
@@ -9429,9 +9429,9 @@ one	O
 .	O
 
 I	O
-fell	O
-in	O
-love	O
+fell	B-OP
+in	I-OP
+love	I-OP
 with	O
 my	O
 machine	O
@@ -9493,7 +9493,7 @@ menu	I-ASP
 It	O
 is	O
 very	O
-fast	O
+fast	B-OP
 and	O
 has	O
 everything	O
@@ -9521,7 +9521,7 @@ switch	I-ASP
 It	O
 is	O
 the	O
-best	O
+best	B-OP
 laptop	O
 ever	O
 !!!	O
@@ -9531,7 +9531,7 @@ laptop	O
 with	O
 Windows	B-ASP
 7	I-ASP
-crashed	O
+crashed	B-OP
 and	O
 I	O
 did	O
@@ -9569,11 +9569,11 @@ on	O
 it	O
 .	O
 
-Easy	O
+Easy	B-OP
 to	O
 install	B-ASP
 also	O
-small	O
+small	B-OP
 to	O
 leave	O
 anywhere	O
@@ -9582,7 +9582,7 @@ your	O
 bedroom	O
 also	O
 very	O
-easy	O
+easy	B-OP
 to	O
 configure	B-ASP
 for	I-ASP
@@ -9599,7 +9599,7 @@ express	O
 how	O
 much	O
 I	O
-love	O
+love	B-OP
 my	O
 new	O
 Mac	O
@@ -9610,7 +9610,7 @@ speakers	B-ASP
 could	O
 have	O
 been	O
-better	O
+better	B-OP
 but	O
 it	O
 was	O
@@ -9622,11 +9622,11 @@ breaker	O
 this	O
 is	O
 a	O
-great	O
+great	B-OP
 little	O
 laptop	O
 ...	O
-love	O
+love	B-OP
 it	O
 !	O
 
@@ -9645,18 +9645,18 @@ mac	O
 offers	O
 .	O
 
-Nice	O
+Nice	B-OP
 packing	B-ASP
 .	O
 
 Besides	O
 being	O
-elegant	O
+elegant	B-OP
 ,	O
 the	O
 MacBooks	O
 are	O
-durable	O
+durable	B-OP
 .	O
 
 I	O
@@ -9682,7 +9682,7 @@ the	O
 MBP	O
 is	O
 more	O
-expensive	O
+expensive	B-OP
 than	O
 competing	O
 PC	O
@@ -9729,7 +9729,7 @@ feel	O
 a	O
 little	O
 bit	O
-uncomfortable	O
+uncomfortable	B-OP
 in	O
 using	O
 the	O
@@ -9764,23 +9764,23 @@ and	O
 so	O
 far	O
 so	O
-good	O
+good	B-OP
 .	O
 
 It	O
 just	O
 works	B-ASP
-out	O
-of	O
-the	O
-box	O
+out	B-OP
+of	I-OP
+the	I-OP
+box	I-OP
 and	O
 you	O
 have	O
 a	O
 lot	O
 of	O
-cool	O
+cool	B-OP
 software	B-ASP
 included	O
 with	O
@@ -9788,7 +9788,7 @@ the	O
 OS	B-ASP
 .	O
 
-Good	O
+Good	B-OP
 in	O
 every	O
 aspect	O
@@ -9803,7 +9803,7 @@ here	O
 .	O
 it	O
 works	B-ASP
-great	O
+great	B-OP
 and	O
 is	O
 not	O
@@ -9825,7 +9825,7 @@ stolen	O
 ,	O
 its	O
 a	O
-great	O
+great	B-OP
 computer	O
 .	O
 
@@ -9853,7 +9853,7 @@ champ	O
 .....	O
 
 Really	O
-great	O
+great	B-OP
 ...	O
 Well	O
 let	O
@@ -9864,7 +9864,7 @@ the	O
 beginning	O
 .	O
 
-Premium	O
+Premium	B-OP
 price	B-ASP
 for	O
 the	O
@@ -9903,7 +9903,7 @@ I	O
 've	O
 found	O
 it	O
-fine	O
+fine	B-OP
 to	O
 work	O
 with	O
@@ -9956,7 +9956,7 @@ earlier	O
 is	O
 n't	O
 the	O
-best	O
+best	B-OP
 ,	O
 but	O
 it	O
@@ -9973,24 +9973,24 @@ pad	I-ASP
 is	O
 a	O
 bit	O
-squirrely	O
+squirrely	B-OP
 at	O
 times	O
 -	O
 sometimes	O
-too	O
-sensitive	O
+too	B-OP
+sensitive	I-OP
 ,	O
 and	O
 sometimes	O
 a	O
 bit	O
-unresponsive	O
+unresponsive	B-OP
 ,	O
 but	O
 it	O
 's	O
-usable	O
+usable	B-OP
 .	O
 
 However	O
@@ -9998,14 +9998,14 @@ However	O
 the	O
 experience	O
 was	O
-great	O
+great	B-OP
 since	O
 the	O
 OS	B-ASP
 does	O
 not	O
 become	O
-unstable	O
+unstable	B-OP
 and	O
 the	O
 application	B-ASP
@@ -10026,7 +10026,7 @@ my	O
 great	O
 MacBook	O
 pro	O
-FAILED	O
+FAILED	B-OP
 .	O
 
 If	O
@@ -10085,7 +10085,7 @@ Seems	O
 a	O
 much	O
 more	O
-economical	O
+economical	B-OP
 way	O
 to	O
 get	O
@@ -10099,7 +10099,7 @@ computers	O
 
 Shipping	B-ASP
 was	O
-quick	O
+quick	B-OP
 and	O
 product	O
 described	O
@@ -10116,10 +10116,10 @@ more	O
 I	O
 'm	O
 so	O
-disgusted	O
+disgusted	B-OP
 that	O
 I	O
-wasted	O
+wasted	B-OP
 my	O
 money	O
 on	O
@@ -10175,7 +10175,7 @@ Mini	O
 is	O
 probably	O
 the	O
-simplest	O
+simplest	B-OP
 example	O
 of	O
 compact	B-ASP
@@ -10221,7 +10221,7 @@ just	O
 got	O
 a	O
 little	O
-lighter	O
+lighter	B-OP
 .	O
 
 I	O
@@ -10234,7 +10234,7 @@ say	O
 this	O
 computer	O
 is	O
-perfect	O
+perfect	B-OP
 .	O
 .	O
 i	O
@@ -10245,12 +10245,12 @@ is	O
 This	O
 machine	O
 is	O
-flawless	O
+flawless	B-OP
 ,	O
-fast	O
+fast	B-OP
 ,	O
 and	O
-classy	O
+classy	B-OP
 .	O
 
 Other	O
@@ -10275,7 +10275,7 @@ up	O
 half	O
 the	O
 night	O
-enjoying	O
+enjoying	B-OP
 my	O
 new	O
 MacBook	O
@@ -10288,7 +10288,7 @@ is	O
 a	O
 100	O
 times	O
-better	O
+better	B-OP
 than	O
 a	O
 Chromebook	O
@@ -10298,7 +10298,7 @@ Additionally	O
 ,	O
 there	O
 is	O
-barely	O
+barely	B-OP
 a	O
 ventilation	B-ASP
 system	I-ASP
@@ -10326,12 +10326,12 @@ to	O
 get	O
 very	O
 very	O
-hot	O
+hot	B-OP
 ,	O
 and	O
 in	O
 fact	O
-impossible	O
+impossible	B-OP
 to	O
 keep	O
 on	O
@@ -10362,7 +10362,7 @@ advised	O
 the	O
 problem	O
 was	O
-corrupted	O
+corrupted	B-OP
 operating	B-ASP
 system	I-ASP
 files	I-ASP
@@ -10396,7 +10396,7 @@ expected	O
 
 Many	O
 people	O
-complain	O
+complain	B-OP
 about	O
 the	O
 new	O
@@ -10424,7 +10424,7 @@ Lion	B-ASP
 I	O
 am	O
 much	O
-happier	O
+happier	B-OP
 about	O
 MAC	B-ASP
 OS	I-ASP
@@ -10439,7 +10439,7 @@ office	O
 .	O
 
 User	O
-upgradeable	O
+upgradeable	B-OP
 RAM	B-ASP
 and	O
 HDD	B-ASP
@@ -10481,7 +10481,7 @@ The	O
 RAM	B-ASP
 memory	I-ASP
 is	O
-good	O
+good	B-OP
 but	O
 should	O
 have	O
@@ -10533,11 +10533,11 @@ did	O
 .	O
 
 I	O
-love	O
+love	B-OP
 it	O
 and	O
 would	O
-recommend	O
+recommend	B-OP
 it	O
 to	O
 everyone	O
@@ -10631,7 +10631,7 @@ OS	B-ASP
 makes	O
 it	O
 much	O
-better	O
+better	B-OP
 .	O
 
 Still	O
@@ -10658,10 +10658,10 @@ Lion	I-ASP
 It	O
 is	O
 EXTREMELY	O
-fast	O
+fast	B-OP
 and	O
-never	O
-lags	O
+never	B-OP
+lags	I-OP
 .	O
 
 I	O
@@ -10679,7 +10679,7 @@ but	O
 I	O
 was	O
 having	O
-issues	O
+issues	B-OP
 .	O
 
 I	O
@@ -10698,13 +10698,13 @@ one	O
 has	O
 a	O
 more	O
-powerful	O
+powerful	B-OP
 performance	B-ASP
 and	O
 seems	O
 much	O
 more	O
-convenient	O
+convenient	B-OP
 ,	O
 even	O
 though	O
@@ -10713,11 +10713,11 @@ it	O
 about	O
 .20	O
 inch	O
-thicker	O
+thicker	B-OP
 and	O
 2	O
 lbs	O
-heavier	O
+heavier	B-OP
 .	O
 
 At	O
@@ -10785,16 +10785,16 @@ able	O
 to	O
 dedicate	O
 a	O
-small	O
+small	B-OP
 ,	O
-portable	O
+portable	B-OP
 laptop	O
 to	O
 my	O
 writing	O
 and	O
 was	O
-surprised	O
+surprised	B-OP
 to	O
 learn	O
 that	O
@@ -10876,7 +10876,7 @@ money	O
 on	O
 something	O
 has	O
-less	O
+less	B-OP
 features	B-ASP
 than	O
 the	O
@@ -10885,7 +10885,7 @@ version	O
 .	O
 
 Definitely	O
-worth	O
+worth	B-OP
 spending	O
 the	O
 money	O
@@ -10907,9 +10907,9 @@ the	O
 volume	B-ASP
 is	O
 really	O
-low	O
+low	B-OP
 to	O
-low	O
+low	B-OP
 for	O
 a	O
 laptopwas	O
@@ -10922,13 +10922,13 @@ be	O
 so	O
 lowan	O
 i	O
-hate	O
+hate	B-OP
 that	O
 about	O
 this	O
 computer	O
 
-Fits	O
+Fits	B-OP
 all	O
 my	O
 personal	O
@@ -10963,7 +10963,7 @@ against	O
 something	O
 so	O
 i	O
-recommend	O
+recommend	B-OP
 getting	O
 a	O
 case	B-ASP
@@ -10989,7 +10989,7 @@ got	O
 this	O
 at	O
 an	O
-amazing	O
+amazing	B-OP
 price	B-ASP
 from	O
 Amazon	O
@@ -11017,7 +11017,7 @@ there	O
 is	O
 this	O
 endlessly	O
-frustrating	O
+frustrating	B-OP
 process	O
 that	O
 I	O
@@ -11060,8 +11060,8 @@ this	O
 set	O
 up	O
 is	O
-silky	O
-smooth	O
+silky	B-OP
+smooth	I-OP
 !	O
 
 I	O
@@ -11089,7 +11089,7 @@ chances	O
 and	O
 am	O
 overly	O
-impressed	O
+impressed	B-OP
 .	O
 
 The	O
@@ -11097,7 +11097,7 @@ case	B-ASP
 is	O
 now	O
 slightly	O
-larger	O
+larger	B-OP
 than	O
 the	O
 previous	O
@@ -11105,7 +11105,7 @@ generation	O
 ,	O
 but	O
 the	O
-lack	O
+lack	B-OP
 of	O
 an	O
 external	O
@@ -11137,7 +11137,7 @@ am	O
 old	O
 school	O
 and	O
-hate	O
+hate	B-OP
 the	O
 pad	B-ASP
 ,	O
@@ -11152,7 +11152,7 @@ it	O
 now	O
 it	O
 works	B-ASP
-great	O
+great	B-OP
 ,	O
 need	O
 to	O
@@ -11218,7 +11218,7 @@ ports	I-ASP
 .	O
 
 A	O
-great	O
+great	B-OP
 college	O
 tool	O
 !	O
@@ -11227,7 +11227,7 @@ The	O
 only	O
 thing	O
 I	O
-dislike	O
+dislike	B-OP
 about	O
 this	O
 laptop	O
@@ -11257,7 +11257,7 @@ solution	O
 It	O
 's	O
 a	O
-decent	O
+decent	B-OP
 computer	O
 for	O
 the	O
@@ -11275,13 +11275,13 @@ time	O
 I	O
 was	O
 really	O
-happy	O
+happy	B-OP
 because	O
 it	O
 is	O
 a	O
 much	O
-better	O
+better	B-OP
 price	B-ASP
 on	O
 amazon.com	O
@@ -11295,7 +11295,7 @@ store	O
 .	O
 
 The	O
-worst	O
+worst	B-OP
 a	O
 Mac	O
 ever	O
@@ -11303,12 +11303,12 @@ did	O
 to	O
 me	O
 was	O
-freeze	O
-up	O
+freeze	B-OP
+up	I-OP
 .	O
 
 The	O
-nicest	O
+nicest	B-OP
 part	O
 is	O
 the	O
@@ -11317,7 +11317,7 @@ heat	B-ASP
 output	I-ASP
 and	O
 ultra	O
-quiet	O
+quiet	B-OP
 operation	B-ASP
 .	O
 
@@ -11458,12 +11458,12 @@ and	O
 it	O
 was	O
 totally	O
-unique	O
+unique	B-OP
 and	O
-different	O
+different	B-OP
 .	O
 
-Quietest	O
+Quietest	B-OP
 laptop	O
 I	O
 have	O
@@ -11473,13 +11473,13 @@ owned	O
 
 air	O
 has	O
-higher	O
+higher	B-OP
 resolution	B-ASP
 but	O
 the	O
 fonts	B-ASP
 are	O
-small	O
+small	B-OP
 .	O
 
 again	O
@@ -11513,11 +11513,11 @@ Mac	O
 is	O
 so	O
 much	O
-easier	O
+easier	B-OP
 ,	O
 so	O
 many	O
-cool	O
+cool	B-OP
 features	B-ASP
 .	O
 
@@ -11532,14 +11532,14 @@ c270	O
 .	O
 
 Very	O
-happy	O
+happy	B-OP
 with	O
 my	O
 purchase	O
 .	O
 
 I	O
-like	O
+like	B-OP
 the	O
 brightness	B-ASP
 and	O
@@ -11549,7 +11549,7 @@ adjustments	B-ASP
 I	O
 'M	O
 SO	O
-HAPPY	O
+HAPPY	B-OP
 WITH	O
 MY	O
 macbook	O
@@ -11558,7 +11558,7 @@ pro	O
 
 I	O
 only	O
-wish	O
+wish	B-OP
 this	O
 mac	O
 had	O
@@ -11573,7 +11573,7 @@ The	O
 only	O
 thing	O
 I	O
-miss	O
+miss	B-OP
 is	O
 that	O
 my	O
@@ -11589,7 +11589,7 @@ The	O
 only	O
 thing	O
 I	O
-miss	O
+miss	B-OP
 are	O
 the	O
 "	B-ASP
@@ -11611,7 +11611,7 @@ long	O
 .	O
 
 So	O
-happy	O
+happy	B-OP
 with	O
 this	O
 purchase	O
@@ -11628,9 +11628,9 @@ Word	I-ASP
 
 It	O
 is	O
-more	O
-than	O
-enough	O
+more	B-OP
+than	I-OP
+enough	I-OP
 computer	O
 to	O
 keep	O
@@ -11647,7 +11647,7 @@ student	O
 
 It	O
 has	O
-enough	O
+enough	B-OP
 memory	B-ASP
 and	O
 speed	B-ASP
@@ -11690,7 +11690,7 @@ owned	O
 .	O
 
 I	O
-love	O
+love	B-OP
 everything	O
 about	O
 this	O
@@ -11715,19 +11715,19 @@ The	O
 battery	B-ASP
 life	I-ASP
 is	O
-excellent	O
+excellent	B-OP
 ,	O
 the	O
 display	B-ASP
 is	O
-excellent	O
+excellent	B-OP
 ,	O
 and	O
 downloading	B-ASP
 apps	I-ASP
 is	O
 a	O
-breeze	O
+breeze	B-OP
 .	O
 
 The	O
@@ -11758,7 +11758,7 @@ the	O
 kids	O
 computers	O
 stay	O
-consistent	O
+consistent	B-OP
 and	O
 so	O
 we	O
@@ -11842,14 +11842,14 @@ the	O
 bass	B-ASP
 is	O
 very	O
-weak	O
+weak	B-OP
 and	O
 the	O
 sound	B-ASP
 comes	O
 out	O
 sounding	O
-tinny	O
+tinny	B-OP
 .	O
 
 I	O
@@ -11857,7 +11857,7 @@ do	O
 admit	O
 it	O
 is	O
-pricey	O
+pricey	B-OP
 but	O
 the	O
 saying	O
@@ -11906,14 +11906,14 @@ built	B-ASP
 quality	I-ASP
 is	O
 really	O
-good	O
+good	B-OP
 ,	O
 I	O
 was	O
 so	O
-Happy	O
+Happy	B-OP
 and	O
-excited	O
+excited	B-OP
 about	O
 this	O
 Product	O
@@ -11921,9 +11921,9 @@ Product	O
 
 I	O
 am	O
-loving	O
+loving	B-OP
 the	O
-fast	O
+fast	B-OP
 performance	B-ASP
 also	O
 .	O
@@ -11948,7 +11948,7 @@ Mac	O
 Mini	O
 has	O
 a	O
-sloppy	O
+sloppy	B-OP
 Bluetooth	B-ASP
 interface	I-ASP
 (	O
@@ -11962,14 +11962,14 @@ and	O
 the	O
 range	B-ASP
 is	O
-poor	O
+poor	B-OP
 .	O
 
-Great	O
+Great	B-OP
 deal	O
 on	O
 an	O
-amazing	O
+amazing	B-OP
 lap	O
 top	O
 !	O
@@ -11996,7 +11996,7 @@ come	O
 up	O
 .	O
 
-Best	O
+Best	B-OP
 money	O
 I	O
 ever	O
@@ -12083,7 +12083,7 @@ professionally	O
 It	O
 doesnt	O
 get	O
-hot	O
+hot	B-OP
 like	O
 my	O
 PC	O
@@ -12129,7 +12129,7 @@ drivers	I-ASP
 This	O
 by	O
 far	O
-beats	O
+beats	B-OP
 any	O
 computer	O
 out	O
@@ -12138,11 +12138,11 @@ the	O
 market	O
 today	O
 built	B-ASP
-well	O
+well	B-OP
 ,	O
 battery	B-ASP
 life	I-ASP
-AMAZING	O
+AMAZING	B-OP
 .	O
 
 I	O
@@ -12158,7 +12158,7 @@ yet	O
 ,	O
 but	O
 I	O
-love	O
+love	B-OP
 it	O
 already	O
 .	O
@@ -12166,7 +12166,7 @@ already	O
 The	O
 OS	B-ASP
 is	O
-easy	O
+easy	B-OP
 ,	O
 and	O
 offers	O
@@ -12214,7 +12214,7 @@ in	O
 my	O
 experience	O
 works	O
-better	O
+better	B-OP
 then	O
 USB3	B-ASP
 (	O
@@ -12237,7 +12237,7 @@ I	O
 felt	O
 it	O
 was	O
-inferior	O
+inferior	B-OP
 in	O
 many	O
 ways	O
@@ -12247,11 +12247,11 @@ Windows	B-ASP
 .	O
 
 I	O
-like	O
+like	B-OP
 iTunes	B-ASP
 ,	O
 the	O
-apparent	O
+apparent	B-OP
 security	B-ASP
 ,	O
 the	O
@@ -12261,7 +12261,7 @@ factor	I-ASP
 ,	O
 all	O
 the	O
-nice	O
+nice	B-OP
 graphics	B-ASP
 stuff	I-ASP
 .	O
@@ -12327,7 +12327,7 @@ I	O
 know	O
 some	O
 people	O
-complained	O
+complained	B-OP
 about	O
 HDMI	B-ASP
 issues	O
@@ -12358,7 +12358,7 @@ keep	O
 up	O
 with	O
 the	O
-best	O
+best	B-OP
 specs	B-ASP
 .	O
 
@@ -12375,14 +12375,14 @@ packing	B-ASP
 and	O
 everything	O
 was	O
-perfect	O
+perfect	B-OP
 
 I	O
 will	O
 not	O
 hesitate	O
 to	O
-recommend	O
+recommend	B-OP
 it	O
 to	O
 family	O
@@ -12407,7 +12407,7 @@ that	O
 they	O
 were	O
 having	O
-issues	O
+issues	B-OP
 with	O
 the	O
 mother	B-ASP
@@ -12431,7 +12431,7 @@ one	O
 is	O
 diagnosed	O
 as	O
-faulty	O
+faulty	B-OP
 ,	O
 related	O
 to	O
@@ -12477,14 +12477,14 @@ a	O
 computer	O
 that	O
 performs	B-ASP
-better	O
+better	B-OP
 .	O
 
 This	O
 computer	O
 is	O
 also	O
-awesome	O
+awesome	B-OP
 for	O
 my	O
 sons	O
@@ -12495,7 +12495,7 @@ schooling	I-ASP
 
 Cost	B-ASP
 is	O
-more	O
+more	B-OP
 as	O
 compared	O
 to	O
@@ -12506,7 +12506,7 @@ brands	O
 also	O
 ...	O
 -	O
-excellent	O
+excellent	B-OP
 operating	B-ASP
 system	I-ASP
 -	O
@@ -12514,10 +12514,10 @@ size	B-ASP
 and	O
 weight	B-ASP
 for	O
-optimal	O
+optimal	B-OP
 mobility	B-ASP
 -	O
-excellent	O
+excellent	B-OP
 durability	B-ASP
 of	I-ASP
 the	I-ASP
@@ -12530,7 +12530,7 @@ by	I-ASP
 the	I-ASP
 trackpad	I-ASP
 is	O
-unmatched	O
+unmatched	B-OP
 by	O
 any	O
 other	O
@@ -12542,7 +12542,7 @@ hardware	B-ASP
 seems	O
 to	O
 be	O
-better	O
+better	B-OP
 than	O
 the	O
 iMac	O
@@ -12554,7 +12554,7 @@ n't	O
 $	O
 1400	O
 and	O
-smaller	O
+smaller	B-OP
 .	O
 
 I	O
