@@ -127,7 +127,7 @@ class BertForToken(pl.LightningModule):
             # HACK(we will not use this anymore soon)
         all_label_ids = torch.tensor([f.label_ids for f in features], dtype=torch.long)
         return DataLoader(
-            TensorDataset(all_input_ids, all_attention_mask, all_token_type_ids, all_label_ids), batch_size=batch_size
+            TensorDataset(all_input_ids, all_attention_mask, all_token_type_ids, all_label_ids), batch_size=batch_size, num_workers=self.hparams.num_workers
         )
 
     def validation_step(self, batch, _):
@@ -220,8 +220,8 @@ class BertForToken(pl.LightningModule):
 
         t_total = (
             (len(dataloader.dataset) // (train_batch_size * max(1, self.hparams.gpus)))
-            // self.hparams.gradient_accumulation_steps
-            * float(self.hparams.num_train_epochs)
+            // self.hparams.accumulate_grad_batches
+            * float(self.hparams.max_epochs)
         )
         scheduler = get_linear_schedule_with_warmup(
             self.opt, num_warmup_steps=self.hparams.warmup_steps, num_training_steps=t_total
@@ -277,66 +277,42 @@ class LoggingCallback(pl.Callback):
                     writer.write("{} = {}\n".format(key, str(metrics[key])))
 
 
-def generic_trainer(
-    model: BertForToken,
-    args,
-    early_stopping_callback=False,
-    tr_logger=True,  # can pass WandbLogger() here
-    extra_callbacks=None,
-    checkpoint_callback=None,
-    logging_callback=None,
-    gpus=None
-    ):
+def generic_trainer(model: BertForToken, args, gpus=None):
     # init model
     set_seed(args)
 
-    # gpus override
-    if gpus is not None:
-        args.gpus = gpus
+    Path(model.hparams.output_dir).mkdir(exist_ok=True)
+    checkpoint_callback = pl.callbacks.ModelCheckpoint(
+        filepath=args.output_dir, prefix="checkpoint", monitor="val_loss", mode="min", save_top_k=1
+    )
+    gpus = args.gpus if gpus is None else gpus
+    distributed_backend = "ddp" if gpus > 1 else None
+    os.environ["TOKENIZERS_PARALLELISM"] = "true"
 
-    odir = Path(model.hparams.output_dir)
-    odir.mkdir(exist_ok=True)
-    if checkpoint_callback is None:
-        checkpoint_callback = pl.callbacks.ModelCheckpoint(
-            filepath=args.output_dir, prefix="checkpoint", monitor="val_loss", mode="min", save_top_k=1
-        )
-    if logging_callback is None:
-        logging_callback = LoggingCallback()
-
-    train_params = {}
-
-    if args.fp16:
-        train_params["use_amp"] = args.fp16
-        train_params["amp_level"] = args.fp16_opt_level
-        train_params["num_tpu_cores"] = args.n_tpu_cores
-        train_params["gpus"] = 0
-
-    if args.gpus > 1:
-        train_params["distributed_backend"] = "ddp"
-        os.environ["TOKENIZERS_PARALLELISM"] = "true"
-    trainer = pl.Trainer(
-        logger=tr_logger,
-        accumulate_grad_batches=args.gradient_accumulation_steps,
-        gpus=args.gpus,
-        max_epochs=args.num_train_epochs,
-        early_stop_callback=early_stopping_callback,
-        gradient_clip_val=args.max_grad_norm,
+    return pl.Trainer(
+        logger=True,
+        accumulate_grad_batches=args.accumulate_grad_batches,
+        gpus=gpus,
+        max_epochs=args.max_epochs,
+        gradient_clip_val=args.gradient_clip_val,
         checkpoint_callback=checkpoint_callback,
-        callbacks=[logging_callback] + (extra_callbacks if extra_callbacks else []),
+        callbacks=[LoggingCallback()],
         fast_dev_run=args.fast_dev_run,
         val_check_interval=args.val_check_interval,
         weights_summary=None,
         resume_from_checkpoint=args.resume_from_checkpoint,
-        **train_params,
+        distributed_backend=distributed_backend,
     )
 
-    return trainer
+def load_config(name):
+    configs_dir = Path(os.path.dirname(os.path.realpath(__file__))) / 'configs'
+    config = Namespace(**load_hparams_from_yaml(configs_dir / (name + '.yaml')))
+    assert config
+    return config
 
 # pylint: disable=no-member
 def main(config_yaml):
-    configs_dir = Path(os.path.dirname(os.path.realpath(__file__))) / 'configs'
-    config = Namespace(**load_hparams_from_yaml(configs_dir / (config_yaml + '.yaml')))
-    assert config
+    config = load_config(config_yaml)
     
     model = BertForToken(config)
     trainer = generic_trainer(model, config)
@@ -356,5 +332,5 @@ def main(config_yaml):
         trainer.test(model)
 
 if __name__ == "__main__":
-    # main(argv[1])
-    main('example')
+    argv = ['', 'example']
+    main(argv[1])
