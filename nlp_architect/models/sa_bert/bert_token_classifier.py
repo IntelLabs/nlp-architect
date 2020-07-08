@@ -11,6 +11,7 @@ from argparse import Namespace
 from pathlib import Path
 from typing import Any, Dict
 import logging
+from pytorch_lightning.core.saving import load_hparams_from_yaml
 from transformers import (
     BertForTokenClassification,
     BertConfig,
@@ -300,3 +301,32 @@ class LoggingCallback(pl.Callback):
                 if key not in ["log", "progress_bar"]:
                     logger.info("{} = {}\n".format(key, str(metrics[key])))
                     writer.write("{} = {}\n".format(key, str(metrics[key])))
+
+def get_trainer(model: BertForToken, args, gpus=None):
+    Path(model.hparams.output_dir).mkdir(exist_ok=True)
+    checkpoint_callback = pl.callbacks.ModelCheckpoint(
+        filepath=args.output_dir, prefix="checkpoint", monitor="val_loss", mode="min", save_top_k=1
+    )
+    gpus = args.gpus if gpus is None else gpus
+    distributed_backend = "ddp" if gpus > 1 else None
+
+    return pl.Trainer(
+        logger=True,
+        accumulate_grad_batches=args.accumulate_grad_batches,
+        gpus=gpus,
+        max_epochs=args.max_epochs,
+        gradient_clip_val=args.gradient_clip_val,
+        checkpoint_callback=checkpoint_callback,
+        callbacks=[LoggingCallback(), pl.callbacks.LearningRateLogger()],
+        fast_dev_run=args.fast_dev_run,
+        val_check_interval=args.val_check_interval,
+        weights_summary=None,
+        resume_from_checkpoint=args.resume_from_checkpoint,
+        distributed_backend=distributed_backend,
+    )
+
+def load_config(name):
+    configs_dir = Path(os.path.dirname(os.path.realpath(__file__))) / 'configs'
+    config = Namespace(**load_hparams_from_yaml(configs_dir / (name + '.yaml')))
+    assert config
+    return config

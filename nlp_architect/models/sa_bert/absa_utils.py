@@ -61,7 +61,6 @@ class Split(Enum):
     dev = "dev"
     test = "test"
 
-
 def read_examples_from_file(data_dir, mode: Union[Split, str]) -> List[InputExample]:
     if isinstance(mode, Split):
         mode = mode.value
@@ -89,30 +88,6 @@ def read_examples_from_file(data_dir, mode: Union[Split, str]) -> List[InputExam
         if words:
             examples.append(InputExample(guid=f"{mode}-{guid_index}", words=words, labels=labels))
     return examples
-
-# def _convert_examples_to_features(
-#         examples: List[InputExample],
-#         label_list: List[str],
-#         max_seq_length: int,
-#         tokenizer: PreTrainedTokenizer,
-#         mask_padding_with_zero=True) -> List[InputFeatures]:
-
-        # features = self._convert_examples_to_features(
-        #     examples,
-        #     max_seq_length,
-        #     self.tokenizer,
-        #     include_labels,
-        #     # xlnet has a cls token at the end
-        #     cls_token_at_end=bool(self.model_type in ["xlnet"]),
-        #     cls_token=self.tokenizer.cls_token,
-        #     cls_token_segment_id=2 if self.model_type in ["xlnet"] else 0,
-        #     sep_token=self.tokenizer.sep_token,
-        #     sep_token_extra=bool(self.model_type in ["roberta"]),
-        #     # pad on the left for xlnet
-        #     pad_on_left=bool(self.model_type in ["xlnet"]),
-        #     pad_token=self.tokenizer.convert_tokens_to_ids([self.tokenizer.pad_token])[0],
-        #     pad_token_segment_id=4 if self.model_type in ["xlnet"] else 0,
-        # )
 
 def convert_examples_to_features(
         examples: List[InputExample],
