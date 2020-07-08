@@ -3,13 +3,13 @@ eval_batch_size: 16
 max_seq_length: 64
 seed: 12
 
-max_epochs: 10
+max_epochs: 4
 num_workers: 88
-gpus: 1
+gpus: 4
 
 model_name_or_path: bert-base-uncased
 
-overwrite_cache: false
+overwrite_cache: true
 cache_dir: /home/daniel_nlp/nlp-architect/nlp_architect/cache
 data_dir: /home/daniel_nlp/nlp-architect/nlp_architect/models/sa_bert/data/laptops_to_restaurants_1
 labels: /home/daniel_nlp/nlp-architect/nlp_architect/models/sa_bert/data/labels.txt
