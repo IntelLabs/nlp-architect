@@ -1,35 +1,43 @@
+"""BERT-based model for token classification."""
+
 import os
-import pytorch_lightning as pl
-import numpy as np
-import torch
-from seqeval.metrics import f1_score, precision_score, recall_score
-from pytorch_lightning.utilities import rank_zero_info, rank_zero_only
-from torch.nn import CrossEntropyLoss
-from torch.utils.data import DataLoader, TensorDataset
-import absa_utils
+import logging
+import glob
 from argparse import Namespace
 from pathlib import Path
 from typing import Any, Dict
-import logging
+
+import pytorch_lightning as pl
+from pytorch_lightning.utilities import rank_zero_info, rank_zero_only
 from pytorch_lightning.core.saving import load_hparams_from_yaml
+import numpy as np
+import torch
+from torch.nn import CrossEntropyLoss
+from torch.utils.data import DataLoader, TensorDataset
+from seqeval.metrics import f1_score, precision_score, recall_score
 from transformers import (
     BertForTokenClassification,
     BertConfig,
     BertTokenizer,
-    PretrainedConfig,
-    PreTrainedTokenizer,
     get_linear_schedule_with_warmup,
     AdamW
 )
+import absa_utils
+# pylint: disable=no-member, not-callable, attribute-defined-outside-init, arguments-differ
 
 logger = logging.getLogger(__name__)
 
+MODEL_CONFIG = {
+    'bert': (BertForTokenClassification, BertConfig, BertTokenizer),
+    # 'sa-bert': (LiBertExtForTokenLinear, BertConfig, BertTokenizer)
+}
+
 class BertForToken(pl.LightningModule):
-    def __init__(self, hparams, config=None,
-                 tokenizer=None, model=None, **config_kwargs):
+    """Lightning module for BERT for token classification."""
+    def __init__(self, hparams, **config_kwargs):
         """Initialize a model, tokenizer and config."""
         super().__init__()
-        if type(hparams) == dict:
+        if isinstance(hparams, dict):
             hparams = Namespace(**hparams)
 
         self.hparams = hparams
@@ -41,33 +49,24 @@ class BertForToken(pl.LightningModule):
         self.tfmr_ckpts = {}
         self.output_dir = Path(self.hparams.output_dir)
         cache_dir = self.hparams.cache_dir if self.hparams.cache_dir else None
-        if config is None:
-            self.config = BertConfig.from_pretrained(
-                self.hparams.config_name if self.hparams.config_name else self.hparams.model_name_or_path,
-                **({"num_labels": num_labels} if num_labels is not None else {}),
-                **config_kwargs,
-            )
-        else:
-            self.config: PretrainedConfig = config
-        
+
+        self.model_type, self.config_type, self.tokenizer_type = MODEL_CONFIG[hparams.model_type]
+
+        self.config = self.config_type \
+            .from_pretrained(self.hparams.model_name_or_path,
+                             **({"num_labels": num_labels} if num_labels is not None else {}),
+                             **config_kwargs)
+
         os.environ["TOKENIZERS_PARALLELISM"] = "true"
-        if tokenizer is None:
-            self.tokenizer = BertTokenizer.from_pretrained(
-                self.hparams.tokenizer_name if self.hparams.tokenizer_name else self.hparams.model_name_or_path,
-                cache_dir=cache_dir,
-            )
-        else:
-            self.tokenizer: PreTrainedTokenizer = tokenizer
-        self.model_type = BertForTokenClassification
-        if model is None:
-            self.model = self.model_type.from_pretrained(
-                self.hparams.model_name_or_path,
-                from_tf=bool(".ckpt" in self.hparams.model_name_or_path),
-                config=self.config,
-                cache_dir=cache_dir,
-            )
-        else:
-            self.model = model
+        self.tokenizer = self.tokenizer_type \
+            .from_pretrained(self.hparams.model_name_or_path, cache_dir=cache_dir)
+
+        self.model = self.model_type.from_pretrained(
+            self.hparams.model_name_or_path,
+            from_tf=bool(".ckpt" in self.hparams.model_name_or_path),
+            config=self.config,
+            cache_dir=cache_dir)
+
 
     def forward(self, **inputs):
         return self.model(**inputs)
@@ -164,7 +163,7 @@ class BertForToken(pl.LightningModule):
         ret, _, _ = self._eval_end(outputs)
         logs = ret["log"]
         # `val_loss` is the key returned by `self._eval_end()` but actually refers to `test_loss`
-        self.logger.experiment.log()
+        # self.logger.experiment.log()
         return {"avg_test_loss": logs["val_loss"], "log": logs, "progress_bar": logs}
 
     def configure_optimizers(self):
@@ -185,7 +184,8 @@ class BertForToken(pl.LightningModule):
         self.opt = optimizer
         return [optimizer]
 
-    def optimizer_step(self, epoch, batch_idx, optimizer, optimizer_idx, second_order_closure=None, on_tpu=False, using_native_amp=False, using_lbfgs=False):
+    def optimizer_step(self, epoch, batch_idx, optimizer, optimizer_idx, second_order_closure=None,
+                       on_tpu=False, using_native_amp=False, using_lbfgs=False):
         optimizer.step()
         optimizer.zero_grad()
         self.lr_scheduler.step()  # By default, PL will only step every epoch.
@@ -218,8 +218,31 @@ class BertForToken(pl.LightningModule):
             "cached_{}_{}_{}".format(
                 mode,
                 list(filter(None, self.hparams.model_name_or_path.split("/"))).pop(),
-                str(self.hparams.max_seq_length),
-            ),
+                str(self.hparams.max_seq_length)))
+
+    def get_trainer(self, gpus_override=None):
+        """Init trainer for model training/testing."""
+        Path(self.hparams.output_dir).mkdir(exist_ok=True)
+        checkpoint_callback = pl.callbacks.ModelCheckpoint(
+            filepath=self.hparams.output_dir, prefix="checkpoint", monitor="val_loss",
+            mode="min", save_top_k=1
+        )
+        gpus = self.hparams.gpus if gpus_override is None else gpus_override
+        distributed_backend = "ddp" if gpus > 1 else None
+
+        return pl.Trainer(
+            logger=True,
+            accumulate_grad_batches=self.hparams.accumulate_grad_batches,
+            gpus=gpus,
+            max_epochs=self.hparams.max_epochs,
+            gradient_clip_val=self.hparams.gradient_clip_val,
+            checkpoint_callback=checkpoint_callback,
+            callbacks=[LoggingCallback(), pl.callbacks.LearningRateLogger()],
+            fast_dev_run=self.hparams.fast_dev_run,
+            val_check_interval=self.hparams.val_check_interval,
+            weights_summary=None,
+            resume_from_checkpoint=self.hparams.resume_from_checkpoint,
+            distributed_backend=distributed_backend,
         )
 
     @pl.utilities.rank_zero_only
@@ -232,6 +255,7 @@ class BertForToken(pl.LightningModule):
         self.tfmr_ckpts[self.step_count] = save_path
 
 class LoggingCallback(pl.Callback):
+    """Class for logging callbacks."""
     @rank_zero_only
     def on_validation_end(self, trainer: pl.Trainer, pl_module: pl.LightningModule):
         rank_zero_info("***** Validation results *****")
@@ -253,31 +277,15 @@ class LoggingCallback(pl.Callback):
                     logger.info("{} = {}\n".format(key, str(metrics[key])))
                     writer.write("{} = {}\n".format(key, str(metrics[key])))
 
-def get_trainer(model: BertForToken, args, gpus=None):
-    Path(model.hparams.output_dir).mkdir(exist_ok=True)
-    checkpoint_callback = pl.callbacks.ModelCheckpoint(
-        filepath=args.output_dir, prefix="checkpoint", monitor="val_loss", mode="min", save_top_k=1
-    )
-    gpus = args.gpus if gpus is None else gpus
-    distributed_backend = "ddp" if gpus > 1 else None
-
-    return pl.Trainer(
-        logger=True,
-        accumulate_grad_batches=args.accumulate_grad_batches,
-        gpus=gpus,
-        max_epochs=args.max_epochs,
-        gradient_clip_val=args.gradient_clip_val,
-        checkpoint_callback=checkpoint_callback,
-        callbacks=[LoggingCallback(), pl.callbacks.LearningRateLogger()],
-        fast_dev_run=args.fast_dev_run,
-        val_check_interval=args.val_check_interval,
-        weights_summary=None,
-        resume_from_checkpoint=args.resume_from_checkpoint,
-        distributed_backend=distributed_backend,
-    )
-
 def load_config(name):
+    """Load an experiment configuration from a yaml file."""
     configs_dir = Path(os.path.dirname(os.path.realpath(__file__))) / 'configs'
     config = Namespace(**load_hparams_from_yaml(configs_dir / (name + '.yaml')))
     assert config
     return config
+
+def load_last_ckpt(model, config):
+    """Load the last model checkpoint saved."""
+    checkpoints = list(sorted(glob.glob(os.path.join(config.output_dir, 
+                                                     "checkpointepoch=*.ckpt"), recursive=True)))
+    return model.load_from_checkpoint(checkpoints[-1])

@@ -7,6 +7,7 @@ max_epochs: 4
 num_workers: 88
 gpus: 4
 
+model_type: bert
 model_name_or_path: bert-base-uncased
 
 overwrite_cache: true
@@ -19,7 +20,6 @@ do_train: true
 do_predict: false
 
 adam_epsilon: 1.0e-08
-config_name: ''
 fast_dev_run: false
 accumulate_grad_batches: 1
 learning_rate: 5.0e-05
