@@ -1,3 +1,4 @@
+# pylint: disable=no-member, not-callable, arguments-differ, missing-class-docstring, missing-module-docstring, missing-function-docstring
 import math
 from torch import nn
 import torch
@@ -5,7 +6,6 @@ from torch.nn import CrossEntropyLoss
 from transformers.modeling_bert import BertEncoder, BertLayer, \
         BertAttention, BertSelfAttention, BertSelfOutput, BertConfig
 from transformers import BertForTokenClassification, BertModel
-# pylint: disable=no-member, not-callable, arguments-differ, missing-class-docstring
 
 class SaBertConfig(BertConfig):
     def __init__(self, **kwargs):
@@ -99,36 +99,10 @@ class SaBertExtModel(BertModel):
             output_hidden_states=None,
             head_probs=None
         ):
-        r"""
-    Return:
-        :obj:`tuple(torch.FloatTensor)` comprising various elements depending on the configuration (:class:`~transformers.BertConfig`) and inputs:
-        last_hidden_state (:obj:`torch.FloatTensor` of shape :obj:`(batch_size, sequence_length, hidden_size)`):
-            Sequence of hidden-states at the output of the last layer of the model.
-        pooler_output (:obj:`torch.FloatTensor`: of shape :obj:`(batch_size, hidden_size)`):
-            Last layer hidden-state of the first token of the sequence (classification token)
-            further processed by a Linear layer and a Tanh activation function. The Linear
-            layer weights are trained from the next sentence prediction (classification)
-            objective during pre-training.
-
-            This output is usually *not* a good summary
-            of the semantic content of the input, you're often better with averaging or pooling
-            the sequence of hidden-states for the whole input sequence.
-        hidden_states (:obj:`tuple(torch.FloatTensor)`, `optional`, returned when ``output_hidden_states=True`` is passed or when ``config.output_hidden_states=True``):
-            Tuple of :obj:`torch.FloatTensor` (one for the output of the embeddings + one for the output of each layer)
-            of shape :obj:`(batch_size, sequence_length, hidden_size)`.
-
-            Hidden-states of the model at the output of each layer plus the initial embedding outputs.
-        attentions (:obj:`tuple(torch.FloatTensor)`, `optional`, returned when ``output_attentions=True`` is passed or when ``config.output_attentions=True``):
-            Tuple of :obj:`torch.FloatTensor` (one for each layer) of shape
-            :obj:`(batch_size, num_heads, sequence_length, sequence_length)`.
-
-            Attentions weights after the attention softmax, used to compute the weighted average in the self-attention
-            heads.
-        """
-        output_attentions = output_attentions if output_attentions is not None else self.config.output_attentions
-        output_hidden_states = (
-            output_hidden_states if output_hidden_states is not None else self.config.output_hidden_states
-        )
+        output_attentions = \
+            output_attentions if output_attentions is not None else self.config.output_attentions
+        output_hidden_states = output_hidden_states if output_hidden_states is not None \
+            else self.config.output_hidden_states
 
         if input_ids is not None and inputs_embeds is not None:
             raise ValueError("You cannot specify both input_ids and inputs_embeds at the same time")
@@ -146,9 +120,11 @@ class SaBertExtModel(BertModel):
         if token_type_ids is None:
             token_type_ids = torch.zeros(input_shape, dtype=torch.long, device=device)
 
-        # We can provide a self-attention mask of dimensions [batch_size, from_seq_length, to_seq_length]
-        # ourselves in which case we just need to make it broadcastable to all heads.
-        extended_attention_mask: torch.Tensor = self.get_extended_attention_mask(attention_mask, input_shape, device)
+        # We can provide a self-attention mask of dimensions
+        # [batch_size, from_seq_length, to_seq_length] ourselves in which
+        # case we just need to make it broadcastable to all heads.
+        extended_attention_mask: torch.Tensor = \
+            self.get_extended_attention_mask(attention_mask, input_shape, device)
 
         # If a 2D ou 3D attention mask is provided for the cross-attention
         # we need to make broadcastabe to [batch_size, num_heads, seq_length, seq_length]
@@ -164,12 +140,14 @@ class SaBertExtModel(BertModel):
         # Prepare head mask if needed
         # 1.0 in head_mask indicate we keep the head
         # attention_probs has shape bsz x n_heads x N x N
-        # input head_mask has shape [num_heads] or [num_hidden_layers x num_heads]
-        # and head_mask is converted to shape [num_hidden_layers x batch x num_heads x seq_length x seq_length]
+        # input head_mask has shape [num_heads] or
+        # [num_hidden_layers x num_heads] and head_mask is converted to shape
+        # [num_hidden_layers x batch x num_heads x seq_length x seq_length]
         head_mask = self.get_head_mask(head_mask, self.config.num_hidden_layers)
 
         embedding_output = self.embeddings(
-            input_ids=input_ids, position_ids=position_ids, token_type_ids=token_type_ids, inputs_embeds=inputs_embeds
+            input_ids=input_ids, position_ids=position_ids, token_type_ids=token_type_ids,
+            inputs_embeds=inputs_embeds
         )
         encoder_outputs = self.encoder(
             embedding_output,
@@ -301,8 +279,8 @@ class SaBertExtAttention(BertAttention):
         self.output = SaBertExtSelfOutput(config, layer_num)
         self.pruned_heads = set()
 
-    def forward(self, hidden_states, attention_mask=None, head_mask=None, 
-                encoder_hidden_states=None, encoder_attention_mask=None, 
+    def forward(self, hidden_states, attention_mask=None, head_mask=None,
+                encoder_hidden_states=None, encoder_attention_mask=None,
                 output_attentions=False, head_probs=None):
         self_outputs = self.self(hidden_states, attention_mask, head_mask, encoder_hidden_states,
                                  encoder_attention_mask, output_attentions, head_probs)
@@ -379,49 +357,50 @@ class SaBertExtSelfAttention(BertSelfAttention):
 
             head_probs_norm = head_probs / head_probs.max(2, keepdim=True)[0]
             head_probs_norm[torch.isnan(head_probs_norm)] = 0
-            
+
            # _, indices = head_probs_norm.max(2)
            # device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
            # ex_head_attention_probs = torch.zeros(head_probs_norm.shape).to(device)
-            
+
            # for batch, tokens in enumerate(indices):
            #     mask_matrix = torch.zeros([head_probs_norm.shape[1], head_probs_norm.shape[2]])
            #     i=0
            #     for token in tokens:
            #         if token != 0:
-           #             mask_matrix[i][token] = 1.                        
-           #             i=i+1                        
+           #             mask_matrix[i][token] = 1.
+           #             i=i+1
 
-            #    ex_head_attention_probs[batch] = mask_matrix         
+            #    ex_head_attention_probs[batch] = mask_matrix
 
             #if self.duplicated_rels is True:
             #    head_probs_norm = ex_head_attention_probs
 
             original_12head_attn_scores = attention_scores[:, :self.orig_num_attention_heads]
-            original_12head_attn_scores = original_12head_attn_scores / math.sqrt(self.attention_head_size)
+            original_12head_attn_scores = \
+                original_12head_attn_scores / math.sqrt(self.attention_head_size)
             original_12head_attn_scores = original_12head_attn_scores + attention_mask
             original_12head_attn_probs = nn.Softmax(dim=-1)(original_12head_attn_scores)
-
-            extra_head_attn = attention_scores[:,self.orig_num_attention_heads,:,:] 
+            extra_head_attn = attention_scores[:, self.orig_num_attention_heads, :, :]
             head_probs_norm = head_probs_norm*8+ attention_mask.squeeze(1)
-            
-                    
-            if self.replace_final is False: 
-                if self.transpose == True:                
-                    head_probs_norm = head_probs_norm.transpose(-1, -2)                   
 
-                extra_head_scaled_attn = ((extra_head_attn *8) * head_probs_norm).unsqueeze(1)       
+            if not self.replace_final:
+                if self.transpose:
+                    head_probs_norm = head_probs_norm.transpose(-1, -2)
+                extra_head_scaled_attn = ((extra_head_attn *8) * head_probs_norm).unsqueeze(1)
                 extra_head_scaled_attn = extra_head_scaled_attn + attention_mask
                 extra_head_scaled_attn_probs = nn.Softmax(dim=-1)(extra_head_scaled_attn)
-                attention_probs = torch.cat((original_12head_attn_probs, extra_head_scaled_attn_probs), 1)
-           
-            # if self.replace_final is True:
-            #     attention_probs = torch.cat((original_12head_attn_probs, ex_head_attention_probs.unsqueeze(1)),1)
+                attention_probs = \
+                    torch.cat((original_12head_attn_probs, extra_head_scaled_attn_probs), 1)
 
-        if head_probs is None or self.random_init:            
+            # if self.replace_final is True:
+            #     attention_probs = \
+            # torch.cat((original_12head_attn_probs, ex_head_attention_probs.unsqueeze(1)),1)
+
+        if head_probs is None or self.random_init:
             attention_scores = attention_scores / math.sqrt(self.attention_head_size)
             if attention_mask is not None:
-                # Apply the attention mask is (precomputed for all layers in BertModel forward() function)
+                # Apply the attention mask is
+                # (precomputed for all layers in BertModel forward() function)
                 attention_scores = attention_scores + attention_mask
 
             # Normalize the attention scores to probabilities.
@@ -444,104 +423,11 @@ class SaBertExtSelfAttention(BertSelfAttention):
         outputs = (context_layer, attention_probs) if output_attentions else (context_layer,)
         return outputs
 
-    # def forward(self, hidden_states, attention_mask, head_mask=None, head_probs=None):    
-    #     if head_probs is not None:
-    #         self.all_head_size = self.num_attention_heads * self.attention_head_size            
-    #         mixed_query_layer = torch.cat((self.query(hidden_states), self.extra_query(hidden_states)),2)
-    #         mixed_key_layer = torch.cat((self.key(hidden_states), self.extra_key(hidden_states)),2)
-    #         mixed_value_layer = torch.cat((self.value(hidden_states), self.extra_value(hidden_states)),2)
-  
-    #     else:
-    #         self.all_head_size = self.num_attention_heads * self.attention_head_size
-    #         mixed_query_layer = self.query(hidden_states)
-    #         mixed_key_layer = self.key(hidden_states)
-    #         mixed_value_layer = self.value(hidden_states)
-
-    #     query_layer = self.transpose_for_scores(mixed_query_layer)
-    #     key_layer = self.transpose_for_scores(mixed_key_layer)
-    #     value_layer = self.transpose_for_scores(mixed_value_layer)
-
-    #     attention_scores = torch.matmul(query_layer, key_layer.transpose(-1, -2))        
-
-    #     if head_probs is not None and self.random_init is False:   
-
-    #         #  duplicated heads across all matrix (one vector duplicated across matrix)
-    #         if self.duplicated_rels is True:
-    #             head_probs = head_probs.sum(1, keepdim=True)
-    #             # duplicate sum vector
-    #             head_probs = head_probs.repeat(1,64,1)
-                 
-    #         head_probs_norm = head_probs / head_probs.max(2, keepdim=True)[0]
-    #         head_probs_norm[torch.isnan(head_probs_norm)] = 0
-            
-    #        # _, indices = head_probs_norm.max(2)
-    #        # device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    #        # ex_head_attention_probs = torch.zeros(head_probs_norm.shape).to(device)
-            
-    #        # for batch, tokens in enumerate(indices):
-    #        #     mask_matrix = torch.zeros([head_probs_norm.shape[1], head_probs_norm.shape[2]])
-    #        #     i=0
-    #        #     for token in tokens:
-    #        #         if token != 0:
-    #        #             mask_matrix[i][token] = 1.                        
-    #        #             i=i+1                        
-
-    #         #    ex_head_attention_probs[batch] = mask_matrix         
-
-    #         #if self.duplicated_rels is True:
-    #         #    head_probs_norm = ex_head_attention_probs
-
-    #         original_12head_attn_scores = attention_scores[:, :self.orig_num_attention_heads]
-    #         original_12head_attn_scores = original_12head_attn_scores / math.sqrt(self.attention_head_size)
-    #         original_12head_attn_scores = original_12head_attn_scores + attention_mask
-    #         original_12head_attn_probs = nn.Softmax(dim=-1)(original_12head_attn_scores)
-
-    #         extra_head_attn = attention_scores[:,self.orig_num_attention_heads,:,:] 
-    #         head_probs_norm = head_probs_norm*8+ attention_mask.squeeze(1)
-            
-                    
-    #         if not self.replace_final: 
-    #             if self.transpose == True:                
-    #                 head_probs_norm = head_probs_norm.transpose(-1, -2)                   
-
-    #             extra_head_scaled_attn = ((extra_head_attn *8) * head_probs_norm).unsqueeze(1)       
-    #             extra_head_scaled_attn = extra_head_scaled_attn + attention_mask
-    #             extra_head_scaled_attn_probs = nn.Softmax(dim=-1)(extra_head_scaled_attn)
-    #             attention_probs = torch.cat((original_12head_attn_probs, extra_head_scaled_attn_probs), 1)
-           
-    #         # else:
-    #         #     attention_probs = torch.cat((original_12head_attn_probs, ex_head_attention_probs.unsqueeze(1)),1)
-
-    #     if head_probs is None or self.random_init is True:
-    #         attention_scores = attention_scores / math.sqrt(self.attention_head_size)
-    #         # Apply the attention mask is (precomputed for all layers in BertModel forward() function)
-    #         attention_scores = attention_scores + attention_mask
-
-    #         # Normalize the attention scores to probabilities.
-    #         attention_probs = nn.Softmax(dim=-1)(attention_scores)
-            
-    #     # This is actually dropping out entire tokens to attend to, which might
-    #     # seem a bit unusual, but is taken from the original Transformer paper.
-    #     attention_probs = self.dropout(attention_probs)
-
-    #     # Mask heads if we want to
-    #     if head_mask is not None:
-    #         attention_probs = attention_probs * head_mask
-
-    #     context_layer = torch.matmul(attention_probs, value_layer)
-
-    #     context_layer = context_layer.permute(0, 2, 1, 3).contiguous()
-    #     new_context_layer_shape = context_layer.size()[:-2] + (self.all_head_size,)
-    #     context_layer = context_layer.view(*new_context_layer_shape)
-
-    #     outputs = (context_layer, attention_probs) if self.output_attentions else (context_layer,)
-    #     return outputs
-
 class SaBertExtSelfOutput(BertSelfOutput):
     def __init__(self, config, layer_num):
         super(SaBertExtSelfOutput, self).__init__(config)
         if  (layer_num == config.li_layer or config.all_layers is True \
-             or layer_num in config.layers_range): 
+             or layer_num in config.layers_range):
             self.original_num_attention_heads = config.num_attention_heads
             self.attention_head_size = int(config.hidden_size / self.original_num_attention_heads)
             self.dense_extra_head = nn.Linear(self.attention_head_size, config.hidden_size)
@@ -549,11 +435,11 @@ class SaBertExtSelfOutput(BertSelfOutput):
     def forward(self, hidden_states, input_tensor, head_probs=None):
         if head_probs is not None:
             original_hidden_vec_size = self.original_num_attention_heads*self.attention_head_size
-            hidden_states = self.dense(hidden_states[:,:,:original_hidden_vec_size]) + \
-                self.dense_extra_head(hidden_states[:,:,original_hidden_vec_size:])
+            hidden_states = self.dense(hidden_states[:, :, :original_hidden_vec_size]) + \
+                self.dense_extra_head(hidden_states[:, :, original_hidden_vec_size:])
         else:
             hidden_states = self.dense(hidden_states)
-        
+
         hidden_states = self.dropout(hidden_states)
         hidden_states = self.LayerNorm(hidden_states + input_tensor)
         return hidden_states
