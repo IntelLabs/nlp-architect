@@ -23,18 +23,19 @@ from transformers import (
     AdamW
 )
 import absa_utils
+from sa_bert_model import SaBertForToken, SaBertConfig
 # pylint: disable=no-member, not-callable, attribute-defined-outside-init, arguments-differ
 
 logger = logging.getLogger(__name__)
 
 MODEL_CONFIG = {
     'bert': (BertForTokenClassification, BertConfig, BertTokenizer),
-    # 'sa-bert': (LiBertExtForTokenLinear, BertConfig, BertTokenizer)
+    'sa-bert': (SaBertForToken, SaBertConfig, BertTokenizer)
 }
 
 class BertForToken(pl.LightningModule):
     """Lightning module for BERT for token classification."""
-    def __init__(self, hparams, **config_kwargs):
+    def __init__(self, hparams):
         """Initialize a model, tokenizer and config."""
         super().__init__()
         if isinstance(hparams, dict):
@@ -54,8 +55,8 @@ class BertForToken(pl.LightningModule):
 
         self.config = self.config_type \
             .from_pretrained(self.hparams.model_name_or_path,
-                             **({"num_labels": num_labels} if num_labels is not None else {}),
-                             **config_kwargs)
+                             **({"num_labels": num_labels} if num_labels is not None else {}))
+        self.config.add_extra_args(hparams)
 
         os.environ["TOKENIZERS_PARALLELISM"] = "true"
         self.tokenizer = self.tokenizer_type \
@@ -66,7 +67,6 @@ class BertForToken(pl.LightningModule):
             from_tf=bool(".ckpt" in self.hparams.model_name_or_path),
             config=self.config,
             cache_dir=cache_dir)
-
 
     def forward(self, **inputs):
         return self.model(**inputs)

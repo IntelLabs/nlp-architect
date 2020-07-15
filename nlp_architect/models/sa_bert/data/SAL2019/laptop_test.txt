@@ -1,0 +1,800 @@
+Boot time is super fast, around anywhere from 35 seconds to 1 minute.####Boot=T-POS time=T-POS is=O super=O fast=O ,=O around=O anywhere=O from=O 35=O seconds=O to=O 1=O minute=O .=O
+tech support would not fix the problem unless I bought your plan for $150 plus.####tech=T-NEG support=T-NEG would=O not=O fix=O the=O problem=O unless=O I=O bought=O your=O plan=O for=O $=O 150=O plus=O .=O
+but in resume this computer rocks!####but=O in=O resume=O this=O computer=O rocks=O !=O
+Set up was easy.####Set=T-POS up=T-POS was=O easy=O .=O
+Did not enjoy the new Windows 8 and touchscreen functions.####Did=O not=O enjoy=O the=O new=O Windows=T-NEG 8=T-NEG and=O touchscreen=T-NEG functions=T-NEG .=O
+I expected so as it's an Apple product, but I was glad to see my expectations exceeded, this is THE laptop to buy right now.####I=O expected=O so=O as=O it=O 's=O an=O Apple=O product=O ,=O but=O I=O was=O glad=O to=O see=O my=O expectations=O exceeded=O ,=O this=O is=O THE=O laptop=O to=O buy=O right=O now=O .=O
+Other than not being a fan of click pads (industry standard these days) and the lousy internal speakers, it's hard for me to find things about this notebook I don't like, especially considering the $350 price tag.####Other=O than=O not=O being=O a=O fan=O of=O click=T-NEG pads=T-NEG industry=O standard=O these=O days=O and=O the=O lousy=O internal=T-NEG speakers=T-NEG ,=O it=O 's=O hard=O for=O me=O to=O find=O things=O about=O this=O notebook=O I=O do=O n't=O like=O ,=O especially=O considering=O the=O $=O 350=O price=T-POS tag=T-POS .=O
+excellent in every way.####excellent=O in=O every=O way=O .=O
+No installation disk (DVD) is included.####No=O installation=T-NEU disk=T-NEU (DVD)=T-NEU is=O included=O .=O
+It's fast, light, and simple to use.####It=O 's=O fast=O ,=O light=O ,=O and=O simple=O to=O use=T-POS .=O
+Works well, and I am extremely happy to be back to an apple OS.####Works=T-POS well=O ,=O and=O I=O am=O extremely=O happy=O to=O be=O back=O to=O an=O apple=T-POS OS=T-POS .=O
+This mac has been a problem since we got it.####This=O mac=O has=O been=O a=O problem=O since=O we=O got=O it=O .=O
+Sure it's not light and slim but the features make up for it 100%.####Sure=O it=O 's=O not=O light=O and=O slim=O but=O the=O features=T-POS make=O up=O for=O it=O 100=O %=O .=O
+I am pleased with the fast log on, speedy WiFi connection and the long battery life (>6 hrs).####I=O am=O pleased=O with=O the=O fast=O log=T-POS on=T-POS ,=O speedy=O WiFi=T-POS connection=T-POS and=O the=O long=O battery=T-POS life=T-POS >=O 6=O hrs=O .=O
+The Apple engineers have not yet discovered the delete key.####The=O Apple=O engineers=O have=O not=O yet=O discovered=O the=O delete=T-NEG key=T-NEG .=O
+Made interneting (part of my business) very difficult to maintain.####Made=O interneting=T-NEG part=O of=O my=O business=O very=O difficult=O to=O maintain=O .=O
+Luckily, for all of us contemplating the decision, the Mac Mini is priced just right.####Luckily=O ,=O for=O all=O of=O us=O contemplating=O the=O decision=O ,=O the=O Mac=O Mini=O is=O priced=T-POS just=O right=O .=O
+Small and still VERY powerful.####Small=O and=O still=O VERY=O powerful=O .=O
+I had gotten this model for  $1199.00 on my State's tax-free weekend and had a $100 off coupon for a MacBook at the local BestBuy!####I=O had=O gotten=O this=O model=O for=O $=O 119900=O on=O my=O State=O 's=O tax-free=O weekend=O and=O had=O a=O $=O 100=O off=O coupon=O for=O a=O MacBook=O at=O the=O local=O BestBuy=O !=O .=O
+Super light, super sexy and everything just works.####Super=O light=O ,=O super=O sexy=O and=O everything=O just=O works=T-POS .=O
+Only problem that I had was that the track pad was not very good for me, I only had a problem once or twice with it, But probably my computer was a bit defective.####Only=O problem=O that=O I=O had=O was=O that=O the=O track=T-NEG pad=T-NEG was=O not=O very=O good=O for=O me=O ,=O I=O only=O had=O a=O problem=O once=O or=O twice=O with=O it=O ,=O But=O probably=O my=O computer=O was=O a=O bit=O defective=O .=O
+And if you are switching from a pc I hilghy sugest this one.####And=O if=O you=O are=O switching=O from=O a=O pc=O I=O hilghy=O sugest=O this=O one=O .=O
+It is super fast and has outstanding graphics.####It=O is=O super=O fast=O and=O has=O outstanding=O graphics=T-POS .=O
+But the mountain lion is just too slow.####But=O the=O mountain=T-NEG lion=T-NEG is=O just=O too=O slow=O .=O
+Strong build though which really adds to its durability.####Strong=O build=T-POS though=O which=O really=O adds=O to=O its=O durability=T-POS .=O
+The battery life is excellent- 6-7 hours without charging.####The=O battery=T-POS life=T-POS is=O excellent=O 6-7=O hours=O without=O charging=O .=O
+I enjoy having apple products.####I=O enjoy=O having=O apple=O products=O .=O
+I've had my computer for 2 weeks already and it works perfectly.####I=O 've=O had=O my=O computer=O for=O 2=O weeks=O already=O and=O it=O works=T-POS perfectly=O .=O
+I will never go back to a PC again!####I=O will=O never=O go=O back=O to=O a=O PC=O again=O !=O
+And I may be the only one but I am really liking Windows 8.####And=O I=O may=O be=O the=O only=O one=O but=O I=O am=O really=O liking=O Windows=T-POS 8=T-POS .=O
+The baterry is very longer.####The=O baterry=T-POS is=O very=O longer=O .=O
+And it's so quiet that I don't hear it at all.####And=O it=O 's=O so=O quiet=O that=O I=O do=O n't=O hear=O it=O at=O all=O .=O
+Its size is ideal and the weight is acceptable.####Its=O size=T-POS is=O ideal=O and=O the=O weight=T-POS is=O acceptable=O .=O
+I know Apples are more expensive than PCs, but he thinks it is worth every penny.####I=O know=O Apples=O are=O more=O expensive=O than=O PCs=O ,=O but=O he=O thinks=O it=O is=O worth=O every=O penny=O .=O
+To me it's a workhorse... and quiet as can be... you even save big bucks not dishing out any extra to Uncle Sam... Definite Buy...####To=O me=O it=O 's=O a=O workhorse=O and=O quiet=O as=O can=O be=O you=O even=O save=O big=O bucks=O not=O dishing=O out=O any=O extra=O to=O Uncle=O Sam=O Definite=O Buy=O .=O
+I can say that I am fully satisfied with the performance that the computer has supplied.####I=O can=O say=O that=O I=O am=O fully=O satisfied=O with=O the=O performance=T-POS that=O the=O computer=O has=O supplied=O .=O
+I'm pretty sure when I bought it, my bank account went 'ouch!####I=O 'm=O pretty=O sure=O when=O I=O bought=O it=O ,=O my=O bank=O account=O went=O ouch=O !=O
+Thank you so much for the great item.####Thank=O you=O so=O much=O for=O the=O great=O item=O .=O
+This laptop has only 2 USB ports, and they are both on the same side.####This=O laptop=O has=O only=O 2=O USB=T-NEG ports=T-NEG ,=O and=O they=O are=O both=O on=O the=O same=O side=O .=O
+It's annoying very much and I won't ever buy any Acer products.####It=O 's=O annoying=O very=O much=O and=O I=O wo=O n't=O ever=O buy=O any=O Acer=O products=O .=O
+This is why I purchased a BRAND NEW LAPTOP in the first place so it wouldn't have ANY problems.####This=O is=O why=O I=O purchased=O a=O BRAND=O NEW=O LAPTOP=O in=O the=O first=O place=O so=O it=O would=O n't=O have=O ANY=O problems=O .=O
+It has so much more speed and the screen is very sharp.####It=O has=O so=O much=O more=O speed=T-POS and=O the=O screen=T-POS is=O very=O sharp=O .=O
+As for the laptop, this is our 3rd Apple computer in the past 2 years.####As=O for=O the=O laptop=O ,=O this=O is=O our=O 3rd=O Apple=O computer=O in=O the=O past=O 2=O years=O .=O
+Everything I wanted and everything I needed and the price was great!####Everything=O I=O wanted=O and=O everything=O I=O needed=O and=O the=O price=T-POS was=O great=O !=O
+It's not inexpensive but the Hardware performance is impressive for a computer this small.####It=O 's=O not=O inexpensive=O but=O the=O Hardware=T-POS performance=T-POS is=O impressive=O for=O a=O computer=O this=O small=O .=O
+It is better than my old acer laptop.####It=O is=O better=O than=O my=O old=O acer=O laptop=O .=O
+This thing is awesome, everything always works, everything is always easy to set up, everything is compatible, its literally everything I could ask for.####This=O thing=O is=O awesome=O ,=O everything=O always=O works=T-POS ,=O everything=O is=O always=O easy=O to=O set=T-POS up=T-POS ,=O everything=O is=O compatible=O ,=O its=O literally=O everything=O I=O could=O ask=O for=O .=O
+I would buy it again in a heartbeat!####I=O would=O buy=O it=O again=O in=O a=O heartbeat=O !=O
+Keyboard responds well to presses.####Keyboard=T-POS responds=O well=O to=O presses=O .=O
+If someone called me an Apple Fanboy...it would make sense.####If=O someone=O called=O me=O an=O Apple=O Fanboyit=O would=O make=O sense=O .=O
+Lastly, Windows 8 is annoying.####Lastly=O ,=O Windows=T-NEG 8=T-NEG is=O annoying=O .=O
+A scratch on a $1,500 MacBook is unforgivable.####A=O scratch=O on=O a=O $=O 1,500=O MacBook=O is=O unforgivable=O .=O
+I just fell in love with this thing.####I=O just=O fell=O in=O love=O with=O this=O thing=O .=O
+Everything is so easy and intuitive to setup or configure.####Everything=O is=O so=O easy=O and=O intuitive=O to=O setup=T-POS or=O configure=T-POS .=O
+I have no problems yet on my mac so far, and hope it stays like that.####I=O have=O no=O problems=O yet=O on=O my=O mac=O so=O far=O ,=O and=O hope=O it=O stays=O like=O that=O .=O
+This laptop is a great buy.####This=O laptop=O is=O a=O great=O buy=O .=O
+Biggest complaint is Windows 8 .####Biggest=O complaint=O is=O Windows=T-NEG 8=T-NEG .=O
+Only 2 usb ports...seems kind of...limited.####Only=O 2=O usb=T-NEG ports=T-NEG kind=O oflimited=O .=O
+It has been to early to see if this actually fixes the problem or not though.####It=O has=O been=O to=O early=O to=O see=O if=O this=O actually=O fixes=O the=O problem=O or=O not=O though=O .=O
+This device has met my expectations and I'm sure it will meet yours.####This=O device=O has=O met=O my=O expectations=O and=O I=O 'm=O sure=O it=O will=O meet=O yours=O .=O
+It has all the expected features and more +plus a wide screen and more than roomy keyboard.####It=O has=O all=O the=O expected=O features=T-POS and=O more=O +plus=O a=O wide=O screen=T-POS and=O more=O than=O roomy=O keyboard=T-POS .=O
+Out of all the laptops I have owned, this is by far the best!####Out=O of=O all=O the=O laptops=O I=O have=O owned=O ,=O this=O is=O by=O far=O the=O best=O !=O
+Amazing Performance for anything I throw at it.####Amazing=O Performance=T-POS for=O anything=O I=O throw=O at=O it=O .=O
+I can never go back to a PC now, this machine never freezes or has any problems.####I=O can=O never=O go=O back=O to=O a=O PC=O now=O ,=O this=O machine=O never=O freezes=O or=O has=O any=O problems=O .=O
+Out of the box I noticed how small it was and was exactly what I was looking for.####Out=O of=O the=O box=O I=O noticed=O how=O small=O it=O was=O and=O was=O exactly=O what=O I=O was=O looking=O for=O .=O
+The receiver was full of superlatives for the quality and performance.####The=O receiver=O was=O full=O of=O superlatives=O for=O the=O quality=T-POS and=O performance=T-POS .=O
+I was extremely happy with the OS itself.####I=O was=O extremely=O happy=O with=O the=O OS=T-POS itself=O .=O
+I was looking for something in between a regular laptop and a tablet and this is it.####I=O was=O looking=O for=O something=O in=O between=O a=O regular=O laptop=O and=O a=O tablet=O and=O this=O is=O it=O .=O
+The new MBP offers great portability and gives us confidence that we are not going to need to purchase a new laptop in 18 months.####The=O new=O MBP=O offers=O great=O portability=T-POS and=O gives=O us=O confidence=O that=O we=O are=O not=O going=O to=O need=O to=O purchase=O a=O new=O laptop=O in=O 18=O months=O .=O
+Great purchase and I definitely didn't miss out on the Black Friday deals.####Great=O purchase=O and=O I=O definitely=O did=O n't=O miss=O out=O on=O the=O Black=O Friday=O deals=O .=O
+The criticism has waned, and now I'd be the first to recommend an Air for truly portable computing.####The=O criticism=O has=O waned=O ,=O and=O now=O I=O 'd=O be=O the=O first=O to=O recommend=O an=O Air=O for=O truly=O portable=T-POS computing=T-POS .=O
+I would have given it 5 starts was it not for the fact that it had Windows 8####I=O would=O have=O given=O it=O 5=O starts=O was=O it=O not=O for=O the=O fact=O that=O it=O had=O Windows=T-NEG 8=T-NEG
+MS Office 2011 for Mac is wonderful, well worth it.####MS=T-POS Office=T-POS 2011=T-POS for=T-POS Mac=T-POS is=O wonderful=O ,=O well=O worth=O it=O .=O
+After using it for over a month, an issue started to surface.####After=O using=O it=O for=O over=O a=O month=O ,=O an=O issue=O started=O to=O surface=O .=O
+But the performance of Mac Mini is a huge disappointment.####But=O the=O performance=T-NEG of=O Mac=O Mini=O is=O a=O huge=O disappointment=O .=O
+There has been no problem with anything.####There=O has=O been=O no=O problem=O with=O anything=O .=O
+I believe with Apple - you get what you pay for.####I=O believe=O with=O Apple=O ,=O you=O get=O what=O you=O pay=O for=O .=O
+They don't just look good; they deliver excellent performance.####They=O do=O n't=O just=O look=T-POS good=O ;=O they=O deliver=O excellent=O performance=T-POS .=O
+I have had it over a year now with out a Glitch of any kind..I love the lit up keys and screen display...this thing is Fast and clear as can be.####I=O have=O had=O it=O over=O a=O year=O now=O with=O out=O a=O Glitch=O of=O any=O kindI=O love=O the=O lit=T-POS up=T-POS keys=T-POS and=O screen=T-POS display=T-POS thing=O is=O Fast=O and=O clear=O as=O can=O be=O .=O
+The product is prefect for everyone.####The=O product=O is=O prefect=O for=O everyone=O .=O
+The Mountain Lion OS is not hard to figure out if you are familiar with Microsoft Windows.####The=O Mountain=T-POS Lion=T-POS OS=T-POS is=O not=O hard=O to=O figure=O out=O if=O you=O are=O familiar=O with=O Microsoft=T-NEU Windows=T-NEU .=O
+However, I can refute that OSX is "FAST".####However=O ,=O I=O can=O refute=O that=O OSX=T-NEG is=O FAST=O .=O
+I waited to review to make sure it is what it is.####I=O waited=O to=O review=O to=O make=O sure=O it=O is=O what=O it=O is=O .=O
+Enjoy using Microsoft Office!####Enjoy=O using=O Microsoft=T-POS Office=T-POS !=O
+I would suggest this product to anyone.####I=O would=O suggest=O this=O product=O to=O anyone=O .=O
+With no problems,  I'm happy with this purchase because I saved money compared to buying it anywhere else.####With=O no=O problems=O ,=O I=O 'm=O happy=O with=O this=O purchase=O because=O I=O saved=O money=O compared=O to=O buying=O it=O anywhere=O else=O .=O
+Incredible graphics and brilliant colors.####Incredible=O graphics=T-POS and=O brilliant=O colors=T-POS .=O
+I needed something affordable from Apple and was tired of dealing with PC laptop after PC laptop.####I=O needed=O something=O affordable=O from=O Apple=O and=O was=O tired=O of=O dealing=O with=O PC=O laptop=O after=O PC=O laptop=O .=O
+Just bit the bullet and bought the Mac hoping it will last a lot longer….####Just=O bit=O the=O bullet=O and=O bought=O the=O Mac=O hoping=O it=O will=O last=O a=O lot=O longer=O .=O
+Built-in apps are purely amazing.####Built-in=T-POS apps=T-POS are=O purely=O amazing=O .=O
+Cons: Screen resolution.####Cons=O ,=O Screen=T-NEG resolution=T-NEG .=O
+From the speed to the multi touch gestures this operating system beats Windows easily.####From=O the=O speed=T-POS to=O the=O multi=T-POS touch=T-POS gestures=T-POS this=O operating=T-POS system=T-POS beats=O Windows=T-NEG easily=O .=O
+I really like the size and I'm a fan of the ACERS.####I=O really=O like=O the=O size=T-POS and=O I=O 'm=O a=O fan=O of=O the=O ACERS=O .=O
+This is by far thee best, most reliable computer I could find.####This=O is=O by=O far=O thee=O best=O ,=O most=O reliable=O computer=O I=O could=O find=O .=O
+I opted for the SquareTrade 3-Year Computer Accidental Protection Warranty ($1500-2000) which also support "accidents" like drops and spills that are NOT covered by AppleCare.####I=O opted=O for=O the=O SquareTrade=T-POS 3-Year=T-POS Computer=T-POS Accidental=T-POS Protection=T-POS Warranty=T-POS $=O 1500-2000=O which=O also=O support=O accidents=O like=O drops=O and=O spills=O that=O are=O NOT=O covered=O by=O AppleCare=T-NEG .=O
+It's light and easy to transport.####It=O 's=O light=O and=O easy=O to=O transport=T-POS .=O
+Once you get past learning how to use the poorly designed Windows 8 Set-Up you may feel frustrated.####Once=O you=O get=O past=O learning=O how=O to=O use=O the=O poorly=O designed=O Windows=T-NEG 8=T-NEG Set-Up=T-NEG you=O may=O feel=O frustrated=O .=O
+Very powerful especially for the money.####Very=O powerful=O especially=O for=O the=O money=O .=O
+When my Dell laptop gave up only after 2 1/2 years, I decided to buy MacBook Pro.####When=O my=O Dell=O laptop=O gave=O up=O only=O after=O 2=O 1/2=O years=O ,=O I=O decided=O to=O buy=O MacBook=O Pro=O .=O
+It's been time for a new laptop, and the only debate was which size of the Mac laptops, and whether to spring for the retina display.####It=O 's=O been=O time=O for=O a=O new=O laptop=O ,=O and=O the=O only=O debate=O was=O which=O size=T-NEU of=O the=O Mac=O laptops=O ,=O and=O whether=O to=O spring=O for=O the=O retina=T-NEU display=T-NEU .=O
+This was a significantly more affordable than getting a new MacBook Pro from Apple.####This=O was=O a=O significan'tly=O more=O affordable=O than=O getting=O a=O new=O MacBook=O Pro=O from=O Apple=O .=O
+I have always wanted a MacBook Pro.....always!####I=O have=O always=O wanted=O a=O MacBook=O Proalways=O !=O .=O
+The reason why I choose apple MacBook because of their design and the aluminum casing.####The=O reason=O why=O I=O choose=O apple=O MacBook=O because=O of=O their=O design=T-POS and=O the=O aluminum=T-POS casing=T-POS .=O
+The aluminum body sure makes it stand out.####The=O aluminum=T-POS body=T-POS sure=O makes=O it=O stand=O out=O .=O
+Overall it's an amazing product, 5 stars!####Overall=O it=O 's=O an=O amazing=O product=O ,=O 5=O stars=O !=O
+It is very easy to integrate bluetooth devices, and USB devices are recognized almost instantly.####It=O is=O very=O easy=O to=O integrate=T-POS bluetooth=T-POS devices=T-POS ,=O and=O USB=T-POS devices=T-POS are=O recognized=O almost=O instantly=O .=O
+He's thrilled with his new laptop.####He=O 's=O thrilled=O with=O his=O new=O laptop=O .=O
+Amazing product as you would expect from Apple.####Amazing=O product=O as=O you=O would=O expect=O from=O Apple=O .=O
+Nothing wrong with this computer at all!####Nothing=O wrong=O with=O this=O computer=O at=O all=O !=O
+And the fact that Apple is driving the 13" RMBP with the Intel4000 graphic chip seems underpowered (to me.####And=O the=O fact=O that=O Apple=O is=O driving=O the=O 13=O RMBP=O with=O the=O Intel4000=T-NEG graphic=T-NEG chip=T-NEG seems=O underpowered=O to=O me=O .=O
+I have to wonder why Amazon is even selling this dinosaur.####I=O have=O to=O wonder=O why=O Amazon=O is=O even=O selling=O this=O dinosaur=O .=O
+Apple removed the DVD drive Firewire port (will work with adapter) and put the SDXC slot in a silly position on the back.####Apple=O removed=O the=O DVD=T-NEU drive=T-NEU Firewire=T-NEU port=T-NEU will=O work=O with=O adapter=T-NEU and=O put=O the=O SDXC=T-NEG slot=T-NEG in=O a=O silly=O position=O on=O the=O back=O .=O
+No hassle and no complaints.####No=O hassle=O and=O no=O complaints=O .=O
+LOVE IT I've always been an apple fan boy, but never had the money to buy a mac, only ipads and iphones, and this is my first mac, blew me away completely.####LOVE=O IT=O I=O 've=O always=O been=O an=O apple=O fan=O boy=O ,=O but=O never=O had=O the=O money=O to=O buy=O a=O mac=O ,=O only=O ipads=O and=O iphones=O ,=O and=O this=O is=O my=O first=O mac=O ,=O blew=O me=O away=O completely=O .=O
+The durability of the laptop will make it worth the money.####The=O durability=T-POS of=O the=O laptop=O will=O make=O it=O worth=O the=O money=O .=O
+Well designed and fast.####Well=O designed=T-POS and=O fast=O .=O
+And now I am a proud MacBook owner also!####And=O now=O I=O am=O a=O proud=O MacBook=O owner=O also=O !=O
+But I was completely wrong, this computer is UNBELIEVABLE amazing and easy to use.####But=O I=O was=O completely=O wrong=O ,=O this=O computer=O is=O UNBELIEVABLE=O amazing=O and=O easy=O to=O use=T-POS .=O
+Exactly as posted plus a great value.####Exactly=O as=O posted=O plus=O a=O great=O value=T-POS .=O
+The specs are pretty good too.####The=O specs=T-POS are=O pretty=O good=O too=O .=O
+I am having a friend look at it , but will probably return it.####I=O am=O having=O a=O friend=O look=O at=O it=O ,=O but=O will=O probably=O return=O it=O .=O
+There were no scratches or dents or any marks at all.####There=O were=O no=O scratches=O or=O dents=O or=O any=O marks=O at=O all=O .=O
+I've only had it one day, but I really do love it and I'm happy it was economical and I'm finally able to own a Mac!####I=O 've=O only=O had=O it=O one=O day=O ,=O but=O I=O really=O do=O love=O it=O and=O I=O 'm=O happy=O it=O was=O economical=O and=O I=O 'm=O finally=O able=O to=O own=O a=O Mac=O !=O
+Since I have always used Apple products, the choice of Macbook Pro was obvious.####Since=O I=O have=O always=O used=O Apple=O products=O ,=O the=O choice=O of=O Macbook=O Pro=O was=O obvious=O .=O
+Apple is unmatched in product quality,aesthetics,craftmanship, and customer service.####Apple=O is=O unmatched=O in=O product=T-POS quality=T-POS ,=O aesthetics=T-POS ,=O craftmanship=T-POS ,=O and=O customer=T-POS service=T-POS .=O
+This is my first apple laptop.####This=O is=O my=O first=O apple=O laptop=O .=O
+It makes a great gift.####It=O makes=O a=O great=O gift=O .=O
+It is a great size and amazing windows 8 included!####It=O is=O a=O great=O size=T-POS and=O amazing=O windows=T-POS 8=T-POS included=O !=O
+I would recommend to any one lloking for a first class computer!####I=O would=O recommend=O to=O any=O one=O lloking=O for=O a=O first=O class=O computer=O !=O
+I do not like too much Windows 8.####I=O do=O not=O like=O too=O much=O Windows=T-NEG 8=T-NEG .=O
+Startup times are incredibly long: over two minutes.####Startup=T-NEG times=T-NEG are=O incredibly=O long=O ,=O over=O two=O minutes=O .=O
+I bought this Macbook Pro from Best Buy under a year ago to replace my old Macbook Air.####I=O bought=O this=O Macbook=O Pro=O from=O Best=O Buy=O under=O a=O year=O ago=O to=O replace=O my=O old=O Macbook=O Air=O .=O
+The macbook pro is really responsive.####The=O macbook=O pro=O is=O really=O responsive=O .=O
+Also stunning colors and speedy####Also=O stunning=O colors=T-POS and=O speedy=O
+it is really expensive though.####it=O is=O really=O expensive=O though=O .=O
+great price free shipping what else can i ask for!!####great=O price=T-POS free=O shipping=T-POS what=O else=O can=O i=O ask=O for=O !=O !=O
+This mouse is terrific.####This=O mouse=T-POS is=O terrific=O .=O
+I will also say it is much better than I expected!####I=O will=O also=O say=O it=O is=O much=O better=O than=O I=O expected=O !=O
+This computer does everything i need it to do for school and more.####This=O computer=O does=O everything=O i=O need=O it=O to=O do=O for=O school=O and=O more=O .=O
+It is really thick around the battery.####It=O is=O really=O thick=O around=O the=O battery=T-NEU .=O
+And windows 7 works like a charm.####And=O windows=T-POS 7=T-POS works=O like=O a=O charm=O .=O
+And I can attach my projector to it.####And=O I=O can=O attach=O my=O projector=O to=O it=O .=O
+:) Great product, great price, great delivery, and great service.####,=O Great=O product=O ,=O great=O price=T-POS ,=O great=O delivery=T-POS ,=O and=O great=O service=T-POS .=O
+:] It arrived so fast and customer service was great.####,=O ]=O It=O arrived=O so=O fast=O and=O customer=T-POS service=T-POS was=O great=O .=O
+tried windows 8 and hated it !!!####tried=O windows=T-NEG 8=T-NEG and=O hated=O it=O !=O !=O !=O
+The price is higher than most lab top out there; however, he/she will get what they paid for, which is a great computer.####The=O price=O is=O higher=O than=O most=O lab=O top=O out=O there=O ;=O however=O ,=O he/she=O will=O get=O what=O they=O paid=O for=O ,=O which=O is=O a=O great=O computer=O .=O
+So, I thought why not give Mac Book pro a try.####So=O ,=O I=O thought=O why=O not=O give=O Mac=O Book=O pro=O a=O try=O .=O
+Set up was a breeze.####Set=T-POS up=T-POS was=O a=O breeze=O .=O
+But I do NOT like Win8.####But=O I=O do=O NOT=O like=O Win8=T-NEG .=O
+I have owned at least 4 to 5 laptops and computers - but this is by far the most superior machine I have ever owned.####I=O have=O owned=O at=O least=O 4=O to=O 5=O laptops=O and=O computers=O ,=O but=O this=O is=O by=O far=O the=O most=O superior=O machine=O I=O have=O ever=O owned=O .=O
+I am still in the process of learning about its features.####I=O am=O still=O in=O the=O process=O of=O learning=O about=O its=O features=T-NEU .=O
+BTW, I checked online regarding the old laptop that 'died' and found that I was not alone, far from it.####BTW=O ,=O I=O checked=O online=O regarding=O the=O old=O laptop=O that=O died=O and=O found=O that=O I=O was=O not=O alone=O ,=O far=O from=O it=O .=O
+I had the same reasons as most PC users: the price, the overbearing restrictions of OSX and lack of support for games.####I=O had=O the=O same=O reasons=O as=O most=O PC=O users=O ,=O the=O price=T-NEG ,=O the=O overbearing=O restrictions=O of=O OSX=T-NEG and=O lack=O of=O support=T-NEG for=T-NEG games=T-NEG .=O
+I wanted it for it's mobility and man, this little bad boy is very nice.####I=O wanted=O it=O for=O it=O 's=O mobility=T-POS and=O man=O ,=O this=O little=O bad=O boy=O is=O very=O nice=O .=O
+Seems to me that's the best way to get Apple's attention.####Seems=O to=O me=O that=O 's=O the=O best=O way=O to=O get=O Apple=O 's=O attention=O .=O
+Very nice so far.####Very=O nice=O so=O far=O .=O
+You won't be disappointed.####You=O wo=O n't=O be=O disappointed=O .=O
+The investment of a new MacBook Pro came at a price, but totally worth it for a good piece of mind.####The=O investment=O of=O a=O new=O MacBook=O Pro=O came=O at=O a=O price=O ,=O but=O totally=O worth=O it=O for=O a=O good=O piece=O of=O mind=O .=O
+I found the mini to be:Exceptionally easy to set up####I=O found=O the=O mini=O to=O be=O ,=O Exceptionally=O easy=O to=O set=T-POS up=T-POS
+Having USB3 is why I bought this Mini.####Having=O USB3=T-POS is=O why=O I=O bought=O this=O Mini=O .=O
+Be sure to have good air flow where ever you put it.####Be=O sure=O to=O have=O good=O air=O flow=O where=O ever=O you=O put=O it=O .=O
+The sound is nice and loud; I don't have any problems with hearing anything.####The=O sound=T-POS is=O nice=O and=O loud=O ;=O I=O do=O n't=O have=O any=O problems=O with=O hearing=O anything=O .=O
+It is very slim, the track pad is very much impressed with me.####It=O is=O very=O slim=O ,=O the=O track=T-POS pad=T-POS is=O very=O much=O impressed=O with=O me=O .=O
+This was the same problem with my MacBook (circa 2007) that I just retired.####This=O was=O the=O same=O problem=O with=O my=O MacBook=O circa=O 2007=O that=O I=O just=O retired=O .=O
+Great things come in small "packages.####Great=O things=O come=O in=O small=O packages=O .=O
+HUGE Apple MAC Fan!####HUGE=O Apple=O MAC=O Fan=O !=O
+Looked at HP, ASUS, Acer, Sony and a bunch of other ones but could not find I really liked.####Looked=O at=O HP=O ,=O ASUS=O ,=O Acer=O ,=O Sony=O and=O a=O bunch=O of=O other=O ones=O but=O could=O not=O find=O I=O really=O liked=O .=O
+The settings are not user-friendly either.####The=O settings=T-NEG are=O not=O user-friendly=O either=O .=O
+Honestly, I am surprised no one else has mentioned returning theirs.####Honestly=O ,=O I=O am=O surprised=O no=O one=O else=O has=O mentioned=O returning=O theirs=O .=O
+Most of them were either too big, too noisy and too slow after 2 years.####Most=O of=O them=O were=O either=O too=O big=O ,=O too=O noisy=O and=O too=O slow=O after=O 2=O years=O .=O
+The machine is used, but is like new, i'm very impress.####The=O machine=O is=O used=O ,=O but=O is=O like=O new=O ,=O i=O 'm=O very=O impress=O .=O
+Thank goodness for OpenOffice!####Thank=O goodness=O for=O OpenOffice=T-POS !=O
+Awesome form factor, great battery life, wonderful UX.####Awesome=O form=T-POS factor=T-POS ,=O great=O battery=T-POS life=T-POS ,=O wonderful=O UX=T-POS .=O
+Needless to say, the leap from that to this has been amazing and (aside from the financial reasons) I am astounded that I hadn't made the switch sooner.####Needless=O to=O say=O ,=O the=O leap=O from=O that=O to=O this=O has=O been=O amazing=O and=O aside=O from=O the=O financial=O reasons=O I=O am=O astounded=O that=O I=O had=O n't=O made=O the=O switch=O sooner=O .=O
+Its perfect, not much heavy.####Its=O perfect=O ,=O not=O much=O heavy=O .=O
+i love the keyboard and the screen.####i=O love=O the=O keyboard=T-POS and=O the=O screen=T-POS .=O
+I find it not to be very user friendly.####I=O find=O it=O not=O to=O be=O very=O user=O friendly=O .=O
+It has surpassed all expectations and fulfilled all my needs.####It=O has=O surpassed=O all=O expectations=O and=O fulfilled=O all=O my=O needs=O .=O
+However, there are MAJOR issues with the touchpad which render the device nearly useless.####However=O ,=O there=O are=O MAJOR=O issues=O with=O the=O touchpad=T-NEG which=O render=O the=O device=O nearly=O useless=O .=O
+What angers me more than anything else is that I spent all those years hating MACs when I could have been getting a lot more production with a whole lot less grief!####What=O angers=O me=O more=O than=O anything=O else=O is=O that=O I=O spent=O all=O those=O years=O hating=O MACs=O when=O I=O could=O have=O been=O getting=O a=O lot=O more=O production=O with=O a=O whole=O lot=O less=O grief=O !=O
+I've already upgraded o Mavericks and I am impressed with everything about this computer.####I=O 've=O already=O upgraded=O o=O Mavericks=T-POS and=O I=O am=O impressed=O with=O everything=O about=O this=O computer=O .=O
+So this is very good commputer and i highly suggest it.####So=O this=O is=O very=O good=O commputer=O and=O i=O highly=O suggest=O it=O .=O
+the mbp i recieved was everything it should have been.####the=O mbp=O i=O recieved=O was=O everything=O it=O should=O have=O been=O .=O
+I was going to buy today and noticed it went back up to $344.99?####I=O was=O going=O to=O buy=O today=O and=O noticed=O it=O went=O back=O up=O to=O $=O 34499=O ?=O .=O
+Not as fast as I would have expect for an i5.####Not=O as=O fast=O as=O I=O would=O have=O expect=O for=O an=O i5=T-NEG .=O
+SO of course this one came through with the awesomeness!####SO=O of=O course=O this=O one=O came=O through=O with=O the=O awesomeness=O !=O
+You will not regret buying this computer!####You=O will=O not=O regret=O buying=O this=O computer=O !=O
+Nothing bad to say about it.####Nothing=O bad=O to=O say=O about=O it=O .=O
+It s heavy for Mac book but is good.####It=O s=O heavy=O for=O Mac=O book=O but=O is=O good=O .=O
+thanks for great service and shipping!####thanks=O for=O great=O service=T-POS and=O shipping=T-POS !=O
+Deal of the year.####Deal=O of=O the=O year=O .=O
+My sisters same laptop broke about the month later for the same reason.####My=O sisters=O same=O laptop=O broke=O about=O the=O month=O later=O for=O the=O same=O reason=O .=O
+Minis make sense for a lot of people.####Minis=O make=O sense=O for=O a=O lot=O of=O people=O .=O
+The performance seems quite good, and built-in applications like iPhoto work great with my phone and camera.####The=O performance=T-POS seems=O quite=O good=O ,=O and=O built-in=T-POS applications=T-POS like=O iPhoto=T-POS work=O great=O with=O my=O phone=O and=O camera=O .=O
+This Mac Mini makes the Macbook Pro seem slow.####This=O Mac=O Mini=O makes=O the=O Macbook=O Pro=O seem=O slow=O .=O
+I did swap out the hard drive for a Samsung 830 SSD which I highly recommend.####I=O did=O swap=O out=O the=O hard=T-NEU drive=T-NEU for=O a=O Samsung=T-POS 830=T-POS SSD=T-POS which=O I=O highly=O recommend=O .=O
+I bought this MacBook Pro to replace my six-year-old PC (a Sony Vaio), but it was basically no better than my old PC, so I returned it.####I=O bought=O this=O MacBook=O Pro=O to=O replace=O my=O six-year-old=O PC=O a=O Sony=O Vaio=O ,=O but=O it=O was=O basically=O no=O better=O than=O my=O old=O PC=O ,=O so=O I=O returned=O it=O .=O
+I wanted a simple, reliable  laptop.####I=O wanted=O a=O simple=O ,=O reliable=O laptop=O .=O
+Cheaper than buying it @ apple too!####Cheaper=O than=O buying=O it=O @=O apple=O too=O !=O
+I have just had to learn to be a little harder typer than on my last computer.####I=O have=O just=O had=O to=O learn=O to=O be=O a=O little=O harder=O typer=O than=O on=O my=O last=O computer=O .=O
+Extremely disappointed with the way it is.####Extremely=O disappointed=O with=O the=O way=O it=O is=O .=O
+Never been happier using  computer.####Never=O been=O happier=O using=O computer=O .=O
+I have had a total of 5 different laptop from many different manufactures.####I=O have=O had=O a=O total=O of=O 5=O different=O laptop=O from=O many=O different=O manufactures=O .=O
+Does everything I wanted this laptop to do.####Does=O everything=O I=O wanted=O this=O laptop=O to=O do=O .=O
+Besides, the apple stocks have been falling due to lack of sales.####Besides=O ,=O the=O apple=O stocks=O have=O been=O falling=O due=O to=O lack=O of=O sales=O .=O
+Turns out this is a common problem.####Turns=O out=O this=O is=O a=O common=O problem=O .=O
+Starts up in a hurry and everything is ready to go.####Starts=T-POS up=T-POS in=O a=O hurry=O and=O everything=O is=O ready=O to=O go=O .=O
+It is also fast as can be... you get what you pay for... well worth the investment####It=O is=O also=O fast=O as=O can=O be=O you=O get=O what=O you=O pay=O for=O well=O worth=O the=O investment=O .=O
+But I'm still learning so can't rate it yet for everything.####But=O I=O 'm=O still=O learning=O so=O ca=O n't=O rate=O it=O yet=O for=O everything=O .=O
+Overall very impressed, Thank you Apple and Amazon!####Overall=O very=O impressed=O ,=O Thank=O you=O Apple=O and=O Amazon=O !=O
+Yes, that's a good thing, but it's made from aluminum that scratches easily.####Yes=O ,=O that=O 's=O a=O good=O thing=O ,=O but=O it=O 's=O made=O from=O aluminum=T-NEG that=O scratches=O easily=O .=O
+Very fast for my needs.####Very=O fast=O for=O my=O needs=O .=O
+I bought this Mac in order to replace my old Dell laptop.####I=O bought=O this=O Mac=O in=O order=O to=O replace=O my=O old=O Dell=O laptop=O .=O
+Quick and has built in virus control.####Quick=O and=O has=O built=T-POS in=T-POS virus=T-POS control=T-POS .=O
+Took a long time trying to decide between one with retina display and one without.####Took=O a=O long=O time=O trying=O to=O decide=O between=O one=O with=O retina=T-NEU display=T-NEU and=O one=O without=O .=O
+I saw the Mini Mac at Best Buy and decided to get this as my replacement.####I=O saw=O the=O Mini=O Mac=O at=O Best=O Buy=O and=O decided=O to=O get=O this=O as=O my=O replacement=O .=O
+I finally decided on this one and couldn't be any happier.####I=O finally=O decided=O on=O this=O one=O and=O could=O n't=O be=O any=O happier=O .=O
+I was also informed that the components of the Mac Book were dirty.####I=O was=O also=O informed=O that=O the=O components=T-NEG of=O the=O Mac=O Book=O were=O dirty=O .=O
+So glad I did not waste money on a less than par product.####So=O glad=O I=O did=O not=O waste=O money=O on=O a=O less=O than=O par=O product=O .=O
+Haven't regretted it one bit.####Have=O n't=O regretted=O it=O one=O bit=O .=O
+The one thing that Apple does right is computers.####The=O one=O thing=O that=O Apple=O does=O right=O is=O computers=O .=O
+the hardware problems have been so bad, i can't wait till it completely dies in 3 years, TOPS!####the=O hardware=T-NEG problems=O have=O been=O so=O bad=O ,=O i=O ca=O n't=O wait=O till=O it=O completely=O dies=O in=O 3=O years=O ,=O TOPS=O !=O
+It's so nice that the battery last so long and that this machine has the snow lion!####It=O 's=O so=O nice=O that=O the=O battery=T-POS last=O so=O long=O and=O that=O this=O machine=O has=O the=O snow=T-POS lion=T-POS !=O
+I think that they are the best out on the market.####I=O think=O that=O they=O are=O the=O best=O out=O on=O the=O market=O .=O
+HOWEVER I chose two day shipping and it took over a week to arrive.####HOWEVER=O I=O chose=O two=O day=O shipping=T-NEG and=O it=O took=O over=O a=O week=O to=O arrive=O .=O
+That's quite a bump up from the $599 that this little guy sells for, which leaves me to my next point.####That=O 's=O quite=O a=O bump=O up=O from=O the=O $=O 599=O that=O this=O little=O guy=O sells=O for=O ,=O which=O leaves=O me=O to=O my=O next=O point=O .=O
+this is quite smooth as well as heavy and can easily slip through the hands.####this=O is=O quite=O smooth=O as=O well=O as=O heavy=O and=O can=O easily=O slip=O through=O the=O hands=O .=O
+My laptop is so light that I can take it with me anywhere.####My=O laptop=O is=O so=O light=O that=O I=O can=O take=O it=O with=O me=O anywhere=O .=O
+it's exactly what i wanted, and it has all the new features and whatnot.####it=O 's=O exactly=O what=O i=O wanted=O ,=O and=O it=O has=O all=O the=O new=O features=T-POS and=O whatnot=O .=O
+You can do absolutely anything and is very fast and stylish.####You=O can=O do=O absolutely=O anything=O and=O is=O very=O fast=O and=O stylish=O .=O
+Finally decided to try a MAC because there were too many choices of which PC's to buy and EVERYONE who had a MAC said "buy a MAC".####Finally=O decided=O to=O try=O a=O MAC=O because=O there=O were=O too=O many=O choices=O of=O which=O PC=O 's=O to=O buy=O and=O EVERYONE=O who=O had=O a=O MAC=O said=O buy=O a=O MAC=O .=O
+Can you buy any laptop that matches the quality of a MacBook?####Can=O you=O buy=O any=O laptop=O that=O matches=O the=O quality=T-POS of=O a=O MacBook=O ?=O
+It feels cheap, the keyboard is not very sensitive.####It=O feels=O cheap=O ,=O the=O keyboard=T-NEG is=O not=O very=O sensitive=O .=O
+That defeated the whole point of a laptop.####That=O defeated=O the=O whole=O point=O of=O a=O laptop=O .=O
+Though please note that sometimes it crashes, and the sound quality isnt superb.####Though=O please=O note=O that=O sometimes=O it=O crashes=O ,=O and=O the=O sound=T-NEG quality=T-NEG isnt=O superb=O .=O
+It is very easy to navigate even for a novice.####It=O is=O very=O easy=O to=O navigate=T-POS even=O for=O a=O novice=O .=O
+But until now, no complains at all.####But=O until=O now=O ,=O no=O complains=O at=O all=O .=O
+The cons are more annoyances that can be lived with.####The=O cons=O are=O more=O annoyances=O that=O can=O be=O lived=O with=O .=O
+Does everything I need it to, has a wonderful battery life and I couldn't be happier.####Does=O everything=O I=O need=O it=O to=O ,=O has=O a=O wonderful=O battery=T-POS life=T-POS and=O I=O could=O n't=O be=O happier=O .=O
+Great Performance and Quality.####Great=O Performance=T-POS and=O Quality=T-POS .=O
+Just What I Needed For Portable And My Wallet Too!####Just=O What=O I=O Needed=O For=O Portable=O And=O My=O Wallet=O Too=O !=O
+The device speaks about it self.####The=O device=O speaks=O about=O it=O self=O .=O
+I used windows XP, windows Vista, and Windows 7 extensively.####I=O used=O windows=T-NEU XP=T-NEU ,=O windows=T-NEU Vista=T-NEU ,=O and=O Windows=T-NEU 7=T-NEU extensively=O .=O
+the only thing that bums me out about this purchase is they released a newer updated mbp seriously RIGHT after i bought this one.####the=O only=O thing=O that=O bums=O me=O out=O about=O this=O purchase=O is=O they=O released=O a=O newer=O updated=O mbp=O seriously=O RIGHT=O after=O i=O bought=O this=O one=O .=O
+it does get hot when using on a bed or sofa and gets warm on a desk....this is in an un-air conditioned room.....in air condition it gets slightly warm......####it=O does=O get=O hot=O when=O using=O on=O a=O bed=O or=O sofa=O and=O gets=O warm=O on=O a=O deskthis=O is=O in=O an=O un-air=O conditioned=O roomin=O air=O condition=O it=O gets=O slightly=O warm=O .=O
+I did add a SSD drive and memory####I=O did=O add=O a=O SSD=T-NEU drive=T-NEU and=O memory=T-NEU
+I got this one for thanks giving Offer for $962 :).####I=O got=O this=O one=O for=O thanks=O giving=O Offer=O for=O $=O 962=O ,=O .=O
+I had my PC laptop for 3 years and going to a MacBook Pro is like I leaped through time.####I=O had=O my=O PC=O laptop=O for=O 3=O years=O and=O going=O to=O a=O MacBook=O Pro=O is=O like=O I=O leaped=O through=O time=O .=O
+On start up it asks endless questions just so itune can sell you more of their products.####On=O start=T-NEG up=T-NEG it=O asks=O endless=O questions=O just=O so=O itune=T-NEG can=O sell=O you=O more=O of=O their=O products=O .=O
+Pretty much made sense to get a Mini.####Pretty=O much=O made=O sense=O to=O get=O a=O Mini=O .=O
+I Have been a Pc user for a very long time now but I will get used to this new OS.####I=O Have=O been=O a=O Pc=O user=O for=O a=O very=O long=O time=O now=O but=O I=O will=O get=O used=O to=O this=O new=O OS=T-NEU .=O
+not something you want to miss out on!!!####not=O something=O you=O want=O to=O miss=O out=O on=O !=O !=O !=O
+One more thing, this mac does NOT come with restore disks and I am not sure if you can make them direct from the mac like you can with newer PC's, also the charging cables are made of the same cheap material as the iPhone/iPod touch cables.####One=O more=O thing=O ,=O this=O mac=O does=O NOT=O come=O with=O restore=T-NEG disks=T-NEG and=O I=O am=O not=O sure=O if=O you=O can=O make=O them=O direct=O from=O the=O mac=O like=O you=O can=O with=O newer=O PC=O 's=O ,=O also=O the=O charging=T-NEG cables=T-NEG are=O made=O of=O the=O same=O cheap=O material=T-NEG as=O the=O iPhone/iPod=O touch=O cables=O .=O
+I bought it to my son who uses it for graphic design.####I=O bought=O it=O to=O my=O son=O who=O uses=O it=O for=O graphic=T-NEU design=T-NEU .=O
+I previously owned an older Dell laptop that died after about 5 or 6 years.####I=O previously=O owned=O an=O older=O Dell=O laptop=O that=O died=O after=O about=O 5=O or=O 6=O years=O .=O
+Its a pretty decent computer.####Its=O a=O pretty=O decent=O computer=O .=O
+I never tried any external mics with that iMac.####I=O never=O tried=O any=O external=T-NEU mics=T-NEU with=O that=O iMac=O .=O
+The new os is great on my macbook pro!####The=O new=O os=T-POS is=O great=O on=O my=O macbook=O pro=O !=O
+It was fast, and it was "different".####It=O was=O fast=O ,=O and=O it=O was=O different=O .=O
+I had a little problem adjusting to the small screen but works fine as long as I remember to carry my glasses.####I=O had=O a=O little=O problem=O adjusting=O to=O the=O small=O screen=O but=O works=O fine=O as=O long=O as=O I=O remember=O to=O carry=O my=O glasses=O .=O
+I purchased my first Mac and am glad I did.####I=O purchased=O my=O first=O Mac=O and=O am=O glad=O I=O did=O .=O
+I have experienced no problems, works as anticipated.####I=O have=O experienced=O no=O problems=O ,=O works=T-POS as=O anticipated=O .=O
+System is running great.####System=T-POS is=O running=O great=O .=O
+Easy to customize setting and even create your own bookmarks.####Easy=O to=O customize=T-POS setting=T-POS and=O even=O create=T-POS your=T-POS own=T-POS bookmarks=T-POS .=O
+They really screwed the pooch on this one.####They=O really=O screwed=O the=O pooch=O on=O this=O one=O .=O
+The MAC Mini, wireless keyboard / mouse and a HDMI cable is all I need to get some real work done.####The=O MAC=O Mini=O ,=O wireless=T-NEU keyboard=T-NEU /=T-NEU mouse=T-NEU and=O a=O HDMI=T-NEU cable=T-NEU is=O all=O I=O need=O to=O get=O some=O real=O work=O done=O .=O
+I finally pulled the trigger and I am blown away by how much more I enjoy my computer tasks using the Mac Mini!!!####I=O finally=O pulled=O the=O trigger=O and=O I=O am=O blown=O away=O by=O how=O much=O more=O I=O enjoy=O my=O computer=O tasks=O using=O the=O Mac=O Mini=O !=O !=O !=O
+it has all the features that we expected and the price was good, working well so far.####it=O has=O all=O the=O features=T-POS that=O we=O expected=O and=O the=O price=T-POS was=O good=O ,=O working=T-POS well=O so=O far=O .=O
+I work as a designer and coder and I needed a new buddy to work with, not gaming.####I=O work=O as=O a=O designer=O and=O coder=O and=O I=O needed=O a=O new=O buddy=O to=O work=O with=O ,=O not=O gaming=T-NEU .=O
+I was told that it seems to be a multi - component failure.####I=O was=O told=O that=O it=O seems=O to=O be=O a=O multi=O ,=O component=O failure=O .=O
+The new operating system makes this computer into a super iPad.####The=O new=O operating=T-POS system=T-POS makes=O this=O computer=O into=O a=O super=O iPad=O .=O
+I am very happy with my first Mac.####I=O am=O very=O happy=O with=O my=O first=O Mac=O .=O
+Easy to set up and go!####Easy=O to=O set=T-POS up=T-POS and=O go=O !=O
+I can't believe how quiet the hard drive is and how quick this thing boots up.####I=O ca=O n't=O believe=O how=O quiet=O the=O hard=T-POS drive=T-POS is=O and=O how=O quick=O this=O thing=O boots=T-POS up=T-POS .=O
+The only issue came when I tried scanning to the mac.####The=O only=O issue=O came=O when=O I=O tried=O scanning=T-NEG to=O the=O mac=O .=O
+The machine is speedy and efficient.####The=O machine=O is=O speedy=O and=O efficient=O .=O
+I think this is about as good as it gets at anything close to this price point.####I=O think=O this=O is=O about=O as=O good=O as=O it=O gets=O at=O anything=O close=O to=O this=O price=T-NEU point=T-NEU .=O
+A *big* upgrade from my 13" 2006 macbook.####A=O *big*=O upgrade=O from=O my=O 13=O 2006=O macbook=O .=O
+It's just what we were looking for and it works great.####It=O 's=O just=O what=O we=O were=O looking=O for=O and=O it=O works=T-POS great=O .=O
+Having a Mac certainly makes life easier.####Having=O a=O Mac=O certainly=O makes=O life=O easier=O .=O
+It's so quick and responsive that it makes working/surfing on a computer so much more pleasurable!####It=O 's=O so=O quick=O and=O responsive=O that=O it=O makes=O working=T-POS on=O a=O computer=O so=O much=O more=O pleasurable=O !=O
+The old unibody macbook pro could fry an egg after a while.####The=O old=O unibody=O macbook=O pro=O could=O fry=O an=O egg=O after=O a=O while=O .=O
+It works fine, and all the software seems to run pretty well.####It=O works=T-POS fine=O ,=O and=O all=O the=O software=T-POS seems=O to=O run=O pretty=O well=O .=O
+For this purpose, it's great.####For=O this=O purpose=O ,=O it=O 's=O great=O .=O
+Couldn't have asked for more!####Could=O n't=O have=O asked=O for=O more=O !=O
+I'm using this computer for word processing, web browsing, some gaming, and I'm learning programming.####I=O 'm=O using=O this=O computer=O for=O word=T-NEU processing=T-NEU ,=O web=T-NEU browsing=T-NEU ,=O some=O gaming=T-NEU ,=O and=O I=O 'm=O learning=O programming=T-NEU .=O
+It certainly does, but you rarely hear any of your friends with Mac's complain about anything.####It=O certainly=O does=O ,=O but=O you=O rarely=O hear=O any=O of=O your=O friends=O with=O Mac=O 's=O complain=O about=O anything=O .=O
+My wife was so excited to open the box, but quickly came to see that it did not function as it should.####My=O wife=O was=O so=O excited=O to=O open=O the=O box=O ,=O but=O quickly=O came=O to=O see=O that=O it=O did=O not=O function=T-NEG as=O it=O should=O .=O
+I don't have any technical pearls to share.####I=O do=O n't=O have=O any=O technical=O pearls=O to=O share=O .=O
+I wanted a computer that was quite, fast, and that had overall great performance.####I=O wanted=O a=O computer=O that=O was=O quite=O ,=O fast=O ,=O and=O that=O had=O overall=O great=O performance=T-NEU .=O
+Apple "Help" is a mixed bag.####Apple=T-NEG "Help"=T-NEG is=O a=O mixed=O bag=O .=O
+All I can say is I am impressed.####All=O I=O can=O say=O is=O I=O am=O impressed=O .=O
+It suddenly can not work.####It=O suddenly=O can=O not=O work=T-NEG .=O
+It did everything we expected!####It=O did=O everything=O we=O expected=O !=O
+Harddrive was in poor condition, had to replace it.####Harddrive=T-NEG was=O in=O poor=O condition=O ,=O had=O to=O replace=O it=O .=O
+The on/off switch is a bit obscure in the rear corner.####The=O on/off=T-NEG switch=T-NEG is=O a=O bit=O obscure=O in=O the=O rear=O corner=O .=O
+It's a nice little gadget.####It=O 's=O a=O nice=O little=O gadget=O .=O
+My only complaint is the total lack of instructions that come with the mac mini.####My=O only=O complaint=O is=O the=O total=O lack=O of=O instructions=T-NEG that=O come=O with=O the=O mac=O mini=O .=O
+The only task that this computer would not be good enough for would be gaming, otherwise the integrated Intel 4000 graphics work well for other tasks.####The=O only=O task=O that=O this=O computer=O would=O not=O be=O good=O enough=O for=O would=O be=O gaming=T-NEG ,=O otherwise=O the=O integrated=O Intel=O 4000=O graphics=O work=O well=O for=O other=O tasks=O .=O
+It's macbook pro and there is no discusion about it.####It=O 's=O macbook=O pro=O and=O there=O is=O no=O discusion=O about=O it=O .=O
+I'm hoping the rest of the features will be the signature quality of apple.####I=O 'm=O hoping=O the=O rest=O of=O the=O features=O will=O be=O the=O signature=O quality=O of=O apple=O .=O
+I use it mostly for content creation (Audio, video, photo editing) and its reliable.####I=O use=O it=O mostly=O for=O content=T-POS creation=T-POS Audio=T-POS ,=O video=T-POS ,=O photo=T-POS editing=T-POS and=O its=O reliable=O .=O
+It is the best all around Mac.####It=O is=O the=O best=O all=O around=O Mac=O .=O
+Screen is bright and gorgeous.####Screen=T-POS is=O bright=O and=O gorgeous=O .=O
+Also is portable and reliable.####Also=O is=O portable=O and=O reliable=O .=O
+The only solution is to turn the brightness down, etc.####The=O only=O solution=O is=O to=O turn=O the=O brightness=T-NEU down=O ,=O etc=O .=O
+It is not an easy decision to purchase a used or even good as new laptop but I am very satisfied.####It=O is=O not=O an=O easy=O decision=O to=O purchase=O a=O used=O or=O even=O good=O as=O new=O laptop=O but=O I=O am=O very=O satisfied=O .=O
+If you want more information on macs I suggest going to apple.com and heading towards the macbook page for more information on the applications.####If=O you=O want=O more=O information=O on=O macs=O I=O suggest=O going=O to=O applecom=O and=O heading=O towards=O the=O macbook=O page=O for=O more=O information=O on=O the=O applications=T-NEU .=O
+It is robust, with a friendly use as all Apple products.####It=O is=O robust=O ,=O with=O a=O friendly=O use=T-POS as=O all=O Apple=O products=O .=O
+Even if you don't do business, thats okay, it's incredibly fast.####Even=O if=O you=O do=O n't=O do=O business=O ,=O thats=O okay=O ,=O it=O 's=O incredibly=O fast=O .=O
+It is fast and easy to use.####It=O is=O fast=O and=O easy=O to=O use=T-POS .=O
+This was absolutely annoying!####This=O was=O absolutely=O annoying=O !=O
+And the fact that it comes with an i5 processor definitely speeds things up####And=O the=O fact=O that=O it=O comes=O with=O an=O i5=T-POS processor=T-POS definitely=O speeds=O things=O up=O
+But for those of you that dont have a mac and are still on the PC's this is a good foot in the door into mac.####But=O for=O those=O of=O you=O that=O do=O n't=O have=O a=O mac=O and=O are=O still=O on=O the=O PC=O 's=O this=O is=O a=O good=O foot=O in=O the=O door=O into=O mac=O .=O
+I have been PC for years but this computer is intuitive and its built in features are a great help####I=O have=O been=O PC=O for=O years=O but=O this=O computer=O is=O intuitive=O and=O its=O built=T-POS in=T-POS features=T-POS are=O a=O great=O help=O
+and it fits in my briefcase with ease####and=O it=O fits=O in=O my=O briefcase=O with=O ease=O
+Nice screen, keyboard works great!####Nice=O screen=T-POS ,=O keyboard=T-POS works=O great=O !=O
+Still not bad for 220.00.####Still=O not=O bad=O for=O 22000=O .=O
+I was amazed at how fast the delivery was.####I=O was=O amazed=O at=O how=O fast=O the=O delivery=T-POS was=O .=O
+Good computer and fast.####Good=O computer=O and=O fast=O .=O
+I've installed to it additional SSD and 16Gb RAM.####I=O 've=O installed=O to=O it=O additional=O SSD=T-NEU and=O 16Gb=T-NEU RAM=T-NEU .=O
+The memory was gone and it was not able to be used.####The=O memory=T-NEG was=O gone=O and=O it=O was=O not=O able=O to=O be=O used=O .=O
+Its pretty much fire it up and go.####Its=O pretty=O much=O fire=O it=O up=O and=O go=O .=O
+It works great and I am so happy I bought it.####It=O works=T-POS great=O and=O I=O am=O so=O happy=O I=O bought=O it=O .=O
+Let me start off by saying that I was highly reluctant to spend so much money on a laptop.####Let=O me=O start=O off=O by=O saying=O that=O I=O was=O highly=O reluctant=O to=O spend=O so=O much=O money=O on=O a=O laptop=O .=O
+I like the design and ease of use with the keyboard, plenty of ports.####I=O like=O the=O design=T-POS and=O ease=O of=O use=O with=O the=O keyboard=T-POS ,=O plenty=O of=O ports=T-POS .=O
+Apple is living up to its name with the mini and, for our needs, it's perfect.####Apple=O is=O living=O up=O to=O its=O name=O with=O the=O mini=O and=O ,=O for=O our=O needs=O ,=O it=O 's=O perfect=O .=O
+it definitely beats my old mac and the service was great.####it=O definitely=O beats=O my=O old=O mac=O and=O the=O service=T-POS was=O great=O .=O
+I went from a Macbook to this Mac Mini and this was a great upgrade!####I=O went=O from=O a=O Macbook=O to=O this=O Mac=O Mini=O and=O this=O was=O a=O great=O upgrade=O !=O
+Web browsing is very quick with Safari browser.####Web=T-POS browsing=T-POS is=O very=O quick=O with=O Safari=T-POS browser=T-POS .=O
+It couldn't have been a better decision.####It=O could=O n't=O have=O been=O a=O better=O decision=O .=O
+I like the lighted screen at night.####I=O like=O the=O lighted=T-POS screen=T-POS at=O night=O .=O
+It's great to have a solid Mac in the living room.####It=O 's=O great=O to=O have=O a=O solid=O Mac=O in=O the=O living=O room=O .=O
+It is really easy to use and it is quick to start up.####It=O is=O really=O easy=O to=O use=T-POS and=O it=O is=O quick=O to=O start=T-POS up=T-POS .=O
+I've lived with the crashes and slow operation and restarts.####I=O 've=O lived=O with=O the=O crashes=O and=O slow=O operation=T-NEG and=O restarts=O .=O
+Very light and easily maneuverable.####Very=O light=O and=O easily=O maneuverable=O .=O
+USB3 Peripherals are noticably less expensive than the ThunderBolt ones.####USB3=T-POS Peripherals=T-POS are=O noticably=O less=O expensive=O than=O the=O ThunderBolt=T-NEG ones=O .=O
+This can be annoying at first but you just have to train yourself not to to start over so far.####This=O can=O be=O annoying=O at=O first=O but=O you=O just=O have=O to=O train=O yourself=O not=O to=O to=O start=O over=O so=O far=O .=O
+And mine had broke but I sent it in under warranty-no problems.####And=O mine=O had=O broke=O but=O I=O sent=O it=O in=O under=O warranty=T-POS problems=O .=O
+I am not happy with my purchase####I=O am=O not=O happy=O with=O my=O purchase=O
+It's fast, light, and is perfect for media editing, which is mostly why I bought it in the first place.####It=O 's=O fast=O ,=O light=O ,=O and=O is=O perfect=O for=O media=T-POS editing=T-POS ,=O which=O is=O mostly=O why=O I=O bought=O it=O in=O the=O first=O place=O .=O
+However, the machine itself left a bit to be desired.####However=O ,=O the=O machine=O itself=O left=O a=O bit=O to=O be=O desired=O .=O
+The battery lasts as advertised (give or take 15-20 minutes), and the entire user experience is very elegant.####The=O battery=T-POS lasts=O as=O advertised=O give=O or=O take=O 15-20=O minutes=O ,=O and=O the=O entire=O user=T-POS experience=T-POS is=O very=O elegant=O .=O
+I spent months looking for a good laptop for me and I finally found it!####I=O spent=O months=O looking=O for=O a=O good=O laptop=O for=O me=O and=O I=O finally=O found=O it=O !=O
+$999.00 Tax free.####$=O 99900=O Tax=O free=O .=O
+Thanks for the fast shipment and great price.####Thanks=O for=O the=O fast=O shipment=T-POS and=O great=O price=T-POS .=O
+!Excelent performance, usability, presentation and time response.####!=O Excelent=O performance=T-POS ,=O usability=T-POS ,=O presentation=T-POS and=O time=T-POS response=T-POS .=O
+The smaller size was a bonus because of space restrictions.####The=O smaller=O size=T-POS was=O a=O bonus=O because=O of=O space=O restrictions=O .=O
+I blame the Mac OS.####I=O blame=O the=O Mac=T-NEG OS=T-NEG .=O
+But for now, this laptop is still a workhorse.####But=O for=O now=O ,=O this=O laptop=O is=O still=O a=O workhorse=O .=O
+In fact I still use manyLegacy programs (Appleworks, FileMaker Pro, Quicken, Photoshop etc)!####In=O fact=O I=O still=O use=O manyASPECT0=O Appleworks=T-NEU ,=O FileMaker=T-NEU Pro=T-NEU ,=O Quicken=T-NEU ,=O Photoshop=T-NEU etc=O !=O
+It's small but powerful, light but strong, elegant and beautiful... In resume: it's a Mac!####It=O 's=O small=O but=O powerful=O ,=O light=O but=O strong=O ,=O elegant=O and=O beautiful=O In=O resume=O ,=O it=O 's=O a=O Mac=O !=O .=O
+I like the operating system.####I=O like=O the=O operating=T-POS system=T-POS .=O
+I wish I would have taken the plunge years ago.####I=O wish=O I=O would=O have=O taken=O the=O plunge=O years=O ago=O .=O
+I love the form factor.####I=O love=O the=O form=T-POS factor=T-POS .=O
+I haven't used the product long enough to write a detailed technical review.####I=O have=O n't=O used=O the=O product=O long=O enough=O to=O write=O a=O detailed=O technical=O review=O .=O
+It's fast at loading the internet.####It=O 's=O fast=O at=O loading=T-POS the=T-POS internet=T-POS .=O
+So much faster and sleeker looking.####So=O much=O faster=O and=O sleeker=O looking=T-POS .=O
+I plan on using my MacBook Pro for a long time.####I=O plan=O on=O using=O my=O MacBook=O Pro=O for=O a=O long=O time=O .=O
+Unfortunately, it runs XP and Microsoft is dropping support next April.####Unfortunately=O ,=O it=O runs=O XP=T-NEU and=O Microsoft=O is=O dropping=O support=T-NEG next=O April=O .=O
+Its seen in movies, sitcoms, prominent important people carry and use them and they are GREAT!####Its=O seen=O in=O movies=O ,=O sitcoms=O ,=O prominent=O important=O people=O carry=O and=O use=O them=O and=O they=O are=O GREAT=O !=O
+First off, I really do like my MBP... once used to the OS it is pretty easy to get around, and the overall build is great... eg the keyboard is one of the best to type on.####First=O off=O ,=O I=O really=O do=O like=O my=O MBP=O once=O used=O to=O the=O OS=T-POS it=O is=O pretty=O easy=O to=O get=O around=O ,=O and=O the=O overall=T-POS build=T-POS is=O great=O eg=O the=O keyboard=T-POS is=O one=O of=O the=O best=O to=O type=O on=O .=O
+Does exactly what I bought it 4.####Does=O exactly=O what=O I=O bought=O it=O 4=O .=O
+Buy the Mac Mini it's a terribly great machine.####Buy=O the=O Mac=O Mini=O it=O 's=O a=O terribly=O great=O machine=O .=O
+It is made of such solid construction and since I have never had a Mac using my iPhone helped me get used to the system a bit.####It=O is=O made=O of=O such=O solid=O construction=T-POS and=O since=O I=O have=O never=O had=O a=O Mac=O using=O my=O iPhone=O helped=O me=O get=O used=O to=O the=O system=T-NEU a=O bit=O .=O
+I love this piece of equipment, It will be hard to go back to other type of laptop after using a MacBook Pro.####I=O love=O this=O piece=O of=O equipment=O ,=O It=O will=O be=O hard=O to=O go=O back=O to=O other=O type=O of=O laptop=O after=O using=O a=O MacBook=O Pro=O .=O
+Very nice unibody construction.####Very=O nice=O unibody=T-POS construction=T-POS .=O
+Very disappointed with Apple.####Very=O disappointed=O with=O Apple=O .=O
+This Macbook Pro is fast, powerful, and runs super quiet and cool.####This=O Macbook=O Pro=O is=O fast=O ,=O powerful=O ,=O and=O runs=T-POS super=O quiet=O and=O cool=O .=O
+***The review below is no longer relevant, Apple has fixed the issue.####***The=O review=O below=O is=O no=O longer=O relevant=O ,=O Apple=O has=O fixed=O the=O issue=O .=O
+It's ok but doesn't have a disk drive which I didn't know until after I bought it.####It=O 's=O ok=O but=O does=O n't=O have=O a=O disk=T-NEU drive=T-NEU which=O I=O did=O n't=O know=O until=O after=O I=O bought=O it=O .=O
+There is no HDMI receptacle, nor is there an SD card slot located anywhere on the device.####There=O is=O no=O HDMI=T-NEU receptacle=T-NEU ,=O nor=O is=O there=O an=O SD=T-NEU card=T-NEU slot=T-NEU located=O anywhere=O on=O the=O device=O .=O
+It really is very light compared to other computers.####It=O really=O is=O very=O light=O compared=O to=O other=O computers=O .=O
+It came in brand new and works perfectly.####It=O came=O in=O brand=O new=O and=O works=T-POS perfectly=O .=O
+This machine is A-mazing.####This=O machine=O is=O A-mazing=O .=O
+It shouldn't happen like that, I don't have any design app open or anything.####It=O should=O n't=O happen=O like=O that=O ,=O I=O do=O n't=O have=O any=O design=T-NEU app=T-NEU open=O or=O anything=O .=O
+MY TRACKPAD IS NOT WORKING.####MY=O TRACKPAD=T-NEG IS=O NOT=O WORKING=O .=O
+I just hope this expensive laptop doesn't go dead like my friends...it did last him 5 good years before it bit the dust.####I=O just=O hope=O this=O expensive=O laptop=O does=O n't=O go=O dead=O like=O my=O friendsit=O did=O last=O him=O 5=O good=O years=O before=O it=O bit=O the=O dust=O .=O
+Considering another computer should be out of the question####Considering=O another=O computer=O should=O be=O out=O of=O the=O question=O
+It looks and feels solid, with a flawless finish.####It=O looks=T-POS and=O feels=T-POS solid=O ,=O with=O a=O flawless=O finish=T-POS .=O
+Its worth every Penny.####Its=O worth=O every=O Penny=O .=O
+Price was higher when purchased on MAC when compared to price showing on PC when I bought this product.####Price=T-NEG was=O higher=O when=O purchased=O on=O MAC=O when=O compared=O to=O price=T-POS showing=O on=O PC=O when=O I=O bought=O this=O product=O .=O
+This was a great deal for a decked out MacBook Pro.####This=O was=O a=O great=O deal=O for=O a=O decked=O out=O MacBook=O Pro=O .=O
+Then the system would many times not power down without a forced power-off.####Then=O the=O system=T-NEG would=O many=O times=O not=O power=T-NEG down=T-NEG without=O a=O forced=O power-off=O .=O
+Get this instead, you won't be sorry.####Get=O this=O instead=O ,=O you=O wo=O n't=O be=O sorry=O .=O
+The configuration is perfect for my needs.####The=O configuration=T-POS is=O perfect=O for=O my=O needs=O .=O
+and the speakers is the worst ever.####and=O the=O speakers=T-NEG is=O the=O worst=O ever=O .=O
+I think it was around 16 hundred bucks last I checked.####I=O think=O it=O was=O around=O 16=O hundred=O bucks=O last=O I=O checked=O .=O
+Its the best, its got the looks, super easy to use and love all you can do with the trackpad!..####Its=O the=O best=O ,=O its=O got=O the=O looks=T-POS ,=O super=O easy=O to=O use=T-POS and=O love=O all=O you=O can=O do=O with=O the=O trackpad=T-POS !=O .=O
+It's fast, quiet, incredibly small and affordable compared to other Mac models.####It=O 's=O fast=O ,=O quiet=O ,=O incredibly=O small=O and=O affordable=O compared=O to=O other=O Mac=O models=O .=O
+Web surfuring is smooth and seamless.####Web=T-POS surfuring=T-POS is=O smooth=O and=O seamless=O .=O
+It was so exciting for me to unwrapp my new mac.####It=O was=O so=O exciting=O for=O me=O to=O unwrapp=O my=O new=O mac=O .=O
+I'm overall pleased with the interface and the portability of this product.####I=O 'm=O overall=O pleased=O with=O the=O interface=T-POS and=O the=O portability=T-POS of=O this=O product=O .=O
+so when I had the money to buy one I bought other things instead....a 700 laptop and some extra stuff with it.####so=O when=O I=O had=O the=O money=O to=O buy=O one=O I=O bought=O other=O things=O insteada=O 700=O laptop=O and=O some=O extra=O stuff=O with=O it=O .=O
+This item is a beautiful piece, it works well, it is easy to carry and handle.####This=O item=O is=O a=O beautiful=O piece=O ,=O it=O works=T-POS well=O ,=O it=O is=O easy=O to=O carry=T-POS and=O handle=T-POS .=O
+See retired recently and decided that she wanted a laptop.####See=O retired=O recently=O and=O decided=O that=O she=O wanted=O a=O laptop=O .=O
+It was also suffering from hardware (keyboard) issues, relatively slow performance and shortening battery lifetime.####It=O was=O also=O suffering=O from=O hardware=T-NEG (keyboard)=T-NEG issues=O ,=O relatively=O slow=O performance=T-NEG and=O shortening=O battery=T-NEG lifetime=T-NEG .=O
+I'm no regular customer I hate wasting my time with hellos and how can I help you's.####I=O 'm=O no=O regular=O customer=O I=O hate=O wasting=O my=O time=O with=O hellos=O and=O how=O can=O I=O help=O you=O 's=O .=O
+Runs good and does the job, can't complain about that!####Runs=T-POS good=O and=O does=O the=O job=O ,=O ca=O n't=O complain=O about=O that=O !=O
+It's silent and has a very small footprint on my desk.####It=O 's=O silent=O and=O has=O a=O very=O small=O footprint=T-POS on=O my=O desk=O .=O
+I have nothing to regret from this new product.####I=O have=O nothing=O to=O regret=O from=O this=O new=O product=O .=O
+The exterior is absolutely gorgeous.####The=O exterior=T-POS is=O absolutely=O gorgeous=O .=O
+Have one myself and Love it!####Have=O one=O myself=O and=O Love=O it=O !=O
+It has a very high performance, just for what I needed for.####It=O has=O a=O very=O high=O performance=T-POS ,=O just=O for=O what=O I=O needed=O for=O .=O
+This is especially disheartening when Apple prides itself as the choice of creative professionals.####This=O is=O especially=O disheartening=O when=O Apple=O prides=O itself=O as=O the=O choice=O of=O creative=O professionals=O .=O
+Apple is aware of this issue and this is either old stock or a defective design involving the intel 4000 graphics chipset.####Apple=O is=O aware=O of=O this=O issue=O and=O this=O is=O either=O old=O stock=O or=O a=O defective=O design=T-NEU involving=O the=O intel=T-NEU 4000=T-NEU graphics=T-NEU chipset=T-NEU .=O
+Stop living in the stone age and buy a mac, you will not be sorry at all!!####Stop=O living=O in=O the=O stone=O age=O and=O buy=O a=O mac=O ,=O you=O will=O not=O be=O sorry=O at=O all=O !=O !=O
+OSX Mountain Lion  soon to upgrade to Mavericks.####OSX=T-NEU Mountain=T-NEU Lion=T-NEU soon=O to=O upgrade=O to=O Mavericks=T-NEU .=O
+Apple hit a home run here.####Apple=O hit=O a=O home=O run=O here=O .=O
+I just bought the new MacBook Pro, the 13" model, and I can't believe Apple keeps making the same mistake with regard to USB ports.####I=O just=O bought=O the=O new=O MacBook=O Pro=O ,=O the=O 13=O model=O ,=O and=O I=O ca=O n't=O believe=O Apple=O keeps=O making=O the=O same=O mistake=O with=O regard=O to=O USB=T-NEG ports=T-NEG .=O
+So glad I have gone this route!!####So=O glad=O I=O have=O gone=O this=O route=O !=O !=O
+It wakes in less than a second when I open the lid.####It=O wakes=T-POS in=O less=O than=O a=O second=O when=O I=O open=O the=O lid=T-NEU .=O
+It is the perfect size and speed for me.####It=O is=O the=O perfect=O size=T-POS and=O speed=T-POS for=O me=O .=O
+I am so addict to this laptop.####I=O am=O so=O addict=O to=O this=O laptop=O .=O
+THE CUSTOMER SERVICE IS TERRIFIC!!####THE=O CUSTOMER=T-POS SERVICE=T-POS IS=O TERRIFIC=O !=O !=O
+Trashed it when I spilled a latte on it while writing at a cafe.####Trashed=O it=O when=O I=O spilled=O a=O latte=O on=O it=O while=O writing=O at=O a=O cafe=O .=O
+My last laptop was a 17" ASUS gaming machine, which performed admirably, but having since built my own desktop and really settling into the college life, I found myself wanting something smaller and less cumbersome, not to mention that the ASUS had been slowly developing problems ever since I bought it about 4 years ago.####My=O last=O laptop=O was=O a=O 17=O ASUS=O gaming=O machine=O ,=O which=O performed=T-POS admirably=O ,=O but=O having=O since=O built=O my=O own=O desktop=O and=O really=O settling=O into=O the=O college=O life=O ,=O I=O found=O myself=O wanting=O something=O smaller=O and=O less=O cumbersome=O ,=O not=O to=O mention=O that=O the=O ASUS=O had=O been=O slowly=O developing=O problems=O ever=O since=O I=O bought=O it=O about=O 4=O years=O ago=O .=O
+However, it did not have any scratches, ZERO battery cycle count (pretty surprised), and all the hardware seemed to be working perfectly.####However=O ,=O it=O did=O not=O have=O any=O scratches=O ,=O ZERO=O battery=T-POS cycle=T-POS count=T-POS pretty=O surprised=O ,=O and=O all=O the=O hardware=T-POS seemed=O to=O be=O working=O perfectly=O .=O
+After fumbling around with the OS I started searching the internet for a fix and found a number of forums on fixing the issue.####After=O fumbling=O around=O with=O the=O OS=T-NEG I=O started=O searching=O the=O internet=O for=O a=O fix=O and=O found=O a=O number=O of=O forums=O on=O fixing=O the=O issue=O .=O
+I couldn't be more pleased.####I=O could=O n't=O be=O more=O pleased=O .=O
+And as for all the fancy finger swipes -- I just gave up and attached a mouse.####And=O as=O for=O all=O the=O fancy=O finger=T-NEG swipes=T-NEG -=O I=O just=O gave=O up=O and=O attached=O a=O mouse=T-NEU .=O
+I needed a laptop with big storage, a nice screen and fast so I can photoshop without any problem.####I=O needed=O a=O laptop=O with=O big=O storage=T-NEU ,=O a=O nice=O screen=T-NEU and=O fast=O so=O I=O can=O photoshop=T-NEU without=O any=O problem=O .=O
+I like coming back to Mac OS but this laptop is lacking in speaker quality compared to my $400  old HP laptop.####I=O like=O coming=O back=O to=O Mac=T-POS OS=T-POS but=O this=O laptop=O is=O lacking=O in=O speaker=T-NEG quality=T-NEG compared=O to=O my=O $=O 400=O old=O HP=O laptop=O .=O
+It is much better than the Acer ultrabook I had before.####It=O is=O much=O better=O than=O the=O Acer=O ultrabook=O I=O had=O before=O .=O
+Shipped very quickly and safely.####Shipped=T-POS very=O quickly=O and=O safely=O .=O
+I finally own a piece of computing equipment that I don't want to take a baseball bat and destroy.####I=O finally=O own=O a=O piece=O of=O computing=O equipment=O that=O I=O do=O n't=O want=O to=O take=O a=O baseball=O bat=O and=O destroy=O .=O
+The thunderbolt port is awesome!####The=O thunderbolt=T-POS port=T-POS is=O awesome=O !=O
+User friendly, fast and high tech  It is amazing!####User=O friendly=O ,=O fast=O and=O high=O tech=O It=O is=O amazing=O !=O
+The performance is definitely superior to any computer I've ever put my hands on.####The=O performance=T-POS is=O definitely=O superior=O to=O any=O computer=O I=O 've=O ever=O put=O my=O hands=O on=O .=O
+It's great for streaming video and other entertainment uses.####It=O 's=O great=O for=O streaming=T-POS video=T-POS and=O other=O entertainment=T-POS uses=T-POS .=O
+Apple did a great job.####Apple=O did=O a=O great=O job=O .=O
+I like the design and its features but there are somethings I think needs to be improved.####I=O like=O the=O design=T-POS and=O its=O features=T-POS but=O there=O are=O somethings=O I=O think=O needs=O to=O be=O improved=O .=O
+There were small problems with Mac office.####There=O were=O small=O problems=O with=O Mac=T-NEG office=T-NEG .=O
+It is extremely fast and very compact.####It=O is=O extremely=O fast=O and=O very=O compact=O .=O
+I understand I should call Apple Tech Support about any variables(which is my purpose of writing this con) as variables could be a bigger future problem.####I=O understand=O I=O should=O call=O Apple=T-NEU Tech=T-NEU Support=T-NEU about=O any=O variableswhich=O is=O my=O purpose=O of=O writing=O this=O con=O as=O variables=O could=O be=O a=O bigger=O future=O problem=O .=O
+I ordered my 2012 mac mini after being disappointed with spec of the new 27" Imacs.####I=O ordered=O my=O 2012=O mac=O mini=O after=O being=O disappointed=O with=O spec=T-NEG of=O the=O new=O 27=O Imacs=O .=O
+It still works and it's extremely user friendly, so I would recommend it for new computer user and also for those who are just looking for a more efficient way to do things####It=O still=O works=T-POS and=O it=O 's=O extremely=O user=O friendly=O ,=O so=O I=O would=O recommend=O it=O for=O new=O computer=O user=O and=O also=O for=O those=O who=O are=O just=O looking=O for=O a=O more=O efficient=O way=O to=O do=O things=O
+Its fast, easy to use and it looks great.####Its=O fast=O ,=O easy=O to=O use=T-POS and=O it=O looks=T-POS great=O .=O
+(but Office can be purchased) IF I ever need a laptop again I am for sure purchasing another Toshiba!!####but=O Office=T-NEU can=O be=O purchased=O IF=O I=O ever=O need=O a=O laptop=O again=O I=O am=O for=O sure=O purchasing=O another=O Toshiba=O !=O !=O
+I haven't tried the one with retina display... Maybe in the future.####I=O have=O n't=O tried=O the=O one=O with=O retina=T-NEU display=T-NEU Maybe=O in=O the=O future=O .=O
+You can read all about the details of this marvelous computer on wikipedia.####You=O can=O read=O all=O about=O the=O details=O of=O this=O marvelous=O computer=O on=O wikipedia=O .=O
+Performance is much much better on the Pro, especially if you install an SSD on it.####Performance=T-POS is=O much=O much=O better=O on=O the=O Pro=O ,=O especially=O if=O you=O install=O an=O SSD=T-POS on=O it=O .=O
+Note, however, that any existing MagSafe accessories you have will not work with the MagSafe 2 connection.####Note=O ,=O however=O ,=O that=O any=O existing=O MagSafe=T-NEU accessories=T-NEU you=O have=O will=O not=O work=O with=O the=O MagSafe=T-NEG 2=T-NEG connection=T-NEG .=O
+If you get a lemon (I have two thirds of my  Macs), you have to send it in for repairs several times before they will replace it, even if they have numerous problems with the same version of their computers.####If=O you=O get=O a=O lemon=O I=O have=O two=O thirds=O of=O my=O Macs=O ,=O you=O have=O to=O send=O it=O in=O for=O repairs=O several=O times=O before=O they=O will=O replace=O it=O ,=O even=O if=O they=O have=O numerous=O problems=O with=O the=O same=O version=O of=O their=O computers=O .=O
+The only thing I dislike is the touchpad, alot of the times its unresponsive and does things I dont want it too, I would recommend using a mouse with it.####The=O only=O thing=O I=O dislike=O is=O the=O touchpad=T-NEG ,=O alot=O of=O the=O times=O its=O unresponsive=O and=O does=O things=O I=O do=O n't=O want=O it=O too=O ,=O I=O would=O recommend=O using=O a=O mouse=T-NEU with=O it=O .=O
+Yeah, it's super expensive.####Yeah=O ,=O it=O 's=O super=O expensive=O .=O
+The Mac mini is about 8x smaller than my old computer which is a huge bonus and runs very quiet, actually the fans aren't audible unlike my old pc####The=O Mac=O mini=O is=O about=O 8x=O smaller=O than=O my=O old=O computer=O which=O is=O a=O huge=O bonus=O and=O runs=T-POS very=O quiet=O ,=O actually=O the=O fans=T-POS are=O n't=O audible=O unlike=O my=O old=O pc=O
+MAYBE The Mac OS improvement were not The product they Want to offer.####MAYBE=O The=O Mac=T-NEG OS=T-NEG improvement=O were=O not=O The=O product=O they=O Want=O to=O offer=O .=O
+It came before the day it supposed to which is great.####It=O came=O before=O the=O day=O it=O supposed=O to=O which=O is=O great=O .=O
+I thought the transition would be difficult at best and would take some time to fully familiarize myself with the new Mac ecosystem.####I=O thought=O the=O transition=O would=O be=O difficult=O at=O best=O and=O would=O take=O some=O time=O to=O fully=O familiarize=O myself=O with=O the=O new=O Mac=T-NEU ecosystem=T-NEU .=O
+It's absolutely wonderful and worth the price!####It=O 's=O absolutely=O wonderful=O and=O worth=O the=O price=T-POS !=O
+It's a good fix, in my opinion.####It=O 's=O a=O good=O fix=O ,=O in=O my=O opinion=O .=O
+I am please with the products ease of use; out of the box ready; appearance and functionality.####I=O am=O please=O with=O the=O products=O ease=O of=O use=T-POS ;=O out=O of=O the=O box=O ready=O ;=O appearance=T-POS and=O functionality=T-POS .=O
+Buying a Mac Mini would allow me to make the transition.####Buying=O a=O Mac=O Mini=O would=O allow=O me=O to=O make=O the=O transition=O .=O
+Before I begin, I will say that I am not like a good percentage of the people that will end up writing a review on this computer - I am not an Apple fanboy.####Before=O I=O begin=O ,=O I=O will=O say=O that=O I=O am=O not=O like=O a=O good=O percentage=O of=O the=O people=O that=O will=O end=O up=O writing=O a=O review=O on=O this=O computer=O ,=O I=O am=O not=O an=O Apple=O fanboy=O .=O
+its by far faster and more stable then my PC.####its=O by=O far=O faster=O and=O more=O stable=O then=O my=O PC=O .=O
+I purchased a MacBook Pro and this to replace a couple of HP units that I was using.####I=O purchased=O a=O MacBook=O Pro=O and=O this=O to=O replace=O a=O couple=O of=O HP=O units=O that=O I=O was=O using=O .=O
+you will not regret it, promise you!####you=O will=O not=O regret=O it=O ,=O promise=O you=O !=O
+Moving from a PC to Mac has never been easier, and I'm glad that I did it.####Moving=O from=O a=O PC=O to=O Mac=O has=O never=O been=O easier=O ,=O and=O I=O 'm=O glad=O that=O I=O did=O it=O .=O
+Perfect for all my graphic design classes I'm taking this year in college :-)####Perfect=O for=O all=O my=O graphic=T-POS design=T-POS classes=O I=O 'm=O taking=O this=O year=O in=O college=O ,=O -=O
+Have used only Macs for years.####Have=O used=O only=O Macs=O for=O years=O .=O
+Being a tech savvy, APPLE - product loving person, I'm glad I finally got the MacBook Pro!####Being=O a=O tech=O savvy=O ,=O APPLE=O ,=O product=O loving=O person=O ,=O I=O 'm=O glad=O I=O finally=O got=O the=O MacBook=O Pro=O !=O
+I was always against them but now I buying one I'll never go back to PC.####I=O was=O always=O against=O them=O but=O now=O I=O buying=O one=O I=O 'll=O never=O go=O back=O to=O PC=O .=O
+I will not be using that slot again.####I=O will=O not=O be=O using=O that=O slot=T-NEG again=O .=O
+I think that was a great decision to buy####I=O think=O that=O was=O a=O great=O decision=O to=O buy=O
+The OS is fast and fluid, everything is organized and it's just beautiful.####The=O OS=T-POS is=O fast=O and=O fluid=O ,=O everything=O is=O organized=O and=O it=O 's=O just=O beautiful=O .=O
+It will make life so much easier next semester, just wish I had it last semester!!####It=O will=O make=O life=O so=O much=O easier=O next=O semester=O ,=O just=O wish=O I=O had=O it=O last=O semester=O !=O !=O
+I paid for a new laptop, but was sent a used one.####I=O paid=O for=O a=O new=O laptop=O ,=O but=O was=O sent=O a=O used=O one=O .=O
+Searched it on amazon and on bestbuy.####Searched=O it=O on=O amazon=O and=O on=O bestbuy=O .=O
+I bought this one for my 11 year old and the MacBook Air for my 9 year old.####I=O bought=O this=O one=O for=O my=O 11=O year=O old=O and=O the=O MacBook=O Air=O for=O my=O 9=O year=O old=O .=O
+I bought it for college and so far it's amazing!####I=O bought=O it=O for=O college=O and=O so=O far=O it=O 's=O amazing=O !=O
+They are simpler to use.####They=O are=O simpler=O to=O use=T-POS .=O
+It was at my door in less than 24 hours.####It=O was=O at=O my=O door=O in=O less=O than=O 24=O hours=O .=O
+It's also very pricey but you just have to tell yourself it's an investment and that it's gonna last you a long time.####It=O 's=O also=O very=O pricey=O but=O you=O just=O have=O to=O tell=O yourself=O it=O 's=O an=O investment=O and=O that=O it=O 's=O gon=O na=O last=O you=O a=O long=O time=O .=O
+It was getting old and I needed a new school computer.####It=O was=O getting=O old=O and=O I=O needed=O a=O new=O school=O computer=O .=O
+!so nice .. stable .. fast .. now i got my SSD !####!=O so=O nice=O stable=O fast=O now=O i=O got=O my=O SSD=T-POS !=O .=O
+I love apple but unlike others That does not prevent me to not be honest about how i like it and if its good or not.####I=O love=O apple=O but=O unlike=O others=O That=O does=O not=O prevent=O me=O to=O not=O be=O honest=O about=O how=O i=O like=O it=O and=O if=O its=O good=O or=O not=O .=O
+So, I'm cooled on Mac buys.####So=O ,=O I=O 'm=O cooled=O on=O Mac=O buys=O .=O
+It is a great computer for that and I have to say I'm happy I switched.####It=O is=O a=O great=O computer=O for=O that=O and=O I=O have=O to=O say=O I=O 'm=O happy=O I=O switched=O .=O
+Also, in using the built-in camera, my voice recording for my vlog sounds like the interplanetary transmissions in the "Star Wars" saga.####Also=O ,=O in=O using=O the=O built-in=T-NEU camera=T-NEU ,=O my=O voice=T-NEG recording=T-NEG for=O my=O vlog=O sounds=O like=O the=O interplanetary=O transmissions=O in=O the=O Star=O Wars=O saga=O .=O
+Overall a nice computer.####Overall=O a=O nice=O computer=O .=O
+You can imagine that an expensive item as a laptop will not be left on your front steps, it needs signature to pove that you received it.####You=O can=O imagine=O that=O an=O expensive=O item=O as=O a=O laptop=O will=O not=O be=O left=O on=O your=O front=O steps=O ,=O it=O needs=O signature=O to=O pove=O that=O you=O received=O it=O .=O
+I love the quick start up.####I=O love=O the=O quick=O start=T-POS up=T-POS .=O
+Yes, he is a self professed "Mac snob.####Yes=O ,=O he=O is=O a=O self=O professed=O Mac=O snob=O .=O
+You just cannot beat the functionality of an Apple device.####You=O just=O can=O not=O beat=O the=O functionality=T-POS of=O an=O Apple=O device=O .=O
+Yet my mac continues to function properly.####Yet=O my=O mac=O continues=O to=O function=T-POS properly=O .=O
+Graphics are much improved.####Graphics=T-POS are=O much=O improved=O .=O
+Here are the things that made me confident with my purchase:Build Quality - Seriously, you can't beat a unibody construction.####Here=O are=O the=O things=O that=O made=O me=O confident=O with=O my=O purchase=O ,=O Build=T-POS Quality=T-POS ,=O Seriously=O ,=O you=O ca=O n't=O beat=O a=O unibody=T-POS construction=T-POS .=O
+It's the mid 2012 version.####It=O 's=O the=O mid=O 2012=O version=O .=O
+It provides much more flexibility for connectivity.####It=O provides=O much=O more=O flexibility=T-POS for=T-POS connectivity=T-POS .=O
+I want the portability of a tablet, without the limitations of a tablet and that's where this laptop comes into play.####I=O want=O the=O portability=T-POS of=O a=O tablet=O ,=O without=O the=O limitations=O of=O a=O tablet=O and=O that=O 's=O where=O this=O laptop=O comes=O into=O play=O .=O
+I have had many, many issues with PC's in the past and I'm finally glad to have joined the Mac revolution!####I=O have=O had=O many=O ,=O many=O issues=O with=O PC=O 's=O in=O the=O past=O and=O I=O 'm=O finally=O glad=O to=O have=O joined=O the=O Mac=O revolution=O !=O
+Mac tutorials do help.####Mac=T-POS tutorials=T-POS do=O help=O .=O
+When it broke I wanted another Acer and chose the V5.####When=O it=O broke=O I=O wanted=O another=O Acer=O and=O chose=O the=O V5=O .=O
+The technical support was not helpful as well.####The=O technical=T-NEG support=T-NEG was=O not=O helpful=O as=O well=O .=O
+I got the new adapter and there was no change.####I=O got=O the=O new=O adapter=T-NEU and=O there=O was=O no=O change=O .=O
+so i called technical support.####so=O i=O called=O technical=T-NEU support=T-NEU .=O
+Nothing about it that i don't love, apple always makes a great product.####Nothing=O about=O it=O that=O i=O do=O n't=O love=O ,=O apple=O always=O makes=O a=O great=O product=O .=O
+I saved about $100 plus tax ordering on Amazon and since I have prime, it arrived overnight for just $3.99 more.####I=O saved=O about=O $=O 100=O plus=O tax=O ordering=O on=O Amazon=O and=O since=O I=O have=O prime=O ,=O it=O arrived=O overnight=O for=O just=O $=O 399=O more=O .=O
+Came with iPhoto and garage band already loaded.####Came=O with=O iPhoto=T-NEU and=O garage=T-NEU band=T-NEU already=O loaded=O .=O
+It's all a bit magical.####It=O 's=O all=O a=O bit=O magical=O .=O
+Logic board utterly fried, cried, and laid down and died.####Logic=T-POS board=T-POS utterly=O fried=O ,=O cried=O ,=O and=O laid=O down=O and=O died=O .=O
+It is BLAZING fast!####It=O is=O BLAZING=O fast=O !=O
+The sound was crappy even when you turn up the volume still the same results.####The=O sound=T-NEG was=O crappy=O even=O when=O you=O turn=O up=O the=O volume=T-NEG still=O the=O same=O results=O .=O
+ive never had a problem with it!####ive=O never=O had=O a=O problem=O with=O it=O !=O
+I currently own a Lenovo laptop as well as my new MacBook Pro, and each have their own strengths and weaknesses.####I=O currently=O own=O a=O Lenovo=O laptop=O as=O well=O as=O my=O new=O MacBook=O Pro=O ,=O and=O each=O have=O their=O own=O strengths=O and=O weaknesses=O .=O
+OSX Lion is a great performer..extremely fast and reliable.####OSX=T-POS Lion=T-POS is=O a=O great=O performerextremely=O fast=O and=O reliable=O .=O
+Best commuter I have ever owned.####Best=O commuter=O I=O have=O ever=O owned=O .=O
+What can I say, It's an Apple.####What=O can=O I=O say=O ,=O It=O 's=O an=O Apple=O .=O
+Having heard from friends and family about how reliable a Mac product is, I never expected to have an application crash within the first month, but I did.####Having=O heard=O from=O friends=O and=O family=O about=O how=O reliable=O a=O Mac=O product=O is=O ,=O I=O never=O expected=O to=O have=O an=O application=T-NEG crash=O within=O the=O first=O month=O ,=O but=O I=O did=O .=O
+The Macbook pro's physical form is wonderful.####The=O Macbook=O pro=O 's=O physical=T-POS form=T-POS is=O wonderful=O .=O
+I have an iPhone, and iPad, so it just made sense to finish off the platform by adding the Mini.####I=O have=O an=O iPhone=O ,=O and=O iPad=O ,=O so=O it=O just=O made=O sense=O to=O finish=O off=O the=O platform=O by=O adding=O the=O Mini=O .=O
+Not super light but still a good one.####Not=O super=O light=O but=O still=O a=O good=O one=O .=O
+The Mini's body hasn't changed since late 2010- and for a good reason.####The=O Mini=O 's=O body=T-POS has=O n't=O changed=O since=O late=O 2010=O and=O for=O a=O good=O reason=O .=O
+The unibody construction really does feel lot more solid than Apple's previous laptops.####The=O unibody=T-POS construction=T-POS really=O does=O feel=O lot=O more=O solid=O than=O Apple=O 's=O previous=O laptops=O .=O
+i had to return it for a replacement.####i=O had=O to=O return=O it=O for=O a=O replacement=O .=O
+It was wonderful deal for the wonderful product.####It=O was=O wonderful=O deal=O for=O the=O wonderful=O product=O .=O
+It completely supports my home business and personal life.####It=O completely=O supports=O my=O home=O business=O and=O personal=O life=O .=O
+3D rendering slows it down considerably.####3D=T-NEG rendering=T-NEG slows=O it=O down=O considerably=O .=O
+Got this Mac Mini with OS X Mountain Lion for my wife.####Got=O this=O Mac=O Mini=O with=O OS=T-NEU X=T-NEU Mountain=T-NEU Lion=T-NEU for=O my=O wife=O .=O
+I am pleased to report that it is one of the best presents I have received to date.####I=O am=O pleased=O to=O report=O that=O it=O is=O one=O of=O the=O best=O presents=O I=O have=O received=O to=O date=O .=O
+Every day I had this computer, something failed on it.####Every=O day=O I=O had=O this=O computer=O ,=O something=O failed=O on=O it=O .=O
+fast, great screen, beautiful apps for a laptop;priced at 1100 on the apple website;amazon had it for 1098+ tax -  plus i had a 10% off coupon from amazon-cost me 998 plus tax- 1070- OTD!####fast=O ,=O great=O screen=T-POS ,=O beautiful=O apps=T-POS for=O a=O laptop=O ;=O priced=T-NEU at=O 1100=O on=O the=O apple=O website=O ;=O amazon=O had=O it=O for=O 1098+=O tax=O ,=O plus=O i=O had=O a=O 10=O %=O off=O coupon=O from=O amazon-ASPECT3=O me=O 998=O plus=O tax=O 1070=O OTD=O !=O
+12.44 seconds to boot.####1244=O seconds=O to=O boot=T-NEU .=O
+All the ports are much needed since this is my main computer.####All=O the=O ports=T-NEU are=O much=O needed=O since=O this=O is=O my=O main=O computer=O .=O
+The Like New condition of the iMac MC309LL/A on Amazon is at $900+ level only, and it is a Quad-Core 2.5 GHz CPU (similar to the $799 Mini), with Radeon HD 6750M 512MB graphic card (this mini is integrated Intel 4000 card), and it even comes with wireless Apple Keyboard and Mouse, all put together in neat and nice package.####The=O Like=O New=O condition=O of=O the=O iMac=O MC309LL/A=O on=O Amazon=O is=O at=O $=O 900+=O level=O only=O ,=O and=O it=O is=O a=O Quad-Core=T-NEU 2.5=T-NEU GHz=T-NEU CPU=T-NEU similar=O to=O the=O $=O 799=O Mini=O ,=O with=O Radeon=T-NEU HD=T-NEU 6750M=T-NEU 512MB=T-NEU graphic=T-NEU card=T-NEU this=O mini=O is=O integrated=T-NEU Intel=T-NEU 4000=T-NEU card=T-NEU ,=O and=O it=O even=O comes=O with=O wireless=T-NEU Apple=T-NEU Keyboard=T-NEU and=T-NEU Mouse=T-NEU ,=O all=O put=O together=O in=O neat=O and=O nice=O package=T-POS .=O
+Put a cover on it and is a little better but that is my only complaint.####Put=O a=O cover=T-NEU on=O it=O and=O is=O a=O little=O better=O but=O that=O is=O my=O only=O complaint=O .=O
+Within a few hours I was using the gestures unconsciously.####Within=O a=O few=O hours=O I=O was=O using=O the=O gestures=T-POS unconsciously=O .=O
+This mac does come with an extender cable and I'm using mine right now hoping the cable will stay nice for the many years I plan on using this mac.####This=O mac=O does=O come=O with=O an=O extender=T-NEU cable=T-NEU and=O I=O 'm=O using=O mine=O right=O now=O hoping=O the=O cable=T-POS will=O stay=O nice=O for=O the=O many=O years=O I=O plan=O on=O using=O this=O mac=O .=O
+This is the third in a series of MacBooks starting with a Black MacBook.####This=O is=O the=O third=O in=O a=O series=O of=O MacBooks=O starting=O with=O a=O Black=O MacBook=O .=O
+The 2.9ghz dual-core i7 chip really out does itself.####The=O 2.9ghz=T-POS dual-core=T-POS i7=T-POS chip=T-POS really=O out=O does=O itself=O .=O
+My life has been enriched since I have been using Apple products.####My=O life=O has=O been=O enriched=O since=O I=O have=O been=O using=O Apple=O products=O .=O
+i FINALLY DID IT AND THIS MACHINE IS THE WAY TO GO!####i=O FINALLY=O DID=O IT=O AND=O THIS=O MACHINE=O IS=O THE=O WAY=O TO=O GO=O !=O
+It is pretty snappy and starts up in about 30 seconds which is good enough for me.####It=O is=O pretty=O snappy=O and=O starts=T-POS up=T-POS in=O about=O 30=O seconds=O which=O is=O good=O enough=O for=O me=O .=O
+The few things that are wrong with it are very minor things.####The=O few=O things=O that=O are=O wrong=O with=O it=O are=O very=O minor=O things=O .=O
+So noise is reduced at least 50% and the heat is much better, now it doesn't feel hot but warm.####So=O noise=O is=O reduced=O at=O least=O 50=O %=O and=O the=O heat=O is=O much=O better=O ,=O now=O it=O does=O n't=O feel=O hot=O but=O warm=O .=O
+Not sure on Windows 8.####Not=O sure=O on=O Windows=T-NEU 8=T-NEU .=O
+It's a lottery at this point as I have read that other have received new ones with the same problem.####It=O 's=O a=O lottery=O at=O this=O point=O as=O I=O have=O read=O that=O other=O have=O received=O new=O ones=O with=O the=O same=O problem=O .=O
+My one complaint is that there was no internal CD drive.####My=O one=O complaint=O is=O that=O there=O was=O no=O internal=T-NEG CD=T-NEG drive=T-NEG .=O
+This newer netbook has no hard drive or network lights.####This=O newer=O netbook=O has=O no=O hard=T-NEU drive=T-NEU or=O network=T-NEU lights=T-NEU .=O
+This is the first time for me to use a Mac and I'm really happy with the move.####This=O is=O the=O first=O time=O for=O me=O to=O use=O a=O Mac=O and=O I=O 'm=O really=O happy=O with=O the=O move=O .=O
+No complaints for an Apple product.####No=O complaints=O for=O an=O Apple=O product=O .=O
+The new MacBook is lightyears ahead of my old white plastic MacBook circa 2006.####The=O new=O MacBook=O is=O lightyears=O ahead=O of=O my=O old=O white=O plastic=O MacBook=O circa=O 2006=O .=O
+I would say that 85% of the design industry is Mac for good reason.####I=O would=O say=O that=O 85=O %=O of=O the=O design=O industry=O is=O Mac=O for=O good=O reason=O .=O
+I was having a though time deciding between the 13" MacBook Air or the MacBook Pro 13" (Both baseline models, priced at 1,200 $ retail)####I=O was=O having=O a=O though=O time=O deciding=O between=O the=O 13=O MacBook=O Air=O or=O the=O MacBook=O Pro=O 13=O Both=O baseline=O models=O ,=O priced=T-NEU at=O 1,200=O $=O retail=O
+The last new mac I bought was in 1998.####The=O last=O new=O mac=O I=O bought=O was=O in=O 1998=O .=O
+There are reviews that speak to a few possible glitches but, I haven't seen them yet.####There=O are=O reviews=O that=O speak=O to=O a=O few=O possible=O glitches=O but=O ,=O I=O have=O n't=O seen=O them=O yet=O .=O
+Not too expense and has enough storage for most users and many ports.####Not=O too=O expense=O and=O has=O enough=O storage=T-POS for=O most=O users=O and=O many=O ports=T-POS .=O
+I am very satisfied with the mini.####I=O am=O very=O satisfied=O with=O the=O mini=O .=O
+The audio volume is quite low and virtually unusable in a room with any background activity.####The=O audio=T-NEG volume=T-NEG is=O quite=O low=O and=O virtually=O unusable=O in=O a=O room=O with=O any=O background=O activity=O .=O
+I am going to college next year and I needed a cheaper, quality computer for the goals I am trying to pursue.####I=O am=O going=O to=O college=O next=O year=O and=O I=O needed=O a=O cheaper=O ,=O quality=O computer=O for=O the=O goals=O I=O am=O trying=O to=O pursue=O .=O
+In the short time of one month since the 2012 Mac Mini was released there are well over 1000 posts regarding this issue and the numbers keep rising.####In=O the=O short=O time=O of=O one=O month=O since=O the=O 2012=O Mac=O Mini=O was=O released=O there=O are=O well=O over=O 1000=O posts=O regarding=O this=O issue=O and=O the=O numbers=O keep=O rising=O .=O
+It is lightweight and the perfect size to carry to class.####It=O is=O lightweight=O and=O the=O perfect=O size=T-POS to=O carry=O to=O class=O .=O
+If you have to ask you don't own a Mac and your just not in the know.####If=O you=O have=O to=O ask=O you=O do=O n't=O own=O a=O Mac=O and=O your=O just=O not=O in=O the=O know=O .=O
+All my devises “talk” to each other.####All=O my=O devises=O talk=O to=O each=O other=O .=O
+Why not 5 stars?####Why=O not=O 5=O stars=O ?=O
+Very Very Highly Recommended.####Very=O Very=O Highly=O Recommended=O .=O
+?I am only interested in the 15.4  McBook Pro  Model # MD103LL/A####?=O I=O am=O only=O interested=O in=O the=O 154=O McBook=O Pro=O Model=O #=O MD103LL/A=O .=O
+I don't know why I didn't make the switch sooner...o ya because it's expensive.####I=O do=O n't=O know=O why=O I=O did=O n't=O make=O the=O switch=O soonero=O ya=O because=O it=O 's=O expensive=O .=O
+I was given a demonstration of Windows 8.####I=O was=O given=O a=O demonstration=O of=O Windows=T-NEU 8=T-NEU .=O
+The Macbook Pro is the premier choice for college students.####The=O Macbook=O Pro=O is=O the=O premier=O choice=O for=O college=O students=O .=O
+Their products, including the MBP, are beautiful, sleek and clever.####Their=O products=O ,=O including=O the=O MBP=O ,=O are=O beautiful=O ,=O sleek=O and=O clever=O .=O
+The MBP is beautiful has many wonderful capabilities.####The=O MBP=O is=O beautiful=O has=O many=O wonderful=O capabilities=T-POS .=O
+I thought that it will be fine, if i do some settings.####I=O thought=O that=O it=O will=O be=O fine=O ,=O if=O i=O do=O some=O settings=T-NEU .=O
+Runs very smoothly.####Runs=T-POS very=O smoothly=O .=O
+Perfect--thanks so.####Perfect=O --=O thanks=O so=O .=O
+Also, it hardly ever crashes.####Also=O ,=O it=O hardly=O ever=O crashes=O .=O
+I was so excited to get this in the mail i nearly gave myself a heart attack.####I=O was=O so=O excited=O to=O get=O this=O in=O the=O mail=O i=O nearly=O gave=O myself=O a=O heart=O attack=O .=O
+Boot-up slowed significantly after all Windows updates were installed.####Boot-up=T-NEG slowed=O significan'tly=O after=O all=O Windows=T-NEG updates=T-NEG were=O installed=O .=O
+More likely it will require replacing the logic board once they admit they have a problem and come up with a solution.####More=O likely=O it=O will=O require=O replacing=O the=O logic=T-NEG board=T-NEG once=O they=O admit=O they=O have=O a=O problem=O and=O come=O up=O with=O a=O solution=O .=O
+When i finally held it in my hands i kissed it, yes i did.####When=O i=O finally=O held=O it=O in=O my=O hands=O i=O kissed=O it=O ,=O yes=O i=O did=O .=O
+It was important that it was powerful enough to do all of the tasks he needed on the internet, word processing, graphic design and gaming.####It=O was=O important=O that=O it=O was=O powerful=O enough=O to=O do=O all=O of=O the=O tasks=O he=O needed=O on=O the=O internet=T-POS ,=O word=T-POS processing=T-POS ,=O graphic=T-POS design=T-POS and=O gaming=T-POS .=O
+This computer is not cheap and represent an achievement for me.####This=O computer=O is=O not=O cheap=O and=O represent=O an=O achievement=O for=O me=O .=O
+I like the Mini Mac it was easy to setup and install, but I am learning as I go and could use a tutorial to learn how to use some of the features I was use to on the PC especially the right mouse click menu.####I=O like=O the=O Mini=O Mac=O it=O was=O easy=O to=O setup=T-POS and=O install=T-POS ,=O but=O I=O am=O learning=O as=O I=O go=O and=O could=O use=O a=O tutorial=T-NEU to=O learn=O how=O to=O use=O some=O of=O the=O features=T-NEU I=O was=O use=O to=O on=O the=O PC=O especially=O the=O right=T-NEU mouse=T-NEU click=T-NEU menu=T-NEU .=O
+GET THIS MACHINE####GET=O THIS=O MACHINE=O
+It's shiny and it's pretty.####It=O 's=O shiny=O and=O it=O 's=O pretty=O .=O
+Runs real quick.####Runs=T-POS real=O quick=O .=O
+All the above aside this machine ROCKS!####All=O the=O above=O aside=O this=O machine=O ROCKS=O !=O
+Buy the separate RAM memory and you will have a rocket!####Buy=O the=O separate=O RAM=T-POS memory=T-POS and=O you=O will=O have=O a=O rocket=O !=O
+Since the machine's slim profile is critical to me, that was a problem.####Since=O the=O machine=O 's=O slim=O profile=T-NEG is=O critical=O to=O me=O ,=O that=O was=O a=O problem=O .=O
+Bottom line, if you can afford it, get a Mac!####Bottom=O line=O ,=O if=O you=O can=O afford=O it=O ,=O get=O a=O Mac=O !=O
+I finally made the leap after my Gateway crapped out on me.####I=O finally=O made=O the=O leap=O after=O my=O Gateway=O crapped=O out=O on=O me=O .=O
+WiFi capability, disk drive and multiple USB ports to connect scale and printers was all that was required.####WiFi=T-POS capability=T-POS ,=O disk=T-POS drive=T-POS and=O multiple=O USB=T-POS ports=T-POS to=O connect=O scale=O and=O printers=O was=O all=O that=O was=O required=O .=O
+The SD card reader is slightly recessed and upside down (the nail slot on the card cannot be accessed), if this was a self ejecting slot this would not be an issue, but its not.####The=O SD=T-NEG card=T-NEG reader=T-NEG is=O slightly=O recessed=O and=O upside=O down=O the=O nail=T-NEG slot=T-NEG on=T-NEG the=T-NEG card=T-NEG can=O not=O be=O accessed=O ,=O if=O this=O was=O a=O self=O ejecting=O slot=T-NEG this=O would=O not=O be=O an=O issue=O ,=O but=O its=O not=O .=O
+Soft touch, anodized aluminum with laser cut precision and no flaws.####Soft=O touch=T-POS ,=O anodized=T-POS aluminum=T-POS with=O laser=O cut=O precision=O and=O no=O flaws=O .=O
+Simple details, crafted aluminium and real glass make this laptop blow away the other plastic ridden, bulky sticker filled laptops.####Simple=O details=O ,=O crafted=O aluminium=T-POS and=O real=O glass=T-POS make=O this=O laptop=O blow=O away=O the=O other=O plastic=O ridden=O ,=O bulky=O sticker=O filled=O laptops=O .=O
+First of all yes this is a mac and it has that nice brushed aluminum .####First=O of=O all=O yes=O this=O is=O a=O mac=O and=O it=O has=O that=O nice=O brushed=O aluminum=T-POS .=O
+Who makes a laptop that can't rest on your lap?####Who=O makes=O a=O laptop=O that=O ca=O n't=O rest=O on=O your=O lap=O ?=O
+After all was said and done, I essentially used that $450 savings to buy 16GB of RAM, TWO Seagate Momentus XT hybrid drives and an OWC upgrade kit to install the second hard drive.####After=O all=O was=O said=O and=O done=O ,=O I=O essentially=O used=O that=O $=O 450=O savings=O to=O buy=O 16GB=T-NEU of=T-NEU RAM=T-NEU ,=O TWO=O Seagate=T-NEU Momentus=T-NEU XT=T-NEU hybrid=T-NEU drives=T-NEU and=O an=O OWC=T-NEU upgrade=T-NEU kit=T-NEU to=O install=O the=O second=O hard=T-NEU drive=T-NEU .=O
+The Dell Inspiron is fast and has a number pad on the keyboard, which I miss on my Apple laptops.####The=O Dell=O Inspiron=O is=O fast=O and=O has=O a=O number=T-POS pad=T-POS on=T-POS the=T-POS keyboard=T-POS ,=O which=O I=O miss=O on=O my=O Apple=O laptops=O .=O
+wow the new macbook pro hanged as i tried to type this review.####wow=O the=O new=O macbook=O pro=O hanged=O as=O i=O tried=O to=O type=O this=O review=O .=O
+The MacBook Pro is a great product which can meet the needs of the average consumer.####The=O MacBook=O Pro=O is=O a=O great=O product=O which=O can=O meet=O the=O needs=O of=O the=O average=O consumer=O .=O
+I was concerned that the downgrade to the regular hard drive would make it unacceptably slow but I need not have worried - this machine is the fastest I have ever owned...####I=O was=O concerned=O that=O the=O downgrade=O to=O the=O regular=T-POS hard=T-POS drive=T-POS would=O make=O it=O unacceptably=O slow=O but=O I=O need=O not=O have=O worried=O ,=O this=O machine=O is=O the=O fastest=O I=O have=O ever=O owned=O .=O
+This one still has the CD slot.####This=O one=O still=O has=O the=O CD=T-NEU slot=T-NEU .=O
+No HDMI port.####No=O HDMI=T-NEU port=T-NEU .=O
+I had to install Mountain Lion and it took a good two hours.####I=O had=O to=O install=T-NEG Mountain=T-NEG Lion=T-NEG and=O it=O took=O a=O good=O two=O hours=O .=O
+Customization on mac is impossible.####Customization=T-NEG on=O mac=O is=O impossible=O .=O
+I hope this review helps.####I=O hope=O this=O review=O helps=O .=O
+However, you have to adjust yourself to what it will do, not what you want it to do.####However=O ,=O you=O have=O to=O adjust=O yourself=O to=O what=O it=O will=O do=O ,=O not=O what=O you=O want=O it=O to=O do=O .=O
+I am replacing the HD with a Micron SSD soon.####I=O am=O replacing=O the=O HD=T-NEU with=O a=O Micron=T-NEU SSD=T-NEU soon=O .=O
+Plus two finger clicking as a replacement for the right click button is surprisingly intuitive.####Plus=O two=T-POS finger=T-POS clicking=T-POS as=O a=O replacement=O for=O the=O right=T-NEU click=T-NEU button=T-NEU is=O surprisingly=O intuitive=O .=O
+Far superior to my MacBook.####Far=O superior=O to=O my=O MacBook=O .=O
+The SuperDrive is quiet.####The=O SuperDrive=T-POS is=O quiet=O .=O
+It was quite easy.####It=O was=O quite=O easy=O .=O
+The power plug has to be connected to the power adaptor to charge the battery but won't stay connected.####The=O power=T-NEG plug=T-NEG has=O to=O be=O connected=O to=O the=O power=T-NEU adaptor=T-NEU to=O charge=O the=O battery=T-NEU but=O wo=O n't=O stay=O connected=O .=O
+I decided to buy a few notebooks for my nephews for Xmas.####I=O decided=O to=O buy=O a=O few=O notebooks=O for=O my=O nephews=O for=O Xmas=O .=O
+The battery was completely dead, in fact it had grown about a quarter inch thick lump on the underside.####The=O battery=T-NEG was=O completely=O dead=O ,=O in=O fact=O it=O had=O grown=O about=O a=O quarter=O inch=O thick=O lump=O on=O the=O underside=O .=O
+This is no exception.####This=O is=O no=O exception=O .=O
+if yo like practicality this is the laptop for you.####if=O yo=O like=O practicality=T-POS this=O is=O the=O laptop=O for=O you=O .=O
+The OS is great.####The=O OS=T-POS is=O great=O .=O
+I have had a black macbook since 2007.####I=O have=O had=O a=O black=O macbook=O since=O 2007=O .=O
+I tried several monitors and several HDMI cables and this was the case each time.####I=O tried=O several=O monitors=T-NEU and=O several=O HDMI=T-NEU cables=T-NEU and=O this=O was=O the=O case=O each=O time=O .=O
+CONS: Price is a bit ridiculous, kinda heavy.####CONS=O ,=O Price=T-NEG is=O a=O bit=O ridiculous=O ,=O kinda=O heavy=O .=O
+If that is the case, then I am completely happy####If=O that=O is=O the=O case=O ,=O then=O I=O am=O completely=O happy=O
+10/10 five stars would recommend.####10/10=O five=O stars=O would=O recommend=O .=O
+The troubleshooting said it was the AC adaptor so we ordered a new one.####The=O troubleshooting=O said=O it=O was=O the=O AC=T-NEU adaptor=T-NEU so=O we=O ordered=O a=O new=O one=O .=O
+I fell in love with my machine, and it was pampered.####I=O fell=O in=O love=O with=O my=O machine=O ,=O and=O it=O was=O pampered=O .=O
+Fan only comes on when you are playing a game.####Fan=T-NEU only=O comes=O on=O when=O you=O are=O playing=T-NEU a=T-NEU game=T-NEU .=O
+Which it did not have, only 3 USB 2 ports.####Which=O it=O did=O not=O have=O ,=O only=O 3=O USB=T-NEU 2=T-NEU ports=T-NEU .=O
+No startup disk was not included but that may be my fault.####No=O startup=T-NEU disk=T-NEU was=O not=O included=O but=O that=O may=O be=O my=O fault=O .=O
+There is no "tools" menu.####There=O is=O no=O "tools"=T-NEU menu=T-NEU .=O
+It is very fast and has everything that I need except for a word program.####It=O is=O very=O fast=O and=O has=O everything=O that=O I=O need=O except=O for=O a=O word=T-NEG program=T-NEG .=O
+Needs a CD/DVD drive and a bigger power switch.####Needs=O a=O CD/DVD=T-NEU drive=T-NEU and=O a=O bigger=O power=T-NEG switch=T-NEG .=O
+It is the best laptop ever!!!####It=O is=O the=O best=O laptop=O ever=O !=O !=O !=O
+My laptop with Windows 7 crashed and I did not want Windows 8.####My=O laptop=O with=O Windows=T-NEG 7=T-NEG crashed=O and=O I=O did=O not=O want=O Windows=T-NEG 8=T-NEG .=O
+Was skeptical about buying an electronic item online but it turned out to be a positive experience.####Was=O skeptical=O about=O buying=O an=O electronic=O item=O online=O but=O it=O turned=O out=O to=O be=O a=O positive=O experience=O .=O
+Not a scratch or mark on it.####Not=O a=O scratch=O or=O mark=O on=O it=O .=O
+Easy to install also small to leave anywhere at your bedroom also very easy to configure for ADSl cable or wifi.####Easy=O to=O install=T-POS also=O small=O to=O leave=O anywhere=O at=O your=O bedroom=O also=O very=O easy=O to=O configure=T-POS for=T-POS ADSl=T-POS cable=T-POS or=T-POS wifi=T-POS .=O
+Words cannot express how much I love my new Mac.####Words=O can=O not=O express=O how=O much=O I=O love=O my=O new=O Mac=O .=O
+The speakers could have been better but it wasn't a deal breaker... this is a great little laptop... love it!####The=O speakers=O could=O have=O been=O better=O but=O it=O was=O n't=O a=O deal=O breaker=O this=O is=O a=O great=O little=O laptop=O love=O it=O !=O .=O
+The item received was exactly as identified.####The=O item=O received=O was=O exactly=O as=O identified=O .=O
+Its everything mac offers.####Its=O everything=O mac=O offers=O .=O
+Nice packing.####Nice=O packing=T-POS .=O
+Besides being elegant, the MacBooks are durable.####Besides=O being=O elegant=O ,=O the=O MacBooks=O are=O durable=O .=O
+I switched to this because I wanted something different, even though I miss windows.####I=O switched=O to=O this=O because=O I=O wanted=O something=O different=O ,=O even=O though=O I=O miss=O windows=T-POS .=O
+Yes, the MBP is more expensive than competing PC laptops.####Yes=O ,=O the=O MBP=O is=O more=O expensive=O than=O competing=O PC=O laptops=O .=O
+Apple no longer includes iDVD with the computer and furthermore, Apple doesn't even offer it anymore!####Apple=O no=O longer=O includes=O iDVD=T-NEG with=O the=O computer=O and=O furthermore=O ,=O Apple=O does=O n't=O even=O offer=O it=O anymore=O !=O
+I also wanted Windows 7, which this one has.####I=O also=O wanted=O Windows=T-POS 7=T-POS ,=O which=O this=O one=O has=O .=O
+At first, I feel a little bit uncomfortable in using the Mac system.####At=O first=O ,=O I=O feel=O a=O little=O bit=O uncomfortable=O in=O using=O the=O Mac=T-NEG system=T-NEG .=O
+I am used to computers with windows so I am having a little difficulty finding my way around.####I=O am=O used=O to=O computers=O with=O windows=T-NEU so=O I=O am=O having=O a=O little=O difficulty=O finding=O my=O way=O around=O .=O
+They replaced it and so far so good.####They=O replaced=O it=O and=O so=O far=O so=O good=O .=O
+It just works out of the box and you have a lot of cool software included with the OS.####It=O just=O works=T-POS out=O of=O the=O box=O and=O you=O have=O a=O lot=O of=O cool=O software=T-POS included=O with=O the=O OS=T-NEU .=O
+Good in every aspect.####Good=O in=O every=O aspect=O .=O
+its as advertised on here..... it works great and is not a waste of money!####its=O as=O advertised=O on=O here=O it=O works=T-POS great=O and=O is=O not=O a=O waste=O of=O money=O !=O .=O
+Replaced this one with my mac that was stolen, its a great computer.####Replaced=O this=O one=O with=O my=O mac=O that=O was=O stolen=O ,=O its=O a=O great=O computer=O .=O
+Just be careful; you always have to give up some good stuff for others.####Just=O be=O careful=O ;=O you=O always=O have=O to=O give=O up=O some=O good=O stuff=O for=O others=O .=O
+Runs like a champ.....####Runs=T-POS like=O a=O champ=O .=O
+Really great...Well let me start at the beginning.####Really=O greatWell=O let=O me=O start=O at=O the=O beginning=O .=O
+Premium price for the OS more than anything else.####Premium=O price=T-POS for=O the=O OS=T-NEU more=O than=O anything=O else=O .=O
+This was a gift for my grand son.####This=O was=O a=O gift=O for=O my=O grand=O son=O .=O
+I was a little concerned about the touch pad based on reviews, but I've found it fine to work with.####I=O was=O a=O little=O concerned=O about=O the=O touch=T-POS pad=T-POS based=O on=O reviews=O ,=O but=O I=O 've=O found=O it=O fine=O to=O work=O with=O .=O
+I bought this Mac book pro along with a new 27" iMac and while they are still light years more reliable than a PC I have noticed a decline in the reliability of my Mac computers.####I=O bought=O this=O Mac=O book=O pro=O along=O with=O a=O new=O 27=O iMac=O and=O while=O they=O are=O still=O light=O years=O more=O reliable=O than=O a=O PC=O I=O have=O noticed=O a=O decline=O in=O the=O reliability=O of=O my=O Mac=O computers=O .=O
+The sound as mentioned earlier isn't the best, but it can be solved with headphones.####The=O sound=O as=O mentioned=O earlier=O is=O n't=O the=O best=O ,=O but=O it=O can=O be=O solved=O with=O headphones=T-NEU .=O
+The track pad is a bit squirrely at times- sometimes too sensitive, and sometimes a bit unresponsive, but it's usable.####The=O track=O pad=O is=O a=O bit=O squirrely=O at=O times=O sometimes=O too=O sensitive=O ,=O and=O sometimes=O a=O bit=O unresponsive=O ,=O but=O it=O 's=O usable=O .=O
+However, the experience was great since the OS does not become unstable and the application will simply shutdown and reopen.####However=O ,=O the=O experience=O was=O great=O since=O the=O OS=T-POS does=O not=O become=O unstable=O and=O the=O application=T-POS will=O simply=O shutdown=O and=O reopen=O .=O
+Then only FOUR months later, my great MacBook pro FAILED.####Then=O only=O FOUR=O months=O later=O ,=O my=O great=O MacBook=O pro=O FAILED=O .=O
+If you ask me, for this price it should be included.####If=O you=O ask=O me=O ,=O for=O this=O price=T-NEG it=O should=O be=O included=O .=O
+The battery is not as shown in the product photos.####The=O battery=T-NEG is=O not=O as=O shown=O in=O the=O product=O photos=O .=O
+Even though I could have gotten a pc twice the speed for the same price I still think there's nothing like a Mac.####Even=O though=O I=O could=O have=O gotten=O a=O pc=O twice=O the=O speed=O for=O the=O same=O price=O I=O still=O think=O there=O 's=O nothing=O like=O a=O Mac=O .=O
+Seems a much more economical way to get into Apple than their other computers.####Seems=O a=O much=O more=O economical=O way=O to=O get=O into=O Apple=O than=O their=O other=O computers=O .=O
+Shipping was quick and product described was the product sent and so much more...####Shipping=T-POS was=O quick=O and=O product=O described=O was=O the=O product=O sent=O and=O so=O much=O more=O .=O
+I'm so disgusted that I wasted my money on this product.####I=O 'm=O so=O disgusted=O that=O I=O wasted=O my=O money=O on=O this=O product=O .=O
+All you get is a box and a computer.####All=O you=O get=O is=O a=O box=O and=O a=O computer=O .=O
+the retina display display make pictures i took years ago jaw dropping.####the=O retina=T-POS display=T-POS display=T-POS make=O pictures=O i=O took=O years=O ago=O jaw=O dropping=O .=O
+Its only crashed on me one time in the 3 months i've had it.####Its=O only=O crashed=O on=O me=O one=O time=O in=O the=O 3=O months=O i=O 've=O had=O it=O .=O
+The Mac Mini is probably the simplest example of compact computing out there.####The=O Mac=O Mini=O is=O probably=O the=O simplest=O example=O of=O compact=T-POS computing=T-POS out=O there=O .=O
+Instead, I'll focus more on the actual performance and feature set of the hardware itself so you can make an educated decision on which Mac to buy.####Instead=O ,=O I=O 'll=O focus=O more=O on=O the=O actual=O performance=T-NEU and=T-NEU feature=T-NEU set=T-NEU of=T-NEU the=T-NEU hardware=T-NEU itself=O so=O you=O can=O make=O an=O educated=O decision=O on=O which=O Mac=O to=O buy=O .=O
+My bag just got a little lighter.####My=O bag=O just=O got=O a=O little=O lighter=O .=O
+I'm Not exagerating when I say this computer is perfect..i It is!!####I=O 'm=O Not=O exagerating=O when=O I=O say=O this=O computer=O is=O perfecti=O It=O is=O !=O !=O .=O
+This machine is flawless, fast, and classy.####This=O machine=O is=O flawless=O ,=O fast=O ,=O and=O classy=O .=O
+Other ports include FireWire 800, Gigabit Ethernet, MagSafe port, Microphone jack.####Other=O ports=T-NEU include=O FireWire=T-NEU 800=T-NEU ,=O Gigabit=T-NEU Ethernet=T-NEU ,=O MagSafe=T-NEU port=T-NEU ,=O Microphone=T-NEU jack=T-NEU .=O
+I stayed up half the night enjoying my new MacBook Pro.####I=O stayed=O up=O half=O the=O night=O enjoying=O my=O new=O MacBook=O Pro=O .=O
+This laptop is a 100 times better than a Chromebook!####This=O laptop=O is=O a=O 100=O times=O better=O than=O a=O Chromebook=O !=O
+Additionally, there is barely a ventilation system in the computer, and even the simple activity of watching videos let alone playing steam games causes the laptop to get very very hot, and in fact impossible to keep on lap.####Additionally=O ,=O there=O is=O barely=O a=O ventilation=T-NEG system=T-NEG in=O the=O computer=O ,=O and=O even=O the=O simple=O activity=O of=O watching=T-NEU videos=T-NEU let=O alone=O playing=T-NEU steam=T-NEU games=T-NEU causes=O the=O laptop=O to=O get=O very=O very=O hot=O ,=O and=O in=O fact=O impossible=O to=O keep=O on=O lap=O .=O
+At $1899 to start, this is no cheap machine.####At=O $=O 1899=O to=O start=O ,=O this=O is=O no=O cheap=O machine=O .=O
+Chatting with Acer support, I was advised the problem was corrupted operating system files.####Chatting=O with=O Acer=T-NEU support=T-NEU ,=O I=O was=O advised=O the=O problem=O was=O corrupted=O operating=T-NEU system=T-NEU files=T-NEU .=O
+It's been a couple weeks since the purchase and I'm struggle with finding the correct keys (but that was expected).####It=O 's=O been=O a=O couple=O weeks=O since=O the=O purchase=O and=O I=O 'm=O struggle=O with=O finding=O the=O correct=O keys=T-NEU but=O that=O was=O expected=O .=O
+Many people complain about the new OS, and it's urgent for Apple to fix it asap!####Many=O people=O complain=O about=O the=O new=O OS=T-NEG ,=O and=O it=O 's=O urgent=O for=O Apple=O to=O fix=O it=O asap=O !=O
+Now that I have upgraded to Lion I am much happier about MAC OS and have just bought an iMac for office.####Now=O that=O I=O have=O upgraded=O to=O Lion=T-POS I=O am=O much=O happier=O about=O MAC=T-POS OS=T-POS and=O have=O just=O bought=O an=O iMac=O for=O office=O .=O
+User upgradeable RAM and HDD.####User=O upgradeable=O RAM=T-POS and=O HDD=T-POS .=O
+But I wanted the Pro for the CD/DVD player.####But=O I=O wanted=O the=O Pro=O for=O the=O CD/DVD=T-POS player=T-POS .=O
+I might have read it incorrectly, but better safe than sorry right?####I=O might=O have=O read=O it=O incorrectly=O ,=O but=O better=O safe=O than=O sorry=O right=O ?=O
+The ultimate graduation gift.####The=O ultimate=O graduation=O gift=O .=O
+The RAM memory is good but should have splurged for 8Mb instead of 4Mb.####The=O RAM=O memory=O is=O good=O but=O should=O have=O splurged=O for=O 8Mb=O instead=O of=O 4Mb=O .=O
+was debating to buy one for months, checked out different stuff on youtube, and read different articles and debates,I just didnt really wanna spend the money but Im glad that I did.####was=O debating=O to=O buy=O one=O for=O months=O ,=O checked=O out=O different=O stuff=O on=O youtube=O ,=O and=O read=O different=O articles=O and=O debates=O ,=O I=O just=O did=O n't=O really=O wan=O na=O spend=O the=O money=O but=O Im=O glad=O that=O I=O did=O .=O
+I love it and would recommend it to everyone who is tired of the constant attention PC's require.####I=O love=O it=O and=O would=O recommend=O it=O to=O everyone=O who=O is=O tired=O of=O the=O constant=O attention=O PC=O 's=O require=O .=O
+I was a little worry at first because I don't have a lot of experience with os.x and windows has always been second nature to me after many years of using windows.####I=O was=O a=O little=O worry=O at=O first=O because=O I=O do=O n't=O have=O a=O lot=O of=O experience=O with=O os.x=T-NEU and=O windows=T-POS has=O always=O been=O second=O nature=O to=O me=O after=O many=O years=O of=O using=O windows=T-POS .=O
+I am an Info Sys major in college, so I started researching this issue on my own.####I=O am=O an=O Info=O Sys=O major=O in=O college=O ,=O so=O I=O started=O researching=O this=O issue=O on=O my=O own=O .=O
+Solution: it turned out to be pretty simple.####Solution=O ,=O it=O turned=O out=O to=O be=O pretty=O simple=O .=O
+With the softwares supporting the use of other OS makes it much better.####With=O the=O softwares=T-NEU supporting=O the=O use=O of=O other=O OS=T-NEU makes=O it=O much=O better=O .=O
+Still haven't solved this.####Still=O have=O n't=O solved=O this=O .=O
+I then upgraded to Mac OS X 10.8 "Mountain Lion".####I=O then=O upgraded=O to=O Mac=T-NEU OS=T-NEU X=T-NEU 10.8=T-NEU "Mountain=T-NEU Lion"=T-NEU .=O
+It is EXTREMELY fast and never lags.####It=O is=O EXTREMELY=O fast=O and=O never=O lags=O .=O
+I told them that I just received my brand new MacBook but I was having issues.####I=O told=O them=O that=O I=O just=O received=O my=O brand=O new=O MacBook=O but=O I=O was=O having=O issues=O .=O
+I was considering buying the Air, but in reality, this one has a more powerful performance and seems much more convenient, even though it's about .20 inch thicker and 2 lbs heavier.####I=O was=O considering=O buying=O the=O Air=O ,=O but=O in=O reality=O ,=O this=O one=O has=O a=O more=O powerful=O performance=T-POS and=O seems=O much=O more=O convenient=O ,=O even=O though=O it=O 's=O about=O 20=O inch=O thicker=O and=O 2=O lbs=O heavier=O .=O
+At home and the office it gets plugged into an external 24" LCD screen, so built in screen size is not terribly important.####At=O home=O and=O the=O office=O it=O gets=O plugged=O into=O an=O external=T-NEU 24"=T-NEU LCD=T-NEU screen=T-NEU ,=O so=O built=T-NEU in=T-NEU screen=T-NEU size=T-NEU is=O not=O terribly=O important=O .=O
+Hopefully my replacement is brand new.####Hopefully=O my=O replacement=O is=O brand=O new=O .=O
+Just beware no DVD slot so when I went to install software I had on CD I couldn't.####Just=O beware=O no=O DVD=T-NEU slot=T-NEU so=O when=O I=O went=O to=O install=T-NEG software=T-NEG I=O had=O on=O CD=O I=O could=O n't=O .=O
+I bought it to be able to dedicate a small, portable laptop to my writing and was surprised to learn that I needed to buy a word processing program to do so.####I=O bought=O it=O to=O be=O able=O to=O dedicate=O a=O small=O ,=O portable=O laptop=O to=O my=O writing=O and=O was=O surprised=O to=O learn=O that=O I=O needed=O to=O buy=O a=O word=T-NEU processing=T-NEU program=T-NEU to=O do=O so=O .=O
+This version of MacBook Pro runs on a third-generation CPU ("Ivy Bridge"), not the latest fourth-generation Haswell CPU the 2013 version has.####This=O version=O of=O MacBook=O Pro=O runs=O on=O a=O third-generation=T-NEU CPU=T-NEU ("Ivy=T-NEU Bridge")=T-NEU ,=O not=O the=O latest=O fourth-generation=T-NEU Haswell=T-NEU CPU=T-NEU the=O 2013=O version=O has=O .=O
+Actually, I think I was intimidated by the change from a PC.####Actually=O ,=O I=O think=O I=O was=O intimidated=O by=O the=O change=O from=O a=O PC=O .=O
+No Cd Rom in the new version there's no way I'm spending that kind of money on something has less features than the older version.####No=O Cd=T-NEU Rom=T-NEU in=O the=O new=O version=O there=O 's=O no=O way=O I=O 'm=O spending=O that=O kind=O of=O money=O on=O something=O has=O less=O features=T-NEG than=O the=O older=O version=O .=O
+Definitely worth spending the money on it.####Definitely=O worth=O spending=O the=O money=O on=O it=O .=O
+I have three words: Piece of Junk!####I=O have=O three=O words=O ,=O Piece=O of=O Junk=O !=O
+the volume is really low to low for a laptopwas not expectin t volume to be so lowan i hate that about this computer####the=O volume=T-NEG is=O really=O low=O to=O low=O for=O a=O laptopwas=O not=O expectin=O t=O volume=T-NEG to=O be=O so=O lowan=O i=O hate=O that=O about=O this=O computer=O
+Fits all my personal needs.####Fits=O all=O my=O personal=O needs=O .=O
+I'm the pro-active type so I went off and did some preventative fixes.####I=O 'm=O the=O pro-active=O type=O so=O I=O went=O off=O and=O did=O some=O preventative=O fixes=O .=O
+and its not hard to accidentally bang it against something so i recommend getting a case to protect it.####and=O its=O not=O hard=O to=O accidentally=O bang=O it=O against=O something=O so=O i=O recommend=O getting=O a=O case=T-NEU to=O protect=O it=O .=O
+I wanted to explore what the Mac was all about.####I=O wanted=O to=O explore=O what=O the=O Mac=O was=O all=O about=O .=O
+I got this at an amazing price from Amazon and it arrived just in time.####I=O got=O this=O at=O an=O amazing=O price=T-POS from=O Amazon=O and=O it=O arrived=O just=O in=O time=O .=O
+Every time I log into the system after a few hours, there is this endlessly frustrating process that I have to go through.####Every=O time=O I=O log=T-NEG into=T-NEG the=T-NEG system=T-NEG after=O a=O few=O hours=O ,=O there=O is=O this=O endlessly=O frustrating=O process=O that=O I=O have=O to=O go=O through=O .=O
+The majority of the reviews seem to be for the 13.3 MacBook Pro  Model # MD101LL/A.####The=O majority=O of=O the=O reviews=O seem=O to=O be=O for=O the=O 133=O MacBook=O Pro=O Model=O #=O MD101LL/A=O .=O
+Put a SSD and use a 21" LED screen, this set up is silky smooth!####Put=O a=O SSD=T-NEU and=O use=O a=O 21"=T-NEU LED=T-NEU screen=T-NEU ,=O this=O set=T-POS up=T-POS is=O silky=O smooth=O !=O
+I saw the bad reviews from people saying to buy directly from Apple and I was concerned but I took my chances and am overly impressed.####I=O saw=O the=O bad=O reviews=O from=O people=O saying=O to=O buy=O directly=O from=O Apple=O and=O I=O was=O concerned=O but=O I=O took=O my=O chances=O and=O am=O overly=O impressed=O .=O
+The case is now slightly larger than the previous generation, but the lack of an external power supply justifies the small increase in size.####The=O case=T-NEG is=O now=O slightly=O larger=O than=O the=O previous=O generation=O ,=O but=O the=O lack=O of=O an=O external=T-NEU power=T-NEU supply=T-NEU justifies=O the=O small=O increase=O in=O size=O .=O
+I had to buy a wireless mouse to go with it, as I am old school and hate the pad, but knew that before I bought it, now it works great, need to get adjusted to the key board, as I am used to a bigger one and pounding.####I=O had=O to=O buy=O a=O wireless=T-NEU mouse=T-NEU to=O go=O with=O it=O ,=O as=O I=O am=O old=O school=O and=O hate=O the=O pad=T-NEG ,=O but=O knew=O that=O before=O I=O bought=O it=O ,=O now=O it=O works=T-POS great=O ,=O need=O to=O get=O adjusted=O to=O the=O key=T-NEU board=T-NEU ,=O as=O I=O am=O used=O to=O a=O bigger=O one=O and=O pounding=O .=O
+When considering a Mac, look at the total cost of ownership and not just the initial price tag.####When=O considering=O a=O Mac=O ,=O look=O at=O the=O total=O cost=T-NEU of=T-NEU ownership=T-NEU and=O not=O just=O the=O initial=O price=T-NEU tag=T-NEU .=O
+Has all the other features I wanted including a VGA port, HDMI, ethernet and 3 USB ports.####Has=O all=O the=O other=O features=T-POS I=O wanted=O including=O a=O VGA=T-NEU port=T-NEU ,=O HDMI=T-NEU ,=O ethernet=T-NEU and=O 3=O USB=T-NEU ports=T-NEU .=O
+A great college tool!####A=O great=O college=O tool=O !=O
+The only thing I dislike about this laptop are the rubber pads found on the bottom of the computer for grip.####The=O only=O thing=O I=O dislike=O about=O this=O laptop=O are=O the=O rubber=T-NEG pads=T-NEG found=O on=O the=O bottom=O of=O the=O computer=O for=O grip=O .=O
+I called apple and no solution.####I=O called=O apple=O and=O no=O solution=O .=O
+It's a decent computer for the price and hopefully it will last a long time.####It=O 's=O a=O decent=O computer=O for=O the=O price=T-NEU and=O hopefully=O it=O will=O last=O a=O long=O time=O .=O
+I was really happy because it is a much better price on amazon.com than it was in the Mac store.####I=O was=O really=O happy=O because=O it=O is=O a=O much=O better=O price=O on=O amazoncom=O than=O it=O was=O in=O the=O Mac=O store=O .=O
+The worst a Mac ever did to me was freeze up.####The=O worst=O a=O Mac=O ever=O did=O to=O me=O was=O freeze=O up=O .=O
+The nicest  part is the low heat output and ultra quiet operation.####The=O nicest=O part=O is=O the=O low=O heat=T-POS output=T-POS and=O ultra=O quiet=O operation=T-POS .=O
+I am paying apple to kill my self and my wallet.####I=O am=O paying=O apple=O to=O kill=O my=O self=O and=O my=O wallet=O .=O
+NO STAR FOR THIS TRASH.[...####NO=O STAR=O FOR=O THIS=O TRASH=O [=O .=O
+I will upgrade the ram myself (because with this model you can you can do it) later on.####I=O will=O upgrade=T-POS the=T-POS ram=T-POS myself=O because=O with=O this=O model=O you=O can=O you=O can=O do=O it=O later=O on=O .=O
+The price is 200 dollars down.####The=O price=T-POS is=O 200=O dollars=O down=O .=O
+this Mac Mini does not have a built-in mic, and it would seem that its Mac OS 10.9 does not handle external microphones properly.####this=O Mac=O Mini=O does=O not=O have=O a=O built-in=T-NEU mic=T-NEU ,=O and=O it=O would=O seem=O that=O its=O Mac=T-NEG OS=T-NEG 10.9=T-NEG does=O not=O handle=O external=T-NEU microphones=T-NEU properly=O .=O
+A lot of features and shortcuts on the MBP that I was never exposed to on a normal PC.####A=O lot=O of=O features=T-NEU and=O shortcuts=T-NEU on=O the=O MBP=O that=O I=O was=O never=O exposed=O to=O on=O a=O normal=O PC=O .=O
+Wasn't sure if I was going to like it much less love it so I went to a local best buy and played around with the IOS system on a Mac Pro and it was totally unique and different.####Was=O n't=O sure=O if=O I=O was=O going=O to=O like=O it=O much=O less=O love=O it=O so=O I=O went=O to=O a=O local=O best=O buy=O and=O played=O around=O with=O the=O IOS=T-POS system=T-POS on=O a=O Mac=O Pro=O and=O it=O was=O totally=O unique=O and=O different=O .=O
+Quietest laptop I have ever owned.####Quietest=O laptop=O I=O have=O ever=O owned=O .=O
+air has higher resolution but the fonts are small.####air=O has=O higher=O resolution=T-POS but=O the=O fonts=T-NEG are=O small=O .=O
+again this is just my personal honest opinion.####again=O this=O is=O just=O my=O personal=O honest=O opinion=O .=O
+If you have much higher expectations than that... I would look elsewhere.####If=O you=O have=O much=O higher=O expectations=O than=O that=O I=O would=O look=O elsewhere=O .=O
+working with Mac is so much easier, so many cool features.####working=T-POS with=O Mac=O is=O so=O much=O easier=O ,=O so=O many=O cool=O features=T-POS .=O
+I'm going to buy a logitevh c270.####I=O 'm=O going=O to=O buy=O a=O logitevh=O c270=O .=O
+Very happy with my purchase.####Very=O happy=O with=O my=O purchase=O .=O
+I like the brightness and adjustments.####I=O like=O the=O brightness=T-POS and=O adjustments=T-POS .=O
+I'M SO HAPPY WITH MY macbook pro!####I=O 'M=O SO=O HAPPY=O WITH=O MY=O macbook=O pro=O !=O
+I only wish this mac had a CD/DVD player built in.####I=O only=O wish=O this=O mac=O had=O a=O CD/DVD=T-NEU player=T-NEU built=O in=O .=O
+The only thing I miss is that my old Alienware laptop had backlit keys.####The=O only=O thing=O I=O miss=O is=O that=O my=O old=O Alienware=O laptop=O had=O backlit=T-NEG keys=T-NEG .=O
+The only thing I miss are the "Home/End" type keys and other things that I grew accustomed to after so long.####The=O only=O thing=O I=O miss=O are=O the=O "Home/End"=T-NEU type=T-NEU keys=T-NEU and=O other=O things=O that=O I=O grew=O accustomed=O to=O after=O so=O long=O .=O
+So happy with this purchase, I just wish it came with Microsoft Word.####So=O happy=O with=O this=O purchase=O ,=O I=O just=O wish=O it=O came=O with=O Microsoft=T-NEU Word=T-NEU .=O
+It is more than enough computer to keep up with the needs of a high school student.####It=O is=O more=O than=O enough=O computer=O to=O keep=O up=O with=O the=O needs=O of=O a=O high=O school=O student=O .=O
+It has enough memory and speed to run my business with all the flexibility that comes with a laptop.####It=O has=O enough=O memory=T-POS and=O speed=T-POS to=O run=O my=O business=O with=O all=O the=O flexibility=T-POS that=O comes=O with=O a=O laptop=O .=O
+The speed, the simplicity, the design.. it is lightyears ahead of any PC I have ever owned.####The=O speed=T-POS ,=O the=O simplicity=T-POS ,=O the=O design=T-POS it=O is=O lightyears=O ahead=O of=O any=O PC=O I=O have=O ever=O owned=O .=O
+I love everything about this computer.####I=O love=O everything=O about=O this=O computer=O .=O
+I found it toughest to decide between Dell ultra books and Apple.####I=O found=O it=O toughest=O to=O decide=O between=O Dell=O ultra=O books=O and=O Apple=O .=O
+The battery life is excellent, the display is excellent, and downloading apps is a  breeze.####The=O battery=T-POS life=T-POS is=O excellent=O ,=O the=O display=T-POS is=O excellent=O ,=O and=O downloading=T-POS apps=T-POS is=O a=O breeze=O .=O
+The screen, the software and the smoothness of the operating system.####The=O screen=T-POS ,=O the=O software=T-POS and=O the=O smoothness=O of=O the=O operating=T-POS system=T-POS .=O
+While we struggle with all the crashes and viruses, the kids computers stay consistent and so we caved in and bought one for buisness!####While=O we=O struggle=O with=O all=O the=O crashes=O and=O viruses=O ,=O the=O kids=O computers=O stay=O consistent=O and=O so=O we=O caved=O in=O and=O bought=O one=O for=O buisness=O !=O
+I don't want to RUN a computer; I want to USE a computer.####I=O do=O n't=O want=O to=O RUN=O a=O computer=O ;=O I=O want=O to=O USE=O a=O computer=O .=O
+i have dropped mine a couple times with only a slim plastic case covering it.####i=O have=O dropped=O mine=O a=O couple=O times=O with=O only=O a=O slim=T-NEU plastic=T-NEU case=T-NEU covering=O it=O .=O
+I also made a recovery USB stick.####I=O also=O made=O a=O recovery=T-NEU USB=T-NEU stick=T-NEU .=O
+Being a PC user for many years to switch to a Mac I will not go back.####Being=O a=O PC=O user=O for=O many=O years=O to=O switch=O to=O a=O Mac=O I=O will=O not=O go=O back=O .=O
+But with this laptop, the bass is very weak and the sound comes out sounding tinny.####But=O with=O this=O laptop=O ,=O the=O bass=T-NEG is=O very=O weak=O and=O the=O sound=T-NEG comes=O out=O sound=T-NEG tinny=O .=O
+I do admit it is pricey but the saying is really true with this MacBook Pro Laptop ( You get what you pay for).####I=O do=O admit=O it=O is=O pricey=O but=O the=O saying=O is=O really=O true=O with=O this=O MacBook=O Pro=O Laptop=O You=O get=O what=O you=O pay=O for=O .=O
+I've almost have bought every generation of MacMinis since 2005, and this one hasn't let me down.####I=O 've=O almost=O have=O bought=O every=O generation=O of=O MacMinis=O since=O 2005=O ,=O and=O this=O one=O has=O n't=O let=O me=O down=O .=O
+The built quality is really good, I was so Happy and excited about this Product.####The=O built=T-POS quality=T-POS is=O really=O good=O ,=O I=O was=O so=O Happy=O and=O excited=O about=O this=O Product=O .=O
+I am loving the fast performance also.####I=O am=O loving=O the=O fast=O performance=T-POS also=O .=O
+I had to return it because it wouldn't even start.####I=O had=O to=O return=O it=O because=O it=O would=O n't=O even=O start=O .=O
+Further, this Mac Mini has a sloppy Bluetooth interface (courtesy of the Mac OS) and the range is poor.####Further=O ,=O this=O Mac=O Mini=O has=O a=O sloppy=O Bluetooth=T-NEG interface=T-NEG courtesy=O of=O the=O Mac=T-NEG OS=T-NEG and=O the=O range=T-NEG is=O poor=O .=O
+Great deal on an amazing lap top!####Great=O deal=O on=O an=O amazing=O lap=O top=O !=O
+If you start on the far right side and scroll to your left the start menu will automatically come up.####If=O you=O start=O on=O the=O far=O right=O side=O and=O scroll=O to=O your=O left=O the=O start=T-NEU menu=T-NEU will=O automatically=O come=O up=O .=O
+Best money I ever spent.####Best=O money=O I=O ever=O spent=O .=O
+My only gripe would be the need to add more RAM.####My=O only=O gripe=O would=O be=O the=O need=O to=O add=O more=O RAM=T-NEG .=O
+But I didn't want to spend another thousand on a laptop since my work already provides me with a PC.####But=O I=O did=O n't=O want=O to=O spend=O another=O thousand=O on=O a=O laptop=O since=O my=O work=O already=O provides=O me=O with=O a=O PC=O .=O
+Fine if you have a touch screen.####Fine=O if=O you=O have=O a=O touch=T-NEU screen=T-NEU .=O
+can never go wrong with apple products.####can=O never=O go=O wrong=O with=O apple=O products=O .=O
+As far as user type - I dabble in everything from games (WoW) to Photoshop, but nothing professionally.####As=O far=O as=O user=O type=O ,=O I=O dabble=O in=O everything=O from=O games=T-NEU WoW=O to=O Photoshop=T-NEU ,=O but=O nothing=O professionally=O .=O
+It doesnt get hot like my PC, with technology always at the tip of our fingertips anytime I forget how to do something i just google it.####It=O doesnt=O get=O hot=O like=O my=O PC=O ,=O with=O technology=O always=O at=O the=O tip=O of=O our=O fingertips=O anytime=O I=O forget=O how=O to=O do=O something=O i=O just=O google=O it=O .=O
+I re-seated the "WLAN" card inside and re-installed the LAN device drivers.####I=O re-seated=O the=O "WLAN"=T-NEU card=T-NEU inside=O and=O re-installed=O the=O LAN=T-NEU device=T-NEU drivers=T-NEU .=O
+This by far beats any computer out on the market today built well, battery life AMAZING.####This=O by=O far=O beats=O any=O computer=O out=O on=O the=O market=O today=O built=T-POS well=O ,=O battery=T-POS life=T-POS AMAZING=O .=O
+I haven't used it for anything high tech yet, but I love it already.####I=O have=O n't=O used=O it=O for=O anything=O high=O tech=O yet=O ,=O but=O I=O love=O it=O already=O .=O
+The OS is easy, and offers all kinds of surprises.####The=O OS=T-POS is=O easy=O ,=O and=O offers=O all=O kinds=O of=O surprises=O .=O
+I had to get Apple Customer Support to correct the problem.####I=O had=O to=O get=O Apple=T-NEU Customer=T-NEU Support=T-NEU to=O correct=O the=O problem=O .=O
+Ideal for someone on the go or for a high school students.####Ideal=O for=O someone=O on=O the=O go=O or=O for=O a=O high=O school=O students=O .=O
+A veryimportant feature is Firewire 800 which in my experience works better then USB3 (in PC enabled with USB3)I was not originally sold on the MAC OS I felt it was inferior in many ways To Windows 7.####A=O veryimportant=O feature=O is=O Firewire=T-POS 800=T-POS which=O in=O my=O experience=O works=O better=O then=O USB3=T-NEG in=O PC=O enabled=O with=O USB3=T-NEG was=O not=O originally=O sold=O on=O the=O MAC=T-NEG OS=T-NEG I=O felt=O it=O was=O inferior=O in=O many=O ways=O To=O Windows=T-POS 7=T-POS .=O
+I like iTunes, the apparent security, the Mini form factor, all the nice graphics stuff.####I=O like=O iTunes=T-POS ,=O the=O apparent=O security=T-POS ,=O the=O Mini=T-POS form=T-POS factor=T-POS ,=O all=O the=O nice=O graphics=T-POS stuff=T-POS .=O
+The first time I used the card reader it took half an hour and a pair of tweezers to remove the card.####The=O first=O time=O I=O used=O the=O card=T-NEG reader=T-NEG it=O took=O half=O an=O hour=O and=O a=O pair=O of=O tweezers=O to=O remove=T-NEG the=T-NEG card=T-NEG .=O
+This flaw unfortunately detracts from everything else Apple got right with the Mini.####This=O flaw=O unfortunately=O detracts=O from=O everything=O else=O Apple=O got=O right=O with=O the=O Mini=O .=O
+After replacing the spinning hard disk with an ssd drive, my mac is just flying.####After=O replacing=O the=O spinning=T-NEU hard=T-NEU disk=T-NEU with=O an=O ssd=T-POS drive=T-POS ,=O my=O mac=O is=O just=O flying=O .=O
+I know some people complained about HDMI issues but they released a firmware patch to address that issue.####I=O know=O some=O people=O complained=O about=O HDMI=T-NEU issues=O but=O they=O released=O a=O firmware=T-NEU patch=T-NEU to=O address=O that=O issue=O .=O
+With the needs of a professional photographer I generally need to keep up with the best specs.####With=O the=O needs=O of=O a=O professional=O photographer=O I=O generally=O need=O to=O keep=O up=O with=O the=O best=O specs=T-NEU .=O
+Added an iMac about 2 years later.####Added=O an=O iMac=O about=O 2=O years=O later=O .=O
+packing and everything was perfect####packing=T-POS and=O everything=O was=O perfect=O
+I will not hesitate to recommend it to family and friends####I=O will=O not=O hesitate=O to=O recommend=O it=O to=O family=O and=O friends=O
+I called Toshiba where I gave them the serial number and they informed me that they were having issues with the mother boards.####I=O called=O Toshiba=O where=O I=O gave=O them=O the=O serial=O number=O and=O they=O informed=O me=O that=O they=O were=O having=O issues=O with=O the=O mother=T-NEU boards=T-NEU .=O
+I seem to be having repeat problems as the Mother Board in this one is diagnosed as faulty, related to the graphics card.####I=O seem=O to=O be=O having=O repeat=O problems=O as=O the=O Mother=T-NEG Board=T-NEG in=O this=O one=O is=O diagnosed=O as=O faulty=O ,=O related=O to=O the=O graphics=T-NEG card=T-NEG .=O
+It also comes with 4G of RAM but if you're like me you want to max that out so I immediately put 8G of RAM in her and I've never used a computer that performs better.####It=O also=O comes=O with=O 4G=T-NEU of=T-NEU RAM=T-NEU but=O if=O you=O 're=O like=O me=O you=O want=O to=O max=O that=O out=O so=O I=O immediately=O put=O 8G=T-NEU of=T-NEU RAM=T-NEU in=O her=O and=O I=O 've=O never=O used=O a=O computer=O that=O performs=T-POS better=O .=O
+This computer is also awesome for my sons virtual home schooling.####This=O computer=O is=O also=O awesome=O for=O my=O sons=O virtual=T-POS home=T-POS schooling=T-POS .=O
+Cost is more as compared to other brands.####Cost=T-NEG is=O more=O as=O compared=O to=O other=O brands=O .=O
+also...- excellent operating system- size and weight for optimal mobility- excellent durability of the battery- the functions provided by the trackpad is unmatched by any other brand-####also=O excellent=O operating=T-POS system=T-POS size=T-POS and=O weight=T-POS for=O optimal=O mobility=T-POS excellent=O durability=T-POS of=T-POS the=T-POS battery=T-POS the=O functions=T-POS provided=T-POS by=T-POS the=T-POS trackpad=T-POS is=O unmatched=O by=O any=O other=O brand-=O .=O
+This hardware seems to be better than the iMac in that it isn't $1400 and smaller.####This=O hardware=T-POS seems=O to=O be=O better=O than=O the=O iMac=O in=O that=O it=O is=O n't=O $=O 1400=O and=O smaller=O .=O
+I'm done with WinDoze computers.####I=O 'm=O done=O with=O WinDoze=O computers=O .=O
+I've had it for about 2 months now and found no issues with software or updates.####I=O 've=O had=O it=O for=O about=O 2=O months=O now=O and=O found=O no=O issues=O with=O software=T-NEU or=O updates=T-NEU .=O
+the latest version does not have a disc drive.####the=O latest=O version=O does=O not=O have=O a=O disc=T-NEU drive=T-NEU .=O
+Screen - although some people might complain about low res which I think is ridiculous.####Screen=T-POS ,=O although=O some=O people=O might=O complain=O about=O low=O res=T-POS which=O I=O think=O is=O ridiculous=O .=O

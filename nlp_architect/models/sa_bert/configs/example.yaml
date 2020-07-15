@@ -5,9 +5,9 @@ seed: 12
 
 max_epochs: 4
 num_workers: 88
-gpus: 4
+gpus: 1
 
-model_type: bert
+model_type: sa-bert
 model_name_or_path: bert-base-uncased
 
 overwrite_cache: true
@@ -31,3 +31,14 @@ val_check_interval: 1.0
 warmup_steps: 0
 weight_decay: 0.0
 logger: true
+
+li_layer: 1
+
+parse_probs: [true]
+replace_final: [false]
+random_init: [true]
+all_layers: [true]
+duplicated_rels: [false]
+relation: ""
+transpose: [false]
+layers_range: [1,2,3,4,5,6,7,8,9,10,11,12]
