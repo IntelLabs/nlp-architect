@@ -1,4 +1,5 @@
-# pylint: disable=no-member, not-callable, arguments-differ, missing-class-docstring, missing-module-docstring, missing-function-docstring
+# pylint: disable=no-member, not-callable, arguments-differ, missing-class-docstring, too-many-locals, too-many-arguments
+# pylint: disable=missing-module-docstring, missing-function-docstring, too-many-statements, too-many-instance-attributes
 import math
 from torch import nn
 import torch
@@ -32,19 +33,9 @@ class SaBertForToken(BertForTokenClassification):
         super(SaBertForToken, self).__init__(config)
         self.bert = SaBertExtModel(config)
 
-    def forward(
-            self,
-            input_ids=None,
-            attention_mask=None,
-            token_type_ids=None,
-            position_ids=None,
-            head_mask=None,
-            inputs_embeds=None,
-            labels=None,
-            output_attentions=None,
-            output_hidden_states=None,
-            head_probs=None
-        ):
+    def forward(self, input_ids=None, attention_mask=None, token_type_ids=None, position_ids=None,
+                head_mask=None, inputs_embeds=None, labels=None, output_attentions=None,
+                output_hidden_states=None, head_probs=None):
         outputs = self.bert(
             input_ids,
             attention_mask=attention_mask,
@@ -56,7 +47,6 @@ class SaBertForToken(BertForTokenClassification):
             output_hidden_states=output_hidden_states,
             head_probs=head_probs
         )
-
         sequence_output = outputs[0]
 
         sequence_output = self.dropout(sequence_output)
@@ -85,20 +75,9 @@ class SaBertExtModel(BertModel):
         super(SaBertExtModel, self).__init__(config)
         self.encoder = SaBertExtEncoder(config)
 
-    def forward(
-            self,
-            input_ids=None,
-            attention_mask=None,
-            token_type_ids=None,
-            position_ids=None,
-            head_mask=None,
-            inputs_embeds=None,
-            encoder_hidden_states=None,
-            encoder_attention_mask=None,
-            output_attentions=None,
-            output_hidden_states=None,
-            head_probs=None
-        ):
+    def forward(self, input_ids=None, attention_mask=None, token_type_ids=None, position_ids=None,
+            head_mask=None, inputs_embeds=None, encoder_hidden_states=None, encoder_attention_mask=None,
+            output_attentions=None, output_hidden_states=None, head_probs=None):
         output_attentions = \
             output_attentions if output_attentions is not None else self.config.output_attentions
         output_hidden_states = output_hidden_states if output_hidden_states is not None \
@@ -176,17 +155,9 @@ class SaBertExtEncoder(BertEncoder):
         self.all_layers = config.all_layers
         self.layers_range = config.layers_range
 
-    def forward(
-            self,
-            hidden_states,
-            attention_mask=None,
-            head_mask=None,
-            encoder_hidden_states=None,
-            encoder_attention_mask=None,
-            output_attentions=False,
-            output_hidden_states=False,
-            head_probs=None
-        ):
+    def forward(self, hidden_states, attention_mask=None, head_mask=None, encoder_hidden_states=None,
+                encoder_attention_mask=None, output_attentions=False, output_hidden_states=False,
+                head_probs=None):
         all_hidden_states = ()
         all_attentions = ()
         for i, layer_module in enumerate(self.layer):
@@ -346,7 +317,6 @@ class SaBertExtSelfAttention(BertSelfAttention):
 
         # Take the dot product between "query" and "key" to get the raw attention scores.
         attention_scores = torch.matmul(query_layer, key_layer.transpose(-1, -2))
-
 
         if head_probs is not None and not self.random_init:
             #  duplicated heads across all matrix (one vector duplicated across matrix)

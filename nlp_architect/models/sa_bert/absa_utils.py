@@ -54,6 +54,7 @@ class InputFeatures:
     attention_mask: List[int]
     token_type_ids: Optional[List[int]] = None
     label_ids: Optional[List[int]] = None
+    parse_heads: Optional[List[float]] = None
 
 class Split(Enum):
     train = "train"

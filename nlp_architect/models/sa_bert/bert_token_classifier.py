@@ -7,10 +7,10 @@ from argparse import Namespace
 from pathlib import Path
 from typing import Any, Dict
 
+import numpy as np
 import pytorch_lightning as pl
 from pytorch_lightning.utilities import rank_zero_info, rank_zero_only
 from pytorch_lightning.core.saving import load_hparams_from_yaml
-import numpy as np
 import torch
 from torch.nn import CrossEntropyLoss
 from torch.utils.data import DataLoader, TensorDataset
@@ -24,7 +24,7 @@ from transformers import (
 )
 import absa_utils
 from sa_bert_model import SaBertForToken, SaBertConfig
-# pylint: disable=no-member, not-callable, attribute-defined-outside-init, arguments-differ
+# pylint: disable=no-member, not-callable, attribute-defined-outside-init, arguments-differ, missing-function-docstring
 
 logger = logging.getLogger(__name__)
 
@@ -74,7 +74,7 @@ class BertForToken(pl.LightningModule):
     def training_step(self, batch, _):
         "Compute loss and log."
         inputs = {"input_ids": batch[0], "attention_mask": batch[1], "token_type_ids": batch[2],
-                  "labels": batch[3]}#, "valid_ids": batch[4]}
+                  "labels": batch[3]}
         outputs = self(**inputs)
         loss = outputs[0]
         tensorboard_logs = {"loss": loss, "rate": self.lr_scheduler.get_last_lr()[-1]}
@@ -100,6 +100,21 @@ class BertForToken(pl.LightningModule):
                 logger.info("Saving features into cached file %s", cached_features_file)
                 torch.save(features, cached_features_file)
 
+    def get_parses_file(self, mode):
+        parse_type = '_head_probs.npz' if self.hparams.parse_probs else '_heads.npz'
+        if self.hparams.relation == "_merged" and self.hparams.parse_probs:
+            parse_type = '_probs.npz'
+        if self.hparams.relation:
+            parse_type = '_' + self.hparams.relation + parse_type
+        parses_file = self.hparams.data_dir + '/' + mode + parse_type
+        return parses_file
+
+    @staticmethod
+    def pad(source):
+        target = np.zeros((64, 64), float)
+        target[:source.shape[0], :source.shape[1]] = source[:64, :64]
+        return target
+
     def load_dataset(self, mode, batch_size):
         "Load datasets. Called after prepare data."
         cached_features_file = self._feature_file(mode)
@@ -108,15 +123,26 @@ class BertForToken(pl.LightningModule):
         all_input_ids = torch.tensor([f.input_ids for f in features], dtype=torch.long)
         all_attention_mask = torch.tensor([f.attention_mask for f in features], dtype=torch.long)
         if features[0].token_type_ids is not None:
-            all_token_type_ids = torch.tensor([f.token_type_ids for f in features], dtype=torch.long)
+            all_token_type_ids = torch.tensor([f.token_type_ids for f in features],
+                                              dtype=torch.long)
         else:
             all_token_type_ids = torch.tensor([0 for f in features], dtype=torch.long)
         all_label_ids = torch.tensor([f.label_ids for f in features], dtype=torch.long)
-        return DataLoader(
-            TensorDataset(all_input_ids, all_attention_mask, all_token_type_ids,
-                          all_label_ids),
-            batch_size=batch_size, num_workers=self.hparams.num_workers
-        )
+
+        if self.model_type is SaBertForToken:
+            #### Attatch dependency parse info ###
+            parses_file = self.get_parses_file(mode)
+            head_data = np.load(parses_file, allow_pickle=True)
+            head_tensors = torch.tensor([self.pad((head_data)[f]) for f in head_data.files],
+                                        dtype=torch.float)
+            tensor_dataset = TensorDataset(all_input_ids, all_attention_mask, all_token_type_ids,
+                                           all_label_ids, head_tensors)
+        else:
+            tensor_dataset = TensorDataset(all_input_ids, all_attention_mask, all_token_type_ids,
+                                           all_label_ids)
+
+        return DataLoader(tensor_dataset, batch_size=batch_size,
+                          num_workers=self.hparams.num_workers)
 
     def validation_step(self, batch, _):
         "Compute validation"
@@ -172,15 +198,18 @@ class BertForToken(pl.LightningModule):
         no_decay = ["bias", "LayerNorm.weight"]
         optimizer_grouped_parameters = [
             {
-                "params": [p for n, p in model.named_parameters() if not any(nd in n for nd in no_decay)],
+                "params": [p for n, p in model.named_parameters() if
+                           not any(nd in n for nd in no_decay)],
                 "weight_decay": self.hparams.weight_decay,
             },
             {
-                "params": [p for n, p in model.named_parameters() if any(nd in n for nd in no_decay)],
+                "params": [p for n, p in model.named_parameters() if
+                           any(nd in n for nd in no_decay)],
                 "weight_decay": 0.0,
-            },
+            }
         ]
-        optimizer = AdamW(optimizer_grouped_parameters, lr=self.hparams.learning_rate, eps=self.hparams.adam_epsilon)
+        optimizer = AdamW(optimizer_grouped_parameters, lr=self.hparams.learning_rate,
+                          eps=self.hparams.adam_epsilon)
         self.opt = optimizer
         return [optimizer]
 
