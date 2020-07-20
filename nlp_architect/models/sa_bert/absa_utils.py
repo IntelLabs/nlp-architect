@@ -25,7 +25,6 @@ from transformers import PreTrainedTokenizer
 
 logger = logging.getLogger(__name__)
 
-
 @dataclass
 class InputExample:
     """
@@ -186,7 +185,6 @@ def convert_examples_to_features(
                                       token_type_ids=segment_ids, label_ids=label_ids))
     return features
 
-
 def get_labels(path: str) -> List[str]:
-    with open(path) as fp:
-        return fp.read().splitlines()
+    with open(path) as labels_f:
+        return labels_f.read().splitlines()

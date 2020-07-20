@@ -22,9 +22,11 @@ from transformers import (
     get_linear_schedule_with_warmup,
     AdamW
 )
+from nlp_architect import LIBRARY_OUT
 import absa_utils
 from sa_bert_model import SaBertForToken, SaBertConfig
 # pylint: disable=no-member, not-callable, attribute-defined-outside-init, arguments-differ, missing-function-docstring
+# pylint: disable=too-many-ancestors, too-many-instance-attributes, too-many-arguments
 
 logger = logging.getLogger(__name__)
 
@@ -41,20 +43,21 @@ class BertForToken(pl.LightningModule):
         if isinstance(hparams, dict):
             hparams = Namespace(**hparams)
 
-        self.hparams = hparams
-        self.labels = absa_utils.get_labels(hparams.labels)
-        num_labels = len(self.labels)
-        self.pad_token_label_id = CrossEntropyLoss().ignore_index
+        data_root = Path(__file__).parent.absolute() / 'data'
 
-        self.step_count = 0
-        self.tfmr_ckpts = {}
-        self.output_dir = Path(self.hparams.output_dir)
-        cache_dir = self.hparams.cache_dir if self.hparams.cache_dir else None
+        self.labels = absa_utils.get_labels(data_root / hparams.labels)
+        num_labels = len(self.labels)
+        hparams.data_dir = data_root / hparams.data_dir
+
+        if not hparams.cache_dir:
+            hparams.cache_dir = LIBRARY_OUT
+        if not hparams.output_dir:
+            hparams.output_dir = LIBRARY_OUT / 'sa-bert-models'
 
         self.model_type, self.config_type, self.tokenizer_type = MODEL_CONFIG[hparams.model_type]
 
         self.config = self.config_type \
-            .from_pretrained(self.hparams.model_name_or_path,
+            .from_pretrained(hparams.model_name_or_path,
                              **({"num_labels": num_labels} if num_labels is not None else {}))
 
         if hasattr(self.config, 'add_extra_args') and callable(self.config.add_extra_args):
@@ -62,13 +65,19 @@ class BertForToken(pl.LightningModule):
 
         os.environ["TOKENIZERS_PARALLELISM"] = "true"
         self.tokenizer = self.tokenizer_type \
-            .from_pretrained(self.hparams.model_name_or_path, cache_dir=cache_dir)
+            .from_pretrained(hparams.model_name_or_path, cache_dir=hparams.cache_dir)
+
+        self.pad_token_label_id = CrossEntropyLoss().ignore_index
+        self.step_count = 0
+        self.tfmr_ckpts = {}
 
         self.model = self.model_type.from_pretrained(
-            self.hparams.model_name_or_path,
-            from_tf=bool(".ckpt" in self.hparams.model_name_or_path),
+            hparams.model_name_or_path,
+            from_tf=bool(".ckpt" in hparams.model_name_or_path),
             config=self.config,
-            cache_dir=cache_dir)
+            cache_dir=hparams.cache_dir)
+
+        self.hparams = hparams
 
     def forward(self, **inputs):
         return self.model(**inputs)
@@ -83,19 +92,18 @@ class BertForToken(pl.LightningModule):
 
     def prepare_data(self):
         "Called to initialize data. Use the call to construct features"
-        args = self.hparams
         for mode in "train", "dev", "test":
             cached_features_file = self._feature_file(mode)
-            if os.path.exists(cached_features_file) and not args.overwrite_cache:
+            if os.path.exists(cached_features_file) and not self.hparams.overwrite_cache:
                 logger.info("Loading features from cached file %s", cached_features_file)
                 features = torch.load(cached_features_file)
             else:
-                logger.info("Creating features from dataset file at %s", args.data_dir)
-                examples = absa_utils.read_examples_from_file(args.data_dir, mode)
+                logger.info("Creating features from dataset file at %s", self.hparams.data_dir)
+                examples = absa_utils.read_examples_from_file(self.hparams.data_dir, mode)
                 features = absa_utils.convert_examples_to_features(
                     examples,
                     self.labels,
-                    args.max_seq_length,
+                    self.hparams.max_seq_length,
                     self.tokenizer
                 )
                 logger.info("Saving features into cached file %s", cached_features_file)
@@ -113,9 +121,9 @@ class BertForToken(pl.LightningModule):
             parse_type = '_probs.npz'
         if self.hparams.relation:
             parse_type = '_' + self.hparams.relation + parse_type
-        parses_file = self.hparams.data_dir + '/' + mode + parse_type
-        np.load(parses_file, allow_pickle=True)
-        return parses_file
+        parses_file = self.hparams.data_dir / (mode + parse_type)
+        parse_data = np.load(parses_file, allow_pickle=True)
+        return parse_data
 
     def load_dataset(self, mode, batch_size):
         "Load datasets. Called after prepare data."
@@ -131,18 +139,16 @@ class BertForToken(pl.LightningModule):
             all_token_type_ids = torch.tensor([0 for f in features], dtype=torch.long)
         all_label_ids = torch.tensor([f.label_ids for f in features], dtype=torch.long)
 
+        tensors = [all_input_ids, all_attention_mask, all_token_type_ids, all_label_ids]
+
         if self.model_type is SaBertForToken:
             #### Attatch dependency parse info ###
             parse_data = self.get_parse_data(mode)
-            head_tensors = torch.tensor([self.pad((parse_data)[f]) for f in parse_data.files],
+            parse_tensor = torch.tensor([self.pad((parse_data)[f]) for f in parse_data.files],
                                         dtype=torch.float)
-            tensor_dataset = TensorDataset(all_input_ids, all_attention_mask, all_token_type_ids,
-                                           all_label_ids, head_tensors)
-        else:
-            tensor_dataset = TensorDataset(all_input_ids, all_attention_mask, all_token_type_ids,
-                                           all_label_ids)
+            tensors.append(parse_tensor)
 
-        return DataLoader(tensor_dataset, batch_size=batch_size,
+        return DataLoader(TensorDataset(*tensors), batch_size=batch_size,
                           num_workers=self.hparams.num_workers)
 
     @staticmethod
@@ -184,7 +190,7 @@ class BertForToken(pl.LightningModule):
             "recall": recall_score(out_label_list, preds_list),
             "f1": f1_score(out_label_list, preds_list),
         }
-        ret = results.copy()
+        ret = {k: v for k, v in results.items()}
         ret["log"] = results
         return ret, preds_list, out_label_list
 
@@ -274,7 +280,7 @@ class BertForToken(pl.LightningModule):
             max_epochs=self.hparams.max_epochs,
             gradient_clip_val=self.hparams.gradient_clip_val,
             checkpoint_callback=checkpoint_callback,
-            callbacks=[LoggingCallback(), pl.callbacks.LearningRateLogger()],
+            callbacks=[LoggingCallback()],#, pl.callbacks.LearningRateLogger()],
             fast_dev_run=self.hparams.fast_dev_run,
             val_check_interval=self.hparams.val_check_interval,
             weights_summary=None,
@@ -284,7 +290,7 @@ class BertForToken(pl.LightningModule):
 
     @pl.utilities.rank_zero_only
     def on_save_checkpoint(self, checkpoint: Dict[str, Any]) -> None:
-        save_path = self.output_dir.joinpath("best_tfmr")
+        save_path = self.hparams.output_dir.joinpath("best_tfmr")
         save_path.mkdir(exist_ok=True)
         self.model.config.save_step = self.step_count
         self.model.save_pretrained(save_path)
@@ -318,11 +324,10 @@ def load_config(name):
     """Load an experiment configuration from a yaml file."""
     configs_dir = Path(os.path.dirname(os.path.realpath(__file__))) / 'configs'
     config = Namespace(**load_hparams_from_yaml(configs_dir / (name + '.yaml')))
-    assert config
     return config
 
-def load_last_ckpt(model, config):
+def load_last_ckpt(model):
     """Load the last model checkpoint saved."""
-    checkpoints = list(sorted(glob.glob(os.path.join(config.output_dir,
+    checkpoints = list(sorted(glob.glob(os.path.join(model.output_dir,
                                                      "checkpointepoch=*.ckpt"), recursive=True)))
     return model.load_from_checkpoint(checkpoints[-1])

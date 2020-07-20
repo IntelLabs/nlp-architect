@@ -20,7 +20,7 @@ class SaBertConfig(BertConfig):
         self.all_layers = hparams.all_layers
         self.duplicated_rels = hparams.duplicated_rels
         self.transpose = hparams.transpose
-        self.syn_layers = hparams.syn_layers
+        self.li_layers = hparams.li_layers
 
 class SaBertForToken(BertForTokenClassification):
     def __init__(self, config):
@@ -148,7 +148,7 @@ class SaBertEncoder(BertEncoder):
             layer_num in range(config.num_hidden_layers)])
         self.li_layer = config.li_layer
         self.all_layers = config.all_layers
-        self.syn_layers = config.syn_layers
+        self.li_layers = config.li_layers
 
     def forward(self, hidden_states, attention_mask=None, head_mask=None,
                 encoder_hidden_states=None, encoder_attention_mask=None,
@@ -160,7 +160,7 @@ class SaBertEncoder(BertEncoder):
                 all_hidden_states = all_hidden_states + (hidden_states,)
 
             parse_layer = None
-            if self.all_layers or i == self.li_layer or i in self.syn_layers:
+            if self.all_layers or i == self.li_layer or i in self.li_layers:
                 parse_layer = parse
 
             layer_outputs = bert_layer(
@@ -235,7 +235,7 @@ class SaBertSelfAttention(BertSelfAttention):
 
         #self.attention_head_size = int(config.hidden_size / config.num_attention_heads)
         if  (layer_num == config.li_layer or config.all_layers is True \
-             or layer_num in config.syn_layers):
+             or layer_num in config.li_layers):
             self.num_attention_heads = 13
             self.extra_query = nn.Linear(config.hidden_size, self.attention_head_size)
             self.extra_key = nn.Linear(config.hidden_size, self.attention_head_size)
@@ -363,7 +363,7 @@ class SaBertSelfOutput(BertSelfOutput):
     def __init__(self, config, layer_num):
         super(SaBertSelfOutput, self).__init__(config)
         if  (layer_num == config.li_layer or config.all_layers is True \
-             or layer_num in config.syn_layers):
+             or layer_num in config.li_layers):
             self.original_num_attention_heads = config.num_attention_heads
             self.attention_head_size = int(config.hidden_size / self.original_num_attention_heads)
             self.dense_extra_head = nn.Linear(self.attention_head_size, config.hidden_size)

@@ -2,23 +2,33 @@ train_batch_size: 16
 eval_batch_size: 16
 max_seq_length: 64
 seed: 12
+max_epochs: 10
+model_type: sa-bert # bert or sa-bert
+model_name_or_path: bert-base-uncased
+random_init: true
 
-max_epochs: 1
+li_layer: 5
+li_layers: [2]
+all_layers: false
+relation: ""
+parse_probs: true
+replace_final: false
+duplicated_rels: false
+transpose: false
+
 num_workers: 88
 gpus: 1
 
-model_type: bert
-model_name_or_path: bert-base-uncased
+overwrite_cache: true # if false, loads features from cached file (quicker)
+cache_dir: # default: nlp-architect/nlp_architect/cache
+output_dir: # default: nlp-architect/nlp_architect/cache/sa-bert-models
 
-overwrite_cache: true
-cache_dir: /home/daniel_nlp/nlp-architect/nlp_architect/cache
-data_dir: /home/daniel_nlp/nlp-architect/nlp_architect/models/sa_bert/data/laptops_to_restaurants_1
-labels: /home/daniel_nlp/nlp-architect/nlp_architect/models/sa_bert/data/labels.txt
-output_dir: /home/daniel_nlp/nlp-architect/nlp_architect/cache/models
+data_dir: sanity #laptops_to_restaurants_1 # relative to nlp_architect/models/sa_bert/data/
+labels: labels.txt # relative to nlp_architect/models/sa_bert/data/ 
+
 
 do_train: true
 do_predict: false
-
 adam_epsilon: 1.0e-08
 fast_dev_run: false
 accumulate_grad_batches: 1
@@ -31,13 +41,3 @@ val_check_interval: 1.0
 warmup_steps: 0
 weight_decay: 0.0
 logger: true
-
-li_layer: 5
-parse_probs: true
-replace_final: false
-random_init: false
-all_layers: false
-duplicated_rels: false
-relation: ""
-transpose: false
-syn_layers: [2]
