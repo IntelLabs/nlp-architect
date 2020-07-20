@@ -31,11 +31,11 @@ class SaBertConfig(BertConfig):
 class SaBertForToken(BertForTokenClassification):
     def __init__(self, config):
         super(SaBertForToken, self).__init__(config)
-        self.bert = SaBertExtModel(config)
+        self.bert = SaBertModel(config)
 
     def forward(self, input_ids=None, attention_mask=None, token_type_ids=None, position_ids=None,
                 head_mask=None, inputs_embeds=None, labels=None, output_attentions=None,
-                output_hidden_states=None, head_probs=None):
+                output_hidden_states=None, parse=None):
         outputs = self.bert(
             input_ids,
             attention_mask=attention_mask,
@@ -45,7 +45,7 @@ class SaBertForToken(BertForTokenClassification):
             inputs_embeds=inputs_embeds,
             output_attentions=output_attentions,
             output_hidden_states=output_hidden_states,
-            head_probs=head_probs
+            parse=parse
         )
         sequence_output = outputs[0]
 
@@ -70,14 +70,15 @@ class SaBertForToken(BertForTokenClassification):
 
         return outputs  # (loss), scores, (hidden_states), (attentions)
 
-class SaBertExtModel(BertModel):
+class SaBertModel(BertModel):
     def __init__(self, config):
-        super(SaBertExtModel, self).__init__(config)
-        self.encoder = SaBertExtEncoder(config)
+        super(SaBertModel, self).__init__(config)
+        self.encoder = SaBertEncoder(config)
 
     def forward(self, input_ids=None, attention_mask=None, token_type_ids=None, position_ids=None,
-            head_mask=None, inputs_embeds=None, encoder_hidden_states=None, encoder_attention_mask=None,
-            output_attentions=None, output_hidden_states=None, head_probs=None):
+                head_mask=None, inputs_embeds=None, encoder_hidden_states=None,
+                encoder_attention_mask=None, output_attentions=None, output_hidden_states=None,
+                parse=None):
         output_attentions = \
             output_attentions if output_attentions is not None else self.config.output_attentions
         output_hidden_states = output_hidden_states if output_hidden_states is not None \
@@ -136,7 +137,7 @@ class SaBertExtModel(BertModel):
             encoder_attention_mask=encoder_extended_attention_mask,
             output_attentions=output_attentions,
             output_hidden_states=output_hidden_states,
-            head_probs=head_probs
+            parse=parse
         )
         sequence_output = encoder_outputs[0]
         pooled_output = self.pooler(sequence_output)
@@ -146,27 +147,27 @@ class SaBertExtModel(BertModel):
         ]  # add hidden_states and attentions if they are here
         return outputs  # sequence_output, pooled_output, (hidden_states), (attentions)
 
-class SaBertExtEncoder(BertEncoder):
+class SaBertEncoder(BertEncoder):
     def __init__(self, config):
-        super(SaBertExtEncoder, self).__init__(config)
-        self.layer = nn.ModuleList([SaBertExtLayer(config, layer_num) for \
+        super(SaBertEncoder, self).__init__(config)
+        self.layer = nn.ModuleList([SaBertLayer(config, layer_num) for \
             layer_num in range(config.num_hidden_layers)])
         self.li_layer = config.li_layer
         self.all_layers = config.all_layers
         self.layers_range = config.layers_range
 
-    def forward(self, hidden_states, attention_mask=None, head_mask=None, encoder_hidden_states=None,
-                encoder_attention_mask=None, output_attentions=False, output_hidden_states=False,
-                head_probs=None):
+    def forward(self, hidden_states, attention_mask=None, head_mask=None,
+                encoder_hidden_states=None, encoder_attention_mask=None,
+                output_attentions=False, output_hidden_states=False, parse=None):
         all_hidden_states = ()
         all_attentions = ()
         for i, layer_module in enumerate(self.layer):
             if output_hidden_states:
                 all_hidden_states = all_hidden_states + (hidden_states,)
 
-            head_probs_layer = None
+            parse_layer = None
             if self.all_layers or i == self.li_layer or i in self.layers_range:
-                head_probs_layer = head_probs
+                parse_layer = parse
 
             if getattr(self.config, "gradient_checkpointing", False):
                 def create_custom_forward(module):
@@ -181,7 +182,7 @@ class SaBertExtEncoder(BertEncoder):
                     head_mask[i],
                     encoder_hidden_states,
                     encoder_attention_mask,
-                    head_probs_layer
+                    parse_layer
                 )
             else:
                 layer_outputs = layer_module(
@@ -190,7 +191,7 @@ class SaBertExtEncoder(BertEncoder):
                     head_mask[i],
                     encoder_hidden_states,
                     encoder_attention_mask,
-                    head_probs_layer,
+                    parse_layer,
                     output_attentions
                 )
             hidden_states = layer_outputs[0]
@@ -209,59 +210,45 @@ class SaBertExtEncoder(BertEncoder):
             outputs = outputs + (all_attentions,)
         return outputs  # last-layer hidden state, (all hidden states), (all attentions)
 
-class SaBertExtLayer(BertLayer):
+class SaBertLayer(BertLayer):
     def __init__(self, config, layer_num):
-        super(SaBertExtLayer, self).__init__(config)
-        self.attention = SaBertExtAttention(config, layer_num)
+        super(SaBertLayer, self).__init__(config)
+        self.attention = SaBertAttention(config, layer_num)
 
     def forward(self, hidden_states, attention_mask=None, head_mask=None,
                 encoder_hidden_states=None, encoder_attention_mask=None,
-                head_probs=None, output_attentions=False):
+                parse=None, output_attentions=False):
         self_attention_outputs = self.attention(
             hidden_states, attention_mask, head_mask, output_attentions=output_attentions,
-            head_probs=head_probs
+            parse=parse
         )
         attention_output = self_attention_outputs[0]
         outputs = self_attention_outputs[1:]  # add self attentions if we output attention weights
-
-        if self.is_decoder and encoder_hidden_states is not None:
-            cross_attention_outputs = self.crossattention(
-                attention_output,
-                attention_mask,
-                head_mask,
-                encoder_hidden_states,
-                encoder_attention_mask,
-                output_attentions,
-                head_probs
-            )
-            attention_output = cross_attention_outputs[0]
-            # add cross attentions if we output attention weights
-            outputs = outputs + cross_attention_outputs[1:]
 
         intermediate_output = self.intermediate(attention_output)
         layer_output = self.output(intermediate_output, attention_output)
         outputs = (layer_output,) + outputs
         return outputs
 
-class SaBertExtAttention(BertAttention):
+class SaBertAttention(BertAttention):
     def __init__(self, config, layer_num):
-        super(SaBertExtAttention, self).__init__(config)
-        self.self = SaBertExtSelfAttention(config, layer_num)
-        self.output = SaBertExtSelfOutput(config, layer_num)
+        super(SaBertAttention, self).__init__(config)
+        self.self = SaBertSelfAttention(config, layer_num)
+        self.output = SaBertSelfOutput(config, layer_num)
         self.pruned_heads = set()
 
     def forward(self, hidden_states, attention_mask=None, head_mask=None,
                 encoder_hidden_states=None, encoder_attention_mask=None,
-                output_attentions=False, head_probs=None):
+                output_attentions=False, parse=None):
         self_outputs = self.self(hidden_states, attention_mask, head_mask, encoder_hidden_states,
-                                 encoder_attention_mask, output_attentions, head_probs)
-        attention_output = self.output(self_outputs[0], hidden_states)
+                                 encoder_attention_mask, output_attentions, parse)
+        attention_output = self.output(self_outputs[0], hidden_states, parse)
         outputs = (attention_output,) + self_outputs[1:]  # add attentions if we output them
         return outputs
 
-class SaBertExtSelfAttention(BertSelfAttention):
+class SaBertSelfAttention(BertSelfAttention):
     def __init__(self, config, layer_num):
-        super(SaBertExtSelfAttention, self).__init__(config)
+        super(SaBertSelfAttention, self).__init__(config)
         self.orig_num_attention_heads = config.num_attention_heads
         self.replace_final = config.replace_final
         self.random_init = config.random_init
@@ -284,9 +271,9 @@ class SaBertExtSelfAttention(BertSelfAttention):
 
     def forward(self, hidden_states, attention_mask=None, head_mask=None,
                 encoder_hidden_states=None, encoder_attention_mask=None,
-                output_attentions=False, head_probs=None):
+                output_attentions=False, parse=None):
 
-        if head_probs is not None:
+        if parse is not None:
             mixed_query_layer = \
                 torch.cat((self.query(hidden_states), self.extra_query(hidden_states)), 2)
         else:
@@ -300,7 +287,7 @@ class SaBertExtSelfAttention(BertSelfAttention):
             mixed_value_layer = self.value(encoder_hidden_states)
             attention_mask = encoder_attention_mask
         else:
-            if head_probs is not None:
+            if parse is not None:
                 self.all_head_size = self.num_attention_heads * self.attention_head_size
                 mixed_key_layer = \
                     torch.cat((self.key(hidden_states), self.extra_key(hidden_states)), 2)
@@ -318,22 +305,22 @@ class SaBertExtSelfAttention(BertSelfAttention):
         # Take the dot product between "query" and "key" to get the raw attention scores.
         attention_scores = torch.matmul(query_layer, key_layer.transpose(-1, -2))
 
-        if head_probs is not None and not self.random_init:
+        if parse is not None and not self.random_init:
             #  duplicated heads across all matrix (one vector duplicated across matrix)
             if self.duplicated_rels is True:
-                head_probs = head_probs.sum(1, keepdim=True)
+                parse = parse.sum(1, keepdim=True)
                 # duplicate sum vector
-                head_probs = head_probs.repeat(1, 64, 1)
+                parse = parse.repeat(1, 64, 1)
 
-            head_probs_norm = head_probs / head_probs.max(2, keepdim=True)[0]
-            head_probs_norm[torch.isnan(head_probs_norm)] = 0
+            parse_norm = parse / parse.max(2, keepdim=True)[0]
+            parse_norm[torch.isnan(parse_norm)] = 0
 
-           # _, indices = head_probs_norm.max(2)
+           # _, indices = parse_norm.max(2)
            # device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-           # ex_head_attention_probs = torch.zeros(head_probs_norm.shape).to(device)
+           # ex_head_attention_probs = torch.zeros(parse_norm.shape).to(device)
 
            # for batch, tokens in enumerate(indices):
-           #     mask_matrix = torch.zeros([head_probs_norm.shape[1], head_probs_norm.shape[2]])
+           #     mask_matrix = torch.zeros([parse_norm.shape[1], parse_norm.shape[2]])
            #     i=0
            #     for token in tokens:
            #         if token != 0:
@@ -343,7 +330,7 @@ class SaBertExtSelfAttention(BertSelfAttention):
             #    ex_head_attention_probs[batch] = mask_matrix
 
             #if self.duplicated_rels is True:
-            #    head_probs_norm = ex_head_attention_probs
+            #    parse_norm = ex_head_attention_probs
 
             original_12head_attn_scores = attention_scores[:, :self.orig_num_attention_heads]
             original_12head_attn_scores = \
@@ -351,12 +338,13 @@ class SaBertExtSelfAttention(BertSelfAttention):
             original_12head_attn_scores = original_12head_attn_scores + attention_mask
             original_12head_attn_probs = nn.Softmax(dim=-1)(original_12head_attn_scores)
             extra_head_attn = attention_scores[:, self.orig_num_attention_heads, :, :]
-            head_probs_norm = head_probs_norm*8+ attention_mask.squeeze(1)
+            parse_norm = parse_norm*8+ attention_mask.squeeze(1)
 
             if not self.replace_final:
                 if self.transpose:
-                    head_probs_norm = head_probs_norm.transpose(-1, -2)
-                extra_head_scaled_attn = ((extra_head_attn *8) * head_probs_norm).unsqueeze(1)
+                    parse_norm = parse_norm.transpose(-1, -2)
+
+                extra_head_scaled_attn = ((extra_head_attn *8) * parse_norm).unsqueeze(1)
                 extra_head_scaled_attn = extra_head_scaled_attn + attention_mask
                 extra_head_scaled_attn_probs = nn.Softmax(dim=-1)(extra_head_scaled_attn)
                 attention_probs = \
@@ -366,7 +354,7 @@ class SaBertExtSelfAttention(BertSelfAttention):
             #     attention_probs = \
             # torch.cat((original_12head_attn_probs, ex_head_attention_probs.unsqueeze(1)),1)
 
-        if head_probs is None or self.random_init:
+        if parse is None or self.random_init:
             attention_scores = attention_scores / math.sqrt(self.attention_head_size)
             if attention_mask is not None:
                 # Apply the attention mask is
@@ -393,20 +381,22 @@ class SaBertExtSelfAttention(BertSelfAttention):
         outputs = (context_layer, attention_probs) if output_attentions else (context_layer,)
         return outputs
 
-class SaBertExtSelfOutput(BertSelfOutput):
+class SaBertSelfOutput(BertSelfOutput):
     def __init__(self, config, layer_num):
-        super(SaBertExtSelfOutput, self).__init__(config)
+        super(SaBertSelfOutput, self).__init__(config)
         if  (layer_num == config.li_layer or config.all_layers is True \
              or layer_num in config.layers_range):
             self.original_num_attention_heads = config.num_attention_heads
             self.attention_head_size = int(config.hidden_size / self.original_num_attention_heads)
             self.dense_extra_head = nn.Linear(self.attention_head_size, config.hidden_size)
 
-    def forward(self, hidden_states, input_tensor, head_probs=None):
-        if head_probs is not None:
-            original_hidden_vec_size = self.original_num_attention_heads*self.attention_head_size
+    def forward(self, hidden_states, input_tensor, parse=None):
+        if parse is not None:
+            original_hidden_vec_size = self.original_num_attention_heads * self.attention_head_size
             hidden_states = self.dense(hidden_states[:, :, :original_hidden_vec_size]) + \
                 self.dense_extra_head(hidden_states[:, :, original_hidden_vec_size:])
+                # add relational embedddings:
+                # + relational_embeddings (shape: config.hidden_size)
         else:
             hidden_states = self.dense(hidden_states)
 

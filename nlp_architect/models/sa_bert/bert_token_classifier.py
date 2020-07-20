@@ -74,7 +74,7 @@ class BertForToken(pl.LightningModule):
     def training_step(self, batch, _):
         "Compute loss and log."
         inputs = {"input_ids": batch[0], "attention_mask": batch[1], "token_type_ids": batch[2],
-                  "labels": batch[3]}
+                  "labels": batch[3], "parse": batch[4]}
         outputs = self(**inputs)
         loss = outputs[0]
         tensorboard_logs = {"loss": loss, "rate": self.lr_scheduler.get_last_lr()[-1]}
@@ -147,7 +147,7 @@ class BertForToken(pl.LightningModule):
     def validation_step(self, batch, _):
         "Compute validation"
         inputs = {"input_ids": batch[0], "attention_mask": batch[1], "token_type_ids": batch[2],
-                  "labels": batch[3]}
+                  "labels": batch[3], "parse": batch[4]}
         outputs = self(**inputs)
         tmp_eval_loss, logits = outputs[:2]
         preds = logits.detach().cpu().numpy()
@@ -303,7 +303,7 @@ class LoggingCallback(pl.Callback):
         with open(output_test_results_file, "w") as writer:
             for key in sorted(metrics):
                 if key not in ["log", "progress_bar"]:
-                    logger.info("{} = {}\n".format(key, str(metrics[key])))
+                    logger.info("%s = %s\n", key, str(metrics[key]))
                     writer.write("{} = {}\n".format(key, str(metrics[key])))
 
 def load_config(name):
@@ -315,6 +315,6 @@ def load_config(name):
 
 def load_last_ckpt(model, config):
     """Load the last model checkpoint saved."""
-    checkpoints = list(sorted(glob.glob(os.path.join(config.output_dir, 
+    checkpoints = list(sorted(glob.glob(os.path.join(config.output_dir,
                                                      "checkpointepoch=*.ckpt"), recursive=True)))
     return model.load_from_checkpoint(checkpoints[-1])
