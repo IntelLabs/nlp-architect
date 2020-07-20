@@ -11,22 +11,16 @@ from transformers import BertForTokenClassification, BertModel
 class SaBertConfig(BertConfig):
     def __init__(self, **kwargs):
         super().__init__()
-        self.li_layer: int
-        self.replace_final: list
-        self.random_init: list
-        self.all_layers: list
-        self.duplicated_rels: list
-        self.transpose: list
-        self.layers_range: list
 
     def add_extra_args(self, hparams):
+        # pylint: disable=attribute-defined-outside-init
         self.li_layer = hparams.li_layer
         self.replace_final = hparams.replace_final
         self.random_init = hparams.random_init
         self.all_layers = hparams.all_layers
         self.duplicated_rels = hparams.duplicated_rels
         self.transpose = hparams.transpose
-        self.layers_range = hparams.layers_range
+        self.syn_layers = hparams.syn_layers
 
 class SaBertForToken(BertForTokenClassification):
     def __init__(self, config):
@@ -154,46 +148,30 @@ class SaBertEncoder(BertEncoder):
             layer_num in range(config.num_hidden_layers)])
         self.li_layer = config.li_layer
         self.all_layers = config.all_layers
-        self.layers_range = config.layers_range
+        self.syn_layers = config.syn_layers
 
     def forward(self, hidden_states, attention_mask=None, head_mask=None,
                 encoder_hidden_states=None, encoder_attention_mask=None,
                 output_attentions=False, output_hidden_states=False, parse=None):
         all_hidden_states = ()
         all_attentions = ()
-        for i, layer_module in enumerate(self.layer):
+        for i, bert_layer in enumerate(self.layer):
             if output_hidden_states:
                 all_hidden_states = all_hidden_states + (hidden_states,)
 
             parse_layer = None
-            if self.all_layers or i == self.li_layer or i in self.layers_range:
+            if self.all_layers or i == self.li_layer or i in self.syn_layers:
                 parse_layer = parse
 
-            if getattr(self.config, "gradient_checkpointing", False):
-                def create_custom_forward(module):
-                    def custom_forward(*inputs):
-                        return module(*inputs, output_attentions)
-                    return custom_forward
-
-                layer_outputs = torch.utils.checkpoint.checkpoint(
-                    create_custom_forward(layer_module),
-                    hidden_states,
-                    attention_mask,
-                    head_mask[i],
-                    encoder_hidden_states,
-                    encoder_attention_mask,
-                    parse_layer
-                )
-            else:
-                layer_outputs = layer_module(
-                    hidden_states,
-                    attention_mask,
-                    head_mask[i],
-                    encoder_hidden_states,
-                    encoder_attention_mask,
-                    parse_layer,
-                    output_attentions
-                )
+            layer_outputs = bert_layer(
+                hidden_states,
+                attention_mask,
+                head_mask[i],
+                encoder_hidden_states,
+                encoder_attention_mask,
+                parse_layer,
+                output_attentions
+            )
             hidden_states = layer_outputs[0]
 
             if output_attentions:
@@ -257,7 +235,7 @@ class SaBertSelfAttention(BertSelfAttention):
 
         #self.attention_head_size = int(config.hidden_size / config.num_attention_heads)
         if  (layer_num == config.li_layer or config.all_layers is True \
-             or layer_num in config.layers_range):
+             or layer_num in config.syn_layers):
             self.num_attention_heads = 13
             self.extra_query = nn.Linear(config.hidden_size, self.attention_head_size)
             self.extra_key = nn.Linear(config.hidden_size, self.attention_head_size)
@@ -385,7 +363,7 @@ class SaBertSelfOutput(BertSelfOutput):
     def __init__(self, config, layer_num):
         super(SaBertSelfOutput, self).__init__(config)
         if  (layer_num == config.li_layer or config.all_layers is True \
-             or layer_num in config.layers_range):
+             or layer_num in config.syn_layers):
             self.original_num_attention_heads = config.num_attention_heads
             self.attention_head_size = int(config.hidden_size / self.original_num_attention_heads)
             self.dense_extra_head = nn.Linear(self.attention_head_size, config.hidden_size)

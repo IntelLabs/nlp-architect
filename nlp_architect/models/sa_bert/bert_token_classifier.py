@@ -56,7 +56,9 @@ class BertForToken(pl.LightningModule):
         self.config = self.config_type \
             .from_pretrained(self.hparams.model_name_or_path,
                              **({"num_labels": num_labels} if num_labels is not None else {}))
-        self.config.add_extra_args(hparams)
+
+        if hasattr(self.config, 'add_extra_args') and callable(self.config.add_extra_args):
+            self.config.add_extra_args(hparams)
 
         os.environ["TOKENIZERS_PARALLELISM"] = "true"
         self.tokenizer = self.tokenizer_type \
@@ -73,8 +75,7 @@ class BertForToken(pl.LightningModule):
 
     def training_step(self, batch, _):
         "Compute loss and log."
-        inputs = {"input_ids": batch[0], "attention_mask": batch[1], "token_type_ids": batch[2],
-                  "labels": batch[3], "parse": batch[4]}
+        inputs = self.map_to_inputs(batch)
         outputs = self(**inputs)
         loss = outputs[0]
         tensorboard_logs = {"loss": loss, "rate": self.lr_scheduler.get_last_lr()[-1]}
@@ -100,20 +101,21 @@ class BertForToken(pl.LightningModule):
                 logger.info("Saving features into cached file %s", cached_features_file)
                 torch.save(features, cached_features_file)
 
-    def get_parses_file(self, mode):
+    @staticmethod
+    def pad(source):
+        target = np.zeros((64, 64), float)
+        target[:source.shape[0], :source.shape[1]] = source[:64, :64]
+        return target
+
+    def get_parse_data(self, mode):
         parse_type = '_head_probs.npz' if self.hparams.parse_probs else '_heads.npz'
         if self.hparams.relation == "_merged" and self.hparams.parse_probs:
             parse_type = '_probs.npz'
         if self.hparams.relation:
             parse_type = '_' + self.hparams.relation + parse_type
         parses_file = self.hparams.data_dir + '/' + mode + parse_type
+        np.load(parses_file, allow_pickle=True)
         return parses_file
-
-    @staticmethod
-    def pad(source):
-        target = np.zeros((64, 64), float)
-        target[:source.shape[0], :source.shape[1]] = source[:64, :64]
-        return target
 
     def load_dataset(self, mode, batch_size):
         "Load datasets. Called after prepare data."
@@ -131,9 +133,8 @@ class BertForToken(pl.LightningModule):
 
         if self.model_type is SaBertForToken:
             #### Attatch dependency parse info ###
-            parses_file = self.get_parses_file(mode)
-            head_data = np.load(parses_file, allow_pickle=True)
-            head_tensors = torch.tensor([self.pad((head_data)[f]) for f in head_data.files],
+            parse_data = self.get_parse_data(mode)
+            head_tensors = torch.tensor([self.pad((parse_data)[f]) for f in parse_data.files],
                                         dtype=torch.float)
             tensor_dataset = TensorDataset(all_input_ids, all_attention_mask, all_token_type_ids,
                                            all_label_ids, head_tensors)
@@ -144,10 +145,17 @@ class BertForToken(pl.LightningModule):
         return DataLoader(tensor_dataset, batch_size=batch_size,
                           num_workers=self.hparams.num_workers)
 
+    @staticmethod
+    def map_to_inputs(batch):
+        inputs = {"input_ids": batch[0], "attention_mask": batch[1], "token_type_ids": batch[2],
+                  "labels": batch[3]}
+        if len(batch) >= 5:
+            inputs["parse"] = batch[4]
+        return inputs
+
     def validation_step(self, batch, _):
         "Compute validation"
-        inputs = {"input_ids": batch[0], "attention_mask": batch[1], "token_type_ids": batch[2],
-                  "labels": batch[3], "parse": batch[4]}
+        inputs = self.map_to_inputs(batch)
         outputs = self(**inputs)
         tmp_eval_loss, logits = outputs[:2]
         preds = logits.detach().cpu().numpy()
@@ -161,7 +169,7 @@ class BertForToken(pl.LightningModule):
         preds = np.argmax(preds, axis=2)
         out_label_ids = np.concatenate([x["target"] for x in outputs], axis=0)
 
-        label_map = {i: label for i, label in enumerate(self.labels)}
+        label_map = dict(enumerate(self.labels))
         out_label_list = [[] for _ in range(out_label_ids.shape[0])]
         preds_list = [[] for _ in range(out_label_ids.shape[0])]
 
@@ -176,7 +184,7 @@ class BertForToken(pl.LightningModule):
             "recall": recall_score(out_label_list, preds_list),
             "f1": f1_score(out_label_list, preds_list),
         }
-        ret = {k: v for k, v in results.items()}
+        ret = results.copy()
         ret["log"] = results
         return ret, preds_list, out_label_list
 
