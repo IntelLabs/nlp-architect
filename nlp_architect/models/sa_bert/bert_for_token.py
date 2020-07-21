@@ -13,7 +13,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
-
 """BERT-based model for token classification."""
 
 import os
@@ -30,7 +29,8 @@ from pytorch_lightning.core.saving import load_hparams_from_yaml
 import torch
 from torch.nn import CrossEntropyLoss
 from torch.utils.data import DataLoader, TensorDataset
-from seqeval.metrics import f1_score, precision_score, recall_score
+from seqeval.metrics import precision_score, recall_score, f1_score, accuracy_score, performance_measure, classification_report
+
 from transformers import (
     BertForTokenClassification,
     BertConfig,
@@ -45,7 +45,6 @@ from sa_bert_model import SaBertForToken, SaBertConfig
 # pylint: disable=too-many-ancestors, too-many-instance-attributes, too-many-arguments
 
 logger = logging.getLogger(__name__)
-logger.setLevel('WARNING')
 
 MODEL_CONFIG = {
     'bert': (BertForTokenClassification, BertConfig, BertTokenizer),
@@ -193,23 +192,38 @@ class BertForToken(pl.LightningModule):
         out_label_ids = np.concatenate([x["target"] for x in outputs], axis=0)
 
         label_map = dict(enumerate(self.labels))
-        out_label_list = [[] for _ in range(out_label_ids.shape[0])]
-        preds_list = [[] for _ in range(out_label_ids.shape[0])]
+        target = [[] for _ in range(out_label_ids.shape[0])]
+        pred = [[] for _ in range(out_label_ids.shape[0])]
 
         for i in range(out_label_ids.shape[0]):
             for j in range(out_label_ids.shape[1]):
                 if out_label_ids[i, j] != self.pad_token_label_id:
-                    out_label_list[i].append(label_map[out_label_ids[i][j]])
-                    preds_list[i].append(label_map[preds[i][j]])
+                    target[i].append(label_map[out_label_ids[i][j]])
+                    pred[i].append(label_map[preds[i][j]])
+
+        per_sentence = lambda f: [f([t], [p]) for t, p in zip(target, pred)]
+
+        debug_metrics = {
+            "macro_report": classification_report(target, pred),
+            "macro_confusion": performance_measure(target, pred),
+            "precision": per_sentence(precision_score),
+            "recall": per_sentence(recall_score),
+            "f1": per_sentence(f1_score),
+            "accuracy": per_sentence(accuracy_score)
+        }
+        for k, v in debug_metrics.items():
+            logger.info("%s: \n%s\n", k, v)
+
         results = {
             "val_loss": val_loss_mean,
-            "precision": precision_score(out_label_list, preds_list),
-            "recall": recall_score(out_label_list, preds_list),
-            "f1": f1_score(out_label_list, preds_list),
+            "macro_precision": precision_score(target, pred),
+            "macro_recall": recall_score(target, pred),
+            "macro_f1": f1_score(target, pred),
+            "macro_accuracy": accuracy_score(target, pred)
         }
-        ret = {k: v for k, v in results.items()}
+        ret = results.copy()
         ret["log"] = results
-        return ret, preds_list, out_label_list
+        return ret, pred, target
 
     def validation_epoch_end(self, outputs):
         ret, _, _ = self._eval_end(outputs)
@@ -251,6 +265,7 @@ class BertForToken(pl.LightningModule):
         self.lr_scheduler.step()  # By default, PL will only step every epoch.
 
     def test_step(self, batch, batch_nb):
+        assert False
         return self.validation_step(batch, batch_nb)
 
     def train_dataloader(self):
@@ -339,7 +354,7 @@ class LoggingCallback(pl.Callback):
 
 def load_config(name):
     """Load an experiment configuration from a yaml file."""
-    configs_dir = Path(os.path.dirname(os.path.realpath(__file__))) / 'configs'
+    configs_dir = Path(os.path.dirname(os.path.realpath(__file__))) / 'config'
     config = Namespace(**load_hparams_from_yaml(configs_dir / (name + '.yaml')))
     return config
 

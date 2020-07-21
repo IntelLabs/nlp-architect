@@ -266,7 +266,6 @@ class SaBertSelfAttention(BertSelfAttention):
     def forward(self, hidden_states, attention_mask=None, head_mask=None,
                 encoder_hidden_states=None, encoder_attention_mask=None,
                 output_attentions=False, parse=None):
-
         if parse is not None:
             mixed_query_layer = \
                 torch.cat((self.query(hidden_states), self.extra_query(hidden_states)), 2)
@@ -309,20 +308,18 @@ class SaBertSelfAttention(BertSelfAttention):
             parse_norm = parse / parse.max(2, keepdim=True)[0]
             parse_norm[torch.isnan(parse_norm)] = 0
 
-           # _, indices = parse_norm.max(2)
-           # device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-           # ex_head_attention_probs = torch.zeros(parse_norm.shape).to(device)
+            # _, indices = parse_norm.max(2)
+            # device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+            # ex_head_attention_probs = torch.zeros(parse_norm.shape).to(device)
 
-           # for batch, tokens in enumerate(indices):
-           #     mask_matrix = torch.zeros([parse_norm.shape[1], parse_norm.shape[2]])
-           #     i=0
-           #     for token in tokens:
-           #         if token != 0:
-           #             mask_matrix[i][token] = 1.
-           #             i=i+1
-
+            # for batch, tokens in enumerate(indices):
+            #     mask_matrix = torch.zeros([parse_norm.shape[1], parse_norm.shape[2]])
+            #     i=0
+            #     for token in tokens:
+            #         if token != 0:
+            #             mask_matrix[i][token] = 1.
+            #             i=i+1
             #    ex_head_attention_probs[batch] = mask_matrix
-
             #if self.duplicated_rels is True:
             #    parse_norm = ex_head_attention_probs
 
@@ -367,11 +364,9 @@ class SaBertSelfAttention(BertSelfAttention):
             attention_probs = attention_probs * head_mask
 
         context_layer = torch.matmul(attention_probs, value_layer)
-
         context_layer = context_layer.permute(0, 2, 1, 3).contiguous()
         new_context_layer_shape = context_layer.size()[:-2] + (self.all_head_size,)
         context_layer = context_layer.view(*new_context_layer_shape)
-
         outputs = (context_layer, attention_probs) if output_attentions else (context_layer,)
         return outputs
 

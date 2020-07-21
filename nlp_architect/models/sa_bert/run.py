@@ -13,9 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
-
 import pytorch_lightning as pl
-from bert_token_classifier import BertForToken, load_config, load_last_ckpt
+from bert_for_token import BertForToken, load_config, load_last_ckpt
 from sys import argv
 
 # pylint: disable=no-member
@@ -35,8 +34,8 @@ def main(config_yaml):
     if config.do_predict:        
         # Bug in pytorch_lightning==0.85 -> testing only works with num gpus=1
         trainer = model.get_trainer(gpus_override=1)
-        trainer.test(load_last_ckpt(model, config))
+        trainer.test(load_last_ckpt(model))
 
 if __name__ == "__main__":
-    argv = ['', 'example']
+    # argv = ['', 'example']
     main(argv[1])
