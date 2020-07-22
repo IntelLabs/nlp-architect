@@ -1,5 +1,6 @@
 # Copyright 2018 The Google AI Language Team Authors and The HuggingFace Inc. team.
-# Copyright (c) 2018, NVIDIA CORPORATION.  Copyright 2019-2020 Intel Corporation. All rights reserved.
+# Copyright (c) 2018, NVIDIA CORPORATION. 
+# Copyright 2019-2020 Intel Corporation. All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,15 +15,14 @@
 # limitations under the License.
 """ Cross-domain ABSA fine-tuning: utilities to work with SemEval-14/16 files. """
 
-import logging
 import os
 from dataclasses import dataclass
 from enum import Enum
+from collections import defaultdict
 from typing import List, Optional, Union
 from transformers import PreTrainedTokenizer
-
-logger = logging.getLogger(__name__)
-logger.setLevel('WARNING')
+from seqeval.metrics.sequence_labeling import get_entities
+import numpy as np
 
 @dataclass
 class InputExample:
@@ -104,8 +104,8 @@ def convert_examples_to_features(
 
     features = []
     for (ex_index, example) in enumerate(examples):
-        if ex_index % 10_000 == 0:
-            logger.info("Writing example %d of %d", ex_index, len(examples))
+        # if ex_index % 10_000 == 0:
+            # logger.info("Writing example %d of %d", ex_index, len(examples))
         tokens = []
         label_ids = []
         for word, label in zip(example.words, example.labels):
@@ -169,14 +169,14 @@ def convert_examples_to_features(
         assert len(segment_ids) == max_seq_length
         assert len(label_ids) == max_seq_length
 
-        if ex_index < 5:
-            logger.info("*** Example ***")
-            logger.info("guid: %s", example.guid)
-            logger.info("tokens: %s", " ".join([str(x) for x in tokens]))
-            logger.info("input_ids: %s", " ".join([str(x) for x in input_ids]))
-            logger.info("input_mask: %s", " ".join([str(x) for x in input_mask]))
-            logger.info("segment_ids: %s", " ".join([str(x) for x in segment_ids]))
-            logger.info("label_ids: %s", " ".join([str(x) for x in label_ids]))
+        # if ex_index < 5:
+        #     logger.info("*** Example ***")
+        #     logger.info("guid: %s", example.guid)
+        #     logger.info("tokens: %s", " ".join([str(x) for x in tokens]))
+        #     logger.info("input_ids: %s", " ".join([str(x) for x in input_ids]))
+        #     logger.info("input_mask: %s", " ".join([str(x) for x in input_mask]))
+        #     logger.info("segment_ids: %s", " ".join([str(x) for x in segment_ids]))
+        #     logger.info("label_ids: %s", " ".join([str(x) for x in label_ids]))
 
         features.append(InputFeatures(input_ids=input_ids, attention_mask=input_mask,
                                       token_type_ids=segment_ids, label_ids=label_ids))
@@ -185,3 +185,47 @@ def convert_examples_to_features(
 def get_labels(path: str) -> List[str]:
     with open(path) as labels_f:
         return labels_f.read().splitlines()
+
+def detailed_metrics(y_true, y_pred):
+    """Calculate the main classification metrics for every label type.
+
+    Args:
+        y_true: 2d array. Ground truth (correct) target values.
+        y_pred: 2d array. Estimated targets as returned by a classifier.
+        digits: int. Number of digits for formatting output floating point values.
+
+    Returns:
+        type_metrics: dict of label types and their metrics.
+        macro_avg: dict of weighted macro averages for all metrics across label types.
+    """
+    true_entities = set(get_entities(y_true))
+    pred_entities = set(get_entities(y_pred))
+    d1 = defaultdict(set)
+    d2 = defaultdict(set)
+    for e in true_entities:
+        d1[e[0]].add((e[1], e[2]))
+    for e in pred_entities:
+        d2[e[0]].add((e[1], e[2]))
+
+    metrics = {}
+    ps, rs, f1s, s = [], [], [], []
+    for type_name, true_entities in d1.items():
+        pred_entities = d2[type_name]
+        nb_correct = len(true_entities & pred_entities)
+        nb_pred = len(pred_entities)
+        nb_true = len(true_entities)
+        p = nb_correct / nb_pred if nb_pred > 0 else 0
+        r = nb_correct / nb_true if nb_true > 0 else 0
+        f1 = 2 * p * r / (p + r) if p + r > 0 else 0
+
+        metrics[type_name.lower() + '_precision'] = p
+        metrics[type_name.lower() + '_recall'] = r
+        metrics[type_name.lower() + '_f1'] = f1
+
+        ps.append(p)
+        rs.append(r)
+        f1s.append(f1)
+        s.append(nb_true)
+    macro_avg = {'macro_precision': np.average(ps, weights=s),
+                 'macro_recall': np.average(rs, weights=s), 'macro_f1': np.average(f1s, weights=s)}
+    return metrics, macro_avg

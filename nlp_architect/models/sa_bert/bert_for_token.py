@@ -15,22 +15,25 @@
 # ******************************************************************************
 """BERT-based model for token classification."""
 
+# pylint: disable=no-member, not-callable, attribute-defined-outside-init, arguments-differ, missing-function-docstring
+# pylint: disable=too-many-ancestors, too-many-instance-attributes, too-many-arguments
 import os
-import logging
 import glob
 from argparse import Namespace
 from pathlib import Path
 from typing import Any, Dict
+from collections import OrderedDict
 
 import numpy as np
 import pytorch_lightning as pl
-from pytorch_lightning.utilities import rank_zero_info, rank_zero_only
+from pytorch_lightning.utilities import rank_zero_only
 from pytorch_lightning.core.saving import load_hparams_from_yaml
+from pytorch_lightning import _logger as log
 import torch
 from torch.nn import CrossEntropyLoss
 from torch.utils.data import DataLoader, TensorDataset
-from seqeval.metrics import precision_score, recall_score, f1_score, accuracy_score, performance_measure, classification_report
-
+from seqeval.metrics import (precision_score, recall_score, f1_score, accuracy_score,
+                             performance_measure)
 from transformers import (
     BertForTokenClassification,
     BertConfig,
@@ -41,10 +44,6 @@ from transformers import (
 from nlp_architect import LIBRARY_OUT
 import absa_utils
 from sa_bert_model import SaBertForToken, SaBertConfig
-# pylint: disable=no-member, not-callable, attribute-defined-outside-init, arguments-differ, missing-function-docstring
-# pylint: disable=too-many-ancestors, too-many-instance-attributes, too-many-arguments
-
-logger = logging.getLogger(__name__)
 
 MODEL_CONFIG = {
     'bert': (BertForTokenClassification, BertConfig, BertTokenizer),
@@ -111,10 +110,10 @@ class BertForToken(pl.LightningModule):
         for mode in "train", "dev", "test":
             cached_features_file = self._feature_file(mode)
             if os.path.exists(cached_features_file) and not self.hparams.overwrite_cache:
-                logger.info("Loading features from cached file %s", cached_features_file)
+                log.debug("Loading features from cached file %s", cached_features_file)
                 features = torch.load(cached_features_file)
             else:
-                logger.info("Creating features from dataset file at %s", self.hparams.data_dir)
+                log.debug("Creating features from dataset file at %s", self.hparams.data_dir)
                 examples = absa_utils.read_examples_from_file(self.hparams.data_dir, mode)
                 features = absa_utils.convert_examples_to_features(
                     examples,
@@ -122,7 +121,7 @@ class BertForToken(pl.LightningModule):
                     self.hparams.max_seq_length,
                     self.tokenizer
                 )
-                logger.info("Saving features into cached file %s", cached_features_file)
+                log.debug("Saving features into cached file %s", cached_features_file)
                 torch.save(features, cached_features_file)
 
     @staticmethod
@@ -144,7 +143,7 @@ class BertForToken(pl.LightningModule):
     def load_dataset(self, mode, batch_size):
         "Load datasets. Called after prepare data."
         cached_features_file = self._feature_file(mode)
-        logger.info("Loading features from cached file %s", cached_features_file)
+        log.debug("Loading features from cached file %s", cached_features_file)
         features = torch.load(cached_features_file)
         all_input_ids = torch.tensor([f.input_ids for f in features], dtype=torch.long)
         all_attention_mask = torch.tensor([f.attention_mask for f in features], dtype=torch.long)
@@ -201,32 +200,37 @@ class BertForToken(pl.LightningModule):
                     target[i].append(label_map[out_label_ids[i][j]])
                     pred[i].append(label_map[preds[i][j]])
 
+        calc = lambda f: f(target, pred)
         per_sentence = lambda f: [f([t], [p]) for t, p in zip(target, pred)]
 
-        debug_metrics = {
-            "macro_report": classification_report(target, pred),
-            "macro_confusion": performance_measure(target, pred),
+        per_sentence_metrics = {
             "precision": per_sentence(precision_score),
             "recall": per_sentence(recall_score),
             "f1": per_sentence(f1_score),
             "accuracy": per_sentence(accuracy_score)
         }
-        for k, v in debug_metrics.items():
-            logger.info("%s: \n%s\n", k, v)
+        for k, v in per_sentence_metrics.items():
+            log.debug("%s: \n%s\n", k, v)
 
-        results = {
+        results = OrderedDict({
             "val_loss": val_loss_mean,
-            "macro_precision": precision_score(target, pred),
-            "macro_recall": recall_score(target, pred),
-            "macro_f1": f1_score(target, pred),
-            "macro_accuracy": accuracy_score(target, pred)
-        }
+            "micro_precision": calc(precision_score),
+            "micro_recall": calc(recall_score),
+            "micro_f1": calc(f1_score),
+            "micro_accuracy": calc(accuracy_score)
+        })
+        confusion = calc(performance_measure)
+        type_metrics, macro_avg = calc(absa_utils.detailed_metrics)
+        results.update(confusion)
+        results.update(type_metrics)
+        results.update(macro_avg)
+
         ret = results.copy()
         ret["log"] = results
-        return ret, pred, target
+        return ret #, pred, target
 
     def validation_epoch_end(self, outputs):
-        ret, _, _ = self._eval_end(outputs)
+        ret = self._eval_end(outputs)
         logs = ret["log"]
         return {"val_loss": logs["val_loss"], "log": logs, "progress_bar": logs}
 
@@ -234,7 +238,6 @@ class BertForToken(pl.LightningModule):
         ret, _, _ = self._eval_end(outputs)
         logs = ret["log"]
         # `val_loss` is the key returned by `self._eval_end()` but actually refers to `test_loss`
-        # self.logger.experiment.log()
         return {"avg_test_loss": logs["val_loss"], "log": logs, "progress_bar": logs}
 
     def configure_optimizers(self):
@@ -265,7 +268,6 @@ class BertForToken(pl.LightningModule):
         self.lr_scheduler.step()  # By default, PL will only step every epoch.
 
     def test_step(self, batch, batch_nb):
-        assert False
         return self.validation_step(batch, batch_nb)
 
     def train_dataloader(self):
@@ -295,31 +297,6 @@ class BertForToken(pl.LightningModule):
                 list(filter(None, self.hparams.model_name_or_path.split("/"))).pop(),
                 str(self.hparams.max_seq_length)))
 
-    def get_trainer(self, gpus_override=None):
-        """Init trainer for model training/testing."""
-        Path(self.hparams.output_dir).mkdir(exist_ok=True)
-        checkpoint_callback = pl.callbacks.ModelCheckpoint(
-            filepath=self.hparams.output_dir, prefix="checkpoint", monitor="val_loss",
-            mode="min", save_top_k=1
-        )
-        gpus = self.hparams.gpus if gpus_override is None else gpus_override
-        distributed_backend = "ddp" if gpus > 1 else None
-
-        return pl.Trainer(
-            logger=True,
-            accumulate_grad_batches=self.hparams.accumulate_grad_batches,
-            gpus=gpus,
-            max_epochs=self.hparams.max_epochs,
-            gradient_clip_val=self.hparams.gradient_clip_val,
-            checkpoint_callback=checkpoint_callback,
-            callbacks=[LoggingCallback()],#, pl.callbacks.LearningRateLogger()],
-            fast_dev_run=self.hparams.fast_dev_run,
-            val_check_interval=self.hparams.val_check_interval,
-            weights_summary=None,
-            resume_from_checkpoint=self.hparams.resume_from_checkpoint,
-            distributed_backend=distributed_backend,
-        )
-
     @pl.utilities.rank_zero_only
     def on_save_checkpoint(self, checkpoint: Dict[str, Any]) -> None:
         save_path = self.hparams.output_dir.joinpath("best_tfmr")
@@ -331,26 +308,27 @@ class BertForToken(pl.LightningModule):
 
 class LoggingCallback(pl.Callback):
     """Class for logging callbacks."""
-    @rank_zero_only
-    def on_validation_end(self, trainer: pl.Trainer, pl_module: pl.LightningModule):
-        rank_zero_info("***** Validation results *****")
-        metrics = trainer.callback_metrics
-        # Log results
-        for key in sorted(metrics):
-            if key not in ["log", "progress_bar"]:
-                rank_zero_info("{} = {}\n".format(key, str(metrics[key])))
 
     @rank_zero_only
-    def on_test_end(self, trainer: pl.Trainer, pl_module: pl.LightningModule):
-        logger.info("***** Test results *****")
+    def on_validation_end(self, trainer: pl.Trainer, pl_module: pl.LightningModule):
+        print("***** Validation results *****")
+        # Log results
         metrics = trainer.callback_metrics
-        # Log and save results to file
-        output_test_results_file = os.path.join(pl_module.hparams.output_dir, "test_results.txt")
-        with open(output_test_results_file, "w") as writer:
-            for key in sorted(metrics):
-                if key not in ["log", "progress_bar"]:
-                    logger.info("%s = %s\n", key, str(metrics[key]))
-                    writer.write("{} = {}\n".format(key, str(metrics[key])))
+        for key in sorted(metrics):
+            if key not in ["log", "progress_bar"]:
+                print("{} = {:.4f}\n".format(key, float(metrics[key])))
+
+    # @rank_zero_only
+    # def on_test_end(self, trainer: pl.Trainer, pl_module: pl.LightningModule):
+    #     log.info("***** Test results *****")
+    #     metrics = trainer.callback_metrics
+    #     # Log and save results to file
+    #     output_test_results_file = os.path.join(pl_module.hparams.output_dir, "test_results.txt")
+    #     with open(output_test_results_file, "w") as writer:
+    #         for key in sorted(metrics):
+    #             if key not in ["log", "progress_bar"]:
+    #                 log.info("%s = %s\n", key, str(metrics[key]))
+    #                 writer.write("{} = {}\n".format(key, str(metrics[key])))
 
 def load_config(name):
     """Load an experiment configuration from a yaml file."""
@@ -360,6 +338,6 @@ def load_config(name):
 
 def load_last_ckpt(model):
     """Load the last model checkpoint saved."""
-    checkpoints = list(sorted(glob.glob(os.path.join(model.output_dir,
+    checkpoints = list(sorted(glob.glob(os.path.join(model.hparams.output_dir,
                                                      "checkpointepoch=*.ckpt"), recursive=True)))
     return model.load_from_checkpoint(checkpoints[-1])
