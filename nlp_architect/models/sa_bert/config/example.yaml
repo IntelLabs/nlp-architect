@@ -2,7 +2,7 @@ train_batch_size: 16
 eval_batch_size: 16
 max_seq_length: 64
 seed: 12
-max_epochs: 6
+max_epochs: 4
 model_type: bert # bert or sa-bert
 model_name_or_path: bert-base-uncased
 random_init: true
@@ -19,7 +19,7 @@ transpose: false
 num_workers: 88
 gpus: 4
 
-overwrite_cache: true # if false, loads features from cached file (quicker)
+overwrite_cache: false # if false, loads features from cached file (quicker)
 cache_dir: # default: nlp-architect/nlp_architect/cache
 output_dir: # default: nlp-architect/nlp_architect/cache/sa-bert-models
 labels: labels.txt # relative to nlp_architect/models/sa_bert/data/ 

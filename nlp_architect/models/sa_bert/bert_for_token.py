@@ -97,14 +97,6 @@ class BertForToken(pl.LightningModule):
     def forward(self, **inputs):
         return self.model(**inputs)
 
-    def training_step(self, batch, _):
-        "Compute loss and log."
-        inputs = self.map_to_inputs(batch)
-        outputs = self(**inputs)
-        loss = outputs[0]
-        tensorboard_logs = {"loss": loss, "rate": self.lr_scheduler.get_last_lr()[-1]}
-        return {"loss": loss, "log": tensorboard_logs}
-
     def prepare_data(self):
         "Called to initialize data. Use the call to construct features"
         for mode in "train", "dev", "test":
@@ -174,18 +166,47 @@ class BertForToken(pl.LightningModule):
             inputs["parse"] = batch[4]
         return inputs
 
+    def training_step(self, batch, _):
+        "Compute loss and log."
+        inputs = self.map_to_inputs(batch)
+        outputs = self(**inputs)
+        loss = outputs[0]
+        tensorboard_logs = {'train_loss_step': loss, 'lr': self.lr_scheduler.get_last_lr()[-1]}
+        return {'loss': loss, 'log': tensorboard_logs}
+
+    def training_epoch_end(self, outputs):
+        avg_loss = torch.stack([x['loss'] for x in outputs]).mean()
+        tensorboard_logs = {'train_loss': avg_loss, 'step': self.current_epoch}
+        return {'loss': avg_loss, 'log': tensorboard_logs}
+
     def validation_step(self, batch, _):
-        "Compute validation"
+        "Compute validation."
         inputs = self.map_to_inputs(batch)
         outputs = self(**inputs)
         tmp_eval_loss, logits = outputs[:2]
-        preds = logits.detach().cpu().numpy()
-        out_label_ids = inputs["labels"].detach().cpu().numpy()
-        return {"val_loss": tmp_eval_loss.detach().cpu(), "pred": preds, "target": out_label_ids}
+        preds = logits.detach().cpu()#.numpy()
+        target = inputs["labels"].detach().cpu()#.numpy()
+        return {"val_loss_step": tmp_eval_loss.detach().cpu(), "pred": preds, "target": target}
+
+    def validation_epoch_end(self, outputs):
+        ret, _, _ = self._eval_end(outputs)
+        logs = ret["log"]
+        logs['step'] = self.current_epoch
+        return {"val_loss": logs["val_loss"], "log": logs}
+
+    def test_step(self, batch, batch_nb):
+        return self.validation_step(batch, batch_nb)
+
+    def test_epoch_end(self, outputs):
+        ret, _, _ = self._eval_end(outputs)
+        logs = ret["log"]
+        logs['step'] = self.current_epoch
+        # `val_loss` is the key returned by `self._eval_end()` but actually refers to `test_loss`
+        return {"avg_test_loss": logs["val_loss"], "log": logs}
 
     def _eval_end(self, outputs):
         "Evaluation called for both Val and Test"
-        val_loss_mean = torch.stack([x["val_loss"] for x in outputs]).mean()
+        val_loss_mean = torch.stack([x["val_loss_step"] for x in outputs]).mean()
         preds = np.concatenate([x["pred"] for x in outputs], axis=0)
         preds = np.argmax(preds, axis=2)
         out_label_ids = np.concatenate([x["target"] for x in outputs], axis=0)
@@ -227,18 +248,7 @@ class BertForToken(pl.LightningModule):
 
         ret = results.copy()
         ret["log"] = results
-        return ret #, pred, target
-
-    def validation_epoch_end(self, outputs):
-        ret = self._eval_end(outputs)
-        logs = ret["log"]
-        return {"val_loss": logs["val_loss"], "log": logs, "progress_bar": logs}
-
-    def test_epoch_end(self, outputs):
-        ret, _, _ = self._eval_end(outputs)
-        logs = ret["log"]
-        # `val_loss` is the key returned by `self._eval_end()` but actually refers to `test_loss`
-        return {"avg_test_loss": logs["val_loss"], "log": logs, "progress_bar": logs}
+        return ret, pred, target
 
     def configure_optimizers(self):
         "Prepare optimizer and schedule (linear warmup and decay)"
@@ -266,9 +276,6 @@ class BertForToken(pl.LightningModule):
         optimizer.step()
         optimizer.zero_grad()
         self.lr_scheduler.step()  # By default, PL will only step every epoch.
-
-    def test_step(self, batch, batch_nb):
-        return self.validation_step(batch, batch_nb)
 
     def train_dataloader(self):
         train_batch_size = self.hparams.train_batch_size
@@ -315,7 +322,7 @@ class LoggingCallback(pl.Callback):
         # Log results
         metrics = trainer.callback_metrics
         for key in sorted(metrics):
-            if key not in ["log", "progress_bar"]:
+            if key != 'log':
                 print("{} = {:.4f}\n".format(key, float(metrics[key])))
 
     # @rank_zero_only

@@ -33,6 +33,8 @@ def get_trainer(model, gpus_override=None):
 
     return pl.Trainer(
         logger=True,
+        log_save_interval=10,
+        row_log_interval=10,
         accumulate_grad_batches=model.hparams.accumulate_grad_batches,
         gpus=gpus,
         max_epochs=model.hparams.max_epochs,
@@ -44,7 +46,7 @@ def get_trainer(model, gpus_override=None):
         weights_summary=None,
         resume_from_checkpoint=model.hparams.resume_from_checkpoint,
         distributed_backend=distributed_backend,
-        # profiler=True,
+        profiler=True,
         benchmark=True,
         deterministic=False
     )
