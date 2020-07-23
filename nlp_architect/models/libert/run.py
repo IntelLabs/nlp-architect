@@ -17,12 +17,14 @@ import pytorch_lightning as pl
 from bert_for_token import BertForToken, load_config, load_last_ckpt, LoggingCallback
 from aggregator import aggregate
 from sys import argv
+import os
 from pathlib import Path
 from itertools import product
+from pytorch_lightning.loggers import TensorBoardLogger
 import logging
 log = logging.getLogger(__name__)
 
-def get_trainer(model, gpus_override=None):
+def get_trainer(model, version, gpus_override=None):
     """Init trainer for model training/testing."""
     Path(model.hparams.output_dir).mkdir(exist_ok=True)
     checkpoint_callback = pl.callbacks.ModelCheckpoint(
@@ -32,8 +34,14 @@ def get_trainer(model, gpus_override=None):
     gpus = model.hparams.gpus if gpus_override is None else gpus_override
     distributed_backend = "ddp" if gpus > 1 else None
 
+    logger = TensorBoardLogger(
+        save_dir=os.getcwd(),
+        version=version,
+        name='lightning_logs'
+    )
+
     return pl.Trainer(
-        logger=True,
+        logger=logger,
         log_save_interval=10,
         row_log_interval=10,
         accumulate_grad_batches=model.hparams.accumulate_grad_batches,
@@ -65,17 +73,18 @@ def main(config_yaml):
         config.data_dir = config.data + '_' + str(split)
         model = BertForToken(config)
 
+        version = '_'.join([config.data, 'seed', seed, 'split', split])
         if config.do_train:
-            trainer = get_trainer(model)
+            trainer = get_trainer(model, version)
             trainer.fit(model)
 
             trainer.logger.log_hyperparams(config)
             trainer.logger.save()
-            versions.append(Path(trainer.logger.log_dir).name)
+            versions.append(version)
 
         if config.do_predict:        
             # Bug in pytorch_lightning==0.85 -> testing only works with num gpus=1
-            trainer = get_trainer(model, gpus_override=1)
+            trainer = get_trainer(model, version + '_test', gpus_override=1)
             trainer.test(load_last_ckpt(model))
 
     aggregate(Path(trainer.logger.root_dir), versions)

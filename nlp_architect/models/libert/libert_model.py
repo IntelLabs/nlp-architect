@@ -24,7 +24,7 @@ from transformers.modeling_bert import BertEncoder, BertLayer, \
         BertAttention, BertSelfAttention, BertSelfOutput, BertConfig
 from transformers import BertForTokenClassification, BertModel
 
-class SaBertConfig(BertConfig):
+class LiBertConfig(BertConfig):
     def __init__(self, **kwargs):
         super().__init__()
 
@@ -38,10 +38,10 @@ class SaBertConfig(BertConfig):
         self.transpose = hparams.transpose
         self.li_layers = hparams.li_layers
 
-class SaBertForToken(BertForTokenClassification):
+class LiBertForToken(BertForTokenClassification):
     def __init__(self, config):
-        super(SaBertForToken, self).__init__(config)
-        self.bert = SaBertModel(config)
+        super(LiBertForToken, self).__init__(config)
+        self.bert = LiBertModel(config)
 
     def forward(self, input_ids=None, attention_mask=None, token_type_ids=None, position_ids=None,
                 head_mask=None, inputs_embeds=None, labels=None, output_attentions=None,
@@ -80,10 +80,10 @@ class SaBertForToken(BertForTokenClassification):
 
         return outputs  # (loss), scores, (hidden_states), (attentions)
 
-class SaBertModel(BertModel):
+class LiBertModel(BertModel):
     def __init__(self, config):
-        super(SaBertModel, self).__init__(config)
-        self.encoder = SaBertEncoder(config)
+        super(LiBertModel, self).__init__(config)
+        self.encoder = LiBertEncoder(config)
 
     def forward(self, input_ids=None, attention_mask=None, token_type_ids=None, position_ids=None,
                 head_mask=None, inputs_embeds=None, encoder_hidden_states=None,
@@ -157,10 +157,10 @@ class SaBertModel(BertModel):
         ]  # add hidden_states and attentions if they are here
         return outputs  # sequence_output, pooled_output, (hidden_states), (attentions)
 
-class SaBertEncoder(BertEncoder):
+class LiBertEncoder(BertEncoder):
     def __init__(self, config):
-        super(SaBertEncoder, self).__init__(config)
-        self.layer = nn.ModuleList([SaBertLayer(config, layer_num) for \
+        super(LiBertEncoder, self).__init__(config)
+        self.layer = nn.ModuleList([LiBertLayer(config, layer_num) for \
             layer_num in range(config.num_hidden_layers)])
         self.li_layer = config.li_layer
         self.all_layers = config.all_layers
@@ -204,10 +204,10 @@ class SaBertEncoder(BertEncoder):
             outputs = outputs + (all_attentions,)
         return outputs  # last-layer hidden state, (all hidden states), (all attentions)
 
-class SaBertLayer(BertLayer):
+class LiBertLayer(BertLayer):
     def __init__(self, config, layer_num):
-        super(SaBertLayer, self).__init__(config)
-        self.attention = SaBertAttention(config, layer_num)
+        super(LiBertLayer, self).__init__(config)
+        self.attention = LiBertAttention(config, layer_num)
 
     def forward(self, hidden_states, attention_mask=None, head_mask=None,
                 encoder_hidden_states=None, encoder_attention_mask=None,
@@ -224,11 +224,11 @@ class SaBertLayer(BertLayer):
         outputs = (layer_output,) + outputs
         return outputs
 
-class SaBertAttention(BertAttention):
+class LiBertAttention(BertAttention):
     def __init__(self, config, layer_num):
-        super(SaBertAttention, self).__init__(config)
-        self.self = SaBertSelfAttention(config, layer_num)
-        self.output = SaBertSelfOutput(config, layer_num)
+        super(LiBertAttention, self).__init__(config)
+        self.self = LiBertSelfAttention(config, layer_num)
+        self.output = LiBertSelfOutput(config, layer_num)
         self.pruned_heads = set()
 
     def forward(self, hidden_states, attention_mask=None, head_mask=None,
@@ -240,9 +240,9 @@ class SaBertAttention(BertAttention):
         outputs = (attention_output,) + self_outputs[1:]  # add attentions if we output them
         return outputs
 
-class SaBertSelfAttention(BertSelfAttention):
+class LiBertSelfAttention(BertSelfAttention):
     def __init__(self, config, layer_num):
-        super(SaBertSelfAttention, self).__init__(config)
+        super(LiBertSelfAttention, self).__init__(config)
         self.orig_num_attention_heads = config.num_attention_heads
         self.replace_final = config.replace_final
         self.random_init = config.random_init
@@ -370,9 +370,9 @@ class SaBertSelfAttention(BertSelfAttention):
         outputs = (context_layer, attention_probs) if output_attentions else (context_layer,)
         return outputs
 
-class SaBertSelfOutput(BertSelfOutput):
+class LiBertSelfOutput(BertSelfOutput):
     def __init__(self, config, layer_num):
-        super(SaBertSelfOutput, self).__init__(config)
+        super(LiBertSelfOutput, self).__init__(config)
         if  (layer_num == config.li_layer or config.all_layers is True \
              or layer_num in config.li_layers):
             self.original_num_attention_heads = config.num_attention_heads

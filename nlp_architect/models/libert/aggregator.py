@@ -27,10 +27,10 @@ import pandas as pd
 import numpy as np
 import tensorflow as tf
 from tensorboard.backend.event_processing.event_accumulator import EventAccumulator
+# pylint: disable=import-error
 from tensorflow.core.util.event_pb2 import Event
 
 OUT_BASE = 'aggregate'
-
 
 def extract(dpath, versions):
     accumulators = [EventAccumulator(str(dpath / dname)).Reload().scalars \
@@ -81,13 +81,13 @@ def write_summary(dpath, aggregations_per_key):
 def aggregate_to_csv(agg_path, aggregation_ops, extracted):
     csv_dir = agg_path / 'csv'
     os.makedirs(csv_dir)
+    # pylint: disable=abstract-class-instantiated
     with pd.ExcelWriter(agg_path / 'all_metrics.xlsx') as xlsx_writer:
         for key, (steps, _, values) in extracted.items():
             aggregations = [op(values, axis=0) for op in aggregation_ops]
             valid_key = get_valid_filename(key)
             csv_out = csv_dir / (valid_key + '.csv')
             write_csv(csv_out, xlsx_writer, valid_key, aggregations, steps, aggregation_ops)
-    # xlsx_writer.save()
 
 def get_valid_filename(s):
     s = str(s).strip().replace(' ', '_')
@@ -98,16 +98,14 @@ def write_csv(csv_out, xlsx_writer, key, aggregations, steps, ops):
     columns = [op.__name__ for op in ops]
     df = pd.DataFrame(np.transpose(aggregations), index=steps, columns=columns)
     df.to_excel(xlsx_writer, sheet_name=key)
-    # df.to_csv(csv_out)
+    df.to_csv(csv_out)
 
 def aggregate(root_dir, versions):
     log_root = Path(root_dir)
     aggregation_ops = [np.mean, np.min, np.max, np.median, np.std, np.var]
     extracted = extract(log_root, versions)
-
     prev_aggs = [d for d in os.listdir(log_root) if d.startswith(OUT_BASE)]
     agg_path = OUT_BASE + '_' + ('0' if not prev_aggs else (str(int(max(prev_aggs)[-1]) + 1)))
     args = log_root / agg_path, aggregation_ops, extracted
-
     aggregate_to_summary(*args)
     aggregate_to_csv(*args)

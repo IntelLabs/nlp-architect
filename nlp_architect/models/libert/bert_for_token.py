@@ -43,14 +43,14 @@ from transformers import (
 )
 from nlp_architect import LIBRARY_OUT
 import absa_utils
-from sa_bert_model import SaBertForToken, SaBertConfig
+from li_bert_model import LiBertForToken, LiBertConfig
 import logging
 logger = logging.getLogger(__name__)
 logger.setLevel('WARNING')
 
 MODEL_CONFIG = {
     'bert': (BertForTokenClassification, BertConfig, BertTokenizer),
-    'sa-bert': (SaBertForToken, SaBertConfig, BertTokenizer)
+    'libert': (LiBertForToken, LiBertConfig, BertTokenizer)
 }
 
 class BertForToken(pl.LightningModule):
@@ -70,7 +70,7 @@ class BertForToken(pl.LightningModule):
         if not hparams.cache_dir:
             hparams.cache_dir = LIBRARY_OUT
         if not hparams.output_dir:
-            hparams.output_dir = LIBRARY_OUT / 'sa-bert-models'
+            hparams.output_dir = LIBRARY_OUT / 'libert-models'
 
         self.model_type, self.config_type, self.tokenizer_type = MODEL_CONFIG[hparams.model_type]
 
@@ -151,7 +151,7 @@ class BertForToken(pl.LightningModule):
 
         tensors = [all_input_ids, all_attention_mask, all_token_type_ids, all_label_ids]
 
-        if self.model_type is SaBertForToken:
+        if self.model_type is LiBertForToken:
             #### Attatch dependency parse info ###
             parse_data = self.get_parse_data(mode)
             parse_tensor = torch.tensor([self.pad((parse_data)[f]) for f in parse_data.files],

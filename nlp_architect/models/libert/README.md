@@ -1,4 +1,4 @@
-# SA-BERT
+# LiBERT
 
 ## Installation
 
@@ -9,7 +9,7 @@ source my_env/bin/activate
 git clone https://github.com/NervanaSystems/nlp-architect.git
 pip install -e nlp-architect
 pip install -U pytorch transformers pytorch-lightning tensorboard scikit-learn seqeval numpy scipy
-git branch sa-bert
+git branch li-bert
 ```
 
 ## Usage
