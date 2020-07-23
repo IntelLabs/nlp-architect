@@ -8,7 +8,7 @@ python3.6 -m venv my_env
 source my_env/bin/activate
 git clone https://github.com/NervanaSystems/nlp-architect.git
 pip install -e nlp-architect
-pip install -U pytorch transformers pytorch-lightning tensorboard scikit-learn seqeval numpy scipy
+pip install -U pytorch transformers pytorch-lightning tensorboard scikit-learn seqeval numpy scipy pandas openpyxl
 git branch li-bert
 ```
 
@@ -27,7 +27,7 @@ git branch li-bert
 - On remote machine:
 
     ```bash
-    tensorboard --host REMOTE_HOST --port PORT --logdir path/to/nlp-architect/lightning_logs
+    tensorboard --host REMOTE_HOST --port PORT --logdir path/to/nlp-architect/models/libert/logs
     ```
 
 - On local machine:

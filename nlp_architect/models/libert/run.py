@@ -17,27 +17,26 @@ import pytorch_lightning as pl
 from bert_for_token import BertForToken, load_config, load_last_ckpt, LoggingCallback
 from aggregator import aggregate
 from sys import argv
-import os
+from os.path import dirname, realpath
 from pathlib import Path
 from itertools import product
 from pytorch_lightning.loggers import TensorBoardLogger
 import logging
 log = logging.getLogger(__name__)
 
-def get_trainer(model, version, gpus_override=None):
+def get_trainer(model, data, experiment, gpus_override=None):
     """Init trainer for model training/testing."""
     Path(model.hparams.output_dir).mkdir(exist_ok=True)
     checkpoint_callback = pl.callbacks.ModelCheckpoint(
-        filepath=model.hparams.output_dir, prefix="checkpoint", monitor="val_loss",
+        filepath=model.hparams.output_dir, prefix="chjeckpoint", monitor="val_loss",
         mode="min", save_top_k=1
     )
     gpus = model.hparams.gpus if gpus_override is None else gpus_override
     distributed_backend = "ddp" if gpus > 1 else None
 
     logger = TensorBoardLogger(
-        save_dir=os.getcwd(),
-        version=version,
-        name='lightning_logs'
+        save_dir=Path(dirname(realpath(__file__))) / 'logs' / data,
+        name=experiment
     )
 
     return pl.Trainer(
@@ -55,7 +54,7 @@ def get_trainer(model, version, gpus_override=None):
         weights_summary=None,
         resume_from_checkpoint=model.hparams.resume_from_checkpoint,
         distributed_backend=distributed_backend,
-        # profiler=True,
+        profiler=True,
         benchmark=True,
         deterministic=False
     )
@@ -67,31 +66,33 @@ def main(config_yaml):
     versions = []
     runs = list(product(config.seeds, config.splits))
     for i, (seed, split) in enumerate(runs):
-        log.info('{}\n{}Run {}/{}: Seed {} Split {}\n{}'.format('*' * 150, ' ' * 50, i + 1, len(runs), seed, split, '*' * 150))
+        experiment = "seed_{}_split_{}".format(seed, split)
+        log.info('\n{}\n{}Run {}/{}: {}, {}\n{}'\
+            .format('*' * 150, ' ' * 50, i + 1, len(runs), config.data, experiment, '*' * 150))
 
         pl.seed_everything(seed)
         config.data_dir = config.data + '_' + str(split)
         model = BertForToken(config)
 
-        version = '_'.join([config.data, 'seed', seed, 'split', split])
         if config.do_train:
-            trainer = get_trainer(model, version)
+            trainer = get_trainer(model, config.data, experiment)
             trainer.fit(model)
 
             trainer.logger.log_hyperparams(config)
             trainer.logger.save()
-            versions.append(version)
+            versions.append(Path(trainer.logger.log_dir))
 
         if config.do_predict:        
             # Bug in pytorch_lightning==0.85 -> testing only works with num gpus=1
-            trainer = get_trainer(model, version + '_test', gpus_override=1)
+            trainer = get_trainer(model, config.data, experiment + '_test', gpus_override=1)
             trainer.test(load_last_ckpt(model))
 
-    aggregate(Path(trainer.logger.root_dir), versions)
+    if len(versions) > 1:
+        aggregate(versions)
 
 if __name__ == "__main__":
     argv = ['', '']
-    argv[1] = 'example'
-    # argv[1] = 'sanity'
+    # argv[1] = 'example'
+    argv[1] = 'sanity'
 
     main(argv[1])

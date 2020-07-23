@@ -1,11 +1,14 @@
 train_batch_size: 16
 eval_batch_size: 16
 max_seq_length: 64
-seed: 12
-max_epochs: 3
+max_epochs: 1
 model_type: bert # bert or li-bert
 model_name_or_path: bert-base-uncased
 random_init: true
+
+data: sanity # relative to nlp_architect/models/li_bert/data/
+splits: [1]
+seeds: [12, 57]
 
 li_layer: 5
 li_layers: [2]
@@ -23,9 +26,6 @@ overwrite_cache: false # if false, loads features from cached file (quicker)
 cache_dir: # default: nlp-architect/nlp_architect/cache
 output_dir: # default: nlp-architect/nlp_architect/cache/li-bert-models
 labels: labels.txt # relative to nlp_architect/models/li_bert/data/ 
-
-data_dir: sanity
-# data_dir: laptops_to_restaurants_1 # relative to nlp_architect/models/li_bert/data/
 
 do_train: true
 do_predict: false

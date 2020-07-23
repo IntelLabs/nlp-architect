@@ -1,14 +1,14 @@
 train_batch_size: 16
 eval_batch_size: 16
 max_seq_length: 64
-max_epochs: 3
+max_epochs: 1
 model_type: bert # bert or li-bert
 model_name_or_path: bert-base-uncased
 random_init: true
 
 data: laptops_to_restaurants # relative to nlp_architect/models/li_bert/data/
-splits: [2]
-seeds: [12, 57]
+splits: [1]
+seeds: [12]
 
 li_layer: 5
 li_layers: [2]

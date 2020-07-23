@@ -43,7 +43,7 @@ from transformers import (
 )
 from nlp_architect import LIBRARY_OUT
 import absa_utils
-from li_bert_model import LiBertForToken, LiBertConfig
+from libert_model import LiBertForToken, LiBertConfig
 import logging
 logger = logging.getLogger(__name__)
 logger.setLevel('WARNING')

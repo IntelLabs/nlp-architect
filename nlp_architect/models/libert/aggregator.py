@@ -32,9 +32,8 @@ from tensorflow.core.util.event_pb2 import Event
 
 OUT_BASE = 'aggregate'
 
-def extract(dpath, versions):
-    accumulators = [EventAccumulator(str(dpath / dname)).Reload().scalars \
-        for dname in versions if dname != OUT_BASE]
+def extract(versions):
+    accumulators = [EventAccumulator(str(version)).Reload().scalars for version in versions]
     # Filter non event files
     accumulators = [acc for acc in accumulators if acc.Keys()]
     # Get and validate all scalar keys
@@ -100,12 +99,18 @@ def write_csv(csv_out, xlsx_writer, key, aggregations, steps, ops):
     df.to_excel(xlsx_writer, sheet_name=key)
     df.to_csv(csv_out)
 
-def aggregate(root_dir, versions):
-    log_root = Path(root_dir)
+def aggregate(versions):
+    # log_root = Path(root_dir)
     aggregation_ops = [np.mean, np.min, np.max, np.median, np.std, np.var]
-    extracted = extract(log_root, versions)
-    prev_aggs = [d for d in os.listdir(log_root) if d.startswith(OUT_BASE)]
-    agg_path = OUT_BASE + '_' + ('0' if not prev_aggs else (str(int(max(prev_aggs)[-1]) + 1)))
-    args = log_root / agg_path, aggregation_ops, extracted
+    extracted = extract(versions)
+
+    base = versions[0].parent.parent
+    print(base, str(base))
+    prev_aggs = [d for d in os.listdir(base.parent) if d.startswith(base.name + '_agg')]
+    agg_path = base.name + '_agg_' + ('0' if not prev_aggs else (str(int(max(prev_aggs)[-1]) + 1)))
+    print(agg_path, str(agg_path))
+
+    args = base.parent / agg_path, aggregation_ops, extracted
+
     aggregate_to_summary(*args)
     aggregate_to_csv(*args)
