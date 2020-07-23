@@ -19,9 +19,8 @@ from aggregator import aggregate
 from sys import argv
 from pathlib import Path
 from itertools import product
-# import logging
-# logger = logging.getLogger(__name__)
-# logger.setLevel('WARNING')
+import logging
+log = logging.getLogger(__name__)
 
 def get_trainer(model, gpus_override=None):
     """Init trainer for model training/testing."""
@@ -48,19 +47,21 @@ def get_trainer(model, gpus_override=None):
         weights_summary=None,
         resume_from_checkpoint=model.hparams.resume_from_checkpoint,
         distributed_backend=distributed_backend,
-        profiler=True,
+        # profiler=True,
         benchmark=True,
         deterministic=False
     )
 
 # pylint: disable=no-member
 def main(config_yaml):
-    # config = load_config(config_yaml)
+    config = load_config(config_yaml)
 
     versions = []
-    for seed, split in product(config.seeds, config.splits):
-        pl.seed_everything(seed)
+    runs = list(product(config.seeds, config.splits))
+    for i, (seed, split) in enumerate(runs):
+        log.info('{}\n{}Run {}/{}: Seed {} Split {}\n{}'.format('*' * 150, ' ' * 50, i + 1, len(runs), seed, split, '*' * 150))
 
+        pl.seed_everything(seed)
         config.data_dir = config.data + '_' + str(split)
         model = BertForToken(config)
 
@@ -70,15 +71,14 @@ def main(config_yaml):
 
             trainer.logger.log_hyperparams(config)
             trainer.logger.save()
-            versions.append(trainer.logger.log_dir)
+            versions.append(Path(trainer.logger.log_dir).name)
 
         if config.do_predict:        
             # Bug in pytorch_lightning==0.85 -> testing only works with num gpus=1
             trainer = get_trainer(model, gpus_override=1)
             trainer.test(load_last_ckpt(model))
 
-    # aggregate(trainer.logger.root_dir, versions)
-    # aggregate(Path('/home/daniel_nlp/nlp-architect/lightning_logs'), ['version_' + str(i) for i in range(4)])
+    aggregate(Path(trainer.logger.root_dir), versions)
 
 if __name__ == "__main__":
     argv = ['', '']

@@ -21,130 +21,93 @@
 
 import os
 import re
+from pathlib import Path
 
 import pandas as pd
 import numpy as np
 import tensorflow as tf
 from tensorboard.backend.event_processing.event_accumulator import EventAccumulator
 from tensorflow.core.util.event_pb2 import Event
-from pathlib import Path
 
-FOLDER_NAME = 'aggregates'
+OUT_BASE = 'aggregate'
 
 
-def extract(dpath, subpath):
-    scalar_accumulators = [EventAccumulator(str(dpath / dname / subpath)).Reload(
-    ).scalars for dname in os.listdir(dpath) if dname != FOLDER_NAME]
-
+def extract(dpath, versions):
+    accumulators = [EventAccumulator(str(dpath / dname)).Reload().scalars \
+        for dname in versions if dname != OUT_BASE]
     # Filter non event files
-    scalar_accumulators = [scalar_accumulator for scalar_accumulator in scalar_accumulators if scalar_accumulator.Keys()]
-
+    accumulators = [acc for acc in accumulators if acc.Keys()]
     # Get and validate all scalar keys
-    all_keys = [tuple(scalar_accumulator.Keys()) for scalar_accumulator in scalar_accumulators]
-    assert len(set(all_keys)) == 1, "All runs need to have the same scalar keys. There are mismatches in {}".format(all_keys)
+    all_keys = [tuple(acc.Keys()) for acc in accumulators]
+    assert len(set(all_keys)) == 1, "All runs need to have the same scalar keys.\
+        There are mismatches in {}".format(all_keys)
     keys = all_keys[0]
 
-    all_scalar_events_per_key = [[scalar_accumulator.Items(key) for scalar_accumulator in scalar_accumulators] for key in keys]
+    keys = [k for k in keys if 'step' not in k and 'lr' not in k]
 
+    all_events_per_key = [[acc.Items(key) for acc in accumulators] for key in keys]
     # Get and validate all steps per key
-    all_steps_per_key = [[tuple(scalar_event.step for scalar_event in scalar_events) for scalar_events in all_scalar_events]
-                         for all_scalar_events in all_scalar_events_per_key]
-
+    all_steps_per_key = [[tuple(e.step for e in events) for events in all_events]
+                         for all_events in all_events_per_key]
     for i, all_steps in enumerate(all_steps_per_key):
-        assert len(set(all_steps)) == 1, "For scalar {} the step numbering or count doesn't match. Step count for all runs: {}".format(
-            keys[i], [len(steps) for steps in all_steps])
-
+        assert len(set(all_steps)) == 1, "For scalar {} the step numbering or count doesn't match.\
+            Step count for all runs: {}".format(keys[i], [len(steps) for steps in all_steps])
     steps_per_key = [all_steps[0] for all_steps in all_steps_per_key]
-
     # Get and average wall times per step per key
-    wall_times_per_key = [np.mean([tuple(scalar_event.wall_time for scalar_event in scalar_events) for scalar_events in all_scalar_events], axis=0)
-                          for all_scalar_events in all_scalar_events_per_key]
-
+    wall_times_per_key = [np.mean([tuple(e.wall_time for e in events) for \
+        events in all_events], axis=0) for all_events in all_events_per_key]
     # Get values per step per key
-    values_per_key = [[[scalar_event.value for scalar_event in scalar_events] for scalar_events in all_scalar_events]
-                      for all_scalar_events in all_scalar_events_per_key]
-
+    values_per_key = [[[scalar_event.value for scalar_event in events] for events in all_events]
+                      for all_events in all_events_per_key]
     all_per_key = dict(zip(keys, zip(steps_per_key, wall_times_per_key, values_per_key)))
-
     return all_per_key
 
-def aggregate_to_summary(dpath, aggregation_ops, extracts_per_subpath):
+def aggregate_to_summary(agg_path, aggregation_ops, extracted):
     for op in aggregation_ops:
-        for subpath, all_per_key in extracts_per_subpath.items():
-            path = dpath / FOLDER_NAME / op.__name__ / dpath.name / subpath
-            aggregations_per_key = {key: (steps, wall_times, op(values, axis=0)) for key, (steps, wall_times, values) in all_per_key.items()}
-            write_summary(path, aggregations_per_key)
+        aggregations_per_key = {key: (steps, wall_times, op(values, axis=0))\
+            for key, (steps, wall_times, values) in extracted.items()}
+        write_summary(agg_path / op.__name__, aggregations_per_key)
 
 def write_summary(dpath, aggregations_per_key):
-    writer = tf.summary.FileWriter(dpath)
-
+    writer = tf.compat.v1.summary.FileWriter(dpath)
     for key, (steps, wall_times, aggregations) in aggregations_per_key.items():
         for step, wall_time, aggregation in zip(steps, wall_times, aggregations):
-            summary = tf.Summary(value=[tf.Summary.Value(tag=key, simple_value=aggregation)])
+            summary = tf.compat.v1.Summary(
+                value=[tf.compat.v1.Summary.Value(tag=key, simple_value=aggregation)])
             scalar_event = Event(wall_time=wall_time, step=step, summary=summary)
             writer.add_event(scalar_event)
-
         writer.flush()
 
-def aggregate_to_csv(dpath, aggregation_ops, extracts_per_subpath):
-    for subpath, all_per_key in extracts_per_subpath.items():
-        for key, (steps, wall_times, values) in all_per_key.items():
+def aggregate_to_csv(agg_path, aggregation_ops, extracted):
+    csv_dir = agg_path / 'csv'
+    os.makedirs(csv_dir)
+    with pd.ExcelWriter(agg_path / 'all_metrics.xlsx') as xlsx_writer:
+        for key, (steps, _, values) in extracted.items():
             aggregations = [op(values, axis=0) for op in aggregation_ops]
-            write_csv(dpath, subpath, key, dpath.name, aggregations, steps, aggregation_ops)
+            valid_key = get_valid_filename(key)
+            csv_out = csv_dir / (valid_key + '.csv')
+            write_csv(csv_out, xlsx_writer, valid_key, aggregations, steps, aggregation_ops)
+    # xlsx_writer.save()
 
 def get_valid_filename(s):
     s = str(s).strip().replace(' ', '_')
     return re.sub(r'(?u)[^-\w.]', '', s)
 
-def write_csv(dpath, subpath, key, fname, aggregations, steps, aggregation_ops):
-    path = dpath / FOLDER_NAME
-    if not path.exists():
-        os.makedirs(path)
-    file_name = get_valid_filename(key) + '-' + get_valid_filename(subpath) + '-' + fname + '.csv'
-    aggregation_ops_names = [aggregation_op.__name__ for aggregation_op in aggregation_ops]
-    df = pd.DataFrame(np.transpose(aggregations), index=steps, columns=aggregation_ops_names)
-    df.to_csv(path / file_name, sep=';')
+def write_csv(csv_out, xlsx_writer, key, aggregations, steps, ops):
+    # columns = ['step'] + [op.__name__ for op in ops]
+    columns = [op.__name__ for op in ops]
+    df = pd.DataFrame(np.transpose(aggregations), index=steps, columns=columns)
+    df.to_excel(xlsx_writer, sheet_name=key)
+    # df.to_csv(csv_out)
 
-
-def aggregate(root_dir, subpaths):
-    dpath = Path(root_dir)
-    name = dpath.name
-    subpath_names = [dpath / subpath for subpath in subpaths]
+def aggregate(root_dir, versions):
+    log_root = Path(root_dir)
     aggregation_ops = [np.mean, np.min, np.max, np.median, np.std, np.var]
-    print("Started aggregation {}".format(name))
-    extracts_per_subpath = {subpath: extract(dpath, subpath) for subpath in subpath_names}
-    args = dpath, aggregation_ops, extracts_per_subpath
+    extracted = extract(log_root, versions)
+
+    prev_aggs = [d for d in os.listdir(log_root) if d.startswith(OUT_BASE)]
+    agg_path = OUT_BASE + '_' + ('0' if not prev_aggs else (str(int(max(prev_aggs)[-1]) + 1)))
+    args = log_root / agg_path, aggregation_ops, extracted
+
     aggregate_to_summary(*args)
-    # aggregate_to_csv(*args)
-    print("Ended aggregation {}".format(name))
-
-
-# if __name__ == '__main__':
-#     def param_list(param):
-#         p_list = ast.literal_eval(param)
-#         if type(p_list) is not list:
-#             raise argparse.ArgumentTypeError("Parameter {} is not a list".format(param))
-#         return p_list
-
-#     parser = argparse.ArgumentParser()
-#     parser.add_argument("--path", type=str, help="main path for tensorboard files", default=os.getcwd())
-#     parser.add_argument("--subpaths", type=param_list, help="subpath sturctures", default=['test', 'train'])
-#     parser.add_argument("--output", type=str, help="aggregation can be saves as tensorboard file (summary) or as table (csv)", default='summary')
-
-#     args = parser.parse_args()
-
-#     path = Path(args.path)
-
-#     if not path.exists():
-#         raise argparse.ArgumentTypeError("Parameter {} is not a valid path".format(path))
-
-#     subpaths = [path / dname / subpath for subpath in args.subpaths for dname in os.listdir(path) if dname != FOLDER_NAME]
-
-#     for subpath in subpaths:
-#         if not os.path.exists(subpath):
-#             raise argparse.ArgumentTypeError("Parameter {} is not a valid path".format(subpath))
-
-#     if args.output not in ['summary', 'csv']:
-#         raise argparse.ArgumentTypeError("Parameter {} is not summary or csv".format(args.output))
-
-#     aggregate(path, args.output, args.subpaths)
+    aggregate_to_csv(*args)
