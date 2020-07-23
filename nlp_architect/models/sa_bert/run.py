@@ -15,8 +15,10 @@
 # ******************************************************************************
 import pytorch_lightning as pl
 from bert_for_token import BertForToken, load_config, load_last_ckpt, LoggingCallback
+from aggregator import aggregate
 from sys import argv
 from pathlib import Path
+from itertools import product
 # import logging
 # logger = logging.getLogger(__name__)
 # logger.setLevel('WARNING')
@@ -53,22 +55,30 @@ def get_trainer(model, gpus_override=None):
 
 # pylint: disable=no-member
 def main(config_yaml):
-    config = load_config(config_yaml)
-    pl.seed_everything(config.seed)
+    # config = load_config(config_yaml)
 
-    model = BertForToken(config)
+    versions = []
+    for seed, split in product(config.seeds, config.splits):
+        pl.seed_everything(seed)
 
-    if config.do_train:
-        trainer = get_trainer(model)
-        trainer.fit(model)
+        config.data_dir = config.data + '_' + str(split)
+        model = BertForToken(config)
 
-        trainer.logger.log_hyperparams(config)
-        trainer.logger.save()
+        if config.do_train:
+            trainer = get_trainer(model)
+            trainer.fit(model)
 
-    if config.do_predict:        
-        # Bug in pytorch_lightning==0.85 -> testing only works with num gpus=1
-        trainer = get_trainer(model, gpus_override=1)
-        trainer.test(load_last_ckpt(model))
+            trainer.logger.log_hyperparams(config)
+            trainer.logger.save()
+            versions.append(trainer.logger.log_dir)
+
+        if config.do_predict:        
+            # Bug in pytorch_lightning==0.85 -> testing only works with num gpus=1
+            trainer = get_trainer(model, gpus_override=1)
+            trainer.test(load_last_ckpt(model))
+
+    # aggregate(trainer.logger.root_dir, versions)
+    # aggregate(Path('/home/daniel_nlp/nlp-architect/lightning_logs'), ['version_' + str(i) for i in range(4)])
 
 if __name__ == "__main__":
     argv = ['', '']

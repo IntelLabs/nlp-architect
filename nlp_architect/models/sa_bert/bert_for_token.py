@@ -44,6 +44,9 @@ from transformers import (
 from nlp_architect import LIBRARY_OUT
 import absa_utils
 from sa_bert_model import SaBertForToken, SaBertConfig
+import logging
+logger = logging.getLogger(__name__)
+logger.setLevel('WARNING')
 
 MODEL_CONFIG = {
     'bert': (BertForTokenClassification, BertConfig, BertTokenizer),
@@ -222,17 +225,6 @@ class BertForToken(pl.LightningModule):
                     pred[i].append(label_map[preds[i][j]])
 
         calc = lambda f: f(target, pred)
-        per_sentence = lambda f: [f([t], [p]) for t, p in zip(target, pred)]
-
-        per_sentence_metrics = {
-            "precision": per_sentence(precision_score),
-            "recall": per_sentence(recall_score),
-            "f1": per_sentence(f1_score),
-            "accuracy": per_sentence(accuracy_score)
-        }
-        for k, v in per_sentence_metrics.items():
-            log.debug("%s: \n%s\n", k, v)
-
         results = OrderedDict({
             "val_loss": val_loss_mean,
             "micro_precision": calc(precision_score),
@@ -242,9 +234,19 @@ class BertForToken(pl.LightningModule):
         })
         confusion = calc(performance_measure)
         type_metrics, macro_avg = calc(absa_utils.detailed_metrics)
-        results.update(confusion)
         results.update(type_metrics)
         results.update(macro_avg)
+        results.update(confusion)
+
+        per_sentence = lambda f: [f([t], [p]) for t, p in zip(target, pred)]
+        per_sentence_metrics = {
+            "precision": per_sentence(precision_score),
+            "recall": per_sentence(recall_score),
+            "f1": per_sentence(f1_score),
+            "accuracy": per_sentence(accuracy_score)
+        }
+        for k, v in per_sentence_metrics.items():
+            log.debug("%s: \n%s\n", k, v)
 
         ret = results.copy()
         ret["log"] = results
