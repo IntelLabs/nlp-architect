@@ -73,7 +73,7 @@ class BertForToken(pl.LightningModule):
         if not hparams.cache_dir:
             hparams.cache_dir = LIBERT_OUT / 'cache'
         if not hparams.output_dir:
-            hparams.output_dir = LIBERT_OUT / 'libert-models'
+            hparams.output_dir = LIBERT_OUT / 'models'
 
         self.model_type, self.config_type, self.tokenizer_type = MODEL_CONFIG[hparams.model_type]
 

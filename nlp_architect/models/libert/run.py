@@ -21,8 +21,7 @@ from pathlib import Path
 from os.path import realpath
 from itertools import product
 from pytorch_lightning.loggers import TensorBoardLogger
-import logging
-log = logging.getLogger(__name__)
+from pytorch_lightning import _logger as log
 
 LIBERT_OUT = Path(realpath(__file__)).parent / 'out'
 
@@ -64,30 +63,31 @@ def get_trainer(model, data, experiment, version=None, gpus_override=None):
 
 # pylint: disable=no-member
 def main(config_yaml):
-    config = load_config(config_yaml)
+    cfg = load_config(config_yaml)
 
     versions = []
-    runs = list(product(config.seeds, config.splits))
+    runs = list(product(cfg.seeds, cfg.splits))
     for i, (seed, split) in enumerate(runs):
-        experiment = "seed_{}_split_{}".format(seed, split)
+        random_init_str = 'random_init_' if cfg.random_init and cfg.model_type == 'libert' else ''
+        experiment = "{}_{}seed_{}_split_{}".format(cfg.model_type, random_init_str, seed, split)
         log.info('\n{}\n{}Run {}/{}: {}, {}\n{}'\
-            .format('*' * 150, ' ' * 50, i + 1, len(runs), config.data, experiment, '*' * 150))
+            .format('*' * 150, ' ' * 50, i + 1, len(runs), cfg.data, experiment, '*' * 150))
 
         pl.seed_everything(seed)
-        config.data_dir = config.data + '_' + str(split)
-        model = BertForToken(config)
+        cfg.data_dir = cfg.data + '_' + str(split)
+        model = BertForToken(cfg)
 
-        if config.do_train:
-            trainer = get_trainer(model, config.data, experiment, config.version)
+        if cfg.do_train:
+            trainer = get_trainer(model, cfg.data, experiment, cfg.version)
             trainer.fit(model)
 
-            trainer.logger.log_hyperparams(config)
+            trainer.logger.log_hyperparams(cfg)
             trainer.logger.save()
             versions.append(Path(trainer.logger.log_dir))
 
-        if config.do_predict:      
+        if cfg.do_predict:      
             # Bug in pytorch_lightning==0.85 -> testing only works with num gpus=1
-            trainer = get_trainer(model, config.data, experiment + '_test', gpus_override=1)
+            trainer = get_trainer(model, cfg.data, experiment + '_test', gpus_override=1)
             trainer.test(load_last_ckpt(model))
 
     # Aggregate tensorboard log metrics for all runs

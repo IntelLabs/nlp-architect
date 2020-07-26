@@ -1,12 +1,12 @@
 max_epochs: 1
-model_type: libert # bert or libert
+model_type: bert # bert or libert
 random_init: false
 
-data: laptops_to_restaurants # relative to nlp_architect/models/li_bert/data/preprocessed_conll
+data: sanity # relative to nlp_architect/models/li_bert/data/preprocessed_conll
 splits: [1, 2]
-seeds: [12, 57]
+seeds: [12]
 
-version: # optional: name this experiment version. version named "baseline" will be used for significance tests
+version: # optional: name this experiment version
 li_layer: #5
 li_layers: #[2]
 all_layers: true
@@ -22,7 +22,7 @@ do_predict: false
 num_workers: 88
 gpus: 1
 
-overwrite_cache: false # if false, loads features from cached file (faster)
+overwrite_cache: true # if false, loads features from cached file (faster)
 cache_dir: # default: nlp-architect/nlp_architect/cache
 output_dir: # default: nlp-architect/nlp_architect/cache/li-bert-models
 labels: labels.txt # relative to nlp_architect/models/li_bert/data
