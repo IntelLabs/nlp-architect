@@ -318,6 +318,21 @@ class BertForToken(pl.LightningModule):
         self.tokenizer.save_pretrained(save_path)
         self.tfmr_ckpts[self.step_count] = save_path
 
+def tabular(dic: dict, title: str) -> str:
+    res = "\n\n{}\n".format(title)
+    key_vals = [(k, f"{float(dic[k]):.4}") for k in sorted(dic)]
+    line_sep = f"{os.linesep}{'-' * 175}"
+    columns_per_row = 8
+    for i in range(0, len(key_vals), columns_per_row):
+        subset = key_vals[i: i + columns_per_row]
+        res += line_sep + f"{os.linesep}"
+        res += f"{subset[0][0]:<10s}\t|  " + "\t|  ".join((f"{k:<13}" for k, _ in subset[1:]))
+        res += line_sep + f"{os.linesep}"
+        res += f"{subset[0][1]:<10s}\t|  " + "\t|  ".join((f"{v:<13}" for _, v in subset[1:]))
+        res += line_sep + "\n"
+    res += os.linesep
+    return res
+
 class LoggingCallback(pl.Callback):
     """Class for logging callbacks."""
 
@@ -326,21 +341,20 @@ class LoggingCallback(pl.Callback):
         print("***** Validation results *****")
         # Log results
         metrics = trainer.callback_metrics
-        for key in sorted(metrics):
-            if key != 'log':
-                print("{} = {:.4f}\n".format(key, float(metrics[key])))
+        print(tabular(metrics, 'Metrics'))
 
-    # @rank_zero_only
-    # def on_test_end(self, trainer: pl.Trainer, pl_module: pl.LightningModule):
-    #     log.info("***** Test results *****")
-    #     metrics = trainer.callback_metrics
-    #     # Log and save results to file
-    #     output_test_results_file = os.path.join(pl_module.hparams.output_dir, "test_results.txt")
-    #     with open(output_test_results_file, "w") as writer:
-    #         for key in sorted(metrics):
-    #             if key not in ["log", "progress_bar"]:
-    #                 log.info("%s = %s\n", key, str(metrics[key]))
-    #                 writer.write("{} = {}\n".format(key, str(metrics[key])))
+    @rank_zero_only
+    def on_test_end(self, trainer: pl.Trainer, pl_module: pl.LightningModule):
+        print("***** Test results *****")
+        metrics = trainer.callback_metrics
+        # Log and save results to file
+        print(tabular(metrics, 'Metrics'))
+
+        output_test_results_file = os.path.join(pl_module.hparams.output_dir, "test_results.txt")
+        with open(output_test_results_file, "w") as writer:
+            for key in sorted(metrics):
+                if key not in ["log", "progress_bar"]:
+                    writer.write("{} = {}\n".format(key, str(metrics[key])))
 
 def load_config(name):
     """Load an experiment configuration from a yaml file."""

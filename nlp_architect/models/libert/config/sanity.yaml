@@ -3,7 +3,7 @@ model_type: bert # bert or libert
 random_init: false
 
 data: sanity # relative to nlp_architect/models/li_bert/data/preprocessed_conll
-splits: [1, 2]
+splits: [1]
 seeds: [12]
 
 version: # optional: name this experiment version
@@ -22,7 +22,7 @@ do_predict: false
 num_workers: 88
 gpus: 1
 
-overwrite_cache: true # if false, loads features from cached file (faster)
+overwrite_cache: false # if false, loads features from cached file (faster)
 cache_dir: # default: nlp-architect/nlp_architect/cache
 output_dir: # default: nlp-architect/nlp_architect/cache/li-bert-models
 labels: labels.txt # relative to nlp_architect/models/li_bert/data

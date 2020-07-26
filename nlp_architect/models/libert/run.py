@@ -85,7 +85,7 @@ def main(config_yaml):
             trainer.logger.save()
             versions.append(Path(trainer.logger.log_dir))
 
-        if cfg.do_predict:      
+        if cfg.do_predict:
             # Bug in pytorch_lightning==0.85 -> testing only works with num gpus=1
             trainer = get_trainer(model, cfg.data, experiment + '_test', gpus_override=1)
             trainer.test(load_last_ckpt(model))
