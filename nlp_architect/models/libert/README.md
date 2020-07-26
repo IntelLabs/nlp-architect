@@ -25,7 +25,7 @@ pip install -r nlp-architect/nlp_architect/models/libert/requirements.txt
 - On remote machine:
 
     ```bash
-    tensorboard --host REMOTE_HOST --port PORT --logdir path/to/nlp-architect/models/libert/logs
+    tensorboard --host REMOTE_HOST --port PORT --logdir path/to/nlp-architect/models/libert/out/logs
     ```
 
 - On local machine:

@@ -100,8 +100,7 @@ def main(config_yaml):
         aggregate(versions)
 
 if __name__ == "__main__":
-    argv = ['', '']
+    # argv = ['', '']
     # argv[1] = 'example'
-    argv[1] = 'sanity'
-
+    # argv[1] = 'sanity'
     main(argv[1])

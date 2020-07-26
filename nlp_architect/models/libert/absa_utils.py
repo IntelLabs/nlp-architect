@@ -20,10 +20,11 @@ from dataclasses import dataclass
 from enum import Enum
 from collections import defaultdict
 from typing import List, Optional, Union
+
+from pytorch_lightning import _logger as log
 from transformers import PreTrainedTokenizer
 from seqeval.metrics.sequence_labeling import get_entities
 import numpy as np
-import logging
 
 @dataclass
 class InputExample:
@@ -105,8 +106,8 @@ def convert_examples_to_features(
 
     features = []
     for (ex_index, example) in enumerate(examples):
-        # if ex_index % 10_000 == 0:
-            # logger.info("Writing example %d of %d", ex_index, len(examples))
+        if ex_index % 1_000 == 0:
+            log.debug("Writing example %d of %d", ex_index, len(examples))
         tokens = []
         label_ids = []
         for word, label in zip(example.words, example.labels):
@@ -170,14 +171,14 @@ def convert_examples_to_features(
         assert len(segment_ids) == max_seq_length
         assert len(label_ids) == max_seq_length
 
-        # if ex_index < 5:
-        #     logger.info("*** Example ***")
-        #     logger.info("guid: %s", example.guid)
-        #     logger.info("tokens: %s", " ".join([str(x) for x in tokens]))
-        #     logger.info("input_ids: %s", " ".join([str(x) for x in input_ids]))
-        #     logger.info("input_mask: %s", " ".join([str(x) for x in input_mask]))
-        #     logger.info("segment_ids: %s", " ".join([str(x) for x in segment_ids]))
-        #     logger.info("label_ids: %s", " ".join([str(x) for x in label_ids]))
+        if ex_index < 5:
+            log.debug("*** Example ***")
+            log.debug("guid: %s", example.guid)
+            log.debug("tokens: %s", " ".join([str(x) for x in tokens]))
+            log.debug("input_ids: %s", " ".join([str(x) for x in input_ids]))
+            log.debug("input_mask: %s", " ".join([str(x) for x in input_mask]))
+            log.debug("segment_ids: %s", " ".join([str(x) for x in segment_ids]))
+            log.debug("label_ids: %s", " ".join([str(x) for x in label_ids]))
 
         features.append(InputFeatures(input_ids=input_ids, attention_mask=input_mask,
                                       token_type_ids=segment_ids, label_ids=label_ids))

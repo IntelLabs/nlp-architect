@@ -26,3 +26,4 @@ pytest_unit.xml
 cache/
 nlp_architect/models/libert/out/*
 *.npz
+cached_*_bert*
