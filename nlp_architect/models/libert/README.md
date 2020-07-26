@@ -6,10 +6,8 @@
 python3.6 -m pip install -U pip setuptools virtualenv
 python3.6 -m venv my_env
 source my_env/bin/activate
-git clone https://github.com/NervanaSystems/nlp-architect.git
-pip install -e nlp-architect
-pip install -U pytorch transformers pytorch-lightning tensorboard scikit-learn seqeval numpy scipy pandas openpyxl
-git branch li-bert
+git clone --branch libert https://github.com/NervanaSystems/nlp-architect.git
+pip install -r nlp-architect/nlp_architect/models/libert/requirements.txt
 ```
 
 ## Usage

@@ -17,12 +17,14 @@ import pytorch_lightning as pl
 from bert_for_token import BertForToken, load_config, load_last_ckpt, LoggingCallback
 from log_aggregator import aggregate
 from sys import argv
-from os.path import dirname, realpath
 from pathlib import Path
+from os.path import realpath
 from itertools import product
 from pytorch_lightning.loggers import TensorBoardLogger
 import logging
 log = logging.getLogger(__name__)
+
+LIBERT_OUT = Path(realpath(__file__)).parent / 'out'
 
 def get_trainer(model, data, experiment, version=None, gpus_override=None):
     """Init trainer for model training/testing."""
@@ -35,7 +37,7 @@ def get_trainer(model, data, experiment, version=None, gpus_override=None):
     distributed_backend = "ddp" if gpus > 1 else None
 
     logger = TensorBoardLogger(
-        save_dir=Path(dirname(realpath(__file__))) / 'logs' / data,
+        save_dir= LIBERT_OUT / 'logs' / data,
         name=experiment,
         version=version
     )

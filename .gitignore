@@ -24,4 +24,5 @@ src/
 tests/fixtures/data/chunker/
 pytest_unit.xml
 cache/
-nlp_architect/models/libert/logs/*
+nlp_architect/models/libert/out/*
+*.npz

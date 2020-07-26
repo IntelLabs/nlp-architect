@@ -23,6 +23,8 @@ from argparse import Namespace
 from pathlib import Path
 from typing import Any, Dict
 from collections import OrderedDict
+from os.path import realpath
+import logging
 
 import numpy as np
 import pytorch_lightning as pl
@@ -41,12 +43,13 @@ from transformers import (
     get_linear_schedule_with_warmup,
     AdamW
 )
-from nlp_architect import LIBRARY_OUT
 import absa_utils
 from libert_model import LiBertForToken, LiBertConfig
-import logging
+
 logger = logging.getLogger(__name__)
 logger.setLevel('WARNING')
+
+LIBERT_OUT = Path(realpath(__file__)).parent / 'out'
 
 MODEL_CONFIG = {
     'bert': (BertForTokenClassification, BertConfig, BertTokenizer),
@@ -61,16 +64,16 @@ class BertForToken(pl.LightningModule):
         if isinstance(hparams, dict):
             hparams = Namespace(**hparams)
 
-        data_root = Path(__file__).parent.absolute() / 'data'
+        data_root = Path(__file__).parent.absolute() / 'data' / 'conll'
 
         self.labels = absa_utils.get_labels(data_root / hparams.labels)
         num_labels = len(self.labels)
         hparams.data_dir = data_root / hparams.data_dir
 
         if not hparams.cache_dir:
-            hparams.cache_dir = LIBRARY_OUT
+            hparams.cache_dir = LIBERT_OUT / 'cache'
         if not hparams.output_dir:
-            hparams.output_dir = LIBRARY_OUT / 'libert-models'
+            hparams.output_dir = LIBERT_OUT / 'libert-models'
 
         self.model_type, self.config_type, self.tokenizer_type = MODEL_CONFIG[hparams.model_type]
 

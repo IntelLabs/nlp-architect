@@ -2,7 +2,7 @@ max_epochs: 1
 model_type: libert # bert or libert
 random_init: true
 
-data: laptops_to_restaurants # relative to nlp_architect/models/li_bert/data/
+data: laptops_to_restaurants # relative to nlp_architect/models/li_bert/data/preprocessed_conll
 splits: [1, 2]
 seeds: [12, 57]
 
@@ -25,7 +25,7 @@ gpus: 1
 overwrite_cache: false # if false, loads features from cached file (faster)
 cache_dir: # default: nlp-architect/nlp_architect/cache
 output_dir: # default: nlp-architect/nlp_architect/cache/li-bert-models
-labels: labels.txt # relative to nlp_architect/models/li_bert/data/ 
+labels: labels.txt # relative to nlp_architect/models/li_bert/data
 
 model_name_or_path: bert-base-uncased
 train_batch_size: 16
