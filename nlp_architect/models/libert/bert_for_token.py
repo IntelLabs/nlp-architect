@@ -24,7 +24,6 @@ from pathlib import Path
 from typing import Any, Dict
 from collections import OrderedDict
 from os.path import realpath
-import logging
 
 import numpy as np
 import pytorch_lightning as pl
@@ -45,9 +44,6 @@ from transformers import (
 )
 import absa_utils
 from libert_model import LiBertForToken, LiBertConfig
-
-logger = logging.getLogger(__name__)
-logger.setLevel('WARNING')
 
 LIBERT_OUT = Path(realpath(__file__)).parent / 'out'
 

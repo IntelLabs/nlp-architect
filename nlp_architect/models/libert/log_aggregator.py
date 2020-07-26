@@ -21,6 +21,7 @@
 
 import os
 import re
+from pathlib import Path
 
 import pandas as pd
 import numpy as np
@@ -103,6 +104,7 @@ def aggregate(versions):
 
     # log_root = Path(root_dir)
     aggregation_ops = [np.mean, np.min, np.max, np.median, np.std, np.var]
+    versions = [Path(v) for v in versions]
     extracted = extract(versions)
 
     base = versions[0].parent.parent

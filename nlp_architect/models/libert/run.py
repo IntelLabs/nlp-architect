@@ -13,15 +13,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
+
+import logging
 import pytorch_lightning as pl
+from pytorch_lightning import _logger as log
 from bert_for_token import BertForToken, load_config, load_last_ckpt, LoggingCallback
 from log_aggregator import aggregate
 from sys import argv
 from pathlib import Path
 from os.path import realpath
 from itertools import product
-from pytorch_lightning.loggers import TensorBoardLogger
-from pytorch_lightning import _logger as log
+
+logging.getLogger("transformers").setLevel('ERROR')
+logging.getLogger("pytorch_lightning").setLevel('WARNING')
 
 LIBERT_OUT = Path(realpath(__file__)).parent / 'out'
 
@@ -30,12 +34,12 @@ def get_trainer(model, data, experiment, version=None, gpus_override=None):
     Path(model.hparams.output_dir).mkdir(exist_ok=True)
     checkpoint_callback = pl.callbacks.ModelCheckpoint(
         filepath=model.hparams.output_dir, prefix="checkpoint", monitor="val_loss",
-        mode="min", save_top_k=1
+        mode="min", save_top_k=0
     )
     gpus = model.hparams.gpus if gpus_override is None else gpus_override
     distributed_backend = "ddp" if gpus > 1 else None
 
-    logger = TensorBoardLogger(
+    logger = pl.loggers.TestTubeLogger(
         save_dir= LIBERT_OUT / 'logs' / data,
         name=experiment,
         version=version
@@ -50,7 +54,7 @@ def get_trainer(model, data, experiment, version=None, gpus_override=None):
         max_epochs=model.hparams.max_epochs,
         gradient_clip_val=model.hparams.gradient_clip_val,
         checkpoint_callback=checkpoint_callback,
-        callbacks=[LoggingCallback(), pl.callbacks.LearningRateLogger()],
+        callbacks=[LoggingCallback()],
         fast_dev_run=model.hparams.fast_dev_run,
         val_check_interval=model.hparams.val_check_interval,
         weights_summary=None,
@@ -81,9 +85,10 @@ def main(config_yaml):
             trainer = get_trainer(model, cfg.data, experiment, cfg.version)
             trainer.fit(model)
 
-            trainer.logger.log_hyperparams(cfg)
-            trainer.logger.save()
-            versions.append(Path(trainer.logger.log_dir))
+            tr_logger = trainer.logger
+            tr_logger.log_hyperparams(cfg)
+            tr_logger.save()
+            versions.append(tr_logger.experiment.log_dir)
 
         if cfg.do_predict:
             # Bug in pytorch_lightning==0.85 -> testing only works with num gpus=1

@@ -23,6 +23,7 @@ from typing import List, Optional, Union
 from transformers import PreTrainedTokenizer
 from seqeval.metrics.sequence_labeling import get_entities
 import numpy as np
+import logging
 
 @dataclass
 class InputExample:
