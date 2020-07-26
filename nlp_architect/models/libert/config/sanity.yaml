@@ -1,15 +1,12 @@
-train_batch_size: 16
-eval_batch_size: 16
-max_seq_length: 64
 max_epochs: 1
-model_type: bert # bert or li-bert
-model_name_or_path: bert-base-uncased
+model_type: libert # bert or libert
 random_init: true
 
-data: sanity # relative to nlp_architect/models/li_bert/data/
-splits: [1]
+data: laptops_to_restaurants # relative to nlp_architect/models/li_bert/data/
+splits: [1, 2]
 seeds: [12, 57]
 
+version: # optional: name this experiment version. version named "baseline" will be used for significance tests
 li_layer: 5
 li_layers: [2]
 all_layers: false
@@ -19,16 +16,21 @@ replace_final: false
 duplicated_rels: false
 transpose: false
 
+do_train: true
+do_predict: false
+
 num_workers: 88
 gpus: 1
 
-overwrite_cache: false # if false, loads features from cached file (quicker)
+overwrite_cache: false # if false, loads features from cached file (faster)
 cache_dir: # default: nlp-architect/nlp_architect/cache
 output_dir: # default: nlp-architect/nlp_architect/cache/li-bert-models
 labels: labels.txt # relative to nlp_architect/models/li_bert/data/ 
 
-do_train: true
-do_predict: false
+model_name_or_path: bert-base-uncased
+train_batch_size: 16
+eval_batch_size: 16
+max_seq_length: 64
 adam_epsilon: 1.0e-08
 fast_dev_run: false
 accumulate_grad_batches: 1

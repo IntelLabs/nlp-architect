@@ -17,7 +17,6 @@ import pytorch_lightning as pl
 from bert_for_token import BertForToken, load_config, load_last_ckpt, LoggingCallback
 from log_aggregator import aggregate
 from sys import argv
-from time import sleep
 from os.path import dirname, realpath
 from pathlib import Path
 from itertools import product
@@ -25,7 +24,7 @@ from pytorch_lightning.loggers import TensorBoardLogger
 import logging
 log = logging.getLogger(__name__)
 
-def get_trainer(model, data, experiment, gpus_override=None):
+def get_trainer(model, data, experiment, version=None, gpus_override=None):
     """Init trainer for model training/testing."""
     Path(model.hparams.output_dir).mkdir(exist_ok=True)
     checkpoint_callback = pl.callbacks.ModelCheckpoint(
@@ -37,7 +36,8 @@ def get_trainer(model, data, experiment, gpus_override=None):
 
     logger = TensorBoardLogger(
         save_dir=Path(dirname(realpath(__file__))) / 'logs' / data,
-        name=experiment
+        name=experiment,
+        version=version
     )
 
     return pl.Trainer(
@@ -76,7 +76,7 @@ def main(config_yaml):
         model = BertForToken(config)
 
         if config.do_train:
-            trainer = get_trainer(model, config.data, experiment)
+            trainer = get_trainer(model, config.data, experiment, config.version)
             trainer.fit(model)
 
             trainer.logger.log_hyperparams(config)
