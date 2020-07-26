@@ -535,7 +535,7 @@ class NeuralTagger(TrainableModel):
         inf_sampler = SequentialSampler(data_set)
         inf_dataloader = DataLoader(data_set, sampler=inf_sampler, batch_size=batch_size)
         logits = self.evaluate(inf_dataloader)
-        active_positions = data_set.tensors[-1].view(len(data_set), -1) != 0.0
+        active_positions = data_set.tensors[-2].view(len(data_set), -1) != 0.0
         logits = torch.argmax(F.log_softmax(logits[0], dim=2), dim=2)
         res_ids = []
         for i in range(logits.size()[0]):
