@@ -20,7 +20,7 @@ duplicated_rels: false
 transpose: false
 
 num_workers: 88
-gpus: 1
+gpus: 2
 
 overwrite_cache: false # if false, loads features from cached file (quicker)
 cache_dir: # default: nlp-architect/nlp_architect/cache

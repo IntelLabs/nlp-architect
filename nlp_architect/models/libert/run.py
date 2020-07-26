@@ -15,8 +15,9 @@
 # ******************************************************************************
 import pytorch_lightning as pl
 from bert_for_token import BertForToken, load_config, load_last_ckpt, LoggingCallback
-from aggregator import aggregate
+from log_aggregator import aggregate
 from sys import argv
+from time import sleep
 from os.path import dirname, realpath
 from pathlib import Path
 from itertools import product
@@ -28,7 +29,7 @@ def get_trainer(model, data, experiment, gpus_override=None):
     """Init trainer for model training/testing."""
     Path(model.hparams.output_dir).mkdir(exist_ok=True)
     checkpoint_callback = pl.callbacks.ModelCheckpoint(
-        filepath=model.hparams.output_dir, prefix="chjeckpoint", monitor="val_loss",
+        filepath=model.hparams.output_dir, prefix="checkpoint", monitor="val_loss",
         mode="min", save_top_k=1
     )
     gpus = model.hparams.gpus if gpus_override is None else gpus_override
@@ -54,9 +55,9 @@ def get_trainer(model, data, experiment, gpus_override=None):
         weights_summary=None,
         resume_from_checkpoint=model.hparams.resume_from_checkpoint,
         distributed_backend=distributed_backend,
-        profiler=True,
+        # profiler=True,
         benchmark=True,
-        deterministic=False
+        deterministic=True
     )
 
 # pylint: disable=no-member
@@ -82,11 +83,12 @@ def main(config_yaml):
             trainer.logger.save()
             versions.append(Path(trainer.logger.log_dir))
 
-        if config.do_predict:        
+        if config.do_predict:      
             # Bug in pytorch_lightning==0.85 -> testing only works with num gpus=1
             trainer = get_trainer(model, config.data, experiment + '_test', gpus_override=1)
             trainer.test(load_last_ckpt(model))
 
+    # Aggregate tensorboard log metrics for all runs
     if len(versions) > 1:
         aggregate(versions)
 
