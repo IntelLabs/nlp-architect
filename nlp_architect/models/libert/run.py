@@ -13,24 +13,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
-
-# pylint: disable=logging-fstring-interpolation
-
 import logging
 import pytorch_lightning as pl
-from pytorch_lightning import _logger as log
 from bert_for_token import BertForToken, LoggingCallback
 from log_aggregator import aggregate
 from sys import argv
 from pathlib import Path
 from os.path import realpath
 from itertools import product
-from absa_utils import load_config, load_last_ckpt
-from significance import test_significance
+from absa_utils import load_config, load_last_ckpt, run_log_msg
+from significance import significance_report
 
 logging.getLogger("transformers").setLevel('ERROR')
 logging.getLogger("pytorch_lightning").setLevel('WARNING')
-
 LIBERT_OUT = Path(realpath(__file__)).parent / 'out'
 
 def get_trainer(model, data, experiment, version=None, gpus=None):
@@ -41,13 +36,10 @@ def get_trainer(model, data, experiment, version=None, gpus=None):
         mode="min", save_top_k=0
     )
     gpus = model.hparams.gpus if gpus is None else gpus
-    distributed_backend = "ddp" if gpus > 1 else None
+    backend = "ddp" if gpus > 1 else None
 
-    logger = pl.loggers.TestTubeLogger(
-        save_dir=LIBERT_OUT / 'logs' / data,
-        name=experiment,
-        version=version
-    )
+    logger = pl.loggers.TestTubeLogger(save_dir=LIBERT_OUT / 'logs' / data, name=experiment,
+                                       version=version)
 
     return pl.Trainer(
         logger=logger,
@@ -63,16 +55,11 @@ def get_trainer(model, data, experiment, version=None, gpus=None):
         val_check_interval=model.hparams.val_check_interval,
         weights_summary=None,
         resume_from_checkpoint=model.hparams.resume_from_checkpoint,
-        distributed_backend=distributed_backend,
-        # profiler=True,
+        distributed_backend=backend,
         benchmark=True,
-        deterministic=True
+        deterministic=True,
+        # profiler=True
     )
-
-def run_log_msg(cfg, model_str, data, seed, split, run_i): 
-    experiment = f'{model_str}_seed_{seed}_split_{split}'
-    log.info(f"\n{'*' * 150}\n{' ' * 50}Run {run_i}/{len(cfg.seeds) * len(cfg.data) * len(cfg.splits)}: {data}, {experiment}\n{'*' * 150}")
-    return experiment
 
 # pylint: disable=no-member
 def main(config_yaml):
@@ -112,7 +99,7 @@ def main(config_yaml):
     if model_str != cfg.baseline_str:
         # Print significance report of model results
         master_version = Path(tr_logger.experiment.log_dir).parent.name
-        test_significance(cfg.data, master_version, cfg.seeds, cfg.splits, LIBERT_OUT / 'logs',
+        significance_report(cfg.data, master_version, cfg.seeds, cfg.splits, LIBERT_OUT / 'logs',
                         cfg.model_type, cfg.baseline_str, epochs=cfg.max_epochs)
 
 if __name__ == "__main__":

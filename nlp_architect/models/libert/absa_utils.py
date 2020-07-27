@@ -15,6 +15,7 @@
 # limitations under the License.
 """ Cross-domain ABSA fine-tuning: utilities to work with SemEval-14/16 files. """
 
+# pylint: disable=logging-fstring-interpolation
 import os
 from dataclasses import dataclass
 from enum import Enum
@@ -266,3 +267,8 @@ def tabular(dic: dict, title: str) -> str:
         res += line_sep + "\n"
     res += os.linesep
     return res
+
+def run_log_msg(cfg, model_str, data, seed, split, run_i): 
+    experiment = f'{model_str}_seed_{seed}_split_{split}'
+    log.info(f"\n{'*' * 150}\n{' ' * 50}Run {run_i}/{len(cfg.seeds) * len(cfg.data) * len(cfg.splits)}: {data}, {experiment}\n{'*' * 150}")
+    return experiment
