@@ -37,7 +37,7 @@ def extract(versions):
     # Filter non event files
     accumulators = [acc for acc in accumulators if acc.Keys()]
     # Get and validate all scalar keys
-    all_keys = [tuple(acc.Keys()) for acc in accumulators]
+    all_keys = [tuple(sorted(acc.Keys())) for acc in accumulators]
     assert len(set(all_keys)) == 1, "All runs need to have the same scalar keys.\
         There are mismatches in {}".format(all_keys)
     keys = all_keys[0]
@@ -102,8 +102,7 @@ def write_csv(csv_out, xlsx_writer, key, aggregations, steps, ops):
 def aggregate(versions):
     tf.compat.v1.disable_eager_execution()
 
-    # log_root = Path(root_dir)
-    aggregation_ops = [np.mean, np.min, np.max, np.median, np.std, np.var]
+    aggregation_ops = [np.mean, np.min, np.max, np.std, np.var]
     versions = [Path(v) for v in versions]
     extracted = extract(versions)
 

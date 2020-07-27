@@ -6,7 +6,7 @@ data: restaurants_to_laptops # relative to nlp_architect/models/li_bert/data/pre
 splits: [1, 2]
 seeds: [12, 57]
 
-version: my_version # optional: name this experiment version
+version: # optional: name this experiment version
 li_layer: #5
 li_layers: #[2]
 all_layers: true

@@ -18,7 +18,6 @@
 # pylint: disable=no-member, not-callable, attribute-defined-outside-init, arguments-differ, missing-function-docstring
 # pylint: disable=too-many-ancestors, too-many-instance-attributes, too-many-arguments
 import os
-import glob
 from argparse import Namespace
 from pathlib import Path
 from typing import Any, Dict
@@ -28,7 +27,6 @@ from os.path import realpath
 import numpy as np
 import pytorch_lightning as pl
 from pytorch_lightning.utilities import rank_zero_only
-from pytorch_lightning.core.saving import load_hparams_from_yaml
 from pytorch_lightning import _logger as log
 import torch
 from torch.nn import CrossEntropyLoss
@@ -191,10 +189,10 @@ class BertForToken(pl.LightningModule):
         return {"val_loss_step": tmp_eval_loss.detach().cpu(), "pred": preds, "target": target}
 
     def validation_epoch_end(self, outputs):
-        ret, _, _ = self._eval_end(outputs)
+        ret, sentence_metrics, _, _ = self._eval_end(outputs)
         logs = ret["log"]
         logs['step'] = self.current_epoch
-        return {"val_loss": logs["val_loss"], "log": logs}
+        return {"val_loss": logs["val_loss"], "log": logs, "sentence_metrics": sentence_metrics}
 
     def test_step(self, batch, batch_nb):
         return self.validation_step(batch, batch_nb)
@@ -249,7 +247,7 @@ class BertForToken(pl.LightningModule):
 
         ret = results.copy()
         ret["log"] = results
-        return ret, pred, target
+        return ret, per_sentence_metrics, pred, target
 
     def configure_optimizers(self):
         "Prepare optimizer and schedule (linear warmup and decay)"
@@ -314,21 +312,6 @@ class BertForToken(pl.LightningModule):
         self.tokenizer.save_pretrained(save_path)
         self.tfmr_ckpts[self.step_count] = save_path
 
-def tabular(dic: dict, title: str) -> str:
-    res = "\n\n{}\n".format(title)
-    key_vals = [(k, f"{float(dic[k]):.4}") for k in sorted(dic)]
-    line_sep = f"{os.linesep}{'-' * 175}"
-    columns_per_row = 8
-    for i in range(0, len(key_vals), columns_per_row):
-        subset = key_vals[i: i + columns_per_row]
-        res += line_sep + f"{os.linesep}"
-        res += f"{subset[0][0]:<10s}\t|  " + "\t|  ".join((f"{k:<13}" for k, _ in subset[1:]))
-        res += line_sep + f"{os.linesep}"
-        res += f"{subset[0][1]:<10s}\t|  " + "\t|  ".join((f"{v:<13}" for _, v in subset[1:]))
-        res += line_sep + "\n"
-    res += os.linesep
-    return res
-
 class LoggingCallback(pl.Callback):
     """Class for logging callbacks."""
 
@@ -337,29 +320,22 @@ class LoggingCallback(pl.Callback):
         print("***** Validation results *****")
         # Log results
         metrics = trainer.callback_metrics
-        print(tabular(metrics, 'Metrics'))
+        sentence_metrics = metrics.pop("sentence_metrics")
+        print(absa_utils.tabular(metrics, 'Metrics'))
+
+        log_dir = Path(trainer.logger.experiment.log_dir)
+        with open(log_dir / f'sent_f1_epoch_{trainer.current_epoch}.txt', 'w') as f:
+            f.writelines([f'{v}\n' for v in sentence_metrics['f1']])
 
     @rank_zero_only
     def on_test_end(self, trainer: pl.Trainer, pl_module: pl.LightningModule):
         print("***** Test results *****")
         metrics = trainer.callback_metrics
         # Log and save results to file
-        print(tabular(metrics, 'Metrics'))
+        print(absa_utils.tabular(metrics, 'Metrics'))
 
         output_test_results_file = os.path.join(pl_module.hparams.output_dir, "test_results.txt")
         with open(output_test_results_file, "w") as writer:
             for key in sorted(metrics):
                 if key not in ["log", "progress_bar"]:
                     writer.write("{} = {}\n".format(key, str(metrics[key])))
-
-def load_config(name):
-    """Load an experiment configuration from a yaml file."""
-    configs_dir = Path(os.path.dirname(os.path.realpath(__file__))) / 'config'
-    config = Namespace(**load_hparams_from_yaml(configs_dir / (name + '.yaml')))
-    return config
-
-def load_last_ckpt(model):
-    """Load the last model checkpoint saved."""
-    checkpoints = list(sorted(glob.glob(os.path.join(model.hparams.output_dir,
-                                                     "checkpointepoch=*.ckpt"), recursive=True)))
-    return model.load_from_checkpoint(checkpoints[-1])

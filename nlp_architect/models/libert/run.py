@@ -14,33 +14,37 @@
 # limitations under the License.
 # ******************************************************************************
 
+# pylint: disable=logging-fstring-interpolation
+
 import logging
 import pytorch_lightning as pl
 from pytorch_lightning import _logger as log
-from bert_for_token import BertForToken, load_config, load_last_ckpt, LoggingCallback
+from bert_for_token import BertForToken, LoggingCallback
 from log_aggregator import aggregate
 from sys import argv
 from pathlib import Path
 from os.path import realpath
 from itertools import product
+from absa_utils import load_config, load_last_ckpt
+from significance import test_significance
 
 logging.getLogger("transformers").setLevel('ERROR')
 logging.getLogger("pytorch_lightning").setLevel('WARNING')
 
 LIBERT_OUT = Path(realpath(__file__)).parent / 'out'
 
-def get_trainer(model, data, experiment, version=None, gpus_override=None):
+def get_trainer(model, data, experiment, version=None, gpus=None):
     """Init trainer for model training/testing."""
     Path(model.hparams.output_dir).mkdir(exist_ok=True)
     checkpoint_callback = pl.callbacks.ModelCheckpoint(
         filepath=model.hparams.output_dir, prefix="checkpoint", monitor="val_loss",
         mode="min", save_top_k=0
     )
-    gpus = model.hparams.gpus if gpus_override is None else gpus_override
+    gpus = model.hparams.gpus if gpus is None else gpus
     distributed_backend = "ddp" if gpus > 1 else None
 
     logger = pl.loggers.TestTubeLogger(
-        save_dir= LIBERT_OUT / 'logs' / data,
+        save_dir=LIBERT_OUT / 'logs' / data,
         name=experiment,
         version=version
     )
@@ -65,42 +69,52 @@ def get_trainer(model, data, experiment, version=None, gpus_override=None):
         deterministic=True
     )
 
+def run_log_msg(cfg, data, seed, split, run_i): 
+    rnd_str = 'random_init_' if cfg.random_init and cfg.model_type == 'libert' else ''
+    experiment = f'{cfg.model_type}_{rnd_str}seed_{seed}_split_{split}'
+    log.info(f"\n{'*' * 150}\n{' ' * 50}Run {run_i}/{len(cfg.seeds) * len(cfg.data) * len(cfg.splits)}: {data}, {experiment}\n{'*' * 150}")
+    return experiment
+
 # pylint: disable=no-member
 def main(config_yaml):
     cfg = load_config(config_yaml)
 
-    versions = []
-    runs = list(product(cfg.seeds, cfg.splits))
-    for i, (seed, split) in enumerate(runs):
-        random_init_str = 'random_init_' if cfg.random_init and cfg.model_type == 'libert' else ''
-        experiment = "{}_{}seed_{}_split_{}".format(cfg.model_type, random_init_str, seed, split)
-        log.info('\n{}\n{}Run {}/{}: {}, {}\n{}'\
-            .format('*' * 150, ' ' * 50, i + 1, len(runs), cfg.data, experiment, '*' * 150))
+    run_i = 1
+    for data in cfg.data:
+        versions = []
+        for seed, split in product(cfg.seeds, cfg.splits):
+            pl.seed_everything(seed)
+            experiment = run_log_msg(cfg, data, seed, split, run_i)
+            cfg.data_dir = f'{data}_{split}'
 
-        pl.seed_everything(seed)
-        cfg.data_dir = cfg.data + '_' + str(split)
-        model = BertForToken(cfg)
+            model = BertForToken(cfg)
 
-        if cfg.do_train:
-            trainer = get_trainer(model, cfg.data, experiment, cfg.version)
-            trainer.fit(model)
+            if cfg.do_train:
+                trainer = get_trainer(model, data, experiment, cfg.version)
+                trainer.fit(model)
 
-            tr_logger = trainer.logger
-            tr_logger.log_hyperparams(cfg)
-            tr_logger.save()
-            versions.append(tr_logger.experiment.log_dir)
+                tr_logger = trainer.logger
+                tr_logger.log_hyperparams(cfg)
+                tr_logger.save()
+                versions.append(tr_logger.experiment.log_dir)
 
-        if cfg.do_predict:
-            # Bug in pytorch_lightning==0.85 -> testing only works with num gpus=1
-            trainer = get_trainer(model, cfg.data, experiment + '_test', gpus_override=1)
-            trainer.test(load_last_ckpt(model))
+            if cfg.do_predict:
+                # Bug in pytorch_lightning==0.85 -> testing only works with num gpus=1
+                trainer = get_trainer(model, data, f'{experiment}_test', gpus=1)
+                trainer.test(load_last_ckpt(model))
 
-    # Aggregate tensorboard log metrics for all runs
-    if len(versions) > 1:
-        aggregate(versions)
+            run_i += 1
+        # Aggregate tensorboard log metrics for all runs on this data
+        if len(versions) > 1:
+            aggregate(versions)
+
+    # Print significance report of model results
+    master_version = Path(tr_logger.experiment.log_dir).parent.name
+    test_significance(cfg.data, master_version, cfg.seeds, cfg.splits, LIBERT_OUT / 'logs',
+                      cfg.model_type, cfg.baseline, epochs=cfg.max_epochs)
 
 if __name__ == "__main__":
-    # argv = ['', '']
+    argv = ['', '']
     # argv[1] = 'example'
-    # argv[1] = 'sanity'
+    argv[1] = 'sanity'
     main(argv[1])

@@ -25,6 +25,10 @@ from pytorch_lightning import _logger as log
 from transformers import PreTrainedTokenizer
 from seqeval.metrics.sequence_labeling import get_entities
 import numpy as np
+import glob
+from pytorch_lightning.core.saving import load_hparams_from_yaml
+from argparse import Namespace
+from pathlib import Path
 
 @dataclass
 class InputExample:
@@ -231,3 +235,34 @@ def detailed_metrics(y_true, y_pred):
     macro_avg = {'macro_precision': np.average(ps, weights=s),
                  'macro_recall': np.average(rs, weights=s), 'macro_f1': np.average(f1s, weights=s)}
     return metrics, macro_avg
+
+
+def load_config(name):
+    """Load an experiment configuration from a yaml file."""
+    configs_dir = Path(os.path.dirname(os.path.realpath(__file__))) / 'config'
+    config = Namespace(**load_hparams_from_yaml(configs_dir / (name + '.yaml')))
+
+    ds = {'l': 'laptops', 'r': 'restaurants', 'd': 'device'}
+    config.data = [f'{ds[d[0]]}_to_{ds[d[1]]}' if len(d) < 3 else d for d in config.data.split()]
+    return config
+
+def load_last_ckpt(model):
+    """Load the last model checkpoint saved."""
+    checkpoints = list(sorted(glob.glob(os.path.join(model.hparams.output_dir,
+                                                     "checkpointepoch=*.ckpt"), recursive=True)))
+    return model.load_from_checkpoint(checkpoints[-1])
+
+def tabular(dic: dict, title: str) -> str:
+    res = "\n\n{}\n".format(title)
+    key_vals = [(k, f"{float(dic[k]):.4}") for k in sorted(dic)]
+    line_sep = f"{os.linesep}{'-' * 175}"
+    columns_per_row = 8
+    for i in range(0, len(key_vals), columns_per_row):
+        subset = key_vals[i: i + columns_per_row]
+        res += line_sep + f"{os.linesep}"
+        res += f"{subset[0][0]:<10s}\t|  " + "\t|  ".join((f"{k:<13}" for k, _ in subset[1:]))
+        res += line_sep + f"{os.linesep}"
+        res += f"{subset[0][1]:<10s}\t|  " + "\t|  ".join((f"{v:<13}" for _, v in subset[1:]))
+        res += line_sep + "\n"
+    res += os.linesep
+    return res

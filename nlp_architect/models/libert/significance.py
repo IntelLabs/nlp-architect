@@ -1,28 +1,25 @@
+# pylint: disable=logging-fstring-interpolation
 import numpy as np
 from collections import defaultdict
 from scipy import stats
-import os
+from itertools import product
+from pathlib import Path
+from pytorch_lightning import _logger as log
 
-def t_test(filename_A, filename_B, alpha):
+def t_test(filename_A, filename_B):
     with open(filename_A) as f:
         data_A = f.read().splitlines()
-
     with open(filename_B) as f:
         data_B = f.read().splitlines()
+    data_A = list(map(float, data_A))
+    data_B = list(map(float, data_B))
 
-    data_A = list(map(float,data_A))
-    data_B = list(map(float,data_B))
-
-    # Paired Student's t-test: Calculate the T-test on TWO RELATED samples of scores, a and b. for one sided test we multiply p-value by half
+    # Paired Student's t-test: Calculate the T-test on TWO RELATED samples of scores, a and b. 
+    # For one sided test we multiply p-value by half
     t_results = stats.ttest_rel(data_A, data_B)
     # correct for one sided test
     pval = float(t_results[1]) / 2
-    if (float(pval) <= float(alpha)):
-        # print("\nTest result is significant with p-value: {}".format(pval))
-        return pval
-    else:
-        # print("\nTest result is not significant with p-value: {}".format(pval))
-        return pval
+    return pval
         
 def find_k_estimator(pvalues, alpha, method ='B'):
     """
@@ -85,58 +82,65 @@ def calc_partial_cunjunction(pvalues, u, method ='B'):
     return p_u_n
 
 def replicability(alpha, pvals):
-    # print "\n The K-Bonferroni estimator for the number of datasets with effect is: ", find_k_estimator(pvals, alpha, 'B')
-    # print "\n The K-Fisher estimator for the number of datasets with effect is: ", find_k_estimator(pvals, alpha, 'F')
+    # Calculate the K-Bonferroni estimator for the number of datasets with effect
     k_est = find_k_estimator(pvals, alpha, 'B')
+    # Get the rejections list according to the Holm procedure
     rejlist = Holm(pvals, alpha)
-    # print "\n The rejections list according to the Holm procedure is: "
-    # for rej in rejlist:
-    #     print "dataset"+str(rej+1)
     return k_est, rejlist
 
 
-def main():
-    root = '/Users/dkorat/Desktop/f1_drop_nulls/'
-    datasets = ['dev_to_res', 'lap_to_res', 'res_to_lap', 'dev_to_lap', 'lap_to_dev', 'res_to_dev']
-    seeds = ['12', '57', '89']
-    splits = ['1', '2', '3']
+def test_significance(
+        datasets: list,
+        version: str, 
+        seeds: list,
+        splits: list,
+        log_root: Path,
+        model: str = 'libert',
+        baseline: str = 'libert_random_init',
+        epochs: int = 1,
+        alphas: tuple = (.001, .01, .05, .1, .15, .2, .3)):
 
     seed_pvals = defaultdict(list)
+    for data, seed, split, epoch in product(datasets, seeds, splits, range(epochs)):
+        baseline_txt = log_root / data / f'{baseline}_seed_{seed}_split_{split}' / 'version_0' / 'tf' / f'sent_f1_epoch_{epoch}.txt'
+        model_txt = log_root / data / f'{model}_seed_{seed}_split_{split}' / version / 'tf' / f'sent_f1_epoch_{epoch}.txt'
 
-    for dataset in datasets:
-        base_rnd = os.listdir(root + dataset + '/rnd')[2].split('sents')[0]
-        base_libert = os.listdir(root + dataset + '/libert')[2].split('sents')[0]
+        p_val = t_test(baseline_txt, model_txt)
+        sample_str = f'{data} seed_{seed} split_{split} epoch_{epoch}: {p_val}'
+        seed_pvals[seed].append((p_val, sample_str))
 
-        for seed in seeds:
-            for split in splits:
-                sample = 'sents_op_f1_seed_' + seed + '_split_' + split + '.txt'
-                rnd = root + dataset + '/rnd/' + base_rnd + sample
-                libert = root + dataset + '/libert/' + base_libert + sample
-                p_val = t_test(rnd, libert, 0.1)
-                sample_str = ' '.join([dataset, 'seed', seed, 'split', split, ':', str(p_val)])
-                print(sample_str)
-                seed_pvals[seed].append((p_val, sample_str))
-        print()
+    for alpha in alphas:
+        log.info(f"\n\n{'-' * 40}\nAlpha (p-value): {alpha}\n{'-' * 40}")
 
-    for alpha in 0.137, 0.15:
         all_pvals = []
-
+        scores = []
         for seed, pvals_sample_strs in seed_pvals.items():
+            log.info(f"Seed: {seed}\n{'-' * 10}")
             pvals = [ps[0] for ps in pvals_sample_strs]
             sample_strs = [ps[1] for ps in pvals_sample_strs]
             k, rej_list = replicability(alpha, pvals)
-            all_pvals.extend(pvals)
-            print('The Bonferroni-k estimator for the number of datasets with effect is: \n', k, \
-                '(out of ' + str(len(pvals)) + ')')
-            rej_samples = '\n'.join([sample_strs[i] for i in rej_list])
-            print('\nThe rejections list according to the Holm procedure is: \n', rej_samples, '\n')
-            acc_samples = '\n'.join([sample_strs[i] for i in range(len(pvals)) if i not in rej_list])
-            print('The acceptance list according to the Holm procedure is: \n', acc_samples, '\n')
-            print()
 
-        # print 'Replicability for all seeds together:'
-        # k, rej_list = replicability(alpha, all_pvals)
-        # print 'Number of datasets: ', len(all_pvals)
-        # print 'The Bonferroni-k estimator for the number of datasets with effect is: ', k
-        # print 'The rejections list according to the Holm procedure is: ', rej_list.tolist()
-        # print 
+            score = k / float(len(pvals))
+            scores.append(score)
+            log.info(f'Score: {score}')
+
+            all_pvals.extend(pvals)
+            log.info(f'The Bonferroni-k estimator for the number of datasets with effect is: {k} (out of {len(pvals)})')
+
+            rej_samples = '\n'.join([sample_strs[i] for i in rej_list])
+            log.info(f'\nThe rejections list according to the Holm procedure is:\n{rej_samples}\n')
+
+            acc_samples = '\n'.join([sample_strs[i] for i in range(len(pvals)) if i not in rej_list])
+            log.info(f'The acceptance list according to the Holm procedure is:\n{acc_samples}\n')
+
+        log.info('==================================================')
+        log.info(f'Avg. score for alpha = {alpha}:\n{np.mean(scores)}')
+        log.info('==================================================')
+
+        log.info('\n\n+++++++++++++++++++++++++++++++++++++')
+        log.info('Replicability for all seeds together:')
+        k, rej_list = replicability(alpha, all_pvals)
+        log.info(f'Number of datasets: {len(all_pvals)}')
+        log.info(f'The Bonferroni-k estimator for the number of datasets with effect is: {k}')
+        log.info(f'The rejections list according to the Holm procedure is: {rej_list.tolist()}')
+        log.info(f'Score: {k / float(len(all_pvals))}')
