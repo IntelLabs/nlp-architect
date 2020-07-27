@@ -5,7 +5,7 @@ random_init: true
 data: lr rl # relative to nlp_architect/models/li_bert/data/preprocessed_conll
 splits: [1, 2]
 seeds: [12, 57]
-baseline: libert_random_init
+baseline_str: libert_random_init
 
 version: # optional: name this experiment version
 li_layer: #5

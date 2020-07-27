@@ -69,9 +69,8 @@ def get_trainer(model, data, experiment, version=None, gpus=None):
         deterministic=True
     )
 
-def run_log_msg(cfg, data, seed, split, run_i): 
-    rnd_str = 'random_init_' if cfg.random_init and cfg.model_type == 'libert' else ''
-    experiment = f'{cfg.model_type}_{rnd_str}seed_{seed}_split_{split}'
+def run_log_msg(cfg, model_str, data, seed, split, run_i): 
+    experiment = f'{model_str}_seed_{seed}_split_{split}'
     log.info(f"\n{'*' * 150}\n{' ' * 50}Run {run_i}/{len(cfg.seeds) * len(cfg.data) * len(cfg.splits)}: {data}, {experiment}\n{'*' * 150}")
     return experiment
 
@@ -84,10 +83,12 @@ def main(config_yaml):
         versions = []
         for seed, split in product(cfg.seeds, cfg.splits):
             pl.seed_everything(seed)
-            experiment = run_log_msg(cfg, data, seed, split, run_i)
-            cfg.data_dir = f'{data}_{split}'
 
+            cfg.data_dir = f'{data}_{split}'
             model = BertForToken(cfg)
+
+            model_str = model.get_str()
+            experiment = run_log_msg(cfg, model_str, data, seed, split, run_i)
 
             if cfg.do_train:
                 trainer = get_trainer(model, data, experiment, cfg.version)
@@ -108,10 +109,11 @@ def main(config_yaml):
         if len(versions) > 1:
             aggregate(versions)
 
-    # Print significance report of model results
-    master_version = Path(tr_logger.experiment.log_dir).parent.name
-    test_significance(cfg.data, master_version, cfg.seeds, cfg.splits, LIBERT_OUT / 'logs',
-                      cfg.model_type, cfg.baseline, epochs=cfg.max_epochs)
+    if model_str != cfg.baseline_str:
+        # Print significance report of model results
+        master_version = Path(tr_logger.experiment.log_dir).parent.name
+        test_significance(cfg.data, master_version, cfg.seeds, cfg.splits, LIBERT_OUT / 'logs',
+                        cfg.model_type, cfg.baseline_str, epochs=cfg.max_epochs)
 
 if __name__ == "__main__":
     argv = ['', '']

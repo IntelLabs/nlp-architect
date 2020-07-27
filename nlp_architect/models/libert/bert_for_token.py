@@ -312,6 +312,12 @@ class BertForToken(pl.LightningModule):
         self.tokenizer.save_pretrained(save_path)
         self.tfmr_ckpts[self.step_count] = save_path
 
+    def get_str(self) -> str:
+        model_str = f'{self.hparams.model_type}'
+        if self.hparams.model_type == 'libert' and self.hparams.random_init:
+            model_str += '_random_init'
+        return model_str
+
 class LoggingCallback(pl.Callback):
     """Class for logging callbacks."""
 
