@@ -32,8 +32,8 @@ def get_trainer(model, data, experiment, version=None, gpus=None):
     """Init trainer for model training/testing."""
     Path(model.hparams.output_dir).mkdir(exist_ok=True)
     checkpoint_callback = pl.callbacks.ModelCheckpoint(
-        filepath=model.hparams.output_dir, prefix="checkpoint", monitor="val_loss",
-        mode="min", save_top_k=0
+        filepath=model.hparams.output_dir, prefix="checkpoint", monitor="micro_f1",
+        mode="max", save_top_k=1
     )
     gpus = model.hparams.gpus if gpus is None else gpus
     backend = "ddp" if gpus > 1 else None
@@ -90,13 +90,13 @@ def main(config_yaml):
                 # Bug in pytorch_lightning==0.85 -> testing only works with num gpus=1
                 trainer = get_trainer(model, data, f'{experiment}_test', gpus=1)
                 trainer.test(load_last_ckpt(model))
-
             run_i += 1
+
         # Aggregate tensorboard log metrics for all runs on this data
         if len(versions) > 1:
             aggregate(versions)
 
-    if model_str != cfg.baseline_str:
+    if model_str != cfg.baseline_str and 'sanity' not in cfg.data:
         # Print significance report of model results
         master_version = Path(tr_logger.experiment.log_dir).parent.name
         significance_report(cfg.data, master_version, cfg.seeds, cfg.splits, LIBERT_OUT / 'logs',

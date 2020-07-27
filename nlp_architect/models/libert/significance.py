@@ -103,6 +103,8 @@ def significance_report(
 
     res_str = ""
     for epoch in range(epochs):
+        res_str += f"\n\n{'#' * 100}\EPOCH: {epoch}\n{'#' * 100}\n"
+
         seed_pvals = defaultdict(list)
         for data, seed, split in product(datasets, seeds, splits):
             baseline_txt = log_root / data / f'{baseline}_seed_{seed}_split_{split}' / 'version_0' / 'tf' / f'sent_f1_epoch_{epoch}.txt'

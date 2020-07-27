@@ -221,7 +221,7 @@ class BertForToken(pl.LightningModule):
                     target[i].append(label_map[out_label_ids[i][j]])
                     pred[i].append(label_map[preds[i][j]])
 
-        calc = lambda f: f(target, pred)
+        calc = lambda f: torch.tensor(f(target, pred))
         results = OrderedDict({
             "val_loss": val_loss_mean,
             "micro_precision": calc(precision_score),
@@ -229,8 +229,8 @@ class BertForToken(pl.LightningModule):
             "micro_f1": calc(f1_score),
             "micro_accuracy": calc(accuracy_score)
         })
-        confusion = calc(performance_measure)
-        type_metrics, macro_avg = calc(absa_utils.detailed_metrics)
+        confusion = performance_measure(target, pred)
+        type_metrics, macro_avg = absa_utils.detailed_metrics(target, pred)
         results.update(type_metrics)
         results.update(macro_avg)
         results.update(confusion)

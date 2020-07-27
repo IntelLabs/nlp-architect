@@ -1,13 +1,13 @@
 max_epochs: 2
-model_type: libert # bert or libert
+model_type: bert # bert or libert
 random_init: false
 
-data: lr # relative to nlp_architect/models/li_bert/data/preprocessed_conll
+data: sanity # relative to nlp_architect/models/li_bert/data/preprocessed_conll
 splits: [1]
 seeds: [12]
 baseline_str: libert_random_init
 
-version: my_version # optional: name this experiment version
+version: test_2 # optional: name this experiment version
 li_layer: #5
 li_layers: #[2]
 all_layers: true
