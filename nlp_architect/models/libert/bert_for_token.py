@@ -279,8 +279,10 @@ class BertForToken(pl.LightningModule):
     def train_dataloader(self):
         train_batch_size = self.hparams.train_batch_size
         dataloader = self.load_dataset("train", train_batch_size)
+        gpus = self.hparams.gpus
+        num_gpus = len(gpus) if isinstance(gpus, list) else gpus
         t_total = (
-            (len(dataloader.dataset) // (train_batch_size * max(1, self.hparams.gpus)))
+            (len(dataloader.dataset) // (train_batch_size * max(1, num_gpus)))
             // self.hparams.accumulate_grad_batches
             * float(self.hparams.max_epochs)
         )

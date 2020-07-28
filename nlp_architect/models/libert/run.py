@@ -44,7 +44,8 @@ def get_trainer(model, data, experiment, version=None, gpus=None):
     logger = get_logger(data, experiment, version)
 
     gpus = model.hparams.gpus if gpus is None else gpus
-    backend = "ddp" if gpus > 1 else None
+    num_gpus = len(gpus) if isinstance(gpus, list) else gpus
+    backend = "ddp" if num_gpus > 1 else None
     return pl.Trainer(
         logger=logger,
         log_save_interval=10,
