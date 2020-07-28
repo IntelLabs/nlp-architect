@@ -26,10 +26,10 @@ from significance import significance_report
 
 logging.getLogger("transformers").setLevel('ERROR')
 logging.getLogger("pytorch_lightning").setLevel('WARNING')
-LIBERT_OUT = Path(realpath(__file__)).parent / 'out'
+LIBERT_DIR = Path(realpath(__file__)).parent
 
 def get_logger(data, experiment, version, suffix=''):
-    return pl.loggers.TestTubeLogger(save_dir=LIBERT_OUT / 'logs' / data, 
+    return pl.loggers.TestTubeLogger(save_dir=LIBERT_DIR / 'logs' / data, 
                                      name=experiment + suffix, version=version)
 
 def get_trainer(model, data, experiment, version=None, gpus=None):
@@ -104,7 +104,7 @@ def main(config_yaml):
     if model_str != cfg.baseline_str and 'sanity' not in cfg.data:
         # Print significance report of model results
         master_version = Path(tr_logger.experiment.log_dir).parent.name
-        significance_report(cfg.data, master_version, cfg.seeds, cfg.splits, LIBERT_OUT / 'logs',
+        significance_report(cfg.data, master_version, cfg.seeds, cfg.splits, LIBERT_DIR / 'logs',
                         cfg.model_type, cfg.baseline_str)
 
 if __name__ == "__main__":

@@ -43,7 +43,7 @@ from transformers import (
 import absa_utils
 from libert_model import LiBertForToken, LiBertConfig
 
-LIBERT_OUT = Path(realpath(__file__)).parent / 'out'
+LIBERT_DIR = Path(realpath(__file__)).parent
 
 MODEL_CONFIG = {
     'bert': (BertForTokenClassification, BertConfig, BertTokenizer),
@@ -65,9 +65,9 @@ class BertForToken(pl.LightningModule):
         hparams.data_dir = data_root / hparams.data_dir
 
         if not hparams.cache_dir:
-            hparams.cache_dir = LIBERT_OUT.parent / 'cache'
+            hparams.cache_dir = LIBERT_DIR / 'cache'
         if not hparams.output_dir:
-            hparams.output_dir = LIBERT_OUT / 'models'
+            hparams.output_dir = LIBERT_DIR / 'models'
 
         self.model_type, self.config_type, self.tokenizer_type = MODEL_CONFIG[hparams.model_type]
 
