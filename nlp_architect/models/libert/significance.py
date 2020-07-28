@@ -1,11 +1,27 @@
-# pylint: disable=logging-fstring-interpolation
-import numpy as np
+# ******************************************************************************
+# Copyright 2019-2020 Intel Corporation
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ******************************************************************************
+"Util to aggreagate multiple TensorBoard log files into one file."
+# pylint: disable=logging-fstring-interpolation, missing-function-docstring
 from collections import defaultdict
-from scipy import stats
 from itertools import product
 from pathlib import Path
-from pytorch_lightning import _logger as log
 from os import listdir
+import numpy as np
+from pytorch_lightning import _logger as log
+from scipy import stats
 
 def t_test(filename_A, filename_B):
     with open(filename_A) as f:
@@ -98,63 +114,65 @@ def significance_report(
         log_root: Path,
         model: str = 'libert',
         baseline: str = 'libert_random_init',
-        epochs: int = 1,
         alphas: tuple = (.001, .01, .05, .1, .15, .2, .3)):
 
     res_str = ""
-    for epoch in range(epochs):
-        res_str += f"\n\n{'#' * 100}\EPOCH: {epoch}\n{'#' * 100}\n"
+    seed_pvals = defaultdict(list)
+    for data, seed, split in product(datasets, seeds, splits):
+        baseline_txt = log_root / data / f'{baseline}_seed_{seed}_split_{split}_test' / 'version_0' / 'tf' / 'sent_f1.txt'
+        model_txt = log_root / data / f'{model}_seed_{seed}_split_{split}_test' / version / 'tf' / 'sent_f1.txt'
 
-        seed_pvals = defaultdict(list)
-        for data, seed, split in product(datasets, seeds, splits):
-            baseline_txt = log_root / data / f'{baseline}_seed_{seed}_split_{split}' / 'version_0' / 'tf' / f'sent_f1_epoch_{epoch}.txt'
-            model_txt = log_root / data / f'{model}_seed_{seed}_split_{split}' / version / 'tf' / f'sent_f1_epoch_{epoch}.txt'
+        p_val = t_test(baseline_txt, model_txt)
+        sample_str = f'{data} seed_{seed} split_{split}: {p_val}'
+        seed_pvals[seed].append((p_val, sample_str))
 
-            p_val = t_test(baseline_txt, model_txt)
-            sample_str = f'{data} seed_{seed} split_{split} epoch_{epoch}: {p_val}'
-            seed_pvals[seed].append((p_val, sample_str))
+    for alpha in alphas:
+        res_str += f"\n\n{'=' * 40}\nAlpha (p-value): {alpha}\n{'=' * 40}\n"
 
-        for alpha in alphas:
-            res_str += f"\n\n{'=' * 40}\nAlpha (p-value): {alpha}\n{'=' * 40}\n"
+        all_pvals = []
+        scores = []
+        for seed, pvals_sample_strs in seed_pvals.items():
+            res_str += f"Seed: {seed}\n{'-' * 10}\n"
+            pvals = [ps[0] for ps in pvals_sample_strs]
+            sample_strs = [ps[1] for ps in pvals_sample_strs]
+            k, rej_list = replicability(alpha, pvals)
 
-            all_pvals = []
-            scores = []
-            for seed, pvals_sample_strs in seed_pvals.items():
-                res_str += f"Seed: {seed}\n{'-' * 10}\n"
-                pvals = [ps[0] for ps in pvals_sample_strs]
-                sample_strs = [ps[1] for ps in pvals_sample_strs]
-                k, rej_list = replicability(alpha, pvals)
+            score = k / float(len(pvals))
+            scores.append(score)
+            res_str += f"Score: {score}\n"
 
-                score = k / float(len(pvals))
-                scores.append(score)
-                res_str += f"Score: {score}\n"
+            all_pvals.extend(pvals)
+            res_str += f"The Bonferroni-k estimator for the number of \
+                datasets with effect is: {k} (out of {len(pvals)})\n"
 
-                all_pvals.extend(pvals)
-                res_str += f"The Bonferroni-k estimator for the number of datasets with effect is: {k} (out of {len(pvals)})\n"
+            rej_samples = '\n'.join([sample_strs[i] for i in rej_list])
+            res_str += f"\nThe rejections list according to \
+                the Holm procedure is:\n{rej_samples}\n\n"
 
-                rej_samples = '\n'.join([sample_strs[i] for i in rej_list])
-                res_str += f"\nThe rejections list according to the Holm procedure is:\n{rej_samples}\n\n"
+            acc_samples = \
+                '\n'.join([sample_strs[i] for i in range(len(pvals)) if i not in rej_list])
+            res_str += f"The acceptance list according to \
+                the Holm procedure is:\n{acc_samples}\n\n"
 
-                acc_samples = '\n'.join([sample_strs[i] for i in range(len(pvals)) if i not in rej_list])
-                res_str += f"The acceptance list according to the Holm procedure is:\n{acc_samples}\n\n"
+        res_str += "---------------------------------------------------\n"
+        res_str += f"Avg. score with alpha = {alpha}:\n{np.mean(scores)}\n"
+        res_str += "---------------------------------------------------\n"
 
-            res_str += "---------------------------------------------------\n"
-            res_str += f"Avg. score with alpha = {alpha}:\n{np.mean(scores)}\n"
-            res_str += "---------------------------------------------------\n"
-
-            res_str += "\n\n+++++++++++++++++++++++++++++++++++++\n"
-            res_str += "Replicability for all seeds together:'\n"
-            k, rej_list = replicability(alpha, all_pvals)
-            res_str += f"Number of datasets: {len(all_pvals)}\n"
-            res_str += f"The Bonferroni-k estimator for the number of datasets with effect is: {k}\n"
-            res_str += f"The rejections list according to the Holm procedure is: {rej_list.tolist()}\n"
-            res_str += f"Score: {k / float(len(all_pvals))}\n"
+        res_str += "\n\n+++++++++++++++++++++++++++++++++++++\n"
+        res_str += "Replicability for all seeds together:'\n"
+        k, rej_list = replicability(alpha, all_pvals)
+        res_str += f"Number of datasets: {len(all_pvals)}\n"
+        res_str += f"The Bonferroni-k estimator for the number \
+            of datasets with effect is: {k}\n"
+        res_str += f"The rejections list according to \
+            the Holm procedure is: {rej_list.tolist()}\n"
+        res_str += f"Score: {k / float(len(all_pvals))}\n"
 
     log.info(res_str)
 
-    template = lambda i: f"significance_{model}_vs_{baseline}_{i}.txt"
+    template = lambda i: f"significance_{model}_vs_{baseline}_{version}_{i}.txt"
     i = 0
     while template(i) in listdir(log_root):
         i += 1
-    with open(log_root / template(i), 'w') as f:
-        f.write(res_str)
+    with open(log_root / template(i), 'w') as report_file:
+        report_file.write(res_str)

@@ -21,26 +21,30 @@ from sys import argv
 from pathlib import Path
 from os.path import realpath
 from itertools import product
-from absa_utils import load_config, load_last_ckpt, run_log_msg
+from absa_utils import load_config, run_log_msg
 from significance import significance_report
 
 logging.getLogger("transformers").setLevel('ERROR')
 logging.getLogger("pytorch_lightning").setLevel('WARNING')
 LIBERT_OUT = Path(realpath(__file__)).parent / 'out'
 
+def get_logger(data, experiment, version, suffix=''):
+    return pl.loggers.TestTubeLogger(save_dir=LIBERT_OUT / 'logs' / data, 
+                                     name=experiment + suffix, version=version)
+
 def get_trainer(model, data, experiment, version=None, gpus=None):
     """Init trainer for model training/testing."""
     Path(model.hparams.output_dir).mkdir(exist_ok=True)
+    out = str(model.hparams.output_dir)
+
     checkpoint_callback = pl.callbacks.ModelCheckpoint(
-        filepath=model.hparams.output_dir, prefix="checkpoint", monitor="micro_f1",
-        mode="max", save_top_k=1
+        filepath=out + "/_{epoch}-{micro_f1:.4f}", prefix=experiment, monitor="micro_f1",
+        mode="max", save_top_k=2
     )
+    logger = get_logger(data, experiment, version)
+
     gpus = model.hparams.gpus if gpus is None else gpus
     backend = "ddp" if gpus > 1 else None
-
-    logger = pl.loggers.TestTubeLogger(save_dir=LIBERT_OUT / 'logs' / data, name=experiment,
-                                       version=version)
-
     return pl.Trainer(
         logger=logger,
         log_save_interval=10,
@@ -88,8 +92,9 @@ def main(config_yaml):
 
             if cfg.do_predict:
                 # Bug in pytorch_lightning==0.85 -> testing only works with num gpus=1
-                trainer = get_trainer(model, data, f'{experiment}_test', gpus=1)
-                trainer.test(load_last_ckpt(model))
+                trainer.gpus = 1
+                trainer.logger = get_logger(data, experiment, cfg.version, suffix='_test')
+                trainer.test()
             run_i += 1
 
         # Aggregate tensorboard log metrics for all runs on this data
@@ -100,10 +105,7 @@ def main(config_yaml):
         # Print significance report of model results
         master_version = Path(tr_logger.experiment.log_dir).parent.name
         significance_report(cfg.data, master_version, cfg.seeds, cfg.splits, LIBERT_OUT / 'logs',
-                        cfg.model_type, cfg.baseline_str, epochs=cfg.max_epochs)
+                        cfg.model_type, cfg.baseline_str)
 
 if __name__ == "__main__":
-    argv = ['', '']
-    # argv[1] = 'example'
-    argv[1] = 'sanity'
     main(argv[1])

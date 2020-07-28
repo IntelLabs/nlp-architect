@@ -65,7 +65,7 @@ class BertForToken(pl.LightningModule):
         hparams.data_dir = data_root / hparams.data_dir
 
         if not hparams.cache_dir:
-            hparams.cache_dir = LIBERT_OUT / 'cache'
+            hparams.cache_dir = LIBERT_OUT.parent / 'cache'
         if not hparams.output_dir:
             hparams.output_dir = LIBERT_OUT / 'models'
 
@@ -84,7 +84,7 @@ class BertForToken(pl.LightningModule):
 
         self.pad_token_label_id = CrossEntropyLoss().ignore_index
         self.step_count = 0
-        self.tfmr_ckpts = {}
+        # self.tfmr_ckpts = {}
 
         self.model = self.model_type.from_pretrained(
             hparams.model_name_or_path,
@@ -189,20 +189,20 @@ class BertForToken(pl.LightningModule):
         return {"val_loss_step": tmp_eval_loss.detach().cpu(), "pred": preds, "target": target}
 
     def validation_epoch_end(self, outputs):
-        ret, sentence_metrics, _, _ = self._eval_end(outputs)
+        ret, _, _, _ = self._eval_end(outputs)
         logs = ret["log"]
         logs['step'] = self.current_epoch
-        return {"val_loss": logs["val_loss"], "log": logs, "sentence_metrics": sentence_metrics}
+        return {"val_loss": logs["val_loss"], "log": logs}
 
     def test_step(self, batch, batch_nb):
         return self.validation_step(batch, batch_nb)
 
     def test_epoch_end(self, outputs):
-        ret, _, _ = self._eval_end(outputs)
+        ret, sentence_metrics, _, _ = self._eval_end(outputs)
         logs = ret["log"]
         logs['step'] = self.current_epoch
         # `val_loss` is the key returned by `self._eval_end()` but actually refers to `test_loss`
-        return {"avg_test_loss": logs["val_loss"], "log": logs}
+        return {"test_loss": logs["val_loss"], "log": logs, "sentence_metrics": sentence_metrics}
 
     def _eval_end(self, outputs):
         "Evaluation called for both Val and Test"
@@ -303,14 +303,14 @@ class BertForToken(pl.LightningModule):
                 list(filter(None, self.hparams.model_name_or_path.split("/"))).pop(),
                 str(self.hparams.max_seq_length)))
 
-    @pl.utilities.rank_zero_only
-    def on_save_checkpoint(self, checkpoint: Dict[str, Any]) -> None:
-        save_path = self.hparams.output_dir.joinpath("best_tfmr")
-        save_path.mkdir(exist_ok=True)
-        self.model.config.save_step = self.step_count
-        self.model.save_pretrained(save_path)
-        self.tokenizer.save_pretrained(save_path)
-        self.tfmr_ckpts[self.step_count] = save_path
+    # @pl.utilities.rank_zero_only
+    # def on_save_checkpoint(self, checkpoint: Dict[str, Any]) -> None:
+    #     save_path = self.hparams.output_dir.joinpath("best_tfmr")
+    #     save_path.mkdir(exist_ok=True)
+    #     self.model.config.save_step = self.step_count
+    #     self.model.save_pretrained(save_path)
+    #     self.tokenizer.save_pretrained(save_path)
+    #     self.tfmr_ckpts[self.step_count] = save_path
 
     def get_str(self) -> str:
         model_str = f'{self.hparams.model_type}'
@@ -325,23 +325,16 @@ class LoggingCallback(pl.Callback):
     def on_validation_end(self, trainer: pl.Trainer, pl_module: pl.LightningModule):
         print("***** Validation results *****")
         # Log results
+        print(absa_utils.tabular(trainer.callback_metrics, 'Metrics'))
+        
+    @rank_zero_only
+    def on_test_end(self, trainer: pl.Trainer, pl_module: pl.LightningModule):
+        print("***** Test results *****")
+        # Log results
         metrics = trainer.callback_metrics
         sentence_metrics = metrics.pop("sentence_metrics")
         print(absa_utils.tabular(metrics, 'Metrics'))
 
         log_dir = Path(trainer.logger.experiment.log_dir)
-        with open(log_dir / f'sent_f1_epoch_{trainer.current_epoch}.txt', 'w') as f:
+        with open(log_dir / 'sent_f1.txt', 'w') as f:
             f.writelines([f'{v}\n' for v in sentence_metrics['f1']])
-
-    @rank_zero_only
-    def on_test_end(self, trainer: pl.Trainer, pl_module: pl.LightningModule):
-        print("***** Test results *****")
-        metrics = trainer.callback_metrics
-        # Log and save results to file
-        print(absa_utils.tabular(metrics, 'Metrics'))
-
-        output_test_results_file = os.path.join(pl_module.hparams.output_dir, "test_results.txt")
-        with open(output_test_results_file, "w") as writer:
-            for key in sorted(metrics):
-                if key not in ["log", "progress_bar"]:
-                    writer.write("{} = {}\n".format(key, str(metrics[key])))

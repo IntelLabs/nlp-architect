@@ -247,11 +247,13 @@ def load_config(name):
     config.data = [f'{ds[d[0]]}_to_{ds[d[1]]}' if len(d) < 3 else d for d in config.data.split()]
     return config
 
-def load_last_ckpt(model):
+def load_best_ckpt(model):
     """Load the last model checkpoint saved."""
     checkpoints = list(sorted(glob.glob(os.path.join(model.hparams.output_dir,
                                                      "checkpointepoch=*.ckpt"), recursive=True)))
-    return model.load_from_checkpoint(checkpoints[-1])
+    ckpt = model.load_from_checkpoint(checkpoints[-1])
+    ckpt.freeze()
+    return ckpt
 
 def tabular(dic: dict, title: str) -> str:
     res = "\n\n{}\n".format(title)
@@ -268,7 +270,8 @@ def tabular(dic: dict, title: str) -> str:
     res += os.linesep
     return res
 
-def run_log_msg(cfg, model_str, data, seed, split, run_i): 
+def run_log_msg(cfg, model_str, data, seed, split, run_i):
     experiment = f'{model_str}_seed_{seed}_split_{split}'
-    log.info(f"\n{'*' * 150}\n{' ' * 50}Run {run_i}/{len(cfg.seeds) * len(cfg.data) * len(cfg.splits)}: {data}, {experiment}\n{'*' * 150}")
+    runs = len(cfg.seeds) * len(cfg.data) * len(cfg.splits)
+    log.info(f"\n{'*' * 150}\n{' ' * 50}Run {run_i}/{runs}: {data}, {experiment}\n{'*' * 150}")
     return experiment
