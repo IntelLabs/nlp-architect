@@ -93,6 +93,7 @@ class BertForToken(pl.LightningModule):
             cache_dir=hparams.cache_dir)
 
         self.hparams = hparams
+        self.sentence_metrics = None
 
     def forward(self, **inputs):
         return self.model(**inputs)
@@ -189,7 +190,7 @@ class BertForToken(pl.LightningModule):
         return {"val_loss_step": tmp_eval_loss.detach().cpu(), "pred": preds, "target": target}
 
     def validation_epoch_end(self, outputs):
-        ret, _, _, _ = self._eval_end(outputs)
+        ret, _, _ = self._eval_end(outputs)
         logs = ret["log"]
         logs['step'] = self.current_epoch
         return {"val_loss": logs["val_loss"], "log": logs}
@@ -198,11 +199,11 @@ class BertForToken(pl.LightningModule):
         return self.validation_step(batch, batch_nb)
 
     def test_epoch_end(self, outputs):
-        ret, sentence_metrics, _, _ = self._eval_end(outputs)
+        ret, _, _ = self._eval_end(outputs)
         logs = ret["log"]
         logs['step'] = self.current_epoch
         # `val_loss` is the key returned by `self._eval_end()` but actually refers to `test_loss`
-        return {"test_loss": logs["val_loss"], "log": logs, "sentence_metrics": sentence_metrics}
+        return {"test_loss": logs["val_loss"], "log": logs}
 
     def _eval_end(self, outputs):
         "Evaluation called for both Val and Test"
@@ -236,18 +237,15 @@ class BertForToken(pl.LightningModule):
         results.update(confusion)
 
         per_sentence = lambda f: [f([t], [p]) for t, p in zip(target, pred)]
-        per_sentence_metrics = {
+        self.sentence_metrics = {
             "precision": per_sentence(precision_score),
             "recall": per_sentence(recall_score),
             "f1": per_sentence(f1_score),
             "accuracy": per_sentence(accuracy_score)
         }
-        for k, v in per_sentence_metrics.items():
-            log.debug("%s: \n%s\n", k, v)
-
         ret = results.copy()
         ret["log"] = results
-        return ret, per_sentence_metrics, pred, target
+        return ret, pred, target
 
     def configure_optimizers(self):
         "Prepare optimizer and schedule (linear warmup and decay)"
@@ -328,15 +326,13 @@ class LoggingCallback(pl.Callback):
         print("***** Validation results *****")
         # Log results
         print(absa_utils.tabular(trainer.callback_metrics, 'Metrics'))
-        
+
     @rank_zero_only
     def on_test_end(self, trainer: pl.Trainer, pl_module: pl.LightningModule):
         print("***** Test results *****")
         # Log results
-        metrics = trainer.callback_metrics
-        sentence_metrics = metrics.pop("sentence_metrics")
-        print(absa_utils.tabular(metrics, 'Metrics'))
+        print(absa_utils.tabular(trainer.callback_metrics, 'Metrics'))
 
         log_dir = Path(trainer.logger.experiment.log_dir)
-        with open(log_dir / 'sent_f1.txt', 'w') as f:
-            f.writelines([f'{v}\n' for v in sentence_metrics['f1']])
+        with open(log_dir / 'sent_f1.txt', 'w') as f1_file:
+            f1_file.writelines([f'{v}\n' for v in pl_module.sentence_metrics['f1']])

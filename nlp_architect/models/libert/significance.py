@@ -24,8 +24,12 @@ from pytorch_lightning import _logger as log
 from scipy import stats
 
 def t_test(filename_A, filename_B):
-    with open(filename_A) as f:
-        data_A = f.read().splitlines()
+    try:
+        with open(filename_A) as f:
+            data_A = f.read().splitlines()
+    except FileNotFoundError as error:
+        log.error("Baseline version does not exist. Please generate the baseline model first.")
+        raise error
     with open(filename_B) as f:
         data_B = f.read().splitlines()
     data_A = list(map(float, data_A))
@@ -105,22 +109,28 @@ def replicability(alpha, pvals):
     rejlist = Holm(pvals, alpha)
     return k_est, rejlist
 
+def significance_report_from_cfg(cfg, log_dir, exp_id):
+    significance_report(cfg.data, exp_id, cfg.seeds, cfg.splits, log_dir,
+                        cfg.baseline_str, cfg.baseline_version, cfg.model_type)
 
 def significance_report(
         datasets: list,
-        version: str, 
+        exp_id: str,
         seeds: list,
         splits: list,
         log_root: Path,
-        model: str = 'libert',
-        baseline: str = 'libert_random_init',
+        baseline: str,
+        baseline_ver: str,
+        model: str,
         alphas: tuple = (.001, .01, .05, .1, .15, .2, .3)):
 
     res_str = ""
     seed_pvals = defaultdict(list)
     for data, seed, split in product(datasets, seeds, splits):
-        baseline_txt = log_root / data / f'{baseline}_seed_{seed}_split_{split}_test' / 'version_0' / 'tf' / 'sent_f1.txt'
-        model_txt = log_root / data / f'{model}_seed_{seed}_split_{split}_test' / version / 'tf' / 'sent_f1.txt'
+        baseline_txt = log_root / data / f'{baseline}_seed_{seed}_split_{split}_test'\
+            / baseline_ver / 'tf' / 'sent_f1.txt'
+        model_txt = log_root / data / f'{model}_seed_{seed}_split_{split}_test'\
+            / ('version_' + exp_id) / 'tf' / 'sent_f1.txt'
 
         p_val = t_test(baseline_txt, model_txt)
         sample_str = f'{data} seed_{seed} split_{split}: {p_val}'
@@ -170,9 +180,5 @@ def significance_report(
 
     log.info(res_str)
 
-    template = lambda i: f"significance_{model}_vs_{baseline}_{version}_{i}.txt"
-    i = 0
-    while template(i) in listdir(log_root):
-        i += 1
-    with open(log_root / template(i), 'w') as report_file:
+    with open(log_root / f"significance_{model}_vs_{baseline}_{exp_id}.txt", 'w') as report_file:
         report_file.write(res_str)

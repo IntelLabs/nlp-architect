@@ -22,30 +22,27 @@ from pathlib import Path
 from os.path import realpath
 from itertools import product
 from absa_utils import load_config, run_log_msg
-from significance import significance_report
+from significance import significance_report_from_cfg
+from datetime import datetime
 
 logging.getLogger("transformers").setLevel('ERROR')
 logging.getLogger("pytorch_lightning").setLevel('WARNING')
 LIBERT_DIR = Path(realpath(__file__)).parent
 
-def get_logger(data, experiment, version, suffix=''):
+def get_logger(data, experiment, exp_id, suffix=''):
     return pl.loggers.TestTubeLogger(save_dir=LIBERT_DIR / 'logs' / data, 
-                                     name=experiment + suffix, version=version)
+                                     name=experiment + suffix, version=exp_id)
 
-def get_trainer(model, data, experiment, version=None, gpus=None):
+def get_trainer(model, data, experiment, exp_id, gpus=None):
     """Init trainer for model training/testing."""
     Path(model.hparams.output_dir).mkdir(exist_ok=True)
-    out = str(model.hparams.output_dir)
-
     checkpoint_callback = pl.callbacks.ModelCheckpoint(
-        filepath=out + "/_{epoch}-{micro_f1:.4f}", prefix=experiment, monitor="micro_f1",
-        mode="max", save_top_k=2
+        filepath=str(model.hparams.output_dir) + "/_{epoch}-{micro_f1:.4f}",
+        prefix=experiment + '_' + exp_id, monitor="micro_f1", mode="max", save_top_k=1
     )
-    logger = get_logger(data, experiment, version)
-
+    logger = get_logger(data, experiment, exp_id)
     gpus = model.hparams.gpus if gpus is None else gpus
     num_gpus = len(gpus) if isinstance(gpus, list) else gpus
-    backend = "ddp" if num_gpus > 1 else None
     return pl.Trainer(
         logger=logger,
         log_save_interval=10,
@@ -60,15 +57,15 @@ def get_trainer(model, data, experiment, version=None, gpus=None):
         val_check_interval=model.hparams.val_check_interval,
         weights_summary=None,
         resume_from_checkpoint=model.hparams.resume_from_checkpoint,
-        distributed_backend=backend,
+        distributed_backend="ddp" if num_gpus > 1 else None,
         benchmark=True,
         deterministic=True,
-        # profiler=True
     )
 
 # pylint: disable=no-member
 def main(config_yaml):
     cfg = load_config(config_yaml)
+    exp_id = datetime.now().strftime("%a_%b_%d_%H:%M:%S") + cfg.version_tag
 
     run_i = 1
     for data in cfg.data:
@@ -83,7 +80,7 @@ def main(config_yaml):
             experiment = run_log_msg(cfg, model_str, data, seed, split, run_i)
 
             if cfg.do_train:
-                trainer = get_trainer(model, data, experiment, cfg.version)
+                trainer = get_trainer(model, data, experiment, exp_id)
                 trainer.fit(model)
 
                 tr_logger = trainer.logger
@@ -94,7 +91,7 @@ def main(config_yaml):
             if cfg.do_predict:
                 # Bug in pytorch_lightning==0.85 -> testing only works with num gpus=1
                 trainer.gpus = 1
-                trainer.logger = get_logger(data, experiment, cfg.version, suffix='_test')
+                trainer.logger = get_logger(data, experiment, exp_id, suffix='_test')
                 trainer.test()
             run_i += 1
 
@@ -104,9 +101,7 @@ def main(config_yaml):
 
     if model_str != cfg.baseline_str and 'sanity' not in cfg.data:
         # Print significance report of model results
-        master_version = Path(tr_logger.experiment.log_dir).parent.name
-        significance_report(cfg.data, master_version, cfg.seeds, cfg.splits, LIBERT_DIR / 'logs',
-                        cfg.model_type, cfg.baseline_str)
+        significance_report_from_cfg(cfg, LIBERT_DIR / 'logs', exp_id)
 
 if __name__ == "__main__":
     main(argv[1])

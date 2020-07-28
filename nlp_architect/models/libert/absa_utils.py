@@ -243,6 +243,7 @@ def load_config(name):
     configs_dir = Path(os.path.dirname(os.path.realpath(__file__))) / 'config'
     config = Namespace(**load_hparams_from_yaml(configs_dir / (name + '.yaml')))
 
+    config.version_tag = '' if config.version_tag is None else '_' + config.version_tag
     ds = {'l': 'laptops', 'r': 'restaurants', 'd': 'device'}
     config.data = [f'{ds[d[0]]}_to_{ds[d[1]]}' if len(d) < 3 else d for d in config.data.split()]
     return config
