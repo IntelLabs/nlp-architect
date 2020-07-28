@@ -97,7 +97,7 @@ def main(config_yaml):
 
         # Aggregate tensorboard log metrics for all runs on this data
         if len(versions) > 1:
-            aggregate(versions)
+            aggregate(versions, exp_id)
 
     if model_str != cfg.baseline_str and 'sanity' not in cfg.data:
         # Print significance report of model results

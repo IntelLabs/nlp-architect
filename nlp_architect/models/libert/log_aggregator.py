@@ -99,7 +99,7 @@ def write_csv(csv_out, xlsx_writer, key, aggregations, steps, ops):
     df.to_excel(xlsx_writer, sheet_name=key)
     df.to_csv(csv_out)
 
-def aggregate(versions, aggregation_ops=(np.mean,)):
+def aggregate(versions, exp_id, aggregation_ops=(np.mean,)):
     tf.compat.v1.disable_eager_execution()
 
     # aggregation_ops = [np.mean, np.min, np.max, np.std, np.var]
@@ -107,8 +107,7 @@ def aggregate(versions, aggregation_ops=(np.mean,)):
     extracted = extract(versions)
 
     base = versions[0].parent.parent
-    prev_aggs = [d for d in os.listdir(base.parent) if d.startswith(base.name + '_agg')]
-    agg_path = base.name + '_agg_' + ('0' if not prev_aggs else (str(int(max(prev_aggs)[-1]) + 1)))
+    agg_path = base.name + '_agg_' + exp_id
     args = base.parent / agg_path, aggregation_ops, extracted
 
     aggregate_to_summary(*args)

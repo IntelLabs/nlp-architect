@@ -1,6 +1,6 @@
 max_epochs: 2
 model_type: libert # bert or libert
-random_init: true
+random_init: false
 
 data: lr rl # relative to nlp_architect/models/li_bert/data/preprocessed_conll
 splits: [1, 2]
