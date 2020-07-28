@@ -4,10 +4,11 @@
 
 ```bash
 python3.6 -m pip install -U pip setuptools virtualenv
-python3.6 -m venv my_env
-source my_env/bin/activate
+python3.6 -m venv libert_env
+source libert_env/bin/activate
 git clone --branch libert https://github.com/NervanaSystems/nlp-architect.git
-pip install -r nlp-architect/nlp_architect/models/libert/requirements.txt
+pip install torch==1.5.1+cu101 torchvision==0.6.1+cu101 -f https://download.pytorch.org/whl/torch_stable.html
+pip install -r -U nlp-architect/nlp_architect/models/libert/requirements.txt
 ```
 
 ## Usage
