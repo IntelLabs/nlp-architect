@@ -23,7 +23,7 @@ from os.path import realpath
 from itertools import product
 from absa_utils import load_config, run_log_msg
 from significance import significance_report_from_cfg
-from datetime import datetime
+from datetime.datetime import now
 
 logging.getLogger("transformers").setLevel('ERROR')
 logging.getLogger("pytorch_lightning").setLevel('WARNING')
@@ -65,11 +65,12 @@ def get_trainer(model, data, experiment, exp_id, gpus=None):
 # pylint: disable=no-member
 def main(config_yaml):
     cfg = load_config(config_yaml)
-    exp_id = datetime.now().strftime("%a_%b_%d_%H:%M:%S") + cfg.version_tag
+    timed_id = now().strftime("%a_%b_%d_%H:%M:%S") + cfg.version_tag
 
     run_i = 1
     for data in cfg.data:
         versions = []
+        test_versions = []
         for seed, split in product(cfg.seeds, cfg.splits):
             pl.seed_everything(seed)
 
@@ -78,6 +79,7 @@ def main(config_yaml):
 
             model_str = model.get_str()
             experiment = run_log_msg(cfg, model_str, data, seed, split, run_i)
+            exp_id = 'baseline' if model_str == cfg.baseline_str else timed_id
 
             if cfg.do_train:
                 trainer = get_trainer(model, data, experiment, exp_id)
@@ -93,11 +95,12 @@ def main(config_yaml):
                 trainer.gpus = 1
                 trainer.logger = get_logger(data, experiment, exp_id, suffix='_test')
                 trainer.test()
+                test_versions.append(trainer.logger.experiment.log_dir)
             run_i += 1
 
         # Aggregate tensorboard log metrics for all runs on this data
         if len(versions) > 1:
-            aggregate(versions, exp_id)
+            aggregate(versions, test_versions, exp_id)
 
     if model_str != cfg.baseline_str and 'sanity' not in cfg.data:
         # Print significance report of model results

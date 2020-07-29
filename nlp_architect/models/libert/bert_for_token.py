@@ -20,7 +20,6 @@
 import os
 from argparse import Namespace
 from pathlib import Path
-from typing import Any, Dict
 from collections import OrderedDict
 from os.path import realpath
 
@@ -31,6 +30,7 @@ from pytorch_lightning import _logger as log
 import torch
 from torch.nn import CrossEntropyLoss
 from torch.utils.data import DataLoader, TensorDataset
+torch.multiprocessing.set_sharing_strategy('file_system')
 from seqeval.metrics import (precision_score, recall_score, f1_score, accuracy_score,
                              performance_measure)
 from transformers import (
@@ -302,15 +302,6 @@ class BertForToken(pl.LightningModule):
                 mode,
                 list(filter(None, self.hparams.model_name_or_path.split("/"))).pop(),
                 str(self.hparams.max_seq_length)))
-
-    # @pl.utilities.rank_zero_only
-    # def on_save_checkpoint(self, checkpoint: Dict[str, Any]) -> None:
-    #     save_path = self.hparams.output_dir.joinpath("best_tfmr")
-    #     save_path.mkdir(exist_ok=True)
-    #     self.model.config.save_step = self.step_count
-    #     self.model.save_pretrained(save_path)
-    #     self.tokenizer.save_pretrained(save_path)
-    #     self.tfmr_ckpts[self.step_count] = save_path
 
     def get_str(self) -> str:
         model_str = f'{self.hparams.model_type}'

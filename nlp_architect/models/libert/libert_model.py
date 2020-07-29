@@ -21,6 +21,7 @@ import math
 from torch import nn
 import torch
 from torch.nn import CrossEntropyLoss
+torch.multiprocessing.set_sharing_strategy('file_system')
 from transformers.modeling_bert import BertEncoder, BertLayer, \
         BertAttention, BertSelfAttention, BertSelfOutput, BertConfig
 from transformers import BertForTokenClassification, BertModel
