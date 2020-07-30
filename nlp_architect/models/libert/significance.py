@@ -18,7 +18,6 @@
 from collections import defaultdict
 from itertools import product
 from pathlib import Path
-from os import listdir
 import numpy as np
 from pytorch_lightning import _logger as log
 from scipy import stats
@@ -28,7 +27,7 @@ def t_test(filename_A, filename_B):
         with open(filename_A) as f:
             data_A = f.read().splitlines()
     except FileNotFoundError as error:
-        log.error("Baseline version does not exist. Please generate the baseline model first.")
+        log.error("\nBaseline log does not exist. Please generate the baseline model first.")
         raise error
     with open(filename_B) as f:
         data_B = f.read().splitlines()

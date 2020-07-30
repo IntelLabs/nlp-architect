@@ -29,7 +29,8 @@ logging.getLogger("transformers").setLevel('ERROR')
 logging.getLogger("pytorch_lightning").setLevel('WARNING')
 LIBERT_DIR = Path(realpath(__file__)).parent
 
-def get_logger(data, experiment, exp_id, suffix=''):
+def get_logger(data, experiment, exp_id, suffix=None):
+    suffix = '_' + suffix if suffix else ''
     return pl.loggers.TestTubeLogger(save_dir=LIBERT_DIR / 'logs' / data, 
                                      name=experiment + suffix, version=exp_id)
 
@@ -93,7 +94,7 @@ def main(config_yaml):
             if cfg.do_predict:
                 # Bug in pytorch_lightning==0.85 -> testing only works with num gpus=1
                 trainer.gpus = 1
-                trainer.logger = get_logger(data, experiment, exp_id, suffix='_test')
+                trainer.logger = get_logger(data, experiment, exp_id, suffix='test')
                 trainer.test()
                 test_versions.append(trainer.logger.experiment.log_dir)
             run_i += 1

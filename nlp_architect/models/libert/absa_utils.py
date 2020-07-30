@@ -21,6 +21,7 @@ from dataclasses import dataclass
 from enum import Enum
 from collections import defaultdict
 from typing import List, Optional, Union
+from os.path import realpath
 
 from pytorch_lightning import _logger as log
 from transformers import PreTrainedTokenizer
@@ -30,6 +31,10 @@ import glob
 from pytorch_lightning.core.saving import load_hparams_from_yaml
 from argparse import Namespace
 from pathlib import Path
+from significance import significance_report_from_cfg as significance
+
+LIBERT_DIR = Path(realpath(__file__)).parent
+
 
 @dataclass
 class InputExample:
@@ -276,3 +281,7 @@ def run_log_msg(cfg, model_str, data, seed, split, run_i):
     runs = len(cfg.seeds) * len(cfg.data) * len(cfg.splits)
     log.info(f"\n{'*' * 150}\n{' ' * 50}Run {run_i}/{runs}: {data}, {experiment}\n{'*' * 150}")
     return experiment
+
+
+if __name__ == "__main__":
+    significance(load_config('model'), LIBERT_DIR / 'logs', 'Thu_Jul_30_00:43:52')
