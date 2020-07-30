@@ -1,0 +1,4 @@
+pandas
+hyperopt
+termcolor
+bokeh == 1.2.0
