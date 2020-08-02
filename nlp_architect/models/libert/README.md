@@ -2,7 +2,7 @@
 
 ## Installation
 
-Intructions for machines with CIDA 10.2 installed:
+Intructions for machines with CUDA 10.2 installed:
 
 ```bash
 python3.6 -m pip install -U pip setuptools virtualenv
