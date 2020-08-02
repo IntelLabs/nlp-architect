@@ -2,14 +2,14 @@
 
 ## Installation
 
-Intructions for machines with CIDA 10.2 installed:
+Intructions for machines with CUDA 10.2 installed:
 
 ```bash
 python3.6 -m pip install -U pip setuptools virtualenv
 python3.6 -m venv libert_env
 source libert_env/bin/activate
 git clone --branch libert https://github.com/NervanaSystems/nlp-architect.git
-pip install -r -U nlp-architect/nlp_architect/models/libert/requirements.txt
+pip install -r nlp-architect/nlp_architect/models/libert/requirements.txt
 ```
 
 ## Usage
