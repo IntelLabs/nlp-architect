@@ -13,21 +13,31 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
+# pylint: disable=logging-fstring-interpolation
+
 import logging
 import pytorch_lightning as pl
+from pytorch_lightning import _logger as log
 from bert_for_token import BertForToken, LoggingCallback
 from log_aggregator import aggregate
 from sys import argv
 from pathlib import Path
 from os.path import realpath
 from itertools import product
-from absa_utils import load_config, run_log_msg
+from absa_utils import load_config
 from significance import significance_report_from_cfg
 from datetime import datetime
 
 logging.getLogger("transformers").setLevel('ERROR')
 logging.getLogger("pytorch_lightning").setLevel('WARNING')
 LIBERT_DIR = Path(realpath(__file__)).parent
+
+def log_model_and_version(trainer, cfg, versions, save=True):
+    logger = trainer.logger
+    logger.log_hyperparams(cfg)
+    if save:
+        logger.save()
+    versions.append(logger.experiment.log_dir)
 
 def get_logger(data, experiment, exp_id, suffix=None):
     suffix = '_' + suffix if suffix else ''
@@ -67,41 +77,38 @@ def get_trainer(model, data, experiment, exp_id, gpus=None):
 def main(config_yaml):
     cfg = load_config(config_yaml)
     timed_id = datetime.now().strftime("%a_%b_%d_%H:%M:%S") + cfg.version_tag
+    runs = product(cfg.base_init, cfg.data, cfg.seeds, cfg.splits)
+    runs_per_data = len(cfg.seeds) * len(cfg.splits)
 
-    run_i = 1
-    for data in cfg.data:
-        versions = []
-        test_versions = []
-        for seed, split in product(cfg.seeds, cfg.splits):
-            pl.seed_everything(seed)
+    for run_i, (base_init, data, seed, split) in enumerate(runs, start=1):
+        pl.seed_everything(seed)
 
-            cfg.data_dir = f'{data}_{split}'
-            model = BertForToken(cfg)
+        cfg.rnd_init = base_init
+        cfg.data_dir = f'{data}_{split}'
+        model = BertForToken(cfg)
 
-            model_str = model.get_str()
-            experiment = run_log_msg(cfg, model_str, data, seed, split, run_i)
-            exp_id = 'baseline' if model_str == cfg.baseline_str else timed_id
+        model_str = model.get_str()
+        exper_str = f'{model_str}_seed_{seed}_split_{split}'
+        log.info(f"\n{'*' * 150}\n{' ' * 50}Run {run_i}/{len(runs)}: {data}, {exper_str}\n{'*' * 150}")
+        exp_id = 'baseline' if model_str == cfg.baseline_str else timed_id
 
-            if cfg.do_train:
-                trainer = get_trainer(model, data, experiment, exp_id)
-                trainer.fit(model)
+        if run_i % runs_per_data == 0:
+            train_versions, test_versions = [], []
 
-                tr_logger = trainer.logger
-                tr_logger.log_hyperparams(cfg)
-                tr_logger.save()
-                versions.append(tr_logger.experiment.log_dir)
+        if cfg.do_train:
+            trainer = get_trainer(model, data, exper_str, exp_id)
+            trainer.fit(model)
+            log_model_and_version(trainer, cfg, train_versions)
 
-            if cfg.do_predict:
-                # Bug in pytorch_lightning==0.85 -> testing only works with num gpus=1
-                trainer.gpus = 1
-                trainer.logger = get_logger(data, experiment, exp_id, suffix='test')
-                trainer.test()
-                test_versions.append(trainer.logger.experiment.log_dir)
-            run_i += 1
+        if cfg.do_predict:
+            # Switch to test logger
+            trainer.logger = get_logger(data, exper_str, exp_id, suffix='test')
+            trainer.test()
+            log_model_and_version(trainer, cfg, test_versions, save=False)
 
         # Aggregate tensorboard log metrics for all runs on this data
-        if len(versions) > 1:
-            aggregate(versions, exp_id + '_train', model_str)
+        if (run_i + 1) % runs_per_data == 0 and len(train_versions) > 1:
+            aggregate(train_versions, exp_id + '_train', model_str)
             aggregate(test_versions, exp_id + '_test', model_str)
 
     if model_str != cfg.baseline_str and 'sanity' not in cfg.data:

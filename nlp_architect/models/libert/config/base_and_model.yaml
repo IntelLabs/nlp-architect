@@ -1,8 +1,8 @@
 max_epochs: 1 # 8
-model_type: bert # bert or libert
-rnd_init: true
+model_type: libert # bert or libert
+base_init: [true, false]
 
-data: sanity # rl dl ld dr rd # relative to nlp_architect/models/li_bert/data/preprocessed_conll
+data: lr # rl dl ld # relative to nlp_architect/models/li_bert/data/preprocessed_conll
 splits: [1]
 seeds: [12]
 version_tag: # optional: name this experiment version

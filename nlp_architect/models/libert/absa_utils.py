@@ -22,15 +22,15 @@ from enum import Enum
 from collections import defaultdict
 from typing import List, Optional, Union
 from os.path import realpath
+from argparse import Namespace
+from pathlib import Path
 
 from pytorch_lightning import _logger as log
+from pytorch_lightning.core.saving import load_hparams_from_yaml
 from transformers import PreTrainedTokenizer
 from seqeval.metrics.sequence_labeling import get_entities
 import numpy as np
-import glob
-from pytorch_lightning.core.saving import load_hparams_from_yaml
-from argparse import Namespace
-from pathlib import Path
+
 from significance import significance_report_from_cfg as significance
 
 LIBERT_DIR = Path(realpath(__file__)).parent
@@ -253,14 +253,6 @@ def load_config(name):
     config.data = [f'{ds[d[0]]}_to_{ds[d[1]]}' if len(d) < 3 else d for d in config.data.split()]
     return config
 
-def load_best_ckpt(model):
-    """Load the last model checkpoint saved."""
-    checkpoints = list(sorted(glob.glob(os.path.join(model.hparams.output_dir,
-                                                     "checkpointepoch=*.ckpt"), recursive=True)))
-    ckpt = model.load_from_checkpoint(checkpoints[-1])
-    ckpt.freeze()
-    return ckpt
-
 def tabular(dic: dict, title: str) -> str:
     res = "\n\n{}\n".format(title)
     key_vals = [(k, f"{float(dic[k]):.4}") for k in sorted(dic)]
@@ -275,12 +267,6 @@ def tabular(dic: dict, title: str) -> str:
         res += line_sep + "\n"
     res += os.linesep
     return res
-
-def run_log_msg(cfg, model_str, data, seed, split, run_i):
-    experiment = f'{model_str}_seed_{seed}_split_{split}'
-    runs = len(cfg.seeds) * len(cfg.data) * len(cfg.splits)
-    log.info(f"\n{'*' * 150}\n{' ' * 50}Run {run_i}/{runs}: {data}, {experiment}\n{'*' * 150}")
-    return experiment
 
 
 if __name__ == "__main__":

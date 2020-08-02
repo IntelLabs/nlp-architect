@@ -34,7 +34,7 @@ class LiBertConfig(BertConfig):
         # pylint: disable=attribute-defined-outside-init
         self.li_layer = hparams.li_layer
         self.replace_final = hparams.replace_final
-        self.random_init = hparams.random_init
+        self.rnd_init = hparams.rnd_init
         self.all_layers = hparams.all_layers
         self.duplicated_rels = hparams.duplicated_rels
         self.transpose = hparams.transpose
@@ -247,7 +247,7 @@ class LiBertSelfAttention(BertSelfAttention):
         super(LiBertSelfAttention, self).__init__(config)
         self.orig_num_attention_heads = config.num_attention_heads
         self.replace_final = config.replace_final
-        self.random_init = config.random_init
+        self.rnd_init = config.rnd_init
         self.duplicated_rels = config.duplicated_rels
         self.transpose = config.transpose
 
@@ -300,7 +300,7 @@ class LiBertSelfAttention(BertSelfAttention):
         # Take the dot product between "query" and "key" to get the raw attention scores.
         attention_scores = torch.matmul(query_layer, key_layer.transpose(-1, -2))
 
-        if parse is not None and not self.random_init:
+        if parse is not None and not self.rnd_init:
             #  duplicated heads across all matrix (one vector duplicated across matrix)
             if self.duplicated_rels is True:
                 parse = parse.sum(1, keepdim=True)
@@ -347,7 +347,7 @@ class LiBertSelfAttention(BertSelfAttention):
             #     attention_probs = \
             # torch.cat((original_12head_attn_probs, ex_head_attention_probs.unsqueeze(1)),1)
 
-        if parse is None or self.random_init:
+        if parse is None or self.rnd_init:
             attention_scores = attention_scores / math.sqrt(self.attention_head_size)
             if attention_mask is not None:
                 # Apply the attention mask is

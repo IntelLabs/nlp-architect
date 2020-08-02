@@ -305,8 +305,8 @@ class BertForToken(pl.LightningModule):
 
     def get_str(self) -> str:
         model_str = f'{self.hparams.model_type}'
-        if self.hparams.model_type == 'libert' and self.hparams.random_init:
-            model_str += '_random_init'
+        if self.hparams.model_type == 'libert' and self.hparams.rnd_init:
+            model_str += '_rnd_init'
         return model_str
 
 class LoggingCallback(pl.Callback):
