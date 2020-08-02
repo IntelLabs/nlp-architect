@@ -11,7 +11,6 @@ cd nlp-architect
 pip install --upgrade pip
 pip install -e .
 pip install -r nlp_architect/solutions/absa_solution/requirements.txt
-export BOKEH_ALLOW_WS_ORIGIN=127.0.0.1:5007
 ```
 
 ## Run - Served Locally
@@ -27,6 +26,7 @@ Replace REMOTE_HOST with the server's hostname, and USER with your username:
 
 ```bash
     ssh USER@REMOTE_HOST -L 5006:REMOTE_HOST:5006
+    export BOKEH_ALLOW_WS_ORIGIN=127.0.0.1:5007
     python nlp_architect/solutions/absa_solution/ui.py
 ```
 
