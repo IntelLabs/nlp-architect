@@ -13,70 +13,25 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
-# pylint: disable=logging-fstring-interpolation
-
-import logging
-import pytorch_lightning as pl
-from pytorch_lightning import _logger as log
-from bert_for_token import BertForToken, LoggingCallback
-from log_aggregator import aggregate
-from sys import argv
+# pylint: disable=logging-fstring-interpolation, no-member
+import sys
 from pathlib import Path
 from os.path import realpath
 from itertools import product
-from absa_utils import load_config
-from significance import significance_report_from_cfg
 from datetime import datetime
+import pytorch_lightning as pl
+from pytorch_lightning import _logger as log
+from bert_for_token import BertForToken
+from log_aggregator import aggregate
+from absa_utils import load_config
+from significance import significance_from_cfg
+from trainer import get_logger, get_trainer, log_model_and_version
 
-logging.getLogger("transformers").setLevel('ERROR')
-logging.getLogger("pytorch_lightning").setLevel('WARNING')
 LIBERT_DIR = Path(realpath(__file__)).parent
 
-def log_model_and_version(trainer, cfg, versions, save=True):
-    logger = trainer.logger
-    logger.log_hyperparams(cfg)
-    if save:
-        logger.save()
-    versions.append(logger.experiment.log_dir)
-
-def get_logger(data, experiment, exp_id, suffix=None):
-    suffix = '_' + suffix if suffix else ''
-    return pl.loggers.TestTubeLogger(save_dir=LIBERT_DIR / 'logs' / data, 
-                                     name=experiment + suffix, version=exp_id)
-
-def get_trainer(model, data, experiment, exp_id, gpus=None):
-    """Init trainer for model training/testing."""
-    Path(model.hparams.output_dir).mkdir(exist_ok=True)
-    checkpoint_callback = pl.callbacks.ModelCheckpoint(
-        filepath=str(model.hparams.output_dir) + "/_{epoch}-{micro_f1:.4f}",
-        prefix=experiment + '_' + exp_id, monitor="micro_f1", mode="max", save_top_k=1
-    )
-    logger = get_logger(data, experiment, exp_id, suffix='train')
-    gpus = model.hparams.gpus if gpus is None else gpus
-    num_gpus = len(gpus) if isinstance(gpus, list) else gpus
-    return pl.Trainer(
-        logger=logger,
-        log_save_interval=10,
-        row_log_interval=10,
-        accumulate_grad_batches=model.hparams.accumulate_grad_batches,
-        gpus=gpus,
-        max_epochs=model.hparams.max_epochs,
-        gradient_clip_val=model.hparams.gradient_clip_val,
-        checkpoint_callback=checkpoint_callback,
-        callbacks=[LoggingCallback()],
-        fast_dev_run=model.hparams.fast_dev_run,
-        val_check_interval=model.hparams.val_check_interval,
-        weights_summary=None,
-        resume_from_checkpoint=model.hparams.resume_from_checkpoint,
-        distributed_backend="ddp" if num_gpus > 1 else None,
-        benchmark=True,
-        deterministic=True,
-    )
-
-# pylint: disable=no-member
 def main(config_yaml):
     cfg = load_config(config_yaml)
-    timed_id = datetime.now().strftime("%a_%b_%d_%H:%M:%S") + cfg.version_tag
+    timed_id = datetime.now().strftime("%a_%b_%d_%H:%M:%S") + cfg.tag
     runs = product(cfg.base_init, cfg.data, cfg.seeds, cfg.splits)
     runs_per_data = len(cfg.seeds) * len(cfg.splits)
 
@@ -113,7 +68,7 @@ def main(config_yaml):
 
     if model_str != cfg.baseline_str and 'sanity' not in cfg.data:
         # Print significance report of model results
-        significance_report_from_cfg(cfg, LIBERT_DIR / 'logs', exp_id)
+        significance_from_cfg(cfg, LIBERT_DIR / 'logs', exp_id)
 
 if __name__ == "__main__":
-    main(argv[1])
+    main(sys.argv[1])

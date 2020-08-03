@@ -31,7 +31,7 @@ from transformers import PreTrainedTokenizer
 from seqeval.metrics.sequence_labeling import get_entities
 import numpy as np
 
-from significance import significance_report_from_cfg as significance
+from significance import significance_from_cfg as significance
 
 LIBERT_DIR = Path(realpath(__file__)).parent
 
@@ -248,7 +248,7 @@ def load_config(name):
     configs_dir = Path(os.path.dirname(os.path.realpath(__file__))) / 'config'
     config = Namespace(**load_hparams_from_yaml(configs_dir / (name + '.yaml')))
 
-    config.version_tag = '' if config.version_tag is None else '_' + config.version_tag
+    config.tag = '' if config.tag is None else '_' + config.tag
     ds = {'l': 'laptops', 'r': 'restaurants', 'd': 'device'}
     config.data = [f'{ds[d[0]]}_to_{ds[d[1]]}' if len(d) < 3 else d for d in config.data.split()]
     return config

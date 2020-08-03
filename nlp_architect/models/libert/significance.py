@@ -108,7 +108,7 @@ def replicability(alpha, pvals):
     rejlist = Holm(pvals, alpha)
     return k_est, rejlist
 
-def significance_report_from_cfg(cfg, log_dir, exp_id):
+def significance_from_cfg(cfg, log_dir, exp_id):
     significance_report(cfg.data, exp_id, cfg.seeds, cfg.splits, log_dir,
                         cfg.baseline_str, cfg.baseline_version, cfg.model_type)
 
@@ -121,7 +121,7 @@ def significance_report(
         baseline: str,
         baseline_ver: str,
         model: str,
-        alphas: tuple = (.001, .01, .05, .1, .15, .2, .3)):
+        alphas: tuple = (.001, .01, .05, .1, .15, .2, .25)):
 
     res_str = ""
     seed_pvals = defaultdict(list)
