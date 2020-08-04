@@ -33,19 +33,20 @@ def log_model_and_version(trainer, cfg, versions, save=True):
         logger.save()
     versions.append(logger.experiment.log_dir)
 
-def get_logger(data, experiment, exp_id, suffix=None):
+def get_logger(data, experiment, exp_id, log_dir=None, suffix=None):
     suffix = '_' + suffix if suffix else ''
-    return pl.loggers.TestTubeLogger(save_dir=LIBERT_DIR / 'logs' / data, 
+    save_dir = log_dir if log_dir else LIBERT_DIR / 'logs'
+    return pl.loggers.TestTubeLogger(save_dir= Path(save_dir) / data, 
                                      name=experiment + suffix, version=exp_id)
 
-def get_trainer(model, data, experiment, exp_id, gpus=None):
+def get_trainer(model, data, experiment, exp_id, log_dir=None, gpus=None):
     """Init trainer for model training/testing."""
     Path(model.hparams.output_dir).mkdir(exist_ok=True)
     checkpoint_callback = pl.callbacks.ModelCheckpoint(
         filepath=str(model.hparams.output_dir) + "/_{epoch}-{micro_f1:.4f}",
         prefix=experiment + '_' + exp_id, monitor="micro_f1", mode="max", save_top_k=1
     )
-    logger = get_logger(data, experiment, exp_id, suffix='train')
+    logger = get_logger(data, experiment, exp_id, log_dir, suffix='train')
     gpus = model.hparams.gpus if gpus is None else gpus
     num_gpus = len(gpus) if isinstance(gpus, list) else gpus
     return pl.Trainer(

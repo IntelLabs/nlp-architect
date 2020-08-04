@@ -2,7 +2,7 @@ max_epochs: 1
 model_type: libert # bert or libert
 base_init: [true, false]
 
-data: lr rl dl # ld dr rd # relative to nlp_architect/models/li_bert/data/preprocessed_conll
+data: lr # rl dl # ld dr rd # relative to nlp_architect/models/li_bert/data/preprocessed_conll
 splits: [1]
 seeds: [12]
 tag: # optional: name this experiment version

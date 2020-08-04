@@ -268,6 +268,14 @@ def tabular(dic: dict, title: str) -> str:
     res += os.linesep
     return res
 
+def set_as_latest_log_dir(log_dir):
+    log_root = LIBERT_DIR / 'logs'
+    link = log_root / 'latest'
+    try:
+        link.unlink()
+    except FileNotFoundError:
+        pass
+    os.symlink(log_dir, link, target_is_directory=True)
 
 if __name__ == "__main__":
     significance(load_config('model'), LIBERT_DIR / 'logs', 'Thu_Jul_30_00:43:52')
