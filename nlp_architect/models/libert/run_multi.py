@@ -13,9 +13,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
-# pylint: disable=logging-fstring-interpolation, no-member
+# pylint: disable=logging-fstring-interpolation, no-member, unsubscriptable-object
 # pylint: disable=no-value-for-parameter
 
+import os
 from sys import argv, executable as python
 from pathlib import Path
 from os.path import realpath
@@ -33,10 +34,10 @@ from trainer import get_logger, get_trainer, log_model_and_version
 
 LIBERT_DIR = Path(realpath(__file__)).parent
 
-def run_data(cfg_yaml, time, rnd_init, data, gpu):
+def run_data(cfg_yaml, time, rnd_init, data):
     cfg = load_config(cfg_yaml)
     cfg.rnd_init = rnd_init == 'True'
-    cfg.gpus = [int(gpu)]
+    cfg.gpus = 1
     train_versions, test_versions = [], []
     runs = list(product(cfg.seeds, cfg.splits))
     for run_i, (seed, split) in enumerate(runs, start=1):
@@ -70,6 +71,7 @@ def run_data(cfg_yaml, time, rnd_init, data, gpu):
 def main(config_yaml):
     cfg = load_config(config_yaml)
     time_tag = dt.now().strftime("%a_%b_%d_%H:%M:%S") + cfg.tag
+    open(LIBERT_DIR / 'time.txt', 'w').write(f'{time_tag}\n')
 
     run_queue = deque(product(cfg.base_init, cfg.data))
     num_procs = min(len(cfg.gpus), len(run_queue))
@@ -78,21 +80,32 @@ def main(config_yaml):
     while run_queue:
         procs = []
         for gpu_i in cfg.gpus[:num_procs]:
+            os.environ["CUDA_VISIBLE_DEVICES"] = str(gpu_i)
             rnd_init, data = run_queue.popleft()
-            args = this_module, config_yaml, time_tag, rnd_init, data, gpu_i
+            args = this_module, config_yaml, time_tag, rnd_init, data
+
             cmd = [python] + [f'{_}' for _ in args]
-            print(f'Running {cmd}')
             with open(LIBERT_DIR / f'gpu_{gpu_i}.log', 'a') as log_file:
                 log_file.truncate(0)
-                procs.append(Popen(cmd, bufsize=-1, stdout=log_file, stderr=STDOUT))
+                proc = Popen(cmd, bufsize=-1, stdout=log_file, stderr=STDOUT)
+                print(f'PID: {proc.pid}: yaml: {config_yaml}, time: {time_tag},\
+                    rnd_init: {rnd_init}, data: {data}, gpu: {gpu_i}')
+                procs.append(proc)
             model_str = f'{cfg.model_type}_rnd_init' if rnd_init else f'{cfg.model_type}'
+            if not run_queue:
+                break
 
         for proc in procs:
+            print(f'waiting for pid {proc.pid}')
             proc.wait()
 
     # Run significance tests if baseline was run and last run was model
     if model_str != cfg.baseline_str:
         significance_from_cfg(cfg=cfg, log_dir=LIBERT_DIR / 'logs', exp_id=time_tag)
+    
+    open(LIBERT_DIR / 'time.txt', 'a').write(dt.now().strftime("%a_%b_%d_%H:%M:%S"))
+
+    print('Tensorboard viewable at: http://localhost:6060/')
 
 if __name__ == "__main__":
     if len(argv) == 2:

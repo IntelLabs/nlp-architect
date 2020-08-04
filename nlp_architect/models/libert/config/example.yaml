@@ -1,10 +1,10 @@
-max_epochs: 10
+max_epochs: 1
 model_type: libert # bert or libert
 base_init: [true, false]
 
-data: lr rl dl ld dr rd # relative to nlp_architect/models/li_bert/data/preprocessed_conll
-splits: [1, 2, 3]
-seeds: [12, 57, 89]
+data: lr rl dl # ld dr rd # relative to nlp_architect/models/li_bert/data/preprocessed_conll
+splits: [1]
+seeds: [12]
 tag: # optional: name this experiment version
 
 baseline_str: libert_rnd_init
@@ -24,7 +24,7 @@ do_train: true
 do_predict: true
 
 num_workers: 20
-gpus: [0, 1]
+gpus: [0, 1, 2, 3]
 
 overwrite_cache: false # if false, loads features from cached file (faster)
 cache_dir: # default: nlp-architect/nlp_architect/cache
