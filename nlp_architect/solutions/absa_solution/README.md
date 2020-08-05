@@ -10,7 +10,7 @@ Aspect Based Sentiment Analysis is the task of co-extracting opinion terms and a
 
 ## Video Demo
 
-[![Video Demo](https://raw.githubusercontent.com/NervanaSystems/nlp-architect/absa/nlp_architect/solutions/absa_solution/assets/demo_video.png)](https://drive.google.com/open?id=1BLk0xkjIOqyRhNy4UQEFQpDF_KR_NMAd)
+[![Video Demo](https://raw.githubusercontent.com/NervanaSystems/nlp-architect/absa/nlp_architect/solutions/absa_solution/assets/video.png)](https://drive.google.com/open?id=1BLk0xkjIOqyRhNy4UQEFQpDF_KR_NMAd)
 
 ## Solution Overview
 
