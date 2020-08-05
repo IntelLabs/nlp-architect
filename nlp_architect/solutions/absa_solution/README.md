@@ -1,12 +1,20 @@
 # ABSApp
 
-## Aspect-based Sentiment Analysis Solution
+## Aspect Based Sentiment Analysis (ABSA) Solution
 
 **Paper:** [ABSApp: A Portable Weakly-Supervised Aspect-Based Sentiment Extraction System](https://www.aclweb.org/anthology/D19-3001/)
 
-### Abstract
+### Overview
 
-We present ABSApp, a portable system for weakly-supervised aspect-based sentiment ex- traction. The system is interpretable and user friendly and does not require labeled training data, hence can be rapidly and cost-effectively used across different domains in applied setups. The system flow includes three stages: First, it generates domain-specific aspect and opinion lexicons based on an unlabeled dataset; second, it enables the user to view and edit those lexicons (weak supervision); and finally, it enables the user to select an unlabeled target dataset from the same domain, classify it, and generate an aspect-based sentiment report. ABSApp has been successfully used in a number of real-life use cases, among them movie review analysis and convention impact analysis.
+Aspect Based Sentiment Analysis is the task of co-extracting opinion terms and aspect terms (opinion targets) and the relations between them in a given corpus.
+
+## Solution Overview
+
+[![Video Demo](http://nlp_architect.nervanasys.com/_images/absa_solution_workflow.png)](https://drive.google.com/open?id=1BLk0xkjIOqyRhNy4UQEFQpDF_KR_NMAd)
+
+The solution flow includes three stages: first, it generates domain-specific aspect and opinion lexicons based on an unlabeled dataset; second, it enables the user to view and edit those lexicons; and finally, it enables the user to select an unlabeled target dataset from the same domain, classify it, and generate an aspect-based sentiment report.
+
+For lexicon extraction, the solution calls the training step of NLP Architect’s ABSA training, whereas for sentiment classification, the solution calls NLP Architect’s ABSA inference. For more details see ABSA.
 
 ## Video Demo
 
