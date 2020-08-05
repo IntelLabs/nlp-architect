@@ -1,6 +1,6 @@
 # ABSApp - Aspect Based Sentiment Analysis (ABSA) Solution
 
-**Paper:** [ABSApp: A Portable Weakly-Supervised Aspect-Based Sentiment Extraction System](https://www.aclweb.org/anthology/D19-3001/)
+**Demo paper @ EMNLP 2019:** [ABSApp: A Portable Weakly-Supervised Aspect-Based Sentiment Extraction System](https://www.aclweb.org/anthology/D19-3001/)
 
 ## Overview
 
@@ -61,7 +61,7 @@ pip install -r nlp_architect/solutions/absa_solution/requirements.txt
     open http://localhost:5006
 ```
 
-## Serve app remotely
+### Serve app remotely
 
 Replace `USER@REMOTE_HOST` with your username and server's hostname.
 
