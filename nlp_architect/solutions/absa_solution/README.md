@@ -16,7 +16,7 @@ Producing sentiment knowledge at the aspect level (vs. sentence-level) provides 
 *Figure 1*
 
 
-## Solution Overview
+## Workflow and UI
 
 ![Workflow](http://nlp_architect.nervanasys.com/_images/absa_solution_workflow.png)
 *Figure 2*
@@ -24,13 +24,9 @@ Producing sentiment knowledge at the aspect level (vs. sentence-level) provides 
 
 ![Workflow](https://raw.githubusercontent.com/NervanaSystems/nlp-architect/absa/nlp_architect/solutions/absa_solution/assets/absa_solution_ui_3.png)
 *Figure 3*
-    
 
-The solution flow includes three stages: first, it generates domain-specific aspect and opinion lexicons based on an unlabeled dataset; second, it enables the user to view and edit those lexicons; and finally, it enables the user to select an unlabeled target dataset from the same domain, classify it, and generate an aspect-based sentiment report.
 
-## Workflow and UI
-
-Following is a description of the 3 steps of the solution operation:
+The 3 steps of the solution are:
 
 **Step 1:** The first step of the flow is to select an input dataset for lexicon extraction, performed by clicking the ‘Extract lexicons’ button shown in Figure 3. Once a dataset<sup>1</sup> is selected, the system performs the lexicon extraction process. Note that, this step can be skipped, in case the user already has aspect and opinion lexicons. In order to load pre-trained aspect and opinion lexicons select `Edit Lexicons` -> `Load` (Figure 3). For demonstration purposes, we provide pre-trained lexicons that are located at `examples/aspects.csv` and `examples/opinion.csv`. We also provide, a sample dataset<sup>2</sup> for lexicon extraction, at `datasets/absa/tripadvisor_co_uk-travel_restaurant_reviews_sample_2000_train.csv`.
 
