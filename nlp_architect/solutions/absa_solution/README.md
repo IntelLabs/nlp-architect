@@ -65,7 +65,7 @@ pip install -r nlp-architect/nlp_architect/solutions/absa_solution/requirements.
 ### Served locally
 
 ```bash
-    python nlp_architect/solutions/absa_solution/ui.py
+    python nlp-architect/nlp_architect/solutions/absa_solution/ui.py
     open http://localhost:5006
 ```
 
