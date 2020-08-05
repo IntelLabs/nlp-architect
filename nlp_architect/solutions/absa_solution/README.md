@@ -41,10 +41,17 @@ Following is a description of the 3 steps of the solution operation:
 
 ## Setup
 
+- **Create virtual environment (optional)**:
+
 ```bash
 python3.6 -m pip install -U pip setuptools virtualenv
 python3.6 -m venv absa_env
 source absa_env/bin/activate
+```
+
+- **Clone and install**:
+
+```bash
 git clone --branch absa https://github.com/NervanaSystems/nlp-architect.git
 cd nlp-architect
 pip install --upgrade pip
@@ -54,14 +61,14 @@ pip install -r nlp_architect/solutions/absa_solution/requirements.txt
 
 ## Run
 
-### Serve app locally
+### Served locally
 
 ```bash
     python nlp_architect/solutions/absa_solution/ui.py
     open http://localhost:5006
 ```
 
-### Serve app remotely
+### Served remotely
 
 Replace `USER@REMOTE_HOST` with your username and server's hostname.
 
