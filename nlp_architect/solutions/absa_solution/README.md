@@ -18,8 +18,9 @@ Producing sentiment knowledge at the aspect level (vs. sentence-level) provides 
 
 ## Workflow and UI
 
-![Workflow](http://nlp_architect.nervanasys.com/_images/absa_solution_workflow.png)
+![Workflow](http://nlp_architect.nervanasys.com/_images/absa_solution_workflow.png)  
 *Figure 2*
+
 
 
 ![Workflow](https://raw.githubusercontent.com/NervanaSystems/nlp-architect/absa/nlp_architect/solutions/absa_solution/assets/absa_solution_ui_3.png)
