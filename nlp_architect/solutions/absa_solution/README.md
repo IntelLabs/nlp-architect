@@ -9,18 +9,23 @@ Aspect Based Sentiment Analysis is the task of co-extracting opinion terms and a
 ## Video Demo
 
 [![Video Demo](https://raw.githubusercontent.com/NervanaSystems/nlp-architect/absa/nlp_architect/solutions/absa_solution/assets/video.png)](https://drive.google.com/open?id=1BLk0xkjIOqyRhNy4UQEFQpDF_KR_NMAd)
+*Figure 1*
 
 ## Solution Overview
 
-[![Video Demo](http://nlp_architect.nervanasys.com/_images/absa_solution_workflow.png)](https://drive.google.com/open?id=1BLk0xkjIOqyRhNy4UQEFQpDF_KR_NMAd)
+![Workflow](http://nlp_architect.nervanasys.com/_images/absa_solution_workflow.png)
+*Figure 2*
 
+![Workflow](https://raw.githubusercontent.com/NervanaSystems/nlp-architect/absa/nlp_architect/solutions/absa_solution/assets/absa_solution_ui_3.png)
+*Figure 3*
+    
 The solution flow includes three stages: first, it generates domain-specific aspect and opinion lexicons based on an unlabeled dataset; second, it enables the user to view and edit those lexicons; and finally, it enables the user to select an unlabeled target dataset from the same domain, classify it, and generate an aspect-based sentiment report.
 
 ## Workflow and UI
 
 Following is a description of the 3 steps of the solution operation:
 
-**Step 1:** The first step of the flow is to select an input dataset for lexicon extraction, performed by clicking the ‘Extract lexicons’ button shown in Figure 1. Once a dataset<sup>1</sup> is selected, the system performs the lexicon extraction process. Note that, this step can be skipped, in case the user already has aspect and opinion lexicons. In order to load pre-trained aspect and opinion lexicons select ‘Edit Lexicons’ -> ‘Load’ (figure 1). For demonstration purposes, we provide pre-trained lexicons that are located at examples/aspects.csv and examples/opinion.csv We also provide, a sample dataset** for lexicon extraction, at `datasets/absa/tripadvisor_co_uk-travel_restaurant_reviews_sample_2000_train.csv`.
+**Step 1:** The first step of the flow is to select an input dataset for lexicon extraction, performed by clicking the ‘Extract lexicons’ button shown in Figure 1. Once a dataset<sup>1</sup> is selected, the system performs the lexicon extraction process. Note that, this step can be skipped, in case the user already has aspect and opinion lexicons. In order to load pre-trained aspect and opinion lexicons select ‘Edit Lexicons’ -> ‘Load’ (Figure 1). For demonstration purposes, we provide pre-trained lexicons that are located at examples/aspects.csv and examples/opinion.csv We also provide, a sample dataset** for lexicon extraction, at `datasets/absa/tripadvisor_co_uk-travel_restaurant_reviews_sample_2000_train.csv`.
 
 **Step 2:** The user can choose to edit an aspect lexicon or an opinion lexicon that were generated in the previous step by selecting the ‘Aspect Lexicon’ or ‘it Opinion Lexicon’ tab (see figure 1). As shown in Figure 1, in which the ‘Aspect Lexicon’ has been selected, the ‘Term’ column displays the aspect terms while the ‘Alias1-3’ columns display aspect terms that have the same semantic meaning. Upon selecting a specific aspect, the ‘Examples’ view on the right-hand side, displays text snippets from the input dataset that include this term (highlighted in blue). the user can delete (by unchecking the term’s checkbox), add or modify the lexicon items. The opinion lexicon editor (not shown) functions similarly to the aspect lexicon editor except that it includes a ‘Polarity’ column and a ‘Score’ column. Both the polarity and the score can be edited by the user.
 
