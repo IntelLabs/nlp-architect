@@ -1,4 +1,5 @@
-# ABSApp - Aspect Based Sentiment Analysis (ABSA) Solution
+# Aspect Based Sentiment Analysis (ABSA) Solution 
+## Part of NLP Architect by Intel® AI Lab
 
 **Demo paper @ EMNLP 2019:** [ABSApp: A Portable Weakly-Supervised Aspect-Based Sentiment Extraction System](https://www.aclweb.org/anthology/D19-3001/)
 
