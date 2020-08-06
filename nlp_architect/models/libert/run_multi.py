@@ -33,6 +33,7 @@ from significance import significance_from_cfg
 from trainer import get_logger, get_trainer, log_model_and_version
 
 LIBERT_DIR = Path(realpath(__file__)).parent
+LOG_ROOT = LIBERT_DIR / 'logs'
 
 def run_data(cfg_yaml, time, rnd_init, data, log_dir):
     cfg = load_config(cfg_yaml)
@@ -70,12 +71,12 @@ def run_data(cfg_yaml, time, rnd_init, data, log_dir):
 
 def main(config_yaml):
     cfg = load_config(config_yaml)
+    os.makedirs(LOG_ROOT, exist_ok=True)
+
     time_tag = dt.now().strftime("%a_%b_%d_%H:%M:%S") + cfg.tag
-    open(LIBERT_DIR / 'time.txt', 'w').write(f'{time_tag}\n')
+    open(LOG_ROOT / 'time.log', 'w').write(f'{time_tag}\n')
 
-    log_dir = LIBERT_DIR / 'logs' / time_tag
-
-    set_as_latest_log_dir(log_dir)
+    log_dir = LOG_ROOT / time_tag
 
     run_queue = deque(product(cfg.base_init, cfg.data))
     num_procs = min(len(cfg.gpus), len(run_queue))
@@ -89,7 +90,7 @@ def main(config_yaml):
             args = this_module, config_yaml, time_tag, rnd_init, data, log_dir
 
             cmd = [python] + [f'{_}' for _ in args]
-            with open(LIBERT_DIR / 'logs' / f'gpu_{gpu_i}.log', 'a') as log_file:
+            with open(LOG_ROOT / f'gpu_{gpu_i}.log', 'a') as log_file:
                 log_file.truncate(0)
                 proc = Popen(cmd, bufsize=-1, stdout=log_file, stderr=STDOUT)
 
@@ -108,7 +109,9 @@ def main(config_yaml):
     if model_str != cfg.baseline_str:
         significance_from_cfg(cfg=cfg, log_dir=log_dir, exp_id=time_tag)
     
-    open(LIBERT_DIR / 'time.txt', 'a').write(dt.now().strftime("%a_%b_%d_%H:%M:%S"))
+    open(LOG_ROOT / 'time.log', 'a').write(dt.now().strftime("%a_%b_%d_%H:%M:%S"))
+
+    set_as_latest_log_dir(log_dir)
 
 if __name__ == "__main__":
     if len(argv) == 2:

@@ -44,7 +44,8 @@ def get_trainer(model, data, experiment, exp_id, log_dir=None, gpus=None):
     Path(model.hparams.output_dir).mkdir(exist_ok=True)
     checkpoint_callback = pl.callbacks.ModelCheckpoint(
         filepath=str(model.hparams.output_dir) + "/_{epoch}-{micro_f1:.4f}",
-        prefix=experiment + '_' + exp_id, monitor="micro_f1", mode="max", save_top_k=1
+        prefix='_'.join([data, experiment, exp_id]), monitor="micro_f1", mode="max", 
+        save_top_k=1, save_weights_only=True
     )
     logger = get_logger(data, experiment, exp_id, log_dir, suffix='train')
     gpus = model.hparams.gpus if gpus is None else gpus
