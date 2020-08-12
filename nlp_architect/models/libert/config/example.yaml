@@ -6,6 +6,7 @@ data: lr rl dl ld dr rd # relative to nlp_architect/models/li_bert/data/preproce
 splits: [1, 2, 3]
 seeds: [12, 57, 89]
 tag: # optional: name this experiment version
+metric: asp_f1
 
 baseline_str: libert_rnd_init
 baseline_version: version_baseline
@@ -23,7 +24,7 @@ transpose: false
 do_train: true
 do_predict: true
 
-num_workers: 20
+num_workers: 40
 gpus: [0, 1, 2, 3]
 
 overwrite_cache: false # if false, loads features from cached file (faster)

@@ -35,7 +35,7 @@ from trainer import get_logger, get_trainer, log_model_and_version
 LIBERT_DIR = Path(realpath(__file__)).parent
 LOG_ROOT = LIBERT_DIR / 'logs'
 
-def run_data(cfg_yaml, time, rnd_init, data, log_dir):
+def run_data(cfg_yaml, time, rnd_init, data, log_dir, metric):
     cfg = load_config(cfg_yaml)
     cfg.rnd_init = rnd_init == 'True'
     cfg.gpus = 1
@@ -52,7 +52,7 @@ def run_data(cfg_yaml, time, rnd_init, data, log_dir):
         exp_id = 'baseline' if model_str == cfg.baseline_str else time
 
         if cfg.do_train:
-            trainer = get_trainer(model, data, exper_str, exp_id, log_dir)
+            trainer = get_trainer(model, data, exper_str, exp_id, log_dir, metric=metric)
             trainer.fit(model)
             log_model_and_version(trainer, cfg, train_versions)
 
@@ -87,8 +87,7 @@ def main(config_yaml):
         for gpu_i in cfg.gpus[:num_procs]:
             os.environ["CUDA_VISIBLE_DEVICES"] = str(gpu_i)
             rnd_init, data = run_queue.popleft()
-            args = this_module, config_yaml, time_tag, rnd_init, data, log_dir
-
+            args = this_module, config_yaml, time_tag, rnd_init, data, log_dir, cfg.metric
             cmd = [python] + [f'{_}' for _ in args]
             with open(LOG_ROOT / f'gpu_{gpu_i}.log', 'a') as log_file:
                 log_file.truncate(0)

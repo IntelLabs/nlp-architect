@@ -39,12 +39,12 @@ def get_logger(data, experiment, exp_id, log_dir=None, suffix=None):
     return pl.loggers.TestTubeLogger(save_dir= Path(save_dir) / data, 
                                      name=experiment + suffix, version=exp_id)
 
-def get_trainer(model, data, experiment, exp_id, log_dir=None, gpus=None):
+def get_trainer(model, data, experiment, exp_id, log_dir=None, gpus=None, metric='micro_f1'):
     """Init trainer for model training/testing."""
     Path(model.hparams.output_dir).mkdir(exist_ok=True)
     checkpoint_callback = pl.callbacks.ModelCheckpoint(
-        filepath=str(model.hparams.output_dir) + "/_{epoch}-{micro_f1:.4f}",
-        prefix='_'.join([data, experiment, exp_id]), monitor="micro_f1", mode="max", 
+        filepath=str(model.hparams.output_dir) + "/_{epoch}-{" + metric + ":.4f}",
+        prefix='_'.join([data, experiment, exp_id]), monitor=metric, mode="max",
         save_top_k=1, save_weights_only=True
     )
     logger = get_logger(data, experiment, exp_id, log_dir, suffix='train')
