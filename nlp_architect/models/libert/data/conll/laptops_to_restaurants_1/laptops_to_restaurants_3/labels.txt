@@ -1,5 +1,0 @@
-O
-B-ASP
-I-ASP
-B-OP
-I-OP

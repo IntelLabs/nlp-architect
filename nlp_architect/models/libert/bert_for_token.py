@@ -22,13 +22,12 @@ from argparse import Namespace
 from pathlib import Path
 from collections import OrderedDict
 from os.path import realpath
-
+from torch.nn import CrossEntropyLoss
 import numpy as np
 import pytorch_lightning as pl
 from pytorch_lightning.utilities import rank_zero_only
 from pytorch_lightning import _logger as log
 import torch
-from torch.nn import CrossEntropyLoss
 from torch.utils.data import DataLoader, TensorDataset
 torch.multiprocessing.set_sharing_strategy('file_system')
 from seqeval.metrics import (precision_score, recall_score, f1_score, accuracy_score,
@@ -156,7 +155,8 @@ class BertForToken(pl.LightningModule):
                                         dtype=torch.float)
             tensors.append(parse_tensor)
 
-        return DataLoader(TensorDataset(*tensors), batch_size=batch_size,
+        shuffle = mode == 'train'
+        return DataLoader(TensorDataset(*tensors), batch_size=batch_size, shuffle=shuffle,
                           num_workers=self.hparams.num_workers)
 
     @staticmethod

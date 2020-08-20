@@ -14,7 +14,7 @@
 # limitations under the License.
 # ******************************************************************************
 
-# pylint: disable=no-member, not-callable, arguments-differ, missing-class-docstring, too-many-locals, too-many-arguments
+# pylint: disable=no-member, not-callable, arguments-differ, missing-class-docstring, too-many-locals, too-many-arguments, abstract-method
 # pylint: disable=missing-module-docstring, missing-function-docstring, too-many-statements, too-many-instance-attributes
 
 import math
@@ -267,96 +267,82 @@ class LiBertSelfAttention(BertSelfAttention):
 
     def forward(self, hidden_states, attention_mask=None, head_mask=None,
                 encoder_hidden_states=None, encoder_attention_mask=None,
-                output_attentions=False, parse=None):
-        if parse is not None:
-            mixed_query_layer = \
-                torch.cat((self.query(hidden_states), self.extra_query(hidden_states)), 2)
+                output_attentions=False, head_probs=None):
+        if head_probs is not None:
+            self.all_head_size = self.num_attention_heads * self.attention_head_size            
+            mixed_query_layer = torch.cat((self.query(hidden_states), self.extra_query(hidden_states)),2)
+            mixed_key_layer = torch.cat((self.key(hidden_states), self.extra_key(hidden_states)),2)
+            mixed_value_layer = torch.cat((self.value(hidden_states), self.extra_value(hidden_states)),2)
+  
         else:
+            self.all_head_size = self.num_attention_heads * self.attention_head_size
             mixed_query_layer = self.query(hidden_states)
-
-        # If this is instantiated as a cross-attention module, the keys
-        # and values come from an encoder; the attention mask needs to be
-        # such that the encoder's padding tokens are not attended to.
-        if encoder_hidden_states is not None:
-            mixed_key_layer = self.key(encoder_hidden_states)
-            mixed_value_layer = self.value(encoder_hidden_states)
-            attention_mask = encoder_attention_mask
-        else:
-            if parse is not None:
-                self.all_head_size = self.num_attention_heads * self.attention_head_size
-                mixed_key_layer = \
-                    torch.cat((self.key(hidden_states), self.extra_key(hidden_states)), 2)
-                mixed_value_layer = \
-                    torch.cat((self.value(hidden_states), self.extra_value(hidden_states)), 2)
-            else:
-                self.all_head_size = self.num_attention_heads * self.attention_head_size
-                mixed_key_layer = self.key(hidden_states)
-                mixed_value_layer = self.value(hidden_states)
+            mixed_key_layer = self.key(hidden_states)
+            mixed_value_layer = self.value(hidden_states)
 
         query_layer = self.transpose_for_scores(mixed_query_layer)
         key_layer = self.transpose_for_scores(mixed_key_layer)
         value_layer = self.transpose_for_scores(mixed_value_layer)
 
-        # Take the dot product between "query" and "key" to get the raw attention scores.
-        attention_scores = torch.matmul(query_layer, key_layer.transpose(-1, -2))
+        attention_scores = torch.matmul(query_layer, key_layer.transpose(-1, -2))        
 
-        if parse is not None and not self.rnd_init:
+        if head_probs is not None and self.rnd_init is False:   
+
             #  duplicated heads across all matrix (one vector duplicated across matrix)
             if self.duplicated_rels is True:
-                parse = parse.sum(1, keepdim=True)
+                head_probs = head_probs.sum(1, keepdim=True)
                 # duplicate sum vector
-                parse = parse.repeat(1, 64, 1)
-
-            parse_norm = parse / parse.max(2, keepdim=True)[0]
-            parse_norm[torch.isnan(parse_norm)] = 0
-
-            # _, indices = parse_norm.max(2)
+                head_probs = head_probs.repeat(1,64,1)
+                 
+            head_probs_norm = head_probs / head_probs.max(2, keepdim=True)[0]
+            head_probs_norm[torch.isnan(head_probs_norm)] = 0
+            
+            # _, indices = head_probs_norm.max(2)
             # device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-            # ex_head_attention_probs = torch.zeros(parse_norm.shape).to(device)
-
+            # ex_head_attention_probs = torch.zeros(head_probs_norm.shape).to(device)
+            
             # for batch, tokens in enumerate(indices):
-            #     mask_matrix = torch.zeros([parse_norm.shape[1], parse_norm.shape[2]])
+            #     mask_matrix = torch.zeros([head_probs_norm.shape[1], head_probs_norm.shape[2]])
             #     i=0
             #     for token in tokens:
             #         if token != 0:
-            #             mask_matrix[i][token] = 1.
-            #             i=i+1
-            #    ex_head_attention_probs[batch] = mask_matrix
+            #             mask_matrix[i][token] = 1.                        
+            #             i=i+1                        
+
+            #    ex_head_attention_probs[batch] = mask_matrix         
+
             #if self.duplicated_rels is True:
-            #    parse_norm = ex_head_attention_probs
+            #    head_probs_norm = ex_head_attention_probs
 
             original_12head_attn_scores = attention_scores[:, :self.orig_num_attention_heads]
-            original_12head_attn_scores = \
-                original_12head_attn_scores / math.sqrt(self.attention_head_size)
+            original_12head_attn_scores = original_12head_attn_scores / math.sqrt(self.attention_head_size)
             original_12head_attn_scores = original_12head_attn_scores + attention_mask
             original_12head_attn_probs = nn.Softmax(dim=-1)(original_12head_attn_scores)
-            extra_head_attn = attention_scores[:, self.orig_num_attention_heads, :, :]
-            parse_norm = parse_norm*8+ attention_mask.squeeze(1)
 
-            if not self.replace_final:
-                if self.transpose:
-                    parse_norm = parse_norm.transpose(-1, -2)
+            extra_head_attn = attention_scores[:,self.orig_num_attention_heads,:,:] 
+            head_probs_norm = head_probs_norm*8+ attention_mask.squeeze(1)
+            
+                    
+            if self.replace_final is False: 
+                if self.transpose == True:                
+                    head_probs_norm = head_probs_norm.transpose(-1, -2)                   
 
-                extra_head_scaled_attn = ((extra_head_attn *8) * parse_norm).unsqueeze(1)
+                extra_head_scaled_attn = ((extra_head_attn *8) * head_probs_norm).unsqueeze(1)       
                 extra_head_scaled_attn = extra_head_scaled_attn + attention_mask
                 extra_head_scaled_attn_probs = nn.Softmax(dim=-1)(extra_head_scaled_attn)
-                attention_probs = \
-                    torch.cat((original_12head_attn_probs, extra_head_scaled_attn_probs), 1)
-
+                attention_probs = torch.cat((original_12head_attn_probs, extra_head_scaled_attn_probs), 1)
+           
             # if self.replace_final is True:
-            #     attention_probs = \
-            # torch.cat((original_12head_attn_probs, ex_head_attention_probs.unsqueeze(1)),1)
+            #     attention_probs = torch.cat((original_12head_attn_probs, ex_head_attention_probs.unsqueeze(1)),1)
 
-        if parse is None or self.rnd_init:
+        if head_probs is None or self.rnd_init is True:
             attention_scores = attention_scores / math.sqrt(self.attention_head_size)
-            if attention_mask is not None:
-                # Apply the attention mask is
-                # (precomputed for all layers in BertModel forward() function)
-                attention_scores = attention_scores + attention_mask
+            # Apply the attention mask is (precomputed for all layers in BertModel forward() function)
+            attention_scores = attention_scores + attention_mask
 
             # Normalize the attention scores to probabilities.
             attention_probs = nn.Softmax(dim=-1)(attention_scores)
-
+            
         # This is actually dropping out entire tokens to attend to, which might
         # seem a bit unusual, but is taken from the original Transformer paper.
         attention_probs = self.dropout(attention_probs)
@@ -366,9 +352,11 @@ class LiBertSelfAttention(BertSelfAttention):
             attention_probs = attention_probs * head_mask
 
         context_layer = torch.matmul(attention_probs, value_layer)
+
         context_layer = context_layer.permute(0, 2, 1, 3).contiguous()
         new_context_layer_shape = context_layer.size()[:-2] + (self.all_head_size,)
         context_layer = context_layer.view(*new_context_layer_shape)
+
         outputs = (context_layer, attention_probs) if output_attentions else (context_layer,)
         return outputs
 

@@ -126,12 +126,12 @@ def significance_report(
     res_str = ""
     seed_pvals = defaultdict(list)
     for data, seed, split in product(datasets, seeds, splits):
-        baseline_txt = log_root / data / f'{baseline}_seed_{seed}_split_{split}_test'\
+        baseline_sent_f1 = log_root / data / f'{baseline}_seed_{seed}_split_{split}_test'\
             / baseline_ver / 'tf' / 'sent_f1.txt'
-        model_txt = log_root / data / f'{model}_seed_{seed}_split_{split}_test'\
+        model_sent_f1 = log_root / data / f'{model}_seed_{seed}_split_{split}_test'\
             / ('version_' + exp_id) / 'tf' / 'sent_f1.txt'
 
-        p_val = t_test(baseline_txt, model_txt)
+        p_val = t_test(baseline_sent_f1, model_sent_f1)
         sample_str = f'{data} seed_{seed} split_{split}: {p_val}'
         seed_pvals[seed].append((p_val, sample_str))
 

@@ -24,6 +24,7 @@ from typing import List, Optional, Union
 from os.path import realpath
 from argparse import Namespace
 from pathlib import Path
+from torch.nn import CrossEntropyLoss
 
 from pytorch_lightning import _logger as log
 from pytorch_lightning.core.saving import load_hparams_from_yaml
@@ -112,7 +113,7 @@ def convert_examples_to_features(
     pad_token = tokenizer.pad_token_id
     pad_token_segment_id = tokenizer.pad_token_type_id
     cls_token_segment_id = 0
-    pad_token_label_id = -100
+    pad_token_label_id = CrossEntropyLoss().ignore_index
 
     features = []
     for (ex_index, example) in enumerate(examples):

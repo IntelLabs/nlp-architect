@@ -37,12 +37,13 @@ LOG_ROOT = LIBERT_DIR / 'logs'
 
 def run_data(cfg_yaml, time, rnd_init, data, log_dir, metric):
     cfg = load_config(cfg_yaml)
-    cfg.rnd_init = rnd_init == 'True'
+    cfg.rnd_init = str(rnd_init) == 'True'
     cfg.gpus = 1
     train_versions, test_versions = [], []
     runs = list(product(cfg.seeds, cfg.splits))
     for run_i, (seed, split) in enumerate(runs, start=1):
         pl.seed_everything(seed)
+
         cfg.data_dir = f'{data}_{split}'
         model = BertForToken(cfg)
         model_str = f'{cfg.model_type}_rnd_init' if cfg.rnd_init else f'{cfg.model_type}'
@@ -52,7 +53,7 @@ def run_data(cfg_yaml, time, rnd_init, data, log_dir, metric):
         exp_id = 'baseline' if model_str == cfg.baseline_str else time
 
         if cfg.do_train:
-            trainer = get_trainer(model, data, exper_str, exp_id, log_dir, metric=metric)
+            trainer = get_trainer(model, data, exper_str, exp_id, log_dir, metric=metric, limit_data=cfg.limit_data)
             trainer.fit(model)
             log_model_and_version(trainer, cfg, train_versions)
 
@@ -72,45 +73,51 @@ def run_data(cfg_yaml, time, rnd_init, data, log_dir, metric):
 def main(config_yaml):
     cfg = load_config(config_yaml)
     os.makedirs(LOG_ROOT, exist_ok=True)
-
     time_tag = dt.now().strftime("%a_%b_%d_%H:%M:%S") + cfg.tag
     open(LOG_ROOT / 'time.log', 'w').write(f'{time_tag}\n')
-
+    this_module = Path(realpath(__file__))
     log_dir = LOG_ROOT / time_tag
+    set_as_latest_log_dir(log_dir)
 
     run_queue = deque(product(cfg.base_init, cfg.data))
     num_procs = min(len(cfg.gpus), len(run_queue))
 
-    this_module = Path(realpath(__file__))
-    while run_queue:
-        procs = []
-        for gpu_i in cfg.gpus[:num_procs]:
-            os.environ["CUDA_VISIBLE_DEVICES"] = str(gpu_i)
+    # Parallel: each experiment runs on a single GPU
+    if cfg.parallel:
+        while run_queue:
+            procs = []
+            for gpu_i in cfg.gpus[:num_procs]:
+                os.environ["CUDA_VISIBLE_DEVICES"] = str(gpu_i)
+                rnd_init, data = run_queue.popleft()
+                args = this_module, config_yaml, time_tag, rnd_init, data, log_dir, cfg.metric
+                cmd = [python] + [f'{_}' for _ in args]
+                with open(LOG_ROOT / f'gpu_{gpu_i}.log', 'a') as log_file:
+                    log_file.truncate(0)
+                    proc = Popen(cmd, bufsize=-1, stdout=log_file, stderr=STDOUT)
+
+                print(f"PID: {proc.pid}: yaml: {config_yaml}.yaml, time: {time_tag}, " \
+                    f"rnd_init: {rnd_init}, data: {data}, gpu: {gpu_i}")
+                procs.append(proc)
+                model_str = f"{cfg.model_type}_rnd_init" if rnd_init else f'{cfg.model_type}'
+                if not run_queue:
+                    break
+
+            for proc in procs:
+                print(f'waiting for pid {proc.pid}')
+                proc.wait()
+
+    # Sequential: each experiment runs in turn on all gpus
+    else:
+        while run_queue:
             rnd_init, data = run_queue.popleft()
-            args = this_module, config_yaml, time_tag, rnd_init, data, log_dir, cfg.metric
-            cmd = [python] + [f'{_}' for _ in args]
-            with open(LOG_ROOT / f'gpu_{gpu_i}.log', 'a') as log_file:
-                log_file.truncate(0)
-                proc = Popen(cmd, bufsize=-1, stdout=log_file, stderr=STDOUT)
-
-            print(f"PID: {proc.pid}: yaml: {config_yaml}.yaml, time: {time_tag}, " \
-                f"rnd_init: {rnd_init}, data: {data}, gpu: {gpu_i}")
-            procs.append(proc)
+            run_data(config_yaml, time_tag, rnd_init, data, log_dir, cfg.metric)
             model_str = f'{cfg.model_type}_rnd_init' if rnd_init else f'{cfg.model_type}'
-            if not run_queue:
-                break
-
-        for proc in procs:
-            print(f'waiting for pid {proc.pid}')
-            proc.wait()
-
+            
     # Run significance tests if baseline exists and last run was on model
-    if model_str != cfg.baseline_str:
+    if cfg.do_predict and model_str != cfg.baseline_str:
         significance_from_cfg(cfg=cfg, log_dir=log_dir, exp_id=time_tag)
     
     open(LOG_ROOT / 'time.log', 'a').write(dt.now().strftime("%a_%b_%d_%H:%M:%S"))
-
-    set_as_latest_log_dir(log_dir)
 
 if __name__ == "__main__":
     if len(argv) == 2:
