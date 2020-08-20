@@ -28,7 +28,7 @@ import pytorch_lightning as pl
 from pytorch_lightning import _logger as log
 from bert_for_token import BertForToken
 from log_aggregator import aggregate
-from absa_utils import load_config, set_as_latest_log_dir
+from absa_utils import load_config, set_as_latest_log_dir, write_summary_table
 from significance import significance_from_cfg
 from trainer import get_logger, get_trainer, log_model_and_version
 
@@ -112,12 +112,19 @@ def main(config_yaml):
             rnd_init, data = run_queue.popleft()
             run_data(config_yaml, time_tag, rnd_init, data, log_dir, cfg.metric)
             model_str = f'{cfg.model_type}_rnd_init' if rnd_init else f'{cfg.model_type}'
-            
+    
+    post_analysis(cfg, log_dir, time_tag, model_str)
+
+def post_analysis(cfg, log_dir, time_tag, model_str):
+    # Save termination time
+    open(LOG_ROOT / 'time.log', 'a').write(dt.now().strftime("%a_%b_%d_%H:%M:%S"))
+
     # Run significance tests if baseline exists and last run was on model
     if cfg.do_predict and model_str != cfg.baseline_str:
         significance_from_cfg(cfg=cfg, log_dir=log_dir, exp_id=time_tag)
-    
-    open(LOG_ROOT / 'time.log', 'a').write(dt.now().strftime("%a_%b_%d_%H:%M:%S"))
+
+    # Write summary table to CSV
+    write_summary_table(cfg, time_tag)
 
 if __name__ == "__main__":
     if len(argv) == 2:

@@ -99,7 +99,7 @@ def write_csv(csv_out, xlsx_writer, key, aggregations, steps, ops):
     df.to_excel(xlsx_writer, sheet_name=key)
     df.to_csv(csv_out)
 
-def aggregate(versions, exp_id, label, aggregation_ops=(np.mean,)):
+def aggregate(versions, exp_id, label, aggregation_ops=(np.mean, np.std)):
     # Full-list of possibly interesting aggregation ops include:
     # (np.mean, np.min, np.max, np.median, np.std, np.var)
 

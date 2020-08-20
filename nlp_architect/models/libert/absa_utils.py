@@ -18,6 +18,7 @@
 # pylint: disable=logging-fstring-interpolation
 import os
 from dataclasses import dataclass
+import csv
 from enum import Enum
 from collections import defaultdict
 from typing import List, Optional, Union
@@ -35,6 +36,7 @@ import numpy as np
 from significance import significance_from_cfg as significance
 
 LIBERT_DIR = Path(realpath(__file__)).parent
+LOG_ROOT = LIBERT_DIR / 'logs'
 
 
 @dataclass
@@ -277,6 +279,51 @@ def set_as_latest_log_dir(log_dir):
     except FileNotFoundError:
         pass
     os.symlink(log_dir, link, target_is_directory=True)
+
+def write_summary_table(cfg, time_tag):
+    with open(LOG_ROOT / f'summary_table_{time_tag}.csv', 'w', newline='') as csv_file:
+        csv_writer = csv.writer(csv_file)
+        header = ['']
+        for dataset in cfg.data:
+            ds_split = dataset.split('_')
+            ds_str = f"{ds_split[0][0]}-->{ds_split[2][0]}".upper()
+            header.extend([ds_str, f'{ds_str} '])
+        sub_header = [''] + ['AS', 'OP'] * len(cfg.data)
+        csv_writer.writerow(header)
+        csv_writer.writerow(sub_header)
+
+        baseline_row, baseline_std_row, model_row, model_std_row = [], [], [], []
+        for dataset in cfg.data:
+            datest_dir = LOG_ROOT / time_tag / dataset
+            baseline_dir = datest_dir / f'libert_AGGREGATED_{time_tag}_test' / 'csv'
+            model_dir = datest_dir / 'libert_rnd_init_AGGREGATED_baseline_test' / 'csv'
+
+            baseline_mean_asp_f1, baseline_std_asp_f1 = extract_test_agg_score(baseline_dir, 'asp_f1')
+            baseline_mean_op_f1, baseline_std_op_f1 = extract_test_agg_score(baseline_dir, 'op_f1')
+            model_mean_asp_f1, model_std_asp_f1 = extract_test_agg_score(model_dir, 'asp_f1')
+            model_mean_op_f1, model_std_op_f1 = extract_test_agg_score(model_dir, 'op_f1')
+
+            baseline_row.extend([baseline_mean_asp_f1, baseline_mean_op_f1])
+            model_row.extend([model_mean_asp_f1, model_mean_op_f1])
+
+            baseline_std_row.extend([baseline_std_asp_f1, baseline_std_op_f1])
+            model_std_row.extend([model_std_asp_f1, model_std_op_f1])
+
+        deltas_row = [model - baseline for model, baseline in list(zip(model_row, baseline_row))]
+        format_list = lambda means, stds: [f'{m:.2f} ({s:.2f})' for m, s in zip(means, stds)]
+
+        csv_writer.writerow(['baseline'] + format_list(baseline_row, baseline_std_row))
+        csv_writer.writerow(['model'] + format_list(model_row, model_std_row))
+        csv_writer.writerow(['delta'] + [f'{d:.2f}' for d in deltas_row])
+
+def extract_test_agg_score(csv_dir, metric):
+    with open(csv_dir / f'{metric}.csv') as csv_file:
+        csv_reader = csv.reader(csv_file)
+        rows = list(csv_reader)
+        mean = float(rows[1][1]) * 100
+        std = float(rows[1][2]) * 100
+        return mean, std
+        
 
 if __name__ == "__main__":
     significance(load_config('model'), LIBERT_DIR / 'logs', 'Thu_Jul_30_00:43:52')
