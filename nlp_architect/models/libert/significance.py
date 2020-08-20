@@ -19,8 +19,10 @@ from collections import defaultdict
 from itertools import product
 from pathlib import Path
 import numpy as np
+import pandas as pd
 from pytorch_lightning import _logger as log
 from scipy import stats
+import matplotlib.pyplot as plt
 
 def t_test(filename_A, filename_B):
     try:
@@ -135,6 +137,8 @@ def significance_report(
         sample_str = f'{data} seed_{seed} split_{split}: {p_val}'
         seed_pvals[seed].append((p_val, sample_str))
 
+    all_alphas_scores = []
+
     for alpha in alphas:
         res_str += f"\n\n{'=' * 40}\nAlpha (p-value): {alpha}\n{'=' * 40}\n"
 
@@ -163,6 +167,9 @@ def significance_report(
             res_str += f"The acceptance list according to \
                 the Holm procedure is:\n{acc_samples}\n\n"
 
+        
+        all_alphas_scores.append(scores)
+
         res_str += "---------------------------------------------------\n"
         res_str += f"Avg. score with alpha = {alpha}:\n{np.mean(scores)}\n"
         res_str += "---------------------------------------------------\n"
@@ -177,7 +184,41 @@ def significance_report(
             the Holm procedure is: {rej_list.tolist()}\n"
         res_str += f"Score: {k / float(len(all_pvals))}\n"
 
+    fig = get_significance_report_plot(alphas, all_alphas_scores)
+    fig.savefig(log_root / f"significance_{model}_vs_{baseline}_{exp_id}.png", dpi=fig.dpi)
+
     log.info(res_str)
 
     with open(log_root / f"significance_{model}_vs_{baseline}_{exp_id}.txt", 'w') as report_file:
         report_file.write(res_str)
+
+    return
+
+def get_significance_report_plot(alphas, all_alphas_scores):
+
+    all_alphas_scores = np.array(all_alphas_scores)
+    score_df = pd.DataFrame({'alphas': alphas}).merge(
+                pd.DataFrame(all_alphas_scores,
+                    columns=['score_' +  str(el) for el in range(all_alphas_scores.shape[1])]),
+                    left_index=True, right_index=True)
+
+    score_df['score_mean'] = score_df[[el for el in score_df.columns if 'score_' in el]].mean(axis=1)
+    fig = plt.figure()
+    ax = fig.add_axes([0.1, 0.1, 0.75, 0.75])
+
+    ax.set_xlabel('p-values')
+    ax.set_ylabel('Scores')
+    score_cols = [el for el in score_df if 'score_' in el if 'mean' not in el]
+    for index, el in enumerate(score_cols):
+        if index==0:
+            ax.scatter(score_df['alphas'], score_df[el],
+                color='blue', label='individual splits')
+        else:
+            ax.scatter(score_df['alphas'], score_df[el], color='blue')
+    ax.plot(score_df['alphas'], score_df['score_mean'], color='red', linestyle='-',
+                    label='mean score for splits')
+    ax.legend()
+    ax.set_title('Significance Testing')
+    plt.close()
+    
+    return fig
