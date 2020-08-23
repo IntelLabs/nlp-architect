@@ -1,0 +1,50 @@
+max_epochs: 10
+model_type: libert # bert or libert
+base_init: [true, false]
+
+data: rl rd lr ld dr dl # relative to nlp_architect/models/li_bert/data/preprocessed_conll
+limit_data: 1.0
+splits: [1, 2, 3]
+seeds: [23, 7, 34]
+tag: # optional: name this experiment version
+metric: asp_f1
+baseline_str: libert_rnd_init
+baseline_version: version_baseline
+
+num_workers: 44
+gpus: [0, 1, 2, 3]
+parallel: true
+
+li_layer: #5
+li_layers: #[2]
+all_layers: true
+relation: ""
+parse_probs: true
+replace_final: false
+duplicated_rels: false
+transpose: false
+
+do_train: true
+do_predict: true
+
+overwrite_cache: true # if false, loads features from cached file (faster)
+cache_dir: # default: nlp-architect/nlp_architect/cache
+output_dir: # default: nlp-architect/nlp_architect/cache/li-bert-models
+labels: labels.txt # relative to nlp_architect/models/li_bert/data
+
+model_name_or_path: bert-base-uncased
+train_batch_size: 8
+eval_batch_size: 8
+max_seq_length: 64
+adam_epsilon: 1.0e-08
+fast_dev_run: false
+accumulate_grad_batches: 1
+learning_rate: 5.0e-05
+gradient_clip_val: 1.0
+n_tpu_cores: 0
+resume_from_checkpoint: null
+tokenizer_name: null
+val_check_interval: 1.0
+warmup_steps: 0
+weight_decay: 0.0
+logger: true

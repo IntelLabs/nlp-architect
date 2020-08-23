@@ -21,19 +21,19 @@ from pathlib import Path
 from sys import argv, executable as python
 from os.path import realpath
 from itertools import product
-from datetime import datetime as dt
 from collections import deque
 from subprocess import Popen, STDOUT
 import pytorch_lightning as pl
 from pytorch_lightning import _logger as log
 from bert_for_token import BertForToken
 from log_aggregator import aggregate
-from absa_utils import load_config, set_as_latest_log_dir, write_summary_table
+from absa_utils import load_config, set_as_latest, write_summary_tables, pretty_datetime
 from significance import significance_from_cfg
 from trainer import get_logger, get_trainer, log_model_and_version
 
 LIBERT_DIR = Path(realpath(__file__)).parent
 LOG_ROOT = LIBERT_DIR / 'logs'
+GPUS_LOG = LOG_ROOT / 'gpus'
 
 def run_data(cfg_yaml, time, rnd_init, data, log_dir, metric):
     cfg = load_config(cfg_yaml)
@@ -69,15 +69,17 @@ def run_data(cfg_yaml, time, rnd_init, data, log_dir, metric):
         aggregate(test_versions, exp_id + '_test', model_str)
     return model_str, exp_id
 
-
 def main(config_yaml):
+    # Init: config, experiment id, logging
     cfg = load_config(config_yaml)
-    os.makedirs(LOG_ROOT, exist_ok=True)
-    time_tag = dt.now().strftime("%a_%b_%d_%H:%M:%S") + cfg.tag
-    open(LOG_ROOT / 'time.log', 'w').write(f'{time_tag}\n')
-    this_module = Path(realpath(__file__))
-    log_dir = LOG_ROOT / time_tag
-    set_as_latest_log_dir(log_dir)
+    time_now = pretty_datetime()
+    exp_tag = time_now + cfg.tag
+    log_dir = LOG_ROOT / exp_tag
+    gpus_log_dir = log_dir / 'gpus'
+    os.makedirs(gpus_log_dir, exist_ok=True)
+    open(log_dir / 'time.log', 'w').write(f'{time_now}\n')
+    set_as_latest(log_dir)
+    this_module = realpath(__file__)
 
     run_queue = deque(product(cfg.base_init, cfg.data))
     num_procs = min(len(cfg.gpus), len(run_queue))
@@ -89,13 +91,12 @@ def main(config_yaml):
             for gpu_i in cfg.gpus[:num_procs]:
                 os.environ["CUDA_VISIBLE_DEVICES"] = str(gpu_i)
                 rnd_init, data = run_queue.popleft()
-                args = this_module, config_yaml, time_tag, rnd_init, data, log_dir, cfg.metric
-                cmd = [python] + [f'{_}' for _ in args]
-                with open(LOG_ROOT / f'gpu_{gpu_i}.log', 'a') as log_file:
-                    log_file.truncate(0)
+                args = config_yaml, exp_tag, rnd_init, data, log_dir, cfg.metric
+                cmd = [python] + [this_module] + [f'{_}' for _ in args]
+                with open(gpus_log_dir / f'gpu_{gpu_i}.log', 'a') as log_file:
                     proc = Popen(cmd, bufsize=-1, stdout=log_file, stderr=STDOUT)
 
-                print(f"PID: {proc.pid}: yaml: {config_yaml}.yaml, time: {time_tag}, " \
+                print(f"PID: {proc.pid}: yaml: {config_yaml}.yaml, time: {exp_tag}, " \
                     f"rnd_init: {rnd_init}, data: {data}, gpu: {gpu_i}")
                 procs.append(proc)
                 model_str = f"{cfg.model_type}_rnd_init" if rnd_init else f'{cfg.model_type}'
@@ -110,21 +111,21 @@ def main(config_yaml):
     else:
         while run_queue:
             rnd_init, data = run_queue.popleft()
-            run_data(config_yaml, time_tag, rnd_init, data, log_dir, cfg.metric)
+            run_data(config_yaml, exp_tag, rnd_init, data, log_dir, cfg.metric)
             model_str = f'{cfg.model_type}_rnd_init' if rnd_init else f'{cfg.model_type}'
     
-    post_analysis(cfg, log_dir, time_tag, model_str)
+    post_analysis(cfg, log_dir, exp_tag, model_str)
+
+    # Save termination time
+    open(log_dir / 'time.log', 'a').write(pretty_datetime())
 
 def post_analysis(cfg, log_dir, time_tag, model_str):
-    # Save termination time
-    open(LOG_ROOT / 'time.log', 'a').write(dt.now().strftime("%a_%b_%d_%H:%M:%S"))
-
     # Run significance tests if baseline exists and last run was on model
     if cfg.do_predict and model_str != cfg.baseline_str:
         significance_from_cfg(cfg=cfg, log_dir=log_dir, exp_id=time_tag)
 
     # Write summary table to CSV
-    write_summary_table(cfg, time_tag)
+    write_summary_tables(cfg, time_tag)
 
 if __name__ == "__main__":
     if len(argv) == 2:
