@@ -128,6 +128,8 @@ class BertForToken(pl.LightningModule):
             parse_type = '_probs.npz'
         if self.hparams.relation:
             parse_type = '_' + self.hparams.relation + parse_type
+        if self.hparams.spacy:
+            parse_type = '_spacy' + parse_type
         parses_file = self.hparams.data_dir / (mode + parse_type)
         parse_data = np.load(parses_file, allow_pickle=True)
         return parse_data

@@ -5,7 +5,7 @@ base_init: [true, false]
 data: rl rd lr ld dr dl # relative to nlp_architect/models/li_bert/data/preprocessed_conll
 limit_data: 1.0
 splits: [1, 2, 3]
-seeds: [23, 7, 34]
+seeds: [7, 9, 14, 18, 25]
 tag: # optional: name this experiment version
 metric: asp_f1
 baseline_str: libert_rnd_init
@@ -19,10 +19,11 @@ li_layer: #5
 li_layers: #[2]
 all_layers: true
 relation: ""
-parse_probs: true
+parse_probs: false
 replace_final: false
 duplicated_rels: false
 transpose: false
+spacy: true
 
 do_train: true
 do_predict: true

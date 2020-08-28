@@ -19,10 +19,11 @@ li_layer: #5
 li_layers: #[2]
 all_layers: true
 relation: ""
-parse_probs: true
+parse_probs: false
 replace_final: false
 duplicated_rels: false
 transpose: false
+spacy: true
 
 do_train: true
 do_predict: true

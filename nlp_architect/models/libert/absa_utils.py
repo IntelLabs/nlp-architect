@@ -15,7 +15,7 @@
 # limitations under the License.
 """ Cross-domain ABSA fine-tuning: utilities to work with SemEval-14/16 files. """
 
-# pylint: disable=logging-fstring-interpolation
+# pylint: disable=logging-fstring-interpolation, not-callable
 import os
 from dataclasses import dataclass
 import csv
@@ -28,6 +28,7 @@ from pathlib import Path
 from datetime import datetime as dt
 
 from torch.nn import CrossEntropyLoss
+from torch import tensor
 from pytorch_lightning import _logger as log
 from pytorch_lightning.core.saving import load_hparams_from_yaml
 from transformers import PreTrainedTokenizer
@@ -234,16 +235,16 @@ def detailed_metrics(y_true, y_pred):
         r = nb_correct / nb_true if nb_true > 0 else 0
         f1 = 2 * p * r / (p + r) if p + r > 0 else 0
 
-        metrics[type_name.lower() + '_precision'] = p
-        metrics[type_name.lower() + '_recall'] = r
-        metrics[type_name.lower() + '_f1'] = f1
+        metrics[type_name.lower() + '_precision'] = tensor(p)
+        metrics[type_name.lower() + '_recall'] = tensor(r)
+        metrics[type_name.lower() + '_f1'] = tensor(f1)
 
         ps.append(p)
         rs.append(r)
         f1s.append(f1)
         s.append(nb_true)
-    macro_avg = {'macro_precision': np.average(ps, weights=s),
-                 'macro_recall': np.average(rs, weights=s), 'macro_f1': np.average(f1s, weights=s)}
+    macro_avg = {'macro_precision': tensor(np.average(ps, weights=s)),
+                 'macro_recall': tensor(np.average(rs, weights=s)), 'macro_f1': tensor(np.average(f1s, weights=s))}
     return metrics, macro_avg
 
 
