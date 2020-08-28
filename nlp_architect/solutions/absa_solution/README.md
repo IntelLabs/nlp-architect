@@ -85,11 +85,11 @@ Open web browser to:
 ## Citation
 
 ```bibtex
-@article{pereg2019absapp,
+@inproceedings{pereg2019absapp,
   title={ABSApp: A Portable Weakly-Supervised Aspect-Based Sentiment Extraction System},
   author={Pereg, Oren and Korat, Daniel and Wasserblat, Moshe and Mamou, Jonathan and Dagan, Ido},
-  journal={EMNLP-IJCNLP 2019},
-  pages={1},
+  booktitle={Proceedings of the 2019 Conference on Empirical Methods in Natural Language Processing and the 9th International Joint Conference on Natural Language Processing (EMNLP-IJCNLP): System Demonstrations},
+  pages={1--6},
   year={2019}
 }
 ```
