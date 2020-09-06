@@ -65,7 +65,7 @@ def get_trainer(model, data, experiment, exp_id, log_dir=None, gpus=None, metric
         weights_summary=None,
         resume_from_checkpoint=model.hparams.resume_from_checkpoint,
         distributed_backend="ddp" if num_gpus > 1 else None,
-        benchmark=False,
+        benchmark=True,
         deterministic=True,
         limit_train_batches=limit_data,
         limit_val_batches=limit_data,

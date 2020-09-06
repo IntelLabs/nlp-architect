@@ -159,7 +159,7 @@ class BertForToken(pl.LightningModule):
 
         shuffle = mode == 'train'
         return DataLoader(TensorDataset(*tensors), batch_size=batch_size, shuffle=shuffle,
-                          num_workers=self.hparams.num_workers)
+                          num_workers=self.hparams.num_workers, pin_memory=True)
 
     @staticmethod
     def map_to_inputs(batch):

@@ -18,11 +18,9 @@
 
 import os
 from pathlib import Path
-from sys import argv, executable as python
+from sys import argv
 from os.path import realpath
 from itertools import product
-from collections import deque
-from subprocess import Popen, STDOUT
 import pytorch_lightning as pl
 from pytorch_lightning import _logger as log
 from bert_for_token import BertForToken
@@ -86,46 +84,44 @@ def main(config_yaml):
     # Init: config, experiment id, logging
     cfg = load_config(config_yaml)
     time_now = pretty_datetime()
-    exp_tag = time_now + cfg.tag
-    log_dir = LOG_ROOT / exp_tag
+    exp_id = time_now + cfg.tag
+    log_dir = LOG_ROOT / exp_id
     tasks_log_dir = log_dir / 'tasks'
     os.makedirs(tasks_log_dir, exist_ok=True)
     open(log_dir / 'time.log', 'w').write(f'{time_now}\n')
     set_as_latest(log_dir)
     run_list = product(cfg.base_init, cfg.data)
-
     args_list = []
     for task_idx, (rnd_init, data) in enumerate(run_list):
-        args = task_idx, config_yaml, exp_tag, rnd_init, data, log_dir, cfg.metric
+        args = task_idx, config_yaml, exp_id, rnd_init, data, log_dir, cfg.metric
         args_list.append(args)
 
     # Parallel: each experiment runs on a single GPU
     if cfg.parallel:
-        ray_options = {"num_gpus":1}
+        ray_options = {"num_gpus": 1}
 
-    # Sequential: each experiment runs in turn on all gpus
+    # Sequential: run each experiemnt in turn (on all gpus)
     else:
-        ray_options = {"num_gpus":len(ray.get_gpu_ids)}
+        ray_options = {"num_gpus": len(ray.get_gpu_ids())}
 
     # Launching Ray tasks
     futures = [run_data.options(**ray_options).remote(*args) for args in args_list]
-    results = ray.get(futures)
+    ray.get(futures)
 
-    for model_str, exp_id in results:
-        post_analysis(cfg, log_dir, exp_tag, model_str)
+    post_analysis(cfg, log_dir, exp_id)
 
     # Save termination time
     open(log_dir / 'time.log', 'a').write(pretty_datetime())
 
     ray.shutdown()
 
-def post_analysis(cfg, log_dir, time_tag, model_str):
+def post_analysis(cfg, log_dir, exp_id):
     # Run significance tests if baseline exists and last run was on model
-    if cfg.do_predict and model_str != cfg.baseline_str:
-        significance_from_cfg(cfg=cfg, log_dir=log_dir, exp_id=time_tag)
+    if cfg.do_predict and True in cfg.base_init and False in cfg.base_init:
+        significance_from_cfg(cfg=cfg, log_dir=log_dir, exp_id=exp_id)
 
     # Write summary table to CSV
-    write_summary_tables(cfg, time_tag)
+    write_summary_tables(cfg, exp_id)
 
 if __name__ == "__main__":
     if len(argv) == 2:
