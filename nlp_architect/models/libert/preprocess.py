@@ -1,44 +1,26 @@
-# from allennlp.predictors.predictor import Predictor
-# from allennlp.models import Model
-# from allennlp.models import archival
-# from allennlp.models.biaffine_dependency_parser import BiaffineDependencyParser
+import csv
+import os
+from pathlib import Path
+from itertools import permutations
 from transformers import BertTokenizer
 import numpy as np
 from tqdm import tqdm
-from itertools import permutations
-import os
 import spacy
 from spacy.tokens import Doc
-from pathlib import Path
 
 DATA_DIR = Path(os.path.realpath(__file__)).parent / 'data' / 'conll'
 
 class SpacyWithBertTokenizer:
     def __init__(self):
         self.parse_cache = {}
-        self.nlp = self.get_nlp_bert_instance()
-        
+        self.nlp = self.get_spacy_with_bert_tokenizer()
+
     @staticmethod
-    def get_nlp_bert_instance():
-        nlp = spacy.load("en_core_web_lg", disable=["ner", "vectors", "textcat"])
+    def get_spacy_with_bert_tokenizer(spacy_model="en_core_web_lg"):
+        nlp = spacy.load(spacy_model, disable=["ner", "vectors", "textcat"])
         bert_tokenizer_m = ModifiedBertTokenizer.from_pretrained('bert-base-uncased')
         nlp.tokenizer = Tokenizer(nlp.vocab, bert_tokenizer_m)
         return nlp
-
-    def parse(self, text):
-        if text in self.parse_cache:
-            return self.parse_cache[text]
-
-        doc = self.nlp(text)
-        toks = [t.text for t in doc]
-        pos = [t.tag_ for t in doc]
-        bert_sub_toks = doc.user_data
-        heads = [t.head.i for t in doc]
-        rels = [t.dep_ for t in doc]
-        assert len(toks) == len(bert_sub_toks) == len(pos) == len(heads) == len(rels)
-        res = toks, pos, bert_sub_toks, heads, rels
-        self.parse_cache[text] = res
-        return res
 
     def pipe_batch(self, batch):
         cached_idx = {}
@@ -69,56 +51,60 @@ class SpacyWithBertTokenizer:
 
         res_list = []
         for doc in docs:
+            sub_toks = [''.join(sub_tok) if len(sub_tok) > 1 else '' for sub_tok in doc.user_data]
             toks = [t.text for t in doc]
             pos = [t.tag_ for t in doc]
-            bert_sub_toks = doc.user_data
             heads = [t.head.i for t in doc]
             rels = [t.dep_ for t in doc]
-            assert len(toks) == len(bert_sub_toks) == len(pos) == len(heads) == len(rels)
-            res_list.append((toks, pos, bert_sub_toks, heads, rels))
-
+            assert len(toks) == len(sub_toks) == len(pos) == len(heads) == len(rels)
+            res_list.append((toks, pos, sub_toks, heads, rels))
         return res_list
 
 def batcher(iterable, n=1):
-    l = len(iterable)
-    for ndx in range(0, l, n):
-        yield iterable[ndx:min(ndx + n, l)]
+    iter_len = len(iterable)
+    for ndx in range(0, iter_len, n):
+        yield iterable[ndx: min(ndx + n, iter_len)]
 
-def conll_sentences(f, gold=False):
-    toks = []
-    labels = []
+def conll_iter(f):
+    toks, labels = [], []
     for line in f:
-        line = line.strip() 
+        line = line.strip()
         if not line:
-            if gold:
-                yield tuple(toks), tuple(labels)
-            else:
-                yield tuple(toks)
-            toks = []
-            labels = []
+            yield tuple(toks), tuple(labels)
+            toks, labels = [], []
         else:
             split = line.split('\t')
-            if gold:
-                labels.append(split[1])
+            labels.append(split[1])
             toks.append(split[0])
 
-def dm_parse_file(txt_path, overwrite=True):
-    heads_list = []
-    spacy_bert_tok = SpacyWithBertTokenizer()
+def parse_file(txt_path, spacy_bert_tok, overwrite=True):
+    out_path = txt_path[:-4].replace('conll', 'csv') + '.csv'
+    os.makedirs(Path(out_path).parent, exist_ok=True)
 
-    if overwrite or not os.path.exists(txt_path[:-4] + '_spacy_heads.npz'):
-        with open(txt_path) as f:
-            sentences_as_lists = list(conll_sentences(f))
-            parsed_sentences = spacy_bert_tok.pipe(sentences_as_lists)
+    if overwrite or not os.path.exists(out_path):
+        with open(txt_path) as input_f:
+            space_tok_reviews = []
+            reviews_tok_labels = []
+            for toks, labels in conll_iter(input_f):
+                space_tok_reviews.append(toks)
+                reviews_tok_labels.append(labels)
 
-            for sentence_word_list, sentence_parse in zip(sentences_as_lists, parsed_sentences):
-                toks, pos, bert_sub_toks, heads, rels = sentence_parse
-                assert len(toks) == len(sentence_word_list)
-                binary_heads = add_sub_tokens(binarize(heads), bert_sub_toks)
-                assert binary_heads.shape[0] == binary_heads.shape[1]
-                heads_list.append(binary_heads)
-
-            np.savez(txt_path[:-4] + '_spacy_heads.npz', *heads_list)
+            with open(out_path, 'w') as csv_file:
+                writer = csv.writer(csv_file)
+                parsed_reviews = spacy_bert_tok.pipe(space_tok_reviews)
+                for word_list, parsed_review, labels in \
+                    zip(space_tok_reviews, parsed_reviews, reviews_tok_labels):
+                    toks = parsed_review[0]
+                    assert len(toks) == len(labels)
+                    assert tuple(toks) == word_list
+                    for tok, pos_tag, sub_tok, head, rel, label in zip(*parsed_review, labels):
+                        writer.writerow([tok, label, head, rel, pos_tag, sub_tok])
+                    writer.writerow(['_'] * 6)
+                    writer.writerow(['_'] * 6)
+                    # binary_heads = add_sub_tokens(binarize(heads), bert_sub_toks)
+                    # assert binary_heads.shape[0] == binary_heads.shape[1]
+                    # heads_list.append(binary_heads)
+                # np.savez(txt_path[:-4] + '_spacy_heads.npz', *heads_list)
 
 def add_sub_tokens(preds, sub_tokens, zero_sub_tokens=False):
     for i in range(len(sub_tokens) - 1, -1, -1):
@@ -190,22 +176,20 @@ class Tokenizer:
             res.extend(bert_token)
         # All tokens 'own' a subsequent space character in this tokenizer
         spaces = [True] * len(words)
-        doc = Doc(self.vocab, words=res, spaces=spaces)
+        doc = Doc(vocab=self.vocab, words=res, spaces=spaces)
         doc.user_data = sub_tokens
         return doc
 
-def dm_parse_cross_domain_settings(domains: list, overwrite=True):
+def parse_cross_domain_settings(domains: list, overwrite=True):
+    spacy_bert_tok = SpacyWithBertTokenizer()
+
     for domain_a, domain_b in permutations(domains, r=2):
         print('Setting: ' + domain_a + ' to ' + domain_b)
         for split in ['1', '2', '3']:
             for ds in tqdm(['train', 'test', 'dev']):
                 ds_file = str(DATA_DIR / f'{domain_a}_to_{domain_b}_{split}' / f'{ds}.txt')
                 print(ds_file)
-                dm_parse_file(ds_file, overwrite=overwrite)
-
+                parse_file(ds_file, spacy_bert_tok, overwrite=overwrite)
 
 if __name__ == "__main__":
-    nlp = spacy.load("en_core_web_lg", disable=["tagger", "ner", "vectors", "textcat"])
-    doc = nlp("This is a sentence")
-
-    dm_parse_cross_domain_settings(domains=['restaurants', 'laptops', 'device'], overwrite=True)
+    parse_cross_domain_settings(domains=['restaurants', 'laptops', 'device'], overwrite=False)
