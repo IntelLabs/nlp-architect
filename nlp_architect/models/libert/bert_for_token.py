@@ -57,7 +57,7 @@ class BertForToken(pl.LightningModule):
         if isinstance(hparams, dict):
             hparams = Namespace(**hparams)
 
-        data_root = Path(__file__).parent.absolute() / 'data' / 'conll'
+        data_root = Path(__file__).parent.absolute() / 'data' / 'csv'
 
         self.labels = absa_utils.get_labels(data_root / hparams.labels)
         num_labels = len(self.labels)
@@ -116,23 +116,17 @@ class BertForToken(pl.LightningModule):
                 log.debug("Saving features into cached file %s", cached_features_file)
                 torch.save(features, cached_features_file)
 
-    @staticmethod
-    def pad(source):
-        target = np.zeros((64, 64), float)
-        target[:source.shape[0], :source.shape[1]] = source[:64, :64]
-        return target
-
-    def get_parse_data(self, mode):
-        parse_type = '_head_probs.npz' if self.hparams.parse_probs else '_heads.npz'
-        if self.hparams.relation == "_merged" and self.hparams.parse_probs:
-            parse_type = '_probs.npz'
-        if self.hparams.relation:
-            parse_type = '_' + self.hparams.relation + parse_type
-        if self.hparams.spacy:
-            parse_type = '_spacy' + parse_type
-        parses_file = self.hparams.data_dir / (mode + parse_type)
-        parse_data = np.load(parses_file, allow_pickle=True)
-        return parse_data
+    # def get_parse_data(self, mode):
+    #     parse_type = '_head_probs.npz' if self.hparams.parse_probs else '_heads.npz'
+    #     if self.hparams.relation == "_merged" and self.hparams.parse_probs:
+    #         parse_type = '_probs.npz'
+    #     if self.hparams.relation:
+    #         parse_type = '_' + self.hparams.relation + parse_type
+    #     if self.hparams.spacy:
+    #         parse_type = '_spacy' + parse_type
+    #     parses_file = self.hparams.data_dir / (mode + parse_type)
+    #     parse_data = np.load(parses_file, allow_pickle=True)
+    #     return parse_data
 
     def load_dataset(self, mode, batch_size):
         "Load datasets. Called after prepare data."
@@ -152,10 +146,8 @@ class BertForToken(pl.LightningModule):
 
         if self.model_type is LiBertForToken:
             #### Attatch dependency parse info ###
-            parse_data = self.get_parse_data(mode)
-            parse_tensor = torch.tensor([self.pad((parse_data)[f]) for f in parse_data.files],
-                                        dtype=torch.float)
-            tensors.append(parse_tensor)
+            dep_heads = torch.tensor([f.dep_heads for f in features], dtype=torch.float)
+            tensors.append(dep_heads)
 
         shuffle = mode == 'train'
         return DataLoader(TensorDataset(*tensors), batch_size=batch_size, shuffle=shuffle,

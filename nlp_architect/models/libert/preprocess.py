@@ -106,30 +106,30 @@ def parse_file(txt_path, spacy_bert_tok, overwrite=True):
                     # heads_list.append(binary_heads)
                 # np.savez(txt_path[:-4] + '_spacy_heads.npz', *heads_list)
 
-def add_sub_tokens(preds, sub_tokens, zero_sub_tokens=False):
-    for i in range(len(sub_tokens) - 1, -1, -1):
-        for _ in range(1, len(sub_tokens[i])):
-            if zero_sub_tokens:
-                sub_token_row = [0 for _ in preds[i]]
-            else:
-                sub_token_row = preds[i].copy()
-            preds.insert(i + 1, sub_token_row)
+# def add_sub_tokens(preds, sub_tokens, zero_sub_tokens=False):
+#     for i in range(len(sub_tokens) - 1, -1, -1):
+#         for _ in range(1, len(sub_tokens[i])):
+#             if zero_sub_tokens:
+#                 sub_token_row = [0 for _ in preds[i]]
+#             else:
+#                 sub_token_row = preds[i].copy()
+#             preds.insert(i + 1, sub_token_row)
 
-    for row in preds:
-        # zero [CLS] (ROOT) column?
-        for i in range(len(sub_tokens) - 1, -1, -1):
-            for _ in range(1, len(sub_tokens[i])):
-                row.insert(i + 2, 0)
+#     for row in preds:
+#         # zero [CLS] (ROOT) column?
+#         for i in range(len(sub_tokens) - 1, -1, -1):
+#             for _ in range(1, len(sub_tokens[i])):
+#                 row.insert(i + 2, 0)
 
-    # insert zeros row for [CLS] token
-    preds.insert(0, [0] * (len(preds) + 1))
-    return np.array(preds)
+#     # insert zeros row for [CLS] token
+#     preds.insert(0, [0] * (len(preds) + 1))
+#     return np.array(preds)
 
-def binarize(preds):
-    res = []
-    for pred in preds:
-        res.append([1 if i == pred else 0 for i in range(len(preds) + 1)])
-    return res
+# def binarize(preds):
+#     res = []
+#     for pred in preds:
+#         res.append([1 if i == pred else 0 for i in range(len(preds) + 1)])
+#     return res
 
 class ModifiedBertTokenizer(BertTokenizer):
     def __init__(self, *args, **kwargs):

@@ -55,7 +55,10 @@ class InputExample:
     guid: str
     words: List[str]
     labels: Optional[List[str]]
-
+    heads: Optional[List[int]]
+    dep_rels: Optional[List[str]]
+    pos_tags: Optional[List[str]]
+    sub_toks: Optional[List[List[str]]]
 
 @dataclass
 class InputFeatures:
@@ -67,7 +70,7 @@ class InputFeatures:
     attention_mask: List[int]
     token_type_ids: Optional[List[int]] = None
     label_ids: Optional[List[int]] = None
-    parse_heads: Optional[List[float]] = None
+    dep_heads: Optional[List[float]] = None
 
 class Split(Enum):
     train = "train"
@@ -77,31 +80,62 @@ class Split(Enum):
 def read_examples_from_file(data_dir, mode: Union[Split, str]) -> List[InputExample]:
     if isinstance(mode, Split):
         mode = mode.value
-    file_path = os.path.join(data_dir, f"{mode}.txt")
+    file_path = os.path.join(data_dir, f"{mode}.csv")
     guid_index = 1
     examples = []
+    empty_row = ['_'] * 6
     with open(file_path, encoding="utf-8") as f:
-        words = []
-        labels = []
-        for line in f:
-            if line in ('', '\n'):
+        words, labels, heads, dep_rels, pos_tags, sub_toks = [], [], [], [], [], []
+        for row in csv.reader(f):
+            if row == empty_row:
                 if words:
-                    examples.append(InputExample(guid=f"{mode}-{guid_index}",
-                                                 words=words, labels=labels))
+                    examples.append(InputExample(guid=f"{mode}-{guid_index}", words=words, labels=labels,
+                                                    heads=heads, dep_rels=dep_rels, pos_tags=pos_tags, sub_toks=sub_toks))
                     guid_index += 1
-                    words = []
-                    labels = []
+                    words, labels, heads, dep_rels, pos_tags, sub_toks = [], [], [], [], [], []
             else:
-                splits = line.split()
-                words.append(splits[0])
-                if len(splits) > 1:
-                    labels.append(splits[-1].replace("\n", ""))
-                else:
-                    # Examples could have no label for mode = "test"
-                    labels.append("O")
+                word, label, head, dep_rel, pos_tag, sub_tok = row
+                words.append(word)
+                labels.append(label)
+                heads.append(int(head))
+                dep_rels.append(dep_rel)
+                pos_tags.append(pos_tag)
+                sub_toks.append(sub_tok.split('##'))
         if words:
-            examples.append(InputExample(guid=f"{mode}-{guid_index}", words=words, labels=labels))
+            examples.append(InputExample(guid=f"{mode}-{guid_index}", words=words, labels=labels,
+                                            heads=heads, dep_rels=dep_rels, pos_tags=pos_tags, sub_toks=sub_toks))
     return examples
+
+
+def pad(a):
+    target = np.zeros((64, 64), float)
+    target[:a.shape[0], :a.shape[1]] = a[:64, :64]
+    return target
+
+def add_sub_tokens(preds, sub_tokens, zero_sub_tokens=False):
+    for i in range(len(sub_tokens) - 1, -1, -1):
+        for _ in range(1, len(sub_tokens[i])):
+            if zero_sub_tokens:
+                sub_token_row = [0 for _ in preds[i]]
+            else:
+                sub_token_row = preds[i].copy()
+            preds.insert(i + 1, sub_token_row)
+
+    for row in preds:
+        # zero [CLS] (ROOT) column?
+        for i in range(len(sub_tokens) - 1, -1, -1):
+            for _ in range(1, len(sub_tokens[i])):
+                row.insert(i + 2, 0)
+
+    # insert zeros row for [CLS] token
+    preds.insert(0, [0] * (len(preds) + 1))
+    return np.array(preds)
+
+def binarize(preds):
+    res = []
+    for pred in preds:
+        res.append([1 if i == pred else 0 for i in range(len(preds) + 1)])
+    return res
 
 def convert_examples_to_features(
         examples: List[InputExample],
@@ -120,12 +154,14 @@ def convert_examples_to_features(
     pad_token_label_id = CrossEntropyLoss().ignore_index
 
     features = []
-    for (ex_index, example) in enumerate(examples):
+    for (ex_index, ex) in enumerate(examples):
         if ex_index % 1_000 == 0:
             log.debug("Writing example %d of %d", ex_index, len(examples))
-        tokens = []
-        label_ids = []
-        for word, label in zip(example.words, example.labels):
+        tokens, label_ids, heads, sub_toks = [], [], [], []
+
+        for word, label, head, _, _, sub_tok in zip(ex.words, ex.labels, ex.heads, ex.dep_rels, ex.pos_tags, ex.sub_toks):
+            heads.append(head)
+            sub_toks.append(sub_tok if sub_tok else [word])
             word_tokens = tokenizer.tokenize(word)
 
             # bert-base-multilingual-cased sometimes output "nothing ([])
@@ -135,6 +171,12 @@ def convert_examples_to_features(
                 # Use the real label id for the first token of the word,
                 # and padding ids for the remaining tokens
                 label_ids.extend([label_map[label]] + [pad_token_label_id] * (len(word_tokens) - 1))
+
+        ######### Add binary dependency heads matrix #################
+        binary_heads = add_sub_tokens(binarize(heads), sub_toks)
+        assert binary_heads.shape[0] == binary_heads.shape[1]
+        padded_heads = pad(binary_heads)
+        #######################################################################################
 
         # Account for [CLS] and [SEP]
         special_tokens_count = tokenizer.num_special_tokens_to_add()
@@ -188,7 +230,7 @@ def convert_examples_to_features(
 
         if ex_index < 5:
             log.debug("*** Example ***")
-            log.debug("guid: %s", example.guid)
+            log.debug("guid: %s", ex.guid)
             log.debug("tokens: %s", " ".join([str(x) for x in tokens]))
             log.debug("input_ids: %s", " ".join([str(x) for x in input_ids]))
             log.debug("input_mask: %s", " ".join([str(x) for x in input_mask]))
@@ -196,7 +238,7 @@ def convert_examples_to_features(
             log.debug("label_ids: %s", " ".join([str(x) for x in label_ids]))
 
         features.append(InputFeatures(input_ids=input_ids, attention_mask=input_mask,
-                                      token_type_ids=segment_ids, label_ids=label_ids))
+                                      token_type_ids=segment_ids, label_ids=label_ids, dep_heads=padded_heads))
     return features
 
 def get_labels(path: str) -> List[str]:
@@ -246,7 +288,6 @@ def detailed_metrics(y_true, y_pred):
     macro_avg = {'macro_precision': tensor(np.average(ps, weights=s)),
                  'macro_recall': tensor(np.average(rs, weights=s)), 'macro_f1': tensor(np.average(f1s, weights=s))}
     return metrics, macro_avg
-
 
 def load_config(name):
     """Load an experiment configuration from a yaml file."""
@@ -347,8 +388,7 @@ def write_asp_op_f1_summary(cfg, exp_id, seed=None):
             csv_writer.writerow(['baseline'] + format_list(baseline_row, baseline_std_row))
             csv_writer.writerow(['model'] + format_list(model_row, model_std_row))
             csv_writer.writerow(['delta'] + [f'{d:.2f}' for d in deltas_row])
-
-                
+        
 def write_summary_tables(cfg, exp_id):
     write_asp_op_f1_summary(cfg, exp_id)
 
@@ -373,6 +413,7 @@ def get_score_from_csv_agg(csv_dir, metric):
       
 def pretty_datetime():
     return dt.now().strftime("%a_%b_%d_%H:%M:%S")
+
 
 if __name__ == "__main__":
     significance(load_config('model'), LIBERT_DIR / 'logs', 'Thu_Jul_30_00:43:52')
