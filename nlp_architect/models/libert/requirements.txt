@@ -79,3 +79,5 @@ urllib3==1.25.10
 Werkzeug==1.0.1
 wrapt==1.12.1
 zipp==3.1.0
+matplotlib==3.3.1
+ray==0.8.7
