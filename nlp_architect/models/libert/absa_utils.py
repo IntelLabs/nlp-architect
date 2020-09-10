@@ -56,6 +56,7 @@ class InputExample:
     words: List[str]
     labels: Optional[List[str]]
     heads: Optional[List[int]]
+    head_words: Optional[List[str]]
     dep_rels: Optional[List[str]]
     pos_tags: Optional[List[str]]
     sub_toks: Optional[List[List[str]]]
@@ -83,27 +84,31 @@ def read_examples_from_file(data_dir, mode: Union[Split, str]) -> List[InputExam
     file_path = os.path.join(data_dir, f"{mode}.csv")
     guid_index = 1
     examples = []
-    empty_row = ['_'] * 6
+    empty_row = ['_'] * 7
     with open(file_path, encoding="utf-8") as f:
-        words, labels, heads, dep_rels, pos_tags, sub_toks = [], [], [], [], [], []
-        for row in csv.reader(f):
+        words, labels, heads, head_words, dep_rels, pos_tags, sub_toks = [], [], [], [], [], [], []
+        reader = csv.reader(f)
+        next(reader, None)
+        for row in reader:
             if row == empty_row:
                 if words:
                     examples.append(InputExample(guid=f"{mode}-{guid_index}", words=words, labels=labels,
-                                                    heads=heads, dep_rels=dep_rels, pos_tags=pos_tags, sub_toks=sub_toks))
+                                                    heads=heads, head_words=head_words, dep_rels=dep_rels, pos_tags=pos_tags, sub_toks=sub_toks))
                     guid_index += 1
-                    words, labels, heads, dep_rels, pos_tags, sub_toks = [], [], [], [], [], []
+                    words, labels, heads, head_words, dep_rels, pos_tags, sub_toks = [], [], [], [], [], [], []
             else:
-                word, label, head, dep_rel, pos_tag, sub_tok = row
+                word, label, head, head_word, dep_rel, pos_tag, sub_tok = row
                 words.append(word)
                 labels.append(label)
                 heads.append(int(head))
+                head_words.append(head_word)
                 dep_rels.append(dep_rel)
                 pos_tags.append(pos_tag)
-                sub_toks.append(sub_tok.split('##'))
+                sub_toks.append(sub_tok.split() if sub_tok else [word])
         if words:
             examples.append(InputExample(guid=f"{mode}-{guid_index}", words=words, labels=labels,
-                                            heads=heads, dep_rels=dep_rels, pos_tags=pos_tags, sub_toks=sub_toks))
+                                            heads=heads, head_words=head_words, dep_rels=dep_rels,
+                                            pos_tags=pos_tags, sub_toks=sub_toks))
     return examples
 
 
@@ -161,7 +166,7 @@ def convert_examples_to_features(
 
         for word, label, head, _, _, sub_tok in zip(ex.words, ex.labels, ex.heads, ex.dep_rels, ex.pos_tags, ex.sub_toks):
             heads.append(head)
-            sub_toks.append(sub_tok if sub_tok else [word])
+            sub_toks.append(sub_tok)
             word_tokens = tokenizer.tokenize(word)
 
             # bert-base-multilingual-cased sometimes output "nothing ([])
@@ -174,7 +179,22 @@ def convert_examples_to_features(
 
         ######### Add binary dependency heads matrix #################
         binary_heads = add_sub_tokens(binarize(heads), sub_toks)
-        assert binary_heads.shape[0] == binary_heads.shape[1]
+
+        ####################### DEBUG ############################
+        # if binary_heads.shape[1] != len(tokens) + 1:
+        #     print('$$'*20)
+        #     print()
+        #     print(f'len(heads): {len(heads)}')
+        #     print(f'binary_heads.shape[1]: {binary_heads.shape[1]}')
+        #     print(f'len(tokens): {len(tokens)}')
+        #     print(f'len(sub_toks): {len(sub_toks)}')
+        #     print([[token] for token in tokens])
+        #     print([[word] for word in ex.words])
+        #     print(sub_toks)
+        #     print()
+        ############################################################
+
+        assert binary_heads.shape[0] == binary_heads.shape[1] == len(tokens) + 1
         padded_heads = pad(binary_heads)
         #######################################################################################
 

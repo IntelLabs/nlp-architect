@@ -1,195 +1,332 @@
-import csv
-import os
+import json, os
+from tqdm import tqdm
+from random import shuffle
 from pathlib import Path
 from itertools import permutations
-from transformers import BertTokenizer
-import numpy as np
-from tqdm import tqdm
-import spacy
-from spacy.tokens import Doc
 
-DATA_DIR = Path(os.path.realpath(__file__)).parent / 'data' / 'conll'
+DATA_DIR = Path(os.path.realpath(__file__)).parent / 'data'
+CROSS_DOMAIN_SETTINGS = ['laptops_to_restaurants', 'restaurants_to_laptops']
+IN_DOMAIN_SETTINGS = ['laptops14', 'restaurants14', 'restaurants15', 'restaurants_all', 'service', 'device']
+ALL_SETTINGS = CROSS_DOMAIN_SETTINGS + IN_DOMAIN_SETTINGS
+NUM_SPLITS = 3
+CONLL_DIR = DATA_DIR / 'conll'
 
-class SpacyWithBertTokenizer:
-    def __init__(self):
-        self.parse_cache = {}
-        self.nlp = self.get_spacy_with_bert_tokenizer()
 
-    @staticmethod
-    def get_spacy_with_bert_tokenizer(spacy_model="en_core_web_lg"):
-        nlp = spacy.load(spacy_model, disable=["ner", "vectors", "textcat"])
-        bert_tokenizer_m = ModifiedBertTokenizer.from_pretrained('bert-base-uncased')
-        nlp.tokenizer = Tokenizer(nlp.vocab, bert_tokenizer_m)
-        return nlp
+def create_dev_sets():
+    for domain_a, domain_b in tqdm(permutations(['laptops', 'restaurants', 'device'], r=2)):
+        for split in range(1, 4):
+            src_dir = CONLL_DIR + domain_b + '_to_' + domain_a + '_' + str(split) + '/'
+            try:
+                train_text = open(src_dir + 'train.txt').read().strip().split('\n\n')
+                dev_len = int(len(train_text) / 3)
+                dev_text = train_text[:dev_len]
+                target_dir = CONLL_DIR + domain_a + '_to_' + domain_b + '_' + str(split) + '/'
+                open(target_dir + 'dev.txt', 'w').write('\n\n'.join(dev_text) + '\n\n')
+            except:
+                continue
 
-    def pipe_batch(self, batch):
-        cached_idx = {}
-        not_in_cache_idx = {}
-        not_in_cache = []
-        for i, text in enumerate(batch):
-            if text in self.parse_cache:
-                cached_idx[i] = self.parse_cache[text]
+def dai2019_single_to_conll_and_raw(sent_file, tok_file, conll_out: str, raw_out: str, opinion_labels=False):
+    """Converts ABSA datasets from Dai (2019) format to CoNLL format.
+    Args:
+        sentence: Path to textfile sentence desciptors, one json per line.
+        token_spans: Path to textfile containing token char ranges
+        conll_out: Path for output file.
+    """
+    sentences = []
+    token_spans = []
+    aspect_spans = []
+    opinions = []
+
+    if isinstance(sent_file, str) and isinstance(tok_file, str):
+        with open(sent_file, encoding='utf-8') as sentence_f:
+            sent_file = [line for line in sentence_f]
+        with open(tok_file, encoding='utf-8') as tok_f:
+            tok_file = [line for i, line in enumerate(tok_f) if i % 2 == 1]
+
+    assert len(sent_file) == len(tok_file)
+
+    for json_line in sent_file:
+        sent_json = json.loads(json_line)
+        sentences.append(sent_json['text'])
+        curr_aspects = [term['span'] for term in sent_json['terms']] if 'terms' in sent_json else []
+        curr_opinions = sent_json.get('opinions', [])
+        opinions.append(curr_opinions)
+        aspect_spans.append(curr_aspects)
+
+    for i, line in enumerate(tok_file):
+        curr_toks = []
+        indices = line.split()
+        for j in range(0, len(indices), 2):
+            curr_toks.append([int(indices[j]), int(indices[j + 1])])
+        token_spans.append(curr_toks)
+    assert len(sentences) == len(token_spans) == len(aspect_spans) == len(opinions)
+
+    with open(raw_out, 'w', encoding='utf-8') as raw_f:
+        raw_f.write('\n'.join(sentences))
+
+    with open(conll_out, 'w', encoding='utf-8') as conll_f:
+        count_not_found = 0
+
+        for sentence, tok_indices, asp_indices, op_words in tqdm(zip(sentences, token_spans, aspect_spans, opinions)):
+            tokens = [sentence[s: e] for s, e in tok_indices]
+            tags = ['O' for i in range(len(tokens))]
+
+            if opinion_labels and op_words:
+                # if len(op_words) > 2 and [x for x in op_words if ' ' in x]:
+                #     print()
+                op_words_sorted = sorted([tuple(phrase.lower().split()) for phrase in set(op_words)], key=lambda x: -len(x))
+                tok_i = 0
+                ops_not_found = set(op_words_sorted)
+                while tok_i < len(tokens):
+                    for op_phrase in op_words_sorted:
+                        if len(op_phrase) > 0 and check_match(tokens, tok_i, op_phrase):
+                            tags[tok_i] = 'B-OP'
+                            for j in range(1, len(op_phrase)):
+                                tags[tok_i + j] = 'I-OP'
+                            tok_i += len(op_phrase) - 1
+                            if op_phrase in ops_not_found:
+                                ops_not_found.remove(op_phrase)
+                            break
+                    tok_i += 1
+
+                if ops_not_found:
+                    count_not_found += 1
+                    # print(sentence)
+                    # print(ops_not_found)
+                    # print(tokens)
+                    # print('\n\n')
+
+                # print([tok + ': ' + tag for tok, tag in zip(tokens, tags)])
+                # print(op_words_sorted)
+                # print('\n\n')
+
+            if asp_indices:
+                curr_asp = 0
+                inside_aspect = False
+                for i, (tok_start, tok_end) in enumerate(tok_indices):
+                    if curr_asp == len(asp_indices):
+                        break
+                    if inside_aspect:
+                        tags[i] = 'I-ASP'
+                    elif tok_start == asp_indices[curr_asp][0]:
+                        inside_aspect = True
+                        tags[i] = 'B-ASP'
+                    if tok_end == asp_indices[curr_asp][1]:
+                        curr_asp += 1
+                        inside_aspect = False
+        
+            conll_f.write('\n'.join(['\t'.join((_)) for _ in zip(tokens, tags)]) + '\n\n')
+        print(conll_out)
+        print('NOT FOUND: ' + str(count_not_found))
+
+def check_match(tokens, i, op_phrase):
+    if len(tokens) - i >= len(op_phrase):
+        return tuple(tokens[j].lower() for j in range(i, i + len(op_phrase))) == op_phrase
+    return False
+
+def preprocess_laptops_and_restaurants_dai2019_cross_domain(opinion_labels=False):
+    in_base = DATA_DIR / 'Dai2019' / 'semeval'
+    out_base = DATA_DIR / 'conll'
+    out_base += '_op/' if opinion_labels else '/'
+    sets = {'restaurants': ('14', '15'), 'laptops': ('14',)}
+    all_out_dirs = []
+
+    for domain, years in sets.items():
+        all_domain_sents = []
+        for year in years:
+            out_dir = out_base + domain + year + '/'
+            all_out_dirs.append(out_dir)
+            os.makedirs(out_dir, exist_ok=True)
+            for ds in 'train', 'test':
+                ds_path = in_base +  year + '/' + domain + '/' + domain + '_' + ds
+                sent_file = ds_path + '_sents.json'
+                tok_file = ds_path + '_texts_tok_pos.txt'
+                dai2019_single_to_conll_and_raw(sent_file, tok_file, out_dir + ds + '.txt', 
+                    out_dir + 'raw_' + ds + '.txt', opinion_labels)
+
+                with open(sent_file, encoding='utf-8') as sentence_f:
+                    with open(tok_file, encoding='utf-8') as tok_f:
+                        for json_line, tok_line in zip(sentence_f, (line for i, line in enumerate(tok_f) if i % 2 == 1)):
+                            all_domain_sents.append((json_line, tok_line))
+        
+        for split_i in range(NUM_SPLITS):
+            split_num = str(split_i + 1)
+            lt_to_res_dir = out_base + 'laptops_to_restaurants_' + split_num + '/'
+            res_to_lt_dir = out_base + 'restaurants_to_laptops_' + split_num + '/'
+            all_out_dirs.extend([lt_to_res_dir, res_to_lt_dir])
+            os.makedirs(lt_to_res_dir, exist_ok=True)
+            os.makedirs(res_to_lt_dir, exist_ok=True)
+
+            if domain == 'laptops':
+                out_test_dir = res_to_lt_dir
+                out_train_dir = lt_to_res_dir
             else:
-                not_in_cache_idx[i] = len(not_in_cache)
-                not_in_cache.append(text)
+                out_test_dir = lt_to_res_dir
+                out_train_dir = res_to_lt_dir
+            
+            shuffle(all_domain_sents)
+            split = round(0.75 * len(all_domain_sents))
+            train = all_domain_sents[:split]
+            test = all_domain_sents[split:]
+            
+            dai2019_single_to_conll_and_raw([p[0] for p in train], [p[1] for p in train], out_train_dir + 'train.txt', 
+                out_train_dir + 'raw_train.txt', opinion_labels)
+            dai2019_single_to_conll_and_raw([p[0] for p in test], [p[1] for p in test], out_test_dir + 'test.txt', out_test_dir + 'raw_test.txt',
+                opinion_labels)           
 
-        parsed_docs = list(self.nlp.pipe(not_in_cache))
-        res = []
-        for i in range(len(batch)):
-            if i in cached_idx:
-                res.append(cached_idx[i])
-            else:
-                parsed_doc = parsed_docs[not_in_cache_idx[i]]
-                self.parse_cache[batch[i]] = parsed_doc
-                res.append(parsed_doc)
-        return res
+    labels = ['O', 'B-ASP', 'I-ASP']
+    if opinion_labels:
+        labels.extend(['B-OP', 'I-OP'])
+    
+    for dir in all_out_dirs:
+        with open(dir + 'labels.txt', 'w', encoding='utf-8') as labels_f:
+            labels_f.write('\n'.join(labels))
 
-    def pipe(self, word_lists):
-        docs = []
-        for s_batch in tqdm(batcher([' '.join(words) for words in word_lists], n=20)):
-            docs.extend(self.pipe_batch(s_batch))
+def count_phrase_in_token_list(phrase, tokens):
+    phrase_len = len(phrase)
+    spans = []
+    for i in range(len(tokens) - phrase_len + 1):
+        if tokens[i: i + phrase_len] in (phrase , (phrase[:-1] + [phrase[-1] + 's'])):
+            spans.append((i, i + phrase_len))
+    return spans
 
-        res_list = []
-        for doc in docs:
-            sub_toks = [''.join(sub_tok) if len(sub_tok) > 1 else '' for sub_tok in doc.user_data]
-            toks = [t.text for t in doc]
-            pos = [t.tag_ for t in doc]
-            heads = [t.head.i for t in doc]
-            rels = [t.dep_ for t in doc]
-            assert len(toks) == len(sub_toks) == len(pos) == len(heads) == len(rels)
-            res_list.append((toks, pos, sub_toks, heads, rels))
-        return res_list
+def check_term_list(asp_phrases, op_phrases, tokens, i, stat):
+    error = False
+    asp_spans = []
+    op_spans = []
+    for phrase_list in asp_phrases, op_phrases:
+        for phrase in phrase_list:
+            spans = count_phrase_in_token_list(phrase, tokens)
+            count = len(spans)
+            if count == 0:
+                print("Missing " + ' '.join(phrase) + "' in line no. " + str(i + 1))
+                stat['miss'] += 1
+                error = True
+            if count > 1:
+                print("Multiple " + ' '.join(phrase) + "' in line no. " + str(i + 1))
+                # error = True
+                stat['mul'] += 1
+            if count !=1:
+                stat['err'] += 1
+            (asp_spans if phrase_list is asp_phrases else op_spans).extend(spans)
 
-def batcher(iterable, n=1):
-    iter_len = len(iterable)
-    for ndx in range(0, iter_len, n):
-        yield iterable[ndx: min(ndx + n, iter_len)]
+    if error:
+        print('Aspects:', asp_phrases)
+        print('Opinions:', op_phrases)
+        print(' '.join(tokens), '\n')
+    return asp_spans, op_spans
 
-def conll_iter(f):
-    toks, labels = [], []
-    for line in f:
-        line = line.strip()
-        if not line:
-            yield tuple(toks), tuple(labels)
-            toks, labels = [], []
+def wang_spans_to_conll_sentence(tokens, asp_spans, op_spans):
+    labels = ['O' for t in tokens]
+
+    for spans in asp_spans, op_spans:
+        for span in spans:
+            labels[span[0]] = 'B-ASP' if spans is asp_spans else 'B-OP'
+            for i in range(span[0] + 1, span[1]):
+                labels[i] = 'I-ASP' if spans is asp_spans else 'I-OP'
+    
+    return '\n'.join(([t + '\t' + l for t, l in zip(tokens, labels)])) + '\n\n'
+
+def wang2018_single_to_conll(data_dir, text_op_file, asp_pol_file):
+    all_tokens = []
+    all_opinions = []
+    conll_sents = []
+    with open(data_dir + text_op_file, encoding='utf-8') as sent_op_f:
+        for line in sent_op_f:
+            text_op = line.strip().split('##')
+            assert len(text_op) in (1, 2)
+            tokens = text_op[0].split()
+            opinions = [op_pol.strip(' +-1.,').split() for op_pol in text_op[1].split(' ')] if len(text_op) == 2 else []
+            all_tokens.append(tokens)
+            all_opinions.append([ops for ops in opinions if ops])
+    
+    all_aspects = []
+    with open(data_dir + asp_pol_file, encoding='utf-8') as asp_pol_f:
+        for line in asp_pol_f:
+            aspects = [asp_pol.split(':')[0].strip().split() for asp_pol in line.strip().split(',')] if line != 'NIL\n' else []
+            all_aspects.append(aspects)
+    
+    stat = {'miss': 0, 'mul': 0, 'err': 0}
+    # with open(data_dir + conll_out, 'w') as out_conll:
+    for i, (tokens, aspects, opinions) in enumerate(zip(all_tokens, all_aspects, all_opinions)):
+        asp_spans, op_spans = check_term_list(aspects, opinions, tokens, i, stat)
+        conll_sentence = wang_spans_to_conll_sentence(tokens, asp_spans, op_spans)
+        # out_conll.write(conll_sentence)
+        conll_sents.append(conll_sentence)
+            
+    print("\nMissing", stat['miss'])
+    print("Multiple", stat['mul'])
+    print('Erroneus lines', stat['err'])
+    return conll_sents
+
+def get_all_sentences_of_domain(data_dir, domain, years):
+    semeval_in_base = data_dir + '/Dai2019/semeval'
+    out_base = 'nlp_architect/models/absa_neural/data/conll_op/'
+    all_domain_sents = []
+    for year in years:
+        out_dir = out_base + domain + year + '/'
+        os.makedirs(out_dir, exist_ok=True)
+        for ds in 'train', 'test':
+            ds_path = semeval_in_base +  year + '/' + domain + '/' + domain + '_' + ds
+            sent_file = ds_path + '_sents.json'
+            tok_file = ds_path + '_texts_tok_pos.txt'
+            with open(sent_file, encoding='utf-8') as sentence_f:
+                with open(tok_file, encoding='utf-8') as tok_f:
+                    for json_line, tok_line in zip(sentence_f, (line for i, line in enumerate(tok_f) if i % 2 == 1)):
+                        all_domain_sents.append((json_line, tok_line))
+    return all_domain_sents
+
+def preprocess_wang2018(data_dir, device_text_op_file, device_asp_pol_file, domain_b, domain_years):
+    out_base = DATA_DIR / 'conll'
+    sets = {domain_b: domain_years, 'device': None}
+
+    all_out_dirs = []
+    for domain, years in sets.items():
+        if years:
+            all_domain_sents = get_all_sentences_of_domain(data_dir, domain, years)
         else:
-            split = line.split('\t')
-            labels.append(split[1])
-            toks.append(split[0])
+            all_domain_sents = wang2018_single_to_conll(data_dir, device_text_op_file, device_asp_pol_file)
 
-def parse_file(txt_path, spacy_bert_tok, overwrite=True):
-    out_path = txt_path[:-4].replace('conll', 'csv') + '.csv'
-    os.makedirs(Path(out_path).parent, exist_ok=True)
+        for split_i in range(NUM_SPLITS):
+            split_num = str(split_i + 1)
+            domain_to_device_dir = out_base + domain_b + '_to_device_' + split_num + '/'
+            device_to_domain_dir = out_base + 'device_to_' + domain_b + '_' + split_num + '/'
+            all_out_dirs.extend([device_to_domain_dir, device_to_domain_dir])
+            os.makedirs(device_to_domain_dir, exist_ok=True)
+            os.makedirs(domain_to_device_dir, exist_ok=True)
 
-    if overwrite or not os.path.exists(out_path):
-        with open(txt_path) as input_f:
-            space_tok_reviews = []
-            reviews_tok_labels = []
-            for toks, labels in conll_iter(input_f):
-                space_tok_reviews.append(toks)
-                reviews_tok_labels.append(labels)
+            if domain == 'device':
+                out_test_dir = domain_to_device_dir
+                out_train_dir = device_to_domain_dir
+            else:
+                out_test_dir = device_to_domain_dir
+                out_train_dir = domain_to_device_dir
+            
+            shuffle(all_domain_sents)
+            split = round(0.75 * len(all_domain_sents))
+            train = all_domain_sents[:split]
+            test = all_domain_sents[split:]
+            
+            if years:
+                dai2019_single_to_conll_and_raw([p[0] for p in train], [p[1] for p in train], out_train_dir + 'train.txt', 
+                    out_train_dir + 'raw_train.txt', opinion_labels=True)
+                dai2019_single_to_conll_and_raw([p[0] for p in test], [p[1] for p in test], out_test_dir + 'test.txt', out_test_dir + 'raw_test.txt',
+                    opinion_labels=True)           
+            else:
+                with open(out_train_dir + 'train.txt', 'w') as f:
+                    f.write('\n'.join(train) + '\n')
+                with open(out_test_dir + 'test.txt', 'w') as f:
+                    f.write('\n'.join(test) + '\n')
 
-            with open(out_path, 'w') as csv_file:
-                writer = csv.writer(csv_file)
-                parsed_reviews = spacy_bert_tok.pipe(space_tok_reviews)
-                for word_list, parsed_review, labels in \
-                    zip(space_tok_reviews, parsed_reviews, reviews_tok_labels):
-                    toks = parsed_review[0]
-                    assert len(toks) == len(labels)
-                    assert tuple(toks) == word_list
-                    for tok, pos_tag, sub_tok, head, rel, label in zip(*parsed_review, labels):
-                        writer.writerow([tok, label, head, rel, pos_tag, sub_tok])
-                    writer.writerow(['_'] * 6)
-                    writer.writerow(['_'] * 6)
-                    # binary_heads = add_sub_tokens(binarize(heads), bert_sub_toks)
-                    # assert binary_heads.shape[0] == binary_heads.shape[1]
-                    # heads_list.append(binary_heads)
-                # np.savez(txt_path[:-4] + '_spacy_heads.npz', *heads_list)
+    for out_dir in all_out_dirs:
+        with open(out_dir + 'labels.txt', 'w', encoding='utf-8') as labels_f:
+            labels_f.write('\n'.join(['O', 'B-ASP', 'I-ASP', 'B-OP', 'I-OP']))
 
-# def add_sub_tokens(preds, sub_tokens, zero_sub_tokens=False):
-#     for i in range(len(sub_tokens) - 1, -1, -1):
-#         for _ in range(1, len(sub_tokens[i])):
-#             if zero_sub_tokens:
-#                 sub_token_row = [0 for _ in preds[i]]
-#             else:
-#                 sub_token_row = preds[i].copy()
-#             preds.insert(i + 1, sub_token_row)
+def preprocess_devices_wang2018_cross_domain(data_dir, device_text_op_file, device_asp_pol_file):
+    for domain, years in [('restaurants', ('14', '15')), ('laptops', ('14',))]:
+        preprocess_wang2018(data_dir, device_text_op_file, device_asp_pol_file, domain, years)
 
-#     for row in preds:
-#         # zero [CLS] (ROOT) column?
-#         for i in range(len(sub_tokens) - 1, -1, -1):
-#             for _ in range(1, len(sub_tokens[i])):
-#                 row.insert(i + 2, 0)
-
-#     # insert zeros row for [CLS] token
-#     preds.insert(0, [0] * (len(preds) + 1))
-#     return np.array(preds)
-
-# def binarize(preds):
-#     res = []
-#     for pred in preds:
-#         res.append([1 if i == pred else 0 for i in range(len(preds) + 1)])
-#     return res
-
-class ModifiedBertTokenizer(BertTokenizer):
-    def __init__(self, *args, **kwargs):
-        # kwargs['do_lower_case'] = False
-        super(ModifiedBertTokenizer, self).__init__(*args, **kwargs)
-
-    def tokenize(self, text, **kwargs):
-        """ Converts a string in a sequence of tokens (string), using the tokenizer.
-            Split in words for word-based vocabulary or sub-words for sub-word-based
-            vocabularies (BPE/SentencePieces/WordPieces).
-
-            Take care of added tokens.
-        """
-        def split_on_tokens(tok_list, text, res_toks=None):
-            if not text:
-                return []
-            if not tok_list:
-                return self._tokenize(text, **kwargs)
-            tok = tok_list[0]
-            split_text = text.split(tok)
-            if res_toks is not None:
-                res_toks.extend(split_text)
-            sub_tokens = sum((split_on_tokens(tok_list[1:], sub_text.strip()) + [tok] \
-                        for sub_text in split_text), [])[:-1]
-            return sub_tokens
-
-        added_tokens = list(self.added_tokens_encoder.keys()) + self.all_special_tokens
-        tokens = []
-        sub_tokens = split_on_tokens(added_tokens, text, tokens)
-        return tokens, sub_tokens
-
-class Tokenizer:
-    def __init__(self, vocab, bert_tokenizer):
-        self.vocab = vocab
-        self.bert_tokenizer = bert_tokenizer
-
-    def __call__(self, text):
-        res = []
-        words = text.split()
-        sub_tokens = []
-        for word in words:
-            bert_token, sub_tok = self.bert_tokenizer.tokenize(word)
-            sub_tokens.append(sub_tok)
-            res.extend(bert_token)
-        # All tokens 'own' a subsequent space character in this tokenizer
-        spaces = [True] * len(words)
-        doc = Doc(vocab=self.vocab, words=res, spaces=spaces)
-        doc.user_data = sub_tokens
-        return doc
-
-def parse_cross_domain_settings(domains: list, overwrite=True):
-    spacy_bert_tok = SpacyWithBertTokenizer()
-
-    for domain_a, domain_b in permutations(domains, r=2):
-        print('Setting: ' + domain_a + ' to ' + domain_b)
-        for split in ['1', '2', '3']:
-            for ds in tqdm(['train', 'test', 'dev']):
-                ds_file = str(DATA_DIR / f'{domain_a}_to_{domain_b}_{split}' / f'{ds}.txt')
-                print(ds_file)
-                parse_file(ds_file, spacy_bert_tok, overwrite=overwrite)
 
 if __name__ == "__main__":
-    parse_cross_domain_settings(domains=['restaurants', 'laptops', 'device'], overwrite=False)
+    preprocess_laptops_and_restaurants_dai2019_cross_domain(opinion_labels=True)
+    preprocess_devices_wang2018_cross_domain(DATA_DIR, 'Wang2018/addsenti_device.txt', 'Wang2018/aspect_op_device.txt')
