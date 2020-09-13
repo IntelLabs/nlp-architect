@@ -8,6 +8,7 @@ import spacy
 from spacy.tokens import Doc
 
 CONLL_DIR = Path(os.path.realpath(__file__)).parent / 'data' / 'conll'
+DOMAINS_DIR = CONLL_DIR / 'domains_all'
 
 class SpacyWithBertTokenizer:
     def __init__(self):
@@ -154,7 +155,7 @@ class Tokenizer:
         doc.user_data = sub_tokens
         return doc
 
-def parse_cross_domain_settings(domains: list, splits=3, modes=('train', 'dev', 'test'), overwrite=True):
+def parse_cross_domain(domains: list, splits=3, modes=('train', 'dev', 'test'), overwrite=True):
     spacy_bert_tok = SpacyWithBertTokenizer()
 
     for domain_a, domain_b in permutations(domains, r=2):
@@ -165,6 +166,15 @@ def parse_cross_domain_settings(domains: list, splits=3, modes=('train', 'dev', 
                 print(ds_file)
                 parse_file(ds_file, spacy_bert_tok, overwrite=overwrite)
 
+def parse_in_domain(domains: list):
+    spacy_bert_tok = SpacyWithBertTokenizer()
+
+    for domain in tqdm(domains):
+        ds_file = str(DOMAINS_DIR / f'{domain}.txt')
+        print('File: ' + ds_file)
+        parse_file(ds_file, spacy_bert_tok)
+
 if __name__ == "__main__":
-    parse_cross_domain_settings(domains=['restaurants', 'laptops', 'device'], overwrite=True)
+    # parse_cross_domain(domains=['restaurants', 'laptops', 'device'], overwrite=True)
+    parse_in_domain(domains=['restaurants', 'laptops', 'device'])
     # parse_cross_domain_settings(domains=['restaurants', 'laptops'], splits=1, modes=['dev'], overwrite=True)
