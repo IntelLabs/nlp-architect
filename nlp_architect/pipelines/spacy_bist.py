@@ -162,7 +162,7 @@ def _download_pretrained_model():
         zip_path = SpacyBISTParser.dir / "bist-pretrained.zip"
         makedirs(SpacyBISTParser.dir, exist_ok=True)
         download_unlicensed_file(
-            "https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/dep_parse/",
+            "https://d2zs9tzlek599f.cloudfront.net/models/dep_parse/",
             "bist-pretrained.zip",
             zip_path,
         )

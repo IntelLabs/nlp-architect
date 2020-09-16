@@ -85,13 +85,13 @@ class MachineComprehensionApi(AbstractApi):
             if self.prompt is True:
                 license_prompt(
                     "mrc_data",
-                    "https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/mrc"
+                    "https://d2zs9tzlek599f.cloudfront.net/models/mrc"
                     "/mrc_data.zip",
                     self.data_dir,
                 )
                 license_prompt(
                     "mrc_model",
-                    "https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/mrc"
+                    "https://d2zs9tzlek599f.cloudfront.net/models/mrc"
                     "/mrc_model.zip",
                     self.model_dir,
                 )
@@ -100,12 +100,12 @@ class MachineComprehensionApi(AbstractApi):
             makedirs(self.data_dir, exist_ok=True)
             makedirs(self.model_dir, exist_ok=True)
             download_unlicensed_file(
-                "https://s3-us-west-2.amazonaws.com/nlp-architect-data" "/models/mrc/",
+                "https://d2zs9tzlek599f.cloudfront.net" "/models/mrc/",
                 "mrc_data.zip",
                 data_zipfile,
             )
             download_unlicensed_file(
-                "https://s3-us-west-2.amazonaws.com/nlp-architect-data" "/models/mrc/",
+                "https://d2zs9tzlek599f.cloudfront.net" "/models/mrc/",
                 "mrc_model.zip",
                 model_zipfile,
             )

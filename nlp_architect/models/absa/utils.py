@@ -37,7 +37,7 @@ def _download_pretrained_rerank_model(rerank_model_full_path):
         makedirs(rerank_model_dir, exist_ok=True)
         print("dowloading pre-trained reranking model..")
         download_unlicensed_file(
-            "https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/" "absa/",
+            "https://d2zs9tzlek599f.cloudfront.net/models/" "absa/",
             "rerank_model.h5",
             rerank_model_full_path,
         )

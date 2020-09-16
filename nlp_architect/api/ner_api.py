@@ -72,12 +72,12 @@ class NerApi(AbstractApi):
                 if agreed is False:
                     sys.exit(0)
             download_unlicensed_file(
-                "https://s3-us-west-2.amazonaws.com/nlp-architect-data" "/models/ner/",
+                "https://d2zs9tzlek599f.cloudfront.net" "/models/ner/",
                 "model_v4.h5",
                 self.pretrained_model,
             )
             download_unlicensed_file(
-                "https://s3-us-west-2.amazonaws.com/nlp-architect-data" "/models/ner/",
+                "https://d2zs9tzlek599f.cloudfront.net" "/models/ner/",
                 "model_info_v4.dat",
                 self.pretrained_model_info,
             )
