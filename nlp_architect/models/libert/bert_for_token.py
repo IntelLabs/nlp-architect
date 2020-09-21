@@ -116,18 +116,6 @@ class BertForToken(pl.LightningModule):
                 log.debug("Saving features into cached file %s", cached_features_file)
                 torch.save(features, cached_features_file)
 
-    # def get_parse_data(self, mode):
-    #     parse_type = '_head_probs.npz' if self.hparams.parse_probs else '_heads.npz'
-    #     if self.hparams.relation == "_merged" and self.hparams.parse_probs:
-    #         parse_type = '_probs.npz'
-    #     if self.hparams.relation:
-    #         parse_type = '_' + self.hparams.relation + parse_type
-    #     if self.hparams.spacy:
-    #         parse_type = '_spacy' + parse_type
-    #     parses_file = self.hparams.data_dir / (mode + parse_type)
-    #     parse_data = np.load(parses_file, allow_pickle=True)
-    #     return parse_data
-
     def load_dataset(self, mode, batch_size):
         "Load datasets. Called after prepare data."
         cached_features_file = self._feature_file(mode)
@@ -145,9 +133,12 @@ class BertForToken(pl.LightningModule):
         tensors = [all_input_ids, all_attention_mask, all_token_type_ids, all_label_ids]
 
         if self.model_type is LiBertForToken:
-            #### Attatch dependency parse info ###
+            #### Attatch syntactic info ###
             dep_heads = torch.tensor([f.dep_heads for f in features], dtype=torch.float)
             tensors.append(dep_heads)
+
+            syn_rels = torch.tensor([f.syn_rels for f in features], dtype=torch.long)
+            tensors.append(syn_rels)
 
         shuffle = mode == 'train'
         return DataLoader(TensorDataset(*tensors), batch_size=batch_size, shuffle=shuffle,
@@ -158,7 +149,9 @@ class BertForToken(pl.LightningModule):
         inputs = {"input_ids": batch[0], "attention_mask": batch[1], "token_type_ids": batch[2],
                   "labels": batch[3]}
         if len(batch) >= 5:
-            inputs["parse"] = batch[4]
+            inputs["syn_heads"] = batch[4]
+        if len(batch) >= 6:
+            inputs["syn_rels"] = batch[5]
         return inputs
 
     def training_step(self, batch, _):
