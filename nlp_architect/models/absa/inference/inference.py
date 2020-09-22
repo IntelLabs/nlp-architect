@@ -105,8 +105,8 @@ class SentimentInference:
         return sentiment_doc
 
     def run_multiple(self, data: Union[str, PathLike] = None, parsed_data: Union[str, PathLike] = None,
-            out_dir: Union[str, PathLike] = INFERENCE_OUT):
-            
+                     out_dir: Union[str, PathLike] = INFERENCE_OUT):
+        
         if not parsed_data:
             if not self.parser:
                 raise RuntimeError("Parser not initialized (try parse=True at init)")

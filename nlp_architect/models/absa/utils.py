@@ -59,8 +59,7 @@ def _walk_directory(directory: Union[str, PathLike], yield_fname=True):
                         yield doc_text
 
 
-def parse_docs(parser, docs: Union[str, PathLike], out_dir: Union[str, PathLike] = None,
-               show_tok=True, show_doc=True):
+def parse_docs(parser, docs: Union[str, PathLike], out_dir: Union[str, PathLike] = None):
     if isinstance(docs, (list, GeneratorType)):
         doc_stream = (doc for doc in docs)
     elif isdir(docs):

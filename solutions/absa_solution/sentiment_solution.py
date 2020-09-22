@@ -18,13 +18,13 @@ import json
 from os import PathLike
 from os.path import isdir
 from typing import Optional
+import csv
+import re
+from abc import abstractmethod
 
 import numpy as np
 import pandas as pd
 from tqdm import tqdm
-import csv
-import re
-from abc import abstractmethod
 
 from nlp_architect import LIBRARY_OUT
 from nlp_architect.common.core_nlp_doc import CoreNLPDoc
@@ -47,7 +47,7 @@ from nlp_architect.utils.io import (
 SENTIMENT_OUT = LIBRARY_OUT / "absa_solution"
 
 
-class Anonymiser(object):
+class Anonymiser:
     """Abstract class for anonymiser algorithm, intended for privacy keeping."""
 
     @abstractmethod
@@ -100,7 +100,7 @@ def _ui_format(sent: SentimentSentence, doc: SentimentDoc) -> str:
     return text
 
 
-class SentimentSolution(object):
+class SentimentSolution:
     """Main class for executing Sentiment Solution pipeline.
 
     Args:
