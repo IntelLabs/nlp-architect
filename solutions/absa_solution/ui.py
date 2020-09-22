@@ -443,8 +443,7 @@ def _create_ui_components() -> (Figure, ColumnDataSource):  # pylint: disable=to
 
     # pylint: disable=unused-argument
     def txt_status_callback(attr, old, new):
-        print("Previous label: " + old)
-        print("Updated label: " + new)
+        print("Status: " + new)
 
     text_status.on_change("value", txt_status_callback)
 

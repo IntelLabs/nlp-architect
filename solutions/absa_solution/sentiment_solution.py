@@ -132,23 +132,18 @@ class SentimentSolution(object):
             with open(inference_results, encoding="utf-8") as f:
                 results = json.loads(f.read(), object_hook=SentimentDoc.decoder)
         elif data or parsed_data:
-            inference = SentimentInference(aspect_lex, opinions, parse=False)
-            parse = None
-            if not parsed_data:  # source data is raw text, need to parse
-                from nlp_architect.pipelines.spacy_bist import SpacyBISTParser
-
-                parse = SpacyBISTParser().parse
-
+            inference = SentimentInference(aspect_lex, opinions)
+            parsed = parsed_data is not None
             results = {}
-            print("Running inference on data files... (Iterating data files)")
+            print('Running inference on data files... (Iterating data files)')
             data_source = parsed_data if parsed_data else data
             for file, doc in self._iterate_docs(data_source):
-                parsed_doc = (
-                    parse(doc) if parse else json.loads(doc, object_hook=CoreNLPDoc.decoder)
-                )
+                parsed_doc = inference.parser.parse([doc])[0] if parsed \
+                    else json.loads(doc, object_hook=CoreNLPDoc.decoder)
                 sentiment_doc = inference.run(parsed_doc=parsed_doc)
                 if sentiment_doc:
                     results[file] = sentiment_doc
+
             with open(SENTIMENT_OUT / "inference_results.json", "w", encoding="utf-8") as f:
                 json.dump(results, f, cls=SentimentDocEncoder, indent=4, sort_keys=True)
         else:
@@ -166,8 +161,8 @@ class SentimentSolution(object):
     @staticmethod
     def _iterate_docs(data: PathLike) -> tuple:
         if isdir(data):
-            for file, doc_text in tqdm(list(walk_directory(data))):
-                yield file, doc_text
+            for f, doc_text in tqdm(list(walk_directory(data))):
+                yield f, doc_text
         else:
             with open(data, encoding="utf-8") as f:
                 for i, doc_text in tqdm(enumerate(f), total=line_count(data)):

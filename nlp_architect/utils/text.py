@@ -233,7 +233,6 @@ class SpacyInstance:
         return [doc for batch in executor(tasks) for doc in batch]
 
     def process_batch(self, texts, output_dir=None, batch_id=0):
-        print("Processing batch", batch_id)
         parsed_docs = []
         for i, doc in enumerate(self.parser.pipe(texts)):
             parsed_doc = doc if self.spacy_doc else \
@@ -243,7 +242,6 @@ class SpacyInstance:
                 out_path = Path(output_dir) / ("{}.{}.json".format(batch_id, i))
                 with open(out_path, "w", encoding="utf8") as f:
                     f.write(parsed_doc.pretty_json())
-        print("Batch {} Done".format(batch_id))
         return parsed_docs
 
     def tokenize(self, text: str) -> List[str]:
