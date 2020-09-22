@@ -29,6 +29,7 @@ from absa_utils import load_config, set_as_latest, write_summary_tables, pretty_
 from significance import significance_from_cfg
 from trainer import get_logger, get_trainer, log_model_and_version
 from contextlib import redirect_stdout, redirect_stderr
+from torch.cuda import device_count
 import ray
 
 LIBERT_DIR = Path(realpath(__file__)).parent
@@ -79,10 +80,38 @@ def run_data(task_idx, cfg_yaml, time, rnd_init, data, log_dir, metric):
                 return model_str, exp_id
 
 def main(config_yaml):
-    ray.init()
-    
     # Init: config, experiment id, logging
     cfg = load_config(config_yaml)
+
+    # Determining num gpus requested 
+    if isinstance(cfg.gpus, list):
+        num_gpus_req = len(cfg.gpus)
+        cfg.gpus = [str(gpu_id) for gpu_id in cfg.gpus]
+        gpu_id_list = ",".join(cfg.gpus)
+    elif isinstance(cfg.gpus, int):
+        num_gpus_req = cfg.gpus
+        cfg.gpus = [str(gpu_id) for gpu_id in range(cfg.gpus)]
+        gpu_id_list = ",".join(cfg.gpus)
+    else:
+        print("Unrecognized GPU configuration.")
+        exit()
+
+    # Making sure there are enough GPUs on the system
+    num_gpus_avail = device_count()
+    assert num_gpus_req <= num_gpus_avail, f"Requested {num_gpus_req} GPUs, only {num_gpus_avail} available."
+
+    # Setting GPU visibility
+    os.environ["CUDA_VISIBLE_DEVICES"] = gpu_id_list
+
+    # Parallel: each experiment runs on a single GPU
+    if cfg.parallel:
+        ray.init(num_gpus=num_gpus_req)
+    
+    # Sequential: run each experiemnt in turn (on all gpus)
+    else:
+        ray.init(num_gpus=num_gpus_req, local_mode=True)
+
+    # Setting up log dir
     time_now = pretty_datetime()
     exp_id = time_now + cfg.tag
     log_dir = LOG_ROOT / exp_id
@@ -90,22 +119,16 @@ def main(config_yaml):
     os.makedirs(tasks_log_dir, exist_ok=True)
     open(log_dir / 'time.log', 'w').write(f'{time_now}\n')
     set_as_latest(log_dir)
+
+    # Setting up run configurations
     run_list = product(cfg.base_init, cfg.data)
     args_list = []
     for task_idx, (rnd_init, data) in enumerate(run_list):
         args = task_idx, config_yaml, exp_id, rnd_init, data, log_dir, cfg.metric
         args_list.append(args)
 
-    # Parallel: each experiment runs on a single GPU
-    if cfg.parallel:
-        ray_options = {"num_gpus": 1}
-
-    # Sequential: run each experiemnt in turn (on all gpus)
-    else:
-        ray_options = {"num_gpus": len(ray.get_gpu_ids())}
-
     # Launching Ray tasks
-    futures = [run_data.options(**ray_options).remote(*args) for args in args_list]
+    futures = [run_data.options(num_gpus=1).remote(*args) for args in args_list]
     ray.get(futures)
 
     post_analysis(cfg, log_dir, exp_id)
