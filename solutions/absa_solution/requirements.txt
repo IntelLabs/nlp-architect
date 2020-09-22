@@ -1,4 +1,5 @@
 pandas==0.24.2
 bokeh==1.2.0
 spacy==2.1.4
-joblib
+joblib==0.16.0
+dynet==2.1
