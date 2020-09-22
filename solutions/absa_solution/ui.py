@@ -39,7 +39,7 @@ from nlp_architect import LIBRARY_ROOT
 from nlp_architect.models.absa import LEXICONS_OUT
 from nlp_architect.models.absa.train.acquire_terms import AcquireTerms
 from nlp_architect.models.absa.train.train import TrainSentiment
-from sentiment_solution import SENTIMENT_OUT, SentimentSolution
+from ..solutions.absa_solutions.sentiment_solutions import SENTIMENT_OUT, SentimentSolution
 
 SOLUTION_DIR = join(LIBRARY_ROOT, "solutions/absa_solution/")
 POLARITIES = ("POS", "NEG")
