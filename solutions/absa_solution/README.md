@@ -54,7 +54,7 @@ source absa_env/bin/activate
 - **Clone and install**:
 
 ```bash
-git clone --branch absa https://github.com/NervanaSystems/nlp-architect.git
+git clone https://github.com/NervanaSystems/nlp-architect.git
 pip install -U pip
 pip install -e nlp-architect
 pip install -r nlp-architect/nlp_architect/solutions/absa_solution/requirements.txt
