@@ -35,14 +35,14 @@ from bokeh.transform import dodge
 from bokeh.core.properties import value
 from tornado.web import StaticFileHandler
 
-from nlp_architect import LIBRARY_PATH
+from nlp_architect import LIBRARY_ROOT
 from nlp_architect.models.absa import LEXICONS_OUT
 from nlp_architect.models.absa.train.acquire_terms import AcquireTerms
 from nlp_architect.models.absa.train.train import TrainSentiment
 from nlp_architect.models.absa.inference.data_types import SentimentDoc, SentimentSentence
 from sentiment_solution import SENTIMENT_OUT, SentimentSolution
 
-SOLUTION_DIR = join(LIBRARY_PATH, "solutions/absa_solution/")
+SOLUTION_DIR = join(LIBRARY_ROOT, "solutions/absa_solution/")
 POLARITIES = ("POS", "NEG")
 
 
