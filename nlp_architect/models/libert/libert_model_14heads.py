@@ -39,6 +39,7 @@ class LiBertConfig(BertConfig):
         self.duplicated_rels = hparams.duplicated_rels
         self.transpose = hparams.transpose
         self.li_layers = hparams.li_layers
+        self.fourteen_head = hparams.fourteen_head
 
 class LiBertForToken(BertForTokenClassification):
     def __init__(self, config):
@@ -261,14 +262,15 @@ class LiBertSelfAttention(BertSelfAttention):
             self.extra_key = nn.Linear(config.hidden_size, self.attention_head_size)
             self.extra_value = nn.Linear(config.hidden_size, self.attention_head_size)
             self.random_init(self.extra_query, self.extra_key, self.extra_value)
-            
+           
+            # --- head14 change ---
             # add 14th head (dep->head)
             if (self.fourteen_head == True):
                 self.num_attention_heads = 14
                 self.fourteen_query = nn.Linear(config.hidden_size, self.attention_head_size)
                 self.fourteen_key = nn.Linear(config.hidden_size, self.attention_head_size)
                 self.fourteen_value = nn.Linear(config.hidden_size, self.attention_head_size)
-                self.random_init(self.fourteen_query, self.fourteen_key, self.fourteen_value)
+                self.random_init(self.fourteen_query, self.fourteen_key, self.fourteen_value)                
 
     def random_init(self, query, key, value):
         nn.init.normal_(query.weight.data, mean=0, std=0.02)
@@ -281,7 +283,7 @@ class LiBertSelfAttention(BertSelfAttention):
 
     def forward(self, hidden_states, attention_mask=None, head_mask=None,
                 encoder_hidden_states=None, encoder_attention_mask=None,
-                output_attentions=False, head_probs=None):
+                output_attentions=False, head_probs=None):       
         if head_probs is not None:
             self.all_head_size = self.num_attention_heads * self.attention_head_size            
             mixed_query_layer = torch.cat((self.query(hidden_states), self.extra_query(hidden_states)),2)
@@ -320,22 +322,38 @@ class LiBertSelfAttention(BertSelfAttention):
             original_12head_attn_scores = original_12head_attn_scores + attention_mask
             original_12head_attn_probs = nn.Softmax(dim=-1)(original_12head_attn_scores)
 
-            
+            # --- head14 change ---
             #extra_head_attn = attention_scores[:,self.orig_num_attention_heads,:,:] 
-            extra_head_attn = attention_scores[:,self.orig_num_attention_heads:self.orig_num_attention_heads+1,:,:] 
-            fourteen_head_attn = attention_scores[:,self.orig_num_attention_heads+1,:,:] 
+            extra_head_attn = attention_scores[:,self.orig_num_attention_heads:self.orig_num_attention_heads+1,:,:]
+
+            if (self.fourteen_head == True): 
+                fourteen_head_attn = attention_scores[:,self.orig_num_attention_heads+1:,:,:] 
+
+             # --- head14 change end ---
+
             head_probs_norm = head_probs_norm*8+ attention_mask.squeeze(1)
-            # ------------ until here ------------
+           
                     
             if self.replace_final is False: 
                 if self.transpose == True:                
                     head_probs_norm = head_probs_norm.transpose(-1, -2)                   
 
-                extra_head_scaled_attn = ((extra_head_attn *8) * head_probs_norm).unsqueeze(1)       
+                #extra_head_scaled_attn = ((extra_head_attn *8) * head_probs_norm).unsqueeze(1)  
+                extra_head_scaled_attn = ((extra_head_attn *8) * head_probs_norm.unsqueeze(1))            
                 extra_head_scaled_attn = extra_head_scaled_attn + attention_mask
                 extra_head_scaled_attn_probs = nn.Softmax(dim=-1)(extra_head_scaled_attn)
                 attention_probs = torch.cat((original_12head_attn_probs, extra_head_scaled_attn_probs), 1)
            
+                # --- head14 change ---
+                if (self.fourteen_head == True): 
+                    head_probs_norm_transposed = head_probs_norm.transpose(-1, -2)   
+                    #fourteen_head_scaled_attn = ((fourteen_head_attn *8) * head_probs_norm_transposed).unsqueeze(1)     
+                    fourteen_head_scaled_attn = ((fourteen_head_attn *8) * head_probs_norm_transposed.unsqueeze(1))    
+                    fourteen_head_scaled_attn = fourteen_head_scaled_attn + attention_mask
+                    fourteen_head_scaled_attn_probs = nn.Softmax(dim=-1)(fourteen_head_scaled_attn)
+                    attention_probs = torch.cat((attention_probs, fourteen_head_scaled_attn_probs), 1)
+                # --- head14 change ---
+
             # if self.replace_final is True:
             #     attention_probs = torch.cat((original_12head_attn_probs, ex_head_attention_probs.unsqueeze(1)),1)
 
@@ -373,13 +391,24 @@ class LiBertSelfOutput(BertSelfOutput):
             self.attention_head_size = int(config.hidden_size / self.original_num_attention_heads)
             self.dense_extra_head = nn.Linear(self.attention_head_size, config.hidden_size)
 
+            # ---- 14head addition
+            self.fourteen_head = config.fourteen_head
+            self.dense_fourteen_head = nn.Linear(self.attention_head_size, config.hidden_size)
+
     def forward(self, hidden_states, input_tensor, parse=None):
         if parse is not None:
-            original_hidden_vec_size = self.original_num_attention_heads * self.attention_head_size
-            hidden_states = self.dense(hidden_states[:, :, :original_hidden_vec_size]) + \
+            original_hidden_vec_size = self.original_num_attention_heads * self.attention_head_size                                    
+            if (self.fourteen_head == True): 
+                hidden_states = self.dense(hidden_states[:, :, :original_hidden_vec_size]) + \
+                self.dense_extra_head(hidden_states[:, :, original_hidden_vec_size:original_hidden_vec_size+self.attention_head_size]) + \
+                self.dense_fourteen_head(hidden_states[:, :, original_hidden_vec_size+self.attention_head_size:])    
+            
+            else:
+                hidden_states = self.dense(hidden_states[:, :, :original_hidden_vec_size]) + \
                 self.dense_extra_head(hidden_states[:, :, original_hidden_vec_size:])
                 # add relational embedddings:
                 # + relational_embeddings (shape: config.hidden_size)
+
         else:
             hidden_states = self.dense(hidden_states)
 
