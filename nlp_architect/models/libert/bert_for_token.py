@@ -94,6 +94,9 @@ class BertForToken(pl.LightningModule):
         self.hparams = hparams
         self.sentence_metrics = None
 
+        # self.example_input_array = {"input_ids": torch.zeros(64), "attention_mask": torch.zeros(64), "token_type_ids": torch.zeros(64),
+        #           "labels": torch.zeros(64), "syn_heads": torch.zeros(64, 64), "syn_rels": torch.zeros(64)}
+
     def forward(self, **inputs):
         return self.model(**inputs)
 

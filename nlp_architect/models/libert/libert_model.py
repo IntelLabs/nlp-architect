@@ -25,6 +25,7 @@ torch.multiprocessing.set_sharing_strategy('file_system')
 from transformers.modeling_bert import BertEncoder, BertLayer, \
         BertAttention, BertSelfAttention, BertSelfOutput, BertConfig
 from transformers import BertForTokenClassification, BertModel
+from pytorch_lightning import _logger as log
 
 class LiBertConfig(BertConfig):
     def __init__(self, **kwargs):
@@ -39,6 +40,7 @@ class LiBertConfig(BertConfig):
         self.duplicated_rels = hparams.duplicated_rels
         self.transpose = hparams.transpose
         self.li_layers = hparams.li_layers
+        self.use_syntactic_rels = hparams.use_syntactic_rels
 
 class LiBertForToken(BertForTokenClassification):
     def __init__(self, config):
@@ -164,7 +166,10 @@ class LiBertModel(BertModel):
 class LiBertEncoder(BertEncoder):
     def __init__(self, config):
         super(LiBertEncoder, self).__init__(config)
-        self.layer = nn.ModuleList([LiBertLayer(config, layer_num) for \
+        syn_rel_embedding = nn.Embedding(52, 64, padding_idx=0)
+        syn_rel_embedding.weight.requires_grad = False
+
+        self.layer = nn.ModuleList([LiBertLayer(config, layer_num, syn_rel_embedding) for \
             layer_num in range(config.num_hidden_layers)])
         self.li_layer = config.li_layer
         self.all_layers = config.all_layers
@@ -208,9 +213,9 @@ class LiBertEncoder(BertEncoder):
         return outputs  # last-layer hidden state, (all hidden states), (all attentions)
 
 class LiBertLayer(BertLayer):
-    def __init__(self, config, layer_num):
+    def __init__(self, config, layer_num, syn_rel_embedding):
         super(LiBertLayer, self).__init__(config)
-        self.attention = LiBertAttention(config, layer_num)
+        self.attention = LiBertAttention(config, layer_num, syn_rel_embedding)
 
     def forward(self, hidden_states, attention_mask=None, head_mask=None,
                 encoder_hidden_states=None, encoder_attention_mask=None,
@@ -228,10 +233,10 @@ class LiBertLayer(BertLayer):
         return outputs
 
 class LiBertAttention(BertAttention):
-    def __init__(self, config, layer_num):
+    def __init__(self, config, layer_num, syn_rel_embedding):
         super(LiBertAttention, self).__init__(config)
         self.self = LiBertSelfAttention(config, layer_num)
-        self.output = LiBertSelfOutput(config, layer_num)
+        self.output = LiBertSelfOutput(config, layer_num, syn_rel_embedding)
         self.pruned_heads = set()
 
     def forward(self, hidden_states, attention_mask=None, head_mask=None,
@@ -364,26 +369,65 @@ class LiBertSelfAttention(BertSelfAttention):
         return outputs
 
 class LiBertSelfOutput(BertSelfOutput):
-    def __init__(self, config, layer_num):
+    def __init__(self, config, layer_num, syn_rel_embedding):
         super(LiBertSelfOutput, self).__init__(config)
         if  (layer_num == config.li_layer or config.all_layers is True \
              or layer_num in config.li_layers):
             self.original_num_attention_heads = config.num_attention_heads
             self.attention_head_size = int(config.hidden_size / self.original_num_attention_heads)
-            self.dense_extra_head = nn.Linear(self.attention_head_size, config.hidden_size)
-            self.syn_rel_embedding = nn.Embedding(52, 64, padding_idx=0)
+            self.dense_li_head = nn.Linear(self.attention_head_size, config.hidden_size)
+
+            self.use_syntactic_rels = config.use_syntactic_rels
+            self.syn_rel_layer = syn_rel_embedding
+            self.dense_rel = nn.Linear(self.attention_head_size, config.hidden_size)
 
     def forward(self, hidden_states, input_tensor, syn_heads=None, syn_rels=None):
-        if syn_heads is not None:
-            original_hidden_vec_size = self.original_num_attention_heads * self.attention_head_size
-            syn_rel_embeddings = self.syn_rel_embedding(syn_rels)
-            li_head_output = hidden_states[:, :, original_hidden_vec_size:]
-            li_head_with_syn_rels = li_head_output + syn_rel_embeddings
-            hidden_states = self.dense(hidden_states[:, :, :original_hidden_vec_size]) + \
-                self.dense_extra_head(li_head_with_syn_rels)
-        else:
-            hidden_states = self.dense(hidden_states)
+        #################### With Syntactic Relations ####################
+        if self.use_syntactic_rels:
+            if syn_heads is not None:
+                original_hidden_vec_size = self.original_num_attention_heads * self.attention_head_size
 
-        hidden_states = self.dropout(hidden_states)
-        hidden_states = self.LayerNorm(hidden_states + input_tensor)
+                orig_heads_output = hidden_states[:, :, :original_hidden_vec_size]
+                syn_rel_embeddings = self.syn_rel_layer(syn_rels)
+                li_head_output = hidden_states[:, :, original_hidden_vec_size:]
+
+                for v, v_name in (orig_heads_output, "orig_heads_output"), (syn_rel_embeddings, "syn_rel_embeddings"), \
+                    (li_head_output, "li_head_output"):
+                    log.info(tensor_stats(v, v_name))
+                
+                dense_orig_heads_output = self.dense(orig_heads_output)
+                dense_li_head_output = self.dense_li_head(li_head_output)
+                dense_syn_rel_embeddings = self.dense_rel(syn_rel_embeddings)
+
+                hidden_states = dense_orig_heads_output + \
+                                dense_li_head_output + \
+                                dense_syn_rel_embeddings
+
+                for v, v_name in (dense_orig_heads_output, "dense_orig_heads_output"), \
+                    (dense_li_head_output, "dense_li_head_output"),  (dense_syn_rel_embeddings, "dense_syn_rel_embeddings"):
+                    log.info(tensor_stats(v, v_name))
+
+            else:
+                hidden_states = self.dense(hidden_states)
+
+            hidden_states = self.dropout(hidden_states)
+            hidden_states = self.LayerNorm(hidden_states + input_tensor)
+
+        #################### Without Syntactic Relations ####################
+        else:
+            if syn_heads is not None:
+                original_hidden_vec_size = self.original_num_attention_heads * self.attention_head_size
+                hidden_states = self.dense(hidden_states[:, :, :original_hidden_vec_size]) + \
+                    self.dense_li_head(hidden_states[:, :, original_hidden_vec_size:])
+                    # add relational embedddings:
+                    # + relational_embeddings (shape: config.hidden_size)
+            else:
+                hidden_states = self.dense(hidden_states)
+
+            hidden_states = self.dropout(hidden_states)
+            hidden_states = self.LayerNorm(hidden_states + input_tensor)
+
         return hidden_states
+
+def tensor_stats(a, name):
+    return f"Var: {name}; Shape: {tuple(a.shape)}; [min, max]: [{a.min().item():.4f}, {a.max().item():.4f}]; mean: {a.mean().item():.4f}; median: {a.median().item():.4f}"
