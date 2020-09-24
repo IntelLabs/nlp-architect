@@ -2,7 +2,7 @@ max_epochs: 10
 model_type: libert # bert or libert
 base_init: [true, false]
 
-data: rl lr # # relative to nlp_architect/models/li_bert/data/preprocessed_conll
+data: rl #lr # # relative to nlp_architect/models/li_bert/data/preprocessed_conll
 limit_data: 1.0
 splits: [1, 2, 3]
 seeds: [7]
