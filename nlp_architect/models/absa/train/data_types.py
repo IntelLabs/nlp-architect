@@ -134,9 +134,9 @@ class DepRelation(object):
 
 
 class RelCategory(Enum):
-    SUBJ = {'nsubj', 'nsubjpass', 'csubj', 'csubjpass'}
-    MOD = {'amod', 'acl', 'advcl', 'appos', 'neg', 'nmod'}
-    OBJ = {'dobj', 'iobj', 'obj', 'pobj'}
+    SUBJ = {"nsubj", "nsubjpass", "csubj", "csubjpass"}
+    MOD = {"amod", "acl", "advcl", "appos", "neg", "nmod"}
+    OBJ = {"dobj", "iobj"}
 
 
 class DepRelationTerm(object):

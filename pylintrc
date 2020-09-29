@@ -152,8 +152,7 @@ disable=print-statement,
         c-extension-no-member,
         logging-format-interpolation,
         arguments-differ,
-        not-callable,
-        unnecessary-comprehension
+        not-callable
 
 # Enable the message, report, category or checker with the given id(s). You can
 # either give multiple identifier separated by comma (,) or put this option

@@ -124,8 +124,7 @@ def rule_6(dep_rel, relation_list, text):
         text (str): Sentence text.
     """
     candidate = None
-    if dep_rel.rel.startswith('conj') \
-            and dep_rel.dep.norm_pos in {POS.ADJ, POS.ADV, POS.NN, POS.VB}:
+    if dep_rel.rel in ("conj_and", "conj_but"):
         aspect = expand_aspect(dep_rel.dep, relation_list)
         candidate = CandidateTerm(aspect, dep_rel.gov, text, Polarity.UNK)
     return candidate
@@ -136,7 +135,7 @@ def is_subj_obj_or_mod(rt):
 
 
 def expand_aspect(in_aspect_token, relation_list):
-    """Expand aspect by Looking for a noun word that its gov is the aspect. if it has (noun)
+    """Expand aspect by Looking for a noun word that it's gov is the aspect. if it has (noun)
     compound relation add it to aspect."""
     aspect = DepRelationTerm(
         text=in_aspect_token.text,

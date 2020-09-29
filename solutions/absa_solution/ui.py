@@ -35,13 +35,14 @@ from bokeh.transform import dodge
 from bokeh.core.properties import value
 from tornado.web import StaticFileHandler
 
-from nlp_architect import LIBRARY_ROOT
+from nlp_architect import LIBRARY_PATH
 from nlp_architect.models.absa import LEXICONS_OUT
 from nlp_architect.models.absa.train.acquire_terms import AcquireTerms
 from nlp_architect.models.absa.train.train import TrainSentiment
+from nlp_architect.models.absa.inference.data_types import SentimentDoc, SentimentSentence
 from sentiment_solution import SENTIMENT_OUT, SentimentSolution
 
-SOLUTION_DIR = join(LIBRARY_ROOT, "solutions/absa_solution/")
+SOLUTION_DIR = join(LIBRARY_PATH, "solutions/absa_solution/")
 POLARITIES = ("POS", "NEG")
 
 
@@ -441,7 +442,8 @@ def _create_ui_components() -> (Figure, ColumnDataSource):  # pylint: disable=to
 
     # pylint: disable=unused-argument
     def txt_status_callback(attr, old, new):
-        print("Status: " + new)
+        print("Previous label: " + old)
+        print("Updated label: " + new)
 
     text_status.on_change("value", txt_status_callback)
 
@@ -561,6 +563,22 @@ def _update_events(events: DataTable, in_domain: bool) -> None:
             for pol in POLARITIES
         }
     )
+
+
+def _ui_format(sent: SentimentSentence, doc: SentimentDoc) -> str:
+    """Get sentence as HTML with 4 classes: aspects, opinions, negations and intensifiers."""
+    text = doc.doc_text[sent.start : sent.end + 1]
+    seen = set()
+    for term in sorted([t for e in sent.events for t in e], key=lambda t: t.start)[::-1]:
+        if term.start not in seen:
+            seen.add(term.start)
+            start = term.start - sent.start
+            end = start + term.len
+            label = term.type.value + "_" + term.polarity.value
+            text = "".join(
+                (text[:start], '<span class="', label, '">', text[start:end], "</span>", text[end:])
+            )
+    return text
 
 
 def _create_examples_table() -> DataTable:

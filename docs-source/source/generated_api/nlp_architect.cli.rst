@@ -4,6 +4,14 @@ nlp\_architect.cli package
 Submodules
 ----------
 
+nlp\_architect.cli.cli\_commands module
+---------------------------------------
+
+.. automodule:: nlp_architect.cli.cli_commands
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 nlp\_architect.cli.cmd\_registry module
 ---------------------------------------
 
