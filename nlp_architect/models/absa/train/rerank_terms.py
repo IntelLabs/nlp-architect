@@ -255,16 +255,16 @@ class RerankTerms(object):
 
     def load_terms_and_y_labels_and_generate_features(self, filename):
         """
-       load candidate terms with their basic features, Y labels and polarities from feature file
+        load candidate terms with their basic features, Y labels and polarities from feature file
 
-       Args:
-           filename: feature table file path
-       Returns:
-           x: feature vector
-           y: labels vector
-           terms: candidate terms
-           polarities: opinion polarity per term
-       """
+        Args:
+            filename: feature table file path
+        Returns:
+            x: feature vector
+            y: labels vector
+            terms: candidate terms
+            polarities: opinion polarity per term
+        """
         print("\nLoading feature table...\n")
 
         y, terms, polarities = self.load_terms_and_y_labels(filename)
@@ -279,15 +279,15 @@ class RerankTerms(object):
 
     def load_terms_and_generate_features(self, filename):
         """
-       load candidate terms with their basic features, Y labels and polarities from feature file
+        load candidate terms with their basic features, Y labels and polarities from feature file
 
-       Args:
-           filename: feature table file path
-       Returns:
-           x: feature vector
-           terms: candidate terms
-           polarities: opinion polarity per term
-       """
+        Args:
+            filename: feature table file path
+        Returns:
+            x: feature vector
+            terms: candidate terms
+            polarities: opinion polarity per term
+        """
         print("\nLoading feature table...\n")
 
         terms, polarities = self.load_terms_and_polarities(filename)

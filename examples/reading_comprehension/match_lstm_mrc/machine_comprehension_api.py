@@ -85,14 +85,12 @@ class MachineComprehensionApi(AbstractApi):
             if self.prompt is True:
                 license_prompt(
                     "mrc_data",
-                    "https://d2zs9tzlek599f.cloudfront.net/models/mrc"
-                    "/mrc_data.zip",
+                    "https://d2zs9tzlek599f.cloudfront.net/models/mrc" "/mrc_data.zip",
                     self.data_dir,
                 )
                 license_prompt(
                     "mrc_model",
-                    "https://d2zs9tzlek599f.cloudfront.net/models/mrc"
-                    "/mrc_model.zip",
+                    "https://d2zs9tzlek599f.cloudfront.net/models/mrc" "/mrc_model.zip",
                     self.model_dir,
                 )
             data_zipfile = os.path.join(self.data_dir, "mrc_data.zip")

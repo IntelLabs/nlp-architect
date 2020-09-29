@@ -248,9 +248,9 @@ class SequenceChunker(SequenceTagger):
 
 class SequencePOSTagger(SequenceTagger):
     """
-        A sequence POS tagger model written in Tensorflow (and Keras) based SequenceTagger model.
-        The model uses only the chunking output of the model.
-        """
+    A sequence POS tagger model written in Tensorflow (and Keras) based SequenceTagger model.
+    The model uses only the chunking output of the model.
+    """
 
     def predict(self, x, batch_size=1):
         """

@@ -364,8 +364,7 @@ def line_count(file):
 
 
 def prepare_output_path(output_dir: str, overwrite_output_dir: str):
-    """Create output directory or throw error if exists and overwrite_output_dir is false
-    """
+    """Create output directory or throw error if exists and overwrite_output_dir is false"""
     if os.path.exists(output_dir) and os.listdir(output_dir) and not overwrite_output_dir:
         raise ValueError(
             "Output directory ({}) already exists and is not empty. Use --overwrite_output_dir "
