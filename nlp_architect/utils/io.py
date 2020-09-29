@@ -22,7 +22,7 @@ import posixpath
 import re
 import sys
 import zipfile
-from os import PathLike, makedirs, remove
+from os import PathLike, makedirs
 from pathlib import Path
 from urllib.parse import urlparse
 
