@@ -325,13 +325,14 @@ def detailed_metrics(y_true, y_pred):
         f1s.append(f1)
         s.append(nb_true)
     macro_avg = {'macro_precision': tensor(np.average(ps, weights=s)),
-                 'macro_recall': tensor(np.average(rs, weights=s)), 'macro_f1': tensor(np.average(f1s, weights=s))}
+                 'macro_recall': tensor(np.average(rs, weights=s)),
+                 'macro_f1': tensor(np.average(f1s, weights=s))}
     return metrics, macro_avg
 
 def load_config(name):
     """Load an experiment configuration from a yaml file."""
-    cfg_dir = Path(os.path.dirname(os.path.realpath(__file__))) / 'config'
-    cfg = Namespace(**load_hparams_from_yaml(cfg_dir / (name + '.yaml')))
+    cfg_path = Path(os.path.dirname(os.path.realpath(__file__))) / 'config' / (name + '.yaml')
+    cfg = Namespace(**load_hparams_from_yaml(str(cfg_path)))
 
     if isinstance(cfg.splits, int):
         cfg.splits = list(range(1, cfg.splits + 1))

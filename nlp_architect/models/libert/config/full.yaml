@@ -12,7 +12,7 @@ baseline_str: libert_rnd_init
 baseline_version: version_baseline
 
 num_workers: 44
-gpus: [0, 1, 2, 3]
+gpus: [0, 1]
 parallel: true
 
 li_layer: #5
@@ -23,6 +23,7 @@ parse_probs: false
 replace_final: false
 duplicated_rels: false
 transpose: false
+use_syntactic_rels: true
 
 do_train: true
 do_predict: true
