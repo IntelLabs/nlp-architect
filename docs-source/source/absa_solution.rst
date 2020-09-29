@@ -34,26 +34,9 @@ For lexicon extraction, the solution calls the training step of NLP Architect's 
 training, whereas for sentiment classification, the solution calls NLP Architect's ABSA inference.
 For more details see :doc:`ABSA <absa>`.
 
-Solution execution
-==================
-All three stages of the solution are end-to-end executed by a dedicated UI.
-An example for running the UI is available at ``examples/absa/solution/absa_solution.py``.
-
-Install solution extra packages:
-
-.. code:: python
-
-  pip install -r solutions/absa_solution/requirements.txt
-
-
-.. code:: bash
-
-    python3 examples/absa/solution/absa_solution.py
-
-
-Flow
-====
-.. image :: assets/absa_solution_workflow.png
+Installing and Running
+======================
+For instructions on running the end-to-end solution UI, see here: `ABSA Solution README <https://github.com/NervanaSystems/nlp-architect/tree/master/solutions/absa_solution#setup>`__
 
 
 Workflow and UI

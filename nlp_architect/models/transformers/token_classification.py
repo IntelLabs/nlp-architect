@@ -250,7 +250,6 @@ class RobertaForTokenClassificationHead(BertPreTrainedModel):
 class TransformerTokenClassifier(TransformerBase):
     """
     Transformer word tagging classifier
-
     Args:
         model_type(str): model family (classifier head), choose between bert/quant_bert/xlnet
         labels (List[str], optional): list of tag labels
