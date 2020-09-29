@@ -169,4 +169,4 @@ def _download_pretrained_model():
         print("Unzipping...")
         uncompress_file(zip_path, outpath=str(SpacyBISTParser.dir))
         remove(zip_path)
-        print('Done.')
+        print("Done.")

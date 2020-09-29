@@ -355,8 +355,10 @@ def _get_rel_list(parsed_sentence):
     gen_toks = []
     for tok in parsed_sentence:
         gen_toks.append(
-            DepRelationTerm(tok.get('text'), tok.get('lemma'), tok.get('pos'),
-                            tok.get('ner'), tok.get('start')))
+            DepRelationTerm(
+                tok.get("text"), tok.get("lemma"), tok.get("pos"), tok.get("ner"), tok.get("start")
+            )
+        )
 
     for gen_tok, tok in zip(gen_toks, parsed_sentence):
         gov_idx = tok["gov"]

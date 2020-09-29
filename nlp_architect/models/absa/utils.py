@@ -64,34 +64,41 @@ def parse_docs(parser, docs: Union[str, PathLike], out_dir: Union[str, PathLike]
         doc_stream = (doc for doc in docs)
     elif isdir(docs):
         doc_stream = _walk_directory(docs)
-    elif str(docs).endswith('.txt'):
+    elif str(docs).endswith(".txt"):
         doc_stream = txt_line_generator(docs)
-    elif str(docs).endswith('.csv'):
+    elif str(docs).endswith(".csv"):
         doc_stream = csv_line_iterator(docs)
     else:
-        raise ValueError("Invalid data format. Please input a list of strings,"
-                         "a directory of txt files or a multi-line csv/txt file.")
+        raise ValueError(
+            "Invalid data format. Please input a list of strings,"
+            "a directory of txt files or a multi-line csv/txt file."
+        )
     return parser.parse(doc_stream, out_dir)
 
 
 def txt_line_generator(txt_file):
-    with open(txt_file, encoding='utf-8') as f:
+    with open(txt_file, encoding="utf-8") as f:
         for line in f:
-            line_s = line.strip('\n')
+            line_s = line.strip("\n")
             if line_s:
                 yield line_s
 
 
 def csv_line_iterator(csv_file):
-    with open(csv_file, newline='', encoding="utf-8") as f:
-        reader = csv.reader(f, delimiter=',', quotechar='|')
+    with open(csv_file, newline="", encoding="utf-8") as f:
+        reader = csv.reader(f, delimiter=",", quotechar="|")
         for row in reader:
             if row:
                 yield row[0]
 
 
-def parse_docs_bist(parser, docs: Union[str, PathLike], out_dir: Union[str, PathLike] = None,
-                    show_tok=True, show_doc=True):
+def parse_docs_bist(
+    parser,
+    docs: Union[str, PathLike],
+    out_dir: Union[str, PathLike] = None,
+    show_tok=True,
+    show_doc=True,
+):
     """Parse raw documents in the form of text files in a directory or lines in a text file.
 
     Args:

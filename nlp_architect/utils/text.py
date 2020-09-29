@@ -190,8 +190,18 @@ class SpacyInstance:
         ptb_pos (bool, optional): convert spacy POS tags to Penn Treebank tags
     """
 
-    def __init__(self, model='en', disable=None, display_prompt=True, n_jobs=8, batch_size=1500,
-                 spacy_doc=False, show_tok=True, show_doc=True, ptb_pos=False):
+    def __init__(
+        self,
+        model="en",
+        disable=None,
+        display_prompt=True,
+        n_jobs=8,
+        batch_size=1500,
+        spacy_doc=False,
+        show_tok=True,
+        show_doc=True,
+        ptb_pos=False,
+    ):
         if disable is None:
             disable = []
         try:
@@ -234,8 +244,11 @@ class SpacyInstance:
     def process_batch(self, texts, output_dir=None, batch_id=0):
         parsed_docs = []
         for i, doc in enumerate(self.parser.pipe(texts)):
-            parsed_doc = doc if self.spacy_doc else \
-                CoreNLPDoc.from_spacy(doc, self.show_tok, self.show_doc, self.ptb_pos)
+            parsed_doc = (
+                doc
+                if self.spacy_doc
+                else CoreNLPDoc.from_spacy(doc, self.show_tok, self.show_doc, self.ptb_pos)
+            )
             parsed_docs.append(parsed_doc)
             if output_dir:
                 out_path = Path(output_dir) / ("{}.{}.json".format(batch_id, i))
