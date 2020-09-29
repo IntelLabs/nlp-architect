@@ -113,7 +113,7 @@ class StringUtils:
 
     @staticmethod
     def find_head_lemma_pos_ner(x: str):
-        """"
+        """ "
 
         :param x: mention
         :return: the head word and the head word lemma of the mention

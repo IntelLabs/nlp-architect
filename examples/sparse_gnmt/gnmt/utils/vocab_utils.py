@@ -66,19 +66,19 @@ DEFAULT_CHAR_MAXLEN = 50  # max number of chars for each word.
 def _string_to_bytes(text, max_length):
     """Given string and length, convert to byte seq of at most max_length.
 
-  This process mimics docqa/elmo's preprocessing:
-  https://github.com/allenai/document-qa/blob/master/docqa/elmo/data.py
+    This process mimics docqa/elmo's preprocessing:
+    https://github.com/allenai/document-qa/blob/master/docqa/elmo/data.py
 
-  Note that we make use of BOS_CHAR_ID and EOS_CHAR_ID in iterator_utils.py &
-  our usage differs from docqa/elmo.
+    Note that we make use of BOS_CHAR_ID and EOS_CHAR_ID in iterator_utils.py &
+    our usage differs from docqa/elmo.
 
-  Args:
-    text: tf.string tensor of shape []
-    max_length: max number of chars for each word.
+    Args:
+      text: tf.string tensor of shape []
+      max_length: max number of chars for each word.
 
-  Returns:
-    A tf.int32 tensor of the byte encoded text.
-  """
+    Returns:
+      A tf.int32 tensor of the byte encoded text.
+    """
     byte_ids = tf.to_int32(tf.decode_raw(text, tf.uint8))
     byte_ids = byte_ids[: max_length - 2]
     padding = tf.fill([max_length - tf.shape(byte_ids)[0] - 2], PAD_CHAR_ID)
@@ -93,13 +93,13 @@ def _string_to_bytes(text, max_length):
 def tokens_to_bytes(tokens):
     """Given a sequence of strings, map to sequence of bytes.
 
-  Args:
-    tokens: A tf.string tensor
+    Args:
+      tokens: A tf.string tensor
 
-  Returns:
-    A tensor of shape words.shape + [bytes_per_word] containing byte versions
-    of each word.
-  """
+    Returns:
+      A tensor of shape words.shape + [bytes_per_word] containing byte versions
+      of each word.
+    """
     bytes_per_word = DEFAULT_CHAR_MAXLEN
     with tf.device("/cpu:0"):
         tf.assert_rank(tokens, 1)
@@ -174,20 +174,20 @@ def create_vocab_tables(src_vocab_file, tgt_vocab_file, share_vocab):
 def load_embed_txt(embed_file):
     """Load embed_file into a python dictionary.
 
-  Note: the embed_file should be a Glove/word2vec formatted txt file. Assuming
-  Here is an exampe assuming embed_size=5:
+    Note: the embed_file should be a Glove/word2vec formatted txt file. Assuming
+    Here is an exampe assuming embed_size=5:
 
-  the -0.071549 0.093459 0.023738 -0.090339 0.056123
-  to 0.57346 0.5417 -0.23477 -0.3624 0.4037
-  and 0.20327 0.47348 0.050877 0.002103 0.060547
+    the -0.071549 0.093459 0.023738 -0.090339 0.056123
+    to 0.57346 0.5417 -0.23477 -0.3624 0.4037
+    and 0.20327 0.47348 0.050877 0.002103 0.060547
 
-  For word2vec format, the first line will be: <num_words> <emb_size>.
+    For word2vec format, the first line will be: <num_words> <emb_size>.
 
-  Args:
-    embed_file: file path to the embedding file.
-  Returns:
-    a dictionary that maps word to vector, and the size of embedding dimensions.
-  """
+    Args:
+      embed_file: file path to the embedding file.
+    Returns:
+      a dictionary that maps word to vector, and the size of embedding dimensions.
+    """
     emb_dict = dict()
     emb_size = None
 

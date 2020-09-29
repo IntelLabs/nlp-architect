@@ -36,7 +36,7 @@ from tensorflow.python.framework import ops
 # https://github.com/tensorflow/tensorflow/issues/14070
 # Once this becomes part of the official TF release, it will be removed
 class WeightNorm(Wrapper):
-    """ This wrapper reparameterizes a layer by decoupling the weight's
+    """This wrapper reparameterizes a layer by decoupling the weight's
     magnitude and direction. This speeds up convergence by improving the
     conditioning of the optimization problem.
 
@@ -90,7 +90,7 @@ class WeightNorm(Wrapper):
 
     def _compute_weights(self):
         """Generate weights by combining the direction of weight vector
-         with it's norm """
+        with it's norm"""
         with variable_scope.variable_scope("compute_weights"):
             self.layer.kernel = (
                 nn_impl.l2_normalize(self.layer.v, axis=self.norm_axes) * self.layer.g

@@ -47,7 +47,7 @@ __all__ = ["GNMTModel"]
 
 class GNMTModel(attention_model.AttentionModel):
     """Sequence-to-sequence dynamic model with GNMT attention architecture
-        with sparsity policy support.
+    with sparsity policy support.
     """
 
     def __init__(

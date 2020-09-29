@@ -286,11 +286,11 @@ class TransformerBase(TrainableModel):
         best_result_file: str = None,
     ):
         """Run model training
-            batch_mapper: a function that maps a batch into parameters that the model
-                          expects in the forward method (for use with custom heads and models).
-                          If None it will default to the basic models input structure.
-            logging_callback_fn: a function that is called in each evaluation step
-                          with the model as a parameter.
+        batch_mapper: a function that maps a batch into parameters that the model
+                      expects in the forward method (for use with custom heads and models).
+                      If None it will default to the basic models input structure.
+        logging_callback_fn: a function that is called in each evaluation step
+                      with the model as a parameter.
 
         """
         t_total, num_train_epochs = self.get_train_steps_epochs(

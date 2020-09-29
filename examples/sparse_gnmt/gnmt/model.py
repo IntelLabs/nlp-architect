@@ -94,8 +94,7 @@ class InferOutputTuple(
 
 
 class BaseModel(object):
-    """Sequence-to-sequence base class.
-    """
+    """Sequence-to-sequence base class."""
 
     def __init__(
         self,
@@ -589,7 +588,11 @@ class BaseModel(object):
                 )
 
                 # Decoder
-                my_decoder = tf.contrib.seq2seq.BasicDecoder(cell, helper, decoder_initial_state,)
+                my_decoder = tf.contrib.seq2seq.BasicDecoder(
+                    cell,
+                    helper,
+                    decoder_initial_state,
+                )
 
                 # Dynamic decoding
                 outputs, final_context_state, _ = tf.contrib.seq2seq.dynamic_decode(

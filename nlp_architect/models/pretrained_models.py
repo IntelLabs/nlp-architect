@@ -24,7 +24,7 @@ S3_PREFIX = "https://d2zs9tzlek599f.cloudfront.net/"
 
 class PretrainedModel:
 
-    """ Generic class to download the pre-trained models
+    """Generic class to download the pre-trained models
 
     Usage Example:
 

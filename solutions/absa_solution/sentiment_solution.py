@@ -175,7 +175,7 @@ class SentimentSolution(object):
 
     def _compute_stats(self, results: dict, aspects: list, opinion_lex: dict) -> pd.DataFrame:
         """Aggregates counts for each aspect-polarity pairs, with separate counts for in-domain
-         only events.
+        only events.
         """
         index = pd.MultiIndex.from_product(
             [aspects, ["POS", "NEG"], [False, True]], names=["Aspect", "Polarity", "inDomain"]

@@ -48,8 +48,7 @@ POLARITIES = ("POS", "NEG")
 
 # pylint: disable=global-variable-undefined
 def serve_absa_ui() -> None:
-    """Main function for serving UI application.
-    """
+    """Main function for serving UI application."""
 
     def _doc_modifier(doc: Document) -> None:
         grid = _create_ui_components()

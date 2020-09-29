@@ -50,8 +50,7 @@ import numpy as np
 
 
 def get_conll_scores(predictions, y, y_lex, unk="O"):
-    """Get Conll style scores (precision, recall, f1)
-    """
+    """Get Conll style scores (precision, recall, f1)"""
     if isinstance(predictions, list):
         predictions = predictions[-1]
     test_p = predictions
@@ -81,21 +80,18 @@ def get_conll_scores(predictions, y, y_lex, unk="O"):
 
 
 def simple_accuracy(preds, labels):
-    """return simple accuracy
-    """
+    """return simple accuracy"""
     return (preds == labels).mean()
 
 
 def accuracy(preds, labels):
-    """return simple accuracy in expected dict format
-    """
+    """return simple accuracy in expected dict format"""
     acc = simple_accuracy(preds, labels)
     return {"acc": acc}
 
 
 def acc_and_f1(preds, labels):
-    """return accuracy and f1 score
-    """
+    """return accuracy and f1 score"""
     acc = simple_accuracy(preds, labels)
     f1 = classification_f1_score(y_true=labels, y_pred=preds)
     return {
@@ -106,8 +102,7 @@ def acc_and_f1(preds, labels):
 
 
 def pearson_and_spearman(preds, labels):
-    """get pearson and spearman correlation
-    """
+    """get pearson and spearman correlation"""
     pearson_corr = pearsonr(preds, labels)[0]
     spearman_corr = spearmanr(preds, labels)[0]
     return {

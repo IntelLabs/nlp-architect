@@ -84,7 +84,10 @@ def test_trend_analysis(filter_data_path, graph_data_path):
     target_corpus_path = path.join(ta_path, "target_corpus.csv")
     reference_corpus_path = path.join(ta_path, "reference_corpus.csv")
     trend_analyze(
-        target_corpus_path, reference_corpus_path, target_corpus_path, reference_corpus_path,
+        target_corpus_path,
+        reference_corpus_path,
+        target_corpus_path,
+        reference_corpus_path,
     )
     assert os.path.isfile(filter_data_path)
     assert os.path.isfile(graph_data_path)
