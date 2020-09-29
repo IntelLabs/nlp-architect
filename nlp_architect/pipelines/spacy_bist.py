@@ -13,13 +13,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ******************************************************************************
-from os import path, remove, makedirs
+from os import path, makedirs
 
 from nlp_architect.common.core_nlp_doc import CoreNLPDoc, _spacy_pos_to_ptb
 from nlp_architect.data.conll import ConllEntry
 from nlp_architect.models.bist_parser import BISTModel
 from nlp_architect import LIBRARY_OUT
-from nlp_architect.utils.io import download_unlicensed_file, uncompress_file
+from nlp_architect.utils.io import download_unzip
 from nlp_architect.utils.io import validate
 from nlp_architect.utils.text import SpacyInstance
 
@@ -158,15 +158,22 @@ class SpacyBISTParser:
 def _download_pretrained_model():
     """Downloads the pre-trained BIST model if non-existent."""
     if not path.isfile(SpacyBISTParser.dir / "bist.model"):
-        print("Downloading pre-trained BIST model...")
-        zip_path = SpacyBISTParser.dir / "bist-pretrained.zip"
+        print("Downloading pre-trained BIST model..")
+        zip_path = SpacyBISTParser.dir / "bist-pretrained"
         makedirs(SpacyBISTParser.dir, exist_ok=True)
-        download_unlicensed_file(
+
+        download_unzip(
             "https://d2zs9tzlek599f.cloudfront.net/models/dep_parse/",
             "bist-pretrained.zip",
             zip_path,
         )
-        print("Unzipping...")
-        uncompress_file(zip_path, outpath=str(SpacyBISTParser.dir))
-        remove(zip_path)
+
+        # download_unlicensed_file(
+        #     "https://d2zs9tzlek599f.cloudfront.net/models/dep_parse/",
+        #     "bist-pretrained.zip",
+        #     zip_path,
+        # )
+        # print("Unzipping...")
+        # uncompress_file(zip_path, outpath=str(SpacyBISTParser.dir))
+        # remove(zip_path)
         print("Done.")

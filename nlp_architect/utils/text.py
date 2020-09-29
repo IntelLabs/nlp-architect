@@ -171,6 +171,14 @@ def id_to_char(c_id):
     return None
 
 
+def try_to_load_spacy(model_name):
+    try:
+        spacy.load(model_name)
+        return True
+    except OSError:
+        return False
+
+
 class SpacyInstance:
     """
     Spacy pipeline wrapper which prompts user for model download authorization.

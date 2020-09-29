@@ -350,7 +350,6 @@ def download_unzip(
             download_unlicensed_file(url, sourcefile, zip_path)
             print("Unzipping...")
             uncompress_file(zip_path, dest_parent)
-            remove(zip_path)
     return unzipped_path
 
 
