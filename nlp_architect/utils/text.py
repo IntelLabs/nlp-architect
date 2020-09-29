@@ -165,8 +165,7 @@ def char_to_id(c):
 
 
 def id_to_char(c_id):
-    """return character of given char id
-    """
+    """return character of given char id"""
     if c_id < n_letters:
         return all_letters[c_id]
     return None
@@ -445,7 +444,10 @@ def bio_to_spans(text: List[str], tags: List[str]) -> List[Tuple[int, int, str]]
     """
     pointer = 0
     starts = []
-    for i, t, in enumerate(tags):
+    for (
+        i,
+        t,
+    ) in enumerate(tags):
         if t.startswith("B-"):
             starts.append((i, pointer))
         pointer += len(text[i]) + 1

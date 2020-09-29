@@ -194,22 +194,19 @@ class FasttextEmbeddingsModel(object):
         self.model.train(sentences=texts, total_examples=len(texts), epochs=epochs)
 
     def vec(self, word: str) -> np.ndarray:
-        """return vector corresponding given word
-        """
+        """return vector corresponding given word"""
         return self.model.wv[word]
 
     def __getitem__(self, item):
         return self.vec(item)
 
     def save(self, path) -> None:
-        """save model to path
-        """
+        """save model to path"""
         self.model.save(path)
 
     @classmethod
     def load(cls, path):
-        """load model from path
-        """
+        """load model from path"""
         loaded_model = FastText.load(path)
         new_model = cls()
         new_model.model = loaded_model

@@ -20,13 +20,13 @@ logger = logging.getLogger(__name__)
 
 
 class ModelAPI:
-    """ Base class for a model API implementation
-        Implementing classes must provide a default model and/or a path to a model
+    """Base class for a model API implementation
+    Implementing classes must provide a default model and/or a path to a model
 
-        Args:
-            model_path (str): path to a trained model
+    Args:
+        model_path (str): path to a trained model
 
-        run method must return
+    run method must return
     """
 
     default_model = None  # pre-trained model from library

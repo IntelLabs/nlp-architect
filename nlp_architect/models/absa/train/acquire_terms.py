@@ -59,7 +59,7 @@ class AcquireTerms(object):
         aspect_candidates_list_final (list): final aspect candidates list
         aspect_candidate_list_raw (dict): all instances of candidate aspect terms
                                           across all iterations
-        """
+    """
 
     generic_opinion_lex_path = GENERIC_OP_LEX
     acquired_opinion_terms_path = LEXICONS_OUT / "generated_opinion_lex.csv"

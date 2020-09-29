@@ -213,8 +213,7 @@ class QuantizedBertPreTrainedModel(BertPreTrainedModel):
     base_model_prefix = "quant_bert"
 
     def init_weights(self, module):
-        """ Initialize the weights.
-        """
+        """Initialize the weights."""
         if isinstance(module, (nn.Linear, nn.Embedding, QuantizedLinear, QuantizedEmbedding)):
             module.weight.data.normal_(mean=0.0, std=self.config.initializer_range)
         elif isinstance(module, BertLayerNorm):

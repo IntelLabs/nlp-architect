@@ -1,4 +1,5 @@
-tensorflow==1.15.2
+tensorflow==1.15.4
+dynet==2.1
 torch==1.4.0
 transformers==2.4.1
 spacy==2.1.8

@@ -442,13 +442,13 @@ def merge_phrases(data, is_ref_data, hash2group, rep2rank, top_n, topics_count):
 
 def clean_group(phrase_group):
     """
-   Returns the shortest element in a group of phrases
+    Returns the shortest element in a group of phrases
 
-    Args:
-        phrase_group (String): a group of phrases separated by ';'
+     Args:
+         phrase_group (String): a group of phrases separated by ';'
 
-    Returns:
-        The shortest phrase in the group (String)
+     Returns:
+         The shortest phrase in the group (String)
     """
     text = [x.lstrip() for x in phrase_group.split(";")]
     return min(text, key=len)
