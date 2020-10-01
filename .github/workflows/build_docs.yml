@@ -1,0 +1,67 @@
+name: Build documentation
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.6
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.6
+
+    - name: Setup git config and pages branch
+      run: |
+        git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+        git config user.name github-actions[bot]
+        git checkout -b pages
+
+    - name: Install dependencies
+      run: |
+        pip install -U pip setuptools h5py
+        pip3 install -U -e .[all,dev]
+        python -m spacy download en
+        python --version
+        pip --version
+        pip list
+
+    - name: Build sphinx documentation
+      run: |
+        sudo apt-get install build-essential
+        make -C docs-source html
+        rm -rfv ./docs
+        cp -rv ./docs-source/build/html ./docs
+
+### Uncomment to upload sphinx documentation as an artifact
+#    - name: Upload sphinx html documentation artifact
+#      uses: actions/upload-artifact@v1
+#      with:
+#        name: nlp_architect_docs
+#        path: ./docs
+
+    - name: Commit documentation changes
+      run:  |
+        git add ./docs
+        git commit -m "Documentation build via Github Actions"
+
+    - name: Push documentation changes to "pages" branch
+      uses: ad-m/github-push-action@master
+      with:
+        branch: pages
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        force: true  # Always update pages branch to most recent commit to master
+
+### Uncomment to automatically generate PR after push
+#    - name: Create PR
+#      uses: repo-sync/pull-request@v2
+#      with:
+#        source_branch: pages            
+#        destination_branch: master 
+#        pr_title: Documentation changes by pull-request action
+#        pr_body: Automated changes by [pull-request](https://github.com/repo-sync/pull-request) GitHub action
+#        github_token: ${{ secrets.GITHUB_TOKEN }}
