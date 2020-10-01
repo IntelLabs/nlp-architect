@@ -40,7 +40,7 @@ from significance import significance_from_cfg as significance
 LIBERT_DIR = Path(realpath(__file__)).parent
 LOG_ROOT = LIBERT_DIR / 'logs'
 
-DEP_REL_MAP = {rel.strip(): i + 1 for i, rel in enumerate(open(LIBERT_DIR / 'data' / 'dep_relations.txt'))}
+DEP_REL_MAP = {rel.strip(): i + 1 for i, rel in enumerate(open(LIBERT_DIR / 'dep_relations.txt'))}
 
 @dataclass
 class InputExample:

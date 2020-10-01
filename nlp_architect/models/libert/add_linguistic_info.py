@@ -175,6 +175,5 @@ def parse_in_domain(domains: list):
         parse_file(ds_file, spacy_bert_tok)
 
 if __name__ == "__main__":
-    # parse_cross_domain(domains=['restaurants', 'laptops', 'device'], overwrite=True)
-    parse_in_domain(domains=['restaurants', 'laptops', 'device'])
-    # parse_cross_domain_settings(domains=['restaurants', 'laptops'], splits=1, modes=['dev'], overwrite=True)
+    parse_cross_domain(domains=['restaurants', 'laptops'])
+    # parse_in_domain(domains=['restaurants', 'laptops'])
