@@ -65,18 +65,18 @@ def _spacy_pos_to_ptb(pos, text):
     """
     validate((pos, str, 0, 30), (text, str, 0, 1000))
     ptb_tag = pos
-    if text in ['...', '—']:
-        ptb_tag = ':'
-    elif text == '*':
-        ptb_tag = 'SYM'
-    elif pos == 'AFX':
-        ptb_tag = 'JJ'
-    elif pos == 'ADD':
-        ptb_tag = 'NN'
-    elif text != pos and text in [',', '.', ":", '``', '-RRB-', '-LRB-']:
+    if text in ["...", "—"]:
+        ptb_tag = ":"
+    elif text == "*":
+        ptb_tag = "SYM"
+    elif pos == "AFX":
+        ptb_tag = "JJ"
+    elif pos == "ADD":
+        ptb_tag = "NN"
+    elif text != pos and text in [",", ".", ":", "``", "-RRB-", "-LRB-"]:
         ptb_tag = text
-    elif pos in ['NFP', 'HYPH', 'XX']:
-        ptb_tag = 'SYM'
+    elif pos in ["NFP", "HYPH", "XX"]:
+        ptb_tag = "SYM"
     return ptb_tag
 
 
@@ -240,9 +240,14 @@ class CoreNLPDoc:
             cur_sent = []
             for tok in spacy_sent:
                 pos = _spacy_pos_to_ptb(tok.tag_, tok.text) if ptb_pos else tok.tag_
-                core_tok = {"start": tok.idx, "len": len(tok), "pos": pos,
-                            "lemma": tok.lemma_, "rel": tok.dep_.lower(),
-                            "gov": -1 if tok.dep_ == "ROOT" else tok.head.i - spacy_sent.start}
+                core_tok = {
+                    "start": tok.idx,
+                    "len": len(tok),
+                    "pos": pos,
+                    "lemma": tok.lemma_,
+                    "rel": tok.dep_.lower(),
+                    "gov": -1 if tok.dep_ == "ROOT" else tok.head.i - spacy_sent.start,
+                }
                 if show_tok:
                     core_tok["text"] = tok.text
                 cur_sent.append(core_tok)

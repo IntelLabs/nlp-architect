@@ -22,7 +22,7 @@ import posixpath
 import re
 import sys
 import zipfile
-from os import PathLike, makedirs, remove
+from os import PathLike, makedirs
 from pathlib import Path
 from urllib.parse import urlparse
 
@@ -350,7 +350,6 @@ def download_unzip(
             download_unlicensed_file(url, sourcefile, zip_path)
             print("Unzipping...")
             uncompress_file(zip_path, dest_parent)
-            remove(zip_path)
     return unzipped_path
 
 

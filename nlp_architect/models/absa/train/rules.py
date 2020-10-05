@@ -124,8 +124,12 @@ def rule_6(dep_rel, relation_list, text):
         text (str): Sentence text.
     """
     candidate = None
-    if dep_rel.rel.startswith('conj') \
-            and dep_rel.dep.norm_pos in {POS.ADJ, POS.ADV, POS.NN, POS.VB}:
+    if dep_rel.rel.startswith("conj") and dep_rel.dep.norm_pos in {
+        POS.ADJ,
+        POS.ADV,
+        POS.NN,
+        POS.VB,
+    }:
         aspect = expand_aspect(dep_rel.dep, relation_list)
         candidate = CandidateTerm(aspect, dep_rel.gov, text, Polarity.UNK)
     return candidate

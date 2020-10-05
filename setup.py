@@ -64,7 +64,7 @@ with open("README.md", encoding="utf8") as fp:
 
 with io.open(os.path.join(root, "nlp_architect", "version.py"), encoding="utf8") as f:
     version_f = {}
-    exec(f.read(), version_f)
+    exec(f.read(), version_f) # pylint: disable=exec-used
     version = version_f["NLP_ARCHITECT_VERSION"]
 
 setup(
