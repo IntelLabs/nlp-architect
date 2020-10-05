@@ -21,8 +21,7 @@ import torch
 
 
 def setup_backend(no_cuda):
-    """Setup backend according to selected backend and detected configuration
-    """
+    """Setup backend according to selected backend and detected configuration"""
     device = torch.device("cuda" if torch.cuda.is_available() and not no_cuda else "cpu")
     if torch.cuda.is_available() and not no_cuda:
         device = torch.device("cuda")
@@ -34,8 +33,7 @@ def setup_backend(no_cuda):
 
 
 def set_seed(seed, n_gpus=None):
-    """set and return seed
-    """
+    """set and return seed"""
     if seed == -1:
         seed = int(time.time())
     random.seed(seed)

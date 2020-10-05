@@ -53,4 +53,4 @@ Demos
 -----
 - NeurIPS 2018:
 
-  - Unsupervised Aspect-based Sentiment Analysis (`video <https://s3-us-west-2.amazonaws.com/nlp-architect-data/content/absa_kingsman_demo.mp4>`_)
+  - Unsupervised Aspect-based Sentiment Analysis (`video <https://d2zs9tzlek599f.cloudfront.net/content/absa_kingsman_demo.mp4>`_)

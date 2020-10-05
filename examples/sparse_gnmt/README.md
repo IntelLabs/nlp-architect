@@ -32,8 +32,8 @@ You can use these models to [Run Inference with Pre-Trained Model](#run-inferenc
 | Model                      | Sparsity | BLEU| Non-Zero Parameters | Data Type |
 |----------------------------|:--------:|:----:|:-------------------:|:---------:|
 | Baseline                   |    0%    | 29.9 |        ~210M        |  Float32  |
-| [Sparse](https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/sparse_gnmt/gnmt_sparse.zip)                     |    90%   | 28.4 |         ~22M        |  Float32  |
-| [2x2 Block Sparse](https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/sparse_gnmt/gnmt_blocksparse2x2.zip)           |    90%   | 27.8 |         ~22M        |  Float32  |
+| [Sparse](https://d2zs9tzlek599f.cloudfront.net/models/sparse_gnmt/gnmt_sparse.zip)                     |    90%   | 28.4 |         ~22M        |  Float32  |
+| [2x2 Block Sparse](https://d2zs9tzlek599f.cloudfront.net/models/sparse_gnmt/gnmt_blocksparse2x2.zip)           |    90%   | 27.8 |         ~22M        |  Float32  |
 | Quantized Sparse           |    90%   | 28.4 |         ~22M        |  Integer8 |
 | Quantized 2x2 Block Sparse |    90%   | 27.6 |         ~22M        |  Integer8 |
 
@@ -92,7 +92,7 @@ Follow these instructions in order to use our pre-trained models:
 ```
 
 # Download pre-trained model zip file, e.g. gnmt_sparse.zip
-wget https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/sparse_gnmt/gnmt_sparse.zip
+wget https://d2zs9tzlek599f.cloudfront.net/models/sparse_gnmt/gnmt_sparse.zip
 
 # Unzip checkpoint + vocabulary files
 unzip gnmt_sparse.zip -d /tmp/gnmt_sparse_checkpoint

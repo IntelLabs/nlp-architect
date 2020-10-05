@@ -37,17 +37,17 @@ TEACHER_TYPES = ["bert"]
 
 class TeacherStudentDistill:
     """
-        Teacher-Student knowledge distillation helper.
-        Use this object when training a model with KD and a teacher model.
+    Teacher-Student knowledge distillation helper.
+    Use this object when training a model with KD and a teacher model.
 
-        Args:
-            teacher_model (TrainableModel): teacher model
-            temperature (float, optional): KD temperature. Defaults to 1.0.
-            dist_w (float, optional): distillation loss weight. Defaults to 0.1.
-            loss_w (float, optional): student loss weight. Defaults to 1.0.
-            loss_function (str, optional): loss function to use (kl for KLDivLoss,
-                mse for MSELoss)
-        """
+    Args:
+        teacher_model (TrainableModel): teacher model
+        temperature (float, optional): KD temperature. Defaults to 1.0.
+        dist_w (float, optional): distillation loss weight. Defaults to 0.1.
+        loss_w (float, optional): student loss weight. Defaults to 1.0.
+        loss_function (str, optional): loss function to use (kl for KLDivLoss,
+            mse for MSELoss)
+    """
 
     def __init__(
         self,

@@ -540,16 +540,16 @@ class MatchLSTMAnswerPointer(object):
         dynamic_question_index=0,
     ):
         """
-          Function to run inference_mode for reading comprehension
+        Function to run inference_mode for reading comprehension
 
-          Args:
-              session: tensorflow session
-              valid: data dictionary for validation set
-              vocab_tuple: a tuple containing voacab dictionaries in forward and reverse directions
-              num_examples : specify the number of samples to run for inference
-              dropout : Float value which is always 1.0 for inference
-              dynamic_question_mode : boolean to enable whether or not accept
-                                      questions from the user(used in the demo mode)
+        Args:
+            session: tensorflow session
+            valid: data dictionary for validation set
+            vocab_tuple: a tuple containing voacab dictionaries in forward and reverse directions
+            num_examples : specify the number of samples to run for inference
+            dropout : Float value which is always 1.0 for inference
+            dynamic_question_mode : boolean to enable whether or not accept
+                                    questions from the user(used in the demo mode)
 
         """
         vocab_forward = vocab_tuple[0]

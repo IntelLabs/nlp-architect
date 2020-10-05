@@ -401,7 +401,7 @@ def clear_seed_callback():
 
 def get_selected_phrases_for_seed():
     """
-     create the seed string to send to the server
+    create the seed string to send to the server
     """
     global all_selected_phrases
     phrases = ""

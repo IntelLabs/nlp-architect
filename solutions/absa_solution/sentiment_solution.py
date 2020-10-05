@@ -18,13 +18,13 @@ import json
 from os import PathLike
 from os.path import isdir
 from typing import Optional
+import csv
+import re
+from abc import abstractmethod
 
 import numpy as np
 import pandas as pd
 from tqdm import tqdm
-import csv
-import re
-from abc import abstractmethod
 
 from nlp_architect import LIBRARY_OUT
 from nlp_architect.common.core_nlp_doc import CoreNLPDoc
@@ -47,7 +47,7 @@ from nlp_architect.utils.io import (
 SENTIMENT_OUT = LIBRARY_OUT / "absa_solution"
 
 
-class Anonymiser(object):
+class Anonymiser:
     """Abstract class for anonymiser algorithm, intended for privacy keeping."""
 
     @abstractmethod
@@ -100,7 +100,7 @@ def _ui_format(sent: SentimentSentence, doc: SentimentDoc) -> str:
     return text
 
 
-class SentimentSolution(object):
+class SentimentSolution:
     """Main class for executing Sentiment Solution pipeline.
 
     Args:
@@ -132,23 +132,21 @@ class SentimentSolution(object):
             with open(inference_results, encoding="utf-8") as f:
                 results = json.loads(f.read(), object_hook=SentimentDoc.decoder)
         elif data or parsed_data:
-            inference = SentimentInference(aspect_lex, opinions, parse=False)
-            parse = None
-            if not parsed_data:  # source data is raw text, need to parse
-                from nlp_architect.pipelines.spacy_bist import SpacyBISTParser
-
-                parse = SpacyBISTParser().parse
-
+            inference = SentimentInference(aspect_lex, opinions)
+            parsed = parsed_data is not None
             results = {}
             print("Running inference on data files... (Iterating data files)")
             data_source = parsed_data if parsed_data else data
             for file, doc in self._iterate_docs(data_source):
                 parsed_doc = (
-                    parse(doc) if parse else json.loads(doc, object_hook=CoreNLPDoc.decoder)
+                    inference.parser.parse([doc])[0]
+                    if parsed
+                    else json.loads(doc, object_hook=CoreNLPDoc.decoder)
                 )
                 sentiment_doc = inference.run(parsed_doc=parsed_doc)
                 if sentiment_doc:
                     results[file] = sentiment_doc
+
             with open(SENTIMENT_OUT / "inference_results.json", "w", encoding="utf-8") as f:
                 json.dump(results, f, cls=SentimentDocEncoder, indent=4, sort_keys=True)
         else:
@@ -166,8 +164,8 @@ class SentimentSolution(object):
     @staticmethod
     def _iterate_docs(data: PathLike) -> tuple:
         if isdir(data):
-            for file, doc_text in tqdm(list(walk_directory(data))):
-                yield file, doc_text
+            for f, doc_text in tqdm(list(walk_directory(data))):
+                yield f, doc_text
         else:
             with open(data, encoding="utf-8") as f:
                 for i, doc_text in tqdm(enumerate(f), total=line_count(data)):
@@ -175,7 +173,7 @@ class SentimentSolution(object):
 
     def _compute_stats(self, results: dict, aspects: list, opinion_lex: dict) -> pd.DataFrame:
         """Aggregates counts for each aspect-polarity pairs, with separate counts for in-domain
-         only events.
+        only events.
         """
         index = pd.MultiIndex.from_product(
             [aspects, ["POS", "NEG"], [False, True]], names=["Aspect", "Polarity", "inDomain"]

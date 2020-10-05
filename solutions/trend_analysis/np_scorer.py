@@ -24,7 +24,7 @@ from nlp_architect.utils.io import download_unlicensed_file
 from nlp_architect.utils.text import SpacyInstance
 from .scoring_utils import TextSpanScoring
 
-nlp_chunker_url = "https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/chunker/"
+nlp_chunker_url = "https://d2zs9tzlek599f.cloudfront.net/models/chunker/"
 chunker_model_dat_file = "model_info.dat.params"
 chunker_model_file = "model.h5"
 chunker_local_path = str(LIBRARY_OUT / "chunker-pretrained")
