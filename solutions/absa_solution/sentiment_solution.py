@@ -135,11 +135,14 @@ class SentimentSolution:
             inference = SentimentInference(aspect_lex, opinions)
             parsed = parsed_data is not None
             results = {}
-            print('Running inference on data files... (Iterating data files)')
+            print("Running inference on data files... (Iterating data files)")
             data_source = parsed_data if parsed_data else data
             for file, doc in self._iterate_docs(data_source):
-                parsed_doc = inference.parser.parse([doc])[0] if parsed \
+                parsed_doc = (
+                    inference.parser.parse([doc])[0]
+                    if parsed
                     else json.loads(doc, object_hook=CoreNLPDoc.decoder)
+                )
                 sentiment_doc = inference.run(parsed_doc=parsed_doc)
                 if sentiment_doc:
                     results[file] = sentiment_doc
