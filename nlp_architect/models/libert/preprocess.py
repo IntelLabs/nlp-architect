@@ -124,7 +124,7 @@ def check_match(tokens, i, op_phrase):
         return tuple(tokens[j].lower() for j in range(i, i + len(op_phrase))) == op_phrase
     return False
 
-def preprocess_laptops_and_restaurants_dai2019_cross_domain(opinion_labels=False, seed=42):
+def preprocess_laptops_and_restaurants_dai2019_cross_domain(seed, opinion_labels=True):
     random.seed(seed)
     in_base = str(DATA_DIR / 'Dai2019' / 'semeval')
     out_base = str(DATA_DIR / 'conll') + '/'
@@ -188,8 +188,11 @@ def count_phrase_in_token_list(phrase, tokens):
     phrase_len = len(phrase)
     spans = []
     for i in range(len(tokens) - phrase_len + 1):
-        if tokens[i: i + phrase_len] in (phrase , (phrase[:-1] + [phrase[-1] + 's'])):
-            spans.append((i, i + phrase_len))
+        try:
+            if tokens[i: i + phrase_len] in (phrase , (phrase[:-1] + [phrase[-1] + 's'])):
+                spans.append((i, i + phrase_len))
+        except:
+            print('#')
     return spans
 
 def check_term_list(asp_phrases, op_phrases, tokens, i, stat):
@@ -230,6 +233,7 @@ def wang_spans_to_conll_sentence(tokens, asp_spans, op_spans):
     return '\n'.join(([t + '\t' + l for t, l in zip(tokens, labels)])) + '\n\n'
 
 def wang2018_single_to_conll(data_dir, text_op_file, asp_pol_file):
+    data_dir = str(data_dir) + '/'
     all_tokens = []
     all_opinions = []
     conll_sents = []
@@ -245,7 +249,14 @@ def wang2018_single_to_conll(data_dir, text_op_file, asp_pol_file):
     all_aspects = []
     with open(data_dir + asp_pol_file, encoding='utf-8') as asp_pol_f:
         for line in asp_pol_f:
-            aspects = [asp_pol.split(':')[0].strip().split() for asp_pol in line.strip().split(',')] if line != 'NIL\n' else []
+            split_line = line.strip().split(',')
+            aspects = []
+            if line != 'NIL\n':
+                for asp_pol in split_line:
+                    aspect = asp_pol.split(':')[0].strip().split()
+                    if aspect:
+                        aspects.append(aspect)
+
             all_aspects.append(aspects)
     
     stat = {'miss': 0, 'mul': 0, 'err': 0}
@@ -262,7 +273,7 @@ def wang2018_single_to_conll(data_dir, text_op_file, asp_pol_file):
     return conll_sents
 
 def get_all_sentences_of_domain(data_dir, domain, years):
-    semeval_in_base = data_dir + '/Dai2019/semeval'
+    semeval_in_base = str(data_dir) + '/Dai2019/semeval'
     out_base = 'nlp_architect/models/absa_neural/data/conll_op/'
     all_domain_sents = []
     for year in years:
@@ -278,17 +289,17 @@ def get_all_sentences_of_domain(data_dir, domain, years):
                         all_domain_sents.append((json_line, tok_line))
     return all_domain_sents
 
-def preprocess_wang2018(data_dir, device_text_op_file, device_asp_pol_file, domain_b, domain_years, seed=42):
+def preprocess_wang2018(device_text_op_file, device_asp_pol_file, domain_b, domain_years, seed):
     random.seed(seed)
-    out_base = DATA_DIR / 'conll'
+    out_base = str(DATA_DIR / 'conll') + '/'
     sets = {domain_b: domain_years, 'device': None}
 
     all_out_dirs = []
     for domain, years in sets.items():
         if years:
-            all_domain_sents = get_all_sentences_of_domain(data_dir, domain, years)
+            all_domain_sents = get_all_sentences_of_domain(DATA_DIR, domain, years)
         else:
-            all_domain_sents = wang2018_single_to_conll(data_dir, device_text_op_file, device_asp_pol_file)
+            all_domain_sents = wang2018_single_to_conll(DATA_DIR, device_text_op_file, device_asp_pol_file)
 
         for split_i in range(NUM_SPLITS):
             split_num = str(split_i + 1)
@@ -325,11 +336,16 @@ def preprocess_wang2018(data_dir, device_text_op_file, device_asp_pol_file, doma
         with open(out_dir + 'labels.txt', 'w', encoding='utf-8') as labels_f:
             labels_f.write('\n'.join(['O', 'B-ASP', 'I-ASP', 'B-OP', 'I-OP']))
 
-def preprocess_devices_wang2018_cross_domain(data_dir, device_text_op_file, device_asp_pol_file):
+def preprocess_devices_wang2018_cross_domain(seed):
+    device_text_op_file, device_asp_pol_file = 'Wang2018/addsenti_device', 'Wang2018/aspect_op_device'
     for domain, years in [('restaurants', ('14', '15')), ('laptops', ('14',))]:
-        preprocess_wang2018(data_dir, device_text_op_file, device_asp_pol_file, domain, years)
+        preprocess_wang2018(device_text_op_file, device_asp_pol_file, domain, years, seed)
 
+
+def prepare_all_datasets(seed):
+    preprocess_laptops_and_restaurants_dai2019_cross_domain(seed=seed)
+    preprocess_devices_wang2018_cross_domain(seed=seed)
+    create_dev_sets(domains=['laptops', 'restaurants', 'device'])
 
 if __name__ == "__main__":
-    preprocess_laptops_and_restaurants_dai2019_cross_domain(opinion_labels=True)
-    # preprocess_devices_wang2018_cross_domain(DATA_DIR, 'Wang2018/addsenti_device.txt', 'Wang2018/aspect_op_device.txt')
+    prepare_all_datasets(seed=42)

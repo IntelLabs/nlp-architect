@@ -12,31 +12,36 @@ git clone --branch libert https://github.com/NervanaSystems/nlp-architect.git
 pip install -r nlp-architect/nlp_architect/models/libert/requirements.txt
 ```
 
-## Data
+## Prepare Data
 
-### Download and Pre-process SemEval14-15 Tokenized Dataset
+### SemEval14-15 (Tokenized) Dataset and KDD-2004 Dataset
 
-Data can be obtained from [this](https://github.com/HKUST-KnowComp/RINANTE) GitHub Repository ([MIT License](https://github.com/HKUST-KnowComp/RINANTE/blob/master/LICENSE)).
-Here are the commands for downloading and pre-processing train, dev and test datasets for laptops and restaurants domains.
+SemEval14-15 data contains reviews in restaurants and laptops domains. It can can be obtained from [this](https://github.com/HKUST-KnowComp/RINANTE) GitHub Repository ([MIT License](https://github.com/HKUST-KnowComp/RINANTE/blob/master/LICENSE)).
+KDD-2004 data contains reviews the devices domains. It can can be obtained from [this](https://github.com/happywwy/Recursive-Neural-Structural-Correspondence-Network) GitHub Repository (unlicenesed).
+Here are the commands for downloading and pre-processing train, dev and test datasets for laptops, restaurants and devices domains.
 
 Let's define some variables for these steps:
 
 ```bash
-export SRC_URL=https://raw.githubusercontent.com/HKUST-KnowComp/RINANTE/master/rinante-data
+export SE_URL=https://raw.githubusercontent.com/HKUST-KnowComp/RINANTE/master/rinante-data
 export LAPTOPS_FILES=laptops_test_sents.json,laptops_test_texts_tok_pos.txt,laptops_train_sents.json,laptops_train_texts_tok_pos.txt
 export RESTAURANTS_FILES=restaurants_test_sents.json,restaurants_test_texts_tok_pos.txt,restaurants_train_sents.json,restaurants_train_texts_tok_pos.txt
+export KDD_URL=https://raw.githubusercontent.com/happywwy/Recursive-Neural-Structural-Correspondence-Network/master/util/data_semEval
+export KDD_FILES=addsenti_device,aspect_op_device
 ```
 
 Download the datasets into the required folder structure:
 
 ```bash
 mkdir -p nlp-architect/nlp_architect/models/libert/data/Dai2019/semeval14/laptops && cd $_
-curl -# -L "$SRC_URL/semeval14/laptops/{$LAPTOPS_FILES}" -O --remote-name-all
+curl -# -L "$SE_URL/semeval14/laptops/{$LAPTOPS_FILES}" -O --remote-name-all
 mkdir ../restaurants && cd $_
-curl -# -L "$SRC_URL/semeval14/restaurants/{$RESTAURANTS_FILES}" -O --remote-name-all
+curl -# -L "$SE_URL/semeval14/restaurants/{$RESTAURANTS_FILES}" -O --remote-name-all
 mkdir -p ../../semeval15/restaurants && cd $_
-curl -# -L "$SRC_URL/semeval15/restaurants/{$RESTAURANTS_FILES}" -O --remote-name-all
-cd ../../../..
+curl -# -L "$SE_URL/semeval15/restaurants/{$RESTAURANTS_FILES}" -O --remote-name-all
+mkdir -p ../../../Wang2018 && cd $_
+curl -# -L "$KDD_URL/{$KDD_FILES}" -O --remote-name-all
+cd ../..
 ```
 
 Convert the datasets into CoNLL format, and then into CSV with added lingusitic info:
