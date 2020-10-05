@@ -7,7 +7,8 @@ from tqdm import tqdm
 import spacy
 from spacy.tokens import Doc
 
-CONLL_DIR = Path(os.path.realpath(__file__)).parent / 'data' / 'conll'
+DATA_DIR = Path(os.path.realpath(__file__)).parent / 'data'
+CONLL_DIR = DATA_DIR / 'conll'
 DOMAINS_DIR = CONLL_DIR / 'domains_all'
 
 class SpacyWithBertTokenizer:
@@ -176,3 +177,7 @@ def parse_in_domain(domains: list):
 
 if __name__ == "__main__":
     parse_cross_domain(domains=['restaurants', 'laptops', 'device'])
+    
+    # Save label set to label.txt
+    with open(DATA_DIR / 'csv' / 'labels.txt', 'w', encoding='utf-8') as labels_f:
+        labels_f.write('\n'.join(['O', 'B-ASP', 'I-ASP', 'B-OP', 'I-OP']))

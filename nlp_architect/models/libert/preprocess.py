@@ -174,25 +174,13 @@ def preprocess_laptops_and_restaurants_dai2019_cross_domain(seed, opinion_labels
             dai2019_single_to_conll_and_raw([p[0] for p in test], [p[1] for p in test], out_test_dir + 'test.txt', out_test_dir + 'raw_test.txt',
                 opinion_labels)
 
-    create_dev_sets(domains=['laptops', 'restaurants'])
-
-    labels = ['O', 'B-ASP', 'I-ASP']
-    if opinion_labels:
-        labels.extend(['B-OP', 'I-OP'])
-    
-    for dir in all_out_dirs:
-        with open(dir + 'labels.txt', 'w', encoding='utf-8') as labels_f:
-            labels_f.write('\n'.join(labels))
-
 def count_phrase_in_token_list(phrase, tokens):
     phrase_len = len(phrase)
     spans = []
     for i in range(len(tokens) - phrase_len + 1):
-        try:
-            if tokens[i: i + phrase_len] in (phrase , (phrase[:-1] + [phrase[-1] + 's'])):
-                spans.append((i, i + phrase_len))
-        except:
-            print('#')
+        if tokens[i: i + phrase_len] in (phrase , (phrase[:-1] + [phrase[-1] + 's'])):
+            spans.append((i, i + phrase_len))
+
     return spans
 
 def check_term_list(asp_phrases, op_phrases, tokens, i, stat):
@@ -331,10 +319,6 @@ def preprocess_wang2018(device_text_op_file, device_asp_pol_file, domain_b, doma
                     f.write('\n'.join(train) + '\n')
                 with open(out_test_dir + 'test.txt', 'w') as f:
                     f.write('\n'.join(test) + '\n')
-
-    for out_dir in all_out_dirs:
-        with open(out_dir + 'labels.txt', 'w', encoding='utf-8') as labels_f:
-            labels_f.write('\n'.join(['O', 'B-ASP', 'I-ASP', 'B-OP', 'I-OP']))
 
 def preprocess_devices_wang2018_cross_domain(seed):
     device_text_op_file, device_asp_pol_file = 'Wang2018/addsenti_device', 'Wang2018/aspect_op_device'
