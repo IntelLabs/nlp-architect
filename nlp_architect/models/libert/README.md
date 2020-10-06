@@ -1,8 +1,6 @@
 # LiBERT
 
-## Setup
-
-### Automated Setup
+## Automated Setup
 
 To set up code and data, execute the included script:
 
@@ -13,7 +11,7 @@ To set up code and data, execute the included script:
 These scripts clone the code, install requirements, and download and prepare the data, as detailed in the following sections.
 
 
-### Manual Setup
+## Manual Setup
 
 ### Prepare environment and clone repo
 
@@ -42,9 +40,9 @@ pip install torch==1.6.0+cu101 torchvision==0.7.0+cu101 -f https://download.pyto
 python -m spacy download en_core_web_lg
 ```
 
-## Prepare Data
+### Prepare Data
 
-### SemEval14-15 (Tokenized) Dataset and KDD-2004 Dataset
+#### SemEval14-15 (Tokenized) Dataset and KDD-2004 Dataset
 
 SemEval14-15 data contains reviews in restaurants and laptops domains. It can can be obtained from [this](https://github.com/HKUST-KnowComp/RINANTE) GitHub Repository ([MIT License](https://github.com/HKUST-KnowComp/RINANTE/blob/master/LICENSE)).
 KDD-2004 data contains reviews the devices domains. It can can be obtained from [this](https://github.com/happywwy/Recursive-Neural-Structural-Correspondence-Network) GitHub Repository (unlicenesed).
