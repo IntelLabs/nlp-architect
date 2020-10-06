@@ -1,8 +1,10 @@
+#! /usr/bin/env bash
 python3.6 -m pip install -U pip setuptools virtualenv
 python3.6 -m venv libert_env
 source libert_env/bin/activate
 git clone --branch libert https://github.com/NervanaSystems/nlp-architect.git
 pip install -U pip
+
 pip install -r /home/daniel_nlp/nlp-architect/nlp_architect/models/libert/requirements.txt
 python -m spacy download en_core_web_sm
 
