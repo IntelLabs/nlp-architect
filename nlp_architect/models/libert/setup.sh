@@ -6,7 +6,7 @@ git clone --branch libert https://github.com/NervanaSystems/nlp-architect.git
 pip install -U pip
 
 pip install -r /home/daniel_nlp/nlp-architect/nlp_architect/models/libert/requirements.txt
-python -m spacy download en_core_web_sm
+python -m spacy download en_core_web_lg
 
 export SE_URL=https://raw.githubusercontent.com/HKUST-KnowComp/RINANTE/master/rinante-data
 export LAPTOPS_FILES=laptops_test_sents.json,laptops_test_texts_tok_pos.txt,laptops_train_sents.json,laptops_train_texts_tok_pos.txt
