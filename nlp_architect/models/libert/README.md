@@ -6,8 +6,9 @@
 
 To set up code and data, execute the included script:
 
-For machines with CUDA 10.2: [setup.sh](https://github.com/NervanaSystems/nlp-architect/blob/libert/nlp_architect/models/libert/setup.sh)
-For machines with CUDA 10.1: [setup-cu101.sh](https://github.com/NervanaSystems/nlp-architect/blob/libert/nlp_architect/models/libert/setup-cu101.sh)
+*For machines with CUDA 10.2:* [setup.sh](https://github.com/NervanaSystems/nlp-architect/blob/libert/nlp_architect/models/libert/setup.sh)
+
+*For machines with CUDA 10.1:* [setup-cu101.sh](https://github.com/NervanaSystems/nlp-architect/blob/libert/nlp_architect/models/libert/setup-cu101.sh)
 
 These scripts clone the code, install requirements, and download and prepare the data, as detailed in the following sections.
 
