@@ -15,7 +15,7 @@
 # ******************************************************************************
 import math
 from os import PathLike
-from pathlib import Path
+from pathlib import Path, PosixPath
 from typing import Union
 
 from nlp_architect.common.core_nlp_doc import CoreNLPDoc
@@ -32,13 +32,17 @@ from nlp_architect.models.absa.utils import (
     _read_lexicon_from_csv,
     load_opinion_lex,
     _load_aspect_lexicon,
+    parse_docs,
+    parse_docs_bist,
+    _load_parsed_docs_from_dir,
 )
+from tqdm import tqdm
 
 INTENSIFIER_FACTOR = 0.3
 VERB_POS = {"VB", "VBD", "VBG", "VBN", "VBP", "VBZ"}
 
 
-class SentimentInference(object):
+class SentimentInference:
     """Main class for sentiment inference execution.
 
     Attributes:
@@ -53,6 +57,8 @@ class SentimentInference(object):
         aspect_lex: Union[str, PathLike],
         opinion_lex: Union[str, PathLike, dict],
         parse: bool = True,
+        parser="spacy",
+        spacy_model="en_core_web_sm",
     ):
         """Inits SentimentInference with given aspect and opinion lexicons."""
         INFERENCE_OUT.mkdir(parents=True, exist_ok=True)
@@ -62,13 +68,37 @@ class SentimentInference(object):
         self.aspect_lex = _load_aspect_lexicon(Path(aspect_lex))
         self.intensifier_lex = _read_lexicon_from_csv("IntensifiersLex.csv")
         self.negation_lex = _read_lexicon_from_csv("NegationSentLex.csv")
+        self.parser_name = parser
 
         if parse:
-            from nlp_architect.pipelines.spacy_bist import SpacyBISTParser
+            if parser == "bist":
+                from nlp_architect.pipelines.spacy_bist import SpacyBISTParser
 
-            self.parser = SpacyBISTParser(spacy_model="en")
+                self.parser = SpacyBISTParser(spacy_model=spacy_model)
+            elif parser == "spacy":
+                from nlp_architect.utils.text import SpacyInstance
+
+                disable = [
+                    "merge_noun_chunks",
+                    "ner",
+                    "entity_linker",
+                    "textcat",
+                    "entity_ruler",
+                    "sentencizer",
+                    "merge_entities",
+                ]
+                self.parser = SpacyInstance(
+                    model=spacy_model, disable=disable, ptb_pos=True, n_jobs=1
+                )
         else:
             self.parser = None
+
+    def parse_data(self, data: Union[PathLike, PosixPath], out_dir: Union[str, PathLike]):
+        if out_dir:
+            Path(out_dir).mkdir(parents=True, exist_ok=True)
+        parse_func = parse_docs_bist if self.parser_name == "bist" else parse_docs
+        parse_func(self.parser, data, out_dir=out_dir)
+        return out_dir
 
     def run(self, doc: str = None, parsed_doc: CoreNLPDoc = None) -> SentimentDoc:
         """Run SentimentInference on a single document.
@@ -78,8 +108,8 @@ class SentimentInference(object):
         """
         if not parsed_doc:
             if not self.parser:
-                raise RuntimeError("Parser not initialized (try parse=True at init )")
-            parsed_doc = self.parser.parse(doc)
+                raise RuntimeError("Parser not initialized (try parse=True at init)")
+            parsed_doc = self.parser.parse([doc])[0]
 
         sentiment_doc = None
         for sentence in parsed_doc.sentences:
@@ -102,6 +132,24 @@ class SentimentInference(object):
                     )
                 )
         return sentiment_doc
+
+    def run_multiple(
+        self,
+        data: Union[str, PathLike] = None,
+        parsed_data: Union[str, PathLike] = None,
+        out_dir: Union[str, PathLike] = INFERENCE_OUT,
+    ):
+        if not parsed_data:
+            if not self.parser:
+                raise RuntimeError("Parser not initialized (try parse=True at init)")
+            parsed_dir = Path(out_dir) / "parsed" / Path(data).stem
+            parsed_data = self.parse_data(data, out_dir=parsed_dir)
+
+        sentiment_docs = {}
+        for f, parsed_doc in tqdm(_load_parsed_docs_from_dir(out_dir)):
+            sentiment_doc = self.run(parsed_doc=parsed_doc)
+            sentiment_docs[f] = sentiment_doc
+        return sentiment_docs
 
     def _extract_intensifier_terms(self, toks, sentiment_index, polarity, sentence):
         """Extract intensifier events from sentence."""

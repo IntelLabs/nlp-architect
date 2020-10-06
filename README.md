@@ -16,8 +16,8 @@ A Deep Learning NLP/NLU library by <a href="https://www.intel.ai/research/">Inte
     <a href="https://github.com/NervanaSystems/nlp-architect/releases">
         <img alt="GitHub release" src="https://img.shields.io/github/release/NervanaSystems/nlp-architect.svg?style=flat-square">
     </a>
-    <a href="https://pepy.tech/project/nlp-architect/month">
-        <img src="https://pepy.tech/badge/nlp-architect/month">
+    <a href="https://pepy.tech/project/nlp-architect">
+        <img src="https://pepy.tech/badge/nlp-architect">
     </a>
 </p>
 

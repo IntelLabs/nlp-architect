@@ -22,7 +22,7 @@ import posixpath
 import re
 import sys
 import zipfile
-from os import PathLike, makedirs, remove
+from os import PathLike, makedirs
 from pathlib import Path
 from urllib.parse import urlparse
 
@@ -350,7 +350,6 @@ def download_unzip(
             download_unlicensed_file(url, sourcefile, zip_path)
             print("Unzipping...")
             uncompress_file(zip_path, dest_parent)
-            remove(zip_path)
     return unzipped_path
 
 
@@ -364,8 +363,7 @@ def line_count(file):
 
 
 def prepare_output_path(output_dir: str, overwrite_output_dir: str):
-    """Create output directory or throw error if exists and overwrite_output_dir is false
-    """
+    """Create output directory or throw error if exists and overwrite_output_dir is false"""
     if os.path.exists(output_dir) and os.listdir(output_dir) and not overwrite_output_dir:
         raise ValueError(
             "Output directory ({}) already exists and is not empty. Use --overwrite_output_dir "

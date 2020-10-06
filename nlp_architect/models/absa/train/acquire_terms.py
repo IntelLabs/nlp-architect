@@ -59,7 +59,7 @@ class AcquireTerms(object):
         aspect_candidates_list_final (list): final aspect candidates list
         aspect_candidate_list_raw (dict): all instances of candidate aspect terms
                                           across all iterations
-        """
+    """
 
     generic_opinion_lex_path = GENERIC_OP_LEX
     acquired_opinion_terms_path = LEXICONS_OUT / "generated_opinion_lex.csv"
@@ -173,7 +173,6 @@ class AcquireTerms(object):
                     ):
                         opinions.append(rule_5(rel_entry, text))
                         aspects.append(rule_6(rel_entry, relations, text))
-
                     self._add_opinion_term(opinions)
                     self._add_aspect_term(aspects)
 
@@ -325,9 +324,7 @@ class AcquireTerms(object):
         )
 
         self._write_candidate_opinion_lex()
-
         aspect_dict = _add_lemmas_aspect_lex(self.aspect_candidates_list_final)
-
         return aspect_dict
 
 
@@ -358,7 +355,9 @@ def _get_rel_list(parsed_sentence):
     gen_toks = []
     for tok in parsed_sentence:
         gen_toks.append(
-            DepRelationTerm(tok["text"], tok["lemma"], tok["pos"], tok["ner"], tok["start"])
+            DepRelationTerm(
+                tok.get("text"), tok.get("lemma"), tok.get("pos"), tok.get("ner"), tok.get("start")
+            )
         )
 
     for gen_tok, tok in zip(gen_toks, parsed_sentence):

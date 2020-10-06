@@ -26,7 +26,7 @@ logger = logging.getLogger(__name__)
 
 class SetExpand(object):
     """
-        Set expansion module, given a trained np2vec model.
+    Set expansion module, given a trained np2vec model.
     """
 
     def __init__(

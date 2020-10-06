@@ -157,17 +157,17 @@ class SequentialTaggingDataset(object):
 
 class CONLL2000(object):
     """
-        CONLL 2000 POS/chunking task data set (numpy)
+    CONLL 2000 POS/chunking task data set (numpy)
 
-        Arguments:
-            data_path (str): directory containing CONLL2000 files
-            sentence_length (int, optional): number of time steps to embed the data.
-                None value will not truncate vectors
-            max_word_length (int, optional): max word length in characters.
-                None value will not truncate vectors
-            extract_chars (boolean, optional): Yield Char RNN features.
-            lowercase (bool, optional): lower case sentence words
-        """
+    Arguments:
+        data_path (str): directory containing CONLL2000 files
+        sentence_length (int, optional): number of time steps to embed the data.
+            None value will not truncate vectors
+        max_word_length (int, optional): max word length in characters.
+            None value will not truncate vectors
+        extract_chars (boolean, optional): Yield Char RNN features.
+        lowercase (bool, optional): lower case sentence words
+    """
 
     dataset_files = {"train": "train.txt", "test": "test.txt"}
 

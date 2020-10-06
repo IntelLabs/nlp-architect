@@ -55,7 +55,7 @@ class DataProcessor(object):
 
 
 class Task:
-    """ A task definition class
+    """A task definition class
     Args:
         name (str): the name of the task
         processor (DataProcessor): a DataProcessor class containing a dataset loader

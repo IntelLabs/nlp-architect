@@ -101,7 +101,12 @@ class IntentExtractionModel(object):
     def _create_input_embed(sentence_len, is_extern_emb, token_emb_size, vocab_size):
         if is_extern_emb:
             in_layer = e_layer = tf.keras.layers.Input(
-                shape=(sentence_len, token_emb_size,), dtype="float32", name="tokens_input"
+                shape=(
+                    sentence_len,
+                    token_emb_size,
+                ),
+                dtype="float32",
+                name="tokens_input",
             )
         else:
             in_layer = tf.keras.layers.Input(

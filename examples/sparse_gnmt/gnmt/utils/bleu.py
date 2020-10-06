@@ -46,15 +46,15 @@ import math
 def _get_ngrams(segment, max_order):
     """Extracts all n-grams upto a given maximum order from an input segment.
 
-  Args:
-    segment: text segment from which n-grams will be extracted.
-    max_order: maximum length in tokens of the n-grams returned by this
-        methods.
+    Args:
+      segment: text segment from which n-grams will be extracted.
+      max_order: maximum length in tokens of the n-grams returned by this
+          methods.
 
-  Returns:
-    The Counter containing all n-grams upto max_order in segment
-    with a count of how many times each n-gram occurred.
-  """
+    Returns:
+      The Counter containing all n-grams upto max_order in segment
+      with a count of how many times each n-gram occurred.
+    """
     ngram_counts = collections.Counter()
     for order in range(1, max_order + 1):
         for i in range(0, len(segment) - order + 1):
@@ -66,18 +66,18 @@ def _get_ngrams(segment, max_order):
 def compute_bleu(reference_corpus, translation_corpus, max_order=4, smooth=False):
     """Computes BLEU score of translated segments against one or more references.
 
-  Args:
-    reference_corpus: list of lists of references for each translation. Each
-        reference should be tokenized into a list of tokens.
-    translation_corpus: list of translations to score. Each translation
-        should be tokenized into a list of tokens.
-    max_order: Maximum n-gram order to use when computing BLEU score.
-    smooth: Whether or not to apply Lin et al. 2004 smoothing.
+    Args:
+      reference_corpus: list of lists of references for each translation. Each
+          reference should be tokenized into a list of tokens.
+      translation_corpus: list of translations to score. Each translation
+          should be tokenized into a list of tokens.
+      max_order: Maximum n-gram order to use when computing BLEU score.
+      smooth: Whether or not to apply Lin et al. 2004 smoothing.
 
-  Returns:
-    3-Tuple with the BLEU score, n-gram precisions, geometric mean of n-gram
-    precisions and brevity penalty.
-  """
+    Returns:
+      3-Tuple with the BLEU score, n-gram precisions, geometric mean of n-gram
+      precisions and brevity penalty.
+    """
     matches_by_order = [0] * max_order
     possible_matches_by_order = [0] * max_order
     reference_length = 0
