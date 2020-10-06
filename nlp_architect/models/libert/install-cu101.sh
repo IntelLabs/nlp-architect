@@ -1,4 +1,4 @@
-
+#! /usr/bin/env bash
 python3.6 -m pip install -U pip setuptools virtualenv
 python3.6 -m venv libert_env
 source libert_env/bin/activate
