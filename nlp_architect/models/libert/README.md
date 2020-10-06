@@ -1,16 +1,44 @@
 # LiBERT
 
-## Installation
+## Setup
 
-Intructions for machines with CUDA 10.2 installed:
+### Automated Setup
+
+To set up code and data, execute the included script:
+
+For machines with CUDA 10.2: [setup.sh](https://github.com/NervanaSystems/nlp-architect/blob/libert/nlp_architect/models/libert/setup.sh)
+For machines with CUDA 10.1: [setup-cu101.sh](https://github.com/NervanaSystems/nlp-architect/blob/libert/nlp_architect/models/libert/setup-cu101.sh)
+
+These scripts clone the code, install requirements, and download and prepare the data, as detailed in the following sections.
+
+
+### Manual Setup
+
+### Prepare environment and clone repo
 
 ```bash
 python3.6 -m pip install -U pip setuptools virtualenv
 python3.6 -m venv libert_env
 source libert_env/bin/activate
 git clone --branch libert https://github.com/NervanaSystems/nlp-architect.git
-pip install --upgrade pip
+pip install -U pip
+```
+
+### Install requirements
+
+#### For machines with CUDA 10.2:
+
+```bash
 pip install -r nlp-architect/nlp_architect/models/libert/requirements.txt
+python -m spacy download en_core_web_lg
+```
+
+#### For machines with CUDA 10.1:
+
+```bash
+pip install -r nlp-architect/nlp_architect/models/libert/requirements_no_torch.txt
+pip install torch==1.6.0+cu101 torchvision==0.7.0+cu101 -f https://download.pytorch.org/whl/torch_stable.html
+python -m spacy download en_core_web_lg
 ```
 
 ## Prepare Data
