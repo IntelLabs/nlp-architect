@@ -15,16 +15,16 @@ To set up code and data, execute the included script:
 
 ```bash
 curl -O  https://raw.githubusercontent.com/NervanaSystems/nlp-architect/libert/nlp_architect/models/libert/setup.sh
-chmod +x setup.sh
-./setup.sh
+chmod +x setup.sh && ./setup.sh
+
 ```
 
 ### For machines with CUDA 10.1:
 
 ```bash
 curl -O  https://raw.githubusercontent.com/NervanaSystems/nlp-architect/libert/nlp_architect/models/libert/setup-cu101.sh
-chmod +x setup-cu101.sh
-./setup-cu101.sh
+chmod +x setup-cu101.sh && ./setup-cu101.sh
+
 ```
 
 These scripts clone the code, install requirements, and download and prepare the data, as detailed in the following sections.
