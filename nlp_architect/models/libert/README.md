@@ -2,7 +2,7 @@
 
 ## Requirements
 
-- Linux (tested on Ubuntu)
+- Linux (tested on Ubuntu 16.04)
 - Python 3.6.x
 - GPU + CUDA 10.1+
 
