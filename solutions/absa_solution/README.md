@@ -12,18 +12,18 @@ Producing sentiment knowledge at the aspect level (vs. sentence-level) provides 
 
 ## Video Demo
 
-[![Video Demo](https://raw.githubusercontent.com/NervanaSystems/nlp-architect/absa/nlp_architect/solutions/absa_solution/assets/video.png)](https://drive.google.com/open?id=1BLk0xkjIOqyRhNy4UQEFQpDF_KR_NMAd)
+[![Video Demo](https://raw.githubusercontent.com/NervanaSystems/nlp-architect/master/solutions/absa_solution/assets/video.png)](https://drive.google.com/open?id=1BLk0xkjIOqyRhNy4UQEFQpDF_KR_NMAd)
 *Figure 1*
 
 
 ## Workflow and UI
 
-![Workflow](http://nlp_architect.nervanasys.com/_images/absa_solution_workflow.png)  
+![Workflow](https://raw.githubusercontent.com/NervanaSystems/nlp-architect/master/solutions/absa_solution/assets/absa_solution_workflow.png)  
 *Figure 2*
 
 
 
-![Workflow](https://raw.githubusercontent.com/NervanaSystems/nlp-architect/absa/nlp_architect/solutions/absa_solution/assets/absa_solution_ui_3.png)
+![Workflow](https://raw.githubusercontent.com/NervanaSystems/nlp-architect/master/solutions/absa_solution/assets/absa_solution_ui_3.png)
 *Figure 3*  
 
 
