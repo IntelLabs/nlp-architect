@@ -1,5 +1,10 @@
 # LiBERT
 
+## Requirements
+
+- Linux (tested on Ubuntu)
+- Python 3.6
+
 ## Automated Setup
 
 To set up code and data, execute the included script:
