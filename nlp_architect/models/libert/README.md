@@ -1,20 +1,48 @@
 # LiBERT
 
-## Installation
+## Automated Setup
 
-Intructions for machines with CUDA 10.2 installed:
+To set up code and data, execute the included script:
+
+**For machines with CUDA 10.2:** [setup.sh](https://github.com/NervanaSystems/nlp-architect/blob/libert/nlp_architect/models/libert/setup.sh)
+
+**For machines with CUDA 10.1:** [setup-cu101.sh](https://github.com/NervanaSystems/nlp-architect/blob/libert/nlp_architect/models/libert/setup-cu101.sh)
+
+These scripts clone the code, install requirements, and download and prepare the data, as detailed in the following sections.
+
+
+## Manual Setup
+
+### Prepare environment and clone repo
 
 ```bash
 python3.6 -m pip install -U pip setuptools virtualenv
 python3.6 -m venv libert_env
 source libert_env/bin/activate
 git clone --branch libert https://github.com/NervanaSystems/nlp-architect.git
-pip install -r nlp-architect/nlp_architect/models/libert/requirements.txt
+pip install -U pip
 ```
 
-## Prepare Data
+### Install requirements
 
-### SemEval14-15 (Tokenized) Dataset and KDD-2004 Dataset
+#### For machines with CUDA 10.2:
+
+```bash
+pip install -r nlp-architect/nlp_architect/models/libert/requirements.txt
+python -m spacy download en_core_web_lg
+```
+
+#### For machines with CUDA 10.1:
+
+```bash
+pip install -r nlp-architect/nlp_architect/models/libert/requirements_no_torch.txt
+pip install torch==1.6.0+cu101 torchvision==0.7.0+cu101 -f https://download.pytorch.org/whl/torch_stable.html
+python -m spacy download en_core_web_lg
+```
+
+### Prepare Data
+
+#### SemEval14-15 (Tokenized) Dataset and KDD-2004 Dataset
 
 SemEval14-15 data contains reviews in restaurants and laptops domains. It can can be obtained from [this](https://github.com/HKUST-KnowComp/RINANTE) GitHub Repository ([MIT License](https://github.com/HKUST-KnowComp/RINANTE/blob/master/LICENSE)).
 KDD-2004 data contains reviews the devices domains. It can can be obtained from [this](https://github.com/happywwy/Recursive-Neural-Structural-Correspondence-Network) GitHub Repository (unlicenesed).
