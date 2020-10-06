@@ -3,7 +3,8 @@
 ## Requirements
 
 - Linux (tested on Ubuntu)
-- Python 3.6
+- Python 3.6.X
+- GPU + CUDA 10.1+
 
 ## Automated Setup
 
