@@ -1,15 +1,33 @@
 # LiBERT
 
+## Requirements
+
+- Linux (tested on Ubuntu 16.04)
+- Python 3.6.x
+- GPU + CUDA 10.1+
+
 ## Automated Setup
 
 To set up code and data, execute the included script:
 
-**For machines with CUDA 10.2:** [setup.sh](https://github.com/NervanaSystems/nlp-architect/blob/libert/nlp_architect/models/libert/setup.sh)
 
-**For machines with CUDA 10.1:** [setup-cu101.sh](https://github.com/NervanaSystems/nlp-architect/blob/libert/nlp_architect/models/libert/setup-cu101.sh)
+### For machines with CUDA 10.2:
+
+```bash
+curl -O  https://raw.githubusercontent.com/NervanaSystems/nlp-architect/libert/nlp_architect/models/libert/setup.sh
+chmod +x setup.sh && ./setup.sh
+
+```
+
+### For machines with CUDA 10.1:
+
+```bash
+curl -O  https://raw.githubusercontent.com/NervanaSystems/nlp-architect/libert/nlp_architect/models/libert/setup-cu101.sh
+chmod +x setup-cu101.sh && ./setup-cu101.sh
+
+```
 
 These scripts clone the code, install requirements, and download and prepare the data, as detailed in the following sections.
-
 
 ## Manual Setup
 
