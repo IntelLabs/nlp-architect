@@ -192,11 +192,11 @@ def check_term_list(asp_phrases, op_phrases, tokens, i, stat):
             spans = count_phrase_in_token_list(phrase, tokens)
             count = len(spans)
             if count == 0:
-                print("Missing " + ' '.join(phrase) + "' in line no. " + str(i + 1))
+                print("Missing '" + ' '.join(phrase) + "' in line no. " + str(i + 1))
                 stat['miss'] += 1
                 error = True
             if count > 1:
-                print("Multiple " + ' '.join(phrase) + "' in line no. " + str(i + 1))
+                print("Multiple '" + ' '.join(phrase) + "' in line no. " + str(i + 1))
                 # error = True
                 stat['mul'] += 1
             if count !=1:
@@ -332,4 +332,4 @@ def prepare_all_datasets(seed):
     create_dev_sets(domains=['laptops', 'restaurants', 'device'])
 
 if __name__ == "__main__":
-    prepare_all_datasets(seed=42)
+    prepare_all_datasets(seed=7)
