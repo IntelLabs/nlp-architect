@@ -18,11 +18,11 @@ def create_dev_sets(domains: list):
         for split in range(1, 4):
             src_dir = CONLL_DIR / (domain_b + '_to_' + domain_a + '_' + str(split))
             try:
-                train_text = open(src_dir / 'train.txt').read().strip().split('\n\n')
+                train_text = open(src_dir / 'train.txt', encoding='utf-8').read().strip().split('\n\n')
                 dev_len = int(len(train_text) / 3)
                 dev_text = train_text[:dev_len]
                 target_dir = CONLL_DIR / (domain_a + '_to_' + domain_b + '_' + str(split))
-                open(target_dir / 'dev.txt', 'w').write('\n\n'.join(dev_text) + '\n\n')
+                open(target_dir / 'dev.txt', 'w', encoding='utf-8').write('\n\n'.join(dev_text) + '\n\n')
             except Exception as e:
                 raise e
 
@@ -248,7 +248,7 @@ def wang2018_single_to_conll(data_dir, text_op_file, asp_pol_file):
             all_aspects.append(aspects)
     
     stat = {'miss': 0, 'mul': 0, 'err': 0}
-    # with open(data_dir + conll_out, 'w') as out_conll:
+    # with open(data_dir + conll_out, 'w', encoding='utf-8') as out_conll:
     for i, (tokens, aspects, opinions) in enumerate(zip(all_tokens, all_aspects, all_opinions)):
         asp_spans, op_spans = check_term_list(aspects, opinions, tokens, i, stat)
         conll_sentence = wang_spans_to_conll_sentence(tokens, asp_spans, op_spans)
@@ -315,9 +315,9 @@ def preprocess_wang2018(device_text_op_file, device_asp_pol_file, domain_b, doma
                 dai2019_single_to_conll_and_raw([p[0] for p in test], [p[1] for p in test], out_test_dir + 'test.txt', out_test_dir + 'raw_test.txt',
                     opinion_labels=True)           
             else:
-                with open(out_train_dir + 'train.txt', 'w') as f:
+                with open(out_train_dir + 'train.txt', 'w', encoding='utf-8') as f:
                     f.write('\n'.join(train) + '\n')
-                with open(out_test_dir + 'test.txt', 'w') as f:
+                with open(out_test_dir + 'test.txt', 'w', encoding='utf-8') as f:
                     f.write('\n'.join(test) + '\n')
 
 def preprocess_devices_wang2018_cross_domain(seed):

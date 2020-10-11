@@ -316,5 +316,5 @@ class LoggingCallback(pl.Callback):
         print(absa_utils.tabular(trainer.callback_metrics, 'Metrics'))
 
         log_dir = Path(trainer.logger.experiment.log_dir)
-        with open(log_dir / 'sent_f1.txt', 'w') as f1_file:
+        with open(log_dir / 'sent_f1.txt', 'w', encoding='utf-8') as f1_file:
             f1_file.writelines([f'{v}\n' for v in pl_module.sentence_metrics['f1']])

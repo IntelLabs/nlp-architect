@@ -84,14 +84,14 @@ def parse_file(txt_path, spacy_bert_tok, overwrite=True):
     os.makedirs(Path(out_path).parent, exist_ok=True)
 
     if overwrite or not os.path.exists(out_path):
-        with open(txt_path) as input_f:
+        with open(txt_path, encoding='utf-8') as input_f:
             space_tok_reviews = []
             reviews_tok_labels = []
             for toks, labels in conll_iter(input_f):
                 space_tok_reviews.append(toks)
                 reviews_tok_labels.append(labels)
 
-            with open(out_path, 'w') as csv_file:
+            with open(out_path, 'w', encoding='utf-8') as csv_file:
                 writer = csv.writer(csv_file)
                 parsed_reviews = spacy_bert_tok.pipe(space_tok_reviews)
                 writer.writerow(['TOKEN', 'LABEL', 'HEAD', 'HEAD_WORD', 'DEP_REL', 'POS', 'SUB_TOKENS'])

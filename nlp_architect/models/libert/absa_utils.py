@@ -40,7 +40,7 @@ from significance import significance_from_cfg as significance
 LIBERT_DIR = Path(realpath(__file__)).parent
 LOG_ROOT = LIBERT_DIR / 'logs'
 
-DEP_REL_MAP = {rel.strip(): i + 1 for i, rel in enumerate(open(LIBERT_DIR / 'dep_relations.txt'))}
+DEP_REL_MAP = {rel.strip(): i + 1 for i, rel in enumerate(open(LIBERT_DIR / 'dep_relations.txt', encoding='utf-8'))}
 
 @dataclass
 class InputExample:
@@ -87,7 +87,7 @@ def read_examples_from_file(data_dir, mode: Union[Split, str]) -> List[InputExam
     guid_index = 1
     examples = []
     empty_row = ['_'] * 7
-    with open(file_path, encoding="utf-8") as f:
+    with open(file_path, encoding='utf-8') as f:
         words, labels, heads, head_words, syn_rels, pos_tags, sub_toks = [], [], [], [], [], [], []
         reader = csv.reader(f)
         next(reader, None)
@@ -281,7 +281,7 @@ def convert_examples_to_features(
     return features
 
 def get_labels(path: str) -> List[str]:
-    with open(path) as labels_f:
+    with open(path, encoding='utf-8') as labels_f:
         return labels_f.read().splitlines()
 
 def detailed_metrics(y_true, y_pred):
@@ -370,7 +370,7 @@ def write_asp_op_f1_summary(cfg, exp_id, seed=None):
     filename = f'summary_table_{exp_id}'
     if seed:
         filename += f'_seed_{seed}'
-    with open(LOG_ROOT / exp_id / f'{filename}.csv', 'w', newline='') as csv_file:
+    with open(LOG_ROOT / exp_id / f'{filename}.csv', 'w', newline='', encoding='utf-8') as csv_file:
         csv_writer = csv.writer(csv_file)
         header = ['']
         for dataset in cfg.data:
@@ -436,7 +436,7 @@ def write_summary_tables(cfg, exp_id):
         write_asp_op_f1_summary(cfg, exp_id, seed=seed)
 
 def get_score_from_csv(csv_file, metric):
-    with open(csv_file) as csv_file:
+    with open(csv_file, encoding='utf-8') as csv_file:
         csv_reader = csv.reader(csv_file)
         rows = list(csv_reader)
         metric_idx = rows[0].index(metric)
@@ -444,7 +444,7 @@ def get_score_from_csv(csv_file, metric):
         return metric_val
 
 def get_score_from_csv_agg(csv_dir, metric):
-    with open(csv_dir / f'{metric}.csv') as csv_file:
+    with open(csv_dir / f'{metric}.csv', encoding='utf-8') as csv_file:
         csv_reader = csv.reader(csv_file)
         rows = list(csv_reader)
         mean = float(rows[1][1]) * 100

@@ -26,12 +26,12 @@ import matplotlib.pyplot as plt
 
 def t_test(filename_A, filename_B):
     try:
-        with open(filename_A) as f:
+        with open(filename_A, encoding='utf-8') as f:
             data_A = f.read().splitlines()
     except FileNotFoundError as error:
         log.error("\nBaseline log does not exist. Please generate the baseline model first.")
         raise error
-    with open(filename_B) as f:
+    with open(filename_B, encoding='utf-8') as f:
         data_B = f.read().splitlines()
     data_A = list(map(float, data_A))
     data_B = list(map(float, data_B))
@@ -189,7 +189,7 @@ def significance_report(
 
     log.info(res_str)
 
-    with open(log_root / f"significance_{model}_vs_{baseline}_{exp_id}.txt", 'w') as report_file:
+    with open(log_root / f"significance_{model}_vs_{baseline}_{exp_id}.txt", 'w', encoding='utf-8') as report_file:
         report_file.write(res_str)
 
     return

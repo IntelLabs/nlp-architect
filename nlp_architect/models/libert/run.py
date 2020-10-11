@@ -77,7 +77,7 @@ def main(config_yaml):
     log_dir = LOG_ROOT / exp_tag
     gpus_log_dir = log_dir / 'gpus'
     os.makedirs(gpus_log_dir, exist_ok=True)
-    open(log_dir / 'time.log', 'w').write(f'{time_now}\n')
+    open(log_dir / 'time.log', 'w', encoding='utf-8').write(f'{time_now}\n')
     set_as_latest(log_dir)
     this_module = realpath(__file__)
 
@@ -93,8 +93,8 @@ def main(config_yaml):
                 rnd_init, data = run_queue.popleft()
                 args = config_yaml, exp_tag, rnd_init, data, log_dir, cfg.metric
                 cmd = [python] + [this_module] + [f'{_}' for _ in args]
-                with open(gpus_log_dir / f'gpu_{gpu_i}.log', 'a') as log_file:
-                    proc = Popen(cmd, bufsize=-1, stdout=log_file, stderr=STDOUT)
+                with open(gpus_log_dir / f'gpu_{gpu_i}.log', 'a', encoding='utf-8') as log_file:
+                    proc = Popen(cmd, bufsize=-1, stdout=log_file, stderr=STDOUT, encoding='utf-8')
 
                 print(f"PID: {proc.pid}: yaml: {config_yaml}.yaml, time: {exp_tag}, " \
                     f"rnd_init: {rnd_init}, data: {data}, gpu: {gpu_i}")
@@ -117,7 +117,7 @@ def main(config_yaml):
     post_analysis(cfg, log_dir, exp_tag, model_str)
 
     # Save termination time
-    open(log_dir / 'time.log', 'a').write(pretty_datetime())
+    open(log_dir / 'time.log', 'a', encoding='utf-8').write(pretty_datetime())
 
 def post_analysis(cfg, log_dir, time_tag, model_str):
     # Run significance tests if baseline exists and last run was on model
