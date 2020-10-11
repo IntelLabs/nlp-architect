@@ -332,4 +332,4 @@ def prepare_all_datasets(seed):
     create_dev_sets(domains=['laptops', 'restaurants', 'device'])
 
 if __name__ == "__main__":
-    prepare_all_datasets(seed=7)
+    prepare_all_datasets(seed=3)
