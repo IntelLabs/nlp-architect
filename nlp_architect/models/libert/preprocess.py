@@ -192,11 +192,11 @@ def check_term_list(asp_phrases, op_phrases, tokens, i, stat):
             spans = count_phrase_in_token_list(phrase, tokens)
             count = len(spans)
             if count == 0:
-                print("Missing '" + ' '.join(phrase) + "' in line no. " + str(i + 1))
                 stat['miss'] += 1
-                error = True
+                # print(str(stat['miss']) + ": Missing '" + ' '.join(phrase) + "' in line no. " + str(i + 1))
+                # error = True
             if count > 1:
-                print("Multiple '" + ' '.join(phrase) + "' in line no. " + str(i + 1))
+                # print("Multiple '" + ' '.join(phrase) + "' in line no. " + str(i + 1))
                 # error = True
                 stat['mul'] += 1
             if count !=1:
@@ -218,7 +218,7 @@ def wang_spans_to_conll_sentence(tokens, asp_spans, op_spans):
             for i in range(span[0] + 1, span[1]):
                 labels[i] = 'I-ASP' if spans is asp_spans else 'I-OP'
     
-    return '\n'.join(([t + '\t' + l for t, l in zip(tokens, labels)])) + '\n\n'
+    return '\n'.join(([t + '\t' + l for t, l in zip(tokens, labels)])) + '\n'
 
 def wang2018_single_to_conll(data_dir, text_op_file, asp_pol_file):
     data_dir = str(data_dir) + '/'
@@ -332,4 +332,4 @@ def prepare_all_datasets(seed):
     create_dev_sets(domains=['laptops', 'restaurants', 'device'])
 
 if __name__ == "__main__":
-    prepare_all_datasets(seed=3)
+    prepare_all_datasets(seed=16)
