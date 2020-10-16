@@ -23,7 +23,7 @@ parse_probs: false
 replace_final: false
 duplicated_rels: false
 transpose: false
-use_syntactic_rels: false
+use_syntactic_rels: true
 
 do_train: true
 do_predict: true

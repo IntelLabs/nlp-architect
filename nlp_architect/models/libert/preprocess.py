@@ -255,9 +255,9 @@ def wang2018_single_to_conll(data_dir, text_op_file, asp_pol_file):
         # out_conll.write(conll_sentence)
         conll_sents.append(conll_sentence)
             
-    print("\nMissing", stat['miss'])
-    print("Multiple", stat['mul'])
-    print('Erroneus lines', stat['err'])
+    # print("\nMissing", stat['miss'])
+    # print("Multiple", stat['mul'])
+    # print('Erroneus lines', stat['err'])
     return conll_sents
 
 def get_all_sentences_of_domain(data_dir, domain, years):
