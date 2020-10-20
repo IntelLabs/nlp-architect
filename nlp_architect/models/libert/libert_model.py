@@ -27,6 +27,8 @@ from transformers.modeling_bert import BertEncoder, BertLayer, \
 from transformers import BertForTokenClassification, BertModel
 from pytorch_lightning import _logger as log
 
+REL_EMBED_SIZE = 64
+
 class LiBertConfig(BertConfig):
     def __init__(self, **kwargs):
         super().__init__()
@@ -46,7 +48,12 @@ class LiBertForToken(BertForTokenClassification):
     def __init__(self, config):
         super(LiBertForToken, self).__init__(config)
         self.bert = LiBertModel(config)
-        # self.classifier = nn.Linear(config.hidden_size + rel_embedding_size, config.num_labels)
+        self.classifier = nn.Linear(config.hidden_size + REL_EMBED_SIZE, config.num_labels)
+
+        if config.use_syntactic_rels:
+            self.rel_embed_layer = nn.Embedding(52, REL_EMBED_SIZE, padding_idx=0)
+        else:
+            self.rel_embed_layer = None
 
     def forward(self, input_ids=None, attention_mask=None, token_type_ids=None, position_ids=None,
                 head_mask=None, inputs_embeds=None, labels=None, output_attentions=None,
@@ -65,8 +72,10 @@ class LiBertForToken(BertForTokenClassification):
         )
         sequence_output = outputs[0]
 
-        sequence_output = self.dropout(sequence_output) # add/concatenate syn_rels here
-        logits = self.classifier(sequence_output)
+        rel_embeds = self.rel_embed_layer(syn_rels)
+        sequence_with_relations = torch.cat((sequence_output, rel_embeds), 2)
+        sequence_with_relations = self.dropout(sequence_with_relations)
+        logits = self.classifier(sequence_with_relations)
 
         outputs = (logits,) + outputs[2:]  # add hidden states and attention if they are here
         if labels is not None:
@@ -89,12 +98,8 @@ class LiBertForToken(BertForTokenClassification):
 class LiBertModel(BertModel):
     def __init__(self, config):
         super(LiBertModel, self).__init__(config)
-        if config.use_syntactic_rels:
-            rel_embed_layer = nn.Embedding(52, 768, padding_idx=0)
-        else:
-            rel_embed_layer = None
-            
-        self.encoder = LiBertEncoder(config, rel_embed_layer)
+
+        self.encoder = LiBertEncoder(config, None)
 
     def forward(self, input_ids=None, attention_mask=None, token_type_ids=None, position_ids=None,
                 head_mask=None, inputs_embeds=None, encoder_hidden_states=None,
@@ -407,9 +412,9 @@ class LiBertSelfOutput(BertSelfOutput):
             hidden_states = dense_output_12_heads + dense_output_13_head
 
             ####### Add Syntactic Relations #######
-            if self.use_syntactic_rels:
-                rel_embeds = self.syn_rel_layer(syn_rels)
-                hidden_states += rel_embeds
+            # if self.use_syntactic_rels:
+            #     rel_embeds = self.syn_rel_layer(syn_rels)
+            #     hidden_states += rel_embeds
 
         hidden_states = self.dropout(hidden_states)
         hidden_states = self.LayerNorm(hidden_states + input_tensor)

@@ -2,10 +2,10 @@ max_epochs: 10
 model_type: libert # bert or libert
 base_init: [true, false]
 
-data: rl
+data: rl lr
 limit_data: 1.0
 splits: 3
-seeds: [7]
+seeds: [7, 25, 26]
 tag: # optional: name this experiment version
 metric: asp_f1
 baseline_str: libert_rnd_init
@@ -23,7 +23,7 @@ parse_probs: false
 replace_final: false
 duplicated_rels: false
 transpose: false
-use_syntactic_rels: false
+use_syntactic_rels: true
 
 do_train: true
 do_predict: true
