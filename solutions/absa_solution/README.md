@@ -84,7 +84,7 @@ When running for the first time, close the remote session (`Ctrl-D`) and reconne
 ```bash
     ssh USER@REMOTE_HOST -L 5006:REMOTE_HOST:5006
     source absa_env/bin/activate
-    python nlp-architect/nlp_architect/solutions/absa_solution/ui.py
+    python nlp-architect/solutions/absa_solution/ui.py
 ```
 
 Open web browser to:  
