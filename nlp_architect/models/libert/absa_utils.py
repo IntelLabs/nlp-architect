@@ -366,10 +366,8 @@ def set_as_latest(log_dir):
         pass
     os.symlink(log_dir, link, target_is_directory=True)
 
-def write_asp_op_f1_summary(cfg, exp_id, seed=None):
+def write_summary_tables(cfg, exp_id):
     filename = f'summary_table_{exp_id}'
-    if seed:
-        filename += f'_seed_{seed}'
     with open(LOG_ROOT / exp_id / f'{filename}.csv', 'w', newline='', encoding='utf-8') as csv_file:
         csv_writer = csv.writer(csv_file)
         header = ['']
@@ -377,41 +375,52 @@ def write_asp_op_f1_summary(cfg, exp_id, seed=None):
             ds_split = dataset.split('_')
             ds_str = f"{ds_split[0][0]}-->{ds_split[2][0]}".upper()
             header.extend([ds_str, f'{ds_str} '])
-        sub_header = [''] + ['AS', 'OP'] * len(cfg.data)
+        sub_header = ['Seeds Average'] + ['AS', 'OP'] * len(cfg.data) + ['ASP_MEAN', 'OP_MEAN']
         csv_writer.writerow(header)
         csv_writer.writerow(sub_header)
 
         baseline_row, baseline_std_row, model_row, model_std_row = [], [], [], []
 
-        if seed is None:
-            for dataset in cfg.data:
-                dataset_dir = LOG_ROOT / exp_id / dataset
-                baseline_dir = dataset_dir / 'libert_rnd_init_AGGREGATED_baseline_test' / 'csv'
-                model_dir = dataset_dir / f'libert_AGGREGATED_{exp_id}_test' / 'csv'
+        for dataset in cfg.data:
+            dataset_dir = LOG_ROOT / exp_id / dataset
+            baseline_dir = dataset_dir / 'libert_rnd_init_AGGREGATED_baseline_test' / 'csv'
+            model_dir = dataset_dir / f'libert_AGGREGATED_{exp_id}_test' / 'csv'
 
-                baseline_mean_asp, baseline_std_asp = get_score_from_csv_agg(baseline_dir, 'asp_f1')
-                baseline_mean_op, baseline_std_op = get_score_from_csv_agg(baseline_dir, 'op_f1')
-                model_mean_asp, model_std_asp = get_score_from_csv_agg(model_dir, 'asp_f1')
-                model_mean_op, model_std_op = get_score_from_csv_agg(model_dir, 'op_f1')
+            baseline_mean_asp, baseline_std_asp = get_score_from_csv_agg(baseline_dir, 'asp_f1')
+            baseline_mean_op, baseline_std_op = get_score_from_csv_agg(baseline_dir, 'op_f1')
+            model_mean_asp, model_std_asp = get_score_from_csv_agg(model_dir, 'asp_f1')
+            model_mean_op, model_std_op = get_score_from_csv_agg(model_dir, 'op_f1')
 
-                baseline_row.extend([baseline_mean_asp, baseline_mean_op])
-                model_row.extend([model_mean_asp, model_mean_op])
-                baseline_std_row.extend([baseline_std_asp, baseline_std_op])
-                model_std_row.extend([model_std_asp, model_std_op])
+            baseline_row.extend([baseline_mean_asp, baseline_mean_op])
+            model_row.extend([model_mean_asp, model_mean_op])
+            baseline_std_row.extend([baseline_std_asp, baseline_std_op])
+            model_std_row.extend([model_std_asp, model_std_op])
 
-            deltas_row = np.array(model_row) - np.array(baseline_row)
-            format_list = lambda means, stds: [f'{m:.2f} ({s:.2f})' for m, s in zip(means, stds)]
-            csv_writer.writerow(['baseline'] + format_list(baseline_row, baseline_std_row))
-            csv_writer.writerow(['model'] + format_list(model_row, model_std_row))
-            csv_writer.writerow(['delta'] + [f'{d:.2f}' for d in deltas_row])
+        for row in baseline_row, model_row:
+            asp_mean = np.mean([row[i] for i in range(0, len(row), 2)])
+            op_mean = np.mean([row[i] for i in range(1, len(row), 2)])
+            row.extend([asp_mean, op_mean])
 
-        else:
+        deltas_row = np.array(model_row) - np.array(baseline_row)
+        format_list = lambda means, stds: [f'{m:.2f} ({s:.2f})' for m, s in zip(means, stds)]
+        csv_writer.writerow(['baseline'] + format_list(baseline_row[:-2], baseline_std_row) + baseline_row[-2:])
+        csv_writer.writerow(['model'] + format_list(model_row[:-2], model_std_row) + model_row[-2:])
+        csv_writer.writerow(['delta'] + [f'{d:.2f}' for d in deltas_row])
+
+        for seed in cfg.seeds:
+            baseline_row, baseline_std_row, model_row, model_std_row = [], [], [], []
+            csv_writer.writerow([''] * ((2 * len(cfg.data)) + 3))
+            seed_header = [f'Seed {seed}'] + ['AS', 'OP'] * len(cfg.data) + ['ASP_MEAN', 'OP_MEAN']
+            csv_writer.writerow(seed_header)
+
             for dataset in cfg.data:
                 base_asp, model_asp, base_op, model_op = [], [], [], []
                 for split in cfg.splits:
                     dataset_dir = LOG_ROOT / exp_id / dataset
-                    baseline_csv = dataset_dir / f'libert_rnd_init_seed_{seed}_split_{split}_test' / 'version_baseline' / 'metrics.csv'
-                    model_csv = dataset_dir / f'libert_seed_{seed}_split_{split}_test' / f'version_{exp_id}' / 'metrics.csv'
+                    baseline_csv = dataset_dir / f'libert_rnd_init_seed_{seed}_split_{split}_test'\
+                        / 'version_baseline' / 'metrics.csv'
+                    model_csv = dataset_dir / f'libert_seed_{seed}_split_{split}_test'\
+                        / f'version_{exp_id}' / 'metrics.csv'
 
                     base_asp.append(get_score_from_csv(baseline_csv, 'asp_f1'))
                     base_op.append(get_score_from_csv(baseline_csv, 'op_f1'))
@@ -423,17 +432,16 @@ def write_asp_op_f1_summary(cfg, exp_id, seed=None):
                 baseline_std_row.extend([np.array(base_asp).std(), np.array(base_op).std()])
                 model_std_row.extend([np.array(model_asp).std(), np.array(model_op).std()])
 
+            for row in baseline_row, model_row:
+                asp_mean = np.mean([row[i] for i in range(0, len(row), 2)])
+                op_mean = np.mean([row[i] for i in range(1, len(row), 2)])
+                row.extend([asp_mean, op_mean])
+
             deltas_row = np.array(model_row) - np.array(baseline_row)
             format_list = lambda means, stds: [f'{m:.2f} ({s:.2f})' for m, s in zip(means, stds)]
-            csv_writer.writerow(['baseline'] + format_list(baseline_row, baseline_std_row))
-            csv_writer.writerow(['model'] + format_list(model_row, model_std_row))
+            csv_writer.writerow(['baseline'] + format_list(baseline_row[:-2], baseline_std_row) + baseline_row[-2:])
+            csv_writer.writerow(['model'] + format_list(model_row[:-2], model_std_row) + model_row[-2:])
             csv_writer.writerow(['delta'] + [f'{d:.2f}' for d in deltas_row])
-        
-def write_summary_tables(cfg, exp_id):
-    write_asp_op_f1_summary(cfg, exp_id)
-
-    for seed in cfg.seeds:
-        write_asp_op_f1_summary(cfg, exp_id, seed=seed)
 
 def get_score_from_csv(csv_file, metric):
     with open(csv_file, encoding='utf-8') as csv_file:
@@ -450,7 +458,7 @@ def get_score_from_csv_agg(csv_dir, metric):
         mean = float(rows[1][1]) * 100
         std = float(rows[1][2]) * 100
         return mean, std
-      
+
 def pretty_datetime():
     return dt.now().strftime("%a_%b_%d_%H:%M:%S")
 
