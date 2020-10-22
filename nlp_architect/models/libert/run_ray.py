@@ -23,7 +23,8 @@ from os.path import realpath
 from itertools import product
 import pytorch_lightning as pl
 from pytorch_lightning import _logger as log
-from bert_for_token import BertForToken
+#from bert_for_token import BertForToken
+from kibert_for_token import BertForToken
 from log_aggregator import aggregate
 from absa_utils import load_config, set_as_latest, write_summary_tables, pretty_datetime
 from significance import significance_from_cfg
@@ -36,7 +37,7 @@ LIBERT_DIR = Path(realpath(__file__)).parent
 LOG_ROOT = LIBERT_DIR / 'logs'
 GPUS_LOG = LOG_ROOT / 'gpus'
 
-@ray.remote(max_calls=1)
+@ray.remote(num_gpus=1, max_calls=1)
 def run_data(task_idx, cfg_yaml, time, rnd_init, data, log_dir, metric):
     # Routing output to log files
     tasks_log_dir = log_dir / 'tasks'
@@ -105,11 +106,11 @@ def main(config_yaml):
 
     # Parallel: each experiment runs on a single GPU
     if cfg.parallel:
-        ray.init(num_gpus=num_gpus_req)
+        ray.init(num_gpus=num_gpus_req, dashboard_host="0.0.0.0")
     
     # Sequential: run each experiemnt in turn (on all gpus)
     else:
-        ray.init(num_gpus=num_gpus_req, local_mode=True)
+        ray.init(num_gpus=num_gpus_req, dashboard_host="0.0.0.0", local_mode=True)
 
     # Setting up log dir
     time_now = pretty_datetime()
@@ -128,7 +129,8 @@ def main(config_yaml):
         args_list.append(args)
 
     # Launching Ray tasks
-    futures = [run_data.options(num_gpus=1).remote(*args) for args in args_list]
+    #futures = [run_data.options(num_gpus=1).remote(*args) for args in args_list]
+    futures = [run_data.remote(*args) for args in args_list]
     ray.get(futures)
 
     post_analysis(cfg, log_dir, exp_id)

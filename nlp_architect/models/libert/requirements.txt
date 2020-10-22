@@ -1,5 +1,5 @@
 tensorflow==2.3.0
-transformers==3.0.2
+transformers==3.3.1
 pytorch-lightning==0.8.5
 tensorboard==2.3.0
 scikit-learn==0.23.1
@@ -10,3 +10,7 @@ spacy==2.3.2
 torch==1.6.0
 matplotlib==3.3.1
 test-tube==0.7.5
+datasets==1.1.2
+faiss-gpu==1.6.3
+tabulate==0.8.7
+ray==1.0.0
