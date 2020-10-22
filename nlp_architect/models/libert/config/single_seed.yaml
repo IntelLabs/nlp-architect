@@ -1,18 +1,18 @@
-max_epochs: 10
+max_epochs: 2
 model_type: libert # bert or libert
 base_init: [true, false]
 
-data: rl lr
-limit_data: 1.0
-splits: 3
-seeds: [7, 25, 26]
+data: rl
+limit_data: 0.1
+splits: 2
+seeds: [26]
 tag: # optional: name this experiment version
 metric: asp_f1
 baseline_str: libert_rnd_init
 baseline_version: version_baseline
 
 num_workers: 44
-gpus: [0, 1, 2, 3]
+gpus: [0, 1, 3]
 parallel: true
 
 li_layer: #5

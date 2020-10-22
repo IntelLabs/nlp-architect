@@ -27,7 +27,7 @@ from transformers.modeling_bert import BertEncoder, BertLayer, \
 from transformers import BertForTokenClassification, BertModel
 from pytorch_lightning import _logger as log
 
-REL_EMBED_SIZE = 64
+REL_EMBED_SIZE = 768
 
 class LiBertConfig(BertConfig):
     def __init__(self, **kwargs):
@@ -47,17 +47,16 @@ class LiBertConfig(BertConfig):
 class LiBertForToken(BertForTokenClassification):
     def __init__(self, config):
         super(LiBertForToken, self).__init__(config)
-        self.bert = LiBertModel(config)
-        self.classifier = nn.Linear(config.hidden_size + REL_EMBED_SIZE, config.num_labels)
 
-        if config.use_syntactic_rels:
-            self.rel_embed_layer = nn.Embedding(52, REL_EMBED_SIZE, padding_idx=0)
-        else:
-            self.rel_embed_layer = None
+        self.rel_embed_layer = nn.Embedding(52, REL_EMBED_SIZE, padding_idx=0) if config.use_syntactic_rels else None
+        self.bert = LiBertModel(config, self.rel_embed_layer)
+
+        # REL_EXPERIMENT_2:
+        # self.classifier = nn.Linear(config.hidden_size + rel_embedding_size, config.num_labels)
 
     def forward(self, input_ids=None, attention_mask=None, token_type_ids=None, position_ids=None,
                 head_mask=None, inputs_embeds=None, labels=None, output_attentions=None,
-                output_hidden_states=None, parse=None, syn_rels=None):
+                output_hidden_states=None, syn_heads=None, syn_rels=None):
         outputs = self.bert(
             input_ids,
             attention_mask=attention_mask,
@@ -67,15 +66,20 @@ class LiBertForToken(BertForTokenClassification):
             inputs_embeds=inputs_embeds,
             output_attentions=output_attentions,
             output_hidden_states=output_hidden_states,
-            parse=parse,
+            syn_heads=syn_heads,
             syn_rels=syn_rels
         )
+        
         sequence_output = outputs[0]
 
-        rel_embeds = self.rel_embed_layer(syn_rels)
-        sequence_with_relations = torch.cat((sequence_output, rel_embeds), 2)
-        sequence_with_relations = self.dropout(sequence_with_relations)
-        logits = self.classifier(sequence_with_relations)
+        sequence_output = self.dropout(sequence_output) # add/concatenate syn_rels here
+        logits = self.classifier(sequence_output)
+
+        # REL_EXPERIMENT_2:
+        # rel_embeds = self.rel_embed_layer(syn_rels)
+        # sequence_with_relations = torch.cat((sequence_output, rel_embeds), 2)
+        # sequence_with_relations = self.dropout(sequence_with_relations)
+        # logits = self.classifier(sequence_with_relations)
 
         outputs = (logits,) + outputs[2:]  # add hidden states and attention if they are here
         if labels is not None:
@@ -96,15 +100,15 @@ class LiBertForToken(BertForTokenClassification):
         return outputs  # (loss), scores, (hidden_states), (attentions)
 
 class LiBertModel(BertModel):
-    def __init__(self, config):
+    def __init__(self, config, rel_embed_layer):
         super(LiBertModel, self).__init__(config)
-
-        self.encoder = LiBertEncoder(config, None)
+            
+        self.encoder = LiBertEncoder(config, rel_embed_layer)
 
     def forward(self, input_ids=None, attention_mask=None, token_type_ids=None, position_ids=None,
                 head_mask=None, inputs_embeds=None, encoder_hidden_states=None,
                 encoder_attention_mask=None, output_attentions=None, output_hidden_states=None,
-                parse=None, syn_rels=None):
+                syn_heads=None, syn_rels=None):
         output_attentions = \
             output_attentions if output_attentions is not None else self.config.output_attentions
         output_hidden_states = output_hidden_states if output_hidden_states is not None \
@@ -163,7 +167,7 @@ class LiBertModel(BertModel):
             encoder_attention_mask=encoder_extended_attention_mask,
             output_attentions=output_attentions,
             output_hidden_states=output_hidden_states,
-            parse=parse,
+            syn_heads=syn_heads,
             syn_rels=syn_rels
         )
         sequence_output = encoder_outputs[0]
@@ -186,7 +190,7 @@ class LiBertEncoder(BertEncoder):
 
     def forward(self, hidden_states, attention_mask=None, head_mask=None,
                 encoder_hidden_states=None, encoder_attention_mask=None,
-                output_attentions=False, output_hidden_states=False, parse=None, syn_rels=None):
+                output_attentions=False, output_hidden_states=False, syn_heads=None, syn_rels=None):
         all_hidden_states = ()
         all_attentions = ()
         for i, bert_layer in enumerate(self.layer):
@@ -195,7 +199,7 @@ class LiBertEncoder(BertEncoder):
 
             parse_layer = None
             if self.all_layers or i == self.li_layer or i in self.li_layers:
-                parse_layer = parse
+                parse_layer = syn_heads
 
             layer_outputs = bert_layer(
                 hidden_states=hidden_states,
@@ -203,7 +207,7 @@ class LiBertEncoder(BertEncoder):
                 head_mask=head_mask[i],
                 encoder_hidden_states=encoder_hidden_states,
                 encoder_attention_mask=encoder_attention_mask,
-                parse=parse_layer,
+                syn_heads=parse_layer,
                 syn_rels=syn_rels,
                 output_attentions=output_attentions
             )
@@ -230,10 +234,10 @@ class LiBertLayer(BertLayer):
 
     def forward(self, hidden_states, attention_mask=None, head_mask=None,
                 encoder_hidden_states=None, encoder_attention_mask=None,
-                parse=None, syn_rels=None, output_attentions=False):
+                syn_heads=None, syn_rels=None, output_attentions=False):
         self_attention_outputs = self.attention(
             hidden_states, attention_mask, head_mask, output_attentions=output_attentions,
-            parse=parse, syn_rels=syn_rels
+            syn_heads=syn_heads, syn_rels=syn_rels
         )
         attention_output = self_attention_outputs[0]
         outputs = self_attention_outputs[1:]  # add self attentions if we output attention weights
@@ -252,12 +256,12 @@ class LiBertAttention(BertAttention):
 
     def forward(self, hidden_states, attention_mask=None, head_mask=None,
                 encoder_hidden_states=None, encoder_attention_mask=None,
-                output_attentions=False, parse=None, syn_rels=None):
+                output_attentions=False, syn_heads=None, syn_rels=None):
         self_outputs = self.self(hidden_states=hidden_states, attention_mask=attention_mask,
                                  head_mask=head_mask, encoder_hidden_states=encoder_hidden_states,
                                  encoder_attention_mask=encoder_attention_mask, 
-                                 output_attentions=output_attentions, parse=parse)
-        attention_output = self.output(self_outputs[0], hidden_states, parse, syn_rels)
+                                 output_attentions=output_attentions, syn_heads=syn_heads)
+        attention_output = self.output(self_outputs[0], hidden_states, syn_heads, syn_rels)
         outputs = (attention_output,) + self_outputs[1:]  # add attentions if we output them
         return outputs
 
@@ -270,7 +274,6 @@ class LiBertSelfAttention(BertSelfAttention):
         self.duplicated_rels = config.duplicated_rels
         self.transpose = config.transpose
 
-        #self.attention_head_size = int(config.hidden_size / config.num_attention_heads)
         if  (layer_num == config.li_layer or config.all_layers is True \
              or layer_num in config.li_layers):
             self.num_attention_heads = 13
@@ -286,12 +289,14 @@ class LiBertSelfAttention(BertSelfAttention):
 
     def forward(self, hidden_states, attention_mask=None, head_mask=None,
                 encoder_hidden_states=None, encoder_attention_mask=None,
-                output_attentions=False, parse=None):
-        if parse is not None:
+                output_attentions=False, syn_heads=None):
+
+        # If this head is to be injected with linguistic info, initialise random Q, K, V
+        if syn_heads is not None:
             self.all_head_size = self.num_attention_heads * self.attention_head_size            
-            mixed_query_layer = torch.cat((self.query(hidden_states), self.extra_query(hidden_states)),2)
-            mixed_key_layer = torch.cat((self.key(hidden_states), self.extra_key(hidden_states)),2)
-            mixed_value_layer = torch.cat((self.value(hidden_states), self.extra_value(hidden_states)),2)
+            mixed_query_layer = torch.cat((self.query(hidden_states), self.extra_query(hidden_states)), 2)
+            mixed_key_layer = torch.cat((self.key(hidden_states), self.extra_key(hidden_states)), 2)
+            mixed_value_layer = torch.cat((self.value(hidden_states), self.extra_value(hidden_states)), 2)
   
         else:
             self.all_head_size = self.num_attention_heads * self.attention_head_size
@@ -305,33 +310,16 @@ class LiBertSelfAttention(BertSelfAttention):
 
         attention_scores = torch.matmul(query_layer, key_layer.transpose(-1, -2))        
 
-        if parse is not None and self.rnd_init is False:   
+        if syn_heads is not None and not self.rnd_init:   
 
             #  duplicated heads across all matrix (one vector duplicated across matrix)
             if self.duplicated_rels is True:
-                parse = parse.sum(1, keepdim=True)
+                syn_heads = syn_heads.sum(1, keepdim=True)
                 # duplicate sum vector
-                parse = parse.repeat(1,64,1)
+                syn_heads = syn_heads.repeat(1,64,1)
                  
-            parse_norm = parse / parse.max(2, keepdim=True)[0]
+            parse_norm = syn_heads / syn_heads.max(2, keepdim=True)[0]
             parse_norm[torch.isnan(parse_norm)] = 0
-            
-            # _, indices = parse_norm.max(2)
-            # device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-            # ex_head_attention_probs = torch.zeros(parse_norm.shape).to(device)
-            
-            # for batch, tokens in enumerate(indices):
-            #     mask_matrix = torch.zeros([parse_norm.shape[1], parse_norm.shape[2]])
-            #     i=0
-            #     for token in tokens:
-            #         if token != 0:
-            #             mask_matrix[i][token] = 1.                        
-            #             i=i+1                        
-
-            #    ex_head_attention_probs[batch] = mask_matrix         
-
-            #if self.duplicated_rels is True:
-            #    parse_norm = ex_head_attention_probs
 
             original_12head_attn_scores = attention_scores[:, :self.orig_num_attention_heads]
             original_12head_attn_scores = original_12head_attn_scores / math.sqrt(self.attention_head_size)
@@ -341,20 +329,20 @@ class LiBertSelfAttention(BertSelfAttention):
             extra_head_attn = attention_scores[:,self.orig_num_attention_heads,:,:] 
             parse_norm = parse_norm * 8 + attention_mask.squeeze(1)
             
-                    
-            if self.replace_final is False: 
-                if self.transpose == True:                
-                    parse_norm = parse_norm.transpose(-1, -2)                   
+            # if self.replace_final is False:
 
-                extra_head_scaled_attn = ((extra_head_attn * 8) * parse_norm).unsqueeze(1)       
-                extra_head_scaled_attn = extra_head_scaled_attn + attention_mask
-                extra_head_scaled_attn_probs = nn.Softmax(dim=-1)(extra_head_scaled_attn)
-                attention_probs = torch.cat((original_12head_attn_probs, extra_head_scaled_attn_probs), 1)
+            if self.transpose:                
+                parse_norm = parse_norm.transpose(-1, -2)                   
+
+            extra_head_scaled_attn = ((extra_head_attn * 8) * parse_norm).unsqueeze(1)       
+            extra_head_scaled_attn = extra_head_scaled_attn + attention_mask
+            extra_head_scaled_attn_probs = nn.Softmax(dim=-1)(extra_head_scaled_attn)
+            attention_probs = torch.cat((original_12head_attn_probs, extra_head_scaled_attn_probs), 1)
            
             # if self.replace_final is True:
             #     attention_probs = torch.cat((original_12head_attn_probs, ex_head_attention_probs.unsqueeze(1)),1)
 
-        if parse is None or self.rnd_init is True:
+        else:
             attention_scores = attention_scores / math.sqrt(self.attention_head_size)
             # Apply the attention mask is (precomputed for all layers in BertModel forward() function)
             attention_scores = attention_scores + attention_mask
@@ -386,19 +374,24 @@ class LiBertSelfOutput(BertSelfOutput):
              or layer_num in config.li_layers):
             self.original_num_attention_heads = config.num_attention_heads
             self.attention_head_size = int(config.hidden_size / self.original_num_attention_heads)
-            self.dense_13_head = nn.Linear(self.attention_head_size, config.hidden_size) # [64, 768]
-
             self.use_syntactic_rels = config.use_syntactic_rels
             self.syn_rel_layer = rel_embed_layer
-            # self.dense_rel = nn.Linear(self.attention_head_size, config.hidden_size)
 
-    def forward(self, hidden_states, input_tensor, parse=None, syn_rels=None):
+            # REL_EXPERIMENT_1:
+            self.dense_13_head = nn.Linear(self.attention_head_size, config.hidden_size) # [64, 768]
+            
+            # REL_EXPERIMENT_3:
+            # self.dense_13_head = nn.Linear(self.attention_head_size + REL_EMBED_SIZE, config.hidden_size) # [128, 768]
+
+    def forward(self, hidden_states, input_tensor, syn_heads=None, syn_rels=None):
         
-        if parse is None: 
+        if syn_heads is None: 
             #~~~~ Standard Attention Head ~~~~#
             hidden_states = self.dense(hidden_states)
 
         else:
+            assert syn_rels is not None
+
             #~~~~ Linguisticially-Informed Head ~~~~#
 
             ####### Add Syntactic Relations #######
@@ -407,14 +400,21 @@ class LiBertSelfOutput(BertSelfOutput):
             output_13_head = hidden_states[:, :, hidden_size_12_heads:]
 
             dense_output_12_heads = self.dense(output_12_heads)
-            dense_output_13_head = self.dense_13_head(output_13_head)
 
-            hidden_states = dense_output_12_heads + dense_output_13_head
+            ###### Add Syntactic Relations #######
+            if self.use_syntactic_rels:
+                rel_embeds = self.syn_rel_layer(syn_rels)
 
-            ####### Add Syntactic Relations #######
-            # if self.use_syntactic_rels:
-            #     rel_embeds = self.syn_rel_layer(syn_rels)
-            #     hidden_states += rel_embeds
+                # REL_EXPERIMENT_3:
+                # lingustic_info = self.dense_13_head(torch.cat((output_13_head, rel_embeds), 2))
+
+                # REL_EXPERIMENT_1:
+                lingustic_info = self.dense_13_head(output_13_head) + rel_embeds
+            
+            else:
+                lingustic_info = self.dense_13_head(output_13_head)
+
+            hidden_states = dense_output_12_heads + lingustic_info
 
         hidden_states = self.dropout(hidden_states)
         hidden_states = self.LayerNorm(hidden_states + input_tensor)

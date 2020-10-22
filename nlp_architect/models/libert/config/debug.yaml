@@ -1,6 +1,6 @@
 max_epochs: 1
 model_type: libert # bert or libert
-base_init: [false]
+base_init: [true, false]
 
 data: ld dl # relative to nlp_architect/models/li_bert/data/preprocessed_conll
 limit_data: 0.1
