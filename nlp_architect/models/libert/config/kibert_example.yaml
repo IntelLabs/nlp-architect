@@ -23,7 +23,8 @@ do_train: true
 do_predict: true
 
 # NEED TO OVERWRITE CACHE IF CHANGING RAG question/query, since RAG embeddings are stored in the cached feature file
-overwrite_cache: true # if false, loads features from cached file (faster)
+# It's recommended to use the "create_kibert_features_file.py" script to create these feature files rather than the below option
+overwrite_cache: false # if false, loads features from cached file (faster)
 cache_dir: # default: nlp-architect/nlp_architect/cache
 output_dir: # default: nlp-architect/nlp_architect/cache/li-bert-models
 labels: labels.txt # relative to nlp_architect/models/li_bert/data

@@ -23,6 +23,7 @@ from pathlib import Path
 from collections import OrderedDict
 from os.path import realpath
 from torch.nn import CrossEntropyLoss
+from tqdm import tqdm
 import numpy as np
 import pytorch_lightning as pl
 from pytorch_lightning.utilities import rank_zero_only
@@ -132,7 +133,7 @@ class BertForToken(pl.LightningModule):
                 
                 new_features = []
                 k = 5  # number of embeddings to retrieve
-                for e, f in zip(examples, features):
+                for e, f in tqdm(zip(examples, features), total=len(examples)):
                     # look for aspect, TODO: make this noun instead?
                     # TODO: decide on what to do if no B-ASP?
                     #try:
