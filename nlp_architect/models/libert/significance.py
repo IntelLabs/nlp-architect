@@ -111,7 +111,7 @@ def replicability(alpha, pvals):
     return k_est, rejlist
 
 def significance_from_cfg(cfg, log_dir, exp_id):
-    significance_report(cfg.data, exp_id, cfg.seeds, cfg.splits, log_dir,
+    return significance_report(cfg.data, exp_id, cfg.seeds, cfg.splits, log_dir,
                         cfg.baseline_str, cfg.baseline_version, cfg.model_type)
 
 def significance_report(
@@ -166,7 +166,6 @@ def significance_report(
                 '\n'.join([sample_strs[i] for i in range(len(pvals)) if i not in rej_list])
             res_str += f"The acceptance list according to \
                 the Holm procedure is:\n{acc_samples}\n\n"
-
         
         all_alphas_scores.append(scores)
 
@@ -192,7 +191,7 @@ def significance_report(
     with open(log_root / f"significance_{model}_vs_{baseline}_{exp_id}.txt", 'w', encoding='utf-8') as report_file:
         report_file.write(res_str)
 
-    return
+    return seeds, alphas, all_alphas_scores
 
 def get_significance_report_plot(alphas, all_alphas_scores):
 
@@ -212,11 +211,11 @@ def get_significance_report_plot(alphas, all_alphas_scores):
     for index, el in enumerate(score_cols):
         if index==0:
             ax.scatter(score_df['alphas'], score_df[el],
-                color='blue', label='individual splits')
+                color='blue', label='individual seeds')
         else:
             ax.scatter(score_df['alphas'], score_df[el], color='blue')
     ax.plot(score_df['alphas'], score_df['score_mean'], color='red', linestyle='-',
-                    label='mean score for splits')
+                    label='mean score for seeds')
     ax.legend()
     ax.set_title('Significance Testing')
     plt.close()

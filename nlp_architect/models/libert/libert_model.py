@@ -37,7 +37,7 @@ class LiBertConfig(BertConfig):
         # pylint: disable=attribute-defined-outside-init
         self.li_layer = hparams.li_layer
         self.replace_final = hparams.replace_final
-        self.rnd_init = hparams.rnd_init
+        self.baseline = hparams.baseline
         self.all_layers = hparams.all_layers
         self.duplicated_rels = hparams.duplicated_rels
         self.transpose = hparams.transpose
@@ -48,7 +48,7 @@ class LiBertForToken(BertForTokenClassification):
     def __init__(self, config):
         super(LiBertForToken, self).__init__(config)
 
-        self.rel_embed_layer = nn.Embedding(52, REL_EMBED_SIZE, padding_idx=0) if config.use_syntactic_rels else None
+        self.rel_embed_layer = nn.Embedding(52, REL_EMBED_SIZE, padding_idx=0)
         self.bert = LiBertModel(config, self.rel_embed_layer)
 
         # REL_EXPERIMENT_2:
@@ -270,7 +270,6 @@ class LiBertSelfAttention(BertSelfAttention):
         super(LiBertSelfAttention, self).__init__(config)
         self.orig_num_attention_heads = config.num_attention_heads
         self.replace_final = config.replace_final
-        self.rnd_init = config.rnd_init
         self.duplicated_rels = config.duplicated_rels
         self.transpose = config.transpose
 
@@ -310,7 +309,7 @@ class LiBertSelfAttention(BertSelfAttention):
 
         attention_scores = torch.matmul(query_layer, key_layer.transpose(-1, -2))        
 
-        if syn_heads is not None and not self.rnd_init:   
+        if syn_heads is not None:   
 
             #  duplicated heads across all matrix (one vector duplicated across matrix)
             if self.duplicated_rels is True:
@@ -370,6 +369,9 @@ class LiBertSelfAttention(BertSelfAttention):
 class LiBertSelfOutput(BertSelfOutput):
     def __init__(self, config, layer_num, rel_embed_layer):
         super(LiBertSelfOutput, self).__init__(config)
+        
+        self.baseline = config.baseline
+
         if  (layer_num == config.li_layer or config.all_layers is True \
              or layer_num in config.li_layers):
             self.original_num_attention_heads = config.num_attention_heads
@@ -387,6 +389,7 @@ class LiBertSelfOutput(BertSelfOutput):
         
         if syn_heads is None: 
             #~~~~ Standard Attention Head ~~~~#
+            assert False
             hidden_states = self.dense(hidden_states)
 
         else:
@@ -402,7 +405,7 @@ class LiBertSelfOutput(BertSelfOutput):
             dense_output_12_heads = self.dense(output_12_heads)
 
             ###### Add Syntactic Relations #######
-            if self.use_syntactic_rels:
+            if not self.baseline:
                 rel_embeds = self.syn_rel_layer(syn_rels)
 
                 # REL_EXPERIMENT_3:

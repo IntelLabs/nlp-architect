@@ -8,7 +8,7 @@ splits: 3
 seeds: [7] #[7, 25, 26]
 tag: # optional: name this experiment version
 metric: asp_f1
-baseline_str: libert_rnd_init
+baseline_str: libert_baseline
 baseline_version: version_baseline
 
 num_workers: 44
