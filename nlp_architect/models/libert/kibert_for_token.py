@@ -74,10 +74,10 @@ class BertForToken(pl.LightningModule):
 
         # Initializing BERT and RAG models
         self.model_type, self.config_type, self.tokenizer_type = MODEL_CONFIG[hparams.model_type]
-        if hparams.model_type == 'custom':
-            self.rag_encoder = DPRQuestionEncoder.from_pretrained('facebook/dpr-question_encoder-single-nq-base')
-            self.rag_tokenizer = DPRQuestionEncoderTokenizer.from_pretrained('facebook/dpr-question_encoder-single-nq-base')
-            self.wiki_dataset =  datasets.load_dataset('wiki_dpr')
+        #if hparams.model_type == 'custom':
+        #    self.rag_encoder = DPRQuestionEncoder.from_pretrained('facebook/dpr-question_encoder-single-nq-base')
+        #    self.rag_tokenizer = DPRQuestionEncoderTokenizer.from_pretrained('facebook/dpr-question_encoder-single-nq-base')
+        #    self.wiki_dataset =  datasets.load_dataset('wiki_dpr')
 
         self.config = self.config_type \
             .from_pretrained(hparams.model_name_or_path,
@@ -118,6 +118,12 @@ class BertForToken(pl.LightningModule):
                 features = torch.load(cached_features_file)
             else:
                 log.debug("Creating features from dataset file at %s", self.hparams.data_dir)
+                
+                # Creating DPR model to generate features
+                self.rag_encoder = DPRQuestionEncoder.from_pretrained('facebook/dpr-question_encoder-single-nq-base')
+                self.rag_tokenizer = DPRQuestionEncoderTokenizer.from_pretrained('facebook/dpr-question_encoder-single-nq-base')
+                self.wiki_dataset =  datasets.load_dataset('wiki_dpr')
+
                 examples = absa_utils.read_examples_from_file(self.hparams.data_dir, mode)
                 features = absa_utils.convert_examples_to_features(
                     examples,

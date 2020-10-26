@@ -47,6 +47,7 @@ class CustomBertConfig(BertConfig):
         # pylint: disable=attribute-defined-outside-init
         self.custom_layers = hparams.custom_layers
         self.add_norm = hparams.add_norm
+        self.mlp = hparams.mlp
 
 class CustomBertForTokenClassification(BertForTokenClassification):
     def __init__(self, config):
@@ -478,7 +479,8 @@ class ExternalEmbeddingAttention(nn.Module):
         self.pruned_heads = set()
 
         # MLP
-        #self.mlp = MLP(config)
+        if config.mlp:
+            self.mlp = MLP(config)
 
     def prune_heads(self, heads):
         if len(heads) == 0:
@@ -509,6 +511,10 @@ class ExternalEmbeddingAttention(nn.Module):
         external_embeddings=None,
         regress_to_bert=False,
     ):
+        # Adding MLP
+        if hasattr(self, "mlp"):
+            external_embeddings = self.mlp(external_embeddings)
+
         self_outputs = self.self(
             hidden_states,
             attention_mask,
@@ -519,7 +525,6 @@ class ExternalEmbeddingAttention(nn.Module):
             external_embeddings,
             regress_to_bert,
         )
-
         
         # Config choice to include Add + Norm block (dense, dropout, reisidual + layernorm)
         if hasattr(self, "output"):
@@ -529,8 +534,6 @@ class ExternalEmbeddingAttention(nn.Module):
             outputs = self_outputs
 
 
-        # Adding MLP
-        #outputs = self.mlp(outputs[0])
 
         return outputs
 
@@ -543,8 +546,8 @@ class MLP(nn.Module):
         else:
             self.intermediate_act_fn = config.hidden_act
         self.dense2 = nn.Linear(config.intermediate_size, config.hidden_size)
-        self.LayerNorm = nn.LayerNorm(config.hidden_size, eps=config.layer_norm_eps)
-        self.dropout = nn.Dropout(config.hidden_dropout_prob)
+        #self.LayerNorm = nn.LayerNorm(config.hidden_size, eps=config.layer_norm_eps)
+        #self.dropout = nn.Dropout(config.hidden_dropout_prob)
         
 
     def forward(self, hidden_states):
@@ -552,8 +555,8 @@ class MLP(nn.Module):
         hidden_states = self.dense1(hidden_states)
         hidden_states = self.intermediate_act_fn(hidden_states)
         hidden_states = self.dense2(hidden_states)
-        hidden_states = self.dropout(hidden_states)
-        hidden_states = self.LayerNorm(hidden_states + input_tensor)
+        #hidden_states = self.dropout(hidden_states)
+        #hidden_states = self.LayerNorm(hidden_states + input_tensor)
         return hidden_states
 
 

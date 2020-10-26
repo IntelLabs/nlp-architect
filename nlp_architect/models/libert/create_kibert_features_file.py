@@ -42,6 +42,17 @@ def main(args):
     if os.path.basename(data_dir) == '':
         print("Please make sure that there is no '/' at the end of the data dir path, e.g. it should be path/laptops_to_restaurants_1 instead of path/laptops_to_restaurants_1/. Exiting.")
         exit()
+    
+    if args.merge_train_dev:
+        merge_train_dev = True
+    else:
+        merge_train_dev = False
+
+    if args.query_domain:
+        query_domain = args.query_domain
+    else:
+        print("No query domain specified, defaulting to 'test'.")
+        query_domain = "test"
 
     data_root = Path(data_dir).parent
     labels = absa_utils.get_labels(data_root / "labels.txt")
@@ -75,6 +86,16 @@ def main(args):
         dataset_name = os.path.basename(data_dir)
         train_domain = dataset_name.split('_')[0]
         val_test_domain = dataset_name.split('_')[2]
+
+        print(f"Constructing DPR features based on the following query: how is [aspect] related to [{query_domain} domain]")
+        if query_domain == "respective":
+            domain = train_domain if mode=="train" else val_test_domain
+        elif query_domain == "test":
+            domain = val_test_domain
+        elif query_domain == "train":
+            domain = train_domain
+        else:
+            print(f"Unrecognized query domain '{query_domain}'")
         
         new_features = []
         k = 5  # number of embeddings to retrieve
@@ -84,9 +105,6 @@ def main(args):
             #try:
             asp_idx = e.labels.index('B-ASP')
             asp = e.words[asp_idx]
-            #domain = train_domain if mode=="train" else val_test_domain
-            domain = val_test_domain
-            #domain = train_domain
             question = f"how is {asp} related to {domain}"
             question_emb = rag_encoder(**rag_tokenizer(question, return_tensors="pt"))[0].detach().numpy()
             passages_scores, passages = wiki_dataset['train'].get_nearest_examples("embeddings", question_emb, k=k)  # get k nearest
@@ -98,10 +116,40 @@ def main(args):
             #    passage_embeddings = torch.zeros(5, 768)
             #    new_features.append((f, passage_embeddings)) 
 
+        # Merging dev data into train data
+        if mode == "train" and merge_train_dev == True:
+            print("Adding dev data to train data...")
+            examples_dev = absa_utils.read_examples_from_file(data_dir, "dev")
+            features_dev = absa_utils.convert_examples_to_features(
+                examples_dev,
+                labels,
+                max_seq_length,
+                tokenizer
+            )
+
+            for e, f in tqdm(zip(examples_dev, features_dev), total=len(examples_dev)):
+                # look for aspect, TODO: make this noun instead?
+                # TODO: decide on what to do if no B-ASP?
+                #try:
+                asp_idx = e.labels.index('B-ASP')
+                asp = e.words[asp_idx]
+                question = f"how is {asp} related to {val_test_domain}"
+                question_emb = rag_encoder(**rag_tokenizer(question, return_tensors="pt"))[0].detach().numpy()
+                passages_scores, passages = wiki_dataset['train'].get_nearest_examples("embeddings", question_emb, k=k)  # get k nearest
+                passage_embeddings = torch.tensor(passages['embeddings'])
+                new_features.append((f, passage_embeddings))
+
+                #except ValueError:
+                    # In case no B-ASP in example
+                #    passage_embeddings = torch.zeros(5, 768)
+                #    new_features.append((f, passage_embeddings)) 
+
         torch.save(new_features, cached_features_file)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--data_dir", help="Path to data directory, e.g. /PATH_TO_DATA/laptops_to_restaurants_1")
+    parser.add_argument("--merge_train_dev", action='store_true', help="Set if you want to merge the train and dev sets.")
+    parser.add_argument("--query_domain", help="Choose which domain to query against, options are 'train', 'test' and 'respective'")
     args = parser.parse_args()
     main(args)

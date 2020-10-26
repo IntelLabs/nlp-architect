@@ -1,6 +1,6 @@
 max_epochs: 10
 model_type: custom # bert or custom
-base_init: [true, false] # true will randomly intitialize the embeddings which are injected (false is RAG embeddings)
+base_init: [true, false] # true will randomly intitialize the embeddings which are injected (false is DPR/RAG embeddings)
 
 data: lr # relative to nlp_architect/models/li_bert/data/preprocessed_conll
 limit_data: 1.0
@@ -16,8 +16,9 @@ gpus: [0, 1]  # only run multi with overwrite_cache as false, otherwise multiple
 parallel: true
 
 # MODEL HPARAMS
-custom_layers: [1, 2, 3] # sets which layers to add the external embedding attention to (0 - 11)
-add_norm: true
+custom_layers: [1, 2, 3]  # sets which layers to add the external embedding attention to (0 - 11)
+add_norm: true  # keep this true, else training destabilizes
+mlp: true  # whether or not to add 2-layer MLP between DPR/RAG embeddings and attention module
 
 do_train: true
 do_predict: true
