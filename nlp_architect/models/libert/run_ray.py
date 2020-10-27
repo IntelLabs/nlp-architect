@@ -143,8 +143,8 @@ def post_analysis(cfg, log_dir, exp_id):
     if cfg.do_predict and True in cfg.base_init and False in cfg.base_init:
         sig_result = significance_from_cfg(cfg=cfg, log_dir=log_dir, exp_id=exp_id)
 
-    # Write summary table to CSV
-    write_summary_tables(cfg, exp_id, sig_result)
+        # Write summary table to CSV
+        write_summary_tables(cfg, exp_id, sig_result)
 
 if __name__ == "__main__":
     if len(argv) == 2:

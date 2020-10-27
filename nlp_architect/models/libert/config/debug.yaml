@@ -12,7 +12,7 @@ baseline_str: libert_baseline
 baseline_version: version_baseline
 
 num_workers: 44
-gpus: [0, 1]
+gpus: [2]
 parallel: false
 
 li_layer: #5

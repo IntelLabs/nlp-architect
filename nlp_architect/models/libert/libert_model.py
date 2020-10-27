@@ -23,11 +23,12 @@ import torch
 from torch.nn import CrossEntropyLoss
 torch.multiprocessing.set_sharing_strategy('file_system')
 from transformers.modeling_bert import BertEncoder, BertLayer, \
-        BertAttention, BertSelfAttention, BertSelfOutput, BertConfig
+        BertAttention, BertSelfAttention, BertSelfOutput, BertConfig, BertLayerNorm
 from transformers import BertForTokenClassification, BertModel
 from pytorch_lightning import _logger as log
 
-REL_EMBED_SIZE = 768
+REL_EMBED_SIZE = 64
+REL_EXPER = 1
 
 class LiBertConfig(BertConfig):
     def __init__(self, **kwargs):
@@ -51,12 +52,19 @@ class LiBertForToken(BertForTokenClassification):
         self.rel_embed_layer = nn.Embedding(52, REL_EMBED_SIZE, padding_idx=0)
         self.bert = LiBertModel(config, self.rel_embed_layer)
 
-        # REL_EXPERIMENT_2:
-        # self.classifier = nn.Linear(config.hidden_size + rel_embedding_size, config.num_labels)
+        if REL_EXPER == 2:
+            self.classifier = nn.Linear(config.hidden_size + REL_EMBED_SIZE, config.num_labels)
+            self.baseline = config.baseline
+
+        self.RelLayerNorm = BertLayerNorm(REL_EMBED_SIZE, eps=config.layer_norm_eps)
 
     def forward(self, input_ids=None, attention_mask=None, token_type_ids=None, position_ids=None,
                 head_mask=None, inputs_embeds=None, labels=None, output_attentions=None,
                 output_hidden_states=None, syn_heads=None, syn_rels=None):
+
+        syn_rels = self.rel_embed_layer(syn_rels)
+        syn_rels = self.RelLayerNorm(syn_rels)
+
         outputs = self.bert(
             input_ids,
             attention_mask=attention_mask,
@@ -72,14 +80,16 @@ class LiBertForToken(BertForTokenClassification):
         
         sequence_output = outputs[0]
 
-        sequence_output = self.dropout(sequence_output) # add/concatenate syn_rels here
-        logits = self.classifier(sequence_output)
+        if REL_EXPER == 2:
+            rel_embeds = self.rel_embed_layer(syn_rels)
+            rel_embeds = rel_embeds if not self.baseline else torch.zeros_like(rel_embeds)
+            sequence_with_relations = torch.cat((sequence_output, rel_embeds), 2)
+            sequence_with_relations = self.dropout(sequence_with_relations)
+            logits = self.classifier(sequence_with_relations)
 
-        # REL_EXPERIMENT_2:
-        # rel_embeds = self.rel_embed_layer(syn_rels)
-        # sequence_with_relations = torch.cat((sequence_output, rel_embeds), 2)
-        # sequence_with_relations = self.dropout(sequence_with_relations)
-        # logits = self.classifier(sequence_with_relations)
+        else:
+            sequence_output = self.dropout(sequence_output) # add/concatenate syn_rels here
+            logits = self.classifier(sequence_output)
 
         outputs = (logits,) + outputs[2:]  # add hidden states and attention if they are here
         if labels is not None:
@@ -379,11 +389,10 @@ class LiBertSelfOutput(BertSelfOutput):
             self.use_syntactic_rels = config.use_syntactic_rels
             self.syn_rel_layer = rel_embed_layer
 
-            # REL_EXPERIMENT_1:
-            self.dense_13_head = nn.Linear(self.attention_head_size, config.hidden_size) # [64, 768]
-            
-            # REL_EXPERIMENT_3:
-            # self.dense_13_head = nn.Linear(self.attention_head_size + REL_EMBED_SIZE, config.hidden_size) # [128, 768]
+            if REL_EXPER == 3:
+                self.dense_13_head = nn.Linear(self.attention_head_size + REL_EMBED_SIZE, config.hidden_size) # [128, 768]
+            else:
+                self.dense_13_head = nn.Linear(self.attention_head_size, config.hidden_size) # [64, 768]
 
     def forward(self, hidden_states, input_tensor, syn_heads=None, syn_rels=None):
         
@@ -404,18 +413,26 @@ class LiBertSelfOutput(BertSelfOutput):
 
             dense_output_12_heads = self.dense(output_12_heads)
 
-            ###### Add Syntactic Relations #######
-            if not self.baseline:
-                rel_embeds = self.syn_rel_layer(syn_rels)
-
-                # REL_EXPERIMENT_3:
-                # lingustic_info = self.dense_13_head(torch.cat((output_13_head, rel_embeds), 2))
-
-                # REL_EXPERIMENT_1:
-                lingustic_info = self.dense_13_head(output_13_head) + rel_embeds
-            
-            else:
+            if REL_EXPER == 2:
                 lingustic_info = self.dense_13_head(output_13_head)
+
+            else:
+                # rel_embeds = self.syn_rel_layer(syn_rels)
+
+                ###### Add Syntactic Relations #######
+                if self.baseline:
+
+                    if REL_EXPER == 3:
+                        rel_pad = torch.zeros_like(syn_rels)
+                        lingustic_info = self.dense_13_head(torch.cat((output_13_head, rel_pad), 2))
+
+                else:
+                    if REL_EXPER == 3:
+                        concat = torch.cat((output_13_head, syn_rels))
+                        lingustic_info = self.dense_13_head(concat, 2)
+
+                    if REL_EXPER == 1:
+                        lingustic_info = self.dense_13_head(output_13_head + syn_rels)
 
             hidden_states = dense_output_12_heads + lingustic_info
 

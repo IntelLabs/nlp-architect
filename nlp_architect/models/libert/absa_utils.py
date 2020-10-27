@@ -367,8 +367,7 @@ def set_as_latest(log_dir):
     os.symlink(log_dir, link, target_is_directory=True)
 
 def write_summary_tables(cfg, exp_id, sig_result):
-    sig_seeds, _, all_alphas_scores = sig_result
-    assert list(sig_seeds) == list(cfg.seeds)
+    _, _, all_alphas_scores = sig_result
 
     filename = f'summary_table_{exp_id}'
     with open(LOG_ROOT / exp_id / f'{filename}.csv', 'w', newline='', encoding='utf-8') as csv_file:

@@ -1,11 +1,11 @@
-max_epochs: 3
+max_epochs: 2
 model_type: libert # bert or libert
 base_init: [true, false]
 
-data: ld dl # lr ld dr dl # relative to nlp_architect/models/li_bert/data/preprocessed_conll
-limit_data: 0.5
-splits: 1
-seeds: [58] #, 23, 17]
+data: rl # lr ld dr dl # relative to nlp_architect/models/li_bert/data/preprocessed_conll
+limit_data: 0.2
+splits: 2
+seeds: [58, 13] #, 23, 17]
 tag: # optional: name this experiment version
 metric: asp_f1
 baseline_str: libert_baseline
