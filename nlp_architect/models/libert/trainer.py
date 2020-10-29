@@ -36,7 +36,7 @@ def log_model_and_version(trainer, cfg, versions, save=True):
 def get_logger(data, experiment, exp_id, log_dir=None, suffix=None):
     suffix = '_' + suffix if suffix else ''
     save_dir = log_dir if log_dir else LIBERT_DIR / 'logs'
-    return pl.loggers.TestTubeLogger(save_dir= Path(save_dir) / data, 
+    return pl.loggers.TestTubeLogger(save_dir= Path(save_dir) / data,
                                      name=experiment + suffix, version=exp_id)
 
 def get_trainer(model, data, experiment, exp_id, log_dir=None, gpus=None, metric='micro_f1', limit_data=1.0):

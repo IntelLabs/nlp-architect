@@ -2,10 +2,10 @@ max_epochs: 10
 model_type: libert # bert or libert
 base_init: [true, false]
 
-data: rl lr dl ld rd dr
+data: rl dr
 limit_data: 1.0
 splits: 3
-seeds: [25, 12, 26]
+seeds: [7, 12, 34]
 tag: # optional: name this experiment version
 metric: asp_f1
 baseline_str: libert_baseline

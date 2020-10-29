@@ -64,6 +64,7 @@ class LiBertForToken(BertForTokenClassification):
 
         syn_rels = self.rel_embed_layer(syn_rels)
         syn_rels = self.RelLayerNorm(syn_rels)
+        # syn_rels = torch.div(syn_rels, 4)
 
         outputs = self.bert(
             input_ids,
@@ -425,11 +426,15 @@ class LiBertSelfOutput(BertSelfOutput):
                     if REL_EXPER == 3:
                         rel_pad = torch.zeros_like(syn_rels)
                         lingustic_info = self.dense_13_head(torch.cat((output_13_head, rel_pad), 2))
+                    
+                    if REL_EXPER == 1:
+                        lingustic_info = self.dense_13_head(output_13_head)                    
 
                 else:
                     if REL_EXPER == 3:
                         concat = torch.cat((output_13_head, syn_rels))
                         lingustic_info = self.dense_13_head(concat, 2)
+
 
                     if REL_EXPER == 1:
                         lingustic_info = self.dense_13_head(output_13_head + syn_rels)
