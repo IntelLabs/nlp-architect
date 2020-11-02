@@ -74,9 +74,8 @@ def run_data(task_idx, cfg_yaml, time, baseline, data, log_dir, metric):
                         log_model_and_version(trainer, cfg, test_versions, save=False)
 
                 # Aggregate tensorboard log metrics for all runs on this data
-                if len(train_versions) > 1:
-                    aggregate(train_versions, exp_id + '_train', model_str)
-                    aggregate(test_versions, exp_id + '_test', model_str)
+                aggregate(train_versions, exp_id + '_train', model_str)
+                aggregate(test_versions, exp_id + '_test', model_str)
                 return model_str, exp_id
 
 def main(config_yaml):
@@ -113,7 +112,7 @@ def main(config_yaml):
 
     # Setting up log dir
     time_now = pretty_datetime()
-    exp_id = time_now + cfg.tag
+    exp_id = cfg.tag + time_now
     log_dir = LOG_ROOT / exp_id
     tasks_log_dir = log_dir / 'tasks'
     os.makedirs(tasks_log_dir, exist_ok=True)

@@ -167,6 +167,21 @@ def parse_cross_domain(domains: list, splits=3, modes=('train', 'dev', 'test'), 
                 print(ds_file)
                 parse_file(ds_file, spacy_bert_tok, overwrite=overwrite)
 
+def parse_2_domains_to_1(domains: list, modes=('train', 'dev', 'test'), overwrite=True):
+    spacy_bert_tok = SpacyWithBertTokenizer()
+
+    for i in range(len(domains)):
+        target_domain = domains[i]
+        src_domain_1 = domains[(i + 1) % 3]
+        src_domain_2 = domains[(i + 2) % 3]
+
+        setting = f"{src_domain_1}_{src_domain_2}_to_{target_domain}"
+        print(f'Setting: {setting}')
+        for ds in tqdm(modes):
+            ds_file = str(CONLL_DIR / setting / f'{ds}.txt')
+            print(ds_file)
+            parse_file(ds_file, spacy_bert_tok, overwrite=overwrite)
+
 def parse_in_domain(domains: list):
     spacy_bert_tok = SpacyWithBertTokenizer()
 
@@ -176,7 +191,7 @@ def parse_in_domain(domains: list):
         parse_file(ds_file, spacy_bert_tok)
 
 if __name__ == "__main__":
-    parse_cross_domain(domains=['restaurants', 'laptops', 'device'])
+    parse_2_domains_to_1(domains=['restaurants', 'laptops', 'device'])
     
     # Save label set to label.txt
     with open(DATA_DIR / 'csv' / 'labels.txt', 'w', encoding='utf-8') as labels_f:

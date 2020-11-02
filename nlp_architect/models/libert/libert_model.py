@@ -64,7 +64,7 @@ class LiBertForToken(BertForTokenClassification):
 
         syn_rels = self.rel_embed_layer(syn_rels)
         syn_rels = self.RelLayerNorm(syn_rels)
-        # syn_rels = torch.div(syn_rels, 4)
+        syn_rels = torch.div(syn_rels, 4)
 
         outputs = self.bert(
             input_ids,

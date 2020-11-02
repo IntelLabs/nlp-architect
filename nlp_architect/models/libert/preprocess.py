@@ -62,58 +62,68 @@ def dai2019_single_to_conll_and_raw(sent_file, tok_file, conll_out: str, raw_out
         token_spans.append(curr_toks)
     assert len(sentences) == len(token_spans) == len(aspect_spans) == len(opinions)
 
-    with open(raw_out, 'w', encoding='utf-8') as raw_f:
-        raw_f.write('\n'.join(sentences))
+    if raw_out:
+        with open(raw_out, 'w', encoding='utf-8') as raw_f:
+            raw_f.write('\n'.join(sentences))
 
     mixed_numeral_pattern = re.compile(' 1/2\tO')
-    with open(conll_out, 'w', encoding='utf-8') as conll_f:
-        count_not_found = 0
+    count_not_found = 0
+    conll_sents = []
 
-        for sentence, tok_indices, asp_indices, op_words in tqdm(zip(sentences, token_spans, aspect_spans, opinions)):
-            tokens = [sentence[s: e] for s, e in tok_indices]
-            tags = ['O' for i in range(len(tokens))]
+    for sentence, tok_indices, asp_indices, op_words in tqdm(zip(sentences, token_spans, aspect_spans, opinions)):
+        tokens = [sentence[s: e] for s, e in tok_indices]
+        tags = ['O' for i in range(len(tokens))]
 
-            if opinion_labels and op_words:
-                # if len(op_words) > 2 and [x for x in op_words if ' ' in x]:
-                #     print()
-                op_words_sorted = sorted([tuple(phrase.lower().split()) for phrase in set(op_words)], key=lambda x: -len(x))
-                tok_i = 0
-                ops_not_found = set(op_words_sorted)
-                while tok_i < len(tokens):
-                    for op_phrase in op_words_sorted:
-                        if len(op_phrase) > 0 and check_match(tokens, tok_i, op_phrase):
-                            tags[tok_i] = 'B-OP'
-                            for j in range(1, len(op_phrase)):
-                                tags[tok_i + j] = 'I-OP'
-                            tok_i += len(op_phrase) - 1
-                            if op_phrase in ops_not_found:
-                                ops_not_found.remove(op_phrase)
-                            break
-                    tok_i += 1
-
-                if ops_not_found:
-                    count_not_found += 1
-
-            if asp_indices:
-                curr_asp = 0
-                inside_aspect = False
-                for i, (tok_start, tok_end) in enumerate(tok_indices):
-                    if curr_asp == len(asp_indices):
+        if opinion_labels and op_words:
+            # if len(op_words) > 2 and [x for x in op_words if ' ' in x]:
+            #     print()
+            op_words_sorted = sorted([tuple(phrase.lower().split()) for phrase in set(op_words)], key=lambda x: -len(x))
+            tok_i = 0
+            ops_not_found = set(op_words_sorted)
+            while tok_i < len(tokens):
+                for op_phrase in op_words_sorted:
+                    if len(op_phrase) > 0 and check_match(tokens, tok_i, op_phrase):
+                        tags[tok_i] = 'B-OP'
+                        for j in range(1, len(op_phrase)):
+                            tags[tok_i + j] = 'I-OP'
+                        tok_i += len(op_phrase) - 1
+                        if op_phrase in ops_not_found:
+                            ops_not_found.remove(op_phrase)
                         break
-                    if inside_aspect:
-                        tags[i] = 'I-ASP'
-                    elif tok_start == asp_indices[curr_asp][0]:
-                        inside_aspect = True
-                        tags[i] = 'B-ASP'
-                    if tok_end == asp_indices[curr_asp][1]:
-                        curr_asp += 1
-                        inside_aspect = False
+                tok_i += 1
 
-            conll_text = '\n'.join(['\t'.join((_)) for _ in zip(tokens, tags)]) + '\n\n'
-            fixed_conll_text = fix_untoknized_mixed_numerals(conll_text, mixed_numeral_pattern)
-            conll_f.write(fixed_conll_text)
+            if ops_not_found:
+                count_not_found += 1
+
+        if asp_indices:
+            curr_asp = 0
+            inside_aspect = False
+            for i, (tok_start, tok_end) in enumerate(tok_indices):
+                if curr_asp == len(asp_indices):
+                    break
+                if inside_aspect:
+                    tags[i] = 'I-ASP'
+                elif tok_start == asp_indices[curr_asp][0]:
+                    inside_aspect = True
+                    tags[i] = 'B-ASP'
+                if tok_end == asp_indices[curr_asp][1]:
+                    curr_asp += 1
+                    inside_aspect = False
+
+        conll_text = '\n'.join(['\t'.join((_)) for _ in zip(tokens, tags)]) + '\n'
+        fixed_conll_text = fix_untoknized_mixed_numerals(conll_text, mixed_numeral_pattern)
+        conll_sents.append(fixed_conll_text)
+
+    conll_sents_str = ''.join(conll_sents)
+
+    if conll_out:
+        with open(conll_out, 'w', encoding='utf-8') as conll_f:
+            conll_f.write(conll_sents_str)
+
         print(conll_out)
         # print('NOT FOUND: ' + str(count_not_found))
+    
+    return conll_sents
 
 def fix_untoknized_mixed_numerals(conll_text, pattern):
     fixed_conll_text = pattern.sub('\tO\n1/2\tO', conll_text)
@@ -319,9 +329,13 @@ def get_all_semeval_domain_sents(domain, years, out_base, in_base, opinion_label
                         all_domain_sents.append((json_line, tok_line))
     return all_domain_sents
 
-def dai2019_single_to_conll(domain, years):
+def dai2019_domain_to_conll(domain, years):
     domain_sents = get_all_sentences_of_domain(domain, years)
-    
+    sent_file = [tup[0] for tup in domain_sents]
+    tok_file = [tup[1] for tup in domain_sents]
+    conll_sents = dai2019_single_to_conll_and_raw(
+        sent_file, tok_file, conll_out=False, raw_out=False, opinion_labels=True)
+    return conll_sents
 
 def preprocess_2_domains_to_1(seed):
     random.seed(seed)
@@ -330,7 +344,7 @@ def preprocess_2_domains_to_1(seed):
     domain_sets = {'restaurants': ('14', '15'), 'laptops': ('14',), 'device': None}
     dom_sentences = {}
     for domain, years in domain_sets.items():
-        dom_sentences[domain] = dai2019_single_to_conll(domain, years) if years \
+        dom_sentences[domain] = dai2019_domain_to_conll(domain, years) if years \
             else wang2018_single_to_conll(DATA_DIR, device_text_op_file, device_asp_pol_file)
 
     dev_test_sets = {}

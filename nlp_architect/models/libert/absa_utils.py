@@ -337,9 +337,19 @@ def load_config(name):
     if isinstance(cfg.splits, int):
         cfg.splits = list(range(1, cfg.splits + 1))
 
-    cfg.tag = '' if cfg.tag is None else '_' + cfg.tag
+    cfg.tag = '' if cfg.tag is None else cfg.tag + '_'
     ds = {'l': 'laptops', 'r': 'restaurants', 'd': 'device'}
-    cfg.data = [f'{ds[d[0]]}_to_{ds[d[1]]}' if len(d) < 3 else d for d in cfg.data.split()]
+
+    datasets = []
+    for d in cfg.data.split():
+        if len(d) < 3:
+            datasets.append(f'{ds[d[0]]}_to_{ds[d[1]]}')
+        elif len(d) == 3:
+            datasets.append(f'{ds[d[0]]}_{ds[d[1]]}_to_{ds[d[2]]}')
+        else:
+            datasets.append(d)
+
+    cfg.data = datasets
     return cfg
 
 def tabular(dic: dict, title: str) -> str:
@@ -369,13 +379,14 @@ def set_as_latest(log_dir):
 def write_summary_tables(cfg, exp_id, sig_result):
     _, _, all_alphas_scores = sig_result
 
-    filename = f'summary_table_{exp_id}'
+    filename = f'{exp_id}'
     with open(LOG_ROOT / exp_id / f'{filename}.csv', 'w', newline='', encoding='utf-8') as csv_file:
         csv_writer = csv.writer(csv_file)
         header = ['']
         for dataset in cfg.data:
             ds_split = dataset.split('_')
-            ds_str = f"{ds_split[0][0]}-->{ds_split[2][0]}".upper()
+            ds_str = f"{ds_split[0][0]}-->{ds_split[2][0]}".upper() if len(ds_split) == 3 else \
+                f"{ds_split[0][0]}_{ds_split[1][0]}-->{ds_split[3][0]}".upper()
             header.extend([ds_str, f'{ds_str} '])
         sub_header = ['Seeds Average'] + ['AS', 'OP'] * len(cfg.data) + ['ASP_MEAN', 'OP_MEAN']
         csv_writer.writerow(header)

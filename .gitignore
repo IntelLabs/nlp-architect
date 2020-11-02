@@ -27,6 +27,5 @@ cache/
 nlp_architect/models/libert/cache/*
 nlp_architect/models/libert/models/*
 nlp_architect/models/libert/logs/*
-nlp_architect/models/libert/data/*
 *.npz
 cached_*

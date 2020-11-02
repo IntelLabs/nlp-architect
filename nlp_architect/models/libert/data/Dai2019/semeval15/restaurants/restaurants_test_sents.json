@@ -1,0 +1,685 @@
+{"id": "ADLT#8:0", "text": "Love Al Di La", "terms": [{"term": "Al Di La", "polarity": "positive", "span": [5, 13]}], "opinions": ["Love"]}
+{"id": "ADLT#8:1", "text": "I recommend this place to everyone.", "terms": [{"term": "place", "polarity": "positive", "span": [17, 22]}], "opinions": ["recommend"]}
+{"id": "ADLT#8:2", "text": "Great food.", "terms": [{"term": "food", "polarity": "positive", "span": [6, 10]}], "opinions": ["Great"]}
+{"id": "ADLT#2:0", "text": "One of my favorite places in Brooklyn. ", "opinions": []}
+{"id": "ADLT#2:1", "text": "The pastas are incredible, the risottos (particularly the sepia) are fantastic and the braised rabbit is amazing.", "terms": [{"term": "pastas", "polarity": "positive", "span": [4, 10]}, {"term": "risottos", "polarity": "positive", "span": [31, 39]}, {"term": "sepia", "polarity": "positive", "span": [58, 63]}, {"term": "braised rabbit", "polarity": "positive", "span": [87, 101]}], "opinions": ["incredible", "fantastic", "amazing"]}
+{"id": "BFC#4:0", "text": "Overpriced and not tasty ", "opinions": []}
+{"id": "BFC#4:1", "text": "The food here was mediocre at best. ", "terms": [{"term": "food", "polarity": "negative", "span": [4, 8]}], "opinions": ["mediocre at best"]}
+{"id": "BFC#4:2", "text": "It was totally overpriced- fish and chips was about $15.... ", "terms": [{"term": "fish and chips", "polarity": "negative", "span": [27, 41]}], "opinions": ["overpriced"]}
+{"id": "BFC#4:3\" OutOfScope=\"TRUE", "text": "There are so many other great places to go to eat and drink..... this place is not worth it...", "opinions": []}
+{"id": "BHD#9:0", "text": "Tasty Dog!", "terms": [{"term": "Dog", "polarity": "positive", "span": [6, 9]}], "opinions": ["Tasty"]}
+{"id": "BHD#9:1", "text": "An awesome organic dog, and a conscious eco friendly establishment.", "terms": [{"term": "dog", "polarity": "positive", "span": [19, 22]}, {"term": "establishment", "polarity": "positive", "span": [53, 66]}], "opinions": ["awesome", "organic", "eco friendly"]}
+{"id": "BHD#9:2", "text": "One of the best hot dogs I have ever eaten.", "opinions": []}
+{"id": "BHD#9:3", "text": "Can't wait to go back.", "opinions": []}
+{"id": "BzG#1:0", "text": "The Cypriot restaurant has a lot going for it.", "terms": [{"term": "Cypriot restaurant", "polarity": "positive", "span": [4, 22]}], "opinions": []}
+{"id": "BzG#1:1", "text": "But the best pork souvlaki I ever had is the main thing.", "terms": [{"term": "pork souvlaki", "polarity": "positive", "span": [13, 26]}], "opinions": ["best"]}
+{"id": "BzG#1:2", "text": "Trust me.", "opinions": []}
+{"id": "BzG#1:3", "text": "Run don't walk.", "opinions": []}
+{"id": "EVPK#10:0", "text": "Super YUMMY Pizza!", "terms": [{"term": "Pizza", "polarity": "positive", "span": [12, 17]}], "opinions": ["YUMMY"]}
+{"id": "EVPK#10:1", "text": "I was visiting New York City with a friend and we discovered this really warm and inviting restaurant.", "terms": [{"term": "restaurant", "polarity": "positive", "span": [91, 101]}], "opinions": ["warm", "inviting"]}
+{"id": "EVPK#10:2", "text": "I LOOOVE their eggplant pizza, as well as their pastas!", "terms": [{"term": "eggplant pizza", "polarity": "positive", "span": [15, 29]}, {"term": "pastas", "polarity": "positive", "span": [48, 54]}], "opinions": ["LOVE"]}
+{"id": "EVPK#10:3", "text": "We had half/half pizza, mine was eggplant and my friend had the buffalo and it was sooo huge for a small size pizza!", "terms": [{"term": "half/half pizza", "polarity": "positive", "span": [7, 22]}], "opinions": ["huge"]}
+{"id": "EVPK#10:4", "text": "We had fun eating in there, we were there like around 3 a.m. in the morning!", "opinions": []}
+{"id": "EVPK#10:5", "text": "Will comeback for sure, wish they have it here in LA..", "opinions": []}
+{"id": "Z#3:0", "text": "Excellent food, although the interior could use some help.", "terms": [{"term": "food", "polarity": "positive", "span": [10, 14]}, {"term": "interior", "polarity": "negative", "span": [29, 37]}], "opinions": ["Excellent", "help"]}
+{"id": "Z#3:1", "text": "The space kind of feels like an Alice in Wonderland setting, without it trying to be that.", "terms": [{"term": "space", "polarity": "negative", "span": [4, 9]}], "opinions": []}
+{"id": "Z#3:2", "text": "I paid just about $60 for a good meal, though :)", "terms": [{"term": "meal", "polarity": "positive", "span": [33, 37]}, {"term": "meal", "polarity": "positive", "span": [33, 37]}], "opinions": ["good"]}
+{"id": "Z#3:3", "text": "Great sake!", "terms": [{"term": "sake", "polarity": "positive", "span": [6, 10]}], "opinions": ["Great"]}
+{"id": "Y#7:0", "text": "Reliable, Fresh Sushi", "terms": [{"term": "Sushi", "polarity": "positive", "span": [16, 21]}], "opinions": ["Reliable", "Fresh"]}
+{"id": "Y#7:1", "text": "My husband and I take out from here 3-4 times a month.", "opinions": []}
+{"id": "Y#7:2", "text": "The sashimi is always fresh and the rolls are innovative and delicious.", "terms": [{"term": "sashimi", "polarity": "positive", "span": [4, 11]}, {"term": "rolls", "polarity": "positive", "span": [36, 41]}, {"term": "rolls", "polarity": "positive", "span": [36, 41]}], "opinions": ["fresh", "innovative", "delicious"]}
+{"id": "Y#7:3", "text": "Have never had a problem with service save a missing rice once.", "terms": [{"term": "service", "polarity": "positive", "span": [30, 37]}], "opinions": ["problem"]}
+{"id": "Y#7:4", "text": "Delivery can be spot on or lacking depending on the weather and the day of the week.", "terms": [{"term": "Delivery", "polarity": "negative", "span": [0, 8]}], "opinions": ["lacking"]}
+{"id": "Y#7:5", "text": "Delivery guy sometimes get upset if you don't tip more than 10%.", "terms": [{"term": "Delivery guy", "polarity": "negative", "span": [0, 12]}], "opinions": ["upset"]}
+{"id": "Y#7:6\" OutOfScope=\"TRUE", "text": "We've found it to be better and fresher than Kiku which is comparable in price.", "opinions": []}
+{"id": "Y#3:0", "text": "Best. Sushi. Ever.", "terms": [{"term": "Sushi", "polarity": "positive", "span": [6, 11]}], "opinions": ["Best"]}
+{"id": "Y#3:1", "text": "This place has ruined me for neighborhood sushi.", "terms": [{"term": "sushi", "polarity": "positive", "span": [42, 47]}], "opinions": ["ruined"]}
+{"id": "Y#3:2", "text": "Creative, consistent, fresh.", "opinions": []}
+{"id": "Y#3:3", "text": "Excellent sashimi, and the millennium roll is beyond delicious.", "terms": [{"term": "sashimi", "polarity": "positive", "span": [10, 17]}, {"term": "millennium roll", "polarity": "positive", "span": [27, 42]}], "opinions": ["Excellent", "delicious"]}
+{"id": "Y#3:4", "text": "Not cheap but very yummy.", "opinions": []}
+{"id": "Y#3:5", "text": "Love it.", "opinions": []}
+{"id": "Y#2:0", "text": "Very, very nice", "opinions": []}
+{"id": "Y#2:1", "text": "The place is a bit hidden away, but once you get there, it's all worth it.", "terms": [{"term": "place", "polarity": "neutral", "span": [4, 9]}, {"term": "place", "polarity": "positive", "span": [4, 9]}], "opinions": ["hidden away", "worth"]}
+{"id": "Y#2:2", "text": "not only is the food", "terms": [{"term": "food", "polarity": "positive", "span": [16, 20]}], "opinions": []}
+{"id": "WE#9:0", "text": "Loved It", "opinions": []}
+{"id": "WE#9:1", "text": "My wife and I went to Water's Edge for a romantic dinner.", "opinions": []}
+{"id": "WE#9:2", "text": "We had a very nice time.", "opinions": []}
+{"id": "WE#9:3", "text": "The waiter was attentive, the food was delicious and the views of the city were great.", "terms": [{"term": "waiter", "polarity": "positive", "span": [4, 10]}, {"term": "food", "polarity": "positive", "span": [30, 34]}, {"term": "views of the city", "polarity": "positive", "span": [57, 74]}], "opinions": ["attentive", "delicious", "great"]}
+{"id": "WE#9:4", "text": "I'd definitely go back again.", "opinions": []}
+{"id": "TR#3:0", "text": "Great place to relax and enjoy your dinner", "terms": [{"term": "place", "polarity": "positive", "span": [6, 11]}], "opinions": ["Great"]}
+{"id": "TR#3:1", "text": "There is something about their atmosphere that makes me come back nearly every week.", "terms": [{"term": "atmosphere", "polarity": "positive", "span": [31, 41]}], "opinions": []}
+{"id": "TR#3:2", "text": "Place is open till late, no dress code.", "terms": [{"term": "Place", "polarity": "positive", "span": [0, 5]}], "opinions": []}
+{"id": "TR#3:3", "text": "Good food: my favorite is the seafood spaghetti.", "terms": [{"term": "food", "polarity": "positive", "span": [5, 9]}, {"term": "seafood spaghetti", "polarity": "positive", "span": [30, 47]}], "opinions": ["Good", "favorite"]}
+{"id": "TR#3:4", "text": "Highly recommended!", "opinions": []}
+{"id": "TM#7:0", "text": "Excellent food for great prices", "terms": [{"term": "food", "polarity": "positive", "span": [10, 14]}, {"term": "food", "polarity": "positive", "span": [10, 14]}], "opinions": ["Excellent"]}
+{"id": "TM#7:1", "text": "My husband and I have been sold on this from the first visit.", "opinions": []}
+{"id": "TM#7:2", "text": "The wait staff is very courteous and accomodating.", "terms": [{"term": "wait staff", "polarity": "positive", "span": [4, 14]}], "opinions": ["courteous", "accomodating"]}
+{"id": "TM#7:3", "text": "The space is limited so be prepared to wait up to 45 minutes - 1 hour, but be richly rewarded when you savor the delicious indo-chinese food.", "terms": [{"term": "space", "polarity": "neutral", "span": [4, 9]}, {"term": "space", "polarity": "negative", "span": [4, 9]}, {"term": "indo-chinese food", "polarity": "positive", "span": [123, 140]}], "opinions": ["limited", "delicious"]}
+{"id": "TM#7:4", "text": "There are no negatives to speak of.", "opinions": []}
+{"id": "RL#7:0", "text": "the bestt!", "opinions": []}
+{"id": "RL#7:1", "text": "my favorite place lol", "terms": [{"term": "place", "polarity": "positive", "span": [12, 17]}], "opinions": ["favorite"]}
+{"id": "RL#7:2", "text": "i love their chicken pasta cant remember the name but is sooo good", "terms": [{"term": "chicken pasta", "polarity": "positive", "span": [13, 26]}], "opinions": ["love", "good"]}
+{"id": "RL#3:0", "text": "its alright", "opinions": []}
+{"id": "RL#3:1", "text": "im not necessarily fanatical about this place, but it was a fun time for low pirces.", "terms": [{"term": "place", "polarity": "positive", "span": [40, 45]}, {"term": "place", "polarity": "positive", "span": [40, 45]}], "opinions": ["fanatical", "fun"]}
+{"id": "RL#3:2", "text": "lobster was good, nothing spectacular.", "terms": [{"term": "lobster", "polarity": "neutral", "span": [0, 7]}], "opinions": ["good", "spectacular"]}
+{"id": "RL#3:3", "text": "its just a fun place to go, not a five star restaraunt.", "terms": [{"term": "restaraunt", "polarity": "neutral", "span": [44, 54]}], "opinions": ["five star"]}
+{"id": "PP#9:0", "text": "Way below average", "opinions": []}
+{"id": "PP#9:1", "text": "I think the pizza is so overrated and was under cooked.", "terms": [{"term": "pizza", "polarity": "negative", "span": [12, 17]}], "opinions": ["overrated", "under cooked"]}
+{"id": "PP#9:2", "text": "Had no flavor and the staff is rude and not attentive.", "terms": [{"term": "staff", "polarity": "negative", "span": [22, 27]}], "opinions": ["rude", "attentive"]}
+{"id": "PP#9:3", "text": "Would NEVER go back", "opinions": []}
+{"id": "PP#4:0", "text": "I love this place", "terms": [{"term": "place", "polarity": "positive", "span": [12, 17]}], "opinions": ["love"]}
+{"id": "PP#4:1", "text": "I wasn't here for the pizza so I can't comment on that yet but what I had was very good.", "opinions": []}
+{"id": "PP#4:2", "text": "The service was quick and friendly.", "terms": [{"term": "service", "polarity": "positive", "span": [4, 11]}], "opinions": ["quick", "friendly"]}
+{"id": "PP#4:3", "text": "Everyone was smiling so that made me feel welcome.", "opinions": []}
+{"id": "PP#4:4", "text": "I thought the restaurant was nice and clean.", "terms": [{"term": "restaurant", "polarity": "positive", "span": [14, 24]}, {"term": "restaurant", "polarity": "positive", "span": [14, 24]}], "opinions": ["nice", "clean"]}
+{"id": "PP#4:5", "text": "I ordered the vitello alla marsala and I was pretty impressed.", "terms": [{"term": "vitello alla marsala", "polarity": "positive", "span": [14, 34]}], "opinions": ["impressed"]}
+{"id": "PP#4:6", "text": "The veal and the mushrooms were cooked perfectly.", "terms": [{"term": "veal", "polarity": "positive", "span": [4, 8]}, {"term": "mushrooms", "polarity": "positive", "span": [17, 26]}], "opinions": ["perfectly"]}
+{"id": "PP#4:7", "text": "The potato balls were not dry at all... in fact it was buttery.", "terms": [{"term": "potato balls", "polarity": "positive", "span": [4, 16]}], "opinions": ["dry", "buttery"]}
+{"id": "PP#4:8", "text": "The only downside... they only take cash which is OK if you know about it ahead of time.", "opinions": []}
+{"id": "PP#4:9", "text": "I'll be back for sure.", "opinions": []}
+{"id": "P#1:0", "text": "WORST PLACE ON SMITH STREET IN BROOKLYN", "terms": [{"term": "PLACE", "polarity": "negative", "span": [6, 11]}], "opinions": ["WORST"]}
+{"id": "P#1:1", "text": "Very immature bartender, didnt know how to make specific drinks, service was so slowwwww, the food was not fresh or warm, waitresses were busy flirting with men at the bar and werent very attentive to all the customers.", "terms": [{"term": "bartender", "polarity": "negative", "span": [14, 23]}, {"term": "service", "polarity": "negative", "span": [65, 72]}, {"term": "food", "polarity": "negative", "span": [94, 98]}, {"term": "waitresses", "polarity": "negative", "span": [122, 132]}], "opinions": ["immature", "slow", "fresh", "warm", "attentive"]}
+{"id": "P#1:2", "text": "I would never recommend this place to anybody even for a casual dinner.", "terms": [{"term": "place", "polarity": "negative", "span": [29, 34]}, {"term": "place", "polarity": "negative", "span": [29, 34]}], "opinions": ["recommend"]}
+{"id": "RL#9:0", "text": "awesome", "opinions": []}
+{"id": "RL#9:1", "text": "the food is always fresh ...", "terms": [{"term": "food", "polarity": "positive", "span": [4, 8]}], "opinions": ["fresh"]}
+{"id": "Y#5:0", "text": "overpriced japanese food with mediocre service", "terms": [{"term": "japanese food", "polarity": "negative", "span": [11, 24]}, {"term": "service", "polarity": "neutral", "span": [39, 46]}], "opinions": ["overpriced", "mediocre"]}
+{"id": "Y#5:1", "text": "Went here on sat 1/26 and was disappointed.", "opinions": []}
+{"id": "Y#5:2", "text": "Chicken teriyaki had tomato or pimentos on top??", "terms": [{"term": "Chicken teriyaki", "polarity": "negative", "span": [0, 16]}], "opinions": []}
+{"id": "Y#5:3", "text": "food was luke warm.", "terms": [{"term": "food", "polarity": "negative", "span": [0, 4]}], "opinions": ["luke warm"]}
+{"id": "Y#5:4", "text": "The waitress was not attentive at all.", "terms": [{"term": "waitress", "polarity": "negative", "span": [4, 12]}], "opinions": ["attentive"]}
+{"id": "Y#5:5", "text": "I was looking for banana tempura for dessert and they dont have.", "terms": [{"term": "dessert", "polarity": "negative", "span": [37, 44]}], "opinions": []}
+{"id": "Y#5:6\" OutOfScope=\"TRUE", "text": "Too many other good places to have to settle.", "opinions": []}
+{"id": "TFS#8:0", "text": "Not because you are \"The Four Seasons\"... – you are allowed to charge an arm and a leg for a romatic dinner.", "terms": [{"term": "The Four Seasons", "polarity": "negative", "span": [21, 37]}], "opinions": []}
+{"id": "TFS#8:1", "text": "The food was excellent as well as service, however, I left The Four Seasons very dissappointed.", "terms": [{"term": "food", "polarity": "positive", "span": [4, 8]}, {"term": "service", "polarity": "positive", "span": [34, 41]}, {"term": "The Four Seasons", "polarity": "negative", "span": [59, 75]}], "opinions": ["excellent", "dissappointed"]}
+{"id": "TFS#8:2", "text": "I do not think dinner in Manhattan should cost $400.00 where I am not swept off my feet.", "terms": [{"term": "dinner", "polarity": "negative", "span": [15, 21]}], "opinions": []}
+{"id": "Y#4:0", "text": "Red Dragon Roll - my favorite thing to eat, of any food group - hands down", "terms": [{"term": "Red Dragon Roll", "polarity": "positive", "span": [0, 15]}], "opinions": ["favorite"]}
+{"id": "Y#4:1", "text": "Just go to Yamato and order the Red Dragon Roll.", "terms": [{"term": "Yamato", "polarity": "positive", "span": [11, 17]}, {"term": "Red Dragon Roll", "polarity": "positive", "span": [32, 47]}], "opinions": []}
+{"id": "Y#4:2", "text": "If you don't like it, I don't know what to tell you.", "opinions": []}
+{"id": "Y#4:3", "text": "The Seafood Dynamite is also otherworldly.", "terms": [{"term": "Seafood Dynamite", "polarity": "positive", "span": [4, 20]}], "opinions": ["otherworldly"]}
+{"id": "Y#4:4", "text": "I'm not even going to bother to describe it; it speaks for itself.", "opinions": []}
+{"id": "Y#6:0", "text": "Favorite Sushi in NYC", "terms": [{"term": "Sushi", "polarity": "positive", "span": [9, 14]}], "opinions": ["Favorite"]}
+{"id": "Y#6:1\" OutOfScope=\"TRUE", "text": "I have eaten at some of the 'best' sushi joints in NYC (Nobu, Bond Street, JewelBako, etc) and Yamato is my favorite.", "opinions": []}
+{"id": "Y#6:2", "text": "An unpretentious spot in Park Slope, the sushi is consistently good, the service is pleasant, effective and unassuming.", "terms": [{"term": "spot", "polarity": "positive", "span": [17, 21]}, {"term": "sushi", "polarity": "positive", "span": [41, 46]}, {"term": "service", "polarity": "positive", "span": [73, 80]}], "opinions": ["unpretentious", "good", "pleasant", "effective", "unassuming"]}
+{"id": "Y#6:3", "text": "In the summer months, the back garden area is really nice.", "terms": [{"term": "back garden area", "polarity": "positive", "span": [26, 42]}], "opinions": ["nice"]}
+{"id": "Y#6:4", "text": "The rolls are creative and I have yet to find another sushi place that serves up more inventive yet delicious japanese food.", "terms": [{"term": "rolls", "polarity": "positive", "span": [4, 9]}, {"term": "japanese food", "polarity": "positive", "span": [110, 123]}, {"term": "japanese food", "polarity": "positive", "span": [110, 123]}], "opinions": ["creative", "inventive", "delicious"]}
+{"id": "Y#6:5", "text": "The Dancing, White River and Millenium rolls are musts.", "terms": [{"term": "Dancing, White River and Millenium rolls", "polarity": "positive", "span": [4, 44]}], "opinions": ["musts"]}
+{"id": "RL#4:0", "text": "SO GOOD", "opinions": []}
+{"id": "RL#4:1", "text": "I CAN EAT HERE EVERY DAY OF THE WEEK REALLY LOL LOVE THIS PLACE ...)", "terms": [{"term": "PLACE", "polarity": "positive", "span": [58, 63]}], "opinions": ["LOVE"]}
+{"id": "P#10:0", "text": "Gross food – Wow-", "terms": [{"term": "food", "polarity": "negative", "span": [6, 10]}], "opinions": ["Gross"]}
+{"id": "P#10:1", "text": "I can't remember the last time I had such gross food in New York.", "terms": [{"term": "food", "polarity": "negative", "span": [48, 52]}], "opinions": []}
+{"id": "P#10:2", "text": "My quesadilla tasted like it had been made by a three-year old with no sense of proportion or flavor.", "terms": [{"term": "quesadilla", "polarity": "negative", "span": [3, 13]}, {"term": "quesadilla", "polarity": "negative", "span": [3, 13]}], "opinions": []}
+{"id": "P#10:3", "text": "And $11 for a plate of bland guacamole?", "terms": [{"term": "guacamole", "polarity": "negative", "span": [29, 38]}, {"term": "guacamole", "polarity": "negative", "span": [29, 38]}], "opinions": ["bland"]}
+{"id": "P#10:4", "text": "Come on.", "opinions": []}
+{"id": "P#10:5", "text": "Don't get me started on the margaritas, either.", "terms": [{"term": "margaritas", "polarity": "negative", "span": [28, 38]}], "opinions": []}
+{"id": "P#10:6", "text": "Mine tasted like the bartender had forgotten to add the tequila.", "opinions": []}
+{"id": "P#10:7\" OutOfScope=\"TRUE", "text": "Really, I find it rather scandalous that such a crappy restaurant attracts such crowds--this, in the city of a million restaurants, at least 9/10 of which are way better than this one.", "opinions": []}
+{"id": "P#10:8", "text": "Save your money and your time and go somewhere else.", "opinions": []}
+{"id": "P#10:9", "text": "Oh, and I never write reviews--I just was so moved by how bad this place was, I felt it was my duty to spread the word.", "terms": [{"term": "place", "polarity": "negative", "span": [67, 72]}], "opinions": ["bad"]}
+{"id": "TM#3:0", "text": "Great Indian Food!", "terms": [{"term": "Indian Food", "polarity": "positive", "span": [6, 17]}], "opinions": ["Great"]}
+{"id": "TM#3:1", "text": "This place was reccomended to me by a friend.", "opinions": []}
+{"id": "TM#3:2", "text": "When I got there the place was packed but they made sure to seat me quickly.", "opinions": []}
+{"id": "TM#3:3", "text": "The food was good, the place was clean and affordable.", "terms": [{"term": "food", "polarity": "positive", "span": [4, 8]}, {"term": "place", "polarity": "positive", "span": [23, 28]}, {"term": "place", "polarity": "positive", "span": [23, 28]}], "opinions": ["good", "clean", "affordable"]}
+{"id": "TM#3:4", "text": "I noticed alot of indian people eatting there which is a great sign for an indian place!", "terms": [{"term": "indian place", "polarity": "positive", "span": [75, 87]}], "opinions": ["great"]}
+{"id": "TR#1:0", "text": "This is one of my favorite spot, very relaxing the food is great all the times , celebrated my engagement and my wedding here , it was very well organized .", "terms": [{"term": "food", "polarity": "positive", "span": [51, 55]}], "opinions": ["favorite", "relaxing", "great"]}
+{"id": "TR#1:1", "text": "The staff is very good.", "terms": [{"term": "staff", "polarity": "positive", "span": [4, 9]}], "opinions": ["good"]}
+{"id": "TR#1:2", "text": "Love their drink menu.", "terms": [{"term": "drink menu", "polarity": "positive", "span": [11, 21]}], "opinions": ["Love"]}
+{"id": "TR#1:3", "text": "I highly recommend this beautiful place.", "terms": [{"term": "place", "polarity": "positive", "span": [34, 39]}, {"term": "place", "polarity": "positive", "span": [34, 39]}], "opinions": ["recommend", "beautiful"]}
+{"id": "TR#8:0", "text": "Nice for one time special occasion.", "opinions": []}
+{"id": "TR#8:1", "text": "Went for Mom's birthday brunch/lunch.", "opinions": []}
+{"id": "TR#8:2", "text": "They honored reservation on Sunday afternoon very well. ", "opinions": []}
+{"id": "TR#8:3", "text": "Be aware.", "opinions": []}
+{"id": "TR#8:4", "text": "We were offered water for the table but were not told the Voss bottles of water were $8 a piece.", "terms": [{"term": "Voss bottles of water", "polarity": "negative", "span": [58, 79]}], "opinions": []}
+{"id": "TR#8:5", "text": "Food was OK.", "terms": [{"term": "Food", "polarity": "neutral", "span": [0, 4]}], "opinions": []}
+{"id": "TR#8:6", "text": "Nice view of river and NYC.", "terms": [{"term": "view of river and NYC", "polarity": "positive", "span": [5, 26]}], "opinions": ["Nice"]}
+{"id": "BG#1:0", "text": "I come here enjoy very much with husband.", "opinions": []}
+{"id": "BG#1:1", "text": "Remind me of home.", "opinions": []}
+{"id": "BG#1:2", "text": "Great survice", "terms": [{"term": "survice", "polarity": "positive", "span": [6, 13]}], "opinions": ["Great"]}
+{"id": "ADLT#4:0", "text": "MMMMMMMMMmmmmmm so delicious", "opinions": []}
+{"id": "CLF#1:0", "text": "A beautifully designed dreamy Egyptian restaurant that gets sceney at night.", "terms": [{"term": "Egyptian restaurant", "polarity": "positive", "span": [30, 49]}], "opinions": ["beautifully designed", "dreamy"]}
+{"id": "CLF#1:1", "text": "Watch the talented belly dancers as you enjoy delicious baba ganoush that's more lemony than smoky.", "terms": [{"term": "baba ganoush", "polarity": "positive", "span": [56, 68]}, {"term": "belly dancers", "polarity": "positive", "span": [19, 32]}], "opinions": ["talented", "delicious"]}
+{"id": "CLF#1:2", "text": "Oh, and there's hookah.", "terms": [{"term": "hookah", "polarity": "positive", "span": [16, 22]}], "opinions": []}
+{"id": "P#9:0", "text": "Raymond the bartender rocks!", "terms": [{"term": "Raymond", "polarity": "positive", "span": [0, 7]}], "opinions": ["rocks"]}
+{"id": "P#9:1", "text": "Pacifico is a great place to casually hang out.", "terms": [{"term": "Pacifico", "polarity": "positive", "span": [0, 8]}], "opinions": ["great"]}
+{"id": "P#9:2", "text": "The drinks are great, especially when made by Raymond.", "terms": [{"term": "drinks", "polarity": "positive", "span": [4, 10]}, {"term": "Raymond", "polarity": "positive", "span": [46, 53]}], "opinions": ["great", "especially"]}
+{"id": "P#9:3", "text": "The omlette for brunch is great...", "terms": [{"term": "omlette for brunch", "polarity": "positive", "span": [4, 22]}], "opinions": ["great"]}
+{"id": "P#9:4", "text": "the spinach is fresh, definately not frozen...", "terms": [{"term": "spinach", "polarity": "positive", "span": [4, 11]}], "opinions": ["fresh", "frozen"]}
+{"id": "P#9:5", "text": "quacamole at pacifico is yummy, as are the wings with chimmichuri.", "terms": [{"term": "quacamole", "polarity": "positive", "span": [0, 9]}, {"term": "wings with chimmichuri", "polarity": "positive", "span": [43, 65]}], "opinions": ["yummy"]}
+{"id": "P#9:6", "text": "A weakness is the chicken in the salads.", "terms": [{"term": "chicken in the salads", "polarity": "negative", "span": [18, 39]}], "opinions": ["weakness"]}
+{"id": "P#9:7", "text": "It's just average, just shredded, no seasoning on it.", "opinions": []}
+{"id": "P#9:8", "text": "Also, I personally wasn't a fan of the portobello and asparagus mole.", "terms": [{"term": "portobello and asparagus mole", "polarity": "negative", "span": [39, 68]}], "opinions": ["fan"]}
+{"id": "P#9:9", "text": "Overall, decent food at a good price, with friendly people.", "terms": [{"term": "food", "polarity": "neutral", "span": [16, 20]}, {"term": "food", "polarity": "positive", "span": [16, 20]}, {"term": "people", "polarity": "positive", "span": [52, 58]}], "opinions": ["decent", "friendly"]}
+{"id": "BG#6:0", "text": "Best Indian Restaurant in the City", "terms": [{"term": "Indian Restaurant", "polarity": "positive", "span": [5, 22]}], "opinions": ["Best"]}
+{"id": "BG#6:1", "text": "Decor needs to be upgraded but the food is amazing!", "terms": [{"term": "Decor", "polarity": "negative", "span": [0, 5]}, {"term": "food", "polarity": "positive", "span": [35, 39]}], "opinions": ["upgraded", "amazing"]}
+{"id": "BzG#4:0", "text": "This small Astoria souvlaki spot makes what many consider the best gyros in New York.", "terms": [{"term": "gyros", "polarity": "positive", "span": [67, 72]}], "opinions": ["best"]}
+{"id": "BzG#4:1\" OutOfScope=\"TRUE", "text": "Small, bright, and clean, BZ Grill stands apart from the usual run of gyro joints, both in Astoria and out.", "opinions": []}
+{"id": "BzG#4:2", "text": "What really makes it shine is the food, which is aggressively seasoned with Cyrpriot spices, and all made in-house (even the gyro meat and sausages), and made of much higher quality ingredients that might otherwise be expected.", "terms": [{"term": "food", "polarity": "positive", "span": [34, 38]}, {"term": "gyro meat", "polarity": "positive", "span": [125, 134]}, {"term": "sausages", "polarity": "positive", "span": [139, 147]}, {"term": "ingredients", "polarity": "positive", "span": [182, 193]}], "opinions": ["shine", "in-house", "higher quality"]}
+{"id": "BzG#4:3", "text": "All the various Greek and Cypriot dishes are excellent, but the gyro is the reason to come--if you don't eat one your trip was wasted.", "terms": [{"term": "Greek and Cypriot dishes", "polarity": "positive", "span": [16, 40]}, {"term": "gyro", "polarity": "positive", "span": [64, 68]}], "opinions": ["excellent"]}
+{"id": "NP#10:0", "text": "Best restaurant in Brooklyn", "terms": [{"term": "restaurant", "polarity": "positive", "span": [5, 15]}], "opinions": ["Best"]}
+{"id": "NP#10:1", "text": "The best!", "opinions": []}
+{"id": "NP#10:2", "text": "Great food, amazing service, this place is a class act.", "terms": [{"term": "food", "polarity": "positive", "span": [6, 10]}, {"term": "service", "polarity": "positive", "span": [20, 27]}, {"term": "place", "polarity": "positive", "span": [34, 39]}], "opinions": ["Great", "amazing", "class act"]}
+{"id": "NP#10:3", "text": "The veal was incredible last night.", "terms": [{"term": "veal", "polarity": "positive", "span": [4, 8]}], "opinions": ["incredible"]}
+{"id": "NP#10:4", "text": "Fresh, mind blowing flavors.", "opinions": []}
+{"id": "NP#10:5", "text": "This place is a must visit!", "terms": [{"term": "place", "polarity": "positive", "span": [5, 10]}], "opinions": ["must visit"]}
+{"id": "BHD#2:0", "text": "You want to have a real hot dog in Brooklyn?", "opinions": []}
+{"id": "BHD#2:1\" OutOfScope=\"TRUE", "text": "Skip Nathan's...you can get that at the mall...go to Bark.", "opinions": []}
+{"id": "BHD#2:2", "text": "Delicious, creative and fun.", "opinions": []}
+{"id": "Z#11:0", "text": "Got a date? Go here!", "opinions": []}
+{"id": "Z#11:1", "text": "Every time I have a special occasion with my boyfriend I have a hard time going anywhere else.", "opinions": []}
+{"id": "Z#11:2", "text": "It is so romantic.", "opinions": []}
+{"id": "Z#11:3", "text": "Its dark, and cozy.. there is always jazz music playing when we go.", "opinions": []}
+{"id": "Z#11:4", "text": "Most of the booths allow you to sit next to eachother without looking like 'that' couple.", "terms": [{"term": "booths", "polarity": "positive", "span": [12, 18]}], "opinions": []}
+{"id": "Z#11:5", "text": "The food is all shared so we get to order together and eat together.", "terms": [{"term": "food", "polarity": "positive", "span": [4, 8]}], "opinions": ["shared"]}
+{"id": "Z#11:6", "text": "I've enjoyed 99% of the dishes we've ordered with the only exceptions being the occasional too-authentic-for-me dish (I'm a daring eater but not THAT daring).", "terms": [{"term": "dishes", "polarity": "positive", "span": [24, 30]}, {"term": "dish", "polarity": "negative", "span": [112, 116]}], "opinions": ["enjoyed", "too-authentic-for-me"]}
+{"id": "Z#11:7", "text": "Once you try it for a special occasion beware.. you can't stop!", "opinions": []}
+{"id": "Z#11:8", "text": "You'll be ther for every anniversary, birthday, valentines day...", "opinions": []}
+{"id": "WE#4:0", "text": "For a Fabulous Wedding!", "opinions": []}
+{"id": "WE#4:1", "text": "My daughter's wedding reception at Water's Edge received the highest compliments from our guests.", "terms": [{"term": "Water's Edge", "polarity": "positive", "span": [35, 47]}], "opinions": ["highest compliments"]}
+{"id": "WE#4:2", "text": "Everyone raved about the atmosphere (elegant rooms and absolutely incomparable views) and the fabulous food!", "terms": [{"term": "atmosphere", "polarity": "positive", "span": [25, 35]}, {"term": "rooms", "polarity": "positive", "span": [45, 50]}, {"term": "views", "polarity": "positive", "span": [79, 84]}, {"term": "food", "polarity": "positive", "span": [103, 107]}], "opinions": ["raved", "elegant", "incomparable", "fabulous"]}
+{"id": "WE#4:3", "text": "Service was wonderful;", "terms": [{"term": "Service", "polarity": "positive", "span": [0, 7]}], "opinions": ["wonderful"]}
+{"id": "WE#4:4", "text": "everyone was cheerfully cooperative and helpful.", "opinions": []}
+{"id": "WE#4:5", "text": "Paul, the maitre d', was totally professional and always on top of things.", "terms": [{"term": "Paul", "polarity": "positive", "span": [0, 4]}], "opinions": ["professional"]}
+{"id": "WE#4:6", "text": "Thank you everyone at Water's Edge.", "terms": [{"term": "Water's Edge", "polarity": "positive", "span": [22, 34]}], "opinions": []}
+{"id": "WE#4:7", "text": "Ruth, mother of the Bride", "opinions": []}
+{"id": "TR#2:0", "text": "would NOT go back.", "opinions": []}
+{"id": "TR#2:1", "text": "Service ok but unfriendly,filthy bathroom.", "terms": [{"term": "Service", "polarity": "negative", "span": [0, 7]}, {"term": "bathroom", "polarity": "negative", "span": [33, 41]}], "opinions": ["ok", "unfriendly", "filthy"]}
+{"id": "TR#2:2", "text": "The high prices you're going to pay is for the view not for the food.", "terms": [{"term": "view", "polarity": "neutral", "span": [47, 51]}, {"term": "food", "polarity": "negative", "span": [64, 68]}], "opinions": ["high prices"]}
+{"id": "TR#2:3", "text": "The bar drinks were Eh, ok to say the least.", "terms": [{"term": "bar drinks", "polarity": "negative", "span": [4, 14]}], "opinions": ["ok"]}
+{"id": "TR#2:4", "text": "The stuff tilapia was horrid...tasted like cardboard.", "terms": [{"term": "stuff tilapia", "polarity": "negative", "span": [4, 17]}], "opinions": ["horrid"]}
+{"id": "TR#2:5", "text": "We thought the dessert would be better, Wrong!", "terms": [{"term": "dessert", "polarity": "negative", "span": [15, 22]}], "opinions": ["better", "Wrong"]}
+{"id": "TR#2:6", "text": "$170 down the toilet...", "opinions": []}
+{"id": "TR#2:7", "text": "oh speaking of bathroom , the mens bathroom was disgusting.", "terms": [{"term": "mens bathroom", "polarity": "negative", "span": [30, 43]}], "opinions": ["disgusting"]}
+{"id": "TR#2:8", "text": "The floor was wet, the trash can filled with hand towels n all over the floor, no soap, and no hand towels left.", "opinions": []}
+{"id": "TR#2:9\" OutOfScope=\"TRUE", "text": "Go to son cubano in edgewater nj instead.", "opinions": []}
+{"id": "TFS#10:0", "text": "Good Experience", "opinions": []}
+{"id": "TFS#10:1", "text": "During our trip to NYC, we made reservations to dine in the pool room of the Four Seasons for their pre-theater menu (offering a modified menu for $65 pp).", "opinions": []}
+{"id": "TFS#10:2", "text": "The wine list was extensive - though the staff did not seem knowledgeable about wine pairings.", "terms": [{"term": "wine list", "polarity": "positive", "span": [4, 13]}, {"term": "staff", "polarity": "negative", "span": [41, 46]}], "opinions": ["extensive", "knowledgeable"]}
+{"id": "TFS#10:3", "text": "The bread we received was horrible - rock hard and cold - and the \"free\" appetizer of olives was disappointing.", "terms": [{"term": "bread", "polarity": "negative", "span": [4, 9]}, {"term": "appetizer of olives", "polarity": "negative", "span": [73, 92]}, {"term": "appetizer of olives", "polarity": "neutral", "span": [73, 92]}], "opinions": ["horrible", "rock hard", "cold", "disappointing"]}
+{"id": "TFS#10:4", "text": "However, our main course was wonderful.", "terms": [{"term": "main course", "polarity": "positive", "span": [13, 24]}], "opinions": ["wonderful"]}
+{"id": "TFS#10:5", "text": "I had fish and my husband had the filet - both of which exceeded our expectations.", "terms": [{"term": "fish", "polarity": "positive", "span": [6, 10]}, {"term": "filet", "polarity": "positive", "span": [34, 39]}], "opinions": ["exceeded"]}
+{"id": "TFS#10:6", "text": "The dessert (we had a pear torte) was good - but, once again, the staff was unable to provide appropriate drink suggestions.", "terms": [{"term": "pear torte", "polarity": "positive", "span": [22, 32]}, {"term": "staff", "polarity": "negative", "span": [66, 71]}], "opinions": ["good", "unable"]}
+{"id": "TFS#10:7", "text": "When we inquired about ports - the waitress listed off several but did not know taste variations or cost.", "terms": [{"term": "waitress", "polarity": "negative", "span": [35, 43]}], "opinions": []}
+{"id": "TFS#10:8", "text": "Not what I would expect for the price and prestige of this location.", "terms": [{"term": "location", "polarity": "neutral", "span": [59, 67]}, {"term": "location", "polarity": "neutral", "span": [59, 67]}], "opinions": ["expect"]}
+{"id": "TFS#10:9", "text": "All in all, I would return - as it was a beautiful restaurant - but I hope the staff pays more attention to the little details in the future.", "terms": [{"term": "restaurant", "polarity": "positive", "span": [51, 61]}, {"term": "restaurant", "polarity": "positive", "span": [51, 61]}, {"term": "staff", "polarity": "negative", "span": [79, 84]}], "opinions": ["beautiful"]}
+{"id": "Z#9:0", "text": "short and sweet – seating is great:it's romantic,cozy and private.", "terms": [{"term": "seating", "polarity": "positive", "span": [18, 25]}], "opinions": ["short", "sweet", "great", "romantic", "cozy", "private"]}
+{"id": "Z#9:1", "text": "The boths are not as small as some of the reviews make them out to look they're perfect for 2 people.", "terms": [{"term": "boths", "polarity": "positive", "span": [4, 9]}], "opinions": ["small", "perfect"]}
+{"id": "Z#9:2", "text": "The service was extremely fast and attentive(thanks to the service button on your table) but I barely understood 1 word when the waiter took our order.", "terms": [{"term": "service", "polarity": "positive", "span": [4, 11]}, {"term": "service button", "polarity": "positive", "span": [59, 73]}, {"term": "waiter", "polarity": "negative", "span": [129, 135]}], "opinions": ["fast", "attentive", "thanks to"]}
+{"id": "Z#9:3", "text": "The food was ok and fair nothing to go crazy.", "terms": [{"term": "food", "polarity": "neutral", "span": [4, 8]}], "opinions": ["ok", "fair"]}
+{"id": "Z#9:4", "text": "over.", "opinions": []}
+{"id": "Z#9:5", "text": "Over all the looks of the place exceeds the actual meals.", "terms": [{"term": "looks", "polarity": "positive", "span": [13, 18]}, {"term": "meals", "polarity": "negative", "span": [51, 56]}], "opinions": ["exceeds"]}
+{"id": "Z#9:6", "text": "So what you really end up paying for is the restaurant not the food.", "terms": [{"term": "restaurant", "polarity": "negative", "span": [44, 54]}, {"term": "restaurant", "polarity": "neutral", "span": [44, 54]}, {"term": "food", "polarity": "negative", "span": [63, 67]}], "opinions": []}
+{"id": "Z#9:7", "text": "Will prob. not return but it is a great dinning experience to try atleast once.", "opinions": []}
+{"id": "NP#3:0", "text": "Impressed...", "opinions": []}
+{"id": "NP#3:1", "text": "Subtle food and service", "terms": [{"term": "food", "polarity": "positive", "span": [7, 11]}, {"term": "service", "polarity": "positive", "span": [16, 23]}], "opinions": ["Subtle"]}
+{"id": "NP#3:2", "text": "Noodle pudding is exactly the type of service and food I enjoy.", "terms": [{"term": "service", "polarity": "positive", "span": [38, 45]}, {"term": "food", "polarity": "positive", "span": [50, 54]}], "opinions": ["enjoy"]}
+{"id": "NP#3:3", "text": "Servers are all different, Greg is my favorite.", "terms": [{"term": "Greg", "polarity": "positive", "span": [27, 31]}], "opinions": ["favorite"]}
+{"id": "NP#3:4", "text": "Sometimes tables don't understand his sense of humor but it's refreshing to have a server who has personality, professionalism, and respects the privacy of your dinner.", "terms": [{"term": "server", "polarity": "positive", "span": [83, 89]}], "opinions": []}
+{"id": "NP#3:5", "text": "This is the first place I've been that a runner remembers my order... hope he likes his job because I have half a mind to steal him for my restaurant.", "terms": [{"term": "runner", "polarity": "positive", "span": [41, 47]}], "opinions": []}
+{"id": "NP#3:6", "text": "Prices are fair across the board for both food and bev.", "terms": [{"term": "food", "polarity": "positive", "span": [42, 46]}, {"term": "bev", "polarity": "positive", "span": [51, 54]}], "opinions": ["fair"]}
+{"id": "NP#3:7", "text": "I go out to eat and like my courses, servers are patient and never rush courses or force another drink.", "terms": [{"term": "servers", "polarity": "positive", "span": [37, 44]}], "opinions": ["patient"]}
+{"id": "NP#3:8\" OutOfScope=\"TRUE", "text": "Restaurants in manhattan should try to model food and service after this place.", "opinions": []}
+{"id": "BHD#7:0", "text": "amazing fresh dogs but best of all endless toppings!!!", "terms": [{"term": "dogs", "polarity": "positive", "span": [14, 18]}, {"term": "toppings", "polarity": "positive", "span": [43, 51]}], "opinions": ["amazing", "fresh", "best", "endless"]}
+{"id": "BHD#7:1", "text": "this place had ALL the trimmings and i mean all.", "terms": [{"term": "trimmings", "polarity": "positive", "span": [23, 32]}], "opinions": []}
+{"id": "BHD#7:2", "text": "peppers, onions, relish, chilli, cheeses, you NAME it.", "opinions": []}
+{"id": "BHD#7:3", "text": "amazing fun for hot dog lovers of all ages PLEASE do yourself a favor and check this place out!!!!", "terms": [{"term": "place", "polarity": "positive", "span": [85, 90]}, {"term": "hot dog", "polarity": "positive", "span": [16, 23]}], "opinions": ["amazing fun"]}
+{"id": "CLF#5:0", "text": "BEST DINING EXPERIENCE IN THE WEST VILLAGE!", "opinions": []}
+{"id": "CLF#5:1", "text": "Stepping into Casa La Femme last night was a true experience unlike any other in New York!", "terms": [{"term": "Casa La Femme", "polarity": "positive", "span": [14, 27]}], "opinions": ["true"]}
+{"id": "CLF#5:2", "text": "Highly impressed from the decor to the food to the hospitality to the great night I had!", "terms": [{"term": "decor", "polarity": "positive", "span": [26, 31]}, {"term": "food", "polarity": "positive", "span": [39, 43]}], "opinions": ["impressed"]}
+{"id": "CLF#5:3", "text": "The have a great cocktail with Citrus Vodka and lemon and lime juice and mint leaves that is to die for!", "terms": [{"term": "cocktail with Citrus Vodka and lemon and lime juice and mint leaves", "polarity": "positive", "span": [17, 84]}], "opinions": ["great", "die for"]}
+{"id": "CLF#5:4", "text": "Food took some time to prepare, all worth waiting for.", "terms": [{"term": "Food", "polarity": "positive", "span": [0, 4]}], "opinions": ["worth"]}
+{"id": "CLF#5:5", "text": "We were drawn into the belly dancing show that captivated the crowd.", "terms": [{"term": "belly dancing show", "polarity": "positive", "span": [23, 41]}], "opinions": ["captivated"]}
+{"id": "CLF#5:6", "text": "I never write on these sites but this restaurant is def worth commending!", "terms": [{"term": "restaurant", "polarity": "positive", "span": [38, 48]}], "opinions": ["worth"]}
+{"id": "CLF#5:7", "text": "Great find in the West Village!", "opinions": []}
+{"id": "NP#4:0", "text": "Maggot in the food!", "terms": [{"term": "food", "polarity": "negative", "span": [14, 18]}], "opinions": []}
+{"id": "NP#4:1", "text": "I've been wanting to go to this place forever and finally got a table.", "opinions": []}
+{"id": "NP#4:2", "text": "The menu looked great, and the waiter was very nice, but when the food came, it was average.", "terms": [{"term": "menu", "polarity": "positive", "span": [4, 8]}, {"term": "waiter", "polarity": "positive", "span": [31, 37]}, {"term": "food", "polarity": "neutral", "span": [66, 70]}], "opinions": ["great", "nice", "average"]}
+{"id": "NP#4:3", "text": "Nevertheless, I finished my plate, and that's when I found a maggot in mushroom sauce at the bottom.", "terms": [{"term": "mushroom sauce", "polarity": "negative", "span": [71, 85]}], "opinions": []}
+{"id": "NP#4:4", "text": "I showed it to the manager, and he smilingly apologized and brought us two free desserts (but did not ask us what we wanted and so brought the last two desserts we would have asked for).", "terms": [{"term": "manager", "polarity": "positive", "span": [19, 26]}, {"term": "manager", "polarity": "negative", "span": [19, 26]}], "opinions": []}
+{"id": "NP#4:5", "text": "When the bill came, nothing was comped, so I told the manager very politely that we were willing to pay for the wine, but I didn't think I should have to pay for food with a maggot in it.", "opinions": []}
+{"id": "NP#4:6", "text": "Yes, I ate the food, but I certainly would not have if I had seen the maggot before eating, and I was at this point fairly sick to my stomach.", "opinions": []}
+{"id": "NP#4:7", "text": "The manager finally said he would comp the two glasses of wine (which cost less than the food), and made it seem like a big concession.", "terms": [{"term": "manager", "polarity": "negative", "span": [4, 11]}], "opinions": []}
+{"id": "NP#4:8", "text": "We paid and left because we didn't feel like arguing any more.", "opinions": []}
+{"id": "NP#4:9", "text": "I have worked in restaurants and cook a lot, and there is no way a maggot should be able to get into well prepared food.", "terms": [{"term": "food", "polarity": "negative", "span": [115, 119]}], "opinions": ["well prepared"]}
+{"id": "NP#4:10", "text": "For a restaurant with such a good reputation and that is usually so packed, there was no reason for such a lack of intelligent customer service.", "terms": [{"term": "restaurant", "polarity": "positive", "span": [6, 16]}, {"term": "customer service", "polarity": "negative", "span": [127, 143]}], "opinions": ["good reputation", "lack of", "intelligent"]}
+{"id": "FF#1:0\" OutOfScope=\"TRUE", "text": "A fairly late entry into the haute barnyard sweepstakes, Flatbush Farm isn't in the same league as the Blue Hills or even the Farm on Adderlys of the world, but it's pretty good, albeit with a somewhat dismal setting.", "opinions": []}
+{"id": "P#6:0", "text": "Unhygienic", "opinions": []}
+{"id": "P#6:1", "text": "I do not recommend.", "opinions": []}
+{"id": "P#6:2", "text": "I went there 2times .", "opinions": []}
+{"id": "P#6:3", "text": "I got hair in my food 2 times of then !", "terms": [{"term": "food", "polarity": "negative", "span": [17, 21]}], "opinions": []}
+{"id": "BzG#2:0", "text": "Great place, great value.", "terms": [{"term": "place", "polarity": "positive", "span": [6, 11]}, {"term": "place", "polarity": "positive", "span": [6, 11]}], "opinions": ["Great"]}
+{"id": "BzG#2:1", "text": "The food is flavorful, plentiful and reasonably priced.", "terms": [{"term": "food", "polarity": "positive", "span": [4, 8]}, {"term": "food", "polarity": "positive", "span": [4, 8]}, {"term": "food", "polarity": "positive", "span": [4, 8]}], "opinions": ["flavorful", "plentiful", "reasonably priced"]}
+{"id": "BzG#2:2", "text": "The atmosphere is relaxed and casual.", "terms": [{"term": "atmosphere", "polarity": "positive", "span": [4, 14]}], "opinions": ["relaxed", "casual"]}
+{"id": "BzG#2:3", "text": "It's a great place to order from or sit-in.", "terms": [{"term": "place", "polarity": "positive", "span": [13, 18]}], "opinions": ["great"]}
+{"id": "TVU#4:0", "text": "Awesome", "opinions": []}
+{"id": "TVU#4:1", "text": "Inexpensive, unassuming, great time!", "opinions": []}
+{"id": "Z#2:0", "text": "Sushi experience was unbelievable with my fiance.", "terms": [{"term": "Sushi", "polarity": "positive", "span": [0, 5]}], "opinions": ["unbelievable"]}
+{"id": "Z#2:1", "text": "Try it!", "opinions": []}
+{"id": "Z#2:2", "text": "Very pleased", "opinions": []}
+{"id": "Y#9:0", "text": "Good creative rolls!", "terms": [{"term": "rolls", "polarity": "positive", "span": [14, 19]}, {"term": "rolls", "polarity": "positive", "span": [14, 19]}], "opinions": ["Good", "creative"]}
+{"id": "Y#9:1", "text": "Yamato is an excellent place to go if youre not into sashimi, or if you have friends who doesnt like sushi much.", "terms": [{"term": "Yamato", "polarity": "positive", "span": [0, 6]}], "opinions": ["excellent"]}
+{"id": "Y#9:2", "text": "They have great rolls, the triple color and norwegetan rolls, are awesome and filling.", "terms": [{"term": "rolls", "polarity": "positive", "span": [16, 21]}, {"term": "triple color and norwegetan rolls", "polarity": "positive", "span": [27, 60]}, {"term": "triple color and norwegetan rolls", "polarity": "positive", "span": [27, 60]}], "opinions": ["great", "awesome", "filling"]}
+{"id": "Y#9:3", "text": "One special roll and one regular roll is enough to fill you up, but save room for dessert!", "terms": [{"term": "dessert", "polarity": "positive", "span": [82, 89]}, {"term": "special roll", "polarity": "positive", "span": [4, 16]}, {"term": "regular roll", "polarity": "positive", "span": [25, 37]}], "opinions": ["enough", "save room"]}
+{"id": "Y#9:4", "text": "They have a delicious banana chocolate dessert, as well as a great green tea tempura.", "terms": [{"term": "banana chocolate dessert", "polarity": "positive", "span": [22, 46]}, {"term": "green tea tempura", "polarity": "positive", "span": [67, 84]}], "opinions": ["delicious", "great"]}
+{"id": "Y#9:5", "text": "The appetizers are also delicious!", "terms": [{"term": "appetizers", "polarity": "positive", "span": [4, 14]}], "opinions": ["delicious"]}
+{"id": "Z#5:0", "text": "Amazing food.", "terms": [{"term": "food", "polarity": "positive", "span": [8, 12]}], "opinions": ["Amazing"]}
+{"id": "Z#5:1", "text": "Mazing interior.", "terms": [{"term": "interior", "polarity": "negative", "span": [7, 15]}], "opinions": ["amazing"]}
+{"id": "Z#5:2", "text": "Great food!", "terms": [{"term": "food", "polarity": "positive", "span": [6, 10]}], "opinions": ["Great"]}
+{"id": "Z#5:3", "text": "I've had my fair share of modern Japanese and this spot delivers.", "terms": [{"term": "modern Japanese", "polarity": "positive", "span": [26, 41]}], "opinions": ["delivers"]}
+{"id": "Z#5:4", "text": "The atmosphere was pretty nice but had a bit lacking, which it tries to make up for with a crazy scheme of mirrors.", "terms": [{"term": "atmosphere", "polarity": "negative", "span": [4, 14]}, {"term": "scheme of mirrors", "polarity": "negative", "span": [97, 114]}], "opinions": ["nice", "lacking", "crazy"]}
+{"id": "Z#5:5", "text": "If you're into being lost when you're just five feet from your table then hey, that's a good thing.", "opinions": []}
+{"id": "Z#5:6", "text": "Despite the confusing mirrors this will likely be my go-to for modern Japanese food for the foreseeable future.", "terms": [{"term": "modern Japanese food", "polarity": "positive", "span": [63, 83]}, {"term": "mirrors", "polarity": "negative", "span": [22, 29]}], "opinions": ["confusing", "go-to for"]}
+{"id": "Z#5:7\" OutOfScope=\"TRUE", "text": "Another review here claimed the pre-fix was $29/per person including sake but it is $55 per person not including sake.", "opinions": []}
+{"id": "TM#4:0", "text": "Indo Chinese food, pretty good...", "terms": [{"term": "Indo Chinese food", "polarity": "positive", "span": [0, 17]}], "opinions": ["good"]}
+{"id": "TM#4:1", "text": "Not a very fancy place but very good Chinese style Indian food.", "terms": [{"term": "place", "polarity": "neutral", "span": [17, 22]}, {"term": "Chinese style Indian food", "polarity": "positive", "span": [37, 62]}], "opinions": ["fancy", "good"]}
+{"id": "TM#4:2", "text": "The chicken lollipop is my favorite, most of the dishes (I have to agree with a previous reviewer) are quite oily and very spicy, espeically the Chilli Chicken.", "terms": [{"term": "chicken lollipop", "polarity": "positive", "span": [4, 20]}, {"term": "dishes", "polarity": "negative", "span": [49, 55]}, {"term": "Chilli Chicken", "polarity": "negative", "span": [145, 159]}], "opinions": ["favorite", "oily", "spicy"]}
+{"id": "TM#4:3", "text": "My mom originally introduced me to this place, but even she (being Indian) feels the food can be somewhat over the top spicy and far too oily.", "terms": [{"term": "food", "polarity": "negative", "span": [85, 89]}], "opinions": ["spicy", "oily"]}
+{"id": "TM#4:4", "text": "Still we keep going back :)", "opinions": []}
+{"id": "TFS#11:0", "text": "I was speechless by the horrible food.", "terms": [{"term": "food", "polarity": "negative", "span": [33, 37]}], "opinions": ["horrible"]}
+{"id": "TFS#11:1", "text": "I attended a holiday dinner at the restaurant, and the food was majorly disappointing.", "terms": [{"term": "food", "polarity": "negative", "span": [55, 59]}], "opinions": ["disappointing"]}
+{"id": "TFS#11:2", "text": "Rather than eating the meat entree being offered, I requested a vegetarian dish.", "opinions": []}
+{"id": "TFS#11:3", "text": "Rather than preparing vegetarian dish, the chef presented me with a plate of steamed vegetables (minus sauce, seasoning, or any form or aesthetic presentation).", "terms": [{"term": "chef", "polarity": "negative", "span": [43, 47]}, {"term": "vegetarian dish", "polarity": "negative", "span": [22, 37]}, {"term": "vegetarian dish", "polarity": "negative", "span": [22, 37]}], "opinions": []}
+{"id": "TFS#11:4", "text": "I was so stunned, and I left the dinner hungry and majorly disappointing.", "opinions": []}
+{"id": "TFS#11:5", "text": "This place survives on reputation alone.", "terms": [{"term": "place", "polarity": "negative", "span": [5, 10]}], "opinions": []}
+{"id": "TFS#11:6", "text": "I will NEVER return.", "opinions": []}
+{"id": "ADLT#10:0", "text": "Best In ALL of NYC", "opinions": []}
+{"id": "ADLT#10:1", "text": "This is the MOST wonderful restaurant in all of New York City, not just Brooklyn...", "terms": [{"term": "restaurant", "polarity": "positive", "span": [27, 37]}], "opinions": ["wonderful"]}
+{"id": "ADLT#10:2", "text": "for 7 years they have put out the most tasty, most delicious food and kept it that way...", "terms": [{"term": "food", "polarity": "positive", "span": [61, 65]}], "opinions": ["tasty", "delicious"]}
+{"id": "ADLT#10:3", "text": "never swaying, never a bad meal, never bad service...", "terms": [{"term": "meal", "polarity": "positive", "span": [27, 31]}, {"term": "service", "polarity": "positive", "span": [43, 50]}], "opinions": ["bad", "bad"]}
+{"id": "ADLT#10:4", "text": "I'm telling you...", "opinions": []}
+{"id": "ADLT#10:5", "text": "you should travel from the Bronx to try it...", "opinions": []}
+{"id": "ADLT#10:6", "text": "great food, great wine list, great service in a great neighborhood...", "terms": [{"term": "food", "polarity": "positive", "span": [6, 10]}, {"term": "wine list", "polarity": "positive", "span": [18, 27]}, {"term": "service", "polarity": "positive", "span": [35, 42]}, {"term": "neighborhood", "polarity": "positive", "span": [54, 66]}], "opinions": ["great", "great", "great", "great"]}
+{"id": "ADLT#10:7", "text": "so delicious!!!!!!", "opinions": []}
+{"id": "PP#3:0", "text": "Patsy's Pizza = true love", "terms": [{"term": "Patsy's Pizza", "polarity": "positive", "span": [0, 13]}], "opinions": ["true love"]}
+{"id": "PP#3:1", "text": "Hands down the best pizza on the planet.", "terms": [{"term": "pizza", "polarity": "positive", "span": [20, 25]}], "opinions": ["Hands down"]}
+{"id": "PP#3:2", "text": "My bf and I go to the walk-up counter and order a pie.", "opinions": []}
+{"id": "PP#3:3", "text": "In about 12 minutes, the thing is gone.", "opinions": []}
+{"id": "PP#3:4", "text": "Need I say more?", "opinions": []}
+{"id": "BHD#6:0", "text": "great hot dogs..", "terms": [{"term": "hot dogs", "polarity": "positive", "span": [6, 14]}], "opinions": ["great"]}
+{"id": "BHD#6:1", "text": "the hot dogs were juicy and tender inside and had plenty of crunch and snap on the outside.", "terms": [{"term": "hot dogs", "polarity": "positive", "span": [4, 12]}], "opinions": ["juicy", "tender"]}
+{"id": "BHD#6:2", "text": "great toppings definitely a place you need to check out for late night munchies or a mid day boost!", "terms": [{"term": "toppings", "polarity": "positive", "span": [6, 14]}, {"term": "place", "polarity": "positive", "span": [28, 33]}], "opinions": ["great"]}
+{"id": "TM#5:0", "text": "great taste", "opinions": []}
+{"id": "TM#5:1", "text": "Great, original taste.", "opinions": []}
+{"id": "TM#5:2", "text": "For me dishes a little oily, but overall dining experience good.", "terms": [{"term": "dishes", "polarity": "negative", "span": [7, 13]}], "opinions": ["oily"]}
+{"id": "TM#5:3", "text": "Helpful service and average price per dish $10.", "terms": [{"term": "service", "polarity": "positive", "span": [8, 15]}, {"term": "dish", "polarity": "neutral", "span": [38, 42]}], "opinions": ["Helpful", "average price"]}
+{"id": "TM#5:4", "text": "The only thing that strikes you is the decor?(not very pleasant).", "terms": [{"term": "decor", "polarity": "negative", "span": [39, 44]}], "opinions": ["strikes", "pleasant"]}
+{"id": "TM#6:0", "text": "great food", "terms": [{"term": "food", "polarity": "positive", "span": [6, 10]}], "opinions": ["great"]}
+{"id": "TM#6:1", "text": "This place has great indian chinese food.", "terms": [{"term": "indian chinese food", "polarity": "positive", "span": [21, 40]}], "opinions": ["great"]}
+{"id": "TM#6:2", "text": "The flavors are amazing and the value is phenomenal.", "opinions": []}
+{"id": "TM#6:3", "text": "Be prepared to wait, because the place is pretty tiny.", "terms": [{"term": "place", "polarity": "negative", "span": [33, 38]}, {"term": "place", "polarity": "negative", "span": [33, 38]}], "opinions": ["tiny"]}
+{"id": "TM#6:4", "text": "Also, they do not take credit card so come with cash!", "opinions": []}
+{"id": "TM#6:5", "text": "Even though the place is not beautiful, the food speaks for itself.", "terms": [{"term": "place", "polarity": "negative", "span": [16, 21]}, {"term": "food", "polarity": "positive", "span": [44, 48]}], "opinions": ["beautiful", "speaks for itself"]}
+{"id": "TM#6:6", "text": "Best Indian Chinese in the city, by far!", "terms": [{"term": "Indian Chinese", "polarity": "positive", "span": [5, 19]}], "opinions": ["Best"]}
+{"id": "TVU#6:0", "text": "AMAZING MY FAVORITE!!!", "opinions": []}
+{"id": "TVU#6:1", "text": "I have been living in NYC for bit now and I have to say I love to go out and explore the scene.", "opinions": []}
+{"id": "TVU#6:2", "text": "I came across Village Underground by accident, now I go there all the time.", "terms": [{"term": "Village Underground", "polarity": "positive", "span": [14, 33]}], "opinions": []}
+{"id": "TVU#6:3", "text": "The martinis are amazing and very fairly priced.", "terms": [{"term": "martinis", "polarity": "positive", "span": [4, 12]}, {"term": "martinis", "polarity": "positive", "span": [4, 12]}], "opinions": ["amazing"]}
+{"id": "TVU#6:4", "text": "THE SERVICE IS AMAZING, i've had different waiters and they were all nice, which is a rare thing in NYC.", "terms": [{"term": "SERVICE", "polarity": "positive", "span": [4, 11]}, {"term": "waiters", "polarity": "positive", "span": [43, 50]}], "opinions": ["AMAZING", "nice"]}
+{"id": "TVU#6:5", "text": "The DJ is awesome, I have been there for my birthday and a bunch of other times with friends and I keep going back.", "terms": [{"term": "DJ", "polarity": "positive", "span": [4, 6]}], "opinions": ["awesome"]}
+{"id": "TVU#6:6", "text": "You can get a table without a reservation if you get there early I they don't make you by bottles.", "opinions": []}
+{"id": "TVU#6:7", "text": "Which lets face it....at times it's a good thing.", "opinions": []}
+{"id": "TVU#6:8", "text": "In the end you end up with a fair tab and NOTHING BUT A GREAT TIME!!!", "opinions": []}
+{"id": "TVU#6:9", "text": "Highly recommended!", "opinions": []}
+{"id": "ADLT#3:0", "text": "One of the best, if not THE best, restaurants in Park Slope (and NY in general)", "opinions": []}
+{"id": "ADLT#3:1", "text": "Everything on the menu is great. ", "terms": [{"term": "menu", "polarity": "positive", "span": [18, 22]}], "opinions": ["great"]}
+{"id": "ADLT#3:2", "text": "This establishment is the real deal. ", "terms": [{"term": "establishment", "polarity": "positive", "span": [5, 18]}], "opinions": ["real deal"]}
+{"id": "ADLT#3:3", "text": "Wish NY had more of these kind of places: intimate, superb food, homey, top notch all the way around, certainly worth the wait.", "terms": [{"term": "food", "polarity": "positive", "span": [59, 63]}], "opinions": ["intimate", "superb", "homey", "top notch"]}
+{"id": "TFS#5:0", "text": "There is \"Expensive-but-worth-it\" and there is \"Expensive-and-WTF\"?", "opinions": []}
+{"id": "TFS#5:1", "text": "This is a twenty-something guy that doesn't mind laying down $300 for a fine and delicious meal for 2 on special occassions.", "opinions": []}
+{"id": "TFS#5:2", "text": "But $500 for a dinner for two that didn't include Wine?", "terms": [{"term": "dinner for two", "polarity": "negative", "span": [15, 29]}], "opinions": []}
+{"id": "TFS#5:3", "text": "Are you freaking kidding me?", "opinions": []}
+{"id": "TFS#5:4", "text": "Look, the appetizers were really good.", "terms": [{"term": "appetizers", "polarity": "positive", "span": [10, 20]}], "opinions": ["good"]}
+{"id": "TFS#5:5", "text": "The entree was also very good.", "terms": [{"term": "entree", "polarity": "positive", "span": [4, 10]}], "opinions": ["good"]}
+{"id": "TFS#5:6", "text": "Can't argue about that, but they are clearly over priced.", "opinions": []}
+{"id": "TFS#5:7", "text": "What you are paying for is the environment and the name.", "terms": [{"term": "environment", "polarity": "neutral", "span": [31, 42]}], "opinions": []}
+{"id": "TFS#5:8", "text": "Yes, the place is classy and beautiful, but they most certainly target the uber whealthy Not the common joe that wants to go all out every once in a while.", "terms": [{"term": "place", "polarity": "positive", "span": [9, 14]}, {"term": "place", "polarity": "negative", "span": [9, 14]}], "opinions": ["classy", "beautiful"]}
+{"id": "TFS#5:9", "text": "$500 included:", "opinions": []}
+{"id": "TFS#5:10", "text": "Drinks: 2 glasses of Dom Perignon at $35 each.", "opinions": []}
+{"id": "TFS#5:11", "text": "Starters: Kobe Beef Sashimi.", "opinions": []}
+{"id": "TFS#5:12", "text": "Which of course is not real Kobe but Wagyu beef.", "opinions": []}
+{"id": "TFS#5:13", "text": "Surprised that a place of this caliber would advertise it as Kobe.", "opinions": []}
+{"id": "TFS#5:14", "text": "A beef Consomme.", "opinions": []}
+{"id": "TFS#5:15", "text": "Entrees: Vanison steak and Bison Steak.", "opinions": []}
+{"id": "TFS#5:16", "text": "Vanison was good but not amazing.", "terms": [{"term": "Vanison", "polarity": "neutral", "span": [0, 7]}], "opinions": ["good", "amazing"]}
+{"id": "TFS#5:17", "text": "Bison was quite excellent however.", "terms": [{"term": "Bison", "polarity": "positive", "span": [0, 5]}], "opinions": ["excellent"]}
+{"id": "TFS#5:18", "text": "Dessert: pure disaster.", "terms": [{"term": "Dessert", "polarity": "negative", "span": [0, 7]}], "opinions": ["disaster"]}
+{"id": "TFS#5:19", "text": "Just not good at all.", "opinions": []}
+{"id": "TFS#5:20", "text": "Some Pineapple covered in a glaze of some kind and some pear tart thing Not impressive at all.", "opinions": []}
+{"id": "TFS#5:21", "text": "I read reviews that called the restaurant too expensive and I thought to myself, but may be it is worth it.", "terms": [{"term": "restaurant", "polarity": "negative", "span": [31, 41]}, {"term": "restaurant", "polarity": "negative", "span": [31, 41]}], "opinions": ["expensive"]}
+{"id": "TFS#5:22", "text": "I was wrong.", "opinions": []}
+{"id": "TFS#5:23", "text": "The Four Seasons has history and it is a sort of landmark of New York City restaurants, but trust me, they will charge you through the nose just so that you can say \"I've been to the four seasons restaurant\".", "terms": [{"term": "The Four Seasons", "polarity": "neutral", "span": [0, 16]}, {"term": "The Four Seasons", "polarity": "negative", "span": [0, 16]}], "opinions": []}
+{"id": "TFS#5:24", "text": "I wanted to go there to see if it was worth it and sadly, curiousity got the best of me and I paid dearly for it.", "opinions": []}
+{"id": "TFS#5:25", "text": "All in all, the food was great (except for the dessserts).", "terms": [{"term": "food", "polarity": "positive", "span": [16, 20]}, {"term": "dessserts", "polarity": "negative", "span": [47, 56]}], "opinions": ["great", "except"]}
+{"id": "TFS#5:26", "text": "The environment is very upscale and you will see a lot of rich guys with trophy wives or just highly paid escorts.", "terms": [{"term": "environment", "polarity": "neutral", "span": [4, 15]}], "opinions": ["upscale"]}
+{"id": "TFS#5:27", "text": "If you are going for the food, it will not be worth it.", "terms": [{"term": "food", "polarity": "negative", "span": [25, 29]}], "opinions": ["worth"]}
+{"id": "TFS#5:28\" OutOfScope=\"TRUE", "text": "Yes, it is good, but I've had better for cheaper.", "opinions": []}
+{"id": "TFS#5:29", "text": "You would think they would make up for it with service, sadly, no.", "terms": [{"term": "service", "polarity": "negative", "span": [47, 54]}], "opinions": ["sadly"]}
+{"id": "TFS#5:30", "text": "Service was just ok, it is not what you'd expect for $500.", "terms": [{"term": "Service", "polarity": "negative", "span": [0, 7]}], "opinions": ["ok"]}
+{"id": "CLF#3:0", "text": "Terrible Waste of money.. scammers", "opinions": []}
+{"id": "CLF#3:1", "text": "I agree that dining at Casa La Femme is like no other dining experience!", "terms": [{"term": "Casa La Femme", "polarity": "negative", "span": [23, 36]}], "opinions": []}
+{"id": "CLF#3:2", "text": "BUT not in a good way.", "opinions": []}
+{"id": "CLF#3:3", "text": "I am actually offended to have spent so much money on such a bad experience.", "opinions": []}
+{"id": "CLF#3:4", "text": "I literally just got back home after visiting Casa La Femme and was so offended by my visit felt it necessary to try and warn other diners who value their money and time.", "terms": [{"term": "Casa La Femme", "polarity": "negative", "span": [46, 59]}, {"term": "Casa La Femme", "polarity": "negative", "span": [46, 59]}], "opinions": ["offended"]}
+{"id": "CLF#3:5", "text": "We went to celebrate two birthdays and wanted to do something special and different.", "opinions": []}
+{"id": "CLF#3:6", "text": "Our visit their to say the least, was an unpleasant and costly experience!", "opinions": []}
+{"id": "CLF#3:7", "text": "And even more so unpleasant because it was so costly for such an unpleasant experience.", "opinions": []}
+{"id": "CLF#3:8", "text": "We did arrive late for our reservation so I can not complain too much about the wait for a table.", "terms": [{"term": "wait", "polarity": "neutral", "span": [80, 84]}], "opinions": []}
+{"id": "CLF#3:9", "text": "Although we were told 10-15 minutes and it was more like 45 minutes.", "opinions": []}
+{"id": "CLF#3:10", "text": "We were ushered to the bar to wait momentarily and upon arrival were so excited.", "opinions": []}
+{"id": "CLF#3:11", "text": "The place is beautiful!", "terms": [{"term": "place", "polarity": "positive", "span": [4, 9]}], "opinions": ["beautiful"]}
+{"id": "CLF#3:12", "text": "The hostess was very pleasant.", "terms": [{"term": "hostess", "polarity": "positive", "span": [4, 11]}], "opinions": ["pleasant"]}
+{"id": "CLF#3:13", "text": "However, our $14 drinks were were horrible!", "terms": [{"term": "drinks", "polarity": "negative", "span": [17, 23]}, {"term": "drinks", "polarity": "negative", "span": [17, 23]}], "opinions": ["horrible"]}
+{"id": "CLF#3:14", "text": "Once we finally got a table, despite indicating we wanted an alla carte menu we were pushed into a table that was only price fixed!", "opinions": []}
+{"id": "CLF#3:15", "text": "Since we were already waiting so long, we felt we had no other choice but to accept it.", "opinions": []}
+{"id": "CLF#3:16", "text": "Our experience did not ever get any better.", "opinions": []}
+{"id": "CLF#3:17", "text": "For each course we waited over 1/2 hour to 45 minutes and were never offered a drink.", "opinions": []}
+{"id": "CLF#3:18", "text": "We also asked for Hooka six times and the waiter kept telling us one minute and never returning with the Hooka.", "terms": [{"term": "waiter", "polarity": "negative", "span": [42, 48]}], "opinions": []}
+{"id": "CLF#3:19", "text": "After the 4th time i asked again and the waiter than said after our dinner.", "terms": [{"term": "waiter", "polarity": "negative", "span": [41, 47]}], "opinions": []}
+{"id": "CLF#3:20", "text": "We asked for beverages and never received them.", "opinions": []}
+{"id": "CLF#3:21", "text": "We asked for sides which the waiter than admitted that he forgot to put in that part of our order.", "terms": [{"term": "waiter", "polarity": "negative", "span": [29, 35]}], "opinions": ["forgot"]}
+{"id": "CLF#3:22", "text": "My chicken was inedible as there were so many fatty lumps which i had to keep spitting out into my napkin.", "terms": [{"term": "chicken", "polarity": "negative", "span": [3, 10]}], "opinions": ["inedible"]}
+{"id": "CLF#3:23", "text": "I would not expect this for a $55 dinner.", "terms": [{"term": "dinner", "polarity": "negative", "span": [34, 40]}, {"term": "dinner", "polarity": "negative", "span": [34, 40]}], "opinions": []}
+{"id": "CLF#3:24", "text": "By the time we finished our dinner we still had not received one beverage NOR hooka!", "opinions": []}
+{"id": "CLF#3:25", "text": "What we did do was waste 3 hours being trapped in a table waiting and waiting for food and drinks and hooka.. some of which we never received!", "opinions": []}
+{"id": "CLF#3:26", "text": "The only beverage we did receive was water in dirty glasses!", "opinions": []}
+{"id": "CLF#3:27", "text": "To top it all off.. the main reason we came to your restaurant was for the belly dancers and missed the first show as we were not seated yet and the 2nd belly dancer only danced at two tables in the back of the restaurant and never made it around to the other half of the restaurant.", "opinions": []}
+{"id": "CLF#3:28", "text": "By the time we left our wallets were empy and so were our stomachs AND we missed the show we were supposed to see following our dinner, which would have been acceptable if we got to enjoy the experience of good food and belly dancers!", "terms": [{"term": "food", "polarity": "negative", "span": [211, 215]}], "opinions": ["good"]}
+{"id": "CLF#3:29", "text": "If it seemed possible to do so while there I would have fought my bill since my dinner portion of my meal was inedible!", "terms": [{"term": "meal", "polarity": "negative", "span": [101, 105]}], "opinions": ["inedible"]}
+{"id": "CLF#3:30", "text": "I have never left a restaurant feeling as if i was abused, and wasted my hard earned money.", "terms": [{"term": "restaurant", "polarity": "negative", "span": [20, 30]}, {"term": "restaurant", "polarity": "negative", "span": [20, 30]}], "opinions": ["abused"]}
+{"id": "CLF#3:31", "text": "MY husbands birthday and my sons was not as it was intended... and we drove two hours to spend too much money to be treated terribly!", "opinions": []}
+{"id": "CLF#3:32", "text": "I wish I COULD be refunded!", "opinions": []}
+{"id": "BFC#9:0", "text": "Don't go with a larger group than 4! ", "opinions": []}
+{"id": "BFC#9:1", "text": "I went here for a family birthday dinner. ", "opinions": []}
+{"id": "BFC#9:2", "text": "Five of us walked in at approximately 6:20 on a Thursday evening. ", "opinions": []}
+{"id": "BFC#9:3", "text": "The hostess said \"Wow that's a large group, unless you aren't together\", to which I replied \"no we are, and there will be one more, so a table for six please.\" ", "opinions": []}
+{"id": "BFC#9:4", "text": "At first we were a little taken aback, as this seemed to present a problem, although the restaurant looked fairly empty, but they hastily put the table together for us.", "opinions": []}
+{"id": "BFC#9:5", "text": "The menu is fairly simple without much descriptions. ", "terms": [{"term": "menu", "polarity": "neutral", "span": [4, 8]}], "opinions": ["simple"]}
+{"id": "BFC#9:6", "text": "There was no tap beer that evening, which was a disappointment. ", "terms": [{"term": "beer", "polarity": "negative", "span": [17, 21]}], "opinions": ["disappointment"]}
+{"id": "BFC#9:7", "text": "Not much of a selection of bottled beer either, we went with Brahma. ", "terms": [{"term": "selection of bottled beer", "polarity": "negative", "span": [14, 39]}], "opinions": ["much"]}
+{"id": "BFC#9:8", "text": "The appetizers we ordered were served quickly - an order of fried oysters and clams were delicious but a tiny portion (maybe 3 of each). ", "terms": [{"term": "fried oysters and clams", "polarity": "positive", "span": [60, 83]}, {"term": "fried oysters and clams", "polarity": "negative", "span": [60, 83]}], "opinions": ["delicious", "tiny"]}
+{"id": "BFC#9:9", "text": "The lobster knuckles (special of the day) were ok, but pretty tasteless.", "terms": [{"term": "lobster knuckles", "polarity": "neutral", "span": [4, 20]}, {"term": "lobster knuckles", "polarity": "negative", "span": [4, 20]}], "opinions": ["ok", "tasteless"]}
+{"id": "BFC#9:10", "text": "I believe there were 2 shrimp in the \"salt encrusted shrimp\" appetizer. ", "terms": [{"term": "&quot;salt encrusted shrimp&quot; appetizer", "polarity": "negative", "span": [37, 70]}], "opinions": []}
+{"id": "BFC#9:11", "text": "After we ate our appetizers (which took all of 8 minutes) we ordered another round of Brahma's - and tried to stall a little as we waited for our sixth dinner member. ", "opinions": []}
+{"id": "BFC#9:12", "text": "The waitress appeared and asked us if we wanted to go ahead and order. ", "opinions": []}
+{"id": "BFC#9:13", "text": "We replied that we would like to wait 5 more minutes if that was okay. ", "opinions": []}
+{"id": "BFC#9:14", "text": "She replied \"well it would be more convenient for us if you ordered now, since you are a larger party, and it might get crowded.\" ", "opinions": []}
+{"id": "BFC#9:15", "text": "We called the other person who was very close by, and she told us to order for her, so we did. ", "opinions": []}
+{"id": "BFC#9:16", "text": "The food arrived in about 15 minutes. ", "opinions": []}
+{"id": "BFC#9:17", "text": "I had the Thai style Fried Sea Bass...which was very good. ", "terms": [{"term": "Thai style Fried Sea Bass", "polarity": "positive", "span": [10, 35]}], "opinions": ["good"]}
+{"id": "BFC#9:18", "text": "Everyone seemed generally happy with their food, except my brother who had the grilled Mahi Mahi, seemingly drenched in Grapfruit Juice! ", "terms": [{"term": "food", "polarity": "positive", "span": [43, 47]}, {"term": "grilled Mahi Mahi", "polarity": "negative", "span": [79, 96]}, {"term": "grilled Mahi Mahi", "polarity": "negative", "span": [79, 96]}], "opinions": ["happy", "drenched"]}
+{"id": "BFC#9:19", "text": "I heard the lobster roll was excellent. ", "terms": [{"term": "lobster roll", "polarity": "positive", "span": [12, 24]}], "opinions": ["excellent"]}
+{"id": "BFC#9:20", "text": "They seemed to continue to rush us along, taking plates without asking if we were done (my sister still had her fork in hand). ", "opinions": []}
+{"id": "BFC#9:21", "text": "All in all the food was good - a little on the expensive side, but fresh. ", "terms": [{"term": "food", "polarity": "positive", "span": [15, 19]}, {"term": "food", "polarity": "negative", "span": [15, 19]}], "opinions": ["good", "expensive", "fresh"]}
+{"id": "BFC#9:22", "text": "Service not the friendliest to our \"large party\"! ", "terms": [{"term": "Service", "polarity": "negative", "span": [0, 7]}], "opinions": ["friendliest"]}
+{"id": "BFC#9:23", "text": "Probably would not go back here.", "opinions": []}
+{"id": "BG#5:0", "text": "Great Indian food", "terms": [{"term": "Indian food", "polarity": "positive", "span": [6, 17]}], "opinions": ["Great"]}
+{"id": "BG#5:1", "text": "I lived on 50th st, and wanted Indian one day so decided to check this place out.", "opinions": []}
+{"id": "BG#5:2", "text": "Food was amazing - I love Indian food and eat it quite regularly, but I can say this is one of the best I've had.", "terms": [{"term": "Food", "polarity": "positive", "span": [0, 4]}], "opinions": ["amazing", "love", "best"]}
+{"id": "BG#5:3", "text": "Very \"normal Indian food\", but done really well.", "terms": [{"term": "Indian food", "polarity": "neutral", "span": [13, 24]}, {"term": "Indian food", "polarity": "positive", "span": [13, 24]}], "opinions": []}
+{"id": "BG#5:4", "text": "I have it a 4 instead of 5 because of the price (just chicken tikka masala - no bread of rice - is $25), which I would expect at a upscale Indian restaurant but this place doesn't have an upscale feel.", "terms": [{"term": "place", "polarity": "positive", "span": [166, 171]}, {"term": "place", "polarity": "negative", "span": [166, 171]}, {"term": "chicken tikka masala", "polarity": "negative", "span": [54, 74]}, {"term": "feel", "polarity": "negative", "span": [196, 200]}], "opinions": ["upscale"]}
+{"id": "BG#5:5", "text": "Also, waiters try to push more food on you, like suggest things as if they are complimentary when they actually cost $.", "terms": [{"term": "waiters", "polarity": "negative", "span": [6, 13]}], "opinions": []}
+{"id": "BG#5:6", "text": "I don't appreciate places or people that try to drive up the bill without the patron's knowledge so that was a huge turnoff (more than the price).", "opinions": []}
+{"id": "BG#5:7", "text": "But if you're prepared to spend some $ and remember to ask if something they offer is complimentary, then this is the place to go for Indian food", "terms": [{"term": "Indian food", "polarity": "positive", "span": [134, 145]}, {"term": "place", "polarity": "negative", "span": [118, 123]}], "opinions": []}
+{"id": "BG#8:0", "text": "One of the BEST", "opinions": []}
+{"id": "BG#8:1", "text": "Bukhara Grill, the tagline says it all.. \"INDIAN SPICE RAVE\"", "terms": [{"term": "Bukhara Grill", "polarity": "positive", "span": [0, 13]}], "opinions": []}
+{"id": "BG#8:2", "text": "My GF and I dine at Bukhara often as she lives near it.", "opinions": []}
+{"id": "BG#8:3", "text": "The lunch buffet is expensive but is deff worth it.", "terms": [{"term": "lunch buffet", "polarity": "negative", "span": [4, 16]}, {"term": "lunch buffet", "polarity": "positive", "span": [4, 16]}], "opinions": ["expensive", "worth"]}
+{"id": "BG#8:4", "text": "We go often for lunch and the place is packed.", "opinions": []}
+{"id": "BG#8:5", "text": "We have gone for dinner only a few times but the same great quality and service is given.", "terms": [{"term": "service", "polarity": "positive", "span": [72, 79]}, {"term": "dinner", "polarity": "positive", "span": [17, 23]}], "opinions": ["great quality", "given"]}
+{"id": "BG#8:6", "text": "Bukhara is on my top 5 Indian places in NYC", "terms": [{"term": "Bukhara", "polarity": "positive", "span": [0, 7]}], "opinions": ["top"]}
+{"id": "DBG#2:0", "text": "Wretched and retching", "opinions": []}
+{"id": "DBG#2:1", "text": "This will be only the third online review I have ever made about a restaurant in my life.", "opinions": []}
+{"id": "DBG#2:2", "text": "They have all been tonight and they have all been about the same restaurant.", "opinions": []}
+{"id": "DBG#2:3", "text": "I have never been so disgusted by both food an service.", "terms": [{"term": "food", "polarity": "negative", "span": [39, 43]}, {"term": "service", "polarity": "negative", "span": [47, 54]}], "opinions": ["disgusted"]}
+{"id": "DBG#2:4", "text": "For starters they delivered us someone else's order.", "opinions": []}
+{"id": "DBG#2:5", "text": "Fine, I wont hang you for that.", "opinions": []}
+{"id": "DBG#2:6", "text": "However, once I received my predictably mediocre order of what Dokebi thinks passes as Korean fair, (sometimes you have to settle when it's your only option), I got through about half my kimchee before I found a piece of random lettuce accompanied by a far more disgusting, slimy, clearly bad piece of fish skin.", "terms": [{"term": "kimchee", "polarity": "negative", "span": [187, 194]}, {"term": "Korean fair", "polarity": "negative", "span": [87, 98]}], "opinions": ["mediocre", "disgusting"]}
+{"id": "DBG#2:7", "text": "Not one to jump to complaints (hence my lack of previous online reviewing), I called the restaurant to give them a heads up that their kitchen might want to check the cleanliness of their prep stations.", "opinions": []}
+{"id": "DBG#2:8", "text": "My main concern was the sanity of the food that was being sent out to myself and others, but I would be lying is I said that as someone who has worked in restaurants since the age of fifteen I was expecting at least a minimal effort on the part of the restaurant to amend the situation.", "terms": [{"term": "food", "polarity": "negative", "span": [38, 42]}], "opinions": []}
+{"id": "DBG#2:9", "text": "None was made so i hung up.", "opinions": []}
+{"id": "DBG#2:10", "text": "Less than three minutes passed before I found myself doubled over the toilet.", "opinions": []}
+{"id": "DBG#2:11", "text": "My girlfriend, being slightly more aggressive, and having been equally disgusted causing her to throw out the remainder of her barely eaten meal, called back only to be informed that I was probably wrong and that it was most likely an oyster, and that we were also blacklisted from their restaurant.", "terms": [{"term": "meal", "polarity": "negative", "span": [140, 144]}], "opinions": ["disgusted"]}
+{"id": "DBG#2:12", "text": "Not only have I worked in restaurants for many years, I am now in culinary school, I am a huge lover of oysters and fish, and my girlfriend is half Korean!", "opinions": []}
+{"id": "DBG#2:13", "text": "We know the difference between and oyster and bad fish.", "opinions": []}
+{"id": "DBG#2:14", "text": "It wasn't as if this restaurant had any major bragging points before hand, but now it's simply repulsive.", "terms": [{"term": "restaurant", "polarity": "negative", "span": [21, 31]}], "opinions": ["repulsive"]}
+{"id": "DBG#2:15", "text": "Eat at your own risk.", "opinions": []}
+{"id": "CLF#7:0", "text": "Gorgeous place ideal for a romantic dinner", "terms": [{"term": "place", "polarity": "positive", "span": [9, 14]}, {"term": "place", "polarity": "positive", "span": [9, 14]}], "opinions": ["Gorgeous"]}
+{"id": "CLF#7:1", "text": "I took my boyfriend for a dinner on saturday night.", "opinions": []}
+{"id": "CLF#7:2", "text": "I book a gorgeous white organza tent which included a four course prix fix menu which we enjoyed a lot.", "terms": [{"term": "four course prix fix menu", "polarity": "positive", "span": [54, 79]}, {"term": "white organza tent", "polarity": "positive", "span": [18, 36]}], "opinions": ["gorgeous", "enjoyed"]}
+{"id": "CLF#7:3", "text": "The service was spectacular as the waiter knew everything about the menu and his recommendations were amazing!", "terms": [{"term": "service", "polarity": "positive", "span": [4, 11]}, {"term": "waiter", "polarity": "positive", "span": [35, 41]}], "opinions": ["spectacular", "amazing"]}
+{"id": "CLF#7:4", "text": "I completely recommend Casa La Femme for any special occasion and to REALLY impress your date.", "terms": [{"term": "Casa La Femme", "polarity": "positive", "span": [23, 36]}], "opinions": ["recommend", "impress"]}
+{"id": "DBG#7:0", "text": "More Williamsburg Garbage", "opinions": []}
+{"id": "DBG#7:1", "text": "My wife and I visited Dokebi tonight.", "opinions": []}
+{"id": "DBG#7:2", "text": "We ordered dosut bibimbap and nakgi-bokum.", "opinions": []}
+{"id": "DBG#7:3", "text": "The dishes came out around 5 minutes apart.", "opinions": []}
+{"id": "DBG#7:4", "text": "The bibimbap was average, but the stone bowl wasn't even close to sizzling.", "terms": [{"term": "bibimbap", "polarity": "neutral", "span": [4, 12]}, {"term": "stone bowl", "polarity": "negative", "span": [34, 44]}], "opinions": ["average", "sizzling"]}
+{"id": "DBG#7:5", "text": "Too bad I had paid an extra $2 for the stone bowl.", "terms": [{"term": "stone bowl", "polarity": "negative", "span": [39, 49]}], "opinions": ["bad"]}
+{"id": "DBG#7:6", "text": "The nakgi-bokum was horrible.", "terms": [{"term": "nakgi-bokum", "polarity": "negative", "span": [4, 15]}], "opinions": ["horrible"]}
+{"id": "DBG#7:7", "text": "Easily the worst stir-fried squid I've ever tasted.", "terms": [{"term": "stir-fried squid", "polarity": "negative", "span": [17, 33]}], "opinions": ["worst"]}
+{"id": "DBG#7:8", "text": "The sauce tasted more like Chinese fast food than decent Korean.", "terms": [{"term": "sauce", "polarity": "negative", "span": [4, 9]}], "opinions": []}
+{"id": "DBG#7:9", "text": "The side dishes were passable, and I did get a refill upon request.", "terms": [{"term": "side dishes", "polarity": "neutral", "span": [4, 15]}, {"term": "side dishes", "polarity": "positive", "span": [4, 15]}], "opinions": ["passable"]}
+{"id": "DBG#7:10", "text": "The real problem I had with this place was the complete lack of service.", "terms": [{"term": "service", "polarity": "negative", "span": [64, 71]}], "opinions": ["lack of"]}
+{"id": "DBG#7:11", "text": "I mentioned the squid dish wasn't very good when the waitress visited.", "opinions": []}
+{"id": "DBG#7:12", "text": "She just nodded and walked off.", "opinions": []}
+{"id": "DBG#7:13", "text": "There were no communications issues either, as she spoke perfect English.", "opinions": []}
+{"id": "DBG#7:14", "text": "As to my comment about the food, no apology or acknowledgment was made.", "opinions": []}
+{"id": "DBG#7:15", "text": "My wife had barely touched that mess of a dish.", "terms": [{"term": "dish", "polarity": "negative", "span": [42, 46]}], "opinions": ["mess"]}
+{"id": "DBG#7:16", "text": "We were charged full price.", "opinions": []}
+{"id": "DBG#7:17\" OutOfScope=\"TRUE", "text": "If you ware looking for Korean fusion, I suggest you try some of the places in the East Village.", "opinions": []}
+{"id": "DBG#7:18\" OutOfScope=\"TRUE", "text": "Authentic Korean food lovers should visit 32nd Street, of course.", "opinions": []}
+{"id": "ADLT#9:0", "text": "Lives up to the hype", "opinions": []}
+{"id": "ADLT#9:1", "text": "We've lived around the corner from this place for over a year and finally had dinner there.", "opinions": []}
+{"id": "ADLT#9:2", "text": "We've tried before but it always packed and doesn't take reservations.", "opinions": []}
+{"id": "ADLT#9:3", "text": "It was well worth the wait.", "opinions": []}
+{"id": "ADLT#9:4", "text": "The wife had the risotto which was amazing.", "terms": [{"term": "risotto", "polarity": "positive", "span": [17, 24]}], "opinions": ["amazing"]}
+{"id": "ADLT#9:5", "text": "It doesn't look appetizing as it's covered in squid ink and it turns your lips and teeth black, but the taste was phenomenal.", "opinions": []}
+{"id": "ADLT#9:6", "text": "The farro salad and the mashed yukon potatoes were also extremely tasty.", "terms": [{"term": "farro salad", "polarity": "positive", "span": [4, 15]}, {"term": "mashed yukon potatoes", "polarity": "positive", "span": [24, 45]}], "opinions": ["tasty"]}
+{"id": "EVPK#4:0", "text": "i love margherita pizza – i looove east village pizza", "terms": [{"term": "east village pizza", "polarity": "positive", "span": [35, 53]}, {"term": "margherita pizza", "polarity": "positive", "span": [7, 23]}], "opinions": ["love", "love"]}
+{"id": "EVPK#4:1", "text": "Love this place, every time we are in the city this is one of the places we always go.", "terms": [{"term": "place", "polarity": "positive", "span": [10, 15]}], "opinions": ["Love"]}
+{"id": "EVPK#4:2", "text": "A quintessential slice of NYC pizza.", "terms": [{"term": "slice of NYC pizza", "polarity": "neutral", "span": [17, 35]}], "opinions": ["quintessential"]}
+{"id": "EVPK#4:3", "text": "The crust has a great bite and a good chew, the sauce is light with a nice acidity to it, the salt from the cheese is great, really heightens the flavor of all the other components.", "terms": [{"term": "crust", "polarity": "positive", "span": [4, 9]}, {"term": "sauce", "polarity": "positive", "span": [48, 53]}, {"term": "cheese", "polarity": "positive", "span": [108, 114]}], "opinions": ["great", "good", "light", "nice", "great"]}
+{"id": "EVPK#4:4", "text": "Personally I like the margherita pizza better, but they are all good.", "terms": [{"term": "margherita pizza", "polarity": "positive", "span": [22, 38]}], "opinions": ["like", "better", "good"]}
+{"id": "Z#6:0", "text": "Possibly the Most Romantic Restaurant in the City", "terms": [{"term": "Restaurant", "polarity": "positive", "span": [27, 37]}], "opinions": ["Most Romantic"]}
+{"id": "Z#6:1", "text": "This is undoubtedly my favorite modern Japanese brasserie (that don’t serve sushi), and in my opinion, one of the most romantic restaurants in the city!", "terms": [{"term": "modern Japanese brasserie", "polarity": "positive", "span": [32, 57]}, {"term": "modern Japanese brasserie", "polarity": "positive", "span": [32, 57]}], "opinions": ["favorite", "most romantic"]}
+{"id": "Z#6:2", "text": "Not only is it an adventure getting to this somewhat hidden spot, once you enter the unmarked wooden doors, the zen and intimate décor will make you feel like you’re no longer in the city.", "terms": [{"term": "spot", "polarity": "neutral", "span": [60, 64]}, {"term": "unmarked wooden doors", "polarity": "positive", "span": [85, 106]}, {"term": "décor", "polarity": "positive", "span": [129, 134]}], "opinions": ["hidden", "intimate"]}
+{"id": "Z#6:3", "text": "If you’re planning to come here, make sure that your date is someone whom you really like since you’ll be ushered to private booths where there will be no people or food watching (choose the ones on the ground level that have glass ceilings so you may see the stars in the sky!).", "terms": [{"term": "private booths", "polarity": "positive", "span": [117, 131]}, {"term": "glass ceilings", "polarity": "positive", "span": [226, 240]}], "opinions": ["ushered"]}
+{"id": "Z#6:4", "text": "It’s just you and your date and an occasional cute ‘excuse me’ before the waiter opens the little curtain to your booth!", "terms": [{"term": "waiter", "polarity": "positive", "span": [74, 80]}], "opinions": []}
+{"id": "Z#6:5", "text": "My party had the BBE $29 fixe prix menu, which was such a wonderful deal since it also came with a flight of sake!", "terms": [{"term": "BBE $29 fixe prix menu", "polarity": "positive", "span": [17, 39]}, {"term": "BBE $29 fixe prix menu", "polarity": "positive", "span": [17, 39]}], "opinions": ["wonderful"]}
+{"id": "Z#6:6", "text": "I never used to be a fan of sakes but am lately experimenting with it a lot more and am acquiring a better taste of it.", "opinions": []}
+{"id": "Z#6:7", "text": "We started off with a delightful sashimi amuse bouche.", "terms": [{"term": "sashimi amuse bouche", "polarity": "positive", "span": [33, 53]}], "opinions": ["delightful"]}
+{"id": "Z#6:8", "text": "Our first course was Tuna Sashimi with Green Yuzu Sauce.", "opinions": []}
+{"id": "Z#6:9", "text": "I picked the Grilled Black Cod as my entree, which I absolutely devoured while someone commented that the Grilled Salmon dish was better.", "terms": [{"term": "Grilled Black Cod", "polarity": "positive", "span": [13, 30]}, {"term": "Grilled Salmon dish", "polarity": "positive", "span": [106, 125]}], "opinions": ["devoured", "better"]}
+{"id": "Z#6:10", "text": "The entrees were served with miso soup and rice.", "terms": [{"term": "entrees", "polarity": "neutral", "span": [4, 11]}], "opinions": []}
+{"id": "Z#6:11", "text": "The sake’s complimented the courses very well and is successfully easing me into the sake world.", "terms": [{"term": "sake’s", "polarity": "positive", "span": [4, 10]}], "opinions": ["well"]}
+{"id": "Z#6:12", "text": "For desserts, we tried the frozen black sesame mousse (interesting but not extraordinary) and matcha (powdered green tea) and blueberry cheesecake, which was phenomenal.", "terms": [{"term": "frozen black sesame mousse", "polarity": "neutral", "span": [27, 53]}, {"term": "matcha (powdered green tea) and blueberry cheesecake", "polarity": "positive", "span": [94, 146]}], "opinions": ["interesting", "extraordinary", "phenomenal"]}
+{"id": "Z#6:13", "text": "Maybe it was the great company (I had friends visiting from Philly – yes, it was not a date this time) or the super reasonable price point, but I just can’t say enough good things about this brasserie.", "terms": [{"term": "brasserie", "polarity": "positive", "span": [191, 200]}, {"term": "brasserie", "polarity": "positive", "span": [191, 200]}], "opinions": ["good"]}
+{"id": "Z#6:14", "text": "I don’t usually visit the same establishment more than once, what more twice, but I’ll come to Zenkichi anytime for a quiet, unhurried and memorable dinner.", "terms": [{"term": "Zenkichi", "polarity": "positive", "span": [95, 103]}, {"term": "Zenkichi", "polarity": "positive", "span": [95, 103]}], "opinions": ["quiet", "unhurried", "memorable"]}
+{"id": "CLF#6:0", "text": "Terrible would be a compliment!", "opinions": []}
+{"id": "CLF#6:1", "text": "The service leaves much to be desired, from feeling like you are rushed the place your order, to being ignored the rest of the night.", "terms": [{"term": "service", "polarity": "negative", "span": [4, 11]}], "opinions": ["desired", "rushed", "ignored"]}
+{"id": "CLF#6:2", "text": "We were 10 people celebrtating a birthday, we sat in the tent.", "opinions": []}
+{"id": "CLF#6:3", "text": "We paid a fixed pricce but got nothing!!", "opinions": []}
+{"id": "CLF#6:4", "text": "We never ate because by close to 2 in the monring we were not served and were too upset ad tired to start eating.", "opinions": []}
+{"id": "CLF#6:5", "text": "They are extremely rude, not even apologizing for the horrible service we got and handing us a bill well over $500 for some drinks adn their pita bread!", "terms": [{"term": "service", "polarity": "negative", "span": [63, 70]}, {"term": "drinks", "polarity": "negative", "span": [124, 130]}, {"term": "pita bread", "polarity": "negative", "span": [141, 151]}], "opinions": ["rude", "horrible"]}
+{"id": "CLF#6:6", "text": "Stay away", "opinions": []}
+{"id": "DBG#6:0", "text": "Great Shabu Shabu", "terms": [{"term": "Shabu Shabu", "polarity": "positive", "span": [6, 17]}], "opinions": ["Great"]}
+{"id": "DBG#6:1", "text": "I go here at least once every other week, particularly when it's cold!", "opinions": []}
+{"id": "DBG#6:2", "text": "I love it.", "opinions": []}
+{"id": "DBG#6:3", "text": "To be honest we only ever eat the Shabu Shabu.", "opinions": []}
+{"id": "DBG#6:4", "text": "I tried a couple other dishes but wasn't too impressed.", "terms": [{"term": "dishes", "polarity": "neutral", "span": [23, 29]}], "opinions": ["impressed"]}
+{"id": "DBG#6:5", "text": "But for the Shabu Shabu, you won't find much better in NY.", "terms": [{"term": "Shabu Shabu", "polarity": "positive", "span": [12, 23]}], "opinions": ["better"]}
+{"id": "DBG#6:6\" OutOfScope=\"TRUE", "text": "In fact there is only one I've tried that even compares (shabu Tatsu) and even then I prefer Dokebi.", "opinions": []}
+{"id": "DBG#6:7", "text": "The meat is fresh, the sauces are great, you get kimchi and a salad free with your meal and service is good too.", "terms": [{"term": "meat", "polarity": "positive", "span": [4, 8]}, {"term": "sauces", "polarity": "positive", "span": [23, 29]}, {"term": "service", "polarity": "positive", "span": [92, 99]}, {"term": "meal", "polarity": "positive", "span": [83, 87]}, {"term": "kimchi", "polarity": "positive", "span": [49, 55]}, {"term": "salad", "polarity": "positive", "span": [62, 67]}], "opinions": ["fresh", "great", "free", "good"]}
+{"id": "DBG#1:0", "text": "Dokebi gives Williamsburg the right one-two punch of classic Korean food and fusion twists like pork belly tacos.", "terms": [{"term": "Korean food", "polarity": "positive", "span": [61, 72]}, {"term": "fusion twists", "polarity": "positive", "span": [77, 90]}, {"term": "pork belly tacos", "polarity": "positive", "span": [96, 112]}], "opinions": ["classic"]}
+{"id": "BHD#1:0", "text": "The hot dogs are good, yes, but the reason to get over here is the fantastic pork croquette sandwich, perfect on its supermarket squishy bun.", "terms": [{"term": "hot dogs", "polarity": "positive", "span": [4, 12]}, {"term": "pork croquette sandwich", "polarity": "positive", "span": [77, 100]}, {"term": "bun", "polarity": "positive", "span": [137, 140]}], "opinions": ["good", "fantastic", "perfect"]}
+{"id": "TR#5:0", "text": "Restaurant with a view", "terms": [{"term": "view", "polarity": "neutral", "span": [18, 22]}], "opinions": []}
+{"id": "TR#5:1", "text": "Celebrated my fathers birthday here.", "opinions": []}
+{"id": "TR#5:2", "text": "The food tasted very good.", "terms": [{"term": "food", "polarity": "positive", "span": [4, 8]}], "opinions": ["good"]}
+{"id": "TR#5:3", "text": "The family seafood entree was very good.", "terms": [{"term": "family seafood entree", "polarity": "positive", "span": [4, 25]}], "opinions": ["good"]}
+{"id": "TR#5:4", "text": "The main entree was also very good.", "terms": [{"term": "main entree", "polarity": "positive", "span": [4, 15]}], "opinions": ["good"]}
+{"id": "TR#5:5", "text": "We order a bit of everything on the menu.", "opinions": []}
+{"id": "TR#5:6", "text": "Price is high but the food is good, so I would come back again.", "terms": [{"term": "food", "polarity": "positive", "span": [22, 26]}, {"term": "food", "polarity": "negative", "span": [22, 26]}], "opinions": ["good"]}
+{"id": "Z#7:0", "text": "This place doesn't make any sense", "terms": [{"term": "place", "polarity": "negative", "span": [5, 10]}], "opinions": []}
+{"id": "Z#7:1", "text": "Just want to warn you all - don't waste your time and money.", "opinions": []}
+{"id": "Z#7:2", "text": "This place has totally weird decor, stairs going up with mirrored walls - I am surprised how no one yet broke their head or fall off the stairs - mirrored walls make you dizzy and delusional...", "terms": [{"term": "decor", "polarity": "negative", "span": [29, 34]}, {"term": "mirrored walls", "polarity": "negative", "span": [57, 71]}], "opinions": ["weired", "dizzy", "delusional"]}
+{"id": "Z#7:3", "text": "This place is not inviting and the food is totally weird.", "terms": [{"term": "place", "polarity": "negative", "span": [5, 10]}, {"term": "food", "polarity": "negative", "span": [35, 39]}], "opinions": ["inviting", "weird"]}
+{"id": "Z#7:4", "text": "The concept of japanese tapas is newly created and clearly doesn't work.", "terms": [{"term": "japanese tapas", "polarity": "negative", "span": [15, 29]}], "opinions": ["work"]}
+{"id": "Z#7:5", "text": "The food they serve is not comforting, not appetizing and uncooked.", "terms": [{"term": "food", "polarity": "negative", "span": [4, 8]}], "opinions": ["comforting", "appetizing", "uncooked"]}
+{"id": "Z#7:6\" OutOfScope=\"TRUE", "text": "Go to japanese sushi place or Spanish tapas place - this creation in Williamsburg is a misstake.", "opinions": []}
+{"id": "Z#10:0", "text": "Good Food", "terms": [{"term": "Food", "polarity": "positive", "span": [5, 9]}], "opinions": ["Good"]}
+{"id": "Z#10:1", "text": "I went here with my boyfriend for our anniversary.", "opinions": []}
+{"id": "Z#10:2", "text": "The food was great and tasty, but the sitting space was too small, I don't like being cramp in a corner.", "terms": [{"term": "food", "polarity": "positive", "span": [4, 8]}, {"term": "sitting space", "polarity": "negative", "span": [38, 51]}], "opinions": ["great", "tasty", "small"]}
+{"id": "Z#10:3", "text": "Over all it was a very nice romantic place .", "terms": [{"term": "place", "polarity": "positive", "span": [37, 42]}, {"term": "place", "polarity": "positive", "span": [37, 42]}], "opinions": ["nice", "romantic"]}
+{"id": "Z#10:4", "text": "I would recommend to ask for a bigger sitting area when you make a reservation (if possible)", "opinions": []}
+{"id": "P#7:0", "text": "Loved it", "opinions": []}
+{"id": "P#7:1", "text": "A coworker and I tried Pacifico after work a few Fridays and loved it.", "terms": [{"term": "Pacifico", "polarity": "positive", "span": [23, 31]}], "opinions": ["loved"]}
+{"id": "P#7:2", "text": "The atmosphere was great.", "terms": [{"term": "atmosphere", "polarity": "positive", "span": [4, 14]}], "opinions": ["great"]}
+{"id": "P#7:3", "text": "The food we ordered was excellent, although I wouldn't say the margaritas were anything to write home about.", "terms": [{"term": "food", "polarity": "positive", "span": [4, 8]}, {"term": "margaritas", "polarity": "neutral", "span": [63, 73]}], "opinions": ["excellent"]}
+{"id": "P#7:4", "text": "Our waitress wasn't mean, but not especially warm or attentive either.", "terms": [{"term": "waitress", "polarity": "neutral", "span": [4, 12]}], "opinions": ["mean", "warm", "attentive"]}
+{"id": "P#7:5", "text": "I must say I am surprised by the bad reviews of the restaurant earlier in the year, though.", "terms": [{"term": "restaurant", "polarity": "positive", "span": [52, 62]}], "opinions": ["bad"]}
+{"id": "P#7:6", "text": "Maybe it has improved since then?", "opinions": []}
+{"id": "P#7:7", "text": "Regardless, we'll be back and can't wait to visit in the summer to take advantage of the patio.", "terms": [{"term": "patio", "polarity": "positive", "span": [89, 94]}], "opinions": []}
+{"id": "FF#4:0", "text": "Dumbfoundingly Poor", "opinions": []}
+{"id": "FF#4:1", "text": "This was, from start to finish, a mind-bogglingly uncomfortable experience.", "opinions": []}
+{"id": "FF#4:2", "text": "Lexicographers take note: a new and fascinating definition of rudeness is alive and flourishing right here in Brooklyn.", "opinions": []}
+{"id": "FF#4:3", "text": "The servers at Flatbush Farm appear to have perfected that ghastly technique of making you feel guilty and ashamed for deigning to attract their attention.", "terms": [{"term": "servers", "polarity": "negative", "span": [4, 11]}], "opinions": ["perfected"]}
+{"id": "FF#4:4", "text": "Polite acknowledgement is out;", "opinions": []}
+{"id": "FF#4:5", "text": "supercilious scorn is in.", "opinions": []}
+{"id": "FF#4:6", "text": "And how many times can you pick up the same perfectly aligned set of napkins, inspect them vapidly and plonk them down in exactly the same place instead of venturing a glance at people who are there to help you make the rent?", "opinions": []}
+{"id": "FF#4:7", "text": "A different server enhanced the fun, dumping our entrees in front of us halfway through our appetizer (which was delicious).", "terms": [{"term": "server", "polarity": "negative", "span": [12, 18]}, {"term": "appetizer", "polarity": "positive", "span": [92, 101]}], "opinions": ["enhanced", "delicious"]}
+{"id": "FF#4:8", "text": "Overall the food quality was pretty good, though I hear the salmon is much better when it hasn't sat cooling in front of the guest.", "terms": [{"term": "food", "polarity": "positive", "span": [12, 16]}], "opinions": ["good"]}
+{"id": "FF#4:9", "text": "The place has a nice fit-out, some attractive furnishings and, from what I could tell, a reasonable wine list (I was given the food menu when I asked for the carte des vins)", "terms": [{"term": "fit-out", "polarity": "positive", "span": [21, 28]}, {"term": "furnishings", "polarity": "positive", "span": [46, 57]}, {"term": "wine list", "polarity": "positive", "span": [100, 109]}], "opinions": ["nice", "attractive", "reasonable"]}
+{"id": "FF#4:10", "text": "At $120 for two people, however, this in no way represents value, unless you're looking to pay by the hour for passive-aggressive torture.", "opinions": []}
+{"id": "FF#4:11", "text": "On that scale, it's a world-beater.", "opinions": []}
+{"id": "FF#3:0", "text": "How is this palce still open?", "terms": [{"term": "palce", "polarity": "negative", "span": [12, 17]}], "opinions": []}
+{"id": "FF#3:1", "text": "I honestly don't even know where to begin.", "opinions": []}
+{"id": "FF#3:2", "text": "My boyfriend and I are avid restaurant goers, and we are always on the lookout for new places and our friend had recommended Flatbush Farms.", "opinions": []}
+{"id": "FF#3:3", "text": "We arrived and were seated immediately, which made us both happy.", "opinions": []}
+{"id": "FF#3:4", "text": "We ordered our appetizers, I ordered the chicken and my boyfriend the salmon.", "opinions": []}
+{"id": "FF#3:5", "text": "Everything was going good until we got our meals.", "terms": [{"term": "meals", "polarity": "negative", "span": [43, 48]}], "opinions": ["good"]}
+{"id": "FF#3:6", "text": "I took one look at the chicken and I was appalled.", "terms": [{"term": "chicken", "polarity": "negative", "span": [23, 30]}], "opinions": ["appalled"]}
+{"id": "FF#3:7", "text": "It was served with skin, over a bed of extremely undercooked spinach and mashed potatoes.", "terms": [{"term": "spinach", "polarity": "negative", "span": [61, 68]}], "opinions": ["undercooked"]}
+{"id": "FF#3:8", "text": "My boyfriend asked me if I wanted to switch and eat his salmon instead, while he de-skinned the chicken so that I could enjoy the white meat.", "opinions": []}
+{"id": "FF#3:9", "text": "I took one bite from the $24 salmon, and I have never, in the 17 years I have been going to restaurants tasted salmon as fishy, as dry, and as bland as the one in Flatbush Farms.", "terms": [{"term": "salmon", "polarity": "negative", "span": [29, 35]}, {"term": "salmon", "polarity": "negative", "span": [29, 35]}], "opinions": ["fishy", "dry", "bland"]}
+{"id": "FF#3:10", "text": "At this point, the waitress comes over and asks us if everything was okay, I was literally so shocked that I was speechless and didn't say anything, and guess what, the waitress WALKED away.", "terms": [{"term": "waitress", "polarity": "negative", "span": [19, 27]}], "opinions": []}
+{"id": "FF#3:11", "text": "So, I switch with my boyfriend again to see if maybe I could stomach the meat and spinach again, but the spinach was so undercooked that I just could not bite through it.", "terms": [{"term": "spinach", "polarity": "negative", "span": [105, 112]}], "opinions": ["undercooked"]}
+{"id": "FF#3:12", "text": "I couldn't even enjoy the mashed potatoes because it was hidden completely under the chicken and spinach.", "opinions": []}
+{"id": "FF#3:13\" OutOfScope=\"TRUE", "text": "I've had better chicken at BBQs!!!!", "opinions": []}
+{"id": "FF#3:14", "text": "So I decide to report back to the waitress because it was completely inedible.", "opinions": []}
+{"id": "FF#3:15", "text": "Guess what, I waited for TWENTY minutes before she came over and when she finally did, she says, \"oh well, I wish you would have said something earlier\" No apology, nothing.", "opinions": []}
+{"id": "FF#3:16", "text": "After that she simply took our plates, walked away, came back another TWENTY minutes later with the bill and the chicken on it!!!!!!!!!!!!", "opinions": []}
+{"id": "FF#3:17", "text": "No desert menu, no apology, nothing!!!!!!", "opinions": []}
+{"id": "FF#3:18", "text": "I was literally going to explode, but instead, my boyfriend took the bill and went to find the manager.", "opinions": []}
+{"id": "FF#3:19", "text": "This is where it really really gets bad: the manager said, there is absolutely nothing we can do, it's a matter of taste that she didn't like it, and I cannot comp it.", "terms": [{"term": "manager", "polarity": "negative", "span": [45, 52]}], "opinions": ["bad"]}
+{"id": "FF#3:20", "text": "Again, no apology, no is there anything else I can get you, no can I get you a drink to make up for it, nothing!!!!", "opinions": []}
+{"id": "FF#3:21", "text": "We refused to pay for it because at this point it had nothing to do with the food anymore.", "opinions": []}
+{"id": "FF#3:22", "text": "The level of rudeness was preposterous.", "opinions": []}
+{"id": "FF#3:23", "text": "The manager came to the table and said we can do what we want, so we paid for what we did enjoy, the drinks and appetizers, and walked out.", "terms": [{"term": "manager", "polarity": "negative", "span": [4, 11]}, {"term": "drinks", "polarity": "positive", "span": [101, 107]}, {"term": "appetizers", "polarity": "positive", "span": [112, 122]}], "opinions": ["enjoy"]}
+{"id": "FF#3:24", "text": "I HAVE NEVER EVER HAD SUCH AN UNPLEASANT EXPERIENCE.", "opinions": []}
+{"id": "FF#3:25", "text": "THIS STAFF SHOULD BE FIRED.", "terms": [{"term": "STAFF", "polarity": "negative", "span": [5, 10]}], "opinions": ["FIRED"]}
+{"id": "EVPK#9:0", "text": "cirspy crust margherita pizza", "terms": [{"term": "margherita pizza", "polarity": "positive", "span": [13, 29]}], "opinions": ["crispy", "crust"]}
+{"id": "EVPK#9:1", "text": "we have been there 3 times since last week we alked it by chance first day the manager offerd us the margherita pizza adn we said yes.", "opinions": []}
+{"id": "EVPK#9:2", "text": "it was really good pizza.", "terms": [{"term": "pizza", "polarity": "positive", "span": [19, 24]}], "opinions": ["good"]}
+{"id": "EVPK#9:3", "text": "the crust was imazingly cooked well and pizza was fully loaded:):):)", "terms": [{"term": "crust", "polarity": "positive", "span": [4, 9]}, {"term": "pizza", "polarity": "positive", "span": [40, 45]}], "opinions": ["amazingly cooked", "fully loaded"]}
+{"id": "EVPK#9:4", "text": "you know what i mean all the positives things happening there made mw write this review.", "opinions": []}
+{"id": "CLF#4:0", "text": "Single Worst Restaurant in Manhattan", "terms": [{"term": "Restaurant", "polarity": "negative", "span": [13, 23]}], "opinions": ["Worst"]}
+{"id": "CLF#4:1", "text": "I'll being with a couple of positives: cool decor, good pita and hummus, and grilled octopus that was actually pretty tasty.", "terms": [{"term": "decor", "polarity": "positive", "span": [44, 49]}, {"term": "pita", "polarity": "positive", "span": [56, 60]}, {"term": "hummus", "polarity": "positive", "span": [65, 71]}, {"term": "grilled octopus", "polarity": "positive", "span": [77, 92]}], "opinions": ["cool", "good", "tasty"]}
+{"id": "CLF#4:2", "text": "Moving on.", "opinions": []}
+{"id": "CLF#4:3", "text": "If I could give 0 stars I would do so for this place.", "terms": [{"term": "place", "polarity": "negative", "span": [47, 52]}], "opinions": []}
+{"id": "CLF#4:4\" OutOfScope=\"TRUE", "text": "Casa La Femme is to middle eastern dining what Chuckie Cheeze is to italian.", "opinions": []}
+{"id": "CLF#4:5", "text": "The reason there are 4 different results on citysearch for the same place is because they keep trying to start a new thread so they can stock it with positive reviews.", "opinions": []}
+{"id": "CLF#4:6", "text": "Well...they can run but they can't hide.", "opinions": []}
+{"id": "CLF#4:7", "text": "I live in the West Village and I've been to a lot of restaurants.", "opinions": []}
+{"id": "CLF#4:8\" OutOfScope=\"TRUE", "text": "Sometimes you pay a lot and don't get much in return - it's manhattan, things are expensive.", "opinions": []}
+{"id": "CLF#4:9\" OutOfScope=\"TRUE", "text": "However, most of them are at least prompt and pleasant.", "opinions": []}
+{"id": "CLF#4:10", "text": "This place...god where do i begin.", "terms": [{"term": "place", "polarity": "negative", "span": [5, 10]}], "opinions": []}
+{"id": "CLF#4:11", "text": "It is quite a spectacular scene i'll give them that.", "terms": [{"term": "scene", "polarity": "positive", "span": [26, 31]}], "opinions": ["spectacular"]}
+{"id": "CLF#4:12", "text": "The decor however seems to be the distraction so you won't notice that you just payed 300 bucks for some cold eggplant that took 2 FRICKIN HOURS TO COME!!!!", "terms": [{"term": "decor", "polarity": "neutral", "span": [4, 9]}, {"term": "eggplant", "polarity": "negative", "span": [110, 118]}, {"term": "eggplant", "polarity": "negative", "span": [110, 118]}], "opinions": ["distraction", "cold"]}
+{"id": "CLF#4:13", "text": "How this place survives the competitive west village market in this economy, or any other for that matter, is beyond me.", "terms": [{"term": "place", "polarity": "negative", "span": [9, 14]}], "opinions": []}
+{"id": "BHD#4:0", "text": "Great Hot Dogs!", "terms": [{"term": "Hot Dogs", "polarity": "positive", "span": [6, 14]}], "opinions": ["Great"]}
+{"id": "BHD#4:1", "text": "I've made the trip out here a few times with a friend who lives nearby (I live on UWS).", "opinions": []}
+{"id": "BHD#4:2", "text": "Though it's been crowded most times I've gone here, Bark always delivers on their food.", "terms": [{"term": "food", "polarity": "positive", "span": [82, 86]}, {"term": "Bark", "polarity": "neutral", "span": [52, 56]}], "opinions": ["delivers"]}
+{"id": "BHD#4:3", "text": "The hot dogs are top notch, and they're Slamwich is amazing!", "terms": [{"term": "hot dogs", "polarity": "positive", "span": [4, 12]}, {"term": "Slamwich", "polarity": "positive", "span": [40, 48]}], "opinions": ["top notch", "amazing"]}
+{"id": "BHD#4:4", "text": "Going to Bark is always worth the train ride, and will make your tongue and belly very happy!", "terms": [{"term": "Bark", "polarity": "positive", "span": [9, 13]}], "opinions": ["worth", "happy"]}
+{"id": "BHD#4:5", "text": "Only complaint is the pricing--I believe it would be more reasonable to pay a dollar less on each item listed on the menu.", "terms": [{"term": "menu", "polarity": "negative", "span": [117, 121]}], "opinions": []}
+{"id": "BHD#4:6", "text": "But nonetheless--great spot, great food.", "terms": [{"term": "spot", "polarity": "positive", "span": [23, 27]}, {"term": "food", "polarity": "positive", "span": [35, 39]}], "opinions": ["great", "great"]}
+{"id": "BFC#7:0", "text": "Fabulous food - if the front of house staff don't put you off – ", "terms": [{"term": "food", "polarity": "positive", "span": [9, 13]}, {"term": "front of house staff", "polarity": "negative", "span": [23, 43]}], "opinions": ["Fabulous"]}
+{"id": "BFC#7:1", "text": "We live nearby BFC. ", "opinions": []}
+{"id": "BFC#7:2", "text": "It's a little out of our price range for dining there except on special occasions, but we've eaten there 6 times in the last 2 years. ", "opinions": []}
+{"id": "BFC#7:3", "text": "Each time we've been, the front of house staff (not the waiters - they're fantastic - but the people who greet and seat you) has been so hideous to us that were it not for the exceptional fish dishes I would never return. ", "terms": [{"term": "waiters", "polarity": "positive", "span": [56, 63]}, {"term": "front of house staff", "polarity": "negative", "span": [26, 46]}, {"term": "fish dishes", "polarity": "positive", "span": [188, 199]}], "opinions": ["fantastic", "exceptional"]}
+{"id": "BFC#7:4", "text": "As BFC doesn't take reservations you almost always have to wait by the bar - and be abused by the front of house staff until you are seated, which can be over an hour later!", "terms": [{"term": "BFC", "polarity": "negative", "span": [3, 6]}, {"term": "front of house staff", "polarity": "negative", "span": [98, 118]}], "opinions": ["abused"]}
+{"id": "BFC#7:5", "text": "The frizzy retro girl (with winged/ Dame Edna glasses) will yell at you if you try to order a drink. ", "terms": [{"term": "girl", "polarity": "negative", "span": [17, 21]}], "opinions": ["frizzy"]}
+{"id": "BFC#7:6", "text": "I was almost amused by the fact that she was turning away customers at 9pm on a Friday night because she \"had a BBQ to go to\" that night - WTF??", "opinions": []}
+{"id": "BFC#7:7", "text": "I'd be horrified if my staff were turning away customers so early and so rudely!", "terms": [{"term": "staff", "polarity": "negative", "span": [23, 28]}], "opinions": ["horrified", "rudely"]}
+{"id": "BFC#7:8", "text": "There's another girl who I can't describe, she is about 5'6\" with brown hair, who eavesdrops on your conversation and chimes in - except she only hears the last part of what you said, so her uninvited opinions are often out of context and nothing to do with what you're *really* talking about. ", "terms": [{"term": "girl", "polarity": "negative", "span": [16, 20]}], "opinions": ["uninvited"]}
+{"id": "BFC#7:9", "text": "I'm a friendly person, so I wouldn't mind had she not been so nasty and gotten so personal. ", "opinions": []}
+{"id": "BFC#7:10", "text": "Again, I'd be super upset if that were my employee.", "opinions": []}
+{"id": "BFC#7:11", "text": "Considering you will spend at least $60 a head, I expect better service. ", "terms": [{"term": "service", "polarity": "negative", "span": [64, 71]}], "opinions": ["better"]}
+{"id": "BFC#7:12", "text": "So, if you're walking by and thinking about dining, you might want to see who's going to be seating you first...", "opinions": []}
+{"id": "ADLT#6:0", "text": "Maitre-D-\"Eat and get out\"", "terms": [{"term": "Maitre-D", "polarity": "negative", "span": [0, 8]}], "opinions": []}
+{"id": "ADLT#6:1", "text": "My family ate here last weekend.", "opinions": []}
+{"id": "ADLT#6:2", "text": "The food and service were fine, however the maitre-D was incredibly unwelcoming and arrogant.", "terms": [{"term": "food", "polarity": "positive", "span": [4, 8]}, {"term": "service", "polarity": "positive", "span": [13, 20]}, {"term": "maitre-D", "polarity": "negative", "span": [44, 52]}], "opinions": ["fine", "unwelcoming", "arrogant"]}
+{"id": "ADLT#6:3", "text": "While finishing our meals which included a high-end bottle of wine, our son's fiance joined us for a glass of wine and dessert.", "terms": [{"term": "bottle of wine", "polarity": "positive", "span": [52, 66]}], "opinions": ["high-end"]}
+{"id": "ADLT#6:4", "text": "This guy refused to seat her and she left, followed shortly by the four of us, but not before I told him that in my 40 years of world travel, including Paris, that I had never seen such a display of bad behavior by a frontman in a restaurant.", "terms": [{"term": "frontman", "polarity": "negative", "span": [217, 225]}], "opinions": ["bad"]}
+{"id": "ADLT#6:5", "text": "His response was smug, arrogant, and condescending, totally consistent with his deportment on display all evening.", "opinions": []}
+{"id": "ADLT#6:6", "text": "A word to the wise: you can't dine here and disturb the maitre-D's sense of \" table turnover\", as whacked as it is, or else.", "terms": [{"term": "maitre-D", "polarity": "negative", "span": [56, 64]}], "opinions": []}
+{"id": "ADLT#6:7", "text": "If you go here, do it on his off-night.", "opinions": []}
+{"id": "NP#9:0", "text": "Best meal in a long time!", "terms": [{"term": "meal", "polarity": "positive", "span": [5, 9]}], "opinions": ["Best"]}
+{"id": "NP#9:1", "text": "Mussles and calamari were superb Saturday evening.", "terms": [{"term": "Mussles", "polarity": "positive", "span": [0, 7]}, {"term": "calamari", "polarity": "positive", "span": [12, 20]}], "opinions": ["superb"]}
+{"id": "NP#9:2", "text": "I had the Lamb special which was perfect.", "terms": [{"term": "Lamb special", "polarity": "positive", "span": [10, 22]}], "opinions": ["perfect"]}
+{"id": "NP#9:3", "text": "My father had the flank steak which was very good, and my mother had the swordfish.", "terms": [{"term": "flank steak", "polarity": "positive", "span": [18, 29]}], "opinions": ["good"]}
+{"id": "TFS#2:0", "text": "The Four Seasons restaurant is a great experience.", "terms": [{"term": "The Four Seasons restaurant", "polarity": "positive", "span": [0, 27]}], "opinions": ["great"]}
+{"id": "TFS#2:1", "text": "The food is great and the environment is even better.", "terms": [{"term": "food", "polarity": "positive", "span": [4, 8]}, {"term": "environment", "polarity": "positive", "span": [26, 37]}], "opinions": ["great", "better"]}
+{"id": "TFS#2:2", "text": "Everyone must come here at least once.", "opinions": []}
+{"id": "TFS#2:3", "text": "Highly recommend it!", "opinions": []}
+{"id": "BHD#8:0", "text": "Taking Hot Dogs to the next level", "terms": [{"term": "Hot Dogs", "polarity": "positive", "span": [7, 15]}], "opinions": []}
+{"id": "BHD#8:1", "text": "At first glance this place seems a bit pricey for a hot dog joint, but at Bark you don't just get your average hot dog.", "terms": [{"term": "Bark", "polarity": "negative", "span": [74, 78]}, {"term": "hot dog", "polarity": "positive", "span": [111, 118]}], "opinions": ["pricey", "average"]}
+{"id": "BHD#8:2", "text": "Here the hot dog is elevated to the level of a real entree with numerous variations available.", "terms": [{"term": "hot dog", "polarity": "positive", "span": [9, 16]}, {"term": "hot dog", "polarity": "positive", "span": [9, 16]}], "opinions": ["elevated"]}
+{"id": "P#3:0", "text": "Great Atmosphere", "terms": [{"term": "Atmosphere", "polarity": "positive", "span": [6, 16]}], "opinions": ["Great"]}
+{"id": "P#3:1", "text": "Went to this place this place on a real cold night and needed a quick meal.", "opinions": []}
+{"id": "P#3:2", "text": "I highly recommend the fish tacos, everything else was ok.", "terms": [{"term": "fish tacos", "polarity": "positive", "span": [23, 33]}], "opinions": ["recommend"]}
+{"id": "P#3:3", "text": "Cool atmosphere, the fire place in the back really ads to it but needs a bit more heat throughout on a cold night.", "terms": [{"term": "atmosphere", "polarity": "positive", "span": [5, 15]}, {"term": "fire place", "polarity": "positive", "span": [21, 31]}], "opinions": ["Cool"]}
+{"id": "CLF#8:0", "text": "Poor service and management", "terms": [{"term": "service", "polarity": "negative", "span": [5, 12]}, {"term": "management", "polarity": "negative", "span": [17, 27]}], "opinions": ["Poor"]}
+{"id": "CLF#8:1", "text": "Don’t go to this place!", "terms": [{"term": "place", "polarity": "negative", "span": [17, 22]}], "opinions": []}
+{"id": "CLF#8:2", "text": "Had an awful experience at Casa la Femme on a Saturday dinner.", "terms": [{"term": "Casa la Femme", "polarity": "negative", "span": [27, 40]}], "opinions": ["awful"]}
+{"id": "CLF#8:3", "text": "Appetizers took nearly an hour.", "opinions": []}
+{"id": "CLF#8:4", "text": "When the main course finally arrived (another 45mins) half of our order was missing.", "opinions": []}
+{"id": "CLF#8:5", "text": "Never got an explanation as to what was going on.", "opinions": []}
+{"id": "CLF#8:6", "text": "The manager was rude and handled the situation extremely poorly.", "terms": [{"term": "manager", "polarity": "negative", "span": [4, 11]}], "opinions": ["rude", "poorly"]}
+{"id": "CLF#8:7", "text": "When we threatened to leave, we were offered a meager discount even though half the order was missing.", "opinions": []}
+{"id": "CLF#8:8", "text": "On the way out, we heard of other guests complaining about similar issues.", "opinions": []}
+{"id": "CLF#8:9", "text": "Can’t believe how an expensive NYC restaurant can be so disrespectful to its clients.", "terms": [{"term": "restaurant", "polarity": "negative", "span": [35, 45]}], "opinions": ["expensive", "disrespectful"]}
+{"id": "ADLT#11:0", "text": "What a hassle!", "opinions": []}
+{"id": "ADLT#11:1", "text": "The food is very good, but not outstanding.", "terms": [{"term": "food", "polarity": "neutral", "span": [4, 8]}], "opinions": ["good", "outstanding"]}
+{"id": "ADLT#11:2", "text": "There is no way it justifies the accolades it receives, the attitude of the staff or the wait for a table.", "terms": [{"term": "staff", "polarity": "negative", "span": [76, 81]}, {"term": "wait", "polarity": "negative", "span": [89, 93]}], "opinions": []}
+{"id": "ADLT#11:3", "text": "On our last visit, they skipped over our name on the list, leaving us waiting an extra hour for a table.", "opinions": []}
+{"id": "ADLT#11:4", "text": "Mistakes happen, but they are usually accompanied by an apology, perhaps even a glass of wine...but not the grunt that we received from the Al Di La staff.", "terms": [{"term": "staff", "polarity": "negative", "span": [149, 154]}], "opinions": []}
+{"id": "ADLT#11:5\" OutOfScope=\"TRUE", "text": "Without the wait or attitude, I would probably go back, but there are just too many other restaurants in Brooklyn that are as good or better and don't make me jump through hoops.", "opinions": []}
+{"id": "WE#1:0", "text": "Expensive", "opinions": []}
+{"id": "WE#1:1", "text": "I went there after hearing how great it was.", "opinions": []}
+{"id": "WE#1:2", "text": "Wow.", "opinions": []}
+{"id": "WE#1:3", "text": "The bread was stale, the salad was overpriced and empty.", "terms": [{"term": "bread", "polarity": "negative", "span": [4, 9]}, {"term": "salad", "polarity": "negative", "span": [25, 30]}, {"term": "salad", "polarity": "negative", "span": [25, 30]}], "opinions": ["stable", "overpriced", "empty"]}
+{"id": "WE#1:4", "text": "The pasta was well cooked, didn't have enough sauce though or flavor.", "terms": [{"term": "pasta", "polarity": "positive", "span": [4, 9]}, {"term": "pasta", "polarity": "negative", "span": [4, 9]}, {"term": "pasta", "polarity": "negative", "span": [4, 9]}], "opinions": ["well cooked"]}
+{"id": "WE#1:5\" OutOfScope=\"TRUE", "text": "I though it was expensive and I prefer Bella Via just blocks away by far.", "opinions": []}
+{"id": "FF#6:0", "text": "So rude!!!", "opinions": []}
+{"id": "FF#6:1", "text": "I went with JWILS.", "opinions": []}
+{"id": "FF#6:2", "text": "Her review is above.", "opinions": []}
+{"id": "FF#6:3", "text": "I was one of the people that went for this horrible experience.", "opinions": []}
+{"id": "FF#6:4", "text": "My friend is 100% right in the experience we had.", "opinions": []}
+{"id": "FF#6:5", "text": "The hostess was rude and I got a distinct feeling that they did not want to serve us.", "terms": [{"term": "hostess", "polarity": "negative", "span": [4, 11]}], "opinions": ["rude"]}
+{"id": "FF#6:6", "text": "The only thing that my friend left out is that when we sat down at the bar the bartender disappeared.", "terms": [{"term": "bartender", "polarity": "negative", "span": [79, 88]}], "opinions": ["disappeared"]}
+{"id": "FF#6:7", "text": "I asked for a menu and the same waitress looked at my like I was insane.", "terms": [{"term": "waitress", "polarity": "negative", "span": [32, 40]}], "opinions": []}
+{"id": "FF#6:8", "text": "I was shocked that my friends wanted to stay after the waitress said, \"can I help you\" and \"how many are in your party.\"", "terms": [{"term": "waitress", "polarity": "negative", "span": [55, 63]}], "opinions": []}
+{"id": "FF#6:9", "text": "What?", "opinions": []}
+{"id": "FF#6:10", "text": "The three of us standing in front of her should have been an indication of how many of us there were.", "opinions": []}
+{"id": "FF#6:11", "text": "We didn't look like the other patrons in there so unfortunately I think that may have been part of the problem.", "opinions": []}
+{"id": "FF#6:12", "text": "Shame on this place for the horrible rude staff and non-existent customer service.", "terms": [{"term": "staff", "polarity": "negative", "span": [42, 47]}, {"term": "customer service", "polarity": "negative", "span": [65, 81]}], "opinions": ["Shame", "horrible", "rude", "non-existent"]}
+{"id": "FF#10:0", "text": "bad staff", "terms": [{"term": "staff", "polarity": "negative", "span": [4, 9]}], "opinions": ["bad"]}
+{"id": "FF#10:1", "text": "I generally like this place.", "terms": [{"term": "place", "polarity": "positive", "span": [22, 27]}], "opinions": ["like"]}
+{"id": "FF#10:2", "text": "The food is good.", "terms": [{"term": "food", "polarity": "positive", "span": [4, 8]}], "opinions": ["good"]}
+{"id": "FF#10:3", "text": "The design of the space is good.", "terms": [{"term": "space", "polarity": "positive", "span": [18, 23]}], "opinions": ["good"]}
+{"id": "FF#10:4", "text": "But the service is HORRID!", "terms": [{"term": "service", "polarity": "negative", "span": [8, 15]}], "opinions": ["HORRID"]}
+{"id": "FF#10:5", "text": "I was there for brunch recently, and we were tag teamed by a waitress and a waiter.", "terms": [{"term": "waitress", "polarity": "negative", "span": [61, 69]}, {"term": "waiter", "polarity": "negative", "span": [76, 82]}], "opinions": ["teamed"]}
+{"id": "FF#10:6", "text": "The waiter delivered our food while holding what appeared to be a plastic bag of garbage in one hand.", "terms": [{"term": "waiter", "polarity": "negative", "span": [4, 10]}], "opinions": []}
+{"id": "FF#10:7", "text": "I can't believe that it was, but please put the bag down before delivering food!", "opinions": []}
+{"id": "FF#10:8", "text": "The waitress came to check in on us every few minutes, and began to clear the plates while half of us were still eating (a big pet peeve of mine that happens almost everywhere, so I try to ignore it).", "terms": [{"term": "waitress", "polarity": "negative", "span": [4, 12]}], "opinions": []}
+{"id": "FF#10:9", "text": "I couldn't ignore the fact that she reach over the plate of one of my friends, who was in mid bite, to clear the table.", "opinions": []}
+{"id": "FF#10:10", "text": "She then put the check down without asking if we were done, and came to check on the bill every two minutes, even though we were one of three occupied tables.", "opinions": []}
+{"id": "FF#10:11", "text": "I wish I could like this place more, and I wish someone would retrain the staff.", "terms": [{"term": "place", "polarity": "negative", "span": [25, 30]}, {"term": "staff", "polarity": "negative", "span": [74, 79]}], "opinions": []}
