@@ -17,11 +17,13 @@
 # pylint: disable=no-member, not-callable, arguments-differ, missing-class-docstring, too-many-locals, too-many-arguments, abstract-method
 # pylint: disable=missing-module-docstring, missing-function-docstring, too-many-statements, too-many-instance-attributes
 
+import os
 import math
 from torch import nn
 import torch
 from torch.nn import CrossEntropyLoss
 torch.multiprocessing.set_sharing_strategy('file_system')
+import datasets
 from transformers.modeling_bert import (
     BertEncoder,
     BertLayer,
@@ -36,23 +38,39 @@ from transformers.modeling_utils import (
     prune_linear_layer,
 )
 from transformers.activations import ACT2FN
-from transformers import BertForTokenClassification, BertModel
+from transformers import (
+    BertForTokenClassification, 
+    BertModel, 
+    BertTokenizer,
+    DPRQuestionEncoder,
+    DPRQuestionEncoderTokenizer,
+)
 from pytorch_lightning import _logger as log
 
-class CustomBertConfig(BertConfig):
+class KiBertConfig(BertConfig):
     def __init__(self, **kwargs):
         super().__init__()
 
     def add_extra_args(self, hparams):
         # pylint: disable=attribute-defined-outside-init
-        self.custom_layers = hparams.custom_layers
+        self.kibert_layers = hparams.kibert_layers
         self.add_norm = hparams.add_norm
         self.mlp = hparams.mlp
+        self.additive_attn = hparams.additive_attn
+        dataset_name = os.path.basename(hparams.data_dir).strip("/")
+        #print(f"Dataset name: {dataset_name}")
+        self.train_domain = dataset_name.split('_')[0]
+        self.test_domain = dataset_name.split('_')[2]
+        self.n_docs = hparams.n_docs
+        self.rnd_init = hparams.rnd_init
+        self.probs = hparams.probs
 
-class CustomBertForTokenClassification(BertForTokenClassification):
+        self.max_seq_length = hparams.max_seq_length
+
+class KiBertForTokenClassification(BertForTokenClassification):
     def __init__(self, config):
         super().__init__(config)
-        self.bert = CustomBertModel(config)
+        self.bert = KiBertModel(config)
 
     def forward(
         self,
@@ -60,13 +78,13 @@ class CustomBertForTokenClassification(BertForTokenClassification):
         attention_mask=None,
         token_type_ids=None,
         position_ids=None,
+        domain_ids=None,
         head_mask=None,
         inputs_embeds=None,
         labels=None,
         output_attentions=None,
         output_hidden_states=None,
         return_dict=None,
-        external_embeddings=None,
         regress_to_bert=False,
     ):
         r"""
@@ -82,11 +100,11 @@ class CustomBertForTokenClassification(BertForTokenClassification):
             token_type_ids=token_type_ids,
             position_ids=position_ids,
             head_mask=head_mask,
+            domain_ids=domain_ids,
             inputs_embeds=inputs_embeds,
             output_attentions=output_attentions,
             output_hidden_states=output_hidden_states,
             return_dict=return_dict,
-            external_embeddings=external_embeddings,
             regress_to_bert=regress_to_bert,
         )
 
@@ -123,12 +141,23 @@ class CustomBertForTokenClassification(BertForTokenClassification):
         #    attentions=outputs.attentions,
         #)
 
-class CustomBertModel(BertModel):
+class KiBertModel(BertModel):
     def __init__(self, config, add_pooling_layer=True):
         super().__init__(config)
         # Model weights are loaded in the call to super().__init__(config)
         # State dict still maps to the layers defined in the Custom Encoder
-        self.encoder = CustomBertEncoder(config)
+        self.bert_tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
+        self.encoder = KiBertEncoder(config)
+        self.question_encoder = DPRQuestionEncoder.from_pretrained('facebook/dpr-question_encoder-single-nq-base')
+        self.question_encoder_tokenizer = DPRQuestionEncoderTokenizer.from_pretrained('facebook/dpr-question_encoder-single-nq-base')
+        self.wiki_dataset =  datasets.load_dataset('wiki_dpr')
+        self.train_domain = config.train_domain
+        self.test_domain = config.test_domain
+        self.n_docs = config.n_docs
+        self.rnd_init = config.rnd_init
+        self.probs = config.probs
+
+        self.max_seq_length = config.max_seq_length
         
     def forward(
         self,
@@ -136,6 +165,7 @@ class CustomBertModel(BertModel):
         attention_mask=None,
         token_type_ids=None,
         position_ids=None,
+        domain_ids=None,
         head_mask=None,
         inputs_embeds=None,
         encoder_hidden_states=None,
@@ -143,7 +173,6 @@ class CustomBertModel(BertModel):
         output_attentions=None,
         output_hidden_states=None,
         return_dict=None,
-        external_embeddings=None,
         regress_to_bert=False,
     ):
         r"""
@@ -158,6 +187,53 @@ class CustomBertModel(BertModel):
             - 1 for tokens that are **not masked**,
             - 0 for tokens that are **maked**.
         """
+        ### RAG STUFF ###
+        n_docs = self.n_docs
+
+        if not self.rnd_init:
+            domain_id = domain_ids.detach()[0]
+
+            if domain_id == 0:  # 0 for train, 1 for val/test
+                input_domain = self.train_domain
+            else:
+                input_domain = self.test_domain
+
+            # Decode input ids
+            special_tokens = ["[SEP]", "[CLS]", "[PAD]"]
+            input_sentences = [self.bert_tokenizer.decode(input_id) for input_id in input_ids]
+            input_sentences = [filter(lambda x: x not in special_tokens, input_sentence.split()) for input_sentence in input_sentences]
+            input_sentences = [' '.join(input_sentence) for input_sentence in input_sentences]
+
+            # Creating query 
+            queries = [f"domain: {input_domain} review: {input_sentence}" for input_sentence in input_sentences]
+            query_inputs = self.question_encoder_tokenizer(queries, return_tensors='pt', padding='max_length', truncation=True, max_length=self.max_seq_length).to('cuda')
+
+            # Encoding question and retrieving passage
+            question_enc_outputs = self.question_encoder(**query_inputs, return_dict=True)
+            question_encoder_last_hidden_states = question_enc_outputs.pooler_output  # hidden states of question encoder (batch_size, 768)
+            total_doc_scores_, total_docs = self.wiki_dataset['train'].get_nearest_examples_batch("embeddings", question_encoder_last_hidden_states.detach().cpu().numpy(), k=n_docs)  # get k nearest
+            retrieved_doc_embeds = torch.stack([torch.tensor(docs['embeddings']) for docs in total_docs]).to('cuda')  # Moving batch document embeddings to GPU, (batch_size, n_docs, 768)
+
+            # Uncomment to check if there is gradient flow back to the question encoder (prints the corresponding grads)
+            #if question_encoder_last_hidden_states.requires_grad:
+            #    question_encoder_last_hidden_states.register_hook(lambda x: print(f"at question_encoder_last_hidden_states: {x}"))
+
+            # (batch_size, n_docs)
+            doc_scores = torch.bmm(
+                question_encoder_last_hidden_states.unsqueeze(1), retrieved_doc_embeds.transpose(1, 2)
+            ).squeeze(1)
+
+            # log(softmax(doc_scores)), (batch_size, n_docs)
+            if self.probs == 'log':
+                doc_logprobs = torch.nn.functional.log_softmax(doc_scores, dim=1)
+            else:
+                doc_logprobs = torch.nn.functional.softmax(doc_scores, dim=1)
+
+        else:
+            retrieved_doc_embeds = torch.rand(len(input_ids), n_docs, 768).to('cuda')
+            doc_logprobs = torch.rand(len(input_ids), n_docs).to('cuda')
+
+        ### BERT STUFF ###
         output_attentions = output_attentions if output_attentions is not None else self.config.output_attentions
         output_hidden_states = (
             output_hidden_states if output_hidden_states is not None else self.config.output_hidden_states
@@ -203,7 +279,10 @@ class CustomBertModel(BertModel):
         head_mask = self.get_head_mask(head_mask, self.config.num_hidden_layers)
 
         embedding_output = self.embeddings(
-            input_ids=input_ids, position_ids=position_ids, token_type_ids=token_type_ids, inputs_embeds=inputs_embeds
+            input_ids=input_ids, 
+            position_ids=position_ids, 
+            token_type_ids=token_type_ids, 
+            inputs_embeds=inputs_embeds,
         )
         encoder_outputs = self.encoder(
             embedding_output,
@@ -214,7 +293,8 @@ class CustomBertModel(BertModel):
             output_attentions=output_attentions,
             output_hidden_states=output_hidden_states,
             return_dict=return_dict,
-            external_embeddings=external_embeddings,
+            external_embeddings=retrieved_doc_embeds,
+            doc_logprobs=doc_logprobs,
             regress_to_bert=regress_to_bert,
         )
         sequence_output = encoder_outputs[0]
@@ -230,12 +310,11 @@ class CustomBertModel(BertModel):
         #    attentions=encoder_outputs.attentions,
         #)
 
-class CustomBertEncoder(BertEncoder):
+class KiBertEncoder(BertEncoder):
     def __init__(self, config):
         super().__init__(config)
         self.config = config
-        self.layer = nn.ModuleList([CustomBertLayer(config, base_bert=False) if layer_num in config.custom_layers else CustomBertLayer(config, base_bert=True) for layer_num in range(12)])
-        #self.layer = nn.ModuleList([CustomBertLayer(config) for _ in range(12)])
+        self.layer = nn.ModuleList([KiBertLayer(config, base_bert=False) if (layer_num+1) in config.kibert_layers else KiBertLayer(config, base_bert=True) for layer_num in range(12)])
         
     def forward(
         self,
@@ -248,6 +327,7 @@ class CustomBertEncoder(BertEncoder):
         output_hidden_states=False,
         return_dict=False,
         external_embeddings=None,
+        doc_logprobs=None,
         regress_to_bert=False,
     ):
         all_hidden_states = () if output_hidden_states else None
@@ -274,6 +354,7 @@ class CustomBertEncoder(BertEncoder):
                     encoder_hidden_states,
                     encoder_attention_mask,
                     external_embeddings,
+                    doc_logprobs,
                     regress_to_bert,
                 )
             else:
@@ -285,6 +366,7 @@ class CustomBertEncoder(BertEncoder):
                     encoder_attention_mask,
                     output_attentions,
                     external_embeddings,
+                    doc_logprobs,
                     regress_to_bert,
                 )
             hidden_states = layer_outputs[0]
@@ -301,7 +383,7 @@ class CustomBertEncoder(BertEncoder):
         #)
 
         
-class CustomBertLayer(BertLayer):
+class KiBertLayer(BertLayer):
     def __init__(self, config, base_bert):
         super().__init__(config)
         self.base_bert = base_bert
@@ -317,6 +399,7 @@ class CustomBertLayer(BertLayer):
         encoder_attention_mask=None,
         output_attentions=False,
         external_embeddings=None,
+        doc_logprobs=None,
         regress_to_bert=False,
     ):
         self_attention_outputs = self.attention(
@@ -345,8 +428,13 @@ class CustomBertLayer(BertLayer):
         
         # New
         if hasattr(self, "external_attention"):
-            external_attention_output = self.external_attention(attention_output, external_embeddings=external_embeddings, regress_to_bert=regress_to_bert)[0]
-            attention_output = external_attention_output
+            external_attention_output = self.external_attention(
+                attention_output, 
+                external_embeddings=external_embeddings, 
+                doc_logprobs=doc_logprobs, 
+                regress_to_bert=regress_to_bert
+            )
+            attention_output = external_attention_output[0]
         
         layer_output = apply_chunking_to_forward(
             self.feed_forward_chunk, self.chunk_size_feed_forward, self.seq_len_dim, attention_output
@@ -380,6 +468,9 @@ class ExternalEmbeddingSelfAttention(nn.Module):
         
         self.dropout = nn.Dropout(config.attention_probs_dropout_prob)
 
+        # Whether or not to force attention weight on original token to be 1 (bool)
+        self.additive_attn = config.additive_attn
+
     def transpose_for_scores(self, x):
         new_x_shape = x.size()[:-1] + (self.num_attention_heads, self.attention_head_size)
         x = x.view(*new_x_shape)
@@ -394,6 +485,7 @@ class ExternalEmbeddingSelfAttention(nn.Module):
         encoder_attention_mask=None,
         output_attentions=False,
         external_embeddings=None,
+        doc_logprobs=None,
         regress_to_bert=False,
     ):
         if regress_to_bert == True:
@@ -418,7 +510,7 @@ class ExternalEmbeddingSelfAttention(nn.Module):
         # Extracting each sequence in the batch
         # sequence_query, sequence_key, sequence_value: (seq_len, 768)
         # external_keys, external_values: (num_phases, 768)
-        for sequence_query, sequence_key, sequence_value, external_key, external_value in zip(query_layer, token_keys, token_values, external_keys, external_values):
+        for sequence_query, sequence_key, sequence_value, external_key, external_value, doc_logprob in zip(query_layer, token_keys, token_values, external_keys, external_values, doc_logprobs):
             sequence_context_layer = []
             sequence_attention_probs = []
             
@@ -426,21 +518,31 @@ class ExternalEmbeddingSelfAttention(nn.Module):
             for token_query, token_key, token_value in zip(sequence_query, sequence_key, sequence_value):
                 
                 # Creating new key and value vectors/matrices with the token embedding + external embeddings
-                key_layer = torch.cat((token_key.unsqueeze(0), external_key), dim=0)        # (1 + num_phrases, 768)
-                value_layer = torch.cat((token_value.unsqueeze(0), external_value), dim=0)  # (1 + num_phrases, 768)
+                key_layer = torch.cat((token_key.unsqueeze(0), external_key), dim=0)        # (1 + n_docs, 768)
+                value_layer = torch.cat((token_value.unsqueeze(0), external_value), dim=0)  # (1 + n_docs, 768)
                 
                 # Computing external Attention scores
-                token_attention_scores = torch.matmul(token_query, key_layer.transpose(0,1))  # (1 + num_phrases)               
+                token_attention_scores = torch.matmul(token_query, key_layer.transpose(0,1))  # (1 + n_docs)               
                 token_attention_probs = nn.Softmax(dim=-1)(token_attention_scores)
                 # Add dropout?: attention_probs = self.dropout(attention_probs)
+
+                # Forcing full attention on original token, no longer a "probability"
+                if self.additive_attn:
+                    token_attention_probs[0] = 1
+
                 sequence_attention_probs.append(token_attention_probs)
-                
+
+                # Gamma vector to pre-weight value vectors (CRITICAL: doc_logprobs needed for backprop)
+                gamma = torch.cat((torch.tensor(1, device='cuda').unsqueeze(0), doc_logprob)).unsqueeze(1)  # (1 + n_docs, 1)
+                gamma = gamma.expand_as(value_layer)
+                new_value_layer = torch.mul(value_layer, gamma)
+
                 # New contextual embeddings with external information
-                context_layer = torch.matmul(token_attention_probs, value_layer)  # (768)
+                context_layer = torch.matmul(token_attention_probs, new_value_layer)  # (768)
                 sequence_context_layer.append(context_layer)
             
             # Converting list to tensors
-            sequence_attention_probs = torch.stack(sequence_attention_probs) # (seq_len, 1 + num_phrases)
+            sequence_attention_probs = torch.stack(sequence_attention_probs) # (seq_len, 1 + n_docs)
             sequence_context_layer = torch.stack(sequence_context_layer)    # (seq_len, 768)
             batch_attention_probs.append(sequence_attention_probs)
             batch_context_layer.append(sequence_context_layer)
@@ -509,6 +611,7 @@ class ExternalEmbeddingAttention(nn.Module):
         encoder_attention_mask=None,
         output_attentions=False,
         external_embeddings=None,
+        doc_logprobs=None,
         regress_to_bert=False,
     ):
         # Adding MLP
@@ -523,6 +626,7 @@ class ExternalEmbeddingAttention(nn.Module):
             encoder_attention_mask,
             output_attentions,
             external_embeddings,
+            doc_logprobs,
             regress_to_bert,
         )
         
@@ -533,21 +637,21 @@ class ExternalEmbeddingAttention(nn.Module):
         else:
             outputs = self_outputs
 
-
-
         return outputs
 
 class MLP(nn.Module):
     def __init__(self, config):
         super().__init__()
         self.dense1 = nn.Linear(config.hidden_size, config.intermediate_size)
+        #self.dense1 = nn.Linear(config.hidden_size, 300)
         if isinstance(config.hidden_act, str):
             self.intermediate_act_fn = ACT2FN[config.hidden_act]
         else:
             self.intermediate_act_fn = config.hidden_act
         self.dense2 = nn.Linear(config.intermediate_size, config.hidden_size)
-        #self.LayerNorm = nn.LayerNorm(config.hidden_size, eps=config.layer_norm_eps)
-        #self.dropout = nn.Dropout(config.hidden_dropout_prob)
+        #self.dense2 = nn.Linear(300, config.hidden_size)
+        self.LayerNorm = nn.LayerNorm(config.hidden_size, eps=config.layer_norm_eps)
+        self.dropout = nn.Dropout(config.hidden_dropout_prob)
         
 
     def forward(self, hidden_states):
@@ -555,8 +659,8 @@ class MLP(nn.Module):
         hidden_states = self.dense1(hidden_states)
         hidden_states = self.intermediate_act_fn(hidden_states)
         hidden_states = self.dense2(hidden_states)
-        #hidden_states = self.dropout(hidden_states)
-        #hidden_states = self.LayerNorm(hidden_states + input_tensor)
+        hidden_states = self.dropout(hidden_states)
+        hidden_states = self.LayerNorm(hidden_states + input_tensor)
         return hidden_states
 
 

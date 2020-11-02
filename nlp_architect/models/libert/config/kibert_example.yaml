@@ -1,6 +1,6 @@
 max_epochs: 10
-model_type: custom # bert or custom
-base_init: [true, false] # true will randomly intitialize the embeddings which are injected (false is DPR/RAG embeddings)
+model_type: kibert # bert or kibert
+base_init: [true, false]  # true will randomly intitialize the embeddings which are injected (false is DPR/RAG embeddings)
 
 data: lr # relative to nlp_architect/models/li_bert/data/preprocessed_conll
 limit_data: 1.0
@@ -8,23 +8,24 @@ splits: 1
 seeds: [7, 25, 26]
 tag: # optional: name this experiment version
 metric: asp_f1
-baseline_str: custom_rnd_init
+baseline_str: kibert_rnd_init
 baseline_version: version_baseline
 
 num_workers: 44
-gpus: [0, 1]  # only run multi with overwrite_cache as false, otherwise multiple processes might try to write the cache file
+gpus: [0, 1] 
 parallel: true
 
 # MODEL HPARAMS
-custom_layers: [1, 2, 3]  # sets which layers to add the external embedding attention to (0 - 11)
+kibert_layers: [1, 2, 3]  # sets which layers to add the external embedding attention to (1 - 12)
 add_norm: true  # keep this true, else training destabilizes
 mlp: true  # whether or not to add 2-layer MLP between DPR/RAG embeddings and attention module
+additive_attn: false  # whether or not to force attention weight on original token to be 1 (after attention weight computation)
+n_docs: 5
+probs: log   # log or normal (whether or not to log document score softmax)
 
 do_train: true
 do_predict: true
 
-# NEED TO OVERWRITE CACHE IF CHANGING RAG question/query, since RAG embeddings are stored in the cached feature file
-# It's recommended to use the "create_kibert_features_file.py" script to create these feature files rather than the below option
 overwrite_cache: false # if false, loads features from cached file (faster)
 cache_dir: # default: nlp-architect/nlp_architect/cache
 output_dir: # default: nlp-architect/nlp_architect/cache/li-bert-models

@@ -44,13 +44,13 @@ from transformers import (
     DPRQuestionEncoder,
 )
 import absa_utils
-from kibert_model import CustomBertForTokenClassification, CustomBertConfig
+from kibert_model import KiBertForTokenClassification, KiBertConfig
 
 LIBERT_DIR = Path(realpath(__file__)).parent
 
 MODEL_CONFIG = {
     'bert': (BertForTokenClassification, BertConfig, BertTokenizer),
-    'custom': (CustomBertForTokenClassification, CustomBertConfig, BertTokenizer)
+    'kibert': (KiBertForTokenClassification, KiBertConfig, BertTokenizer)
 }
 
 class BertForToken(pl.LightningModule):
@@ -72,12 +72,8 @@ class BertForToken(pl.LightningModule):
         if not hparams.output_dir:
             hparams.output_dir = LIBERT_DIR / 'models'
 
-        # Initializing BERT and RAG models
+        # Initializing BERT and KiBERT models
         self.model_type, self.config_type, self.tokenizer_type = MODEL_CONFIG[hparams.model_type]
-        #if hparams.model_type == 'custom':
-        #    self.rag_encoder = DPRQuestionEncoder.from_pretrained('facebook/dpr-question_encoder-single-nq-base')
-        #    self.rag_tokenizer = DPRQuestionEncoderTokenizer.from_pretrained('facebook/dpr-question_encoder-single-nq-base')
-        #    self.wiki_dataset =  datasets.load_dataset('wiki_dpr')
 
         self.config = self.config_type \
             .from_pretrained(hparams.model_name_or_path,
@@ -110,7 +106,7 @@ class BertForToken(pl.LightningModule):
         return self.model(**inputs)
 
     def prepare_data(self):
-        "Called to initialize data. Use the call to construct features (including RAG embeddings)"
+        "Called to initialize data. Use the call to construct features"
         for mode in "train", "dev", "test":
             cached_features_file = self._feature_file(mode)
             if os.path.exists(cached_features_file) and not self.hparams.overwrite_cache:
@@ -118,12 +114,6 @@ class BertForToken(pl.LightningModule):
                 features = torch.load(cached_features_file)
             else:
                 log.debug("Creating features from dataset file at %s", self.hparams.data_dir)
-                
-                # Creating DPR model to generate features
-                self.rag_encoder = DPRQuestionEncoder.from_pretrained('facebook/dpr-question_encoder-single-nq-base')
-                self.rag_tokenizer = DPRQuestionEncoderTokenizer.from_pretrained('facebook/dpr-question_encoder-single-nq-base')
-                self.wiki_dataset =  datasets.load_dataset('wiki_dpr')
-
                 examples = absa_utils.read_examples_from_file(self.hparams.data_dir, mode)
                 features = absa_utils.convert_examples_to_features(
                     examples,
@@ -132,41 +122,14 @@ class BertForToken(pl.LightningModule):
                     self.tokenizer
                 )
 
-                # Ex: dataset_name = "laptops_to_restaurants_1"
-                dataset_name = os.path.basename(self.hparams.data_dir)
-                train_domain = dataset_name.split('_')[0]
-                val_test_domain = dataset_name.split('_')[2]
-                
-                new_features = []
-                k = 5  # number of embeddings to retrieve
-                for e, f in tqdm(zip(examples, features), total=len(examples)):
-                    # look for aspect, TODO: make this noun instead?
-                    # TODO: decide on what to do if no B-ASP?
-                    #try:
-                    asp_idx = e.labels.index('B-ASP')
-                    asp = e.words[asp_idx]
-                    #domain = train_domain if mode=="train" else val_test_domain
-                    domain = val_test_domain
-                    #domain = train_domain
-                    question = f"how is {asp} related to {domain}"
-                    question_emb = self.rag_encoder(**self.rag_tokenizer(question, return_tensors="pt"))[0].detach().numpy()
-                    passages_scores, passages = self.wiki_dataset['train'].get_nearest_examples("embeddings", question_emb, k=k)  # get k nearest
-                    passage_embeddings = torch.tensor(passages['embeddings'])
-                    new_features.append((f, passage_embeddings))
-
-                    #except ValueError:
-                        # In case no B-ASP in example
-                    #    passage_embeddings = torch.zeros(5, 768)
-                    #    new_features.append((f, passage_embeddings)) 
                 log.debug("Saving features into cached file %s", cached_features_file)
-                torch.save(new_features, cached_features_file)
+                torch.save(features, cached_features_file)
 
     def load_dataset(self, mode, batch_size):
         "Load datasets. Called after prepare data."
         cached_features_file = self._feature_file(mode)
         log.debug("Loading features from cached file %s", cached_features_file)
-        new_features = torch.load(cached_features_file)
-        features, passage_embeddings = zip(*new_features)  # unzipping
+        features = torch.load(cached_features_file)
         all_input_ids = torch.tensor([f.input_ids for f in features], dtype=torch.long)
         all_attention_mask = torch.tensor([f.attention_mask for f in features], dtype=torch.long)
         if features[0].token_type_ids is not None:
@@ -178,19 +141,10 @@ class BertForToken(pl.LightningModule):
 
         tensors = [all_input_ids, all_attention_mask, all_token_type_ids, all_label_ids]
 
-        if self.model_type is CustomBertForTokenClassification:
-            #### Attach rag embeddings ###
-            if self.hparams.rnd_init:
-                k = 5  # number of embeddings to retrieve
-                log.debug("Using random embedding features for each example.")
-                random_embeddings = [torch.rand(5, 768) for _ in passage_embeddings]  # TODO make k a hparam and modify this and previous function
-                tensors.append(torch.stack(random_embeddings))
-            else:
-                log.debug("Using RAG embedding features for each example.")
-                tensors.append(torch.stack(passage_embeddings))
-
-            #tensors.append(torch.stack(passage_embeddings))
-
+        # Adding domain information for KiBERT
+        if self.hparams.model_type == 'kibert':
+            all_domain_ids = torch.tensor([0 if mode == 'train' else 1 for _ in features])
+            tensors.append(all_domain_ids)
 
         shuffle = mode == 'train'
         return DataLoader(TensorDataset(*tensors), batch_size=batch_size, shuffle=shuffle,
@@ -201,7 +155,7 @@ class BertForToken(pl.LightningModule):
         inputs = {"input_ids": batch[0], "attention_mask": batch[1], "token_type_ids": batch[2],
                   "labels": batch[3]}
         if len(batch) >= 5:
-            inputs["external_embeddings"] = batch[4] 
+            inputs["domain_ids"] = batch[4] 
         return inputs
 
     def training_step(self, batch, _):

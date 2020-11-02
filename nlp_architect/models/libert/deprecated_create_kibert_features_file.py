@@ -83,7 +83,7 @@ def main(args):
         )
 
         # Ex: dataset_name = "laptops_to_restaurants_1"
-        dataset_name = os.path.basename(data_dir)
+        dataset_name = os.path.basename(data_dir).strip("/")
         train_domain = dataset_name.split('_')[0]
         val_test_domain = dataset_name.split('_')[2]
 
