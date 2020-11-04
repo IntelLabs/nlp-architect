@@ -87,7 +87,7 @@ class LiBertModel(BertModel):
     def __init__(self, config):
         super(LiBertModel, self).__init__(config)
 
-        self.encoder = LiBertEncoder(config, None)
+        self.encoder = LiBertEncoder(config)
 
     def forward(self, input_ids=None, attention_mask=None, token_type_ids=None, position_ids=None,
                 head_mask=None, inputs_embeds=None, encoder_hidden_states=None,

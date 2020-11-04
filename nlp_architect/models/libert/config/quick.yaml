@@ -3,9 +3,9 @@ model_type: libert # bert or libert
 base_init: [true, false]
 
 data: ld # lr ld dr dl # relative to nlp_architect/models/li_bert/data/preprocessed_conll
-limit_data: 0.1
-splits: 1
-seeds: [58] #, 23, 17]
+limit_data: 0.3
+splits: 2
+seeds: [58, 1] #, 23, 17]
 tag: # optional: name this experiment version
 metric: asp_f1
 baseline_str: libert_rnd_init
