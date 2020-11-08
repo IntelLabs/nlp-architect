@@ -95,9 +95,6 @@ class BertForToken(pl.LightningModule):
         self.hparams = hparams
         self.sentence_metrics = None
 
-        # self.example_input_array = {"input_ids": torch.zeros(64), "attention_mask": torch.zeros(64), "token_type_ids": torch.zeros(64),
-        #           "labels": torch.zeros(64), "syn_heads": torch.zeros(64, 64), "syn_rels": torch.zeros(64)}
-
     def forward(self, **inputs):
         return self.model(**inputs)
 
@@ -141,9 +138,6 @@ class BertForToken(pl.LightningModule):
             dep_heads = torch.tensor([f.dep_heads for f in features], dtype=torch.float)
             tensors.append(dep_heads)
 
-            syn_rels = torch.tensor([f.syn_rels for f in features], dtype=torch.long)
-            tensors.append(syn_rels)
-
         shuffle = mode == 'train'
         return DataLoader(TensorDataset(*tensors), batch_size=batch_size, shuffle=shuffle,
                           num_workers=self.hparams.num_workers, pin_memory=True)
@@ -154,8 +148,6 @@ class BertForToken(pl.LightningModule):
                   "labels": batch[3]}
         if len(batch) >= 5:
             inputs["parse"] = batch[4]
-        if len(batch) >= 6:
-            inputs["syn_rels"] = batch[5]
         return inputs
 
     def training_step(self, batch, _):
