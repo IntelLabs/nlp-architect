@@ -1,3 +1,4 @@
+#%%
 import csv
 import os
 from pathlib import Path
@@ -7,7 +8,8 @@ from tqdm import tqdm
 import spacy
 from spacy.tokens import Doc
 
-DATA_DIR = Path(os.path.realpath(__file__)).parent / 'data'
+LIBERT_DIR = Path(os.path.realpath(__file__)).parent
+DATA_DIR = LIBERT_DIR / 'data'
 CONLL_DIR = DATA_DIR / 'conll'
 DOMAINS_DIR = CONLL_DIR / 'domains_all'
 
@@ -15,7 +17,11 @@ class SpacyWithBertTokenizer:
     def __init__(self):
         self.parse_cache = {}
         self.nlp = self.get_spacy_with_bert_tokenizer()
-
+        #  For UD dependency parses, first download a SpaCy UD model- run:
+        # > pip install https://storage.googleapis.com/en_ud_model/en_ud_model_lg-1.1.0.tar.gz
+        #  Then, replace default `spacy_model` with "en_ud_model_lg" - replace the last line with:
+        # self.nlp = self.get_spacy_with_bert_tokenizer(spacy_model="en_ud_model_lg")
+        
     @staticmethod
     def get_spacy_with_bert_tokenizer(spacy_model="en_core_web_lg"):
         nlp = spacy.load(spacy_model, disable=["ner", "vectors", "textcat"])
@@ -177,7 +183,22 @@ def parse_in_domain(domains: list):
 
 if __name__ == "__main__":
     parse_cross_domain(domains=['restaurants', 'laptops', 'device'])
+    # parse_in_domain(domains=['restaurants', 'laptops', 'device'])
     
     # Save label set to label.txt
     with open(DATA_DIR / 'csv' / 'labels.txt', 'w', encoding='utf-8') as labels_f:
         labels_f.write('\n'.join(['O', 'B-ASP', 'I-ASP', 'B-OP', 'I-OP']))
+
+    # Prepare dep_relations.txt with all dependecny relation labels from ALL CSVs
+    import pandas as pd
+    import glob
+    path = DATA_DIR / 'csv' 
+    all_files = glob.glob(str(path) + "/*/*.csv")
+    dfs = [pd.read_csv(filename, index_col=None)
+        for filename in all_files]
+    df = pd.concat(dfs, axis=0, ignore_index=False)
+    dep_relations = [l.lower() for l in set(df['DEP_REL'])] 
+    # Save dep_relations.txt
+    with open(LIBERT_DIR / 'dep_relations.txt', 'w', encoding='utf-8') as dep_rel_labels_f:
+        dep_rel_labels_f.write('\n'.join(dep_relations))
+

@@ -18,6 +18,7 @@
 # pylint: disable=missing-module-docstring, missing-function-docstring, too-many-statements, too-many-instance-attributes
 
 import math
+from os.path import realpath
 from torch import nn
 import torch
 from torch.nn import CrossEntropyLoss
@@ -26,9 +27,16 @@ from transformers.modeling_bert import BertEncoder, BertLayer, \
         BertAttention, BertSelfAttention, BertSelfOutput, BertConfig
 from transformers import BertForTokenClassification, BertModel
 from pytorch_lightning import _logger as log
+from pathlib import Path
+
+
+LIBERT_DIR = Path(realpath(__file__)).parent
 
 REL_EMBED_SIZE = 64
-
+# determine number of dep-relation labels by dep_relations.txt
+with open(LIBERT_DIR / "dep_relations.txt") as deprel_f:
+    NUM_REL_LABELS = len(deprel_f.read().splitlines()) + 1
+    
 class LiBertConfig(BertConfig):
     def __init__(self, **kwargs):
         super().__init__()
@@ -48,12 +56,11 @@ class LiBertForToken(BertForTokenClassification):
     def __init__(self, config):
         super(LiBertForToken, self).__init__(config)
         self.bert = LiBertModel(config)
-        self.classifier = nn.Linear(config.hidden_size + REL_EMBED_SIZE, config.num_labels)
-
+        self.use_syntactic_rels = config.use_syntactic_rels
         if config.use_syntactic_rels:
-            self.rel_embed_layer = nn.Embedding(52, REL_EMBED_SIZE, padding_idx=0)
-        else:
-            self.rel_embed_layer = None
+            self.classifier = nn.Linear(config.hidden_size + REL_EMBED_SIZE, config.num_labels)
+            self.rel_embed_layer = nn.Embedding(NUM_REL_LABELS, REL_EMBED_SIZE, padding_idx=0)
+
 
     def forward(self, input_ids=None, attention_mask=None, token_type_ids=None, position_ids=None,
                 head_mask=None, inputs_embeds=None, labels=None, output_attentions=None,
@@ -72,11 +79,15 @@ class LiBertForToken(BertForTokenClassification):
         )
         sequence_output = outputs[0]
 
-        rel_embeds = self.rel_embed_layer(syn_rels)
-        sequence_with_relations = torch.cat((sequence_output, rel_embeds), 2)
-        sequence_with_relations = self.dropout(sequence_with_relations)
-        logits = self.classifier(sequence_with_relations)
-
+        if self.use_syntactic_rels:
+            rel_embeds = self.rel_embed_layer(syn_rels)
+            sequence_with_relations = torch.cat((sequence_output, rel_embeds), 2)
+            sequence_with_relations = self.dropout(sequence_with_relations)
+            sequence_output = sequence_with_relations
+        else:
+            sequence_output = self.dropout(sequence_output)
+        logits = self.classifier(sequence_output)
+        
         outputs = (logits,) + outputs[2:]  # add hidden states and attention if they are here
         if labels is not None:
             loss_fct = CrossEntropyLoss()
