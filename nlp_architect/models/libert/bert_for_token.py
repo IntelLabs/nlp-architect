@@ -41,7 +41,6 @@ from transformers import (
 )
 import absa_utils
 from libert_model import LiBertForToken, LiBertConfig
-#from libert_model_14heads import LiBertForToken, LiBertConfig
 
 LIBERT_DIR = Path(realpath(__file__)).parent
 

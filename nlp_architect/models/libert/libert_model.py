@@ -28,7 +28,7 @@ from transformers import BertForTokenClassification, BertModel
 from pytorch_lightning import _logger as log
 
 REL_EMBED_SIZE = 64
-REL_EXPER = 1
+REL_EXPER = 3
 
 class LiBertConfig(BertConfig):
     def __init__(self, **kwargs):
@@ -50,7 +50,7 @@ class LiBertForToken(BertForTokenClassification):
         super(LiBertForToken, self).__init__(config)
 
         self.rel_embed_layer = nn.Embedding(52, REL_EMBED_SIZE, padding_idx=0)
-        self.bert = LiBertModel(config, self.rel_embed_layer)
+        self.bert = LiBertModel(config)
 
         if REL_EXPER == 2:
             self.classifier = nn.Linear(config.hidden_size + REL_EMBED_SIZE, config.num_labels)
@@ -62,9 +62,10 @@ class LiBertForToken(BertForTokenClassification):
                 head_mask=None, inputs_embeds=None, labels=None, output_attentions=None,
                 output_hidden_states=None, syn_heads=None, syn_rels=None):
 
-        syn_rels = self.rel_embed_layer(syn_rels)
-        syn_rels = self.RelLayerNorm(syn_rels)
-        syn_rels = torch.div(syn_rels, 4)
+        if REL_EXPER != 2:
+            syn_rels = self.rel_embed_layer(syn_rels)
+            syn_rels = self.RelLayerNorm(syn_rels)
+            syn_rels = torch.div(syn_rels, 4)
 
         outputs = self.bert(
             input_ids,
@@ -83,7 +84,13 @@ class LiBertForToken(BertForTokenClassification):
 
         if REL_EXPER == 2:
             rel_embeds = self.rel_embed_layer(syn_rels)
-            rel_embeds = rel_embeds if not self.baseline else torch.zeros_like(rel_embeds)
+
+            if not self.baseline:
+                rel_embeds = self.RelLayerNorm(rel_embeds)
+                rel_embeds = torch.div(rel_embeds, 4)
+            else:
+                rel_embeds = torch.zeros_like(rel_embeds)
+
             sequence_with_relations = torch.cat((sequence_output, rel_embeds), 2)
             sequence_with_relations = self.dropout(sequence_with_relations)
             logits = self.classifier(sequence_with_relations)
@@ -111,10 +118,10 @@ class LiBertForToken(BertForTokenClassification):
         return outputs  # (loss), scores, (hidden_states), (attentions)
 
 class LiBertModel(BertModel):
-    def __init__(self, config, rel_embed_layer):
+    def __init__(self, config):
         super(LiBertModel, self).__init__(config)
             
-        self.encoder = LiBertEncoder(config, rel_embed_layer)
+        self.encoder = LiBertEncoder(config)
 
     def forward(self, input_ids=None, attention_mask=None, token_type_ids=None, position_ids=None,
                 head_mask=None, inputs_embeds=None, encoder_hidden_states=None,
@@ -190,10 +197,10 @@ class LiBertModel(BertModel):
         return outputs  # sequence_output, pooled_output, (hidden_states), (attentions)
 
 class LiBertEncoder(BertEncoder):
-    def __init__(self, config, rel_embed_layer):
+    def __init__(self, config):
         super(LiBertEncoder, self).__init__(config)
         
-        self.layer = nn.ModuleList([LiBertLayer(config, layer_num, rel_embed_layer) for \
+        self.layer = nn.ModuleList([LiBertLayer(config, layer_num) for \
             layer_num in range(config.num_hidden_layers)])
         self.li_layer = config.li_layer
         self.all_layers = config.all_layers
@@ -239,9 +246,9 @@ class LiBertEncoder(BertEncoder):
         return outputs  # last-layer hidden state, (all hidden states), (all attentions)
 
 class LiBertLayer(BertLayer):
-    def __init__(self, config, layer_num, rel_embed_layer):
+    def __init__(self, config, layer_num):
         super(LiBertLayer, self).__init__(config)
-        self.attention = LiBertAttention(config, layer_num, rel_embed_layer)
+        self.attention = LiBertAttention(config, layer_num)
 
     def forward(self, hidden_states, attention_mask=None, head_mask=None,
                 encoder_hidden_states=None, encoder_attention_mask=None,
@@ -259,10 +266,10 @@ class LiBertLayer(BertLayer):
         return outputs
 
 class LiBertAttention(BertAttention):
-    def __init__(self, config, layer_num, rel_embed_layer):
+    def __init__(self, config, layer_num):
         super(LiBertAttention, self).__init__(config)
         self.self = LiBertSelfAttention(config, layer_num)
-        self.output = LiBertSelfOutput(config, layer_num, rel_embed_layer)
+        self.output = LiBertSelfOutput(config, layer_num)
         self.pruned_heads = set()
 
     def forward(self, hidden_states, attention_mask=None, head_mask=None,
@@ -378,7 +385,7 @@ class LiBertSelfAttention(BertSelfAttention):
         return outputs
 
 class LiBertSelfOutput(BertSelfOutput):
-    def __init__(self, config, layer_num, rel_embed_layer):
+    def __init__(self, config, layer_num):
         super(LiBertSelfOutput, self).__init__(config)
         
         self.baseline = config.baseline
@@ -388,7 +395,6 @@ class LiBertSelfOutput(BertSelfOutput):
             self.original_num_attention_heads = config.num_attention_heads
             self.attention_head_size = int(config.hidden_size / self.original_num_attention_heads)
             self.use_syntactic_rels = config.use_syntactic_rels
-            self.syn_rel_layer = rel_embed_layer
 
             if REL_EXPER == 3:
                 self.dense_13_head = nn.Linear(self.attention_head_size + REL_EMBED_SIZE, config.hidden_size) # [128, 768]
@@ -418,8 +424,6 @@ class LiBertSelfOutput(BertSelfOutput):
                 lingustic_info = self.dense_13_head(output_13_head)
 
             else:
-                # rel_embeds = self.syn_rel_layer(syn_rels)
-
                 ###### Add Syntactic Relations #######
                 if self.baseline:
 
@@ -432,8 +436,8 @@ class LiBertSelfOutput(BertSelfOutput):
 
                 else:
                     if REL_EXPER == 3:
-                        concat = torch.cat((output_13_head, syn_rels))
-                        lingustic_info = self.dense_13_head(concat, 2)
+                        concat = torch.cat((output_13_head, syn_rels), 2)
+                        lingustic_info = self.dense_13_head(concat)
 
 
                     if REL_EXPER == 1:
