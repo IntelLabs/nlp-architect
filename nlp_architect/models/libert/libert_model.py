@@ -37,6 +37,9 @@ REL_EMBED_SIZE = 64
 with open(LIBERT_DIR / "dep_relations.txt") as deprel_f:
     NUM_REL_LABELS = len(deprel_f.read().splitlines()) + 1
 
+A = 0.5
+B = 0.5
+
 class LiBertConfig(BertConfig):
     def __init__(self, **kwargs):
         super().__init__()
@@ -55,10 +58,8 @@ class LiBertForToken(BertForTokenClassification):
     def __init__(self, config):
         super(LiBertForToken, self).__init__(config)
         self.bert = LiBertModel(config)
-        self.use_syntactic_rels = config.use_syntactic_rels
-        if config.use_syntactic_rels:
-            self.classifier = nn.Linear(config.hidden_size + REL_EMBED_SIZE, config.num_labels)
-            self.rel_embed_layer = nn.Embedding(NUM_REL_LABELS, REL_EMBED_SIZE, padding_idx=0)
+
+        self.syn_head_classifier = nn.Linear(config.hidden_size, 64)
 
 
     def forward(self, input_ids=None, attention_mask=None, token_type_ids=None, position_ids=None,
@@ -77,14 +78,10 @@ class LiBertForToken(BertForTokenClassification):
         )
         sequence_output = outputs[0]
 
-        if self.use_syntactic_rels:
-            rel_embeds = self.rel_embed_layer(syn_rels)
-            sequence_with_relations = torch.cat((sequence_output, rel_embeds), 2)
-            sequence_with_relations = self.dropout(sequence_with_relations)
-            sequence_output = sequence_with_relations
-        else:
-            sequence_output = self.dropout(sequence_output)
+        sequence_output = self.dropout(sequence_output)
         logits = self.classifier(sequence_output)
+
+        syn_head_logits = self.syn_head_classifier(sequence_output)
         
         outputs = (logits,) + outputs[2:]  # add hidden states and attention if they are here
         if labels is not None:
@@ -97,9 +94,10 @@ class LiBertForToken(BertForTokenClassification):
                     active_loss, labels.view(-1),
                     torch.tensor(loss_fct.ignore_index).type_as(labels)
                 )
-                loss = loss_fct(active_logits, active_labels)
+                loss = A * loss_fct(active_logits, active_labels) + B * loss_fct(syn_head_logits, parse)
             else:
-                loss = loss_fct(logits.view(-1, self.num_labels), labels.view(-1))
+                loss = A * loss_fct(logits.view(-1, self.num_labels), labels.view(-1)) + B * loss_fct(syn_head_logits, parse)
+
             outputs = (loss,) + outputs
 
         return outputs  # (loss), scores, (hidden_states), (attentions)
