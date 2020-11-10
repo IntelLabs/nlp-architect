@@ -1,8 +1,9 @@
 import json, os
 from tqdm import tqdm
-from random import shuffle
+import random
 from pathlib import Path
 from itertools import permutations
+import re
 
 DATA_DIR = Path(os.path.realpath(__file__)).parent / 'data'
 CROSS_DOMAIN_SETTINGS = ['laptops_to_restaurants', 'restaurants_to_laptops']
@@ -12,18 +13,18 @@ NUM_SPLITS = 3
 CONLL_DIR = DATA_DIR / 'conll'
 
 
-def create_dev_sets():
-    for domain_a, domain_b in tqdm(permutations(['laptops', 'restaurants', 'device'], r=2)):
+def create_dev_sets(domains: list):
+    for domain_a, domain_b in tqdm(permutations(domains, r=2)):
         for split in range(1, 4):
-            src_dir = CONLL_DIR + domain_b + '_to_' + domain_a + '_' + str(split) + '/'
+            src_dir = CONLL_DIR / (domain_b + '_to_' + domain_a + '_' + str(split))
             try:
-                train_text = open(src_dir + 'train.txt').read().strip().split('\n\n')
+                train_text = open(src_dir / 'train.txt', encoding='utf-8').read().strip().split('\n\n')
                 dev_len = int(len(train_text) / 3)
                 dev_text = train_text[:dev_len]
-                target_dir = CONLL_DIR + domain_a + '_to_' + domain_b + '_' + str(split) + '/'
-                open(target_dir + 'dev.txt', 'w').write('\n\n'.join(dev_text) + '\n\n')
-            except:
-                continue
+                target_dir = CONLL_DIR / (domain_a + '_to_' + domain_b + '_' + str(split))
+                open(target_dir / 'dev.txt', 'w', encoding='utf-8').write('\n\n'.join(dev_text) + '\n\n')
+            except Exception as e:
+                raise e
 
 def dai2019_single_to_conll_and_raw(sent_file, tok_file, conll_out: str, raw_out: str, opinion_labels=False):
     """Converts ABSA datasets from Dai (2019) format to CoNLL format.
@@ -64,6 +65,7 @@ def dai2019_single_to_conll_and_raw(sent_file, tok_file, conll_out: str, raw_out
     with open(raw_out, 'w', encoding='utf-8') as raw_f:
         raw_f.write('\n'.join(sentences))
 
+    mixed_numeral_pattern = re.compile(' 1/2\tO')
     with open(conll_out, 'w', encoding='utf-8') as conll_f:
         count_not_found = 0
 
@@ -91,14 +93,6 @@ def dai2019_single_to_conll_and_raw(sent_file, tok_file, conll_out: str, raw_out
 
                 if ops_not_found:
                     count_not_found += 1
-                    # print(sentence)
-                    # print(ops_not_found)
-                    # print(tokens)
-                    # print('\n\n')
-
-                # print([tok + ': ' + tag for tok, tag in zip(tokens, tags)])
-                # print(op_words_sorted)
-                # print('\n\n')
 
             if asp_indices:
                 curr_asp = 0
@@ -114,20 +108,26 @@ def dai2019_single_to_conll_and_raw(sent_file, tok_file, conll_out: str, raw_out
                     if tok_end == asp_indices[curr_asp][1]:
                         curr_asp += 1
                         inside_aspect = False
-        
-            conll_f.write('\n'.join(['\t'.join((_)) for _ in zip(tokens, tags)]) + '\n\n')
+
+            conll_text = '\n'.join(['\t'.join((_)) for _ in zip(tokens, tags)]) + '\n\n'
+            fixed_conll_text = fix_untoknized_mixed_numerals(conll_text, mixed_numeral_pattern)
+            conll_f.write(fixed_conll_text)
         print(conll_out)
-        print('NOT FOUND: ' + str(count_not_found))
+        # print('NOT FOUND: ' + str(count_not_found))
+
+def fix_untoknized_mixed_numerals(conll_text, pattern):
+    fixed_conll_text = pattern.sub('\tO\n1/2\tO', conll_text)
+    return fixed_conll_text
 
 def check_match(tokens, i, op_phrase):
     if len(tokens) - i >= len(op_phrase):
         return tuple(tokens[j].lower() for j in range(i, i + len(op_phrase))) == op_phrase
     return False
 
-def preprocess_laptops_and_restaurants_dai2019_cross_domain(opinion_labels=False):
-    in_base = DATA_DIR / 'Dai2019' / 'semeval'
-    out_base = DATA_DIR / 'conll'
-    out_base += '_op/' if opinion_labels else '/'
+def preprocess_laptops_and_restaurants_dai2019_cross_domain(seed, opinion_labels=True):
+    random.seed(seed)
+    in_base = str(DATA_DIR / 'Dai2019' / 'semeval')
+    out_base = str(DATA_DIR / 'conll') + '/'
     sets = {'restaurants': ('14', '15'), 'laptops': ('14',)}
     all_out_dirs = []
 
@@ -164,7 +164,7 @@ def preprocess_laptops_and_restaurants_dai2019_cross_domain(opinion_labels=False
                 out_test_dir = lt_to_res_dir
                 out_train_dir = res_to_lt_dir
             
-            shuffle(all_domain_sents)
+            random.shuffle(all_domain_sents)
             split = round(0.75 * len(all_domain_sents))
             train = all_domain_sents[:split]
             test = all_domain_sents[split:]
@@ -172,15 +172,7 @@ def preprocess_laptops_and_restaurants_dai2019_cross_domain(opinion_labels=False
             dai2019_single_to_conll_and_raw([p[0] for p in train], [p[1] for p in train], out_train_dir + 'train.txt', 
                 out_train_dir + 'raw_train.txt', opinion_labels)
             dai2019_single_to_conll_and_raw([p[0] for p in test], [p[1] for p in test], out_test_dir + 'test.txt', out_test_dir + 'raw_test.txt',
-                opinion_labels)           
-
-    labels = ['O', 'B-ASP', 'I-ASP']
-    if opinion_labels:
-        labels.extend(['B-OP', 'I-OP'])
-    
-    for dir in all_out_dirs:
-        with open(dir + 'labels.txt', 'w', encoding='utf-8') as labels_f:
-            labels_f.write('\n'.join(labels))
+                opinion_labels)
 
 def count_phrase_in_token_list(phrase, tokens):
     phrase_len = len(phrase)
@@ -188,6 +180,7 @@ def count_phrase_in_token_list(phrase, tokens):
     for i in range(len(tokens) - phrase_len + 1):
         if tokens[i: i + phrase_len] in (phrase , (phrase[:-1] + [phrase[-1] + 's'])):
             spans.append((i, i + phrase_len))
+
     return spans
 
 def check_term_list(asp_phrases, op_phrases, tokens, i, stat):
@@ -199,11 +192,11 @@ def check_term_list(asp_phrases, op_phrases, tokens, i, stat):
             spans = count_phrase_in_token_list(phrase, tokens)
             count = len(spans)
             if count == 0:
-                print("Missing " + ' '.join(phrase) + "' in line no. " + str(i + 1))
                 stat['miss'] += 1
-                error = True
+                # print(str(stat['miss']) + ": Missing '" + ' '.join(phrase) + "' in line no. " + str(i + 1))
+                # error = True
             if count > 1:
-                print("Multiple " + ' '.join(phrase) + "' in line no. " + str(i + 1))
+                # print("Multiple '" + ' '.join(phrase) + "' in line no. " + str(i + 1))
                 # error = True
                 stat['mul'] += 1
             if count !=1:
@@ -225,9 +218,10 @@ def wang_spans_to_conll_sentence(tokens, asp_spans, op_spans):
             for i in range(span[0] + 1, span[1]):
                 labels[i] = 'I-ASP' if spans is asp_spans else 'I-OP'
     
-    return '\n'.join(([t + '\t' + l for t, l in zip(tokens, labels)])) + '\n\n'
+    return '\n'.join(([t + '\t' + l for t, l in zip(tokens, labels)])) + '\n'
 
 def wang2018_single_to_conll(data_dir, text_op_file, asp_pol_file):
+    data_dir = str(data_dir) + '/'
     all_tokens = []
     all_opinions = []
     conll_sents = []
@@ -243,24 +237,31 @@ def wang2018_single_to_conll(data_dir, text_op_file, asp_pol_file):
     all_aspects = []
     with open(data_dir + asp_pol_file, encoding='utf-8') as asp_pol_f:
         for line in asp_pol_f:
-            aspects = [asp_pol.split(':')[0].strip().split() for asp_pol in line.strip().split(',')] if line != 'NIL\n' else []
+            split_line = line.strip().split(',')
+            aspects = []
+            if line != 'NIL\n':
+                for asp_pol in split_line:
+                    aspect = asp_pol.split(':')[0].strip().split()
+                    if aspect:
+                        aspects.append(aspect)
+
             all_aspects.append(aspects)
     
     stat = {'miss': 0, 'mul': 0, 'err': 0}
-    # with open(data_dir + conll_out, 'w') as out_conll:
+    # with open(data_dir + conll_out, 'w', encoding='utf-8') as out_conll:
     for i, (tokens, aspects, opinions) in enumerate(zip(all_tokens, all_aspects, all_opinions)):
         asp_spans, op_spans = check_term_list(aspects, opinions, tokens, i, stat)
         conll_sentence = wang_spans_to_conll_sentence(tokens, asp_spans, op_spans)
         # out_conll.write(conll_sentence)
         conll_sents.append(conll_sentence)
             
-    print("\nMissing", stat['miss'])
-    print("Multiple", stat['mul'])
-    print('Erroneus lines', stat['err'])
+    # print("\nMissing", stat['miss'])
+    # print("Multiple", stat['mul'])
+    # print('Erroneus lines', stat['err'])
     return conll_sents
 
 def get_all_sentences_of_domain(data_dir, domain, years):
-    semeval_in_base = data_dir + '/Dai2019/semeval'
+    semeval_in_base = str(data_dir) + '/Dai2019/semeval'
     out_base = 'nlp_architect/models/absa_neural/data/conll_op/'
     all_domain_sents = []
     for year in years:
@@ -276,16 +277,17 @@ def get_all_sentences_of_domain(data_dir, domain, years):
                         all_domain_sents.append((json_line, tok_line))
     return all_domain_sents
 
-def preprocess_wang2018(data_dir, device_text_op_file, device_asp_pol_file, domain_b, domain_years):
-    out_base = DATA_DIR / 'conll'
+def preprocess_wang2018(device_text_op_file, device_asp_pol_file, domain_b, domain_years, seed):
+    random.seed(seed)
+    out_base = str(DATA_DIR / 'conll') + '/'
     sets = {domain_b: domain_years, 'device': None}
 
     all_out_dirs = []
     for domain, years in sets.items():
         if years:
-            all_domain_sents = get_all_sentences_of_domain(data_dir, domain, years)
+            all_domain_sents = get_all_sentences_of_domain(DATA_DIR, domain, years)
         else:
-            all_domain_sents = wang2018_single_to_conll(data_dir, device_text_op_file, device_asp_pol_file)
+            all_domain_sents = wang2018_single_to_conll(DATA_DIR, device_text_op_file, device_asp_pol_file)
 
         for split_i in range(NUM_SPLITS):
             split_num = str(split_i + 1)
@@ -302,7 +304,7 @@ def preprocess_wang2018(data_dir, device_text_op_file, device_asp_pol_file, doma
                 out_test_dir = device_to_domain_dir
                 out_train_dir = domain_to_device_dir
             
-            shuffle(all_domain_sents)
+            random.shuffle(all_domain_sents)
             split = round(0.75 * len(all_domain_sents))
             train = all_domain_sents[:split]
             test = all_domain_sents[split:]
@@ -313,20 +315,21 @@ def preprocess_wang2018(data_dir, device_text_op_file, device_asp_pol_file, doma
                 dai2019_single_to_conll_and_raw([p[0] for p in test], [p[1] for p in test], out_test_dir + 'test.txt', out_test_dir + 'raw_test.txt',
                     opinion_labels=True)           
             else:
-                with open(out_train_dir + 'train.txt', 'w') as f:
+                with open(out_train_dir + 'train.txt', 'w', encoding='utf-8') as f:
                     f.write('\n'.join(train) + '\n')
-                with open(out_test_dir + 'test.txt', 'w') as f:
+                with open(out_test_dir + 'test.txt', 'w', encoding='utf-8') as f:
                     f.write('\n'.join(test) + '\n')
 
-    for out_dir in all_out_dirs:
-        with open(out_dir + 'labels.txt', 'w', encoding='utf-8') as labels_f:
-            labels_f.write('\n'.join(['O', 'B-ASP', 'I-ASP', 'B-OP', 'I-OP']))
-
-def preprocess_devices_wang2018_cross_domain(data_dir, device_text_op_file, device_asp_pol_file):
+def preprocess_devices_wang2018_cross_domain(seed):
+    device_text_op_file, device_asp_pol_file = 'Wang2018/addsenti_device', 'Wang2018/aspect_op_device'
     for domain, years in [('restaurants', ('14', '15')), ('laptops', ('14',))]:
-        preprocess_wang2018(data_dir, device_text_op_file, device_asp_pol_file, domain, years)
+        preprocess_wang2018(device_text_op_file, device_asp_pol_file, domain, years, seed)
 
+
+def prepare_all_datasets(seed):
+    preprocess_laptops_and_restaurants_dai2019_cross_domain(seed=seed)
+    preprocess_devices_wang2018_cross_domain(seed=seed)
+    create_dev_sets(domains=['laptops', 'restaurants', 'device'])
 
 if __name__ == "__main__":
-    preprocess_laptops_and_restaurants_dai2019_cross_domain(opinion_labels=True)
-    preprocess_devices_wang2018_cross_domain(DATA_DIR, 'Wang2018/addsenti_device.txt', 'Wang2018/aspect_op_device.txt')
+    prepare_all_datasets(seed=16)

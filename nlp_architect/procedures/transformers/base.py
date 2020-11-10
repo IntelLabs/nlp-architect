@@ -19,8 +19,7 @@ from nlp_architect.models.transformers.base_model import get_models
 
 
 def create_base_args(parser: argparse.ArgumentParser, model_types=None):
-    """Add base arguments for Transformers based models
-    """
+    """Add base arguments for Transformers based models"""
     # Required parameters
     if model_types is not None and len(model_types) > 1:
         parser.add_argument(
@@ -85,8 +84,7 @@ def create_base_args(parser: argparse.ArgumentParser, model_types=None):
 
 
 def inference_args(parser: argparse.ArgumentParser):
-    """ Add inference specific arguments for Transoformer based models
-    """
+    """Add inference specific arguments for Transoformer based models"""
     parser.add_argument(
         "--model_path", default=None, type=str, required=True, help="Path to pre-trained model"
     )
@@ -100,8 +98,7 @@ def inference_args(parser: argparse.ArgumentParser):
 
 
 def train_args(parser: argparse.ArgumentParser, models_family=None):
-    """ Add training specific arguments for Transformer based models
-    """
+    """Add training specific arguments for Transformer based models"""
     parser.add_argument(
         "--model_name_or_path",
         default=None,

@@ -61,13 +61,13 @@ class ConcatTensorDataset(torch.utils.data.Dataset):
 
 class CombinedTensorDataset(torch.utils.data.Dataset):
     r"""Dataset as a concatenation of tensor datasets with different number of
-        tensors (labeled dataset/ unlabeled dataset). Labels of unlabeled dataset will
-        be represented as a tensor of zeros.
+    tensors (labeled dataset/ unlabeled dataset). Labels of unlabeled dataset will
+    be represented as a tensor of zeros.
 
-        Each sample will be retrieved by indexing tensors along the first dimension.
+    Each sample will be retrieved by indexing tensors along the first dimension.
 
-        Arguments:
-            datasets (List[TensorDataset]): datasets to concat.
+    Arguments:
+        datasets (List[TensorDataset]): datasets to concat.
     """
 
     def __init__(self, datasets: List[torch.utils.data.TensorDataset]):

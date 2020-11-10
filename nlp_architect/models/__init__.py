@@ -20,35 +20,28 @@ logger = logging.getLogger(__name__)
 
 
 class TrainableModel(ABC):
-    """Base class for a trainable model
-    """
+    """Base class for a trainable model"""
 
     def convert_to_tensors(self, *args, **kwargs):
-        """convert any chosen input to valid model format of tensors
-        """
+        """convert any chosen input to valid model format of tensors"""
         raise NotImplementedError
 
     def get_logits(self, *args, **kwargs):
-        """get model logits from given input
-        """
+        """get model logits from given input"""
         raise NotImplementedError
 
     def train(self, *args, **kwargs):
-        """train the model
-        """
+        """train the model"""
         raise NotImplementedError
 
     def inference(self, *args, **kwargs):
-        """run inference
-        """
+        """run inference"""
         raise NotImplementedError
 
     def save_model(self, *args, **kwargs):
-        """save the model
-        """
+        """save the model"""
         ...
 
     def load_model(self, *args, **kwargs):
-        """load a model
-        """
+        """load a model"""
         ...

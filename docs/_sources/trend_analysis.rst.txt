@@ -37,7 +37,7 @@ In this stage, the algorithm will also train a W2V model on the joint corpora to
 In the second stage the topic lists are being compared and analyzed.
 Finally the UI reads the analysis data and generates automatic reports for extracted topics, “Hot” and “Cold” trends, and topic clustering in 2D space.
 
-The noun phrase extraction module is using a pre-trained `model <https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/chunker/model.h5>`__ which is available under the Apache 2.0 license.
+The noun phrase extraction module is using a pre-trained `model <https://d2zs9tzlek599f.cloudfront.net/models/chunker/model.h5>`__ which is available under the Apache 2.0 license.
 
 Flow diagram
 ============

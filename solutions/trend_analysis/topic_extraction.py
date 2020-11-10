@@ -243,26 +243,26 @@ def train_w2v_model(data):
 
 def create_w2v_model(text_list_t, text_list_r):
     """
-     Create a w2v model on the given corpora
+    Create a w2v model on the given corpora
 
-     Args:
-         text_list_t: A list of documents - target corpus (List[String])
-         text_list_r: A list of documents - reference corpus (List[String])
-     """
+    Args:
+        text_list_t: A list of documents - target corpus (List[String])
+        text_list_r: A list of documents - reference corpus (List[String])
+    """
     unified_data = unify_corpora_from_texts(text_list_t, text_list_r)
     train_w2v_model(unified_data)
 
 
 def get_urls_from_file(file):
     """
-     Merge two corpora into a single text file
+    Merge two corpora into a single text file
 
-     Args:
-         corpus_a: A folder containing text files (String)
-         corpus_b: A folder containing text files (String)
-     Returns:
-         The path of the unified corpus
-     """
+    Args:
+        corpus_a: A folder containing text files (String)
+        corpus_b: A folder containing text files (String)
+    Returns:
+        The path of the unified corpus
+    """
     with open(file) as url_file:
         url_list = url_file.readlines()
         url_list = [x.strip() for x in url_list]

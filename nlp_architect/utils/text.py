@@ -25,8 +25,12 @@ from nltk.stem.snowball import EnglishStemmer
 from spacy.cli.download import download as spacy_download
 from spacy.lang.en import LEMMA_EXC, LEMMA_INDEX, LEMMA_RULES
 from spacy.lemmatizer import Lemmatizer
-
 from nlp_architect.utils.generic import license_prompt
+from joblib import Parallel, delayed
+from functools import partial
+from spacy.util import minibatch
+from nlp_architect.common.core_nlp_doc import CoreNLPDoc
+from pathlib import Path
 
 
 class Vocabulary:
@@ -161,8 +165,7 @@ def char_to_id(c):
 
 
 def id_to_char(c_id):
-    """return character of given char id
-    """
+    """return character of given char id"""
     if c_id < n_letters:
         return all_letters[c_id]
     return None
@@ -185,9 +188,28 @@ class SpacyInstance:
         disable (list of string, optional): pipeline annotators to disable
             (default: [])
         display_prompt (bool, optional): flag to display/skip license prompt
+        n_jobs (int, optional): maximum number of concurrent Python worker processes.
+            If -1 all CPUs are used.
+        batch_size (int, optional): number of docs per batch.
+        spacy_doc (bool, optional): if True, parser outputs `spacy.tokens.doc`
+            instead of `CoreNLPDoc`
+        show_tok (bool, optional): include token text in `CoreNLPDoc` output
+        show_dok (bool, optional): include document text in `CoreNLPDoc` output
+        ptb_pos (bool, optional): convert spacy POS tags to Penn Treebank tags
     """
 
-    def __init__(self, model="en", disable=None, display_prompt=True):
+    def __init__(
+        self,
+        model="en",
+        disable=None,
+        display_prompt=True,
+        n_jobs=8,
+        batch_size=1500,
+        spacy_doc=False,
+        show_tok=True,
+        show_doc=True,
+        ptb_pos=False,
+    ):
         if disable is None:
             disable = []
         try:
@@ -197,12 +219,50 @@ class SpacyInstance:
             if display_prompt and license_prompt("Spacy {} model".format(model), url) is False:
                 sys.exit(0)
             spacy_download(model)
-            self._parser = spacy.load(model, disable=disable)
+            print("Spacy model installed, please rerun your command.")
+            sys.exit(0)
+        self.n_jobs = n_jobs
+        self.batch_size = batch_size
+        self.spacy_doc = spacy_doc
+        self.show_tok = show_tok
+        self.show_doc = show_doc
+        self.ptb_pos = ptb_pos
 
     @property
     def parser(self):
         """return Spacy's instance parser"""
         return self._parser
+
+    def parse(self, texts, output_dir=None):
+        """
+        Parse a list of documents. If more than 1 document is passed, use multi-processing.
+
+        Args:
+            texts (list of str): documents to parse
+            output_dir (Path or str, optional): if given, parsed documents will be written here
+        """
+        if self.n_jobs == 1:
+            return self.process_batch(texts, output_dir)
+        partitions = minibatch(texts, size=self.batch_size)
+        executor = Parallel(n_jobs=self.n_jobs, backend="multiprocessing", prefer="processes")
+        do = delayed(partial(self.process_batch))
+        tasks = (do(batch, output_dir, batch_i) for batch_i, batch in enumerate(partitions))
+        return [doc for batch in executor(tasks) for doc in batch]
+
+    def process_batch(self, texts, output_dir=None, batch_id=0):
+        parsed_docs = []
+        for i, doc in enumerate(self.parser.pipe(texts)):
+            parsed_doc = (
+                doc
+                if self.spacy_doc
+                else CoreNLPDoc.from_spacy(doc, self.show_tok, self.show_doc, self.ptb_pos)
+            )
+            parsed_docs.append(parsed_doc)
+            if output_dir:
+                out_path = Path(output_dir) / ("{}.{}.json".format(batch_id, i))
+                with open(out_path, "w", encoding="utf8") as f:
+                    f.write(parsed_doc.pretty_json())
+        return parsed_docs
 
     def tokenize(self, text: str) -> List[str]:
         """
@@ -405,7 +465,10 @@ def bio_to_spans(text: List[str], tags: List[str]) -> List[Tuple[int, int, str]]
     """
     pointer = 0
     starts = []
-    for i, t, in enumerate(tags):
+    for (
+        i,
+        t,
+    ) in enumerate(tags):
         if t.startswith("B-"):
             starts.append((i, pointer))
         pointer += len(text[i]) + 1

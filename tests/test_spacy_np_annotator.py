@@ -27,7 +27,7 @@ from nlp_architect.pipelines.spacy_np_annotator import (
 from nlp_architect.utils.io import download_unlicensed_file
 from nlp_architect.utils.text import SpacyInstance, try_to_load_spacy
 
-MODEL_URL = "https://s3-us-west-2.amazonaws.com/nlp-architect-data/models/chunker/"
+MODEL_URL = "https://d2zs9tzlek599f.cloudfront.net/models/chunker/"
 MODEL_FILE = "model.h5"
 MODEL_INFO = "model_info.dat.params"
 local_models_path = path.join(path.dirname(path.realpath(__file__)), "fixtures/data/chunker")

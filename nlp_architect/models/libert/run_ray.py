@@ -40,7 +40,7 @@ GPUS_LOG = LOG_ROOT / 'gpus'
 def run_data(task_idx, cfg_yaml, time, rnd_init, data, log_dir, metric):
     # Routing output to log files
     tasks_log_dir = log_dir / 'tasks'
-    with open(tasks_log_dir / f'task_{task_idx}.log', 'a') as log_file:
+    with open(tasks_log_dir / f'task_{task_idx}.log', 'a', encoding='utf-8') as log_file:
         with redirect_stdout(log_file):
             with redirect_stderr(log_file):
                 cfg = load_config(cfg_yaml)
@@ -117,7 +117,7 @@ def main(config_yaml):
     log_dir = LOG_ROOT / exp_id
     tasks_log_dir = log_dir / 'tasks'
     os.makedirs(tasks_log_dir, exist_ok=True)
-    open(log_dir / 'time.log', 'w').write(f'{time_now}\n')
+    open(log_dir / 'time.log', 'w', encoding='utf-8').write(f'{time_now}\n')
     set_as_latest(log_dir)
 
     # Setting up run configurations
@@ -134,7 +134,7 @@ def main(config_yaml):
     post_analysis(cfg, log_dir, exp_id)
 
     # Save termination time
-    open(log_dir / 'time.log', 'a').write(pretty_datetime())
+    open(log_dir / 'time.log', 'a', encoding='utf-8').write(pretty_datetime())
 
     ray.shutdown()
 

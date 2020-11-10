@@ -2,17 +2,17 @@ max_epochs: 10
 model_type: libert # bert or libert
 base_init: [true, false]
 
-data: rl rd lr ld dr dl # relative to nlp_architect/models/li_bert/data/preprocessed_conll
+data: rl rd lr ld dr dl
 limit_data: 1.0
 splits: 3
-seeds: [7, 25, 26]
+seeds: [25, 26, 12]
 tag: # optional: name this experiment version
 metric: asp_f1
 baseline_str: libert_rnd_init
 baseline_version: version_baseline
 
 num_workers: 44
-gpus: [0, 1]
+gpus: [0, 1, 2, 3]
 parallel: true
 
 li_layer: #5
@@ -23,7 +23,7 @@ parse_probs: false
 replace_final: false
 duplicated_rels: false
 transpose: false
-use_syntactic_rels: true
+use_syntactic_rels: false
 
 do_train: true
 do_predict: true

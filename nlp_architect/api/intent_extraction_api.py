@@ -73,12 +73,12 @@ class IntentExtractionApi(AbstractApi):
                 if agreed is False:
                     sys.exit(0)
             download_unlicensed_file(
-                "https://s3-us-west-2.amazonaws.com/nlp-architect-data" "/models/intent/",
+                "https://d2zs9tzlek599f.cloudfront.net" "/models/intent/",
                 "model_info.dat",
                 IntentExtractionApi.pretrained_model_info,
             )
             download_unlicensed_file(
-                "https://s3-us-west-2.amazonaws.com/nlp-architect-data" "/models/intent/",
+                "https://d2zs9tzlek599f.cloudfront.net" "/models/intent/",
                 "model.h5",
                 IntentExtractionApi.pretrained_model,
             )

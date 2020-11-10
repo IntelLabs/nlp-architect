@@ -14,6 +14,7 @@
 # limitations under the License.
 # ******************************************************************************
 import json
+from nlp_architect.utils.io import validate
 
 
 def merge_punct_tok(merged_punct_sentence, last_merged_punct_index, punct_text, is_traverse):
@@ -51,6 +52,34 @@ def fix_gov_indexes(merged_punct_sentence, sentence):
             merged_token["gov"] = correct_index
 
 
+def _spacy_pos_to_ptb(pos, text):
+    """
+    Converts a Spacy part-of-speech tag to a Penn Treebank part-of-speech tag.
+
+    Args:
+        pos (str): Spacy POS tag (`tok.tag_`).
+        text (str): The token text.
+
+    Returns:
+        ptb_tag (str): Standard PTB POS tag.
+    """
+    validate((pos, str, 0, 30), (text, str, 0, 1000))
+    ptb_tag = pos
+    if text in ["...", "—"]:
+        ptb_tag = ":"
+    elif text == "*":
+        ptb_tag = "SYM"
+    elif pos == "AFX":
+        ptb_tag = "JJ"
+    elif pos == "ADD":
+        ptb_tag = "NN"
+    elif text != pos and text in [",", ".", ":", "``", "-RRB-", "-LRB-"]:
+        ptb_tag = text
+    elif pos in ["NFP", "HYPH", "XX"]:
+        ptb_tag = "SYM"
+    return ptb_tag
+
+
 def merge_punctuation(sentence):
     merged_punct_sentence = []
     tmp_punct_text = None
@@ -72,7 +101,7 @@ def merge_punctuation(sentence):
     return merged_punct_sentence
 
 
-class CoreNLPDoc(object):
+class CoreNLPDoc:
     """Object for core-components (POS, Dependency Relations, etc).
 
     Attributes:
@@ -203,3 +232,27 @@ class CoreNLPDoc(object):
                     )
             doc.append(sentence_doc)
         return doc
+
+    @staticmethod
+    def from_spacy(spacy_doc, show_tok=True, show_doc=True, ptb_pos=False):
+        core_sents = []
+        for spacy_sent in spacy_doc.sents:
+            cur_sent = []
+            for tok in spacy_sent:
+                pos = _spacy_pos_to_ptb(tok.tag_, tok.text) if ptb_pos else tok.tag_
+                core_tok = {
+                    "start": tok.idx,
+                    "len": len(tok),
+                    "pos": pos,
+                    "lemma": tok.lemma_,
+                    "rel": tok.dep_.lower(),
+                    "gov": -1 if tok.dep_ == "ROOT" else tok.head.i - spacy_sent.start,
+                }
+                if show_tok:
+                    core_tok["text"] = tok.text
+                cur_sent.append(core_tok)
+            core_sents.append(cur_sent)
+        core_doc = CoreNLPDoc(sentences=core_sents)
+        if show_doc:
+            core_doc.doc_text = spacy_doc.text
+        return core_doc
