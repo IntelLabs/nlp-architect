@@ -70,6 +70,7 @@ class InputFeatures:
     token_type_ids: Optional[List[int]] = None
     label_ids: Optional[List[int]] = None
     dep_heads: Optional[List[float]] = None
+    head_idx: Optional[List[int]] = None
     
 class Split(Enum):
     train = "train"
@@ -113,7 +114,13 @@ def pad_heads(a):
     target = np.zeros((64, 64), float)
     target[:a.shape[0], :a.shape[1]] = a[:64, :64]
     return target
-    
+
+def pad_heads_idx(a):
+    arr = np.array(a)
+    target = np.zeros((64), int)
+    target[:arr.shape[0]] = arr[:64]
+    return target
+
 def apply_heads_to_subtokens(heads, sub_tokens, zero_sub_tokens=False):
     for i in range(len(sub_tokens) - 1, -1, -1):
         for _ in range(1, len(sub_tokens[i])):
@@ -195,6 +202,10 @@ def convert_examples_to_features(
         padded_heads = pad_heads(binary_heads)
         #######################################################################################
 
+        padded_heads_idx = pad_heads_idx(heads)
+
+        #######################################################################################
+
         # Account for [CLS] and [SEP]
         special_tokens_count = tokenizer.num_special_tokens_to_add()
         if len(tokens) > max_seq_length - special_tokens_count:
@@ -256,7 +267,7 @@ def convert_examples_to_features(
 
         input_features = InputFeatures(input_ids=input_ids, attention_mask=input_mask,
                                       token_type_ids=segment_ids, label_ids=label_ids, 
-                                      dep_heads=padded_heads)
+                                      dep_heads=padded_heads, head_idx=padded_heads_idx)
         features.append(input_features)
     return features
 

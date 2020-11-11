@@ -32,10 +32,6 @@ from pathlib import Path
 
 LIBERT_DIR = Path(realpath(__file__)).parent
 
-# determine number of dep-relation labels by dep_relations.txt
-with open(LIBERT_DIR / "dep_relations.txt") as deprel_f:
-    NUM_REL_LABELS = len(deprel_f.read().splitlines()) + 1
-
 A = 0.5
 B = 0.5
 
@@ -55,10 +51,15 @@ class LiBertForToken(BertForTokenClassification):
     def __init__(self, config):
         super(LiBertForToken, self).__init__(config)
         self.bert = LiBertModel(config)
+        self.rnd_init = config.rnd_init
+
+        if not self.rnd_init:
+            self.syn_head_classifier = nn.Linear(config.hidden_size, 64)
+
 
     def forward(self, input_ids=None, attention_mask=None, token_type_ids=None, position_ids=None,
                 head_mask=None, inputs_embeds=None, labels=None, output_attentions=None,
-                output_hidden_states=None, parse=None):
+                output_hidden_states=None, parse=None, heads_idx=None):
         outputs = self.bert(
             input_ids,
             attention_mask=attention_mask,
@@ -71,13 +72,11 @@ class LiBertForToken(BertForTokenClassification):
             parse=parse
         )
         sequence_output = outputs[0]
-
         sequence_output = self.dropout(sequence_output)
         logits = self.classifier(sequence_output)
 
-        syn_head_logits = self.syn_head_classifier(sequence_output)
-        
         outputs = (logits,) + outputs[2:]  # add hidden states and attention if they are here
+
         if labels is not None:
             loss_fct = CrossEntropyLoss()
             # Only keep active parts of the loss
@@ -88,9 +87,25 @@ class LiBertForToken(BertForTokenClassification):
                     active_loss, labels.view(-1),
                     torch.tensor(loss_fct.ignore_index).type_as(labels)
                 )
-                loss = A * loss_fct(active_logits, active_labels) + B * loss_fct(syn_head_logits, parse)
+
+                if self.rnd_init:
+                    loss = loss_fct(active_logits, active_labels)
+
+                else:
+                    #### syn_head loss stuff ####
+                    syn_head_logits = self.syn_head_classifier(sequence_output)
+
+                    active_syn_head_logits = syn_head_logits.view(-1, 64)
+                    active_syn_head_labels = torch.where(
+                        active_loss, heads_idx.view(-1),
+                        torch.tensor(loss_fct.ignore_index).type_as(heads_idx)
+                    )
+                    loss = A * loss_fct(active_logits, active_labels) + \
+                        B * loss_fct(active_syn_head_logits, active_syn_head_labels)
+
             else:
-                loss = A * loss_fct(logits.view(-1, self.num_labels), labels.view(-1)) + B * loss_fct(syn_head_logits, parse)
+                assert False
+                loss = loss_fct(logits.view(-1, self.num_labels), labels.view(-1))
 
             outputs = (loss,) + outputs
 
@@ -304,7 +319,7 @@ class LiBertSelfAttention(BertSelfAttention):
 
         attention_scores = torch.matmul(query_layer, key_layer.transpose(-1, -2))        
 
-        if parse is not None and self.rnd_init is False:   
+        if parse is not None:   
 
             #  duplicated heads across all matrix (one vector duplicated across matrix)
             if self.duplicated_rels is True:
@@ -353,13 +368,13 @@ class LiBertSelfAttention(BertSelfAttention):
             # if self.replace_final is True:
             #     attention_probs = torch.cat((original_12head_attn_probs, ex_head_attention_probs.unsqueeze(1)),1)
 
-        if parse is None or self.rnd_init is True:
-            attention_scores = attention_scores / math.sqrt(self.attention_head_size)
-            # Apply the attention mask is (precomputed for all layers in BertModel forward() function)
-            attention_scores = attention_scores + attention_mask
+        # if parse is None or self.rnd_init is True:
+        #     attention_scores = attention_scores / math.sqrt(self.attention_head_size)
+        #     # Apply the attention mask is (precomputed for all layers in BertModel forward() function)
+        #     attention_scores = attention_scores + attention_mask
 
-            # Normalize the attention scores to probabilities.
-            attention_probs = nn.Softmax(dim=-1)(attention_scores)
+        #     # Normalize the attention scores to probabilities.
+        #     attention_probs = nn.Softmax(dim=-1)(attention_scores)
             
         # This is actually dropping out entire tokens to attend to, which might
         # seem a bit unusual, but is taken from the original Transformer paper.
