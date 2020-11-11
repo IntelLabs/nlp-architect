@@ -32,7 +32,6 @@ from pathlib import Path
 
 LIBERT_DIR = Path(realpath(__file__)).parent
 
-REL_EMBED_SIZE = 64
 # determine number of dep-relation labels by dep_relations.txt
 with open(LIBERT_DIR / "dep_relations.txt") as deprel_f:
     NUM_REL_LABELS = len(deprel_f.read().splitlines()) + 1
@@ -41,8 +40,6 @@ A = 0.5
 B = 0.5
 
 class LiBertConfig(BertConfig):
-    def __init__(self, **kwargs):
-        super().__init__()
 
     def add_extra_args(self, hparams):
         # pylint: disable=attribute-defined-outside-init
@@ -58,9 +55,6 @@ class LiBertForToken(BertForTokenClassification):
     def __init__(self, config):
         super(LiBertForToken, self).__init__(config)
         self.bert = LiBertModel(config)
-
-        self.syn_head_classifier = nn.Linear(config.hidden_size, 64)
-
 
     def forward(self, input_ids=None, attention_mask=None, token_type_ids=None, position_ids=None,
                 head_mask=None, inputs_embeds=None, labels=None, output_attentions=None,
