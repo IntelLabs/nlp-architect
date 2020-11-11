@@ -24,7 +24,7 @@ from itertools import product
 import pytorch_lightning as pl
 from pytorch_lightning import _logger as log
 #from bert_for_token import BertForToken
-from kibert_for_token import BertForToken
+from cluster_for_token import BertForToken
 from log_aggregator import aggregate
 from absa_utils import load_config, set_as_latest, write_summary_tables, pretty_datetime
 from significance import significance_from_cfg

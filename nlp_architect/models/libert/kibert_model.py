@@ -211,7 +211,7 @@ class KiBertModel(BertModel):
             # Encoding question and retrieving passage
             question_enc_outputs = self.question_encoder(**query_inputs, return_dict=True)
             question_encoder_last_hidden_states = question_enc_outputs.pooler_output  # hidden states of question encoder (batch_size, 768)
-            total_doc_scores_, total_docs = self.wiki_dataset['train'].get_nearest_examples_batch("embeddings", question_encoder_last_hidden_states.detach().cpu().numpy(), k=n_docs)  # get k nearest
+            _, total_docs = self.wiki_dataset['train'].get_nearest_examples_batch("embeddings", question_encoder_last_hidden_states.detach().cpu().numpy(), k=n_docs)  # get k nearest
             retrieved_doc_embeds = torch.stack([torch.tensor(docs['embeddings']) for docs in total_docs]).to('cuda')  # Moving batch document embeddings to GPU, (batch_size, n_docs, 768)
 
             # Uncomment to check if there is gradient flow back to the question encoder (prints the corresponding grads)
