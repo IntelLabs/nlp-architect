@@ -5,14 +5,14 @@ base_init: [true, false]
 data: rl rd lr ld dr dl
 limit_data: 1.0
 splits: 3
-seeds: [25, 26, 12]
-tag: # optional: name this experiment version
+seeds: [25, 26, 7]
+tag: syn_head_loss # optional: name this experiment version
 metric: asp_f1
 baseline_str: libert_rnd_init
 baseline_version: version_baseline
 
 num_workers: 44
-gpus: [0, 1, 2, 3]
+gpus: [0, 1, 2]
 parallel: true
 
 li_layer: #5

@@ -115,11 +115,15 @@ def pad_heads(a):
     target[:a.shape[0], :a.shape[1]] = a[:64, :64]
     return target
 
-def pad_heads_idx(a):
-    arr = np.array(a)
-    target = np.zeros((64), int)
-    target[:arr.shape[0]] = arr[:64]
-    return target
+def indexify(a):
+    res = []
+    for row in a:
+        idx = np.where(row == 1)[0]
+        if idx:
+            res.append(idx[0])
+        else:
+            res.append(0)
+    return res
 
 def apply_heads_to_subtokens(heads, sub_tokens, zero_sub_tokens=False):
     for i in range(len(sub_tokens) - 1, -1, -1):
@@ -202,7 +206,7 @@ def convert_examples_to_features(
         padded_heads = pad_heads(binary_heads)
         #######################################################################################
 
-        padded_heads_idx = pad_heads_idx(heads)
+        padded_heads_idx = indexify(padded_heads)
 
         #######################################################################################
 

@@ -32,9 +32,9 @@ from pathlib import Path
 
 LIBERT_DIR = Path(realpath(__file__)).parent
 
-A = 0.5
-B = 0.5
-
+A = 0.7
+B = 0.3
+HEADS_IGNORE_IDX = 0
 class LiBertConfig(BertConfig):
 
     def add_extra_args(self, hparams):
@@ -98,7 +98,7 @@ class LiBertForToken(BertForTokenClassification):
                     active_syn_head_logits = syn_head_logits.view(-1, 64)
                     active_syn_head_labels = torch.where(
                         active_loss, heads_idx.view(-1),
-                        torch.tensor(loss_fct.ignore_index).type_as(heads_idx)
+                        torch.tensor(HEADS_IGNORE_IDX).type_as(heads_idx)
                     )
                     loss = A * loss_fct(active_logits, active_labels) + \
                         B * loss_fct(active_syn_head_logits, active_syn_head_labels)
