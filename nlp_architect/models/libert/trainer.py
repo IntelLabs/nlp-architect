@@ -69,5 +69,6 @@ def get_trainer(model, data, experiment, exp_id, log_dir=None, gpus=None, metric
         deterministic=True,
         limit_train_batches=limit_data,
         limit_val_batches=limit_data,
-        limit_test_batches=limit_data
+        limit_test_batches=limit_data,
+        precision=16
     )
