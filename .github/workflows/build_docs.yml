@@ -37,7 +37,6 @@ jobs:
         rm -rfv ./docs
         cp -rv ./docs-source/build/html ./docs
         touch ./docs/.nojekyll
-        cp CNAME ./docs/CNAME
 
     - name: Commit documentation changes
       run:  |

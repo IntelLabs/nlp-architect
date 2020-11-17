@@ -1,4 +1,4 @@
-https://github.com/NervanaSystems/ngraph-python/blob/master/LICENSE
+https://github.com/IntelLabs/ngraph-python/blob/master/LICENSE
 
 
   Apache License

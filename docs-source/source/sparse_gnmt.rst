@@ -384,7 +384,7 @@ References
 .. _wmt16_en_de.sh: https://github.com/tensorflow/nmt/blob/master/nmt/scripts/wmt16_en_de.sh
 .. _`WMT Shared Task: Machine Translation of News`: http://www.statmt.org/wmt16/translation-task.html
 .. _`Shared Task`: http://www.statmt.org/wmt16/translation-task.html
-.. _`Model Zoo`: http://nlp_architect.nervanasys.com/model_zoo.html
+.. _`Model Zoo`: https://intellabs.github.io/nlp-architect/model_zoo.html
 .. _`TensorFlow API`: https://www.tensorflow.org/api_docs/python/tf/quantize
 .. _`Sparse`: https://d2zs9tzlek599f.cloudfront.net/models/sparse_gnmt/gnmt_sparse.zip
 .. _`2x2 Block Sparse`: https://d2zs9tzlek599f.cloudfront.net/models/sparse_gnmt/gnmt_blocksparse2x2.zip
