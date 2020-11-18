@@ -158,24 +158,30 @@ class BertForToken(pl.LightningModule):
     def training_step(self, batch, _):
         "Compute loss and log."
         inputs = self.map_to_inputs(batch)
-        outputs = self(**inputs)
+        outputs, detailed_loss = self(**inputs)
+        cls_loss, aux_loss = detailed_loss
         loss = outputs[0]
-        tensorboard_logs = {'train_loss_step': loss, 'lr': self.lr_scheduler.get_last_lr()[-1]}
-        return {'loss': loss, 'log': tensorboard_logs}
+        tensorboard_logs = {'train_loss_step': loss, 'lr': self.lr_scheduler.get_last_lr()[-1], 
+        "train_cls_loss_step": cls_loss.detach().cpu(), "train_aux_loss_step": aux_loss.detach().cpu()}
+        return {'loss': loss, 'log': tensorboard_logs, 'cls_loss': cls_loss, 'aux_loss': aux_loss}
 
     def training_epoch_end(self, outputs):
         avg_loss = torch.stack([x['loss'] for x in outputs]).mean()
-        tensorboard_logs = {'train_loss': avg_loss, 'step': self.current_epoch}
+        avg_cls_loss = torch.stack([x['cls_loss'] for x in outputs]).mean()
+        avg_aux_loss = torch.stack([x['aux_loss'] for x in outputs]).mean()
+        tensorboard_logs = {'train_loss': avg_loss, 'step': self.current_epoch, 'train_cls_loss': avg_cls_loss, 'train_aux_loss': avg_aux_loss}
         return {'loss': avg_loss, 'log': tensorboard_logs}
 
     def validation_step(self, batch, _):
         "Compute validation."
         inputs = self.map_to_inputs(batch)
-        outputs = self(**inputs)
+        outputs, detailed_loss = self(**inputs)
+        cls_loss, aux_loss = detailed_loss
         tmp_eval_loss, logits = outputs[:2]
-        preds = logits.detach().cpu()#.numpy()
-        target = inputs["labels"].detach().cpu()#.numpy()
-        return {"val_loss_step": tmp_eval_loss.detach().cpu(), "pred": preds, "target": target}
+        preds = logits.detach().cpu()
+        target = inputs["labels"].detach().cpu()
+        return {"val_loss_step": tmp_eval_loss.detach().cpu(), "pred": preds, "target": target,
+                "val_cls_loss_step": cls_loss.detach().cpu(), "val_aux_loss_step": aux_loss.detach().cpu()}
 
     def validation_epoch_end(self, outputs):
         ret, _, _ = self._eval_end(outputs)
@@ -196,6 +202,8 @@ class BertForToken(pl.LightningModule):
     def _eval_end(self, outputs):
         "Evaluation called for both Val and Test"
         val_loss_mean = torch.stack([x["val_loss_step"] for x in outputs]).mean()
+        val_cls_loss_mean = torch.stack([x["val_cls_loss_step"] for x in outputs]).mean()
+        val_aux_loss_mean = torch.stack([x["val_aux_loss_step"] for x in outputs]).mean()
         preds = np.concatenate([x["pred"] for x in outputs], axis=0)
         preds = np.argmax(preds, axis=2)
         out_label_ids = np.concatenate([x["target"] for x in outputs], axis=0)
@@ -213,6 +221,8 @@ class BertForToken(pl.LightningModule):
         calc = lambda f: torch.tensor(f(target, pred))
         results = OrderedDict({
             "val_loss": val_loss_mean,
+            "val_cls_loss": val_cls_loss_mean,
+            "val_aux_loss": val_aux_loss_mean,
             "micro_precision": calc(precision_score),
             "micro_recall": calc(recall_score),
             "micro_f1": calc(f1_score),

@@ -54,7 +54,7 @@ class LiBertForToken(BertForTokenClassification):
         self.rnd_init = config.rnd_init
 
         if not self.rnd_init:
-            self.syn_head_classifier = nn.Linear(config.hidden_size, 64)
+            self.syn_head_classifier = nn.Linear(config.hidden_size, 22)
 
 
     def forward(self, input_ids=None, attention_mask=None, token_type_ids=None, position_ids=None,
@@ -90,26 +90,27 @@ class LiBertForToken(BertForTokenClassification):
 
                 if self.rnd_init:
                     loss = loss_fct(active_logits, active_labels)
-
+                    classifier_loss, aux_loss = torch.tensor(0.0), torch.tensor(0.0)
                 else:
                     #### syn_head loss stuff ####
                     syn_head_logits = self.syn_head_classifier(sequence_output)
 
-                    active_syn_head_logits = syn_head_logits.view(-1, 64)
+                    active_syn_head_logits = syn_head_logits.view(-1, 22)
                     active_syn_head_labels = torch.where(
                         active_loss, heads_idx.view(-1),
                         torch.tensor(HEADS_IGNORE_IDX).type_as(heads_idx)
                     )
-                    loss = A * loss_fct(active_logits, active_labels) + \
-                        B * loss_fct(active_syn_head_logits, active_syn_head_labels)
-
+                    classifier_loss = A * loss_fct(active_logits, active_labels)
+                    aux_loss = B * loss_fct(active_syn_head_logits, active_syn_head_labels)
+                    loss = classifier_loss + aux_loss
+                        
             else:
-                assert False
                 loss = loss_fct(logits.view(-1, self.num_labels), labels.view(-1))
 
             outputs = (loss,) + outputs
 
-        return outputs  # (loss), scores, (hidden_states), (attentions)
+        detailed_loss = classifier_loss, aux_loss
+        return outputs, detailed_loss  # (loss), scores, (hidden_states), (attentions)
 
 class LiBertModel(BertModel):
     def __init__(self, config):

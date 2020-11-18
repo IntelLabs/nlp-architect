@@ -207,7 +207,7 @@ def convert_examples_to_features(
         #######################################################################################
 
         padded_heads_idx = indexify(padded_heads)
-
+        padded_heads_idx = [(v - i) + 11 if v != 0 and -11 < v - i < 11 else 0 for i, v in enumerate(padded_heads_idx)]
         #######################################################################################
 
         # Account for [CLS] and [SEP]
