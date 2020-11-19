@@ -21,6 +21,7 @@ import math
 from torch import nn
 import torch
 from torch.nn import CrossEntropyLoss
+from torch.nn.parameter import Parameter
 torch.multiprocessing.set_sharing_strategy('file_system')
 from transformers.modeling_bert import (
     BertEncoder,
@@ -46,11 +47,28 @@ class CustomBertConfig(BertConfig):
     def add_extra_args(self, hparams):
         # pylint: disable=attribute-defined-outside-init
         self.custom_layers = hparams.custom_layers
+        self.n_clusters = hparams.n_clusters
+        self.grl = hparams.grl
+        self.beta = hparams.beta
+        self.gamma = hparams.gamma
+        self.learn_gamma = hparams.learn_gamma
+        self.gamma_val = hparams.gamma_val
 
 class CustomBertForTokenClassification(BertForTokenClassification):
     def __init__(self, config):
         super().__init__(config)
         self.bert = CustomBertModel(config)
+        self.learn_gamma = config.learn_gamma
+        if not config.learn_gamma:
+            self.gamma = config.gamma_val
+        else:
+            if config.gamma:
+                self.gamma = Parameter(torch.tensor(0.0))  # Gets pushed through sigmoid, so effectively gamma = 0.5
+                #nn.init.zeros_(self.gamma)
+                #self.register_parameter("gamma", self.gamma)
+                print(f"initializing gamma with value: {self.gamma}")
+                #if self.gamma.requires_grad: self.gamma.register_hook(lambda x: print(f"gamma grad: {x}"))
+                self.gamma.register_hook(lambda x: x * 100)
 
     def forward(
         self,
@@ -102,15 +120,27 @@ class CustomBertForTokenClassification(BertForTokenClassification):
                 active_labels = torch.where(
                     active_loss, labels.view(-1), torch.tensor(loss_fct.ignore_index).type_as(labels)
                 )
-                loss = loss_fct(active_logits, active_labels)
+                asp_loss = loss_fct(active_logits, active_labels)
             else:
-                loss = loss_fct(logits.view(-1, self.num_labels), labels.view(-1))
-            
-            loss += cluster_loss
+                asp_loss = loss_fct(logits.view(-1, self.num_labels), labels.view(-1))
 
-            outputs = (loss,) + outputs
+            # Creating joint loss aspect extraction/cluster prediction loss
+            if hasattr(self, 'gamma'):
+                if self.learn_gamma:
+                    #print(f"gamma: {self.gamma}")
+                    gamma_eff = torch.sigmoid(self.gamma)
+                    #print(f"gamma_eff: {gamma_eff}")
+                    total_loss = 2 * ((gamma_eff * asp_loss) + (1-gamma_eff) * cluster_loss)
+                else:
+                    total_loss = asp_loss + self.gamma * cluster_loss
+                    gamma_eff = self.gamma
+            else:
+                total_loss = asp_loss + cluster_loss
+                gamma_eff = 1
 
-        return outputs  # (loss), scores, (hidden_states), (attentions)
+            outputs = (total_loss,) + outputs + (asp_loss, cluster_loss, gamma_eff)
+
+        return outputs  # total_loss, scores, (hidden_states), (attentions), asp_loss, cluster_loss
 
         #if not return_dict:
         #    output = (logits,) + outputs[2:]
@@ -313,7 +343,9 @@ class CustomBertLayer(BertLayer):
         self.base_bert = base_bert
         if not self.base_bert:
             self.cluster_predictor = ClusterPredictor(config)  # SEE BELOW but can be arbitrary module
-    
+            if config.grl:
+                self.grl = GradientReversalLayer(config)
+
     def forward(
         self,
         hidden_states,
@@ -355,7 +387,13 @@ class CustomBertLayer(BertLayer):
 
         # New
         if hasattr(self, "cluster_predictor"):
-            cluster_loss = self.cluster_predictor(layer_output, cluster_labels=cluster_labels)
+            if hasattr(self, "grl"):
+                #if layer_output.requires_grad: layer_output.register_hook(lambda x: print(f"after grl grad: {x}"))
+                cp_input = self.grl(layer_output)
+                #if layer_output.requires_grad: layer_output.register_hook(lambda x: print(f"before grl grad: {x}"))
+            else:
+                cp_input = layer_output
+            cluster_loss = self.cluster_predictor(cp_input, cluster_labels=cluster_labels)
         
         outputs = (layer_output,) + outputs + (cluster_loss,)
         return outputs
@@ -365,20 +403,37 @@ class CustomBertLayer(BertLayer):
         layer_output = self.output(intermediate_output, attention_output)
         return layer_output
 
+class GRLFunction(torch.autograd.Function):
+    @staticmethod 
+    def forward(ctx, hidden_states):
+        #ctx.save_for_backward(beta)
+        return hidden_states
+
+    @staticmethod
+    def backward(ctx, grad_output):
+        #beta = ctx.saved_tensors
+        #print(f"grad_output shape: {grad_output.size()}")
+        return grad_output.neg()
+
+class GradientReversalLayer(nn.Module):
+    def __init__(self, config):
+        super().__init__()
+        #self.beta = torch.tensor(config.beta, dtype=torch.long, requires_grad=False)
+
+    def forward(self, hidden_states):
+        #return GRLFunction.apply(hidden_states, self.beta)
+        return GRLFunction.apply(hidden_states)
 
 class ClusterPredictor(nn.Module):
     def __init__(self, config):
         super().__init__()
-        # TODO fix hardcoding, add option to yaml
-        self.n_clusters = 10
+        self.n_clusters = config.n_clusters
         self.dense1 = nn.Linear(config.hidden_size, config.intermediate_size)
-        #self.dense1 = nn.Linear(config.hidden_size, 300)
         if isinstance(config.hidden_act, str):
             self.intermediate_act_fn = ACT2FN[config.hidden_act]
         else:
             self.intermediate_act_fn = config.hidden_act
         self.dense2 = nn.Linear(config.intermediate_size, self.n_clusters)
-        #self.dense2 = nn.Linear(300, config.hidden_size)
         #self.LayerNorm = nn.LayerNorm(config.hidden_size, eps=config.layer_norm_eps)
         #self.dropout = nn.Dropout(config.hidden_dropout_prob)
         self.log_softmax = nn.LogSoftmax(dim=1)

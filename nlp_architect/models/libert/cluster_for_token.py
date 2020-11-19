@@ -122,10 +122,8 @@ class BertForToken(pl.LightningModule):
                     self.tokenizer
                 )
 
-                # TODO: add option to yaml file 
-                review_df = pd.read_pickle("./review_with_cluster_labels_df.pkl")
-                #print(review_df[['review_text', 'cluster_label']])
-                cluster_label_map = {review: label for review, label in review_df[['review_text', 'cluster_label_10']].values}
+                review_df = pd.read_pickle(self.hparams.cluster_df)
+                cluster_label_map = {review: label for review, label in review_df[['review_text', f'cluster_label_{self.hparams.n_clusters}']].values}
 
                 reviews = [' '.join(example.words) for example in examples]
                 cluster_labels = [cluster_label_map[review] for review in reviews]
@@ -177,12 +175,34 @@ class BertForToken(pl.LightningModule):
         outputs = self(**inputs)
         loss = outputs[0]
         tensorboard_logs = {'train_loss_step': loss, 'lr': self.lr_scheduler.get_last_lr()[-1]}
-        return {'loss': loss, 'log': tensorboard_logs}
+        return_dict = {'loss': loss, 'log': tensorboard_logs}
+
+        # Logging extra stuff for cluster bert
+        if self.model_type is CustomBertForTokenClassification:
+            asp_loss = outputs[-3]
+            cluster_loss = outputs[-2]
+            return_dict.update({'asp_loss': asp_loss, 'cluster_loss': cluster_loss})
+            if self.hparams.gamma:
+                gamma_eff = outputs[-1]
+                return_dict.update({'gamma_eff': gamma_eff})
+
+        return return_dict
 
     def training_epoch_end(self, outputs):
         avg_loss = torch.stack([x['loss'] for x in outputs]).mean()
         tensorboard_logs = {'train_loss': avg_loss, 'step': self.current_epoch}
-        return {'loss': avg_loss, 'log': tensorboard_logs}
+        return_dict = {'loss': avg_loss,  'log': tensorboard_logs}
+
+        # Logging extra stuff for cluster bert
+        if self.model_type is CustomBertForTokenClassification:
+            avg_asp_loss = torch.stack([x['asp_loss'] for x in outputs]).mean()
+            avg_cluster_loss = torch.stack([x['cluster_loss'] for x in outputs]).mean()
+            return_dict.update({'asp_loss': avg_asp_loss, 'cluster_loss': avg_cluster_loss})
+            if self.hparams.gamma:
+                end_gamma_eff = outputs[-1]['gamma_eff']
+                return_dict.update({'gamma_eff': end_gamma_eff})
+
+        return return_dict
 
     def validation_step(self, batch, _):
         "Compute validation."

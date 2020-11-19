@@ -16,7 +16,14 @@ gpus: [0]
 parallel: true
 
 # MODEL HPARAMS
-custom_layers: [8]  # model will use hidden representations at end of this layer for cluster prediction
+custom_layers: [3]  # model will use hidden representations at end of this layer for cluster prediction
+n_clusters: 10      # number of clusters to use in prediction (works for 2-19)
+beta: 1             # used for GRL, doesn't do anything currently
+gamma: true         # whether or not to use gamma (false is equivalent to true and gamma_val = 1)
+learn_gamma: false  # whether or not to try and learn gamma (recommended false for now)
+gamma_val: 1        # gamma val used to weight cluster loss (e.g. total_loss = asp_loss + gamma*cluster_loss)
+grl: false          # model will use the gradient reversal layer
+cluster_df: ./review_with_cluster_labels_df.pkl
 
 do_train: true
 do_predict: true
